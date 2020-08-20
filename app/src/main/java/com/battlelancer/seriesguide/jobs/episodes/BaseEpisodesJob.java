@@ -91,12 +91,9 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         }
 
         // apply local updates
-        ContentValues values = new ContentValues();
-        values.put(getDatabaseColumnToUpdate(), getFlagValue());
-        int updated = context.getContentResolver()
-                .update(uri, values, getDatabaseSelection(), null);
-        if (updated < 0) {
-            return false; // -1 means error
+        boolean updated = applyDatabaseChanges(context, uri);
+        if (!updated) {
+            return false;
         }
 
         // persist network job after successful local updates
@@ -113,6 +110,14 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
                 .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
 
         return true;
+    }
+
+    protected boolean applyDatabaseChanges(Context context, Uri uri) {
+        ContentValues values = new ContentValues();
+        values.put(getDatabaseColumnToUpdate(), getFlagValue());
+        int updated = context.getContentResolver()
+                .update(uri, values, getDatabaseSelection(), null);
+        return updated >= 0; // -1 means error
     }
 
     @Nullable

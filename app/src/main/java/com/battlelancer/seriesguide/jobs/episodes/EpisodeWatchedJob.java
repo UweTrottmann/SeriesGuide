@@ -2,10 +2,14 @@ package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.provider.EpisodeHelper;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -34,7 +38,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
             // find an appropriate last watched episode
             final Cursor show = context.getContentResolver().query(
                     SeriesGuideContract.Shows.buildShowUri(String.valueOf(getShowTvdbId())),
-                    new String[] {
+                    new String[]{
                             SeriesGuideContract.Shows._ID,
                             SeriesGuideContract.Shows.LASTWATCHEDID
                     }, null, null, null
@@ -56,7 +60,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
                                             .valueOf(getShowTvdbId())),
                                     BaseEpisodesJob.PROJECTION_EPISODE,
                                     SeriesGuideContract.Episodes.SELECTION_PREVIOUS_WATCHED,
-                                    new String[] {
+                                    new String[]{
                                             season, season, String.valueOf(episode)
                                     }, SeriesGuideContract.Episodes.SORT_PREVIOUS_WATCHED
                             );
@@ -99,6 +103,29 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
         ListWidgetProvider.notifyDataChanged(context);
 
         return true;
+    }
+
+    @Override
+    protected boolean applyDatabaseChanges(Context context, Uri uri) {
+        EpisodeHelper episodeHelper = SgRoomDatabase.getInstance(context).episodeHelper();
+        int flagValue = getFlagValue();
+
+        int rowsUpdated;
+        switch (flagValue) {
+            case EpisodeFlags.SKIPPED:
+                rowsUpdated = episodeHelper.setSkipped(episodeTvdbId);
+                break;
+            case EpisodeFlags.WATCHED:
+                rowsUpdated = episodeHelper.setWatchedAndAddPlay(episodeTvdbId);
+                break;
+            case EpisodeFlags.UNWATCHED:
+                rowsUpdated = episodeHelper.setNotWatchedAndRemovePlays(episodeTvdbId);
+                break;
+            default:
+                throw new IllegalArgumentException("Flag value not supported");
+        }
+
+        return rowsUpdated == 1;
     }
 
     @NonNull
