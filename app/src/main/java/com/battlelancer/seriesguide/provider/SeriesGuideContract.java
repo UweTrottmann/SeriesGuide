@@ -389,6 +389,11 @@ public class SeriesGuideContract {
         String WATCHED = "watched";
 
         /**
+         * The number of times an episode was watched.
+         */
+        String PLAYS = "plays";
+
+        /**
          * Whether an episode has been collected in digital, physical form.
          */
         String COLLECTED = "episode_collected";

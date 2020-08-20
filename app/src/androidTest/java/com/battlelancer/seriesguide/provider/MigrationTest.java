@@ -193,23 +193,25 @@ public class MigrationTest {
         SgRoomDatabase database = getMigratedRoomDatabase();
         assertTestData(database);
         SgShow dbShow = database.showHelper().getShow();
-        assertThat(dbShow.posterSmall).isEqualTo(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX + dbShow.poster);
+        assertThat(dbShow.posterSmall)
+                .isEqualTo(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX + dbShow.poster);
     }
 
     @Test
     public void migrationFrom47To48_containsCorrectData() throws IOException {
-        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 47);
-        RoomDatabaseTestHelper.insertShow(SHOW, db, 47);
+        int v47 = SgRoomDatabase.VERSION_47_SERIES_POSTER_THUMB;
+        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, v47);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, v47);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
 
         Episode testEpisode = getTestEpisode(21);
         RoomDatabaseTestHelper
-                .insertEpisode(db, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
+                .insertEpisode(db, v47, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
                         true);
 
         testEpisode = getTestEpisode(22);
         RoomDatabaseTestHelper
-                .insertEpisode(db, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
+                .insertEpisode(db, v47, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
                         false);
 
         MovieDetails testMovieDetails = getTestMovieDetails(12);

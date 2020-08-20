@@ -25,6 +25,8 @@ public class Episode {
 
     public boolean watched;
 
+    public int plays;
+
     public boolean skipped;
 
     public boolean collected;
@@ -73,6 +75,13 @@ public class Episode {
         values.put(Episodes.WATCHED, skipped
                 ? EpisodeFlags.SKIPPED : watched
                 ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
+        int playsValue;
+        if (plays >= 1) {
+            playsValue = plays;
+        } else {
+            playsValue = watched ? 1 : 0;
+        }
+        values.put(Episodes.PLAYS, playsValue);
 
         values.put(Episodes.DIRECTORS, directors != null ? directors : "");
         values.put(Episodes.GUESTSTARS, gueststars != null ? gueststars : "");

@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.model.SgSeason;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -47,11 +48,14 @@ public class RoomDatabaseTestHelper {
 
     public static void insertEpisode(Episode episode, int showTvdbId, int seasonTvdbId,
             int seasonNumber, SupportSQLiteDatabase db) {
-        insertEpisode(db, episode, showTvdbId, seasonTvdbId, seasonNumber, false);
+        // Note: use version 47 as no changes before that.
+        insertEpisode(db, SgRoomDatabase.VERSION_47_SERIES_POSTER_THUMB,
+                episode, showTvdbId, seasonTvdbId, seasonNumber, false);
     }
 
     public static void insertEpisode(
             SupportSQLiteDatabase db,
+            int version,
             Episode episode,
             int showTvdbId,
             int seasonTvdbId,
@@ -63,7 +67,13 @@ public class RoomDatabaseTestHelper {
                 episode.id, seasonTvdbId, showTvdbId, seasonNumber,
                 Constants.EPISODE_UNKNOWN_RELEASE, true);
 
-        if (watched) values.put(SeriesGuideContract.Episodes.WATCHED, EpisodeFlags.WATCHED);
+        if (watched) values.put(Episodes.WATCHED, EpisodeFlags.WATCHED);
+
+        // Remove columns added in newer versions.
+        // Also check SqliteDatabaseTestHelper!
+        if (version < SgRoomDatabase.VERSION_48_EPISODE_PLAYS) {
+            values.remove(Episodes.PLAYS);
+        }
 
         db.insert(Tables.EPISODES, SQLiteDatabase.CONFLICT_REPLACE, values);
     }
