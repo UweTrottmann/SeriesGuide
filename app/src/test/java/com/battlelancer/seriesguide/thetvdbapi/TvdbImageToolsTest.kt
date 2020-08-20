@@ -1,11 +1,14 @@
 package com.battlelancer.seriesguide.thetvdbapi
 
+import com.battlelancer.seriesguide.EmptyTestApplication
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
+@Config(application = EmptyTestApplication::class)
 class TvdbImageToolsTest {
 
     @Test
