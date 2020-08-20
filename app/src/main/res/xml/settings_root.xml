@@ -77,6 +77,12 @@
             app:summary="@string/clear_cache_summary"
             app:title="@string/clear_cache" />
 
+        <SwitchPreferenceCompat
+            app:defaultValue="True"
+            app:iconSpaceReserved="false"
+            app:key="com.battlelancer.seriesguide.sendErrorReports"
+            app:title="@string/pref_error_reports" />
+
         <Preference
             app:iconSpaceReserved="false"
             app:key="aboutPref"

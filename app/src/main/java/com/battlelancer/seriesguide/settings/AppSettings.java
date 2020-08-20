@@ -10,6 +10,7 @@ import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import timber.log.Timber;
 
 public class AppSettings {
@@ -23,6 +24,8 @@ public class AppSettings {
     public static final String KEY_HAS_SEEN_NAV_DRAWER = "hasSeenNavDrawer";
 
     public static final String KEY_ASKED_FOR_FEEDBACK = "askedForFeedback";
+
+    public static final String KEY_SEND_ERROR_REPORTS = "com.battlelancer.seriesguide.sendErrorReports";
 
     public static final String KEY_USER_DEBUG_MODE_ENBALED = "com.battlelancer.seriesguide.userDebugModeEnabled";
 
@@ -78,6 +81,22 @@ public class AppSettings {
                 .edit()
                 .putBoolean(KEY_ASKED_FOR_FEEDBACK, true)
                 .apply();
+    }
+
+    public static boolean isSendErrorReports(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_SEND_ERROR_REPORTS, true);
+    }
+
+    public static void setSendErrorReports(Context context, boolean isEnabled, boolean save) {
+        if (save) {
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putBoolean(KEY_SEND_ERROR_REPORTS, isEnabled)
+                    .apply();
+        }
+        Timber.d("Turning error reporting %s", isEnabled ? "ON" : "OFF");
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isEnabled);
     }
 
     /**

@@ -349,6 +349,7 @@
     <string name="pref_language_fallback">Алтернативен јазик</string>
     <string name="pref_updatewifionly">Слики од Wi-Fi само</string>
     <string name="pref_updatewifionlysummary">Да ги намали потрошувачката на интернет, не симнувајте преку мобилен или преку мрежи кој се наплаќаат</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d ден порано</item>
         <item quantity="other">%d дена порано</item>

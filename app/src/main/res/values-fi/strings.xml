@@ -349,6 +349,7 @@
     <string name="pref_language_fallback">Vaihtoehtoinen kieli</string>
     <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
     <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d päivä ennen</item>
         <item quantity="other">%d päivää ennen</item>

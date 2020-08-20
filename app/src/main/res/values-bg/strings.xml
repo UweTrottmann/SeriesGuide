@@ -349,6 +349,7 @@
     <string name="pref_language_fallback">Алтернативен език</string>
     <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
     <string name="pref_updatewifionlysummary">За да намалите таксуването за пренос на данни, не теглете през мобилната мрежа</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d ден предварително</item>
         <item quantity="other">%d дни предварително</item>

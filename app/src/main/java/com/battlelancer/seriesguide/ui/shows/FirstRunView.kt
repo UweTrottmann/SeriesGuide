@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFirstRunBinding
 import com.battlelancer.seriesguide.dataliberation.AutoBackupTools
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
+import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
@@ -77,6 +78,14 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             setFirstRunDismissed()
             EventBus.getDefault().post(ButtonEvent(ButtonType.DISMISS))
         }
+
+        binding.containerErrorReports.setOnClickListener {
+            // New state is inversion of current state.
+            val isSendErrorReports = !binding.checkboxErrorReports.isChecked
+            AppSettings.setSendErrorReports(context, isSendErrorReports, true)
+            binding.checkboxErrorReports.isChecked = isSendErrorReports
+        }
+        binding.checkboxErrorReports.isChecked = AppSettings.isSendErrorReports(context)
 
         binding.textViewPolicyLink.setOnClickListener { v ->
             val context = v.context

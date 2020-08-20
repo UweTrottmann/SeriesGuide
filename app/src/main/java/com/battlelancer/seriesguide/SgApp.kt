@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.google.android.gms.security.ProviderInstaller
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -160,7 +161,11 @@ class SgApp : Application() {
     }
 
     private fun initializeLogging() {
-        // Note: Firebase Crashlytics is automatically initialized using content provider.
+        // Note: Firebase Crashlytics is automatically initialized through its content provider.
+        // Pass current enabled state to Crashlytics (e.g. in case app was restored from backup).
+        val isSendErrors = AppSettings.isSendErrorReports(this)
+        Timber.d("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isSendErrors)
 
         if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug drawer logging

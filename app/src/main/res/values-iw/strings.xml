@@ -365,6 +365,7 @@
     <string name="pref_language_fallback">שפה חלופית</string>
     <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>
     <string name="pref_updatewifionlysummary">כדי לצמצם את חיובי הנתונים, לא להוריד ברשת סלולרי או רשת מבוקרת</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">יום לפני</item>
         <item quantity="two">יומיים לפני</item>

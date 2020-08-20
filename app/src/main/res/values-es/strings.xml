@@ -350,6 +350,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Para reducir el consumo de datos, no descargar a través de redes móviles</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d día antes</item>
         <item quantity="other">%d días antes</item>
