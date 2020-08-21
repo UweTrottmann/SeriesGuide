@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.TextViewCompat;
@@ -240,8 +241,31 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
      */
     private void onToggleWatched() {
         boolean watched = EpisodeTools.isWatched(episodeFlag);
-        changeEpisodeFlag(watched ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
+        if (watched) {
+            View anchor = bindingButtons.buttonEpisodeWatched;
+            PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
+            popupMenu.inflate(R.menu.watched_episode_popup_menu);
+            popupMenu.setOnMenuItemClickListener(watchedEpisodePopupMenuListener);
+            popupMenu.show();
+        } else {
+            changeEpisodeFlag(EpisodeFlags.WATCHED);
+        }
     }
+
+    private final PopupMenu.OnMenuItemClickListener watchedEpisodePopupMenuListener = item -> {
+        int itemId = item.getItemId();
+        if (itemId == R.id.watched_episode_popup_menu_watch_again) {
+            // Multiple plays are for supporters only.
+            if (!Utils.hasAccessToX(requireContext())) {
+                Utils.advertiseSubscription(requireContext());
+            } else {
+                changeEpisodeFlag(EpisodeFlags.WATCHED);
+            }
+        } else if (itemId == R.id.watched_episode_popup_menu_set_not_watched) {
+            changeEpisodeFlag(EpisodeFlags.UNWATCHED);
+        }
+        return true;
+    };
 
     /**
      * If episode was skipped, flags as unwatched. Otherwise, flags as skipped.
