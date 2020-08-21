@@ -143,7 +143,7 @@ dependencies {
     implementation "androidx.core:core-ktx:${versions.core}"
     implementation "androidx.annotation:annotation:${versions.annotation}"
     // https://developer.android.com/jetpack/androidx/releases/appcompat
-    implementation 'androidx.appcompat:appcompat:1.2.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.browser:browser:1.2.0'
     // https://developer.android.com/jetpack/androidx/releases/fragment
