@@ -112,7 +112,7 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         return true;
     }
 
-    protected boolean applyDatabaseChanges(Context context, Uri uri) {
+    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
         ContentValues values = new ContentValues();
         values.put(getDatabaseColumnToUpdate(), getFlagValue());
         int updated = context.getContentResolver()

@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.model.EpisodeWithShow;
 import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.model.SgEpisodeSeasonAndShow;
 import com.battlelancer.seriesguide.model.SgShow;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 
 /**
  * Data Access Object for the episodes table.
@@ -39,14 +39,26 @@ public interface EpisodeHelper {
     @RawQuery(observedEntities = {SgEpisode.class, SgShow.class})
     DataSource.Factory<Integer, EpisodeWithShow> getEpisodesWithShow(SupportSQLiteQuery query);
 
-    @Query("UPDATE episodes SET watched = " + EpisodeFlags.WATCHED
-            + ", plays = plays + 1 WHERE _id=:episodeTvdbId")
+    @Query("UPDATE episodes SET watched = 1, plays = plays + 1 WHERE _id=:episodeTvdbId")
     int setWatchedAndAddPlay(int episodeTvdbId);
 
-    @Query("UPDATE episodes SET watched = " + EpisodeFlags.UNWATCHED
-            + ", plays = 0 WHERE _id=:episodeTvdbId")
+    // Must
+    // - be released before current episode,
+    // - OR at the same time, but with same (itself) or lower (all released at same time) number
+    // - have a release date,
+    // - be unwatched or skipped.
+    @Query("UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId"
+            + " AND ("
+            + "episode_firstairedms < :episodeFirstAired"
+            + " OR (episode_firstairedms = :episodeFirstAired AND episodenumber <= :episodeNumber)"
+            + ")"
+            + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
+            + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED)
+    int setWatchedUpToAndAddPlay(int showTvdbId, long episodeFirstAired, int episodeNumber);
+
+    @Query("UPDATE episodes SET watched = 0, plays = 0 WHERE _id=:episodeTvdbId")
     int setNotWatchedAndRemovePlays(int episodeTvdbId);
 
-    @Query("UPDATE episodes SET watched = " + EpisodeFlags.SKIPPED + " WHERE _id=:episodeTvdbId")
+    @Query("UPDATE episodes SET watched = 2 WHERE _id=:episodeTvdbId")
     int setSkipped(int episodeTvdbId);
 }

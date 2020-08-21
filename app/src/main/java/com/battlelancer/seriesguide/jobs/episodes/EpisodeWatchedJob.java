@@ -106,7 +106,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
     }
 
     @Override
-    protected boolean applyDatabaseChanges(Context context, Uri uri) {
+    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
         EpisodeHelper episodeHelper = SgRoomDatabase.getInstance(context).episodeHelper();
         int flagValue = getFlagValue();
 

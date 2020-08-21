@@ -5,6 +5,7 @@ import android.net.Uri
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 
 /**
@@ -51,6 +52,12 @@ class EpisodeWatchedUpToJob(
         ListWidgetProvider.notifyDataChanged(context)
 
         return true
+    }
+
+    override fun applyDatabaseChanges(context: Context, uri: Uri): Boolean {
+        val rowsUpdated = SgRoomDatabase.getInstance(context).episodeHelper()
+            .setWatchedUpToAndAddPlay(showTvdbId, episodeFirstAired, episodeNumber)
+        return rowsUpdated >= 0 // -1 means error
     }
 
     override fun getConfirmationText(context: Context): String {
