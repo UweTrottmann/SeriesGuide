@@ -2,22 +2,26 @@ package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.EpisodeHelper;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 
 public class SeasonWatchedJob extends SeasonBaseJob {
 
-    private final long currentTime;
+    private final long currentTimePlusOneHour;
 
     public SeasonWatchedJob(int showTvdbId, int seasonTvdbId, int season,
             int episodeFlags, long currentTime) {
         super(showTvdbId, seasonTvdbId, season, episodeFlags, JobAction.EPISODE_WATCHED_FLAG);
-        this.currentTime = currentTime;
+        this.currentTimePlusOneHour = currentTime + DateUtils.HOUR_IN_MILLIS;
     }
 
     @Override
@@ -25,21 +29,20 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         if (EpisodeTools.isUnwatched(getFlagValue())) {
             // set unwatched
             // include watched or skipped episodes
-            return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED;
+            return Episodes.SELECTION_WATCHED_OR_SKIPPED;
         } else {
             // set watched or skipped
             // do NOT mark watched episodes again to avoid trakt adding a new watch
             // only mark episodes that have been released until within the hour
-            return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
-                    + DateUtils.HOUR_IN_MILLIS)
-                    + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
-                    + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
+            return Episodes.FIRSTAIREDMS + "<=" + currentTimePlusOneHour
+                    + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
+                    + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
         }
     }
 
     @Override
     protected String getDatabaseColumnToUpdate() {
-        return SeriesGuideContract.Episodes.WATCHED;
+        return Episodes.WATCHED;
     }
 
     private int getLastWatchedEpisodeTvdbId(Context context) {
@@ -53,12 +56,11 @@ public class SeasonWatchedJob extends SeasonBaseJob {
 
             // get the last flagged episode of the season
             final Cursor seasonEpisodes = context.getContentResolver().query(
-                    SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
+                    Episodes.buildEpisodesOfSeasonUri(
                             String.valueOf(seasonTvdbId)),
                     BaseEpisodesJob.PROJECTION_EPISODE,
-                    SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
-                            + DateUtils.HOUR_IN_MILLIS), null,
-                    SeriesGuideContract.Episodes.NUMBER + " DESC"
+                    Episodes.FIRSTAIREDMS + "<=" + currentTimePlusOneHour, null,
+                    Episodes.NUMBER + " DESC"
             );
             if (seasonEpisodes != null) {
                 if (seasonEpisodes.moveToFirst()) {
@@ -86,6 +88,28 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         ListWidgetProvider.notifyDataChanged(context);
 
         return true;
+    }
+
+    @Override
+    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
+        EpisodeHelper episodeHelper = SgRoomDatabase.getInstance(context).episodeHelper();
+
+        int rowsUpdated;
+        switch (getFlagValue()) {
+            case EpisodeFlags.SKIPPED:
+                rowsUpdated = episodeHelper.setSeasonSkipped(seasonTvdbId, currentTimePlusOneHour);
+                break;
+            case EpisodeFlags.WATCHED:
+                rowsUpdated = episodeHelper
+                        .setSeasonWatchedAndAddPlay(seasonTvdbId, currentTimePlusOneHour);
+                break;
+            case EpisodeFlags.UNWATCHED:
+                rowsUpdated = episodeHelper.setSeasonNotWatchedAndRemovePlays(seasonTvdbId);
+                break;
+            default:
+                throw new IllegalArgumentException("Flag value not supported");
+        }
+        return rowsUpdated >= 0; // -1 means error.
     }
 
     @NonNull

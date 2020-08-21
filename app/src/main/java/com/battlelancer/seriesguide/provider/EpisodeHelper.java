@@ -39,14 +39,25 @@ public interface EpisodeHelper {
     @RawQuery(observedEntities = {SgEpisode.class, SgShow.class})
     DataSource.Factory<Integer, EpisodeWithShow> getEpisodesWithShow(SupportSQLiteQuery query);
 
+    @Query("UPDATE episodes SET watched = 0, plays = 0 WHERE _id=:episodeTvdbId")
+    int setNotWatchedAndRemovePlays(int episodeTvdbId);
+
     @Query("UPDATE episodes SET watched = 1, plays = plays + 1 WHERE _id=:episodeTvdbId")
     int setWatchedAndAddPlay(int episodeTvdbId);
 
-    // Must
-    // - be released before current episode,
-    // - OR at the same time, but with same (itself) or lower (all released at same time) number
-    // - have a release date,
-    // - be unwatched or skipped.
+    @Query("UPDATE episodes SET watched = 2 WHERE _id=:episodeTvdbId")
+    int setSkipped(int episodeTvdbId);
+
+    /**
+     * Sets not watched or skipped episodes, that have been released,
+     * as watched and adds play if these conditions are met:
+     * <p>
+     * Must
+     * - be released before given episode release time,
+     * - OR at the same time, but with same (itself) or lower (others released at same time) number.
+     * <p>
+     * Note: keep in sync with EpisodeWatchedUpToJob.
+     */
     @Query("UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId"
             + " AND ("
             + "episode_firstairedms < :episodeFirstAired"
@@ -56,9 +67,37 @@ public interface EpisodeHelper {
             + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED)
     int setWatchedUpToAndAddPlay(int showTvdbId, long episodeFirstAired, int episodeNumber);
 
-    @Query("UPDATE episodes SET watched = 0, plays = 0 WHERE _id=:episodeTvdbId")
-    int setNotWatchedAndRemovePlays(int episodeTvdbId);
+    /**
+     * Sets all watched or skipped as not watched and removes all plays.
+     * <p>
+     * Note: keep in sync with SeasonWatchedJob.
+     */
+    @Query("UPDATE episodes SET watched = 0, plays = 0 WHERE season_id=:seasonTvdbId"
+            + " AND " + Episodes.SELECTION_WATCHED_OR_SKIPPED)
+    int setSeasonNotWatchedAndRemovePlays(int seasonTvdbId);
 
-    @Query("UPDATE episodes SET watched = 2 WHERE _id=:episodeTvdbId")
-    int setSkipped(int episodeTvdbId);
+    /**
+     * Sets not watched or skipped episodes, released until within the hour,
+     * as watched and adds play.
+     * <p>
+     * Does NOT mark watched episodes again to avoid adding a new play (Trakt and local).
+     * <p>
+     * Note: keep in sync with SeasonWatchedJob.
+     */
+    @Query("UPDATE episodes SET watched = 1, plays = plays + 1 WHERE season_id=:seasonTvdbId"
+            + " AND episode_firstairedms <= :currentTimePlusOneHour"
+            + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
+            + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED)
+    int setSeasonWatchedAndAddPlay(int seasonTvdbId, long currentTimePlusOneHour);
+
+    /**
+     * Sets not watched episodes, released until within the hour, as skipped.
+     * <p>
+     * Note: keep in sync with SeasonWatchedJob.
+     */
+    @Query("UPDATE episodes SET watched = 2 WHERE season_id=:seasonTvdbId"
+            + " AND episode_firstairedms <= :currentTimePlusOneHour"
+            + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
+            + " AND " + Episodes.SELECTION_UNWATCHED)
+    int setSeasonSkipped(int seasonTvdbId, long currentTimePlusOneHour);
 }
