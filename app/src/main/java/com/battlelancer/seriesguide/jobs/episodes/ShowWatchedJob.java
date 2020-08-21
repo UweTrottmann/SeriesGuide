@@ -1,20 +1,24 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.EpisodeHelper;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 
 public class ShowWatchedJob extends ShowBaseJob {
 
-    private final long currentTime;
+    private final long currentTimePlusOneHour;
 
     public ShowWatchedJob(int showTvdbId, int flagValue, long currentTime) {
         super(showTvdbId, flagValue, JobAction.EPISODE_WATCHED_FLAG);
-        this.currentTime = currentTime;
+        this.currentTimePlusOneHour = currentTime + DateUtils.HOUR_IN_MILLIS;
     }
 
     @Override
@@ -22,23 +26,22 @@ public class ShowWatchedJob extends ShowBaseJob {
         if (EpisodeTools.isUnwatched(getFlagValue())) {
             // set unwatched
             // include watched or skipped episodes
-            return SeriesGuideContract.Episodes.SELECTION_WATCHED_OR_SKIPPED
-                    + " AND " + SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
+            return Episodes.SELECTION_WATCHED_OR_SKIPPED
+                    + " AND " + Episodes.SELECTION_NO_SPECIALS;
         } else {
             // set watched or skipped
             // do NOT mark watched episodes again to avoid trakt adding a new watch
             // only mark episodes that have been released until within the hour
-            return SeriesGuideContract.Episodes.FIRSTAIREDMS + "<=" + (currentTime
-                    + DateUtils.HOUR_IN_MILLIS)
-                    + " AND " + SeriesGuideContract.Episodes.SELECTION_HAS_RELEASE_DATE
-                    + " AND " + SeriesGuideContract.Episodes.SELECTION_UNWATCHED_OR_SKIPPED
-                    + " AND " + SeriesGuideContract.Episodes.SELECTION_NO_SPECIALS;
+            return Episodes.FIRSTAIREDMS + "<=" + currentTimePlusOneHour
+                    + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
+                    + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED
+                    + " AND " + Episodes.SELECTION_NO_SPECIALS;
         }
     }
 
     @Override
     protected String getDatabaseColumnToUpdate() {
-        return SeriesGuideContract.Episodes.WATCHED;
+        return Episodes.WATCHED;
     }
 
     @Override
@@ -59,6 +62,26 @@ public class ShowWatchedJob extends ShowBaseJob {
         ListWidgetProvider.notifyDataChanged(context);
 
         return true;
+    }
+
+    @Override
+    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
+        EpisodeHelper episodeHelper = SgRoomDatabase.getInstance(context).episodeHelper();
+
+        int rowsUpdated;
+        switch (getFlagValue()) {
+            case EpisodeFlags.UNWATCHED:
+                rowsUpdated = episodeHelper.setShowNotWatchedAndRemovePlays(getShowTvdbId());
+                break;
+            case EpisodeFlags.WATCHED:
+                rowsUpdated = episodeHelper
+                        .setShowWatchedAndAddPlay(getShowTvdbId(), currentTimePlusOneHour);
+                break;
+            default:
+                // Note: Skip not supported for whole show.
+                throw new IllegalArgumentException("Flag value not supported");
+        }
+        return rowsUpdated >= 0; // -1 means error.
     }
 
     @NonNull

@@ -100,4 +100,31 @@ public interface EpisodeHelper {
             + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
             + " AND " + Episodes.SELECTION_UNWATCHED)
     int setSeasonSkipped(int seasonTvdbId, long currentTimePlusOneHour);
+
+    /**
+     * Sets watched or skipped episodes, excluding specials,
+     * as not watched and removes all plays.
+     * <p>
+     * Note: keep in sync with ShowWatchedJob.
+     */
+    @Query("UPDATE episodes SET watched = 0, plays = 0 WHERE series_id=:showTvdbId"
+            + " AND " + Episodes.SELECTION_WATCHED_OR_SKIPPED
+            + " AND " + Episodes.SELECTION_NO_SPECIALS)
+    int setShowNotWatchedAndRemovePlays(int showTvdbId);
+
+    /**
+     * Sets not watched or skipped episodes, released until within the hour, excluding specials,
+     * as watched and adds play.
+     * <p>
+     * Does NOT mark watched episodes again to avoid adding a new play (Trakt and local).
+     * <p>
+     * Note: keep in sync with ShowWatchedJob.
+     */
+    @Query("UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId"
+            + " AND episode_firstairedms <= :currentTimePlusOneHour"
+            + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
+            + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED
+            + " AND " + Episodes.SELECTION_NO_SPECIALS)
+    int setShowWatchedAndAddPlay(int showTvdbId, long currentTimePlusOneHour);
+
 }
