@@ -3,16 +3,13 @@ package com.battlelancer.seriesguide.billing.amazon;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.amazon.device.iap.PurchasingService;
 import com.amazon.device.iap.model.Product;
 import com.amazon.device.iap.model.RequestId;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.ActivityAmazonBillingBinding;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,20 +18,13 @@ import timber.log.Timber;
 
 public class AmazonBillingActivity extends BaseActivity {
 
-    @BindView(R.id.progressBarAmazonBilling) View progressBar;
-    @BindView(R.id.buttonAmazonBillingSubscribe) Button buttonSubscribe;
-    @BindView(R.id.textViewAmazonBillingSubPrice) TextView textViewPriceSub;
-    @BindView(R.id.buttonAmazonBillingGetPass) Button buttonGetPass;
-    @BindView(R.id.textViewAmazonBillingPricePass) TextView textViewPricePass;
-    @BindView(R.id.textViewAmazonBillingExisting) TextView textViewIsSupporter;
-    @BindView(R.id.buttonPositive) Button dismissButton;
-    @BindView(R.id.buttonNegative) Button hiddenButton;
-    @BindView(R.id.textViewAmazonBillingMoreInfo) View buttonMoreInfo;
+    private ActivityAmazonBillingBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amazon_billing);
+        binding = ActivityAmazonBillingBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         setupActionBar();
 
         setupViews();
@@ -47,27 +37,22 @@ public class AmazonBillingActivity extends BaseActivity {
         super.setupActionBar();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
     private void setupViews() {
-        ButterKnife.bind(this);
+        binding.buttonAmazonBillingSubscribe.setEnabled(false);
+        binding.buttonAmazonBillingSubscribe.setOnClickListener(v -> subscribe());
 
-        buttonSubscribe.setEnabled(false);
-        buttonSubscribe.setOnClickListener(v -> subscribe());
+        binding.buttonAmazonBillingGetPass.setEnabled(false);
+        binding.buttonAmazonBillingGetPass.setOnClickListener(v -> purchasePass());
 
-        buttonGetPass.setEnabled(false);
-        buttonGetPass.setOnClickListener(v -> purchasePass());
-
-        dismissButton.setText(R.string.dismiss);
-        dismissButton.setOnClickListener(v -> dismiss());
-        hiddenButton.setVisibility(View.GONE);
-
-        buttonMoreInfo.setOnClickListener(
+        binding.textViewAmazonBillingMoreInfo.setOnClickListener(
                 v -> Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay)));
 
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBarAmazonBilling.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -114,10 +99,6 @@ public class AmazonBillingActivity extends BaseActivity {
         Timber.d("purchasePass: requestId (%s)", requestId);
     }
 
-    private void dismiss() {
-        finish();
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(AmazonIapManager.AmazonIapMessageEvent event) {
         Toast.makeText(this, event.messageResId, Toast.LENGTH_LONG).show();
@@ -125,20 +106,22 @@ public class AmazonBillingActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(AmazonIapManager.AmazonIapAvailabilityEvent event) {
-        progressBar.setVisibility(View.GONE);
+        binding.progressBarAmazonBilling.setVisibility(View.GONE);
 
         // enable or disable purchase buttons based on what can be purchased
-        buttonSubscribe.setEnabled(event.subscriptionAvailable && !event.userHasActivePurchase);
-        buttonGetPass.setEnabled(event.passAvailable && !event.userHasActivePurchase);
+        binding.buttonAmazonBillingSubscribe
+                .setEnabled(event.subscriptionAvailable && !event.userHasActivePurchase);
+        binding.buttonAmazonBillingGetPass
+                .setEnabled(event.passAvailable && !event.userHasActivePurchase);
 
         // status text
         if (!event.subscriptionAvailable && !event.passAvailable) {
             // neither purchase available, probably not signed in
-            textViewIsSupporter.setText(R.string.subscription_not_signed_in);
+            binding.textViewAmazonBillingExisting.setText(R.string.subscription_not_signed_in);
         } else {
             // subscription or pass available
             // show message if either one is active
-            textViewIsSupporter.setText(
+            binding.textViewAmazonBillingExisting.setText(
                     event.userHasActivePurchase ? getString(R.string.upgrade_success) : null);
         }
     }
@@ -152,12 +135,12 @@ public class AmazonBillingActivity extends BaseActivity {
             price = "--";
         }
         if (AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku().equals(product.getSku())) {
-            textViewPriceSub.setText(
+            binding.textViewAmazonBillingSubPrice.setText(
                     getString(R.string.billing_price_subscribe,
                             price, getString(R.string.amazon))
             );
         } else if (AmazonSku.SERIESGUIDE_PASS.getSku().equals(product.getSku())) {
-            textViewPricePass.setText(
+            binding.textViewAmazonBillingPricePass.setText(
                     String.format("%s\n%s", price, getString(R.string.billing_price_pass)));
         }
     }

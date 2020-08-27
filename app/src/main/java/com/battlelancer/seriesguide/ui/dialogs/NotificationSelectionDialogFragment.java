@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -16,12 +15,10 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.adapters.CursorRecyclerViewAdapter;
+import com.battlelancer.seriesguide.databinding.DialogNotificationSelectionBinding;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -34,24 +31,21 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
 
     private static final int LOADER_ID_SELECTION = 1;
 
-    @BindView(R.id.textViewSelectionEmpty) TextView textViewEmpty;
-    @BindView(R.id.recyclerViewSelection) RecyclerView recyclerView;
-    private Unbinder unbinder;
+    private DialogNotificationSelectionBinding binding;
 
     private SelectionAdapter adapter;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_notification_selection, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        binding = DialogNotificationSelectionBinding.inflate(inflater, container, false);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.recyclerViewSelection.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SelectionAdapter(onItemClickListener);
-        recyclerView.setAdapter(adapter);
+        binding.recyclerViewSelection.setAdapter(adapter);
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -65,7 +59,7 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        binding = null;
     }
 
     @Override
@@ -79,7 +73,7 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             return new CursorLoader(requireContext(), SeriesGuideContract.Shows.CONTENT_URI,
-                    new String[] {
+                    new String[]{
                             SeriesGuideContract.Shows._ID, // 0
                             SeriesGuideContract.Shows.TITLE, // 1
                             SeriesGuideContract.Shows.NOTIFY // 2
@@ -92,8 +86,8 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
         @Override
         public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
             boolean hasNoData = data == null || data.getCount() == 0;
-            textViewEmpty.setVisibility(hasNoData ? View.VISIBLE : View.GONE);
-            recyclerView.setVisibility(hasNoData ? View.GONE : View.VISIBLE);
+            binding.textViewSelectionEmpty.setVisibility(hasNoData ? View.VISIBLE : View.GONE);
+            binding.recyclerViewSelection.setVisibility(hasNoData ? View.GONE : View.VISIBLE);
             adapter.swapCursor(data);
         }
 
@@ -103,7 +97,7 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
         }
     };
 
-    private SelectionAdapter.OnItemClickListener onItemClickListener
+    private final SelectionAdapter.OnItemClickListener onItemClickListener
             = (showTvdbId, notify) -> SgApp.getServicesComponent(requireContext()).showTools()
             .storeNotify(showTvdbId, notify);
 
@@ -141,12 +135,12 @@ public class NotificationSelectionDialogFragment extends AppCompatDialogFragment
 
         static class ViewHolder extends RecyclerView.ViewHolder {
 
-            @BindView(R.id.switchItemSelection) SwitchCompat switchCompat;
+            private final SwitchCompat switchCompat;
             int showTvdbId;
 
             public ViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
                 super(itemView);
-                ButterKnife.bind(this, itemView);
+                switchCompat = itemView.findViewById(R.id.switchItemSelection);
                 itemView.setOnClickListener(
                         v -> onItemClickListener.onItemClick(showTvdbId, switchCompat.isChecked()));
             }

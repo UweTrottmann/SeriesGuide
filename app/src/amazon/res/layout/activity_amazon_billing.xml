@@ -60,8 +60,8 @@
                 android:id="@+id/progressBarAmazonBilling"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/buttonAmazonBillingSubscribe"
                 android:layout_alignTop="@+id/buttonAmazonBillingSubscribe"
+                android:layout_alignBottom="@+id/buttonAmazonBillingSubscribe"
                 android:layout_centerHorizontal="true" />
 
             <TextView
@@ -113,7 +113,5 @@
         </RelativeLayout>
 
     </ScrollView>
-
-    <include layout="@layout/dialog_buttons_divided" />
 
 </LinearLayout>
