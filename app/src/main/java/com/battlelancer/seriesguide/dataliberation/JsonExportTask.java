@@ -17,12 +17,13 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -384,44 +385,37 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     private void addEpisodes(Season season) {
         season.episodes = new ArrayList<>();
-        final Cursor episodesCursor = context.getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonUri(String.valueOf(season.tvdbId)),
-                isFullDump ? EpisodesQuery.PROJECTION_FULL : EpisodesQuery.PROJECTION, null, null,
-                EpisodesQuery.SORT);
+        java.util.List<SgEpisode> episodes = SgRoomDatabase.getInstance(context)
+                .episodeHelper()
+                .getSeason(season.tvdbId);
 
-        if (episodesCursor == null) {
-            return;
-        }
-
-        while (episodesCursor.moveToNext()) {
-            Episode episode = new Episode();
-            episode.tvdbId = episodesCursor.getInt(EpisodesQuery.ID);
-            episode.episode = episodesCursor.getInt(EpisodesQuery.NUMBER);
-            episode.episodeAbsolute = episodesCursor.getInt(EpisodesQuery.NUMBER_ABSOLUTE);
-            episode.episodeDvd = episodesCursor.getDouble(EpisodesQuery.NUMBER_DVD);
-            int episodeFlag = episodesCursor.getInt(EpisodesQuery.WATCHED);
-            episode.watched = EpisodeTools.isWatched(episodeFlag);
-            episode.skipped = EpisodeTools.isSkipped(episodeFlag);
-            episode.collected = episodesCursor.getInt(EpisodesQuery.COLLECTED) == 1;
-            episode.title = episodesCursor.getString(EpisodesQuery.TITLE);
-            episode.firstAired = episodesCursor.getLong(EpisodesQuery.FIRSTAIRED);
-            episode.imdbId = episodesCursor.getString(EpisodesQuery.IMDBID);
-            episode.rating_user = episodesCursor.getInt(EpisodesQuery.RATING_USER);
+        for (SgEpisode episodeDb : episodes) {
+            Episode episodeExport = new Episode();
+            episodeExport.tvdbId = episodeDb.tvdbId;
+            episodeExport.episode = episodeDb.number;
+            episodeExport.episodeAbsolute = episodeDb.absoluteNumber;
+            episodeExport.episodeDvd = episodeDb.dvdNumber;
+            int episodeFlag = episodeDb.watched;
+            episodeExport.watched = EpisodeTools.isWatched(episodeFlag);
+            episodeExport.skipped = EpisodeTools.isSkipped(episodeFlag);
+            episodeExport.collected = episodeDb.collected;
+            episodeExport.title = episodeDb.title;
+            episodeExport.firstAired = episodeDb.firstReleasedMs;
+            episodeExport.imdbId = episodeDb.imdbId;
+            episodeExport.rating_user = episodeDb.ratingUser;
             if (isFullDump) {
-                episode.overview = episodesCursor.getString(EpisodesQuery.OVERVIEW);
-                episode.image = episodesCursor.getString(EpisodesQuery.IMAGE);
-                episode.writers = episodesCursor.getString(EpisodesQuery.WRITERS);
-                episode.gueststars = episodesCursor.getString(EpisodesQuery.GUESTSTARS);
-                episode.directors = episodesCursor.getString(EpisodesQuery.DIRECTORS);
-                episode.rating = episodesCursor.getDouble(EpisodesQuery.RATING_GLOBAL);
-                episode.rating_votes = episodesCursor.getInt(EpisodesQuery.RATING_VOTES);
-                episode.lastEdited = episodesCursor.getLong(EpisodesQuery.LAST_EDITED);
+                episodeExport.overview = episodeDb.overview;
+                episodeExport.image = episodeDb.image;
+                episodeExport.writers = episodeDb.writers;
+                episodeExport.gueststars = episodeDb.guestStars;
+                episodeExport.directors = episodeDb.directors;
+                episodeExport.rating = episodeDb.ratingGlobal;
+                episodeExport.rating_votes = episodeDb.ratingVotes;
+                episodeExport.lastEdited = episodeDb.lastEditedSec;
             }
 
-            season.episodes.add(episode);
+            season.episodes.add(episodeExport);
         }
-
-        episodesCursor.close();
     }
 
     void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
@@ -588,64 +582,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int LAST_UPDATED = 26;
         int LAST_EDITED = 27;
         int SLUG = 28;
-    }
-
-    public interface EpisodesQuery {
-        String[] PROJECTION = new String[]{
-                Episodes._ID,
-                Episodes.NUMBER,
-                Episodes.ABSOLUTE_NUMBER,
-                Episodes.WATCHED,
-                Episodes.COLLECTED,
-                Episodes.TITLE,
-                Episodes.FIRSTAIREDMS,
-                Episodes.IMDBID,
-                Episodes.DVDNUMBER,
-                Episodes.RATING_USER
-        };
-        String[] PROJECTION_FULL = new String[]{
-                Episodes._ID,
-                Episodes.NUMBER,
-                Episodes.ABSOLUTE_NUMBER,
-                Episodes.WATCHED,
-                Episodes.COLLECTED,
-                Episodes.TITLE,
-                Episodes.FIRSTAIREDMS,
-                Episodes.IMDBID,
-                Episodes.DVDNUMBER,
-                Episodes.RATING_USER,
-                // Full dump only
-                Episodes.OVERVIEW,
-                Episodes.IMAGE,
-                Episodes.WRITERS,
-                Episodes.GUESTSTARS,
-                Episodes.DIRECTORS,
-                Episodes.RATING_GLOBAL,
-                Episodes.RATING_VOTES,
-                Episodes.LAST_EDITED
-        };
-
-        String SORT = Episodes.NUMBER + " ASC";
-
-        int ID = 0;
-        int NUMBER = 1;
-        int NUMBER_ABSOLUTE = 2;
-        int WATCHED = 3;
-        int COLLECTED = 4;
-        int TITLE = 5;
-        int FIRSTAIRED = 6;
-        int IMDBID = 7;
-        int NUMBER_DVD = 8;
-        int RATING_USER = 9;
-        // Full dump only
-        int OVERVIEW = 10;
-        int IMAGE = 11;
-        int WRITERS = 12;
-        int GUESTSTARS = 13;
-        int DIRECTORS = 14;
-        int RATING_GLOBAL = 15;
-        int RATING_VOTES = 16;
-        int LAST_EDITED = 17;
     }
 
     public interface ListsQuery {

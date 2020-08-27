@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.model.SgEpisodeSeasonAndShow;
 import com.battlelancer.seriesguide.model.SgShow;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import java.util.List;
 
 /**
  * Data Access Object for the episodes table.
@@ -31,6 +32,12 @@ public interface EpisodeHelper {
      */
     @Query("SELECT * FROM " + EPISODES + " WHERE _id=:episodeTvdbId")
     SgEpisode getEpisode(int episodeTvdbId);
+
+    /**
+     * Gets episodes of season ordered by episode number.
+     */
+    @Query("SELECT * FROM episodes WHERE season_id=:seasonTvdbId ORDER BY episodenumber ASC")
+    List<SgEpisode> getSeason(int seasonTvdbId);
 
     @Nullable
     @Query("SELECT season_id, season, series_id  FROM episodes WHERE _id=:episodeTvdbId")
