@@ -10,6 +10,7 @@ import androidx.room.RawQuery;
 import androidx.sqlite.db.SupportSQLiteQuery;
 import com.battlelancer.seriesguide.model.EpisodeWithShow;
 import com.battlelancer.seriesguide.model.SgEpisode;
+import com.battlelancer.seriesguide.model.SgEpisodeForTraktSync;
 import com.battlelancer.seriesguide.model.SgEpisodeSeasonAndShow;
 import com.battlelancer.seriesguide.model.SgShow;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -38,6 +39,9 @@ public interface EpisodeHelper {
      */
     @Query("SELECT * FROM episodes WHERE season_id=:seasonTvdbId ORDER BY episodenumber ASC")
     List<SgEpisode> getSeason(int seasonTvdbId);
+
+    @Query("SELECT _id, episodenumber, watched, plays, episode_collected FROM episodes WHERE season_id=:seasonTvdbId")
+    List<SgEpisodeForTraktSync> getSeasonForTraktSync(int seasonTvdbId);
 
     @Nullable
     @Query("SELECT season_id, season, series_id  FROM episodes WHERE _id=:episodeTvdbId")
