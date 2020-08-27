@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.dataliberation.model;
 
 import android.content.ContentValues;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -15,9 +16,11 @@ public class Episode {
 
     public int episode;
 
+    @Nullable
     @SerializedName("episode_absolute")
-    public int episodeAbsolute;
+    public Integer episodeAbsolute;
 
+    @Nullable
     public String title;
 
     @SerializedName("first_aired")
@@ -31,6 +34,7 @@ public class Episode {
 
     public boolean collected;
 
+    @Nullable
     @SerializedName("imdb_id")
     public String imdbId;
 
@@ -38,22 +42,31 @@ public class Episode {
      * Full dump only follows.
      */
 
+    @Nullable
     @SerializedName("episode_dvd")
-    public double episodeDvd;
+    public Double episodeDvd;
 
+    @Nullable
     public String overview;
 
+    @Nullable
     public String image;
 
+    @Nullable
     public String writers;
 
+    @Nullable
     public String gueststars;
 
+    @Nullable
     public String directors;
 
-    public double rating;
-    public int rating_votes;
-    public int rating_user;
+    @Nullable
+    public Double rating;
+    @Nullable
+    public Integer rating_votes;
+    @Nullable
+    public Integer rating_user;
 
     @SerializedName("last_edited")
     public long lastEdited;
@@ -64,9 +77,11 @@ public class Episode {
 
         values.put(Episodes.TITLE, title != null ? title : "");
         values.put(Episodes.OVERVIEW, overview);
-        values.put(Episodes.NUMBER, episode >= 0 ? episode : 0);
+        values.put(Episodes.NUMBER, Math.max(episode, 0));
         values.put(Episodes.SEASON, seasonNumber);
-        values.put(Episodes.DVDNUMBER, episodeDvd >= 0 ? episodeDvd : 0);
+        if (episodeDvd != null) {
+            values.put(Episodes.DVDNUMBER, episodeDvd >= 0 ? episodeDvd : 0);
+        }
 
         values.put(Shows.REF_SHOW_ID, showTvdbId);
         values.put(Seasons.REF_SEASON_ID, seasonTvdbId);
@@ -91,14 +106,22 @@ public class Episode {
         values.put(Episodes.FIRSTAIREDMS, firstAired);
         values.put(Episodes.COLLECTED, collected ? 1 : 0);
 
-        values.put(Episodes.RATING_GLOBAL, (rating >= 0 && rating <= 10) ? rating : 0);
-        values.put(Episodes.RATING_VOTES, rating_votes >= 0 ? rating_votes : 0);
-        values.put(Episodes.RATING_USER,
-                (rating_user >= 0 && rating_user <= 10) ? rating_user : 0);
+        if (rating != null) {
+            values.put(Episodes.RATING_GLOBAL, (rating >= 0 && rating <= 10) ? rating : 0);
+        }
+        if (rating_votes != null) {
+            values.put(Episodes.RATING_VOTES, rating_votes >= 0 ? rating_votes : 0);
+        }
+        if (rating_user != null) {
+            values.put(Episodes.RATING_USER, (rating_user >= 0 && rating_user <= 10)
+                    ? rating_user : 0);
+        }
 
         values.put(Episodes.IMDBID, imdbId != null ? imdbId : "");
         values.put(Episodes.LAST_EDITED, lastEdited);
-        values.put(Episodes.ABSOLUTE_NUMBER, episodeAbsolute >= 0 ? episodeAbsolute : 0);
+        if (episodeAbsolute != null) {
+            values.put(Episodes.ABSOLUTE_NUMBER, episodeAbsolute >= 0 ? episodeAbsolute : 0);
+        }
 
         // set default values
         values.put(Episodes.LAST_UPDATED, 0);
