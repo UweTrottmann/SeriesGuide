@@ -91,7 +91,7 @@ public class Episode {
                 ? EpisodeFlags.SKIPPED : watched
                 ? EpisodeFlags.WATCHED : EpisodeFlags.UNWATCHED);
         int playsValue;
-        if (plays >= 1) {
+        if (watched && plays >= 1) {
             playsValue = plays;
         } else {
             playsValue = watched ? 1 : 0;
