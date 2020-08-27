@@ -398,6 +398,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             int episodeFlag = episodeDb.watched;
             episodeExport.watched = EpisodeTools.isWatched(episodeFlag);
             episodeExport.skipped = EpisodeTools.isSkipped(episodeFlag);
+            episodeExport.plays = episodeDb.plays;
             episodeExport.collected = episodeDb.collected;
             episodeExport.title = episodeDb.title;
             episodeExport.firstAired = episodeDb.firstReleasedMs;
