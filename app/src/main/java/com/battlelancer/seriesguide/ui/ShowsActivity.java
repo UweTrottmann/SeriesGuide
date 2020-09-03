@@ -85,6 +85,16 @@ public class ShowsActivity extends BaseTopActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Due to an Android bug, launching via the app icon may add another launcher activity
+        // on top of the task stack instead of resuming the last activity. Work around this
+        // by finishing the launcher activity if it isn't the task root.
+        // https://issuetracker.google.com/issues/64108432
+        if (!isTaskRoot()
+                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+                && Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_shows);
         setupActionBar();
         setupNavDrawer();
