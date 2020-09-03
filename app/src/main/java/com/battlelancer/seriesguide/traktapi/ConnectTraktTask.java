@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Response;
+import timber.log.Timber;
 
 /**
  * Expects a valid trakt OAuth auth code. Retrieves the access token and username for the associated
@@ -27,11 +28,11 @@ import retrofit2.Response;
  */
 public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
-    public class FinishedEvent {
+    public static class FinishedEvent {
         /**
-         * One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
+         * One of {@link TraktResult}.
          */
-        public int resultCode;
+        public final int resultCode;
 
         FinishedEvent(int resultCode) {
             this.resultCode = resultCode;
@@ -60,6 +61,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // check if we have any usable data
         if (TextUtils.isEmpty(authCode)) {
+            Timber.e("Failed because auth code is empty.");
             return TraktResult.AUTH_ERROR;
         }
 
@@ -73,7 +75,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
             if (response.isSuccessful() && body != null) {
                 accessToken = body.access_token;
                 refreshToken = body.refresh_token;
-                expiresIn = body.expires_in;
+                expiresIn = body.expires_in != null ? body.expires_in : -1;
             } else {
                 Errors.logAndReport("get access token", response);
             }
@@ -82,7 +84,14 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         }
 
         // did we obtain all required data?
-        if (TextUtils.isEmpty(accessToken) || TextUtils.isEmpty(refreshToken) || expiresIn < 1) {
+        if (TextUtils.isEmpty(accessToken)) {
+            Timber.e("Failed to obtain access token.");
+            return TraktResult.AUTH_ERROR;
+        } else if (TextUtils.isEmpty(refreshToken)) {
+            Timber.e("Failed to obtain refresh token");
+            return TraktResult.AUTH_ERROR;
+        } else if (expiresIn < 1) {
+            Timber.e("Failed because no valid expiry time.");
             return TraktResult.AUTH_ERROR;
         }
 
@@ -108,9 +117,11 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // store the access token, refresh token and expiry time
         TraktCredentials.get(context).storeAccessToken(accessToken);
         if (!TraktCredentials.get(context).hasCredentials()) {
+            Timber.e("Failed because access token can not be stored.");
             return Result.ERROR; // saving access token failed, abort.
         }
         if (!TraktOAuthSettings.storeRefreshData(context, refreshToken, expiresIn)) {
+            Timber.e("Failed because refresh data can not be stored.");
             TraktCredentials.get(context).removeCredentials();
             return Result.ERROR; // saving refresh token failed, abort.
         }
@@ -142,10 +153,12 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
 
         // did we obtain a username (display name is not required)?
         if (TextUtils.isEmpty(username)) {
+            Timber.e("Failed because returned user name is empty.");
             return TraktResult.API_ERROR;
         }
         TraktCredentials.get(context).storeUsername(username, displayname);
 
+        Timber.i("Successfully connected to Trakt.");
         return Result.SUCCESS;
     }
 
