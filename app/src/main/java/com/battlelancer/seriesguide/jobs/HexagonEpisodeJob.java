@@ -106,6 +106,9 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
             episode.setEpisodeNumber(episodeInfo.number());
             if (isWatchedNotCollected) {
                 episode.setWatchedFlag(jobInfo.flagValue());
+                // Always upload (regardless if watched, skipped or not watched).
+                // Also ensures legacy data slowly adds the new plays field.
+                episode.setPlays(episodeInfo.plays());
             } else {
                 episode.setIsInCollection(EpisodeTools.isCollected(jobInfo.flagValue()));
             }
