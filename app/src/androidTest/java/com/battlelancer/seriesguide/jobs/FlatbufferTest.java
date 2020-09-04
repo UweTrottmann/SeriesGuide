@@ -17,10 +17,10 @@ public class FlatbufferTest {
 
         int[] episodeInfos = new int[42];
         for (int i = 0; i < 21; i++) {
-            episodeInfos[i] = EpisodeInfo.createEpisodeInfo(builder, 1, i + 1);
+            episodeInfos[i] = EpisodeInfo.createEpisodeInfo(builder, 1, i + 1, i);
         }
         for (int i = 21; i < 42; i++) {
-            episodeInfos[i] = EpisodeInfo.createEpisodeInfo(builder, 2, i + 1);
+            episodeInfos[i] = EpisodeInfo.createEpisodeInfo(builder, 2, i + 1, i);
         }
 
         int episodes = SgJobInfo.createEpisodesVector(builder, episodeInfos);
@@ -41,11 +41,13 @@ public class FlatbufferTest {
             EpisodeInfo episodeInfo = jobInfoReloaded.episodes(i);
             assertThat(episodeInfo.season()).isEqualTo(1);
             assertThat(episodeInfo.number()).isEqualTo(i + 1);
+            assertThat(episodeInfo.plays()).isEqualTo(i);
         }
         for (int i = 21; i < 42; i++) {
             EpisodeInfo episodeInfo = jobInfoReloaded.episodes(i);
             assertThat(episodeInfo.season()).isEqualTo(2);
             assertThat(episodeInfo.number()).isEqualTo(i + 1);
+            assertThat(episodeInfo.plays()).isEqualTo(i);
         }
     }
 

@@ -60,6 +60,13 @@ class EpisodeWatchedUpToJob(
         return rowsUpdated >= 0 // -1 means error
     }
 
+    /**
+     * Note: this should mirror the planned database changes in [applyDatabaseChanges].
+     */
+    override fun getPlaysForNetworkJob(plays: Int): Int {
+        return plays + 1
+    }
+
     override fun getConfirmationText(context: Context): String {
         return context.getString(R.string.action_watched_up_to)
     }

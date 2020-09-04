@@ -84,6 +84,22 @@ public class ShowWatchedJob extends ShowBaseJob {
         return rowsUpdated >= 0; // -1 means error.
     }
 
+    /**
+     * Note: this should mirror the planned database changes in {@link #applyDatabaseChanges(Context, Uri)}.
+     */
+    @Override
+    protected int getPlaysForNetworkJob(int plays) {
+        switch (getFlagValue()) {
+            case EpisodeFlags.WATCHED:
+                return plays + 1;
+            case EpisodeFlags.UNWATCHED:
+                return 0;
+            default:
+                // Note: Skip not supported for whole show.
+                throw new IllegalArgumentException("Flag value not supported");
+        }
+    }
+
     @NonNull
     @Override
     public String getConfirmationText(Context context) {
