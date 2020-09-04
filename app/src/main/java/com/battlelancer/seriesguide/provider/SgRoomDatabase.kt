@@ -126,6 +126,9 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE episodes ADD COLUMN plays INTEGER;")
                 database.execSQL("UPDATE episodes SET plays = 1 WHERE watched = 1;")
                 database.execSQL("UPDATE episodes SET plays = 0 WHERE watched != 1;")
+                // Movies already have plays column, but also prepopulate it.
+                database.execSQL("UPDATE movies SET movies_plays = 1 WHERE movies_watched = 1;")
+                database.execSQL("UPDATE movies SET movies_plays = 0 WHERE movies_watched = 0;")
             }
         }
 
