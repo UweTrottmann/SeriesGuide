@@ -349,7 +349,7 @@
     <string name="pref_language_fallback">Alternatieve taal</string>
     <string name="pref_updatewifionly">Afbeeldingen alleen via Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Download niet over mobiele of betalende netwerken om dataverbruik te verlagen</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Rapporteer fouten aan de ontwikkelaar van de app</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dag voordien</item>
         <item quantity="other">%d dagen voordien</item>

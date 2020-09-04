@@ -349,7 +349,7 @@
     <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imagens apenas via Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Para reduzir o consumo de dados, não baixar através de redes móveis ou redes limitadas</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Relatar erros ao desenvolvedor</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dia antes</item>
         <item quantity="other">%d dias antes</item>

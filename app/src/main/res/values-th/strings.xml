@@ -341,7 +341,7 @@
     <string name="pref_language_fallback">ภาษารอง</string>
     <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>
     <string name="pref_updatewifionlysummary">ใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">รายข้อผิดพลาดไปยังผู้พัฒนาแอป</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d วันก่อนหน้า</item>
     </plurals>
