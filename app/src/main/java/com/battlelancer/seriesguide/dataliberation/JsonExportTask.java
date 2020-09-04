@@ -506,6 +506,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             movie.inCollection = movies.getInt(MoviesQuery.IN_COLLECTION) == 1;
             movie.inWatchlist = movies.getInt(MoviesQuery.IN_WATCHLIST) == 1;
             movie.watched = movies.getInt(MoviesQuery.WATCHED) == 1;
+            movie.plays = movies.getInt(MoviesQuery.PLAYS);
             movie.lastUpdatedMs = movies.getLong(MoviesQuery.LAST_UPDATED);
 
             if (isFullDump) {
@@ -623,6 +624,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Movies.IN_COLLECTION,
                 Movies.IN_WATCHLIST,
                 Movies.WATCHED,
+                Movies.PLAYS,
                 Movies.LAST_UPDATED,
                 Movies.OVERVIEW
         };
@@ -638,8 +640,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int IN_COLLECTION = 7;
         int IN_WATCHLIST = 8;
         int WATCHED = 9;
-        int LAST_UPDATED = 10;
+        int PLAYS = 10;
+        int LAST_UPDATED = 11;
         // only in FULL dump
-        int OVERVIEW = 11;
+        int OVERVIEW = 12;
     }
 }
