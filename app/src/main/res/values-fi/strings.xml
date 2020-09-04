@@ -112,6 +112,7 @@
     <string name="action_watched">Katsottu</string>
     <string name="action_unwatched">Katsomaton</string>
     <string name="state_watched">Katsottu</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
     <string name="state_skipped">Ohitettu</string>
     <string name="state_in_collection">Kokoelmassa</string>
     <string name="state_on_watchlist"> Seurantalistalla</string>

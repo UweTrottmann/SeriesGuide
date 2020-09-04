@@ -111,6 +111,7 @@
     <string name="action_watched">視聴済に設定</string>
     <string name="action_unwatched">未視聴に設定</string>
     <string name="state_watched">視聴済</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
     <string name="state_skipped">スキップ済</string>
     <string name="state_in_collection">コレクション内</string>
     <string name="state_on_watchlist">ウォッチリスト内</string>
