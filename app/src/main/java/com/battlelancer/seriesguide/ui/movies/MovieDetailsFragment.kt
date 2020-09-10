@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -15,6 +16,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
@@ -48,6 +50,7 @@ import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
@@ -321,9 +324,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {
-            it.setText(
-                if (isWatched) R.string.state_watched else R.string.action_watched
-            )
+            it.text = TextToolsK.getWatchedButtonText(requireContext(), isWatched, plays)
             CheatSheet.setup(
                 it, if (isWatched) R.string.action_unwatched else R.string.action_watched
             )
@@ -332,9 +333,21 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             } else {
                 ViewTools.setVectorDrawableTop(it, R.drawable.ic_watch_black_24dp)
             }
-            it.setOnClickListener {
+            it.setOnClickListener { view ->
                 if (isWatched) {
-                    MovieTools.unwatchedMovie(context, tmdbId)
+                    PopupMenu(view.context, view)
+                        .apply {
+                            inflate(R.menu.watched_popup_menu)
+                            setOnMenuItemClickListener(
+                                WatchedPopupMenuListener(
+                                    requireContext(),
+                                    tmdbId,
+                                    plays,
+                                    inWatchlist
+                                )
+                            )
+                        }
+                        .show()
                 } else {
                     MovieTools.watchedMovie(context, tmdbId, plays, inWatchlist)
                 }
@@ -397,13 +410,17 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // ratings
-        binding.containerRatings.textViewRatingsTmdbValue.text = TraktTools.buildRatingString(tmdbMovie.vote_average)
+        binding.containerRatings.textViewRatingsTmdbValue.text = TraktTools.buildRatingString(
+            tmdbMovie.vote_average
+        )
         binding.containerRatings.textViewRatingsTmdbVotes.text =
             TraktTools.buildRatingVotesString(activity, tmdbMovie.vote_count)
         traktRatings?.let {
             binding.containerRatings.textViewRatingsTraktVotes.text =
                 TraktTools.buildRatingVotesString(activity, it.votes)
-            binding.containerRatings.textViewRatingsTraktValue.text = TraktTools.buildRatingString(it.rating)
+            binding.containerRatings.textViewRatingsTraktValue.text = TraktTools.buildRatingString(
+                it.rating
+            )
         }
         // if movie is not in database, can't handle user ratings
         if (!inCollection && !inWatchlist && !isWatched) {
@@ -414,7 +431,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         } else {
             binding.containerRatings.textViewRatingsTraktUserLabel.isGone = false
             binding.containerRatings.textViewRatingsTraktUser.isGone = false
-            binding.containerRatings.textViewRatingsTraktUser.text = TraktTools.buildUserRatingString(activity, rating)
+            binding.containerRatings.textViewRatingsTraktUser.text = TraktTools.buildUserRatingString(
+                activity,
+                rating
+            )
             binding.containerRatings.root.setOnClickListener { rateMovie() }
             CheatSheet.setup(binding.containerRatings.root, R.string.action_rate)
         }
@@ -444,7 +464,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             ServiceUtils.loadWithPicasso(activity, smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
-                        val bitmap = (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
+                        val bitmap =
+                            (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
                         paletteAsyncTask = Palette.from(bitmap)
                             .generate { palette ->
                                 if (palette != null) {
@@ -471,6 +492,31 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
+    /**
+     * Menu click listener to watch again (supporters only) or set unwatched.
+     */
+    private class WatchedPopupMenuListener(
+        val context: Context,
+        val movieTmdbId: Int,
+        val plays: Int,
+        val inWatchlist: Boolean
+    ) : PopupMenu.OnMenuItemClickListener {
+        override fun onMenuItemClick(item: MenuItem): Boolean {
+            when (item.itemId) {
+                R.id.watched_popup_menu_watch_again -> if (Utils.hasAccessToX(context)) {
+                    MovieTools.watchedMovie(context, movieTmdbId, plays, inWatchlist)
+                } else {
+                    Utils.advertiseSubscription(context)
+                }
+                R.id.watched_popup_menu_set_not_watched -> MovieTools.unwatchedMovie(
+                    context,
+                    movieTmdbId
+                )
+            }
+            return true
+        }
+    }
+
     private fun populateMovieCreditsViews(credits: Credits?) {
         if (credits == null) {
             setCastVisibility(false)
@@ -480,7 +526,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // cast members
         if (credits.cast?.size != 0
-            && PeopleListHelper.populateMovieCast(activity, binding.moviePeople.containerCast, credits)) {
+            && PeopleListHelper.populateMovieCast(
+                activity,
+                binding.moviePeople.containerCast,
+                credits
+            )) {
             setCastVisibility(true)
         } else {
             setCastVisibility(false)
@@ -488,7 +538,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // crew members
         if (credits.crew?.size != 0
-            && PeopleListHelper.populateMovieCrew(activity, binding.moviePeople.containerCrew, credits)) {
+            && PeopleListHelper.populateMovieCrew(
+                activity,
+                binding.moviePeople.containerCrew,
+                credits
+            )) {
             setCrewVisibility(true)
         } else {
             setCrewVisibility(false)
