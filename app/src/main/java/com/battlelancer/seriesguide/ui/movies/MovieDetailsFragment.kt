@@ -288,6 +288,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val inCollection = movieDetails.isInCollection
         val inWatchlist = movieDetails.isInWatchlist
         val isWatched = movieDetails.isWatched
+        val plays = movieDetails.plays
         val rating = movieDetails.userRating
 
         movieTitle = tmdbMovie.title
@@ -335,7 +336,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 if (isWatched) {
                     MovieTools.unwatchedMovie(context, tmdbId)
                 } else {
-                    MovieTools.watchedMovie(context, tmdbId, inWatchlist)
+                    MovieTools.watchedMovie(context, tmdbId, plays, inWatchlist)
                 }
             }
         }

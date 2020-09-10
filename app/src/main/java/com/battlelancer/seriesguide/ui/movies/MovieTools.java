@@ -181,8 +181,16 @@ public class MovieTools {
         }
     }
 
-    static void watchedMovie(Context context, int movieTmdbId, boolean inWatchlist) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, true));
+    static void watchedMovie(
+            Context context,
+            int movieTmdbId,
+            int currentPlays,
+            boolean inWatchlist
+    ) {
+        FlagJobAsyncTask.executeJob(
+                context,
+                new MovieWatchedJob(movieTmdbId, true, currentPlays)
+        );
         // trakt removes from watchlist automatically, but app would not show until next sync
         // and not mirror on hexagon, so do it manually
         if (inWatchlist) {
@@ -191,7 +199,7 @@ public class MovieTools {
     }
 
     static void unwatchedMovie(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false));
+        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false, 0));
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {

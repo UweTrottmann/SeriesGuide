@@ -40,15 +40,15 @@ public interface MovieHelper {
     @RawQuery(observedEntities = SgMovie.class)
     DataSource.Factory<Integer, SgMovie> getWatchedMovies(SupportSQLiteQuery query);
 
-    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched "
+    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays "
             + "FROM movies WHERE movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1")
     List<SgMovieFlags> getMoviesOnListsOrWatched();
 
-    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched "
+    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays "
             + "FROM movies")
     List<SgMovieFlags> getMovieFlags();
 
-    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched "
+    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays "
             + "FROM movies WHERE movies_tmdbid=:tmdbId")
     SgMovieFlags getMovieFlags(int tmdbId);
 

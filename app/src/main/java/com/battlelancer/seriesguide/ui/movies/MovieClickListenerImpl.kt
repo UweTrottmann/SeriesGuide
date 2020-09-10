@@ -40,7 +40,12 @@ internal open class MovieClickListenerImpl(val context: Context) : MovieClickLis
         popupMenu.setOnMenuItemClickListener { item ->
             return@setOnMenuItemClickListener when (item.itemId) {
                 R.id.menu_action_movies_set_watched -> {
-                    MovieTools.watchedMovie(context, movieTmdbId, movieFlags.inWatchlist)
+                    MovieTools.watchedMovie(
+                        context,
+                        movieTmdbId,
+                        movieFlags.plays,
+                        movieFlags.inWatchlist
+                    )
                     true
                 }
                 R.id.menu_action_movies_set_unwatched -> {
