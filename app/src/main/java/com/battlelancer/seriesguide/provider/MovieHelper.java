@@ -18,9 +18,7 @@ import java.util.List;
 @Dao
 public interface MovieHelper {
 
-    /**
-     * For testing: get single movie.
-     */
+    @Nullable
     @Query("SELECT * FROM movies WHERE movies_tmdbid=:tmdbId")
     SgMovie getMovie(int tmdbId);
 

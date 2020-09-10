@@ -286,6 +286,9 @@ public class MovieTools {
         return rowsUpdated > 0;
     }
 
+    /**
+     * Updates existing movie. If movie does not exist in database, will do nothing.
+     */
     public void updateMovie(MovieDetails details, int tmdbId) {
         ContentValues values = details.toContentValuesUpdate();
         if (values.size() == 0) {
@@ -294,7 +297,6 @@ public class MovieTools {
 
         values.put(SeriesGuideContract.Movies.LAST_UPDATED, System.currentTimeMillis());
 
-        // if movie does not exist in database, will do nothing
         context.getContentResolver().update(SeriesGuideContract.Movies.buildMovieUri(tmdbId),
                 values, null, null);
     }

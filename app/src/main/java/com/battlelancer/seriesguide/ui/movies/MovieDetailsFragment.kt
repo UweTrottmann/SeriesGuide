@@ -650,7 +650,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private val movieLoaderCallbacks = object : LoaderManager.LoaderCallbacks<MovieDetails> {
         override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<MovieDetails> {
             binding.progressBar.isGone = false
-            return MovieLoader(context, args!!.getInt(ARG_TMDB_ID))
+            return MovieLoader(requireContext(), args!!.getInt(ARG_TMDB_ID))
         }
 
         override fun onLoadFinished(movieLoader: Loader<MovieDetails>, movieDetails: MovieDetails) {
