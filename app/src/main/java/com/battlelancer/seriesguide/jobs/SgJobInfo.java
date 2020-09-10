@@ -18,6 +18,9 @@ public final class SgJobInfo extends Table {
   public SgJobInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public int showTvdbId() { int o = __offset(4); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  /**
+   * One of EpisodeFlags (watched, not watched or skipped).
+   */
   public int flagValue() { int o = __offset(6); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
   public com.battlelancer.seriesguide.jobs.EpisodeInfo episodes(int j) { return episodes(new com.battlelancer.seriesguide.jobs.EpisodeInfo(), j); }
   public com.battlelancer.seriesguide.jobs.EpisodeInfo episodes(com.battlelancer.seriesguide.jobs.EpisodeInfo obj, int j) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
