@@ -24,6 +24,9 @@ public interface MovieHelper {
     @Query("SELECT * FROM movies WHERE movies_tmdbid=:tmdbId")
     SgMovie getMovie(int tmdbId);
 
+    @Query("SELECT COUNT(movies_tmdbid) FROM movies WHERE movies_tmdbid=:tmdbId")
+    int getCount(int tmdbId);
+
     @Query("SELECT movies_tmdbid FROM movies WHERE "
             + "(movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1)"
             + " AND ("
@@ -54,6 +57,18 @@ public interface MovieHelper {
     @Nullable
     @Query("SELECT movies_title FROM movies WHERE movies_tmdbid=:tmdbId")
     String getMovieTitle(int tmdbId);
+
+    @Query("UPDATE movies SET movies_watched = 0, movies_plays = 0 WHERE movies_tmdbid=:tmdbId")
+    int setNotWatchedAndRemovePlays(int tmdbId);
+
+    @Query("UPDATE movies SET movies_watched = 1, movies_plays = movies_plays + 1 WHERE movies_tmdbid=:tmdbId")
+    int setWatchedAndAddPlay(int tmdbId);
+
+    @Query("UPDATE movies SET movies_incollection = :inCollection WHERE movies_tmdbid=:tmdbId")
+    int updateInCollection(int tmdbId, boolean inCollection);
+
+    @Query("UPDATE movies SET movies_inwatchlist = :inWatchlist WHERE movies_tmdbid=:tmdbId")
+    int updateInWatchlist(int tmdbId, boolean inWatchlist);
 
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     int deleteMovie(int tmdbId);

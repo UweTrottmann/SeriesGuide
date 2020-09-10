@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
 import com.battlelancer.seriesguide.model.SgMovieFlags;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
+import com.battlelancer.seriesguide.provider.MovieHelper;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -124,21 +125,20 @@ public class MovieTools {
 
     /**
      * Adds the movie to the given list. If it was not in any list before, adds the movie to the
-     * local database first.
-     *
-     * @return If the database operation was successful.
+     * local database first. Returns if the database operation was successful.
      */
     public boolean addToList(int movieTmdbId, Lists list) {
-        // do we have this movie in the database already?
-        Boolean movieExists = isMovieInDatabase(context, movieTmdbId);
-        if (movieExists == null) {
-            return false; // query failed
-        }
+        boolean movieExists = isMovieInDatabase(movieTmdbId);
         if (movieExists) {
-            return updateMovie(context, movieTmdbId, list.databaseColumn, true);
+            return updateMovie(context, movieTmdbId, list, true);
         } else {
             return addMovie(movieTmdbId, list);
         }
+    }
+
+    private boolean isMovieInDatabase(int movieTmdbId) {
+        int count = SgRoomDatabase.getInstance(context).movieHelper().getCount(movieTmdbId);
+        return count > 0;
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
@@ -177,7 +177,7 @@ public class MovieTools {
             return deleteMovie(context, movieTmdbId);
         } else {
             // otherwise, just update
-            return updateMovie(context, movieTmdbId, listToRemoveFrom.databaseColumn, false);
+            return updateMovie(context, movieTmdbId, listToRemoveFrom, false);
         }
     }
 
@@ -228,22 +228,6 @@ public class MovieTools {
         return localMoviesIds;
     }
 
-    private static Boolean isMovieInDatabase(Context context, int movieTmdbId) {
-        Cursor movie = context.getContentResolver()
-                .query(SeriesGuideContract.Movies.CONTENT_URI, new String[]{
-                                SeriesGuideContract.Movies._ID},
-                        SeriesGuideContract.Movies.TMDB_ID + "=" + movieTmdbId, null, null);
-        if (movie == null) {
-            return null;
-        }
-
-        boolean movieExists = movie.getCount() > 0;
-
-        movie.close();
-
-        return movieExists;
-    }
-
     private boolean addMovie(int movieTmdbId, Lists listToAddTo) {
         // get movie info
         MovieDetails details = getMovieDetails(movieTmdbId, false);
@@ -255,7 +239,9 @@ public class MovieTools {
         // build values
         details.setInCollection(listToAddTo == Lists.COLLECTION);
         details.setInWatchlist(listToAddTo == Lists.WATCHLIST);
-        details.setWatched(listToAddTo == Lists.WATCHED);
+        boolean isWatched = listToAddTo == Lists.WATCHED;
+        details.setWatched(isWatched);
+        details.setPlays(isWatched ? 1 : 0);
         ContentValues values = details.toContentValuesInsert();
 
         // add to database
@@ -270,13 +256,32 @@ public class MovieTools {
     /**
      * Returns {@code true} if the movie was updated.
      */
-    private static boolean updateMovie(Context context, int movieTmdbId, String column,
-            boolean value) {
-        ContentValues values = new ContentValues();
-        values.put(column, value ? 1 : 0);
+    private static boolean updateMovie(
+            Context context,
+            int movieTmdbId,
+            Lists list,
+            boolean value
+    ) {
+        MovieHelper helper = SgRoomDatabase.getInstance(context).movieHelper();
 
-        int rowsUpdated = context.getContentResolver().update(
-                SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
+        int rowsUpdated;
+        switch (list) {
+            case COLLECTION:
+                rowsUpdated = helper.updateInCollection(movieTmdbId, value);
+                break;
+            case WATCHLIST:
+                rowsUpdated = helper.updateInWatchlist(movieTmdbId, value);
+                break;
+            case WATCHED:
+                if (value) {
+                    rowsUpdated = helper.setWatchedAndAddPlay(movieTmdbId);
+                } else {
+                    rowsUpdated = helper.setNotWatchedAndRemovePlays(movieTmdbId);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported Lists type " + list);
+        }
 
         return rowsUpdated > 0;
     }
