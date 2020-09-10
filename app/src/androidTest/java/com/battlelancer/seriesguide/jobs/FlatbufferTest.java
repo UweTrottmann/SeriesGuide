@@ -24,7 +24,7 @@ public class FlatbufferTest {
         }
 
         int episodes = SgJobInfo.createEpisodesVector(builder, episodeInfos);
-        int jobInfo = SgJobInfo.createSgJobInfo(builder, 42, 1, episodes, 0);
+        int jobInfo = SgJobInfo.createSgJobInfo(builder, 42, 1, episodes, 0, 0);
 
         builder.finish(jobInfo);
 
@@ -55,7 +55,7 @@ public class FlatbufferTest {
     public void movieId() {
         FlatBufferBuilder builder = new FlatBufferBuilder(0);
 
-        int jobInfo = SgJobInfo.createSgJobInfo(builder, 0, 0, 0, 42);
+        int jobInfo = SgJobInfo.createSgJobInfo(builder, 0, 0, 0, 42, 3);
 
         builder.finish(jobInfo);
 
@@ -69,6 +69,7 @@ public class FlatbufferTest {
         assertThat(jobInfoReloaded.flagValue()).isEqualTo(0);
         assertThat(jobInfoReloaded.episodesLength()).isEqualTo(0);
         assertThat(jobInfoReloaded.movieTmdbId()).isEqualTo(42);
+        assertThat(jobInfoReloaded.plays()).isEqualTo(3);
     }
 
 }

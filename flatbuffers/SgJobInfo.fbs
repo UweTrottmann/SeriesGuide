@@ -10,6 +10,8 @@ table SgJobInfo {
     flagValue:int;
     episodes:[EpisodeInfo];
     movieTmdbId:int;
+    /// Number of times the movie was watched.
+    plays:int;
 }
 
 table EpisodeInfo {
