@@ -23,7 +23,7 @@ import org.threeten.bp.ZoneOffset;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class TraktMovieJob extends BaseNetworkEpisodeJob {
+public class TraktMovieJob extends BaseNetworkMovieJob {
 
     private final long actionAtMs;
 
