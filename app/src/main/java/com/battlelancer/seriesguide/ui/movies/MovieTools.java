@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 import retrofit2.Response;
@@ -354,25 +355,25 @@ public class MovieTools {
      *
      * @param newCollectionMovies Movie TMDB ids to add to the collection.
      * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
-     * @param newWatchedMovies Movie TMDB ids to set watched.
+     * @param newWatchedMoviesToPlays Movie TMDB ids to set watched mapped to play count.
      */
     public boolean addMovies(
             @NonNull Set<Integer> newCollectionMovies,
             @NonNull Set<Integer> newWatchlistMovies,
-            @Nullable Set<Integer> newWatchedMovies
+            @Nullable Map<Integer, Integer> newWatchedMoviesToPlays
     ) {
         Timber.d("addMovies: %s to collection, %s to watchlist", newCollectionMovies.size(),
                 newWatchlistMovies.size());
-        if (newWatchedMovies != null) {
-            Timber.d("addMovies: %s to watched", newWatchedMovies.size());
+        if (newWatchedMoviesToPlays != null) {
+            Timber.d("addMovies: %s to watched", newWatchedMoviesToPlays.size());
         }
 
         // build a single list of tmdb ids
         Set<Integer> newMovies = new HashSet<>();
         newMovies.addAll(newCollectionMovies);
         newMovies.addAll(newWatchlistMovies);
-        if (newWatchedMovies != null) {
-            newMovies.addAll(newWatchedMovies);
+        if (newWatchedMoviesToPlays != null) {
+            newMovies.addAll(newWatchedMoviesToPlays.keySet());
         }
 
         String languageCode = DisplaySettings.getMoviesLanguage(context);
@@ -398,8 +399,11 @@ public class MovieTools {
             // set flags
             movieDetails.setInCollection(newCollectionMovies.contains(tmdbId));
             movieDetails.setInWatchlist(newWatchlistMovies.contains(tmdbId));
-            if (newWatchedMovies != null) {
-                movieDetails.setWatched(newWatchedMovies.contains(tmdbId));
+            if (newWatchedMoviesToPlays != null) {
+                Integer plays = newWatchedMoviesToPlays.get(tmdbId);
+                boolean isWatched = plays != null;
+                movieDetails.setWatched(isWatched);
+                movieDetails.setPlays(isWatched ? plays : 0);
             }
 
             movies.add(movieDetails);
