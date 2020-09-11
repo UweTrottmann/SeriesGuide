@@ -12,6 +12,21 @@ Version 56
 ----------
 *in development*
 
+#### 56-beta2
+*2020-09-11*
+
+* 🌟 Limited support for re-watching episodes and movies. When viewing an episode or movie, tap
+  Watched and then Set watched to add another play. To keep things simple, SeriesGuide only keeps
+  a count of plays. This is only available for supporters.
+* 📝 When connecting Trakt, multiple plays are not uploaded (as Trakt keeps a watched at time,
+  not sure how to handle this, yet).
+* 📝 The JSON backup format now exports plays count for episodes and movies.
+* 🔧 Add additional reporting to help diagnose Trakt sign-in issues.
+* 🔧 Add option to turn off sending crash and error reports.
+* 🔨 Tapping the launcher icon to open the app now always returns to the previous screen.
+* 🔨 Display movie info instead of nothing if sending movie action to Trakt fails.
+* 📝 Latest translations from crowdin.
+
 #### 56-beta1
 *2020-08-07*
 
