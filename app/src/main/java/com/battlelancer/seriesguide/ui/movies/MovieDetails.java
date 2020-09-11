@@ -19,6 +19,7 @@ public class MovieDetails {
     private boolean inCollection;
     private boolean inWatchlist;
     private boolean isWatched;
+    private int plays;
 
     private int userRating;
 
@@ -62,6 +63,14 @@ public class MovieDetails {
 
     public void setWatched(boolean watched) {
         isWatched = watched;
+    }
+
+    public int getPlays() {
+        return plays;
+    }
+
+    public void setPlays(int plays) {
+        this.plays = plays;
     }
 
     public int getUserRating() {
@@ -113,8 +122,8 @@ public class MovieDetails {
     }
 
     /**
-     * Like {@link #toContentValuesUpdate()} and adds TMDB id and IN_COLLECTION and IN_WATCHLIST
-     * values.
+     * Like {@link #toContentValuesUpdate()} and adds TMDB id and adds values for collection,
+     * watchlist and watched status and plays.
      */
     public ContentValues toContentValuesInsert() {
         ContentValues values = toContentValuesUpdate();
@@ -122,8 +131,8 @@ public class MovieDetails {
         values.put(Movies.IN_COLLECTION, DBUtils.convertBooleanToInt(inCollection));
         values.put(Movies.IN_WATCHLIST, DBUtils.convertBooleanToInt(inWatchlist));
         values.put(Movies.WATCHED, DBUtils.convertBooleanToInt(isWatched));
+        values.put(Movies.PLAYS, plays);
         // set default values
-        values.put(Movies.PLAYS, 0);
         values.put(Movies.RATING_TMDB, 0);
         values.put(Movies.RATING_VOTES_TMDB, 0);
         values.put(Movies.RATING_TRAKT, 0);

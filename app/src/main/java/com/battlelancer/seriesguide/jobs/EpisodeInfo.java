@@ -17,8 +17,17 @@ public final class EpisodeInfo extends Table {
   public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public EpisodeInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
+  /**
+   * Number of the season.
+   */
   public int season() { int o = __offset(4); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  /**
+   * Number of the episode in the season.
+   */
   public int number() { int o = __offset(6); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  /**
+   * Number of times the episode was watched.
+   */
   public int plays() { int o = __offset(8); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
 
   public static int createEpisodeInfo(FlatBufferBuilder builder,

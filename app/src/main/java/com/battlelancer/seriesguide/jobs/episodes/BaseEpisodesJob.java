@@ -155,7 +155,7 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         query.close();
 
         int episodes = SgJobInfo.createEpisodesVector(builder, episodeInfos);
-        int jobInfo = SgJobInfo.createSgJobInfo(builder, showTvdbId, flagValue, episodes, 0);
+        int jobInfo = SgJobInfo.createSgJobInfo(builder, showTvdbId, flagValue, episodes, 0, 0);
 
         builder.finish(jobInfo);
         return builder.sizedByteArray();

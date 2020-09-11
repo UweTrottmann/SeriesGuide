@@ -30,13 +30,12 @@ internal class HexagonMovieSync(
      * Downloads movies from hexagon, updates existing movies with new properties, removes
      * movies that are neither in collection or watchlist or watched.
      *
-     *
-     *  Adds movie tmdb ids of new movies to the respective collection, watchlist or watched set.
+     * Adds movie tmdb ids of new movies to the respective collection, watchlist or watched set.
      */
     fun download(
         newCollectionMovies: MutableSet<Int>,
         newWatchlistMovies: MutableSet<Int>,
-        newWatchedMovies: MutableSet<Int>,
+        newWatchedMoviesToPlays: MutableMap<Int, Int>,
         hasMergedMovies: Boolean
     ): Boolean {
         var movies: List<Movie>?
@@ -123,7 +122,7 @@ internal class HexagonMovieSync(
                         )
                         removedCount++
                     } else {
-                        // update collection, watchlist and watched flags
+                        // update collection, watchlist and watched flags and plays
                         val values = ContentValues().apply {
                             putIfNotNull(
                                 movie.isInCollection,
@@ -137,6 +136,20 @@ internal class HexagonMovieSync(
                                 movie.isWatched,
                                 SeriesGuideContract.Movies.WATCHED
                             )
+                            movie.isWatched?.let {
+                                if (it) {
+                                    // Watched.
+                                    // Note: plays may be null for legacy data. Protect against invalid data.
+                                    if (movie.plays != null && movie.plays >= 1) {
+                                        put(SeriesGuideContract.Movies.PLAYS, movie.plays)
+                                    } else {
+                                        put(SeriesGuideContract.Movies.PLAYS, 1)
+                                    }
+                                } else {
+                                    // Not watched.
+                                    put(SeriesGuideContract.Movies.PLAYS, 0)
+                                }
+                            }
                         }
                         batch.add(
                             ContentProviderOperation.newUpdate(
@@ -154,7 +167,13 @@ internal class HexagonMovieSync(
                         newWatchlistMovies.add(movie.tmdbId)
                     }
                     if (movie.isWatched == true) {
-                        newWatchedMovies.add(movie.tmdbId)
+                        // Note: plays may be null for legacy data. Protect against invalid data.
+                        val plays = if (movie.plays != null && movie.plays >= 1) {
+                            movie.plays
+                        } else {
+                            1
+                        }
+                        newWatchedMoviesToPlays[movie.tmdbId] = plays
                     }
                 }
             }
@@ -233,6 +252,7 @@ internal class HexagonMovieSync(
             movieToUpload.isInCollection = movie.inCollection
             movieToUpload.isInWatchlist = movie.inWatchlist
             movieToUpload.isWatched = movie.watched
+            movieToUpload.plays = movie.plays
             movies.add(movieToUpload)
         }
 

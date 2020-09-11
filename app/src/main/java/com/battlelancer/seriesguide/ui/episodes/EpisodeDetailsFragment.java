@@ -56,6 +56,7 @@ import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
+import com.battlelancer.seriesguide.util.TextToolsK;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
@@ -244,7 +245,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         if (watched) {
             View anchor = bindingButtons.buttonEpisodeWatched;
             PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
-            popupMenu.inflate(R.menu.watched_episode_popup_menu);
+            popupMenu.inflate(R.menu.watched_popup_menu);
             popupMenu.setOnMenuItemClickListener(watchedEpisodePopupMenuListener);
             popupMenu.show();
         } else {
@@ -254,14 +255,14 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private final PopupMenu.OnMenuItemClickListener watchedEpisodePopupMenuListener = item -> {
         int itemId = item.getItemId();
-        if (itemId == R.id.watched_episode_popup_menu_watch_again) {
+        if (itemId == R.id.watched_popup_menu_watch_again) {
             // Multiple plays are for supporters only.
             if (!Utils.hasAccessToX(requireContext())) {
                 Utils.advertiseSubscription(requireContext());
             } else {
                 changeEpisodeFlag(EpisodeFlags.WATCHED);
             }
-        } else if (itemId == R.id.watched_episode_popup_menu_set_not_watched) {
+        } else if (itemId == R.id.watched_popup_menu_set_not_watched) {
             changeEpisodeFlag(EpisodeFlags.UNWATCHED);
         }
         return true;
@@ -551,7 +552,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
         bindingButtons.buttonEpisodeWatched.setOnClickListener(v -> onToggleWatched());
         int plays = cursor.getInt(DetailsQuery.PLAYS);
-        bindingButtons.buttonEpisodeWatched.setText(getWatchedButtonText(isWatched, plays));
+        bindingButtons.buttonEpisodeWatched
+                .setText(TextToolsK.getWatchedButtonText(requireContext(), isWatched, plays));
         CheatSheet.setup(bindingButtons.buttonEpisodeWatched, isWatched ? R.string.action_unwatched
                 : R.string.action_watched);
 
@@ -590,18 +592,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                     .setText(isSkipped ? R.string.state_skipped : R.string.action_skip);
             CheatSheet.setup(bindingButtons.buttonEpisodeSkip,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
-        }
-    }
-
-    private String getWatchedButtonText(boolean isWatched, int plays) {
-        if (isWatched) {
-            if (plays <= 1) {
-                return getString(R.string.state_watched);
-            } else {
-                return getString(R.string.state_watched_multiple_format, plays);
-            }
-        } else {
-            return getString(R.string.action_watched);
         }
     }
 

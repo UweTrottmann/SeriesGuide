@@ -23,9 +23,11 @@ import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.services.Sync;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import retrofit2.Response;
 import timber.log.Timber;
@@ -92,8 +94,8 @@ public class TraktMovieSync {
         if (watchlist == null) {
             return false;
         }
-        Set<Integer> watched = downloadWatched();
-        if (watched == null) {
+        Map<Integer, Integer> watchedWithPlays = downloadWatched();
+        if (watchedWithPlays == null) {
             return false;
         }
 
@@ -116,7 +118,8 @@ public class TraktMovieSync {
             int tmdbId = localMovie.getTmdbId();
             boolean inCollectionOnTrakt = collection.remove(tmdbId);
             boolean inWatchlistOnTrakt = watchlist.remove(tmdbId);
-            boolean isWatchedOnTrakt = watched.remove(tmdbId);
+            Integer plays = watchedWithPlays.remove(tmdbId);
+            boolean isWatchedOnTrakt = plays != null;
 
             if (merging) {
                 // Mark movie for upload if missing from Trakt collection or watchlist
@@ -155,6 +158,7 @@ public class TraktMovieSync {
                     }
                     if (!localMovie.getWatched() && isWatchedOnTrakt) {
                         builder.withValue(Movies.WATCHED, true);
+                        builder.withValue(Movies.PLAYS, plays >= 1 ? plays : 1);
                         changed = true;
                     }
 
@@ -163,20 +167,27 @@ public class TraktMovieSync {
                     }
                 }
             } else {
-                // Performance: only add op if any flag differs.
+                // Performance: only add op if any flag differs or if watched and plays have changed.
                 if (localMovie.getInCollection() != inCollectionOnTrakt
                         || localMovie.getInWatchlist() != inWatchlistOnTrakt
-                        || localMovie.getWatched() != isWatchedOnTrakt) {
-                    // Mirror Trakt collection, watchlist and watched flag.
+                        || localMovie.getWatched() != isWatchedOnTrakt
+                        || (isWatchedOnTrakt && plays >= 1 && localMovie.getPlays() != plays)) {
+                    // Mirror Trakt collection, watchlist, watched flag and plays.
                     // Note: unneeded (not watched or in any list) movies
                     // are removed in a later sync step.
-                    ContentProviderOperation op = ContentProviderOperation
+                    ContentProviderOperation.Builder op = ContentProviderOperation
                             .newUpdate(Movies.buildMovieUri(tmdbId))
                             .withValue(Movies.IN_COLLECTION, inCollectionOnTrakt)
                             .withValue(Movies.IN_WATCHLIST, inWatchlistOnTrakt)
-                            .withValue(Movies.WATCHED, isWatchedOnTrakt)
-                            .build();
-                    batch.add(op);
+                            .withValue(Movies.WATCHED, isWatchedOnTrakt);
+                    int playsValue;
+                    if (isWatchedOnTrakt) {
+                        playsValue = plays >= 1 ? plays : 1;
+                    } else {
+                        playsValue = 0;
+                    }
+                    op.withValue(Movies.PLAYS, playsValue);
+                    batch.add(op.build());
                 }
             }
         }
@@ -212,7 +223,7 @@ public class TraktMovieSync {
         // add movies from trakt missing locally
         // all local movies were removed from trakt collection, watchlist, and watched list
         // so they only contain movies missing locally
-        boolean addingSuccessful = movieTools.addMovies(collection, watchlist, watched);
+        boolean addingSuccessful = movieTools.addMovies(collection, watchlist, watchedWithPlays);
         if (addingSuccessful) {
             // store last activity timestamps
             TraktSettings.storeLastMoviesChangedAt(
@@ -222,7 +233,7 @@ public class TraktMovieSync {
                     activity.watched_at
             );
             // if movies were added, ensure ratings for them are downloaded next
-            if (collection.size() > 0 || watchlist.size() > 0 || watched.size() > 0) {
+            if (collection.size() > 0 || watchlist.size() > 0 || watchedWithPlays.size() > 0) {
                 TraktSettings.resetMoviesLastRatedAt(context);
             }
         }
@@ -236,7 +247,9 @@ public class TraktMovieSync {
             Response<List<BaseMovie>> response = traktSync
                     .collectionMovies(null)
                     .execute();
-            return verifyListResponse(response, "null collection response", ACTION_GET_COLLECTION);
+            List<BaseMovie> collection = verifyListResponse(response,
+                    "null collection response", ACTION_GET_COLLECTION);
+            return toTmdbIdSet(collection);
         } catch (Exception e) {
             Errors.logAndReport(ACTION_GET_COLLECTION, e);
             return null;
@@ -249,7 +262,9 @@ public class TraktMovieSync {
             Response<List<BaseMovie>> response = traktSync
                     .watchlistMovies(null)
                     .execute();
-            return verifyListResponse(response, "null watchlist response", ACTION_GET_WATCHLIST);
+            List<BaseMovie> watchlist = verifyListResponse(response,
+                    "null watchlist response", ACTION_GET_WATCHLIST);
+            return toTmdbIdSet(watchlist);
         } catch (Exception e) {
             Errors.logAndReport(ACTION_GET_WATCHLIST, e);
             return null;
@@ -257,12 +272,14 @@ public class TraktMovieSync {
     }
 
     @Nullable
-    private Set<Integer> downloadWatched() {
+    private Map<Integer, Integer> downloadWatched() {
         try {
             Response<List<BaseMovie>> response = traktSync
                     .watchedMovies(null)
                     .execute();
-            return verifyListResponse(response, "null watched response", ACTION_GET_WATCHED);
+            List<BaseMovie> watched = verifyListResponse(response,
+                    "null watched response", ACTION_GET_WATCHED);
+            return mapTmdbIdToPlays(watched);
         } catch (Exception e) {
             Errors.logAndReport(ACTION_GET_WATCHED, e);
             return null;
@@ -270,17 +287,17 @@ public class TraktMovieSync {
     }
 
     @Nullable
-    private Set<Integer> verifyListResponse(
+    private List<BaseMovie> verifyListResponse(
             Response<List<BaseMovie>> response,
             String nullResponse,
             String action
     ) {
         if (response.isSuccessful()) {
-            Set<Integer> tmdbIdSet = buildTmdbIdSet(response.body());
-            if (tmdbIdSet == null) {
+            List<BaseMovie> movies = response.body();
+            if (movies == null) {
                 Timber.e(nullResponse);
             }
-            return tmdbIdSet;
+            return movies;
         } else {
             if (SgTrakt.isUnauthorized(context, response)) {
                 return null;
@@ -291,7 +308,7 @@ public class TraktMovieSync {
     }
 
     @Nullable
-    private Set<Integer> buildTmdbIdSet(@Nullable List<BaseMovie> movies) {
+    private Set<Integer> toTmdbIdSet(@Nullable List<BaseMovie> movies) {
         if (movies == null) {
             return null;
         }
@@ -304,6 +321,22 @@ public class TraktMovieSync {
             tmdbIdSet.add(movie.movie.ids.tmdb);
         }
         return tmdbIdSet;
+    }
+
+    @Nullable
+    private Map<Integer, Integer> mapTmdbIdToPlays(@Nullable List<BaseMovie> movies) {
+        if (movies == null) {
+            return null;
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (BaseMovie movie : movies) {
+            if (movie.movie == null || movie.movie.ids == null || movie.movie.ids.tmdb == null) {
+                continue; // skip invalid values
+            }
+            map.put(movie.movie.ids.tmdb, movie.plays);
+        }
+        return map;
     }
 
     /**

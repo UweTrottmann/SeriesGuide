@@ -19,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.model.SgEpisode;
+import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.model.SgSeason;
 import com.battlelancer.seriesguide.model.SgShow;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
@@ -213,6 +214,13 @@ public class MigrationTest {
                 .insertEpisode(db, v47, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
                         false);
 
+        MovieDetails testMovieDetails = getTestMovieDetails(12);
+        testMovieDetails.setWatched(true);
+        RoomDatabaseTestHelper.insertMovie(db, testMovieDetails);
+
+        testMovieDetails = getTestMovieDetails(13);
+        testMovieDetails.setWatched(false);
+        RoomDatabaseTestHelper.insertMovie(db, testMovieDetails);
         db.close();
 
         SgRoomDatabase database = getMigratedRoomDatabase();
@@ -224,6 +232,13 @@ public class MigrationTest {
 
         SgEpisode episodeNotWatched = database.episodeHelper().getEpisode(22);
         assertThat(episodeNotWatched.plays).isEqualTo(0);
+
+        // Watched movie should have 1 play.
+        SgMovie movieWatched = database.movieHelper().getMovie(12);
+        assertThat(movieWatched.plays).isEqualTo(1);
+
+        SgMovie movieNotWatched = database.movieHelper().getMovie(13);
+        assertThat(movieNotWatched.plays).isEqualTo(0);
     }
 
     private void assertTestData(SgRoomDatabase database) {

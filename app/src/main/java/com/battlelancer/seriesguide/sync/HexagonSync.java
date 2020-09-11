@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.greenrobot.eventbus.EventBus;
 
@@ -163,12 +164,12 @@ public class HexagonSync {
         // download movies and apply property changes, build list of new movies
         Set<Integer> newCollectionMovies = new HashSet<>();
         Set<Integer> newWatchlistMovies = new HashSet<>();
-        Set<Integer> newWatchedMovies = new HashSet<>();
+        Map<Integer, Integer> newWatchedMoviesToPlays = new HashMap<>();
         HexagonMovieSync movieSync = new HexagonMovieSync(context, hexagonTools);
         boolean downloadSuccessful = movieSync.download(
                 newCollectionMovies,
                 newWatchlistMovies,
-                newWatchedMovies,
+                newWatchedMoviesToPlays,
                 hasMergedMovies
         );
         if (!downloadSuccessful) {
@@ -184,7 +185,7 @@ public class HexagonSync {
 
         // add new movies with the just downloaded properties
         boolean addingSuccessful = movieTools
-                .addMovies(newCollectionMovies, newWatchlistMovies, newWatchedMovies);
+                .addMovies(newCollectionMovies, newWatchlistMovies, newWatchedMoviesToPlays);
         if (!hasMergedMovies) {
             // ensure all missing movies from Hexagon are added before merge is complete
             if (!addingSuccessful) {

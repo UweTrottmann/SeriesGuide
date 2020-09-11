@@ -33,6 +33,8 @@ public class Movie {
 
     public boolean watched;
 
+    public int plays;
+
     @SerializedName("last_updated_ms")
     public long lastUpdatedMs;
     
@@ -48,11 +50,17 @@ public class Movie {
         values.put(Movies.IN_COLLECTION, inCollection ? 1 : 0);
         values.put(Movies.IN_WATCHLIST, inWatchlist ? 1 : 0);
         values.put(Movies.WATCHED, watched ? 1 : 0);
+        int playsValue;
+        if (watched && plays >= 1) {
+            playsValue = plays;
+        } else {
+            playsValue = watched ? 1 : 0;
+        }
+        values.put(Movies.PLAYS, playsValue);
         values.put(Movies.LAST_UPDATED, lastUpdatedMs);
         // full dump values
         values.put(Movies.OVERVIEW, overview);
         // set default values
-        values.put(Movies.PLAYS, 0);
         values.put(Movies.RATING_TMDB, 0);
         values.put(Movies.RATING_VOTES_TMDB, 0);
         values.put(Movies.RATING_TRAKT, 0);

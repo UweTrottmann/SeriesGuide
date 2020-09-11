@@ -29,8 +29,8 @@ internal open class MovieClickListenerImpl(val context: Context) : MovieClickLis
 
         val popupMenu = PopupMenu(anchor.context, anchor)
         popupMenu.inflate(R.menu.movies_popup_menu)
+        // Note: set watched is always visible (multiple plays).
         popupMenu.menu.apply {
-            findItem(R.id.menu_action_movies_set_watched).isVisible = !movieFlags.watched
             findItem(R.id.menu_action_movies_set_unwatched).isVisible = movieFlags.watched
             findItem(R.id.menu_action_movies_watchlist_add).isVisible = !movieFlags.inWatchlist
             findItem(R.id.menu_action_movies_watchlist_remove).isVisible = movieFlags.inWatchlist
@@ -40,7 +40,18 @@ internal open class MovieClickListenerImpl(val context: Context) : MovieClickLis
         popupMenu.setOnMenuItemClickListener { item ->
             return@setOnMenuItemClickListener when (item.itemId) {
                 R.id.menu_action_movies_set_watched -> {
-                    MovieTools.watchedMovie(context, movieTmdbId, movieFlags.inWatchlist)
+                    // Multiple plays only for supporters.
+                    if (movieFlags.watched && !Utils.hasAccessToX(context)) {
+                        Utils.advertiseSubscription(context)
+                        return@setOnMenuItemClickListener true
+                    }
+
+                    MovieTools.watchedMovie(
+                        context,
+                        movieTmdbId,
+                        movieFlags.plays,
+                        movieFlags.inWatchlist
+                    )
                     true
                 }
                 R.id.menu_action_movies_set_unwatched -> {

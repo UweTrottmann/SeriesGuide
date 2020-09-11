@@ -58,8 +58,14 @@ class HexagonMovieJob(
             MOVIE_COLLECTION_REMOVE -> movie.isInCollection = false
             MOVIE_WATCHLIST_ADD -> movie.isInWatchlist = true
             MOVIE_WATCHLIST_REMOVE -> movie.isInWatchlist = false
-            MOVIE_WATCHED_SET -> movie.isWatched = true
-            MOVIE_WATCHED_REMOVE -> movie.isWatched = false
+            MOVIE_WATCHED_SET -> {
+                movie.isWatched = true
+                movie.plays = jobInfo.plays()
+            }
+            MOVIE_WATCHED_REMOVE -> {
+                movie.isWatched = false
+                movie.plays = 0
+            }
             else -> throw IllegalArgumentException("Action $action not supported.")
         }
 
