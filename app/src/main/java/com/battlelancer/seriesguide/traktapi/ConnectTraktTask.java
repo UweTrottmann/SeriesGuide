@@ -76,7 +76,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                 expiresIn = body.expires_in;
             } else {
                 Errors.logAndReport("get access token", response,
-                        ((SgTrakt) trakt).checkForTraktOAuthError(response));
+                        SgTrakt.checkForTraktOAuthError(trakt, response));
             }
         } catch (IOException e) {
             Errors.logAndReport("get access token", e);

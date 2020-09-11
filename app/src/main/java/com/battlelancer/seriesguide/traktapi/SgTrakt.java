@@ -6,12 +6,9 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.TraktError;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
+import com.uwetrottmann.trakt5.entities.TraktOAuthError;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Converter;
 import retrofit2.Response;
 
 /**
@@ -79,21 +76,8 @@ public class SgTrakt extends TraktV2 {
     }
 
     @Nullable
-    public String checkForTraktOAuthError(Response<?> response) {
-        if (response.isSuccessful()) {
-            return null;
-        }
-
-        Converter<ResponseBody, TraktApiOAuthError> errorConverter = retrofit()
-                .responseBodyConverter(TraktApiOAuthError.class, new Annotation[0]);
-
-        TraktApiOAuthError error;
-        try {
-            error = errorConverter.convert(response.errorBody());
-        } catch (IOException ignored) {
-            error = new TraktApiOAuthError(); // null values
-        }
-
+    public static String checkForTraktOAuthError(TraktV2 trakt, Response<?> response) {
+        TraktOAuthError error = trakt.checkForTraktOAuthError(response);
         if (error != null && error.error != null && error.error_description != null) {
             return error.error + " " + error.error_description;
         } else {
