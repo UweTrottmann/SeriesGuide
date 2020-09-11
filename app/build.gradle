@@ -225,19 +225,19 @@ dependencies {
     amazonImplementation files('libs/amazon/in-app-purchasing-2.0.76.jar')
 
     // Instrumented unit tests
-    // https://developer.android.com/training/testing/release-notes
+    // https://developer.android.com/jetpack/androidx/releases/test
     androidTestImplementation "androidx.annotation:annotation:${versions.annotation}"
     // Core library
-    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test:core:1.3.0'
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
     // Espresso
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
     // Assertions
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation('androidx.test.ext:truth:1.2.0') {
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation('androidx.test.ext:truth:1.3.0') {
         exclude group: 'com.google.truth' // include manually to control conflicting deps
     }
     androidTestImplementation("com.google.truth:truth:${versions.truth}") {
@@ -256,7 +256,8 @@ dependencies {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
     }
-    testImplementation 'org.robolectric:robolectric:4.3.1'
+    // https://github.com/robolectric/robolectric/releases/
+    testImplementation 'org.robolectric:robolectric:4.4'
 
 }
 
