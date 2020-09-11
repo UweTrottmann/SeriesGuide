@@ -148,7 +148,8 @@ dependencies {
     implementation 'androidx.browser:browser:1.2.0'
     // https://developer.android.com/jetpack/androidx/releases/fragment
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
-    implementation 'com.google.android.material:material:1.1.0'
+    // https://github.com/material-components/material-components-android/releases
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.palette:palette:1.0.0'
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
