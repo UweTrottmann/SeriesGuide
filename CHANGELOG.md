@@ -21,6 +21,7 @@ Version 56
 * 📝 When connecting Trakt, multiple plays are not uploaded (as Trakt keeps a watched at time,
   not sure how to handle this, yet).
 * 📝 The JSON backup format now exports plays count for episodes and movies.
+* 🔨 Potential fix for Trakt sign-in issues for some users.
 * 🔧 Add additional reporting to help diagnose Trakt sign-in issues.
 * 🔧 Add option to turn off sending crash and error reports.
 * 🔨 Tapping the launcher icon to open the app now always returns to the previous screen.
