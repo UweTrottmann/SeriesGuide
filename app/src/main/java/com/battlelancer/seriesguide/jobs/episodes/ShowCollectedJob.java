@@ -25,6 +25,11 @@ public class ShowCollectedJob extends ShowBaseJob {
         return SeriesGuideContract.Episodes.COLLECTED;
     }
 
+    @Override
+    protected int getPlaysForNetworkJob(int plays) {
+        return plays; // Collected change does not change plays.
+    }
+
     @NonNull
     @Override
     public String getConfirmationText(Context context) {

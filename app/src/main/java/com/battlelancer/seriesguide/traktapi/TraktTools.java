@@ -13,7 +13,6 @@ import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,13 +54,13 @@ public class TraktTools {
     }
 
     @NonNull
-    public static HashSet<Integer> buildTraktEpisodesMap(List<BaseEpisode> episodes) {
-        HashSet<Integer> traktEpisodesMap = new HashSet<>(episodes.size());
+    public static HashMap<Integer, BaseEpisode> buildTraktEpisodesMap(List<BaseEpisode> episodes) {
+        HashMap<Integer, BaseEpisode> traktEpisodesMap = new HashMap<>(episodes.size());
         for (BaseEpisode episode : episodes) {
             if (episode.number == null) {
                 continue; // trakt episode misses required data, skip.
             }
-            traktEpisodesMap.add(episode.number);
+            traktEpisodesMap.put(episode.number, episode);
         }
         return traktEpisodesMap;
     }

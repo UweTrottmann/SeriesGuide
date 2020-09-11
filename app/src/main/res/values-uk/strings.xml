@@ -114,6 +114,7 @@
     <string name="action_watched">Переглянуто</string>
     <string name="action_unwatched">Не переглянуто</string>
     <string name="state_watched">Переглянуто</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
     <string name="state_skipped">Пропущено</string>
     <string name="state_in_collection">В колекції</string>
     <string name="state_on_watchlist">В списку перегляду</string>

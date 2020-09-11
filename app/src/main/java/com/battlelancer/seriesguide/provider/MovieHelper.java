@@ -18,6 +18,12 @@ import java.util.List;
 @Dao
 public interface MovieHelper {
 
+    /**
+     * For testing: get single movie.
+     */
+    @Query("SELECT * FROM movies WHERE movies_tmdbid=:tmdbId")
+    SgMovie getMovie(int tmdbId);
+
     @Query("SELECT movies_tmdbid FROM movies WHERE "
             + "(movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1)"
             + " AND ("

@@ -114,6 +114,7 @@
     <string name="action_watched">נצפה</string>
     <string name="action_unwatched">לא נצפה</string>
     <string name="state_watched">נצפה</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
     <string name="state_skipped">דילוג</string>
     <string name="state_in_collection">באוסף</string>
     <string name="state_on_watchlist">ברשימת הצפייה</string>

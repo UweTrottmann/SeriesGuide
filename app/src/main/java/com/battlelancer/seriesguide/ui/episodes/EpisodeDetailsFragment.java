@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.TextViewCompat;
@@ -240,8 +241,31 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
      */
     private void onToggleWatched() {
         boolean watched = EpisodeTools.isWatched(episodeFlag);
-        changeEpisodeFlag(watched ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
+        if (watched) {
+            View anchor = bindingButtons.buttonEpisodeWatched;
+            PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
+            popupMenu.inflate(R.menu.watched_episode_popup_menu);
+            popupMenu.setOnMenuItemClickListener(watchedEpisodePopupMenuListener);
+            popupMenu.show();
+        } else {
+            changeEpisodeFlag(EpisodeFlags.WATCHED);
+        }
     }
+
+    private final PopupMenu.OnMenuItemClickListener watchedEpisodePopupMenuListener = item -> {
+        int itemId = item.getItemId();
+        if (itemId == R.id.watched_episode_popup_menu_watch_again) {
+            // Multiple plays are for supporters only.
+            if (!Utils.hasAccessToX(requireContext())) {
+                Utils.advertiseSubscription(requireContext());
+            } else {
+                changeEpisodeFlag(EpisodeFlags.WATCHED);
+            }
+        } else if (itemId == R.id.watched_episode_popup_menu_set_not_watched) {
+            changeEpisodeFlag(EpisodeFlags.UNWATCHED);
+        }
+        return true;
+    };
 
     /**
      * If episode was skipped, flags as unwatched. Otherwise, flags as skipped.
@@ -526,8 +550,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                     R.drawable.ic_watch_black_24dp);
         }
         bindingButtons.buttonEpisodeWatched.setOnClickListener(v -> onToggleWatched());
-        bindingButtons.buttonEpisodeWatched
-                .setText(isWatched ? R.string.state_watched : R.string.action_watched);
+        int plays = cursor.getInt(DetailsQuery.PLAYS);
+        bindingButtons.buttonEpisodeWatched.setText(getWatchedButtonText(isWatched, plays));
         CheatSheet.setup(bindingButtons.buttonEpisodeWatched, isWatched ? R.string.action_unwatched
                 : R.string.action_watched);
 
@@ -566,6 +590,18 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                     .setText(isSkipped ? R.string.state_skipped : R.string.action_skip);
             CheatSheet.setup(bindingButtons.buttonEpisodeSkip,
                     isSkipped ? R.string.action_dont_skip : R.string.action_skip);
+        }
+    }
+
+    private String getWatchedButtonText(boolean isWatched, int plays) {
+        if (isWatched) {
+            if (plays <= 1) {
+                return getString(R.string.state_watched);
+            } else {
+                return getString(R.string.state_watched_multiple_format, plays);
+            }
+        } else {
+            return getString(R.string.action_watched);
         }
     }
 
@@ -722,6 +758,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 Episodes.RATING_VOTES,
                 Episodes.RATING_USER,
                 Episodes.WATCHED,
+                Episodes.PLAYS,
                 Episodes.COLLECTED,
                 Episodes.LAST_EDITED,
                 Shows.REF_SHOW_ID,
@@ -750,13 +787,14 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         int RATING_VOTES = 15;
         int RATING_USER = 16;
         int WATCHED = 17;
-        int COLLECTED = 18;
-        int LAST_EDITED = 19;
-        int SHOW_ID = 20;
-        int SHOW_IMDBID = 21;
-        int SHOW_TITLE = 22;
-        int SHOW_RUNTIME = 23;
-        int SHOW_LANGUAGE = 24;
-        int SHOW_SLUG = 25;
+        int PLAYS = 18;
+        int COLLECTED = 19;
+        int LAST_EDITED = 20;
+        int SHOW_ID = 21;
+        int SHOW_IMDBID = 22;
+        int SHOW_TITLE = 23;
+        int SHOW_RUNTIME = 24;
+        int SHOW_LANGUAGE = 25;
+        int SHOW_SLUG = 26;
     }
 }

@@ -2,10 +2,11 @@ package com.battlelancer.seriesguide.provider;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.model.SgSeason;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -18,10 +19,10 @@ import com.uwetrottmann.thetvdb.entities.Episode;
 public class SqliteDatabaseTestHelper {
 
     public static void insertShow(Show show, SQLiteDatabase db) {
-        ContentValues values = show.toContentValues(InstrumentationRegistry.getTargetContext(),
+        ContentValues values = show.toContentValues(ApplicationProvider.getApplicationContext(),
                 true);
 
-        // Remove columns added after version 42.
+        // Remove columns added after version 42 (last version before Room).
         // Also check RoomDatabaseTestHelper!
         values.remove(Shows.SLUG);
         values.remove(Shows.POSTER_SMALL);
@@ -46,6 +47,10 @@ public class SqliteDatabaseTestHelper {
         TvdbEpisodeTools.toContentValues(episode, values,
                 episode.id, seasonTvdbId, showTvdbId, seasonNumber,
                 Constants.EPISODE_UNKNOWN_RELEASE, true);
+
+        // Remove columns added after version 42 (last version before Room).
+        // Also check RoomDatabaseTestHelper!
+        values.remove(Episodes.PLAYS);
 
         db.insertWithOnConflict(Tables.EPISODES, null, values,
                 SQLiteDatabase.CONFLICT_REPLACE);

@@ -22,9 +22,10 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
     public static final String[] PROJECTION_EPISODE = new String[] {
             Episodes._ID
     };
-    public static final String[] PROJECTION_SEASON_NUMBER = new String[] {
+    public static final String[] PROJECTION_EPISODES_NETWORK_JOB = new String[] {
             Episodes.SEASON,
-            Episodes.NUMBER
+            Episodes.NUMBER,
+            Episodes.PLAYS
     };
     public static final String ORDER_SEASON_ASC_NUMBER_ASC =
             Episodes.SORT_SEASON_ASC + ", " + Episodes.SORT_NUMBER_ASC;
@@ -91,12 +92,9 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         }
 
         // apply local updates
-        ContentValues values = new ContentValues();
-        values.put(getDatabaseColumnToUpdate(), getFlagValue());
-        int updated = context.getContentResolver()
-                .update(uri, values, getDatabaseSelection(), null);
-        if (updated < 0) {
-            return false; // -1 means error
+        boolean updated = applyDatabaseChanges(context, uri);
+        if (!updated) {
+            return false;
         }
 
         // persist network job after successful local updates
@@ -115,11 +113,25 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         return true;
     }
 
+    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
+        ContentValues values = new ContentValues();
+        values.put(getDatabaseColumnToUpdate(), getFlagValue());
+        int updated = context.getContentResolver()
+                .update(uri, values, getDatabaseSelection(), null);
+        return updated >= 0; // -1 means error
+    }
+
+    /**
+     * Returns the number of plays to upload to Cloud (Trakt currently not supported)
+     * based on the current number of plays (before {@link #applyLocalChanges(Context, boolean)}.
+     */
+    protected abstract int getPlaysForNetworkJob(int plays);
+
     @Nullable
     private byte[] prepareNetworkJob(Context context, @NonNull Uri uri) {
         // store affected episodes for network part
         Cursor query = context.getContentResolver()
-                .query(uri, PROJECTION_SEASON_NUMBER, getDatabaseSelection(), null,
+                .query(uri, PROJECTION_EPISODES_NETWORK_JOB, getDatabaseSelection(), null,
                         ORDER_SEASON_ASC_NUMBER_ASC);
         if (query == null) {
             return null;
@@ -136,7 +148,8 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         do {
             int season = query.getInt(0);
             int number = query.getInt(1);
-            episodeInfos[i] = EpisodeInfo.createEpisodeInfo(builder, season, number);
+            int plays = getPlaysForNetworkJob(query.getInt(2));
+            episodeInfos[i] = EpisodeInfo.createEpisodeInfo(builder, season, number, plays);
             i++;
         } while (query.moveToNext());
         query.close();

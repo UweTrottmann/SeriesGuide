@@ -112,6 +112,7 @@
     <string name="action_watched">Markér som set</string>
     <string name="action_unwatched">Markér som ikke set</string>
     <string name="state_watched">Set</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
     <string name="state_skipped">Sprunget over</string>
     <string name="state_in_collection">I samling</string>
     <string name="state_on_watchlist">På overvågningsliste</string>

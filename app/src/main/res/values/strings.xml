@@ -127,6 +127,7 @@
     <string name="action_watched">Set watched</string>
     <string name="action_unwatched">Set not watched</string>
     <string name="state_watched">Watched</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
