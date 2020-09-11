@@ -112,7 +112,7 @@
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">No visto</string>
     <string name="state_watched">Visto</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Has visto %@</string>
     <string name="state_skipped">Omitido</string>
     <string name="state_in_collection">En colección</string>
     <string name="state_on_watchlist">En la lista de visualización</string>
@@ -351,7 +351,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Para reducir el consumo de datos, no descargar a través de redes móviles</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Reportar errores al desarrollador de la aplicación</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d día antes</item>
         <item quantity="other">%d días antes</item>
@@ -454,8 +454,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_notification_channel_errors">Errores</string>
     <string name="pref_notifications_next_episodes_only">Sólo para episodios siguientes para ver</string>
     <string name="pref_notifications_next_episodes_only_summary">Solo notificar si el nuevo episodio es el siguiente para ver</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_battery_settings">Ajustes de batería</string>
+    <string name="pref_notifications_battery_settings_summary">Ir a la configuración de la batería para desactivar las optimizaciones de la batería para obtener notificaciones fiables</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo de widget</string>

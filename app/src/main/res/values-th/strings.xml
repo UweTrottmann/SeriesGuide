@@ -111,7 +111,7 @@
     <string name="action_watched">ดูแล้ว</string>
     <string name="action_unwatched">ยังไม่ได้ดู</string>
     <string name="state_watched">ดูแล้ว</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">ดูแล้ว (%d)</string>
     <string name="state_skipped">ข้ามแล้ว</string>
     <string name="state_in_collection">ในคลังเก็บ</string>
     <string name="state_on_watchlist">ในรายการที่อยากดู</string>
