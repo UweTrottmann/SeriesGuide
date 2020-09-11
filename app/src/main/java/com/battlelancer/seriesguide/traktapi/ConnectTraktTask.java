@@ -75,7 +75,8 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                 refreshToken = body.refresh_token;
                 expiresIn = body.expires_in;
             } else {
-                Errors.logAndReport("get access token", response);
+                Errors.logAndReport("get access token", response,
+                        ((SgTrakt) trakt).checkForTraktOAuthError(response));
             }
         } catch (IOException e) {
             Errors.logAndReport("get access token", e);
@@ -127,7 +128,8 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                     displayname = body.user.name;
                 }
             } else {
-                Errors.logAndReport("get user settings", response);
+                Errors.logAndReport("get user settings", response,
+                        SgTrakt.checkForTraktError(trakt, response));
                 if (SgTrakt.isUnauthorized(response)) {
                     // access token already is invalid, remove it :(
                     TraktCredentials.get(context).removeCredentials();
