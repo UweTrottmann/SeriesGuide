@@ -211,7 +211,7 @@ dependencies {
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    implementation "com.google.android.gms:play-services-auth:18.0.0"
+    implementation "com.google.android.gms:play-services-auth:18.1.0"
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
