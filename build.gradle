@@ -54,7 +54,8 @@ buildscript {
         // https://github.com/ben-manes/gradle-versions-plugin/releases
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.31.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2' // api
+        // https://github.com/Codearte/gradle-nexus-staging-plugin/releases
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0' // api
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
         classpath 'com.google.gms:google-services:4.3.3'
