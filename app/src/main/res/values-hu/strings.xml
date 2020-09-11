@@ -419,7 +419,7 @@
     <string name="backup_button">Biztonsági Mentés</string>
     <string name="import_button">Visszaállítás</string>
     <string name="import_warning">Megértettem, hogy az aktuális sorozataim, listáim és filmjeim lecserélésre kerülnek!</string>
-    <string name="no_file_selected">Nincs fájl  kijelölve</string>
+    <string name="no_file_selected">Nincs fájl kijelölve</string>
     <string name="action_select_file">Fájl kiválasztása</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatikus biztonsági másolat</string>

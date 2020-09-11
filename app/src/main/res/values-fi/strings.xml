@@ -115,7 +115,7 @@
     <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Katsottu (%d)</string>
     <string name="state_skipped">Ohitettu</string>
     <string name="state_in_collection">Kokoelmassa</string>
-    <string name="state_on_watchlist"> Seurantalistalla</string>
+    <string name="state_on_watchlist">Seurantalistalla</string>
     <string name="state_favorite">Suosikki</string>
     <!-- Shows -->
     <string name="confirm_delete">Poista %s?</string>

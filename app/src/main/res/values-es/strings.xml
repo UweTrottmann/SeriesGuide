@@ -112,7 +112,7 @@
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">No visto</string>
     <string name="state_watched">Visto</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Has visto %@</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Visto (%d)</string>
     <string name="state_skipped">Omitido</string>
     <string name="state_in_collection">En colección</string>
     <string name="state_on_watchlist">En la lista de visualización</string>

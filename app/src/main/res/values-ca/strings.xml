@@ -173,7 +173,7 @@
     <!-- Updating -->
     <string name="update_scheduled">S\'està actualitzant&#8230;</string>
     <string name="update_no_connection">Connecteu-vos a internet per actualitzar.</string>
-    <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard. </string>
+    <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard</string>
     <!-- Seasons -->
     <string name="season_allwatched">Tots els episodis vistos</string>
     <plurals name="other_episodes_plural">
@@ -431,7 +431,7 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="autobackup_failed">Ha fallat l\'última còpia de seguretat automàtica</string>
     <string name="autobackup_files_missing">Per utilitzar la còpia de seguretat automàtica, selecciona arxius de còpia de seguretat vàlids.</string>
     <string name="autobackup_create_user_copy">Creeu una còpia després de cada còpia de seguretat</string>
-    <string name="autobackup_restore_available">Per restaurar pot estar disponible una còpia de seguretat automàtica </string>
+    <string name="autobackup_restore_available">Per restaurar pot estar disponible una còpia de seguretat automàtica</string>
     <!-- Welcome dialog -->
     <string name="get_started">Inici</string>
     <string name="dismiss">Omet</string>
