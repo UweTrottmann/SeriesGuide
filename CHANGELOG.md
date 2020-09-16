@@ -51,6 +51,13 @@ Version 55
 * 🔨 The app respects the system font size on Android 7 and older again.
 * 🔨 Removed subscription expired notification.
 
+#### 55.1
+*2020-09-16*
+
+* 🔨 Potential fix for Trakt sign-in issues for some users.
+* 🔧 Add additional reporting to help diagnose Trakt sign-in issues.
+* 🔨 Display movie info instead of nothing if sending movie action to Trakt fails.
+
 #### 55
 *2020-07-16*
 
