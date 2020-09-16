@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.TraktError;
+import com.uwetrottmann.trakt5.entities.TraktOAuthError;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -46,7 +47,7 @@ public class SgTrakt extends TraktV2 {
      *
      * @see #isUnauthorized(Context, Response)
      */
-    public static boolean isUnauthorized(retrofit2.Response response) {
+    public static boolean isUnauthorized(retrofit2.Response<?> response) {
         return response.code() == 401;
     }
 
@@ -54,7 +55,7 @@ public class SgTrakt extends TraktV2 {
      * Returns if the request was not authorized. If it was, also calls {@link
      * TraktCredentials#setCredentialsInvalid()} to notify the user.
      */
-    public static boolean isUnauthorized(Context context, retrofit2.Response response) {
+    public static boolean isUnauthorized(Context context, retrofit2.Response<?> response) {
         if (response.code() == 401) {
             // current access token is invalid, remove it and notify user to re-connect
             TraktCredentials.get(context).setCredentialsInvalid();
@@ -65,10 +66,20 @@ public class SgTrakt extends TraktV2 {
     }
 
     @Nullable
-    public static String checkForTraktError(TraktV2 trakt, Response response) {
+    public static String checkForTraktError(TraktV2 trakt, Response<?> response) {
         TraktError error = trakt.checkForTraktError(response);
         if (error != null && error.message != null) {
             return error.message;
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
+    public static String checkForTraktOAuthError(TraktV2 trakt, Response<?> response) {
+        TraktOAuthError error = trakt.checkForTraktOAuthError(response);
+        if (error != null && error.error != null && error.error_description != null) {
+            return error.error + " " + error.error_description;
         } else {
             return null;
         }
