@@ -234,7 +234,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         val show = result.show
         if (show == null) {
             // Failed to load, can't be added.
-            if (!AndroidUtils.isNetworkConnected(activity)) {
+            if (!AndroidUtils.isNetworkConnected(requireContext())) {
                 overview.setText(R.string.offline)
             } else if (result.doesNotExist) {
                 overview.setText(R.string.tvdb_error_does_not_exist)
