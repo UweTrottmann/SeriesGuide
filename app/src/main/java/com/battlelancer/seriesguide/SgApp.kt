@@ -139,6 +139,7 @@ class SgApp : Application() {
         initializeEventBus()
         initializePicasso()
         if (AndroidUtils.isAtLeastAndroid8()) {
+            //noinspection NewApi Lint is dumb.
             initializeNotificationChannels()
         }
 
@@ -250,6 +251,7 @@ class SgApp : Application() {
                 detectResourceMismatches()
             }
             if (AndroidUtils.isAtLeastAndroid8()) {
+                //noinspection NewApi Lint is dumb, e.g. above works!
                 detectUnbufferedIo()
             }
             StrictMode.setThreadPolicy(build())
@@ -265,6 +267,7 @@ class SgApp : Application() {
             detectLeakedRegistrationObjects()
             detectFileUriExposure()
             if (AndroidUtils.isAtLeastAndroid8()) {
+                //noinspection NewApi Lint is dumb.
                 detectContentUriWithoutPermission()
             }
             // Policy applied to all threads in the virtual machine's process

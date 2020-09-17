@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.util
 
+import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -96,6 +97,7 @@ class ShortcutCreator(
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
+        @TargetApi(26) // Lint is dumb.
         if (AndroidUtils.isAtLeastAndroid8()) {
             val shortcutManager = context.getSystemService(ShortcutManager::class.java)
             if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported) {
