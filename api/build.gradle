@@ -1,11 +1,9 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
-apply plugin: 'io.codearte.nexus-staging'
 
 group = "com.uwetrottmann.seriesguide"
-archivesBaseName = "seriesguide-api"
-version = "2.0.3"
+version = "2.0.4-SNAPSHOT"
 
 android {
     compileSdkVersion versions.compileSdk
@@ -32,21 +30,22 @@ dependencies {
     implementation "androidx.core:core:${versions.core}"
 }
 
-// load local.properties file
-Properties props = new Properties()
-if(rootProject.file('local.properties').exists()) {
-    props.load(new FileInputStream(file("../local.properties")))
-}
-
-task generateJavadoc(type: Javadoc) {
+task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     title = "SeriesGuide API"
 
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    // Add in dependency classpath to avoid cannot find symbol (http://stackoverflow.com/a/34572606/1676363)
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompileProvider.get().classpath
+        }
+    }
 
     options.locale = "en"
     options.windowTitle = "SeriesGuide API"
-    options.linksOffline("http://developer.android.com/reference", "${props["sdk.dir"]}/docs/reference")
+    options.links("https://developer.android.com/reference/")
+    options.linksOffline("https://developer.android.com/reference/", "https://developer.android.com/reference/androidx/")
     options.noDeprecated = true
     options.noHelp = true
     options.noIndex = true
@@ -54,80 +53,82 @@ task generateJavadoc(type: Javadoc) {
     options.stylesheetFile = file('./javadoc_stylesheet.css')
 }
 
-// Add in dependency classpath to avoid cannot find symbol (http://stackoverflow.com/a/34572606/1676363)
-afterEvaluate {
-    generateJavadoc.classpath += files(android.libraryVariants.collect { variant ->
-        variant.javaCompileProvider.get().classpath.files
-    })
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    archiveClassifier.set('javadoc')
+    from androidJavadocs.destinationDir
 }
 
-task javadocJar(type: Jar, dependsOn: generateJavadoc) {
-    archiveClassifier.set("javadoc")
-    from generateJavadoc.destinationDir
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier.set("sources")
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
     from android.sourceSets.main.java.srcDirs
 }
 
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
+// Because the components are created only during the afterEvaluate phase, you must
+// configure your publications using the afterEvaluate() lifecycle method.
+afterEvaluate { project ->
+    publishing {
+        publications {
+            central(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
 
-signing {
-    sign configurations.archives
-}
+                artifact androidJavadocsJar
+                artifact androidSourcesJar
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                artifactId = 'seriesguide-api'
 
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                if (hasProperty('SONATYPE_NEXUS_USERNAME') && hasProperty('SONATYPE_NEXUS_PASSWORD')) {
-                    authentication(userName: SONATYPE_NEXUS_USERNAME, password: SONATYPE_NEXUS_PASSWORD)
-                }
-            }
+                pom {
+                    name = "SeriesGuide API"
+                    description = "Extension API for SeriesGuide to provide custom actions on media items"
+                    url = "https://seriesgui.de/api"
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                if (hasProperty('SONATYPE_NEXUS_USERNAME') && hasProperty('SONATYPE_NEXUS_PASSWORD')) {
-                    authentication(userName: SONATYPE_NEXUS_USERNAME, password: SONATYPE_NEXUS_PASSWORD)
-                }
-            }
+                    licenses {
+                        license {
+                            name = "The Apache License, Version 2.0"
+                            url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                        }
+                    }
 
-            pom.project {
-                name "SeriesGuide API"
-                packaging "aar"
-                description "Extension API for SeriesGuide to provide custom actions on media items"
-                url "http://seriesgui.de/api"
+                    developers {
+                        developer {
+                            id = "uwetrottmann"
+                            name = "Uwe Trottmann"
+                        }
+                    }
 
-                licenses {
-                    license {
-                        name "Public Domain"
-                        url "http://unlicense.org"
+                    scm {
+                        connection = "scm:git:git@github.com:UweTrottmann/SeriesGuide.git"
+                        developerConnection = "scm:git:git@github.com:UweTrottmann/SeriesGuide.git"
+                        url = "https://github.com/UweTrottmann/SeriesGuide.git"
                     }
                 }
+            }
+        }
 
-                developers {
-                    developer {
-                        id "uwetrottmann"
-                        name "Uwe Trottmann"
-                        url "http://uwetrottmann.com"
+        repositories {
+            maven {
+                name = "Central"
+                def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                if (rootProject.hasProperty('SONATYPE_NEXUS_USERNAME')
+                        && rootProject.hasProperty('SONATYPE_NEXUS_PASSWORD')) {
+                    credentials {
+                        username SONATYPE_NEXUS_USERNAME
+                        password SONATYPE_NEXUS_PASSWORD
                     }
-                }
-
-                scm {
-                    url "https://github.com/UweTrottmann/SeriesGuide.git"
-                    connection "scm:git:git://github.com/UweTrottmann/SeriesGuide.git"
-                    developerConnection "scm:git:git@github.com:UweTrottmann/SeriesGuide.git"
                 }
             }
         }
     }
-}
 
-nexusStaging {
-    packageGroup = "com.uwetrottmann"
+    signing {
+        if (!rootProject.hasProperty('signing.keyId')
+                || !rootProject.hasProperty('signing.password')
+                || !rootProject.hasProperty('signing.secretKeyRingFile')) {
+            println "WARNING: Signing properties missing, published artifacts will not be signed."
+        }
+        sign publishing.publications.central
+    }
+
 }

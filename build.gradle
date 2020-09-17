@@ -79,6 +79,17 @@ dependencyUpdates.resolutionStrategy {
     }
 }
 
+apply plugin: 'io.codearte.nexus-staging'
+
+nexusStaging {
+    packageGroup = "com.uwetrottmann"
+    if (rootProject.hasProperty('SONATYPE_NEXUS_USERNAME')
+            && rootProject.hasProperty('SONATYPE_NEXUS_PASSWORD')) {
+        username = SONATYPE_NEXUS_USERNAME
+        password = SONATYPE_NEXUS_PASSWORD
+    }
+}
+
 allprojects {
     repositories {
         google()
