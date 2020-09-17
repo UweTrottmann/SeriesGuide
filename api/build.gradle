@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = "com.uwetrottmann.seriesguide"
-version = "2.0.4-SNAPSHOT"
+version = "2.1.0"
 
 android {
     compileSdkVersion versions.compileSdk
