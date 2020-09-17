@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -37,6 +36,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -263,7 +263,7 @@ public class NotificationService {
         Timber.d("Going to sleep, setting wake-up alarm to: %s",
                 Instant.ofEpochMilli(nextWakeUpTime));
         if (am != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (AndroidUtils.isMarshmallowOrHigher()) {
                 am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);
             } else {
                 am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi);

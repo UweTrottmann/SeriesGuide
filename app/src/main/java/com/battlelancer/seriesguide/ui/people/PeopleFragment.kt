@@ -169,7 +169,7 @@ class PeopleFragment : Fragment() {
 
     private fun setEmptyMessage() {
         // display error message if we are offline
-        if (!AndroidUtils.isNetworkConnected(context)) {
+        if (!AndroidUtils.isNetworkConnected(requireContext())) {
             emptyView.setMessage(R.string.offline)
         } else {
             emptyView.setMessage(R.string.people_empty)

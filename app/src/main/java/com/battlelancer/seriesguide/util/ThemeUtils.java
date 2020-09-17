@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.os.Build;
 import androidx.annotation.AttrRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Helper methods to support SeriesGuide's different themes.
@@ -28,10 +28,12 @@ public class ThemeUtils {
                 break;
             default:
                 // Defaults as recommended by https://medium.com/androiddevelopers/appcompat-v23-2-daynight-d10f90c83e94
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                if (AndroidUtils.isAtLeastAndroid10()) {
+                    AppCompatDelegate
+                            .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    AppCompatDelegate
+                            .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
                 }
                 break;
         }

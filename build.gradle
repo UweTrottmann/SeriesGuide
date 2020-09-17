@@ -22,7 +22,7 @@ buildscript {
             'retrofit': '2.9.0', // https://github.com/square/retrofit/blob/master/CHANGELOG.md
             'timber': '4.7.1', // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
-            'androidUtils': '2.3.1', // https://github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
+            'androidUtils': '2.4.0', // https://github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
             'thetvdb': '2.3.0', // https://github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
             'tmdb': '2.2.0', // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
             'trakt': '6.7.0', // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md

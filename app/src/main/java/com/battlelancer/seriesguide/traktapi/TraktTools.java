@@ -2,11 +2,11 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
@@ -89,7 +89,7 @@ public class TraktTools {
         if (rating == null || rating == 0) {
             return "--";
         }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+        if (!AndroidUtils.isNougatOrHigher()) {
             // before Android 7.0 string format seems to round half down, despite docs saying half up
             // it likely used DecimalFormat, which defaults to half even
             BigDecimal bigDecimal = new BigDecimal(rating);

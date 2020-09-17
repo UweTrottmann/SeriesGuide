@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -157,7 +156,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // warning: pre-M status bar not always translucent (e.g. Nexus 10)
         // (using fitsSystemWindows would not work correctly with multiple views)
         val config = (activity as MovieDetailsActivity).systemBarTintManager.config
-        val pixelInsetTop = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val pixelInsetTop = if (AndroidUtils.isMarshmallowOrHigher()) {
             config.statusBarHeight // full screen, status bar transparent
         } else {
             config.getPixelInsetTop(false) // status bar translucent
@@ -722,11 +721,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 activity!!.invalidateOptionsMenu()
             } else {
                 // if there is no local data and loading from network failed
-                binding.textViewMovieDescription.text = if (AndroidUtils.isNetworkConnected(context)) {
-                    getString(R.string.api_error_generic, getString(R.string.tmdb))
-                } else {
-                    getString(R.string.offline)
-                }
+                binding.textViewMovieDescription.text =
+                    if (AndroidUtils.isNetworkConnected(requireContext())) {
+                        getString(R.string.api_error_generic, getString(R.string.tmdb))
+                    } else {
+                        getString(R.string.offline)
+                    }
             }
         }
 

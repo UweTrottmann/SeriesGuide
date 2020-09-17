@@ -27,6 +27,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
+import com.uwetrottmann.androidutils.AndroidUtils
 import io.palaima.debugdrawer.timber.data.LumberYard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -137,7 +138,7 @@ class SgApp : Application() {
         AndroidThreeTen.init(this)
         initializeEventBus()
         initializePicasso()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (AndroidUtils.isAtLeastAndroid8()) {
             initializeNotificationChannels()
         }
 
@@ -245,10 +246,10 @@ class SgApp : Application() {
             detectDiskWrites()
             detectNetwork()
             detectCustomSlowCalls()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (AndroidUtils.isMarshmallowOrHigher()) {
                 detectResourceMismatches()
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastAndroid8()) {
                 detectUnbufferedIo()
             }
             StrictMode.setThreadPolicy(build())
@@ -263,7 +264,7 @@ class SgApp : Application() {
             detectLeakedClosableObjects()
             detectLeakedRegistrationObjects()
             detectFileUriExposure()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastAndroid8()) {
                 detectContentUriWithoutPermission()
             }
             // Policy applied to all threads in the virtual machine's process
