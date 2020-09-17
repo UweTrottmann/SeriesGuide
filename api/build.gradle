@@ -46,10 +46,7 @@ task androidJavadocs(type: Javadoc) {
     options.windowTitle = "SeriesGuide API"
     options.links("https://developer.android.com/reference/")
     options.linksOffline("https://developer.android.com/reference/", "https://developer.android.com/reference/androidx/")
-    options.noDeprecated = true
-    options.noHelp = true
-    options.noIndex = true
-    options.noTree = true
+    options.noDeprecated = true // Currently nothing is deprecated.
     options.stylesheetFile = file('./javadoc_stylesheet.css')
 }
 
