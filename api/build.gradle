@@ -30,6 +30,7 @@ dependencies {
     implementation "androidx.core:core:${versions.core}"
 }
 
+// Note: should build web version with JDK 9+ to get no-frames version.
 task androidJavadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     title = "SeriesGuide API"
@@ -48,6 +49,12 @@ task androidJavadoc(type: Javadoc) {
     options.linksOffline("https://developer.android.com/reference/", "https://developer.android.com/reference/androidx/")
     options.noDeprecated = true // Currently nothing is deprecated.
     options.stylesheetFile = file('./javadoc_stylesheet.css')
+    // Specify language level to avoid "The code being documented uses modules" javadoc error
+    // if generating with JDK 9+.
+    def currentJavaVersion = JavaVersion.current()
+    if (currentJavaVersion >= JavaVersion.VERSION_1_9) {
+        options.addStringOption("-release", "8")
+    }
 }
 
 task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
