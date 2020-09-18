@@ -9,8 +9,8 @@ Thumbs.db
 # intended to run in multiple environments; otherwise, check them in:
 # Gemfile.lock
 
-# bower
-bower_components
-
 # bundler
 /vendor/bundle
+
+# Sublime
+*.sublime-*
