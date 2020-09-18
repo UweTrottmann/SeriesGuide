@@ -30,7 +30,7 @@ dependencies {
     implementation "androidx.core:core:${versions.core}"
 }
 
-task androidJavadocs(type: Javadoc) {
+task androidJavadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     title = "SeriesGuide API"
 
@@ -50,9 +50,9 @@ task androidJavadocs(type: Javadoc) {
     options.stylesheetFile = file('./javadoc_stylesheet.css')
 }
 
-task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
     archiveClassifier.set('javadoc')
-    from androidJavadocs.destinationDir
+    from androidJavadoc.destinationDir
 }
 
 task androidSourcesJar(type: Jar) {
@@ -69,7 +69,7 @@ afterEvaluate { project ->
                 // Applies the component for the release build variant.
                 from components.release
 
-                artifact androidJavadocsJar
+                artifact androidJavadocJar
                 artifact androidSourcesJar
 
                 artifactId = 'seriesguide-api'
