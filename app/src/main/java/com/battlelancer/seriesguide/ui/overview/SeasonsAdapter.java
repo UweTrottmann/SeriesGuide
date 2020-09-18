@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.ui.overview;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.Build;
 import android.provider.BaseColumns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +64,7 @@ class SeasonsAdapter extends CursorAdapter {
         final int max = cursor.getInt(SeasonsQuery.TOTALCOUNT);
         final int progress = max - released - notReleased - noReleaseDate;
         viewHolder.seasonProgressBar.setMax(max);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (AndroidUtils.isNougatOrHigher()) {
             viewHolder.seasonProgressBar.setProgress(progress, true);
         } else {
             viewHolder.seasonProgressBar.setProgress(progress);

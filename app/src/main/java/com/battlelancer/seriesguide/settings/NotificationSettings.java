@@ -2,7 +2,6 @@
 package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
-import android.os.Build;
 import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -10,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Access settings related to the notification service.
@@ -138,7 +138,7 @@ public class NotificationSettings {
         if (ringtoneUri == null) {
             ringtoneUri = Settings.System.DEFAULT_NOTIFICATION_URI.toString();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (AndroidUtils.isNougatOrHigher()) {
             // Xiaomi devices incorrectly allowed file:// uris
             // protect against FileUriExposedException
             if (ringtoneUri.length() > 0 /* not silent */ && !ringtoneUri.startsWith("content")) {
