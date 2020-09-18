@@ -1,6 +1,9 @@
 # Configuration for CircleCI
 
-general:
-  branches:
-    ignore:
-      - gh-pages
+version: 2.1
+
+jobs:
+  build:
+    branches:
+      ignore:
+        - gh-pages
