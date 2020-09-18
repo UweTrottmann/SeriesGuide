@@ -146,7 +146,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
                 thresholdPref.isEnabled = isChecked
                 selectionPref.isEnabled = isChecked
-                if (AndroidUtils.isAtLeastAndroid8()) {
+                if (AndroidUtils.isAtLeastOreo()) {
                     channelsPref?.isEnabled = isChecked
                 } else {
                     vibratePref?.isEnabled = isChecked
@@ -164,7 +164,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = isNotificationsEnabled
             hiddenPref.isEnabled = isNotificationsEnabled
             onlyNextPref.isEnabled = isNotificationsEnabled
-            if (AndroidUtils.isAtLeastAndroid8()) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 channelsPref?.isEnabled = isNotificationsEnabled
             } else {
                 vibratePref?.isEnabled = isNotificationsEnabled
@@ -178,7 +178,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = false
             hiddenPref.isEnabled = false
             onlyNextPref.isEnabled = false
-            if (AndroidUtils.isAtLeastAndroid8()) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 channelsPref?.isEnabled = false
             } else {
                 vibratePref?.isEnabled = false
@@ -323,7 +323,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
         if (NotificationSettings.KEY_CHANNELS == key) {
             // launch system settings app at settings for episodes channel
-            if (AndroidUtils.isAtLeastAndroid8()) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)

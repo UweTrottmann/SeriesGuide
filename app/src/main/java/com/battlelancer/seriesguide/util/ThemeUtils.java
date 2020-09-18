@@ -28,7 +28,7 @@ public class ThemeUtils {
                 break;
             default:
                 // Defaults as recommended by https://medium.com/androiddevelopers/appcompat-v23-2-daynight-d10f90c83e94
-                if (AndroidUtils.isAtLeastAndroid10()) {
+                if (AndroidUtils.isAtLeastQ()) {
                     AppCompatDelegate
                             .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 } else {

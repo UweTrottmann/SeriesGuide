@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util
 
-import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -74,7 +73,7 @@ class ShortcutCreator(
                 R.dimen.show_poster_width_shortcut,
                 R.dimen.show_poster_height_shortcut
             )
-        if (!AndroidUtils.isAtLeastAndroid8()) {
+        if (!AndroidUtils.isAtLeastOreo()) {
             // on O+ we use 108x108dp adaptive icon, no need to cut its corners
             // pre-O full bitmap is displayed, so cut corners for nicer icon shape
             requestCreator.transform(
@@ -97,8 +96,7 @@ class ShortcutCreator(
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        @TargetApi(26) // Lint is dumb.
-        if (AndroidUtils.isAtLeastAndroid8()) {
+        if (AndroidUtils.isAtLeastOreo()) {
             val shortcutManager = context.getSystemService(ShortcutManager::class.java)
             if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported) {
                 val builder = ShortcutInfo.Builder(
