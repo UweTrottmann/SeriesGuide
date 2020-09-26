@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
@@ -55,11 +54,15 @@ class StatsFragment : Fragment() {
         binding.textViewEpisodesRuntime.visibility = View.INVISIBLE
 
         binding.textViewMoviesWatchlist.visibility = View.INVISIBLE
-        binding.progressBarMoviesWatchlist.visibility = View.INVISIBLE
-        binding.textViewMoviesWatched.visibility = View.INVISIBLE
-        binding.progressBarMoviesWatched.visibility = View.INVISIBLE
         binding.textViewMoviesWatchlistRuntime.visibility = View.INVISIBLE
+
+        binding.progressBarMoviesWatched.visibility = View.INVISIBLE
+        binding.textViewMoviesWatched.visibility = View.INVISIBLE
         binding.textViewMoviesWatchedRuntime.visibility = View.INVISIBLE
+
+        binding.progressBarMoviesCollection.visibility = View.INVISIBLE
+        binding.textViewMoviesCollection.visibility = View.INVISIBLE
+        binding.textViewMoviesCollectionRuntime.visibility = View.INVISIBLE
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         binding.textViewShows.copyTextToClipboardOnLongClick()
@@ -70,9 +73,11 @@ class StatsFragment : Fragment() {
         binding.textViewEpisodesRuntime.copyTextToClipboardOnLongClick()
         binding.textViewMovies.copyTextToClipboardOnLongClick()
         binding.textViewMoviesWatchlist.copyTextToClipboardOnLongClick()
-        binding.textViewMoviesWatched.copyTextToClipboardOnLongClick()
         binding.textViewMoviesWatchlistRuntime.copyTextToClipboardOnLongClick()
+        binding.textViewMoviesWatched.copyTextToClipboardOnLongClick()
         binding.textViewMoviesWatchedRuntime.copyTextToClipboardOnLongClick()
+        binding.textViewMoviesCollection.copyTextToClipboardOnLongClick()
+        binding.textViewMoviesCollectionRuntime.copyTextToClipboardOnLongClick()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -80,7 +85,7 @@ class StatsFragment : Fragment() {
         setHasOptionsMenu(true)
 
         model = ViewModelProvider(this).get(StatsViewModel::class.java)
-        model.statsData.observe(viewLifecycleOwner, Observer { this.handleStatsUpdate(it) })
+        model.statsData.observe(viewLifecycleOwner, { this.handleStatsUpdate(it) })
         loadStats()
     }
 
@@ -207,35 +212,51 @@ class StatsFragment : Fragment() {
         // movies
         binding.textViewMovies.text = format.format(stats.movies.toLong())
 
-        // movies in watchlist
-        binding.progressBarMoviesWatchlist.max = stats.movies
-        binding.progressBarMoviesWatchlist.progress = stats.moviesWatchlist
-        binding.progressBarMoviesWatchlist.visibility = View.VISIBLE
-
-        binding.textViewMoviesWatchlist.text = getString(
-            R.string.movies_on_watchlist,
-            format.format(stats.moviesWatchlist.toLong())
-        )
-        binding.textViewMoviesWatchlist.visibility = View.VISIBLE
-
         // watched movies
-        binding.progressBarMoviesWatched.max = stats.movies
-        binding.progressBarMoviesWatched.progress = stats.moviesWatched
-        binding.progressBarMoviesWatched.visibility = View.VISIBLE
+        binding.progressBarMoviesWatched.apply {
+            max = stats.movies
+            progress = stats.moviesWatched
+            visibility = View.VISIBLE
+        }
+        binding.textViewMoviesWatched.apply {
+            text = getString(
+                R.string.movies_watched_format,
+                format.format(stats.moviesWatched.toLong())
+            )
+            visibility = View.VISIBLE
+        }
+        binding.textViewMoviesWatchedRuntime.apply {
+            text = getTimeDuration(stats.moviesWatchedRuntime)
+            visibility = View.VISIBLE
+        }
 
-        binding.textViewMoviesWatched.text = getString(
-            R.string.movies_watched_format,
-            format.format(stats.moviesWatched.toLong())
-        )
-        binding.textViewMoviesWatched.visibility = View.VISIBLE
+        // movies in watchlist
+        binding.textViewMoviesWatchlist.apply {
+            text = getString(
+                R.string.movies_on_watchlist,
+                format.format(stats.moviesWatchlist.toLong())
+            )
+            visibility = View.VISIBLE
+        }
+        binding.textViewMoviesWatchlistRuntime.apply {
+            text = getTimeDuration(stats.moviesWatchlistRuntime)
+            visibility = View.VISIBLE
+        }
 
-        // runtime of movie watchlist
-        binding.textViewMoviesWatchlistRuntime.text = getTimeDuration(stats.moviesWatchlistRuntime)
-        binding.textViewMoviesWatchlistRuntime.visibility = View.VISIBLE
-
-        // runtime of watched movies
-        binding.textViewMoviesWatchedRuntime.text = getTimeDuration(stats.moviesWatchedRuntime)
-        binding.textViewMoviesWatchedRuntime.visibility = View.VISIBLE
+        // movies in collection
+        binding.progressBarMoviesCollection.apply {
+            max = stats.movies
+            progress = stats.moviesCollection
+            visibility = View.VISIBLE
+        }
+        binding.textViewMoviesCollection.apply {
+            text = getString(R.string.stats_in_collection_format, stats.moviesCollection)
+            visibility = View.VISIBLE
+        }
+        binding.textViewMoviesCollectionRuntime.apply {
+            text = getTimeDuration(stats.moviesCollectionRuntime)
+            visibility = View.VISIBLE
+        }
     }
 
     private fun getTimeDuration(duration: Long): String {
@@ -333,14 +354,21 @@ class StatsFragment : Fragment() {
             R.string.movies_watched_format,
             format.format(currentStats.moviesWatched.toLong())
         )
+        val moviesCollection = getString(
+            R.string.stats_in_collection_format,
+            currentStats.moviesCollection
+        )
         val moviesWatchlistRuntime = getTimeDuration(currentStats.moviesWatchlistRuntime)
         val moviesWatchedRuntime = getTimeDuration(currentStats.moviesWatchedRuntime)
+        val moviesCollectionRuntime = getTimeDuration(currentStats.moviesCollectionRuntime)
 
         val movieStats = "$movies ${getString(R.string.statistics_movies)}\n" +
                 "$moviesWatched\n" +
                 "$moviesWatchedRuntime\n" +
                 "$moviesWatchlist\n" +
-                "$moviesWatchlistRuntime\n"
+                "$moviesWatchlistRuntime\n" +
+                "$moviesCollection\n" +
+                "$moviesCollectionRuntime\n"
 
         statsString.append(movieStats)
 

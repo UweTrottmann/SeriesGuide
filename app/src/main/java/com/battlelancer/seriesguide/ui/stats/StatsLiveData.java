@@ -135,7 +135,8 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
                     new String[]{SeriesGuideContract.Movies._ID,
                             SeriesGuideContract.Movies.IN_WATCHLIST, // 1
                             SeriesGuideContract.Movies.WATCHED, // 2
-                            SeriesGuideContract.Movies.RUNTIME_MIN // 3
+                            SeriesGuideContract.Movies.RUNTIME_MIN, // 3
+                            SeriesGuideContract.Movies.IN_COLLECTION // 4
                     }, null, null, null
             );
             if (movies == null) {
@@ -147,14 +148,21 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
             long watchlistRuntime = 0;
             int watched = 0;
             long watchedRuntime = 0;
+            int inCollection = 0;
+            long collectionRuntime = 0;
             while (movies.moveToNext()) {
+                long runtime = movies.getInt(3 /* RUNTIME_MIN */) * DateUtils.MINUTE_IN_MILLIS;
                 if (movies.getInt(1 /* IN_WATCHLIST */) == 1) {
                     inWatchlist++;
-                    watchlistRuntime += movies.getInt(3 /* RUNTIME_MIN */) * DateUtils.MINUTE_IN_MILLIS;
+                    watchlistRuntime += runtime;
                 }
-                if (movies.getInt(2 /* WATCHED */) == 1 ) {
+                if (movies.getInt(2 /* WATCHED */) == 1) {
                     watched++;
-                    watchedRuntime += movies.getInt(3 /* RUNTIME_MIN */) * DateUtils.MINUTE_IN_MILLIS;
+                    watchedRuntime += runtime;
+                }
+                if (movies.getInt(4 /* IN_COLLECTION */) == 1) {
+                    inCollection++;
+                    collectionRuntime += runtime;
                 }
             }
             movies.close();
@@ -163,6 +171,8 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
             stats.moviesWatchlistRuntime = watchlistRuntime;
             stats.moviesWatched = watched;
             stats.moviesWatchedRuntime = watchedRuntime;
+            stats.moviesCollection = inCollection;
+            stats.moviesCollectionRuntime = collectionRuntime;
             return true;
         }
 
@@ -230,7 +240,7 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
     }
 
     static class StatsUpdateEvent {
-        @NonNull  final Stats stats;
+        @NonNull final Stats stats;
         final boolean finalValues;
         final boolean successful;
 
@@ -254,5 +264,7 @@ class StatsLiveData extends LiveData<StatsLiveData.StatsUpdateEvent> {
         long moviesWatchlistRuntime;
         int moviesWatched;
         long moviesWatchedRuntime;
+        int moviesCollection;
+        long moviesCollectionRuntime;
     }
 }
