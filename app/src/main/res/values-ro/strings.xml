@@ -5,18 +5,18 @@
     <string name="lists">Liste</string>
     <string name="movies">Filme</string>
     <string name="statistics">Statistici</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Mai mult</string>
     <string name="search">Căutare</string>
     <string name="preferences">Setări</string>
     <string name="help">Ajutor</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide nu va mai primi actualizări pentru această versiune de Android.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">Detalii</string>
     <string name="episode">Episod</string>
-    <string name="episode_number">Episod %d</string>
+    <string name="episode_number">Episodul %d</string>
     <string name="episodes">Episoade</string>
     <string name="season">Sezon</string>
-    <string name="season_number">Sezonul %d</string>
+    <string name="season_number">Sezon %d</string>
     <string name="specialseason">Episoade speciale</string>
     <string name="ratings">Evaluări</string>
     <!-- Descriptions -->
@@ -30,7 +30,7 @@
     <string name="save_selection">Salvează selecția</string>
     <string name="action_display_all">Arată tot</string>
     <string name="web_search">Căutare pe web</string>
-    <string name="add_to_homescreen">Adăugați pe ecranul de principal</string>
+    <string name="add_to_homescreen">Adaugă la ecranul de principal</string>
     <string name="action_open">Deschide</string>
     <string name="sync_manually">Sincronizare manuala</string>
     <string name="sync_and_update">Sincronizare &amp; innoita</string>

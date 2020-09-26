@@ -112,10 +112,10 @@
     <string name="action_watched">İzlendi yap</string>
     <string name="action_unwatched">İzlenmedi yap</string>
     <string name="state_watched">İzlenmiş</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">İzlendi (%d)</string>
+    <string name="state_skipped">Atlandı</string>
+    <string name="state_in_collection">Koleksiyonda</string>
+    <string name="state_on_watchlist">İzleme listesinde</string>
     <string name="state_favorite">Favori</string>
     <!-- Shows -->
     <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
@@ -332,8 +332,8 @@
     <string name="feedback">Geribildirim Gönder</string>
     <string name="action_open_in_browser">Tarayıcıda aç</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Bu uygulamayı tercüme et</string>
+    <string name="action_contribute_content">Tercüme et veya içeriği geliştir</string>
     <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
@@ -350,7 +350,7 @@
     <string name="pref_language_fallback">Alternatif dil</string>
     <string name="pref_updatewifionly">Görüntüler sadece Wi-Fi üzerinden</string>
     <string name="pref_updatewifionlysummary">Veri ücretlerini azaltmak için, mobil ve tarifeli internet bağlantılarından indirme yapma</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Uygulama geliştiricisine hataları bildir</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d gün önce</item>
         <item quantity="other">%d gün önce</item>
