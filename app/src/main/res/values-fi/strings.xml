@@ -112,7 +112,7 @@
     <string name="action_watched">Katsottu</string>
     <string name="action_unwatched">Katsomaton</string>
     <string name="state_watched">Katsottu</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Katsottu (%d)</string>
+    <string name="state_watched_multiple_format">Katsottu (%d)</string>
     <string name="state_skipped">Ohitettu</string>
     <string name="state_in_collection">Kokoelmassa</string>
     <string name="state_on_watchlist">Seurantalistalla</string>
@@ -250,6 +250,7 @@
     <string name="shows_continuing">%s jatkuu</string>
     <string name="episodes_watched">%s katsottu</string>
     <string name="movies_on_watchlist">%s seurantalistalla</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s katsottu</string>
     <plurals name="days_plural">
         <item quantity="one">%d päivä</item>

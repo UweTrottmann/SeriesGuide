@@ -114,7 +114,7 @@
     <string name="action_watched">Ust. obejrzane</string>
     <string name="action_unwatched">Ust. nieobejrzane</string>
     <string name="state_watched">Obejrzane</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Obejrzane (%d)</string>
+    <string name="state_watched_multiple_format">Obejrzane (%d)</string>
     <string name="state_skipped">Pominięty</string>
     <string name="state_in_collection">W kolekcji</string>
     <string name="state_on_watchlist">Na liście do obejrzenia</string>
@@ -258,6 +258,7 @@
     <string name="shows_continuing">%s w toku</string>
     <string name="episodes_watched">%s obejrzanych</string>
     <string name="movies_on_watchlist">%s pozycji do obejrzenia</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s obejrzanych</string>
     <plurals name="days_plural">
         <item quantity="one">%d dzień</item>

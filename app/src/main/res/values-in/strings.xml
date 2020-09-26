@@ -111,7 +111,7 @@
     <string name="action_watched">Ubah ditonton</string>
     <string name="action_unwatched">Ubah belum ditonton</string>
     <string name="state_watched">Ditonton</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -246,6 +246,7 @@
     <string name="shows_continuing">%s berlanjut</string>
     <string name="episodes_watched">%s ditonton</string>
     <string name="movies_on_watchlist">%s di daftar tonton</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s ditonton</string>
     <plurals name="days_plural">
         <item quantity="other">%d hari</item>

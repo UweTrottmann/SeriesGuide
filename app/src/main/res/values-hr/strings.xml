@@ -113,7 +113,7 @@
     <string name="action_watched">Pogledano</string>
     <string name="action_unwatched">Nije pogledano</string>
     <string name="state_watched">Pogledano</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -254,6 +254,7 @@
     <string name="shows_continuing">%s se nastavlja</string>
     <string name="episodes_watched">%s pogledano</string>
     <string name="movies_on_watchlist">%s na popisu gledanja</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s pogledano</string>
     <plurals name="days_plural">
         <item quantity="one">%d dan</item>

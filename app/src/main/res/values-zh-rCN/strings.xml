@@ -111,7 +111,7 @@
     <string name="action_watched">标记为已观看</string>
     <string name="action_unwatched">标记为未观看</string>
     <string name="state_watched">已观看</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">已观看（%d）</string>
+    <string name="state_watched_multiple_format">已观看（%d）</string>
     <string name="state_skipped">已跳过</string>
     <string name="state_in_collection">在收藏中</string>
     <string name="state_on_watchlist">在待看列表中</string>
@@ -246,6 +246,7 @@
     <string name="shows_continuing">%s 部节目仍在连载</string>
     <string name="episodes_watched">%s 集已观看</string>
     <string name="movies_on_watchlist">%s 部待看电影</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s 集已观看</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>

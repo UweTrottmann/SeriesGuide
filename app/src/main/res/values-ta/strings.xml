@@ -112,7 +112,7 @@
     <string name="action_watched">பார்த்த அமை</string>
     <string name="action_unwatched">இல்லை பார்த்த அமை</string>
     <string name="state_watched">பார்த்த</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Watched (%d)</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -250,6 +250,7 @@
     <string name="shows_continuing">%s தொடரும்</string>
     <string name="episodes_watched">%s பார்த்த</string>
     <string name="movies_on_watchlist">watchlist %s</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s பார்த்த</string>
     <plurals name="days_plural">
         <item quantity="one">%d நாள்</item>
