@@ -8,21 +8,16 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentStatsBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
-import com.battlelancer.seriesguide.widgets.EmptyView
 import java.text.NumberFormat
 
 /**
@@ -31,47 +26,7 @@ import java.text.NumberFormat
  */
 class StatsFragment : Fragment() {
 
-    @BindView(R.id.emptyViewStats)
-    lateinit var errorView: EmptyView
-
-    @BindView(R.id.textViewStatsShows)
-    lateinit var textViewShows: TextView
-    @BindView(R.id.textViewStatsShowsWithNext)
-    lateinit var textViewShowsWithNextEpisode: TextView
-    @BindView(R.id.progressBarStatsShowsWithNext)
-    lateinit var progressBarShowsWithNextEpisode: ProgressBar
-    @BindView(R.id.textViewStatsShowsContinuing)
-    lateinit var textViewShowsContinuing: TextView
-    @BindView(R.id.progressBarStatsShowsContinuing)
-    lateinit var progressBarShowsContinuing: ProgressBar
-
-    @BindView(R.id.textViewStatsEpisodes)
-    lateinit var textViewEpisodes: TextView
-    @BindView(R.id.textViewStatsEpisodesWatched)
-    lateinit var textViewEpisodesWatched: TextView
-    @BindView(R.id.progressBarStatsEpisodesWatched)
-    lateinit var progressBarEpisodesWatched: ProgressBar
-    @BindView(R.id.textViewStatsEpisodesRuntime)
-    lateinit var textViewEpisodesRuntime: TextView
-    @BindView(R.id.progressBarStatsEpisodesRuntime)
-    lateinit var progressBarEpisodesRuntime: ProgressBar
-
-    @BindView(R.id.textViewStatsMovies)
-    lateinit var textViewMovies: TextView
-    @BindView(R.id.textViewStatsMoviesWatchlist)
-    lateinit var textViewMoviesWatchlist: TextView
-    @BindView(R.id.progressBarStatsMoviesWatchlist)
-    lateinit var progressBarMoviesWatchlist: ProgressBar
-    @BindView(R.id.textViewStatsMoviesWatched)
-    lateinit var textViewMoviesWatched: TextView
-    @BindView(R.id.progressBarStatsMoviesWatched)
-    lateinit var progressBarMoviesWatched: ProgressBar
-    @BindView(R.id.textViewStatsMoviesWatchlistRuntime)
-    lateinit var textViewMoviesWatchlistRuntime: TextView
-    @BindView(R.id.textViewStatsMoviesWatchedRuntime)
-    lateinit var textViewMoviesWatchedRuntime: TextView
-
-    private lateinit var unbinder: Unbinder
+    private var binding: FragmentStatsBinding? = null
     private lateinit var model: StatsViewModel
     private var currentStats: StatsLiveData.Stats? = null
     private var hasFinalValues: Boolean = false
@@ -80,43 +35,44 @@ class StatsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_stats, container, false)
-        unbinder = ButterKnife.bind(this, view)
+        binding = FragmentStatsBinding.inflate(inflater, container, false)
+        return binding!!.root
+    }
 
-        errorView.visibility = View.GONE
-        errorView.setButtonClickListener { loadStats() }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = binding!!
+        binding.errorView.visibility = View.GONE
+        binding.errorView.setButtonClickListener { loadStats() }
 
         // set some views invisible so they can be animated in once stats are computed
-        textViewShowsWithNextEpisode.visibility = View.INVISIBLE
-        progressBarShowsWithNextEpisode.visibility = View.INVISIBLE
-        textViewShowsContinuing.visibility = View.INVISIBLE
-        progressBarShowsContinuing.visibility = View.INVISIBLE
+        binding.textViewShowsWithNextEpisode.visibility = View.INVISIBLE
+        binding.progressBarShowsWithNextEpisode.visibility = View.INVISIBLE
+        binding.textViewShowsContinuing.visibility = View.INVISIBLE
+        binding.progressBarShowsContinuing.visibility = View.INVISIBLE
 
-        textViewEpisodesWatched.visibility = View.INVISIBLE
-        progressBarEpisodesWatched.visibility = View.INVISIBLE
-        textViewEpisodesRuntime.visibility = View.INVISIBLE
+        binding.textViewEpisodesWatched.visibility = View.INVISIBLE
+        binding.progressBarEpisodesWatched.visibility = View.INVISIBLE
+        binding.textViewEpisodesRuntime.visibility = View.INVISIBLE
 
-        textViewMoviesWatchlist.visibility = View.INVISIBLE
-        progressBarMoviesWatchlist.visibility = View.INVISIBLE
-        textViewMoviesWatched.visibility = View.INVISIBLE
-        progressBarMoviesWatched.visibility = View.INVISIBLE
-        textViewMoviesWatchlistRuntime.visibility = View.INVISIBLE
-        textViewMoviesWatchedRuntime.visibility = View.INVISIBLE
+        binding.textViewMoviesWatchlist.visibility = View.INVISIBLE
+        binding.progressBarMoviesWatchlist.visibility = View.INVISIBLE
+        binding.textViewMoviesWatched.visibility = View.INVISIBLE
+        binding.progressBarMoviesWatched.visibility = View.INVISIBLE
+        binding.textViewMoviesWatchlistRuntime.visibility = View.INVISIBLE
+        binding.textViewMoviesWatchedRuntime.visibility = View.INVISIBLE
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
-        textViewShows.copyTextToClipboardOnLongClick()
-        textViewShowsWithNextEpisode.copyTextToClipboardOnLongClick()
-        textViewShowsContinuing.copyTextToClipboardOnLongClick()
-        textViewEpisodes.copyTextToClipboardOnLongClick()
-        textViewEpisodesWatched.copyTextToClipboardOnLongClick()
-        textViewEpisodesRuntime.copyTextToClipboardOnLongClick()
-        textViewMovies.copyTextToClipboardOnLongClick()
-        textViewMoviesWatchlist.copyTextToClipboardOnLongClick()
-        textViewMoviesWatched.copyTextToClipboardOnLongClick()
-        textViewMoviesWatchlistRuntime.copyTextToClipboardOnLongClick()
-        textViewMoviesWatchedRuntime.copyTextToClipboardOnLongClick()
-
-        return view
+        binding.textViewShows.copyTextToClipboardOnLongClick()
+        binding.textViewShowsWithNextEpisode.copyTextToClipboardOnLongClick()
+        binding.textViewShowsContinuing.copyTextToClipboardOnLongClick()
+        binding.textViewEpisodes.copyTextToClipboardOnLongClick()
+        binding.textViewEpisodesWatched.copyTextToClipboardOnLongClick()
+        binding.textViewEpisodesRuntime.copyTextToClipboardOnLongClick()
+        binding.textViewMovies.copyTextToClipboardOnLongClick()
+        binding.textViewMoviesWatchlist.copyTextToClipboardOnLongClick()
+        binding.textViewMoviesWatched.copyTextToClipboardOnLongClick()
+        binding.textViewMoviesWatchlistRuntime.copyTextToClipboardOnLongClick()
+        binding.textViewMoviesWatchedRuntime.copyTextToClipboardOnLongClick()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -131,7 +87,7 @@ class StatsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        unbinder.unbind()
+        binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -183,22 +139,24 @@ class StatsFragment : Fragment() {
         stats: StatsLiveData.Stats, hasFinalValues: Boolean,
         successful: Boolean
     ) {
+        val binding = binding ?: return
+
         // display error if not all stats could be calculated
-        errorView.isGone = successful
+        binding.errorView.isGone = successful
 
         val format = NumberFormat.getIntegerInstance()
 
         // all shows
-        textViewShows.text = format.format(stats.shows.toLong())
+        binding.textViewShows.text = format.format(stats.shows.toLong())
 
         // shows with next episodes
-        progressBarShowsWithNextEpisode.apply {
+        binding.progressBarShowsWithNextEpisode.apply {
             max = stats.shows
             progress = stats.showsWithNextEpisodes
             visibility = View.VISIBLE
         }
 
-        textViewShowsWithNextEpisode.apply {
+        binding.textViewShowsWithNextEpisode.apply {
             text = getString(
                 R.string.shows_with_next,
                 format.format(stats.showsWithNextEpisodes.toLong())
@@ -207,31 +165,31 @@ class StatsFragment : Fragment() {
         }
 
         // continuing shows
-        progressBarShowsContinuing.apply {
+        binding.progressBarShowsContinuing.apply {
             max = stats.shows
             progress = stats.showsContinuing
             visibility = View.VISIBLE
         }
 
-        textViewShowsContinuing.text = getString(
+        binding.textViewShowsContinuing.text = getString(
             R.string.shows_continuing,
             format.format(stats.showsContinuing.toLong())
         )
-        textViewShowsContinuing.visibility = View.VISIBLE
+        binding.textViewShowsContinuing.visibility = View.VISIBLE
 
         // all episodes
-        textViewEpisodes.text = format.format(stats.episodes.toLong())
+        binding.textViewEpisodes.text = format.format(stats.episodes.toLong())
 
         // watched episodes
-        progressBarEpisodesWatched.max = stats.episodes
-        progressBarEpisodesWatched.progress = stats.episodesWatched
-        progressBarEpisodesWatched.visibility = View.VISIBLE
+        binding.progressBarEpisodesWatched.max = stats.episodes
+        binding.progressBarEpisodesWatched.progress = stats.episodesWatched
+        binding.progressBarEpisodesWatched.visibility = View.VISIBLE
 
-        textViewEpisodesWatched.text = getString(
+        binding.textViewEpisodesWatched.text = getString(
             R.string.episodes_watched,
             format.format(stats.episodesWatched.toLong())
         )
-        textViewEpisodesWatched.visibility = View.VISIBLE
+        binding.textViewEpisodesWatched.visibility = View.VISIBLE
 
         // episode runtime
         var watchedDuration = getTimeDuration(stats.episodesWatchedRuntime)
@@ -239,45 +197,45 @@ class StatsFragment : Fragment() {
             // showing minimum (= not the final value)
             watchedDuration = "> $watchedDuration"
         }
-        textViewEpisodesRuntime.text = watchedDuration
-        textViewEpisodesRuntime.visibility = View.VISIBLE
-        progressBarEpisodesRuntime.visibility = if (successful)
+        binding.textViewEpisodesRuntime.text = watchedDuration
+        binding.textViewEpisodesRuntime.visibility = View.VISIBLE
+        binding.progressBarEpisodesRuntime.visibility = if (successful)
             if (hasFinalValues) View.GONE else View.VISIBLE
         else
             View.GONE
 
         // movies
-        textViewMovies.text = format.format(stats.movies.toLong())
+        binding.textViewMovies.text = format.format(stats.movies.toLong())
 
         // movies in watchlist
-        progressBarMoviesWatchlist.max = stats.movies
-        progressBarMoviesWatchlist.progress = stats.moviesWatchlist
-        progressBarMoviesWatchlist.visibility = View.VISIBLE
+        binding.progressBarMoviesWatchlist.max = stats.movies
+        binding.progressBarMoviesWatchlist.progress = stats.moviesWatchlist
+        binding.progressBarMoviesWatchlist.visibility = View.VISIBLE
 
-        textViewMoviesWatchlist.text = getString(
+        binding.textViewMoviesWatchlist.text = getString(
             R.string.movies_on_watchlist,
             format.format(stats.moviesWatchlist.toLong())
         )
-        textViewMoviesWatchlist.visibility = View.VISIBLE
+        binding.textViewMoviesWatchlist.visibility = View.VISIBLE
 
         // watched movies
-        progressBarMoviesWatched.max = stats.movies
-        progressBarMoviesWatched.progress = stats.moviesWatched
-        progressBarMoviesWatched.visibility = View.VISIBLE
+        binding.progressBarMoviesWatched.max = stats.movies
+        binding.progressBarMoviesWatched.progress = stats.moviesWatched
+        binding.progressBarMoviesWatched.visibility = View.VISIBLE
 
-        textViewMoviesWatched.text = getString(
+        binding.textViewMoviesWatched.text = getString(
             R.string.movies_watched_format,
             format.format(stats.moviesWatched.toLong())
         )
-        textViewMoviesWatched.visibility = View.VISIBLE
+        binding.textViewMoviesWatched.visibility = View.VISIBLE
 
         // runtime of movie watchlist
-        textViewMoviesWatchlistRuntime.text = getTimeDuration(stats.moviesWatchlistRuntime)
-        textViewMoviesWatchlistRuntime.visibility = View.VISIBLE
+        binding.textViewMoviesWatchlistRuntime.text = getTimeDuration(stats.moviesWatchlistRuntime)
+        binding.textViewMoviesWatchlistRuntime.visibility = View.VISIBLE
 
         // runtime of watched movies
-        textViewMoviesWatchedRuntime.text = getTimeDuration(stats.moviesWatchedRuntime)
-        textViewMoviesWatchedRuntime.visibility = View.VISIBLE
+        binding.textViewMoviesWatchedRuntime.text = getTimeDuration(stats.moviesWatchedRuntime)
+        binding.textViewMoviesWatchedRuntime.visibility = View.VISIBLE
     }
 
     private fun getTimeDuration(duration: Long): String {
