@@ -5,7 +5,7 @@
     <string name="lists">Listák</string>
     <string name="movies">Filmek</string>
     <string name="statistics">Statisztika</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Továbbiak</string>
     <string name="search">Keresés</string>
     <string name="preferences">Beállítások</string>
     <string name="help">Súgó</string>
@@ -112,11 +112,11 @@
     <string name="action_watched">Megnézve</string>
     <string name="action_unwatched">Még nem láttam</string>
     <string name="state_watched">Megnézve</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched_multiple_format">Megnézve (%d)</string>
+    <string name="state_skipped">Kihagyva</string>
+    <string name="state_in_collection">Gyűjteményben</string>
+    <string name="state_on_watchlist">Figyelőlistán</string>
+    <string name="state_favorite">Kedvencek</string>
     <!-- Shows -->
     <string name="confirm_delete">Biztosan törlöd a következőt: %s?</string>
     <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
@@ -250,7 +250,7 @@
     <string name="shows_continuing">%s folytatódik</string>
     <string name="episodes_watched">%s megnézve</string>
     <string name="movies_on_watchlist">%s a figyelőlistában</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d a gyűjteményben</string>
     <string name="movies_watched_format">%s megnézve</string>
     <plurals name="days_plural">
         <item quantity="one">%d nap</item>
@@ -333,7 +333,7 @@
     <string name="feedback">Visszajelzés küldése</string>
     <string name="action_open_in_browser">Megnyitás böngészőben</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
+    <string name="action_translate">Alkalmazás fordítása</string>
     <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
@@ -454,7 +454,7 @@
     <string name="pref_notification_channel_errors">Hibák</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings">Akkumulátor beállítások</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Megnézett epizódok elrejtése</string>
@@ -479,7 +479,7 @@
     <string name="billing_price_pass">Egyszeri fizetés</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_learn_more">Továbi információk és segítség</string>
     <string name="subscription_expired">Lejárt az előfizetés</string>
     <string name="subscription_expired_details">Lejárt a SeriesGuide előfizetésed.</string>
     <!-- Amazon In-App Billing -->

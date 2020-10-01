@@ -250,7 +250,7 @@
     <string name="shows_continuing">%s lopende</string>
     <string name="episodes_watched">%s bekeken</string>
     <string name="movies_on_watchlist">%s op watchlist</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d in collectie</string>
     <string name="movies_watched_format">%s bekeken</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>

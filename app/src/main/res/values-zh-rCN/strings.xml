@@ -246,7 +246,7 @@
     <string name="shows_continuing">%s 部节目仍在连载</string>
     <string name="episodes_watched">%s 集已观看</string>
     <string name="movies_on_watchlist">%s 部待看电影</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d 在收藏中</string>
     <string name="movies_watched_format">%s 集已观看</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>
