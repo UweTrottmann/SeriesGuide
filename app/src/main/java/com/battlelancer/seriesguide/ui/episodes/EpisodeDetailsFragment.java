@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +81,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private static final String ARG_EPISODE_TVDBID = "episode_tvdbid";
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private TraktRatingsTask ratingsTask;
 
     private int episodeTvdbId;

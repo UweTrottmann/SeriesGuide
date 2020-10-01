@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
@@ -71,7 +72,7 @@ class ListWidgetPreferenceActivity : AppCompatActivity() {
         val runnable = Runnable {
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
         }
-        Handler().postDelayed(runnable, 300)
+        Handler(Looper.getMainLooper()).postDelayed(runnable, 300)
 
         setWidgetResult(Activity.RESULT_OK)
         finish()

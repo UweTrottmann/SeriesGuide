@@ -8,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -23,6 +22,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import androidx.palette.graphics.Palette
@@ -61,6 +61,9 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.Videos
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -80,7 +83,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var movieTitle: String? = null
     private var trailer: Videos.Video? = null
 
-    private val handler = Handler()
     private var paletteAsyncTask: AsyncTask<Bitmap, Void, Palette>? = null
 
     override fun onCreateView(
@@ -666,18 +668,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    private val movieActionsRunnable = Runnable {
-        if (!isAdded) {
-            return@Runnable // we need an activity for this, abort.
-        }
-        loadMovieActions()
-    }
+    private var loadActionsJob: Job? = null
 
     override fun loadMovieActionsDelayed() {
-        handler.removeCallbacks(movieActionsRunnable)
-        handler.postDelayed(
-            movieActionsRunnable, MovieActionsContract.ACTION_LOADER_DELAY_MILLIS.toLong()
-        )
+        // Simple de-bounce: cancel any waiting job.
+        loadActionsJob?.cancel()
+        loadActionsJob = lifecycleScope.launch {
+            delay(MovieActionsContract.ACTION_LOADER_DELAY_MILLIS.toLong())
+            loadMovieActions()
+        }
     }
 
     private fun rateMovie() {

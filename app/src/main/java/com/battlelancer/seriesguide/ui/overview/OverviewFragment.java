@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -149,7 +150,7 @@ public class OverviewFragment extends Fragment implements
 
     @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private TraktRatingsTask ratingsTask;
     private Unbinder unbinder;
 
