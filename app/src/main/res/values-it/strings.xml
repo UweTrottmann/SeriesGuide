@@ -112,7 +112,7 @@
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">Non visto</string>
     <string name="state_watched">Visto</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Visto (%d)</string>
+    <string name="state_watched_multiple_format">Visto (%d)</string>
     <string name="state_skipped">Saltato</string>
     <string name="state_in_collection">In collezione</string>
     <string name="state_on_watchlist">Da vedere</string>
@@ -250,6 +250,7 @@
     <string name="shows_continuing">%s in produzione</string>
     <string name="episodes_watched">%s guardati</string>
     <string name="movies_on_watchlist">%s nella lista dei film da vedere</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s guardati</string>
     <plurals name="days_plural">
         <item quantity="one">%d giorno</item>

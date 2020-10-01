@@ -112,7 +112,7 @@
     <string name="action_watched">Έχει παρακολουθηθεί </string>
     <string name="action_unwatched">Δεν παρακολούθησα</string>
     <string name="state_watched">Είδατε</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Έχουν προβληθεί (%d)</string>
+    <string name="state_watched_multiple_format">Έχουν προβληθεί (%d)</string>
     <string name="state_skipped">Παραλείφθηκε</string>
     <string name="state_in_collection">Σε συλλογή</string>
     <string name="state_on_watchlist">Σε λίστα παρακολούθησης</string>
@@ -250,6 +250,7 @@
     <string name="shows_continuing">%s συνεχίζονται</string>
     <string name="episodes_watched">%s παρακολουθήθηκαν</string>
     <string name="movies_on_watchlist">%s στην λίστα παρακολούθησης</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s παρακολουθήθηκαν</string>
     <plurals name="days_plural">
         <item quantity="one">%d ημέρα</item>

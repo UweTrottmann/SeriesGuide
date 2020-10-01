@@ -114,7 +114,7 @@
     <string name="action_watched">Označiť ako videné</string>
     <string name="action_unwatched">Označiť ako nevidené</string>
     <string name="state_watched">Videné</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Videné (%d)</string>
+    <string name="state_watched_multiple_format">Videné (%d)</string>
     <string name="state_skipped">Preskočené</string>
     <string name="state_in_collection">V zbierke</string>
     <string name="state_on_watchlist">V Chcem vidieť</string>
@@ -258,6 +258,7 @@
     <string name="shows_continuing">%s pokračuje</string>
     <string name="episodes_watched">%s videných</string>
     <string name="movies_on_watchlist">%s v Chcem vidieť</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s videných</string>
     <plurals name="days_plural">
         <item quantity="one">%d deň</item>

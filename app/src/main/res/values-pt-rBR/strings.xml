@@ -112,7 +112,7 @@
     <string name="action_watched">Marcar como assistido</string>
     <string name="action_unwatched">Marcar como não assistido</string>
     <string name="state_watched">Assistido</string>
-    <string name="state_watched_multiple_format" comment="Like watched, but includes the number of times in parentheses. Example: Watched (3)">Assistido (%d)</string>
+    <string name="state_watched_multiple_format">Assistido (%d)</string>
     <string name="state_skipped">Ignorado</string>
     <string name="state_in_collection">Na coleção</string>
     <string name="state_on_watchlist">Na lista</string>
@@ -250,6 +250,7 @@
     <string name="shows_continuing">%s em exibição</string>
     <string name="episodes_watched">%s assistidos</string>
     <string name="movies_on_watchlist">%s na lista</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s assistidos</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
