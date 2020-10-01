@@ -1,6 +1,6 @@
 # SeriesGuide Show Manager
 
-Android app to help you keep track of your favorite TV shows and movies.
+Android app to help you keep track of your favorite TV shows and movies.This app helps you as a companion which will guide you to watch some amazing movies with many different genre. 
 
 [Download at seriesgui.de](https://seriesgui.de).
 
