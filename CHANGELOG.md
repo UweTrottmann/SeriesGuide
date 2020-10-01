@@ -12,6 +12,12 @@ Version 56
 ----------
 *in development*
 
+#### 56-beta3
+*2020-10-01*
+
+* 🔧 Display number and share of movies in collection in statistics, drop redundant progress bar.
+* 📝 Latest translations from crowdin.
+
 #### 56-beta2
 *2020-09-11*
 
