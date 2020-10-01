@@ -2,11 +2,9 @@ package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -61,9 +59,11 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.Videos
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -82,8 +82,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var movieDetails: MovieDetails? = MovieDetails()
     private var movieTitle: String? = null
     private var trailer: Videos.Video? = null
-
-    private var paletteAsyncTask: AsyncTask<Bitmap, Void, Palette>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -209,8 +207,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
         Picasso.get().cancelRequest(binding.imageViewMoviePoster)
-        // same for Palette task
-        paletteAsyncTask?.cancel(true)
 
         _binding = null
     }
@@ -465,16 +461,24 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             ServiceUtils.loadWithPicasso(activity, smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
-                        val bitmap =
-                            (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
-                        paletteAsyncTask = Palette.from(bitmap)
-                            .generate { palette ->
-                                if (palette != null) {
-                                    var color = palette.getVibrantColor(Color.WHITE)
-                                    color = ColorUtils.setAlphaComponent(color, 50)
-                                    binding.rootLayoutMovie.setBackgroundColor(color)
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            val bitmap =
+                                (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
+
+                            val color = withContext(Dispatchers.Default) {
+                                val palette = try {
+                                    Palette.from(bitmap).generate()
+                                } catch (e: Exception) {
+                                    Timber.e(e, "Failed to generate palette.")
+                                    null
                                 }
+                                palette
+                                    ?.getVibrantColor(Color.WHITE)
+                                    ?.let { ColorUtils.setAlphaComponent(it, 50) }
                             }
+
+                            color?.let { binding.rootLayoutMovie.setBackgroundColor(it) }
+                        }
                     }
                 })
             // click listener for high resolution poster
