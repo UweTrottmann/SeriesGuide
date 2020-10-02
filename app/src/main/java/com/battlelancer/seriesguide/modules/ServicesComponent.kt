@@ -4,7 +4,6 @@ import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools
 import com.battlelancer.seriesguide.traktapi.ConnectTraktTask
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
@@ -54,5 +53,4 @@ interface ServicesComponent {
     fun inject(showCreditsLoader: ShowCreditsLoader)
     fun inject(traktAddLoader: TraktAddLoader)
     fun inject(traktCommentsLoader: TraktCommentsLoader)
-    fun inject(traktRatingsTask: TraktRatingsTask)
 }
