@@ -30,6 +30,7 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import io.palaima.debugdrawer.timber.data.LumberYard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import org.greenrobot.eventbus.EventBus
@@ -101,6 +102,13 @@ class SgApp : Application() {
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
          */
         const val CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider"
+
+        /**
+         * A global [CoroutineScope] to avoid using [GlobalScope] and leave open the possibility
+         * of exception handling and other things. Note this is a [MainScope] so unlike
+         * [GlobalScope] the dispatcher is [Dispatchers.Main] by default.
+         */
+        val coroutineScope = MainScope()
 
         /** Executes one coroutine at a time. But does not guarantee order if they suspend. */
         @Suppress("EXPERIMENTAL_API_USAGE")

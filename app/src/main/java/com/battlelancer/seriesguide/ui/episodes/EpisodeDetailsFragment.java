@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui.episodes;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -45,7 +44,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
+import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
@@ -67,6 +66,7 @@ import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import kotlinx.coroutines.Job;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -81,7 +81,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private TraktRatingsTask ratingsTask;
+    private Job ratingFetchJob;
 
     private int episodeTvdbId;
     private int showTvdbId;
@@ -262,10 +262,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (ratingsTask != null) {
-            ratingsTask.cancel(true);
-            ratingsTask = null;
-        }
+        // Release reference to any job.
+        ratingFetchJob = null;
     }
 
     /**
@@ -633,10 +631,14 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private void loadDetails() {
         // update trakt ratings
-        if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            ratingsTask = new TraktRatingsTask(requireContext(), showTvdbId, episodeTvdbId,
-                    seasonNumber, episodeNumber);
-            ratingsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
+            ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
+                    requireContext(),
+                    showTvdbId,
+                    episodeTvdbId,
+                    seasonNumber,
+                    episodeNumber
+            );
         }
     }
 
