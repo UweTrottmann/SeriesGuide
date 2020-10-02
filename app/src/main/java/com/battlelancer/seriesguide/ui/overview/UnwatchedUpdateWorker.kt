@@ -4,7 +4,6 @@ import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.util.DBUtils
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -19,7 +18,7 @@ object UnwatchedUpdateWorker {
      * May be cancelled when the app process dies.
      */
     fun updateUnwatchedCountFor(context: Context, showTvdbId: Int, seasonTvdbId: Int = -1) {
-        GlobalScope.launch {
+        SgApp.coroutineScope.launch {
             updateUnwatchedCount(context.applicationContext, showTvdbId, seasonTvdbId)
         }
     }
