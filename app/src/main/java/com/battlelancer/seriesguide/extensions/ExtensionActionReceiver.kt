@@ -3,12 +3,12 @@ package com.battlelancer.seriesguide.extensions
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Action
 import com.battlelancer.seriesguide.api.constants.IncomingConstants
 import com.battlelancer.seriesguide.api.constants.OutgoingConstants
 import com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_PUBLISH_ACTION
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -20,7 +20,7 @@ class ExtensionActionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val appContext = context.applicationContext
         if (ACTION_PUBLISH_ACTION == intent.action) {
-            GlobalScope.launch {
+            SgApp.coroutineScope.launch {
                 withContext(Dispatchers.Default) {
                     // An extension published a new action.
                     val token = intent.getStringExtra(IncomingConstants.EXTRA_TOKEN)
