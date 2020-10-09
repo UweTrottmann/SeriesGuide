@@ -31,12 +31,13 @@ import io.palaima.debugdrawer.timber.data.LumberYard
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
 import java.util.ArrayList
+import java.util.concurrent.Executors
 
 /**
  * Initializes logging and services.
@@ -111,8 +112,7 @@ class SgApp : Application() {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
         /** Executes one coroutine at a time. But does not guarantee order if they suspend. */
-        @Suppress("EXPERIMENTAL_API_USAGE")
-        val SINGLE = newSingleThreadContext("SingleThread")
+        val SINGLE = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
         private var servicesComponent: ServicesComponent? = null
 

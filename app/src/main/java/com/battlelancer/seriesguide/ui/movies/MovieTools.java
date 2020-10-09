@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
+import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
@@ -115,11 +115,11 @@ public class MovieTools {
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, true));
+        FlagJobExecutor.execute(context, new MovieCollectionJob(movieTmdbId, true));
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, true));
+        FlagJobExecutor.execute(context, new MovieWatchlistJob(movieTmdbId, true));
     }
 
     /**
@@ -142,11 +142,11 @@ public class MovieTools {
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, false));
+        FlagJobExecutor.execute(context, new MovieCollectionJob(movieTmdbId, false));
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, false));
+        FlagJobExecutor.execute(context, new MovieWatchlistJob(movieTmdbId, false));
     }
 
     /**
@@ -177,7 +177,7 @@ public class MovieTools {
     }
 
     static void watchedMovie(Context context, int movieTmdbId, boolean inWatchlist) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, true));
+        FlagJobExecutor.execute(context, new MovieWatchedJob(movieTmdbId, true));
         // background: watched state currently only supported with trakt
         // trakt removes from watchlist automatically, but app would not show until next sync
         // and not mirror on hexagon, so do it manually
@@ -187,7 +187,7 @@ public class MovieTools {
     }
 
     static void unwatchedMovie(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false));
+        FlagJobExecutor.execute(context, new MovieWatchedJob(movieTmdbId, false));
     }
 
     /**

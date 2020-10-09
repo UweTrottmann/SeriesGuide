@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
 import android.database.Cursor;
-import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
+import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedUpToJob;
@@ -67,13 +67,13 @@ public class EpisodeTools {
     public static void episodeWatched(Context context, int showTvdbId, int episodeTvdbId,
             int season, int episode, int episodeFlags) {
         validateFlags(episodeFlags);
-        FlagJobAsyncTask.executeJob(context,
+        FlagJobExecutor.execute(context,
                 new EpisodeWatchedJob(showTvdbId, episodeTvdbId, season, episode, episodeFlags));
     }
 
     public static void episodeCollected(Context context, int showTvdbId, int episodeTvdbId,
             int season, int episode, boolean isCollected) {
-        FlagJobAsyncTask.executeJob(context,
+        FlagJobExecutor.execute(context,
                 new EpisodeCollectedJob(showTvdbId, episodeTvdbId, season, episode, isCollected));
     }
 
@@ -83,30 +83,30 @@ public class EpisodeTools {
      */
     public static void episodeWatchedUpTo(Context context, int showTvdbId,
             long episodeFirstAired, int episodeNumber) {
-        FlagJobAsyncTask.executeJob(context,
+        FlagJobExecutor.execute(context,
                 new EpisodeWatchedUpToJob(showTvdbId, episodeFirstAired, episodeNumber));
     }
 
     public static void seasonWatched(Context context, int showTvdbId, int seasonTvdbId, int season,
             int episodeFlags) {
         validateFlags(episodeFlags);
-        FlagJobAsyncTask.executeJob(context, new SeasonWatchedJob(showTvdbId, seasonTvdbId, season,
+        FlagJobExecutor.execute(context, new SeasonWatchedJob(showTvdbId, seasonTvdbId, season,
                 episodeFlags, TimeTools.getCurrentTime(context)));
     }
 
     public static void seasonCollected(Context context, int showTvdbId, int seasonTvdbId,
             int season, boolean isCollected) {
-        FlagJobAsyncTask.executeJob(context,
+        FlagJobExecutor.execute(context,
                 new SeasonCollectedJob(showTvdbId, seasonTvdbId, season, isCollected));
     }
 
     public static void showWatched(Context context, int showTvdbId, boolean isFlag) {
-        FlagJobAsyncTask.executeJob(context,
+        FlagJobExecutor.execute(context,
                 new ShowWatchedJob(showTvdbId, isFlag ? 1 : 0, TimeTools.getCurrentTime(context)));
     }
 
     public static void showCollected(Context context, int showTvdbId, boolean isCollected) {
-        FlagJobAsyncTask.executeJob(context, new ShowCollectedJob(showTvdbId, isCollected));
+        FlagJobExecutor.execute(context, new ShowCollectedJob(showTvdbId, isCollected));
     }
 
 }
