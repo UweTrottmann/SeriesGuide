@@ -12,6 +12,13 @@ Version 56
 ----------
 *in development*
 
+#### 56-beta4
+*2020-10-09*
+
+* 🔧 Improvements to background tasks, billing.
+* 🔨 Do not crash when loading movie with invalid release date.
+* 🔧 Optimizations for Android 11.
+
 #### 56-beta3
 *2020-10-01*
 
