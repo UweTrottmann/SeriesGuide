@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
 import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus
-import timber.log.Timber
 
 class BillingViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -23,12 +22,6 @@ class BillingViewModel(application: Application) : AndroidViewModel(application)
         subsSkuDetailsListLiveData = repository.subsSkuDetailsListLiveData
         entitlementRevokedEvent = repository.entitlementRevokedEvent
         errorEvent = repository.errorEvent
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Timber.d("onCleared")
-        repository.endDataSourceConnections()
     }
 
     fun makePurchase(activity: Activity, augmentedSkuDetails: AugmentedSkuDetails) {
