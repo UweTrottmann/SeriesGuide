@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.Show
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -26,7 +25,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     fun storeIsFavorite(showTvdbId: Int, isFavorite: Boolean) {
-        GlobalScope.launch {
+        SgApp.coroutineScope.launch {
             storeIsFavoriteAsync(showTvdbId, isFavorite)
         }
     }
@@ -83,7 +82,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
     fun storeIsHidden(showTvdbId: Int, isHidden: Boolean) {
-        GlobalScope.launch {
+        SgApp.coroutineScope.launch {
             storeIsHiddenAsync(showTvdbId, isHidden)
         }
     }
@@ -138,7 +137,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
      * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
      */
     fun storeNotify(showTvdbId: Int, notify: Boolean) {
-        GlobalScope.launch {
+        SgApp.coroutineScope.launch {
             storeNotifyAsync(showTvdbId, notify)
         }
     }
@@ -183,7 +182,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
      * the cloud as well.
      */
     fun storeAllHiddenVisible() {
-        GlobalScope.launch {
+        SgApp.coroutineScope.launch {
             // Send to cloud.
             val isCloudFailed = withContext(Dispatchers.Default) {
                 if (!HexagonSettings.isEnabled(context)) {
@@ -229,7 +228,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     }
 
     fun uploadShowToCloud(show: Show) {
-        GlobalScope.launch {
+        SgApp.coroutineScope.launch {
             uploadShowToCloudAsync(show)
         }
     }

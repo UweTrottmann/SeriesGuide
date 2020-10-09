@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
+import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
@@ -117,11 +117,11 @@ public class MovieTools {
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, true));
+        FlagJobExecutor.execute(context, new MovieCollectionJob(movieTmdbId, true));
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, true));
+        FlagJobExecutor.execute(context, new MovieWatchlistJob(movieTmdbId, true));
     }
 
     /**
@@ -143,11 +143,11 @@ public class MovieTools {
     }
 
     public static void removeFromCollection(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, false));
+        FlagJobExecutor.execute(context, new MovieCollectionJob(movieTmdbId, false));
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, false));
+        FlagJobExecutor.execute(context, new MovieWatchlistJob(movieTmdbId, false));
     }
 
     /**
@@ -188,7 +188,7 @@ public class MovieTools {
             int currentPlays,
             boolean inWatchlist
     ) {
-        FlagJobAsyncTask.executeJob(
+        FlagJobExecutor.execute(
                 context,
                 new MovieWatchedJob(movieTmdbId, true, currentPlays)
         );
@@ -200,7 +200,7 @@ public class MovieTools {
     }
 
     static void unwatchedMovie(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false, 0));
+        FlagJobExecutor.execute(context, new MovieWatchedJob(movieTmdbId, false, 0));
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {

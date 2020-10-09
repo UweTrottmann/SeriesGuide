@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.overview
 
 import android.content.Intent
 import android.database.Cursor
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -32,7 +31,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask
+import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -56,6 +55,7 @@ import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -143,7 +143,7 @@ class ShowFragment : Fragment() {
     private var showTvdbId: Int = 0
     private var showCursor: Cursor? = null
     private lateinit var showTools: ShowTools
-    private var traktTask: TraktRatingsTask? = null
+    private var ratingFetchJob: Job? = null
     private var showSlug: String? = null
     private var showTitle: String? = null
     private var posterPath: String? = null
@@ -226,6 +226,12 @@ class ShowFragment : Fragment() {
         super.onDestroyView()
 
         unbinder.unbind()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Release reference to any job.
+        ratingFetchJob = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -630,11 +636,9 @@ class ShowFragment : Fragment() {
     }
 
     private fun loadTraktRatings() {
-        val oldTraktTask = traktTask
-        if (oldTraktTask == null || oldTraktTask.status == AsyncTask.Status.FINISHED) {
-            val newTraktTask = TraktRatingsTask(context, showTvdbId)
-            newTraktTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            traktTask = newTraktTask
+        val oldRatingFetchJob = ratingFetchJob
+        if (oldRatingFetchJob == null || !oldRatingFetchJob.isActive) {
+            ratingFetchJob = TraktRatingsFetcher.fetchShowRatingsAsync(requireContext(), showTvdbId)
         }
     }
 
