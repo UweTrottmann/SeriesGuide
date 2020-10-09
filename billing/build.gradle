@@ -40,7 +40,7 @@ dependencies {
 
     // Google Play Billing
     // https://developer.android.com/google/play/billing/billing_library_releases_notes
-    implementation 'com.android.billingclient:billing-ktx:3.0.0'
+    implementation 'com.android.billingclient:billing-ktx:3.0.1'
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
