@@ -373,7 +373,14 @@ public class TraktEpisodeSync {
                 if (isWatchedLocally) {
                     if (isInitialSync) {
                         // Upload to Trakt.
-                        syncEpisodes.add(new SyncEpisode().number(episodeNumber));
+                        int plays = localEpisode.getPlays() != null
+                                ? localEpisode.getPlays()
+                                : 1 /* Safe-guard (plays should never be null). */;
+                        // Add an episode for each play, Trakt will create a separate play for each.
+                        SyncEpisode syncEpisode = new SyncEpisode().number(episodeNumber);
+                        for (int i = 0; i < plays; i++) {
+                            syncEpisodes.add(syncEpisode);
+                        }
                     } else {
                         // Set as not watched and remove plays if it is currently watched.
                         ContentProviderOperation.Builder update = ContentProviderOperation
@@ -590,7 +597,7 @@ public class TraktEpisodeSync {
         // query for watched/collected episodes of the given season
         Cursor flaggedEpisodesQuery = context.getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonUri(seasonTvdbId),
-                new String[]{Episodes.NUMBER},
+                new String[]{Episodes.NUMBER, Episodes.PLAYS},
                 flag.flagSelection,
                 null,
                 Episodes.SORT_NUMBER_ASC);
@@ -602,7 +609,13 @@ public class TraktEpisodeSync {
         List<SyncEpisode> syncEpisodes = new ArrayList<>();
         while (flaggedEpisodesQuery.moveToNext()) {
             int episodeNumber = flaggedEpisodesQuery.getInt(0);
-            syncEpisodes.add(new SyncEpisode().number(episodeNumber));
+            int plays = flaggedEpisodesQuery.getInt(1);
+
+            // Add an episode for each play, Trakt will create a separate play for each.
+            SyncEpisode syncEpisode = new SyncEpisode().number(episodeNumber);
+            for (int i = 0; i < plays; i++) {
+                syncEpisodes.add(syncEpisode);
+            }
         }
         flaggedEpisodesQuery.close();
 
@@ -623,6 +636,7 @@ public class TraktEpisodeSync {
         while (episodesCursor.moveToNext()) {
             int season = episodesCursor.getInt(EpisodesQuery.SEASON);
             int episode = episodesCursor.getInt(EpisodesQuery.EPISODE);
+            int plays = episodesCursor.getInt(EpisodesQuery.PLAYS);
 
             // create new season if none exists or number has changed
             if (currentSeason == null || currentSeason.number != season) {
@@ -631,8 +645,11 @@ public class TraktEpisodeSync {
                 seasons.add(currentSeason);
             }
 
-            // add episode
-            currentSeason.episodes.add(new SyncEpisode().number(episode));
+            // Add an episode for each play, Trakt will create a separate play for each.
+            SyncEpisode syncEpisode = new SyncEpisode().number(episode);
+            for (int i = 0; i < plays; i++) {
+                currentSeason.episodes.add(syncEpisode);
+            }
         }
 
         return seasons;
@@ -641,11 +658,12 @@ public class TraktEpisodeSync {
     private interface EpisodesQuery {
 
         String[] PROJECTION = new String[]{
-                Episodes.SEASON, Episodes.NUMBER
+                Episodes.SEASON, Episodes.NUMBER, Episodes.PLAYS
         };
 
         int SEASON = 0;
         int EPISODE = 1;
+        int PLAYS = 2;
     }
 
     public enum Flag {
