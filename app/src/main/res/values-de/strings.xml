@@ -425,7 +425,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatische Sicherung</string>
     <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme im Gerätespeicher.</string>
-    <string name="autobackup_details">Diese Sicherungen sind nicht verfügbar, wenn die App neu installiert wird, es sei denn, die App-Daten-Sicherung ist für dieses Gerät aktiviert (Android 6+). Erstellen Sie ansonsten Kopien, um sie aufzubewahren.</string>
+    <string name="autobackup_details">Diese Sicherungen sind nicht verfügbar, wenn die App neu installiert wird. Erstellen Sie Kopien, um sie anderweitig aufzubewahren.</string>
     <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
     <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
     <string name="autobackup_failed">Die letzte automatische Sicherung ist fehlgeschlagen</string>

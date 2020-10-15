@@ -414,7 +414,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">自動備份</string>
     <string name="pref_autobackupsummary">每週備份你的節目，清單和電影</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">剩餘自動備份︰ %s</string>
     <string name="restore_auto_backup">還原自動備份</string>
     <string name="autobackup_failed">The last auto backup has failed</string>

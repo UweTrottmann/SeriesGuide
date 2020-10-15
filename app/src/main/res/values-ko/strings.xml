@@ -414,7 +414,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">자동 백업</string>
     <string name="pref_autobackupsummary">매주 프로그램, 목록, 영화를 백업합니다.</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">최근 자동 백업: %s</string>
     <string name="restore_auto_backup">자동 백업 복원</string>
     <string name="autobackup_failed">The last auto backup has failed</string>

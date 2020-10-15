@@ -425,7 +425,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatikus biztonsági másolat</string>
     <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">Utolsó automata mentés: %s</string>
     <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
     <string name="autobackup_failed">A legutóbbi automatikus mentés nem sikerült</string>

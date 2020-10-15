@@ -425,7 +425,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Copias de seguridade automáticas</string>
     <string name="pref_autobackupsummary">Copia de seguridade semanal das túas series, listas e películas</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">Última copia de seguridade automática: %s</string>
     <string name="restore_auto_backup">Restaurar copia de seguridade automática</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
