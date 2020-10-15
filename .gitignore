@@ -47,3 +47,6 @@ build/
 
 ## Proguard
 unused.txt
+
+## Flatbuffers
+flatc.exe

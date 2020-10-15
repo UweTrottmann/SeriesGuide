@@ -112,6 +112,7 @@
     <string name="action_watched">Sett</string>
     <string name="action_unwatched">Ikke sett</string>
     <string name="state_watched">Sett</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s fortsetter</string>
     <string name="episodes_watched">%s sett</string>
     <string name="movies_on_watchlist">%s i overvåkningslisten</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s sett</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
@@ -349,6 +351,7 @@
     <string name="pref_language_fallback">Alternativt språk</string>
     <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
     <string name="pref_updatewifionlysummary">For å redusere datakostnadene, ikke last ned over mobil eller målte nettverk</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dag tidligere</item>
         <item quantity="other">%d dager tidligere</item>
@@ -422,7 +425,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
     <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
     <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
@@ -451,6 +454,8 @@
     <string name="pref_notification_channel_errors">Feil</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sette episoder</string>
     <string name="pref_widget_opacity">Modulbakgrunn</string>

@@ -8,6 +8,63 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 56
+----------
+*2020-10-15*
+
+* 🌟 Limited support for watching episodes and movies multiple times. Synced with Cloud or Trakt.
+  Only available for supporters.
+* 🌟 Metacritic search link for shows and movies. Note that only English titles get good results.
+* 🔧 Display movies in collection in statistics.
+* 🔧 Shorter English episode number formats by default (S01E01 -> S1:E1). The older formats are
+  still available in Settings.
+
+#### 56
+*2020-10-15*
+
+* 🔧 Upload multiple plays to Trakt during first sync (previously would only upload one).
+
+#### 56-beta4
+*2020-10-09*
+
+* 🔧 Improvements to background tasks, billing.
+* 🔨 Do not crash when loading movie with invalid release date.
+
+#### 56-beta3
+*2020-10-01*
+
+* 🔧 Display number and share of movies in collection in statistics, drop redundant progress bar.
+* 📝 Latest translations from crowdin.
+
+#### 56-beta2
+*2020-09-11*
+
+* 🌟 Limited support for re-watching episodes and movies. When viewing an episode or movie, tap
+  Watched and then Set watched to add another play. To keep things simple, SeriesGuide only keeps
+  a count of plays. This is only available for supporters.
+* 📝 When connecting Trakt, multiple plays are not uploaded (as Trakt keeps a watched at time,
+  not sure how to handle this, yet).
+* 📝 The JSON backup format now exports plays count for episodes and movies.
+* 🔨 Potential fix for Trakt sign-in issues for some users.
+* 🔧 Add additional reporting to help diagnose Trakt sign-in issues.
+* 🔧 Add option to turn off sending crash and error reports.
+* 🔨 Tapping the launcher icon to open the app now always returns to the previous screen.
+* 🔨 Display movie info instead of nothing if sending movie action to Trakt fails.
+* 📝 Latest translations from crowdin.
+
+#### 56-beta1
+*2020-08-07*
+
+* 🌟 Metacritic search link for shows and movies. Note that only English titles get good results.
+* 🔧 Shorter English episode number formats by default (S01E01 -> S1:E1). The older formats are still available in Settings.
+* 🔧 Show details layout again always includes status, network and time.
+* 🔧 Show overview multi-pane layout requires larger screen width in landscape.
+  Most tall phones using gesture navigation should support it.
+* 🔧 Update older movies more often (180 -> 90 days), this should resolve broken posters more quickly.
+* 🔧 Fast scroller for watched movie list.
+* 🔧 Link to battery settings/app info page from notification settings to make users aware of these system settings.
+* 📝 Latest translations from crowdin.
+
 Version 55
 ----------
 *2020-07-16*

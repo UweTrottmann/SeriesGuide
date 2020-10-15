@@ -111,6 +111,7 @@
     <string name="action_watched">标记为已观看</string>
     <string name="action_unwatched">标记为未观看</string>
     <string name="state_watched">已观看</string>
+    <string name="state_watched_multiple_format">已观看（%d）</string>
     <string name="state_skipped">已跳过</string>
     <string name="state_in_collection">在收藏中</string>
     <string name="state_on_watchlist">在待看列表中</string>
@@ -245,6 +246,7 @@
     <string name="shows_continuing">%s 部节目仍在连载</string>
     <string name="episodes_watched">%s 集已观看</string>
     <string name="movies_on_watchlist">%s 部待看电影</string>
+    <string name="stats_in_collection_format">%d 在收藏中</string>
     <string name="movies_watched_format">%s 集已观看</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>
@@ -341,6 +343,7 @@
     <string name="pref_language_fallback">副语言</string>
     <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
     <string name="pref_updatewifionlysummary">为了减少蜂窝数据流量使用，在移动网络下禁止下载</string>
+    <string name="pref_error_reports">向应用开发者报告错误</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d 天前</item>
     </plurals>
@@ -440,6 +443,8 @@
     <string name="pref_notification_channel_errors">错误</string>
     <string name="pref_notifications_next_episodes_only">仅用于下一待看剧集</string>
     <string name="pref_notifications_next_episodes_only_summary">仅当新剧集是下一个待看剧集时通知</string>
+    <string name="pref_notifications_battery_settings">电池设置</string>
+    <string name="pref_notifications_battery_settings_summary">转到电池设置，禁用电池优化以获取可靠稳定的通知</string>
     <!-- List Widget -->
     <string name="hide_watched">隐藏已观看剧集</string>
     <string name="pref_widget_opacity">微件背景</string>

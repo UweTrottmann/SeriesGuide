@@ -112,6 +112,7 @@
     <string name="action_watched">Angesehen markieren</string>
     <string name="action_unwatched">Nicht angesehen markieren</string>
     <string name="state_watched">Angesehen</string>
+    <string name="state_watched_multiple_format">Angesehen (%d)</string>
     <string name="state_skipped">Übersprungen</string>
     <string name="state_in_collection">In Sammlung</string>
     <string name="state_on_watchlist">Auf Merkliste</string>
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s werden fortgesetzt</string>
     <string name="episodes_watched">%s angesehen</string>
     <string name="movies_on_watchlist">%s auf Merkliste</string>
+    <string name="stats_in_collection_format">%d in Sammlung</string>
     <string name="movies_watched_format">%s angesehen</string>
     <plurals name="days_plural">
         <item quantity="one">%d Tag</item>
@@ -349,6 +351,7 @@
     <string name="pref_language_fallback">Alternative Sprache</string>
     <string name="pref_updatewifionly">Bilder nur über WLAN</string>
     <string name="pref_updatewifionlysummary">Um Gebühren zu vermeiden, nicht über mobile oder kostenpflichtige Funknetze herunterladen</string>
+    <string name="pref_error_reports">Fehler an App-Entwickler melden</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d Tag zuvor</item>
         <item quantity="other">%d Tage zuvor</item>
@@ -422,7 +425,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatische Sicherung</string>
     <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme im Gerätespeicher.</string>
-    <string name="autobackup_details">Diese Sicherungen sind nicht verfügbar, wenn die App neu installiert wird, es sei denn, die App-Daten-Sicherung ist für dieses Gerät aktiviert (Android 6+). Erstellen Sie ansonsten Kopien, um sie aufzubewahren.</string>
+    <string name="autobackup_details">Diese Sicherungen sind nicht verfügbar, wenn die App neu installiert wird. Erstellen Sie Kopien, um sie anderweitig aufzubewahren.</string>
     <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
     <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
     <string name="autobackup_failed">Die letzte automatische Sicherung ist fehlgeschlagen</string>
@@ -451,6 +454,8 @@
     <string name="pref_notification_channel_errors">Fehler</string>
     <string name="pref_notifications_next_episodes_only">Nur als nächstes anzus. Folgen</string>
     <string name="pref_notifications_next_episodes_only_summary">Nur benachrichtigen, wenn die neue Folge die nächste anzusehende ist</string>
+    <string name="pref_notifications_battery_settings">Akku-Einstellungen</string>
+    <string name="pref_notifications_battery_settings_summary">Zu Akku-Einstellungen gehen um Akkuverbrauch optimieren für zuverlässige Benachrichtigungen auszuschalten</string>
     <!-- List Widget -->
     <string name="hide_watched">Angesehene Folgen verstecken</string>
     <string name="pref_widget_opacity">Widget-Hintergrund</string>

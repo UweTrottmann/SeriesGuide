@@ -2,14 +2,15 @@ package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.TextViewCompat;
@@ -43,7 +44,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
+import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
@@ -55,6 +56,7 @@ import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
+import com.battlelancer.seriesguide.util.TextToolsK;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
@@ -65,6 +67,7 @@ import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import kotlinx.coroutines.Job;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -78,8 +81,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private static final String ARG_EPISODE_TVDBID = "episode_tvdbid";
     private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
 
-    private Handler handler = new Handler();
-    private TraktRatingsTask ratingsTask;
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private Job ratingFetchJob;
 
     private int episodeTvdbId;
     private int showTvdbId;
@@ -229,10 +232,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (ratingsTask != null) {
-            ratingsTask.cancel(true);
-            ratingsTask = null;
-        }
+        // Release reference to any job.
+        ratingFetchJob = null;
     }
 
     /**
@@ -240,8 +241,31 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
      */
     private void onToggleWatched() {
         boolean watched = EpisodeTools.isWatched(episodeFlag);
-        changeEpisodeFlag(watched ? EpisodeFlags.UNWATCHED : EpisodeFlags.WATCHED);
+        if (watched) {
+            View anchor = bindingButtons.buttonEpisodeWatched;
+            PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
+            popupMenu.inflate(R.menu.watched_popup_menu);
+            popupMenu.setOnMenuItemClickListener(watchedEpisodePopupMenuListener);
+            popupMenu.show();
+        } else {
+            changeEpisodeFlag(EpisodeFlags.WATCHED);
+        }
     }
+
+    private final PopupMenu.OnMenuItemClickListener watchedEpisodePopupMenuListener = item -> {
+        int itemId = item.getItemId();
+        if (itemId == R.id.watched_popup_menu_watch_again) {
+            // Multiple plays are for supporters only.
+            if (!Utils.hasAccessToX(requireContext())) {
+                Utils.advertiseSubscription(requireContext());
+            } else {
+                changeEpisodeFlag(EpisodeFlags.WATCHED);
+            }
+        } else if (itemId == R.id.watched_popup_menu_set_not_watched) {
+            changeEpisodeFlag(EpisodeFlags.UNWATCHED);
+        }
+        return true;
+    };
 
     /**
      * If episode was skipped, flags as unwatched. Otherwise, flags as skipped.
@@ -526,8 +550,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                     R.drawable.ic_watch_black_24dp);
         }
         bindingButtons.buttonEpisodeWatched.setOnClickListener(v -> onToggleWatched());
+        int plays = cursor.getInt(DetailsQuery.PLAYS);
         bindingButtons.buttonEpisodeWatched
-                .setText(isWatched ? R.string.state_watched : R.string.action_watched);
+                .setText(TextToolsK.getWatchedButtonText(requireContext(), isWatched, plays));
         CheatSheet.setup(bindingButtons.buttonEpisodeWatched, isWatched ? R.string.action_unwatched
                 : R.string.action_watched);
 
@@ -600,10 +625,14 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private void loadDetails() {
         // update trakt ratings
-        if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
-            ratingsTask = new TraktRatingsTask(requireContext(), showTvdbId, episodeTvdbId,
-                    seasonNumber, episodeNumber);
-            ratingsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
+            ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
+                    requireContext(),
+                    showTvdbId,
+                    episodeTvdbId,
+                    seasonNumber,
+                    episodeNumber
+            );
         }
     }
 
@@ -722,6 +751,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 Episodes.RATING_VOTES,
                 Episodes.RATING_USER,
                 Episodes.WATCHED,
+                Episodes.PLAYS,
                 Episodes.COLLECTED,
                 Episodes.LAST_EDITED,
                 Shows.REF_SHOW_ID,
@@ -750,13 +780,14 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         int RATING_VOTES = 15;
         int RATING_USER = 16;
         int WATCHED = 17;
-        int COLLECTED = 18;
-        int LAST_EDITED = 19;
-        int SHOW_ID = 20;
-        int SHOW_IMDBID = 21;
-        int SHOW_TITLE = 22;
-        int SHOW_RUNTIME = 23;
-        int SHOW_LANGUAGE = 24;
-        int SHOW_SLUG = 25;
+        int PLAYS = 18;
+        int COLLECTED = 19;
+        int LAST_EDITED = 20;
+        int SHOW_ID = 21;
+        int SHOW_IMDBID = 22;
+        int SHOW_TITLE = 23;
+        int SHOW_RUNTIME = 24;
+        int SHOW_LANGUAGE = 25;
+        int SHOW_SLUG = 26;
     }
 }

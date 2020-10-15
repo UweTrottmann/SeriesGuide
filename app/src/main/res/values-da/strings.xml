@@ -112,6 +112,7 @@
     <string name="action_watched">Markér som set</string>
     <string name="action_unwatched">Markér som ikke set</string>
     <string name="state_watched">Set</string>
+    <string name="state_watched_multiple_format">Set (%d)</string>
     <string name="state_skipped">Sprunget over</string>
     <string name="state_in_collection">I samling</string>
     <string name="state_on_watchlist">På overvågningsliste</string>
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s fortsætter</string>
     <string name="episodes_watched">%s set</string>
     <string name="movies_on_watchlist">%s på overvågningsliste</string>
+    <string name="stats_in_collection_format">%d i samling</string>
     <string name="movies_watched_format">%s set</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
@@ -349,6 +351,7 @@
     <string name="pref_language_fallback">Alternativt sprog</string>
     <string name="pref_updatewifionly">Download kun billeder via Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Download ikke billeder via mobil- eller forbrugsgebyrbelagte netværk for at reducere gebyrer</string>
+    <string name="pref_error_reports">Rapportér fejl til app-udvikler</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dage før</item>
         <item quantity="other">%d dage før</item>
@@ -451,6 +454,8 @@
     <string name="pref_notification_channel_errors">Fejl</string>
     <string name="pref_notifications_next_episodes_only">Kun for efterfølgende episoder på afspilningslisten</string>
     <string name="pref_notifications_next_episodes_only_summary">Underret mig kun, hvis den nye episode er den næste på afspilningslisten</string>
+    <string name="pref_notifications_battery_settings">Batteriindstillinger</string>
+    <string name="pref_notifications_battery_settings_summary">Gå til Batteriindstillinger for at deaktivere batterioptimeringer for pålidelige meddelelser</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
     <string name="pref_widget_opacity">Widget-baggrund</string>

@@ -114,6 +114,7 @@
     <string name="action_watched">נצפה</string>
     <string name="action_unwatched">לא נצפה</string>
     <string name="state_watched">נצפה</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">דילוג</string>
     <string name="state_in_collection">באוסף</string>
     <string name="state_on_watchlist">ברשימת הצפייה</string>
@@ -257,6 +258,7 @@
     <string name="shows_continuing">%s ממשיכים</string>
     <string name="episodes_watched">%s נצפו</string>
     <string name="movies_on_watchlist">%s ברשימת הצפייה</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s נצפו</string>
     <plurals name="days_plural">
         <item quantity="one">יום %d</item>
@@ -365,6 +367,7 @@
     <string name="pref_language_fallback">שפה חלופית</string>
     <string name="pref_updatewifionly">תמונות באמצעות Wi-Fi בלבד</string>
     <string name="pref_updatewifionlysummary">כדי לצמצם את חיובי הנתונים, לא להוריד ברשת סלולרי או רשת מבוקרת</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">יום לפני</item>
         <item quantity="two">יומיים לפני</item>
@@ -473,6 +476,8 @@
     <string name="pref_notification_channel_errors">שגיאות</string>
     <string name="pref_notifications_next_episodes_only">רק לפרקים לצפייה בקרוב</string>
     <string name="pref_notifications_next_episodes_only_summary">התראה רק אם הפרק החדש הוא הבא לצפייה</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">הסתר פרקים שנצפו</string>
     <string name="pref_widget_opacity">רקע ווידג\'ט</string>

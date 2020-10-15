@@ -43,7 +43,7 @@
     <!-- Status messages -->
     <string name="updated">Actualizado a la última versión.</string>
     <string name="updated_details">Detalles</string>
-    <string name="norating">n/a</string>
+    <string name="norating">n/d</string>
     <string name="unknown">desconocido</string>
     <string name="offline">Conéctate a una red y vuelve a intentarlo.</string>
     <string name="app_not_available">No existe ninguna aplicación disponible para gestionar esto</string>
@@ -112,6 +112,7 @@
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">No visto</string>
     <string name="state_watched">Visto</string>
+    <string name="state_watched_multiple_format">Visto (%d)</string>
     <string name="state_skipped">Omitido</string>
     <string name="state_in_collection">En colección</string>
     <string name="state_on_watchlist">En la lista de visualización</string>
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s continuando</string>
     <string name="episodes_watched">%s vistos</string>
     <string name="movies_on_watchlist">%s en la lista de visualización</string>
+    <string name="stats_in_collection_format">%d en colección</string>
     <string name="movies_watched_format">%s vistos</string>
     <plurals name="days_plural">
         <item quantity="one">%d día</item>
@@ -317,7 +319,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="rating6">Justo</string>
     <string name="rating7">Bueno</string>
     <string name="rating8">Mejor</string>
-    <string name="rating9">Muy Bueno</string>
+    <string name="rating9">Excelente</string>
     <plurals name="votes">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
@@ -350,6 +352,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imágenes sólo por Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Para reducir el consumo de datos, no descargar a través de redes móviles</string>
+    <string name="pref_error_reports">Reportar errores al desarrollador de la aplicación</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d día antes</item>
         <item quantity="other">%d días antes</item>
@@ -416,7 +419,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="import_success">Copia de seguridad restaurada correctamente.</string>
     <string name="import_failed">No se pudo restaurar la copia de seguridad.</string>
     <string name="backup_button">Respaldo</string>
-    <string name="import_button">Restaurar</string>
+    <string name="import_button">Restaurar la copia de seguridad</string>
     <string name="import_warning">Entiendo que mis series, listas y películas actuales serán reemplazadas!</string>
     <string name="no_file_selected">No hay ningún archivo seleccionado</string>
     <string name="action_select_file">Seleccione un archivo</string>
@@ -452,6 +455,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_notification_channel_errors">Errores</string>
     <string name="pref_notifications_next_episodes_only">Sólo para episodios siguientes para ver</string>
     <string name="pref_notifications_next_episodes_only_summary">Solo notificar si el nuevo episodio es el siguiente para ver</string>
+    <string name="pref_notifications_battery_settings">Ajustes de batería</string>
+    <string name="pref_notifications_battery_settings_summary">Ir a la configuración de la batería para desactivar las optimizaciones de la batería para obtener notificaciones fiables</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo de widget</string>

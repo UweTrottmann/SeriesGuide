@@ -47,7 +47,12 @@ class BillingRepository(private val applicationContext: Context) {
      * (re)created for each Activity or Fragment or is kept open for the life of the application
      * is a matter of choice.
      */
-    private lateinit var playStoreBillingClient: BillingClient
+    private val playStoreBillingClient: BillingClient by lazy {
+        BillingClient.newBuilder(applicationContext)
+            .enablePendingPurchases()  // Not used for subscriptions.
+            .setListener(purchasesUpdatedListener)
+            .build()
+    }
 
     /**
      * A local cache billing client is important in that the Play Store may be temporarily
@@ -91,33 +96,13 @@ class BillingRepository(private val applicationContext: Context) {
     /** Triggered if there was an error. Contains an error message to display. */
     val errorEvent = SingleLiveEvent<String>()
 
-    /**
-     * Correlated data sources belong inside a repository module so that the rest of
-     * the app can have appropriate access to the data it needs. Still, it may be effective to
-     * track the opening (and sometimes closing) of data source connections based on lifecycle
-     * events. One convenient way of doing that is by calling this
-     * [startDataSourceConnections] when the [BillingViewModel] is instantiated and
-     * [endDataSourceConnections] inside [BillingViewModel.onCleared].
-     */
     fun startDataSourceConnections() {
         Timber.d("startDataSourceConnections")
         localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
-        instantiateAndConnectToPlayBillingService()
-    }
-
-    fun endDataSourceConnections() {
-        playStoreBillingClient.endConnection()
-        // normally you don't worry about closing a DB connection unless you have more than
-        // one DB open. so no need to call 'localCacheBillingClient.close()'
-        Timber.d("endDataSourceConnections")
-    }
-
-    private fun instantiateAndConnectToPlayBillingService() {
-        playStoreBillingClient = BillingClient.newBuilder(applicationContext)
-            .enablePendingPurchases()  // Not used for subscriptions.
-            .setListener(purchasesUpdatedListener)
-            .build()
-        connectToPlayBillingService()
+        if (!connectToPlayBillingService()) {
+            // Already connected, so trigger purchases query directly.
+            queryPurchasesAsync()
+        }
     }
 
     private fun connectToPlayBillingService(): Boolean {
@@ -322,7 +307,7 @@ class BillingRepository(private val applicationContext: Context) {
         playStoreBillingClient.querySkuDetailsAsync(params) { billingResult, skuDetailsList ->
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
-                    if (skuDetailsList.orEmpty().isNotEmpty()) {
+                    if (skuDetailsList != null && skuDetailsList.isNotEmpty()) {
                         skuDetailsList.forEach {
                             CoroutineScope(Job() + Dispatchers.IO).launch {
                                 localCacheBillingClient.skuDetailsDao().insertOrUpdate(it)
@@ -346,6 +331,10 @@ class BillingRepository(private val applicationContext: Context) {
      * [purchasesUpdatedListener].
      */
     fun launchBillingFlow(activity: Activity, augmentedSkuDetails: AugmentedSkuDetails) {
+        if (augmentedSkuDetails.originalJson == null) {
+            Timber.e("augmentedSkuDetails.originalJson is null")
+            return
+        }
         val skuDetails = SkuDetails(augmentedSkuDetails.originalJson)
 
         // Check if this is a subscription up- or downgrade.
@@ -368,7 +357,7 @@ class BillingRepository(private val applicationContext: Context) {
 
         val purchaseParams = BillingFlowParams.newBuilder().apply {
             setSkuDetails(skuDetails)
-            if (oldSku != null) {
+            if (oldSku != null && purchaseToken != null) {
                 setOldSku(oldSku, purchaseToken)
                 setReplaceSkusProrationMode(prorationMode)
             }

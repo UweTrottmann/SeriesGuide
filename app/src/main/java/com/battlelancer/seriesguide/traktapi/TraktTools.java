@@ -2,18 +2,17 @@ package com.battlelancer.seriesguide.traktapi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,13 +54,13 @@ public class TraktTools {
     }
 
     @NonNull
-    public static HashSet<Integer> buildTraktEpisodesMap(List<BaseEpisode> episodes) {
-        HashSet<Integer> traktEpisodesMap = new HashSet<>(episodes.size());
+    public static HashMap<Integer, BaseEpisode> buildTraktEpisodesMap(List<BaseEpisode> episodes) {
+        HashMap<Integer, BaseEpisode> traktEpisodesMap = new HashMap<>(episodes.size());
         for (BaseEpisode episode : episodes) {
             if (episode.number == null) {
                 continue; // trakt episode misses required data, skip.
             }
-            traktEpisodesMap.add(episode.number);
+            traktEpisodesMap.put(episode.number, episode);
         }
         return traktEpisodesMap;
     }
@@ -90,7 +89,7 @@ public class TraktTools {
         if (rating == null || rating == 0) {
             return "--";
         }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+        if (!AndroidUtils.isNougatOrHigher()) {
             // before Android 7.0 string format seems to round half down, despite docs saying half up
             // it likely used DecimalFormat, which defaults to half even
             BigDecimal bigDecimal = new BigDecimal(rating);

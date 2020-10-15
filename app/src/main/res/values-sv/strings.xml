@@ -59,7 +59,7 @@
     <string name="share_episode">Dela avsnitt</string>
     <string name="share_movie">Dela film</string>
     <string name="addtocalendar">Lägg till i kalendern</string>
-    <string name="addtocalendar_failed">Kan inte lägga till i kalendern. </string>
+    <string name="addtocalendar_failed">Kan inte lägga till i kalendern.</string>
     <string name="links">Länkar</string>
     <!-- Comments -->
     <string name="comments">Kommentarer</string>
@@ -112,6 +112,7 @@
     <string name="action_watched">Sett</string>
     <string name="action_unwatched">Markera som osedd</string>
     <string name="state_watched">Sedda</string>
+    <string name="state_watched_multiple_format">Sett (%d)</string>
     <string name="state_skipped">Hoppat över</string>
     <string name="state_in_collection">I samling</string>
     <string name="state_on_watchlist">På bevakningslistan</string>
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s fortsätter</string>
     <string name="episodes_watched">%s sedda</string>
     <string name="movies_on_watchlist">%s på bevakningslistan</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s sedda</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
@@ -349,6 +351,7 @@
     <string name="pref_language_fallback">Alternativt språk</string>
     <string name="pref_updatewifionly">Endast bilder via Wi-Fi</string>
     <string name="pref_updatewifionlysummary">För att minska dataavgifter, hämta inte via mobilnät</string>
+    <string name="pref_error_reports">Rapportera fel till apputvecklare</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dag innan</item>
         <item quantity="other">%d dagar innan</item>
@@ -359,7 +362,7 @@
     </plurals>
     <plurals name="minutes_before_plural">
         <item quantity="one">%d minut innan</item>
-        <item quantity="other">%s minuter innan</item>
+        <item quantity="other">%d minuter innan</item>
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Sekretesspolicy</string>
@@ -451,10 +454,12 @@
     <string name="pref_notification_channel_errors">Fel</string>
     <string name="pref_notifications_next_episodes_only">Endast för avsnitt att titta på härnäst</string>
     <string name="pref_notifications_next_episodes_only_summary">Meddela bara om det nya avsnittet är det nästa att titta på</string>
+    <string name="pref_notifications_battery_settings">Batteriinställningar</string>
+    <string name="pref_notifications_battery_settings_summary">Gå till Batteriinställningar för att inaktivera batterioptimeringar för tillförlitliga aviseringar</string>
     <!-- List Widget -->
     <string name="hide_watched">Dölj sedda avsnitt</string>
-    <string name="pref_widget_opacity">Widgetbakgrund </string>
-    <string name="pref_widget_type">Widgettyp </string>
+    <string name="pref_widget_opacity">Widgetbakgrund</string>
+    <string name="pref_widget_type">Widgettyp</string>
     <string name="pref_large_font">Använd stort teckensnitt</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>

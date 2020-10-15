@@ -8,10 +8,12 @@ import com.battlelancer.seriesguide.ui.movies.MovieTools
 
 class MovieWatchedJob(
     movieTmdbId: Int,
-    private val isWatched: Boolean
+    private val isWatched: Boolean,
+    currentPlays: Int
 ) : MovieJob(
     if (isWatched) JobAction.MOVIE_WATCHED_SET else JobAction.MOVIE_WATCHED_REMOVE,
-    movieTmdbId
+    movieTmdbId,
+    if (isWatched) currentPlays + 1 else 0
 ) {
 
     override fun applyDatabaseUpdate(context: Context, movieTmdbId: Int): Boolean {

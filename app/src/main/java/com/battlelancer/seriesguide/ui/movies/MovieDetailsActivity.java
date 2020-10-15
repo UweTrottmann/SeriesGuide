@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.movies;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import androidx.appcompat.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie defined by the given TMDb
@@ -34,7 +34,7 @@ public class MovieDetailsActivity extends BaseMessageActivity {
         super.onCreate(savedInstanceState);
 
         // support transparent status bar
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (AndroidUtils.isMarshmallowOrHigher()) {
             findViewById(android.R.id.content).setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
@@ -67,7 +67,7 @@ public class MovieDetailsActivity extends BaseMessageActivity {
         // (using fitsSystemWindows would not work correctly with multiple views)
         systemBarTintManager = new SystemBarTintManager(this);
         SystemBarTintManager.SystemBarConfig config = systemBarTintManager.getConfig();
-        int insetTop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+        int insetTop = AndroidUtils.isMarshmallowOrHigher()
                 ? config.getStatusBarHeight() // transparent status bar
                 : config.getPixelInsetTop(false); // translucent status bar
         ViewGroup actionBarToolbar = findViewById(R.id.sgToolbar);

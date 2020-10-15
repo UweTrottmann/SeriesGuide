@@ -225,6 +225,7 @@ class TvdbEpisodeTools constructor(
             if (forInsert) {
                 // set default values
                 values.put(Episodes.WATCHED, 0)
+                values.put(Episodes.PLAYS, 0)
                 values.put(Episodes.COLLECTED, 0)
             }
         }

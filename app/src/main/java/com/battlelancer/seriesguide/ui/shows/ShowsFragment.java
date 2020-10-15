@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -293,7 +294,7 @@ public class ShowsFragment extends Fragment {
     private void scheduleQueryUpdate(boolean isPostNotRemove) {
         Timber.d(isPostNotRemove ? "Scheduling query update." : "Removing planned query update.");
         if (handler == null) {
-            handler = new Handler();
+            handler = new Handler(Looper.getMainLooper());
         }
         handler.removeCallbacks(dataRefreshRunnable);
         if (isPostNotRemove) {

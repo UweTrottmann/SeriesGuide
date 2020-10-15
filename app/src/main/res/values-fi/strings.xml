@@ -33,7 +33,7 @@
     <string name="add_to_homescreen">Lisää aloitusnäytölle</string>
     <string name="action_open">Avaa</string>
     <string name="sync_manually">Synkronoi manuaalisesti</string>
-    <string name="sync_and_update">Synkronoi ja päivitä</string>
+    <string name="sync_and_update">Synkronoi &amp; päivitä</string>
     <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
     <string name="action_turn_off">Poista käytöstä</string>
     <string name="action_stream">Suoratoista tai osta</string>
@@ -109,12 +109,13 @@
     <string name="action_dont_skip">Älä ohita</string>
     <string name="action_collection_add">Lisää kokoelmaan</string>
     <string name="action_collection_remove">Poista kokoelmasta</string>
-    <string name="action_watched">Aseta katsotuksi</string>
-    <string name="action_unwatched">Aseta katsomattomaksi</string>
+    <string name="action_watched">Katsottu</string>
+    <string name="action_unwatched">Katsomaton</string>
     <string name="state_watched">Katsottu</string>
+    <string name="state_watched_multiple_format">Katsottu (%d)</string>
     <string name="state_skipped">Ohitettu</string>
     <string name="state_in_collection">Kokoelmassa</string>
-    <string name="state_on_watchlist"> Seurantalistalla</string>
+    <string name="state_on_watchlist">Seurantalistalla</string>
     <string name="state_favorite">Suosikki</string>
     <!-- Shows -->
     <string name="confirm_delete">Poista %s?</string>
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s jatkuu</string>
     <string name="episodes_watched">%s katsottu</string>
     <string name="movies_on_watchlist">%s seurantalistalla</string>
+    <string name="stats_in_collection_format">%d kokoelmassa</string>
     <string name="movies_watched_format">%s katsottu</string>
     <plurals name="days_plural">
         <item quantity="one">%d päivä</item>
@@ -349,6 +351,7 @@
     <string name="pref_language_fallback">Vaihtoehtoinen kieli</string>
     <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
     <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
+    <string name="pref_error_reports">Ilmoita virheistä sovelluksen kehittäjälle</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d päivä ennen</item>
         <item quantity="other">%d päivää ennen</item>
@@ -451,6 +454,8 @@
     <string name="pref_notification_channel_errors">Virheet</string>
     <string name="pref_notifications_next_episodes_only">Vain seuraavaksi katsottavat jaksot</string>
     <string name="pref_notifications_next_episodes_only_summary">Ilmoita vain, jos uusi jakso on seuraavaksi katsottavana</string>
+    <string name="pref_notifications_battery_settings">Akkuasetukset</string>
+    <string name="pref_notifications_battery_settings_summary">Siirry kohtaan Akku-asetukset poistaaksesi käytöstä akkuoptimoinnit luotettavien ilmoitusten saamiseksi</string>
     <!-- List Widget -->
     <string name="hide_watched">Piilota katsotut jaksot</string>
     <string name="pref_widget_opacity">Widgetin tausta</string>

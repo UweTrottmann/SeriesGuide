@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="false"
     android:orientation="horizontal"
     android:paddingTop="@dimen/default_padding"
-    android:paddingBottom="@dimen/large_padding">
+    android:paddingBottom="@dimen/large_padding"
+    tools:layout_width="384dp">
+    <!-- Width based on 60% as used by activity_overview_multipane (portrait),
+    40% as used by activity_overview_multipane_wide (landscape). -->
 
     <include
         android:id="@+id/include_more"

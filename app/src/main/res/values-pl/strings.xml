@@ -114,6 +114,7 @@
     <string name="action_watched">Ust. obejrzane</string>
     <string name="action_unwatched">Ust. nieobejrzane</string>
     <string name="state_watched">Obejrzane</string>
+    <string name="state_watched_multiple_format">Obejrzane (%d)</string>
     <string name="state_skipped">Pominięty</string>
     <string name="state_in_collection">W kolekcji</string>
     <string name="state_on_watchlist">Na liście do obejrzenia</string>
@@ -257,6 +258,7 @@
     <string name="shows_continuing">%s w toku</string>
     <string name="episodes_watched">%s obejrzanych</string>
     <string name="movies_on_watchlist">%s pozycji do obejrzenia</string>
+    <string name="stats_in_collection_format">%d w kolekcji</string>
     <string name="movies_watched_format">%s obejrzanych</string>
     <plurals name="days_plural">
         <item quantity="one">%d dzień</item>
@@ -365,6 +367,7 @@
     <string name="pref_language_fallback">Język alternatywny</string>
     <string name="pref_updatewifionly">Obrazy tylko przez Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Aby zmniejszyć opłaty za transfer danych, nie pobieraj przy użyciu sieci komórkowej</string>
+    <string name="pref_error_reports">Zgłoś błędy do dewelopera aplikacji</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dzień przed</item>
         <item quantity="few">%d dni przed</item>
@@ -473,6 +476,8 @@
     <string name="pref_notification_channel_errors">Błędy</string>
     <string name="pref_notifications_next_episodes_only">Tylko dla następnych do obejrzenia</string>
     <string name="pref_notifications_next_episodes_only_summary">Powiadamiaj tylko gdy nowy odcinek jest następnym do obejrzenia</string>
+    <string name="pref_notifications_battery_settings">Ustawienia baterii</string>
+    <string name="pref_notifications_battery_settings_summary">Przejdź do ustawień baterii, aby wyłączyć jej optymalizację, aby otrzymywać powiadomienia na bieżąco</string>
     <!-- List Widget -->
     <string name="hide_watched">Ukryj obejrzane odcinki</string>
     <string name="pref_widget_opacity">Tło widżetu</string>

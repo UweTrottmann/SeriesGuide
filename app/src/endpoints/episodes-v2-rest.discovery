@@ -134,6 +134,10 @@
     "isInCollection": {
      "type": "boolean"
     },
+    "plays": {
+     "format": "int32",
+     "type": "integer"
+    },
     "seasonNumber": {
      "format": "int32",
      "type": "integer"

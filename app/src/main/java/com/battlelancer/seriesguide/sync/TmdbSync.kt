@@ -53,7 +53,7 @@ class TmdbSync internal constructor(
         val releasedAfter = currentTimeMillis - RELEASED_AFTER_DAYS
         // exclude movies updated in the last 7 days
         val updatedBefore = currentTimeMillis - UPDATED_BEFORE_DAYS
-        val updatedBeforeOther = currentTimeMillis - UPDATED_BEFORE_HALF_YEAR
+        val updatedBeforeOther = currentTimeMillis - UPDATED_BEFORE_90_DAYS
         val movies = SgRoomDatabase.getInstance(context).movieHelper()
             .getMoviesToUpdate(releasedAfter, updatedBefore, updatedBeforeOther)
         Timber.d("Updating %d movie(s)...", movies.size)
@@ -94,11 +94,8 @@ class TmdbSync internal constructor(
     }
 
     companion object {
-        @JvmField
-        val RELEASED_AFTER_DAYS = 6 * 30 * DateUtils.DAY_IN_MILLIS
-        @JvmField
-        val UPDATED_BEFORE_DAYS = 7 * DateUtils.DAY_IN_MILLIS
-        @JvmField
-        val UPDATED_BEFORE_HALF_YEAR = 6 * 30 * DateUtils.DAY_IN_MILLIS
+        const val RELEASED_AFTER_DAYS = 6 * 30 * DateUtils.DAY_IN_MILLIS
+        const val UPDATED_BEFORE_DAYS = 7 * DateUtils.DAY_IN_MILLIS
+        const val UPDATED_BEFORE_90_DAYS = 3 * 30 * DateUtils.DAY_IN_MILLIS
     }
 }

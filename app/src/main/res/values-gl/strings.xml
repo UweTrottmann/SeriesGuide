@@ -112,6 +112,7 @@
     <string name="action_watched">Marcar como visto</string>
     <string name="action_unwatched">Marcar como non visto</string>
     <string name="state_watched">Vistas</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s continuando</string>
     <string name="episodes_watched">%s vistos</string>
     <string name="movies_on_watchlist">%s na lista de visualización</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s vistos</string>
     <plurals name="days_plural">
         <item quantity="one">%d día</item>
@@ -331,8 +333,8 @@
     <string name="feedback">Enviar comentarios</string>
     <string name="action_open_in_browser">Abrir no navegador</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Traduce esta aplicación</string>
+    <string name="action_contribute_content">Traduza ou mellora o contido</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Ocultar episodios exibidos</string>
@@ -349,6 +351,7 @@
     <string name="pref_language_fallback">Idioma alternativo</string>
     <string name="pref_updatewifionly">Imaxes só por Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Para reducir o consumo de datos, non descargar a través de redes móbiles</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d día antes</item>
         <item quantity="other">%d días antes</item>
@@ -422,7 +425,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Copias de seguridade automáticas</string>
     <string name="pref_autobackupsummary">Copia de seguridade semanal das túas series, listas e películas</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">Última copia de seguridade automática: %s</string>
     <string name="restore_auto_backup">Restaurar copia de seguridade automática</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
@@ -451,6 +454,8 @@
     <string name="pref_notification_channel_errors">Erros</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
     <string name="pref_notifications_next_episodes_only_summary">Só notificar se o novo episodio é o seguinte a ver</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Agochar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo do widget</string>

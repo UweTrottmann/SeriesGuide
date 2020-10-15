@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.widget.ImageView
 import com.battlelancer.seriesguide.R
@@ -29,7 +30,7 @@ class FullscreenImageActivity : BaseActivity() {
      */
     private lateinit var photoView: PhotoView
 
-    private var hideHandler = Handler()
+    private var hideHandler = Handler(Looper.getMainLooper())
     private var hideRunnable: Runnable = Runnable { systemUiHider.hide() }
 
     override fun onCreate(savedInstanceState: Bundle?) {

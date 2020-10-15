@@ -111,6 +111,7 @@
     <string name="action_watched">設為已觀看</string>
     <string name="action_unwatched">設為尚未觀看</string>
     <string name="state_watched">已看過</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -245,6 +246,7 @@
     <string name="shows_continuing">%s部影集仍在連載</string>
     <string name="episodes_watched">%s 集已看</string>
     <string name="movies_on_watchlist">%s於待看清單中。</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s 集已看</string>
     <plurals name="days_plural">
         <item quantity="other">%d 天</item>
@@ -341,6 +343,7 @@
     <string name="pref_language_fallback">Alternative language</string>
     <string name="pref_updatewifionly">只有在使用Wi-Fi時載入圖片</string>
     <string name="pref_updatewifionlysummary">為了減少資料量，不要透過移動或計量網路下載</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d days before</item>
     </plurals>
@@ -411,7 +414,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">自動備份</string>
     <string name="pref_autobackupsummary">每週備份你的節目，清單和電影</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">剩餘自動備份︰ %s</string>
     <string name="restore_auto_backup">還原自動備份</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
@@ -440,6 +443,8 @@
     <string name="pref_notification_channel_errors">錯誤</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">隱藏已看過集數</string>
     <string name="pref_widget_opacity">小工具背景</string>

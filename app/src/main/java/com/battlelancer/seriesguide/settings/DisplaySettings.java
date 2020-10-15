@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
@@ -30,8 +31,6 @@ public class DisplaySettings {
     public static final String KEY_NUMBERFORMAT = "numberformat";
 
     public static final String NUMBERFORMAT_DEFAULT = "default";
-
-    public static final String NUMBERFORMAT_ENGLISHLOWER = "englishlower";
 
     public static final String KEY_SHOWS_TIME_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
@@ -126,9 +125,11 @@ public class DisplaySettings {
                 : languageCode;
     }
 
+    @NonNull
     public static String getNumberFormat(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        String formatOrNull = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_NUMBERFORMAT, NUMBERFORMAT_DEFAULT);
+        return formatOrNull == null ? NUMBERFORMAT_DEFAULT : formatOrNull;
     }
 
     /**
@@ -137,7 +138,7 @@ public class DisplaySettings {
      */
     public static int getShowsTimeOffset(Context context) {
         try {
-            return Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
+            return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
                     .getString(KEY_SHOWS_TIME_OFFSET, "0"));
         } catch (NumberFormatException e) {
             return 0;

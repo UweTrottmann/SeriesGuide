@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui.preferences
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.browser.customtabs.CustomTabColorSchemeParams
@@ -26,6 +25,7 @@ import com.battlelancer.seriesguide.ui.HelpActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.customtabs.CustomTabsHelper
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -53,7 +53,7 @@ class MoreOptionsActivity : BaseTopActivity() {
     private fun configureViews() {
         // Shows a no updates info text if the device is running a version of Android
         // that will not be supported by a future version of this app.
-        binding.textViewNoMoreUpdates.isGone = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+        binding.textViewNoMoreUpdates.isGone = AndroidUtils.isLollipopOrHigher()
 
         binding.syncStatus.isGone = true
 

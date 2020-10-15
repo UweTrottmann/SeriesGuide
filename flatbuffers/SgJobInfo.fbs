@@ -6,14 +6,21 @@ namespace com.battlelancer.seriesguide.jobs;
 
 table SgJobInfo {
     showTvdbId:int;
+    /// One of EpisodeFlags (watched, not watched or skipped).
     flagValue:int;
     episodes:[EpisodeInfo];
     movieTmdbId:int;
+    /// Number of times the movie was watched.
+    plays:int;
 }
 
 table EpisodeInfo {
+    /// Number of the season.
     season:int;
+    /// Number of the episode in the season.
     number:int;
+    /// Number of times the episode was watched.
+    plays:int;
 }
 
 root_type SgJobInfo;

@@ -111,6 +111,7 @@
     <string name="action_watched">시청함</string>
     <string name="action_unwatched">시청하지 않음</string>
     <string name="state_watched">시청한 목록</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -245,6 +246,7 @@
     <string name="shows_continuing">%s 방영 중</string>
     <string name="episodes_watched">%s 시청함</string>
     <string name="movies_on_watchlist">관심목록 %s편</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s 시청함</string>
     <plurals name="days_plural">
         <item quantity="other">%d일</item>
@@ -341,6 +343,7 @@
     <string name="pref_language_fallback">기타 언어</string>
     <string name="pref_updatewifionly">와이파이를 이용하여 이미지 다운받기</string>
     <string name="pref_updatewifionlysummary">데이터 과금을 막기 위해 모바일 네트워크를 통해 다운로드하지 않음</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d일 전</item>
     </plurals>
@@ -411,7 +414,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">자동 백업</string>
     <string name="pref_autobackupsummary">매주 프로그램, 목록, 영화를 백업합니다.</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
     <string name="last_auto_backup">최근 자동 백업: %s</string>
     <string name="restore_auto_backup">자동 백업 복원</string>
     <string name="autobackup_failed">The last auto backup has failed</string>
@@ -440,6 +443,8 @@
     <string name="pref_notification_channel_errors">오류</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">시청한 에피소드 숨기기</string>
     <string name="pref_widget_opacity">위젯 배경</string>

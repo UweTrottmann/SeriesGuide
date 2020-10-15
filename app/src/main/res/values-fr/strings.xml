@@ -112,6 +112,7 @@
     <string name="action_watched">Vu</string>
     <string name="action_unwatched">Pas vu</string>
     <string name="state_watched">Vu</string>
+    <string name="state_watched_multiple_format">Vu (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">Collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s en cours</string>
     <string name="episodes_watched">%s vus</string>
     <string name="movies_on_watchlist">%s dans la liste à voir</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s vus</string>
     <plurals name="days_plural">
         <item quantity="one">%d jour</item>
@@ -349,6 +351,7 @@
     <string name="pref_language_fallback">Langue alternative</string>
     <string name="pref_updatewifionly">Images uniquement via Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Pour réduire les frais de consommation de données, ne pas les télécharger via un réseau mobile</string>
+    <string name="pref_error_reports">Signaler les erreurs au développeur de l\'application</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d jour avant</item>
         <item quantity="other">%d jours avant</item>
@@ -451,6 +454,8 @@
     <string name="pref_notification_channel_errors">Erreurs</string>
     <string name="pref_notifications_next_episodes_only">Seulement pour les épisodes à regarder ensuite</string>
     <string name="pref_notifications_next_episodes_only_summary">Notifier seulement si le prochain épisode sorti est celui à regarder</string>
+    <string name="pref_notifications_battery_settings">Paramètres de batterie</string>
+    <string name="pref_notifications_battery_settings_summary">Aller dans les paramètres de batterie pour désactiver l\'optimisation de la batterie afin de recevoir correctement les notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Masquer les épisodes vus</string>
     <string name="pref_widget_opacity">Arrière-plan du widget</string>

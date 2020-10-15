@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
 import android.provider.Settings
@@ -45,6 +44,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -146,7 +146,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
                 thresholdPref.isEnabled = isChecked
                 selectionPref.isEnabled = isChecked
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (AndroidUtils.isAtLeastOreo()) {
                     channelsPref?.isEnabled = isChecked
                 } else {
                     vibratePref?.isEnabled = isChecked
@@ -164,7 +164,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = isNotificationsEnabled
             hiddenPref.isEnabled = isNotificationsEnabled
             onlyNextPref.isEnabled = isNotificationsEnabled
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 channelsPref?.isEnabled = isNotificationsEnabled
             } else {
                 vibratePref?.isEnabled = isNotificationsEnabled
@@ -178,12 +178,24 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = false
             hiddenPref.isEnabled = false
             onlyNextPref.isEnabled = false
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 channelsPref?.isEnabled = false
             } else {
                 vibratePref?.isEnabled = false
                 ringtonePref?.isEnabled = false
             }
+        }
+
+        findPreference<Preference>(KEY_BATTERY_SETTINGS)?.setOnPreferenceClickListener {
+            // Try to open app info where user can configure battery settings.
+            var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                .setData(Uri.parse("package:" + requireActivity().packageName))
+            if (!Utils.tryStartActivity(activity, intent, false)) {
+                // Open all apps view if detail view not available.
+                intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
+                Utils.tryStartActivity(activity, intent, true)
+            }
+            true
         }
 
         updateThresholdSummary(thresholdPref)
@@ -311,7 +323,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
         if (NotificationSettings.KEY_CHANNELS == key) {
             // launch system settings app at settings for episodes channel
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
@@ -342,7 +354,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 var ringtoneUri: Uri? = data.getParcelableExtra(
                     RingtoneManager.EXTRA_RINGTONE_PICKED_URI
                 )
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                if (AndroidUtils.isNougatOrHigher()) {
                     // Xiaomi devices incorrectly return file:// uris on N
                     // protect against FileUriExposedException
                     if (ringtoneUri != null /* not silent */ && "content" != ringtoneUri.scheme) {
@@ -423,6 +435,13 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             if (pref != null) {
                 val autoUpdatePref = pref as SwitchPreferenceCompat
                 SgSyncAdapter.setSyncAutomatically(activity, autoUpdatePref.isChecked)
+            }
+        }
+
+        if (AppSettings.KEY_SEND_ERROR_REPORTS == key) {
+            pref?.also {
+                val switchPref = pref as SwitchPreferenceCompat
+                AppSettings.setSendErrorReports(switchPref.context, switchPref.isChecked, false)
             }
         }
     }
@@ -516,6 +535,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
         private const val KEY_ABOUT = "aboutPref"
         //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
+        private const val KEY_BATTERY_SETTINGS = "com.battlelancer.seriesguide.notifications.battery"
 
         // links
         private const val LINK_BASE_KEY = "com.battlelancer.seriesguide.settings."

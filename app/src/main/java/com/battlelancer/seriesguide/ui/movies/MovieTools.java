@@ -7,12 +7,13 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.jobs.FlagJobAsyncTask;
+import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
 import com.battlelancer.seriesguide.model.SgMovieFlags;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
+import com.battlelancer.seriesguide.provider.MovieHelper;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -37,6 +38,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 import retrofit2.Response;
@@ -115,38 +117,37 @@ public class MovieTools {
     }
 
     public static void addToCollection(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, true));
+        FlagJobExecutor.execute(context, new MovieCollectionJob(movieTmdbId, true));
     }
 
     public static void addToWatchlist(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, true));
+        FlagJobExecutor.execute(context, new MovieWatchlistJob(movieTmdbId, true));
     }
 
     /**
      * Adds the movie to the given list. If it was not in any list before, adds the movie to the
-     * local database first.
-     *
-     * @return If the database operation was successful.
+     * local database first. Returns if the database operation was successful.
      */
     public boolean addToList(int movieTmdbId, Lists list) {
-        // do we have this movie in the database already?
-        Boolean movieExists = isMovieInDatabase(context, movieTmdbId);
-        if (movieExists == null) {
-            return false; // query failed
-        }
+        boolean movieExists = isMovieInDatabase(movieTmdbId);
         if (movieExists) {
-            return updateMovie(context, movieTmdbId, list.databaseColumn, true);
+            return updateMovie(context, movieTmdbId, list, true);
         } else {
             return addMovie(movieTmdbId, list);
         }
     }
 
+    private boolean isMovieInDatabase(int movieTmdbId) {
+        int count = SgRoomDatabase.getInstance(context).movieHelper().getCount(movieTmdbId);
+        return count > 0;
+    }
+
     public static void removeFromCollection(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieCollectionJob(movieTmdbId, false));
+        FlagJobExecutor.execute(context, new MovieCollectionJob(movieTmdbId, false));
     }
 
     public static void removeFromWatchlist(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchlistJob(movieTmdbId, false));
+        FlagJobExecutor.execute(context, new MovieWatchlistJob(movieTmdbId, false));
     }
 
     /**
@@ -177,12 +178,20 @@ public class MovieTools {
             return deleteMovie(context, movieTmdbId);
         } else {
             // otherwise, just update
-            return updateMovie(context, movieTmdbId, listToRemoveFrom.databaseColumn, false);
+            return updateMovie(context, movieTmdbId, listToRemoveFrom, false);
         }
     }
 
-    static void watchedMovie(Context context, int movieTmdbId, boolean inWatchlist) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, true));
+    static void watchedMovie(
+            Context context,
+            int movieTmdbId,
+            int currentPlays,
+            boolean inWatchlist
+    ) {
+        FlagJobExecutor.execute(
+                context,
+                new MovieWatchedJob(movieTmdbId, true, currentPlays)
+        );
         // trakt removes from watchlist automatically, but app would not show until next sync
         // and not mirror on hexagon, so do it manually
         if (inWatchlist) {
@@ -191,7 +200,7 @@ public class MovieTools {
     }
 
     static void unwatchedMovie(Context context, int movieTmdbId) {
-        FlagJobAsyncTask.executeJob(context, new MovieWatchedJob(movieTmdbId, false));
+        FlagJobExecutor.execute(context, new MovieWatchedJob(movieTmdbId, false, 0));
     }
 
     private static ContentValues[] buildMoviesContentValues(List<MovieDetails> movies) {
@@ -228,22 +237,6 @@ public class MovieTools {
         return localMoviesIds;
     }
 
-    private static Boolean isMovieInDatabase(Context context, int movieTmdbId) {
-        Cursor movie = context.getContentResolver()
-                .query(SeriesGuideContract.Movies.CONTENT_URI, new String[]{
-                                SeriesGuideContract.Movies._ID},
-                        SeriesGuideContract.Movies.TMDB_ID + "=" + movieTmdbId, null, null);
-        if (movie == null) {
-            return null;
-        }
-
-        boolean movieExists = movie.getCount() > 0;
-
-        movie.close();
-
-        return movieExists;
-    }
-
     private boolean addMovie(int movieTmdbId, Lists listToAddTo) {
         // get movie info
         MovieDetails details = getMovieDetails(movieTmdbId, false);
@@ -255,7 +248,9 @@ public class MovieTools {
         // build values
         details.setInCollection(listToAddTo == Lists.COLLECTION);
         details.setInWatchlist(listToAddTo == Lists.WATCHLIST);
-        details.setWatched(listToAddTo == Lists.WATCHED);
+        boolean isWatched = listToAddTo == Lists.WATCHED;
+        details.setWatched(isWatched);
+        details.setPlays(isWatched ? 1 : 0);
         ContentValues values = details.toContentValuesInsert();
 
         // add to database
@@ -270,17 +265,39 @@ public class MovieTools {
     /**
      * Returns {@code true} if the movie was updated.
      */
-    private static boolean updateMovie(Context context, int movieTmdbId, String column,
-            boolean value) {
-        ContentValues values = new ContentValues();
-        values.put(column, value ? 1 : 0);
+    private static boolean updateMovie(
+            Context context,
+            int movieTmdbId,
+            Lists list,
+            boolean value
+    ) {
+        MovieHelper helper = SgRoomDatabase.getInstance(context).movieHelper();
 
-        int rowsUpdated = context.getContentResolver().update(
-                SeriesGuideContract.Movies.buildMovieUri(movieTmdbId), values, null, null);
+        int rowsUpdated;
+        switch (list) {
+            case COLLECTION:
+                rowsUpdated = helper.updateInCollection(movieTmdbId, value);
+                break;
+            case WATCHLIST:
+                rowsUpdated = helper.updateInWatchlist(movieTmdbId, value);
+                break;
+            case WATCHED:
+                if (value) {
+                    rowsUpdated = helper.setWatchedAndAddPlay(movieTmdbId);
+                } else {
+                    rowsUpdated = helper.setNotWatchedAndRemovePlays(movieTmdbId);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported Lists type " + list);
+        }
 
         return rowsUpdated > 0;
     }
 
+    /**
+     * Updates existing movie. If movie does not exist in database, will do nothing.
+     */
     public void updateMovie(MovieDetails details, int tmdbId) {
         ContentValues values = details.toContentValuesUpdate();
         if (values.size() == 0) {
@@ -289,7 +306,6 @@ public class MovieTools {
 
         values.put(SeriesGuideContract.Movies.LAST_UPDATED, System.currentTimeMillis());
 
-        // if movie does not exist in database, will do nothing
         context.getContentResolver().update(SeriesGuideContract.Movies.buildMovieUri(tmdbId),
                 values, null, null);
     }
@@ -339,26 +355,25 @@ public class MovieTools {
      *
      * @param newCollectionMovies Movie TMDB ids to add to the collection.
      * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
-     * @param newWatchedMovies Movie TMDB ids to set watched.
+     * @param newWatchedMoviesToPlays Movie TMDB ids to set watched mapped to play count.
      */
     public boolean addMovies(
             @NonNull Set<Integer> newCollectionMovies,
             @NonNull Set<Integer> newWatchlistMovies,
-            @Nullable Set<Integer> newWatchedMovies
+            @NonNull Map<Integer, Integer> newWatchedMoviesToPlays
     ) {
-        Timber.d("addMovies: %s to collection, %s to watchlist", newCollectionMovies.size(),
-                newWatchlistMovies.size());
-        if (newWatchedMovies != null) {
-            Timber.d("addMovies: %s to watched", newWatchedMovies.size());
-        }
+        Timber.d(
+                "addMovies: %s to collection, %s to watchlist, %s to watched",
+                newCollectionMovies.size(),
+                newWatchlistMovies.size(),
+                newWatchedMoviesToPlays.size()
+        );
 
         // build a single list of tmdb ids
         Set<Integer> newMovies = new HashSet<>();
         newMovies.addAll(newCollectionMovies);
         newMovies.addAll(newWatchlistMovies);
-        if (newWatchedMovies != null) {
-            newMovies.addAll(newWatchedMovies);
-        }
+        newMovies.addAll(newWatchedMoviesToPlays.keySet());
 
         String languageCode = DisplaySettings.getMoviesLanguage(context);
         String regionCode = DisplaySettings.getMoviesRegion(context);
@@ -383,9 +398,10 @@ public class MovieTools {
             // set flags
             movieDetails.setInCollection(newCollectionMovies.contains(tmdbId));
             movieDetails.setInWatchlist(newWatchlistMovies.contains(tmdbId));
-            if (newWatchedMovies != null) {
-                movieDetails.setWatched(newWatchedMovies.contains(tmdbId));
-            }
+            Integer plays = newWatchedMoviesToPlays.get(tmdbId);
+            boolean isWatched = plays != null;
+            movieDetails.setWatched(isWatched);
+            movieDetails.setPlays(isWatched ? plays : 0);
 
             movies.add(movieDetails);
 

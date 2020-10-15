@@ -17,21 +17,34 @@ public final class EpisodeInfo extends Table {
   public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public EpisodeInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
+  /**
+   * Number of the season.
+   */
   public int season() { int o = __offset(4); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  /**
+   * Number of the episode in the season.
+   */
   public int number() { int o = __offset(6); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  /**
+   * Number of times the episode was watched.
+   */
+  public int plays() { int o = __offset(8); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
 
   public static int createEpisodeInfo(FlatBufferBuilder builder,
       int season,
-      int number) {
-    builder.startTable(2);
+      int number,
+      int plays) {
+    builder.startTable(3);
+    EpisodeInfo.addPlays(builder, plays);
     EpisodeInfo.addNumber(builder, number);
     EpisodeInfo.addSeason(builder, season);
     return EpisodeInfo.endEpisodeInfo(builder);
   }
 
-  public static void startEpisodeInfo(FlatBufferBuilder builder) { builder.startTable(2); }
+  public static void startEpisodeInfo(FlatBufferBuilder builder) { builder.startTable(3); }
   public static void addSeason(FlatBufferBuilder builder, int season) { builder.addInt(0, season, 0); }
   public static void addNumber(FlatBufferBuilder builder, int number) { builder.addInt(1, number, 0); }
+  public static void addPlays(FlatBufferBuilder builder, int plays) { builder.addInt(2, plays, 0); }
   public static int endEpisodeInfo(FlatBufferBuilder builder) {
     int o = builder.endTable();
     return o;

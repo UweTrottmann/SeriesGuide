@@ -3,9 +3,9 @@ package com.battlelancer.seriesguide.ui.overview;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +51,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
+import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.HelpActivity;
@@ -79,6 +79,7 @@ import com.squareup.picasso.Picasso;
 import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.Date;
 import java.util.List;
+import kotlinx.coroutines.Job;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -149,8 +150,8 @@ public class OverviewFragment extends Fragment implements
 
     @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
 
-    private Handler handler = new Handler();
-    private TraktRatingsTask ratingsTask;
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private Job ratingFetchJob;
     private Unbinder unbinder;
 
     private boolean isEpisodeDataAvailable;
@@ -246,8 +247,8 @@ public class OverviewFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Hide show info if it is displayed in show fragment.
-        boolean isDisplayShowInfo = !getResources().getBoolean(R.bool.isFragmentShowNarrow);
+        // Hide show info if show fragment is visible due to multi-pane layout.
+        boolean isDisplayShowInfo = getResources().getBoolean(R.bool.isOverviewSinglePane);
         containerShow.setVisibility(isDisplayShowInfo ? View.VISIBLE : View.GONE);
 
         LoaderManager loaderManager = LoaderManager.getInstance(this);
@@ -293,10 +294,8 @@ public class OverviewFragment extends Fragment implements
         if (handler != null) {
             handler.removeCallbacks(episodeActionsRunnable);
         }
-        if (ratingsTask != null) {
-            ratingsTask.cancel(true);
-            ratingsTask = null;
-        }
+        // Release reference to any job.
+        ratingFetchJob = null;
     }
 
     private void createCalendarEvent() {
@@ -831,13 +830,16 @@ public class OverviewFragment extends Fragment implements
         if (!isEpisodeDataAvailable) {
             return;
         }
-
-        if (ratingsTask == null || ratingsTask.getStatus() == AsyncTask.Status.FINISHED) {
+        if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
             int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
             int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            ratingsTask = new TraktRatingsTask(requireContext(), showTvdbId,
-                    currentEpisodeTvdbId, seasonNumber, episodeNumber);
-            ratingsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
+                    requireContext(),
+                    showTvdbId,
+                    currentEpisodeTvdbId,
+                    seasonNumber,
+                    episodeNumber
+            );
         }
     }
 

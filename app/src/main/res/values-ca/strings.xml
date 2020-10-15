@@ -112,6 +112,7 @@
     <string name="action_watched">Vist</string>
     <string name="action_unwatched">No vist</string>
     <string name="state_watched">Vist</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -172,7 +173,7 @@
     <!-- Updating -->
     <string name="update_scheduled">S\'està actualitzant&#8230;</string>
     <string name="update_no_connection">Connecteu-vos a internet per actualitzar.</string>
-    <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard. </string>
+    <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard</string>
     <!-- Seasons -->
     <string name="season_allwatched">Tots els episodis vistos</string>
     <plurals name="other_episodes_plural">
@@ -249,6 +250,7 @@
     <string name="shows_continuing">%s en progrés</string>
     <string name="episodes_watched">%s mirats</string>
     <string name="movies_on_watchlist">%s a la llista de seguiment</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s mirats</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
@@ -349,6 +351,7 @@
     <string name="pref_language_fallback">Idioma alternatiu</string>
     <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
     <string name="pref_updatewifionlysummary">Per reduir els càrrecs de dades, no descarregar en xarxes mòbils o comptabilitzades</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dia abans</item>
         <item quantity="other">%d dies abans</item>
@@ -429,7 +432,7 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="autobackup_failed">Ha fallat l\'última còpia de seguretat automàtica</string>
     <string name="autobackup_files_missing">Per utilitzar la còpia de seguretat automàtica, selecciona arxius de còpia de seguretat vàlids.</string>
     <string name="autobackup_create_user_copy">Creeu una còpia després de cada còpia de seguretat</string>
-    <string name="autobackup_restore_available">Per restaurar pot estar disponible una còpia de seguretat automàtica </string>
+    <string name="autobackup_restore_available">Per restaurar pot estar disponible una còpia de seguretat automàtica</string>
     <!-- Welcome dialog -->
     <string name="get_started">Inici</string>
     <string name="dismiss">Omet</string>
@@ -452,6 +455,8 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="pref_notification_channel_errors">Errors</string>
     <string name="pref_notifications_next_episodes_only">Només per a episodis per veure a continuació</string>
     <string name="pref_notifications_next_episodes_only_summary">Notifiqueu només si el nou episodi és el següent que es pugui veure</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>

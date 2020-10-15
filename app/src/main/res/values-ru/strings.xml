@@ -114,10 +114,11 @@
     <string name="action_watched">Просмотрен</string>
     <string name="action_unwatched">Не просмотрено</string>
     <string name="state_watched">Просмотрено</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
+    <string name="state_skipped">пропущено</string>
+    <string name="state_in_collection">В коллекции</string>
+    <string name="state_on_watchlist">В списке просмотра</string>
+    <string name="state_favorite">Избранное</string>
     <!-- Shows -->
     <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
     <string name="delete_error">Невозможно удалить сериал. Повторите попытку позже.</string>
@@ -257,6 +258,7 @@
     <string name="shows_continuing">%s продолжается</string>
     <string name="episodes_watched">%s просмотрено</string>
     <string name="movies_on_watchlist">%s в списке просмотра</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s просмотрено</string>
     <plurals name="days_plural">
         <item quantity="one">%d день</item>
@@ -347,8 +349,8 @@
     <string name="feedback">Отправить отзыв</string>
     <string name="action_open_in_browser">Открыть в браузере</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Помочь с переводом</string>
+    <string name="action_contribute_content">Перевести или улучшить контент</string>
     <string name="prefs_category_advanced">Дополнительно</string>
     <string name="prefs_category_about">О программе</string>
     <string name="pref_onlyfuture">Скрыть вышедшие эпизоды</string>
@@ -361,10 +363,11 @@
     <string name="pref_nospoilers_summary">Скрывать подробности, пока эпизод не просмотрен</string>
     <string name="pref_seasonsorting">Сортировка сезонов по&#8230;</string>
     <string name="pref_episodesorting">Сортировка эпизодов по&#8230;</string>
-    <string name="pref_language">Предпочтительный язык контента</string>
-    <string name="pref_language_fallback">Альтернативный язык</string>
+    <string name="pref_language">Предпочитаемый язык контента</string>
+    <string name="pref_language_fallback">Альтернативное изображение</string>
     <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Чтобы сократить расходы на передачу данных, не скачивать через мобильные сети</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">за %d дн. до</item>
         <item quantity="few">за %d дн. до</item>
@@ -473,6 +476,8 @@
     <string name="pref_notification_channel_errors">Ошибки</string>
     <string name="pref_notifications_next_episodes_only">Только для следующих серий</string>
     <string name="pref_notifications_next_episodes_only_summary">Уведомлять только если новая серия следующая для просмотра</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
@@ -492,11 +497,11 @@
     <string name="billing_action_pass">Получить X Pass</string>
     <string name="billing_price_subscribe">%1$s/год, попробуйте бесплатно, можно отменить в любой момент до %2$s</string>
     <string name="billing_duration_format">%1$s/год</string>
-    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_sub_description">Попробуйте 30 дней бесплатно, отмените в любое время.</string>
     <string name="billing_price_pass">Единоразовая покупка</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">Каждая подписка открывает все функции и поддерживает будущие обновления. Для использования этого приложения подписка не требуется.</string>
     <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_learn_more">Дополнительная информация и помощь</string>
     <string name="subscription_expired">Срок действия подписки истек</string>
     <string name="subscription_expired_details">Подписка X функции истекла.</string>
     <!-- Amazon In-App Billing -->

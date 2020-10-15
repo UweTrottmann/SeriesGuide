@@ -1,20 +1,18 @@
 package com.battlelancer.seriesguide.ui.movies
 
+import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
@@ -22,6 +20,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import androidx.palette.graphics.Palette
@@ -44,9 +43,11 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
@@ -58,6 +59,11 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.Videos
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -76,9 +82,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var movieDetails: MovieDetails? = MovieDetails()
     private var movieTitle: String? = null
     private var trailer: Videos.Video? = null
-
-    private val handler = Handler()
-    private var paletteAsyncTask: AsyncTask<Bitmap, Void, Palette>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -153,7 +156,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // warning: pre-M status bar not always translucent (e.g. Nexus 10)
         // (using fitsSystemWindows would not work correctly with multiple views)
         val config = (activity as MovieDetailsActivity).systemBarTintManager.config
-        val pixelInsetTop = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val pixelInsetTop = if (AndroidUtils.isMarshmallowOrHigher()) {
             config.statusBarHeight // full screen, status bar transparent
         } else {
             config.getPixelInsetTop(false) // status bar translucent
@@ -204,8 +207,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
         Picasso.get().cancelRequest(binding.imageViewMoviePoster)
-        // same for Palette task
-        paletteAsyncTask?.cancel(true)
 
         _binding = null
     }
@@ -217,10 +218,14 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             inflater.inflate(R.menu.movie_details_menu, menu)
 
             // enable/disable actions
-            val isEnableShare = !it.tmdbMovie()?.title.isNullOrEmpty()
+            val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
             menu.findItem(R.id.menu_movie_share).apply {
-                isEnabled = isEnableShare
-                isVisible = isEnableShare
+                isEnabled = hasTitle
+                isVisible = hasTitle
+            }
+            menu.findItem(R.id.menu_open_metacritic).apply {
+                isEnabled = hasTitle
+                isVisible = hasTitle
             }
 
             val isEnableImdb = !it.tmdbMovie()?.imdb_id.isNullOrEmpty()
@@ -238,27 +243,39 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.menu_movie_share) {
-            movieDetails?.tmdbMovie()?.let { ShareUtils.shareMovie(activity, tmdbId, it.title) }
-            return true
+        return when (item.itemId) {
+            R.id.menu_movie_share -> {
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
+                true
+            }
+            R.id.menu_open_youtube -> {
+                trailer?.let { ServiceUtils.openYoutube(it.key, activity) }
+                true
+            }
+            R.id.menu_open_imdb -> {
+                movieDetails?.tmdbMovie()
+                    ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
+                true
+            }
+            R.id.menu_open_metacritic -> {
+                // Metacritic only has English titles, so using the original title is the best bet.
+                val titleOrNull = movieDetails?.tmdbMovie()
+                    ?.let { it.original_title ?: it.title }
+                titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
+                true
+            }
+            R.id.menu_open_tmdb -> {
+                TmdbTools.openTmdbMovie(activity, tmdbId)
+                true
+            }
+            R.id.menu_open_trakt -> {
+                Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        if (itemId == R.id.menu_open_imdb) {
-            movieDetails?.tmdbMovie()?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
-            return true
-        }
-        if (itemId == R.id.menu_open_youtube) {
-            trailer?.let { ServiceUtils.openYoutube(it.key, activity) }
-            return true
-        }
-        if (itemId == R.id.menu_open_tmdb) {
-            TmdbTools.openTmdbMovie(activity, tmdbId)
-        }
-        if (itemId == R.id.menu_open_trakt) {
-            Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun populateMovieViews() {
@@ -271,6 +288,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val inCollection = movieDetails.isInCollection
         val inWatchlist = movieDetails.isInWatchlist
         val isWatched = movieDetails.isWatched
+        val plays = movieDetails.plays
         val rating = movieDetails.userRating
 
         movieTitle = tmdbMovie.title
@@ -303,9 +321,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {
-            it.setText(
-                if (isWatched) R.string.state_watched else R.string.action_watched
-            )
+            it.text = TextToolsK.getWatchedButtonText(requireContext(), isWatched, plays)
             CheatSheet.setup(
                 it, if (isWatched) R.string.action_unwatched else R.string.action_watched
             )
@@ -314,11 +330,23 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             } else {
                 ViewTools.setVectorDrawableTop(it, R.drawable.ic_watch_black_24dp)
             }
-            it.setOnClickListener {
+            it.setOnClickListener { view ->
                 if (isWatched) {
-                    MovieTools.unwatchedMovie(context, tmdbId)
+                    PopupMenu(view.context, view)
+                        .apply {
+                            inflate(R.menu.watched_popup_menu)
+                            setOnMenuItemClickListener(
+                                WatchedPopupMenuListener(
+                                    requireContext(),
+                                    tmdbId,
+                                    plays,
+                                    inWatchlist
+                                )
+                            )
+                        }
+                        .show()
                 } else {
-                    MovieTools.watchedMovie(context, tmdbId, inWatchlist)
+                    MovieTools.watchedMovie(context, tmdbId, plays, inWatchlist)
                 }
             }
         }
@@ -379,13 +407,17 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // ratings
-        binding.containerRatings.textViewRatingsTmdbValue.text = TraktTools.buildRatingString(tmdbMovie.vote_average)
+        binding.containerRatings.textViewRatingsTmdbValue.text = TraktTools.buildRatingString(
+            tmdbMovie.vote_average
+        )
         binding.containerRatings.textViewRatingsTmdbVotes.text =
             TraktTools.buildRatingVotesString(activity, tmdbMovie.vote_count)
         traktRatings?.let {
             binding.containerRatings.textViewRatingsTraktVotes.text =
                 TraktTools.buildRatingVotesString(activity, it.votes)
-            binding.containerRatings.textViewRatingsTraktValue.text = TraktTools.buildRatingString(it.rating)
+            binding.containerRatings.textViewRatingsTraktValue.text = TraktTools.buildRatingString(
+                it.rating
+            )
         }
         // if movie is not in database, can't handle user ratings
         if (!inCollection && !inWatchlist && !isWatched) {
@@ -396,7 +428,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         } else {
             binding.containerRatings.textViewRatingsTraktUserLabel.isGone = false
             binding.containerRatings.textViewRatingsTraktUser.isGone = false
-            binding.containerRatings.textViewRatingsTraktUser.text = TraktTools.buildUserRatingString(activity, rating)
+            binding.containerRatings.textViewRatingsTraktUser.text = TraktTools.buildUserRatingString(
+                activity,
+                rating
+            )
             binding.containerRatings.root.setOnClickListener { rateMovie() }
             CheatSheet.setup(binding.containerRatings.root, R.string.action_rate)
         }
@@ -426,15 +461,24 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             ServiceUtils.loadWithPicasso(activity, smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
-                        val bitmap = (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
-                        paletteAsyncTask = Palette.from(bitmap)
-                            .generate { palette ->
-                                if (palette != null) {
-                                    var color = palette.getVibrantColor(Color.WHITE)
-                                    color = ColorUtils.setAlphaComponent(color, 50)
-                                    binding.rootLayoutMovie.setBackgroundColor(color)
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            val bitmap =
+                                (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
+
+                            val color = withContext(Dispatchers.Default) {
+                                val palette = try {
+                                    Palette.from(bitmap).generate()
+                                } catch (e: Exception) {
+                                    Timber.e(e, "Failed to generate palette.")
+                                    null
                                 }
+                                palette
+                                    ?.getVibrantColor(Color.WHITE)
+                                    ?.let { ColorUtils.setAlphaComponent(it, 50) }
                             }
+
+                            color?.let { binding.rootLayoutMovie.setBackgroundColor(it) }
+                        }
                     }
                 })
             // click listener for high resolution poster
@@ -453,6 +497,31 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
+    /**
+     * Menu click listener to watch again (supporters only) or set unwatched.
+     */
+    private class WatchedPopupMenuListener(
+        val context: Context,
+        val movieTmdbId: Int,
+        val plays: Int,
+        val inWatchlist: Boolean
+    ) : PopupMenu.OnMenuItemClickListener {
+        override fun onMenuItemClick(item: MenuItem): Boolean {
+            when (item.itemId) {
+                R.id.watched_popup_menu_watch_again -> if (Utils.hasAccessToX(context)) {
+                    MovieTools.watchedMovie(context, movieTmdbId, plays, inWatchlist)
+                } else {
+                    Utils.advertiseSubscription(context)
+                }
+                R.id.watched_popup_menu_set_not_watched -> MovieTools.unwatchedMovie(
+                    context,
+                    movieTmdbId
+                )
+            }
+            return true
+        }
+    }
+
     private fun populateMovieCreditsViews(credits: Credits?) {
         if (credits == null) {
             setCastVisibility(false)
@@ -462,7 +531,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // cast members
         if (credits.cast?.size != 0
-            && PeopleListHelper.populateMovieCast(activity, binding.moviePeople.containerCast, credits)) {
+            && PeopleListHelper.populateMovieCast(
+                activity,
+                binding.moviePeople.containerCast,
+                credits
+            )) {
             setCastVisibility(true)
         } else {
             setCastVisibility(false)
@@ -470,7 +543,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // crew members
         if (credits.crew?.size != 0
-            && PeopleListHelper.populateMovieCrew(activity, binding.moviePeople.containerCrew, credits)) {
+            && PeopleListHelper.populateMovieCrew(
+                activity,
+                binding.moviePeople.containerCrew,
+                credits
+            )) {
             setCrewVisibility(true)
         } else {
             setCrewVisibility(false)
@@ -595,18 +672,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    private val movieActionsRunnable = Runnable {
-        if (!isAdded) {
-            return@Runnable // we need an activity for this, abort.
-        }
-        loadMovieActions()
-    }
+    private var loadActionsJob: Job? = null
 
     override fun loadMovieActionsDelayed() {
-        handler.removeCallbacks(movieActionsRunnable)
-        handler.postDelayed(
-            movieActionsRunnable, MovieActionsContract.ACTION_LOADER_DELAY_MILLIS.toLong()
-        )
+        // Simple de-bounce: cancel any waiting job.
+        loadActionsJob?.cancel()
+        loadActionsJob = lifecycleScope.launch {
+            delay(MovieActionsContract.ACTION_LOADER_DELAY_MILLIS.toLong())
+            loadMovieActions()
+        }
     }
 
     private fun rateMovie() {
@@ -633,7 +707,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private val movieLoaderCallbacks = object : LoaderManager.LoaderCallbacks<MovieDetails> {
         override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<MovieDetails> {
             binding.progressBar.isGone = false
-            return MovieLoader(context, args!!.getInt(ARG_TMDB_ID))
+            return MovieLoader(requireContext(), args!!.getInt(ARG_TMDB_ID))
         }
 
         override fun onLoadFinished(movieLoader: Loader<MovieDetails>, movieDetails: MovieDetails) {
@@ -650,11 +724,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 activity!!.invalidateOptionsMenu()
             } else {
                 // if there is no local data and loading from network failed
-                binding.textViewMovieDescription.text = if (AndroidUtils.isNetworkConnected(context)) {
-                    getString(R.string.api_error_generic, getString(R.string.tmdb))
-                } else {
-                    getString(R.string.offline)
-                }
+                binding.textViewMovieDescription.text =
+                    if (AndroidUtils.isNetworkConnected(requireContext())) {
+                        getString(R.string.api_error_generic, getString(R.string.tmdb))
+                    } else {
+                        getString(R.string.offline)
+                    }
             }
         }
 

@@ -114,6 +114,7 @@
     <string name="action_watched">Переглянуто</string>
     <string name="action_unwatched">Не переглянуто</string>
     <string name="state_watched">Переглянуто</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">Пропущено</string>
     <string name="state_in_collection">В колекції</string>
     <string name="state_on_watchlist">В списку перегляду</string>
@@ -257,6 +258,7 @@
     <string name="shows_continuing">%s продовжуються</string>
     <string name="episodes_watched">%s переглянуто</string>
     <string name="movies_on_watchlist">%s в списку спостереження</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s переглянуто</string>
     <plurals name="days_plural">
         <item quantity="one">%d день</item>
@@ -365,6 +367,7 @@
     <string name="pref_language_fallback">Альтернативна мова</string>
     <string name="pref_updatewifionly">Зображення лише через Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Не завантажуйте через мобільну мережу для уникнення витрат</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d день до</item>
         <item quantity="few">%d днів до</item>
@@ -473,6 +476,8 @@
     <string name="pref_notification_channel_errors">Помилки</string>
     <string name="pref_notifications_next_episodes_only">Лише для серій що вийдуть</string>
     <string name="pref_notifications_next_episodes_only_summary">Сповіщати лише якщо нова серія буде наступною для перегляду</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Приховати переглянуті серії</string>
     <string name="pref_widget_opacity">Фон віджета</string>

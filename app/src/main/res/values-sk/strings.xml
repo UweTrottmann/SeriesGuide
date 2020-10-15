@@ -104,7 +104,7 @@
     <string name="mark_all">Videné všetky</string>
     <string name="unmark_all">Nevidená žiadna</string>
     <string name="action_watched_up_to">Videné až sem</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="confirmation_watched_up_to">Nastaviť všetky epizódy až k tejto ako videné?</string>
     <string name="collect_all">Pridať sériu do zbierky</string>
     <string name="uncollect_all">Odobrané zo zbierky</string>
     <string name="action_skip">Preskočiť</string>
@@ -114,10 +114,11 @@
     <string name="action_watched">Označiť ako videné</string>
     <string name="action_unwatched">Označiť ako nevidené</string>
     <string name="state_watched">Videné</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched_multiple_format">Videné (%d)</string>
+    <string name="state_skipped">Preskočené</string>
+    <string name="state_in_collection">V zbierke</string>
+    <string name="state_on_watchlist">V Chcem vidieť</string>
+    <string name="state_favorite">Obľúbené</string>
     <!-- Shows -->
     <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
     <string name="delete_error">Seriál nemožno odstrániť. Skúste to znova neskôr.</string>
@@ -257,6 +258,7 @@
     <string name="shows_continuing">%s pokračuje</string>
     <string name="episodes_watched">%s videných</string>
     <string name="movies_on_watchlist">%s v Chcem vidieť</string>
+    <string name="stats_in_collection_format">%d v zbierke</string>
     <string name="movies_watched_format">%s videných</string>
     <plurals name="days_plural">
         <item quantity="one">%d deň</item>
@@ -347,8 +349,8 @@
     <string name="feedback">Poslať reakciu</string>
     <string name="action_open_in_browser">Otvoriť v prehliadači</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Preložiť túto aplikáciu</string>
+    <string name="action_contribute_content">Preložiť alebo vylepšiť obsah</string>
     <string name="prefs_category_advanced">Pokročilé</string>
     <string name="prefs_category_about">O aplikácii</string>
     <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
@@ -365,6 +367,7 @@
     <string name="pref_language_fallback">Alternatívny jazyk</string>
     <string name="pref_updatewifionly">Zobrazovať obrázky výlučne cez Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Pre zníženie spotreby dát, nesťahovať cez mobilné alebo merané siete</string>
+    <string name="pref_error_reports">Nahláste chyby vývojárovi aplikácie</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d deň pred</item>
         <item quantity="few">%d dni pred</item>
@@ -444,7 +447,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatické zálohovanie</string>
     <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again unless app data backup is turned on for this device (Android 6+). Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Tieto zálohy nie sú k dispozícii, ak je aplikácia nainštalovaná znova, pokiaľ nie je pre toto zariadenie zapnuté zálohovanie údajov aplikácie (Android 6+). Vytvorte kópie, aby ste ich zachovali inak.</string>
     <string name="last_auto_backup">Posledná automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
     <string name="autobackup_failed">Posledná automatická záloha zlyhala</string>
@@ -471,8 +474,10 @@
     <string name="pref_notifications_hidden">Ignorovať skryté seriály</string>
     <string name="pref_notifications_hidden_summary">Aj keď sú upozornenia povolené, nezobrazovať ich pre skryté seriály</string>
     <string name="pref_notification_channel_errors">Chyby</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Iba pre nasledujúce epizódy</string>
+    <string name="pref_notifications_next_episodes_only_summary">Upozorniť len v prípade, že nová epizóda je ďalšia na videnie</string>
+    <string name="pref_notifications_battery_settings">Nastavenia batérie</string>
+    <string name="pref_notifications_battery_settings_summary">Prejdite na Nastavenia batérie a deaktivujte optimalizáciu batérie pre spoľahlivé oznámenia</string>
     <!-- List Widget -->
     <string name="hide_watched">Skryť videné epizódy</string>
     <string name="pref_widget_opacity">Pozadie miniaplikácie</string>
@@ -492,11 +497,11 @@
     <string name="billing_action_pass">Získať X Pass</string>
     <string name="billing_price_subscribe">%1$s/ročne, vyskúšajte zadarmo, zrušte kedykoľvek prostredníctvom %2$s</string>
     <string name="billing_duration_format">%1$s/rok</string>
-    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_sub_description">Vyskúšajte 30 dní zadarmo, kedykoľvek môžete zrušiť.</string>
     <string name="billing_price_pass">jednorázová platba</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">Každé predplatné odomkne všetky funkcie a podporuje budúce aktualizácie. Na používanie tejto aplikácie sa nevyžaduje predplatné.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_learn_more">Viac info a pomoc</string>
     <string name="subscription_expired">Predplatné vypršalo</string>
     <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
     <!-- Amazon In-App Billing -->

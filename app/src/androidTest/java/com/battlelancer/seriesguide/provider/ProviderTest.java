@@ -235,6 +235,7 @@ public class ProviderTest {
         assertNotNullValue(query, Episodes.TITLE);
         assertDefaultValue(query, Episodes.NUMBER, 0);
         assertDefaultValue(query, Episodes.WATCHED, 0);
+        assertDefaultValue(query, Episodes.PLAYS, 0);
         assertNotNullValue(query, Episodes.DIRECTORS);
         assertNotNullValue(query, Episodes.GUESTSTARS);
         assertNotNullValue(query, Episodes.WRITERS);

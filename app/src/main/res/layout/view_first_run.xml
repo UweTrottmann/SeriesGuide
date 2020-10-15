@@ -201,6 +201,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonRestoreBackup" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerErrorReports"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:paddingStart="@dimen/large_padding"
+            android:paddingEnd="@dimen/large_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dividerBottom">
+
+            <CheckBox
+                android:id="@+id/checkboxErrorReports"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:checked="true"
+                android:clickable="false"
+                android:focusable="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewErrorReports"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/pref_error_reports"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Dim"
+                app:layout_constraintBaseline_toBaselineOf="@id/checkboxErrorReports"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkboxErrorReports" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/textViewPolicyLink"
             android:layout_width="wrap_content"
@@ -214,7 +249,7 @@
             android:text="@string/privacy_policy"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Accent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dividerBottom" />
+            app:layout_constraintTop_toBottomOf="@+id/containerErrorReports" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupAutoBackupDetected"

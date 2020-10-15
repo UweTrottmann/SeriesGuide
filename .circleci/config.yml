@@ -12,7 +12,7 @@ jobs:
     working_directory: ~/SeriesGuide
 
     docker:
-      - image: circleci/android:api-29
+      - image: circleci/android:api-30
 
     steps:
       - checkout
@@ -55,3 +55,13 @@ jobs:
           paths:
             - ~/.gradle/caches
             - ~/.gradle/wrapper
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - gh-pages

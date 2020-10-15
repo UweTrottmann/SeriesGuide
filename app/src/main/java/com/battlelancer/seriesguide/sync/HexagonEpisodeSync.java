@@ -111,6 +111,19 @@ public class HexagonEpisodeSync {
                 Integer watchedFlag = episode.getWatchedFlag();
                 if (watchedFlag != null) {
                     values.put(SeriesGuideContract.Episodes.WATCHED, watchedFlag);
+                    if (watchedFlag == EpisodeFlags.WATCHED) {
+                        // Watched.
+                        // Note: plays may be null for legacy data. Protect against invalid data.
+                        if (episode.getPlays() != null && episode.getPlays() >= 1) {
+                            values.put(SeriesGuideContract.Episodes.PLAYS, episode.getPlays());
+                        } else {
+                            values.put(SeriesGuideContract.Episodes.PLAYS, 1);
+                        }
+                    } else {
+                        // Skipped or not watched.
+                        values.put(SeriesGuideContract.Episodes.PLAYS, 0);
+                    }
+
                     // record the latest last watched time for a show
                     if (!EpisodeTools.isUnwatched(watchedFlag)) {
                         Long lastWatchedMs = showsLastWatchedMs.get(showTvdbId);
@@ -163,7 +176,7 @@ public class HexagonEpisodeSync {
 
     /**
      * Downloads watched, skipped or collected episodes of this show from Hexagon and applies
-     * those flags to episodes in the database.
+     * those flags and plays to episodes in the database.
      *
      * @return Whether the download was successful and all changes were applied to the database.
      */
@@ -225,9 +238,19 @@ public class HexagonEpisodeSync {
             ArrayList<ContentProviderOperation> batch = new ArrayList<>();
             for (Episode episode : episodes) {
                 ContentValues values = new ContentValues();
-                if (episode.getWatchedFlag() != null
-                        && episode.getWatchedFlag() != EpisodeFlags.UNWATCHED) {
-                    values.put(SeriesGuideContract.Episodes.WATCHED, episode.getWatchedFlag());
+
+                Integer watchedFlag = episode.getWatchedFlag();
+                if (watchedFlag != null && watchedFlag != EpisodeFlags.UNWATCHED) {
+                    // Watched or skipped.
+                    values.put(SeriesGuideContract.Episodes.WATCHED, watchedFlag);
+                    if (watchedFlag == EpisodeFlags.WATCHED) {
+                        // Note: plays may be null for legacy data. Protect against invalid data.
+                        if (episode.getPlays() != null && episode.getPlays() >= 1) {
+                            values.put(SeriesGuideContract.Episodes.PLAYS, episode.getPlays());
+                        } else {
+                            values.put(SeriesGuideContract.Episodes.PLAYS, 1);
+                        }
+                    }
                     // record last watched time by taking latest updatedAt of watched/skipped
                     DateTime updatedAt = episode.getUpdatedAt();
                     if (updatedAt != null) {
@@ -237,6 +260,7 @@ public class HexagonEpisodeSync {
                         }
                     }
                 }
+
                 if (episode.getIsInCollection() != null
                         && episode.getIsInCollection()) {
                     values.put(SeriesGuideContract.Episodes.COLLECTED, 1);
@@ -324,7 +348,7 @@ public class HexagonEpisodeSync {
     }
 
     /**
-     * Uploads all watched, skipped or collected episodes of this show to Hexagon.
+     * Uploads all watched, skipped including plays or collected episodes of this show to Hexagon.
      *
      * @return Whether the upload was successful.
      */
@@ -356,7 +380,9 @@ public class HexagonEpisodeSync {
 
             int watchedFlag = query.getInt(FlaggedEpisodesQuery.WATCHED);
             if (!EpisodeTools.isUnwatched(watchedFlag)) {
+                // Skipped or watched.
                 episode.setWatchedFlag(watchedFlag);
+                episode.setPlays(query.getInt(FlaggedEpisodesQuery.PLAYS));
             }
 
             boolean isInCollection = EpisodeTools.isCollected(
@@ -403,6 +429,7 @@ public class HexagonEpisodeSync {
                 SeriesGuideContract.Episodes.SEASON,
                 SeriesGuideContract.Episodes.NUMBER,
                 SeriesGuideContract.Episodes.WATCHED,
+                SeriesGuideContract.Episodes.PLAYS,
                 SeriesGuideContract.Episodes.COLLECTED
         };
 
@@ -412,7 +439,8 @@ public class HexagonEpisodeSync {
         int SEASON = 1;
         int NUMBER = 2;
         int WATCHED = 3;
-        int IN_COLLECTION = 4;
+        int PLAYS = 4;
+        int IN_COLLECTION = 5;
     }
 
 }

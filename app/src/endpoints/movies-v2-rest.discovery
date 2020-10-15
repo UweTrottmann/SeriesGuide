@@ -131,6 +131,10 @@
     "isWatched": {
      "type": "boolean"
     },
+    "plays": {
+     "format": "int32",
+     "type": "integer"
+    },
     "tmdbId": {
      "format": "int32",
      "type": "integer"

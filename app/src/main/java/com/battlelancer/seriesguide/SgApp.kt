@@ -23,18 +23,22 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.google.android.gms.security.ProviderInstaller
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
+import com.uwetrottmann.androidutils.AndroidUtils
 import io.palaima.debugdrawer.timber.data.LumberYard
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
 import java.util.ArrayList
+import java.util.concurrent.Executors
 
 /**
  * Initializes logging and services.
@@ -101,9 +105,15 @@ class SgApp : Application() {
          */
         const val CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider"
 
+        /**
+         * A global [CoroutineScope] to avoid using [kotlinx.coroutines.GlobalScope]
+         * and leave open the possibility of exception handling and other things.
+         * Uses [Dispatchers.Default] by default.
+         */
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
         /** Executes one coroutine at a time. But does not guarantee order if they suspend. */
-        @Suppress("EXPERIMENTAL_API_USAGE")
-        val SINGLE = newSingleThreadContext("SingleThread")
+        val SINGLE = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
         private var servicesComponent: ServicesComponent? = null
 
@@ -136,7 +146,7 @@ class SgApp : Application() {
         AndroidThreeTen.init(this)
         initializeEventBus()
         initializePicasso()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (AndroidUtils.isAtLeastOreo()) {
             initializeNotificationChannels()
         }
 
@@ -160,12 +170,16 @@ class SgApp : Application() {
     }
 
     private fun initializeLogging() {
-        // Note: Firebase Crashlytics is automatically initialized using content provider.
+        // Note: Firebase Crashlytics is automatically initialized through its content provider.
+        // Pass current enabled state to Crashlytics (e.g. in case app was restored from backup).
+        val isSendErrors = AppSettings.isSendErrorReports(this)
+        Timber.d("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isSendErrors)
 
         if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug drawer logging
             val lumberYard = LumberYard.getInstance(this)
-            GlobalScope.launch(Dispatchers.IO) {
+            coroutineScope.launch(Dispatchers.IO) {
                 lumberYard.cleanUp()
             }
             Timber.plant(lumberYard.tree())
@@ -240,10 +254,10 @@ class SgApp : Application() {
             detectDiskWrites()
             detectNetwork()
             detectCustomSlowCalls()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (AndroidUtils.isMarshmallowOrHigher()) {
                 detectResourceMismatches()
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 detectUnbufferedIo()
             }
             StrictMode.setThreadPolicy(build())
@@ -258,7 +272,7 @@ class SgApp : Application() {
             detectLeakedClosableObjects()
             detectLeakedRegistrationObjects()
             detectFileUriExposure()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 detectContentUriWithoutPermission()
             }
             // Policy applied to all threads in the virtual machine's process

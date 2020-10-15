@@ -5,11 +5,11 @@
     <string name="lists">Seznamy</string>
     <string name="movies">Filmy</string>
     <string name="statistics">Statistiky</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Více</string>
     <string name="search">Hledat</string>
     <string name="preferences">Nastavení</string>
     <string name="help">Nápověda</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide nebude dostávat žádné další aktualizace pro tuto verzi Androidu.</string>
     <!-- Media items -->
     <string name="show_details">Detaily</string>
     <string name="episode">Epizoda</string>
@@ -114,6 +114,7 @@
     <string name="action_watched">Zhlédnuto</string>
     <string name="action_unwatched">Nezhlédnuto</string>
     <string name="state_watched">Zhlédnuto</string>
+    <string name="state_watched_multiple_format">Zhlédnuto (%d)</string>
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
@@ -140,7 +141,7 @@
     <string name="action_shows_filter_unwatched">Nezhlédnuté</string>
     <string name="action_shows_filter_upcoming">Nadcházející</string>
     <string name="action_shows_filter_hidden">Skryté</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
+    <string name="action_shows_make_all_visible">Zviditelnit všechny skryté</string>
     <string name="description_make_all_visible_format">Znovu zviditelnit všechny skryté seriály (%s)?</string>
     <string name="action_shows_sort">Seřadit seriály</string>
     <string name="action_shows_sort_title">Titul</string>
@@ -151,7 +152,7 @@
     <string name="action_shows_sort_favorites">Oblíbené předně</string>
     <string name="context_updateshow">Aktualizovat</string>
     <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Přepnout zobrazení</string>
     <!-- History -->
     <string name="user_stream">Historie</string>
     <string name="recently_watched">Nedávno viděno</string>
@@ -169,7 +170,7 @@
     <string name="calendar_settings">Nastavení kalendáře</string>
     <string name="only_favorites">Pouze oblíbené seriály</string>
     <string name="calendar_only_collected">Pouze epizody ve sbírce</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Pouze premiéry</string>
     <string name="pref_infinite_scrolling">Nekonečný kalendář</string>
     <!-- Updating -->
     <string name="update_scheduled">Probíhá aktualizace&#8230;</string>
@@ -186,7 +187,7 @@
     <plurals name="not_released_episodes_plural">
         <item quantity="one">%d neodvysílaná</item>
         <item quantity="few">%d neodvysílané</item>
-        <item quantity="many">%d to be released</item>
+        <item quantity="many">%d neodvysílaných</item>
         <item quantity="other">%d neodvysílaných</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
@@ -212,7 +213,7 @@
     <string name="shows_collection">Sbírka</string>
     <string name="watchlist">Chci vidět</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
+    <string name="empty_no_results">Nenalezeno</string>
     <string name="title_similar_shows">Podobné seriály</string>
     <!-- Lists -->
     <string name="first_list">První seznam</string>
@@ -257,6 +258,7 @@
     <string name="shows_continuing">%s pokračujicích</string>
     <string name="episodes_watched">%s zhlédnutých</string>
     <string name="movies_on_watchlist">%s z Watchlistu</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s zhlédnutých</string>
     <plurals name="days_plural">
         <item quantity="one">%d den</item>
@@ -266,14 +268,14 @@
     </plurals>
     <plurals name="hours_plural">
         <item quantity="one">%d hodina</item>
-        <item quantity="few">%d hodina</item>
-        <item quantity="many">%d hours</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="many">%d hodin</item>
         <item quantity="other">%d hodin</item>
     </plurals>
     <plurals name="minutes_plural">
         <item quantity="one">%d minuta</item>
-        <item quantity="few">%d minut</item>
-        <item quantity="many">%d minutes</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
         <item quantity="other">%d minut</item>
     </plurals>
     <!-- Features -->
@@ -365,6 +367,7 @@
     <string name="pref_language_fallback">Alternativní jazyk</string>
     <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d den předem</item>
         <item quantity="few">%d dny předem</item>
@@ -385,9 +388,9 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="licence_tvdb">Tato aplikace používá data a obrázky z TheTVDB licencované pod licencí Creative Commons.</string>
     <string name="licence_themoviedb">Tento produkt používá TMDb API, ale není schválen nebo certifikován TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">Tato aplikace využívá data a obrázky z webu Trakt.</string>
     <string name="about_open_source">SeriesGuide je vytvořen pomocí otevřeného softwaru.</string>
     <string name="licences_and_credits">Zdroje a poděkování</string>
     <!-- Sort -->
@@ -413,10 +416,10 @@
     <string name="pref_appearance">Vzhled</string>
     <string name="pref_theme">Téma</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Použít výchozí nastavení systému</string>
+    <string name="theme_app_auto_battery">Podle spořiče baterie</string>
+    <string name="theme_app_dark">Tmavý</string>
+    <string name="theme_app_light">Světlý</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Ostatní</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizuj a aktualizuj SeriesGuide data</string>
@@ -473,11 +476,13 @@
     <string name="pref_notification_channel_errors">Chyby</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_battery_settings">Nastavení baterie</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Skrýt zhlédnuté epizody</string>
     <string name="pref_widget_opacity">Pozadí widgetu</string>
     <string name="pref_widget_type">Typ widgetu</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Použít velké písmo</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Průhledné</string>
     <string name="widget_background_25">25%</string>
@@ -488,7 +493,7 @@
     <string name="onlyx">Pouze pro dárce</string>
     <string name="action_upgrade">Odemknout všechny funkce</string>
     <string name="billing_action_subscribe">Odebírat</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">Spravovat předplatné</string>
     <string name="billing_action_pass">Získejte X Pass</string>
     <string name="billing_price_subscribe">%1$s na rok, vyzkoušejte zdarma, zrušit to můžete kdykoli prostřednictvím %2$s</string>
     <string name="billing_duration_format">%1$s/ročně</string>

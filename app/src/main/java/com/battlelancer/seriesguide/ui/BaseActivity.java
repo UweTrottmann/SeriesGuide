@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.format.DateUtils;
 import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
@@ -185,7 +186,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void updateShowDelayed(final int showTvdbId) {
         if (handler == null) {
-            handler = new Handler();
+            handler = new Handler(Looper.getMainLooper());
         }
 
         // delay sync request to avoid slowing down UI

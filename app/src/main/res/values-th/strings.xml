@@ -111,6 +111,7 @@
     <string name="action_watched">ดูแล้ว</string>
     <string name="action_unwatched">ยังไม่ได้ดู</string>
     <string name="state_watched">ดูแล้ว</string>
+    <string name="state_watched_multiple_format">ดูแล้ว (%d)</string>
     <string name="state_skipped">ข้ามแล้ว</string>
     <string name="state_in_collection">ในคลังเก็บ</string>
     <string name="state_on_watchlist">ในรายการที่อยากดู</string>
@@ -245,6 +246,7 @@
     <string name="shows_continuing">%s เรื่องยังไม่จบ</string>
     <string name="episodes_watched">ดูแล้ว %s ตอน</string>
     <string name="movies_on_watchlist">%s เรื่องที่อยากดู</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">ดูแล้ว %s ตอน</string>
     <plurals name="days_plural">
         <item quantity="other">%d วัน</item>
@@ -341,6 +343,7 @@
     <string name="pref_language_fallback">ภาษารอง</string>
     <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>
     <string name="pref_updatewifionlysummary">ใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
+    <string name="pref_error_reports">รายข้อผิดพลาดไปยังผู้พัฒนาแอป</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d วันก่อนหน้า</item>
     </plurals>
@@ -440,6 +443,8 @@
     <string name="pref_notification_channel_errors">ข้อผิดพลาด</string>
     <string name="pref_notifications_next_episodes_only">เฉพาะตอนที่จะดูต่อเท่านั้น</string>
     <string name="pref_notifications_next_episodes_only_summary">แจ้งเตือนเฉพาะเมื่อตอนใหม่เป็นตอนที่จะดูต่อเท่านั้น</string>
+    <string name="pref_notifications_battery_settings">การตั้งค่าแบตเตอรี่</string>
+    <string name="pref_notifications_battery_settings_summary">ไปยังการตั้งค่าแบตเตอรี่ จากนั้นปิดใช้งานการเพิ่มประสิทธิภาพแบตเตอรี่ เพื่อการแจ้งเตือนที่เสถียรขึ้น</string>
     <!-- List Widget -->
     <string name="hide_watched">ซ่อนตอนที่ดูแล้ว</string>
     <string name="pref_widget_opacity">พื้นหลังวิตเจ็ต</string>

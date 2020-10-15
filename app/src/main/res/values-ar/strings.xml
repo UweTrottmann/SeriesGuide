@@ -116,6 +116,7 @@
     <string name="action_watched">تعيين كمشاهد</string>
     <string name="action_unwatched">تعيين كغير مشاهد</string>
     <string name="state_watched">تمت مشاهدتها</string>
+    <string name="state_watched_multiple_format">Watched (%d)</string>
     <string name="state_skipped">تم تخطيه</string>
     <string name="state_in_collection">قيد التحصيل</string>
     <string name="state_on_watchlist">في قائمة المراقبة</string>
@@ -265,6 +266,7 @@
     <string name="shows_continuing">%s مستمرة</string>
     <string name="episodes_watched">%s تمت مشاهدتها</string>
     <string name="movies_on_watchlist">%s في قائمة المشاهدة لاحقا</string>
+    <string name="stats_in_collection_format">%d in collection</string>
     <string name="movies_watched_format">%s تمت مشاهدتها</string>
     <plurals name="days_plural">
         <item quantity="one">يومان</item>
@@ -381,6 +383,7 @@
     <string name="pref_language_fallback">اللغة البديلة</string>
     <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
     <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
+    <string name="pref_error_reports">Report errors to app developer</string>
     <plurals name="days_before_plural">
         <item quantity="zero">قبل يوم من %d</item>
         <item quantity="one">قبل يوم من %d</item>
@@ -495,6 +498,8 @@
     <string name="pref_notification_channel_errors">أخطاء</string>
     <string name="pref_notifications_next_episodes_only">فقط لمشاهدة الحلقات التالية</string>
     <string name="pref_notifications_next_episodes_only_summary">تنبيه فقط اذا الحلقة الجديدة ستشاهد تالياً</string>
+    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>

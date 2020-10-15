@@ -111,10 +111,11 @@
     <string name="action_watched">視聴済に設定</string>
     <string name="action_unwatched">未視聴に設定</string>
     <string name="state_watched">視聴済</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched_multiple_format">視聴済 (%d)</string>
+    <string name="state_skipped">スキップ済</string>
+    <string name="state_in_collection">コレクション内</string>
+    <string name="state_on_watchlist">ウォッチリスト内</string>
+    <string name="state_favorite">お気に入り</string>
     <!-- Shows -->
     <string name="confirm_delete">%s を削除してもよろしいですか？</string>
     <string name="delete_error">番組を削除できませんでした。後でもう一度やり直してください。</string>
@@ -245,6 +246,7 @@
     <string name="shows_continuing">継続中 %s</string>
     <string name="episodes_watched">%s 視聴済</string>
     <string name="movies_on_watchlist">%s ウォッチリスト内</string>
+    <string name="stats_in_collection_format">コレクション内 %d</string>
     <string name="movies_watched_format">%s 視聴済</string>
     <plurals name="days_plural">
         <item quantity="other">%d 日</item>
@@ -323,8 +325,8 @@
     <string name="feedback">フィードバックを送信</string>
     <string name="action_open_in_browser">ブラウザーで開く</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">このアプリを翻訳</string>
+    <string name="action_contribute_content">コンテンツを翻訳または改善する</string>
     <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>
@@ -341,6 +343,7 @@
     <string name="pref_language_fallback">別の言語</string>
     <string name="pref_updatewifionly">画像は Wi-Fi 経由のみ</string>
     <string name="pref_updatewifionlysummary">データ通信料金を減らすため、モバイルまたは従量課金ネットワーク経由でダウンロードしません</string>
+    <string name="pref_error_reports">アプリ開発者にエラーを報告する</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d 日前</item>
     </plurals>
@@ -440,6 +443,8 @@
     <string name="pref_notification_channel_errors">エラー</string>
     <string name="pref_notifications_next_episodes_only">次に見るエピソードのみ</string>
     <string name="pref_notifications_next_episodes_only_summary">新しいエピソードが、次に視聴するエピソードである場合にのみ通知します</string>
+    <string name="pref_notifications_battery_settings">バッテリー設定</string>
+    <string name="pref_notifications_battery_settings_summary">バッテリー設定に移動して、バッテリーの最適化を無効にし、信頼性の高い通知を表示します</string>
     <!-- List Widget -->
     <string name="hide_watched">視聴済のエピソードを非表示</string>
     <string name="pref_widget_opacity">ウィジェットの背景</string>
@@ -459,11 +464,11 @@
     <string name="billing_action_pass">X Pass を入手</string>
     <string name="billing_price_subscribe">%1$s/年、無料でお試しください、%2$s からいつでもキャンセルできます</string>
     <string name="billing_duration_format">%1$s/年</string>
-    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_sub_description">無料で30日間お試しください。いつでもキャンセルできます</string>
     <string name="billing_price_pass">一回限りの支払</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">サブスクリプションで、すべての機能がロック解除され、将来のアップデートをサポートします。サブスクリプションはこのアプリを使用する上で必須ではありません。</string>
     <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_learn_more">詳細情報とヘルプ</string>
     <string name="subscription_expired">サブスクリプションの有効期限が切れました</string>
     <string name="subscription_expired_details">SeriesGuide サブスクリプションの有効期限が切れています。</string>
     <!-- Amazon In-App Billing -->

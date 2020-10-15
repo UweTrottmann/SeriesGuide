@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.traktapi;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.battlelancer.seriesguide.R;
@@ -13,6 +14,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import timber.log.Timber;
 
 /**
  * Starts a trakt OAuth 2.0 authorization flow using the default browser or an embedded {@link
@@ -46,7 +48,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_STATE, state);
     }
@@ -95,6 +97,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
 
         if (TextUtils.isEmpty(authCode)) {
             // no valid auth code, remain in activity and show fallback buttons
+            Timber.e("Failed because no auth code returned.");
             setMessage(getAuthErrorMessage() + "\n\n(No auth code returned.)");
             return;
         }
