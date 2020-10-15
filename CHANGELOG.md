@@ -10,10 +10,17 @@ Release notes
 
 Version 56
 ----------
-*in development*
+*2020-10-15*
 
-#### Next release
-*TBD*
+* 🌟 Limited support for watching episodes and movies multiple times. Synced with Cloud or Trakt.
+  Only available for supporters.
+* 🌟 Metacritic search link for shows and movies. Note that only English titles get good results.
+* 🔧 Display movies in collection in statistics.
+* 🔧 Shorter English episode number formats by default (S01E01 -> S1:E1). The older formats are
+  still available in Settings.
+
+#### 56
+*2020-10-15*
 
 * 🔧 Upload multiple plays to Trakt during first sync (previously would only upload one).
 
