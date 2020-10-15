@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.app.Application
-import android.os.AsyncTask
 import android.text.format.DateUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -9,18 +8,24 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.util.TimeTools
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
     private val sgShowsLiveData: LiveData<List<SgShow>>
     val showItemsLiveData = MediatorLiveData<List<ShowsAdapter.ShowItem>>()
+    private val showItemsLiveDataSemaphore = Semaphore(1)
 
     init {
         sgShowsLiveData = Transformations.switchMap(queryString) { queryString ->
@@ -30,11 +35,15 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
             // calculate actually displayed values on a background thread
-            AsyncTask.THREAD_POOL_EXECUTOR.execute {
-                val mapped = sgShows?.map {
-                    ShowsAdapter.ShowItem.map(it, getApplication())
+            SgApp.coroutineScope.launch(Dispatchers.IO) {
+                // Use Semaphore with 1 permit to ensure results are delivered in order and never
+                // processed in parallel.
+                showItemsLiveDataSemaphore.withPermit {
+                    val mapped = sgShows?.map {
+                        ShowsAdapter.ShowItem.map(it, getApplication())
+                    }
+                    showItemsLiveData.postValue(mapped)
                 }
-                showItemsLiveData.postValue(mapped)
             }
         }
     }
