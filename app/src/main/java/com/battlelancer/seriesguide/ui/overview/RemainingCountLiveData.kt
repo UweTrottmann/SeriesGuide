@@ -1,42 +1,47 @@
 package com.battlelancer.seriesguide.ui.overview
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.util.DBUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.withContext
 
-class RemainingCountLiveData(val context: Context) : LiveData<RemainingCountLiveData.Result>() {
+/**
+ * Calculates the number of unwatched and not collected episodes of a show.
+ */
+class RemainingCountLiveData(
+    val context: Context,
+    val scope: CoroutineScope
+) : LiveData<RemainingCountLiveData.Result>() {
+
+    private val semaphore = Semaphore(1)
 
     data class Result(
             val unwatchedEpisodes: Int,
             val uncollectedEpisodes: Int
     )
 
-    private var task: RemainingUpdateTask? = null
-    private var showTvdbId: Int = 0
-
     fun load(showTvdbId: Int) {
-        this.showTvdbId = showTvdbId
-        if (showTvdbId > 0 && (task == null || task?.status == AsyncTask.Status.FINISHED)) {
-            task = RemainingUpdateTask().executeOnExecutor(
-                    AsyncTask.THREAD_POOL_EXECUTOR) as RemainingUpdateTask
+        if (showTvdbId > 0) {
+            scope.launch(Dispatchers.IO) {
+                // Use Semaphore with 1 permit to only run one calculation at a time and to
+                // guarantee results are delivered in order.
+                semaphore.withPermit {
+                    calcRemainingCounts(showTvdbId)
+                }
+            }
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private inner class RemainingUpdateTask : AsyncTask<Void, Void, Result>() {
-
-        override fun doInBackground(vararg params: Void): Result {
-            val showTvdbIdStr = showTvdbId.toString()
-            val unwatchedEpisodes = DBUtils.getUnwatchedEpisodesOfShow(context, showTvdbIdStr)
-            val uncollectedEpisodes = DBUtils.getUncollectedEpisodesOfShow(context, showTvdbIdStr)
-            return Result(unwatchedEpisodes, uncollectedEpisodes)
-        }
-
-        override fun onPostExecute(result: Result) {
-            value = result
-        }
+    private suspend fun calcRemainingCounts(showTvdbId: Int) = withContext(Dispatchers.IO) {
+        val showTvdbIdStr = showTvdbId.toString()
+        val unwatchedEpisodes = DBUtils.getUnwatchedEpisodesOfShow(context, showTvdbIdStr)
+        val uncollectedEpisodes = DBUtils.getUncollectedEpisodesOfShow(context, showTvdbIdStr)
+        postValue(Result(unwatchedEpisodes, uncollectedEpisodes))
     }
 
 }
