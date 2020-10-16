@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -35,7 +35,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
             // calculate actually displayed values on a background thread
-            SgApp.coroutineScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.IO) {
                 // Use Semaphore with 1 permit to ensure results are delivered in order and never
                 // processed in parallel.
                 showItemsLiveDataSemaphore.withPermit {
