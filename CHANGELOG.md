@@ -8,6 +8,15 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 57
+----------
+*in development*
+
+#### Next release
+*TBD*
+
+* 🔧 Optimization for Android 11.
+
 Version 56
 ----------
 *2020-10-15*
