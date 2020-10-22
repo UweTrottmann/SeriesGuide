@@ -203,7 +203,6 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         displayedShow?.let {
             LanguageChoiceDialogFragment.show(
                 parentFragmentManager,
-                R.array.languageCodesShows,
                 it.language,
                 LanguageChoiceDialogFragment.TAG_ADD_DIALOG
             )

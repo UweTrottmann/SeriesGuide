@@ -216,7 +216,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     private fun displayLanguageSettings() {
         LanguageChoiceDialogFragment.show(
             parentFragmentManager,
-            R.array.languageCodesShows,
             languageCode,
             LanguageChoiceDialogFragment.TAG_DISCOVER
         )

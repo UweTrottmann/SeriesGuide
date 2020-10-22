@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.annotation.ArrayRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
@@ -25,8 +24,7 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
     private var currentLanguagePosition: Int = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val languageCodesArrayRes = requireArguments().getInt(ARG_ARRAY_LANGUAGE_CODES)
-        languageCodes = resources.getStringArray(languageCodesArrayRes)
+        languageCodes = resources.getStringArray(R.array.languageCodesShows)
 
         val languages = arrayOfNulls<String>(languageCodes.size)
         for (i in languageCodes.indices) {
@@ -72,19 +70,20 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
         const val TAG_ADD_DIALOG = "languageDialogAdd"
         const val TAG_DISCOVER = "languageDialogDiscover"
 
-        private const val ARG_ARRAY_LANGUAGE_CODES = "languageCodes"
         private const val ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode"
 
         /**
          * @param selectedLanguageCode two letter ISO 639-1 language code,
-         * if null selects first item of languageCodes.
+         * plus optional ISO-3166-1 region tag. If null selects first language code.
          */
         @JvmStatic
-        fun show(fragmentManager: FragmentManager, @ArrayRes languageCodes: Int,
-                selectedLanguageCode: String?, tag: String) {
+        fun show(
+            fragmentManager: FragmentManager,
+            selectedLanguageCode: String?,
+            tag: String
+        ) {
             LanguageChoiceDialogFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_ARRAY_LANGUAGE_CODES, languageCodes)
                     putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode)
                 }
             }.safeShow(fragmentManager, tag)

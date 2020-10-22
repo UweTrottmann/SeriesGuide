@@ -645,7 +645,7 @@ class ShowFragment : Fragment() {
     private fun displayLanguageSettings() {
         LanguageChoiceDialogFragment.show(
             parentFragmentManager,
-            R.array.languageCodesShows, languageCode, "showLanguageDialog"
+            languageCode, "showLanguageDialog"
         )
     }
 
