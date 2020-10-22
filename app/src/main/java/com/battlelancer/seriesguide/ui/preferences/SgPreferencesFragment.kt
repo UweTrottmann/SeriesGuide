@@ -40,7 +40,7 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
@@ -236,7 +236,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(DisplaySettings.KEY_LANGUAGE_FALLBACK)!!.also {
             updateFallbackLanguageSummary(it)
             it.setOnPreferenceClickListener {
-                LanguageChoiceDialogFragment.show(
+                ShowL10nDialogFragment.show(
                     parentFragmentManager,
                     DisplaySettings.getShowsLanguageFallback(context),
                     TAG_LANGUAGE_FALLBACK
@@ -490,7 +490,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
+    fun onEvent(event: ShowL10nDialogFragment.LanguageChangedEvent) {
         if (event.tag == TAG_LANGUAGE_FALLBACK) {
             PreferenceManager.getDefaultSharedPreferences(context).edit {
                 putString(DisplaySettings.KEY_LANGUAGE_FALLBACK, event.selectedLanguageCode)
