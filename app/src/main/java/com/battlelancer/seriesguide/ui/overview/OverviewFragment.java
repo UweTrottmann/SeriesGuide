@@ -54,13 +54,13 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
-import com.battlelancer.seriesguide.ui.HelpActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
@@ -924,7 +924,7 @@ public class OverviewFragment extends Fragment implements
                 @Override
                 public void onFeedback() {
                     if (Utils.tryStartActivity(requireContext(),
-                            HelpActivity.getFeedbackEmailIntent(requireContext()), true)) {
+                            MoreOptionsActivity.getFeedbackEmailIntent(requireContext()), true)) {
                         removeFeedbackView();
                     }
                 }
