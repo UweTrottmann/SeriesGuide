@@ -111,7 +111,7 @@ public class DisplaySettings {
      * @return Two letter ISO 639-1 language code of the language the user prefers when searching.
      * Defaults to English.
      */
-    public static String getSearchLanguage(Context context) {
+    public static String getShowsSearchLanguage(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String languageCode = prefs.getString(KEY_LANGUAGE_SEARCH, null);
         // For backwards compatibility: change "any language" code to not set.
