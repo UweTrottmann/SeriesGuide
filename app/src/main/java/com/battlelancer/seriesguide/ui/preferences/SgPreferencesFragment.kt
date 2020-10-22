@@ -238,7 +238,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             it.setOnPreferenceClickListener {
                 LanguageChoiceDialogFragment.show(
                     parentFragmentManager,
-                    R.array.languageCodesShows,
                     DisplaySettings.getShowsLanguageFallback(context),
                     TAG_LANGUAGE_FALLBACK
                 )
