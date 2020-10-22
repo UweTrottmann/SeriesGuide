@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment.LanguageChangedEvent
+import com.battlelancer.seriesguide.util.LanguageToolsK
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
-import java.util.Locale
 
 /**
  * A dialog displaying a list of languages to choose from, posting a [LanguageChangedEvent] if
@@ -30,7 +30,7 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
         for (i in languageCodes.indices) {
             // example: "en" for shows or "en-US" for movies
             val languageCode = languageCodes[i]
-            languages[i] = Locale(languageCode.substring(0, 2), "").displayName
+            languages[i] = LanguageToolsK.buildLanguageDisplayName(languageCode)
         }
 
         val currentLanguageCode = requireArguments().getString(ARG_SELECTED_LANGUAGE_CODE)
