@@ -18,9 +18,9 @@ public class Intents {
     public static final String EXTRA_SHOW_TVDBID = "show_tvdbid";
 
     /**
-     * Builds an implicit {@link android.content.Intent} to view an episode in SeriesGuide. Make
-     * sure to check with {@link Intent#resolveActivity(android.content.pm.PackageManager)} if
-     * SeriesGuide (or another app capable of handling this intent) is available.
+     * Builds an implicit {@link android.content.Intent} to view an episode in SeriesGuide. Like
+     * any Intent it may throw {@link android.content.ActivityNotFoundException}, e.g. if
+     * SeriesGuide (or another app capable of handling this intent) is not available.
      *
      * @param showTvdbId If valid and the episode does not exist, the user will be asked if the show
      *                   should be added to SeriesGuide.
@@ -33,9 +33,9 @@ public class Intents {
     }
 
     /**
-     * Builds an implicit {@link android.content.Intent} to view a show in SeriesGuide. Make
-     * sure to check with {@link Intent#resolveActivity(android.content.pm.PackageManager)} if
-     * SeriesGuide (or another app capable of handling this intent) is available.
+     * Builds an implicit {@link android.content.Intent} to view a show in SeriesGuide. Like
+     * any Intent it may throw {@link android.content.ActivityNotFoundException}, e.g. if
+     * SeriesGuide (or another app capable of handling this intent) is not available.
      *
      * <p> If the show is not added to SeriesGuide, the user will be asked if it should be.
      */
