@@ -33,7 +33,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
@@ -201,10 +201,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     @OnClick(R.id.buttonAddLanguage)
     fun onClickButtonLanguage() {
         displayedShow?.let {
-            LanguageChoiceDialogFragment.show(
+            ShowL10nDialogFragment.show(
                 parentFragmentManager,
                 it.language,
-                LanguageChoiceDialogFragment.TAG_ADD_DIALOG
+                ShowL10nDialogFragment.TAG_ADD_DIALOG
             )
         }
     }
@@ -225,8 +225,8 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
-        if (LanguageChoiceDialogFragment.TAG_ADD_DIALOG != event.tag) {
+    fun onEventMainThread(event: ShowL10nDialogFragment.LanguageChangedEvent) {
+        if (ShowL10nDialogFragment.TAG_ADD_DIALOG != event.tag) {
             return
         }
 

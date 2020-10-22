@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment.LanguageChangedEvent
 import com.battlelancer.seriesguide.util.LanguageToolsK
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -13,10 +12,11 @@ import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 
 /**
- * A dialog displaying a list of languages to choose from, posting a [LanguageChangedEvent] if
- * a language different from the given one was chosen.
+ * A dialog displaying a list of languages to choose from, posting a
+ * [ShowL10nDialogFragment.LanguageChangedEvent] if a
+ * language different from the given one was chosen.
  */
-class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
+class ShowL10nDialogFragment : AppCompatDialogFragment() {
 
     class LanguageChangedEvent(val selectedLanguageCode: String, val tag: String?)
 
@@ -82,7 +82,7 @@ class LanguageChoiceDialogFragment : AppCompatDialogFragment() {
             selectedLanguageCode: String?,
             tag: String
         ) {
-            LanguageChoiceDialogFragment().apply {
+            ShowL10nDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode)
                 }
