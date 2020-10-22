@@ -161,7 +161,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         // enable menu
         setHasOptionsMenu(true)
 
-        languageCode = DisplaySettings.getSearchLanguage(context)
+        languageCode = DisplaySettings.getShowsSearchLanguage(context)
 
         // observe and load results
         model = ViewModelProvider(this).get(ShowsDiscoverViewModel::class.java)
