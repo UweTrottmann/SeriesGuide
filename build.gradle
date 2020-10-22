@@ -49,7 +49,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1' // libraries, SeriesGuide
+        classpath 'com.android.tools.build:gradle:4.1.0' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/ben-manes/gradle-versions-plugin/releases
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.33.0'
