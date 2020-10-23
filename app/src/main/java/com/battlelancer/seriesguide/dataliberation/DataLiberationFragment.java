@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.R2;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.snackbar.Snackbar;
 import org.greenrobot.eventbus.EventBus;
@@ -74,26 +75,26 @@ public class DataLiberationFragment extends Fragment implements
     private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 7;
     private static final int REQUEST_CODE_MOVIES_IMPORT_URI = 8;
 
-    @BindView(R.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
-    @BindView(R.id.buttonDataLibShowsExportFile) Button buttonShowsExportFile;
-    @BindView(R.id.textViewDataLibListsExportFile) TextView textListsExportFile;
-    @BindView(R.id.buttonDataLibListsExportFile) Button buttonListsExportFile;
-    @BindView(R.id.textViewDataLibMoviesExportFile) TextView textMoviesExportFile;
-    @BindView(R.id.buttonDataLibMoviesExportFile) Button buttonMoviesExportFile;
+    @BindView(R2.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
+    @BindView(R2.id.buttonDataLibShowsExportFile) Button buttonShowsExportFile;
+    @BindView(R2.id.textViewDataLibListsExportFile) TextView textListsExportFile;
+    @BindView(R2.id.buttonDataLibListsExportFile) Button buttonListsExportFile;
+    @BindView(R2.id.textViewDataLibMoviesExportFile) TextView textMoviesExportFile;
+    @BindView(R2.id.buttonDataLibMoviesExportFile) Button buttonMoviesExportFile;
 
-    @BindView(R.id.checkBoxDataLibShows) CheckBox checkBoxShows;
-    @BindView(R.id.checkBoxDataLibLists) CheckBox checkBoxLists;
-    @BindView(R.id.checkBoxDataLibMovies) CheckBox checkBoxMovies;
-    @BindView(R.id.textViewDataLibShowsImportFile) TextView textShowsImportFile;
-    @BindView(R.id.buttonDataLibShowsImportFile) Button buttonShowsImportFile;
-    @BindView(R.id.textViewDataLibListsImportFile) TextView textListsImportFile;
-    @BindView(R.id.buttonDataLibListsImportFile) Button buttonListsImportFile;
-    @BindView(R.id.textViewDataLibMoviesImportFile) TextView textMoviesImportFile;
-    @BindView(R.id.buttonDataLibMoviesImportFile) Button buttonMoviesImportFile;
+    @BindView(R2.id.checkBoxDataLibShows) CheckBox checkBoxShows;
+    @BindView(R2.id.checkBoxDataLibLists) CheckBox checkBoxLists;
+    @BindView(R2.id.checkBoxDataLibMovies) CheckBox checkBoxMovies;
+    @BindView(R2.id.textViewDataLibShowsImportFile) TextView textShowsImportFile;
+    @BindView(R2.id.buttonDataLibShowsImportFile) Button buttonShowsImportFile;
+    @BindView(R2.id.textViewDataLibListsImportFile) TextView textListsImportFile;
+    @BindView(R2.id.buttonDataLibListsImportFile) Button buttonListsImportFile;
+    @BindView(R2.id.textViewDataLibMoviesImportFile) TextView textMoviesImportFile;
+    @BindView(R2.id.buttonDataLibMoviesImportFile) Button buttonMoviesImportFile;
 
-    @BindView(R.id.buttonDataLibImport) Button buttonImport;
-    @BindView(R.id.progressBarDataLib) ProgressBar progressBar;
-    @BindView(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
+    @BindView(R2.id.buttonDataLibImport) Button buttonImport;
+    @BindView(R2.id.progressBarDataLib) ProgressBar progressBar;
+    @BindView(R2.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
 
     @Nullable private Integer type;
     private AsyncTask<Void, Integer, Integer> dataLibTask;

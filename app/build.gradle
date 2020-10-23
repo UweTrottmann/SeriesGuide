@@ -6,6 +6,7 @@ if (project.file('google-services.json').exists()) {
     apply plugin: 'com.google.gms.google-services'
 }
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion versions.compileSdk
