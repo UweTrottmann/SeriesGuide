@@ -15,7 +15,10 @@ Version 57
 #### Next release
 *TBD*
 
-* 🔧 Optimization for Android 11.
+* 🌟 For shows, add Portuguese (Brazil) to supported languages.
+* 🔧 Sort languages in selection dialog.
+* 🔨 In movie details, display country if Portuguese is selected as language.
+* 🔧 Optimization for Android 11 (this time for real).
 
 Version 56
 ----------

@@ -84,7 +84,7 @@ class ShowsPopularDataSource(
             Page(emptyList(), totalCount)
         } else {
             Page(TraktAddLoader.parseTraktShowsToSearchResults(context, shows,
-                    DisplaySettings.getSearchLanguage(context)),
+                    DisplaySettings.getShowsSearchLanguage(context)),
                     totalCount)
         }
     }

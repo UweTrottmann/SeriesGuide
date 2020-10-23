@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
-import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.search.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -161,7 +161,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         // enable menu
         setHasOptionsMenu(true)
 
-        languageCode = DisplaySettings.getSearchLanguage(context)
+        languageCode = DisplaySettings.getShowsSearchLanguage(context)
 
         // observe and load results
         model = ViewModelProvider(this).get(ShowsDiscoverViewModel::class.java)
@@ -214,11 +214,10 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private fun displayLanguageSettings() {
-        LanguageChoiceDialogFragment.show(
+        ShowL10nDialogFragment.show(
             parentFragmentManager,
-            R.array.languageCodesShows,
             languageCode,
-            LanguageChoiceDialogFragment.TAG_DISCOVER
+            ShowL10nDialogFragment.TAG_DISCOVER
         )
     }
 
@@ -234,8 +233,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
-        if (LanguageChoiceDialogFragment.TAG_DISCOVER != event.tag) {
+    fun onEventMainThread(event: ShowL10nDialogFragment.LanguageChangedEvent) {
+        if (ShowL10nDialogFragment.TAG_DISCOVER != event.tag) {
             return
         }
         changeLanguage(event.selectedLanguageCode)
