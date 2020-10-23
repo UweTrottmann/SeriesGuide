@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
+import java.text.Collator
 
 /**
  * A dialog displaying a list of languages to choose from, posting a
@@ -20,48 +21,60 @@ class ShowL10nDialogFragment : AppCompatDialogFragment() {
 
     class LanguageChangedEvent(val selectedLanguageCode: String, val tag: String?)
 
-    private lateinit var languageCodes: Array<String>
-    private var currentLanguagePosition: Int = 0
+    data class LocalizationItem(
+        val code: String,
+        val displayText: String
+    )
+
+    private lateinit var sortedLanguageCodes: Array<String>
+    private var currentLanguageIndex: Int = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        languageCodes = resources.getStringArray(R.array.languageCodesShows)
-
-        val languages = arrayOfNulls<String>(languageCodes.size)
-        for (i in languageCodes.indices) {
-            // example: "en" for shows or "en-US" for movies
-            val languageCode = languageCodes[i]
-            languages[i] = LanguageToolsK.buildLanguageDisplayName(languageCode)
+        val languageCodes = resources.getStringArray(R.array.languageCodesShows)
+        val localizationItems = languageCodes.mapTo(ArrayList(languageCodes.size)) {
+            LocalizationItem(it, LanguageToolsK.buildLanguageDisplayName(it))
         }
 
-        val currentLanguageCode = requireArguments().getString(ARG_SELECTED_LANGUAGE_CODE)
+        val collator = Collator.getInstance()
+        localizationItems.sortWith { left: LocalizationItem, right: LocalizationItem ->
+            collator.compare(left.displayText, right.displayText)
+        }
 
-        currentLanguagePosition = 0
+        sortedLanguageCodes = localizationItems.mapToArray { it.code }
+        val sortedLanguages = localizationItems.mapToArray { it.displayText }
+
+        val currentLanguageCode = requireArguments().getString(ARG_SELECTED_LANGUAGE_CODE)
+        currentLanguageIndex = 0
         if (currentLanguageCode != null) {
-            for (i in languageCodes.indices) {
-                if (languageCodes[i] == currentLanguageCode) {
-                    currentLanguagePosition = i
-                    break
-                }
+            val indexOrMinus1 = sortedLanguageCodes.indexOf(currentLanguageCode)
+            if (indexOrMinus1 != -1) {
+                currentLanguageIndex = indexOrMinus1
             }
         }
 
         return MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.pref_language)
                 .setSingleChoiceItems(
-                        languages,
-                        currentLanguagePosition
+                        sortedLanguages,
+                        currentLanguageIndex
                 ) { _, item -> postLanguageChangedEvent(item) }.create()
     }
 
+    private inline fun <T, reified R> List<T>.mapToArray(transform: (T) -> R): Array<R> {
+        return Array(size) { index ->
+            transform(get(index))
+        }
+    }
+
     private fun postLanguageChangedEvent(selectedLanguagePosition: Int) {
-        if (selectedLanguagePosition == currentLanguagePosition) {
+        if (selectedLanguagePosition == currentLanguageIndex) {
             Timber.d("Language is unchanged, do nothing.")
             dismiss()
             return
         }
 
         EventBus.getDefault()
-                .post(LanguageChangedEvent(languageCodes[selectedLanguagePosition], tag))
+                .post(LanguageChangedEvent(sortedLanguageCodes[selectedLanguagePosition], tag))
         dismiss()
     }
 
