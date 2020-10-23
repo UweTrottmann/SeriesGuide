@@ -250,7 +250,7 @@
     <string name="shows_continuing">%s fortsätter</string>
     <string name="episodes_watched">%s sedda</string>
     <string name="movies_on_watchlist">%s på bevakningslistan</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d i samling</string>
     <string name="movies_watched_format">%s sedda</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>

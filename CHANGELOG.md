@@ -19,6 +19,7 @@ Version 57
 * 🔧 Sort languages in selection dialog.
 * 🔨 In movie details, display country if Portuguese is selected as language.
 * 🔧 Optimization for Android 11 (this time for real).
+* 📝 Latest translations from crowdin.
 
 Version 56
 ----------
