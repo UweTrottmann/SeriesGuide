@@ -12,12 +12,13 @@ Version 57
 ----------
 *in development*
 
-#### Next release
-*TBD*
+#### 57-beta1
+*2020-10-23*
 
 * 🌟 For shows, add Portuguese (Brazil) to supported languages.
 * 🔧 Sort languages in selection dialog.
 * 🔨 In movie details, display country if Portuguese is selected as language.
+* 🔨 Restore feedback when tapping buttons at bottom, in rate dialog.
 * 🔧 Optimization for Android 11 (this time for real).
 * 📝 Latest translations from crowdin.
 
