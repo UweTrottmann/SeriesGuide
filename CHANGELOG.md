@@ -13,9 +13,11 @@ Version 57
 *in development*
 
 #### 57-beta2
-*TBD*
+*2020-10-29*
 
 * 🔨 On Android 11 allow detection of X Pass.
+* 🔧 Support Trakt API rate limiting.
+* 📝 Latest translations from crowdin.
 
 #### 57-beta1
 *2020-10-23*
