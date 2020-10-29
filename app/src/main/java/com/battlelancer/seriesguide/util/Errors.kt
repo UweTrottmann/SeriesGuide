@@ -10,6 +10,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
+import java.net.ConnectException
 import java.net.UnknownHostException
 
 class Errors {
@@ -226,12 +227,16 @@ private fun HttpResponseException.isServerError(): Boolean {
 }
 
 /**
- * Returns true if the exception is not an UnknownHostException or InterruptedIOException.
+ * Returns true if the exception is not one of the following:
+ * - ConnectException - network issues (e.g. "Failed to connect to x").
+ * - InterruptedIOException - network request time outs.
+ * - UnknownHostException - network issues.
  */
 private fun Throwable.shouldReport(): Boolean {
     return when (this) {
-        is InterruptedIOException -> false // do not track, mostly timeouts
-        is UnknownHostException -> false // do not track, mostly devices loosing connection
+        is ConnectException -> false
+        is InterruptedIOException -> false
+        is UnknownHostException -> false
         else -> true
     }
 }
