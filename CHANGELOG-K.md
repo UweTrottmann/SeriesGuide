@@ -22,6 +22,22 @@ Version 46
 
 🔧 Drop Google Analytics.
 
+#### 46.4-k
+*(2019-05-02)*
+
+* Resolves crashes on devices without Google Play services.
+
+#### 46.3-k
+*(2019-03-30)*
+
+* Resolves connection issues with TMDB by using Google Play Services to update the device's security provider to use modern TLS.
+
+#### 46.2-k
+*(2019-02-22)*
+
+* 🔧 Cloud: minor improvement to Google Sign-In.
+* 📝 Latest translations from crowdin.
+
 #### 46.1
 *(2019-01-16)*
 
