@@ -131,6 +131,7 @@ public class Utils {
             }
         } catch (NameNotFoundException e) {
             // Expected exception that occurs if the package is not present.
+            Timber.i("X Pass not found.");
         }
 
         return false;

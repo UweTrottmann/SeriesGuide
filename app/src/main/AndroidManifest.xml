@@ -24,12 +24,13 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
-    <!-- On Android 11 (SDK 30), allow SeriesGuide to see apps providing extensions. -->
+    <!-- On Android 11 (SDK 30), allow SeriesGuide to see apps providing extensions and the X Pass app. -->
     <!-- https://developer.android.com/preview/privacy/package-visibility -->
     <queries>
         <intent>
             <action android:name="com.battlelancer.seriesguide.api.SeriesGuideExtension" />
         </intent>
+        <package android:name="com.battlelancer.seriesguide.x" />
     </queries>
 
     <application

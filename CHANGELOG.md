@@ -12,6 +12,11 @@ Version 57
 ----------
 *in development*
 
+#### 57-beta2
+*TBD*
+
+* 🔨 On Android 11 allow detection of X Pass.
+
 #### 57-beta1
 *2020-10-23*
 
