@@ -470,7 +470,7 @@
     <string name="action_upgrade">Otključaj sve značajke</string>
     <string name="billing_action_subscribe">Pretplati se</string>
     <string name="billing_action_manage_subscriptions">Upravljanje pretplatama</string>
-    <string name="billing_action_pass">Nabavi X Pass</string>
+    <string name="billing_action_pass">Nabavi X Pass App</string>
     <string name="billing_price_subscribe">%1$s/godina, isprobajte besplatno, otkažite bilo kad kroz %2$s</string>
     <string name="billing_price_pass">Jednokratna kupnja</string>
     <string name="upgrade_description">Otključajte sve značajke uključujući obavijesti, teme i više opcija widgeta s popisom. Pomozite mi napraviti buduća ažuriranja.</string>

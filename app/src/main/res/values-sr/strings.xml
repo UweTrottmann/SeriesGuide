@@ -470,7 +470,7 @@
     <string name="action_upgrade">Откључај све опције</string>
     <string name="billing_action_subscribe">Претплати се</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">Купи X Pass</string>
+    <string name="billing_action_pass">Купи X Pass App</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_price_pass">доживотна куповина</string>
     <string name="upgrade_description">Откључај све опције укључујући нотификације, теме и више опција за листе. Помозите ми са будућим унапређењима.</string>

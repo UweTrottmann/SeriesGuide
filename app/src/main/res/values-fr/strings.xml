@@ -459,7 +459,7 @@
     <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
     <string name="billing_action_subscribe">Souscrire</string>
     <string name="billing_action_manage_subscriptions">Gérer les abonnements</string>
-    <string name="billing_action_pass">Obtenir X Pass</string>
+    <string name="billing_action_pass">Obtenir X Pass App</string>
     <string name="billing_price_subscribe">%1$s/an, faites l’essai gratuitement, annulez à tout moment via %2$s</string>
     <string name="billing_price_pass">Achat à vie</string>
     <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>

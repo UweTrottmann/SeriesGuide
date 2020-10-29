@@ -448,7 +448,7 @@
     <string name="action_upgrade">Buka semua fitur</string>
     <string name="billing_action_subscribe">Berlangganan</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">Dapatkan X Pass</string>
+    <string name="billing_action_pass">Dapatkan X Pass App</string>
     <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
     <string name="billing_price_pass">pembelian satu kali</string>
     <string name="upgrade_description">Buka semua fitur termasuk pemberitahuan, tema dan lebih banyak pilihan daftar widget. Membantu saya membuat pembaruan di masa mendatang.</string>

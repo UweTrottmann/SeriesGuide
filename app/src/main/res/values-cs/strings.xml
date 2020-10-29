@@ -481,7 +481,7 @@
     <string name="action_upgrade">Odemknout všechny funkce</string>
     <string name="billing_action_subscribe">Odebírat</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">Získejte X Pass</string>
+    <string name="billing_action_pass">Získejte X Pass App</string>
     <string name="billing_price_subscribe">%1$s na rok, vyzkoušejte zdarma, zrušit to můžete kdykoli prostřednictvím %2$s</string>
     <string name="billing_price_pass">jednorázový nákup</string>
     <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>

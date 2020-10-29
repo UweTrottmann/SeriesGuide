@@ -459,7 +459,7 @@
     <string name="action_upgrade">Ontgrendel alle functies</string>
     <string name="billing_action_subscribe">Abonneren</string>
     <string name="billing_action_manage_subscriptions">Abonnementen beheren</string>
-    <string name="billing_action_pass">Neem X Pass</string>
+    <string name="billing_action_pass">Neem X Pass App</string>
     <string name="billing_price_subscribe">%1$s/jaar, probeer gratis, annuleer op elk moment via %2$s</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
     <string name="upgrade_description">Ontgrendel alle functies, inclusief meldingen, thema\'s en meer lijstopties voor widgets. Help me toekomstige updates te maken.</string>
