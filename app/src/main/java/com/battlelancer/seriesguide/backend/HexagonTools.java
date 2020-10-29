@@ -230,8 +230,13 @@ public class HexagonTools {
                                 "GoogleSignInAccount is null"));
             }
         } catch (Exception e) {
-            Errors.logAndReport(ACTION_SILENT_SIGN_IN,
-                    HexagonAuthError.build(ACTION_SILENT_SIGN_IN, e));
+            if (e instanceof InterruptedException) {
+                // Do not report thread interruptions, it's expected.
+                Timber.w(e, "Sign-in check interrupted");
+            } else {
+                Errors.logAndReport(ACTION_SILENT_SIGN_IN,
+                        HexagonAuthError.build(ACTION_SILENT_SIGN_IN, e));
+            }
         }
 
         boolean shouldFixAccount = account == null;
