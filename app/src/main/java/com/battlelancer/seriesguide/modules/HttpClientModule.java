@@ -42,8 +42,8 @@ public class HttpClientModule {
         builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         builder.addInterceptor(tmdbInterceptor);
+        builder.addInterceptor(traktInterceptor);
         builder.addNetworkInterceptor(tvdbInterceptor);
-        builder.addNetworkInterceptor(traktInterceptor);
         builder.authenticator(authenticator);
         builder.cache(cache);
         return builder.build();
