@@ -23,8 +23,8 @@ class Errors {
 
             if (!throwable.shouldReport()) return
 
-            CrashlyticsCore.getInstance().setString("action", action)
-            CrashlyticsCore.getInstance().logException(throwable)
+//            CrashlyticsCore.getInstance().setString("action", action)
+//            CrashlyticsCore.getInstance().logException(throwable)
         }
 
         /**
@@ -86,8 +86,8 @@ class Errors {
 
             if (!throwable.shouldReport()) return
 
-            CrashlyticsCore.getInstance().setString("action", action)
-            CrashlyticsCore.getInstance().logException(throwable)
+//            CrashlyticsCore.getInstance().setString("action", action)
+//            CrashlyticsCore.getInstance().logException(throwable)
         }
 
         /**
