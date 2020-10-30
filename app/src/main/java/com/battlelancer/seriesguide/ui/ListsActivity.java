@@ -30,7 +30,7 @@ import com.battlelancer.seriesguide.ui.lists.ListsReorderDialogFragment;
 import com.battlelancer.seriesguide.ui.lists.ListsTools;
 import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.widgets.SlidingTabLayout;
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

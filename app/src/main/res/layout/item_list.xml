@@ -18,7 +18,7 @@
         tools:ignore="RtlSymmetry"
         tools:text="Sample List Name" />
 
-    <com.battlelancer.seriesguide.widgets.DragGripView
+    <com.uwetrottmann.seriesguide.widgets.DragGripView
         android:id="@+id/dragGripViewItemList"
         android:layout_width="64dp"
         android:layout_height="match_parent"
