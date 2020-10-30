@@ -430,15 +430,18 @@ public class MovieTools {
 
             movies.add(movieDetails);
 
-            // add to database in batches of at most 10
-            if (movies.size() == 10 || !iterator.hasNext()) {
-                // insert into database
+            // Already add to the database if we have 10 movies so UI can already update.
+            if (movies.size() == 10) {
                 context.getContentResolver().bulkInsert(SeriesGuideContract.Movies.CONTENT_URI,
                         buildMoviesContentValues(movies));
-
-                // start new batch
-                movies.clear();
+                movies.clear(); // Start a new batch.
             }
+        }
+
+        // Insert remaining new movies into the database.
+        if (!movies.isEmpty()) {
+            context.getContentResolver().bulkInsert(SeriesGuideContract.Movies.CONTENT_URI,
+                    buildMoviesContentValues(movies));
         }
 
         return true;
