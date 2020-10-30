@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.DialogTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.services.Checkin;
 import org.greenrobot.eventbus.EventBus;
 
@@ -90,10 +91,10 @@ public class TraktCancelCheckinDialogFragment extends AppCompatDialogFragment {
                     if (SgTrakt.isUnauthorized(context, response)) {
                         return context.getString(R.string.trakt_error_credentials);
                     }
-                    SgTrakt.trackFailedRequest("delete check-in", response);
+                    Errors.logAndReport("delete check-in", response);
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest("delete check-in", e);
+                Errors.logAndReport("delete check-in", e);
             }
 
             return context.getString(R.string.api_error_generic,

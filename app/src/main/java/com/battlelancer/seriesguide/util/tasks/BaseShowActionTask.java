@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
@@ -49,11 +50,11 @@ public abstract class BaseShowActionTask extends BaseActionTask {
                     if (SgTrakt.isUnauthorized(getContext(), response)) {
                         return ERROR_TRAKT_AUTH;
                     }
-                    SgTrakt.trackFailedRequest(getTraktAction(), response);
+                    Errors.logAndReport(getTraktAction(), response);
                     return ERROR_TRAKT_API;
                 }
             } catch (Exception e) {
-                SgTrakt.trackFailedRequest(getTraktAction(), e);
+                Errors.logAndReport(getTraktAction(), e);
                 return ERROR_TRAKT_API;
             }
         }

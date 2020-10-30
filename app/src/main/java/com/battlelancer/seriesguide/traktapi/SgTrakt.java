@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.traktapi;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.TraktError;
 import okhttp3.OkHttpClient;
@@ -64,23 +64,14 @@ public class SgTrakt extends TraktV2 {
         }
     }
 
-    public static void trackFailedRequest(TraktV2 trakt, String action,
-            retrofit2.Response response) {
-        String message = response.message();
+    @Nullable
+    public static String checkForTraktError(TraktV2 trakt, Response response) {
         TraktError error = trakt.checkForTraktError(response);
         if (error != null && error.message != null) {
-            message += ", " + error.message;
+            return error.message;
+        } else {
+            return null;
         }
-        Utils.trackFailedRequest(new TraktRequestError(action, response.code(), message));
-    }
-
-    public static void trackFailedRequest(String action, retrofit2.Response response) {
-        Utils.trackFailedRequest(
-                new TraktRequestError(action, response.code(), response.message()));
-    }
-
-    public static void trackFailedRequest(String action, @NonNull Throwable throwable) {
-        Utils.trackFailedRequest(new TraktRequestError(action, throwable));
     }
 
     /**
@@ -93,10 +84,10 @@ public class SgTrakt extends TraktV2 {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                trackFailedRequest(action, response);
+                Errors.logAndReport(action, response);
             }
         } catch (Exception e) {
-            trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
         }
         return null;
     }
@@ -112,11 +103,11 @@ public class SgTrakt extends TraktV2 {
                 return response.body();
             } else {
                 if (!isUnauthorized(context, response)) {
-                    trackFailedRequest(action, response);
+                    Errors.logAndReport(action, response);
                 }
             }
         } catch (Exception e) {
-            trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
         }
         return null;
     }

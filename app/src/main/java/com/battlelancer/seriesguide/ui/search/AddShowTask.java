@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseShow;
@@ -356,10 +357,10 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                     publishProgress(RESULT_TRAKT_AUTH_ERROR);
                     return null;
                 }
-                SgTrakt.trackFailedRequest(action, response);
+                Errors.logAndReport(action, response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
         }
         publishProgress(RESULT_TRAKT_API_ERROR);
         return null;

@@ -7,9 +7,9 @@ import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Comment;
@@ -69,10 +69,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
                     } else {
-                        SgTrakt.trackFailedRequest("get movie comments", response);
+                        Errors.logAndReport("get movie comments", response);
                     }
                 } catch (Exception e) {
-                    SgTrakt.trackFailedRequest("get movie comments", e);
+                    Errors.logAndReport("get movie comments", e);
                 }
             }
             return buildResultFailureWithOfflineCheck();
@@ -113,10 +113,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                     if (response.isSuccessful()) {
                         return buildResultSuccess(response.body());
                     } else {
-                        SgTrakt.trackFailedRequest("get episode comments", response);
+                        Errors.logAndReport("get episode comments", response);
                     }
                 } catch (Exception e) {
-                    SgTrakt.trackFailedRequest("get episode comments", e);
+                    Errors.logAndReport("get episode comments", e);
                 }
                 return buildResultFailureWithOfflineCheck();
             } else {
@@ -138,10 +138,10 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
             if (response.isSuccessful()) {
                 return buildResultSuccess(response.body());
             } else {
-                SgTrakt.trackFailedRequest("get show comments", response);
+                Errors.logAndReport("get show comments", response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get show comments", e);
+            Errors.logAndReport("get show comments", e);
         }
         return buildResultFailureWithOfflineCheck();
     }

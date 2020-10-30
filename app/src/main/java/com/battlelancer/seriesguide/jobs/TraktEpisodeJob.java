@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
@@ -118,7 +119,8 @@ public class TraktEpisodeJob extends BaseNetworkEpisodeJob {
                 if (SgTrakt.isUnauthorized(context, response)) {
                     return NetworkJob.ERROR_TRAKT_AUTH;
                 }
-                SgTrakt.trackFailedRequest(trakt, errorLabel, response);
+                Errors.logAndReport(errorLabel, response,
+                        SgTrakt.checkForTraktError(trakt, response));
 
                 int code = response.code();
                 if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
@@ -128,7 +130,7 @@ public class TraktEpisodeJob extends BaseNetworkEpisodeJob {
                 }
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest(errorLabel, e);
+            Errors.logAndReport(errorLabel, e);
             return NetworkJob.ERROR_CONNECTION;
         }
 

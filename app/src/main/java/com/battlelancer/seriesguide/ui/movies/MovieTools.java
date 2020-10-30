@@ -17,9 +17,8 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.Movie;
@@ -382,10 +381,10 @@ public class MovieTools {
                 Timber.e("Finding trakt movie failed (not in results)");
                 return -1;
             } else {
-                SgTrakt.trackFailedRequest("movie trakt id lookup", response);
+                Errors.logAndReport("movie trakt id lookup", response);
             }
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("movie trakt id lookup", e);
+            Errors.logAndReport("movie trakt id lookup", e);
         }
         return null;
     }
@@ -485,9 +484,9 @@ public class MovieTools {
             if (response.isSuccessful()) {
                 return response.body();
             }
-            SgTrakt.trackFailedRequest("get movie rating", response);
+            Errors.logAndReport("get movie rating", response);
         } catch (Exception e) {
-            SgTrakt.trackFailedRequest("get movie rating", e);
+            Errors.logAndReport("get movie rating", e);
         }
         return null;
     }
@@ -532,10 +531,10 @@ public class MovieTools {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
-                SgTmdb.trackFailedRequest(action, response);
+                Errors.logAndReport(action, response);
             }
         } catch (Exception e) {
-            SgTmdb.trackFailedRequest(action, e);
+            Errors.logAndReport(action, e);
         }
         return null;
     }
