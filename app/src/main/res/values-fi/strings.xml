@@ -275,7 +275,7 @@
     <string name="hexagon_remove_account_confirmation">Tilin poistaminen poistaa kaikki ohjelmat ja elokuvat SeriesGuide Cloud -palvelimelta. Muista poistaa ne myös muista yhdistetyistä laitteista.</string>
     <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
     <string name="hexagon_signed_out">Kirjauduttu ulos SeriesGuide Cloudista.</string>
-    <string name="hexagon_google_play_missing">SeriesGuide Cloudin käyttämiseen vaaditaan Google Play Palvelut.</string>
+    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Lähetetään traktiin.</string>
     <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>

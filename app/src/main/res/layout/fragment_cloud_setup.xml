@@ -12,18 +12,6 @@
         android:animateLayoutChanges="true">
 
         <TextView
-            android:id="@+id/textViewCloudExperimental"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/hexagon_warning"
-            android:textAppearance="@style/TextAppearance.Body.Highlight.Red"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:id="@+id/textViewCloudDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,7 +23,7 @@
             android:textAppearance="@style/TextAppearance.Body"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCloudExperimental" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageViewCloudUser"

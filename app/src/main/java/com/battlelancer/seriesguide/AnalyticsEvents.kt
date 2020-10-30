@@ -4,6 +4,8 @@ class AnalyticsEvents {
     companion object {
         const val HEXAGON_ERROR = "hexagon_error"
         const val SIGN_IN_ERROR = "hexagon_sign_in_error"
+        const val SIGN_OUT_ERROR = "hexagon_sign_out_error"
+        const val REVOKE_ERROR = "hexagon_revoke_error"
         const val THETVDB_ERROR = "thetvdb_error"
         const val TMDB_ERROR = "tmdb_error"
         const val TRAKT_ERROR = "trakt_error"
