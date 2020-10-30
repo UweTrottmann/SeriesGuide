@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.util
 
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.crashlytics.android.core.CrashlyticsCore
 import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
@@ -26,8 +25,8 @@ class Errors {
 
             bendCauseStackTrace(throwable)
 
-            CrashlyticsCore.getInstance().setString("action", action)
-            CrashlyticsCore.getInstance().logException(throwable)
+//            CrashlyticsCore.getInstance().setString("action", action)
+//            CrashlyticsCore.getInstance().logException(throwable)
         }
 
         /**
@@ -80,8 +79,8 @@ class Errors {
 
             Timber.e(throwable, action)
 
-            CrashlyticsCore.getInstance().setString("action", action)
-            CrashlyticsCore.getInstance().logException(throwable)
+//            CrashlyticsCore.getInstance().setString("action", action)
+//            CrashlyticsCore.getInstance().logException(throwable)
         }
 
         /**
