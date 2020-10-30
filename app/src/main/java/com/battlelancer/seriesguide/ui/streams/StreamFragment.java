@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
+import com.battlelancer.seriesguide.widgets.gridheaderview.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**

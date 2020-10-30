@@ -1,4 +1,4 @@
-package com.mobeta.android.dslv;
+package com.battlelancer.seriesguide.widgets.dragsortview;
 
 import android.content.Context;
 import android.graphics.Point;

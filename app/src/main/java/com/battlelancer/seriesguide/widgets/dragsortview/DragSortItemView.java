@@ -1,9 +1,8 @@
-package com.mobeta.android.dslv;
+package com.battlelancer.seriesguide.widgets.dragsortview;
 
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 

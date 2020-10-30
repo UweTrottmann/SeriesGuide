@@ -136,8 +136,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     implementation project(':api')
-    implementation project(':libraries:drag-sort-listview')
-    implementation project(':libraries:stickygridheaders')
 
     implementation "androidx.annotation:annotation:${versions.annotation}"
     implementation 'androidx.appcompat:appcompat:1.0.2'
