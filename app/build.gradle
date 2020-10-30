@@ -7,6 +7,8 @@ apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 android {
     compileSdkVersion versions.compileSdk
 
+    useLibrary 'android.test.base'
+
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
@@ -216,10 +218,19 @@ dependencies {
     // Instrumented unit tests
     // https://developer.android.com/training/testing/release-notes
     androidTestImplementation "androidx.annotation:annotation:${versions.annotation}"
+    // Core library
+    androidTestImplementation 'androidx.test:core:1.1.0'
+    // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.1.1'
+    // Espresso
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.1'
+    // Assertions
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation ('androidx.test.ext:truth:1.1.0') {
+        exclude group: 'com.google.truth' // include manually to control conflicting deps
+    }
     androidTestImplementation ("com.google.truth:truth:${versions.truth}") {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime

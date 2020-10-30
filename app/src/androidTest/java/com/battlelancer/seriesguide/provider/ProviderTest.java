@@ -1,9 +1,6 @@
 package com.battlelancer.seriesguide.provider;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static com.google.common.truth.Truth.assertThat;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -12,8 +9,8 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.List;
@@ -82,19 +79,19 @@ public class ProviderTest {
         // ProviderTestRule does not work with Room
         // so instead blatantly replace the instance with one that uses an in-memory database
         // and use the real ContentResolver
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
         SgRoomDatabase.switchToInMemory(context);
         resolver = context.getContentResolver();
     }
 
     @After
     public void closeDb() {
-        SgRoomDatabase.getInstance(InstrumentationRegistry.getTargetContext()).close();
+        SgRoomDatabase.getInstance(ApplicationProvider.getApplicationContext()).close();
     }
 
     @Test
     public void showDefaultValues() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
 
         ContentValues values = SHOW.toContentValues(context, true);
         ContentProviderOperation op = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
@@ -106,11 +103,11 @@ public class ProviderTest {
 
         Cursor query = resolver.query(Shows.CONTENT_URI, null,
                 null, null, null);
-        assertNotNull(query);
-        assertEquals(1, query.getCount());
-        assertTrue(query.moveToFirst());
+        assertThat(query).isNotNull();
+        assertThat(query.getCount()).isEqualTo(1);
+        assertThat(query.moveToFirst()).isTrue();
 
-        assertEquals(SHOW.tvdb_id, query.getInt(query.getColumnIndexOrThrow(Shows._ID)));
+        assertThat(query.getInt(query.getColumnIndexOrThrow(Shows._ID))).isEqualTo(SHOW.tvdb_id);
         assertNotNullValue(query, Shows.TITLE);
         assertNotNullValue(query, Shows.TITLE);
         assertNotNullValue(query, Shows.OVERVIEW);
@@ -159,7 +156,7 @@ public class ProviderTest {
     private void insertAndAssertSeason(ContentProviderOperation seasonOp)
             throws RemoteException, OperationApplicationException {
         // with Room insert actually checks constraints, so add a matching show first
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
 
         ContentValues values = SHOW.toContentValues(context, true);
         ContentProviderOperation showOp = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
@@ -172,13 +169,16 @@ public class ProviderTest {
 
         Cursor query = resolver.query(Seasons.CONTENT_URI, null,
                 null, null, null);
-        assertNotNull(query);
-        assertEquals(1, query.getCount());
-        assertTrue(query.moveToFirst());
+        assertThat(query).isNotNull();
+        assertThat(query.getCount()).isEqualTo(1);
+        assertThat(query.moveToFirst()).isTrue();
 
-        assertEquals(SEASON.tvdbId, query.getInt(query.getColumnIndexOrThrow(Seasons._ID)));
-        assertEquals(SHOW.tvdb_id, query.getInt(query.getColumnIndexOrThrow(Shows.REF_SHOW_ID)));
-        assertEquals(SEASON.season, query.getInt(query.getColumnIndexOrThrow(Seasons.COMBINED)));
+        assertThat(query.getInt(query.getColumnIndexOrThrow(Seasons._ID)))
+                .isEqualTo(SEASON.tvdbId);
+        assertThat(query.getInt(query.getColumnIndexOrThrow(Shows.REF_SHOW_ID)))
+                .isEqualTo(SHOW.tvdb_id);
+        assertThat(query.getInt(query.getColumnIndexOrThrow(Seasons.COMBINED)))
+                .isEqualTo(SEASON.season);
         // getInt returns 0 if NULL, so check explicitly
         assertDefaultValue(query, Seasons.WATCHCOUNT, 0);
         assertDefaultValue(query, Seasons.UNAIREDCOUNT, 0);
@@ -207,7 +207,7 @@ public class ProviderTest {
 
     private void insertAndAssertEpisode(ContentValues episodeValues) throws Exception {
         // with Room insert actually checks constraints, so add a matching show and season first
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = ApplicationProvider.getApplicationContext();
 
         ContentValues showValues = SHOW.toContentValues(context, true);
         ContentProviderOperation showOp = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
@@ -227,9 +227,9 @@ public class ProviderTest {
 
         Cursor query = resolver.query(Episodes.CONTENT_URI, null,
                 null, null, null);
-        assertNotNull(query);
-        assertEquals(1, query.getCount());
-        assertTrue(query.moveToFirst());
+        assertThat(query).isNotNull();
+        assertThat(query.getCount()).isEqualTo(1);
+        assertThat(query.moveToFirst()).isTrue();
 
         assertNotNullValue(query, Episodes.TITLE);
         assertDefaultValue(query, Episodes.NUMBER, 0);
@@ -248,15 +248,15 @@ public class ProviderTest {
 
     @Test
     public void listDefaultValues() throws Exception {
-        AddListTask addListTask = new AddListTask(InstrumentationRegistry.getTargetContext(),
+        AddListTask addListTask = new AddListTask(ApplicationProvider.getApplicationContext(),
                 LIST.name);
         addListTask.doDatabaseUpdate(resolver, addListTask.getListId());
 
         Cursor query = resolver.query(Lists.CONTENT_URI, null,
                 null, null, null);
-        assertNotNull(query);
-        assertEquals(1, query.getCount());
-        assertTrue(query.moveToFirst());
+        assertThat(query).isNotNull();
+        assertThat(query.getCount()).isEqualTo(1);
+        assertThat(query.moveToFirst()).isTrue();
 
         assertDefaultValue(query, Lists.ORDER, 0);
 
@@ -276,9 +276,9 @@ public class ProviderTest {
 
         Cursor query = resolver.query(Lists.CONTENT_URI, null,
                 null, null, null);
-        assertNotNull(query);
-        assertEquals(1, query.getCount());
-        assertTrue(query.moveToFirst());
+        assertThat(query).isNotNull();
+        assertThat(query.getCount()).isEqualTo(1);
+        assertThat(query.moveToFirst()).isTrue();
 
         assertDefaultValue(query, Lists.ORDER, 0);
 
@@ -310,9 +310,9 @@ public class ProviderTest {
     private void assertMovie(boolean isWatched) {
         Cursor query = resolver.query(Movies.CONTENT_URI, null,
                 null, null, null);
-        assertNotNull(query);
-        assertEquals(1, query.getCount());
-        assertTrue(query.moveToFirst());
+        assertThat(query).isNotNull();
+        assertThat(query.getCount()).isEqualTo(1);
+        assertThat(query.moveToFirst()).isTrue();
 
         assertDefaultValue(query, Movies.RUNTIME_MIN, 0);
         assertDefaultValue(query, Movies.IN_COLLECTION, 0);
@@ -328,11 +328,11 @@ public class ProviderTest {
     }
 
     private void assertNotNullValue(Cursor query, String column) {
-        assertFalse(query.isNull(query.getColumnIndexOrThrow(column)));
+        assertThat(query.isNull(query.getColumnIndexOrThrow(column))).isFalse();
     }
 
     private void assertDefaultValue(Cursor query, String column, int defaultValue) {
         assertNotNullValue(query, column);
-        assertEquals(defaultValue, query.getInt(query.getColumnIndexOrThrow(column)));
+        assertThat(query.getInt(query.getColumnIndexOrThrow(column))).isEqualTo(defaultValue);
     }
 }
