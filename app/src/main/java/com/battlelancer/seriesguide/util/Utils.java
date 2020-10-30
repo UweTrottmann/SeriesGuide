@@ -37,8 +37,6 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.io.File;
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
 import timber.log.Timber;
 
 /**
@@ -166,39 +164,6 @@ public class Utils {
                 file.delete();
             }
         }
-    }
-
-    /**
-     * Track something gone wrong.
-     */
-    public static void trackError(String eventName, @NonNull Throwable throwable) {
-//        CrashlyticsCore.getInstance().setString("event", eventName);
-//        CrashlyticsCore.getInstance().logException(throwable);
-    }
-
-    /**
-     * Shortcut for {@link #trackError(String, Throwable) trackError(eventName, throwable)}
-     * plus error log.
-     */
-    public static void trackFailedRequest(@NonNull RequestError throwable) {
-        if (throwable.getCode() != null && throwable.getFailureMessage() != null) {
-            // log like "action: 404 not found"
-            Timber.tag(throwable.getEvent());
-            Timber.e("%s: %s %s", throwable.getAction(), throwable.getCode(),
-                    throwable.getFailureMessage());
-        } else {
-            Timber.e(throwable.getCause(), throwable.getAction());
-        }
-
-        if (throwable.getCause() instanceof UnknownHostException) {
-            return; // do not track, mostly devices loosing connection
-        }
-        if (throwable.getCause() instanceof InterruptedIOException) {
-            return; // do not track, mostly timeouts
-        }
-
-//        CrashlyticsCore.getInstance().setString("action", throwable.getAction());
-        trackError(throwable.getEvent(), throwable);
     }
 
     /**

@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -49,7 +50,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.zip.ZipInputStream;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import okhttp3.OkHttpClient;
@@ -241,6 +241,7 @@ public class TvdbTools {
                     .series(query, null, null, null, language)
                     .execute();
         } catch (Exception e) {
+            Errors.logAndReport("searchSeries", e);
             throw new TvdbException("searchSeries", e);
         }
 
@@ -248,7 +249,7 @@ public class TvdbTools {
             return null; // API returns 404 if there are no search results
         }
 
-        ensureSuccessfulResponse(response.raw(), "searchSeries");
+        Errors.throwAndReportIfNotSuccessfulTvdb("searchSeries", response.raw());
 
         List<Series> tvdbResults = response.body().data;
         if (tvdbResults == null || tvdbResults.size() == 0) {
@@ -303,6 +304,7 @@ public class TvdbTools {
         try {
             url = TVDB_API_GETSERIES + URLEncoder.encode(query, "UTF-8");
         } catch (UnsupportedEncodingException e) {
+            Errors.logAndReport("searchShow", e);
             throw new TvdbDataException("searchShow", e);
         }
         // ...and set language filter
@@ -312,7 +314,7 @@ public class TvdbTools {
             url += TVDB_PARAM_LANGUAGE + language;
         }
 
-        downloadAndParse(root.getContentHandler(), url, false, "searchShow");
+        downloadAndParse(root.getContentHandler(), url);
 
         return series;
     }
@@ -333,6 +335,7 @@ public class TvdbTools {
         try {
             DBUtils.applyInSmallBatches(context, batch);
         } catch (OperationApplicationException e) {
+            Errors.logAndReport("getEpisodesAndUpdateDatabase", e);
             throw new TvdbDataException("getEpisodesAndUpdateDatabase", e);
         }
 
@@ -358,7 +361,7 @@ public class TvdbTools {
                     hexagonShow = showsService.getShow().setShowTvdbId(showTvdbId).execute();
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("get show details", e);
+                Errors.logAndReportHexagon("get show details", e);
                 throw new TvdbCloudException("getShowDetailsWithHexagon", e);
             }
         }
@@ -555,10 +558,11 @@ public class TvdbTools {
         try {
             response = tvdbSeries.get().series(showTvdbId, language).execute();
         } catch (Exception e) {
+            Errors.logAndReport("getSeries", e);
             throw new TvdbException("getSeries", e);
         }
 
-        ensureSuccessfulResponse(response.raw(), "getSeries");
+        Errors.throwAndReportIfNotSuccessfulTvdb("getSeries", response.raw());
 
         return response.body().data;
     }
@@ -570,6 +574,7 @@ public class TvdbTools {
                     .imagesQuery(showTvdbId, "poster", null, null, language)
                     .execute();
         } catch (Exception e) {
+            Errors.logAndReport("getSeriesPosters", e);
             throw new TvdbException("getSeriesPosters", e);
         }
     }
@@ -593,63 +598,30 @@ public class TvdbTools {
     }
 
     /**
-     * Downloads the XML or ZIP file from the given URL, passing a valid response to {@link
+     * Downloads the XML from the given URL, passing a valid response to {@link
      * Xml#parse(InputStream, android.util.Xml.Encoding, ContentHandler)} using the given {@link
      * ContentHandler}.
      */
-    private void downloadAndParse(ContentHandler handler, String urlString, boolean isZipFile,
-            String logTag) throws TvdbException {
+    private void downloadAndParse(ContentHandler handler, String urlString) throws TvdbException {
         Request request = new Request.Builder().url(urlString).build();
 
         Response response;
         try {
             response = okHttpClient.get().newCall(request).execute();
         } catch (IOException e) {
-            throw new TvdbException(logTag, e);
+            Errors.logAndReport("searchShow", e);
+            throw new TvdbException("searchShow", e);
         }
 
-        ensureSuccessfulResponse(response, logTag);
+        Errors.throwAndReportIfNotSuccessfulTvdb("searchShow", response);
 
         try {
-            //noinspection ConstantConditions
-            final InputStream input = response.body().byteStream();
-            if (isZipFile) {
-                // We downloaded the compressed file from TheTVDB
-                final ZipInputStream zipin = new ZipInputStream(input);
-                zipin.getNextEntry();
-                try {
-                    Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
-                } finally {
-                    //noinspection ThrowFromFinallyBlock
-                    zipin.close();
-                }
-            } else {
-                try {
-                    Xml.parse(input, Xml.Encoding.UTF_8, handler);
-                } finally {
-                    if (input != null) {
-                        //noinspection ThrowFromFinallyBlock
-                        input.close();
-                    }
-                }
+            try (InputStream input = response.body().byteStream()) {
+                Xml.parse(input, Xml.Encoding.UTF_8, handler);
             }
         } catch (SAXException | IOException | AssertionError e) {
-            throw new TvdbDataException(logTag, e);
-        }
-    }
-
-    static void ensureSuccessfulResponse(Response response, String logTag) throws TvdbException {
-        if (response.code() == 404) {
-            // special case: item does not exist (any longer)
-            throw new TvdbException(
-                    logTag + ": " + response.code() + " " + response.message(),
-                    true
-            );
-        } else if (!response.isSuccessful()) {
-            // other non-2xx response
-            throw new TvdbException(
-                    logTag + ": " + response.code() + " " + response.message()
-            );
+            Errors.logAndReport("searchShow", e);
+            throw new TvdbDataException("searchShow", e);
         }
     }
 }

@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.people
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.tmdbapi.SgTmdb
+import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.GenericSimpleLoader
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
@@ -45,10 +45,10 @@ class ShowCreditsLoader(context: Context, private var showId: Int, private val f
             if (response.isSuccessful) {
                 return response.body()
             } else {
-                SgTmdb.trackFailedRequest("get show credits", response)
+                Errors.logAndReport("get show credits", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest("get show credits", e)
+            Errors.logAndReport("get show credits", e)
         }
 
         return null
@@ -70,10 +70,10 @@ class ShowCreditsLoader(context: Context, private var showId: Int, private val f
                 }
                 Timber.d("Downloading show credits failed: show not on TMDb")
             } else {
-                SgTmdb.trackFailedRequest("find tvdb show", response)
+                Errors.logAndReport("find tvdb show", response)
             }
         } catch (e: Exception) {
-            SgTmdb.trackFailedRequest("find tvdb show", e)
+            Errors.logAndReport("find tvdb show", e)
         }
 
         return false

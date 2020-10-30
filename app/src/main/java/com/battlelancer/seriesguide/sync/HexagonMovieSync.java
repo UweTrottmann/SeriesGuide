@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
@@ -97,7 +98,7 @@ public class HexagonMovieSync {
                     hasMoreMovies = false;
                 }
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("get movies", e);
+                Errors.logAndReportHexagon("get movies", e);
                 return false;
             }
 
@@ -181,7 +182,7 @@ public class HexagonMovieSync {
             }
             moviesService.save(movieList).execute();
         } catch (IOException e) {
-            HexagonTools.trackFailedRequest("save movies", e);
+            Errors.logAndReportHexagon("save movies", e);
             return false;
         }
 

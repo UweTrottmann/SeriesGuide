@@ -8,8 +8,8 @@ import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools.ensureSuccessfulResponse
 import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.thetvdb.entities.Episode
@@ -177,10 +177,11 @@ class TvdbEpisodeTools constructor(
         try {
             response = tvdbSeries.get().episodes(showTvdbId, page, language).execute()
         } catch (e: Exception) {
+            Errors.logAndReport("getEpisodes", e)
             throw TvdbException("getEpisodes", e)
         }
 
-        ensureSuccessfulResponse(response.raw(), "getEpisodes")
+        Errors.throwAndReportIfNotSuccessfulTvdb("getEpisodes", response.raw())
 
         return response.body()!!
     }

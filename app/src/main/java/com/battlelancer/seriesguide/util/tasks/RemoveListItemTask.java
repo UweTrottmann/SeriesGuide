@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListItem;
@@ -53,7 +54,7 @@ public class RemoveListItemTask extends BaseActionTask {
             try {
                 listsService.removeItems(wrapper).execute();
             } catch (IOException e) {
-                HexagonTools.trackFailedRequest("remove list item", e);
+                Errors.logAndReportHexagon("remove list item", e);
                 return ERROR_HEXAGON_API;
             }
         }

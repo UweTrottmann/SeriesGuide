@@ -16,7 +16,6 @@ import android.widget.AutoCompleteTextView
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.battlelancer.seriesguide.AnalyticsEvents
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.settings.SearchSettings
@@ -29,10 +28,10 @@ import com.battlelancer.seriesguide.ui.search.SearchTriggerListener
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.ui.search.TvdbIdExtractor
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SlidingTabLayout
 import com.google.android.gms.actions.SearchIntents

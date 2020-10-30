@@ -4,19 +4,30 @@ import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
 
 /**
- * Error for tracking sign-out failures.
+ * Error for tracking Google Sign-In failures.
  */
-internal abstract class HexagonAuthError(val action: String, val failure: String) :
-    Throwable("$action: $failure") {
+class HexagonAuthError(action: String, failure: String, cause: Throwable?) :
+    Throwable("$action: $failure", cause) {
+
+    constructor(action: String, failure: String) : this(action, failure, null)
 
     companion object {
-        internal fun extractFailureMessage(throwable: Throwable): String {
+        @JvmStatic
+        fun build(action: String, throwable: Throwable): HexagonAuthError {
+            return HexagonAuthError(action, extractStatusCodeString(throwable), throwable)
+        }
+
+        private fun extractStatusCodeString(throwable: Throwable): String {
             return if (throwable is ApiException) {
-                GoogleSignInStatusCodes.getStatusCodeString(throwable.statusCode)
+                throwable.getStatusCodeString()
             } else {
-                "${throwable.javaClass.simpleName}: ${throwable.message}"
+                throwable.message ?: ""
             }
         }
     }
 
+}
+
+private fun ApiException.getStatusCodeString(): String {
+    return GoogleSignInStatusCodes.getStatusCodeString(statusCode)
 }
