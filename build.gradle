@@ -8,7 +8,7 @@ buildscript {
             'targetSdk': 28,
 
             // https://developer.android.com/jetpack/docs/release-notes
-            'annotation': '1.0.1',
+            'annotation': '1.0.2',
             'lifecycle': '2.0.0',
             'paging': '2.1.0',
             'room': '2.0.0',
@@ -26,7 +26,6 @@ buildscript {
             'trakt': '6.1.0', // github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
             'truth': '0.42', // github.com/google/truth/releases
-            'threetenABP': '1.1.1', // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 
             // version 15xxxyy -> min SDK 15, release xxx, build yy
             'code': 1503410,
@@ -51,7 +50,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
 //        classpath 'io.fabric.tools:gradle:1.27.0' // SeriesGuide
         //noinspection GradleDependency
