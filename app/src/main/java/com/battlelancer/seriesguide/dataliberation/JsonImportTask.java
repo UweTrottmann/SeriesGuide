@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.settings.BackupSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
+import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
@@ -359,6 +360,11 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
         if (!languageSupported) {
             show.language = null;
+        }
+        // Construct missing small poster URL if there is a poster URL.
+        if ((show.poster_small == null || show.poster_small.length() == 0)
+                && show.poster != null && show.poster.length() > 0) {
+            show.poster_small = TvdbImageTools.TVDB_CACHE_PREFIX + show.poster;
         }
         // ensure a show will be updated (last_updated might be far into the future)
         if (show.last_updated > System.currentTimeMillis()) {

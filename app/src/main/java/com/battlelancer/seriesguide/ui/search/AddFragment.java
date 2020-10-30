@@ -253,7 +253,7 @@ public abstract class AddFragment extends Fragment {
 
             // only local shows will have a poster path set
             // try to fall back to the first uploaded TVDB poster for all others
-            String posterUrl = TvdbImageTools.smallSizeOrResolveUrl(item.getPosterPath(),
+            String posterUrl = TvdbImageTools.posterUrlOrResolve(item.getPosterPath(),
                     item.getTvdbid(),
                     item.getLanguage());
             TvdbImageTools.loadUrlResizeCrop(getContext(), holder.poster, posterUrl);

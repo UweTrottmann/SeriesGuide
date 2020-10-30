@@ -396,6 +396,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             show.last_watched_episode = shows.getInt(ShowsQuery.LASTWATCHEDID);
             show.last_watched_ms = shows.getLong(ShowsQuery.LASTWATCHED_MS);
             show.poster = shows.getString(ShowsQuery.POSTER);
+            show.poster_small = shows.getString(ShowsQuery.POSTER_THUMBNAIL);
             show.content_rating = shows.getString(ShowsQuery.CONTENTRATING);
             show.status = DataLiberationTools.decodeShowStatus(shows.getInt(ShowsQuery.STATUS));
             show.runtime = shows.getInt(ShowsQuery.RUNTIME);
@@ -609,6 +610,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 Shows.LASTWATCHEDID,
                 Shows.LASTWATCHED_MS,
                 Shows.POSTER,
+                Shows.POSTER_SMALL,
                 Shows.CONTENTRATING,
                 Shows.STATUS,
                 Shows.RUNTIME,
@@ -639,22 +641,23 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         int LASTWATCHEDID = 9;
         int LASTWATCHED_MS = 10;
         int POSTER = 11;
-        int CONTENTRATING = 12;
-        int STATUS = 13;
-        int RUNTIME = 14;
-        int NETWORK = 15;
-        int IMDBID = 16;
-        int TRAKT_ID = 17;
-        int FIRSTAIRED = 18;
-        int RATING_USER = 19;
-        int LANGUAGE = 20;
-        int OVERVIEW = 21;
-        int RATING_GLOBAL = 22;
-        int RATING_VOTES = 23;
-        int GENRES = 24;
-        int LAST_UPDATED = 25;
-        int LAST_EDITED = 26;
-        int SLUG = 27;
+        int POSTER_THUMBNAIL = 12;
+        int CONTENTRATING = 13;
+        int STATUS = 14;
+        int RUNTIME = 15;
+        int NETWORK = 16;
+        int IMDBID = 17;
+        int TRAKT_ID = 18;
+        int FIRSTAIRED = 19;
+        int RATING_USER = 20;
+        int LANGUAGE = 21;
+        int OVERVIEW = 22;
+        int RATING_GLOBAL = 23;
+        int RATING_VOTES = 24;
+        int GENRES = 25;
+        int LAST_UPDATED = 26;
+        int LAST_EDITED = 27;
+        int SLUG = 28;
     }
 
     public interface EpisodesQuery {

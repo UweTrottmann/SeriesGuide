@@ -50,7 +50,7 @@ class ShowResultsAdapter extends BaseShowsAdapter {
 
         // poster
         TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
-                cursor.getString(Query.POSTER));
+                cursor.getString(Query.POSTER_SMALL));
 
         // context menu
         viewHolder.isHidden = DBUtils.restoreBooleanFromInt(cursor.getInt(Query.HIDDEN));
@@ -60,7 +60,7 @@ class ShowResultsAdapter extends BaseShowsAdapter {
         String[] PROJECTION = new String[] {
                 SeriesGuideContract.Shows._ID, // 0
                 SeriesGuideContract.Shows.TITLE,
-                SeriesGuideContract.Shows.POSTER,
+                SeriesGuideContract.Shows.POSTER_SMALL,
                 SeriesGuideContract.Shows.FAVORITE,
                 SeriesGuideContract.Shows.HIDDEN, // 4
                 SeriesGuideContract.Shows.RELEASE_TIME,
@@ -72,7 +72,7 @@ class ShowResultsAdapter extends BaseShowsAdapter {
 
         int ID = 0;
         int TITLE = 1;
-        int POSTER = 2;
+        int POSTER_SMALL = 2;
         int FAVORITE = 3;
         int HIDDEN = 4;
         int RELEASE_TIME = 5;

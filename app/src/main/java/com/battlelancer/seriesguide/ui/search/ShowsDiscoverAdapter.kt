@@ -143,7 +143,7 @@ class ShowsDiscoverAdapter(
 
                 // only local shows will have a poster path set
                 // resolve the TVDB poster URL for all others
-                val posterUrl = TvdbImageTools.smallSizeOrResolveUrl(item.posterPath,
+                val posterUrl = TvdbImageTools.posterUrlOrResolve(item.posterPath,
                         item.tvdbid, item.language)
                 TvdbImageTools.loadUrlResizeCrop(context, holder.poster, posterUrl)
             }

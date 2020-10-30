@@ -119,7 +119,7 @@ public class CalendarAdapter extends CursorAdapter implements StickyGridHeadersB
 
         // set poster
         TvdbImageTools.loadShowPosterResizeSmallCrop(context, viewHolder.poster,
-                TvdbImageTools.smallSizeUrl(cursor.getString(CalendarQuery.SHOW_POSTER_PATH)));
+                TvdbImageTools.artworkUrl(cursor.getString(CalendarQuery.SHOW_POSTER_SMALL)));
     }
 
     @Override

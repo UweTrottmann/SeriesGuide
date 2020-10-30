@@ -545,8 +545,11 @@ public class TvdbTools {
                     DisplaySettings.getShowsLanguageFallback(context));
         }
 
-        if (posterResponse.isSuccessful()) {
-            result.poster = getHighestRatedPoster(posterResponse.body().data);
+        if (posterResponse.isSuccessful() && posterResponse.body() != null
+                && posterResponse.body().data != null) {
+            TvdbPoster poster = getHighestRatedPoster(posterResponse.body().data);
+            result.poster = poster.fullSize;
+            result.poster_small = poster.smallSize;
         }
 
         return result;
@@ -579,8 +582,18 @@ public class TvdbTools {
         }
     }
 
-    @Nullable
-    public static String getHighestRatedPoster(List<SeriesImageQueryResult> posters) {
+    public static class TvdbPoster {
+        @Nullable
+        public final String fullSize;
+        @Nullable
+        public final String smallSize;
+        TvdbPoster(@Nullable String fullSize, @Nullable String smallSize) {
+            this.fullSize = fullSize;
+            this.smallSize = smallSize;
+        }
+    }
+
+    public static TvdbPoster getHighestRatedPoster(List<SeriesImageQueryResult> posters) {
         int highestRatedIndex = 0;
         double highestRating = 0.0;
         for (int i = 0; i < posters.size(); i++) {
@@ -594,7 +607,8 @@ public class TvdbTools {
                 highestRatedIndex = i;
             }
         }
-        return posters.get(highestRatedIndex).fileName;
+        SeriesImageQueryResult image = posters.get(highestRatedIndex);
+        return new TvdbPoster(image.fileName, image.thumbnail);
     }
 
     /**

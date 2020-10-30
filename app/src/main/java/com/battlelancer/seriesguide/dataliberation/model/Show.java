@@ -34,6 +34,7 @@ public class Show {
     public String country;
 
     public String poster;
+    public String poster_small;
     public String content_rating;
     public String status;
     public int runtime;
@@ -70,6 +71,7 @@ public class Show {
         values.put(Shows.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(title));
         values.put(Shows.OVERVIEW, overview != null ? overview : "");
         values.put(Shows.POSTER, poster != null ? poster : "");
+        values.put(Shows.POSTER_SMALL, poster_small != null ? poster_small : "");
         values.put(Shows.CONTENTRATING, content_rating != null ? content_rating : "");
         values.put(Shows.STATUS, DataLiberationTools.encodeShowStatus(status));
         values.put(Shows.RUNTIME, runtime >= 0 ? runtime : 0);

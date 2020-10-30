@@ -323,36 +323,6 @@ public class DBUtils {
         }
     }
 
-    private static final String[] SHOW_PROJECTION = new String[]{
-            Shows._ID,
-            Shows.POSTER,
-            Shows.TITLE
-    };
-
-    /**
-     * Returns a {@link Show} object with only TVDB id, title and poster populated. Might return
-     * {@code null} if there is no show with that TVDb id.
-     */
-    @Nullable
-    public static Show getShow(Context context, int showTvdbId) {
-        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
-                SHOW_PROJECTION, null,
-                null, null);
-
-        Show show = null;
-        if (details != null) {
-            if (details.moveToFirst()) {
-                show = new Show();
-                show.tvdb_id = details.getInt(0);
-                show.poster = details.getString(1);
-                show.title = details.getString(2);
-            }
-            details.close();
-        }
-
-        return show;
-    }
-
     /**
      * Queries the show table for the given TVDb id and returns whether there are entries, e.g. the
      * show is already in the database.

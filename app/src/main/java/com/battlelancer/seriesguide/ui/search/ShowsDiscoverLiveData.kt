@@ -158,7 +158,7 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
         }
 
         private fun markLocalShows(results: List<SearchResult>?) {
-            val existingPosterPaths = ShowTools.getShowTvdbIdsAndPosters(context)
+            val existingPosterPaths = ShowTools.getSmallPostersByTvdbId(context)
             if (existingPosterPaths == null || results == null) {
                 return
             }
