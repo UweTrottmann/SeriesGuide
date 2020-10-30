@@ -3,16 +3,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/menu_action_movies_search_change_language"
-        android:icon="@drawable/ic_language_white_24dp"
-        android:title="@string/pref_language"
-        app:showAsAction="ifRoom" />
-
+    <!-- Keep left-most as it expands to search bar when tapped. -->
     <item
         android:id="@+id/menu_action_movies_search_display_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/search"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_action_movies_search_change_language"
+        android:icon="@drawable/ic_language_white_24dp"
+        android:title="@string/pref_language"
         app:showAsAction="ifRoom" />
 
     <item

@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_action_now_refresh"
-        android:orderInCategory="2"
+        android:id="@+id/menu_action_movies_now_refresh"
+        android:icon="@drawable/ic_refresh_white_24dp"
         android:title="@string/refresh"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
 </menu>
