@@ -90,6 +90,7 @@
     <string name="episode_writers">Scénaristes</string>
     <string name="show_isalive">En cours</string>
     <string name="show_isnotalive">Terminé</string>
+    <string name="show_isUpcoming">À venir</string>
     <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
     <string name="no_translation_title">Non traduit</string>
     <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>

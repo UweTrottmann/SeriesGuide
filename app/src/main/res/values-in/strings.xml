@@ -89,6 +89,7 @@
     <string name="episode_writers">Penulis</string>
     <string name="show_isalive">Berkelanjutan</string>
     <string name="show_isnotalive">Berakhir</string>
+    <string name="show_isUpcoming">Mendatang</string>
     <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
     <string name="no_translation_title">Belum diterjemahkan</string>
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>

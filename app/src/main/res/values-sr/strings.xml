@@ -91,6 +91,7 @@
     <string name="episode_writers">Сценаристи</string>
     <string name="show_isalive">Наставља се</string>
     <string name="show_isnotalive">Завршена</string>
+    <string name="show_isUpcoming">Предстојеће</string>
     <string name="no_translation">Не постоји опис преведен на %1$s који је доступан на %2$s.</string>
     <string name="no_translation_title">Nije prevedeno</string>
     <string name="no_spoilers">Neki od detalja nisu vidljivi da se izbegnu spojleri. Da isključite ovo posetite Settings.</string>

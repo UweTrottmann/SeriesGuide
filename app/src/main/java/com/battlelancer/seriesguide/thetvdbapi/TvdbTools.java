@@ -520,10 +520,14 @@ public class TvdbTools {
         }
         String status = series.status;
         if (status != null) {
+            // instead of comparing the string, just compare for length
+            // faster and unlikely new values of same length are added at TheTVDB
             if (status.length() == 10) {
                 result.status = ShowStatusExport.CONTINUING;
             } else if (status.length() == 5) {
                 result.status = ShowStatusExport.ENDED;
+            } else if (status.length() == 8) {
+                result.status = ShowStatusExport.UPCOMING;
             } else {
                 result.status = ShowStatusExport.UNKNOWN;
             }
