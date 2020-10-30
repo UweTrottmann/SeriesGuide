@@ -4,8 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_action_stream_web"
+        android:title="@string/trakt"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_action_stream_refresh"
-        android:orderInCategory="2"
         android:title="@string/refresh"
         app:showAsAction="never" />
 
