@@ -243,6 +243,30 @@ public class Utils {
      * Similar to {@link #tryStartActivity(Context, Intent, boolean)}, but starting an activity for
      * a result.
      */
+    public static void tryStartActivityForResult(android.app.Fragment fragment, Intent intent,
+            int requestCode) {
+        Context context = fragment.getActivity().getApplicationContext();
+
+        // check if the intent can be handled
+        boolean handled = false;
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            try {
+                fragment.startActivityForResult(intent, requestCode);
+                handled = true;
+            } catch (ActivityNotFoundException ignored) {
+                // catch failure to handle explicit intents
+            }
+        }
+
+        if (!handled) {
+            Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Similar to {@link #tryStartActivity(Context, Intent, boolean)}, but starting an activity for
+     * a result.
+     */
     public static void tryStartActivityForResult(Fragment fragment, Intent intent,
             int requestCode) {
         Context context = fragment.getContext();

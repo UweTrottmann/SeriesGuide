@@ -458,7 +458,7 @@ public class SeriesGuidePreferences extends AppCompatActivity {
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
                         TextUtils.isEmpty(existingValue) ? null : Uri.parse(existingValue));
 
-                startActivityForResult(intent, REQUEST_CODE_RINGTONE);
+                Utils.tryStartActivityForResult(this, intent, REQUEST_CODE_RINGTONE);
                 return true;
             }
             if (NotificationSettings.KEY_CHANNELS.equals(key)) {
