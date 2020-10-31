@@ -4,7 +4,6 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.uwetrottmann.seriesguide.tmdbapi.SgTmdb;
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
-import com.uwetrottmann.tmdb2.services.FindService;
 import com.uwetrottmann.tmdb2.services.MoviesService;
 import com.uwetrottmann.tmdb2.services.PeopleService;
 import com.uwetrottmann.tmdb2.services.SearchService;
@@ -21,12 +20,6 @@ public class TmdbModule {
     @Provides
     ConfigurationService provideConfigurationService(Tmdb tmdb) {
         return tmdb.configurationService();
-    }
-
-    @Singleton
-    @Provides
-    FindService provideFindService(Tmdb tmdb) {
-        return tmdb.findService();
     }
 
     @Singleton

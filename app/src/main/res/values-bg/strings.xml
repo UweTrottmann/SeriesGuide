@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
-    <string name="any_language">Който и да е език</string>
     <!-- Status messages -->
     <string name="updated">Актуализиран до последна версия.</string>
     <string name="norating">няма</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">Няма ТВ предавания.</string>
     <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
     <string name="empty_show_search">Не е намерено в твоя списък със сериали</string>
-    <string name="action_try_any_language">Опитай всеки език</string>
     <string name="action_try_again">Опитай отново</string>
     <string name="tvdb_error_does_not_exist">Шоуто не съществува (все още) на TheTVDB. Опитайте отново по-късно.</string>
     <string name="add_all">Добави всички</string>

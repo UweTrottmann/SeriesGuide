@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
-    <string name="any_language">Elke taal</string>
     <!-- Status messages -->
     <string name="updated">Bijgewerkt naar de nieuwste versie</string>
     <string name="norating">n.v.t.</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">Er zijn hier geen series</string>
     <string name="no_results">Geen resultaten, probeer complete woorden.</string>
     <string name="empty_show_search">Niet gevonden in uw serielijst</string>
-    <string name="action_try_any_language">Probeer elke taal</string>
     <string name="action_try_again">Probeer nogmaals</string>
     <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
     <string name="add_all">Alles toevoegen</string>

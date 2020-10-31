@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">清除搜尋記錄</string>
     <string name="search_hint">搜尋集數</string>
-    <string name="any_language">任何語言</string>
     <!-- Status messages -->
     <string name="updated">已更新到最新版本。</string>
     <string name="norating">無</string>
@@ -183,7 +182,6 @@
     <string name="add_empty">無此節目</string>
     <string name="no_results">查無結果，請嘗試完整單字。</string>
     <string name="empty_show_search">Not found in your show list</string>
-    <string name="action_try_any_language">嘗試其他種語言</string>
     <string name="action_try_again">再試一次</string>
     <string name="tvdb_error_does_not_exist">TheTVDB 上不存在。稍後再試。</string>
     <string name="add_all">全部加入</string>

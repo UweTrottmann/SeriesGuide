@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
-    <string name="any_language">أي لغة</string>
     <!-- Status messages -->
     <string name="updated">تم التحديث إلى الإصدار الأخير</string>
     <string name="norating">لا يوجد</string>
@@ -203,7 +202,6 @@
     <string name="add_empty">لا توجد مسلسلات هنا.</string>
     <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
     <string name="empty_show_search">غير متوفر في قائمة العرض الخاصة بك</string>
-    <string name="action_try_any_language">حاول بأي لغة</string>
     <string name="action_try_again">حاول مرة أخرى</string>
     <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TheTVDB. الرجاء المحاولة لاحقا.</string>
     <string name="add_all">إضافة الكل </string>

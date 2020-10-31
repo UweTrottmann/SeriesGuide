@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
-    <string name="any_language">Bármely nyelv</string>
     <!-- Status messages -->
     <string name="updated">Frissítve a legújabb verzióra.</string>
     <string name="norating">n/a</string>
@@ -187,7 +186,6 @@
     <string name="add_empty">Nincsenek sorozatok.</string>
     <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
     <string name="empty_show_search">Nem található a sorozat listádban</string>
-    <string name="action_try_any_language">Keresés bármely nyelven</string>
     <string name="action_try_again">Próbáld újra</string>
     <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TheTVDB adatbázisban. Próbálkozzon később.</string>
     <string name="add_all">Add hozzá mindet</string>

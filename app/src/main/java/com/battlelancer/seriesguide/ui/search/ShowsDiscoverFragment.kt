@@ -60,10 +60,8 @@ class ShowsDiscoverFragment : Fragment() {
     private lateinit var adapter: ShowsDiscoverAdapter
     private lateinit var model: ShowsDiscoverViewModel
 
-    /** Two letter ISO 639-1 language code or 'xx' meaning any language. */
+    /** Two letter ISO 639-1 language code. */
     private lateinit var languageCode: String
-    private val languageCodeAny: String by lazy { getString(R.string.language_code_any) }
-    private var shouldTryAnyLanguage = false
     private var query: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,15 +93,8 @@ class ShowsDiscoverFragment : Fragment() {
 
         emptyView.visibility = View.GONE
         emptyView.setButtonClickListener {
-            if (shouldTryAnyLanguage && languageCode != languageCodeAny) {
-                // try again with any language
-                shouldTryAnyLanguage = false
-                changeLanguage(languageCodeAny)
-                loadResults()
-            } else {
-                // already set to any language or retrying, force loading results again
-                loadResults(true)
-            }
+            // Retrying, force load results again.
+            loadResults(true)
         }
 
         val layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth,
@@ -197,12 +188,7 @@ class ShowsDiscoverFragment : Fragment() {
 
             val hasResults = result.searchResults.isNotEmpty()
 
-            if (it.successful && !hasResults && languageCode != languageCodeAny) {
-                shouldTryAnyLanguage = true
-                emptyView.setButtonText(R.string.action_try_any_language)
-            } else {
-                emptyView.setButtonText(R.string.action_try_again)
-            }
+            emptyView.setButtonText(R.string.action_try_again)
             emptyView.setMessage(result.emptyText)
             emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
 
@@ -231,7 +217,7 @@ class ShowsDiscoverFragment : Fragment() {
 
     private fun displayLanguageSettings() {
         LanguageChoiceDialogFragment.show(fragmentManager!!,
-                R.array.languageCodesShowsWithAny, languageCode,
+                R.array.languageCodesShows, languageCode,
                 LanguageChoiceDialogFragment.TAG_DISCOVER)
     }
 

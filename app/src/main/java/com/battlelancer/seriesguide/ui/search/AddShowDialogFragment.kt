@@ -415,8 +415,8 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         private fun newInstance(context: Context, show: SearchResult): AddShowDialogFragment {
             if (TextUtils.isEmpty(show.language)) {
-                // Use search or fall back language.
-                show.language = DisplaySettings.getSearchLanguageOrFallbackIfAny(context)
+                // Use search language.
+                show.language = DisplaySettings.getSearchLanguage(context)
             }
 
             return AddShowDialogFragment().apply { 

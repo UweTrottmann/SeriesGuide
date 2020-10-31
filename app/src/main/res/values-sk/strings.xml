@@ -43,7 +43,6 @@
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>
-    <string name="any_language">Ľubovoľný jazyk</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
     <string name="norating">Nedostupné</string>
@@ -195,7 +194,6 @@
     <string name="add_empty">Nie sú tu žiadne seriály.</string>
     <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
     <string name="empty_show_search">Nebolo nájdené vo vašich seriáloch</string>
-    <string name="action_try_any_language">Skúsiť ľubovoľný jazyk</string>
     <string name="action_try_again">Skúsiť znova</string>
     <string name="tvdb_error_does_not_exist">Seriál (momentálne) nie je dostupný na TheTVDB. Skúste to znova neskôr.</string>
     <string name="add_all">Pridať všetky</string>
