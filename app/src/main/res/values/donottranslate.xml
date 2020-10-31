@@ -588,24 +588,6 @@
         <item>2</item>
     </string-array>
 
-    <!-- DashClock extension thresholds -->
-    <string-array name="dashclockUpcomingThresholds">
-        <item>@string/upcoming_upto_one_hour</item>
-        <item>@string/upcoming_upto_six_hours</item>
-        <item>@string/upcoming_upto_half_day</item>
-        <item>@string/upcoming_upto_one_day</item>
-        <item>@string/upcoming_upto_three_days</item>
-        <item>@string/upcoming_upto_one_week</item>
-    </string-array>
-    <string-array name="dashclockUpcomingThresholdsData">
-        <item>1</item>
-        <item>6</item>
-        <item>12</item>
-        <item>24</item>
-        <item>72</item>
-        <item>168</item>
-    </string-array>
-
     <string-array name="amazonDomainsData">
         <item>amazon.com</item>
         <item>www.amazon.com.au</item>

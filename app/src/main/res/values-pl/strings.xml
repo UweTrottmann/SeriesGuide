@@ -402,10 +402,6 @@
     <string name="upcoming_upto_one_week">Tygodnia</string>
     <string name="upcoming_upto_two_weeks">Dwóch tygodni</string>
     <string name="upcoming_upto_one_month">Miesiąca</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">godzinę</string>
-    <string name="upcoming_upto_six_hours">6 godzin</string>
-    <string name="upcoming_upto_half_day">12 godzin</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_theme">Motyw</string>
@@ -461,8 +457,6 @@
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Błędy</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (mały)</string>
     <!-- List Widget -->
     <string name="hide_watched">Ukryj obejrzane odcinki</string>
     <string name="pref_widget_opacity">Tło widżetu</string>
@@ -474,10 +468,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Nieprzezroczysty</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Nadchodzące odcinki</string>
-    <string name="dashclock_extension_description">Wyświetla nadchodzące odcinki seriali z SeriesGuide.</string>
-    <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Tylko dla osób wspierających</string>
     <string name="action_upgrade">Odblokuj wszystkie funkcje</string>

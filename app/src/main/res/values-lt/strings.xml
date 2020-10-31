@@ -402,10 +402,6 @@
     <string name="upcoming_upto_one_week">1 savaitė</string>
     <string name="upcoming_upto_two_weeks">2 savaitės</string>
     <string name="upcoming_upto_one_month">1 mėnuo</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 valanda</string>
-    <string name="upcoming_upto_six_hours">6 hours</string>
-    <string name="upcoming_upto_half_day">12 hours</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Išvaizda</string>
     <string name="pref_theme">Tema</string>
@@ -461,8 +457,6 @@
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Errors</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (small)</string>
     <!-- List Widget -->
     <string name="hide_watched">Slėpti pažiūrėtas serijas</string>
     <string name="pref_widget_opacity">Widget background</string>
@@ -474,10 +468,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opaque</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Upcoming episode</string>
-    <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows</string>
-    <string name="dashclock_pref_upcoming_threshold">Display episode within&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Only for supporters</string>
     <string name="action_upgrade">Unlock all features</string>

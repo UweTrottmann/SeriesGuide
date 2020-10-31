@@ -269,50 +269,6 @@
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <receiver
-            android:name="com.battlelancer.seriesguide.appwidget.AppWidget"
-            android:enabled="@bool/isIceCreamSandwichOrLower"
-            android:label="@string/smallwidget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_info" />
-        </receiver>
-        <service
-            android:name="com.battlelancer.seriesguide.appwidget.AppWidget$UpdateService"
-            android:enabled="@bool/isIceCreamSandwichOrLower" />
-
-        <!-- DashClock Extension -->
-        <service
-            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeExtension"
-            android:icon="@drawable/ic_notification"
-            android:label="@string/dashclock_extension_label"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
-            <intent-filter>
-                <action android:name="com.google.android.apps.dashclock.Extension" />
-            </intent-filter>
-
-            <meta-data
-                android:name="protocolVersion"
-                android:value="2" />
-            <meta-data
-                android:name="worldReadable"
-                android:value="true" />
-            <meta-data
-                android:name="description"
-                android:value="@string/dashclock_extension_description" />
-            <meta-data
-                android:name="settingsActivity"
-                android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
-        </service>
-
-        <activity
-            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
-            android:exported="true" />
-
         <!-- SeriesGuide Extension listener -->
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.ExtensionActionReceiver"

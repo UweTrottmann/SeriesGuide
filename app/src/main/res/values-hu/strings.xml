@@ -380,10 +380,6 @@
     <string name="upcoming_upto_one_week">egy hét</string>
     <string name="upcoming_upto_two_weeks">két hét</string>
     <string name="upcoming_upto_one_month">egy hónap</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 óra</string>
-    <string name="upcoming_upto_six_hours">6 óra</string>
-    <string name="upcoming_upto_half_day">12 óra</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Megjelenés</string>
     <string name="pref_theme">Téma</string>
@@ -439,8 +435,6 @@
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Hibák</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (kicsi)</string>
     <!-- List Widget -->
     <string name="hide_watched">Megnézett epizódok elrejtése</string>
     <string name="pref_widget_opacity">Widget háttér</string>
@@ -452,10 +446,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Nem átlátszó</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Következő epizód</string>
-    <string name="dashclock_extension_description">Megjeleníti a következő epizódokat a SeriesGuide sorozataidból.</string>
-    <string name="dashclock_pref_upcoming_threshold">Mutasd a következő epizódokat</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Csak támogatóknak</string>
     <string name="action_upgrade">Összes beállítás feloldása</string>

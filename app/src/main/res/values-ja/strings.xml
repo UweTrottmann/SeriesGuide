@@ -369,10 +369,6 @@
     <string name="upcoming_upto_one_week">1 週間</string>
     <string name="upcoming_upto_two_weeks">2 週間</string>
     <string name="upcoming_upto_one_month">1 ヶ月</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1 時間</string>
-    <string name="upcoming_upto_six_hours">6 時間</string>
-    <string name="upcoming_upto_half_day">12 時間</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">外観</string>
     <string name="pref_theme">テーマ</string>
@@ -428,8 +424,6 @@
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">エラー</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (小)</string>
     <!-- List Widget -->
     <string name="hide_watched">視聴済のエピソードを非表示</string>
     <string name="pref_widget_opacity">ウィジェットの背景</string>
@@ -441,10 +435,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">不透明</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">今後のエピソード</string>
-    <string name="dashclock_extension_description">SeriesGuide の番組の次のエピソードを表示します</string>
-    <string name="dashclock_pref_upcoming_threshold">&#8230;以内のエピソードを表示</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">サポーターに対してのみ</string>
     <string name="action_upgrade">すべての機能のロックを解除</string>

@@ -380,10 +380,6 @@
     <string name="upcoming_upto_one_week">1 setmana</string>
     <string name="upcoming_upto_two_weeks">2 setmanes</string>
     <string name="upcoming_upto_one_month">1 mes</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">1hora</string>
-    <string name="upcoming_upto_six_hours">6 hores</string>
-    <string name="upcoming_upto_half_day">12 hores</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aparença</string>
     <string name="pref_theme">Tema</string>
@@ -439,8 +435,6 @@
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Errors</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (petit)</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>
@@ -452,10 +446,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opac</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Proper episodi</string>
-    <string name="dashclock_extension_description">Mostra el proper episodi de les sèries que teniu a SeriesGuide.</string>
-    <string name="dashclock_pref_upcoming_threshold">Mostra episodi dins&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Només per a patrocinadors</string>
     <string name="action_upgrade">Desbloquejar totes les opcions</string>

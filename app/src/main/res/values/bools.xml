@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <bool name="isIceCreamSandwichOrLower">true</bool>
     <bool name="gridClipToPadding">false</bool>
     <bool name="isSinglePane">true</bool>
 

@@ -183,7 +183,6 @@ dependencies {
     kapt "org.greenrobot:eventbus-annotation-processor:$eventbus_version"
 
     implementation 'com.google.flatbuffers:flatbuffers-java:1.10.0'
-    implementation 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     implementation "com.google.code.gson:gson:${versions.gson}"
     // github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'

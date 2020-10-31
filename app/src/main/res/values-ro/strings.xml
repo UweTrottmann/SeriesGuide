@@ -391,10 +391,6 @@
     <string name="upcoming_upto_one_week">o săptămână</string>
     <string name="upcoming_upto_two_weeks">două săptămâni</string>
     <string name="upcoming_upto_one_month">o lună</string>
-    <!-- Additional DashClock extension upcoming thresholds -->
-    <string name="upcoming_upto_one_hour">o oră</string>
-    <string name="upcoming_upto_six_hours">6 ore</string>
-    <string name="upcoming_upto_half_day">12 ore</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aspect</string>
     <string name="pref_theme">Temă</string>
@@ -450,8 +446,6 @@
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Erori</string>
-    <!-- Legacy Widgets -->
-    <string name="smallwidget">SeriesGuide (mic)</string>
     <!-- List Widget -->
     <string name="hide_watched">Ascundeți episoadele vizionate</string>
     <string name="pref_widget_opacity">Widget fundal</string>
@@ -463,10 +457,6 @@
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Opac</string>
-    <!-- DashClock extension -->
-    <string name="dashclock_extension_label">Episodul următor</string>
-    <string name="dashclock_extension_description">Afişează următorul episod din SeriesGuide.</string>
-    <string name="dashclock_pref_upcoming_threshold">Afișare episod între&#8230;</string>
     <!-- Google In-App Billing -->
     <string name="onlyx">Numai pentru suporteri</string>
     <string name="action_upgrade">Deblocați toate opțiunile</string>
