@@ -60,7 +60,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             if (selection.isNotEmpty()) {
                 selection.append(" AND ")
             }
-            selection.append(SeriesGuideContract.Shows.SELECTION_WITH_RELEASED_NEXT_EPISODE)
+            selection.append(SeriesGuideContract.Shows.SELECTION_WITH_NEXT_EPISODE)
 
             // exclude shows with upcoming next episode
             if (!isFilterUpcoming) {
