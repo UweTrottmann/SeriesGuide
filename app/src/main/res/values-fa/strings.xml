@@ -326,6 +326,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">پایه‌ها</string>
     <string name="prefs_category_sharing">خدمات</string>
+    <string name="prefs_category_advanced">پیش‌رفته</string>
     <string name="prefs_category_about">درباره ما</string>
     <string name="pref_onlyfuture">نادیده گرفتن قسمت‌های پخش شده</string>
     <string name="pref_onlyfuturesummary">هرگز قسمت‌های قبلاً پخش شده را نشان نده</string>

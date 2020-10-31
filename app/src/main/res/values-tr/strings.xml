@@ -326,6 +326,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Temel Ayarlar</string>
     <string name="prefs_category_sharing">Servisler</string>
+    <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
     <string name="pref_onlyfuturesummary">Yayınlanmış bölümleri gösterme</string>

@@ -155,13 +155,14 @@ dependencies {
     implementation "androidx.core:core:${versions.core}"
     implementation "androidx.core:core-ktx:${versions.core}"
     implementation "androidx.annotation:annotation:${versions.annotation}"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.browser:browser:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"

@@ -326,6 +326,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Alap beállítások</string>
     <string name="prefs_category_sharing">Szolgáltatások</string>
+    <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
     <string name="pref_onlyfuturesummary">Soha ne mutassa a már leadott epizódokat</string>

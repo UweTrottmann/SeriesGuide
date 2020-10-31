@@ -326,6 +326,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Basis</string>
     <string name="prefs_category_sharing">Services</string>
+    <string name="prefs_category_advanced">Geavanceerd</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
     <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>

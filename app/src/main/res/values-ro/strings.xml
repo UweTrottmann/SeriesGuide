@@ -334,6 +334,7 @@
     <!-- Settings -->
     <string name="prefs_category_basic">Elemente de bază</string>
     <string name="prefs_category_sharing">Servicii</string>
+    <string name="prefs_category_advanced">Avansate</string>
     <string name="prefs_category_about">Despre</string>
     <string name="pref_onlyfuture">Nici un episod difuzat</string>
     <string name="pref_onlyfuturesummary">Nu afișați episoadele deja difuzate</string>
