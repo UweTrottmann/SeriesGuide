@@ -677,7 +677,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     override fun loadMovieActions() {
-        var actions = ExtensionManager.get()
+        var actions = ExtensionManager.get(context)
             .getLatestMovieActions(context, tmdbId)
 
         // no actions available yet, request extensions to publish them
@@ -691,7 +691,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     .title(it.title)
                     .releaseDate(it.release_date)
                     .build()
-                ExtensionManager.get().requestMovieActions(context, movie)
+                ExtensionManager.get(context).requestMovieActions(context, movie)
             }
         }
 
