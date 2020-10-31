@@ -305,7 +305,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             LINK_KEY_AUTOBACKUP -> {
                 startActivity(
                     Intent(activity, DataLiberationActivity::class.java).putExtra(
-                        DataLiberationActivity.InitBundle.EXTRA_SHOW_AUTOBACKUP, true
+                        DataLiberationActivity.EXTRA_SHOW_AUTOBACKUP, true
                     )
                 )
                 return true
