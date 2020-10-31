@@ -4,7 +4,6 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -22,6 +21,8 @@ import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -145,7 +146,6 @@ class SgApp : Application() {
 
         AndroidThreeTen.init(this)
         initializeEventBus()
-        initializePicasso()
         if (AndroidUtils.isAtLeastOreo()) {
             initializeNotificationChannels()
         }
@@ -153,19 +153,27 @@ class SgApp : Application() {
         // Load the current theme into a global variable
         ThemeUtils.updateTheme(DisplaySettings.getThemeIndex(this))
 
-        // Tell Google Play Services to update the security provider.
-        // This is not technically required, but might improve connection issues
-        // due to encryption on some devices.
-        ProviderInstaller.installIfNeededAsync(applicationContext, providerInstallListener)
+        // Update security provider before building HTTP client (for Picasso and in HttpClientModule).
+        initializeSecurityProvider()
+        initializePicasso()
     }
 
-    private val providerInstallListener = object : ProviderInstaller.ProviderInstallListener {
-        override fun onProviderInstallFailed(errorCode: Int, recoveryIntent: Intent?) {
-            Timber.e("Failed to install GMS provider $errorCode")
-        }
-
-        override fun onProviderInstalled() {
-            Timber.v("Successfully installed GMS provider")
+    /**
+     * Tell Google Play Services to update the security provider.
+     * This enables older devices to keep connecting to APIs and image servers
+     * by use modern encryption.
+     */
+    private fun initializeSecurityProvider() {
+        // TODO Figure out how to do this async
+        //  (either Picasso and HttpClientModule need to wait, or replace them on success?).
+//        ProviderInstaller.installIfNeededAsync(applicationContext, providerInstallListener)
+        try {
+            ProviderInstaller.installIfNeeded(applicationContext)
+            Timber.v("Successfully installed GMS security provider")
+        } catch (e: GooglePlayServicesRepairableException) {
+            Timber.e("Failed to install GMS security provider ${e.connectionStatusCode}")
+        } catch (e: GooglePlayServicesNotAvailableException) {
+            Timber.e("Failed to install GMS security provider ${e.errorCode}")
         }
     }
 
