@@ -169,7 +169,7 @@ public class MoviesDiscoverFragment extends Fragment {
                 return;
             }
             swipeRefreshLayout.setRefreshing(false);
-            adapter.updateMovies(data.results);
+            adapter.updateMovies(data.getResults());
         }
 
         @Override
