@@ -3,7 +3,7 @@ buildscript {
     ext.kotlin_version = '1.4.10' // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
     ext.coroutines_version = '1.4.0' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
     ext.versions = [
-            'minSdk': 15,
+            'minSdk': 16, // Android 4.1
             'compileSdk': 28,
             'targetSdk': 28,
 
@@ -28,8 +28,8 @@ buildscript {
 
             'truth': '1.0', // github.com/google/truth/releases
 
-            // version 15xxxyy -> min SDK 15, release xxx, build yy
-            'code': 1503410,
+            // version 15xxxyy -> min SDK 16, release xxx, build yy
+            'code': 1604600,
             'name': '46.4-k',
     ]
     // load some properties that should not be part of version control
