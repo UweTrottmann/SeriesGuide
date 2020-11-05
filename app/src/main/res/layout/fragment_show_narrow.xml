@@ -105,7 +105,9 @@
             android:layout_marginRight="@dimen/large_padding"
             android:background="?attr/sgColorDivider" />
 
-        <include layout="@layout/ratings_shows_narrow" />
+        <include
+            android:id="@+id/containerRatings"
+            layout="@layout/ratings_shows_narrow" />
 
         <View
             android:layout_width="match_parent"
