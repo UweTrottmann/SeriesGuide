@@ -4,8 +4,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
 if (project.file('google-services.json').exists()) {
     apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'com.google.firebase.crashlytics'
 }
-apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -127,7 +127,7 @@ android {
         }
         debug {
             multiDexEnabled false
-            // disable shrinking to use incremental dex in builds
+            // K: Enabling shrinking to test on Android 4.x (does not support new multidex).
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
