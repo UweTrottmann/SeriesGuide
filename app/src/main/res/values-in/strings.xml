@@ -145,6 +145,7 @@
     <string name="action_shows_sort_favorites">Favorite di awal</string>
     <string name="context_updateshow">Pembaruan</string>
     <string name="context_marknext">Episode selanjutnya ditonton</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Riwayat</string>
     <string name="recently_watched">Baru-baru ini ditonton</string>

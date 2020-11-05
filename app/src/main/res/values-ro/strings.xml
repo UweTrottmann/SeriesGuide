@@ -147,6 +147,7 @@
     <string name="action_shows_sort_favorites">Favoritele primele</string>
     <string name="context_updateshow">Actualizare</string>
     <string name="context_marknext">Episodul următor a fost vizionat</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Istoric</string>
     <string name="recently_watched">Recent vizionate</string>

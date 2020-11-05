@@ -154,13 +154,13 @@ public class ListsFragment extends Fragment {
                 case 2: {
                     // display episodes of season
                     intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, itemTvdbId);
+                    intent.putExtra(EpisodesActivity.EXTRA_SEASON_TVDBID, itemTvdbId);
                     break;
                 }
                 case 3: {
                     // display episode details
                     intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, itemTvdbId);
+                    intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, itemTvdbId);
                     break;
                 }
             }

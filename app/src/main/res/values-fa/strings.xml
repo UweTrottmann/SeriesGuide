@@ -146,6 +146,7 @@
     <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
     <string name="context_updateshow">به‌روز رسانی</string>
     <string name="context_marknext">قسمت بعدی تماشا شده</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">تاریخچه</string>
     <string name="recently_watched">به‌تازگی تماشا شده</string>

@@ -251,7 +251,7 @@ public class CalendarFragment extends Fragment
 
         Intent intent = new Intent();
         intent.setClass(getActivity(), EpisodesActivity.class);
-        intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
+        intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeId);
 
         Utils.startActivityWithAnimation(getActivity(), intent, view);
     }

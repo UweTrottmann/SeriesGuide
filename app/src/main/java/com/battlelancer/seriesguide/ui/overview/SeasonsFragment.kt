@@ -166,7 +166,7 @@ class SeasonsFragment : Fragment() {
     private val listOnItemClickListener = AdapterView.OnItemClickListener { _, view, _, id ->
         view?.let {
             val intent = Intent(activity, EpisodesActivity::class.java).apply {
-                putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, id.toInt())
+                putExtra(EpisodesActivity.EXTRA_SEASON_TVDBID, id.toInt())
             }
             ActivityCompat.startActivity(requireActivity(), intent,
                 ActivityOptionsCompat

@@ -107,7 +107,7 @@ class EpisodeSearchFragment : BaseSearchFragment() {
     private val onItemClickListener =
         EpisodeResultsAdapter.OnItemClickListener { anchor, episodeTvdbId ->
             Intent(activity, EpisodesActivity::class.java)
-                .putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeTvdbId)
+                .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeTvdbId)
                 .also { Utils.startActivityWithAnimation(activity, it, anchor) }
         }
 

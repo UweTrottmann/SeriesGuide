@@ -146,6 +146,7 @@
     <string name="action_shows_sort_favorites">Foretrukne først</string>
     <string name="context_updateshow">Opdatér</string>
     <string name="context_marknext">Næste episode set</string>
+    <string name="action_episodes_switch_view">Switch view</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Set for nylig</string>

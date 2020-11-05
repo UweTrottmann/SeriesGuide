@@ -162,7 +162,7 @@ class ListWidgetRemoteViewsFactory(
             if (isShowQuery) ShowsQuery.SHOW_NEXT_EPISODE_ID else CalendarQuery._ID
         )
         bundleOf(
-            EpisodesActivity.InitBundle.EPISODE_TVDBID to mediaItemId
+            EpisodesActivity.EXTRA_EPISODE_TVDBID to mediaItemId
         ).let {
             Intent().putExtras(it)
         }.let {
