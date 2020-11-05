@@ -103,6 +103,7 @@
     <string name="mark_all">すべて視聴済</string>
     <string name="unmark_all">すべて未視聴</string>
     <string name="action_watched_up_to">Watched up to here</string>
+    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
     <string name="collect_all">すべてコレクション済</string>
     <string name="uncollect_all">すべて未コレクション</string>
     <string name="action_skip">スキップ</string>

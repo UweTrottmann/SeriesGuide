@@ -104,6 +104,7 @@
     <string name="mark_all">Се изгледано</string>
     <string name="unmark_all">Ништо не гледано</string>
     <string name="action_watched_up_to">Watched up to here</string>
+    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
     <string name="collect_all">Се во колеција</string>
     <string name="uncollect_all">Ништо во колекција</string>
     <string name="action_skip">Прескокни</string>
