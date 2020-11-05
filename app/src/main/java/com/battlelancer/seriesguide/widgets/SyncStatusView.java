@@ -4,20 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.ViewSyncStatusBinding;
 import com.battlelancer.seriesguide.sync.SyncProgress;
 
 public class SyncStatusView extends LinearLayout {
 
-    @BindView(R.id.progressBarSyncStatus) ProgressBar progressBar;
-    @BindView(R.id.imageViewSyncStatus) ImageView imageView;
-    @BindView(R.id.textViewSyncStatus) TextView textView;
+    private ViewSyncStatusBinding binding;
 
     public SyncStatusView(Context context) {
         this(context, null);
@@ -25,43 +18,40 @@ public class SyncStatusView extends LinearLayout {
 
     public SyncStatusView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         setOrientation(HORIZONTAL);
-        LayoutInflater.from(context).inflate(R.layout.view_sync_status, this);
+
+        binding = ViewSyncStatusBinding.inflate(LayoutInflater.from(context), this);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
-
-        imageView.setVisibility(GONE);
+        binding.imageViewSyncStatus.setVisibility(GONE);
     }
 
     /**
-     * If there is progress or a failure result, displays it. Otherwise sets the view {@link
-     * View#GONE}.
+     * If there is progress or a failure result, displays it.
+     * Otherwise sets the view {@link View#GONE}.
      */
     public void setProgress(SyncProgress.SyncEvent event) {
-        if (event.step != null) {
-            // syncing
-            progressBar.setVisibility(View.VISIBLE);
-            imageView.setVisibility(GONE);
+        if (event.isSyncing()) {
+            binding.progressBarSyncStatus.setVisibility(View.VISIBLE);
+            binding.imageViewSyncStatus.setVisibility(GONE);
             setVisibility(VISIBLE);
         } else {
-            // finished
-            progressBar.setVisibility(View.GONE);
-            if (event.stepsWithError.size() > 0) {
-                // has errors
-                imageView.setVisibility(VISIBLE);
+            // Finished.
+            binding.progressBarSyncStatus.setVisibility(View.GONE);
+
+            if (event.isFinishedWithError()) {
+                binding.imageViewSyncStatus.setVisibility(VISIBLE);
                 setVisibility(VISIBLE);
             } else {
-                // successful
-                imageView.setVisibility(GONE);
+                // Successful.
+                binding.imageViewSyncStatus.setVisibility(GONE);
                 setVisibility(GONE);
-                return; // no need to update status text
+                return; // No need to update status text.
             }
         }
-        textView.setText(event.getDescription(getContext()));
+        binding.textViewSyncStatus.setText(event.getDescription(getContext()));
     }
 }
