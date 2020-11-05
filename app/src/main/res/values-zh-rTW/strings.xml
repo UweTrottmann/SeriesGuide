@@ -44,6 +44,7 @@
     <string name="search_hint">搜尋集數</string>
     <!-- Status messages -->
     <string name="updated">已更新到最新版本。</string>
+    <string name="updated_details">Details</string>
     <string name="norating">無</string>
     <string name="unknown">不明</string>
     <string name="offline">連接到網路，然後再試一次。</string>

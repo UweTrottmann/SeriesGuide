@@ -13,7 +13,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -48,8 +47,9 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TabClickEvent;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -361,8 +361,16 @@ public class ShowsActivity extends BaseTopActivity implements
         final int currentVersion = BuildConfig.VERSION_CODE;
 
         if (lastVersion < currentVersion) {
-            // user feedback about update
-            Toast.makeText(getApplicationContext(), R.string.updated, Toast.LENGTH_LONG).show();
+            // Let the user know the app has updated.
+            Snackbar.make(getSnackbarParentView(), R.string.updated, Snackbar.LENGTH_LONG)
+                    .setAction(
+                            R.string.updated_details,
+                            v -> Utils.launchWebsite(
+                                    ShowsActivity.this,
+                                    getString(R.string.url_release_notes)
+                            )
+                    )
+                    .show();
 
             // Run some required tasks after updating to certain versions.
             // NOTE: see version codes for upgrade description.

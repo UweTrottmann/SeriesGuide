@@ -44,6 +44,7 @@
     <string name="search_hint">Поиск эпизодов</string>
     <!-- Status messages -->
     <string name="updated">Обновлено до последней версии.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">нет данных</string>
     <string name="unknown">Неизвестно</string>
     <string name="offline">Подключитесь к сети и повторите попытку.</string>

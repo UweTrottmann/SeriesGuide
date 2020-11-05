@@ -44,6 +44,7 @@
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
+    <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">άγνωστο</string>
     <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
