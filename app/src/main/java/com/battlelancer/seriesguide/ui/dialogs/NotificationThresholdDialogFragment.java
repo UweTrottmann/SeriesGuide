@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.widget.RadioGroup;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.preference.PreferenceManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -149,7 +149,7 @@ public class NotificationThresholdDialogFragment extends AppCompatDialogFragment
             minutes *= 60 * 24;
         }
 
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                 .putString(NotificationSettings.KEY_THRESHOLD, String.valueOf(minutes))
                 .apply();
         Timber.i("Notification threshold set to %d minutes", minutes);

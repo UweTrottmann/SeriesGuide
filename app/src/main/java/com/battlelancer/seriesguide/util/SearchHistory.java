@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;

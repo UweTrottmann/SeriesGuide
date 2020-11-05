@@ -3,9 +3,9 @@ package com.battlelancer.seriesguide.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringDef;
+import androidx.preference.PreferenceManager;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 

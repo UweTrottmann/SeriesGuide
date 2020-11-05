@@ -76,9 +76,12 @@ class TvdbIdExtractor(val context: Context, val text: String) {
     private fun matchShowTvdbId(pattern: Pattern, text: String): Int {
         val matcher = pattern.matcher(text)
         if (matcher.find()) {
-            try {
-                return Integer.parseInt(matcher.group(1))
-            } catch (ignored: NumberFormatException) {
+            val match = matcher.group(1)
+            if (match != null) {
+                try {
+                    return Integer.parseInt(match)
+                } catch (ignored: NumberFormatException) {
+                }
             }
         }
         return -1
