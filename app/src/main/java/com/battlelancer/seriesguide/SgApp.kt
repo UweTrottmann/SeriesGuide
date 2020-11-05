@@ -171,11 +171,7 @@ class SgApp : Application() {
     }
 
     private fun initializeLogging() {
-        // set up reporting tools first
-//        if (!Fabric.isInitialized()) {
-//            // use core kit only, Crashlytics kit also adds Answers and Beta kit
-//            Fabric.with(this, CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-//        }
+        // Note: Firebase Crashlytics is automatically initialized using content provider.
 
         if (BuildConfig.DEBUG) {
             // debug drawer logging
@@ -188,7 +184,7 @@ class SgApp : Application() {
             Timber.plant(Timber.DebugTree())
         }
         // crash and error reporting
-//        Timber.plant(AnalyticsTree())
+        Timber.plant(AnalyticsTree())
     }
 
     private fun initializeEventBus() {

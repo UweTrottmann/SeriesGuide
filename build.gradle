@@ -3,7 +3,7 @@ buildscript {
     ext.kotlin_version = '1.4.10' // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
     ext.coroutines_version = '1.4.0' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
     ext.versions = [
-            'minSdk': 15,
+            'minSdk': 16, // Android 4.1
             'compileSdk': 28,
             'targetSdk': 28,
 
@@ -15,7 +15,7 @@ buildscript {
             'room': '2.2.5',
 
             'butterknife': '10.2.0', // github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '2.9.7', // docs.fabric.io/android/changelog.html
+            'crashlytics': '17.2.2', // https://firebase.google.com/support/release-notes/android
             'dagger': '2.23.1', // github.com/google/dagger/releases
             'gson': '2.8.5', // github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '3.12.12', // github.com/square/okhttp/blob/master/CHANGELOG.md
@@ -28,8 +28,8 @@ buildscript {
 
             'truth': '1.0', // github.com/google/truth/releases
 
-            // version 15xxxyy -> min SDK 15, release xxx, build yy
-            'code': 1503410,
+            // version 15xxxyy -> min SDK 16, release xxx, build yy
+            'code': 1604600,
             'name': '46.4-k',
     ]
     // load some properties that should not be part of version control
@@ -46,16 +46,17 @@ buildscript {
         google()
         mavenCentral()
         jcenter()
-//        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
-//        classpath 'io.fabric.tools:gradle:1.27.0' // SeriesGuide
-        //noinspection GradleDependency
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.10.0' // api
+        // Firebase Crashlytics
+        // https://firebase.google.com/support/release-notes/android
+        classpath 'com.google.gms:google-services:4.3.4'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
     }
 }
 
@@ -80,7 +81,6 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
-//        maven { url 'https://maven.fabric.io/public' }
     }
 }
 
