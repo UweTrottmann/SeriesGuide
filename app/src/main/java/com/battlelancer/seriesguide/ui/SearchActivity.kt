@@ -13,6 +13,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -27,33 +28,24 @@ import com.battlelancer.seriesguide.ui.search.SearchTriggerListener
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.ui.search.TvdbIdExtractor
-import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import com.google.android.gms.actions.SearchIntents
 import com.uwetrottmann.androidutils.AndroidUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Handles search intents and displays a [EpisodeSearchFragment] when needed or redirects
  * directly to an [EpisodesActivity].
  */
-class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
-    AddShowDialogFragment.OnAddShowListener, SearchTriggerListener {
-
-    private lateinit var job: Job
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+class SearchActivity : BaseNavDrawerActivity(), AddShowDialogFragment.OnAddShowListener,
+    SearchTriggerListener {
 
     @BindView(R.id.containerSearchBar)
     internal lateinit var searchContainer: View
@@ -73,8 +65,6 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
-        job = Job()
 
         setupActionBar()
         setupNavDrawer()
@@ -247,7 +237,7 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
         }
 
         // try to match TVDB URLs
-        launch {
+        lifecycleScope.launch {
             val showTvdbId = TvdbIdExtractor(applicationContext, sharedText)
                 .tryToExtractTvdbId()
             if (showTvdbId > 0) {
@@ -336,7 +326,6 @@ class SearchActivity : BaseNavDrawerActivity(), CoroutineScope,
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel()
         // remove any stored initial queries so they are not used when re-creating
         EventBus.getDefault().removeStickyEvent(SearchQueryEvent::class.java)
         EventBus.getDefault().removeStickyEvent(SearchQuerySubmitEvent::class.java)
