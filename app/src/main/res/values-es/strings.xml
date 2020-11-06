@@ -43,8 +43,8 @@
     <string name="search_hint">Buscar episodios</string>
     <!-- Status messages -->
     <string name="updated">Actualizado a la última versión.</string>
-    <string name="updated_details">Details</string>
-    <string name="norating">n/a</string>
+    <string name="updated_details">Detalles</string>
+    <string name="norating">n/d</string>
     <string name="unknown">desconocido</string>
     <string name="offline">Conéctate a una red y vuelve a intentarlo.</string>
     <string name="app_not_available">No existe ninguna aplicación disponible para gestionar esto</string>
@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">Todos vistos</string>
     <string name="unmark_all">Ninguno visto</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Visto hasta aquí</string>
+    <string name="confirmation_watched_up_to">¿Marcar como vistos todos los episodios hasta aquí?</string>
     <string name="collect_all">Recopilados todos</string>
     <string name="uncollect_all">Recopilados ninguno</string>
     <string name="action_skip">Omitir</string>
@@ -115,10 +115,10 @@
     <string name="action_watched">Visto</string>
     <string name="action_unwatched">No visto</string>
     <string name="state_watched">Visto</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Omitido</string>
+    <string name="state_in_collection">En colección</string>
+    <string name="state_on_watchlist">En la lista de visualización</string>
+    <string name="state_favorite">Favorito</string>
     <!-- Shows -->
     <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
     <string name="delete_error">No se pudo borrar la serie. Inténtalo más tarde.</string>
@@ -150,7 +150,7 @@
     <string name="action_shows_sort_favorites">Favoritos primero</string>
     <string name="context_updateshow">Actualizar</string>
     <string name="context_marknext">Siguiente episodio visto</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Cambiar vista</string>
     <!-- History -->
     <string name="user_stream">Historial</string>
     <string name="recently_watched">Vistas recientemente</string>
@@ -200,7 +200,6 @@
     <string name="add_error">No se pudo añadir %s.</string>
     <string name="add_already_exists">%s ya está en tu lista de visualización.</string>
     <string name="title_new_episodes">Nuevos episodios</string>
-    <string name="recommended">Recomendado</string>
     <string name="watched_shows">Visto</string>
     <string name="shows_collection">Colección</string>
     <string name="watchlist">Lista de visualización</string>
@@ -281,7 +280,7 @@
 Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error con Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando a trakt.</string>
     <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
@@ -316,7 +315,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="rating6">Justo</string>
     <string name="rating7">Bueno</string>
     <string name="rating8">Mejor</string>
-    <string name="rating9">Muy Bueno</string>
+    <string name="rating9">Excelente</string>
     <plurals name="votes">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
@@ -365,7 +364,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="privacy_policy">Política de privacidad</string>
     <string name="licence_tvdb">Esta aplicación utiliza datos e imágenes de TheTVDB bajo una licencia Creative Commons.</string>
     <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
-    <string name="licence_trakt">Esta aplicación utiliza datos e imágenes de trakt.</string>
+    <string name="licence_trakt">Esta aplicación utiliza información e imágenes de Trakt.</string>
     <string name="about_open_source">SeriesGuide fue desarrollado usando software de código abierto.</string>
     <string name="licences_and_credits">Licencias y créditos</string>
     <!-- Sort -->
@@ -393,8 +392,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Otros</string>
     <string name="pref_autoupdatesummary">Sincronizar y actualizar automáticamente datos de SeriesGuide</string>
-    <string name="pref_autobackup">Copia de seguridad automática</string>
-    <string name="pref_autobackupsummary">Copia de seguridad semanal de tus series, listas y películas</string>
     <string name="backup">Respaldo/Restauración</string>
     <string name="backup_summary">Respaldar o restaurar sus programas</string>
     <string name="pref_number">Formato numérico</string>
@@ -412,15 +409,18 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="import_success">Copia de seguridad restaurada correctamente.</string>
     <string name="import_failed">No se pudo restaurar la copia de seguridad.</string>
     <string name="backup_button">Respaldo</string>
-    <string name="import_button">Restaurar</string>
+    <string name="import_button">Restaurar la copia de seguridad</string>
     <string name="import_warning">Entiendo que mis series, listas y películas actuales serán reemplazadas!</string>
+    <string name="no_file_selected">No hay ningún archivo seleccionado</string>
+    <string name="action_select_file">Seleccione un archivo</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Copia de seguridad automática</string>
+    <string name="pref_autobackupsummary">Copia de seguridad semanal de tus series, listas y películas</string>
     <string name="last_auto_backup">Última copia de seguridad automática: %s</string>
     <string name="restore_auto_backup">Restaurar la copia de seguridad automática</string>
     <string name="dataliberation_permission_missing">Para crear o restaurar una copia de seguridad, permite el acceso a tus archivos.</string>
     <string name="autobackup_permission_missing">Para utilizar la copia de seguridad automática, permite el acceso a tus archivos.</string>
     <string name="autobackup_files_missing">Para utilizar la copia de seguridad automática, seleccione archivos de copia de seguridad válidos.</string>
-    <string name="no_file_selected">No hay ningún archivo seleccionado</string>
-    <string name="action_select_file">Seleccione un archivo</string>
     <string name="backup_use_default_files">Utilizar archivos de copia de seguridad por defecto</string>
     <!-- Welcome dialog -->
     <string name="get_started">Empezar</string>
@@ -439,11 +439,11 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_notifications_treshold">Cuando notificar</string>
     <string name="pref_notifications_select_shows">Elegir series</string>
     <string name="pref_notifications_select_shows_summary">Series que tienen las notificaciones habilitadas (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignorar series ocultas</string>
+    <string name="pref_notifications_hidden_summary">Incluso si las notificaciones están habilitadas, no notifique sobre las series ocultas</string>
     <string name="pref_notification_channel_errors">Errores</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Sólo para episodios siguientes para ver</string>
+    <string name="pref_notifications_next_episodes_only_summary">Solo notificar si el nuevo episodio es el siguiente para ver</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo de widget</string>
@@ -463,9 +463,9 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_action_pass">Obtener X Pass App</string>
     <string name="billing_price_subscribe">%1$s/año, prueba gratuita, cancela en cualquier momento mediante %2$s</string>
     <string name="billing_price_pass">Compra por única vez</string>
-    <string name="upgrade_description">Desbloquea todas las funciones incluyendo notificaciones, temas y mas opciones para los widgets. Ayudame a hacer futuras actualizaciones.</string>
+    <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
-    <string name="billing_learn_more">¿Por qué deberías pagar? Lee más.</string>
+    <string name="billing_learn_more">Más información y ayuda.</string>
     <string name="subscription_expired">Suscripción caducada</string>
     <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
     <!-- Amazon In-App Billing -->

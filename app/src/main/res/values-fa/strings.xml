@@ -36,14 +36,14 @@
     <string name="sync_manually">هم‌گام سازی دستی</string>
     <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
     <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
-    <string name="action_turn_off">Turn off</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_turn_off">غیرفعال سازی</string>
+    <string name="action_stream">پخش یا خرید</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
     <!-- Status messages -->
     <string name="updated">به‌روز شده به جدیدترین نگارش.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">جزییات</string>
     <string name="norating">ناموجود</string>
     <string name="unknown">نامعلوم</string>
     <string name="offline">به شبکه‌ای وصل شده، سپس دوباره تلاش کنید.</string>
@@ -52,8 +52,8 @@
     <string name="database_error">نمی‌توان داده را تغییر داد.</string>
     <string name="reinstall_info">در تنظیمات پشتیبان گرفته، دوباره نصب و بازیابی کنید.</string>
     <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
-    <string name="api_failed">Failed: %s</string>
-    <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="api_failed">%s انجام نشد</string>
+    <string name="copy_to_clipboard">کپی شد</string>
     <!-- Sharing -->
     <string name="share">هم‌رسانی</string>
     <string name="share_show">هم‌رسانی نمایش</string>
@@ -88,12 +88,12 @@
     <string name="episode_writers">نویسندگان</string>
     <string name="show_isalive">در حال پخش</string>
     <string name="show_isnotalive">به پایان رسیده</string>
-    <string name="show_isUpcoming">بزودی</string>
+    <string name="show_isUpcoming">پیش رو</string>
     <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
     <string name="no_translation_title">ترجمه نشده</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
-    <string name="format_source">Source: %s</string>
-    <string name="format_last_edited">Last edited: %s</string>
+    <string name="format_source">منبع: %s</string>
+    <string name="format_last_edited">آخرین ویرایش: %s</string>
     <!-- Date and Time -->
     <string name="today">امروز</string>
     <string name="now">اکنون</string>
@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">همه تماشا شدن</string>
     <string name="unmark_all">هیچکدام تماشا نشدن</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">تا این‌جا تماشا شده</string>
+    <string name="confirmation_watched_up_to">تنطیم همهٔ قسمت‌ها به تماشا شده؟</string>
     <string name="collect_all">همه به کلکسیون افزوده شده</string>
     <string name="uncollect_all">هیچ کدام به کلکسیون افزوده نشده</string>
     <string name="action_skip">رد کردن</string>
@@ -115,10 +115,10 @@
     <string name="action_watched">تنظیم به تماشا شده</string>
     <string name="action_unwatched">تنظیم به تماشا نشده</string>
     <string name="state_watched">تماشا شده</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">رد شده</string>
+    <string name="state_in_collection">در مجموعه</string>
+    <string name="state_on_watchlist">در فهرست تماشا</string>
+    <string name="state_favorite">مورد علاقه</string>
     <!-- Shows -->
     <string name="confirm_delete">واقعاً می‌خواهید %s را حذف کنید؟</string>
     <string name="delete_error">اثر نمایشی حذف نشد. بعداً دوباره سعی کنید.</string>
@@ -128,8 +128,8 @@
     <string name="context_unfavorite">حذف از برگزیده‌ها</string>
     <string name="favorited">به برگزیده‌ها افزوده شد</string>
     <string name="unfavorited">از برگزیده‌ها حذف شد</string>
-    <string name="action_episode_notifications_on">Turn on episode notifications</string>
-    <string name="action_episode_notifications_off">Turn off episode notifications</string>
+    <string name="action_episode_notifications_on">روشن کردن اعلان‌های قسمت</string>
+    <string name="action_episode_notifications_off">خاموش کردن اعلان‌های قسمت</string>
     <string name="context_hide">پنهان کردن</string>
     <string name="context_unhide">پنهان نکردن</string>
     <string name="hidden">به پنهان منتقل شد</string>
@@ -143,14 +143,14 @@
     <string name="action_shows_filter_hidden">پنهان شده</string>
     <string name="action_shows_sort">چینش آثار نمایشی</string>
     <string name="action_shows_sort_title">عنوان</string>
-    <string name="action_shows_sort_latest_episode">آخرین قسمت</string>
+    <string name="action_shows_sort_latest_episode">جدیدترین قسمت</string>
     <string name="action_shows_sort_oldest_episode">قدیمی‌ترین قسمت</string>
     <string name="action_shows_sort_last_watched">آخرین تماشا شده</string>
     <string name="action_shows_sort_remaining">قسمت‌های باقی مانده</string>
     <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
     <string name="context_updateshow">به‌روز رسانی</string>
-    <string name="context_marknext">قسمت بعدی تماشا شده</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="context_marknext">قسمت بعدی تماشا شد</string>
+    <string name="action_episodes_switch_view">تعویض نما</string>
     <!-- History -->
     <string name="user_stream">تاریخچه</string>
     <string name="recently_watched">به‌تازگی تماشا شده</string>
@@ -160,14 +160,14 @@
     <string name="user_stream_empty">هیچ تاریخچه ای در trakt یافت نشد. چند اثری نمایشی را مشاهده کنید و سپس علامت بزنید!</string>
     <string name="user_movie_stream_empty">هیچ فعالیت اخیری در trakt  نیست. تعدادی فیلم را علامت بزنید!</string>
     <!-- Calendar -->
-    <string name="upcoming">بزودی</string>
+    <string name="upcoming">پیش رو</string>
     <string name="recent">اخیر</string>
     <string name="released_today">امروز منتشر شد</string>
     <string name="noupcoming">هیچ قسمت آینده ای وجود ندارد.</string>
     <string name="norecent">هیچ قسمت اخیری وجود ندارد.</string>
-    <string name="calendar_settings">Calendar settings</string>
+    <string name="calendar_settings">تنظیمات تقویم</string>
     <string name="only_favorites">تنها نمایش های مورد علاقه</string>
-    <string name="calendar_only_collected">Only collected episodes</string>
+    <string name="calendar_only_collected">فقط قسمت‌های ذخیره‌شده</string>
     <string name="pref_infinite_scrolling">تقویم بی‌پایان</string>
     <!-- Updating -->
     <string name="update_scheduled">به‌روز رسانی&#8230;</string>
@@ -191,7 +191,7 @@
     <string name="checkin_searchhint">نام یک اثر نمایشی را بنویسید</string>
     <string name="add_empty">این‌جا هیچ سریالی نیست.</string>
     <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
-    <string name="empty_show_search">Not found in your show list</string>
+    <string name="empty_show_search">در لیست برنامه‌ها پیدا نشد</string>
     <string name="action_try_again">دوباره امتحان کنید</string>
     <string name="tvdb_error_does_not_exist">اثر نمایشی (هنوز) در TheTVDB وجود ندارد. بعداً دوباره سعی کنید.</string>
     <string name="add_all">افزودن همه</string>
@@ -199,8 +199,7 @@
     <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
     <string name="add_error">قادر به افزودن %s نمی باشد.</string>
     <string name="add_already_exists">%s هم‌اکنون در فهرست نمایشتان هست.</string>
-    <string name="title_new_episodes">New episodes</string>
-    <string name="recommended">توصیه می شود</string>
+    <string name="title_new_episodes">قسمت‌های جدید</string>
     <string name="watched_shows">تماشا شده</string>
     <string name="shows_collection">مجموعه</string>
     <string name="watchlist">فهرست تماشا</string>
@@ -239,7 +238,7 @@
     <string name="action_movies_sort_release">تاریخ انتشار</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
-    <string name="statistics_shows">نمایش</string>
+    <string name="statistics_shows">سریال‌ها</string>
     <string name="statistics_episodes">قسمت</string>
     <string name="statistics_movies">فیلم</string>
     <string name="shows_with_next">%s با قسمت‌های بعدی</string>
@@ -261,15 +260,15 @@
         <item quantity="other">%d دقیقه</item>
     </plurals>
     <!-- Features -->
-    <string name="feature_supported">Supported</string>
-    <string name="feature_not_supported">Not supported</string>
-    <string name="feature_history">Personal and friend history</string>
-    <string name="feature_comments">Post comments</string>
-    <string name="feature_sync">Sync</string>
+    <string name="feature_supported">پشتیبانی شده</string>
+    <string name="feature_not_supported">پشتیبانی نمی‎شود</string>
+    <string name="feature_history">تاریخچه‌ی شخصی و دوستان</string>
+    <string name="feature_comments">ارسال نظرات</string>
+    <string name="feature_sync">همگام‌‌سازی</string>
     <!-- Hexagon -->
     <string name="hexagon_warning">آزمایشی</string>
-    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_description">SeriesGuide Cloud به همگام‌سازی و پشتیبان‌گیری برنامه‌ها، لیست‌ها و فیلم‌های شما کمک می‌کند</string>
+    <string name="hexagon_warning_trakt">هنگام ورود با SeriesGuide Cloud برخی از ویژگی‌های Trakt در دسترس نیست</string>
     <string name="hexagon_signin">ورود</string>
     <string name="hexagon_signout">خروج از سیستم</string>
     <string name="hexagon_setup_incomplete">راه اندازی فضای ابری SeriesGuide کامل نشد.</string>
@@ -280,7 +279,7 @@
     <string name="hexagon_remove_account_confirmation">حذف حسابتان تمام نمایش‌ها و فیلم‌ها را از فضای ابری SeriesGuide پاک می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز حذف میکنید.</string>
     <string name="hexagon_api_queued">در حال ارسال به فضای ابری SeriesGuide.</string>
     <string name="hexagon_signed_out">از فضای ابری SeriesGuide خارج شدید.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">خطا در ورود با گوگل (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">ارسال به trakt.</string>
     <string name="checkin_success_trakt">%s روی trakt ثبت شد.</string>
@@ -361,8 +360,8 @@
         <item quantity="other">%d دقیقه قبل</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">سیاست حریم شخصی</string>
+    <string name="licence_tvdb">‫این برنامه از داده‌ها و تصاویر TheTVDB با مجوز Cc استفاده می‌کند.</string>
     <string name="licence_themoviedb">‫این محصول از رابط برنامه‌نویسی TMDb استفاده می‌کند ولی توسّط TMDb تصدیق نشده است.</string>
     <string name="licence_trakt">‫این برنامه از داده‌ها و تصویرهای trakt استفاده می‌کند.</string>
     <string name="about_open_source">SeriesGuide با استفاده از نرم‌افزارهای متن باز ساخته شده است.</string>
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">سایر موارد</string>
     <string name="pref_autoupdatesummary">به صورت خودکار داده های SeriesGuide را همگام سازی و بروزرسانی کن</string>
-    <string name="pref_autobackup">پشتیبان‌گیری خودکار</string>
-    <string name="pref_autobackupsummary">پشتیبان گرفتن هفتگی از نمایش‌ها، فهرست‌ها و فیلم‌هایتان</string>
     <string name="backup">پشتیبان گیری / بازیابی</string>
     <string name="backup_summary">پشتیبان گیری یا بازگردانی نمایش‌هایتان</string>
     <string name="pref_number">قالب شماره</string>
@@ -402,7 +399,7 @@
     <string name="clear_cache">پاک سازی تصاویر ذخیره شده از حافظه دستگاه</string>
     <string name="clear_cache_summary">حذف همه تصاویر ذخیره شده از حافظه دستگاه شما</string>
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">Include descriptions, details, ratings</string>
+    <string name="backup_full_dump">دربرگیری توضیحات، جزییات و رتبه‌ها</string>
     <string name="backup_failed_file_access">نمی‌توان پشتیبان گرفت. پروندهٔ پشتیبانی نمی‌تواند پیدا یا دیده شود.</string>
     <string name="backup_success">پشتیبان گیری انجام شد.</string>
     <string name="backup_failed">پشتیبان گیری شکست خورد.</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">ایجاد پشتیبان</string>
     <string name="import_button">بازگردانی پشتیبان</string>
     <string name="import_warning">فهمیدم که نمایش‌ها، فهرست‌ها و فیلم‌های جاریم تعویض خواهند شد!</string>
+    <string name="no_file_selected">هیچ پرونده‌ای گزیده نشده</string>
+    <string name="action_select_file">گزینش پرونده</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">پشتیبان‌گیری خودکار</string>
+    <string name="pref_autobackupsummary">پشتیبان گرفتن هفتگی از نمایش‌ها، فهرست‌ها و فیلم‌هایتان</string>
     <string name="last_auto_backup">آخرین پشتیبان خودکار: %s</string>
     <string name="restore_auto_backup">بازگردانی پشتیبان خودکار</string>
     <string name="dataliberation_permission_missing">برای پشتیبان گیری یا بازگردانی، به پرونده‌هایتان اجازهٔ دسترسی بدهید.</string>
     <string name="autobackup_permission_missing">برای استفاده از پشتیبان گیری خودکار، به پرونده‌هایتان اجازهٔ دسترسی بدهید.</string>
     <string name="autobackup_files_missing">برای استفاده از پشتیبان گیری خودکار، پرونده‌های پشتیبان معتبر را برگزینید.</string>
-    <string name="no_file_selected">هیچ پرونده‌ای گزیده نشده</string>
-    <string name="action_select_file">گزینش پرونده</string>
     <string name="backup_use_default_files">استفاده از پرونده‌های پشتیبان پیش‌گزیده</string>
     <!-- Welcome dialog -->
     <string name="get_started">شروع به کار</string>
@@ -436,18 +436,18 @@
     <string name="pref_vibrate">لرزش</string>
     <string name="pref_vibratesummary">ارزش هنگام نمایش آگهی</string>
     <string name="pref_notifications_treshold">زمان آگاهی</string>
-    <string name="pref_notifications_select_shows">Select shows</string>
-    <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
-    <string name="pref_notification_channel_errors">Errors</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_select_shows">انتخاب برنامه‌ها</string>
+    <string name="pref_notifications_select_shows_summary">برنامه‌های دارای اعلان فعال (%d)</string>
+    <string name="pref_notifications_hidden">نادیده‌گرفتن برنامه‌های پنهان</string>
+    <string name="pref_notifications_hidden_summary">حتی اگر اعلان‌ها فعال‌اند، درباره‌ی برنامه‌های پنهان اطلاع‌رسانی نکن</string>
+    <string name="pref_notification_channel_errors">خطاها</string>
+    <string name="pref_notifications_next_episodes_only">فقط قسمت‌های بعدی برای تماشا</string>
+    <string name="pref_notifications_next_episodes_only_summary">آگاهی فقط در صورتی که قسمت جدید، قسمت بعدی‌ایست که باید دیده شود</string>
     <!-- List Widget -->
     <string name="hide_watched">نهفتن قسمت‌های تماشا شده</string>
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>
     <string name="pref_widget_type">نوع ابزارک</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">استفاده از خط درشت</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفّاف</string>
     <string name="widget_background_25">۲۵٪</string>
@@ -458,13 +458,13 @@
     <string name="onlyx">فقط برای حامیان</string>
     <string name="action_upgrade">باز کردن تمام ویژگی‌ها</string>
     <string name="billing_action_subscribe">اشتراک</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">مدیریت اشتراک‌ها</string>
     <string name="billing_action_pass">گرفتن X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+    <string name="billing_price_subscribe">%1$s/سال, به رایگان امتحان کرده و هر زمان از طریق %2$s لغو کنید</string>
     <string name="billing_price_pass">خرید یک باره</string>
-    <string name="upgrade_description">باز کردن تمام ویژگی‌ها شامل آگاهی‌ها، زمینه‌ها و انتخاب‌های ابزارک فهرست بیش‌تر. به من برای ساخت به‌روز رسانی‌های آینده کمک کنید.</string>
+    <string name="upgrade_description">هر اشتراکی، همهٔ ویژگی‌ها را گشوده و از به‌روز رسانی‌های آتی پشیبانی می‌کند. برای استفاده از این کاره نیازی به اشتراک نیست.</string>
     <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>
-    <string name="billing_learn_more">چرا پول؟ بیش‌تر بدانید.</string>
+    <string name="billing_learn_more">اطّلاعات بیش‌تر و راهنمایی</string>
     <string name="subscription_expired">اشتراک پایان یافت</string>
     <string name="subscription_expired_details">اشتراک سریزگایدتان به پایان رسیده است.</string>
     <!-- Amazon In-App Billing -->

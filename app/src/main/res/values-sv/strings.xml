@@ -10,7 +10,7 @@
     <string name="help">Hjälp</string>
     <string name="help_and_feedback">Hjälp &amp; feedback</string>
     <string name="drawer_open">Öppna navigeringslåda</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide kommer inte att mottaga fler uppdateringar för den här versionen av Android.</string>
     <!-- Media items -->
     <string name="show_details">Detaljer</string>
     <string name="episode">Avsnitt</string>
@@ -31,19 +31,19 @@
     <string name="save_selection">Spara valda</string>
     <string name="action_display_all">Visa alla</string>
     <string name="web_search">Webbsökning</string>
-    <string name="add_to_homescreen">Add to Home screen</string>
+    <string name="add_to_homescreen">Lägg till på hemskärmen</string>
     <string name="action_open">Öppna</string>
     <string name="sync_manually">Synkronisera manuellt</string>
     <string name="sync_and_update">Synkronisera &amp; Uppdatera</string>
     <string name="sync_and_download_all">Synkronisera &amp; Ladda ner alla</string>
-    <string name="action_turn_off">Turn off</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_turn_off">Stäng av</string>
+    <string name="action_stream">Streama eller köp</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
     <!-- Status messages -->
     <string name="updated">Uppdaterad till senaste versionen</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detaljer</string>
     <string name="norating">saknas</string>
     <string name="unknown">okänd</string>
     <string name="offline">Ansluta till ett nätverk och försök igen.</string>
@@ -53,7 +53,7 @@
     <string name="reinstall_info">Försök att säkerhetskopiera i inställningar, installera om och återställ.</string>
     <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
     <string name="api_failed">Misslyckades: %s</string>
-    <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="copy_to_clipboard">Kopierat till urklipp</string>
     <!-- Sharing -->
     <string name="share">Dela</string>
     <string name="share_show">Dela serie</string>
@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">Sett alla</string>
     <string name="unmark_all">Inga sedda</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Sett så här långt</string>
+    <string name="confirmation_watched_up_to">Markera alla avsnitt upp till det här sedda?</string>
     <string name="collect_all">Samla alla</string>
     <string name="uncollect_all">Ingen hämtad</string>
     <string name="action_skip">Hoppa över</string>
@@ -114,11 +114,11 @@
     <string name="action_collection_removed">Borttagen från samling</string>
     <string name="action_watched">Sett</string>
     <string name="action_unwatched">Markera som osedd</string>
-    <string name="state_watched">Sedda</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched">Sett</string>
+    <string name="state_skipped">Hoppat över</string>
+    <string name="state_in_collection">I samling</string>
+    <string name="state_on_watchlist">På bevakningslistan</string>
+    <string name="state_favorite">Favorit</string>
     <!-- Shows -->
     <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
     <string name="delete_error">Det gick inte att ta bort program. Försök igen senare.</string>
@@ -150,7 +150,7 @@
     <string name="action_shows_sort_favorites">Favoriter först</string>
     <string name="context_updateshow">Uppdatera</string>
     <string name="context_marknext">Sett nästa avsnitt</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Ändra vy</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Nyligen sedda</string>
@@ -191,7 +191,7 @@
     <string name="checkin_searchhint">Skriv ett serienamn</string>
     <string name="add_empty">Det finns inga serier här.</string>
     <string name="no_results">Inga resultat, försök med hela ord.</string>
-    <string name="empty_show_search">Not found in your show list</string>
+    <string name="empty_show_search">Hittades inte i din serielista</string>
     <string name="action_try_again">Försök igen</string>
     <string name="tvdb_error_does_not_exist">Serien finns inte (ännu) på TheTVDB. Försök igen senare.</string>
     <string name="add_all">Lägg till alla</string>
@@ -200,7 +200,6 @@
     <string name="add_error">Kunde inte lägga till %s.</string>
     <string name="add_already_exists">%s finns redan i din serielista.</string>
     <string name="title_new_episodes">Nya avsnitt</string>
-    <string name="recommended">Rekommenderade</string>
     <string name="watched_shows">Sedda</string>
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Bevakningslista</string>
@@ -280,7 +279,7 @@
     <string name="hexagon_remove_account_confirmation">Att ta bort ditt konto kommer även att radera alla serier och filmer från SeriesGuide Cloud. Se till att ta bort det även på andra anslutna enheter.</string>
     <string name="hexagon_api_queued">Skickar till SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Loggat ut från SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Fel med Google-inloggning (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Skickar till trakt.</string>
     <string name="checkin_success_trakt">Checkat in %s på trakt.</string>
@@ -361,10 +360,10 @@
         <item quantity="other">%d minuter innan</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Sekretesspolicy</string>
+    <string name="licence_tvdb">Denna app använder data och avbildningar av TheTVDB licensierat under en Creative Commons-licens.</string>
     <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte stödd eller certifierad av TMDb.</string>
-    <string name="licence_trakt">Den här appen använder data och bilder från trakt.</string>
+    <string name="licence_trakt">Denna app använder data och bilder från Trakt.</string>
     <string name="about_open_source">SeriesGuide är byggt med öppen källkod.</string>
     <string name="licences_and_credits">Licenser och tillkännagivanden</string>
     <!-- Sort -->
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Övrigt</string>
     <string name="pref_autoupdatesummary">Automatiskt synkronisera och uppdatera SeriesGuide-data</string>
-    <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
-    <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
     <string name="backup">Säkerhetskopiera/återställ</string>
     <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
     <string name="pref_number">Nummerformat</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Säkerhetskopiera</string>
     <string name="import_button">Återställ säkerhetskopia</string>
     <string name="import_warning">Jag förstår att mina nuvarande serier, listor och filmer kommer ersättas!</string>
+    <string name="no_file_selected">Ingen fil vald</string>
+    <string name="action_select_file">Välj fil</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatisk säkerhetskopiering</string>
+    <string name="pref_autobackupsummary">Veckovis säkerhetskopiering av dina serier, listor och filmer</string>
     <string name="last_auto_backup">Senaste automatiska säkerhetskopia: %s</string>
     <string name="restore_auto_backup">Återställ automatisk säkerhetskopia</string>
     <string name="dataliberation_permission_missing">För att säkerhetskopiera eller återställa måste du tillåta åtkomst till dina filer.</string>
     <string name="autobackup_permission_missing">För att använda automatisk säkerhetskopiering måste du tillåta åtkomst till dina filer.</string>
     <string name="autobackup_files_missing">För att använda automatisk säkerhetskopiering, välj giltiga filer för säkerhetskopiering.</string>
-    <string name="no_file_selected">Ingen fil vald</string>
-    <string name="action_select_file">Välj fil</string>
     <string name="backup_use_default_files">Använd förvalda backupfiler</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom igång</string>
@@ -438,16 +438,16 @@
     <string name="pref_notifications_treshold">När aviseringar ska visas</string>
     <string name="pref_notifications_select_shows">Välj serie</string>
     <string name="pref_notifications_select_shows_summary">Serier som har aviseringar aktiverade (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignorera dolda serier</string>
+    <string name="pref_notifications_hidden_summary">Blockera aviseringar för dolda serier även när aviseringar är aktiverade</string>
     <string name="pref_notification_channel_errors">Fel</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Endast för avsnitt att titta på härnäst</string>
+    <string name="pref_notifications_next_episodes_only_summary">Meddela bara om det nya avsnittet är det nästa att titta på</string>
     <!-- List Widget -->
     <string name="hide_watched">Dölj sedda avsnitt</string>
     <string name="pref_widget_opacity">Widgetbakgrund</string>
     <string name="pref_widget_type">Widgettyp</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Använd stort teckensnitt</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>
@@ -458,13 +458,13 @@
     <string name="onlyx">Endast för supporters</string>
     <string name="action_upgrade">Lås upp alla funktioner</string>
     <string name="billing_action_subscribe">Prenumerera</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">Hantera prenumerationer</string>
     <string name="billing_action_pass">Skaffa X Pass App</string>
     <string name="billing_price_subscribe">%1$s/år, prova gratis, avbryt när som helst genom %2$s</string>
     <string name="billing_price_pass">engångsköp</string>
-    <string name="upgrade_description">Lås upp alla funktioner, inklusive aviseringar, teman och fler alternativ för widgets. Hjälp mig att göra framtida uppdateringar.</string>
+    <string name="upgrade_description">Varje prenumeration låser upp alla funktioner och stöder framtida uppdateringar. En prenumeration krävs inte för att använda den här appen.</string>
     <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
-    <string name="billing_learn_more">Varför betala? Få mer information.</string>
+    <string name="billing_learn_more">Mer info och hjälp</string>
     <string name="subscription_expired">Prenumerationen har gått ut</string>
     <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>
     <!-- Amazon In-App Billing -->

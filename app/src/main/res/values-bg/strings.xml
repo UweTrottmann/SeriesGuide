@@ -200,7 +200,6 @@
     <string name="add_error">Неуспешно добавяне на %s.</string>
     <string name="add_already_exists">%s вече е в списъка със сериали.</string>
     <string name="title_new_episodes">Нови епизоди</string>
-    <string name="recommended">Препоръчани</string>
     <string name="watched_shows">Гледано</string>
     <string name="shows_collection">Колекция</string>
     <string name="watchlist">Списък за гледане</string>
@@ -364,7 +363,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Този продукт използва TMDb API, но не е сертифицирано от TMDb.</string>
-    <string name="licence_trakt">Това приложение използва данни и изображения от trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide е построена чрез използване на софтуер с отворен код.</string>
     <string name="licences_and_credits">Лицензии и кредити</string>
     <!-- Sort -->
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Други</string>
     <string name="pref_autoupdatesummary">Автоматично синхронизиране и актуализиране данните на SeriesGuide</string>
-    <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
-    <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
     <string name="backup">Архивиране/Възстановяване</string>
     <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
     <string name="pref_number">Формат на числата</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Създаване на архив</string>
     <string name="import_button">Възстанови архив</string>
     <string name="import_warning">Разбирам моите текущи предавания, списъци и филми ще бъдат заменени!</string>
+    <string name="no_file_selected">Няма избран файл</string>
+    <string name="action_select_file">Избор на файл</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
+    <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
     <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
     <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
     <string name="dataliberation_permission_missing">За да архивирате или възстановите, позволете достъп до вашите файлове.</string>
     <string name="autobackup_permission_missing">За да използвате автоматичното архивиране, позволете достъп до вашите файлове.</string>
     <string name="autobackup_files_missing">За да използвате автоматично архивиране, изберете валиден архивн файл.</string>
-    <string name="no_file_selected">Няма избран файл</string>
-    <string name="action_select_file">Избор на файл</string>
     <string name="backup_use_default_files">Използвайте файловете подразбиране за архивиране</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начало</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">Вземете X Pass App</string>
     <string name="billing_price_subscribe">%1$s/година, пробвай безплатно, откажи се по всяко време през %2$s</string>
     <string name="billing_price_pass">еднократно закупуване</string>
-    <string name="upgrade_description">Отключване на всички функции, включително нотификации, теми и още опции. Помогни ми за бъдещи актуализации.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
-    <string name="billing_learn_more">Защо да плащате? Научете повече.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Абонаментът е изтекъл</string>
     <string name="subscription_expired_details">Вашият абонамент за X функциите е изтекъл.</string>
     <!-- Amazon In-App Billing -->

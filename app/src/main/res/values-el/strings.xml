@@ -10,7 +10,7 @@
     <string name="help">Βοήθεια</string>
     <string name="help_and_feedback">Βοήθεια &amp; Σχόλια</string>
     <string name="drawer_open">Συρτάρι ανοιχτό</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">Το SeriesGuide δεν θα λάβει άλλες ενημερώσεις για αυτή την έκδοση Android.</string>
     <!-- Media items -->
     <string name="show_details">Λεπτομέρειες</string>
     <string name="episode">Επεισόδιο</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Λεπτομέρειες</string>
     <string name="norating">n/a</string>
     <string name="unknown">άγνωστο</string>
     <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
     <string name="unmark_all">Δεν έχει παρακολουθηθεί κανένα</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Προβλήθηκαν ως εδώ</string>
+    <string name="confirmation_watched_up_to">Να οριστούν όλα τα επεισόδια ως εδώ ότι έχουν προβληθεί;</string>
     <string name="collect_all">Επιλογή όλων</string>
     <string name="uncollect_all">Αποεπιλογή όλων</string>
     <string name="action_skip">Παράλειψη</string>
@@ -115,10 +115,10 @@
     <string name="action_watched">Έχει παρακολουθηθεί </string>
     <string name="action_unwatched">Δεν παρακολούθησα</string>
     <string name="state_watched">Είδατε</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Παραλείφθηκε</string>
+    <string name="state_in_collection">Σε συλλογή</string>
+    <string name="state_on_watchlist">Σε λίστα παρακολούθησης</string>
+    <string name="state_favorite">Αγαπημένο</string>
     <!-- Shows -->
     <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
     <string name="delete_error">Δεν ήταν δυνατή η αφαίρεση της σειράς. Προσπαθήστε ξανά αργότερα.</string>
@@ -150,7 +150,7 @@
     <string name="action_shows_sort_favorites">Αγαπημένα πρώτα</string>
     <string name="context_updateshow">Ενημέρωση</string>
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Αλλαγή προβολής</string>
     <!-- History -->
     <string name="user_stream">Ιστορικό</string>
     <string name="recently_watched">Παρακολουθήσατε πρόσφατα</string>
@@ -200,7 +200,6 @@
     <string name="add_error">Δεν ήταν δυνατή η προσθήκη της σειράς %s.</string>
     <string name="add_already_exists">%s βρίσκετε ήδη στην λίστα με τις σειρές σου.</string>
     <string name="title_new_episodes">Νέα επεισόδια</string>
-    <string name="recommended">Προτεινόμενα</string>
     <string name="watched_shows">Είδατε</string>
     <string name="shows_collection">Συλλογή</string>
     <string name="watchlist">Λίστα προς παρακολούθηση</string>
@@ -280,7 +279,7 @@
     <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
     <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Αποσυνδεθείτε από το SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Σφάλμα με τη σύνδεση Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
     <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>
@@ -361,10 +360,10 @@
         <item quantity="other">%d λεπτό πριν</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Πολιτική Απορρήτου</string>
+    <string name="licence_tvdb">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το TheTVDB με άδειες Creative Commons.</string>
     <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
-    <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το trakt.</string>
+    <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το Trakt.</string>
     <string name="about_open_source">Το SeriesGuide έχει φτιαχτεί με τη χρήση λογισμικού ανοιχτού κώδικα.</string>
     <string name="licences_and_credits">Άδειες και ευχαριστίες</string>
     <!-- Sort -->
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Άλλα</string>
     <string name="pref_autoupdatesummary">Αυτόματος συγχρονισμός και ενημέρωση περιεχομένου</string>
-    <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
-    <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
     <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
     <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
     <string name="pref_number">Μορφή των αριθμών</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Δημιουργία αντιγράφων ασφαλείας</string>
     <string name="import_button">Επαναφορά</string>
     <string name="import_warning">Οι τρέχουσες σειρές, λίστες και ταινίες θα αντικατασταθούν από το αντίγραφο ασφαλείας</string>
+    <string name="no_file_selected">Δεν επιλέχθηκε αρχείο</string>
+    <string name="action_select_file">Επιλογή αρχείου</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Αυτόματο αντίγραφο ασφαλείας</string>
+    <string name="pref_autobackupsummary">Εβδομαδιαίο αντίγραφο ασφαλείας των σειρών, λιστών και ταινιών σας</string>
     <string name="last_auto_backup">Τελευταίο αυτόματο αντίγραφο ασφαλείας: %s</string>
     <string name="restore_auto_backup">Επαναφορά αντιγράφου ασφαλείας στο αυτόματο</string>
     <string name="dataliberation_permission_missing">Για λήψη ή επαναφορά αντιγράφων ασφαλείας, επιτρέψτε πρόσβαση στα αρχεία σας</string>
     <string name="autobackup_permission_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιτρέψτε πρόσβαση στα αρχεία σας</string>
     <string name="autobackup_files_missing">Για τη χρήση της αυτόματης λήψης αντιγράφων ασφαλείας, επιλέξτε έγκυρα αρχεία αντιγράφων ασφαλείας</string>
-    <string name="no_file_selected">Δεν επιλέχθηκε αρχείο</string>
-    <string name="action_select_file">Επιλογή αρχείου</string>
     <string name="backup_use_default_files">Χρησιμοποιήστε τα προεπιλεγμένα αρχεία αντιγράφων ασφαλείας</string>
     <!-- Welcome dialog -->
     <string name="get_started">Ξεκινήστε</string>
@@ -438,16 +438,16 @@
     <string name="pref_notifications_treshold">Πότε να ειδοποιήστε</string>
     <string name="pref_notifications_select_shows">Επιλογή σειρών</string>
     <string name="pref_notifications_select_shows_summary">Σειρές που έχουν ενεργές ειδοποιήσεις (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Αγνόηση κρυφών σειρών</string>
+    <string name="pref_notifications_hidden_summary">Ακόμη και αν οι ειδοποιήσεις είναι ενεργές, μην ειδοποιείς για τις κρυφές σειρές</string>
     <string name="pref_notification_channel_errors">Σφάλματα</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Μόνο για επεισόδια που είναι επόμενα για να προβληθούν</string>
+    <string name="pref_notifications_next_episodes_only_summary">Ειδοποίηση μόνο αν το νέο επιεσόδιο είναι το επόμενο για προβολή</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>
     <string name="pref_widget_type">τύπος Widget</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Χρήση μεγάλης γραμματοσειράς</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Διαφανές</string>
     <string name="widget_background_25">25%</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">Αποκτήστε το X Pass App</string>
     <string name="billing_price_subscribe">%1$s/χρόνο, δοκιμάστε δωρεάν, ακυρώστε οποιαδήποτε στιγμή μέσω του %2$s</string>
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
-    <string name="upgrade_description">Ξεκλειδώσετε όλα τα χαρακτηριστικά συμπεριλαμβανομένων των κοινοποιήσεων, θεμάτων και περισσότερες επιλογές widget λιστών. Βοήθησε με να κάνω μελλοντικές ενημερώσεις.</string>
+    <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
-    <string name="billing_learn_more">Γιατί πληρώνετε; Μάθετε περισσότερα.</string>
+    <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
     <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
     <!-- Amazon In-App Billing -->

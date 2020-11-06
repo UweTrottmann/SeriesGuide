@@ -196,7 +196,6 @@
     <string name="add_error">%s를 추가할 수 없음</string>
     <string name="add_already_exists">%s는 이미 목록에 있습니다.</string>
     <string name="title_new_episodes">새로운 에피소드</string>
-    <string name="recommended">추천</string>
     <string name="watched_shows">시청한 목록</string>
     <string name="shows_collection">컬렉션</string>
     <string name="watchlist">관심목록</string>
@@ -353,7 +352,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">이 프로그램은 TMDb API 를 사용하지만 TMDb에서 승인하거나 인증한 공식 앱이 아닙니다.</string>
-    <string name="licence_trakt">이 앱은 trakt 의 데이터와 이미지를 활용합니다.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide는 오픈소스 소프트웨어를 활용합니다.</string>
     <string name="licences_and_credits">라이센스 및 크레딧</string>
     <!-- Sort -->
@@ -381,8 +380,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">기타</string>
     <string name="pref_autoupdatesummary">자동으로 콘텐츠 동기화 및 업데이트</string>
-    <string name="pref_autobackup">자동 백업</string>
-    <string name="pref_autobackupsummary">매주 프로그램, 목록, 영화를 백업합니다.</string>
     <string name="backup">백업/복원</string>
     <string name="backup_summary">프로그램 목록을 백업학거나 복원합니다</string>
     <string name="pref_number">에피소드 표시 형식</string>
@@ -402,13 +399,16 @@
     <string name="backup_button">백업</string>
     <string name="import_button">복원</string>
     <string name="import_warning">현재 앱에 저장한 프로그램 목록이 교체됩니다</string>
+    <string name="no_file_selected">선택된 파일을 찾을 수 없습니다.</string>
+    <string name="action_select_file">파일 선택</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">자동 백업</string>
+    <string name="pref_autobackupsummary">매주 프로그램, 목록, 영화를 백업합니다.</string>
     <string name="last_auto_backup">최근 자동 백업: %s</string>
     <string name="restore_auto_backup">자동 백업 복원</string>
     <string name="dataliberation_permission_missing">백업 및 복원하기 위해서는 파일 액세스를 허용해야 합니다.</string>
     <string name="autobackup_permission_missing">자동 백업을 하기위해서는 파일 액세스를 허용해야 합니다.</string>
     <string name="autobackup_files_missing">자동백업을 하기 위해서 유효한 백업파일을 선택하세요.</string>
-    <string name="no_file_selected">선택된 파일을 찾을 수 없습니다.</string>
-    <string name="action_select_file">파일 선택</string>
     <string name="backup_use_default_files">기본 백업 파일 사용</string>
     <!-- Welcome dialog -->
     <string name="get_started">시작하기</string>
@@ -451,9 +451,9 @@
     <string name="billing_action_pass">X Pass App 구매</string>
     <string name="billing_price_subscribe">1년 사용 요금: %1$s, 무료 체험 가능, %2$s에서 취소 가능</string>
     <string name="billing_price_pass">1회 구매로 계속 사용</string>
-    <string name="upgrade_description">알림, 테마 및 위젯 옵션을 포함한 모든 기능을 사용할 수 있습니다. 뿐만 아니라 지속적인 개발을 후원할 수 있습니다.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
-    <string name="billing_learn_more">유료 결제를 하면 어떤점이 좋아지는지 확인하세요.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">구독 만료되었습니다</string>
     <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
     <!-- Amazon In-App Billing -->

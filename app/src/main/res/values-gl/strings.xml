@@ -12,7 +12,7 @@
     <string name="drawer_open">Abrir panel de navegación</string>
     <string name="no_more_updates">SeriesGuide non recibirá atualizacións para esta versión de Android.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">Detalles</string>
     <string name="episode">Episodio</string>
     <string name="episode_number">Episodio %d</string>
     <string name="episodes">Episodios</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">Procurar episodios</string>
     <!-- Status messages -->
     <string name="updated">Atualizado para a última versión</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detalles</string>
     <string name="norating">n/d</string>
     <string name="unknown">descoñecido</string>
     <string name="offline">Conéctate a unha rede e tenta de novo</string>
@@ -71,7 +71,7 @@
     <string name="no_shouts">Sé o primeiro en comentar!</string>
     <string name="refresh">Atualizar</string>
     <plurals name="replies_plural">
-        <item quantity="one">%d reply</item>
+        <item quantity="one">%d resposta</item>
         <item quantity="other">%d respostas</item>
     </plurals>
     <!-- Metadata -->
@@ -150,7 +150,7 @@
     <string name="action_shows_sort_favorites">Favoritos primeiro</string>
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Próximo episodio visto</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Cambiar vista</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Visto recentemente</string>
@@ -176,15 +176,15 @@
     <!-- Seasons -->
     <string name="season_allwatched">Todos os episodios vistos</string>
     <plurals name="other_episodes_plural">
-        <item quantity="one">%d other episode</item>
+        <item quantity="one">%d outro episodio</item>
         <item quantity="other">%d outros episodios</item>
     </plurals>
     <plurals name="not_released_episodes_plural">
-        <item quantity="one">%d to be released</item>
+        <item quantity="one">%d por estrear</item>
         <item quantity="other">%d por estrear</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
-        <item quantity="one">%d remaining</item>
+        <item quantity="one">%d restante</item>
         <item quantity="other">%d restantes</item>
     </plurals>
     <!-- Add show -->
@@ -200,7 +200,6 @@
     <string name="add_error">Non foi posíbel engadir %s</string>
     <string name="add_already_exists">%s xa se atopa na súa lista de series</string>
     <string name="title_new_episodes">Novos episodios</string>
-    <string name="recommended">Recomendadas</string>
     <string name="watched_shows">Vistas</string>
     <string name="shows_collection">Coleción</string>
     <string name="watchlist">Por ver</string>
@@ -228,22 +227,22 @@
     <string name="watchlist_remove">Eliminar de por ver</string>
     <string name="watchlist_added">Engadido a por ver</string>
     <string name="watchlist_removed">Eliminado de por ver</string>
-    <string name="movies_search_hint">Escribe o título de un filme</string>
+    <string name="movies_search_hint">Escribe o título dun filme</string>
     <string name="movies_collection_empty">Non engadiches filmes á túa coleción</string>
     <string name="movies_watchlist_empty">Non engadiches filmes á túa lista de por ver</string>
     <string name="trailer">Trailer</string>
-    <string name="movie_cast">Cast</string>
-    <string name="movie_crew">Crew</string>
-    <string name="action_movies_sort">Sort movies</string>
+    <string name="movie_cast">Reparto</string>
+    <string name="movie_crew">Equipo técnico</string>
+    <string name="action_movies_sort">Ordear películas</string>
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Data de estrea</string>
     <!-- Statistics -->
-    <string name="statistics_failed">Could not calculate statistics</string>
-    <string name="statistics_shows">shows</string>
+    <string name="statistics_failed">Non se puideron calcular as estatísticas</string>
+    <string name="statistics_shows">series</string>
     <string name="statistics_episodes">episodios</string>
     <string name="statistics_movies">filmes</string>
-    <string name="shows_with_next">%s with next episodes</string>
-    <string name="shows_continuing">%s continuing</string>
+    <string name="shows_with_next">%s con episodios por ver</string>
+    <string name="shows_continuing">%s continuando</string>
     <string name="episodes_watched">%s vistos</string>
     <string name="runtime_all_episodes">runtime of all watched episodes</string>
     <string name="movies_on_watchlist">%s on watchlist</string>
@@ -269,50 +268,50 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud axúdache a facer unha copia de seguridade e sincronizar as túas series, listas e filmes</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">Mentres esteas identificado en SeriesGuide Cloud, algunhas funcións de trakt non estarán dispoñibles</string>
     <string name="hexagon_signin">Iniciar sesión</string>
     <string name="hexagon_signout">Pechar sesión</string>
-    <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
-    <string name="hexagon_setup_fail_auth">Your Google account did not check out</string>
-    <string name="hexagon_remove_account">Remove account</string>
-    <string name="hexagon_remove_account_success">Account obliterated</string>
-    <string name="hexagon_remove_account_failure">Could not remove account</string>
-    <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
-    <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
-    <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_setup_incomplete">A configuración de SeriesGuide cloud non se completou</string>
+    <string name="hexagon_setup_fail_auth">A túa conta de Google non é válida</string>
+    <string name="hexagon_remove_account">Eliminar conta</string>
+    <string name="hexagon_remove_account_success">Conta borrada</string>
+    <string name="hexagon_remove_account_failure">Non se puido borrar a conta</string>
+    <string name="hexagon_remove_account_confirmation">Isto borrará as túas series, listas e películas de SeriesGuides Cloud</string>
+    <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
+    <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud</string>
+    <string name="hexagon_signin_fail_format">Erro ao facer login con Google Sign-In (%s)</string>
     <!-- trakt -->
-    <string name="trakt_submitqueued">Sending to trakt.</string>
-    <string name="checkin_success_trakt">Checked into %s on trakt</string>
-    <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt</string>
-    <string name="traktcheckin_cancel">Override</string>
-    <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
-    <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="trakt_success">Sent to trakt</string>
-    <string name="trakt_error_credentials">Something went wrong. Check your trakt credentials and try again.</string>
-    <string name="trakt_error_not_exists">Not (yet) available on trakt. Try again later.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
+    <string name="trakt_submitqueued">Enviando a trakt.</string>
+    <string name="checkin_success_trakt">Rexistrado en %s en trakt</string>
+    <string name="checkin_canceled_success_trakt">Check-in en trakt cancelado</string>
+    <string name="traktcheckin_cancel">Sobrescribir</string>
+    <string name="traktcheckin_inprogress">Xa te rexistraches noutro episodio ou película. Sobrescribe o rexistro anterior ou espera %s e inténtao de novo.</string>
+    <string name="traktcheckin_wait">Vou esperar</string>
+    <string name="trakt_success">Enviado a trakt</string>
+    <string name="trakt_error_credentials">Algo foi mal. Por favor comproba as túas credenciais e volve a intentalo.</string>
+    <string name="trakt_error_not_exists">Non dispoñible (aínda) en trakt. Proba mais tarde.</string>
+    <string name="trakt_notice_not_exists">Non se pode seguir (aínda) con trakt</string>
     <!-- Connect trakt -->
     <string name="trakt_account">trakt account</string>
-    <string name="connect_trakt">Connect trakt</string>
-    <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-    <string name="trakt_reconnect_details">Check your trakt credentials</string>
-    <string name="waitplease">A moment, please&#8230;</string>
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="use_integrated_browser">Use integrated browser</string>
-    <string name="show_library">Show your trakt library</string>
-    <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
+    <string name="connect_trakt">Conectar trakt</string>
+    <string name="trakt_reconnect">Conectar SeriesGuide a trakt</string>
+    <string name="trakt_reconnect_details">Verifica as túas credenciais de trakt</string>
+    <string name="waitplease">Un momento, por favor&#8230;</string>
+    <string name="connect">Conectar</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="use_integrated_browser">Empregar navegador integrado</string>
+    <string name="show_library">Amosar a túa biblioteca</string>
+    <string name="about_trakt">trakt axuda a manter un rexistro dos programas de televisión e películas que estás a ver. <a href="https://trakt.tv">Saber máis</a></string>
     <!-- trakt ratings -->
-    <string name="action_rate">Rate</string>
-    <string name="your_rating">Your rating</string>
+    <string name="action_rate">Votar</string>
+    <string name="your_rating">A súa puntuación</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
     <string name="rating2">Terrible</string>
-    <string name="rating3">Bad</string>
-    <string name="rating4">Poor</string>
+    <string name="rating3">Malo</string>
+    <string name="rating4">Pobre</string>
     <string name="rating5">Meh</string>
-    <string name="rating6">Fair</string>
+    <string name="rating6">Aceptable</string>
     <string name="rating7">Bo</string>
     <string name="rating8">Excelente</string>
     <string name="rating9">Incríbel</string>
@@ -337,163 +336,164 @@
     <string name="pref_onlyfuture">Ocultar episodios exibidos</string>
     <string name="pref_onlyfuturesummary">Non amosar episodios xa exibidos</string>
     <string name="pref_onlyseasoneps">Agochar episodios especiais</string>
-    <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
-    <string name="pref_exactdates">Display exact dates</string>
-    <string name="pref_exactdates_summary">\"October 31\" instead of \"in 3 days\"</string>
-    <string name="pref_nospoilers">Prevent spoilers</string>
-    <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
-    <string name="pref_seasonsorting">Sort seasons by&#8230;</string>
-    <string name="pref_episodesorting">Sort episodes by&#8230;</string>
-    <string name="pref_language">Preferred content language</string>
-    <string name="pref_language_fallback">Alternative language</string>
-    <string name="pref_updatewifionly">Images via Wi-Fi only</string>
-    <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+    <string name="pref_onlyseasonepssummary">Os episodios especiais desaparecerán excepto das listas de temporadas</string>
+    <string name="pref_exactdates">Mostrar datas exactas</string>
+    <string name="pref_exactdates_summary">\"31 de Outubro\" en vez de \"en 3 dias\"</string>
+    <string name="pref_nospoilers">Evitar spoilers</string>
+    <string name="pref_nospoilers_summary">Ocultar detalles ata que un episodio sexa visto</string>
+    <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
+    <string name="pref_episodesorting">Ordenar episodios por&#8230;</string>
+    <string name="pref_language">Idioma preferido para o contenido</string>
+    <string name="pref_language_fallback">Idioma alternativo</string>
+    <string name="pref_updatewifionly">Imaxes só por Wi-Fi</string>
+    <string name="pref_updatewifionlysummary">Para reducir o consumo de datos, non descargar a través de redes móbiles</string>
     <plurals name="days_before_plural">
-        <item quantity="one">%d day before</item>
-        <item quantity="other">%d days before</item>
+        <item quantity="one">%d día antes</item>
+        <item quantity="other">%d días antes</item>
     </plurals>
     <plurals name="hours_before_plural">
-        <item quantity="one">%d hour before</item>
-        <item quantity="other">%d hours before</item>
+        <item quantity="one">%d hora antes</item>
+        <item quantity="other">%d horas antes</item>
     </plurals>
     <plurals name="minutes_before_plural">
-        <item quantity="one">%d minute before</item>
-        <item quantity="other">%d minutes before</item>
+        <item quantity="one">%d minuto antes</item>
+        <item quantity="other">%d minutos antes</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
-    <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by trakt.</string>
-    <string name="about_open_source">SeriesGuide is built using open source software.</string>
-    <string name="licences_and_credits">Licences and credits</string>
+    <string name="privacy_policy">Política de privacidade</string>
+    <string name="licence_tvdb">Esta aplicación emprega datos e imaxes de TheTVDB licenciadas baixo unha licenza Creative Commons.</string>
+    <string name="licence_themoviedb">Este producto emprega a API de TMDb pero non está avalado nin certificado por TMDb.</string>
+    <string name="licence_trakt">Esta aplicación emprega datos e imaxes de Trakt.</string>
+    <string name="about_open_source">SeriesGuide desenvolveuse empregando software de código aberto.</string>
+    <string name="licences_and_credits">Licenzas e créditos</string>
     <!-- Sort -->
-    <string name="sort">Sort by</string>
-    <string name="action_sort_ignore_articles">Ignore articles</string>
+    <string name="sort">Ordenar por</string>
+    <string name="action_sort_ignore_articles">Ignorar artigos</string>
     <!-- Sort orders -->
-    <string name="sort_order_latest_first">Latest first</string>
-    <string name="sort_order_oldest_first">Oldest first</string>
-    <string name="sort_order_unwatched_first">Unwatched first</string>
+    <string name="sort_order_latest_first">Mais recentes primeiro</string>
+    <string name="sort_order_oldest_first">Máis antigos primeiro</string>
+    <string name="sort_order_unwatched_first">Non vistos primeiro</string>
     <string name="sort_order_alphabetical">A - Z</string>
-    <string name="sort_order_top_rated_first">Top rated</string>
-    <string name="sort_order_latest_first_dvd">Latest first (DVD)</string>
-    <string name="sort_order_oldest_first_dvd">Oldest first (DVD)</string>
+    <string name="sort_order_top_rated_first">Mais votados</string>
+    <string name="sort_order_latest_first_dvd">Mais recentes primeiro (DVD)</string>
+    <string name="sort_order_oldest_first_dvd">Máis antigos primeiro (DVD)</string>
     <!-- Upcoming thresholds -->
-    <string name="pref_upcominglimit">Upcoming range</string>
+    <string name="pref_upcominglimit">Intervalo para próximos episodios</string>
     <string name="upcoming_upto_now">agora</string>
-    <string name="upcoming_upto_one_day">1 day</string>
-    <string name="upcoming_upto_three_days">3 days</string>
-    <string name="upcoming_upto_one_week">1 week</string>
-    <string name="upcoming_upto_two_weeks">2 weeks</string>
-    <string name="upcoming_upto_one_month">1 month</string>
+    <string name="upcoming_upto_one_day">1 día</string>
+    <string name="upcoming_upto_three_days">3 días</string>
+    <string name="upcoming_upto_one_week">1 semana</string>
+    <string name="upcoming_upto_two_weeks">2 semanas</string>
+    <string name="upcoming_upto_one_month">1 mes</string>
     <!-- Appearance settings -->
-    <string name="pref_appearance">Appearance</string>
-    <string name="pref_theme">Theme</string>
+    <string name="pref_appearance">Aparencia</string>
+    <string name="pref_theme">Tema</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">Other</string>
-    <string name="pref_autoupdatesummary">Automatically sync and update content</string>
-    <string name="pref_autobackup">Auto Backup</string>
-    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
-    <string name="backup">Backup/Restore</string>
-    <string name="backup_summary">Backup or restore your shows</string>
-    <string name="pref_number">Number format</string>
-    <string name="pref_offset">Manual time offset</string>
-    <string name="pref_offsetsummary">Offset air times by %d hours</string>
-    <string name="clear_cache">Clear image caches</string>
-    <string name="clear_cache_summary">Remove all cached images from your device</string>
+    <string name="pref_other">Outros</string>
+    <string name="pref_autoupdatesummary">Sincronizar e actualizar os datos automaticamente</string>
+    <string name="backup">Copa de seguridade / Recuperar</string>
+    <string name="backup_summary">Facer unha copia de seguridade ou restaurar as túas series</string>
+    <string name="pref_number">Formato numérico</string>
+    <string name="pref_offset">Axuste de hora manual</string>
+    <string name="pref_offsetsummary">Axustar %d horas os tempos de emisión</string>
+    <string name="clear_cache">Limpar caché de imaxes</string>
+    <string name="clear_cache_summary">Borrar todas as imaxes da caché do dispositivo</string>
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">Include descriptions, details, ratings</string>
-    <string name="backup_failed_file_access">Can\'t backup. A backup file can not be found or accessed.</string>
-    <string name="backup_success">Backup successful</string>
-    <string name="backup_failed">Backup failed</string>
+    <string name="backup_full_dump">Incluir descricións, detalles, valoracións</string>
+    <string name="backup_failed_file_access">Non se puido facer a copia de seguridade. Unha copia de seguridade non se atopou ou é inaccesible.</string>
+    <string name="backup_success">Respaldo realizado correctamente</string>
+    <string name="backup_failed">Erro na copia de seguranza</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
     <string name="import_failed_nofile">There is no readable backup file</string>
     <string name="import_success">Backup successfully restored</string>
     <string name="import_failed">Restoring the backup failed</string>
-    <string name="backup_button">Create backup</string>
-    <string name="import_button">Restore backup</string>
+    <string name="backup_button">Crear unha copia de seguranza</string>
+    <string name="import_button">Restaurar copia de seguranza</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
-    <string name="last_auto_backup">Last Auto Backup: %s</string>
-    <string name="restore_auto_backup">Restore Auto Backup</string>
+    <string name="no_file_selected">Ningún ficheiro seleccionado</string>
+    <string name="action_select_file">Seleccionar ficheiro</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Copias de seguridade automáticas</string>
+    <string name="pref_autobackupsummary">Copia de seguridade semanal das túas series, listas e películas</string>
+    <string name="last_auto_backup">Última copia de seguridade automática: %s</string>
+    <string name="restore_auto_backup">Restaurar copia de seguridade automática</string>
     <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
     <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
     <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
-    <string name="no_file_selected">No file selected</string>
-    <string name="action_select_file">Select file</string>
     <string name="backup_use_default_files">Use default backup files</string>
     <!-- Welcome dialog -->
-    <string name="get_started">Get started</string>
-    <string name="dismiss">Dismiss</string>
+    <string name="get_started">Comezar</string>
+    <string name="dismiss">Rexeitar</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>
     <string name="upcoming_episodes">New episodes are coming up</string>
-    <string name="upcoming_episodes_number">%s new episodes</string>
-    <string name="more">%d more</string>
+    <string name="upcoming_episodes_number">%s novos episodios</string>
+    <string name="more">%d máis</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
-    <string name="pref_notifications">Notifications</string>
+    <string name="pref_notifications">Notificacións</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>
-    <string name="pref_ringtone">Sound</string>
-    <string name="pref_vibrate">Vibrate</string>
+    <string name="pref_ringtone">Son</string>
+    <string name="pref_vibrate">Vibrar</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
     <string name="pref_notifications_treshold">When to notify</string>
     <string name="pref_notifications_select_shows">Select shows</string>
     <string name="pref_notifications_select_shows_summary">Shows that have notifications enabled (%d)</string>
     <string name="pref_notifications_hidden">Ignore hidden shows</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
-    <string name="pref_notification_channel_errors">Errors</string>
+    <string name="pref_notification_channel_errors">Erros</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only_summary">Só notificar se o novo episodio é o seguinte a ver</string>
     <!-- List Widget -->
-    <string name="hide_watched">Hide watched episodes</string>
-    <string name="pref_widget_opacity">Widget background</string>
-    <string name="pref_widget_type">Widget type</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="hide_watched">Agochar episodios vistos</string>
+    <string name="pref_widget_opacity">Fondo do widget</string>
+    <string name="pref_widget_type">Tipo de widget</string>
+    <string name="pref_large_font">Usar fonte grande</string>
     <!-- Widget background options -->
-    <string name="widget_background_transparent">Transparent</string>
+    <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>
     <string name="widget_background_50">50%</string>
     <string name="widget_background_75">75%</string>
-    <string name="widget_background_opaque">Opaque</string>
+    <string name="widget_background_opaque">opaco</string>
     <!-- Google In-App Billing -->
-    <string name="onlyx">Only for supporters</string>
-    <string name="action_upgrade">Unlock all features</string>
-    <string name="billing_action_subscribe">Subscribe</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">Get X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
-    <string name="billing_price_pass">one-time purchase</string>
-    <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
-    <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
-    <string name="billing_learn_more">Why pay? Learn more</string>
-    <string name="subscription_expired">Subscription expired</string>
-    <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
+    <string name="onlyx">Só para colaboradores</string>
+    <string name="action_upgrade">Desbloquear todas as funcións</string>
+    <string name="billing_action_subscribe">Subscribir</string>
+    <string name="billing_action_manage_subscriptions">Xestionar subscricións</string>
+    <string name="billing_action_pass">Obter X Pass App</string>
+    <string name="billing_price_subscribe">%1$s/ano, proba de balde, cancela en calquera momento a través de %2$s</string>
+    <string name="billing_price_pass">Compra única</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_success">Grazas por soportar SeriesGuide! Tes acceso a todas as funcións</string>
+    <string name="billing_learn_more">More info and help</string>
+    <string name="subscription_expired">A subscripción rematou</string>
+    <string name="subscription_expired_details">A túa subscrición de SeriesGuide rematou</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Sign into your Amazon account</string>
-    <string name="subscription_unavailable">The subscription is currently not available</string>
-    <string name="subscription_failed">Purchase not completed</string>
-    <string name="pass_unavailable">X Pass is currently not available</string>
+    <string name="subscription_not_signed_in">Iniciar sesión coa túa conta de Amazon</string>
+    <string name="subscription_unavailable">A subscrición non está dispoñible nestes momentos</string>
+    <string name="subscription_failed">Compra non completada</string>
+    <string name="pass_unavailable">X Pass non dispoñible agora mesmo</string>
     <!-- Extensions -->
-    <string name="action_extensions_configure">Customize extensions</string>
-    <string name="action_extensions_add">Add extension</string>
-    <string name="action_extensions_search">Get more extensions</string>
+    <string name="action_extensions_configure">Personalizar extensións</string>
+    <string name="action_extensions_add">Engadir extensión</string>
+    <string name="action_extensions_search">Obter máis extensións</string>
     <string name="action_extension_remove">Eliminar</string>
-    <string name="extension_amazon">Amazon search</string>
-    <string name="description_extension_amazon">Search your local Amazon site</string>
-    <string name="pref_amazon_domain">Amazon site</string>
-    <string name="extension_google_play">Google Play search</string>
-    <string name="description_extension_google_play">Search the Google Play Store</string>
-    <string name="extension_youtube">YouTube search</string>
-    <string name="description_extension_youtube">Search YouTube for videos</string>
-    <string name="description_extension_web_search">Search for websites and images</string>
+    <string name="extension_amazon">Buscar en Amazon</string>
+    <string name="description_extension_amazon">Buscar na túa páxina local de Amazon</string>
+    <string name="pref_amazon_domain">Pág Páxina de Amazon</string>
+    <string name="extension_google_play">Buscar en Google Play</string>
+    <string name="description_extension_google_play">Buscar en Google Play Store</string>
+    <string name="extension_youtube">Buscar en YouTube</string>
+    <string name="description_extension_youtube">Buscar vídeos en YouTube</string>
+    <string name="description_extension_web_search">Buscar sitios web e imaxes</string>
     <!-- People -->
-    <string name="person_biography">Biography</string>
+    <string name="person_biography">Biografía</string>
     <!-- Feedback -->
-    <string name="feedback_question_enjoy">Are you enjoying SeriesGuide?</string>
-    <string name="feedback_action_yes">Yes!</string>
-    <string name="feedback_action_notreally">Not really</string>
-    <string name="feedback_question_rate_google">Rate it on Google Play?</string>
-    <string name="feedback_question_rate_amazon">Rate it on Amazon?</string>
-    <string name="feedback_question_feedback">Tell me how to improve it?</string>
-    <string name="feedback_action_ok">OK, sure</string>
-    <string name="feedback_action_nothanks">No, thanks</string>
+    <string name="feedback_question_enjoy">Estás disfrutando SeriesGuide?</string>
+    <string name="feedback_action_yes">Si!</string>
+    <string name="feedback_action_notreally">Realmente, non</string>
+    <string name="feedback_question_rate_google">Valorar na Google Play?</string>
+    <string name="feedback_question_rate_amazon">Valorar en Amazon?</string>
+    <string name="feedback_question_feedback">Disme como milloralo?</string>
+    <string name="feedback_action_ok">Si, por suposto</string>
+    <string name="feedback_action_nothanks">Non, grazas</string>
 </resources>

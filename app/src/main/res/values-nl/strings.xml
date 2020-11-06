@@ -37,7 +37,7 @@
     <string name="sync_and_update">Synchroniseren &amp; bijwerken</string>
     <string name="sync_and_download_all">Synchroniseren &amp; alles downloaden</string>
     <string name="action_turn_off">Uitschakelen</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream">Streamen of kopen</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
@@ -50,8 +50,8 @@
     <string name="app_not_available">Geen app beschikbaar voor deze actie.</string>
     <string name="people_empty">Niemand?! Probeer opnieuw.</string>
     <string name="database_error">Wijziging niet mogelijk.</string>
-    <string name="reinstall_info">Maak een back-up, installeer opnieuw en herstel</string>
-    <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw</string>
+    <string name="reinstall_info">Maak een back-up in de Instellingen, installeer opnieuw en herstel</string>
+    <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw.</string>
     <string name="api_failed">Mislukt: %s</string>
     <string name="copy_to_clipboard">Gekopieerd naar klembord</string>
     <!-- Sharing -->
@@ -65,7 +65,7 @@
     <!-- Comments -->
     <string name="comments">Reacties</string>
     <string name="shout_hint">Voer een opmerking in (in het Engels, meer dan 5 woorden)</string>
-    <string name="shout_invalid">Uw opmerking volgt de regels niet!</string>
+    <string name="shout_invalid">Uw reactie volgt de regels niet!</string>
     <string name="action_post">Verzenden</string>
     <string name="isspoiler">Spoiler waarschuwing!</string>
     <string name="no_shouts">Wees de eerste die shout!</string>
@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">Alles bekeken</string>
     <string name="unmark_all">Niets bekeken</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Tot hier bekeken</string>
+    <string name="confirmation_watched_up_to">Alle afleveringen tot hier markeren als bekeken?</string>
     <string name="collect_all">Alles verzameld</string>
     <string name="uncollect_all">Niets verzameld</string>
     <string name="action_skip">Overslaan</string>
@@ -115,10 +115,10 @@
     <string name="action_watched">Bekeken</string>
     <string name="action_unwatched">Niet bekeken</string>
     <string name="state_watched">Bekeken</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Overgeslagen</string>
+    <string name="state_in_collection">In collectie</string>
+    <string name="state_on_watchlist">Op volglijst</string>
+    <string name="state_favorite">Favoriet</string>
     <!-- Shows -->
     <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
     <string name="delete_error">Kan show niet verwijderen. Probeer later opnieuw.</string>
@@ -146,19 +146,19 @@
     <string name="action_shows_sort_latest_episode">Laatste aflevering</string>
     <string name="action_shows_sort_oldest_episode">Oudste aflevering</string>
     <string name="action_shows_sort_last_watched">Laatst bekeken</string>
-    <string name="action_shows_sort_remaining">Overige afleveringen</string>
+    <string name="action_shows_sort_remaining">Resterende afleveringen</string>
     <string name="action_shows_sort_favorites">Favorieten eerst</string>
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Wissel weergave</string>
     <!-- History -->
     <string name="user_stream">Geschiedenis</string>
     <string name="recently_watched">Laatst gekeken</string>
     <string name="friends_recently">Uw Trakt-vrienden</string>
     <string name="now_empty">Nog niets, kijk eerst wat series!</string>
     <string name="now_movies_empty">Niks te doen. Kijk een film!</string>
-    <string name="user_stream_empty">Geen recente activiteit op trakt. Check in bij shows!</string>
-    <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Check in bij films!</string>
+    <string name="user_stream_empty">Geen recente activiteit op trakt. Kijk en check in bij wat shows!</string>
+    <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Bekijk en check in bij films!</string>
     <!-- Calendar -->
     <string name="upcoming">Eerstvolgende</string>
     <string name="recent">Recente</string>
@@ -192,7 +192,7 @@
     <string name="add_empty">Er zijn hier geen series</string>
     <string name="no_results">Geen resultaten, probeer complete woorden.</string>
     <string name="empty_show_search">Niet gevonden in uw serielijst</string>
-    <string name="action_try_again">Probeer nogmaals</string>
+    <string name="action_try_again">Nogmaals proberen</string>
     <string name="tvdb_error_does_not_exist">Show bestaat (nog) niet op TheTVDB. Probeer later opnieuw.</string>
     <string name="add_all">Alles toevoegen</string>
     <string name="add_multiple">Alle series worden binnenkort in de serielijst weergegeven.</string>
@@ -200,7 +200,6 @@
     <string name="add_error">Kon %s niet toevoegen</string>
     <string name="add_already_exists">%s staat al in uw serielijst</string>
     <string name="title_new_episodes">Nieuwe afleveringen</string>
-    <string name="recommended">Aanbevolen</string>
     <string name="watched_shows">Bekeken</string>
     <string name="shows_collection">Collectie</string>
     <string name="watchlist">Watchlist</string>
@@ -220,7 +219,7 @@
     <string name="title_discover">Ontdekken</string>
     <string name="title_popular">Populair</string>
     <string name="title_digital_releases">Digitale releases</string>
-    <string name="title_disc_releases">CD releases</string>
+    <string name="title_disc_releases">Releases op schijf</string>
     <string name="movies_in_theatres">In de bioscoop</string>
     <string name="movies_collection">Collectie</string>
     <string name="movies_watchlist">Kijklijst</string>
@@ -280,7 +279,7 @@
     <string name="hexagon_remove_account_confirmation">Dit zal al uw series, lijsten en films van SeriesGuide Cloud verwijderen</string>
     <string name="hexagon_api_queued">Verzonden naar SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Afgemeld bij SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Fout tijdens Google login (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
     <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Andere</string>
     <string name="pref_autoupdatesummary">Automatisch data synchroniseren en bijwerken</string>
-    <string name="pref_autobackup">Automatische back-up</string>
-    <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
     <string name="backup">Back-up maken/herstellen</string>
     <string name="backup_summary">Back-up van series maken/herstellen</string>
     <string name="pref_number">Nummer opmaak</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Back-up maken</string>
     <string name="import_button">Herstellen</string>
     <string name="import_warning">Uw huidige series, lijsten en films worden vervangen door de back-up</string>
+    <string name="no_file_selected">Geen bestand geselecteerd</string>
+    <string name="action_select_file">Bestand selecteren</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatische back-up</string>
+    <string name="pref_autobackupsummary">Wekelijkse back-up van uw series, lijsten en films</string>
     <string name="last_auto_backup">Laatste auto back-up: %s</string>
     <string name="restore_auto_backup">Auto back-up terugzetten</string>
     <string name="dataliberation_permission_missing">Geef toegang tot uw bestanden om back-ups te maken en te herstellen</string>
     <string name="autobackup_permission_missing">Geef toegang tot uw bestanden om automatisch te back-uppen</string>
     <string name="autobackup_files_missing">Selecteer geldige back-upbestanden om automatisch te back-uppen</string>
-    <string name="no_file_selected">Geen bestand geselecteerd</string>
-    <string name="action_select_file">Bestand selecteren</string>
     <string name="backup_use_default_files">Standaardbestanden voor back-up gebruiken</string>
     <!-- Welcome dialog -->
     <string name="get_started">Aan de slag</string>
@@ -438,11 +438,11 @@
     <string name="pref_notifications_treshold">Wanneer te waarschuwen</string>
     <string name="pref_notifications_select_shows">Series kiezen</string>
     <string name="pref_notifications_select_shows_summary">Series waarvoor de meldingen aanstaan (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Verborgen series negeren</string>
+    <string name="pref_notifications_hidden_summary">Geen melding sturen over verborgen series, zelfs als meldingen ingeschakeld zijn</string>
     <string name="pref_notification_channel_errors">Fouten</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Alleen voor eerstvolgende afleveringen</string>
+    <string name="pref_notifications_next_episodes_only_summary">Meld alleen als de nieuwe aflevering de eerstvolgende is om te kijken</string>
     <!-- List Widget -->
     <string name="hide_watched">Bekeken afleveringen verbergen</string>
     <string name="pref_widget_opacity">Widget achtergrond</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">Neem X Pass App</string>
     <string name="billing_price_subscribe">%1$s/jaar, probeer gratis, annuleer op elk moment via %2$s</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
-    <string name="upgrade_description">Ontgrendel alle functies, inclusief meldingen, thema\'s en meer lijstopties voor widgets. Help me toekomstige updates te maken.</string>
+    <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
-    <string name="billing_learn_more">Waarom betalen? Lees meer.</string>
+    <string name="billing_learn_more">Meer informatie en ondersteuning</string>
     <string name="subscription_expired">Abonnement verlopen</string>
     <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>
     <!-- Amazon In-App Billing -->

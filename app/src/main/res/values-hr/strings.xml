@@ -10,7 +10,7 @@
     <string name="help">Pomoć</string>
     <string name="help_and_feedback">Pomoć i povratne informacije</string>
     <string name="drawer_open">Otvori navigacijsku ladicu</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide neće dobivati više ažuriranja za ovu verziju Andriod-a</string>
     <!-- Media items -->
     <string name="show_details">Detalji</string>
     <string name="episode">Epizoda</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">Pretraži epizode</string>
     <!-- Status messages -->
     <string name="updated">Ažurirano u najnoviju verziju.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detalji</string>
     <string name="norating">nedostupno</string>
     <string name="unknown">nepoznato</string>
     <string name="offline">Spojite se na mrežu i probajte ponovno.</string>
@@ -103,8 +103,8 @@
     <!-- Flagging -->
     <string name="mark_all">Sve pogledano</string>
     <string name="unmark_all">Ništa nije pogledano</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Pogledano do ovdje</string>
+    <string name="confirmation_watched_up_to">Postavi sve epizode do ove kao pogledane?</string>
     <string name="collect_all">Sve prikupljeno</string>
     <string name="uncollect_all">Ništa prikupljeno</string>
     <string name="action_skip">Preskoči</string>
@@ -151,7 +151,7 @@
     <string name="action_shows_sort_favorites">Lista favorita</string>
     <string name="context_updateshow">Ažuriraj</string>
     <string name="context_marknext">Pogledana sljedeća epizoda</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Promijeni pogled</string>
     <!-- History -->
     <string name="user_stream">Povijest</string>
     <string name="recently_watched">Nedavno pogledano</string>
@@ -204,7 +204,6 @@
     <string name="add_error">Neuspješno dodavanje %s.</string>
     <string name="add_already_exists">%s je već u vašoj listi serija.</string>
     <string name="title_new_episodes">Nove epizode</string>
-    <string name="recommended">Preporučeno</string>
     <string name="watched_shows">Pogledano</string>
     <string name="shows_collection">Zbirka</string>
     <string name="watchlist">Popis gledanja</string>
@@ -287,7 +286,7 @@
     <string name="hexagon_remove_account_confirmation">Uklanjanjem svog računa će te izbrisati sve serije i filmove sa SeriesGuide Oblaka. Ne zaboravite ih ukloniti i sa ostalih povezanih uređaja.</string>
     <string name="hexagon_api_queued">Slanje na SeriesGuide oblak.</string>
     <string name="hexagon_signed_out">Odjavljeni ste sa SeriesGuide oblaka.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Problem s prijavom u Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Poslano na trakt.</string>
     <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
@@ -372,8 +371,8 @@
         <item quantity="other">%d minuta prije</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Pravila privatnosti</string>
+    <string name="licence_tvdb">Ova aplikacija koristi podatake i slike sa TheTVDB koje su licencirane pod Creative Commons licencom</string>
     <string name="licence_themoviedb">Ovaj proizvod koristi TMDb API, ali nije odobrenio ili ovjeren od strane TMDb.</string>
     <string name="licence_trakt">Ova aplikacija koristi podatke i slike sa trakt-a.</string>
     <string name="about_open_source">SeriesGuide je izgrađen korištenjem softvera otvorenog koda.</string>
@@ -403,8 +402,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Ostalo</string>
     <string name="pref_autoupdatesummary">Automatski sinkronizirajte i ažurirajte SeriesGuide podatke</string>
-    <string name="pref_autobackup">Automatska sigurnosna kopija</string>
-    <string name="pref_autobackupsummary">Tjedno sigurnosno kopiranje vaših serija, popisa i filmova</string>
     <string name="backup">Sigurnosno kopiranje/vraćanje</string>
     <string name="backup_summary">Napravi sigurnosnu kopiju ili obnovi svoje serije</string>
     <string name="pref_number">Format broja</string>
@@ -424,13 +421,16 @@
     <string name="backup_button">Stvori sigurnosnu kopiju</string>
     <string name="import_button">Obnovi</string>
     <string name="import_warning">Razumijem da će moje trenutačne serije i popisi biti zamijenjeni!</string>
+    <string name="no_file_selected">Nije odabrana niti jedna datoteka</string>
+    <string name="action_select_file">Odaberi datoteku</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatska sigurnosna kopija</string>
+    <string name="pref_autobackupsummary">Tjedno sigurnosno kopiranje vaših serija, popisa i filmova</string>
     <string name="last_auto_backup">Posljednja automatska Sigurnosna kopija: %s</string>
     <string name="restore_auto_backup">Vrati automatsku sigurnosnu kopiju</string>
     <string name="dataliberation_permission_missing">Kako bi stvarali sigur. kopije i vraćali ih, dopustite pristup vašim datotekama.</string>
     <string name="autobackup_permission_missing">Kako bi koristili automatsko sigur. kopiranje, dopustite pristup vašim datotekama.</string>
     <string name="autobackup_files_missing">Kako bi koristili automatsko sigur. kopiranje, odaberite valjane datoteke sigur. kopije.</string>
-    <string name="no_file_selected">Nije odabrana niti jedna datoteka</string>
-    <string name="action_select_file">Odaberi datoteku</string>
     <string name="backup_use_default_files">Koristi zadane sigurnosne kopije</string>
     <!-- Welcome dialog -->
     <string name="get_started">Prvi koraci</string>
@@ -449,16 +449,16 @@
     <string name="pref_notifications_treshold">Kada obavijestiti</string>
     <string name="pref_notifications_select_shows">Odaberi serije</string>
     <string name="pref_notifications_select_shows_summary">Serije za koje su obavijesti omogućene (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignoriraj skrivene shows</string>
+    <string name="pref_notifications_hidden_summary">Nemoj obaviještavati o skrivenim shows čak i ako su obavijesti omogućene</string>
     <string name="pref_notification_channel_errors">Pogreške</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Samo za episodes koje se slijedće gledaju</string>
+    <string name="pref_notifications_next_episodes_only_summary">Obavijesti samo ako je nova episode sljedeća za gledanje</string>
     <!-- List Widget -->
     <string name="hide_watched">Sakrij pogledane epizode</string>
     <string name="pref_widget_opacity">Pozadina widgeta</string>
     <string name="pref_widget_type">Tip widgeta</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Koristi veliki font</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Prozirno</string>
     <string name="widget_background_25">25%</string>
@@ -473,9 +473,9 @@
     <string name="billing_action_pass">Nabavi X Pass App</string>
     <string name="billing_price_subscribe">%1$s/godina, isprobajte besplatno, otkažite bilo kad kroz %2$s</string>
     <string name="billing_price_pass">Jednokratna kupnja</string>
-    <string name="upgrade_description">Otključajte sve značajke uključujući obavijesti, teme i više opcija widgeta s popisom. Pomozite mi napraviti buduća ažuriranja.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Hvala vam što podržavate SeriesGuide! Sada imate pristup svim značajkama.</string>
-    <string name="billing_learn_more">Zašto platiti? Saznajte više.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Pretplata istekla</string>
     <string name="subscription_expired_details">Tvoja pretplata na X mogućnosti je istekla.</string>
     <!-- Amazon In-App Billing -->

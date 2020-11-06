@@ -43,7 +43,7 @@
     <string name="search_hint">Epizódok keresése</string>
     <!-- Status messages -->
     <string name="updated">Frissítve a legújabb verzióra.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Részletek</string>
     <string name="norating">n/a</string>
     <string name="unknown">ismeretlen</string>
     <string name="offline">Csatlakozz a hálózathoz és próbáld újra.</string>
@@ -115,10 +115,10 @@
     <string name="action_watched">Megnézve</string>
     <string name="action_unwatched">Még nem láttam</string>
     <string name="state_watched">Megnézve</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Kihagyva</string>
+    <string name="state_in_collection">Gyűjteményben</string>
+    <string name="state_on_watchlist">Figyelőlistán</string>
+    <string name="state_favorite">Kedvencek</string>
     <!-- Shows -->
     <string name="confirm_delete">Biztosan törlöd a következőt: %s?</string>
     <string name="delete_error">Nem lehet eltávolítani. Próbáld később.</string>
@@ -150,7 +150,7 @@
     <string name="action_shows_sort_favorites">Kedvencek előre</string>
     <string name="context_updateshow">Frissítés</string>
     <string name="context_marknext">Láttam a következő epizódot</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Nézet váltása</string>
     <!-- History -->
     <string name="user_stream">Előzmények</string>
     <string name="recently_watched">Nemrég megnézett</string>
@@ -200,7 +200,6 @@
     <string name="add_error">Nem lehetett hozzáadni a(z) %s-t.</string>
     <string name="add_already_exists">A(z) %s már a listádon van.</string>
     <string name="title_new_episodes">Új epizódok</string>
-    <string name="recommended">Ajánlott</string>
     <string name="watched_shows">Megnézve</string>
     <string name="shows_collection">Gyűjtemény</string>
     <string name="watchlist">Figyelőlista</string>
@@ -280,7 +279,7 @@
     <string name="hexagon_remove_account_confirmation">A fiókod eltávolításával minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj minden más eszközről való törléséről is.</string>
     <string name="hexagon_api_queued">Küldés a SeriesGuide felhő tárhelyre.</string>
     <string name="hexagon_signed_out">Kijelentkezett a SeriesGuide felhő tárhelyről.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Hiba történt a Google Bejelentkezéssel (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Elküldés a traktnak.</string>
     <string name="checkin_success_trakt">Bejelentkezve trakttal ide: %s.</string>
@@ -362,9 +361,9 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Adatvédelmi irányelvek</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="licence_tvdb">Ez az alkalmazás a TheTVDB, Creative Commons licenc alatt álló adatait és képeit használja.</string>
     <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
-    <string name="licence_trakt">Ez az applikáció a trakt adatait és képeit használja.</string>
+    <string name="licence_trakt">Ez az alkalmazás a Trakt adatait és képeit használja.</string>
     <string name="about_open_source">A SeriesGuide nyílt forráskódú szoftverek használatával készül.</string>
     <string name="licences_and_credits">Engedélyek és készítők listája</string>
     <!-- Sort -->
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Egyéb</string>
     <string name="pref_autoupdatesummary">SeriesGuide adatok automatikus szinkronizálása és frissítése</string>
-    <string name="pref_autobackup">Automatikus biztonsági másolat</string>
-    <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
     <string name="backup">Biztonsági Mentés/Visszaállítás</string>
     <string name="backup_summary">A sorozatokról biztonsági mentés készítése vagy annak visszaállítása</string>
     <string name="pref_number">Számozás formátuma</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Biztonsági Mentés</string>
     <string name="import_button">Visszaállítás</string>
     <string name="import_warning">Megértettem, hogy az aktuális sorozataim, listáim és filmjeim lecserélésre kerülnek!</string>
+    <string name="no_file_selected">Nincs fájl kijelölve</string>
+    <string name="action_select_file">Fájl kiválasztása</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatikus biztonsági másolat</string>
+    <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
     <string name="last_auto_backup">Utolsó automata mentés: %s</string>
     <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
     <string name="dataliberation_permission_missing">Biztonsági mentéshez vagy visszaállításhoz engedélyezd a fájljaidhoz való hozzáférést.</string>
     <string name="autobackup_permission_missing">Az automatikus mentéshez engedélyezd a fájljaidhoz való hozzáférést.</string>
     <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
-    <string name="no_file_selected">Nincs fájl kijelölve</string>
-    <string name="action_select_file">Fájl kiválasztása</string>
     <string name="backup_use_default_files">Használja az alapértelmezett biztonsági mentés fájlokat</string>
     <!-- Welcome dialog -->
     <string name="get_started">Vágjunk bele!</string>
@@ -438,8 +438,8 @@
     <string name="pref_notifications_treshold">Mikor értesítsen</string>
     <string name="pref_notifications_select_shows">Sorozatok kiválasztása</string>
     <string name="pref_notifications_select_shows_summary">Sorozatok, melyek értesítései engedélyezve vannak (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Elrejtett sorozatok mellőzése</string>
+    <string name="pref_notifications_hidden_summary">Még ha be is vannak kapcsolva az értesítések, ne értesítsen a rejtett sorozatokról</string>
     <string name="pref_notification_channel_errors">Hibák</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">X Pass App beszerzése</string>
     <string name="billing_price_subscribe">%1$s/év, próbálja ki ingyen, bármikor kiléphet a %2$s segítségével</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>
-    <string name="upgrade_description">Old fel a összes funkciót, beleértve az értesítéseket, témákat és a több widget lista lehetőséget. Segíts, hogy frissíthessem a programot a jövőben is.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
-    <string name="billing_learn_more">Miért fizessek? Tudj meg többet.</string>
+    <string name="billing_learn_more">Továbi információk és segítség</string>
     <string name="subscription_expired">Lejárt az előfizetés</string>
     <string name="subscription_expired_details">Lejárt a SeriesGuide előfizetésed.</string>
     <!-- Amazon In-App Billing -->

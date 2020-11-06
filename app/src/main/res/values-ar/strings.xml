@@ -43,7 +43,7 @@
     <string name="search_hint">البحث عن الحلقات</string>
     <!-- Status messages -->
     <string name="updated">تم التحديث إلى الإصدار الأخير</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">التفاصيل</string>
     <string name="norating">لا يوجد</string>
     <string name="unknown">غير معروف</string>
     <string name="offline">اتصل بالشبكة، ثم حاول مرة أخرى</string>
@@ -106,8 +106,8 @@
     <!-- Flagging -->
     <string name="mark_all">تعيين الجميع بمشاهد</string>
     <string name="unmark_all">تعيين الجميع بغير مشاهد</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">تم المشاهدة إلى هنا</string>
+    <string name="confirmation_watched_up_to">تعليم كل الحلقات إلى هذه الحلقة بتمت مشاهدتها؟</string>
     <string name="collect_all">جمع الكل</string>
     <string name="uncollect_all">لم يتم جمع شئ</string>
     <string name="action_skip">تخطي</string>
@@ -119,9 +119,9 @@
     <string name="action_watched">تعيين كمشاهد</string>
     <string name="action_unwatched">تعيين كغير مشاهد</string>
     <string name="state_watched">تمت مشاهدتها</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_skipped">تم تخطيه</string>
+    <string name="state_in_collection">قيد التحصيل</string>
+    <string name="state_on_watchlist">في قائمة المراقبة</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>
@@ -154,7 +154,7 @@
     <string name="action_shows_sort_favorites">المفضلة أولاً</string>
     <string name="context_updateshow">تحديث</string>
     <string name="context_marknext">تم مشاهدة الحلقة، الحلقة التالية</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">تغيير طريقة العرض</string>
     <!-- History -->
     <string name="user_stream">السجل</string>
     <string name="recently_watched">تم مشاهدته مؤخراً</string>
@@ -216,7 +216,6 @@
     <string name="add_error">تعذر إضافة %s.</string>
     <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
     <string name="title_new_episodes">حلقات جديدة</string>
-    <string name="recommended">يُنصح به</string>
     <string name="watched_shows">تمت مشاهدتها</string>
     <string name="shows_collection">مجموعة</string>
     <string name="watchlist">قائمة المشاهدة</string>
@@ -308,7 +307,7 @@
     <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك و افلامك من سحابة SeriesGuide. تأكد من إزالته من الأجهزة الأخرى المتصلة أيضا.</string>
     <string name="hexagon_api_queued">جار الإرسال إلى سحابة دليل المسلسلات.</string>
     <string name="hexagon_signed_out">تسجيل الخروج من SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">خطأ في تسجيل الدخول الى Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">تقديم إلى تراكت.</string>
     <string name="checkin_success_trakt">تم فحص %s على التراكت.</string>
@@ -408,7 +407,7 @@
     <string name="privacy_policy">سياسة الخصوصية</string>
     <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل Creative Commons.</string>
     <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
-    <string name="licence_trakt">هذا البرنامج يستخدم صور وبيانات من Trakt.</string>
+    <string name="licence_trakt">هذا البرنامج يستخدم البيانات والصور من تطبيق Trakt.</string>
     <string name="about_open_source">برنامج دليل المسلسلات بني باستخدام برمجيات المصدر المفتوح.</string>
     <string name="licences_and_credits">تراخيص مفتوحة المصدر</string>
     <!-- Sort -->
@@ -436,8 +435,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">أخرى</string>
     <string name="pref_autoupdatesummary">مزامنة وتحديث بيانات SeriesGuide تلقائيا</string>
-    <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
-    <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
     <string name="backup">النسخ الإحتياطي / الإستعادة</string>
     <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
     <string name="pref_number">تنسيق الأرقام</string>
@@ -457,13 +454,16 @@
     <string name="backup_button">نسخ احتياطي</string>
     <string name="import_button">استعادة</string>
     <string name="import_warning">أنا أفهم أن المسلسلات الحالية، القوائم والأفلام سوف تستبدل!</string>
+    <string name="no_file_selected">لم يتم إختيار أي ملف</string>
+    <string name="action_select_file">حدد ملف</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">نسخ احتياطي تلقائي</string>
+    <string name="pref_autobackupsummary">نسخ إحتياطي أسبوعي للمسلسلات، القوائم والأفلام</string>
     <string name="last_auto_backup">آخر عملية نسخ تلقائية: %s</string>
     <string name="restore_auto_backup">استعادة النسخ الاحتياطي التلقائي</string>
     <string name="dataliberation_permission_missing">لعمل نسخ إحتياطي أو إستعادتها، وافق بالسماح للوصول إلى الملفات الخاصة بك.</string>
     <string name="autobackup_permission_missing">لإستخدام النسخ الإحتياطي التلقائي، وافق بالسماح للوصول إلى الملفات الخاصة بك.</string>
     <string name="autobackup_files_missing">لإستخدام النسخ الإحتياطي التلقائي، حدد ملفات النسخ الإحتياطية الصالحة.</string>
-    <string name="no_file_selected">لم يتم إختيار أي ملف</string>
-    <string name="action_select_file">حدد ملف</string>
     <string name="backup_use_default_files">إستخدم النسخ الإحتياطي الإفتراضي</string>
     <!-- Welcome dialog -->
     <string name="get_started">بدء</string>
@@ -482,11 +482,11 @@
     <string name="pref_notifications_treshold">موعد التنبيه</string>
     <string name="pref_notifications_select_shows">اختار العروض</string>
     <string name="pref_notifications_select_shows_summary">يظهر عدد الاشعارات المتاحه للعروض (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">تجاهل المسلسلات المخفيه</string>
+    <string name="pref_notifications_hidden_summary">حتي لو ان الأشعارات مفعلة, لا تبلغني عن المسلسلات المخفية</string>
     <string name="pref_notification_channel_errors">أخطاء</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">فقط لمشاهدة الحلقات التالية</string>
+    <string name="pref_notifications_next_episodes_only_summary">تنبيه فقط اذا الحلقة الجديدة ستشاهد تالياً</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
@@ -506,9 +506,9 @@
     <string name="billing_action_pass">أحصل على X Pass App</string>
     <string name="billing_price_subscribe">%1$s/سنة، جرب مجاناً، و قم بالإلغاء في أي وقت عبر %2$s</string>
     <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
-    <string name="upgrade_description">فتح جميع الميزات بما في ذلك التنبيهات والتصميم والمزيد من الميزات. مساعدتي في التحديثات المستقبلية.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>
-    <string name="billing_learn_more">لماذا تدفع؟ إعرف أكثر.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">انتهت مدة الإشتراك</string>
     <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
     <!-- Amazon In-App Billing -->

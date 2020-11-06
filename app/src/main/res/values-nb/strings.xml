@@ -10,7 +10,7 @@
     <string name="help">Hjelp</string>
     <string name="help_and_feedback">Hjelp og tilbakemelding</string>
     <string name="drawer_open">Åpne navigasjonsskuff</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide vil ikke motta flere oppdateringer for denne versjonen av Android.</string>
     <!-- Media items -->
     <string name="show_details">Details</string>
     <string name="episode">Episode</string>
@@ -200,7 +200,6 @@
     <string name="add_error">Kan ikke legge til %s.</string>
     <string name="add_already_exists">%s er allerede i visningslisten.</string>
     <string name="title_new_episodes">Nye episoder</string>
-    <string name="recommended">Anbefalte</string>
     <string name="watched_shows">Sett</string>
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Overvåkningsliste</string>
@@ -280,7 +279,7 @@
     <string name="hexagon_remove_account_confirmation">Fjerning av kontoen vil slette alle serier og filmer fra SeriesGuide Cloud. Husk å fjerne den fra andre tilkoblede enheter også.</string>
     <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Utlogget fra SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Feil ved Google innlogging (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sender til trakt.</string>
     <string name="checkin_success_trakt">Sjekket inn %s på trakt.</string>
@@ -361,10 +360,10 @@
         <item quantity="other">%d minutter før</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Personvern</string>
+    <string name="licence_tvdb">Denne appen bruker data og bilder av TheTVDB lisensiert under CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Dette produktet bruker API\'en til TMDb men er ikke godkjent eller sertifisert av TMDb.</string>
-    <string name="licence_trakt">Denne appen bruker data og bilder fra trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide er laget med åpen kildekode.</string>
     <string name="licences_and_credits">Lisenser og anerkjennelser</string>
     <!-- Sort -->
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Annet</string>
     <string name="pref_autoupdatesummary">Synkroniser automatisk og oppdater SeriesGuide data</string>
-    <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
-    <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
     <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
     <string name="backup_summary">Sikkerhetskopier eller gjenopprett dine serier</string>
     <string name="pref_number">Nummerering</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Opprett sikkerhetskopi</string>
     <string name="import_button">Gjenopprett</string>
     <string name="import_warning">Jeg forstår at mine valgte serier, lister og filmer vil bli erstattet.</string>
+    <string name="no_file_selected">Ingen fil valgt</string>
+    <string name="action_select_file">Velg fil</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
+    <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
     <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
     <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
     <string name="dataliberation_permission_missing">For å sikkerhetskopiere eller gjenopprette, gi tilgang til filene.</string>
     <string name="autobackup_permission_missing">For å bruke automatisk sikkerhetskopiering, må du gi tilgang til filene dine.</string>
     <string name="autobackup_files_missing">Bruke automatisk sikkerhetskopiering, må du velge gyldige sikkerhetskopifiler.</string>
-    <string name="no_file_selected">Ingen fil valgt</string>
-    <string name="action_select_file">Velg fil</string>
     <string name="backup_use_default_files">Bruk standard sikkerhetskopifiler</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom i gang</string>
@@ -438,8 +438,8 @@
     <string name="pref_notifications_treshold">Tidspunkt for varsling</string>
     <string name="pref_notifications_select_shows">Velg serier</string>
     <string name="pref_notifications_select_shows_summary">Serier med meldinger aktivert (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Overse gjemte programmer</string>
+    <string name="pref_notifications_hidden_summary">Selv om varsler er slått på, ikke varsle om skjulte programmer</string>
     <string name="pref_notification_channel_errors">Feil</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
@@ -447,7 +447,7 @@
     <string name="hide_watched">Skjul sette episoder</string>
     <string name="pref_widget_opacity">Modulbakgrunn</string>
     <string name="pref_widget_type">Modultype</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Bruk stor skrift</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Gjennomsiktig</string>
     <string name="widget_background_25">25%</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">Få X pass App</string>
     <string name="billing_price_subscribe">%1$s/år, prøv gratis, avbryt når som helst gjennom %2$s</string>
     <string name="billing_price_pass">engangskjøp</string>
-    <string name="upgrade_description">Lås opp alle funksjonene inkludert varslinger, temaer og flere alternativer for modulen. Hjelp meg å lage fremtidige oppdateringer.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
-    <string name="billing_learn_more">Fordeler med å betale</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Abonnement utløpt</string>
     <string name="subscription_expired_details">X Pass-abonnementet har utløpt.</string>
     <!-- Amazon In-App Billing -->

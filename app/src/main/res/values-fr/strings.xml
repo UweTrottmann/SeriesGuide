@@ -43,7 +43,7 @@
     <string name="search_hint">Recherche d\'épisodes</string>
     <!-- Status messages -->
     <string name="updated">Mis à jour avec la version la plus récente.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Détails</string>
     <string name="norating">s/o</string>
     <string name="unknown">inconnu</string>
     <string name="offline">Connectez-vous à un réseau, puis réessayez.</string>
@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">Tous vus</string>
     <string name="unmark_all">Vus aucun</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Vu jusqu\'ici</string>
+    <string name="confirmation_watched_up_to">Marqués à partir d\'ici tous les épisodes vus ?</string>
     <string name="collect_all">Tous collectés</string>
     <string name="uncollect_all">Aucun collecté</string>
     <string name="action_skip">Ignorer</string>
@@ -116,7 +116,7 @@
     <string name="action_unwatched">Pas vu</string>
     <string name="state_watched">Vu</string>
     <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
+    <string name="state_in_collection">Collection</string>
     <string name="state_on_watchlist">On watchlist</string>
     <string name="state_favorite">Favorite</string>
     <!-- Shows -->
@@ -150,7 +150,7 @@
     <string name="action_shows_sort_favorites">Favoris en premier</string>
     <string name="context_updateshow">Mettre à jour</string>
     <string name="context_marknext">Prochain épisode vu</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Basculer l’affichage</string>
     <!-- History -->
     <string name="user_stream">Historique</string>
     <string name="recently_watched">Vu récemment</string>
@@ -200,7 +200,6 @@
     <string name="add_error">Impossible d\'ajouter %s.</string>
     <string name="add_already_exists">%s est déjà dans votre liste de séries.</string>
     <string name="title_new_episodes">Nouveaux épisodes</string>
-    <string name="recommended">Recommandé</string>
     <string name="watched_shows">Vu</string>
     <string name="shows_collection">Collection</string>
     <string name="watchlist">Liste à voir</string>
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Autres</string>
     <string name="pref_autoupdatesummary">Synchroniser automatiquement et mettre à jour les données de SeriesGuide</string>
-    <string name="pref_autobackup">Sauvegarde automatique</string>
-    <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos émissions, vos listes et vos films</string>
     <string name="backup">Sauvegarde/Restauration</string>
     <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
     <string name="pref_number">Format de nombre</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Sauvegarder</string>
     <string name="import_button">Restaurer</string>
     <string name="import_warning">Je comprends que mes séries, listes et films actuels seront remplacés !</string>
+    <string name="no_file_selected">Aucun fichier sélectionné</string>
+    <string name="action_select_file">Choisir un fichier</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Sauvegarde automatique</string>
+    <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos émissions, vos listes et vos films</string>
     <string name="last_auto_backup">Dernière sauvegarde auto : %s</string>
     <string name="restore_auto_backup">Restaurer la sauvegarde automatique</string>
     <string name="dataliberation_permission_missing">Pour sauvegarder ou restaurer, permettez l’accès à vos fichiers.</string>
     <string name="autobackup_permission_missing">Pour utiliser la sauvegarde automatique, permettez l’accès à vos fichiers.</string>
     <string name="autobackup_files_missing">Pour utiliser la sauvegarde automatique, sélectionnez un fichier de sauvegarde valides.</string>
-    <string name="no_file_selected">Aucun fichier sélectionné</string>
-    <string name="action_select_file">Choisir un fichier</string>
     <string name="backup_use_default_files">Utiliser le fichier de sauvegarde par défaut</string>
     <!-- Welcome dialog -->
     <string name="get_started">Commencer</string>
@@ -438,11 +438,11 @@
     <string name="pref_notifications_treshold">Quand notifier</string>
     <string name="pref_notifications_select_shows">Visibilité des notifications</string>
     <string name="pref_notifications_select_shows_summary">Montrer qu\'il y a de nouvelles notifications (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignorer les séries cachées</string>
+    <string name="pref_notifications_hidden_summary">Même si les notifications sont activées, ne pas notifier les séries cachées</string>
     <string name="pref_notification_channel_errors">Erreurs</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Seulement pour les épisodes à regarder ensuite</string>
+    <string name="pref_notifications_next_episodes_only_summary">Notifier seulement si le prochain épisode sorti est celui à regarder</string>
     <!-- List Widget -->
     <string name="hide_watched">Masquer les épisodes vus</string>
     <string name="pref_widget_opacity">Arrière-plan du widget</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">Obtenir X Pass App</string>
     <string name="billing_price_subscribe">%1$s/an, faites l’essai gratuitement, annulez à tout moment via %2$s</string>
     <string name="billing_price_pass">Achat à vie</string>
-    <string name="upgrade_description">Déverrouille toutes les fonctionnalités dont les notifications, les thèmes et des options supplémentaires pour le widget. Cela m\'aide à réaliser de nouvelles fonctionnalités.</string>
+    <string name="upgrade_description">Chaque abonnement débloque toutes les fonctionnalités et prend en charge les mises à jour futures. Un abonnement n\'est pas nécessaire pour utiliser cette application.</string>
     <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
-    <string name="billing_learn_more">Pourquoi payer ? En savoir plus.</string>
+    <string name="billing_learn_more">Plus d\'infos et d\'aide</string>
     <string name="subscription_expired">Abonnement expiré</string>
     <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
     <!-- Amazon In-App Billing -->

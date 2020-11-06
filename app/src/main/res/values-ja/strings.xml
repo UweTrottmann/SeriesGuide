@@ -43,7 +43,7 @@
     <string name="search_hint">エピソードを検索</string>
     <!-- Status messages -->
     <string name="updated">最新バージョンに更新しました</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">詳細</string>
     <string name="norating">なし</string>
     <string name="unknown">不明</string>
     <string name="offline">ネットワークに接続して、もう一度やり直してください</string>
@@ -101,8 +101,8 @@
     <!-- Flagging -->
     <string name="mark_all">すべて視聴済</string>
     <string name="unmark_all">すべて未視聴</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">ここまで視聴済</string>
+    <string name="confirmation_watched_up_to">ここまでのすべてのエピソードを視聴済にしますか?</string>
     <string name="collect_all">すべてコレクション済</string>
     <string name="uncollect_all">すべて未コレクション</string>
     <string name="action_skip">スキップ</string>
@@ -114,10 +114,10 @@
     <string name="action_watched">視聴済に設定</string>
     <string name="action_unwatched">未視聴に設定</string>
     <string name="state_watched">視聴済</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">スキップ済</string>
+    <string name="state_in_collection">コレクション内</string>
+    <string name="state_on_watchlist">ウォッチリスト内</string>
+    <string name="state_favorite">お気に入り</string>
     <!-- Shows -->
     <string name="confirm_delete">%s を削除してもよろしいですか？</string>
     <string name="delete_error">番組を削除できませんでした。後でもう一度やり直してください。</string>
@@ -149,7 +149,7 @@
     <string name="action_shows_sort_favorites">お気に入りを先頭に</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">視聴済次のエピソード</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">表示切替</string>
     <!-- History -->
     <string name="user_stream">履歴</string>
     <string name="recently_watched">最近観た作品</string>
@@ -186,7 +186,7 @@
     <!-- Add show -->
     <string name="checkin_searchhint">番組名を入力</string>
     <string name="add_empty">番組がありません</string>
-    <string name="no_results">結果はありません。完全な単語で試してください。</string>
+    <string name="no_results">検索結果はありません。完全な単語で試してください。</string>
     <string name="empty_show_search">番組リストにありません</string>
     <string name="action_try_again">もう一度やり直してください</string>
     <string name="tvdb_error_does_not_exist">番組は TheTVDB に存在しません。後でもう一度試してください。</string>
@@ -196,7 +196,6 @@
     <string name="add_error">%s を追加できませんでした。</string>
     <string name="add_already_exists">%s はすでに番組リストにあります</string>
     <string name="title_new_episodes">新しいエピソード</string>
-    <string name="recommended">おすすめ</string>
     <string name="watched_shows">視聴済</string>
     <string name="shows_collection">コレクション</string>
     <string name="watchlist">ウォッチリスト</string>
@@ -273,7 +272,7 @@
     <string name="hexagon_remove_account_confirmation">SeriesGuide Cloud からすべての番組や映画が削除されます</string>
     <string name="hexagon_api_queued">SeriesGuide クラウドに送信しています。</string>
     <string name="hexagon_signed_out">SeriesGuide クラウドからサインアウトします。</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Google サインインでエラー (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trakt に送信しています</string>
     <string name="checkin_success_trakt">Trakt で %s にチェックインしました</string>
@@ -381,8 +380,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">その他</string>
     <string name="pref_autoupdatesummary">SeriesGuide データを自動的に同期および更新します</string>
-    <string name="pref_autobackup">自動バックアップ</string>
-    <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
     <string name="backup">バックアップ/復元</string>
     <string name="backup_summary">番組をバックアップまたは復元します</string>
     <string name="pref_number">表示形式</string>
@@ -402,13 +399,16 @@
     <string name="backup_button">バックアップを作成</string>
     <string name="import_button">バックアップを復元</string>
     <string name="import_warning">あなたの現在の番組、リスト、映画がバックアップで置き換えられます</string>
+    <string name="no_file_selected">ファイルが選択されていません</string>
+    <string name="action_select_file">ファイルを選択</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">自動バックアップ</string>
+    <string name="pref_autobackupsummary">番組、リスト、映画を毎週バックアップ</string>
     <string name="last_auto_backup">最終の自動バックアップ: %s</string>
     <string name="restore_auto_backup">自動バックアップを復元</string>
     <string name="dataliberation_permission_missing">バックアップまたは復元するため、ファイルへのアクセスを許可してください。</string>
     <string name="autobackup_permission_missing">自動バックアップを使用するため、ファイルへのアクセスを許可してください。</string>
     <string name="autobackup_files_missing">自動バックアップを使用するため、有効なバックアップ ファイルを選択してください。</string>
-    <string name="no_file_selected">ファイルが選択されていません</string>
-    <string name="action_select_file">ファイルを選択</string>
     <string name="backup_use_default_files">デフォルトのバックアップ ファイルを使用する</string>
     <!-- Welcome dialog -->
     <string name="get_started">始めましょう</string>
@@ -427,11 +427,11 @@
     <string name="pref_notifications_treshold">通知のタイミング</string>
     <string name="pref_notifications_select_shows">番組を選択</string>
     <string name="pref_notifications_select_shows_summary">通知を有効にした番組 (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">非表示の番組を無視する</string>
+    <string name="pref_notifications_hidden_summary">通知を有効にした場合でも、非表示の番組は通知しません</string>
     <string name="pref_notification_channel_errors">エラー</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">次に見るエピソードのみ</string>
+    <string name="pref_notifications_next_episodes_only_summary">新しいエピソードが、次に視聴するエピソードである場合にのみ通知します</string>
     <!-- List Widget -->
     <string name="hide_watched">視聴済のエピソードを非表示</string>
     <string name="pref_widget_opacity">ウィジェットの背景</string>
@@ -451,9 +451,9 @@
     <string name="billing_action_pass">X Pass App を入手</string>
     <string name="billing_price_subscribe">%1$s/年、無料でお試しください、%2$s からいつでもキャンセルできます</string>
     <string name="billing_price_pass">一回限りの支払</string>
-    <string name="upgrade_description">通知、テーマ、および多くのリスト ウィジェットのオプションを含む、すべての機能のロックを解除します。将来の更新に役立ちます。</string>
+    <string name="upgrade_description">サブスクリプションで、すべての機能がロック解除され、将来のアップデートをサポートします。サブスクリプションはこのアプリを使用する上で必須ではありません。</string>
     <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>
-    <string name="billing_learn_more">なぜ支払? 詳細情報。</string>
+    <string name="billing_learn_more">詳細情報とヘルプ</string>
     <string name="subscription_expired">サブスクリプションの有効期限が切れました</string>
     <string name="subscription_expired_details">SeriesGuide サブスクリプションの有効期限が切れています。</string>
     <!-- Amazon In-App Billing -->

@@ -57,7 +57,7 @@
     <!-- Sharing -->
     <string name="share">Teilen</string>
     <string name="share_show">Serie teilen</string>
-    <string name="share_episode">Folge empfehlen</string>
+    <string name="share_episode">Folge teilen</string>
     <string name="share_movie">Film teilen</string>
     <string name="addtocalendar">Zum Kalender hinzufügen</string>
     <string name="addtocalendar_failed">Kalender-Termin kann nicht erstellt werden</string>
@@ -154,11 +154,11 @@
     <!-- History -->
     <string name="user_stream">Verlauf</string>
     <string name="recently_watched">Vor kurzem angesehen</string>
-    <string name="friends_recently">Ihre trakt Freunde</string>
+    <string name="friends_recently">Ihre Trakt Freunde</string>
     <string name="now_empty">Nichts los. Sehen Sie sich ein paar Serien an!</string>
     <string name="now_movies_empty">Nichts los. Sehen Sie sich ein paar Filme an!</string>
-    <string name="user_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Serien ein!</string>
-    <string name="user_movie_stream_empty">In letzter Zeit keine Aktivitäten auf trakt. Checken Sie in Filme ein!</string>
+    <string name="user_stream_empty">Kein Verlauf auf Trakt. Sehen Sie ein paar Serien an!</string>
+    <string name="user_movie_stream_empty">Kein Verlauf auf Trakt. Sehen Sie ein paar Filme an!</string>
     <!-- Calendar -->
     <string name="upcoming">Demnächst</string>
     <string name="recent">Vor kurzem</string>
@@ -200,7 +200,6 @@
     <string name="add_error">%s konnte nicht hinzugefügt werden</string>
     <string name="add_already_exists">%s ist bereits in Ihrer Serien-Liste</string>
     <string name="title_new_episodes">Neue Folgen</string>
-    <string name="recommended">Empfehlungen</string>
     <string name="watched_shows">Angesehen</string>
     <string name="shows_collection">Sammlung</string>
     <string name="watchlist">Merkliste</string>
@@ -269,7 +268,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimentell</string>
     <string name="hexagon_description">SeriesGuide Cloud hilft Ihre Serien, Listen und Filme zu sichern und synchronisieren</string>
-    <string name="hexagon_warning_trakt">Während Sie bei SeriesGuide Cloud angemeldet sind, sind einige trakt Funktionen nicht verfügbar</string>
+    <string name="hexagon_warning_trakt">Während Sie bei SeriesGuide Cloud angemeldet sind, sind einige Trakt Funktionen nicht verfügbar</string>
     <string name="hexagon_signin">Anmelden</string>
     <string name="hexagon_signout">Abmelden</string>
     <string name="hexagon_setup_incomplete">Die Einrichtung von SeriesGuide Cloud wurde nicht abgeschlossen</string>
@@ -282,27 +281,27 @@
     <string name="hexagon_signed_out">Von SeriesGuide Cloud abgemeldet</string>
     <string name="hexagon_signin_fail_format">Fehler bei der Google-Anmeldung (%s)</string>
     <!-- trakt -->
-    <string name="trakt_submitqueued">Sende an trakt</string>
-    <string name="checkin_success_trakt">Auf trakt in %s eingecheckt</string>
-    <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen</string>
+    <string name="trakt_submitqueued">Sende an Trakt.</string>
+    <string name="checkin_success_trakt">Auf Trakt in %s eingecheckt</string>
+    <string name="checkin_canceled_success_trakt">Check-in bei Trakt widerrufen</string>
     <string name="traktcheckin_cancel">Überschreiben</string>
     <string name="traktcheckin_inprogress">Sie sind bereits eingecheckt. Überschreiben Sie den Check-in oder warten Sie %s und versuchen es erneut.</string>
     <string name="traktcheckin_wait">Ich warte</string>
-    <string name="trakt_success">An trakt übermittelt.</string>
-    <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre trakt-Anmeldeinformationen und versuchen Sie es erneut.</string>
-    <string name="trakt_error_not_exists">(Noch) nicht bei trakt verfügbar. Versuchen Sie es später erneut.</string>
-    <string name="trakt_notice_not_exists">Kann (noch) nicht mit trakt verwaltet werden</string>
+    <string name="trakt_success">An Trakt übermittelt</string>
+    <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre Trakt-Zugangsdaten und versuchen Sie es erneut.</string>
+    <string name="trakt_error_not_exists">(Noch) nicht bei Trakt verfügbar. Versuchen Sie es später erneut.</string>
+    <string name="trakt_notice_not_exists">Kann (noch) nicht mit Trakt verwaltet werden</string>
     <!-- Connect trakt -->
     <string name="trakt_account">trakt Konto</string>
     <string name="connect_trakt">Mit Trakt verbinden</string>
-    <string name="trakt_reconnect">SeriesGuide mit trakt verbinden</string>
-    <string name="trakt_reconnect_details">Überprüfen Sie Ihre trakt-Anmeldeinformationen</string>
+    <string name="trakt_reconnect">SeriesGuide mit Trakt verbinden</string>
+    <string name="trakt_reconnect_details">Überprüfen Sie Ihre Trakt-Zugangsdaten</string>
     <string name="waitplease">Einen Augenblick, bitte&#8230;</string>
     <string name="connect">Verbinden</string>
     <string name="disconnect">Trennen</string>
     <string name="use_integrated_browser">Integrierten Browser verwenden</string>
-    <string name="show_library">Ihre Bibliothek anzeigen</string>
-    <string name="about_trakt">trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
+    <string name="show_library">Ihre Trakt Bibliothek anzeigen</string>
+    <string name="about_trakt">Trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Bewerten</string>
     <string name="your_rating">Ihre Bewertung</string>
@@ -364,7 +363,7 @@
     <string name="privacy_policy">Datenschutzerklärung</string>
     <string name="licence_tvdb">Diese App verwendet Daten und Bilder von TheTVDB lizenziert unter einer Creative Commons Lizenz.</string>
     <string name="licence_themoviedb">Dieses Produkt verwendet die TMDb API ist aber von TMDb nicht unterstützt oder zertifiziert.</string>
-    <string name="licence_trakt">Diese App verwendet Daten und Bilder von trakt.</string>
+    <string name="licence_trakt">Diese App verwendet Daten und Bilder von Trakt.</string>
     <string name="about_open_source">SeriesGuide basiert auf Open-Source Software.</string>
     <string name="licences_and_credits">Lizenzen und Danksagungen</string>
     <!-- Sort -->
@@ -392,15 +391,13 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Anderes</string>
     <string name="pref_autoupdatesummary">Automatisch synchronisieren und Inhalte aktualisieren</string>
-    <string name="pref_autobackup">Automatische Sicherung</string>
-    <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme</string>
     <string name="backup">Sichern/Wiederherstellen</string>
     <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
     <string name="pref_number">Zahlenformat</string>
     <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
     <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>
-    <string name="clear_cache">Bilder-Cache leeren</string>
-    <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
+    <string name="clear_cache">Cache leeren</string>
+    <string name="clear_cache_summary">Zu Speicher-Einstellungen gehen um zwischengesp. Bilder und Netzwerk-Antworten zu löschen</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Beschreibungen, Details, Bewertungen einschließen</string>
     <string name="backup_failed_file_access">Kann nicht sichern. Eine Sicherungs-Datei konnte nicht gefunden oder beschrieben werden.</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Sicherung erstellen</string>
     <string name="import_button">Sicherung wiederherstellen</string>
     <string name="import_warning">Ihre aktuellen Serien, Listen oder Filme werden durch die Sicherung ersetzt</string>
+    <string name="no_file_selected">Keine Datei ausgewählt</string>
+    <string name="action_select_file">Datei auswählen</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatische Sicherung</string>
+    <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien, Listen und Filme im Gerätespeicher.</string>
     <string name="last_auto_backup">Letzte Auto-Sicherung: %s</string>
     <string name="restore_auto_backup">Auto-Sicherung wiederherstellen</string>
     <string name="dataliberation_permission_missing">Um zu Sichern oder Wiederherzustellen, erlauben Sie Zugriff auf Ihre Dateien</string>
     <string name="autobackup_permission_missing">Um die automatische Sicherung zu verwenden, erlauben Sie Zugriff auf Ihre Dateien</string>
     <string name="autobackup_files_missing">Um die automatische Sicherung zu verwenden, wählen Sie gültige Sicherungsdateien</string>
-    <string name="no_file_selected">Keine Datei ausgewählt</string>
-    <string name="action_select_file">Datei auswählen</string>
     <string name="backup_use_default_files">Standard-Sicherungsdateien verwenden</string>
     <!-- Welcome dialog -->
     <string name="get_started">Erste Schritte</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">X Pass App holen</string>
     <string name="billing_price_subscribe">%1$s/Jahr, bei %2$s jederzeit kündbar</string>
     <string name="billing_price_pass">einmaliger Kauf</string>
-    <string name="upgrade_description">Schalten Sie alle Funktionen wie Benachrichtigungen, Designs und weitere Optionen für das Listen-Widget frei. Unterstützen Sie mich bei der Entwicklung weiterer Updates.</string>
+    <string name="upgrade_description">Jedes Abo schaltet alle Funktionen frei und unterstützt zukünftige Updates. Ein Abo wird nicht benötigt um diese App zu nutzen.</string>
     <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>
-    <string name="billing_learn_more">Warum bezahlen? Mehr Infos</string>
+    <string name="billing_learn_more">Mehr Infos und Hilfe</string>
     <string name="subscription_expired">Abonnement abgelaufen</string>
     <string name="subscription_expired_details">Ihr SeriesGuide Abonnement ist abgelaufen</string>
     <!-- Amazon In-App Billing -->
