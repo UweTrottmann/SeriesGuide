@@ -418,7 +418,7 @@
     <string name="dataliberation_permission_missing">Biztonsági mentéshez vagy visszaállításhoz engedélyezd a fájljaidhoz való hozzáférést.</string>
     <string name="autobackup_permission_missing">Az automatikus mentéshez engedélyezd a fájljaidhoz való hozzáférést.</string>
     <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
-    <string name="no_file_selected">Nincs fájl  kijelölve</string>
+    <string name="no_file_selected">Nincs fájl kijelölve</string>
     <string name="action_select_file">Fájl kiválasztása</string>
     <string name="backup_use_default_files">Használja az alapértelmezett biztonsági mentés fájlokat</string>
     <!-- Welcome dialog -->

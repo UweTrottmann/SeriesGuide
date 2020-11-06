@@ -172,7 +172,7 @@
     <!-- Updating -->
     <string name="update_scheduled">S\'està actualitzant&#8230;</string>
     <string name="update_no_connection">Connecteu-vos a internet per actualitzar.</string>
-    <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard. </string>
+    <string name="update_inprogress">Ja s\'està actualitzant quelcom, intenteu-ho més tard</string>
     <!-- Seasons -->
     <string name="season_allwatched">Tots els episodis vistos</string>
     <plurals name="other_episodes_plural">
