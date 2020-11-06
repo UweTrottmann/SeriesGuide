@@ -26,6 +26,7 @@ import com.google.android.gms.security.ProviderInstaller
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
+import com.uwetrottmann.androidutils.AndroidUtils
 import io.palaima.debugdrawer.timber.data.LumberYard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -133,13 +134,9 @@ class SgApp : Application() {
         // set up logging first so crashes during initialization are caught
         initializeLogging()
 
-        // get latest TZDB.dat from
-        // https://github.com/ThreeTen/threetenbp/blob/master/src/main/resources/org/threeten/bp/TZDB.dat
-        // (switch to tagged version!)
-        // current version: v1.4.1
-        AndroidThreeTen.init(this, "org/threeten/bp/TZDB.dat")
+        AndroidThreeTen.init(this)
         initializeEventBus()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (AndroidUtils.isAtLeastOreo()) {
             initializeNotificationChannels()
         }
 
@@ -251,10 +248,10 @@ class SgApp : Application() {
             detectDiskWrites()
             detectNetwork()
             detectCustomSlowCalls()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (AndroidUtils.isMarshmallowOrHigher()) {
                 detectResourceMismatches()
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 detectUnbufferedIo()
             }
             StrictMode.setThreadPolicy(build())
@@ -268,13 +265,13 @@ class SgApp : Application() {
             detectActivityLeaks()
             detectLeakedClosableObjects()
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (AndroidUtils.isJellyBeanOrHigher()) {
                 detectLeakedRegistrationObjects()
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            if (AndroidUtils.isJellyBeanMR2OrHigher()) {
                 detectFileUriExposure()
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 detectContentUriWithoutPermission()
             }
             // Policy applied to all threads in the virtual machine's process

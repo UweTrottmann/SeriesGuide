@@ -70,7 +70,7 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
         final EditText editTextName = textInputLayoutName.getEditText();
         if (editTextName != null) {
             editTextName.addTextChangedListener(
-                    new ListNameTextWatcher(getContext(),
+                    new ListNameTextWatcher(requireContext(),
                             textInputLayoutName, buttonPositive, null));
         }
 
@@ -85,7 +85,7 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
 
             // add list
             String listName = editTextName.getText().toString().trim();
-            ListsTools.addList(getContext(), listName);
+            ListsTools.addList(requireContext(), listName);
 
             dismiss();
         });

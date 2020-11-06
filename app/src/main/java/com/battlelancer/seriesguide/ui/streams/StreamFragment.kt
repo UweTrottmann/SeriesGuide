@@ -78,7 +78,7 @@ abstract class StreamFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        ViewTools.setSwipeRefreshLayoutColors(activity!!.theme, contentContainer)
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, contentContainer)
 
         if (adapter == null) {
             adapter = listAdapter
@@ -110,14 +110,14 @@ abstract class StreamFragment : Fragment() {
 
     private fun refreshStreamWithNetworkCheck() {
         // launch trakt connect flow if disconnected
-        TraktCredentials.ensureCredentials(activity)
+        TraktCredentials.ensureCredentials(requireContext())
 
         // intercept loader call if offline to avoid replacing data with error message
         // once trakt data has proper cache headers this might become irrelevant
-        if (!AndroidUtils.isNetworkConnected(activity!!)) {
+        if (!AndroidUtils.isNetworkConnected(requireContext())) {
             showProgressBar(false)
             setEmptyMessage(getString(R.string.offline))
-            Toast.makeText(activity, R.string.offline, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.offline, Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -147,11 +147,11 @@ abstract class StreamFragment : Fragment() {
      * Starts an activity to display the given episode.
      */
     protected fun showDetails(view: View, episodeId: Int) {
-        val intent = Intent(activity!!, EpisodesActivity::class.java)
+        val intent = Intent(requireActivity(), EpisodesActivity::class.java)
             .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeId)
 
         ActivityCompat.startActivity(
-            activity!!, intent,
+            requireActivity(), intent,
             ActivityOptionsCompat
                 .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
                 .toBundle()

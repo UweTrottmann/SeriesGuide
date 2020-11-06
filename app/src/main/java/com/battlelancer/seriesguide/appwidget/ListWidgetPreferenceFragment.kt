@@ -42,7 +42,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         savedInstanceState: Bundle?,
         rootKey: String?
     ) {
-        val appWidgetId = arguments!!.getInt(ARG_WIDGET_ID)
+        val appWidgetId = requireArguments().getInt(ARG_WIDGET_ID)
 
         // Type.
         typePref = createListPref(
@@ -177,7 +177,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
     ) {
         inflater.inflate(R.menu.widget_config_menu, menu)
         ViewTools.tintMenuItem(
-            activity!!.findViewById<View>(R.id.sgToolbar).context,
+            requireActivity().findViewById<View>(R.id.sgToolbar).context,
             menu.findItem(R.id.menu_save)
         )
     }

@@ -86,7 +86,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
         buttonLanguage.setOnClickListener(v -> {
             setListVisible(true);
             new Thread(() -> {
-                String[] languageCodes = getContext().getResources()
+                String[] languageCodes = requireContext().getResources()
                         .getStringArray(R.array.languageCodesMovies);
                 List<LocalizationAdapter.LocalizationItem> items = new ArrayList<>(
                         languageCodes.length);
@@ -151,7 +151,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(STATE_LIST_VISIBLE, recyclerView.getVisibility() == View.VISIBLE);
     }
@@ -163,7 +163,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
         EventBus.getDefault().post(new LocalizationChangedEvent());
     }
@@ -212,11 +212,11 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
         public void onItemClick(String code) {
             setListVisible(false);
             if (type == 0) {
-                PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                         .putString(DisplaySettings.KEY_MOVIES_LANGUAGE, code)
                         .apply();
             } else if (type == 1) {
-                PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                         .putString(DisplaySettings.KEY_MOVIES_REGION, code)
                         .apply();
             }
@@ -254,6 +254,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
             notifyDataSetChanged();
         }
 
+        @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
@@ -262,7 +263,7 @@ public class MovieLocalizationDialogFragment extends AppCompatDialogFragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof ViewHolder) {
                 ViewHolder actualHolder = (ViewHolder) holder;
                 LocalizationItem item = items.get(position);

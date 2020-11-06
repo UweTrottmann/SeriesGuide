@@ -108,7 +108,7 @@ public class ShowsNowFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
 
         // define dataset
         adapter = new NowAdapter(getActivity(), itemClickListener);
@@ -191,7 +191,7 @@ public class ShowsNowFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
         // guard against not attached to activity
@@ -252,10 +252,10 @@ public class ShowsNowFragment extends Fragment {
      */
     private void showDetails(View view, int episodeId) {
         Intent intent = new Intent();
-        intent.setClass(getActivity(), EpisodesActivity.class);
+        intent.setClass(requireContext(), EpisodesActivity.class);
         intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeId);
 
-        ActivityCompat.startActivity(getActivity(), intent,
+        ActivityCompat.startActivity(requireContext(), intent,
                 ActivityOptionsCompat
                         .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
                         .toBundle()
@@ -344,7 +344,7 @@ public class ShowsNowFragment extends Fragment {
             }
 
             // check if episode is in database
-            Cursor query = getActivity().getContentResolver()
+            Cursor query = requireActivity().getContentResolver()
                     .query(SeriesGuideContract.Episodes.buildEpisodeUri(item.episodeTvdbId),
                             new String[] { SeriesGuideContract.Episodes._ID }, null, null, null);
             if (query == null) {
@@ -357,7 +357,7 @@ public class ShowsNowFragment extends Fragment {
             } else if (item.showTvdbId != null) {
                 // episode missing: show likely not in database, suggest adding it
                 AddShowDialogFragment
-                        .show(getContext(), getFragmentManager(), item.showTvdbId);
+                        .show(requireContext(), getParentFragmentManager(), item.showTvdbId);
             }
             query.close();
         }
@@ -371,7 +371,7 @@ public class ShowsNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
+        public void onLoadFinished(@NonNull Loader<List<NowAdapter.NowItem>> loader,
                 List<NowAdapter.NowItem> data) {
             if (!isAdded()) {
                 return;
@@ -382,7 +382,7 @@ public class ShowsNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+        public void onLoaderReset(@NonNull Loader<List<NowAdapter.NowItem>> loader) {
             if (!isVisible()) {
                 return;
             }
@@ -400,7 +400,7 @@ public class ShowsNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktRecentEpisodeHistoryLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<TraktRecentEpisodeHistoryLoader.Result> loader,
                 TraktRecentEpisodeHistoryLoader.Result data) {
             if (!isAdded()) {
                 return;
@@ -412,7 +412,7 @@ public class ShowsNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktRecentEpisodeHistoryLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<TraktRecentEpisodeHistoryLoader.Result> loader) {
             if (!isVisible()) {
                 return;
             }
@@ -429,7 +429,7 @@ public class ShowsNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<List<NowAdapter.NowItem>> loader,
+        public void onLoadFinished(@NonNull Loader<List<NowAdapter.NowItem>> loader,
                 List<NowAdapter.NowItem> data) {
             if (!isAdded()) {
                 return;
@@ -440,7 +440,7 @@ public class ShowsNowFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<List<NowAdapter.NowItem>> loader) {
+        public void onLoaderReset(@NonNull Loader<List<NowAdapter.NowItem>> loader) {
             if (!isVisible()) {
                 return;
             }

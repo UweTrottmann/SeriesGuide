@@ -110,7 +110,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val searchResultArg: SearchResult? = arguments!!.getParcelable(ARG_SEARCH_RESULT)
+        val searchResultArg: SearchResult? = requireArguments().getParcelable(ARG_SEARCH_RESULT)
         if (searchResultArg == null || searchResultArg.tvdbid <= 0) {
             // Not a valid TVDb id or show.
             displayedShow = null
@@ -137,7 +137,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         // Icons.
         ViewTools.setVectorIconLeft(
-            activity!!.theme, buttonLanguage,
+            requireActivity().theme, buttonLanguage,
             R.drawable.ic_language_white_24dp
         )
         // Long press hint.
@@ -201,7 +201,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     fun onClickButtonLanguage() {
         displayedShow?.let {
             LanguageChoiceDialogFragment.show(
-                fragmentManager!!,
+                parentFragmentManager,
                 R.array.languageCodesShows,
                 it.language,
                 LanguageChoiceDialogFragment.TAG_ADD_DIALOG
@@ -234,7 +234,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         val show = result.show
         if (show == null) {
             // Failed to load, can't be added.
-            if (!AndroidUtils.isNetworkConnected(activity)) {
+            if (!AndroidUtils.isNetworkConnected(requireContext())) {
                 overview.setText(R.string.offline)
             } else if (result.doesNotExist) {
                 overview.setText(R.string.tvdb_error_does_not_exist)
@@ -282,7 +282,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             // Continuing/ended status.
             val encodedStatus = DataLiberationTools.encodeShowStatus(show.status)
             if (encodedStatus != ShowTools.Status.UNKNOWN) {
-                val decodedStatus = ShowTools.getStatus(activity!!, encodedStatus)
+                val decodedStatus = ShowTools.getStatus(requireActivity(), encodedStatus)
                 if (decodedStatus != null) {
                     if (statusText.isNotEmpty()) {
                         statusText.append(" / ") // Like "2016 / Continuing".
@@ -312,7 +312,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         val timeAndNetworkText = SpannableStringBuilder().apply {
             if (show.release_time != -1) {
                 val release = TimeTools.getShowReleaseDateTime(
-                    activity!!,
+                    requireActivity(),
                     show.release_time,
                     show.release_weekday,
                     show.release_timezone,
@@ -339,7 +339,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         ViewTools.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres))
 
         // Poster.
-        TvdbImageTools.loadShowPosterFitCrop(activity!!, poster, show.poster_small)
+        TvdbImageTools.loadShowPosterFitCrop(requireActivity(), poster, show.poster_small)
 
         // Enable adding of show, display views.
         buttonPositive.isEnabled = true

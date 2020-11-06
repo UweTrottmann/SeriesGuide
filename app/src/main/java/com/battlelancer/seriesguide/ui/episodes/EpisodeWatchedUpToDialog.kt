@@ -19,7 +19,7 @@ class EpisodeWatchedUpToDialog : AppCompatDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments!!.run {
+        requireArguments().run {
             showTvdbId = getInt(ARG_SHOW_TVDB_ID)
             episodeReleaseTime = getLong(ARG_EPISODE_RELEASE_TIME)
             episodeNumber = getInt(ARG_EPISODE_NUMBER)
@@ -27,7 +27,7 @@ class EpisodeWatchedUpToDialog : AppCompatDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return AlertDialog.Builder(context!!)
+        return AlertDialog.Builder(requireContext())
             .setTitle(R.string.confirmation_watched_up_to)
             .setPositiveButton(R.string.action_watched_up_to) { _, _ ->
                 EpisodeTools.episodeWatchedUpTo(

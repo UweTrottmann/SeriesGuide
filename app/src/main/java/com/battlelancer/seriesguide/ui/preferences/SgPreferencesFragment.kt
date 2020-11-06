@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
 import android.provider.Settings
@@ -51,6 +50,7 @@ import com.battlelancer.seriesguide.util.Shadows
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -81,7 +81,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(KEY_CLEAR_CACHE)!!.setOnPreferenceClickListener {
             // try to open app info where user can clear app cache folders
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            intent.data = Uri.parse("package:" + activity!!.packageName)
+            intent.data = Uri.parse("package:" + requireActivity().packageName)
             if (!Utils.tryStartActivity(activity, intent, false)) {
                 // try to open all apps view if detail view not available
                 intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
@@ -139,9 +139,9 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                         Shadows.getInstance().resetShadowColor()
 
                         // restart to apply new theme, go back to this settings screen
-                        TaskStackBuilder.create(activity!!)
+                        TaskStackBuilder.create(requireActivity())
                             .addNextIntent(Intent(activity, ShowsActivity::class.java))
-                            .addNextIntent(activity!!.intent)
+                            .addNextIntent(requireActivity().intent)
                             .startActivities()
                     }
                     true
@@ -180,7 +180,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
                 thresholdPref.isEnabled = isChecked
                 selectionPref.isEnabled = isChecked
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (AndroidUtils.isAtLeastOreo()) {
                     channelsPref?.isEnabled = isChecked
                 } else {
                     vibratePref?.isEnabled = isChecked
@@ -198,7 +198,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = isNotificationsEnabled
             hiddenPref.isEnabled = isNotificationsEnabled
             onlyNextPref.isEnabled = isNotificationsEnabled
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 channelsPref?.isEnabled = isNotificationsEnabled
             } else {
                 vibratePref?.isEnabled = isNotificationsEnabled
@@ -212,7 +212,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = false
             hiddenPref.isEnabled = false
             onlyNextPref.isEnabled = false
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 channelsPref?.isEnabled = false
             } else {
                 vibratePref?.isEnabled = false
@@ -237,7 +237,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             updateFallbackLanguageSummary(it)
             it.setOnPreferenceClickListener {
                 LanguageChoiceDialogFragment.show(
-                    fragmentManager!!,
+                    parentFragmentManager,
                     R.array.languageCodesShows,
                     DisplaySettings.getShowsLanguageFallback(context),
                     TAG_LANGUAGE_FALLBACK
@@ -369,17 +369,17 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
         if (NotificationSettings.KEY_CHANNELS == key) {
             // launch system settings app at settings for episodes channel
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (AndroidUtils.isAtLeastOreo()) {
                 val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, activity!!.packageName)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
                 // at least NVIDIA Shield (8.0.0) can not handle this, so guard
                 Utils.tryStartActivity(activity, intent, true)
             }
             return true
         }
         if (KEY_ABOUT == key) {
-            val ft = fragmentManager!!.beginTransaction()
+            val ft = parentFragmentManager.beginTransaction()
             ft.replace(R.id.containerSettings, AboutPreferencesFragment())
             ft.addToBackStack(null)
             ft.commit()
@@ -394,7 +394,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 var ringtoneUri: Uri? = data.getParcelableExtra(
                     RingtoneManager.EXTRA_RINGTONE_PICKED_URI
                 )
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                if (AndroidUtils.isNougatOrHigher()) {
                     // Xiaomi devices incorrectly return file:// uris on N
                     // protect against FileUriExposedException
                     if (ringtoneUri != null /* not silent */ && "content" != ringtoneUri.scheme) {
@@ -433,7 +433,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             if (NotificationSettings.KEY_VIBRATE == key
                 && NotificationSettings.isNotificationVibrating(pref.context)) {
                 // demonstrate vibration pattern used by SeriesGuide
-                val vibrator = activity!!.getSystemService<Vibrator>()
+                val vibrator = requireActivity().getSystemService<Vibrator>()
                 vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
             }
             if (StreamingSearch.KEY_SETTING_SERVICE == key) {
@@ -444,7 +444,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         // pref changes that require the notification service to be reset
         if (DisplaySettings.KEY_SHOWS_TIME_OFFSET == key
             || NotificationSettings.KEY_THRESHOLD == key) {
-            resetAndRunNotificationsService(activity!!)
+            resetAndRunNotificationsService(requireActivity())
         }
 
         // pref changes that require the widgets to be updated
@@ -453,7 +453,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             || DisplaySettings.KEY_DISPLAY_EXACT_DATE == key
             || DisplaySettings.KEY_PREVENT_SPOILERS == key) {
             // update any widgets
-            ListWidgetProvider.notifyDataChanged(activity!!)
+            ListWidgetProvider.notifyDataChanged(requireActivity())
         }
 
         if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
@@ -464,7 +464,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
                 val values = ContentValues()
                 values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0)
-                activity!!.contentResolver
+                requireActivity().contentResolver
                     .update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null)
             }.start()
         }
@@ -516,7 +516,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
     private fun updateSelectionSummary(selectionPref: Preference) {
         val countOfShowsNotifyOn = DBUtils.getCountOf(
-            activity!!.contentResolver,
+            requireActivity().contentResolver,
             SeriesGuideContract.Shows.CONTENT_URI,
             SeriesGuideContract.Shows.SELECTION_NOTIFY, null, 0
         )
@@ -527,7 +527,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     private fun updateStreamSearchServiceSummary(pref: Preference) {
-        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(activity!!)
+        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(requireActivity())
         when {
             serviceOrEmptyOrNull == null -> pref.summary = null
             serviceOrEmptyOrNull.isEmpty() -> pref.setSummary(R.string.action_turn_off)

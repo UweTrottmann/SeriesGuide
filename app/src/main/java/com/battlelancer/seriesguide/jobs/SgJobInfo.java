@@ -2,6 +2,8 @@
 
 package com.battlelancer.seriesguide.jobs;
 
+import com.google.flatbuffers.BaseVector;
+import com.google.flatbuffers.Constants;
 import com.google.flatbuffers.FlatBufferBuilder;
 import com.google.flatbuffers.Table;
 import java.nio.ByteBuffer;
@@ -9,16 +11,22 @@ import java.nio.ByteOrder;
 
 @SuppressWarnings("unused")
 public final class SgJobInfo extends Table {
+  public static void ValidateVersion() { Constants.FLATBUFFERS_1_12_0(); }
   public static SgJobInfo getRootAsSgJobInfo(ByteBuffer _bb) { return getRootAsSgJobInfo(_bb, new SgJobInfo()); }
   public static SgJobInfo getRootAsSgJobInfo(ByteBuffer _bb, SgJobInfo obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
-  public void __init(int _i, ByteBuffer _bb) { bb_pos = _i; bb = _bb; }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public SgJobInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public int showTvdbId() { int o = __offset(4); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  /**
+   * One of EpisodeFlags (watched, not watched or skipped).
+   */
   public int flagValue() { int o = __offset(6); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
-  public EpisodeInfo episodes(int j) { return episodes(new EpisodeInfo(), j); }
-  public EpisodeInfo episodes(EpisodeInfo obj, int j) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
+  public com.battlelancer.seriesguide.jobs.EpisodeInfo episodes(int j) { return episodes(new com.battlelancer.seriesguide.jobs.EpisodeInfo(), j); }
+  public com.battlelancer.seriesguide.jobs.EpisodeInfo episodes(com.battlelancer.seriesguide.jobs.EpisodeInfo obj, int j) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
   public int episodesLength() { int o = __offset(8); return o != 0 ? __vector_len(o) : 0; }
+  public com.battlelancer.seriesguide.jobs.EpisodeInfo.Vector episodesVector() { return episodesVector(new com.battlelancer.seriesguide.jobs.EpisodeInfo.Vector()); }
+  public com.battlelancer.seriesguide.jobs.EpisodeInfo.Vector episodesVector(com.battlelancer.seriesguide.jobs.EpisodeInfo.Vector obj) { int o = __offset(8); return o != 0 ? obj.__assign(__vector(o), 4, bb) : null; }
   public int movieTmdbId() { int o = __offset(10); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
 
   public static int createSgJobInfo(FlatBufferBuilder builder,
@@ -26,7 +34,7 @@ public final class SgJobInfo extends Table {
       int flagValue,
       int episodesOffset,
       int movieTmdbId) {
-    builder.startObject(4);
+    builder.startTable(4);
     SgJobInfo.addMovieTmdbId(builder, movieTmdbId);
     SgJobInfo.addEpisodes(builder, episodesOffset);
     SgJobInfo.addFlagValue(builder, flagValue);
@@ -34,7 +42,7 @@ public final class SgJobInfo extends Table {
     return SgJobInfo.endSgJobInfo(builder);
   }
 
-  public static void startSgJobInfo(FlatBufferBuilder builder) { builder.startObject(4); }
+  public static void startSgJobInfo(FlatBufferBuilder builder) { builder.startTable(4); }
   public static void addShowTvdbId(FlatBufferBuilder builder, int showTvdbId) { builder.addInt(0, showTvdbId, 0); }
   public static void addFlagValue(FlatBufferBuilder builder, int flagValue) { builder.addInt(1, flagValue, 0); }
   public static void addEpisodes(FlatBufferBuilder builder, int episodesOffset) { builder.addOffset(2, episodesOffset, 0); }
@@ -42,10 +50,17 @@ public final class SgJobInfo extends Table {
   public static void startEpisodesVector(FlatBufferBuilder builder, int numElems) { builder.startVector(4, numElems, 4); }
   public static void addMovieTmdbId(FlatBufferBuilder builder, int movieTmdbId) { builder.addInt(3, movieTmdbId, 0); }
   public static int endSgJobInfo(FlatBufferBuilder builder) {
-    int o = builder.endObject();
+    int o = builder.endTable();
     return o;
   }
   public static void finishSgJobInfoBuffer(FlatBufferBuilder builder, int offset) { builder.finish(offset); }
   public static void finishSizePrefixedSgJobInfoBuffer(FlatBufferBuilder builder, int offset) { builder.finishSizePrefixed(offset); }
+
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
+
+    public SgJobInfo get(int j) { return get(new SgJobInfo(), j); }
+    public SgJobInfo get(SgJobInfo obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
+  }
 }
 

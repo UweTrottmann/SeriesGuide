@@ -75,7 +75,7 @@ public class TraktCommentsFragment extends Fragment {
                 R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
-        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
 
         list.setOnItemClickListener(onItemClickListener);
         list.setEmptyView(emptyView);
@@ -115,7 +115,7 @@ public class TraktCommentsFragment extends Fragment {
         // disable the comment button
         buttonShout.setEnabled(false);
 
-        Bundle args = getArguments();
+        Bundle args = requireArguments();
         boolean isSpoiler = checkBoxIsSpoiler.isChecked();
 
         // as determined by "science", episode comments are most likely, so check for them first
@@ -188,7 +188,7 @@ public class TraktCommentsFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.comments_menu, menu);
     }
 
@@ -233,7 +233,7 @@ public class TraktCommentsFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<TraktCommentsLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<TraktCommentsLoader.Result> loader,
                 TraktCommentsLoader.Result data) {
             if (!isAdded()) {
                 return;
@@ -244,17 +244,17 @@ public class TraktCommentsFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TraktCommentsLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<TraktCommentsLoader.Result> loader) {
             // keep existing data
         }
     };
 
     private void refreshCommentsWithNetworkCheck() {
-        if (!AndroidUtils.isNetworkConnected(getActivity())) {
+        if (!AndroidUtils.isNetworkConnected(requireContext())) {
             // keep existing data, but update empty view anyhow
             showProgressBar(false);
             setEmptyMessage(getString(R.string.offline));
-            Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), R.string.offline, Toast.LENGTH_SHORT).show();
             return;
         }
 

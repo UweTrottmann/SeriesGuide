@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -119,7 +118,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         ViewTools.setVectorIconLeft(theme, binding.buttonMovieLanguage, R.drawable.ic_language_white_24dp)
         CheatSheet.setup(binding.buttonMovieLanguage, R.string.pref_language)
         binding.buttonMovieLanguage.setOnClickListener {
-            MovieLocalizationDialogFragment.show(fragmentManager)
+            MovieLocalizationDialogFragment.show(parentFragmentManager)
         }
 
         // comments button
@@ -142,9 +141,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        tmdbId = arguments!!.getInt(ARG_TMDB_ID)
+        tmdbId = requireArguments().getInt(ARG_TMDB_ID)
         if (tmdbId <= 0) {
-            fragmentManager!!.popBackStack()
+            parentFragmentManager.popBackStack()
             return
         }
 
@@ -165,12 +164,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
     private fun setupViews() {
         val decorationHeightPx: Int
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (AndroidUtils.isKitKatOrHigher()) {
             // avoid overlap with status + action bar (adjust top margin)
             // warning: pre-M status bar not always translucent (e.g. Nexus 10)
             // (using fitsSystemWindows would not work correctly with multiple views)
             val config = (activity as MovieDetailsActivity).systemBarTintManager.config
-            val pixelInsetTop = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val pixelInsetTop = if (AndroidUtils.isMarshmallowOrHigher()) {
                 config.statusBarHeight // full screen, status bar transparent
             } else {
                 config.getPixelInsetTop(false) // status bar translucent
@@ -301,7 +300,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         movieTitle = tmdbMovie.title
         binding.textViewMovieTitle.text = tmdbMovie.title
-        activity!!.title = tmdbMovie.title
+        requireActivity().title = tmdbMovie.title
         binding.textViewMovieDescription.text = TextTools.textWithTmdbSource(
             binding.textViewMovieDescription.context,
             tmdbMovie.overview
@@ -328,7 +327,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.containerMovieButtons.dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
         // watched button (only supported when connected to trakt)
-        val theme = activity!!.theme
+        val theme = requireActivity().theme
         binding.containerMovieButtons.buttonMovieWatched.also {
             if (isConnectedToTrakt) {
                 val textRes = if (isWatched) R.string.action_unwatched else R.string.action_watched
@@ -505,7 +504,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             if (it.isEmpty()) {
                 return
             }
-            MovieCheckInDialogFragment.show(fragmentManager, tmdbId, it)
+            MovieCheckInDialogFragment.show(parentFragmentManager, tmdbId, it)
         }
     }
 
@@ -528,7 +527,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(requireFragmentManager())
+        StreamingSearchConfigureDialog.show(parentFragmentManager)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -611,9 +610,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         Timber.d("loadMovieActions: received %s actions for %s", actions.size, tmdbId)
-        ActionsHelper.populateActions(
-            activity!!.layoutInflater, activity!!.theme, binding.containerMovieActions, actions
-        )
+        requireActivity().run {
+            ActionsHelper.populateActions(
+                layoutInflater, theme, binding.containerMovieActions, actions
+            )
+        }
     }
 
     private val movieActionsRunnable = Runnable {
@@ -631,7 +632,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun rateMovie() {
-        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(context, fragmentManager)
+        RateDialogFragment.newInstanceMovie(tmdbId).safeShow(context, parentFragmentManager)
     }
 
     private fun setCrewVisibility(visible: Boolean) {
@@ -671,11 +672,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 activity!!.invalidateOptionsMenu()
             } else {
                 // if there is no local data and loading from network failed
-                binding.textViewMovieDescription.text = if (AndroidUtils.isNetworkConnected(context)) {
-                    getString(R.string.api_error_generic, getString(R.string.tmdb))
-                } else {
-                    getString(R.string.offline)
-                }
+                binding.textViewMovieDescription.text =
+                    if (AndroidUtils.isNetworkConnected(requireContext())) {
+                        getString(R.string.api_error_generic, getString(R.string.tmdb))
+                    } else {
+                        getString(R.string.offline)
+                    }
             }
         }
 

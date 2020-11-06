@@ -120,7 +120,7 @@ public class TimeOffsetDialogFragment extends AppCompatDialogFragment {
     private void saveAndDismiss() {
         int hours = this.hours;
 
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                 .putString(DisplaySettings.KEY_SHOWS_TIME_OFFSET, String.valueOf(hours))
                 .apply();
         Timber.i("Time offset set to %d hours", hours);

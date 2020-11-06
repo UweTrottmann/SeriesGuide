@@ -54,10 +54,10 @@ public class MoviesDiscoverFragment extends Fragment {
 
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         swipeRefreshLayout.setRefreshing(false);
-        ViewTools.setSwipeRefreshLayoutColors(getActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
 
-        adapter = new MoviesDiscoverAdapter(getContext(),
-                new MovieItemClickListener(getActivity()));
+        adapter = new MoviesDiscoverAdapter(requireContext(),
+                new MovieItemClickListener(requireActivity()));
 
         layoutManager = new AutoGridLayoutManager(getContext(),
                 R.dimen.movie_grid_columnWidth, 2, 6);
@@ -111,7 +111,7 @@ public class MoviesDiscoverFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.movies_discover_menu, menu);
     }
@@ -120,7 +120,7 @@ public class MoviesDiscoverFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_movies_search_change_language) {
-            MovieLocalizationDialogFragment.show(getFragmentManager());
+            MovieLocalizationDialogFragment.show(getParentFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -158,12 +158,12 @@ public class MoviesDiscoverFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<TmdbMoviesLoader.Result>() {
         @Override
         public Loader<TmdbMoviesLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TmdbMoviesLoader(getContext(),
+            return new TmdbMoviesLoader(requireContext(),
                     MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT, null);
         }
 
         @Override
-        public void onLoadFinished(Loader<TmdbMoviesLoader.Result> loader,
+        public void onLoadFinished(@NonNull Loader<TmdbMoviesLoader.Result> loader,
                 TmdbMoviesLoader.Result data) {
             if (!isAdded()) {
                 return;
@@ -173,7 +173,7 @@ public class MoviesDiscoverFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<TmdbMoviesLoader.Result> loader) {
+        public void onLoaderReset(@NonNull Loader<TmdbMoviesLoader.Result> loader) {
             adapter.updateMovies(null);
         }
     };

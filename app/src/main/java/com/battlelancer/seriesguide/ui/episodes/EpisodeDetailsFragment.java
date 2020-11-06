@@ -195,7 +195,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 ));
         bindingBottom.buttonEpisodeLists.setOnClickListener(v ->
                 ManageListsDialogFragment.show(
-                        requireFragmentManager(),
+                        getParentFragmentManager(),
                         episodeTvdbId,
                         ListItemTypes.EPISODE
                 )
@@ -312,7 +312,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     private void showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(requireFragmentManager());
+        StreamingSearchConfigureDialog.show(getParentFragmentManager());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -509,8 +509,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private void updatePrimaryButtons(Cursor cursor) {
         // Check in button.
-        bindingButtons.buttonEpisodeCheckin.setOnClickListener(
-                v -> CheckInDialogFragment.show(getContext(), getFragmentManager(), episodeTvdbId));
+        bindingButtons.buttonEpisodeCheckin.setOnClickListener(v -> CheckInDialogFragment
+                .show(requireContext(), getParentFragmentManager(), episodeTvdbId));
         CheatSheet.setup(bindingButtons.buttonEpisodeCheckin);
         // hide check-in if not connected to trakt or hexagon is enabled
         boolean isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials();
@@ -527,7 +527,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 .setNextFocusUpId(displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
         bindingButtons.buttonEpisodeWatchedUpTo.setOnClickListener(v -> DialogTools.safeShow(
                 EpisodeWatchedUpToDialog.newInstance(showTvdbId, episodeReleaseTime, episodeNumber),
-                requireFragmentManager(), "EpisodeWatchedUpToDialog"
+                getParentFragmentManager(), "EpisodeWatchedUpToDialog"
         ));
 
         // Streaming search button.
@@ -641,7 +641,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private void rateEpisode() {
         RateDialogFragment.newInstanceEpisode(episodeTvdbId)
-                .safeShow(getContext(), getFragmentManager());
+                .safeShow(getContext(), getParentFragmentManager());
     }
 
     private void shareEpisode() {

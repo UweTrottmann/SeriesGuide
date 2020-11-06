@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,8 +97,8 @@ public class StatsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
 
-        model = ViewModelProviders.of(this).get(StatsViewModel.class);
-        model.getStatsData().observe(this, this::handleStatsUpdate);
+        model = new ViewModelProvider(this).get(StatsViewModel.class);
+        model.getStatsData().observe(getViewLifecycleOwner(), this::handleStatsUpdate);
         loadStats();
     }
 

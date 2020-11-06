@@ -98,7 +98,7 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
                 listIdsInOrder.add(list.id);
             }
         }
-        ListsTools.reorderLists(getContext(), listIdsInOrder);
+        ListsTools.reorderLists(requireContext(), listIdsInOrder);
     }
 
     private LoaderManager.LoaderCallbacks<List<OrderedListsLoader.OrderedList>> listsLoaderCallbacks
@@ -109,7 +109,7 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
         }
 
         @Override
-        public void onLoadFinished(Loader<List<OrderedListsLoader.OrderedList>> loader,
+        public void onLoadFinished(@NonNull Loader<List<OrderedListsLoader.OrderedList>> loader,
                 List<OrderedListsLoader.OrderedList> data) {
             if (!isAdded()) {
                 return;
@@ -119,7 +119,7 @@ public class ListsReorderDialogFragment extends AppCompatDialogFragment {
         }
 
         @Override
-        public void onLoaderReset(Loader<List<OrderedListsLoader.OrderedList>> loader) {
+        public void onLoaderReset(@NonNull Loader<List<OrderedListsLoader.OrderedList>> loader) {
             adapter.setData(null);
         }
     };
