@@ -12,13 +12,12 @@
     <string name="drawer_open">திறந்த ஊடாடுதல் drawer</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show">காண்பி</string>
+    <string name="show_details">Details</string>
     <string name="episode">அத்தியாயத்தில்</string>
     <string name="episode_number">அத்தியாயத்தில் %d</string>
     <string name="episodes">அத்தியாயங்களில்</string>
     <string name="season">பருவம்</string>
     <string name="season_number">பருவம் %d</string>
-    <string name="seasons">பருவங்கள்</string>
     <string name="specialseason">சிறப்பு Episodes</string>
     <string name="ratings">மதிப்பீடு</string>
     <!-- Descriptions -->

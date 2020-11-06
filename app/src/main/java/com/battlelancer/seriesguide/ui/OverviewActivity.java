@@ -163,14 +163,14 @@ public class OverviewActivity extends BaseNavDrawerActivity {
                 findViewById(R.id.tabsOverview));
         Bundle argsShow = new Bundle();
         argsShow.putInt(ShowFragment.ARG_SHOW_TVDBID, showTvdbId);
-        tabsAdapter.addTab(R.string.show, ShowFragment.class, argsShow);
+        tabsAdapter.addTab(R.string.show_details, ShowFragment.class, argsShow);
 
         tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
                 .getExtras());
 
         Bundle argsSeason = new Bundle();
         argsSeason.putInt(SeasonsFragment.ARG_SHOW_TVDBID, showTvdbId);
-        tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
+        tabsAdapter.addTab(R.string.episodes, SeasonsFragment.class, argsSeason);
         tabsAdapter.notifyTabsChanged();
 
         // select overview to be shown initially
