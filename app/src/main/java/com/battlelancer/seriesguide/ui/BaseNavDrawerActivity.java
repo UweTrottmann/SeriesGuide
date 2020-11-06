@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.backend.CloudSetupActivity;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
-import com.battlelancer.seriesguide.service.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.jobs.FlagJob;
+import com.battlelancer.seriesguide.service.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
@@ -35,7 +35,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.uwetrottmann.seriesguide.customtabs.CustomTabsHelper;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -208,6 +207,7 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
 
     private void onNavItemClick(int itemId) {
         Intent launchIntent = null;
+        boolean isExternalActivity = false;
 
         switch (itemId) {
             case NAV_ITEM_ACCOUNT_CLOUD_ID: {
@@ -251,29 +251,24 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
                 launchIntent = new Intent(this, SeriesGuidePreferences.class);
                 break;
             case R.id.navigation_sub_item_help:
-                // if we cant find a package name, it means there is no browser that supports
-                // Chrome Custom Tabs installed. So, we fallback to the webview activity.
-                String packageName = CustomTabsHelper.getPackageNameToUse(this);
-                if (packageName == null) {
-                    launchIntent = new Intent(this, HelpActivity.class);
-                } else {
-                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                    builder.setShowTitle(true);
-                    //noinspection deprecation
-                    builder.setToolbarColor(getResources().getColor(
-                            Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary)));
-                    builder.setActionButton(
-                            BitmapFactory.decodeResource(getResources(),
-                                    R.drawable.ic_action_checkin),
-                            getString(R.string.feedback),
-                            PendingIntent.getBroadcast(getApplicationContext(), 0,
-                                    new Intent(getApplicationContext(),
-                                            FeedbackBroadcastReceiver.class), 0));
-                    CustomTabsIntent customTabsIntent = builder.build();
-                    customTabsIntent.intent.setPackage(packageName);
-                    customTabsIntent.intent.setData(Uri.parse(getString(R.string.help_url)));
-                    launchIntent = customTabsIntent.intent;
-                }
+                // Opens in a Custom Tab if a supporting browser is installed.
+                // Otherwise automatically falls back to opening a full browser.
+                Intent customTabsIntent = new CustomTabsIntent.Builder()
+                        .setShowTitle(true)
+                        .setToolbarColor(getResources().getColor(
+                                Utils.resolveAttributeToResourceId(getTheme(), R.attr.colorPrimary))
+                        )
+                        .setActionButton(
+                        BitmapFactory.decodeResource(getResources(),
+                                R.drawable.ic_action_checkin),
+                        getString(R.string.feedback),
+                        PendingIntent.getBroadcast(getApplicationContext(), 0,
+                                new Intent(getApplicationContext(),
+                                        FeedbackBroadcastReceiver.class), 0))
+                        .build().intent;
+                customTabsIntent.setData(Uri.parse(getString(R.string.help_url)));
+                launchIntent = customTabsIntent;
+                isExternalActivity = true;
                 break;
             case R.id.navigation_sub_item_unlock:
                 if (Utils.isAmazonVersion()) {
@@ -293,14 +288,20 @@ public abstract class BaseNavDrawerActivity extends BaseActivity {
         // already displaying correct screen
         if (launchIntent != null) {
             final Intent finalLaunchIntent = launchIntent;
-            handler.postDelayed(() -> goToNavDrawerItem(finalLaunchIntent), NAVDRAWER_CLOSE_DELAY);
+            final boolean finalIsExternalActivity = isExternalActivity;
+            handler.postDelayed(() -> goToNavDrawerItem(finalLaunchIntent, finalIsExternalActivity),
+                    NAVDRAWER_CLOSE_DELAY);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    private void goToNavDrawerItem(Intent intent) {
-        startActivity(intent);
+    private void goToNavDrawerItem(Intent intent, boolean isExternalActivity) {
+        if (isExternalActivity) {
+            Utils.tryStartActivity(this, intent, true);
+        } else {
+            startActivity(intent);
+        }
         overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
     }
 

@@ -217,13 +217,6 @@
             android:exported="true"
             android:taskAffinity="com.battlelancer.seriesguide.task.quickcheckin" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.HelpActivity"
-            android:label="@string/help">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
-        </activity>
-        <activity
             android:name="com.battlelancer.seriesguide.ui.FullscreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name="com.battlelancer.seriesguide.ui.people.PeopleActivity" />
