@@ -10,14 +10,14 @@
     <string name="help">Ajutor</string>
     <string name="help_and_feedback">Ajutor și feedback</string>
     <string name="drawer_open">Deschide sertarul de navigare</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide nu va mai primi actualizări pentru această versiune de Android.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">Detalii</string>
     <string name="episode">Episod</string>
-    <string name="episode_number">Episod %d</string>
+    <string name="episode_number">Episodul %d</string>
     <string name="episodes">Episoade</string>
     <string name="season">Sezon</string>
-    <string name="season_number">Sezonul %d</string>
+    <string name="season_number">Sezon %d</string>
     <string name="specialseason">Episoade speciale</string>
     <string name="ratings">Evaluări</string>
     <!-- Descriptions -->
@@ -31,7 +31,7 @@
     <string name="save_selection">Salvează selecția</string>
     <string name="action_display_all">Arată tot</string>
     <string name="web_search">Căutare pe web</string>
-    <string name="add_to_homescreen">Adăugați pe ecranul de principal</string>
+    <string name="add_to_homescreen">Adaugă la ecranul de principal</string>
     <string name="action_open">Deschide</string>
     <string name="sync_manually">Sincronizare manuala</string>
     <string name="sync_and_update">Sincronizare &amp; innoita</string>
@@ -204,7 +204,6 @@
     <string name="add_error">Nu s-a putut adăuga %s.</string>
     <string name="add_already_exists">%s este deja în lista de emisiuni.</string>
     <string name="title_new_episodes">Episoade noi</string>
-    <string name="recommended">Recomandat</string>
     <string name="watched_shows">Vizionat</string>
     <string name="shows_collection">Colecție</string>
     <string name="watchlist">Listă vizionate</string>
@@ -375,7 +374,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
-    <string name="licence_trakt">Această aplicație foloseste date şi imagini ale trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide este dezvoltat folosind software open source.</string>
     <string name="licences_and_credits">Licențe și credite</string>
     <!-- Sort -->
@@ -403,8 +402,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Alte</string>
     <string name="pref_autoupdatesummary">Sincronizează automat și actualizează datele de pe SeriesGuide</string>
-    <string name="pref_autobackup">Backup automat</string>
-    <string name="pref_autobackupsummary">Backup săptămânal al serialelor, listelor si filmelor</string>
     <string name="backup">Arhivare/Restaurare</string>
     <string name="backup_summary">Arhivează sau restaurează emisiunile</string>
     <string name="pref_number">Format număr</string>
@@ -424,13 +421,16 @@
     <string name="backup_button">Arhivare</string>
     <string name="import_button">Restaurează</string>
     <string name="import_warning">Sunt de acord ca serialele, listele și filmele să fie înlocuite!</string>
+    <string name="no_file_selected">Niciun fișier selectat</string>
+    <string name="action_select_file">Selectează fișierul</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Backup automat</string>
+    <string name="pref_autobackupsummary">Backup săptămânal al serialelor, listelor si filmelor</string>
     <string name="last_auto_backup">Ultimul backup automat: %s</string>
     <string name="restore_auto_backup">Restaurare arhivă automat</string>
     <string name="dataliberation_permission_missing">Pentru backup sau recuperare, permite accesul la fișierele tale.</string>
     <string name="autobackup_permission_missing">Pentru backup automat, permite accesul la fișierele tale.</string>
     <string name="autobackup_files_missing">Pentru backup automat, selectează fișiere de backup valabile.</string>
-    <string name="no_file_selected">Niciun fișier selectat</string>
-    <string name="action_select_file">Selectează fișierul</string>
     <string name="backup_use_default_files">Folosește fișierele de backup implicite</string>
     <!-- Welcome dialog -->
     <string name="get_started">Cum să începeți</string>
@@ -473,9 +473,9 @@
     <string name="billing_action_pass">Obțineți abonamentul X App</string>
     <string name="billing_price_subscribe">%1$s/ an, testează gratuit, anuleaza oricand prin%2$s</string>
     <string name="billing_price_pass">plată unică</string>
-    <string name="upgrade_description">Deblocați toate opțiunile, inclusiv notificări, teme si mai multe opțiuni widget-uri liste. Ajută-mă să fac actualizări viitoare.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>
-    <string name="billing_learn_more">De ce să plătiți? Află mai multe.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Abonament expirat</string>
     <string name="subscription_expired_details">Abonamentul la opțiunile X a expirat.</string>
     <!-- Amazon In-App Billing -->

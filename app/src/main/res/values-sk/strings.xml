@@ -43,7 +43,7 @@
     <string name="search_hint">Hľadať epizódy</string>
     <!-- Status messages -->
     <string name="updated">Aktualizované na najnovšiu verziu.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Podrobnosti</string>
     <string name="norating">Nedostupné</string>
     <string name="unknown">neznámy</string>
     <string name="offline">Pripojte sa k sieti a skúste to znova.</string>
@@ -73,7 +73,7 @@
     <plurals name="replies_plural">
         <item quantity="one">%d odpoveď</item>
         <item quantity="few">%d odpovede</item>
-        <item quantity="many">%d replies</item>
+        <item quantity="many">%d odpovedí</item>
         <item quantity="other">%d odpovedí</item>
     </plurals>
     <!-- Metadata -->
@@ -104,8 +104,8 @@
     <!-- Flagging -->
     <string name="mark_all">Videné všetky</string>
     <string name="unmark_all">Nevidená žiadna</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Videné až sem</string>
+    <string name="confirmation_watched_up_to">Nastaviť všetky epizódy až k tejto ako videné?</string>
     <string name="collect_all">Pridať sériu do zbierky</string>
     <string name="uncollect_all">Odobrané zo zbierky</string>
     <string name="action_skip">Preskočiť</string>
@@ -117,10 +117,10 @@
     <string name="action_watched">Označiť ako videné</string>
     <string name="action_unwatched">Označiť ako nevidené</string>
     <string name="state_watched">Videné</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Preskočené</string>
+    <string name="state_in_collection">V zbierke</string>
+    <string name="state_on_watchlist">V Chcem vidieť</string>
+    <string name="state_favorite">Obľúbené</string>
     <!-- Shows -->
     <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
     <string name="delete_error">Seriál nemožno odstrániť. Skúste to znova neskôr.</string>
@@ -152,7 +152,7 @@
     <string name="action_shows_sort_favorites">Uprednostniť obľúbené</string>
     <string name="context_updateshow">Aktualizovať</string>
     <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Zmeniť zobrazenie</string>
     <!-- History -->
     <string name="user_stream">História</string>
     <string name="recently_watched">Nedávno videné</string>
@@ -180,19 +180,19 @@
     <plurals name="other_episodes_plural">
         <item quantity="one">%d ďalšia epizóda</item>
         <item quantity="few">%d ďalšie epizódy</item>
-        <item quantity="many">%d other episodes</item>
+        <item quantity="many">%d ďalších epizód</item>
         <item quantity="other">%d ďalších epizód</item>
     </plurals>
     <plurals name="not_released_episodes_plural">
         <item quantity="one">%d neodvysielaná</item>
         <item quantity="few">%d neodvysielané</item>
-        <item quantity="many">%d to be released</item>
+        <item quantity="many">%d neodvysielaných</item>
         <item quantity="other">%d neodvysielaných</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
         <item quantity="one">Zostáva %d</item>
         <item quantity="few">Zostávajú %d</item>
-        <item quantity="many">%d remaining</item>
+        <item quantity="many">Zostáva %d</item>
         <item quantity="other">Zostáva %d</item>
     </plurals>
     <!-- Add show -->
@@ -208,7 +208,6 @@
     <string name="add_error">Nemožno pridať %s.</string>
     <string name="add_already_exists">%s už je vo vašich seriáloch.</string>
     <string name="title_new_episodes">Nové epizódy</string>
-    <string name="recommended">Odporúčané</string>
     <string name="watched_shows">Videné</string>
     <string name="shows_collection">Zbierka</string>
     <string name="watchlist">Chcem vidieť</string>
@@ -259,19 +258,19 @@
     <plurals name="days_plural">
         <item quantity="one">%d deň</item>
         <item quantity="few">%d dni</item>
-        <item quantity="many">%d days</item>
+        <item quantity="many">%d dní</item>
         <item quantity="other">%d dní</item>
     </plurals>
     <plurals name="hours_plural">
         <item quantity="one">%d hodina</item>
         <item quantity="few">%d hodiny</item>
-        <item quantity="many">%d hours</item>
+        <item quantity="many">%d hodín</item>
         <item quantity="other">%d hodín</item>
     </plurals>
     <plurals name="minutes_plural">
         <item quantity="one">%d minúta</item>
         <item quantity="few">%d minúty</item>
-        <item quantity="many">%d minutes</item>
+        <item quantity="many">%d minút</item>
         <item quantity="other">%d minút</item>
     </plurals>
     <!-- Features -->
@@ -294,7 +293,7 @@
     <string name="hexagon_remove_account_confirmation">Odstránenie účtu vymaže všetky seriály a filmy zo SeriesGuide Cloudu. Uistite sa, že ste ho odstránili aj z iných pripojených zariadení.</string>
     <string name="hexagon_api_queued">Odosielanie do SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Ste odhlásený zo SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Chyba pri prihlasovaní pomocou Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Odosiela sa na trakt.</string>
     <string name="checkin_success_trakt">Práve pozeráte %s na trakt.</string>
@@ -333,7 +332,7 @@
     <plurals name="votes">
         <item quantity="one">%d hlas</item>
         <item quantity="few">%d hlasy</item>
-        <item quantity="many">%d votes</item>
+        <item quantity="many">%d hlasov</item>
         <item quantity="other">%d hlasov</item>
     </plurals>
     <!-- Check Ins -->
@@ -367,19 +366,19 @@
     <plurals name="days_before_plural">
         <item quantity="one">%d deň pred</item>
         <item quantity="few">%d dni pred</item>
-        <item quantity="many">%d days before</item>
+        <item quantity="many">%d dní pred</item>
         <item quantity="other">%d dní pred</item>
     </plurals>
     <plurals name="hours_before_plural">
         <item quantity="one">%d hodinu pred</item>
         <item quantity="few">%d hodiny pred</item>
-        <item quantity="many">%d hours before</item>
+        <item quantity="many">%d hodín pred</item>
         <item quantity="other">%d hodín pred</item>
     </plurals>
     <plurals name="minutes_before_plural">
         <item quantity="one">%d minútu pred</item>
         <item quantity="few">%d minúty pred</item>
-        <item quantity="many">%d minutes before</item>
+        <item quantity="many">%d minút pred</item>
         <item quantity="other">%d minút pred</item>
     </plurals>
     <!-- About screen -->
@@ -414,8 +413,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Ostatné</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizovať a aktualizovať SeriesGuide dáta</string>
-    <string name="pref_autobackup">Automatické zálohovanie</string>
-    <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
     <string name="backup">Zálohovanie / obnovenie</string>
     <string name="backup_summary">Zálohovanie alebo obnovenie vašich seriálov</string>
     <string name="pref_number">Formát číslovania</string>
@@ -435,13 +432,16 @@
     <string name="backup_button">Zálohovať</string>
     <string name="import_button">Obnoviť</string>
     <string name="import_warning">Rozumiem, moje aktuálne seriály, zoznamy a filmy budú nahradené zálohou!</string>
+    <string name="no_file_selected">Nebol vybratý žiadny súbor</string>
+    <string name="action_select_file">Vyberte súbor</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatické zálohovanie</string>
+    <string name="pref_autobackupsummary">Týždenné zálohovanie vašich seriálov, zoznamov a filmov</string>
     <string name="last_auto_backup">Posledná automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnoviť automatickú zálohu</string>
     <string name="dataliberation_permission_missing">Pre zálohovanie alebo obnovenie, povoľte prístup k vašim súborom.</string>
     <string name="autobackup_permission_missing">Ak chcete použiť automatické zálohovanie, povoľte prístup k vašim súborom.</string>
     <string name="autobackup_files_missing">Ak chcete použiť automatické zálohovanie, vyberte platné záložné súbory.</string>
-    <string name="no_file_selected">Nebol vybratý žiadny súbor</string>
-    <string name="action_select_file">Vyberte súbor</string>
     <string name="backup_use_default_files">Použiť predvolené záložné súbory</string>
     <!-- Welcome dialog -->
     <string name="get_started">Začíname</string>
@@ -460,11 +460,11 @@
     <string name="pref_notifications_treshold">Čas upozornenia</string>
     <string name="pref_notifications_select_shows">Vybrať seriály</string>
     <string name="pref_notifications_select_shows_summary">Seriály, ktoré majú povolené upozornenia (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignorovať skryté seriály</string>
+    <string name="pref_notifications_hidden_summary">Aj keď sú upozornenia povolené, nezobrazovať ich pre skryté seriály</string>
     <string name="pref_notification_channel_errors">Chyby</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Iba pre nasledujúce epizódy</string>
+    <string name="pref_notifications_next_episodes_only_summary">Upozorniť len v prípade, že nová epizóda je ďalšia na videnie</string>
     <!-- List Widget -->
     <string name="hide_watched">Skryť videné epizódy</string>
     <string name="pref_widget_opacity">Pozadie miniaplikácie</string>
@@ -484,9 +484,9 @@
     <string name="billing_action_pass">Získať X Pass App</string>
     <string name="billing_price_subscribe">%1$s/ročne, vyskúšajte zadarmo, zrušte kedykoľvek prostredníctvom %2$s</string>
     <string name="billing_price_pass">jednorázová platba</string>
-    <string name="upgrade_description">Odomknúť všetky funkcie vrátane upozornení, tém a možností pre miniaplikáciu. Pomôžte mi s budúcimi aktualizáciami.</string>
+    <string name="upgrade_description">Každé predplatné odomkne všetky funkcie a podporuje budúce aktualizácie. Na používanie tejto aplikácie sa nevyžaduje predplatné.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
-    <string name="billing_learn_more">Prečo platiť? Zistite viac.</string>
+    <string name="billing_learn_more">Viac info a pomoc</string>
     <string name="subscription_expired">Predplatné vypršalo</string>
     <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
     <!-- Amazon In-App Billing -->

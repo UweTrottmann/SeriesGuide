@@ -204,7 +204,6 @@
     <string name="add_error">Немогуће додати %s.</string>
     <string name="add_already_exists">%s је већ на вашој листи.</string>
     <string name="title_new_episodes">Nove epizode</string>
-    <string name="recommended">Препоручене</string>
     <string name="watched_shows">Одгледано</string>
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
@@ -287,7 +286,7 @@
     <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
     <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Izlogovan iz SeriesGuide Cloud-a</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Greška sa Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Послато на тракт.</string>
     <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>
@@ -298,12 +297,12 @@
     <string name="trakt_success">Пошаљу на Trakt.</string>
     <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
     <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
-    <string name="trakt_notice_not_exists">Can not (yet) be tracked with trakt</string>
+    <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
     <!-- Connect trakt -->
     <string name="trakt_account">trakt налог</string>
     <string name="connect_trakt">Повежи trakt</string>
-    <string name="trakt_reconnect">Connect SeriesGuide to trakt</string>
-    <string name="trakt_reconnect_details">Check your trakt credentials</string>
+    <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
+    <string name="trakt_reconnect_details">Check your Trakt credentials</string>
     <string name="waitplease">Тренутак, молим&#8230;</string>
     <string name="connect">Повежи</string>
     <string name="disconnect">Прекини везу</string>
@@ -375,7 +374,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Licences and credits</string>
     <!-- Sort -->
@@ -403,8 +402,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Остало</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
-    <string name="pref_autobackup">Auto Backup</string>
-    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies</string>
     <string name="backup">Архивирање/ повраћај архиве</string>
     <string name="backup_summary">Архивирај или врати архивиране серије</string>
     <string name="pref_number">Облик нумерисања</string>
@@ -424,13 +421,16 @@
     <string name="backup_button">Архивирај</string>
     <string name="import_button">Поврати архивирану ставку</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
+    <string name="no_file_selected">Нема одабраних фајлова</string>
+    <string name="action_select_file">Изаберите фајл</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Auto Backup</string>
+    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies to device storage.</string>
     <string name="last_auto_backup">Задње аутоматско архивирање: %s</string>
     <string name="restore_auto_backup">Поврати податке</string>
     <string name="dataliberation_permission_missing">To backup or restore, allow access to your files</string>
     <string name="autobackup_permission_missing">To use auto backup, allow access to your files</string>
     <string name="autobackup_files_missing">To use auto backup, select valid backup files</string>
-    <string name="no_file_selected">Нема одабраних фајлова</string>
-    <string name="action_select_file">Изаберите фајл</string>
     <string name="backup_use_default_files">Use default backup files</string>
     <!-- Welcome dialog -->
     <string name="get_started">Почни</string>
@@ -473,9 +473,9 @@
     <string name="billing_action_pass">Купи X Pass App</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_price_pass">доживотна куповина</string>
-    <string name="upgrade_description">Откључај све опције укључујући нотификације, теме и више опција за листе. Помозите ми са будућим унапређењима.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
-    <string name="billing_learn_more">Зашто се претплатити? Сазнај више.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Претплата је истекла</string>
     <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
     <!-- Amazon In-App Billing -->

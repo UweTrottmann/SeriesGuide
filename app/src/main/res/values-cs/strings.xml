@@ -10,9 +10,9 @@
     <string name="help">Nápověda</string>
     <string name="help_and_feedback">Pomoc a připomínky</string>
     <string name="drawer_open">Otevřít záložky aplikace</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide nebude dostávat žádné další aktualizace pro tuto verzi Androidu.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">Detaily</string>
     <string name="episode">Epizoda</string>
     <string name="episode_number">Epizoda %d</string>
     <string name="episodes">Epizody</string>
@@ -31,19 +31,19 @@
     <string name="save_selection">Uložit výběr</string>
     <string name="action_display_all">Zobrazit vše</string>
     <string name="web_search">Webové vyhledávání</string>
-    <string name="add_to_homescreen">Add to Home screen</string>
+    <string name="add_to_homescreen">Přidat na Domovskou obrazovku</string>
     <string name="action_open">Otevřít</string>
     <string name="sync_manually">Synchronizuj ručně</string>
     <string name="sync_and_update">Synchronizuj &amp; Aktualizuj</string>
     <string name="sync_and_download_all">Synchronizuj &amp; Stáhni vše</string>
-    <string name="action_turn_off">Turn off</string>
+    <string name="action_turn_off">Vypnout</string>
     <string name="action_stream">Stream or purchase</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
     <string name="search_hint">Hledat v epizodách</string>
     <!-- Status messages -->
     <string name="updated">Aktualizováno na nejnovější verzi.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detaily</string>
     <string name="norating">n/a</string>
     <string name="unknown">neznámo</string>
     <string name="offline">Připojte se k síti a zkuste to znovu.</string>
@@ -52,8 +52,8 @@
     <string name="database_error">Nelze upravovat data.</string>
     <string name="reinstall_info">Zkuste možnost v nastavení, reinstalovat a obnovit</string>
     <string name="api_error_generic">Nemohl kontaktovat %s. Zkuste prosím později.</string>
-    <string name="api_failed">Failed: %s</string>
-    <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="api_failed">Chyba během: %s</string>
+    <string name="copy_to_clipboard">Zkopírováno do schránky</string>
     <!-- Sharing -->
     <string name="share">Sdílet</string>
     <string name="share_show">Sdílet seriál</string>
@@ -73,8 +73,8 @@
     <plurals name="replies_plural">
         <item quantity="one">%d odpověď</item>
         <item quantity="few">%d odpovědi</item>
-        <item quantity="many">%d replies</item>
-        <item quantity="other">%d odpovědi</item>
+        <item quantity="many">%d odpovědí</item>
+        <item quantity="other">%d odpovědí</item>
     </plurals>
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
@@ -104,8 +104,8 @@
     <!-- Flagging -->
     <string name="mark_all">Zhlédnuty všechny</string>
     <string name="unmark_all">Žádný zhlédnutý</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Zhlédnuto až zde</string>
+    <string name="confirmation_watched_up_to">Opravdu chcete nastavit všechny epizody až k této jako zhlédnuté?</string>
     <string name="collect_all">Přidat sérii do sbírky</string>
     <string name="uncollect_all">Odebráno ze sbírky</string>
     <string name="action_skip">Přeskočit</string>
@@ -120,7 +120,7 @@
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_favorite">Oblíbené</string>
     <!-- Shows -->
     <string name="confirm_delete">Opravdu chcete odstranit %s?</string>
     <string name="delete_error">Seriál nelze odstranit. Opakujte akci později.</string>
@@ -152,7 +152,7 @@
     <string name="action_shows_sort_favorites">Oblíbené předně</string>
     <string name="context_updateshow">Aktualizovat</string>
     <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Přepnout zobrazení</string>
     <!-- History -->
     <string name="user_stream">Historie</string>
     <string name="recently_watched">Nedávno viděno</string>
@@ -180,19 +180,19 @@
     <plurals name="other_episodes_plural">
         <item quantity="one">%d další epizoda</item>
         <item quantity="few">%d další epizody</item>
-        <item quantity="many">%d other episodes</item>
+        <item quantity="many">%d dalších epizod</item>
         <item quantity="other">%d dalších epizod</item>
     </plurals>
     <plurals name="not_released_episodes_plural">
         <item quantity="one">%d neodvysílaná</item>
         <item quantity="few">%d neodvysílané</item>
-        <item quantity="many">%d to be released</item>
+        <item quantity="many">%d neodvysílaných</item>
         <item quantity="other">%d neodvysílaných</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
         <item quantity="one">%d zbývající</item>
         <item quantity="few">%d zbývající</item>
-        <item quantity="many">%d remaining</item>
+        <item quantity="many">%d zbývajících</item>
         <item quantity="other">%d zbývajících</item>
     </plurals>
     <!-- Add show -->
@@ -208,7 +208,6 @@
     <string name="add_error">Nelze přidat %s.</string>
     <string name="add_already_exists">%s už je ve Vašem seznamu pořadů.</string>
     <string name="title_new_episodes">Nové epizody</string>
-    <string name="recommended">Doporučené</string>
     <string name="watched_shows">Zhlédnuto</string>
     <string name="shows_collection">Sbírka</string>
     <string name="watchlist">Chci vidět</string>
@@ -258,20 +257,20 @@
     <string name="runtime_movies_watchlist">Celková délka filmového watchlistu</string>
     <plurals name="days_plural">
         <item quantity="one">%d den</item>
-        <item quantity="few">%d den</item>
-        <item quantity="many">%d days</item>
+        <item quantity="few">%d dny</item>
+        <item quantity="many">%d dní</item>
         <item quantity="other">%d dní</item>
     </plurals>
     <plurals name="hours_plural">
         <item quantity="one">%d hodina</item>
-        <item quantity="few">%d hodina</item>
-        <item quantity="many">%d hours</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="many">%d hodin</item>
         <item quantity="other">%d hodin</item>
     </plurals>
     <plurals name="minutes_plural">
         <item quantity="one">%d minuta</item>
-        <item quantity="few">%d minut</item>
-        <item quantity="many">%d minutes</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
         <item quantity="other">%d minut</item>
     </plurals>
     <!-- Features -->
@@ -332,8 +331,8 @@
     <string name="rating9">Vynikající</string>
     <plurals name="votes">
         <item quantity="one">%d hlas</item>
-        <item quantity="few">%d hlasů</item>
-        <item quantity="many">%d votes</item>
+        <item quantity="few">%d hlasy</item>
+        <item quantity="many">%d hlasů</item>
         <item quantity="other">%d hlasů</item>
     </plurals>
     <!-- Check Ins -->
@@ -367,24 +366,24 @@
     <plurals name="days_before_plural">
         <item quantity="one">%d den předem</item>
         <item quantity="few">%d dny předem</item>
-        <item quantity="many">%d days before</item>
+        <item quantity="many">%d dní předem</item>
         <item quantity="other">%d dní předem</item>
     </plurals>
     <plurals name="hours_before_plural">
-        <item quantity="one">%d hodina předem</item>
+        <item quantity="one">%d hodinu předem</item>
         <item quantity="few">%d hodiny předem</item>
-        <item quantity="many">%d hours before</item>
+        <item quantity="many">%d hodin předem</item>
         <item quantity="other">%d hodin předem</item>
     </plurals>
     <plurals name="minutes_before_plural">
-        <item quantity="one">%d minuta předem</item>
+        <item quantity="one">%d minutu předem</item>
         <item quantity="few">%d minuty předem</item>
-        <item quantity="many">%d minutes before</item>
+        <item quantity="many">%d minut předem</item>
         <item quantity="other">%d minut předem</item>
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="licence_tvdb">Tato aplikace používá data a obrázky z TheTVDB licencované pod licencí Creative Commons.</string>
     <string name="licence_themoviedb">Tento produkt používá TMDb API, ale není schválen nebo certifikován TMDb.</string>
     <string name="licence_trakt">Tato aplikace využívá data a obrázky z webu Trakt.</string>
     <string name="about_open_source">SeriesGuide je vytvořen pomocí otevřeného softwaru.</string>
@@ -414,8 +413,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Ostatní</string>
     <string name="pref_autoupdatesummary">Automaticky synchronizuj a aktualizuj SeriesGuide data</string>
-    <string name="pref_autobackup">Automatická záloha</string>
-    <string name="pref_autobackupsummary">Týdenní záloha vašich seriálů, seznamů a filmů</string>
     <string name="backup">Zálohování/obnovení</string>
     <string name="backup_summary">Zálohování a obnovení Vašich pořadů</string>
     <string name="pref_number">Formát číslování</string>
@@ -435,13 +432,16 @@
     <string name="backup_button">Zálohovat</string>
     <string name="import_button">Obnovit</string>
     <string name="import_warning">Beru na vědomí, že mé aktuální seriály, seznamy a filmy budou přemazány!</string>
+    <string name="no_file_selected">Nebyl vybrán žádný soubor</string>
+    <string name="action_select_file">Vybrat soubor</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatická záloha</string>
+    <string name="pref_autobackupsummary">Týdenní záloha vašich seriálů, seznamů a filmů</string>
     <string name="last_auto_backup">Poslední automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnovení automatické zálohy</string>
     <string name="dataliberation_permission_missing">Pro zálohu nebo obnovení povolte přístup ke svým souborům.</string>
     <string name="autobackup_permission_missing">Pro použití automatického zálohování povolte přístup ke svým souborům.</string>
     <string name="autobackup_files_missing">Pro použití automatického zálohování vyberte platné záložní soubory.</string>
-    <string name="no_file_selected">Nebyl vybrán žádný soubor</string>
-    <string name="action_select_file">Vybrat soubor</string>
     <string name="backup_use_default_files">Použít výchozí záložní soubory</string>
     <!-- Welcome dialog -->
     <string name="get_started">Začněte</string>
@@ -460,7 +460,7 @@
     <string name="pref_notifications_treshold">Čas upozornění</string>
     <string name="pref_notifications_select_shows">Vybrat pořad</string>
     <string name="pref_notifications_select_shows_summary">Seriály, pro které byly povoleny upozornění (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
+    <string name="pref_notifications_hidden">Ignorovat skryté seriály</string>
     <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
     <string name="pref_notification_channel_errors">Chyby</string>
     <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
@@ -469,7 +469,7 @@
     <string name="hide_watched">Skrýt zhlédnuté epizody</string>
     <string name="pref_widget_opacity">Pozadí widgetu</string>
     <string name="pref_widget_type">Typ widgetu</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Použít velké písmo</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Průhledné</string>
     <string name="widget_background_25">25%</string>
@@ -480,13 +480,13 @@
     <string name="onlyx">Pouze pro dárce</string>
     <string name="action_upgrade">Odemknout všechny funkce</string>
     <string name="billing_action_subscribe">Odebírat</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">Spravovat předplatné</string>
     <string name="billing_action_pass">Získejte X Pass App</string>
     <string name="billing_price_subscribe">%1$s na rok, vyzkoušejte zdarma, zrušit to můžete kdykoli prostřednictvím %2$s</string>
     <string name="billing_price_pass">jednorázový nákup</string>
-    <string name="upgrade_description">Unlock all features including notifications, themes and more list widget options. Help me make future updates.</string>
+    <string name="upgrade_description">Každé předplatné odemyká všechny funkce a podporuje budoucí aktualizace. Ale k používání této aplikace není zapotřebí mít předplatné.</string>
     <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
-    <string name="billing_learn_more">Proč platit? Zjistěte víc.</string>
+    <string name="billing_learn_more">Další informace / pomoc</string>
     <string name="subscription_expired">Vypršela platnost</string>
     <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>
     <!-- Amazon In-App Billing -->

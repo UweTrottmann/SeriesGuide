@@ -10,7 +10,7 @@
     <string name="help">ช่วยเหลือ</string>
     <string name="help_and_feedback">ช่วยเหลือ &amp; ความคิดเห็น</string>
     <string name="drawer_open">เปิดแถบนำทาง</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide จะไม่ออกอัปเดตสำหรับ Android เวอร์ชันนี้อีก</string>
     <!-- Media items -->
     <string name="show_details">รายละเอียด</string>
     <string name="episode">ตอน</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">ค้นหาตอน</string>
     <!-- Status messages -->
     <string name="updated">อัปเดตเป็นเวอร์ชันล่าสุดแล้ว</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">รายละเอียด</string>
     <string name="norating">n/a</string>
     <string name="unknown">ไม่ทราบ</string>
     <string name="offline">เชื่อมต่อไปยังเครือข่าย, จากนั้นลองอีกครั้ง</string>
@@ -67,8 +67,8 @@
     <string name="shout_hint">พิมพ์ความคิดเห็น (ภาษาอังกฤษ, 5+ คำ)</string>
     <string name="shout_invalid">ความคิดเห็นของคุณไม่ได้ทำตามกฏ!</string>
     <string name="action_post">โพสต์</string>
-    <string name="isspoiler">เตือนสปอยล์!</string>
-    <string name="no_shouts">เป็นคนแรกที่แสดงความคิดเห็น!</string>
+    <string name="isspoiler">ระวังสปอยล์!</string>
+    <string name="no_shouts">แสดงความคิดเห็นเป็นคนแรก!</string>
     <string name="refresh">โหลดใหม่</string>
     <plurals name="replies_plural">
         <item quantity="other">%d ตอบกลับ</item>
@@ -101,8 +101,8 @@
     <!-- Flagging -->
     <string name="mark_all">ดูทั้งหมดแล้ว</string>
     <string name="unmark_all">ยังไม่ได้ดูเลย</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">ดูถึงตอนนี้</string>
+    <string name="confirmation_watched_up_to">ทำเครื่องหมายตอนก่อนหน้าจนถึงตอนนี้ว่าดูแล้ว?</string>
     <string name="collect_all">เก็บทั้งหมดแล้ว</string>
     <string name="uncollect_all">ยังไม่ได้เก็บเลย</string>
     <string name="action_skip">ข้าม</string>
@@ -114,10 +114,10 @@
     <string name="action_watched">ดูแล้ว</string>
     <string name="action_unwatched">ยังไม่ได้ดู</string>
     <string name="state_watched">ดูแล้ว</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">ข้ามแล้ว</string>
+    <string name="state_in_collection">ในคลังเก็บ</string>
+    <string name="state_on_watchlist">ในรายการที่อยากดู</string>
+    <string name="state_favorite">รายการโปรด</string>
     <!-- Shows -->
     <string name="confirm_delete">คุณแน่ใจหรือว่าต้องลบ %s?</string>
     <string name="delete_error">ไม่สามารถลบซีรีส์ ลองอีกครั้งในภายหลัง</string>
@@ -130,8 +130,8 @@
     <string name="action_episode_notifications_on">เปิดการแจ้งเตือนตอนใหม่</string>
     <string name="action_episode_notifications_off">ปิดการแจ้งเตือนตอนใหม่</string>
     <string name="context_hide">ซ่อน</string>
-    <string name="context_unhide">ไม่ต้องซ่อน</string>
-    <string name="hidden">ย้ายไปซ่อนแล้ว</string>
+    <string name="context_unhide">เลิกซ่อน</string>
+    <string name="hidden">ซ่อนรายการแล้ว</string>
     <string name="unhidden">แสดงซีรีส์อีกครั้ง</string>
     <string name="action_shows_add">เพิ่มซีรีส์</string>
     <string name="action_shows_filter">กรองซีรีส์</string>
@@ -149,7 +149,7 @@
     <string name="action_shows_sort_favorites">รายการโปรดก่อน</string>
     <string name="context_updateshow">อัปเดต</string>
     <string name="context_marknext">ดูตอนถัดไป</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">เปลี่ยนมุมมอง</string>
     <!-- History -->
     <string name="user_stream">ประวัติ</string>
     <string name="recently_watched">เพิ่งดู</string>
@@ -181,7 +181,7 @@
         <item quantity="other">%d ตอนยังไม่ออก</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
-        <item quantity="other">เหลืออีก %d</item>
+        <item quantity="other">เหลืออีก %d ตอน</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
@@ -196,7 +196,6 @@
     <string name="add_error">ไม่สามารถเพิ่ม %s</string>
     <string name="add_already_exists">%s อยู่ในรายการซีรีส์ของคุณอยู่แล้ว</string>
     <string name="title_new_episodes">ตอนใหม่</string>
-    <string name="recommended">แนะนำ</string>
     <string name="watched_shows">ดูแล้ว</string>
     <string name="shows_collection">คลังเก็บ</string>
     <string name="watchlist">อยากดู</string>
@@ -273,7 +272,7 @@
     <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
     <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">ออกจากระบบ SeriesGuide Cloud แล้ว</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">ข้อผิดพลาดในการเข้าสู่ระบบด้วย Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">กำลังส่งไปยัง trakt</string>
     <string name="checkin_success_trakt">เช็กอิน %s บน trakt แล้ว</string>
@@ -339,7 +338,7 @@
     <string name="pref_language">ภาษาของเนื้อหาที่ต้องการ</string>
     <string name="pref_language_fallback">ภาษารอง</string>
     <string name="pref_updatewifionly">รูปภาพผ่านไวไฟเท่านั้น</string>
-    <string name="pref_updatewifionlysummary">เพื่อใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
+    <string name="pref_updatewifionlysummary">ใช้ข้อมูลน้อยลง ไม่ต้องดาวน์โหลดผ่านเครือข่ายมือถือ</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d วันก่อนหน้า</item>
     </plurals>
@@ -350,15 +349,15 @@
         <item quantity="other">%d นาทีก่อนหน้า</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="licence_tvdb">แอปนี้ใช้ข้อมูลและรูปภาพจาก TheTVDB สงวนสิทธิ์ภายใต้สัญญาอนุญาต Creative Commons</string>
     <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDb แต่ไม่ได้รับการรับรองโดย TMDb</string>
-    <string name="licence_trakt">แอปนี้ใช้ข้อมูลและรูปภาพจาก trakt</string>
+    <string name="licence_trakt">แอปนี้ใช้ข้อมูลและรูปภาพจาก Trakt</string>
     <string name="about_open_source">SeriesGuide สร้างด้วยซอฟต์แวร์โอเพนซอร์ส</string>
     <string name="licences_and_credits">สัญญาอนุญาตและเครดิต</string>
     <!-- Sort -->
     <string name="sort">เรียงโดย</string>
-    <string name="action_sort_ignore_articles">ละเลยบทความ</string>
+    <string name="action_sort_ignore_articles">ไม่สนใจบทความ</string>
     <!-- Sort orders -->
     <string name="sort_order_latest_first">ล่าสุดก่อน</string>
     <string name="sort_order_oldest_first">เก่าสุดก่อน</string>
@@ -381,8 +380,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">อื่นๆ</string>
     <string name="pref_autoupdatesummary">ซิงค์และอัปเดตข้อมูล SeriesGuide อัตโนมัติ</string>
-    <string name="pref_autobackup">สำรองอัตโนมัติ</string>
-    <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
     <string name="backup">สำรอง/กู้คืน</string>
     <string name="backup_summary">สำรองหรือกู้คืนซีรีส์ของคุณ</string>
     <string name="pref_number">รูปแบบตัวเลข</string>
@@ -402,13 +399,16 @@
     <string name="backup_button">สร้างข้อมูลสำรอง</string>
     <string name="import_button">กู้คืนการสำรองข้อมูล</string>
     <string name="import_warning">ฉันเข้าใจว่าซีรีส์, รายการ และภาพยนตร์ปัจจุบันของฉันจะถูกแทนที่!</string>
+    <string name="no_file_selected">ไม่ได้เลือกไฟล์ใด</string>
+    <string name="action_select_file">เลือกไฟล์</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">สำรองอัตโนมัติ</string>
+    <string name="pref_autobackupsummary">สำรองข้อมูลซีรีส์, รายการ และภาพยนตร์รายสัปดาห์</string>
     <string name="last_auto_backup">สำรองข้อมูลอัตโนมัติล่าสุด: %s</string>
     <string name="restore_auto_backup">กู้คืนการสำรองข้อมูลอัตโนมัติ</string>
     <string name="dataliberation_permission_missing">ในการสำรองข้อมูลหรือกู้คืน, อนุญาตให้เข้าถึงไฟล์ของคุณ</string>
     <string name="autobackup_permission_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, อนุญาตให้เข้าถึงไฟล์ของคุณ</string>
     <string name="autobackup_files_missing">ในการใช้การสำรองข้อมูลอัตโนมัติ, เลือกไฟล์สำรองที่ถูกต้อง</string>
-    <string name="no_file_selected">ไม่ได้เลือกไฟล์ใด</string>
-    <string name="action_select_file">เลือกไฟล์</string>
     <string name="backup_use_default_files">ใช้ไฟล์สำรองเริ่มต้น</string>
     <!-- Welcome dialog -->
     <string name="get_started">เริ่มต้น</string>
@@ -427,16 +427,16 @@
     <string name="pref_notifications_treshold">แจ้งเตือนตอนไหนดี</string>
     <string name="pref_notifications_select_shows">เลือกรายการ</string>
     <string name="pref_notifications_select_shows_summary">รายการที่เปิดใช้การแจ้งเตือน (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">ไม่สนใจรายการที่ซ่อน</string>
+    <string name="pref_notifications_hidden_summary">ไม่ต้องแจ้งเตือนเกี่ยวกับรายการที่ซ่อนไว้ ถึงแม้การแจ้งเตือนจะเปิดอยู่</string>
     <string name="pref_notification_channel_errors">ข้อผิดพลาด</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">เฉพาะตอนที่จะดูต่อเท่านั้น</string>
+    <string name="pref_notifications_next_episodes_only_summary">แจ้งเตือนเฉพาะเมื่อตอนใหม่เป็นตอนที่จะดูต่อเท่านั้น</string>
     <!-- List Widget -->
     <string name="hide_watched">ซ่อนตอนที่ดูแล้ว</string>
     <string name="pref_widget_opacity">พื้นหลังวิตเจ็ต</string>
     <string name="pref_widget_type">ชนิดวิตเจ็ต</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">ใช้อักษรขนาดใหญ่ขึ้น</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">โปร่งใส</string>
     <string name="widget_background_25">25%</string>
@@ -451,9 +451,9 @@
     <string name="billing_action_pass">รับ X Pass App</string>
     <string name="billing_price_subscribe">%1$s/ปี, ลองใช้ฟรี, ยกเลิกได้ทุกเวลาผ่าน %2$s</string>
     <string name="billing_price_pass">จ่ายครั้งเดียว</string>
-    <string name="upgrade_description">ปลดล็อกคุณสมบัติทั้งหมด รวมทั้งการแจ้งเตือน, ธีม และตัวเลือกวิตเจ็ตเพิ่มเติม ช่วยให้เราสร้างการอัปเดตในอนาคต</string>
+    <string name="upgrade_description">ทุกการสมัครสมาชิกจะปลดล็อกทุกคุณสมบัติและช่วยสนับสนุนอัปเดตในอนาคต ไม่จำเป็นต้องสมัครสมาชิกเพื่อใช้งานแอปนี้</string>
     <string name="upgrade_success">ขอบคุณสำหรับการสนับสนุน SeriesGuide! คุณสามารถเข้าถึงคุณสมบัติทั้งหมดได้แล้ว</string>
-    <string name="billing_learn_more">ทำไมต้องจ่าย? เรีนยรู้เพิ่มเติม</string>
+    <string name="billing_learn_more">ข้อมูลเพิ่มเติมและช่วยเหลือ</string>
     <string name="subscription_expired">การสมัครสมาชิกหมดอายุแล้ว</string>
     <string name="subscription_expired_details">การสมัครสมาชิก SeriesGuide ของคุณหมดอายุแล้ว</string>
     <!-- Amazon In-App Billing -->

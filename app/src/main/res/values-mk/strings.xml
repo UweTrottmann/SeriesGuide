@@ -200,7 +200,6 @@
     <string name="add_error">Неуспешно додавање на %s.</string>
     <string name="add_already_exists">%s веќе се наоѓа во вачата листа од серии.</string>
     <string name="title_new_episodes">Нови епизоди</string>
-    <string name="recommended">Препорачани</string>
     <string name="watched_shows">Гледано</string>
     <string name="shows_collection">Колекција</string>
     <string name="watchlist">Листа за гледање</string>
@@ -269,7 +268,7 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Експериментално!</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
-    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some trakt features are not available</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Пријави се</string>
     <string name="hexagon_signout">Одјави се</string>
     <string name="hexagon_setup_incomplete">Подесувањето на SeriesGuide Cloud не е завршено.</string>
@@ -364,7 +363,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Овој продукт користи TMDb API но не е одобрена или лиценцирана од TMDb.</string>
-    <string name="licence_trakt">Оваа апликација користи податоци и слики од trakt.</string>
+    <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide е направен користејќи софтвер со отворен код.</string>
     <string name="licences_and_credits">Лиценци и кредити</string>
     <!-- Sort -->
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Друго</string>
     <string name="pref_autoupdatesummary">Автоматиско синхронизирање и абдејтирање опции</string>
-    <string name="pref_autobackup">Автoмaтски бекaп</string>
-    <string name="pref_autobackupsummary">Неделни бекупи од вашите серии, листи и филмови</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup или обновување на вашиите серии</string>
     <string name="pref_number">Формат бројки</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Архивирај</string>
     <string name="import_button">Restore backup</string>
     <string name="import_warning">Your current shows, lists or movies will be replaced by the backup</string>
+    <string name="no_file_selected">нема одбрано датотека</string>
+    <string name="action_select_file">Изберете дадотека</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Автoмaтски бекaп</string>
+    <string name="pref_autobackupsummary">Неделни бекупи од вашите серии, листи и филмови</string>
     <string name="last_auto_backup">Последен автоматски Backup: %s</string>
     <string name="restore_auto_backup">Обнови автоматски Backup</string>
     <string name="dataliberation_permission_missing">За да направите backup или restore, дозволете пристап до вашите фајлови.</string>
     <string name="autobackup_permission_missing">За да можете да користите автоматски backup, овозможете пристап до вашите фајлови.</string>
     <string name="autobackup_files_missing">За да користите автоматски бекап, селектирајте валиден бекап фајл.</string>
-    <string name="no_file_selected">нема одбрано датотека</string>
-    <string name="action_select_file">Изберете дадотека</string>
     <string name="backup_use_default_files">Кoристи предефинирaни бекaп фaјлoви</string>
     <!-- Welcome dialog -->
     <string name="get_started">Почни</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">Купи X Pass App</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_price_pass">еднократно купување</string>
-    <string name="upgrade_description">Отклучување на сите функционалности, вклучувајќи нотификации, теми и повеќе опции за листата со widget. Помогнете да се направат нови надградби.</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Ви благодариме за поддршката SeriesGuide! Вие имате пристап до сите функции.</string>
-    <string name="billing_learn_more">Зашто да платиш? Дознај повеќе.</string>
+    <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Претплата истече</string>
     <string name="subscription_expired_details">Вашата SeriesGuide претплата истече.</string>
     <!-- Amazon In-App Billing -->

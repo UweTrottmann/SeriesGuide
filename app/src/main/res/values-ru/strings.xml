@@ -10,7 +10,7 @@
     <string name="help">Помощь</string>
     <string name="help_and_feedback">Помощь и обратная связь</string>
     <string name="drawer_open">Открыть навигационную панель</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide больше не будет получать обновления для этой версии Android.</string>
     <!-- Media items -->
     <string name="show_details">Детали</string>
     <string name="episode">Эпизод</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">Поиск эпизодов</string>
     <!-- Status messages -->
     <string name="updated">Обновлено до последней версии.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Детали</string>
     <string name="norating">нет данных</string>
     <string name="unknown">Неизвестно</string>
     <string name="offline">Подключитесь к сети и повторите попытку.</string>
@@ -104,8 +104,8 @@
     <!-- Flagging -->
     <string name="mark_all">Просмотрено всё</string>
     <string name="unmark_all">Не просмотрено </string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Просмотрено до сюда</string>
+    <string name="confirmation_watched_up_to">Определить все эпизоды до сюда как просмотренные?</string>
     <string name="collect_all">Собраны все</string>
     <string name="uncollect_all">Не собраны</string>
     <string name="action_skip">Пропустить</string>
@@ -117,10 +117,10 @@
     <string name="action_watched">Просмотрен</string>
     <string name="action_unwatched">Не просмотрено</string>
     <string name="state_watched">Просмотрено</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">пропущено</string>
+    <string name="state_in_collection">В коллекции</string>
+    <string name="state_on_watchlist">В списке просмотра</string>
+    <string name="state_favorite">Избранное</string>
     <!-- Shows -->
     <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
     <string name="delete_error">Невозможно удалить сериал. Повторите попытку позже.</string>
@@ -152,7 +152,7 @@
     <string name="action_shows_sort_favorites">Сначала избранные</string>
     <string name="context_updateshow">Обновить</string>
     <string name="context_marknext">Смотреть следующий эпизод</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Изменить вид</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Недавно просмотренные</string>
@@ -208,7 +208,6 @@
     <string name="add_error">Не удалось добавить %s.</string>
     <string name="add_already_exists">%s уже есть в вашем списке.</string>
     <string name="title_new_episodes">Новые эпизоды</string>
-    <string name="recommended">Рекомендуемые</string>
     <string name="watched_shows">Просмотрено</string>
     <string name="shows_collection">Коллекция</string>
     <string name="watchlist">Список просмотра</string>
@@ -294,7 +293,7 @@
     <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
     <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Ошибка при входе в аккаунт Google (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
@@ -360,8 +359,8 @@
     <string name="pref_nospoilers_summary">Скрывать подробности, пока эпизод не просмотрен</string>
     <string name="pref_seasonsorting">Сортировка сезонов по&#8230;</string>
     <string name="pref_episodesorting">Сортировка эпизодов по&#8230;</string>
-    <string name="pref_language">Предпочтительный язык контента</string>
-    <string name="pref_language_fallback">Альтернативный язык</string>
+    <string name="pref_language">Предпочитаемый язык контента</string>
+    <string name="pref_language_fallback">Альтернативное изображение</string>
     <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Чтобы сократить расходы на передачу данных, не скачивать через мобильные сети</string>
     <plurals name="days_before_plural">
@@ -383,8 +382,8 @@
         <item quantity="other">за %d мин. до</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="licence_tvdb">Это приложение использует данные и изображения TheTVDB, лицензированные по лицензии Creative Commons.</string>
     <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
     <string name="licence_trakt">Это приложение использует данные и изображения сервиса Trakt.</string>
     <string name="about_open_source">SeriesGuide сделан с использованием открытого программного обеспечения.</string>
@@ -414,8 +413,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Другое</string>
     <string name="pref_autoupdatesummary">Автоматически синхронизировать и обновлять данные SeriesGuide</string>
-    <string name="pref_autobackup">Автоматическое резервное копирование</string>
-    <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
     <string name="backup">Резервное копирование/восстановление</string>
     <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
     <string name="pref_number">Числовой формат серий</string>
@@ -435,13 +432,16 @@
     <string name="backup_button">Резервное копирование</string>
     <string name="import_button">Восстановление</string>
     <string name="import_warning">Я понимаю, что мои текущие сериалы, списки и фильмы будут заменены!</string>
+    <string name="no_file_selected">Файл не выбран</string>
+    <string name="action_select_file">Выбрать файл</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Автоматическое резервное копирование</string>
+    <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
     <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
     <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>
     <string name="dataliberation_permission_missing">Для резервного копирования или восстановления, разрешите доступ к вашим файлам.</string>
     <string name="autobackup_permission_missing">Чтобы использовать автоматическое резервное копирование, разрешите доступ к вашим файлам.</string>
     <string name="autobackup_files_missing">Чтобы использовать автоматическое резервное копирование, выберите допустимые файлы резервных копий.</string>
-    <string name="no_file_selected">Файл не выбран</string>
-    <string name="action_select_file">Выбрать файл</string>
     <string name="backup_use_default_files">Использовать файлы резервных копий по умолчанию</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начать</string>
@@ -460,11 +460,11 @@
     <string name="pref_notifications_treshold">Когда уведомлять</string>
     <string name="pref_notifications_select_shows">Выбрать сериалы</string>
     <string name="pref_notifications_select_shows_summary">Сериалы с включенными уведомлениями (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Игнорировать скрытые сериалы</string>
+    <string name="pref_notifications_hidden_summary">Даже если уведомления включены, не уведомлять о скрытых сериалах</string>
     <string name="pref_notification_channel_errors">Ошибки</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Только для следующих серий</string>
+    <string name="pref_notifications_next_episodes_only_summary">Уведомлять только если новая серия следующая для просмотра</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
@@ -484,9 +484,9 @@
     <string name="billing_action_pass">Получить X Pass App</string>
     <string name="billing_price_subscribe">%1$s/год, попробуйте бесплатно, можно отменить в любой момент до %2$s</string>
     <string name="billing_price_pass">Единоразовая покупка</string>
-    <string name="upgrade_description">Разблокируйте все возможности, включая уведомления, темы и расширенные настройки виджета. Помогите мне выпускать будущие обновления.</string>
+    <string name="upgrade_description">Каждая подписка открывает все функции и поддерживает будущие обновления. Для использования этого приложения подписка не требуется.</string>
     <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
-    <string name="billing_learn_more">Зачем платить?</string>
+    <string name="billing_learn_more">Дополнительная информация и помощь</string>
     <string name="subscription_expired">Срок действия подписки истек</string>
     <string name="subscription_expired_details">Подписка X функции истекла.</string>
     <!-- Amazon In-App Billing -->

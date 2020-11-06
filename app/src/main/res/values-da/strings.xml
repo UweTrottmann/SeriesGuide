@@ -43,7 +43,7 @@
     <string name="search_hint">Søg episoder</string>
     <!-- Status messages -->
     <string name="updated">Opdateret til nyeste version.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detaljer</string>
     <string name="norating">ikke tilgængelig</string>
     <string name="unknown">ukendt</string>
     <string name="offline">Forbind til et netværk, og prøv igen.</string>
@@ -102,8 +102,8 @@
     <!-- Flagging -->
     <string name="mark_all">Alle set</string>
     <string name="unmark_all">Ingen set</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Set hertil</string>
+    <string name="confirmation_watched_up_to">Markér alle episoder indtil nu som set?</string>
     <string name="collect_all">Alle i samling</string>
     <string name="uncollect_all">Ingen i samling</string>
     <string name="action_skip">Spring over</string>
@@ -115,10 +115,10 @@
     <string name="action_watched">Markér som set</string>
     <string name="action_unwatched">Markér som ikke set</string>
     <string name="state_watched">Set</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_skipped">Sprunget over</string>
+    <string name="state_in_collection">I samling</string>
+    <string name="state_on_watchlist">På overvågningsliste</string>
+    <string name="state_favorite">Favorit</string>
     <!-- Shows -->
     <string name="confirm_delete">Sikker på, at du vil fjerne %s?</string>
     <string name="delete_error">Kunne ikke fjerne serie. Prøv igen senere.</string>
@@ -150,7 +150,7 @@
     <string name="action_shows_sort_favorites">Foretrukne først</string>
     <string name="context_updateshow">Opdatér</string>
     <string name="context_marknext">Næste episode set</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Skift visning</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Set for nylig</string>
@@ -200,7 +200,6 @@
     <string name="add_error">Kunne ikke tilføje %s.</string>
     <string name="add_already_exists">%s er allerede på din serieliste.</string>
     <string name="title_new_episodes">Nye episoder</string>
-    <string name="recommended">Anbefalet</string>
     <string name="watched_shows">Set</string>
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Overvågningsliste</string>
@@ -280,7 +279,7 @@
     <string name="hexagon_remove_account_confirmation">Hvis du sletter din konto, slettes alle film og serier fra SeriesGuide Cloud. Sørg for også at fjerne kontoen på andre tilsluttede enheder.</string>
     <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Logget ud af SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Fejl i Google Sign-In (%s)</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sender til trakt.</string>
     <string name="checkin_success_trakt">%s tjekket ind på trakt.</string>
@@ -364,7 +363,7 @@
     <string name="privacy_policy">Fortrolighedspolitik</string>
     <string name="licence_tvdb">Denne app benytter data og billeder fra TheTVDB, som er licenseret under en Creative Commons-licens.</string>
     <string name="licence_themoviedb">Dette produkt benytter TMDb API\'en, men er ikke godkendt eller certificeret af TMDb.</string>
-    <string name="licence_trakt">Denne app benytter data og billeder fra trakt.</string>
+    <string name="licence_trakt">Denne app benytter data og billeder fra Trakt.</string>
     <string name="about_open_source">SeriesGuide er udviklet ved hjælp af open source-software.</string>
     <string name="licences_and_credits">Licenser og tilkendegivelser</string>
     <!-- Sort -->
@@ -392,8 +391,6 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Øvrige</string>
     <string name="pref_autoupdatesummary">Synkronisér og opdatér SeriesGuide-data automatisk</string>
-    <string name="pref_autobackup">Automatisk sikkerhedskopiering</string>
-    <string name="pref_autobackupsummary">Ugentlig sikkerhedskopiering af dine serier, lister og film</string>
     <string name="backup">Sikkerhedskopier/Gendan</string>
     <string name="backup_summary">Sikkerhedskopier eller gendan dine serier</string>
     <string name="pref_number">Talformat</string>
@@ -413,13 +410,16 @@
     <string name="backup_button">Opret sikkerhedskopi</string>
     <string name="import_button">Gendan sikkerhedskopi</string>
     <string name="import_warning">Jeg forstår, at mine nuværende serier, lister og film vil blive erstattet!</string>
+    <string name="no_file_selected">Ingen fil valgt</string>
+    <string name="action_select_file">Vælg fil</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Automatisk sikkerhedskopiering</string>
+    <string name="pref_autobackupsummary">Ugentlig sikkerhedskopiering af dine serier, lister og film</string>
     <string name="last_auto_backup">Seneste auto-sikkerhedskopiering: %s</string>
     <string name="restore_auto_backup">Gendan auto-sikkerhedskopi</string>
     <string name="dataliberation_permission_missing">Tillad filadgang for at sikkerhedskopiere eller gendanne.</string>
     <string name="autobackup_permission_missing">Tillad filadgang for at benytte auto-sikkerhedskopiering.</string>
     <string name="autobackup_files_missing">Vælg gyldige sikkerhedskopifiler for at benytte auto-sikkerhedskopiering.</string>
-    <string name="no_file_selected">Ingen fil valgt</string>
-    <string name="action_select_file">Vælg fil</string>
     <string name="backup_use_default_files">Benyt standardsikkerhedskopifiler</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom i gang</string>
@@ -438,11 +438,11 @@
     <string name="pref_notifications_treshold">Meddelelsesfrekvens</string>
     <string name="pref_notifications_select_shows">Vælg serier</string>
     <string name="pref_notifications_select_shows_summary">Serier med episodemeddelelser slået til (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Ignorér skjulte serier</string>
+    <string name="pref_notifications_hidden_summary">Selv hvis beskeder er aktiveret, giv ikke besked om skjulte serier</string>
     <string name="pref_notification_channel_errors">Fejl</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Kun for efterfølgende episoder på afspilningslisten</string>
+    <string name="pref_notifications_next_episodes_only_summary">Underret mig kun, hvis den nye episode er den næste på afspilningslisten</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
     <string name="pref_widget_opacity">Widget-baggrund</string>
@@ -462,9 +462,9 @@
     <string name="billing_action_pass">Få X Pass App</string>
     <string name="billing_price_subscribe">%1$s/år, prøv gratis, afmeld når som helst via %2$s</string>
     <string name="billing_price_pass">engangskøb</string>
-    <string name="upgrade_description">Oplås alle funktioner, herunder meddelelser, temaer og flere widget-indstillinger. Hjælp os med at udvikle fremtidige opdateringer.</string>
+    <string name="upgrade_description">Hver type abonnement oplåser alle funktioner og støtter fremtidige opdateringer. Et abonnement er ikke påkrævet for at benytte denne app.</string>
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>
-    <string name="billing_learn_more">Hvorfor betale? Læs mere.</string>
+    <string name="billing_learn_more">Flere oplysninger og hjælp</string>
     <string name="subscription_expired">Abonnement udløbet</string>
     <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
     <!-- Amazon In-App Billing -->
