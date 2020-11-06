@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.service.FeedbackBroadcastReceiver;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
@@ -56,7 +57,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktRatingsTask;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseNavDrawerActivity;
-import com.battlelancer.seriesguide.ui.HelpActivity;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
@@ -918,7 +918,7 @@ public class OverviewFragment extends Fragment implements
                 @Override
                 public void onFeedback() {
                     if (Utils.tryStartActivity(requireContext(),
-                            HelpActivity.getFeedbackEmailIntent(requireContext()), true)) {
+                            FeedbackBroadcastReceiver.getFeedbackEmailIntent(requireContext()), true)) {
                         removeFeedbackView();
                     }
                 }

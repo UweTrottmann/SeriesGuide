@@ -1,5 +1,4 @@
 include ':api'
-include ':customtabs'
 include ':tmdb-api'
 include ':widgets'
 include ':app'
