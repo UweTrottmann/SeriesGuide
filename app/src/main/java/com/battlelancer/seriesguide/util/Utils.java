@@ -122,6 +122,7 @@ public class Utils {
             }
         } catch (NameNotFoundException e) {
             // Expected exception that occurs if the package is not present.
+            Timber.i("X Pass not found.");
         }
 
         return false;
@@ -206,30 +207,26 @@ public class Utils {
     }
 
     /**
-     * Calls {@link Context#startActivity(Intent)} with the given {@link Intent}. If it is
-     * <b>implicit</b>, makes sure there is an {@link Activity} to handle it. If <b>explicit</b>,
-     * will intercept {@link android.content.ActivityNotFoundException}. Can show an error toast on
-     * failure.
+     * Calls {@link Context#startActivity(Intent)} with the given {@link Intent}. Returns false if
+     * no activity found to handle it. Can show an error toast on failure.
      *
-     * <p> E.g. an implicit intent may fail if e.g. the web browser has been disabled through
+     * <p> E.g. an implicit intent may fail if the web browser has been disabled through
      * restricted profiles.
-     *
-     * @return Whether the {@link Intent} could be handled.
      */
     @SuppressLint("LogNotTimber")
     public static boolean tryStartActivity(Context context, Intent intent, boolean displayError) {
-        boolean handled = false;
-
-        // check if an implicit intent can be handled (always true for explicit intents)
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            try {
-                context.startActivity(intent);
-                handled = true;
-            } catch (ActivityNotFoundException | SecurityException e) {
-                // catch failure to handle explicit intents
-                // log in release builds to help extension developers debug
-                Log.i("Utils", "Failed to launch intent.", e);
-            }
+        // Note: Android docs suggest to use resolveActivity,
+        // but won't work on Android 11+ due to package visibility changes.
+        // https://developer.android.com/about/versions/11/privacy/package-visibility
+        boolean handled;
+        try {
+            context.startActivity(intent);
+            handled = true;
+        } catch (ActivityNotFoundException | SecurityException e) {
+            // catch failure to handle explicit intents
+            // log in release builds to help extension developers debug
+            Log.i("Utils", "Failed to launch intent.", e);
+            handled = false;
         }
 
         if (displayError && !handled) {
@@ -271,15 +268,15 @@ public class Utils {
             int requestCode) {
         Context context = fragment.getContext();
 
-        // check if the intent can be handled
-        boolean handled = false;
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            try {
-                fragment.startActivityForResult(intent, requestCode);
-                handled = true;
-            } catch (ActivityNotFoundException ignored) {
-                // catch failure to handle explicit intents
-            }
+        // Note: Android docs suggest to use resolveActivity,
+        // but won't work on Android 11+ due to package visibility changes.
+        // https://developer.android.com/about/versions/11/privacy/package-visibility
+        boolean handled;
+        try {
+            fragment.startActivityForResult(intent, requestCode);
+            handled = true;
+        } catch (ActivityNotFoundException ignored) {
+            handled = false;
         }
 
         if (!handled) {

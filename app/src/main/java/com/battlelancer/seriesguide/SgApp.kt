@@ -28,14 +28,16 @@ import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
 import io.palaima.debugdrawer.timber.data.LumberYard
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
 import java.util.ArrayList
+import java.util.concurrent.Executors
 
 /**
  * Initializes logging and services.
@@ -102,9 +104,15 @@ class SgApp : Application() {
          */
         const val CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider"
 
+        /**
+         * A global [CoroutineScope] to avoid using [kotlinx.coroutines.GlobalScope]
+         * and leave open the possibility of exception handling and other things.
+         * Uses [Dispatchers.Default] by default.
+         */
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
         /** Executes one coroutine at a time. But does not guarantee order if they suspend. */
-        @Suppress("EXPERIMENTAL_API_USAGE")
-        val SINGLE = newSingleThreadContext("SingleThread")
+        val SINGLE = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
         private var servicesComponent: ServicesComponent? = null
 
@@ -173,7 +181,7 @@ class SgApp : Application() {
         if (BuildConfig.DEBUG) {
             // debug drawer logging
             val lumberYard = LumberYard.getInstance(this)
-            GlobalScope.launch(Dispatchers.IO) {
+            coroutineScope.launch(Dispatchers.IO) {
                 lumberYard.cleanUp()
             }
             Timber.plant(lumberYard.tree())
