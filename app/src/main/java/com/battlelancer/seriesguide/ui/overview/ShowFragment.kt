@@ -36,7 +36,7 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
-import com.battlelancer.seriesguide.ui.dialogs.LanguageChoiceDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
@@ -652,9 +652,9 @@ class ShowFragment : Fragment() {
     }
 
     private fun displayLanguageSettings() {
-        LanguageChoiceDialogFragment.show(
+        ShowL10nDialogFragment.show(
             parentFragmentManager,
-            R.array.languageCodesShows, languageCode, "showLanguageDialog"
+            languageCode, "showLanguageDialog"
         )
     }
 
@@ -666,7 +666,7 @@ class ShowFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: LanguageChoiceDialogFragment.LanguageChangedEvent) {
+    fun onEventMainThread(event: ShowL10nDialogFragment.LanguageChangedEvent) {
         changeShowLanguage(event.selectedLanguageCode)
     }
 

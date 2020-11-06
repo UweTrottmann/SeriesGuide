@@ -264,10 +264,11 @@ public class SeriesGuideContract {
         String LASTWATCHED_MS = "series_lastwatched_ms";
 
         /**
-         * Language the show should be downloaded in, in two letter ISO 639-1 format.
+         * Language the show should be downloaded in, in two letter ISO 639-1 format,
+         * plus optional ISO-3166-1 region tag.
          *
          * <pre>
-         * Example: "de"
+         * Example: "de" or "pt-BR"
          * Default: "" (should fall back to English then)
          * </pre>
          */
