@@ -12,6 +12,11 @@ Version 57
 ----------
 *in development*
 
+#### 57-beta3
+*2020-11-06*
+
+* 🔨 Resolve connection issues due to outdated security settings on some devices.
+
 #### 57-beta2
 *2020-10-29*
 

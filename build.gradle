@@ -30,8 +30,8 @@ buildscript {
             'truth': '1.1', // https://github.com/google/truth/releases
 
             // version 21xxxyy -> min SDK 21, release xxx, build yy
-            'code': 2105701,
-            'name': '57-beta2',
+            'code': 2105702,
+            'name': '57-beta3',
     ]
     // load some properties that should not be part of version control
     if (file('secret.properties').exists()) {
