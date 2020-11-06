@@ -114,6 +114,11 @@
     <string name="action_collection_removed">Koleksiyondan kaldırıldı</string>
     <string name="action_watched">İzlendi yap</string>
     <string name="action_unwatched">İzlenmedi yap</string>
+    <string name="state_watched">İzlenmiş</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
     <string name="delete_error">Dizi kaldırılamadı. Sonra tekrar deneyin.</string>

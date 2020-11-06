@@ -707,7 +707,7 @@ public class OverviewFragment extends Fragment implements
         } else {
             ViewTools.setVectorIconTop(theme, buttonCollect, R.drawable.ic_collect_black_24dp);
         }
-        buttonCollect.setText(isCollected ? R.string.action_collection_remove
+        buttonCollect.setText(isCollected ? R.string.state_in_collection
                 : R.string.action_collection_add);
         CheatSheet.setup(buttonCollect, isCollected ? R.string.action_collection_remove
                 : R.string.action_collection_add);

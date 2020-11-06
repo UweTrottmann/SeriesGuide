@@ -115,6 +115,11 @@
     <string name="action_collection_removed">Уклоњено из колекције</string>
     <string name="action_watched">Одгледано</string>
     <string name="action_unwatched">Није одгледано</string>
+    <string name="state_watched">Одгледано</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Желите ли да уклоните %s?</string>
     <string name="delete_error">Серија није уклоњена. Покушајте поново касније.</string>

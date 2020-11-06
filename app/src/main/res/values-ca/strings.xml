@@ -114,6 +114,11 @@
     <string name="action_collection_removed">S\'ha eliminat de la coŀlecció</string>
     <string name="action_watched">Vist</string>
     <string name="action_unwatched">No vist</string>
+    <string name="state_watched">Vist</string>
+    <string name="state_skipped">Skipped</string>
+    <string name="state_in_collection">In collection</string>
+    <string name="state_on_watchlist">On watchlist</string>
+    <string name="state_favorite">Favorite</string>
     <!-- Shows -->
     <string name="confirm_delete">Realment voleu eliminar %s?</string>
     <string name="delete_error">No s\'ha pogut esborrar la sèrie. Intenteu-ho més tard.</string>
