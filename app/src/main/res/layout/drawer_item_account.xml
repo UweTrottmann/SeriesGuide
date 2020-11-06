@@ -23,6 +23,7 @@
         android:paddingRight="@dimen/keyline"
         android:text="@string/no_more_updates"
         android:textAppearance="@style/TextAppearance.Caption"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:visibility="gone"
         tools:visibility="visible" />
 
