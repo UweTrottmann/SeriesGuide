@@ -9,16 +9,11 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.databinding.FragmentCloudSetupBinding
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
@@ -26,7 +21,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
-import com.battlelancer.seriesguide.widgets.SyncStatusView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -45,21 +39,7 @@ import timber.log.Timber
  */
 class CloudSetupFragment : Fragment() {
 
-    @BindView(R.id.buttonCloudAction)
-    internal lateinit var buttonAction: Button
-    @BindView(R.id.textViewCloudDescription)
-    internal lateinit var textViewDescription: TextView
-    @BindView(R.id.textViewCloudUser)
-    internal lateinit var textViewUsername: TextView
-    @BindView(R.id.progressBarCloudAccount)
-    internal lateinit var progressBarAccount: ProgressBar
-    @BindView(R.id.syncStatusCloud)
-    internal lateinit var syncStatusView: SyncStatusView
-    @BindView(R.id.buttonCloudRemoveAccount)
-    internal lateinit var buttonRemoveAccount: Button
-    @BindView(R.id.textViewCloudWarnings)
-    internal lateinit var textViewWarning: TextView
-    private lateinit var unbinder: Unbinder
+    private var binding: FragmentCloudSetupBinding? = null
 
     private var snackbar: Snackbar? = null
 
@@ -83,15 +63,14 @@ class CloudSetupFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v = inflater.inflate(R.layout.fragment_cloud_setup, container, false)
-        unbinder = ButterKnife.bind(this, v)
+        binding = FragmentCloudSetupBinding.inflate(inflater, container, false)
 
-        textViewWarning.setOnClickListener {
+        binding!!.textViewCloudWarnings.setOnClickListener {
             // link to trakt account activity which has details about disabled features
             startActivity(Intent(context, ConnectTraktActivity::class.java))
         }
 
-        buttonRemoveAccount.setOnClickListener {
+        binding!!.buttonCloudRemoveAccount.setOnClickListener {
             if (RemoveCloudAccountDialogFragment().safeShow(
                     parentFragmentManager,
                     "remove-cloud-account"
@@ -102,9 +81,9 @@ class CloudSetupFragment : Fragment() {
 
         updateViews()
         setProgressVisible(true)
-        syncStatusView.visibility = View.GONE
+        binding!!.syncStatusCloud.visibility = View.GONE
 
-        return v
+        return binding!!.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -165,7 +144,7 @@ class CloudSetupFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder.unbind()
+        binding = null
     }
 
     override fun onDestroy() {
@@ -190,7 +169,7 @@ class CloudSetupFragment : Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onEvent(event: SyncProgress.SyncEvent) {
-        syncStatusView.setProgress(event)
+        binding?.syncStatusCloud?.setProgress(event)
     }
 
     /**
@@ -291,36 +270,37 @@ class CloudSetupFragment : Fragment() {
 
     private fun updateViews() {
         // warn about changes in behavior with trakt
-        textViewWarning.visibility = if (TraktCredentials.get(activity).hasCredentials()) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        binding?.textViewCloudWarnings?.visibility =
+            if (TraktCredentials.get(activity).hasCredentials()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
 
         // hexagon enabled and account looks fine?
         if (HexagonSettings.isEnabled(context)
             && !HexagonSettings.shouldValidateAccount(context)) {
-            textViewUsername.text = HexagonSettings.getAccountName(activity)
-            textViewDescription.setText(R.string.hexagon_description)
+            binding?.textViewCloudUser?.text = HexagonSettings.getAccountName(activity)
+            binding?.textViewCloudDescription?.setText(R.string.hexagon_description)
 
             // enable sign-out
-            buttonAction.setText(R.string.hexagon_signout)
-            buttonAction.setOnClickListener { signOut() }
+            binding?.buttonCloudAction?.setText(R.string.hexagon_signout)
+            binding?.buttonCloudAction?.setOnClickListener { signOut() }
             // enable account removal
-            buttonRemoveAccount.visibility = View.VISIBLE
+            binding?.buttonCloudRemoveAccount?.visibility = View.VISIBLE
         } else {
             // did try to setup, but failed?
             if (!HexagonSettings.hasCompletedSetup(activity)) {
                 // show error message
-                textViewDescription.setText(R.string.hexagon_setup_incomplete)
+                binding?.textViewCloudDescription?.setText(R.string.hexagon_setup_incomplete)
             } else {
-                textViewDescription.setText(R.string.hexagon_description)
+                binding?.textViewCloudDescription?.setText(R.string.hexagon_description)
             }
-            textViewUsername.text = null
+            binding?.textViewCloudUser?.text = null
 
             // enable sign-in
-            buttonAction.setText(R.string.hexagon_signin)
-            buttonAction.setOnClickListener {
+            binding?.buttonCloudAction?.setText(R.string.hexagon_signin)
+            binding?.buttonCloudAction?.setOnClickListener {
                 // restrict access to supporters
                 if (Utils.hasAccessToX(activity)) {
                     startHexagonSetup()
@@ -329,7 +309,7 @@ class CloudSetupFragment : Fragment() {
                 }
             }
             // disable account removal
-            buttonRemoveAccount.visibility = View.GONE
+            binding?.buttonCloudRemoveAccount?.visibility = View.GONE
         }
     }
 
@@ -337,18 +317,18 @@ class CloudSetupFragment : Fragment() {
      * Disables buttons and shows a progress bar.
      */
     private fun setProgressVisible(isVisible: Boolean) {
-        progressBarAccount.visibility = if (isVisible) View.VISIBLE else View.GONE
+        binding?.progressBarCloudAccount?.visibility = if (isVisible) View.VISIBLE else View.GONE
 
-        buttonAction.isEnabled = !isVisible
-        buttonRemoveAccount.isEnabled = !isVisible
+        binding?.buttonCloudAction?.isEnabled = !isVisible
+        binding?.buttonCloudRemoveAccount?.isEnabled = !isVisible
     }
 
     /**
      * Disables all buttons (use if signing in with Google seems not possible).
      */
     private fun setDisabled() {
-        buttonAction.isEnabled = false
-        buttonRemoveAccount.isEnabled = false
+        binding?.buttonCloudAction?.isEnabled = false
+        binding?.buttonCloudRemoveAccount?.isEnabled = false
     }
 
     private fun showSnackbar(message: CharSequence) {
