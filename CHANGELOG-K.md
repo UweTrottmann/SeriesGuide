@@ -8,6 +8,32 @@ Release notes for version 46 and older
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+
+Version 46.5-k
+--------------
+*in development*
+
+#### 46.5-k-beta1
+*2020-11-05*
+
+* 📝 Remove support for Android 4.0.
+* 🔨 Resolve connection issues due to outdated security settings on some devices.
+* 🔧 Discover: remove trakt recommendations. They were never useful.
+* 🔨 Only remove movie from watchlist if it actually was on it. This avoids a confusing confirmation message.
+* 🔧 Cloud: update and improve Google Sign-In.
+* 🔧 Support 'Upcoming' status for shows.
+* 📝 Drop support for beaming shows from overview screen. Share the TheTVDB link instead.
+* 🔧 Add link to trakt history website on history screen. Show up to 50 items (was 25).
+* 🔧 If connected to trakt, show at most 10 recently watched episodes or movies on history tabs (was 25).
+* 🔧 Streaming search: add JustWatch for Portugal (but appears to be broken) and Poland.
+* 🌟 Add setting to ignore hidden shows for notifications (defaults to enabled).
+* 🔨 Do not crash if there is no app available to select notification sound.
+* 🔨 Watched up to here no longer marks episodes without release date watched.
+* 🔧 Re-enable crash and error reports.
+* 📝 Latest translations from crowdin.
+* 🌟🔨🔧 And more fixes and improvements from newer releases.
+
+
 Version 46
 ----------
 *(2019-01-04)*

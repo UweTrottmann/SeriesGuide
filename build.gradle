@@ -35,7 +35,7 @@ buildscript {
 
             // version 15xxxyy -> min SDK 16, release xxx, build yy
             'code': 1604600,
-            'name': '46.4-k',
+            'name': '46.5-k-beta1',
     ]
     // load some properties that should not be part of version control
     if (file('secret.properties').exists()) {

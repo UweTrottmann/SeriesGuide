@@ -97,7 +97,7 @@ class SgApp : Application() {
         /**
          * For trakt and hexagon sync movies were not added in all cases, reset sync times.
          */
-        const val RELEASE_VERSION_46_5_K = 1503411
+        const val RELEASE_VERSION_46_5_K_BETA1 = 1604600
 
         /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
