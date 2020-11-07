@@ -13,8 +13,13 @@ Version 46.5-k
 --------------
 *in development*
 
+#### 46.5-k-beta2
+*2020-11-07*
+
+* 🔨 Restore app bar scrolling when viewing episode details.
+
 #### 46.5-k-beta1
-*2020-11-05*
+*2020-11-06*
 
 * 📝 Remove support for Android 4.0.
 * 🔨 Resolve connection issues due to outdated security settings on some devices.
