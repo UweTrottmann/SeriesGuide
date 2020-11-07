@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Enable nested scrolling to work with CoordinatorLayout. -->
-<!-- Use native ScrollView as it behaves better than NestedScrollView when scrolling in view pager -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- Note: this layout is for pre-API 21 (Android 5) devices only. -->
+<!-- Enables nested scrolling to work with CoordinatorLayout. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollViewEpisode"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:nestedScrollingEnabled="true"
-    tools:ignore="UnusedAttribute">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/include_episode"
         layout="@layout/layout_episode" />
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

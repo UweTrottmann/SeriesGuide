@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Some CoordinatorLayouts have scrollable children which do not support app bar scrolling
-    pre-L, so only add scroll flags on L+. -->
+<!-- The scroll flags are only useful inside the coordinator layouts and are otherwise ignored. -->
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sgToolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/transparent"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:layout_scrollFlags="scroll|enterAlways|snap" />
