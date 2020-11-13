@@ -30,6 +30,8 @@ android {
         buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
         buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
+        buildConfigField("String", "COUNT_URL", propertyOrNull("SG_COUNT_URL"))
+        buildConfigField("String", "COUNT_SECRET", propertyOrEmpty("SG_COUNT_SECRET"))
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -207,6 +209,9 @@ dependencies {
 
     // Crashlytics
     implementation "com.google.firebase:firebase-crashlytics:${versions.crashlytics}"
+
+    // Countly
+    implementation "ly.count.android:sdk:20.11.0"
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases

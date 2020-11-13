@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -140,6 +141,9 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
         if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning();
         }
+
+        // Trigger session start only for top activities.
+        Errors.onSessionStart();
     }
 
     @Override
@@ -174,6 +178,10 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
         if (snackbar != null && snackbar.isShown()) {
             snackbar.dismiss();
         }
+
+        // Trigger session stop only for top activities so errors are sent frequently
+        // (when all are stopped).
+        Errors.onSessionStop();
     }
 
     @Override
