@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.modules.TvdbModule
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
@@ -183,6 +184,9 @@ class SgApp : Application() {
         val isSendErrors = AppSettings.isSendErrorReports(this)
         Timber.d("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isSendErrors)
+        if (isSendErrors) {
+            Errors.setUpCounter(this)
+        }
 
         if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug drawer logging
