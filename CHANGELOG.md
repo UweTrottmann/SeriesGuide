@@ -12,6 +12,12 @@ Version 57
 ----------
 *in development*
 
+#### 57-beta4
+*2020-11-26*
+
+* 🔧 Experiment with using self-hosted Countly instance to track some network errors.
+* 📝 Latest translations from crowdin.
+
 #### 57-beta3
 *2020-11-06*
 
