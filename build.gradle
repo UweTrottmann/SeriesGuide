@@ -15,8 +15,8 @@ buildscript {
             'room': '2.2.5',
 
             'butterknife': '10.2.3', // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '17.2.2', // https://firebase.google.com/support/release-notes/android
-            'dagger': '2.29.1', // https://github.com/google/dagger/releases
+            'crashlytics': '17.3.0', // https://firebase.google.com/support/release-notes/android
+            'dagger': '2.30.1', // https://github.com/google/dagger/releases
             'gson': '2.8.6', // https://github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '4.9.0', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
             'retrofit': '2.9.0', // https://github.com/square/retrofit/blob/master/CHANGELOG.md
@@ -49,17 +49,17 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0' // libraries, SeriesGuide
+        classpath 'com.android.tools.build:gradle:4.1.1' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/ben-manes/gradle-versions-plugin/releases
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.33.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.36.0'
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
         // https://github.com/Codearte/gradle-nexus-staging-plugin/releases
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0' // api
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
         classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
     }
 }
 

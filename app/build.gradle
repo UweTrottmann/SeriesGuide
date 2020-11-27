@@ -154,7 +154,7 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     // ViewModel and LiveData
@@ -215,11 +215,11 @@ dependencies {
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
-    implementation "com.google.android.gms:play-services-auth:18.1.0"
+    implementation "com.google.android.gms:play-services-auth:19.0.0"
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    implementation('com.google.api-client:google-api-client-android:1.30.11') {
+    implementation('com.google.api-client:google-api-client-android:1.31.1') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
