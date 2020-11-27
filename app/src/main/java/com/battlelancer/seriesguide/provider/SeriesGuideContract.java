@@ -25,6 +25,17 @@ public class SeriesGuideContract {
         String REF_SHOW_ID = "series_id";
 
         /**
+         * The TMDB ID of a series, may be null for existing shows
+         * (or for new shows until TMDB migration is complete).
+         */
+        String TMDB_ID = "series_tmdb_id";
+
+        /**
+         * The TVDB ID of a series, may be null for new shows after TMDB migration is complete.
+         */
+        String TVDB_ID = "series_tvdb_id";
+
+        /**
          * TheTVDB slug for this show to build URLs. Always a string, but may be a number string if
          * no slug is set (still safe to build URL with). May be null or empty.
          */
@@ -33,32 +44,32 @@ public class SeriesGuideContract {
         /**
          * Ensure this is NOT null (enforced through database constraint).
          */
-        String TITLE = "seriestitle";
+        String TITLE = "series_title";
 
         /**
          * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
          */
         String TITLE_NOARTICLE = "series_title_noarticle";
 
-        String OVERVIEW = "overview";
+        String OVERVIEW = "series_overview";
 
         /**
          * A poster path. Needs to be prefixed with the poster server URL.
          */
-        String POSTER = "poster";
+        String POSTER = "series_poster";
         /**
          * Path to a small variant of the poster. Needs to be prefixed with the poster server URL.
          */
         String POSTER_SMALL = "series_poster_small";
 
-        String CONTENTRATING = "contentrating";
+        String CONTENTRATING = "series_contentrating";
 
         /**
          * Show status. Encoded as integer. See {@link ShowTools.Status}.
          */
-        String STATUS = "status";
+        String STATUS = "series_status";
 
-        String RUNTIME = "runtime";
+        String RUNTIME = "series_runtime";
 
         /**
          * Global rating. Encoded as double.
@@ -67,7 +78,7 @@ public class SeriesGuideContract {
          * Default: 0.0
          * </pre>
          */
-        String RATING_GLOBAL = "rating";
+        String RATING_GLOBAL = "series_rating";
 
         /**
          * Global rating votes. Encoded as integer.
@@ -87,9 +98,9 @@ public class SeriesGuideContract {
          */
         String RATING_USER = "series_rating_user";
 
-        String NETWORK = "network";
+        String NETWORK = "series_network";
 
-        String GENRES = "genres";
+        String GENRES = "series_genres";
 
         /**
          * Release date of the first episode. Encoded as ISO 8601 datetime string. Might be a legacy
@@ -100,7 +111,7 @@ public class SeriesGuideContract {
          * Default: ""
          * </pre>
          */
-        String FIRST_RELEASE = "firstaired";
+        String FIRST_RELEASE = "series_firstaired";
 
         /**
          * Local release time. Encoded as integer (hhmm).
@@ -110,7 +121,7 @@ public class SeriesGuideContract {
          * Default: -1
          * </pre>
          */
-        String RELEASE_TIME = "airstime";
+        String RELEASE_TIME = "series_airstime";
 
         /**
          * Local release week day. Encoded as integer.
@@ -120,7 +131,7 @@ public class SeriesGuideContract {
          * Default: -1
          * </pre>
          */
-        String RELEASE_WEEKDAY = "airsdayofweek";
+        String RELEASE_WEEKDAY = "series_airsdayofweek";
 
         /**
          * Release time zone. Encoded as tzdata "Area/Location" string.
@@ -144,9 +155,9 @@ public class SeriesGuideContract {
          *
          * <p> Previous use: Was added in db version 21 to store the air time in pure text.
          */
-        String RELEASE_COUNTRY = "series_airtime";
+        String RELEASE_COUNTRY = "series_country";
 
-        String IMDBID = "imdbid";
+        String IMDBID = "series_imdbid";
 
         /**
          * The trakt id of this show. Encoded as integer. Note: for simplification, the trakt id
@@ -198,7 +209,7 @@ public class SeriesGuideContract {
          * Default: ""
          * </pre>
          */
-        String NEXTEPISODE = "next";
+        String NEXTEPISODE = "series_next";
 
         /**
          * Next episode text.
@@ -208,7 +219,7 @@ public class SeriesGuideContract {
          * Default: ""
          * </pre>
          */
-        String NEXTTEXT = "nexttext";
+        String NEXTTEXT = "series_nexttext";
 
         /**
          * Next episode release time instant. See {@link Episodes#FIRSTAIREDMS}.
@@ -289,9 +300,20 @@ public class SeriesGuideContract {
         String REF_SEASON_ID = "season_id";
 
         /**
+         * The TMDB ID of a season or episode group, may be null for existing shows
+         * (or for new shows until TMDB migration is complete).
+         */
+        String TMDB_ID = "season_tmdb_id";
+
+        /**
+         * The TVDB ID of a season, may be null for new shows after TMDB migration is complete.
+         */
+        String TVDB_ID = "season_tvdb_id";
+
+        /**
          * The number of a season. Starting from 0 for Special Episodes.
          */
-        String COMBINED = "combinednr";
+        String COMBINED = "season_number";
 
         /**
          * Number of all episodes in a season.
@@ -301,62 +323,88 @@ public class SeriesGuideContract {
         /**
          * Number of unwatched, aired episodes.
          */
-        String WATCHCOUNT = "watchcount";
+        String WATCHCOUNT = "season_watchcount";
 
         /**
          * Number of unwatched, future episodes (not aired yet).
          */
-        String UNAIREDCOUNT = "willaircount";
+        String UNAIREDCOUNT = "season_willaircount";
 
         /**
          * Number of unwatched episodes with no air date.
          */
-        String NOAIRDATECOUNT = "noairdatecount";
+        String NOAIRDATECOUNT = "season_noairdatecount";
 
         /**
-         * Text tags for this season. <em>Repurposed.</em>.
+         * Text tags for this season.
          */
-        String TAGS = "seasonposter";
+        String TAGS = "season_tags";
+
+        /**
+         * The name of a season, or null (in which case should fall back to number).
+         */
+        String NAME = "season_name";
+
+        /**
+         * Integer to order seasons by, typically equal to the season number.
+         */
+        String ORDER = "season_order";
     }
 
     interface EpisodesColumns {
 
         /**
+         * The TMDB ID of an episode, may be null for existing shows
+         * (or for new shows until TMDB migration is complete).
+         */
+        String TMDB_ID = "episode_tmdb_id";
+
+        /**
+         * The TVDB ID of an episode, may be null for new shows after TMDB migration is complete.
+         */
+        String TVDB_ID = "episode_tvdb_id";
+
+        /**
          * Season number. A reference to the season id is stored separately.
          */
-        String SEASON = "season";
+        String SEASON = "episode_season_number";
 
         /**
          * Number of an episode within its season.
          */
-        String NUMBER = "episodenumber";
+        String NUMBER = "episode_number";
+
+        /**
+         * Integer to order episodes by, typically equal to the episode number.
+         */
+        String ORDER = "episode_order";
 
         /**
          * Sometimes episodes are ordered differently when released on DVD. Uses decimal point
          * notation, e.g. 1.0, 1.5.
          */
-        String DVDNUMBER = "dvdnumber";
+        String DVDNUMBER = "episode_dvd_number";
 
         /**
          * Some shows, mainly anime, use absolute episode numbers instead of the season/episode
          * grouping. Added in db version 30.
          */
-        String ABSOLUTE_NUMBER = "absolute_number";
+        String ABSOLUTE_NUMBER = "episode_absolute_number";
 
-        String TITLE = "episodetitle";
+        String TITLE = "episode_title";
 
-        String OVERVIEW = "episodedescription";
+        String OVERVIEW = "episode_description";
 
-        String IMAGE = "episodeimage";
+        String IMAGE = "episode_image";
 
-        String WRITERS = "writers";
+        String WRITERS = "episode_writers";
 
-        String GUESTSTARS = "gueststars";
+        String GUESTSTARS = "episode_gueststars";
 
-        String DIRECTORS = "directors";
+        String DIRECTORS = "episode_directors";
 
         /** See {@link ShowsColumns#RATING_GLOBAL}. */
-        String RATING_GLOBAL = "rating";
+        String RATING_GLOBAL = "episode_rating";
 
         /** See {@link ShowsColumns#RATING_VOTES}. */
         String RATING_VOTES = "episode_rating_votes";
@@ -387,12 +435,12 @@ public class SeriesGuideContract {
         /**
          * One of {@link EpisodeFlags}, whether an episode is watched, skipped or unwatched.
          */
-        String WATCHED = "watched";
+        String WATCHED = "episode_watched";
 
         /**
          * The number of times an episode was watched.
          */
-        String PLAYS = "plays";
+        String PLAYS = "episode_plays";
 
         /**
          * Whether an episode has been collected in digital, physical form.

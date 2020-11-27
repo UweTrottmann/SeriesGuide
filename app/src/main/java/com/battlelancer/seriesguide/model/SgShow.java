@@ -3,17 +3,30 @@ package com.battlelancer.seriesguide.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.DBUtils;
 
-@Entity(tableName = Tables.SHOWS)
+@Entity(
+        tableName = Tables.SHOWS,
+        indices = {
+                @Index(value = Shows.TMDB_ID),
+                @Index(value = Shows.TVDB_ID)
+        }
+)
 public class SgShow {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Shows._ID)
-    public int tvdbId;
+    public int id;
+
+    @ColumnInfo(name = Shows.TMDB_ID)
+    public Integer tmdbId;
+
+    @ColumnInfo(name = Shows.TVDB_ID)
+    public Integer tvdbId;
 
     @ColumnInfo(name = Shows.SLUG)
     public String slug = "";

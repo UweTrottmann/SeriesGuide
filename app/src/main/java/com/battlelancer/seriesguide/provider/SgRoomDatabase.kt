@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.provider
 
 import android.content.Context
+import android.database.sqlite.SQLiteQueryBuilder
 import androidx.annotation.VisibleForTesting
 import androidx.room.Database
 import androidx.room.Room
@@ -48,7 +49,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
         const val VERSION_46_SERIES_SLUG = 46
         const val VERSION_47_SERIES_POSTER_THUMB = 47
         const val VERSION_48_EPISODE_PLAYS = 48
-        const val VERSION = VERSION_48_EPISODE_PLAYS
+        const val VERSION_49_AUTO_ID_MIGRATION = 49
+        const val VERSION = VERSION_49_AUTO_ID_MIGRATION
 
         @Volatile
         private var instance: SgRoomDatabase? = null
@@ -71,6 +73,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                         SgRoomDatabase::class.java,
                         SeriesGuideDatabase.DATABASE_NAME
                     ).addMigrations(
+                        MIGRATION_48_49,
                         MIGRATION_47_48,
                         MIGRATION_46_47,
                         MIGRATION_45_46,
@@ -114,6 +117,110 @@ abstract class SgRoomDatabase : RoomDatabase() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 // manually create FTS table, not supported by Room
                 db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE)
+            }
+        }
+
+        data class SeasonIds(
+            val seasonId: Int,
+            val showId: Int,
+            val seasonTvdbId: Int
+        )
+
+        @JvmField
+        val MIGRATION_48_49: Migration = object :
+            Migration(VERSION_48_EPISODE_PLAYS, VERSION_49_AUTO_ID_MIGRATION) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 48 to 49")
+
+                // Series
+                // Create the new table
+                database.execSQL("CREATE TABLE series_new (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `series_tmdb_id` INTEGER, `series_tvdb_id` INTEGER, `series_slug` TEXT, `series_title` TEXT NOT NULL, `series_title_noarticle` TEXT, `series_overview` TEXT, `series_airstime` INTEGER, `series_airsdayofweek` INTEGER, `series_country` TEXT, `series_timezone` TEXT, `series_firstaired` TEXT, `series_genres` TEXT, `series_network` TEXT, `series_rating` REAL, `series_rating_votes` INTEGER, `series_rating_user` INTEGER, `series_runtime` TEXT, `series_status` TEXT, `series_contentrating` TEXT, `series_next` TEXT, `series_poster` TEXT, `series_poster_small` TEXT, `series_nextairdate` INTEGER, `series_nexttext` TEXT, `series_imdbid` TEXT, `series_trakt_id` INTEGER, `series_favorite` INTEGER NOT NULL, `series_syncenabled` INTEGER NOT NULL, `series_hidden` INTEGER NOT NULL, `series_lastupdate` INTEGER NOT NULL, `series_lastedit` INTEGER NOT NULL, `series_lastwatchedid` INTEGER NOT NULL, `series_lastwatched_ms` INTEGER NOT NULL, `series_language` TEXT, `series_unwatched_count` INTEGER NOT NULL, `series_notify` INTEGER NOT NULL)")
+                // Copy the data
+                database.execSQL("INSERT INTO series_new (series_tvdb_id, series_slug, series_title, series_title_noarticle, series_overview, series_airstime, series_airsdayofweek, series_country, series_timezone, series_firstaired, series_genres, series_network, series_rating, series_rating_votes, series_rating_user, series_runtime, series_status, series_contentrating, series_next, series_poster, series_poster_small, series_nextairdate, series_nexttext, series_imdbid, series_trakt_id, series_favorite, series_syncenabled, series_hidden, series_lastupdate, series_lastedit, series_lastwatchedid, series_lastwatched_ms, series_language, series_unwatched_count, series_notify) SELECT _id, series_slug, seriestitle, series_title_noarticle, overview, airstime, airsdayofweek, series_airtime, series_timezone, firstaired, genres, network, rating, series_rating_votes, series_rating_user, runtime, status, contentrating, next, poster, series_poster_small, series_nextairdate, nexttext, imdbid, series_trakt_id, series_favorite, series_syncenabled, series_hidden, series_lastupdate, series_lastedit, series_lastwatchedid, series_lastwatched_ms, series_language, series_unwatched_count, series_notify FROM series")
+                // Remove the old table
+                database.execSQL("DROP TABLE series")
+                // Change the table name to the correct one
+                database.execSQL("ALTER TABLE series_new RENAME TO series")
+                // Re-create table indexes
+                database.execSQL("CREATE INDEX `index_series_series_tmdb_id` ON `series` (`series_tmdb_id`)")
+                database.execSQL("CREATE INDEX `index_series_series_tvdb_id` ON `series` (`series_tvdb_id`)")
+
+                // Seasons
+                // Create the new table
+                database.execSQL("CREATE TABLE `seasons_new` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `series_id` INTEGER NOT NULL, `season_tmdb_id` TEXT, `season_tvdb_id` INTEGER, `season_number` INTEGER, `season_name` TEXT, `season_order` INTEGER NOT NULL, `season_watchcount` INTEGER, `season_willaircount` INTEGER, `season_noairdatecount` INTEGER, `season_tags` TEXT, `season_totalcount` INTEGER, FOREIGN KEY(`series_id`) REFERENCES `series`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )")
+                // Copy the data, ignore (skip) rows with constraint violations.
+                val showsQuery = database.query(
+                    SQLiteQueryBuilder.buildQueryString(
+                        false,
+                        "series",
+                        arrayOf("_id", "series_tvdb_id"),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                    )
+                )
+                val showTvdbIdsToIds = showsQuery.use {
+                    val array = ArrayList<Pair<Int, Int>>(it.count)
+                    while (it.moveToNext()) {
+                        val id = it.getInt(0)
+                        val tvdbId = it.getInt(1)
+                        array.add(Pair(tvdbId, id))
+                    }
+                    array
+                }
+                showTvdbIdsToIds.forEach {
+                    val showTvdbId = it.first
+                    val showId = it.second
+                    database.execSQL("INSERT OR IGNORE INTO seasons_new (series_id, season_tvdb_id, season_number, season_order, season_watchcount, season_willaircount, season_noairdatecount, season_tags, season_totalcount) SELECT $showId, _id, combinednr, combinednr, watchcount, willaircount, noairdatecount, seasonposter, season_totalcount FROM seasons WHERE series_id=$showTvdbId")
+                }
+                // Remove the old table
+                database.execSQL("DROP TABLE seasons")
+                // Change the table name to the correct one
+                database.execSQL("ALTER TABLE seasons_new RENAME TO seasons")
+                // Re-create seasons table index
+                database.execSQL("CREATE INDEX `index_seasons_series_id` ON `seasons` (`series_id`)")
+
+                // Episodes
+                // Create the new table
+                database.execSQL("CREATE TABLE episodes_new (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `season_id` INTEGER NOT NULL, `series_id` INTEGER NOT NULL, `episode_tmdb_id` INTEGER, `episode_tvdb_id` INTEGER, `episode_title` TEXT NOT NULL, `episode_description` TEXT, `episode_number` INTEGER NOT NULL, `episode_season_number` INTEGER NOT NULL, `episode_order` INTEGER NOT NULL, `episode_dvd_number` REAL, `episode_watched` INTEGER NOT NULL, `episode_plays` INTEGER, `episode_directors` TEXT, `episode_gueststars` TEXT, `episode_writers` TEXT, `episode_image` TEXT, `episode_firstairedms` INTEGER NOT NULL, `episode_collected` INTEGER NOT NULL, `episode_rating` REAL, `episode_rating_votes` INTEGER, `episode_rating_user` INTEGER, `episode_imdbid` TEXT, `episode_lastedit` INTEGER NOT NULL, `episode_absolute_number` INTEGER, `episode_lastupdate` INTEGER NOT NULL, FOREIGN KEY(`series_id`) REFERENCES `series`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )")
+                // Copy the data, ignore (skip) rows with constraint violations.
+                val seasonsQuery = database.query(
+                    SQLiteQueryBuilder.buildQueryString(
+                        false,
+                        "seasons",
+                        arrayOf("_id", "series_id", "season_tvdb_id"),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                    )
+                )
+                val seasonTvdbIdsToIds = seasonsQuery.use {
+                    val array = ArrayList<SeasonIds>(it.count)
+                    while (it.moveToNext()) {
+                        val id = it.getInt(0)
+                        val showId = it.getInt(1)
+                        val tvdbId = it.getInt(2)
+                        array.add(SeasonIds(id, showId, tvdbId))
+                    }
+                    array
+                }
+                seasonTvdbIdsToIds.forEach {
+                    val seasonTvdbId = it.seasonTvdbId
+                    val seasonId = it.seasonId
+                    val showId = it.showId
+                    database.execSQL("INSERT OR IGNORE INTO episodes_new (season_id, series_id, episode_tvdb_id, episode_title, episode_description, episode_number, episode_season_number, episode_order, episode_dvd_number, episode_watched, episode_plays, episode_directors, episode_gueststars, episode_writers, episode_image, episode_firstairedms, episode_collected, episode_rating, episode_rating_votes, episode_rating_user, episode_imdbid, episode_lastedit, episode_absolute_number, episode_lastupdate) SELECT $seasonId, $showId, _id, episodetitle, episodedescription, episodenumber, season, episodenumber, dvdnumber, watched, plays, directors, gueststars, writers, episodeimage, episode_firstairedms, episode_collected, rating, episode_rating_votes, episode_rating_user, episode_imdbid, episode_lastedit, absolute_number, episode_lastupdate FROM episodes WHERE season_id=$seasonTvdbId")
+                }
+                // Remove the old table
+                database.execSQL("DROP TABLE episodes")
+                // Change the table name to the correct one
+                database.execSQL("ALTER TABLE episodes_new RENAME TO episodes")
+                // Re-create episodes table indexes
+                database.execSQL("CREATE INDEX `index_episodes_season_id` ON `episodes` (`season_id`)")
+                database.execSQL("CREATE INDEX `index_episodes_series_id` ON `episodes` (`series_id`)")
             }
         }
 

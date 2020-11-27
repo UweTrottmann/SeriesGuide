@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import timber.log.Timber;
 
 public class SeriesGuideDatabase {

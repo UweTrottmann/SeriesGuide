@@ -32,25 +32,25 @@ interface EpisodeHelper {
     /**
      * Gets episodes of season ordered by episode number.
      */
-    @Query("SELECT * FROM episodes WHERE season_id=:seasonTvdbId ORDER BY episodenumber ASC")
+    @Query("SELECT * FROM episodes WHERE season_id=:seasonTvdbId ORDER BY episode_number ASC")
     fun getSeason(seasonTvdbId: Int): List<SgEpisode>
 
-    @Query("SELECT _id, episodenumber, watched, plays, episode_collected FROM episodes WHERE season_id=:seasonTvdbId")
+    @Query("SELECT _id, episode_number, episode_watched, episode_plays, episode_collected FROM episodes WHERE season_id=:seasonTvdbId")
     fun getSeasonForTraktSync(seasonTvdbId: Int): List<SgEpisodeForTraktSync>
 
-    @Query("SELECT season_id, season, series_id  FROM episodes WHERE _id=:episodeTvdbId")
+    @Query("SELECT season_id, episode_season_number, series_id  FROM episodes WHERE _id=:episodeTvdbId")
     fun getEpisodeMinimal(episodeTvdbId: Int): SgEpisodeSeasonAndShow?
 
     @RawQuery(observedEntities = [SgEpisode::class, SgShow::class])
     fun getEpisodesWithShow(query: SupportSQLiteQuery): DataSource.Factory<Int, EpisodeWithShow>
 
-    @Query("UPDATE episodes SET watched = 0, plays = 0 WHERE _id=:episodeTvdbId")
+    @Query("UPDATE episodes SET episode_watched = 0, episode_plays = 0 WHERE _id=:episodeTvdbId")
     fun setNotWatchedAndRemovePlays(episodeTvdbId: Int): Int
 
-    @Query("UPDATE episodes SET watched = 1, plays = plays + 1 WHERE _id=:episodeTvdbId")
+    @Query("UPDATE episodes SET episode_watched = 1, episode_plays = episode_plays + 1 WHERE _id=:episodeTvdbId")
     fun setWatchedAndAddPlay(episodeTvdbId: Int): Int
 
-    @Query("UPDATE episodes SET watched = 2 WHERE _id=:episodeTvdbId")
+    @Query("UPDATE episodes SET episode_watched = 2 WHERE _id=:episodeTvdbId")
     fun setSkipped(episodeTvdbId: Int): Int
 
     /**
@@ -64,10 +64,10 @@ interface EpisodeHelper {
      * Note: keep in sync with EpisodeWatchedUpToJob.
      */
     @Query(
-        """UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId
+        """UPDATE episodes SET episode_watched = 1, episode_plays = episode_plays + 1 WHERE series_id=:showTvdbId
             AND (
             episode_firstairedms < :episodeFirstAired
-            OR (episode_firstairedms = :episodeFirstAired AND episodenumber <= :episodeNumber)
+            OR (episode_firstairedms = :episodeFirstAired AND episode_number <= :episodeNumber)
             )
             AND ${Episodes.SELECTION_HAS_RELEASE_DATE}
             AND ${Episodes.SELECTION_UNWATCHED_OR_SKIPPED}"""
@@ -80,7 +80,7 @@ interface EpisodeHelper {
      * Note: keep in sync with SeasonWatchedJob.
      */
     @Query(
-        """UPDATE episodes SET watched = 0, plays = 0 WHERE season_id=:seasonTvdbId
+        """UPDATE episodes SET episode_watched = 0, episode_plays = 0 WHERE season_id=:seasonTvdbId
             AND ${Episodes.SELECTION_WATCHED_OR_SKIPPED}"""
     )
     fun setSeasonNotWatchedAndRemovePlays(seasonTvdbId: Int): Int
@@ -94,7 +94,7 @@ interface EpisodeHelper {
      * Note: keep in sync with SeasonWatchedJob.
      */
     @Query(
-        """UPDATE episodes SET watched = 1, plays = plays + 1 WHERE season_id=:seasonTvdbId
+        """UPDATE episodes SET episode_watched = 1, episode_plays = episode_plays + 1 WHERE season_id=:seasonTvdbId
             AND episode_firstairedms <= :currentTimePlusOneHour
             AND ${Episodes.SELECTION_HAS_RELEASE_DATE}
             AND ${Episodes.SELECTION_UNWATCHED_OR_SKIPPED}"""
@@ -107,7 +107,7 @@ interface EpisodeHelper {
      * Note: keep in sync with SeasonWatchedJob.
      */
     @Query(
-        """UPDATE episodes SET watched = 2 WHERE season_id=:seasonTvdbId
+        """UPDATE episodes SET episode_watched = 2 WHERE season_id=:seasonTvdbId
             AND episode_firstairedms <= :currentTimePlusOneHour
             AND ${Episodes.SELECTION_HAS_RELEASE_DATE}
             AND ${Episodes.SELECTION_UNWATCHED}"""
@@ -121,7 +121,7 @@ interface EpisodeHelper {
      * Note: keep in sync with ShowWatchedJob.
      */
     @Query(
-        """UPDATE episodes SET watched = 0, plays = 0 WHERE series_id=:showTvdbId
+        """UPDATE episodes SET episode_watched = 0, episode_plays = 0 WHERE series_id=:showTvdbId
             AND ${Episodes.SELECTION_WATCHED_OR_SKIPPED}
             AND ${Episodes.SELECTION_NO_SPECIALS}"""
     )
@@ -136,7 +136,7 @@ interface EpisodeHelper {
      * Note: keep in sync with ShowWatchedJob.
      */
     @Query(
-        """UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId
+        """UPDATE episodes SET episode_watched = 1, episode_plays = episode_plays + 1 WHERE series_id=:showTvdbId
             AND episode_firstairedms <= :currentTimePlusOneHour
             AND ${Episodes.SELECTION_HAS_RELEASE_DATE}
             AND ${Episodes.SELECTION_UNWATCHED_OR_SKIPPED}

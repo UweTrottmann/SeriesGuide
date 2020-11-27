@@ -7,7 +7,6 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
@@ -16,8 +15,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 @Entity(
         tableName = Tables.EPISODES,
         foreignKeys = {
-                @ForeignKey(entity = SgSeason.class,
-                        parentColumns = Seasons._ID, childColumns = SeasonsColumns.REF_SEASON_ID),
                 @ForeignKey(entity = SgShow.class,
                         parentColumns = Shows._ID, childColumns = ShowsColumns.REF_SHOW_ID)
         },
@@ -28,9 +25,21 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 )
 public class SgEpisode {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Episodes._ID)
-    public int tvdbId;
+    public int id;
+
+    @ColumnInfo(name = SeasonsColumns.REF_SEASON_ID)
+    public int seasonId;
+
+    @ColumnInfo(name = ShowsColumns.REF_SHOW_ID)
+    public int showId;
+
+    @ColumnInfo(name = Episodes.TMDB_ID)
+    public Integer tmdbId;
+
+    @ColumnInfo(name = Episodes.TVDB_ID)
+    public Integer tvdbId;
 
     @NonNull
     @ColumnInfo(name = Episodes.TITLE)
@@ -42,13 +51,11 @@ public class SgEpisode {
     public int number = 0;
     @ColumnInfo(name = Episodes.SEASON)
     public int season = 0;
+    @ColumnInfo(name = Episodes.ORDER)
+    public int order;
+
     @ColumnInfo(name = Episodes.DVDNUMBER)
     public Double dvdNumber;
-
-    @ColumnInfo(name = SeasonsColumns.REF_SEASON_ID)
-    public int seasonTvdbId;
-    @ColumnInfo(name = ShowsColumns.REF_SHOW_ID)
-    public int showTvdbId;
 
     @ColumnInfo(name = Episodes.WATCHED)
     public int watched = 0;

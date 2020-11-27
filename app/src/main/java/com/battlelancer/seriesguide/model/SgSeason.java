@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.model;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -18,15 +19,28 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 )
 public class SgSeason {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Seasons._ID)
+    public int id;
+
+    @ColumnInfo(name = ShowsColumns.REF_SHOW_ID)
+    public int showId;
+
+    @ColumnInfo(name = Seasons.TMDB_ID)
+    public String tmdbId;
+
+    @ColumnInfo(name = Seasons.TVDB_ID)
     public Integer tvdbId;
 
     @ColumnInfo(name = Seasons.COMBINED)
     public Integer number;
 
-    @ColumnInfo(name = ShowsColumns.REF_SHOW_ID)
-    public String showTvdbId;
+    @Nullable
+    @ColumnInfo(name = Seasons.NAME)
+    public String name;
+
+    @ColumnInfo(name = Seasons.ORDER)
+    public int order;
 
     @ColumnInfo(name = Seasons.WATCHCOUNT)
     public Integer watchCount = 0;
