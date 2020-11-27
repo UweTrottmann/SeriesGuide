@@ -12,6 +12,12 @@ Version 57
 ----------
 *in development*
 
+#### 57-beta5
+*2020-11-27*
+
+* 🔧 Detect locked Trakt accounts during sign-in.
+* 📝 Latest translations from crowdin.
+
 #### 57-beta4
 *2020-11-26*
 
