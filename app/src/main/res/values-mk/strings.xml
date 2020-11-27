@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">Веќе сте пријавени во уште една епизода или филм. Или да ја замени претходната проверка или почекајте %s и обидете се повторно.</string>
     <string name="traktcheckin_wait">Ќе почекам</string>
     <string name="trakt_success">Прати на trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Нешто тргна наопаку. Проверете ја вашата trakt сметка и обидете се повторно.</string>
     <string name="trakt_error_not_exists">Не е (сеуште) достапно на trakt. Пробајте подоцна.</string>
     <string name="trakt_notice_not_exists">Не може (сеуште) да бидат тракирани со trakt.</string>
