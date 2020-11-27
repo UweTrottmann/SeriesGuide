@@ -201,7 +201,7 @@
     <string name="add_error">No es pot afegir %s.</string>
     <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
     <string name="title_new_episodes">Nous episodis</string>
-    <string name="watched_shows">Sèries vistes</string>
+    <string name="watched_shows">Vist</string>
     <string name="shows_collection">Coŀlecció</string>
     <string name="watchlist">Llista de seguiment</string>
     <!-- Similar shows -->
