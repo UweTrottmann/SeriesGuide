@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik epizódba, vagy filmbe. Bíráld felül a korábbi bejelentkezést, vagy várj %s és próbáld újra.</string>
     <string name="traktcheckin_wait">Várok</string>
     <string name="trakt_success">Továbbítva a trakt felé.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
     <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
     <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a trakttal.</string>

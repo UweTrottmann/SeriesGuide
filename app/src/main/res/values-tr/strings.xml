@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">Zaten \"şu anda izliyorum\" demiştiniz. Ya önceki girişi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
     <string name="traktcheckin_wait">Bekle</string>
     <string name="trakt_success">Trakt\'a gönder.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
     <string name="trakt_error_not_exists">Trakt (henüz) mevcut değil. Daha sonra yeniden deneyin.</string>
     <string name="trakt_notice_not_exists">(Şimdilik) trakt ile ilişkilendirilememektedir.</string>

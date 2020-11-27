@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
     <string name="traktcheckin_wait">Θα περιμένω</string>
     <string name="trakt_success">Στάλθηκε στο trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>

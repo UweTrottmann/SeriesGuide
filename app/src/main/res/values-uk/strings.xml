@@ -307,6 +307,7 @@
     <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
     <string name="traktcheckin_wait">Я зачекаю</string>
     <string name="trakt_success">Надіслано до trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
     <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>
     <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
