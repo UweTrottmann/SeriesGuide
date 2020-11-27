@@ -281,6 +281,7 @@
     <string name="traktcheckin_inprogress">이미 다른 에피소드 또는 영화에 체크인하였습니다. 이전 체크인을 취소하거나 %s 기다렸다가 다시 시도하세요.</string>
     <string name="traktcheckin_wait">기다리겠습니다</string>
     <string name="trakt_success">trakt로 전송하였습니다.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">오류가 있습니다. trakt 계정을 확인하고 재시도해주세요.</string>
     <string name="trakt_error_not_exists">아직 trakt에 정보가 없습니다. 나중에 다시 시도하세요.</string>
     <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>

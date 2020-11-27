@@ -302,6 +302,7 @@
     <string name="traktcheckin_inprogress">אתה כבר רשום כצופה בפרק או סרט אחר. באפשרותך לדרוס את הרישום הקיים, או לחכות %s ונסה שנית.</string>
     <string name="traktcheckin_wait">אני אחכה</string>
     <string name="trakt_success">נשלח ל-trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את הסיסמא/שם המשתמש שלך ונסה שוב.</string>
     <string name="trakt_error_not_exists">לא זמין (עדיין) ב-trakt. נסה שוב מאוחר יותר.</string>
     <string name="trakt_notice_not_exists">לא ניתן (עדיין) לעקוב עם trakt.</string>

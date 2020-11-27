@@ -316,6 +316,7 @@
     <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
     <string name="traktcheckin_wait">سوف أنتظر</string>
     <string name="trakt_success">تم إرسالها إلى Trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
     <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>
     <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة trakt بعد.</string>

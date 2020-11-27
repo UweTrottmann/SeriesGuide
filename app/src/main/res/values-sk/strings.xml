@@ -302,6 +302,7 @@
     <string name="traktcheckin_inprogress">Už ste prihlásený k inej epizóde alebo filmu. Buď prepíšte predchádzajúce prihlásenie alebo počkajte %s a skúste znova.</string>
     <string name="traktcheckin_wait">Počkám</string>
     <string name="trakt_success">Odoslané do trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Chyba. Skontrolujte užívateľské meno/heslo na trakt a skúste to znova.</string>
     <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
     <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>

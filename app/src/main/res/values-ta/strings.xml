@@ -288,6 +288,7 @@
     <string name="traktcheckin_inprogress">நீங்கள் ஆகியவை ஏற்கனவே சரிபார்க்கப்பட்டது மற்றொரு சம்பவம் அல்லது திரைப்படம். ஒன்று, முந்தைய குறியீட்டு-ல் மேலேறி அல்லது %s காத்திருக்கவும் பின் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="traktcheckin_wait">நான் காத்திருக்க இருக்கும்</string>
     <string name="trakt_success">Trakt அனுப்பப்படும்.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">ஏதோ தவறான சென்று. Trakt அறிமுகங்களை சரிபார்க்கவும் மற்றும் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="trakt_error_not_exists">(இதுவரை) இல்லை அன்று trakt. பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="trakt_notice_not_exists">இல்லை முடியும் (இதுவரை) குறியிட்ட கொண்டு trakt.</string>
