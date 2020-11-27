@@ -161,11 +161,11 @@ public abstract class BaseOAuthActivity extends BaseActivity {
         }
     }
 
-    protected void setMessage(String message) {
+    protected void setMessage(CharSequence message) {
         setMessage(message, false);
     }
 
-    protected void setMessage(String message, boolean progressVisible) {
+    protected void setMessage(CharSequence message, boolean progressVisible) {
         if (message == null) {
             textViewMessage.setVisibility(View.GONE);
         } else {
