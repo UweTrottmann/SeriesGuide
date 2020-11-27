@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.enums.Result;
@@ -26,16 +27,26 @@ import timber.log.Timber;
  * Expects a valid trakt OAuth auth code. Retrieves the access token and username for the associated
  * user. If successful, the credentials are stored.
  */
-public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
+public class ConnectTraktTask extends AsyncTask<String, Void, ConnectTraktTask.TaskResult> {
 
-    public static class FinishedEvent {
+    public static class TaskResult {
         /**
          * One of {@link TraktResult}.
          */
         public final int resultCode;
+        /**
+         * A debug message, or null.
+         */
+        @Nullable
+        public final String debugMessage;
 
-        FinishedEvent(int resultCode) {
+        public TaskResult(int resultCode, @Nullable String debugMessage) {
             this.resultCode = resultCode;
+            this.debugMessage = debugMessage;
+        }
+
+        TaskResult(int resultCode) {
+            this(resultCode, null);
         }
     }
 
@@ -50,10 +61,10 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
     }
 
     @Override
-    protected Integer doInBackground(String... params) {
+    protected TaskResult doInBackground(String... params) {
         // check for connectivity
         if (!AndroidUtils.isNetworkConnected(context)) {
-            return TraktResult.OFFLINE;
+            return new TaskResult(TraktResult.OFFLINE);
         }
 
         // get account data
@@ -62,7 +73,7 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // check if we have any usable data
         if (TextUtils.isEmpty(authCode)) {
             Timber.e("Failed because auth code is empty.");
-            return TraktResult.AUTH_ERROR;
+            return new TaskResult(TraktResult.AUTH_ERROR);
         }
 
         // get access token
@@ -79,6 +90,8 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
             } else {
                 Errors.logAndReport("get access token", response,
                         SgTrakt.checkForTraktOAuthError(trakt, response));
+                return new TaskResult(TraktResult.AUTH_ERROR,
+                        "get access token HTTP " + response.code());
             }
         } catch (IOException e) {
             Errors.logAndReport("get access token", e);
@@ -87,13 +100,13 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // did we obtain all required data?
         if (TextUtils.isEmpty(accessToken)) {
             Timber.e("Failed to obtain access token.");
-            return TraktResult.AUTH_ERROR;
+            return new TaskResult(TraktResult.AUTH_ERROR);
         } else if (TextUtils.isEmpty(refreshToken)) {
             Timber.e("Failed to obtain refresh token");
-            return TraktResult.AUTH_ERROR;
+            return new TaskResult(TraktResult.AUTH_ERROR);
         } else if (expiresIn < 1) {
             Timber.e("Failed because no valid expiry time.");
-            return TraktResult.AUTH_ERROR;
+            return new TaskResult(TraktResult.AUTH_ERROR);
         }
 
         // reset sync state before hasCredentials may return true
@@ -118,13 +131,15 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
         // store the access token, refresh token and expiry time
         TraktCredentials.get(context).storeAccessToken(accessToken);
         if (!TraktCredentials.get(context).hasCredentials()) {
+            // saving access token failed, abort.
             Timber.e("Failed because access token can not be stored.");
-            return Result.ERROR; // saving access token failed, abort.
+            return new TaskResult(Result.ERROR, "access token not stored");
         }
         if (!TraktOAuthSettings.storeRefreshData(context, refreshToken, expiresIn)) {
+            // saving refresh token failed, abort.
             Timber.e("Failed because refresh data can not be stored.");
             TraktCredentials.get(context).removeCredentials();
-            return Result.ERROR; // saving refresh token failed, abort.
+            return new TaskResult(Result.ERROR, "refresh token not stored");
         }
 
         // get user and display name
@@ -144,33 +159,38 @@ public class ConnectTraktTask extends AsyncTask<String, Void, Integer> {
                 if (SgTrakt.isUnauthorized(response)) {
                     // access token already is invalid, remove it :(
                     TraktCredentials.get(context).removeCredentials();
-                    return TraktResult.AUTH_ERROR;
+                    return new TaskResult(TraktResult.AUTH_ERROR);
                 }
+                if (SgTrakt.isAccountLocked(response)) {
+                    return new TaskResult(TraktResult.ACCOUNT_LOCKED);
+                }
+                return new TaskResult(TraktResult.AUTH_ERROR,
+                        "get user settings HTTP " + response.code());
             }
         } catch (Exception e) {
             Errors.logAndReport("get user settings", e);
-            return AndroidUtils.isNetworkConnected(context)
-                    ? TraktResult.API_ERROR : TraktResult.OFFLINE;
+            return new TaskResult(AndroidUtils.isNetworkConnected(context)
+                    ? TraktResult.API_ERROR : TraktResult.OFFLINE);
         }
 
         // did we obtain a username (display name is not required)?
         if (TextUtils.isEmpty(username)) {
             Timber.e("Failed because returned user name is empty.");
-            return TraktResult.API_ERROR;
+            return new TaskResult(TraktResult.API_ERROR);
         }
         TraktCredentials.get(context).storeUsername(username, displayname);
 
         Timber.i("Successfully connected to Trakt.");
-        return Result.SUCCESS;
+        return new TaskResult(Result.SUCCESS);
     }
 
     @Override
-    protected void onPostExecute(Integer resultCode) {
-        if (resultCode == Result.SUCCESS) {
+    protected void onPostExecute(TaskResult result) {
+        if (result.resultCode == Result.SUCCESS) {
             // trigger a sync, notifies user via toast
             SgSyncAdapter.requestSyncDeltaImmediate(context, true);
         }
 
-        EventBus.getDefault().post(new FinishedEvent(resultCode));
+        EventBus.getDefault().post(result);
     }
 }
