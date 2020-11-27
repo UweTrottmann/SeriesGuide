@@ -281,6 +281,7 @@
     <string name="traktcheckin_inprogress">Anda sudah check-in ke episode atau film yang lain. Timpa check-in sebelumnya atau tunggu %s dan coba lagi.</string>
     <string name="traktcheckin_wait">Aku akan menunggu</string>
     <string name="trakt_success">Dikirim ke trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Sesuatu tidak beres. Periksa kredensial trakt anda dan coba lagi.</string>
     <string name="trakt_error_not_exists">Tidak (belum) tersedia pada trakt. Coba lagi nanti.</string>
     <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>

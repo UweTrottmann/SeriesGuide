@@ -288,6 +288,7 @@
     <string name="traktcheckin_inprogress">Du er allerede tjekket ind på en anden episode eller film. Tilsidesæt nuværende indtjekning eller vent %s, og forsøg igen.</string>
     <string name="traktcheckin_wait">Jeg venter</string>
     <string name="trakt_success">Sendt til trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Noget gik galt. Kontrollér dine trakt-brugeroplysninger, og prøv igen.</string>
     <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Prøv igen senere.</string>
     <string name="trakt_notice_not_exists">Kan ikke spores med trakt (endnu).</string>

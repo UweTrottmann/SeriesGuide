@@ -281,6 +281,7 @@
     <string name="traktcheckin_inprogress">您已经为另一个剧集或电影签到了，请等待 %s 后重新签到或替换掉之前的签到状态。</string>
     <string name="traktcheckin_wait">等待</string>
     <string name="trakt_success">已同步至 trakt</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">出错了，请检查您的凭据后再试。</string>
     <string name="trakt_error_not_exists">trakt 上尚无相关信息，请稍后重试。</string>
     <string name="trakt_notice_not_exists">无法在 trakt 上追剧。</string>

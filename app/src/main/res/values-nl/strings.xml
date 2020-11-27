@@ -288,6 +288,7 @@
     <string name="traktcheckin_inprogress">U bent al ingecheckt. Overschrijf de vorige check-in of wacht %s en probeer het opnieuw.</string>
     <string name="traktcheckin_wait">Ik zal wachten</string>
     <string name="trakt_success">Verzonden naar Trakt.</string>
+    <string name="trakt_error_account_locked">Uw Trakt-account is vergrendeld. Neem contact op met Trakt-ondersteuning.</string>
     <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
     <string name="trakt_error_not_exists">Nog (niet) beschikbaar op trakt. Probeer het later nog eens.</string>
     <string name="trakt_notice_not_exists">Kan (nog) niet gevolgd worden via trakt.</string>
