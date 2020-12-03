@@ -237,6 +237,43 @@ public class MigrationTest {
         assertThat(movieNotWatched.plays).isEqualTo(0);
     }
 
+    @Test
+    public void migrationFrom48To49_containsCorrectData() throws IOException {
+        int v48 = SgRoomDatabase.VERSION_48_EPISODE_PLAYS;
+        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, v48);
+        RoomDatabaseTestHelper.insertShow(SHOW, db, v48);
+        RoomDatabaseTestHelper.insertSeason(SEASON, db);
+        TestEpisode testEpisode = getTestEpisode(21);
+        RoomDatabaseTestHelper.insertEpisode(
+                db,
+                v48,
+                testEpisode,
+                SHOW.getTvdbId(),
+                SEASON.getTvdbId(),
+                SEASON.getNumber(),
+                true
+        );
+        db.close();
+
+        SgRoomDatabase database = getMigratedRoomDatabase();
+        assertTestData(database);
+
+        SgShow dbShow = database.showHelper().getShow();
+        assertThat(dbShow.id).isNotEqualTo(SHOW.getTvdbId());
+        assertThat(dbShow.tmdbId).isNull();
+
+        SgSeason dbSeason = database.seasonHelper().getSeason();
+        assertThat(dbSeason.id).isNotEqualTo(SEASON.getTvdbId());
+        assertThat(dbSeason.tmdbId).isNull();
+        assertThat(dbSeason.name).isNull();
+        assertThat(dbSeason.order).isEqualTo(SEASON.getNumber());
+
+        SgEpisode dbEpisode = database.episodeHelper().getEpisode(testEpisode.getTvdbId());
+        assertThat(dbEpisode.id).isNotEqualTo(testEpisode.getTvdbId());
+        assertThat(dbEpisode.tmdbId).isNull();
+        assertThat(dbEpisode.order).isEqualTo(testEpisode.getNumber());
+    }
+
     private void assertTestData(SgRoomDatabase database) {
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity.
         // Validate that the data was migrated properly.
