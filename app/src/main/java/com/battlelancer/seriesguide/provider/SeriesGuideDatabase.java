@@ -275,159 +275,6 @@ public class SeriesGuideDatabase {
                 + Episodes.FIRSTAIREDMS + " as " + Shows.NEXTAIRDATEMS;
     }
 
-    interface References {
-
-        String SHOW_ID = "REFERENCES " + Tables.SHOWS + "(" + BaseColumns._ID + ")";
-
-        String SEASON_ID = "REFERENCES " + Tables.SEASONS + "(" + BaseColumns._ID + ")";
-
-        String LIST_ID = "REFERENCES " + Tables.LISTS + "(" + Lists.LIST_ID + ")";
-    }
-
-    @VisibleForTesting
-    public static final String CREATE_SHOWS_TABLE = "CREATE TABLE " + Tables.SHOWS + " ("
-
-            + BaseColumns._ID + " INTEGER PRIMARY KEY,"
-
-            + ShowsColumns.TITLE + " TEXT NOT NULL,"
-
-            + ShowsColumns.TITLE_NOARTICLE + " TEXT,"
-
-            + ShowsColumns.OVERVIEW + " TEXT DEFAULT '',"
-
-            + ShowsColumns.RELEASE_TIME + " INTEGER,"
-
-            + ShowsColumns.RELEASE_WEEKDAY + " INTEGER,"
-
-            + ShowsColumns.RELEASE_COUNTRY + " TEXT,"
-
-            + ShowsColumns.RELEASE_TIMEZONE + " TEXT,"
-
-            + ShowsColumns.FIRST_RELEASE + " TEXT,"
-
-            + ShowsColumns.GENRES + " TEXT DEFAULT '',"
-
-            + ShowsColumns.NETWORK + " TEXT DEFAULT '',"
-
-            + ShowsColumns.RATING_GLOBAL + " REAL,"
-
-            + ShowsColumns.RATING_VOTES + " INTEGER,"
-
-            + ShowsColumns.RATING_USER + " INTEGER,"
-
-            + ShowsColumns.RUNTIME + " TEXT DEFAULT '',"
-
-            + ShowsColumns.STATUS + " TEXT DEFAULT '',"
-
-            + ShowsColumns.CONTENTRATING + " TEXT DEFAULT '',"
-
-            + ShowsColumns.NEXTEPISODE + " TEXT DEFAULT '',"
-
-            + ShowsColumns.POSTER + " TEXT DEFAULT '',"
-
-            + ShowsColumns.NEXTAIRDATEMS + " INTEGER,"
-
-            + ShowsColumns.NEXTTEXT + " TEXT DEFAULT '',"
-
-            + ShowsColumns.IMDBID + " TEXT DEFAULT '',"
-
-            + ShowsColumns.TRAKT_ID + " INTEGER DEFAULT 0,"
-
-            + ShowsColumns.FAVORITE + " INTEGER DEFAULT 0,"
-
-            + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT '',"
-
-            + ShowsColumns.HEXAGON_MERGE_COMPLETE + " INTEGER DEFAULT 1,"
-
-            + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
-
-            + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0,"
-
-            + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0,"
-
-            + ShowsColumns.LASTWATCHEDID + " INTEGER DEFAULT 0,"
-
-            + ShowsColumns.LASTWATCHED_MS + " INTEGER DEFAULT 0,"
-
-            + ShowsColumns.LANGUAGE + " TEXT DEFAULT '',"
-
-            + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
-            + ","
-
-            + ShowsColumns.NOTIFY + " INTEGER DEFAULT 1"
-
-            + ");";
-
-    @VisibleForTesting
-    public static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
-
-            + BaseColumns._ID + " INTEGER PRIMARY KEY,"
-
-            + SeasonsColumns.COMBINED + " INTEGER,"
-
-            + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID + ","
-
-            + SeasonsColumns.WATCHCOUNT + " INTEGER DEFAULT 0,"
-
-            + SeasonsColumns.UNAIREDCOUNT + " INTEGER DEFAULT 0,"
-
-            + SeasonsColumns.NOAIRDATECOUNT + " INTEGER DEFAULT 0,"
-
-            + SeasonsColumns.TAGS + " TEXT DEFAULT '',"
-
-            + SeasonsColumns.TOTALCOUNT + " INTEGER DEFAULT 0"
-
-            + ");";
-
-    @VisibleForTesting
-    public static final String CREATE_EPISODES_TABLE = "CREATE TABLE " + Tables.EPISODES + " ("
-
-            + BaseColumns._ID + " INTEGER PRIMARY KEY,"
-
-            + EpisodesColumns.TITLE + " TEXT NOT NULL,"
-
-            + EpisodesColumns.OVERVIEW + " TEXT,"
-
-            + EpisodesColumns.NUMBER + " INTEGER DEFAULT 0,"
-
-            + EpisodesColumns.SEASON + " INTEGER DEFAULT 0,"
-
-            + EpisodesColumns.DVDNUMBER + " REAL,"
-
-            + SeasonsColumns.REF_SEASON_ID + " TEXT " + References.SEASON_ID + ","
-
-            + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID + ","
-
-            + EpisodesColumns.WATCHED + " INTEGER DEFAULT 0,"
-
-            + EpisodesColumns.DIRECTORS + " TEXT DEFAULT '',"
-
-            + EpisodesColumns.GUESTSTARS + " TEXT DEFAULT '',"
-
-            + EpisodesColumns.WRITERS + " TEXT DEFAULT '',"
-
-            + EpisodesColumns.IMAGE + " TEXT DEFAULT '',"
-
-            + EpisodesColumns.FIRSTAIREDMS + " INTEGER DEFAULT -1,"
-
-            + EpisodesColumns.COLLECTED + " INTEGER DEFAULT 0,"
-
-            + EpisodesColumns.RATING_GLOBAL + " REAL,"
-
-            + EpisodesColumns.RATING_VOTES + " INTEGER,"
-
-            + EpisodesColumns.RATING_USER + " INTEGER,"
-
-            + EpisodesColumns.IMDBID + " TEXT DEFAULT '',"
-
-            + EpisodesColumns.LAST_EDITED + " INTEGER DEFAULT 0,"
-
-            + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER,"
-
-            + EpisodesColumns.LAST_UPDATED + " INTEGER DEFAULT 0"
-
-            + ");";
-
     static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
             + Tables.EPISODES_SEARCH + " USING fts4("
 
@@ -441,112 +288,22 @@ public class SeriesGuideDatabase {
             + ");";
 
     @VisibleForTesting
-    public static final String CREATE_LISTS_TABLE = "CREATE TABLE " + Tables.LISTS + " ("
-
-            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-
-            + ListsColumns.LIST_ID + " TEXT NOT NULL,"
-
-            + ListsColumns.NAME + " TEXT NOT NULL,"
-
-            + ListsColumns.ORDER + " INTEGER DEFAULT 0,"
-
-            + "UNIQUE (" + ListsColumns.LIST_ID + ") ON CONFLICT REPLACE"
-
+    public static final String ACTIVITY_TABLE = "activity ("
+            + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "activity_episode TEXT NOT NULL,"
+            + "activity_show TEXT NOT NULL,"
+            + "activity_time INTEGER NOT NULL,"
+            + "UNIQUE (activity_episode) ON CONFLICT REPLACE"
             + ");";
 
     @VisibleForTesting
-    public static final String CREATE_LIST_ITEMS_TABLE = "CREATE TABLE " + Tables.LIST_ITEMS
-            + " ("
-
-            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-
-            + ListItemsColumns.LIST_ITEM_ID + " TEXT NOT NULL,"
-
-            + ListItemsColumns.ITEM_REF_ID + " TEXT NOT NULL,"
-
-            + ListItemsColumns.TYPE + " INTEGER NOT NULL,"
-
-            + ListsColumns.LIST_ID + " TEXT " + References.LIST_ID + ","
-
-            + "UNIQUE (" + ListItemsColumns.LIST_ITEM_ID + ") ON CONFLICT REPLACE"
-
+    public static final String JOBS_TABLE = "jobs ("
+            + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "job_created_at INTEGER,"
+            + "job_type INTEGER,"
+            + "job_extras BLOB,"
+            + "UNIQUE (job_created_at) ON CONFLICT REPLACE"
             + ");";
-
-    @VisibleForTesting
-    public static final String CREATE_MOVIES_TABLE = "CREATE TABLE " + Tables.MOVIES
-            + " ("
-
-            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-
-            + MoviesColumns.TMDB_ID + " INTEGER NOT NULL,"
-
-            + MoviesColumns.IMDB_ID + " TEXT,"
-
-            + MoviesColumns.TITLE + " TEXT,"
-
-            + MoviesColumns.TITLE_NOARTICLE + " TEXT,"
-
-            + MoviesColumns.POSTER + " TEXT,"
-
-            + MoviesColumns.GENRES + " TEXT,"
-
-            + MoviesColumns.OVERVIEW + " TEXT,"
-
-            + MoviesColumns.RELEASED_UTC_MS + " INTEGER,"
-
-            + MoviesColumns.RUNTIME_MIN + " INTEGER DEFAULT 0,"
-
-            + MoviesColumns.TRAILER + " TEXT,"
-
-            + MoviesColumns.CERTIFICATION + " TEXT,"
-
-            + MoviesColumns.IN_COLLECTION + " INTEGER DEFAULT 0,"
-
-            + MoviesColumns.IN_WATCHLIST + " INTEGER DEFAULT 0,"
-
-            + MoviesColumns.PLAYS + " INTEGER DEFAULT 0,"
-
-            + MoviesColumns.WATCHED + " INTEGER DEFAULT 0,"
-
-            + MoviesColumns.RATING_TMDB + " REAL DEFAULT 0,"
-
-            + MoviesColumns.RATING_VOTES_TMDB + " INTEGER DEFAULT 0,"
-
-            + MoviesColumns.RATING_TRAKT + " INTEGER DEFAULT 0,"
-
-            + MoviesColumns.RATING_VOTES_TRAKT + " INTEGER DEFAULT 0,"
-
-            + MoviesColumns.RATING_USER + " INTEGER,"
-
-            + MoviesColumns.LAST_UPDATED + " INTEGER,"
-
-            + "UNIQUE (" + MoviesColumns.TMDB_ID + ") ON CONFLICT REPLACE"
-
-            + ");";
-
-    private static final String ACTIVITY_TABLE = Tables.ACTIVITY
-            + " ("
-            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
-            + ActivityColumns.SHOW_TVDB_ID + " TEXT NOT NULL,"
-            + ActivityColumns.TIMESTAMP_MS + " INTEGER NOT NULL,"
-            + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
-            + ");";
-    @VisibleForTesting
-    public static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + ACTIVITY_TABLE;
-
-    private static final String JOBS_TABLE = Tables.JOBS
-            + " ("
-            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + JobsColumns.CREATED_MS + " INTEGER,"
-            + JobsColumns.TYPE + " INTEGER,"
-            + JobsColumns.EXTRAS + " BLOB,"
-            + "UNIQUE (" + JobsColumns.CREATED_MS + ") ON CONFLICT REPLACE"
-            + ");";
-
-    @VisibleForTesting
-    public static final String CREATE_JOBS_TABLE = "CREATE TABLE " + JOBS_TABLE;
 
     /**
      * See {@link #DBVER_42_JOBS}.

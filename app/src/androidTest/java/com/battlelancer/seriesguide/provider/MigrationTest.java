@@ -6,6 +6,7 @@ import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_44_
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_45_46;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_46_47;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_47_48;
+import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_48_49;
 import static com.google.common.truth.Truth.assertThat;
 
 import android.database.sqlite.SQLiteDatabase;
@@ -17,14 +18,15 @@ import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.model.SgEpisode;
 import com.battlelancer.seriesguide.model.SgMovie;
 import com.battlelancer.seriesguide.model.SgSeason;
 import com.battlelancer.seriesguide.model.SgShow;
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode;
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason;
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.movies.MovieDetails;
-import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.io.IOException;
 import org.junit.After;
@@ -38,35 +40,29 @@ public class MigrationTest {
 
     private static final String TEST_DB_NAME = "test-db";
 
-    private static final Show SHOW = new Show();
-    private static final SgSeason SEASON = new SgSeason();
-    private static final Episode EPISODE = new Episode();
+    private static final TestShow SHOW = new TestShow(
+            21,
+            "The No Answers Show",
+            45,
+            "example.jpg"
+    );
+    private static final TestSeason SEASON = new TestSeason(
+            21,
+            "21",
+            2
+    );
+    private static final TestEpisode EPISODE = new TestEpisode(
+            21,
+            "Episode Title",
+            1
+    );
 
-    static {
-        SHOW.tvdb_id = 21;
-        SHOW.title = "The No Answers Show";
-        SHOW.runtime = 45;
-        SHOW.poster = "example.jpg";
-
-        SEASON.tvdbId = 21;
-        SEASON.showTvdbId = "21";
-        SEASON.number = 2;
-
-        EPISODE.id = 21;
-        EPISODE.episodeName = "Episode Title";
-        EPISODE.airedEpisodeNumber = 1;
-    }
-
-    private static Episode getTestEpisode(@Nullable Integer tvdbId) {
-        Episode episode = new Episode();
-        if (tvdbId != null) {
-            episode.id = tvdbId;
-        } else {
-            episode.id = 21;
-        }
-        episode.episodeName = "Episode Title";
-        episode.airedEpisodeNumber = 1;
-        return episode;
+    private static TestEpisode getTestEpisode(@Nullable Integer tvdbId) {
+        return new TestEpisode(
+                tvdbId != null ? tvdbId : 21,
+                "Episode Title",
+                1
+        );
     }
 
     private static MovieDetails getTestMovieDetails(@Nullable Integer tmdbId) {
@@ -137,7 +133,7 @@ public class MigrationTest {
         SqliteDatabaseTestHelper.insertShow(SHOW, db);
         SqliteDatabaseTestHelper.insertSeason(SEASON, db);
         SqliteDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(), db);
         db.close();
     }
 
@@ -148,7 +144,7 @@ public class MigrationTest {
         RoomDatabaseTestHelper.insertShow(SHOW, db, 43);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(), db);
         db.close();
 
         assertTestData(getMigratedRoomDatabase());
@@ -160,7 +156,7 @@ public class MigrationTest {
         RoomDatabaseTestHelper.insertShow(SHOW, db, 44);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(), db);
         db.close();
 
         assertTestData(getMigratedRoomDatabase());
@@ -172,7 +168,7 @@ public class MigrationTest {
         RoomDatabaseTestHelper.insertShow(SHOW, db, 45);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(), db);
         db.close();
 
         SgRoomDatabase database = getMigratedRoomDatabase();
@@ -187,7 +183,7 @@ public class MigrationTest {
         RoomDatabaseTestHelper.insertShow(SHOW, db, 46);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(), db);
         db.close();
 
         SgRoomDatabase database = getMigratedRoomDatabase();
@@ -204,14 +200,14 @@ public class MigrationTest {
         RoomDatabaseTestHelper.insertShow(SHOW, db, v47);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
 
-        Episode testEpisode = getTestEpisode(21);
+        TestEpisode testEpisode = getTestEpisode(21);
         RoomDatabaseTestHelper
-                .insertEpisode(db, v47, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
+                .insertEpisode(db, v47, testEpisode, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(),
                         true);
 
         testEpisode = getTestEpisode(22);
         RoomDatabaseTestHelper
-                .insertEpisode(db, v47, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
+                .insertEpisode(db, v47, testEpisode, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(),
                         false);
 
         MovieDetails testMovieDetails = getTestMovieDetails(12);
@@ -245,23 +241,23 @@ public class MigrationTest {
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity.
         // Validate that the data was migrated properly.
         SgShow dbShow = database.showHelper().getShow();
-        assertThat(dbShow.tvdbId).isEqualTo(SHOW.tvdb_id);
-        assertThat(dbShow.title).isEqualTo(SHOW.title);
-        assertThat(dbShow.runtime).isEqualTo(String.valueOf(SHOW.runtime));
-        assertThat(dbShow.poster).isEqualTo(SHOW.poster);
+        assertThat(dbShow.tvdbId).isEqualTo(SHOW.getTvdbId());
+        assertThat(dbShow.title).isEqualTo(SHOW.getTitle());
+        assertThat(dbShow.runtime).isEqualTo(String.valueOf(SHOW.getRuntime()));
+        assertThat(dbShow.poster).isEqualTo(SHOW.getPoster());
 
         SgSeason dbSeason = database.seasonHelper().getSeason();
-        assertThat(dbSeason.tvdbId).isEqualTo(SEASON.tvdbId);
-        assertThat(dbSeason.showTvdbId).isEqualTo(SEASON.showTvdbId);
-        assertThat(dbSeason.number).isEqualTo(SEASON.number);
+        assertThat(dbSeason.tvdbId).isEqualTo(SEASON.getTvdbId());
+        assertThat(dbSeason.showId).isEqualTo(dbShow.id);
+        assertThat(dbSeason.number).isEqualTo(SEASON.getNumber());
 
         SgEpisode dbEpisode = database.episodeHelper().getEpisode();
-        assertThat(dbEpisode.tvdbId).isEqualTo(EPISODE.id);
-        assertThat(dbEpisode.showTvdbId).isEqualTo(SHOW.tvdb_id);
-        assertThat(dbEpisode.seasonTvdbId).isEqualTo(SEASON.tvdbId);
-        assertThat(dbEpisode.title).isEqualTo(EPISODE.episodeName);
-        assertThat(dbEpisode.number).isEqualTo(EPISODE.airedEpisodeNumber);
-        assertThat(dbEpisode.season).isEqualTo(SEASON.number);
+        assertThat(dbEpisode.tvdbId).isEqualTo(EPISODE.getTvdbId());
+        assertThat(dbEpisode.showId).isEqualTo(dbShow.id);
+        assertThat(dbEpisode.seasonId).isEqualTo(dbSeason.id);
+        assertThat(dbEpisode.title).isEqualTo(EPISODE.getName());
+        assertThat(dbEpisode.number).isEqualTo(EPISODE.getNumber());
+        assertThat(dbEpisode.season).isEqualTo(SEASON.getNumber());
     }
 
     private SgRoomDatabase getMigratedRoomDatabase() {
@@ -273,7 +269,8 @@ public class MigrationTest {
                         MIGRATION_44_45,
                         MIGRATION_45_46,
                         MIGRATION_46_47,
-                        MIGRATION_47_48
+                        MIGRATION_47_48,
+                        MIGRATION_48_49
                 )
                 .build();
         // close the database and release any stream resources when the test finishes
