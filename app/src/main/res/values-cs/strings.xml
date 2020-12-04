@@ -307,7 +307,7 @@
     <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
     <string name="traktcheckin_wait">Budu čekat</string>
     <string name="trakt_success">Odesláno do trakt.tv.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Váš Trakt účet je uzamčen. Obraťte se na Trakt podporu.</string>
     <string name="trakt_error_credentials">Nastala chyba. Prosím zkontrolujte přihlašovací údaje a  akci opakujte.</string>
     <string name="trakt_error_not_exists">Není k dispozici na traktu (zatím). Zkuste to později.</string>
     <string name="trakt_notice_not_exists">Nelze (zatím) synchronizovat s traktem.</string>

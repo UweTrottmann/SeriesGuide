@@ -293,7 +293,7 @@
     <string name="traktcheckin_inprogress">Você já fez check-in em outro episódio ou filme. Substitua o check-in anterior ou aguarde %s e tente novamente.</string>
     <string name="traktcheckin_wait">Vou esperar</string>
     <string name="trakt_success">Enviado ao trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Sua conta Trakt está bloqueada. Contate o suporte.</string>
     <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
     <string name="trakt_error_not_exists">Não disponível (ainda) no trakt. Tente novamente mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt</string>
