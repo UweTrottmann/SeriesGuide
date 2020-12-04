@@ -10,7 +10,17 @@ Release notes
 
 Version 57
 ----------
-*in development*
+*2020-12-04*
+
+* 🌟 For shows, add Portuguese (Brazil) to supported languages.
+* 🔧 Detect locked Trakt accounts during sign-in.
+* 🔧 Optimization for Android 11.
+
+#### 57
+*2020-12-04*
+
+* 🔧 Always display hint about Cloud disabling Trakt features.
+* 📝 Latest translations from crowdin.
 
 #### 57-beta5
 *2020-11-27*
