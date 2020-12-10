@@ -11,7 +11,17 @@ Release notes for version 46 and older
 
 Version 46.5-k
 --------------
-*in development*
+*2020-12-04*
+
+* 🌟🔨🔧 Backport fixes and improvements from newer releases.
+* 📝 Remove support for Android 4.0.
+* 🔨 Resolve connection issues due to outdated security settings on some devices.
+
+#### 46.5-k
+*2020-12-04*
+
+* 🔧 Always display hint about Cloud disabling Trakt features.
+* 📝 Latest translations from crowdin.
 
 #### 46.5-k-beta2
 *2020-11-07*
