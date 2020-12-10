@@ -18,4 +18,7 @@ interface SeasonHelper {
 
     @Query("SELECT season_number, series_id FROM seasons WHERE _id=:seasonTvdbId")
     fun getSeasonMinimal(seasonTvdbId: Int): SgSeasonMinimal?
+
+    @Query("SELECT season_tvdb_id FROM seasons WHERE series_id=:showId")
+    fun getSeasonTvdbIds(showId: Int): List<Int?>
 }

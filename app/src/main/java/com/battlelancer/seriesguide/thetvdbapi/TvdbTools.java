@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync;
@@ -132,7 +133,9 @@ public class TvdbTools {
         // get episodes and store everything to the database
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         batch.add(DBUtils.buildShowOp(context, show, true));
-        getEpisodesAndUpdateDatabase(batch, show, language);
+        getEpisodesAndUpdateDatabase(batch, show, null, language);
+
+        // FIXME below
 
         // restore episode flags...
         if (hexagonEnabled) {
@@ -185,7 +188,8 @@ public class TvdbTools {
 
         // get episodes in the language as returned in the TVDB show entry
         // the show might not be available in the desired language
-        getEpisodesAndUpdateDatabase(batch, show, show.language);
+        int showId = SgRoomDatabase.getInstance(context).showHelper().getShowId(showTvdbId);
+        getEpisodesAndUpdateDatabase(batch, show, showId, show.language);
     }
 
     /**
@@ -256,11 +260,11 @@ public class TvdbTools {
      * information to the database.
      */
     private void getEpisodesAndUpdateDatabase(final ArrayList<ContentProviderOperation> batch,
-            Show show, String language) throws TvdbException {
+            Show show, @Nullable Integer showId, String language) throws TvdbException {
         // get ops for episodes of this show
         TvdbEpisodeTools episodeTools = new TvdbEpisodeTools(context, tvdbSeries);
         ArrayList<ContentValues> importShowEpisodes = episodeTools
-                .fetchEpisodes(batch, show, language);
+                .fetchEpisodes(batch, show, showId, language);
         ContentValues[] newEpisodesValues = new ContentValues[importShowEpisodes.size()];
         newEpisodesValues = importShowEpisodes.toArray(newEpisodesValues);
 

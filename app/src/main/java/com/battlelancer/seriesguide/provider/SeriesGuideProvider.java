@@ -602,8 +602,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 return builder.table(Tables.SHOWS);
             }
             case SHOWS_ID: {
-                final String showId = Shows.getShowId(uri);
-                return builder.table(Tables.SHOWS).where(Shows._ID + "=?", showId);
+                final String showId = Shows.getId(uri);
+                return builder.table(Tables.SHOWS).where(Shows.TVDB_ID + "=?", showId);
             }
             case SHOWS_FILTERED: {
                 final String filter = uri.getLastPathSegment();
@@ -625,7 +625,7 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case EPISODES_ID: {
                 final String episodeId = Episodes.getEpisodeId(uri);
-                return builder.table(Tables.EPISODES).where(Episodes._ID + "=?", episodeId);
+                return builder.table(Tables.EPISODES).where(Episodes.TVDB_ID + "=?", episodeId);
             }
             case EPISODES_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
@@ -659,7 +659,7 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case SEASONS_ID: {
                 final String seasonId = Seasons.getSeasonId(uri);
-                return builder.table(Tables.SEASONS).where(Seasons._ID + "=?", seasonId);
+                return builder.table(Tables.SEASONS).where(Seasons.TVDB_ID + "=?", seasonId);
             }
             case SEASONS_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);

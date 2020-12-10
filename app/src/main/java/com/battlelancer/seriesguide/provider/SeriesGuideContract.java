@@ -752,15 +752,15 @@ public class SeriesGuideContract {
         public static final String SELECTION_HIDDEN = Shows.HIDDEN + "=1";
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 
-        public static Uri buildShowUri(String showId) {
-            return CONTENT_URI.buildUpon().appendPath(showId).build();
+        public static Uri buildShowUri(String showTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(showTvdbId).build();
         }
 
         public static Uri buildShowUri(int showTvdbId) {
             return buildShowUri(String.valueOf(showTvdbId));
         }
 
-        public static String getShowId(Uri uri) {
+        public static String getId(Uri uri) {
             return uri.getLastPathSegment();
         }
     }
@@ -841,12 +841,12 @@ public class SeriesGuideContract {
                         + NUMBER + " DESC" + ","
                         + FIRSTAIREDMS + " DESC";
 
-        public static Uri buildEpisodeUri(String episodeId) {
-            return CONTENT_URI.buildUpon().appendPath(episodeId).build();
+        public static Uri buildEpisodeUri(String episodeTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();
         }
 
-        public static Uri buildEpisodeUri(int episodeId) {
-            return buildEpisodeUri(String.valueOf(episodeId));
+        public static Uri buildEpisodeUri(int episodeTvdbId) {
+            return buildEpisodeUri(String.valueOf(episodeTvdbId));
         }
 
         public static String getEpisodeId(Uri uri) {
@@ -866,12 +866,12 @@ public class SeriesGuideContract {
                     .appendPath(seasonId).build();
         }
 
-        public static Uri buildEpisodesOfShowUri(String showTvdbId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showTvdbId).build();
+        public static Uri buildEpisodesOfShowUri(String showId) {
+            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showId).build();
         }
 
-        public static Uri buildEpisodesOfShowUri(int showTvdbId) {
-            return buildEpisodesOfShowUri(String.valueOf(showTvdbId));
+        public static Uri buildEpisodesOfShowUri(int showId) {
+            return buildEpisodesOfShowUri(String.valueOf(showId));
         }
 
         public static Uri buildEpisodeWithShowUri(String episodeId) {

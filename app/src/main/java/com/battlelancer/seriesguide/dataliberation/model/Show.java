@@ -89,7 +89,7 @@ public class Show {
         values.put(Shows.LASTUPDATED, last_updated);
         values.put(Shows.LASTEDIT, last_edited);
         if (forInsert) {
-            values.put(Shows._ID, tvdb_id);
+            values.put(Shows.TVDB_ID, tvdb_id);
             values.put(Shows.LANGUAGE, language != null ? language : DisplaySettings.LANGUAGE_EN);
 
             values.put(Shows.FAVORITE, favorite ? 1 : 0);
