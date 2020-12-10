@@ -5,9 +5,7 @@ import android.text.TextUtils;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import java.util.Locale;
 
 /**
  * Helper methods for language strings and codes.
@@ -15,8 +13,9 @@ import java.util.Locale;
 public class LanguageTools {
 
     /**
-     * Returns the string representation of the given two letter ISO 639-1 language code if it is
-     * supported by SeriesGuide ({@link SeriesGuideContract.Shows#LANGUAGE}).
+     * Returns the string representation of the given two letter ISO 639-1 language code,
+     * plus optional ISO-3166-1 region tag, if it is supported by SeriesGuide
+     * (see R.array.languageCodesShows).
      *
      * <p>If the given language code is {@code null} uses 'en' to ensure consistent behavior across
      * devices.
@@ -31,10 +30,12 @@ public class LanguageTools {
     }
 
     /**
-     * Returns the string representation of the given two letter ISO 639-1 language code if it is
-     * supported by SeriesGuide ({@link SeriesGuideContract.Shows#LANGUAGE}).
+     * Returns the string representation of the given two letter ISO 639-1 language code,
+     * plus optional ISO-3166-1 region tag, if it is supported by SeriesGuide
+     * (see R.array.languageCodesMovies).
      *
-     * <p>If the given language code is {@code null}, uses {@link DisplaySettings#getMoviesLanguage(Context)}.
+     * <p>If the given language code is {@code null},
+     * uses {@link DisplaySettings#getMoviesLanguage(Context)}.
      */
     public static String getMovieLanguageStringFor(Context context, @Nullable String languageCode) {
         if (TextUtils.isEmpty(languageCode)) {
@@ -50,7 +51,7 @@ public class LanguageTools {
         String[] languageCodes = context.getResources().getStringArray(languageCodesRes);
         for (int i = 0; i < languageCodes.length; i++) {
             if (languageCodes[i].equals(languageCode)) {
-                return new Locale(languageCode.substring(0, 2), "").getDisplayName();
+                return LanguageToolsK.buildLanguageDisplayName(languageCode);
             }
         }
 
@@ -68,8 +69,9 @@ public class LanguageTools {
     }
 
     /**
-     * Returns the string representation and index of the given two letter ISO 639-1 language code
-     * if it is supported by SeriesGuide ({@link SeriesGuideContract.Shows#LANGUAGE}).
+     * Together with the language code, returns the string representation of the given
+     * two letter ISO 639-1 language code, plus optional ISO-3166-1 region tag,
+     * if it is supported by SeriesGuide (see R.array.languageCodesShows).
      *
      * <p>If the given language code is {@code null} uses 'en' to ensure consistent behavior across
      * devices.
@@ -85,29 +87,8 @@ public class LanguageTools {
         String[] languageCodes = context.getResources().getStringArray(R.array.languageCodesShows);
         for (int i = 0; i < languageCodes.length; i++) {
             if (languageCodes[i].equals(languageCode)) {
-                String languageName = new Locale(languageCode, "").getDisplayName();
+                String languageName = LanguageToolsK.buildLanguageDisplayName(languageCode);;
                 return new LanguageData(languageCode, languageName);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the string representation and index of the given two letter ISO 639-1 language code
-     * plus an extra ISO-3166-1 region tag used by TMDB currently set by {@link
-     * DisplaySettings#getMoviesLanguage(Context)}.
-     */
-    @Nullable
-    public static LanguageData getMovieLanguageData(Context context) {
-        String languageCodeCurrent = DisplaySettings.getMoviesLanguage(context);
-        String[] languageCodes = context.getResources().getStringArray(R.array.languageCodesMovies);
-        for (int i = 0; i < languageCodes.length; i++) {
-            String languageCode = languageCodes[i];
-            if (languageCode.equals(languageCodeCurrent)) {
-                String languageDisplayName = new Locale(languageCode.substring(0, 2), "")
-                        .getDisplayName();
-                return new LanguageData(languageCode, languageDisplayName);
             }
         }
 

@@ -334,6 +334,7 @@
     <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="trakt_success">Sent to Trakt</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Something went wrong. Check your Trakt credentials and try again.</string>
     <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
@@ -536,7 +537,7 @@
     <string name="action_upgrade">Unlock all features</string>
     <string name="billing_action_subscribe">Subscribe</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">Get X Pass</string>
+    <string name="billing_action_pass">Get X Pass App</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>

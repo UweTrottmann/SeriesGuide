@@ -113,10 +113,10 @@
     <string name="action_unwatched">Pas vu</string>
     <string name="state_watched">Vu</string>
     <string name="state_watched_multiple_format">Vu (%d)</string>
-    <string name="state_skipped">Skipped</string>
+    <string name="state_skipped">Ignoré</string>
     <string name="state_in_collection">Collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_on_watchlist">Sur la liste à voir</string>
+    <string name="state_favorite">Favori</string>
     <!-- Shows -->
     <string name="confirm_delete">Voulez-vous vraiment supprimer %s?</string>
     <string name="delete_error">Impossible de retirer la série. Réessayez plus tard.</string>
@@ -250,7 +250,7 @@
     <string name="shows_continuing">%s en cours</string>
     <string name="episodes_watched">%s vus</string>
     <string name="movies_on_watchlist">%s dans la liste à voir</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d dans la collection</string>
     <string name="movies_watched_format">%s vus</string>
     <plurals name="days_plural">
         <item quantity="one">%d jour</item>
@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
     <string name="traktcheckin_wait">J\'attends</string>
     <string name="trakt_success">Envoyé à trakt.</string>
+    <string name="trakt_error_account_locked">Votre compte Trakt est verrouillé. Veuillez contacter l\'assistance Trakt.</string>
     <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
     <string name="trakt_error_not_exists">Pas (encore) disponible sur trakt. Réessayez plus tard.</string>
     <string name="trakt_notice_not_exists">Ne peut pas (encore) être suivis avec trakt.</string>

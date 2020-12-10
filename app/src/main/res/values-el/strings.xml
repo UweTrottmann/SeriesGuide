@@ -250,7 +250,7 @@
     <string name="shows_continuing">%s συνεχίζονται</string>
     <string name="episodes_watched">%s παρακολουθήθηκαν</string>
     <string name="movies_on_watchlist">%s στην λίστα παρακολούθησης</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d στη συλλογή</string>
     <string name="movies_watched_format">%s παρακολουθήθηκαν</string>
     <plurals name="days_plural">
         <item quantity="one">%d ημέρα</item>
@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
     <string name="traktcheckin_wait">Θα περιμένω</string>
     <string name="trakt_success">Στάλθηκε στο trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
@@ -367,7 +368,7 @@
     <!-- About screen -->
     <string name="privacy_policy">Πολιτική Απορρήτου</string>
     <string name="licence_tvdb">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το TheTVDB με άδειες Creative Commons.</string>
-    <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο ούτε πιστοποιημένο από το TMDb.</string>
+    <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο, ούτε πιστοποιημένο από το TMDb.</string>
     <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το Trakt.</string>
     <string name="about_open_source">Το SeriesGuide έχει φτιαχτεί με τη χρήση λογισμικού ανοιχτού κώδικα.</string>
     <string name="licences_and_credits">Άδειες και ευχαριστίες</string>

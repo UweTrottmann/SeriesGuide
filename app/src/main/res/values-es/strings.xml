@@ -294,6 +294,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
     <string name="traktcheckin_wait">Voy a esperar</string>
     <string name="trakt_success">Enviado a trakt.</string>
+    <string name="trakt_error_account_locked">Tu cuenta de Trakt está bloqueada. Contacta con el soporte de Trakt.</string>
     <string name="trakt_error_credentials">Algo salió mal. Por favor comprueba tus credenciales y vuelve a intentarlo.</string>
     <string name="trakt_error_not_exists">No disponible (todavía) en trakt. Prueba más tarde.</string>
     <string name="trakt_notice_not_exists">No puede ser seguido (todavía) con trakt.</string>

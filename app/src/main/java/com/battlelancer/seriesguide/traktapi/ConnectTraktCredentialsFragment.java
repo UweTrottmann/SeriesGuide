@@ -37,7 +37,6 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     @BindView(R.id.featureStatusTraktSync) FeatureStatusView featureStatusSync;
     @BindView(R.id.featureStatusTraktSyncShows) FeatureStatusView featureStatusSyncShows;
     @BindView(R.id.featureStatusTraktSyncMovies) FeatureStatusView featureStatusSyncMovies;
-    @BindView(R.id.textViewConnectTraktHexagonWarning) TextView textViewHexagonWarning;
     @BindView(R.id.buttonTraktLibrary) Button buttonLibrary;
     private Unbinder unbinder;
 
@@ -55,7 +54,6 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         featureStatusSync.setFeatureEnabled(!hexagonEnabled);
         featureStatusSyncShows.setFeatureEnabled(!hexagonEnabled);
         featureStatusSyncMovies.setFeatureEnabled(!hexagonEnabled);
-        textViewHexagonWarning.setVisibility(hexagonEnabled ? View.VISIBLE : View.GONE);
 
         // library button
         buttonLibrary.setOnClickListener(v -> {

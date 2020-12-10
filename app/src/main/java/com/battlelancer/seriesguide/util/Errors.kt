@@ -1,27 +1,39 @@
 package com.battlelancer.seriesguide.util
 
 import android.annotation.SuppressLint
+import android.app.Application
+import android.os.Build
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import ly.count.android.sdk.Countly
+import ly.count.android.sdk.CountlyConfig
+import ly.count.android.sdk.DeviceId
 import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
+import java.net.ConnectException
 import java.net.UnknownHostException
+import java.util.UUID
+
 
 class Errors {
 
     companion object {
+
+        private lateinit var appVersion: String
+        private var isCounterAvailable = false
 
         /**
          * Returns null instead of crashing when Firebase is not configured, e.g. for vanilla debug
          * builds and CI builds.
          */
         @SuppressLint("LogNotTimber")
-        fun getReporter() : FirebaseCrashlytics? {
+        fun getReporter(): FirebaseCrashlytics? {
             return try {
                 FirebaseCrashlytics.getInstance()
             } catch (e: Exception) {
@@ -33,6 +45,45 @@ class Errors {
                 )
                 return null
             }
+        }
+
+        fun setUpCounter(application: Application) {
+            appVersion = Utils.getVersion(application.applicationContext)
+
+            @Suppress("SENSELESS_COMPARISON")
+            if (BuildConfig.COUNT_URL != null) {
+                if (Countly.sharedInstance().isInitialized) return
+
+                val config = CountlyConfig(
+                    application,
+                    BuildConfig.COUNT_SECRET,
+                    BuildConfig.COUNT_URL
+                )
+                    // Use random UUID as Countly OpenUDID might use ANDROID_ID.
+                    .setDeviceId(UUID.randomUUID().toString())
+                    .setIdMode(DeviceId.Type.DEVELOPER_SUPPLIED)
+//                .setLoggingEnabled(BuildConfig.DEBUG) // Spams logs, only enable if needed.
+                    .setRequiresConsent(true)
+                    // Only allow sending of events.
+                    .setConsentEnabled(arrayOf(Countly.CountlyFeatureNames.events))
+                Countly.sharedInstance().init(config)
+                isCounterAvailable = true
+            }
+        }
+
+        private fun getCounter(): Countly? {
+            return if (isCounterAvailable) Countly.sharedInstance() else null
+        }
+
+        @JvmStatic
+        fun onSessionStart() {
+            // Don't need an activity name, sessions not sent, just to ensure events are sent.
+            getCounter()?.onStart(null)
+        }
+
+        @JvmStatic
+        fun onSessionStop() {
+            getCounter()?.onStop()
         }
 
         /**
@@ -140,10 +191,27 @@ class Errors {
 
             Timber.e(throwable, action)
 
-            if (response.code == 404) return // do not send 404 to Crashlytics
+            if (response.code == 404) return // Do not report 404 responses.
 
-            getReporter()?.setCustomKey("action", action)
-            getReporter()?.recordException(throwable)
+//            getReporter()?.setCustomKey("action", action)
+//            getReporter()?.recordException(throwable)
+
+            getCounter()?.also {
+                val messageOrNone = when {
+                    message != null -> message
+                    response.message.isNotEmpty() -> response.message
+                    else -> "none"
+                }
+                it.events().recordEvent(
+                    "$action ${response.code}",
+                    mapOf(
+                        "message" to messageOrNone,
+                        "android" to Build.VERSION.RELEASE,
+                        "version" to appVersion,
+                        "device" to Build.MODEL
+                    )
+                )
+            }
         }
 
         /**
@@ -226,12 +294,16 @@ private fun HttpResponseException.isServerError(): Boolean {
 }
 
 /**
- * Returns true if the exception is not an UnknownHostException or InterruptedIOException.
+ * Returns true if the exception is not one of the following:
+ * - ConnectException - network issues (e.g. "Failed to connect to x").
+ * - InterruptedIOException - network request time outs.
+ * - UnknownHostException - network issues.
  */
 private fun Throwable.shouldReport(): Boolean {
     return when (this) {
-        is InterruptedIOException -> false // do not track, mostly timeouts
-        is UnknownHostException -> false // do not track, mostly devices loosing connection
+        is ConnectException -> false
+        is InterruptedIOException -> false
+        is UnknownHostException -> false
         else -> true
     }
 }

@@ -300,6 +300,7 @@
     <string name="traktcheckin_inprogress">Deja ați înregistrat alt episod sau film. Ori suprascrieți precedenta înregistrare sau așteptați %s și încercați din nou.</string>
     <string name="traktcheckin_wait">Voi aștepta</string>
     <string name="trakt_success">Trimis către trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Ceva a mers prost. Vă rugăm să vă verificaţi acreditările şi să încercaţi din nou.</string>
     <string name="trakt_error_not_exists">Nu este (încă) disponibil pe trakt. Încearcă mai târziu.</string>
     <string name="trakt_notice_not_exists">Nu poate (încă) fi urmărit cu trakt.</string>

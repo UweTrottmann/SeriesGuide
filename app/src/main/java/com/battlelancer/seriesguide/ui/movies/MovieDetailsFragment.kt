@@ -401,8 +401,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // language button
         binding.buttonMovieLanguage.also {
-            val languageData = LanguageTools.getMovieLanguageData(context)
-            it.text = languageData?.languageString
+            it.text = LanguageTools.getMovieLanguageStringFor(context, null)
             it.isGone = false
         }
 

@@ -52,6 +52,15 @@ public class SgTrakt extends TraktV2 {
     }
 
     /**
+     * Check if the associated Trakt account is locked.
+     *
+     * https://trakt.docs.apiary.io/#introduction/locked-user-account
+     */
+    public static boolean isAccountLocked(retrofit2.Response<?> response) {
+        return response.code() == 423;
+    }
+
+    /**
      * Returns if the request was not authorized. If it was, also calls {@link
      * TraktCredentials#setCredentialsInvalid()} to notify the user.
      */

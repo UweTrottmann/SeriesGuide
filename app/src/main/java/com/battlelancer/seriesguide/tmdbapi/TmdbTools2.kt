@@ -6,6 +6,9 @@ import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 
 class TmdbTools2 {
 
@@ -36,19 +39,24 @@ class TmdbTools2 {
         return null
     }
 
-    // TODO: Use in ShowsDiscoverLiveData once using coroutines.
     /**
      * Maps TMDB TV shows to search results.
      * Resolves the TheTVDB id using a network call on the calling thread!
      * Excludes shows where no TheTVDB id could be resolved (for any reason).
      */
-    fun mapTvShowsToSearchResults(
+    suspend fun mapTvShowsToSearchResults(
         context: Context,
         languageCode: String,
         results: List<BaseTvShow>
-    ): List<SearchResult> {
-        val tvService = SgApp.getServicesComponent(context.applicationContext).tmdb().tvService()
-        return results.mapNotNull { tvShow ->
+    ): List<SearchResult> = withContext(Dispatchers.IO) {
+        val tvService = SgApp.getServicesComponent(context.applicationContext)
+            .tmdb()
+            .tvService()
+        return@withContext results.mapNotNull { tvShow ->
+            if (!isActive) {
+                return@mapNotNull null // do not bother fetching ids for remaining results
+            }
+
             // Find TheTVDB id.
             val idResponse = tvShow.id?.let {
                 try {

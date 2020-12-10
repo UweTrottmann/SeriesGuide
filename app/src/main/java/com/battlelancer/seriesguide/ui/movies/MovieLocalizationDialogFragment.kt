@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.databinding.DialogLocalizationBinding
 import com.battlelancer.seriesguide.databinding.ItemDropdownBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationAdapter.LocalizationItem
+import com.battlelancer.seriesguide.util.LanguageToolsK
 import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -79,7 +80,10 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
 
                 for (languageCode in languageCodes) {
                     items.add(
-                        LocalizationItem(languageCode, buildLanguageDisplayName(languageCode))
+                        LocalizationItem(
+                            languageCode,
+                            LanguageToolsK.buildLanguageDisplayName(languageCode)
+                        )
                     )
                 }
 
@@ -177,23 +181,10 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
     private fun updateButtonText() {
         // example: "en-US"
         val languageCode = DisplaySettings.getMoviesLanguage(context)
-        binding.buttonLocalizationLanguage.text = buildLanguageDisplayName(languageCode)
+        binding.buttonLocalizationLanguage.text =
+            LanguageToolsK.buildLanguageDisplayName(languageCode)
         val regionCode = DisplaySettings.getMoviesRegion(context)
         binding.buttonLocalizationRegion.text = Locale("", regionCode).displayCountry
-    }
-
-    private fun buildLanguageDisplayName(languageCode: String): String {
-        // Example: "en-US".
-        return if ("pt-BR" == languageCode || "pt-PT" == languageCode) {
-            // Display country only for Portuguese.
-            // Most other TMDB region codes are superfluous or make no sense
-            // (report to TMDB?).
-            Locale(languageCode.substring(0, 2), languageCode.substring(3, 5))
-                .displayName
-        } else {
-            Locale(languageCode.substring(0, 2), "")
-                .displayName
-        }
     }
 
     private fun setListVisible(listIsVisible: Boolean) {

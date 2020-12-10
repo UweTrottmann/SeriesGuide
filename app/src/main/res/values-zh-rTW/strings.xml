@@ -286,6 +286,7 @@
     <string name="traktcheckin_inprogress">你已經在其他影集或電影打卡過了，請覆蓋前一個打卡記錄或者等待%s後再試一次。</string>
     <string name="traktcheckin_wait">等待</string>
     <string name="trakt_success">已發送至trakt。</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">發生錯誤，請檢查您的trakt憑證並重試。</string>
     <string name="trakt_error_not_exists">Trakt還無法使用，稍後再試。</string>
     <string name="trakt_notice_not_exists">還不能使用trakt追蹤。</string>

@@ -18,8 +18,11 @@ class HexagonAuthError(action: String, failure: String, cause: Throwable?) :
         }
 
         private fun extractStatusCodeString(throwable: Throwable): String {
+            val cause = throwable.cause
             return if (throwable is ApiException) {
                 throwable.getStatusCodeString()
+            } else if (cause != null && cause is ApiException) {
+                cause.getStatusCodeString()
             } else {
                 throwable.message ?: ""
             }

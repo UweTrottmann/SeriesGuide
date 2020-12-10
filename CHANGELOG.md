@@ -8,6 +8,54 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 57
+----------
+*2020-12-04*
+
+* 🌟 For shows, add Portuguese (Brazil) to supported languages.
+* 🔧 Detect locked Trakt accounts during sign-in.
+* 🔧 Optimization for Android 11.
+
+#### 57
+*2020-12-04*
+
+* 🔧 Always display hint about Cloud disabling Trakt features.
+* 📝 Latest translations from crowdin.
+
+#### 57-beta5
+*2020-11-27*
+
+* 🔧 Detect locked Trakt accounts during sign-in.
+* 📝 Latest translations from crowdin.
+
+#### 57-beta4
+*2020-11-26*
+
+* 🔧 Experiment with using self-hosted Countly instance to track some network errors.
+* 📝 Latest translations from crowdin.
+
+#### 57-beta3
+*2020-11-06*
+
+* 🔨 Resolve connection issues due to outdated security settings on some devices.
+
+#### 57-beta2
+*2020-10-29*
+
+* 🔨 On Android 11 allow detection of X Pass.
+* 🔧 Support Trakt API rate limiting.
+* 📝 Latest translations from crowdin.
+
+#### 57-beta1
+*2020-10-23*
+
+* 🌟 For shows, add Portuguese (Brazil) to supported languages.
+* 🔧 Sort languages in selection dialog.
+* 🔨 In movie details, display country if Portuguese is selected as language.
+* 🔨 Restore feedback when tapping buttons at bottom, in rate dialog.
+* 🔧 Optimization for Android 11 (this time for real).
+* 📝 Latest translations from crowdin.
+
 Version 56
 ----------
 *2020-10-15*

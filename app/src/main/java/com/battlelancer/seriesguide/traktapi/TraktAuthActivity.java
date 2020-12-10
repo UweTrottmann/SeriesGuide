@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -110,7 +111,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(ConnectTraktTask.FinishedEvent event) {
+    public void onEventMainThread(ConnectTraktTask.TaskResult event) {
         taskFragment.setTask(null);
 
         int resultCode = event.resultCode;
@@ -121,7 +122,7 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         }
 
         // handle errors
-        String errorText;
+        CharSequence errorText;
         switch (resultCode) {
             case TraktResult.OFFLINE:
                 errorText = getString(R.string.offline);
@@ -129,12 +130,23 @@ public class TraktAuthActivity extends BaseOAuthActivity {
             case TraktResult.API_ERROR:
                 errorText = getString(R.string.api_error_generic, getString(R.string.trakt));
                 break;
+            case TraktResult.ACCOUNT_LOCKED:
+                errorText = getString(R.string.trakt_error_account_locked);
+                break;
             case TraktResult.AUTH_ERROR:
             case TraktResult.ERROR:
             default:
                 errorText = getString(R.string.trakt_error_credentials);
                 break;
         }
+
+        if (event.debugMessage != null) {
+            errorText = HtmlCompat.fromHtml(
+                    "<p>" + errorText + "</p><p><i>" + event.debugMessage + "</i></p>",
+                    HtmlCompat.FROM_HTML_MODE_COMPACT
+            );
+        }
+
         setMessage(errorText);
         activateFallbackButtons();
     }

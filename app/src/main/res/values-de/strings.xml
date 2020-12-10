@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">Sie sind bereits eingecheckt. Überschreiben Sie den Check-in oder warten Sie %s und versuchen es erneut.</string>
     <string name="traktcheckin_wait">Ich warte</string>
     <string name="trakt_success">An Trakt übermittelt</string>
+    <string name="trakt_error_account_locked">Ihr Trakt-Konto ist gesperrt. Kontaktieren Sie den Trakt Support.</string>
     <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre Trakt-Zugangsdaten und versuchen Sie es erneut.</string>
     <string name="trakt_error_not_exists">(Noch) nicht bei Trakt verfügbar. Versuchen Sie es später erneut.</string>
     <string name="trakt_notice_not_exists">Kann (noch) nicht mit Trakt verwaltet werden</string>
@@ -472,7 +473,7 @@
     <string name="action_upgrade">Alle Funktionen freischalten</string>
     <string name="billing_action_subscribe">Abonnieren</string>
     <string name="billing_action_manage_subscriptions">Abos verwalten</string>
-    <string name="billing_action_pass">X Pass holen</string>
+    <string name="billing_action_pass">X Pass App holen</string>
     <string name="billing_price_subscribe">%1$s/Jahr, kostenlos testen, bei %2$s jederzeit kündbar</string>
     <string name="billing_duration_format">%1$s/Jahr</string>
     <string name="billing_sub_description">30 Tage kostenlos testen, jederzeit kündigen.</string>

@@ -1,32 +1,43 @@
 package com.battlelancer.seriesguide.ui.search
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.AsyncTask
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.TmdbDate
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 
-class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveData.Result>() {
+/**
+ * Gets search results for the given query, or if the query is blank gets shows with new episodes.
+ */
+class ShowsDiscoverLiveData(
+    val context: Context,
+    val scope: CoroutineScope
+) : LiveData<ShowsDiscoverLiveData.Result>() {
 
     data class Result(
-            val searchResults: List<SearchResult>,
-            val emptyText: String,
-            val isResultsForQuery: Boolean,
-            val successful: Boolean
+        val searchResults: List<SearchResult>,
+        val emptyText: String,
+        val isResultsForQuery: Boolean,
+        val successful: Boolean
     )
 
-    private var task: AsyncTask<Void, Void, Result?>? = null
     private var query: String = ""
     private var language: String = context.getString(R.string.show_default_language)
+    private var currentJob: Job? = null
 
     /**
      * Schedules loading, give two letter ISO 639-1 [language] code.
@@ -34,141 +45,120 @@ class ShowsDiscoverLiveData(val context: Context) : LiveData<ShowsDiscoverLiveDa
      * Returns if it will load.
      */
     fun load(query: String, language: String, forceLoad: Boolean): Boolean {
-        return if (forceLoad || this.query != query || this.language != language || task == null) {
+        return if (forceLoad || this.query != query || this.language != language || currentJob == null) {
             this.query = query
             this.language = language
 
-            if (task?.status != AsyncTask.Status.FINISHED) {
-                task?.cancel(true)
+            currentJob?.cancel()
+            currentJob = scope.launch(Dispatchers.IO) {
+                fetchDiscoverData(query, language)
             }
-            task = WorkTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
             true
         } else {
             false
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
-    inner class WorkTask : AsyncTask<Void, Void, Result?>() {
-
-        override fun doInBackground(vararg params: Void?): Result? {
-            return if (query.isBlank()) {
-                // No query: load a list of shows with new episodes in the last 7 days.
-                getShowsWithNewEpisodes()
-            } else {
-                // Have a query: search using TheTVDB.
-                searchShowsOnTvdb()
-            }
+    private suspend fun fetchDiscoverData(
+        query: String,
+        language: String
+    ) = withContext(Dispatchers.IO) {
+        val result = if (query.isBlank()) {
+            // No query: load a list of shows with new episodes in the last 7 days.
+            getShowsWithNewEpisodes(language)
+        } else {
+            // Have a query: search using TheTVDB.
+            searchShowsOnTvdb(query, language)
         }
+        // Note: Do not bother posting results if cancelled.
+        if (isActive && result != null) {
+            postValue(result)
+        }
+    }
 
-        private fun getShowsWithNewEpisodes(): Result? {
+    private suspend fun getShowsWithNewEpisodes(language: String): Result? =
+        withContext(Dispatchers.IO) {
             val languageActual = language
 
             val tmdb = SgApp.getServicesComponent(context).tmdb()
             val call = tmdb.discoverTv()
-                    .air_date_lte(dateNow)
-                    .air_date_gte(dateOneWeekAgo)
-                    .language(languageActual)
-                    .build()
+                .air_date_lte(dateNow)
+                .air_date_gte(dateOneWeekAgo)
+                .language(languageActual)
+                .build()
 
             val action = "get shows w new episodes"
             val resultsPage = try {
                 val response = call.execute()
                 if (response.isSuccessful) {
-                    response.body() ?: return buildResultFailure(R.string.tmdb, false)
+                    response.body() ?: return@withContext buildResultFailure(R.string.tmdb, false)
                 } else {
                     Errors.logAndReport(action, response)
-                    return buildResultFailure(R.string.tmdb, false)
+                    return@withContext buildResultFailure(R.string.tmdb, false)
                 }
             } catch (e: Exception) {
                 Errors.logAndReport(action, e)
-                return buildResultFailure(R.string.tmdb, false)
+                return@withContext buildResultFailure(R.string.tmdb, false)
             }
 
             val results = resultsPage.results
-                ?: return buildResultFailure(R.string.tmdb, false)
+                ?: return@withContext buildResultFailure(R.string.tmdb, false)
 
-            val tvService = tmdb.tvService()
-            // TODO Replace with TmdbTools2.mapTvShowsToSearchResults once using coroutines.
-            val searchResults = results.mapNotNull { tvShow ->
-                if (isCancelled) {
-                    return null // do not bother fetching ids for remaining results
-                }
-
-                val idResponse = tvShow.id?.let {
-                    try {
-                        tvService.externalIds(it, null).execute()
-                    } catch (e: Exception) {
-                        null
-                    }
-                }
-
-                // On TMDB the TVDB might be 0, ignore those shows, too.
-                val externalIds = idResponse?.body()
-                if (idResponse == null || !idResponse.isSuccessful
-                    || externalIds == null || externalIds.tvdb_id == null
-                    || externalIds.tvdb_id == 0) {
-                    null // just ignore this show
-                } else {
-                    SearchResult().apply {
-                        tvdbid = externalIds.tvdb_id!!
-                        title = tvShow.name
-                        overview = tvShow.overview
-                        language = languageActual
-                    }
-                }
-            }
+            val searchResults = TmdbTools2().mapTvShowsToSearchResults(
+                context,
+                languageActual,
+                results
+            )
             SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, searchResults)
-            return buildResultSuccess(searchResults, R.string.add_empty, false)
+            return@withContext buildResultSuccess(searchResults, R.string.add_empty, false)
         }
 
-        private fun searchShowsOnTvdb(): Result? {
-            val tvdbTools = SgApp.getServicesComponent(context).tvdbTools()
+    private fun searchShowsOnTvdb(query: String, language: String): Result? {
+        val tvdbTools = SgApp.getServicesComponent(context).tvdbTools()
 
-            try {
-                val results = tvdbTools.searchSeries(query, language)
-                SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, results)
-                return buildResultSuccess(results, R.string.no_results, true)
-            } catch (e: TvdbException) {
-                Timber.e(e, "Searching show failed")
-            }
-
-            return buildResultFailure(R.string.tvdb, true)
+        try {
+            val results = tvdbTools.searchSeries(query, language)
+            SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, results)
+            return buildResultSuccess(results, R.string.no_results, true)
+        } catch (e: TvdbException) {
+            Timber.e(e, "Searching show failed")
         }
 
-        private fun buildResultSuccess(results: List<SearchResult>?, @StringRes emptyTextResId: Int,
-                isResultsForQuery: Boolean): Result {
-            return Result(results ?: emptyList(), context.getString(emptyTextResId),
-                    isResultsForQuery,
-                    true)
-        }
-
-        private fun buildResultFailure(@StringRes serviceResId: Int,
-                isResultsForQuery: Boolean): Result {
-            // only check for network here to allow hitting the response cache
-            val emptyText = if (AndroidUtils.isNetworkConnected(context)) {
-                context.getString(R.string.api_error_generic, context.getString(serviceResId))
-            } else {
-                context.getString(R.string.offline)
-            }
-            return Result(emptyList(), emptyText, isResultsForQuery, false)
-        }
-
-        override fun onPostExecute(result: Result?) {
-            if (result != null) {
-                value = result
-            }
-        }
-
+        return buildResultFailure(R.string.tvdb, true)
     }
 
-    private val dateNow: TmdbDate
-        get() = TmdbDate(Date())
+    private fun buildResultSuccess(
+        results: List<SearchResult>?, @StringRes emptyTextResId: Int,
+        isResultsForQuery: Boolean
+    ): Result {
+        return Result(
+            results ?: emptyList(), context.getString(emptyTextResId),
+            isResultsForQuery,
+            true
+        )
+    }
 
-    private val dateOneWeekAgo: TmdbDate
-        get() {
-            val calendar = Calendar.getInstance()
-            calendar.add(Calendar.DAY_OF_MONTH, -7)
-            return TmdbDate(calendar.time)
+    private fun buildResultFailure(
+        @StringRes serviceResId: Int,
+        isResultsForQuery: Boolean
+    ): Result {
+        // only check for network here to allow hitting the response cache
+        val emptyText = if (AndroidUtils.isNetworkConnected(context)) {
+            context.getString(R.string.api_error_generic, context.getString(serviceResId))
+        } else {
+            context.getString(R.string.offline)
         }
+        return Result(emptyList(), emptyText, isResultsForQuery, false)
+    }
+
 }
+
+private val dateNow: TmdbDate
+    get() = TmdbDate(Date())
+
+private val dateOneWeekAgo: TmdbDate
+    get() {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, -7)
+        return TmdbDate(calendar.time)
+    }

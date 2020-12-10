@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">شما به تازگی قسمت یا فیلمی دیگر را ثبت کرده‌اید. ثبت پیشین را باطل کنید یا %s منتظر شده و دوباره تلاش کنید.</string>
     <string name="traktcheckin_wait">منتظر میمانم</string>
     <string name="trakt_success">به trakt ارسال شد.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>

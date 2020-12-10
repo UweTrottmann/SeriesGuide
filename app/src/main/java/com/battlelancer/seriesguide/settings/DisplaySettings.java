@@ -73,16 +73,6 @@ public class DisplaySettings {
     }
 
     /**
-     * Returns two letter ISO 639-1 language code of the fallback show language preferred by the
-     * user. Defaults to 'en'.
-     */
-    public static String getShowsLanguageFallback(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LANGUAGE_FALLBACK,
-                        context.getString(R.string.show_default_language));
-    }
-
-    /**
      * @return Two letter ISO 639-1 language code plus an extra ISO-3166-1 region tag used by TMDB
      * as preferred by the user. Or the default language.
      */
@@ -108,10 +98,10 @@ public class DisplaySettings {
     }
 
     /**
-     * @return Two letter ISO 639-1 language code of the language the user prefers when searching.
-     * Defaults to English.
+     * Returns a two letter ISO 639-1 language code, plus optional ISO-3166-1 region tag,
+     * of the language the user prefers when searching. Defaults to English.
      */
-    public static String getSearchLanguage(Context context) {
+    public static String getShowsSearchLanguage(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String languageCode = prefs.getString(KEY_LANGUAGE_SEARCH, null);
         // For backwards compatibility: change "any language" code to not set.
@@ -123,6 +113,16 @@ public class DisplaySettings {
         return TextUtils.isEmpty(languageCode)
                 ? context.getString(R.string.show_default_language)
                 : languageCode;
+    }
+
+    /**
+     * Returns a two letter ISO 639-1 language code, plus optional ISO-3166-1 region tag,
+     * of the fallback show language preferred by the user. Defaults to 'en'.
+     */
+    public static String getShowsLanguageFallback(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(KEY_LANGUAGE_FALLBACK,
+                        context.getString(R.string.show_default_language));
     }
 
     @NonNull

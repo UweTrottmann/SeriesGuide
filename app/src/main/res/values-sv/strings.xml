@@ -111,7 +111,7 @@
     <string name="action_collection_remove">Ta bort från samling</string>
     <string name="action_watched">Sett</string>
     <string name="action_unwatched">Markera som osedd</string>
-    <string name="state_watched">Sedda</string>
+    <string name="state_watched">Sett</string>
     <string name="state_watched_multiple_format">Sett (%d)</string>
     <string name="state_skipped">Hoppat över</string>
     <string name="state_in_collection">I samling</string>
@@ -250,7 +250,7 @@
     <string name="shows_continuing">%s fortsätter</string>
     <string name="episodes_watched">%s sedda</string>
     <string name="movies_on_watchlist">%s på bevakningslistan</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d i samling</string>
     <string name="movies_watched_format">%s sedda</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
@@ -293,6 +293,7 @@
     <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
     <string name="traktcheckin_wait">Jag väntar</string>
     <string name="trakt_success">Skickat till trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
     <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
     <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>

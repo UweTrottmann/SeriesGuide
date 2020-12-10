@@ -112,11 +112,11 @@
     <string name="action_watched">Vist</string>
     <string name="action_unwatched">No vist</string>
     <string name="state_watched">Vist</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched_multiple_format">Vistes (%d)</string>
+    <string name="state_skipped">Omès</string>
+    <string name="state_in_collection">En aquesta col·lecció</string>
+    <string name="state_on_watchlist">A la llista de seguiment</string>
+    <string name="state_favorite">Preferida</string>
     <!-- Shows -->
     <string name="confirm_delete">Realment voleu eliminar %s?</string>
     <string name="delete_error">No s\'ha pogut esborrar la sèrie. Intenteu-ho més tard.</string>
@@ -129,7 +129,7 @@
     <string name="action_episode_notifications_on">Activa notificacions d\'episodis</string>
     <string name="action_episode_notifications_off">Desactiva notificacions d\'episodis</string>
     <string name="context_hide">Amaga</string>
-    <string name="context_unhide">Mostra</string>
+    <string name="context_unhide">No amaguis</string>
     <string name="hidden">Sèrie oculta</string>
     <string name="unhidden">Sèrie visible</string>
     <string name="action_shows_add">Afegeix sèrie</string>
@@ -196,7 +196,7 @@
     <string name="action_try_again">Torneu-ho a intentar</string>
     <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>
     <string name="add_all">Afegeix-ho tot</string>
-    <string name="add_multiple">Totes les sèries apareixeran de seguida a la vostra llista de sèries.</string>
+    <string name="add_multiple">Totes les sèries apareixeran desseguida a la vostra llista de sèries.</string>
     <string name="add_started">De seguida apareixerà %s a la vostra llista de sèries.</string>
     <string name="add_error">No es pot afegir %s.</string>
     <string name="add_already_exists">%s ja és a la vostra llista de sèries.</string>
@@ -210,7 +210,7 @@
     <!-- Lists -->
     <string name="first_list">Primera llista</string>
     <string name="list_add">Afegeix llista</string>
-    <string name="list_title_hint">Nom de la llista</string>
+    <string name="list_title_hint">Anomena la teva llista</string>
     <string name="list_remove">Elimina llista</string>
     <string name="list_manage">Gestiona llista</string>
     <string name="list_item_manage">Gestiona llistes</string>
@@ -224,7 +224,7 @@
     <string name="title_popular">Popular</string>
     <string name="title_digital_releases">Publicació digital</string>
     <string name="title_disc_releases">Publicació en disc</string>
-    <string name="movies_in_theatres">En els teatres</string>
+    <string name="movies_in_theatres">En els cinemes</string>
     <string name="movies_collection">Coŀlecció</string>
     <string name="movies_watchlist">Llista de seguiment</string>
     <string name="movies_watched">Vist</string>
@@ -250,7 +250,7 @@
     <string name="shows_continuing">%s en progrés</string>
     <string name="episodes_watched">%s mirats</string>
     <string name="movies_on_watchlist">%s a la llista de seguiment</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d en la col·lecció</string>
     <string name="movies_watched_format">%s mirats</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
@@ -293,19 +293,20 @@
     <string name="traktcheckin_inprogress">Ja us heu registrat a un altre episodi o peŀlícula. O bé substituïu el darrer registre o bé us espereu %s i ho torneu a provar.</string>
     <string name="traktcheckin_wait">Esperaré</string>
     <string name="trakt_success">Enviat a trakt.</string>
+    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
     <string name="trakt_error_not_exists">No disponible (encara) a trakt. Prova més tard.</string>
-    <string name="trakt_notice_not_exists">No pot ser registrada (encara) a trakt.</string>
+    <string name="trakt_notice_not_exists">No pot ser registrada (encara) a Trakt.</string>
     <!-- Connect trakt -->
-    <string name="connect_trakt">Connecta\'t al trakt</string>
-    <string name="trakt_reconnect">Connecta SeriesGuide a trakt</string>
-    <string name="trakt_reconnect_details">Comprova les credencials de trakt</string>
+    <string name="connect_trakt">Connecta\'t al Trakt</string>
+    <string name="trakt_reconnect">Connecta SeriesGuide a Trakt</string>
+    <string name="trakt_reconnect_details">Comprova les credencials de Trakt</string>
     <string name="waitplease">Un moment, si us plau&#8230;</string>
     <string name="connect">Connecta</string>
     <string name="disconnect">Desconnecta</string>
     <string name="use_integrated_browser">Utilitza el navegador integrat</string>
     <string name="show_library">Mostra\'m la biblioteca del trakt</string>
-    <string name="about_trakt">La plataforma trakt us ajuda a controlar les sèries i peŀlícules que esteu veient. <a href="https://trakt.tv">Més informació</a></string>
+    <string name="about_trakt">La plataforma Trakt us ajuda a controlar les sèries i peŀlícules que esteu veient. <a href="https://trakt.tv">Més informació</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Puntua</string>
     <string name="your_rating">La vostra valoració</string>
@@ -333,8 +334,8 @@
     <string name="feedback">Envia comentaris</string>
     <string name="action_open_in_browser">Obre al navegador</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Traduïr l\'applicació</string>
+    <string name="action_contribute_content">Tradueïx o millora el contingut</string>
     <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
@@ -351,7 +352,7 @@
     <string name="pref_language_fallback">Idioma alternatiu</string>
     <string name="pref_updatewifionly">Imatges només via xarxa sense fils</string>
     <string name="pref_updatewifionlysummary">Per reduir els càrrecs de dades, no descarregar en xarxes mòbils o comptabilitzades</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Envia errors al desenvolupador</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dia abans</item>
         <item quantity="other">%d dies abans</item>
@@ -401,13 +402,13 @@
     <!-- Other advanced settings -->
     <string name="pref_other">Altres</string>
     <string name="pref_autoupdatesummary">Sincronitzar i actualitzar les dades de SeriesGuide automàticament</string>
-    <string name="backup">Còpies de seguretat</string>
+    <string name="backup">Còpies de seguretat/Restaura</string>
     <string name="backup_summary">Creeu una còpia de seguretat de les vostres sèries o restaureu-ne alguna d\'existent</string>
-    <string name="pref_number">Format de número</string>
+    <string name="pref_number">Format del número</string>
     <string name="pref_offset">Compensació horària manual</string>
     <string name="pref_offsetsummary">Les hores d\'estrena tenen un desfasament de %d hores</string>
     <string name="clear_cache">Buida la memòria cau d\'imatges</string>
-    <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i encara siguin al dispositiu</string>
+    <string name="clear_cache_summary">Elimina totes les imatges que SeriesGuide hagi baixat i que encara siguin al dispositiu</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Incloure descripcions, detalls, valoracions</string>
     <string name="backup_failed_file_access">No es pot fer còpia de seguretat. No es pot trobar o accedir un arxiu de còpia de seguretat.</string>
@@ -425,8 +426,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Còpies de seguretat automàtiques</string>
     <string name="pref_autobackupsummary">Còpia de seguretat setmanal de les teves sèries, llistes i pel·lícules</string>
-    <string name="autobackup_details">Aquestes còpies de seguretat seran innaccesibles si l\'app s\'instal·la de nou excepte si la còpia s\'activa en aquest dispositiu (Android 6+). 
-Creeu còpies per preservar-les d\'una altra manera</string>
+    <string name="autobackup_details">Aquestes còpies de seguretat seran innaccesibles si l\'app s\'instal·la de nou. Creeu còpies per preservar-les d\'una altra manera.</string>
     <string name="last_auto_backup">Darrera còpia de seguretat automàtica: %s</string>
     <string name="restore_auto_backup">Restaura la còpia de seguretat automàtica</string>
     <string name="autobackup_failed">Ha fallat l\'última còpia de seguretat automàtica</string>
@@ -434,7 +434,7 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="autobackup_create_user_copy">Creeu una còpia després de cada còpia de seguretat</string>
     <string name="autobackup_restore_available">Per restaurar pot estar disponible una còpia de seguretat automàtica</string>
     <!-- Welcome dialog -->
-    <string name="get_started">Inici</string>
+    <string name="get_started">Començar</string>
     <string name="dismiss">Omet</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s és a punt de sortir</string>
@@ -455,8 +455,8 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="pref_notification_channel_errors">Errors</string>
     <string name="pref_notifications_next_episodes_only">Només per a episodis per veure a continuació</string>
     <string name="pref_notifications_next_episodes_only_summary">Notifiqueu només si el nou episodi és el següent que es pugui veure</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_battery_settings">Configuració de la bateria</string>
+    <string name="pref_notifications_battery_settings_summary">Vés als ajustaments de la bateria per deshabilitar les optimitzacions de bateria per rebre notificacions</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>
@@ -476,11 +476,11 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="billing_action_pass">Obtenir un «X Pass»</string>
     <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
     <string name="billing_duration_format">%1$s l\'any</string>
-    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_sub_description">Prova 30 dies gratuïtament, cancel·la en qualsevol moment</string>
     <string name="billing_price_pass">compra única</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">Cada subscripció allibera totes les característiques i ajuda a futures actualitzacions. No és necessita cap subscripció per fer servir aquesta aplicació.</string>
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_learn_more">Més informació i ajuda</string>
     <string name="subscription_expired">La subscripció ha caducat</string>
     <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
     <!-- Amazon In-App Billing -->
@@ -495,7 +495,7 @@ Creeu còpies per preservar-les d\'una altra manera</string>
     <string name="action_extension_remove">Elimina</string>
     <string name="extension_amazon">Cerca a Amazon</string>
     <string name="description_extension_amazon">Cerqueu al vostre Amazon local</string>
-    <string name="pref_amazon_domain">Lloc Amazon</string>
+    <string name="pref_amazon_domain">Web Amazon</string>
     <string name="extension_google_play">Cerca a Google Play</string>
     <string name="description_extension_google_play">Cerca a Google Play Store</string>
     <string name="extension_youtube">Cerca a YouTube</string>
