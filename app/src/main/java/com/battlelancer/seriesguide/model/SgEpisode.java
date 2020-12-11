@@ -27,13 +27,13 @@ public class SgEpisode {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Episodes._ID)
-    public int id;
+    public long id;
 
     @ColumnInfo(name = SeasonsColumns.REF_SEASON_ID)
-    public int seasonId;
+    public long seasonId;
 
     @ColumnInfo(name = ShowsColumns.REF_SHOW_ID)
-    public int showId;
+    public long showId;
 
     @ColumnInfo(name = Episodes.TMDB_ID)
     public Integer tmdbId;

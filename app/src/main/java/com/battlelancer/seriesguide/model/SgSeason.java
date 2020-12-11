@@ -21,10 +21,10 @@ public class SgSeason {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Seasons._ID)
-    public int id;
+    public long id;
 
     @ColumnInfo(name = ShowsColumns.REF_SHOW_ID)
-    public int showId;
+    public long showId;
 
     @ColumnInfo(name = Seasons.TMDB_ID)
     public String tmdbId;

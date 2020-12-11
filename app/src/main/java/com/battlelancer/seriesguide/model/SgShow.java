@@ -20,7 +20,7 @@ public class SgShow {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Shows._ID)
-    public int id;
+    public long id;
 
     @ColumnInfo(name = Shows.TMDB_ID)
     public Integer tmdbId;
