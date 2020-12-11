@@ -41,73 +41,73 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static UriMatcher sUriMatcher;
 
-    private static final int SHOWS = 100;
+    static final int SHOWS = 100;
 
-    private static final int SHOWS_ID = 101;
+    static final int SHOWS_ID = 101;
 
-    private static final int SHOWS_FILTERED = 102;
+    static final int SHOWS_FILTERED = 102;
 
-    private static final int SHOWS_WITH_LAST_EPISODE = 103;
+    static final int SHOWS_WITH_LAST_EPISODE = 103;
 
-    private static final int SHOWS_WITH_NEXT_EPISODE = 104;
+    static final int SHOWS_WITH_NEXT_EPISODE = 104;
 
-    private static final int SHOWS_TVDB_ID = 105;
+    static final int SHOWS_TVDB_ID = 105;
 
-    private static final int EPISODES = 200;
+    static final int EPISODES = 200;
 
-    private static final int EPISODES_ID = 201;
+    static final int EPISODES_ID = 201;
 
-    private static final int EPISODES_OFSHOW = 202;
+    static final int EPISODES_OFSHOW = 202;
 
-    private static final int EPISODES_OFSEASON = 203;
+    static final int EPISODES_OFSEASON = 203;
 
-    private static final int EPISODES_OFSEASON_WITHSHOW = 204;
+    static final int EPISODES_OFSEASON_WITHSHOW = 204;
 
-    private static final int EPISODES_WITHSHOW = 205;
+    static final int EPISODES_WITHSHOW = 205;
 
-    private static final int EPISODES_ID_WITHSHOW = 206;
+    static final int EPISODES_ID_WITHSHOW = 206;
 
-    private static final int EPISODES_TVDB_ID = 207;
+    static final int EPISODES_TVDB_ID = 207;
 
-    private static final int SEASONS = 300;
+    static final int SEASONS = 300;
 
-    private static final int SEASONS_ID = 301;
+    static final int SEASONS_ID = 301;
 
-    private static final int SEASONS_OFSHOW = 302;
+    static final int SEASONS_OFSHOW = 302;
 
-    private static final int SEASONS_TVDB_ID = 303;
+    static final int SEASONS_TVDB_ID = 303;
 
-    private static final int EPISODESEARCH = 400;
+    static final int EPISODESEARCH = 400;
 
-    private static final int EPISODESEARCH_ID = 401;
+    static final int EPISODESEARCH_ID = 401;
 
-    private static final int LISTS = 500;
+    static final int LISTS = 500;
 
-    private static final int LISTS_ID = 501;
+    static final int LISTS_ID = 501;
 
-    private static final int LISTS_WITH_LIST_ITEM_ID = 502;
+    static final int LISTS_WITH_LIST_ITEM_ID = 502;
 
-    private static final int LIST_ITEMS = 600;
+    static final int LIST_ITEMS = 600;
 
-    private static final int LIST_ITEMS_ID = 601;
+    static final int LIST_ITEMS_ID = 601;
 
-    private static final int LIST_ITEMS_WITH_DETAILS = 602;
+    static final int LIST_ITEMS_WITH_DETAILS = 602;
 
-    private static final int MOVIES = 700;
+    static final int MOVIES = 700;
 
-    private static final int MOVIES_ID = 701;
+    static final int MOVIES_ID = 701;
 
-    private static final int ACTIVITY = 800;
+    static final int ACTIVITY = 800;
 
-    private static final int SEARCH_SUGGEST = 900;
+    static final int SEARCH_SUGGEST = 900;
 
-    private static final int RENEW_FTSTABLE = 1000;
+    static final int RENEW_FTSTABLE = 1000;
 
-    private static final int JOBS = 1100;
+    static final int JOBS = 1100;
 
-    private static final int JOBS_ID = 1101;
+    static final int JOBS_ID = 1101;
 
-    private static final int CLOSE = 1200;
+    static final int CLOSE = 1200;
 
     /**
      * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
