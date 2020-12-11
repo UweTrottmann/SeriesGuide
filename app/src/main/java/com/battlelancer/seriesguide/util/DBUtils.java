@@ -22,6 +22,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.SeasonTags;
+import com.battlelancer.seriesguide.model.SgEpisodeUpdateInfo;
+import com.battlelancer.seriesguide.model.SgSeasonUpdateInfo;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -32,7 +34,6 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
@@ -304,21 +305,10 @@ public class DBUtils {
      *
      * <p> If the show is new, sets some default values and the (TheTVDB) id.
      */
-    public static ContentProviderOperation buildShowOp(Context context, Show show, boolean isNew) {
+    public static ContentValues buildShowContentValues(Context context, Show show, boolean isNew) {
         // last updated now
         show.last_updated = System.currentTimeMillis();
-
-        ContentValues values = show.toContentValues(context, isNew);
-
-        if (isNew) {
-            return ContentProviderOperation
-                    .newInsert(Shows.CONTENT_URI)
-                    .withValues(values).build();
-        } else {
-            return ContentProviderOperation
-                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdb_id)))
-                    .withValues(values).build();
-        }
+        return show.toContentValues(context, isNew);
     }
 
     /**
@@ -328,21 +318,16 @@ public class DBUtils {
      *
      * @return HashMap containing the shows existing episodes
      */
-    public static HashMap<Integer, Long> getLastUpdatedByEpisodeTvdbId(Context context,
-            int showId) {
-        Cursor episodes = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showId), new String[]{
-                        Episodes.TVDB_ID, Episodes.LAST_UPDATED
-                }, null, null, null
-        );
-        @SuppressLint("UseSparseArrays") HashMap<Integer, Long> episodeMap = new HashMap<>();
-        if (episodes != null) {
-            while (episodes.moveToNext()) {
-                episodeMap.put(episodes.getInt(0), episodes.getLong(1));
-            }
-            episodes.close();
+    public static HashMap<Integer, SgEpisodeUpdateInfo> getEpisodesByTvdbId(Context context,
+            long showId) {
+        List<SgEpisodeUpdateInfo> episodes = SgRoomDatabase.getInstance(context)
+                .episodeHelper()
+                .getLastUpdatedInfoForShow(showId);
+        @SuppressLint("UseSparseArrays") HashMap<Integer, SgEpisodeUpdateInfo> map = new HashMap<>();
+        for (SgEpisodeUpdateInfo episode : episodes) {
+            map.put(episode.getTvdbId(), episode);
         }
-        return episodeMap;
+        return map;
     }
 
     /**
@@ -350,52 +335,16 @@ public class DBUtils {
      *
      * @return HashMap containing the shows existing seasons
      */
-    public static HashSet<Integer> getSeasonTvdbIds(Context context, int showId) {
-        List<Integer> seasonTvdbIdsOrNulls = SgRoomDatabase.getInstance(context).seasonHelper()
+    public static HashMap<Integer, SgSeasonUpdateInfo> getSeasonsByTvdbId(Context context,
+            long showId) {
+        List<SgSeasonUpdateInfo> seasons = SgRoomDatabase.getInstance(context)
+                .seasonHelper()
                 .getSeasonTvdbIds(showId);
-        HashSet<Integer> seasonTvdbIds = new HashSet<>();
-        for (Integer seasonTvdbIdOrNull : seasonTvdbIdsOrNulls) {
-            if (seasonTvdbIdOrNull != null) seasonTvdbIds.add(seasonTvdbIdOrNull);
+        HashMap<Integer, SgSeasonUpdateInfo> map = new HashMap<>();
+        for (SgSeasonUpdateInfo season : seasons) {
+            map.put(season.getTvdbId(), season);
         }
-        return seasonTvdbIds;
-    }
-
-    /**
-     * Creates an update {@link ContentProviderOperation} for the given episode values.
-     */
-    public static ContentProviderOperation buildEpisodeUpdateOp(ContentValues values) {
-        final String episodeTvdbId = values.getAsString(Episodes.TVDB_ID);
-        return ContentProviderOperation
-                .newUpdate(Episodes.buildEpisodeUri(episodeTvdbId))
-                .withValues(values).build();
-    }
-
-    /**
-     * Creates a {@link ContentProviderOperation} for insert if isNew, or update instead for with
-     * the given season values.
-     */
-    public static ContentProviderOperation buildSeasonOp(int showTvdbId, int seasonTvdbId,
-            int seasonNumber, boolean isNew) {
-        ContentProviderOperation op;
-        final ContentValues values = new ContentValues();
-        values.put(Seasons.COMBINED, seasonNumber);
-        values.put(Seasons.ORDER, seasonNumber);
-
-        if (isNew) {
-            values.put(Seasons.TVDB_ID, seasonTvdbId);
-            values.put(Shows.REF_SHOW_ID, showTvdbId);
-            // set default values
-            values.put(Seasons.WATCHCOUNT, 0);
-            values.put(Seasons.UNAIREDCOUNT, 0);
-            values.put(Seasons.NOAIRDATECOUNT, 0);
-            values.put(Seasons.TOTALCOUNT, 0);
-            op = ContentProviderOperation.newInsert(Seasons.CONTENT_URI).withValues(values)
-                    .build();
-        } else {
-            op = ContentProviderOperation.newUpdate(Seasons.buildSeasonUri(seasonTvdbId))
-                    .withValues(values).build();
-        }
-        return op;
+        return map;
     }
 
     private interface LastWatchedEpisodeQuery {

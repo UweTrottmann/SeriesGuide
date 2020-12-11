@@ -1,12 +1,14 @@
 package com.battlelancer.seriesguide.thetvdbapi
 
 import android.content.ContentProviderOperation
+import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.text.format.DateUtils
 import com.battlelancer.seriesguide.dataliberation.model.Show
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
@@ -17,7 +19,6 @@ import com.uwetrottmann.thetvdb.entities.EpisodesResponse
 import com.uwetrottmann.thetvdb.services.TheTvdbSeries
 import dagger.Lazy
 import java.util.ArrayList
-import java.util.HashSet
 import java.util.TimeZone
 
 class TvdbEpisodeTools constructor(
@@ -31,28 +32,24 @@ class TvdbEpisodeTools constructor(
      *
      * Adds update ops for updated episodes and delete ops for local orphaned episodes to the given
      * [ContentProviderOperation] batch.
-     *
-     * [showId] may be null when fetching episodes for a new show.
      */
     @Throws(TvdbException::class)
     fun fetchEpisodes(
         batch: ArrayList<ContentProviderOperation>,
         show: Show,
-        showId: Int?,
+        showId: Long,
         language: String
     ): ArrayList<ContentValues> {
         val showTvdbId = show.tvdb_id
         val newEpisodesValues = ArrayList<ContentValues>()
 
-        val lastUpdatedByEpisodeTvdbId =
-            showId?.let { DBUtils.getLastUpdatedByEpisodeTvdbId(context, showId) } ?: hashMapOf()
+        val localEpisodesByTvdbId = DBUtils.getEpisodesByTvdbId(context, showId)
         // just copy episodes list, then remove valid ones
-        val removableEpisodeTvdbIds = HashSet(lastUpdatedByEpisodeTvdbId.keys)
+        val removableEpisodesByTvdbId = HashMap(localEpisodesByTvdbId)
 
-        val localSeasonTvdbIds =
-            showId?.let { DBUtils.getSeasonTvdbIds(context, showId) } ?: hashSetOf()
-        // store updated seasons to avoid duplicate ops
-        val seasonsToAddOrUpdate = HashSet<Int>()
+        val localSeasonsByTvdbId = DBUtils.getSeasonsByTvdbId(context, showId)
+        // Store new/updated seasons to avoid duplicate ops
+        val addedOrUpdatedSeasonsByTvdbId = HashMap<Int, Long>()
 
         val dateLastMonthEpoch = (System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 30) / 1000
         val showTimeZone = TimeTools.getDateTimeZone(show.release_timezone)
@@ -91,38 +88,49 @@ class TvdbEpisodeTools constructor(
                     continue // invalid ids, skip
                 }
 
-                // add insert/update op for season, prevents it from getting cleaned
-                if (!seasonsToAddOrUpdate.contains(seasonTvdbId)) {
-                    batch.add(DBUtils.buildSeasonOp(showTvdbId, seasonTvdbId, seasonNumber,
-                            !localSeasonTvdbIds.contains(seasonTvdbId)))
-                    seasonsToAddOrUpdate.add(seasonTvdbId)
+                val seasonIdOrNull = addedOrUpdatedSeasonsByTvdbId[seasonTvdbId]
+                val seasonId = if (seasonIdOrNull != null) {
+                    seasonIdOrNull
+                } else {
+                    // Insert/update season, prevent it from getting cleaned.
+                    val seasonId = insertOrUpdateSeason(
+                        context.contentResolver,
+                        showId,
+                        seasonTvdbId,
+                        seasonNumber,
+                        localSeasonsByTvdbId[seasonTvdbId]?.id
+                    )
+                    addedOrUpdatedSeasonsByTvdbId[seasonTvdbId] = seasonId
+                    seasonId
                 }
 
                 // don't clean up this episode
-                removableEpisodeTvdbIds.remove(episodeTvdbId)
+                removableEpisodesByTvdbId.remove(episodeTvdbId)
 
-                var insert = true
-                if (lastUpdatedByEpisodeTvdbId.containsKey(episodeTvdbId)) {
+                val localEpisodeOrNull = localEpisodesByTvdbId[episodeTvdbId]
+                if (localEpisodeOrNull != null) {
                     /*
                      * Update uses provider ops which take a long time. Only
                      * update if episode was edited on TVDb or is not older than
                      * a month (ensures show air time changes get stored).
                      */
-                    val lastUpdatedEpoch = lastUpdatedByEpisodeTvdbId[episodeTvdbId]
+                    val lastUpdatedEpoch = localEpisodeOrNull.lastUpdatedSec
                     val lastTvdbEditEpoch = episode.lastUpdated
-                    if (lastUpdatedEpoch != null && lastTvdbEditEpoch != null
-                            && (lastUpdatedEpoch < lastTvdbEditEpoch
-                                    || dateLastMonthEpoch < lastUpdatedEpoch)) {
-                        insert = false // update episode
+                    if (lastTvdbEditEpoch != null
+                        && (lastUpdatedEpoch < lastTvdbEditEpoch
+                                || dateLastMonthEpoch < lastUpdatedEpoch)) {
+                        // update episode
                     } else {
                         continue // not edited or too old to update, skip
                     }
                 }
 
                 // calculate release time
-                val releaseDateTime = TimeTools.parseEpisodeReleaseDate(context, showTimeZone,
-                        episode.firstAired, showReleaseTime, show.country, show.network,
-                        deviceTimeZone)
+                val releaseDateTime = TimeTools.parseEpisodeReleaseDate(
+                    context, showTimeZone,
+                    episode.firstAired, showReleaseTime, show.country, show.network,
+                    deviceTimeZone
+                )
                 // if name or overview are empty use fallback
                 val hasName = !episode.episodeName.isNullOrEmpty()
                 val hasOverview = !episode.overview.isNullOrEmpty()
@@ -138,15 +146,21 @@ class TvdbEpisodeTools constructor(
                     episode.overview = fallbackEpisode?.overview
                 }
 
-                episode.toContentValues(values, episodeTvdbId, seasonTvdbId, showTvdbId,
-                        seasonNumber, releaseDateTime, insert)
+                episode.toContentValues(
+                    values, episodeTvdbId, seasonId, showId,
+                    seasonNumber, releaseDateTime, localEpisodeOrNull == null
+                )
 
-                if (insert) {
+                if (localEpisodeOrNull == null) {
                     // episode does not exist, yet: insert
                     newEpisodesValues.add(ContentValues(values))
                 } else {
                     // episode exists: update
-                    batch.add(DBUtils.buildEpisodeUpdateOp(values))
+                    batch.add(
+                        ContentProviderOperation
+                            .newUpdate(Episodes.buildIdUri(localEpisodeOrNull.id))
+                            .withValues(values).build()
+                    )
                 }
 
                 values.clear()
@@ -155,18 +169,16 @@ class TvdbEpisodeTools constructor(
         }
 
         // Add delete ops for leftover episodes in local db.
-        removableEpisodeTvdbIds.mapTo(batch) {
-            ContentProviderOperation.newDelete(Episodes.buildEpisodeUri(it)).build()
+        removableEpisodesByTvdbId.values.mapTo(batch) {
+            ContentProviderOperation.newDelete(Episodes.buildIdUri(it.id)).build()
         }
 
         // Add delete ops for leftover seasons in local db.
-        localSeasonTvdbIds
-                .filterNot { seasonsToAddOrUpdate.contains(it) }
+        localSeasonsByTvdbId.values
+                .filterNot { addedOrUpdatedSeasonsByTvdbId.contains(it.tvdbId) }
                 .forEach {
                     batch.add(
-                        ContentProviderOperation.newDelete(
-                            SeriesGuideContract.Seasons.buildSeasonUri(it)
-                        ).build()
+                        ContentProviderOperation.newDelete(Seasons.buildIdUri(it.id)).build()
                     )
                 }
 
@@ -194,13 +206,51 @@ class TvdbEpisodeTools constructor(
         return response.body()!!
     }
 
+    /**
+     * Inserts season if `seasonId` is null, or updates it instead with the given values.
+     * Returns the seasonId. Throws if the database op failed.
+     */
+    @Throws(TvdbException::class)
+    fun insertOrUpdateSeason(
+        resolver: ContentResolver,
+        showId: Long,
+        seasonTvdbId: Int,
+        seasonNumber: Int,
+        seasonId: Long?
+    ): Long {
+        val values = ContentValues()
+        values.put(Seasons.COMBINED, seasonNumber)
+        values.put(Seasons.ORDER, seasonNumber)
+
+        return if (seasonId == null) {
+            values.put(Seasons.TVDB_ID, seasonTvdbId)
+            values.put(Shows.REF_SHOW_ID, showId)
+            // set default values
+            values.put(Seasons.WATCHCOUNT, 0)
+            values.put(Seasons.UNAIREDCOUNT, 0)
+            values.put(Seasons.NOAIRDATECOUNT, 0)
+            values.put(Seasons.TOTALCOUNT, 0)
+            val seasonUri = resolver.insert(Seasons.CONTENT_URI, values)
+                ?: throw TvdbDataException("Failed to insert season")
+            Seasons.getId(seasonUri).toLong()
+        } else {
+            resolver.update(Seasons.buildIdUri(seasonId), values, null, null)
+            seasonId
+        }
+    }
 
     companion object {
 
         @JvmStatic
-        fun Episode.toContentValues(values: ContentValues,
-                episodeTvdbId: Int, seasonTvdbId: Int, showTvdbId: Int,
-                seasonNumber: Int, releaseDateTime: Long, forInsert: Boolean) {
+        fun Episode.toContentValues(
+            values: ContentValues,
+            episodeTvdbId: Int,
+            seasonId: Long,
+            showId: Long,
+            seasonNumber: Int,
+            releaseDateTime: Long,
+            forInsert: Boolean
+        ) {
             values.put(Episodes.TVDB_ID, episodeTvdbId)
             values.put(Episodes.TITLE, episodeName ?: "")
             values.put(Episodes.OVERVIEW, overview)
@@ -214,8 +264,8 @@ class TvdbEpisodeTools constructor(
             values.put(Episodes.IMAGE, filename ?: "")
             values.put(Episodes.IMDBID, imdbId ?: "")
 
-            values.put(SeriesGuideContract.Seasons.REF_SEASON_ID, seasonTvdbId)
-            values.put(SeriesGuideContract.Shows.REF_SHOW_ID, showTvdbId)
+            values.put(Seasons.REF_SEASON_ID, seasonId)
+            values.put(Shows.REF_SHOW_ID, showId)
 
             values.put(Episodes.FIRSTAIREDMS, releaseDateTime)
             values.put(Episodes.ABSOLUTE_NUMBER, absoluteNumber)

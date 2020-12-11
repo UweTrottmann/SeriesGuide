@@ -30,7 +30,7 @@ interface ShowHelper {
     fun getShowTitle(tvdbId: Long): String?
 
     @Query("SELECT _id FROM series WHERE series_tvdb_id=:tvdbId")
-    fun getShowId(tvdbId: Long): Int
+    fun getShowId(tvdbId: Long): Long
 
     @RawQuery(observedEntities = [SgShow::class])
     fun queryShows(query: SupportSQLiteQuery): LiveData<List<SgShow>>

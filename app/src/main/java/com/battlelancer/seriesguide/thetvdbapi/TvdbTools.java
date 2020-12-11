@@ -130,10 +130,19 @@ public class TvdbTools {
         Show show = getShowDetailsWithHexagon(showTvdbId, language, hexagonEnabled);
         language = show.language;
 
-        // get episodes and store everything to the database
+        // Insert show and get its assigned ID.
+        context.getContentResolver().insert(
+                Shows.CONTENT_URI,
+                DBUtils.buildShowContentValues(context, show, true)
+        );
+        long showId = SgRoomDatabase.getInstance(context).showHelper().getShowId(showTvdbId);
+        if (showId == 0) {
+            throw new TvdbDataException("Failed to insert new show");
+        }
+
+        // Get episodes and store seasons and episodes to the database.
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(DBUtils.buildShowOp(context, show, true));
-        getEpisodesAndUpdateDatabase(batch, show, null, language);
+        getEpisodesAndUpdateDatabase(batch, show, showId, language);
 
         // FIXME below
 
@@ -175,6 +184,9 @@ public class TvdbTools {
      * Updates a show. Adds new, updates changed and removes orphaned episodes.
      */
     public void updateShow(int showTvdbId) throws TvdbException {
+        // TODO Pull showId up.
+        long showId = SgRoomDatabase.getInstance(context).showHelper().getShowId(showTvdbId);
+
         // determine which translation to get
         String language = getShowLanguage(context, showTvdbId);
         if (language == null) {
@@ -184,11 +196,15 @@ public class TvdbTools {
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
         Show show = getShowDetails(showTvdbId, language);
-        batch.add(DBUtils.buildShowOp(context, show, false));
+        batch.add(
+                ContentProviderOperation
+                        .newUpdate(Shows.buildIdUri(showId))
+                        .withValues(DBUtils.buildShowContentValues(context, show, false))
+                        .build()
+        );
 
         // get episodes in the language as returned in the TVDB show entry
         // the show might not be available in the desired language
-        int showId = SgRoomDatabase.getInstance(context).showHelper().getShowId(showTvdbId);
         getEpisodesAndUpdateDatabase(batch, show, showId, show.language);
     }
 
@@ -260,7 +276,7 @@ public class TvdbTools {
      * information to the database.
      */
     private void getEpisodesAndUpdateDatabase(final ArrayList<ContentProviderOperation> batch,
-            Show show, @Nullable Integer showId, String language) throws TvdbException {
+            Show show, long showId, String language) throws TvdbException {
         // get ops for episodes of this show
         TvdbEpisodeTools episodeTools = new TvdbEpisodeTools(context, tvdbSeries);
         ArrayList<ContentValues> importShowEpisodes = episodeTools
