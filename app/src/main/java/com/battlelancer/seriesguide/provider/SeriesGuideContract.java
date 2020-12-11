@@ -635,6 +635,8 @@ public class SeriesGuideContract {
 
     public static final String PATH_EPISODES = "episodes";
 
+    public static final String PATH_TVDB = "tvdb";
+
     public static final String PATH_OFSHOW = "ofshow";
 
     public static final String PATH_OFSEASON = "ofseason";
@@ -675,6 +677,10 @@ public class SeriesGuideContract {
          */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_SHOWS)
+                .build();
+
+        public static final Uri CONTENT_URI_TVDB = CONTENT_URI.buildUpon()
+                .appendPath(PATH_TVDB)
                 .build();
 
         /**
@@ -752,16 +758,26 @@ public class SeriesGuideContract {
         public static final String SELECTION_HIDDEN = Shows.HIDDEN + "=1";
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
 
-        public static Uri buildShowUri(String showTvdbId) {
-            return CONTENT_URI.buildUpon().appendPath(showTvdbId).build();
-        }
-
-        public static Uri buildShowUri(int showTvdbId) {
-            return buildShowUri(String.valueOf(showTvdbId));
+        public static Uri buildIdUri(long showId) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(showId)).build();
         }
 
         public static String getId(Uri uri) {
             return uri.getLastPathSegment();
+        }
+
+        /**
+         * @deprecated Use {@link #buildIdUri(long)} with row ID instead.
+         */
+        public static Uri buildShowUri(String showTvdbId) {
+            return CONTENT_URI_TVDB.buildUpon().appendPath(showTvdbId).build();
+        }
+
+        /**
+         * @deprecated Use {@link #buildIdUri(long)} with row ID instead.
+         */
+        public static Uri buildShowUri(int showTvdbId) {
+            return buildShowUri(String.valueOf(showTvdbId));
         }
     }
 
@@ -773,6 +789,9 @@ public class SeriesGuideContract {
          */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_EPISODES).build();
+
+        public static final Uri CONTENT_URI_TVDB = CONTENT_URI.buildUpon()
+                .appendPath(PATH_TVDB).build();
 
         /**
          * Episodes joined with shows table.
@@ -841,16 +860,26 @@ public class SeriesGuideContract {
                         + NUMBER + " DESC" + ","
                         + FIRSTAIREDMS + " DESC";
 
-        public static Uri buildEpisodeUri(String episodeTvdbId) {
-            return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();
+        public static Uri buildIdUri(long episodeId) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(episodeId)).build();
         }
 
+        public static String getId(Uri uri) {
+            return uri.getLastPathSegment();
+        }
+
+        /**
+         * @deprecated Use {@link #buildIdUri(long)} with row ID instead.
+         */
+        public static Uri buildEpisodeUri(String episodeTvdbId) {
+            return CONTENT_URI_TVDB.buildUpon().appendPath(episodeTvdbId).build();
+        }
+
+        /**
+         * @deprecated Use {@link #buildIdUri(long)} with row ID instead.
+         */
         public static Uri buildEpisodeUri(int episodeTvdbId) {
             return buildEpisodeUri(String.valueOf(episodeTvdbId));
-        }
-
-        public static String getEpisodeId(Uri uri) {
-            return uri.getLastPathSegment();
         }
 
         public static Uri buildEpisodesOfSeasonUri(String seasonId) {
@@ -892,6 +921,9 @@ public class SeriesGuideContract {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SEASONS)
                 .build();
 
+        public static final Uri CONTENT_URI_TVDB = CONTENT_URI.buildUpon()
+                .appendPath(PATH_TVDB).build();
+
         /**
          * Use if multiple items get returned
          */
@@ -906,16 +938,26 @@ public class SeriesGuideContract {
         /** Warning: total count may not be up to date. */
         public static final String SELECTION_WITH_EPISODES = Seasons.TOTALCOUNT + ">0";
 
-        public static Uri buildSeasonUri(String seasonTvdbId) {
-            return CONTENT_URI.buildUpon().appendPath(seasonTvdbId).build();
+        public static Uri buildIdUri(long seasonId) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(seasonId)).build();
         }
 
+        public static String getId(Uri uri) {
+            return uri.getLastPathSegment();
+        }
+
+        /**
+         * @deprecated Use {@link #buildIdUri(long)} with row ID instead.
+         */
+        public static Uri buildSeasonUri(String seasonTvdbId) {
+            return CONTENT_URI_TVDB.buildUpon().appendPath(seasonTvdbId).build();
+        }
+
+        /**
+         * @deprecated Use {@link #buildIdUri(long)} with row ID instead.
+         */
         public static Uri buildSeasonUri(int seasonTvdbId) {
             return buildSeasonUri(String.valueOf(seasonTvdbId));
-        }
-
-        public static String getSeasonId(Uri uri) {
-            return uri.getLastPathSegment();
         }
 
         public static Uri buildSeasonsOfShowUri(String showTvdbId) {

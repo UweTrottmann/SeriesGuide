@@ -51,6 +51,8 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int SHOWS_WITH_NEXT_EPISODE = 104;
 
+    private static final int SHOWS_TVDB_ID = 105;
+
     private static final int EPISODES = 200;
 
     private static final int EPISODES_ID = 201;
@@ -65,11 +67,15 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int EPISODES_ID_WITHSHOW = 206;
 
+    private static final int EPISODES_TVDB_ID = 207;
+
     private static final int SEASONS = 300;
 
     private static final int SEASONS_ID = 301;
 
     private static final int SEASONS_OFSHOW = 302;
+
+    private static final int SEASONS_TVDB_ID = 303;
 
     private static final int EPISODESEARCH = 400;
 
@@ -120,6 +126,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 + SeriesGuideContract.PATH_WITH_LAST_EPISODE, SHOWS_WITH_LAST_EPISODE);
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/"
                 + SeriesGuideContract.PATH_WITH_NEXT_EPISODE, SHOWS_WITH_NEXT_EPISODE);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/"
+                + SeriesGuideContract.PATH_TVDB + "/*", SHOWS_TVDB_ID);
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS + "/*", SHOWS_ID);
 
         // Episodes
@@ -140,6 +148,9 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority,
                 SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_WITHSHOW
                         + "/*", EPISODES_ID_WITHSHOW);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_EPISODES + "/" + SeriesGuideContract.PATH_TVDB + "/*",
+                EPISODES_TVDB_ID);
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODES + "/*", EPISODES_ID);
 
         // Seasons
@@ -147,6 +158,9 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority,
                 SeriesGuideContract.PATH_SEASONS + "/" + SeriesGuideContract.PATH_OFSHOW
                         + "/*", SEASONS_OFSHOW);
+        matcher.addURI(authority,
+                SeriesGuideContract.PATH_SEASONS + "/" + SeriesGuideContract.PATH_TVDB
+                        + "/*", SEASONS_TVDB_ID);
         matcher.addURI(authority, SeriesGuideContract.PATH_SEASONS + "/*", SEASONS_ID);
 
         // Lists
@@ -273,6 +287,7 @@ public class SeriesGuideProvider extends ContentProvider {
             case SHOWS_WITH_NEXT_EPISODE:
                 return Shows.CONTENT_TYPE;
             case SHOWS_ID:
+            case SHOWS_TVDB_ID:
                 return Shows.CONTENT_ITEM_TYPE;
             case EPISODES:
             case EPISODES_OFSHOW:
@@ -281,12 +296,14 @@ public class SeriesGuideProvider extends ContentProvider {
             case EPISODES_WITHSHOW:
                 return Episodes.CONTENT_TYPE;
             case EPISODES_ID:
+            case EPISODES_TVDB_ID:
             case EPISODES_ID_WITHSHOW:
                 return Episodes.CONTENT_ITEM_TYPE;
             case SEASONS:
             case SEASONS_OFSHOW:
                 return Seasons.CONTENT_TYPE;
             case SEASONS_ID:
+            case SEASONS_TVDB_ID:
                 return Seasons.CONTENT_ITEM_TYPE;
             case LISTS:
             case LISTS_WITH_LIST_ITEM_ID:
@@ -390,7 +407,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 if (id < 0) {
                     break;
                 }
-                notifyUri = Shows.buildShowUri(values.getAsString(Shows._ID));
+                notifyUri = Shows.buildIdUri(id);
                 break;
             }
             case SEASONS: {
@@ -403,7 +420,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 if (id < 0) {
                     break;
                 }
-                notifyUri = Seasons.buildSeasonUri(values.getAsString(Seasons._ID));
+                notifyUri = Seasons.buildIdUri(id);
                 break;
             }
             case EPISODES: {
@@ -416,7 +433,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 if (id < 0) {
                     break;
                 }
-                notifyUri = Episodes.buildEpisodeUri(values.getAsString(Episodes._ID));
+                notifyUri = Episodes.buildIdUri(id);
                 break;
             }
             case LISTS: {
@@ -602,8 +619,12 @@ public class SeriesGuideProvider extends ContentProvider {
                 return builder.table(Tables.SHOWS);
             }
             case SHOWS_ID: {
-                final String showId = Shows.getId(uri);
-                return builder.table(Tables.SHOWS).where(Shows.TVDB_ID + "=?", showId);
+                final String id = Shows.getId(uri);
+                return builder.table(Tables.SHOWS).where(Shows._ID + "=?", id);
+            }
+            case SHOWS_TVDB_ID: {
+                final String id = Shows.getId(uri);
+                return builder.table(Tables.SHOWS).where(Shows.TVDB_ID + "=?", id);
             }
             case SHOWS_FILTERED: {
                 final String filter = uri.getLastPathSegment();
@@ -624,8 +645,12 @@ public class SeriesGuideProvider extends ContentProvider {
                 return builder.table(Tables.EPISODES);
             }
             case EPISODES_ID: {
-                final String episodeId = Episodes.getEpisodeId(uri);
-                return builder.table(Tables.EPISODES).where(Episodes.TVDB_ID + "=?", episodeId);
+                final String id = Episodes.getId(uri);
+                return builder.table(Tables.EPISODES).where(Episodes._ID + "=?", id);
+            }
+            case EPISODES_TVDB_ID: {
+                final String id = Episodes.getId(uri);
+                return builder.table(Tables.EPISODES).where(Episodes.TVDB_ID + "=?", id);
             }
             case EPISODES_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
@@ -648,7 +673,7 @@ public class SeriesGuideProvider extends ContentProvider {
                         .mapToTable(Episodes.RATING_GLOBAL, Tables.EPISODES);
             }
             case EPISODES_ID_WITHSHOW: {
-                final String episodeId = Episodes.getEpisodeId(uri);
+                final String episodeId = Episodes.getId(uri);
                 return builder.table(Tables.EPISODES_JOIN_SHOWS)
                         .mapToTable(Episodes._ID, Tables.EPISODES)
                         .mapToTable(Episodes.RATING_GLOBAL, Tables.EPISODES)
@@ -658,8 +683,12 @@ public class SeriesGuideProvider extends ContentProvider {
                 return builder.table(Tables.SEASONS);
             }
             case SEASONS_ID: {
-                final String seasonId = Seasons.getSeasonId(uri);
-                return builder.table(Tables.SEASONS).where(Seasons.TVDB_ID + "=?", seasonId);
+                final String id = Seasons.getId(uri);
+                return builder.table(Tables.SEASONS).where(Seasons._ID + "=?", id);
+            }
+            case SEASONS_TVDB_ID: {
+                final String id = Seasons.getId(uri);
+                return builder.table(Tables.SEASONS).where(Seasons.TVDB_ID + "=?", id);
             }
             case SEASONS_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
