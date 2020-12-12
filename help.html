@@ -61,7 +61,7 @@ title: Help
     <section class="mt-2">
       <h3>Check in, set watched, add to collection and skip</h3>
       <p>Each episode or movie displays a button bar with up to four actions:</p>
-      <p><img src="images/buttons.png" alt="Episode actions" width="345" height="65" class="img-responsive"></img></p>
+      <p><img src="images/buttons.png" alt="Episode actions" width="345" height="65" class="img-responsive"></p>
       <ul>
           <li><a href="#checkins">Check in via Trakt</a> if you are watching right now. (<strong>Not available</strong> if SeriesGuide Cloud is connected.)</li>
           <li><b>Set watched</b> if you have watched this.</li>
@@ -97,7 +97,7 @@ title: Help
     <span class="anchor" id="update"></span>
     <section class="mt-2">
       <h3>Manually update shows</h3>
-      <p><span class="badge badge-info">Note</span> By default, show and episode data is updated regularly.</em></p>
+      <p><span class="badge badge-info">Note</span> By default, show and episode data is updated regularly.</p>
       <p>Update a single show:</p>
       <ol>
         <li>From the show list, tap <strong>More options</strong> <span class="fas fa-ellipsis-v" aria-hidden="true"></span> of a show.</li>
@@ -234,64 +234,74 @@ title: Help
       
       <p>Both are open, user-maintained databases. <strong>Consider to help those projects by adding or updating information!</strong></p>
       <p>Below are the sources of some important data in SeriesGuide:</p>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Shows</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Release time<br/>and day:</td>
-            <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Show > Airs field</td>
-          </tr>
-          <tr>
-            <td>Release country<br/>(time zone):</td>
-            <td><a href="{{ site.data.links.tmdb }}tv">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Show > Production Information > Origin Country<br/><strong>Note:</strong> The TVDB ID has to be linked under External IDs.</td>
-          </tr>
-          <tr>
-            <td>Cast and Crew:</td>
-            <td><a href="{{ site.data.links.tmdb }}tv">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Show > Regular Cast/Crew</td>
-          </tr>
-          <tr>
-            <td>Poster:</td>
-            <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Using the highest rated show poster in your language.</td>
-          </tr>
-        </tbody>
-        <thead>
-          <tr>
-            <th>Episodes</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Release date:</td>
-            <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Episode > First Aired field</td>
-          </tr>
-          <tr>
-            <td>Image:</td>
-            <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a></td>
-          </tr>
-        </tbody>
-        <thead>
-          <tr>
-            <th>Movies</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Release date:</td>
-            <td><a href="{{ site.data.links.tmdb }}movie">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Movie > Release Information</td>
-          </tr>
-          <tr>
-            <td>Image:</td>
-            <td><a href="{{ site.data.links.tmdb }}movie">TMDb <span class="fas fa-external-link-alt"></span></a><br/>The poster for your language.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Shows</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Release time<br/>and day:</td>
+              <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Show > Airs field</td>
+            </tr>
+            <tr>
+              <td>Release country<br/>(time zone):</td>
+              <td><a href="{{ site.data.links.tmdb }}tv">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Show > Production Information > Origin Country<br/><strong>Note:</strong> The TVDB ID has to be linked under External IDs.</td>
+            </tr>
+            <tr>
+              <td>Cast and Crew:</td>
+              <td><a href="{{ site.data.links.tmdb }}tv">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Show > Regular Cast/Crew</td>
+            </tr>
+            <tr>
+              <td>Poster:</td>
+              <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Using the highest rated show poster in your language.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Episodes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Release date:</td>
+              <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Episode > First Aired field</td>
+            </tr>
+            <tr>
+              <td>Image:</td>
+              <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Movies</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Release date:</td>
+              <td><a href="{{ site.data.links.tmdb }}movie">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Movie > Release Information</td>
+            </tr>
+            <tr>
+              <td>Image:</td>
+              <td><a href="{{ site.data.links.tmdb }}movie">TMDb <span class="fas fa-external-link-alt"></span></a><br/>The poster for your language.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <span class="anchor" id="fixes"></span>
