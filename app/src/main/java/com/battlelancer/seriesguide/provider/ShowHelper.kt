@@ -7,6 +7,7 @@ import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.model.SgShow
 import com.battlelancer.seriesguide.model.SgShowMinimal
+import com.battlelancer.seriesguide.model.SgShowTitleAndTvdbId
 
 /**
  * Data Access Object for the series table.
@@ -26,11 +27,14 @@ interface ShowHelper {
     @Query("SELECT series_title, series_poster_small FROM series WHERE _id = :tvdbId LIMIT 1")
     fun getShowMinimal(tvdbId: Long): SgShowMinimal?
 
-    @Query("SELECT series_title FROM series WHERE _id = :tvdbId")
-    fun getShowTitle(tvdbId: Long): String?
+    @Query("SELECT series_title, series_tvdb_id FROM series WHERE _id = :showId")
+    fun getShowTitleAndTvdbId(showId: Long): SgShowTitleAndTvdbId?
 
     @Query("SELECT _id FROM series WHERE series_tvdb_id=:tvdbId")
     fun getShowId(tvdbId: Long): Long
+
+    @Query("SELECT series_tvdb_id FROM series WHERE _id=:id")
+    fun getShowTvdbId(id: Long): Int
 
     @RawQuery(observedEntities = [SgShow::class])
     fun queryShows(query: SupportSQLiteQuery): LiveData<List<SgShow>>

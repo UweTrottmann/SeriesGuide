@@ -183,18 +183,19 @@ public class TvdbTools {
     /**
      * Updates a show. Adds new, updates changed and removes orphaned episodes.
      */
-    public void updateShow(int showTvdbId) throws TvdbException {
-        // TODO Pull showId up.
-        long showId = SgRoomDatabase.getInstance(context).showHelper().getShowId(showTvdbId);
-
+    public void updateShow(long showId) throws TvdbException {
         // determine which translation to get
-        String language = getShowLanguage(context, showTvdbId);
+        String language = getShowLanguage(context, showId);
         if (language == null) {
             return;
         }
 
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
 
+        int showTvdbId = SgRoomDatabase.getInstance(context).showHelper().getShowTvdbId(showId);
+        if (showTvdbId == 0) {
+            return;
+        }
         Show show = getShowDetails(showTvdbId, language);
         batch.add(
                 ContentProviderOperation
@@ -211,9 +212,9 @@ public class TvdbTools {
     /**
      * @return {@code null} if the query failed, should try again later.
      */
-    private static String getShowLanguage(Context context, int showTvdbId) {
+    private static String getShowLanguage(Context context, long showId) {
         Cursor languageQuery = context.getContentResolver()
-                .query(Shows.buildShowUri(showTvdbId), LANGUAGE_QUERY_PROJECTION, null, null, null);
+                .query(Shows.buildIdUri(showId), LANGUAGE_QUERY_PROJECTION, null, null, null);
         if (languageQuery == null) {
             // query failed, abort
             return null;

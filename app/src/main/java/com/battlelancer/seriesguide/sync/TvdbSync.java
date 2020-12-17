@@ -6,7 +6,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.text.format.DateUtils;
 import androidx.annotation.Nullable;
+import com.battlelancer.seriesguide.model.SgShowTitleAndTvdbId;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
@@ -28,12 +30,12 @@ public class TvdbSync {
             + 12 * DateUtils.HOUR_IN_MILLIS;
 
     private final SyncType syncType;
-    private final int singleShowTvdbId;
+    private final long singleShowId;
     private boolean hasUpdatedShows;
 
-    public TvdbSync(SyncType syncType, int singleShowTvdbId) {
+    public TvdbSync(SyncType syncType, long singleShowId) {
         this.syncType = syncType;
-        this.singleShowTvdbId = singleShowTvdbId;
+        this.singleShowId = singleShowId;
     }
 
     /**
@@ -50,19 +52,19 @@ public class TvdbSync {
     ) {
         hasUpdatedShows = false;
 
-        int[] showsToUpdate = getShowsToUpdate(context, resolver, currentTime);
-        if (showsToUpdate == null) {
+        long[] showIdsToUpdate = getShowsToUpdate(resolver, currentTime);
+        if (showIdsToUpdate == null) {
             return null;
         }
-        Timber.d("Updating %d show(s)...", showsToUpdate.length);
+        Timber.d("Updating %d show(s)...", showIdsToUpdate.length);
 
         // from here on we need more sophisticated abort handling, so keep track of errors
         SgSyncAdapter.UpdateResult resultCode = SgSyncAdapter.UpdateResult.SUCCESS;
 
         // loop through shows and download latest data from TVDb
         int consecutiveTimeouts = 0;
-        for (int i = 0; i < showsToUpdate.length; i++) {
-            int showTvdbId = showsToUpdate[i];
+        for (int i = 0; i < showIdsToUpdate.length; i++) {
+            long showId = showIdsToUpdate[i];
 
             // stop sync if connectivity is lost
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -71,7 +73,7 @@ public class TvdbSync {
             }
 
             try {
-                tvdbTools.get().updateShow(showTvdbId);
+                tvdbTools.get().updateShow(showId);
                 hasUpdatedShows = true;
 
                 // make sure other loaders (activity, overview, details) are notified
@@ -80,9 +82,11 @@ public class TvdbSync {
                 // failed, continue with other shows
                 resultCode = SgSyncAdapter.UpdateResult.INCOMPLETE;
 
-                String showTitle = SgRoomDatabase.getInstance(context)
+                SgShowTitleAndTvdbId titleAndTvdbId = SgRoomDatabase.getInstance(context)
                         .showHelper()
-                        .getShowTitle(showTvdbId);
+                        .getShowTitleAndTvdbId(showId);
+                String showTitle = titleAndTvdbId != null ? titleAndTvdbId.getTitle() : "?";
+                int showTvdbId = titleAndTvdbId != null ? titleAndTvdbId.getTvdbId() : -1;
                 String message = String
                         .format("Failed to update show ('%s', TVDB id %s).", showTitle, showTvdbId);
                 if (e.itemDoesNotExist()) {
@@ -92,7 +96,7 @@ public class TvdbSync {
                 Timber.e(e, message);
 
                 Throwable cause = e.getCause();
-                if (cause != null && cause instanceof SocketTimeoutException) {
+                if (cause instanceof SocketTimeoutException) {
                     consecutiveTimeouts++;
                 } else if (consecutiveTimeouts > 0) {
                     consecutiveTimeouts--;
@@ -109,43 +113,42 @@ public class TvdbSync {
     }
 
     /**
-     * Returns an array of show ids to update.
+     * Returns an array of show row ids to update.
      */
     @Nullable
-    private int[] getShowsToUpdate(Context context, ContentResolver resolver, long currentTime) {
+    private long[] getShowsToUpdate(ContentResolver resolver, long currentTime) {
         switch (syncType) {
             case SINGLE: {
-                int showTvdbId = singleShowTvdbId;
-                if (showTvdbId == 0) {
+                long showId = singleShowId;
+                if (showId == 0) {
                     Timber.e("Syncing...ABORT_INVALID_SHOW_TVDB_ID");
                     return null;
                 }
-                return new int[]{showTvdbId};
+                return new long[]{showId};
             }
             case FULL: {
                 // get all show IDs for a full update
                 final Cursor showsQuery = resolver.query(
-                        SeriesGuideContract.Shows.CONTENT_URI,
-                        new String[]{
-                                SeriesGuideContract.Shows._ID
-                        }, null, null, null
+                        Shows.CONTENT_URI,
+                        new String[]{Shows._ID},
+                        null, null, null
                 );
                 if (showsQuery == null) {
                     Timber.e("Syncing...ABORT_SHOW_QUERY_FAILED");
                     return null;
                 }
 
-                int[] showIds = new int[showsQuery.getCount()];
+                long[] showIds = new long[showsQuery.getCount()];
                 int i = 0;
                 while (showsQuery.moveToNext()) {
-                    showIds[i] = showsQuery.getInt(0);
+                    showIds[i] = showsQuery.getLong(0);
                     i++;
                 }
                 showsQuery.close();
                 return showIds;
             }
             case DELTA:
-                return getShowsToDeltaUpdate(context, resolver, currentTime);
+                return getShowsToDeltaUpdate(resolver, currentTime);
             default:
                 throw new IllegalArgumentException("Sync type " + syncType + " is not supported.");
         }
@@ -155,20 +158,18 @@ public class TvdbSync {
      * Return list of show TVDb ids that have not been updated for a certain time.
      */
     @Nullable
-    private int[] getShowsToDeltaUpdate(Context context, ContentResolver resolver,
-            long currentTime) {
+    private long[] getShowsToDeltaUpdate(ContentResolver resolver, long currentTime) {
         // get existing show ids
         final Cursor shows = resolver
-                .query(SeriesGuideContract.Shows.CONTENT_URI, new String[]{
-                        SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.LASTUPDATED,
-                        SeriesGuideContract.Shows.RELEASE_WEEKDAY
-                }, null, null, null);
+                .query(Shows.CONTENT_URI,
+                        new String[]{Shows._ID, Shows.LASTUPDATED, Shows.RELEASE_WEEKDAY},
+                        null, null, null);
         if (shows == null) {
             Timber.e("Syncing...ABORT_SHOW_QUERY_FAILED");
             return null;
         }
 
-        final List<Integer> updatableShowIds = new ArrayList<>();
+        final List<Long> updatableShowIds = new ArrayList<>();
         while (shows.moveToNext()) {
             boolean isDailyShow = shows.getInt(2) == TimeTools.RELEASE_WEEKDAY_DAILY;
             long lastUpdatedTime = shows.getLong(1);
@@ -176,18 +177,18 @@ public class TvdbSync {
             if (currentTime - lastUpdatedTime >
                     (isDailyShow ? UPDATE_THRESHOLD_DAILYS_MS : UPDATE_THRESHOLD_WEEKLYS_MS)) {
                 // add shows that are due for updating
-                updatableShowIds.add(shows.getInt(0));
+                updatableShowIds.add(shows.getLong(0));
             }
         }
 
         shows.close();
 
         // copy to int array
-        int[] showTvdbIds = new int[updatableShowIds.size()];
+        long[] showIds = new long[updatableShowIds.size()];
         for (int i = 0; i < updatableShowIds.size(); i++) {
-            showTvdbIds[i] = updatableShowIds.get(i);
+            showIds[i] = updatableShowIds.get(i);
         }
-        return showTvdbIds;
+        return showIds;
     }
 
     public boolean isSyncMultiple() {

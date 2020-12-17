@@ -54,10 +54,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     static final String EXTRA_SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
     /**
-     * If {@link #EXTRA_SYNC_TYPE} is {@link SyncType#SINGLE}, the TVDb id of the show
-     * to sync.
+     * If {@link #EXTRA_SYNC_TYPE} is {@link SyncType#SINGLE}, the row id of the show to sync.
      */
-    static final String EXTRA_SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
+    static final String EXTRA_SYNC_SHOW_ID = "com.battlelancer.seriesguide.sync_show";
     /**
      * Whether the sync should occur despite time or backoff limits.
      */
@@ -99,7 +98,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // SYNC
-        TvdbSync tvdbSync = new TvdbSync(options.syncType, options.singleShowTvdbId);
+        TvdbSync tvdbSync = new TvdbSync(options.syncType, options.singleShowId);
 
         // should we sync?
         final long currentTime = System.currentTimeMillis();
@@ -268,14 +267,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
+    // FIXME Fix callers.
     /**
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *
-     * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
+     * @param showId If using {@link SyncType#SINGLE}, the row id of a show.
      */
     private static void requestSyncIfConnected(Context context, SyncType syncType,
-            int showTvdbId) {
+            long showId) {
         if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
             // offline or auto-sync disabled: abort
             return;
@@ -283,7 +283,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         Bundle args = new Bundle();
         args.putInt(EXTRA_SYNC_TYPE, syncType.id);
-        args.putInt(EXTRA_SYNC_SHOW_TVDB_ID, showTvdbId);
+        args.putLong(EXTRA_SYNC_SHOW_ID, showId);
 
         requestSync(context, args);
     }
@@ -326,8 +326,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         requestSyncImmediate(context, SyncType.FULL, 0, showStatusToast);
     }
 
+    // FIXME Fix callers.
     private static void requestSyncImmediate(Context context, SyncType syncType,
-            int showTvdbId, boolean showStatusToast) {
+            long showId, boolean showStatusToast) {
         if (showStatusToast) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 // offline: notify and abort
@@ -341,7 +342,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Bundle args = new Bundle();
         args.putBoolean(EXTRA_SYNC_IMMEDIATE, true);
         args.putInt(EXTRA_SYNC_TYPE, syncType.id);
-        args.putInt(EXTRA_SYNC_SHOW_TVDB_ID, showTvdbId);
+        args.putLong(EXTRA_SYNC_SHOW_ID, showId);
 
         // ignore sync settings and backoff
         args.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
