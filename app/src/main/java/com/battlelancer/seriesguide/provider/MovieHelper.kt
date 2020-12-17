@@ -22,15 +22,14 @@ interface MovieHelper {
     fun getCount(tmdbId: Int): Int
 
     @Query(
-        "SELECT movies_tmdbid FROM movies WHERE "
-                + "(movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1)"
-                + " AND ("
-                + "movies_last_updated IS NULL"
-                + " OR "
-                + "(movies_released > :releasedAfter AND movies_last_updated < :updatedBeforeForReleasedAfter)"
-                + " OR "
-                + "movies_last_updated < :updatedBeforeAllOthers"
-                + ")"
+        """SELECT movies_tmdbid FROM movies WHERE
+            (movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1)
+            AND (
+            movies_last_updated IS NULL
+            OR (movies_released > :releasedAfter AND movies_last_updated < :updatedBeforeForReleasedAfter)
+            OR 
+            movies_last_updated < :updatedBeforeAllOthers
+            )"""
     )
     fun getMoviesToUpdate(
         releasedAfter: Long,
@@ -42,20 +41,17 @@ interface MovieHelper {
     fun getWatchedMovies(query: SupportSQLiteQuery): DataSource.Factory<Int, SgMovie>
 
     @Query(
-        "SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays "
-                + "FROM movies WHERE movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1"
+        """SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays
+            FROM movies WHERE movies_incollection=1 OR movies_inwatchlist=1 OR movies_watched=1"""
     )
     fun getMoviesOnListsOrWatched(): List<SgMovieFlags>
 
-    @Query(
-        "SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays "
-                + "FROM movies"
-    )
+    @Query("SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays FROM movies")
     fun getMovieFlags(): List<SgMovieFlags>
 
     @Query(
-        "SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays "
-                + "FROM movies WHERE movies_tmdbid=:tmdbId"
+        """SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays
+            FROM movies WHERE movies_tmdbid=:tmdbId"""
     )
     fun getMovieFlags(tmdbId: Int): SgMovieFlags?
 
@@ -77,7 +73,9 @@ interface MovieHelper {
     @Query("DELETE FROM movies WHERE movies_tmdbid=:tmdbId")
     fun deleteMovie(tmdbId: Int): Int
 
-    /** For testing.  */
+    /**
+     * For testing.
+     */
     @Query("SELECT * FROM movies")
     fun getAllMovies(): List<SgMovie>
 }

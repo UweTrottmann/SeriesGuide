@@ -64,13 +64,13 @@ interface EpisodeHelper {
      * Note: keep in sync with EpisodeWatchedUpToJob.
      */
     @Query(
-        "UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId"
-                + " AND ("
-                + "episode_firstairedms < :episodeFirstAired"
-                + " OR (episode_firstairedms = :episodeFirstAired AND episodenumber <= :episodeNumber)"
-                + ")"
-                + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
-                + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED
+        """UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId
+            AND (
+            episode_firstairedms < :episodeFirstAired
+            OR (episode_firstairedms = :episodeFirstAired AND episodenumber <= :episodeNumber)
+            )
+            AND ${Episodes.SELECTION_HAS_RELEASE_DATE}
+            AND ${Episodes.SELECTION_UNWATCHED_OR_SKIPPED}"""
     )
     fun setWatchedUpToAndAddPlay(showTvdbId: Int, episodeFirstAired: Long, episodeNumber: Int): Int
 
@@ -80,8 +80,8 @@ interface EpisodeHelper {
      * Note: keep in sync with SeasonWatchedJob.
      */
     @Query(
-        "UPDATE episodes SET watched = 0, plays = 0 WHERE season_id=:seasonTvdbId"
-                + " AND " + Episodes.SELECTION_WATCHED_OR_SKIPPED
+        """UPDATE episodes SET watched = 0, plays = 0 WHERE season_id=:seasonTvdbId
+            AND ${Episodes.SELECTION_WATCHED_OR_SKIPPED}"""
     )
     fun setSeasonNotWatchedAndRemovePlays(seasonTvdbId: Int): Int
 
@@ -94,10 +94,10 @@ interface EpisodeHelper {
      * Note: keep in sync with SeasonWatchedJob.
      */
     @Query(
-        "UPDATE episodes SET watched = 1, plays = plays + 1 WHERE season_id=:seasonTvdbId"
-                + " AND episode_firstairedms <= :currentTimePlusOneHour"
-                + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
-                + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED
+        """UPDATE episodes SET watched = 1, plays = plays + 1 WHERE season_id=:seasonTvdbId
+            AND episode_firstairedms <= :currentTimePlusOneHour
+            AND ${Episodes.SELECTION_HAS_RELEASE_DATE}
+            AND ${Episodes.SELECTION_UNWATCHED_OR_SKIPPED}"""
     )
     fun setSeasonWatchedAndAddPlay(seasonTvdbId: Int, currentTimePlusOneHour: Long): Int
 
@@ -107,10 +107,10 @@ interface EpisodeHelper {
      * Note: keep in sync with SeasonWatchedJob.
      */
     @Query(
-        "UPDATE episodes SET watched = 2 WHERE season_id=:seasonTvdbId"
-                + " AND episode_firstairedms <= :currentTimePlusOneHour"
-                + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
-                + " AND " + Episodes.SELECTION_UNWATCHED
+        """UPDATE episodes SET watched = 2 WHERE season_id=:seasonTvdbId
+            AND episode_firstairedms <= :currentTimePlusOneHour
+            AND ${Episodes.SELECTION_HAS_RELEASE_DATE}
+            AND ${Episodes.SELECTION_UNWATCHED}"""
     )
     fun setSeasonSkipped(seasonTvdbId: Int, currentTimePlusOneHour: Long): Int
 
@@ -121,9 +121,9 @@ interface EpisodeHelper {
      * Note: keep in sync with ShowWatchedJob.
      */
     @Query(
-        "UPDATE episodes SET watched = 0, plays = 0 WHERE series_id=:showTvdbId"
-                + " AND " + Episodes.SELECTION_WATCHED_OR_SKIPPED
-                + " AND " + Episodes.SELECTION_NO_SPECIALS
+        """UPDATE episodes SET watched = 0, plays = 0 WHERE series_id=:showTvdbId
+            AND ${Episodes.SELECTION_WATCHED_OR_SKIPPED}
+            AND ${Episodes.SELECTION_NO_SPECIALS}"""
     )
     fun setShowNotWatchedAndRemovePlays(showTvdbId: Int): Int
 
@@ -136,11 +136,11 @@ interface EpisodeHelper {
      * Note: keep in sync with ShowWatchedJob.
      */
     @Query(
-        "UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId"
-                + " AND episode_firstairedms <= :currentTimePlusOneHour"
-                + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
-                + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED
-                + " AND " + Episodes.SELECTION_NO_SPECIALS
+        """UPDATE episodes SET watched = 1, plays = plays + 1 WHERE series_id=:showTvdbId
+            AND episode_firstairedms <= :currentTimePlusOneHour
+            AND ${Episodes.SELECTION_HAS_RELEASE_DATE}
+            AND ${Episodes.SELECTION_UNWATCHED_OR_SKIPPED}
+            AND ${Episodes.SELECTION_NO_SPECIALS}"""
     )
     fun setShowWatchedAndAddPlay(showTvdbId: Int, currentTimePlusOneHour: Long): Int
 }
