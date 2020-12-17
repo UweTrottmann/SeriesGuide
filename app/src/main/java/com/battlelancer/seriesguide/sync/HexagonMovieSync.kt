@@ -244,7 +244,7 @@ internal class HexagonMovieSync(
         // query for movies in lists or that are watched
         val moviesInListsOrWatched = SgRoomDatabase.getInstance(context)
             .movieHelper()
-            .moviesOnListsOrWatched
+            .getMoviesOnListsOrWatched()
 
         for (movie in moviesInListsOrWatched) {
             val movieToUpload = Movie()

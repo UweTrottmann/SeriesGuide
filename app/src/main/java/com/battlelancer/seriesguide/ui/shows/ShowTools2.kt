@@ -193,7 +193,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 }
 
                 val hiddenShowTvdbIds = withContext(Dispatchers.IO) {
-                    SgRoomDatabase.getInstance(context).showHelper().hiddenShowsTvdbIds
+                    SgRoomDatabase.getInstance(context).showHelper().getHiddenShowsTvdbIds()
                 }
 
                 val shows = hiddenShowTvdbIds.map { showTvdbId ->
