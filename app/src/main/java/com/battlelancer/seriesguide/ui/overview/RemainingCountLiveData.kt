@@ -14,8 +14,8 @@ import kotlinx.coroutines.withContext
  * Calculates the number of unwatched and not collected episodes of a show.
  */
 class RemainingCountLiveData(
-    val context: Context,
-    val scope: CoroutineScope
+    private val context: Context,
+    private val scope: CoroutineScope
 ) : LiveData<RemainingCountLiveData.Result>() {
 
     private val semaphore = Semaphore(1)
@@ -25,22 +25,21 @@ class RemainingCountLiveData(
             val uncollectedEpisodes: Int
     )
 
-    fun load(showTvdbId: Int) {
-        if (showTvdbId > 0) {
+    fun load(showId: Long) {
+        if (showId > 0) {
             scope.launch(Dispatchers.IO) {
                 // Use Semaphore with 1 permit to only run one calculation at a time and to
                 // guarantee results are delivered in order.
                 semaphore.withPermit {
-                    calcRemainingCounts(showTvdbId)
+                    calcRemainingCounts(showId)
                 }
             }
         }
     }
 
-    private suspend fun calcRemainingCounts(showTvdbId: Int) = withContext(Dispatchers.IO) {
-        val showTvdbIdStr = showTvdbId.toString()
-        val unwatchedEpisodes = DBUtils.getUnwatchedEpisodesOfShow(context, showTvdbIdStr)
-        val uncollectedEpisodes = DBUtils.getUncollectedEpisodesOfShow(context, showTvdbIdStr)
+    private suspend fun calcRemainingCounts(showId: Long) = withContext(Dispatchers.IO) {
+        val unwatchedEpisodes = DBUtils.getUnwatchedEpisodesOfShow(context, showId)
+        val uncollectedEpisodes = DBUtils.getUncollectedEpisodesOfShow(context, showId)
         postValue(Result(unwatchedEpisodes, uncollectedEpisodes))
     }
 

@@ -899,7 +899,7 @@ public class SeriesGuideContract {
             return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showId).build();
         }
 
-        public static Uri buildEpisodesOfShowUri(int showId) {
+        public static Uri buildEpisodesOfShowUri(long showId) {
             return buildEpisodesOfShowUri(String.valueOf(showId));
         }
 

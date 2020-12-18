@@ -114,7 +114,8 @@ class SeasonsFragment : Fragment() {
         super.onStart()
 
         updateUnwatchedCounts()
-        model.remainingCountData.load(showId)
+        // FIXME
+//        model.remainingCountData.load(showId)
 
         EventBus.getDefault().register(this)
     }
@@ -176,7 +177,8 @@ class SeasonsFragment : Fragment() {
         if (!isAdded) {
             return  // no longer added to activity
         }
-        model.remainingCountData.load(showId)
+        // FIXME
+//        model.remainingCountData.load(showId)
         if (event.flagJob is SeasonWatchedJob) {
             // If we can narrow it down to just one season...
             UnwatchedUpdateWorker.updateUnwatchedCountFor(

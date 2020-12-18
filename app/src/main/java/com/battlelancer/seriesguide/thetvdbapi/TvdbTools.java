@@ -175,7 +175,7 @@ public class TvdbTools {
         }
 
         // calculate next episode
-        DBUtils.updateLatestEpisode(context, showTvdbId);
+        DBUtils.updateLatestEpisode(context, showId);
 
         return true;
     }

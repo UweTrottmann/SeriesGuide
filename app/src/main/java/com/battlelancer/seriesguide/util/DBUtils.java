@@ -1,7 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Qualified;
-
 import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -18,17 +16,20 @@ import android.text.TextUtils;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.enums.SeasonTags;
 import com.battlelancer.seriesguide.model.SgEpisodeUpdateInfo;
 import com.battlelancer.seriesguide.model.SgSeasonUpdateInfo;
+import com.battlelancer.seriesguide.model.SgShowIdAndLastEpisode;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.provider.ShowHelper;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
@@ -220,7 +221,7 @@ public class DBUtils {
      *
      * @return {@link #UNKNOWN_UNWATCHED_COUNT} if the number is unknown or failed to be determined.
      */
-    public static int getUnwatchedEpisodesOfShow(Context context, String showId) {
+    public static int getUnwatchedEpisodesOfShow(@Nullable Context context, long showId) {
         if (context == null) {
             return UNKNOWN_UNWATCHED_COUNT;
         }
@@ -238,7 +239,7 @@ public class DBUtils {
      * Returns how many episodes of a show are left to collect. Only considers regular, released
      * episodes (no specials, must have a release date in the past).
      */
-    public static int getUncollectedEpisodesOfShow(Context context, String showId) {
+    public static int getUncollectedEpisodesOfShow(@Nullable Context context, long showId) {
         if (context == null) {
             return UNKNOWN_COLLECTED_COUNT;
         }
@@ -347,25 +348,9 @@ public class DBUtils {
         return map;
     }
 
-    private interface LastWatchedEpisodeQuery {
-        String[] PROJECTION = new String[]{
-                Qualified.SHOWS_ID,
-                Shows.LASTWATCHEDID,
-                Episodes.SEASON,
-                Episodes.NUMBER,
-                Episodes.FIRSTAIREDMS
-        };
-
-        int SHOW_TVDB_ID = 0;
-        int LAST_EPISODE_TVDB_ID = 1;
-        int LAST_EPISODE_SEASON = 2;
-        int LAST_EPISODE_NUMBER = 3;
-        int LAST_EPISODE_FIRST_RELEASE_MS = 4;
-    }
-
     private interface NextEpisodesQuery {
         String[] PROJECTION = new String[]{
-                Episodes._ID,
+                Episodes.TVDB_ID,
                 Episodes.SEASON,
                 Episodes.NUMBER,
                 Episodes.FIRSTAIREDMS,
@@ -390,7 +375,7 @@ public class DBUtils {
         String SORTORDER = Episodes.FIRSTAIREDMS + " ASC," + Episodes.SEASON + " ASC,"
                 + Episodes.NUMBER + " ASC";
 
-        int ID = 0;
+        int TVDB_ID = 0;
         int SEASON = 1;
         int NUMBER = 2;
         int FIRST_RELEASE_MS = 3;
@@ -401,42 +386,17 @@ public class DBUtils {
      * Update next episode field and unwatched episode count for the given show. If no show id is
      * passed, will update next episodes for all shows.
      *
-     * @return If only one show was passed, the TVDb id of the new next episode. Otherwise -1.
+     * @return If only one show was passed, the row id of the new next episode. Otherwise -1.
      */
-    public static long updateLatestEpisode(Context context, Integer showTvdbIdToUpdate) {
+    public static long updateLatestEpisode(Context context, @Nullable Long showIdToUpdate) {
         // get a list of shows and their last watched episodes
-        Cursor shows;
-        try {
-            shows = context.getContentResolver().query(Shows.CONTENT_URI_WITH_LAST_EPISODE,
-                    LastWatchedEpisodeQuery.PROJECTION,
-                    showTvdbIdToUpdate != null ?
-                            Qualified.SHOWS_ID + "=" + showTvdbIdToUpdate : null,
-                    null, null
-            );
-        } catch (SQLiteException e) {
-            shows = null;
-            Timber.e(e, "updateLatestEpisode: show query failed.");
-            postDatabaseError(e);
+        ShowHelper showHelper = SgRoomDatabase.getInstance(context).showHelper();
+        List<SgShowIdAndLastEpisode> showsLastEpisodes;
+        if (showIdToUpdate != null) {
+            showsLastEpisodes = showHelper.getIdAndLastWatchedEpisode(showIdToUpdate);
+        } else {
+            showsLastEpisodes = showHelper.getIdsAndLastWatchedEpisode();
         }
-        if (shows == null) {
-            // abort completely on query failure
-            Timber.e("Failed to update next episode values");
-            return -1;
-        }
-        final List<String[]> showsLastEpisodes = new ArrayList<>();
-        while (shows.moveToNext()) {
-            showsLastEpisodes.add(
-                    new String[]{
-                            shows.getString(LastWatchedEpisodeQuery.SHOW_TVDB_ID), // 0
-                            shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_TVDB_ID), // 1
-                            shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_SEASON), // 2
-                            shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_NUMBER), // 3
-                            shows.getString(LastWatchedEpisodeQuery.LAST_EPISODE_FIRST_RELEASE_MS)
-                            // 4
-                    }
-            );
-        }
-        shows.close();
 
         // pre-build next episode selection
         final boolean isNoReleasedEpisodes = DisplaySettings.isNoReleasedEpisodes(context);
@@ -449,19 +409,18 @@ public class DBUtils {
         final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         final String currentTime = String.valueOf(TimeTools.getCurrentTime(context));
         boolean preventSpoilers = DisplaySettings.preventSpoilers(context);
-        for (String[] show : showsLastEpisodes) {
+        for (SgShowIdAndLastEpisode show : showsLastEpisodes) {
             // STEP 1: get last watched episode details
-            final String showTvdbId = show[0];
-            final String lastEpisodeTvdbId = show[1];
-            String season = show[2];
-            String number = show[3];
-            String releaseTime = show[4];
-            if (TextUtils.isEmpty(lastEpisodeTvdbId)
-                    || season == null || number == null || releaseTime == null) {
+            int seasonArg = show.getSeasonNumber();
+            int numberArg = show.getEpisodeNumber();
+            long releaseTimeArg = show.getEpisodeFirstAiredMs();
+            if (show.getLastWatchedEpisodeId() == 0
+                    || seasonArg < 0 || numberArg == 0
+                    || releaseTimeArg == Constants.EPISODE_UNKNOWN_RELEASE) {
                 // by default: no watched episodes, include all starting with special 0
-                season = "-1";
-                number = "-1";
-                releaseTime = String.valueOf(Long.MIN_VALUE);
+                seasonArg = -1;
+                numberArg = -1;
+                releaseTimeArg = Long.MIN_VALUE;
             }
 
             // STEP 2: get episode released closest afterwards; or at the same time,
@@ -470,18 +429,25 @@ public class DBUtils {
             if (isNoReleasedEpisodes) {
                 // restrict to episodes with future release date
                 selectionArgs = new String[]{
-                        releaseTime, number, season, releaseTime, currentTime
+                        String.valueOf(releaseTimeArg),
+                        String.valueOf(numberArg),
+                        String.valueOf(seasonArg),
+                        String.valueOf(releaseTimeArg),
+                        currentTime
                 };
             } else {
                 // restrict to episodes with any valid air date
                 selectionArgs = new String[]{
-                        releaseTime, number, season, releaseTime
+                        String.valueOf(releaseTimeArg),
+                        String.valueOf(numberArg),
+                        String.valueOf(seasonArg),
+                        String.valueOf(releaseTimeArg)
                 };
             }
             Cursor next;
             try {
                 next = context.getContentResolver()
-                        .query(Episodes.buildEpisodesOfShowUri(showTvdbId),
+                        .query(Episodes.buildEpisodesOfShowUri(show.getId()),
                                 NextEpisodesQuery.PROJECTION, nextEpisodeSelection, selectionArgs,
                                 NextEpisodesQuery.SORTORDER);
             } catch (SQLiteException e) {
@@ -512,7 +478,7 @@ public class DBUtils {
                 // next release date text, e.g. "in 15 mins (Fri)"
                 long releaseTimeNext = next.getLong(NextEpisodesQuery.FIRST_RELEASE_MS);
 
-                nextEpisodeTvdbId = next.getInt(NextEpisodesQuery.ID);
+                nextEpisodeTvdbId = next.getInt(NextEpisodesQuery.TVDB_ID);
                 newShowValues.put(Shows.NEXTEPISODE, nextEpisodeTvdbId);
                 newShowValues.put(Shows.NEXTAIRDATEMS, releaseTimeNext);
                 newShowValues.put(Shows.NEXTTEXT, nextEpisodeString);
@@ -526,11 +492,11 @@ public class DBUtils {
             next.close();
 
             // STEP 4: get remaining episodes count
-            int unwatchedEpisodesCount = getUnwatchedEpisodesOfShow(context, showTvdbId);
+            int unwatchedEpisodesCount = getUnwatchedEpisodesOfShow(context, show.getId());
             newShowValues.put(Shows.UNWATCHED_COUNT, unwatchedEpisodesCount);
 
             // update the show with the new next episode values
-            batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(showTvdbId))
+            batch.add(ContentProviderOperation.newUpdate(Shows.buildIdUri(show.getId()))
                     .withValues(newShowValues)
                     .build());
             newShowValues.clear();

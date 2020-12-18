@@ -437,19 +437,19 @@ public class OverviewFragment extends Fragment implements
 
     public static class EpisodeLoader extends CursorLoader {
 
-        private int showTvdbId;
+        private final long showId;
 
-        public EpisodeLoader(Context context, int showTvdbId) {
+        public EpisodeLoader(Context context, long showId) {
             super(context);
-            this.showTvdbId = showTvdbId;
+            this.showId = showId;
             setProjection(EpisodeQuery.PROJECTION);
         }
 
         @Override
         public Cursor loadInBackground() {
             // get episode id, set query params
-            int episodeId = (int) DBUtils.updateLatestEpisode(getContext(), showTvdbId);
-            setUri(Episodes.buildEpisodeUri(episodeId));
+            long episodeId = DBUtils.updateLatestEpisode(getContext(), showId);
+            setUri(Episodes.buildIdUri(episodeId));
 
             return super.loadInBackground();
         }
@@ -538,7 +538,8 @@ public class OverviewFragment extends Fragment implements
         switch (id) {
             case OverviewActivity.OVERVIEW_EPISODE_LOADER_ID:
             default:
-                return new EpisodeLoader(getActivity(), showTvdbId);
+                // FIXME
+//                return new EpisodeLoader(getActivity(), showId);
             case OverviewActivity.OVERVIEW_SHOW_LOADER_ID:
                 return new CursorLoader(requireContext(), Shows.buildShowUri(String
                         .valueOf(showTvdbId)), ShowQuery.PROJECTION, null, null, null);

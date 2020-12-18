@@ -38,7 +38,8 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
         if (showTvdbId > 0) {
             // update single show
             Timber.d("Updating next episode for show %s", showTvdbId);
-            DBUtils.updateLatestEpisode(context, showTvdbId);
+            // FIXME
+//            DBUtils.updateLatestEpisode(context, showTvdbId);
         } else {
             // update all shows
             Timber.d("Updating next episodes for all shows");

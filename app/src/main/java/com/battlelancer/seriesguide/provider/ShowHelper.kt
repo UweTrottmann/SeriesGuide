@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.model.SgShow
+import com.battlelancer.seriesguide.model.SgShowIdAndLastEpisode
 import com.battlelancer.seriesguide.model.SgShowMinimal
 import com.battlelancer.seriesguide.model.SgShowTitleAndTvdbId
 
@@ -47,4 +48,13 @@ interface ShowHelper {
 
     @Query("UPDATE series SET series_hidden=0 WHERE series_hidden=1")
     fun makeHiddenVisible(): Int
+
+    @Query("""SELECT series._id, series_lastwatchedid, episode_season_number, episode_number, episode_firstairedms
+        FROM series LEFT OUTER JOIN episodes ON series.series_lastwatchedid=episodes.episode_tvdb_id""")
+    fun getIdsAndLastWatchedEpisode(): List<SgShowIdAndLastEpisode>
+
+    @Query("""SELECT series._id, series_lastwatchedid, episode_season_number, episode_number, episode_firstairedms
+        FROM series LEFT OUTER JOIN episodes ON series.series_lastwatchedid=episodes.episode_tvdb_id
+        WHERE series._id=:showId""")
+    fun getIdAndLastWatchedEpisode(showId: Long): List<SgShowIdAndLastEpisode>
 }
