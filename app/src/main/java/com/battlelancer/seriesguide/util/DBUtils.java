@@ -682,6 +682,7 @@ public class DBUtils {
      * Removes a leading article from the given string (including the first whitespace that
      * follows). <p> <em>Currently only supports English articles (the, a and an).</em>
      */
+    @Nullable
     public static String trimLeadingArticle(String title) {
         if (TextUtils.isEmpty(title)) {
             return title;
