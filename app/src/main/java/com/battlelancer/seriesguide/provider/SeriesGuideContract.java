@@ -427,6 +427,438 @@ public class SeriesGuideContract {
         String LAST_UPDATED = "episode_lastupdate";
     }
 
+    public interface SgShow2Columns extends BaseColumns {
+
+        /**
+         * This column is NOT in this table, it is for reference purposes only.
+         */
+        String REF_SHOW_ID = "series_id";
+
+        /**
+         * The TMDB ID of a series, may be null for existing shows
+         * (or for new shows until TMDB migration is complete).
+         */
+        String TMDB_ID = "series_tmdb_id";
+
+        /**
+         * The TVDB ID of a series, may be null for new shows after TMDB migration is complete.
+         */
+        String TVDB_ID = "series_tvdb_id";
+
+        /**
+         * TheTVDB slug for this show to build URLs. Always a string, but may be a number string if
+         * no slug is set (still safe to build URL with). May be null or empty.
+         */
+        String SLUG = "series_slug";
+
+        /**
+         * Ensure this is NOT null (enforced through database constraint).
+         */
+        String TITLE = "series_title";
+
+        /**
+         * The title without any articles (e.g. 'the' or 'an'). Added with db version 33.
+         */
+        String TITLE_NOARTICLE = "series_title_noarticle";
+
+        String OVERVIEW = "series_overview";
+
+        /**
+         * A poster path. Needs to be prefixed with the poster server URL.
+         */
+        String POSTER = "series_poster";
+        /**
+         * Path to a small variant of the poster. Needs to be prefixed with the poster server URL.
+         */
+        String POSTER_SMALL = "series_poster_small";
+
+        String CONTENTRATING = "series_contentrating";
+
+        /**
+         * Show status. Encoded as integer. See {@link ShowTools.Status}.
+         */
+        String STATUS = "series_status";
+
+        String RUNTIME = "series_runtime";
+
+        /**
+         * Global rating. Encoded as double.
+         * <pre>
+         * Range:   0.0-10.0
+         * Default: 0.0
+         * </pre>
+         */
+        String RATING_GLOBAL = "series_rating";
+
+        /**
+         * Global rating votes. Encoded as integer.
+         * <pre>
+         * Example: 42
+         * Default: 0
+         * </pre>
+         */
+        String RATING_VOTES = "series_rating_votes";
+
+        /**
+         * User rating. Encoded as integer.
+         * <pre>
+         * Range:   1-10
+         * Default: 0
+         * </pre>
+         */
+        String RATING_USER = "series_rating_user";
+
+        String NETWORK = "series_network";
+
+        String GENRES = "series_genres";
+
+        /**
+         * Release date of the first episode. Encoded as ISO 8601 datetime string. Might be a legacy
+         * value which only includes the date.
+         *
+         * <pre>
+         * Example: "2008-01-20T02:00:00.000Z"
+         * Default: ""
+         * </pre>
+         */
+        String FIRST_RELEASE = "series_firstaired";
+
+        /**
+         * Local release time. Encoded as integer (hhmm).
+         *
+         * <pre>
+         * Example: 2035
+         * Default: -1
+         * </pre>
+         */
+        String RELEASE_TIME = "series_airstime";
+
+        /**
+         * Local release week day. Encoded as integer.
+         * <pre>
+         * Range:   1-7
+         * Daily:   0
+         * Default: -1
+         * </pre>
+         */
+        String RELEASE_WEEKDAY = "series_airsdayofweek";
+
+        /**
+         * Release time zone. Encoded as tzdata "Area/Location" string.
+         *
+         * <pre>
+         * Example: "America/New_York"
+         * Default: ""
+         * </pre>
+         *
+         * <p> Added with {@link com.battlelancer.seriesguide.provider.SeriesGuideDatabase#DBVER_34_TRAKT_V2}.
+         */
+        String RELEASE_TIMEZONE = "series_timezone";
+
+        /**
+         * Release country. Encoded as ISO3166-1 alpha-2 string.
+         *
+         * <pre>
+         * Example: "us"
+         * Default: ""
+         * </pre>
+         *
+         * <p> Previous use: Was added in db version 21 to store the air time in pure text.
+         */
+        String RELEASE_COUNTRY = "series_country";
+
+        String IMDBID = "series_imdbid";
+
+        /**
+         * The trakt id of this show. Encoded as integer. Note: for simplification, the trakt id
+         * might be handled as a String within the app.
+         *
+         * <pre>
+         * Range:   integer
+         * Default: 0 (unknown)
+         * </pre>
+         */
+        String TRAKT_ID = "series_trakt_id";
+
+        /**
+         * Whether this show has been favorited.
+         */
+        String FAVORITE = "series_favorite";
+
+        /**
+         * Whether this show has been hidden. Added in db version 23.
+         */
+        String HIDDEN = "series_hidden";
+
+        /**
+         * Whether notifications for new episodes of this show should be shown. Added with {@link
+         * SeriesGuideDatabase#DBVER_40_NOTIFY_PER_SHOW}.
+         *
+         * <pre>
+         * Range: 0-1
+         * Default: 1
+         * </pre>
+         */
+        String NOTIFY = "series_notify";
+
+        /**
+         * Whether this show was merged with data on Hexagon after signing in the last time.
+         *
+         * <pre>
+         * Range: 0-1
+         * Default: 1
+         * </pre>
+         */
+        String HEXAGON_MERGE_COMPLETE = "series_syncenabled";
+
+        /**
+         * Next episode TheTVDB id.
+         *
+         * <pre>
+         * Example: "42"
+         * Default: ""
+         * </pre>
+         */
+        String NEXTEPISODE = "series_next";
+
+        /**
+         * Next episode text.
+         *
+         * <pre>
+         * Example: "0x12 Episode Name"
+         * Default: ""
+         * </pre>
+         */
+        String NEXTTEXT = "series_nexttext";
+
+        /**
+         * Next episode release time instant. See {@link Episodes#FIRSTAIREDMS}.
+         *
+         * <pre>
+         * Range:   long
+         * Default: {@link com.battlelancer.seriesguide.util.DBUtils#UNKNOWN_NEXT_RELEASE_DATE}
+         * </pre>
+         *
+         * <p> Added in db version 25 to allow correct sorting by next air date.
+         */
+        String NEXTAIRDATEMS = "series_nextairdate";
+
+        /**
+         * Added in db version 22 to store the last time a show was updated.
+         */
+        String LASTUPDATED = "series_lastupdate";
+
+        /**
+         * Last time show was edited on theTVDb.com (lastupdated field). Added in db version 27.
+         */
+        String LASTEDIT = "series_lastedit";
+
+        /**
+         * Id of the last watched episode, used to calculate the next episode to watch. Added with
+         * {@link SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
+         */
+        String LASTWATCHEDID = "series_lastwatchedid";
+
+        /**
+         * Store the time an episode was last watched for this show. Added in
+         */
+        String LASTWATCHED_MS = "series_lastwatched_ms";
+
+        /**
+         * Language the show should be downloaded in, in two letter ISO 639-1 format,
+         * plus optional ISO-3166-1 region tag.
+         *
+         * <pre>
+         * Example: "de" or "pt-BR"
+         * Default: "" (should fall back to English then)
+         * </pre>
+         */
+        String LANGUAGE = "series_language";
+
+        /**
+         * The remaining number of episodes to watch for this show. Added with {@link
+         * SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
+         */
+        String UNWATCHED_COUNT = "series_unwatched_count";
+    }
+
+    public interface SgSeason2Columns extends BaseColumns {
+
+        /**
+         * This column is NOT in this table, it is for reference purposes only.
+         */
+        String REF_SEASON_ID = "season_id";
+
+        /**
+         * The TMDB ID of a season (integer) or episode group (string),
+         * may be null for existing shows (or for new shows until TMDB migration is complete).
+         */
+        String TMDB_ID = "season_tmdb_id";
+
+        /**
+         * The TVDB ID of a season, may be null for new shows after TMDB migration is complete.
+         */
+        String TVDB_ID = "season_tvdb_id";
+
+        /**
+         * The number of a season. Starting from 0 for Special Episodes.
+         */
+        String COMBINED = "season_number";
+
+        /**
+         * Number of all episodes in a season.
+         */
+        String TOTALCOUNT = "season_totalcount";
+
+        /**
+         * Number of unwatched, aired episodes.
+         */
+        String WATCHCOUNT = "season_watchcount";
+
+        /**
+         * Number of unwatched, future episodes (not aired yet).
+         */
+        String UNAIREDCOUNT = "season_willaircount";
+
+        /**
+         * Number of unwatched episodes with no air date.
+         */
+        String NOAIRDATECOUNT = "season_noairdatecount";
+
+        /**
+         * Text tags for this season.
+         */
+        String TAGS = "season_tags";
+
+        /**
+         * The name of a season, or null (in which case should fall back to number).
+         */
+        String NAME = "season_name";
+
+        /**
+         * Integer to order seasons by, typically equal to the season number.
+         */
+        String ORDER = "season_order";
+    }
+
+    public interface SgEpisode2Columns extends BaseColumns {
+
+        /**
+         * The TMDB ID of an episode, may be null for existing shows
+         * (or for new shows until TMDB migration is complete).
+         */
+        String TMDB_ID = "episode_tmdb_id";
+
+        /**
+         * The TVDB ID of an episode, may be null for new shows after TMDB migration is complete.
+         */
+        String TVDB_ID = "episode_tvdb_id";
+
+        /**
+         * Season number. A reference to the season id is stored separately.
+         */
+        String SEASON = "episode_season_number";
+
+        /**
+         * Number of an episode within its season.
+         */
+        String NUMBER = "episode_number";
+
+        /**
+         * Integer to order episodes by, typically equal to the episode number.
+         */
+        String ORDER = "episode_order";
+
+        /**
+         * Sometimes episodes are ordered differently when released on DVD. Uses decimal point
+         * notation, e.g. 1.0, 1.5.
+         */
+        String DVDNUMBER = "episode_dvd_number";
+
+        /**
+         * Some shows, mainly anime, use absolute episode numbers instead of the season/episode
+         * grouping. Added in db version 30.
+         */
+        String ABSOLUTE_NUMBER = "episode_absolute_number";
+
+        String TITLE = "episode_title";
+
+        String OVERVIEW = "episode_description";
+
+        String IMAGE = "episode_image";
+
+        String WRITERS = "episode_writers";
+
+        String GUESTSTARS = "episode_gueststars";
+
+        String DIRECTORS = "episode_directors";
+
+        /** See {@link ShowsColumns#RATING_GLOBAL}. */
+        String RATING_GLOBAL = "episode_rating";
+
+        /** See {@link ShowsColumns#RATING_VOTES}. */
+        String RATING_VOTES = "episode_rating_votes";
+
+        /** See {@link ShowsColumns#RATING_USER}. */
+        String RATING_USER = "episode_rating_user";
+
+        /**
+         * First aired date in ms.
+         *
+         * <p>This date time is based on the shows release time and time zone at the time this
+         * episode was last updated. It includes country and time zone specific offsets (currently
+         * only for US western time zones). It does NOT include the user-set offset.
+         *
+         * <pre>
+         * Range:   long
+         * Default: {@link Constants#EPISODE_UNKNOWN_RELEASE}
+         * </pre>
+         */
+        String FIRSTAIREDMS = "episode_firstairedms";
+
+        /**
+         * One of {@link EpisodeFlags}, whether an episode is watched, skipped or unwatched.
+         */
+        String WATCHED = "episode_watched";
+
+        /**
+         * The number of times an episode was watched.
+         */
+        String PLAYS = "episode_plays";
+
+        /**
+         * Whether an episode has been collected in digital, physical form.
+         */
+        String COLLECTED = "episode_collected";
+
+        /**
+         * IMDb id for a single episode. Added in db version 27.
+         */
+        String IMDBID = "episode_imdbid";
+
+        /**
+         * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds).
+         * Added in {@link SeriesGuideDatabase#DBVER_27_IMDBIDSLASTEDIT}.
+         *
+         * <pre>
+         * Range:   long (unix time)
+         * Default: 0
+         * </pre>
+         */
+        String LAST_EDITED = "episode_lastedit";
+
+        /**
+         * Stores the last edited time after fetching full episode data from TVDB.
+         * Added in {@link SeriesGuideDatabase#DBVER_41_EPISODE_LAST_UPDATED}.
+         *
+         * <pre>
+         * Range:   long (unix time)
+         * Default: 0
+         * </pre>
+         */
+        String LAST_UPDATED = "episode_lastupdate";
+    }
+
     interface EpisodeSearchColumns {
 
         String _DOCID = "docid";

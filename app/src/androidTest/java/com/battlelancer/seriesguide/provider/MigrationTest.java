@@ -6,6 +6,7 @@ import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_44_
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_45_46;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_46_47;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_47_48;
+import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_48_49;
 import static com.google.common.truth.Truth.assertThat;
 
 import android.database.Cursor;
@@ -108,7 +109,7 @@ public class MigrationTest {
         SupportSQLiteDatabase database = migrationTestHelper
                 .runMigrationsAndValidate(TEST_DB_NAME, 43,
                         false /* adding FTS table ourselves */, MIGRATION_42_43);
-        assertTestData(database);
+        assertTestData_series_seasons_episodes(database);
     }
 
     @Test
@@ -120,7 +121,7 @@ public class MigrationTest {
 
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity
         // Validate that the data was migrated properly.
-        assertTestData(getMigratedDatabase(44));
+        assertTestData_series_seasons_episodes(getMigratedDatabase(44));
     }
 
     private void insertTestDataSqlite() {
@@ -146,7 +147,7 @@ public class MigrationTest {
                         db);
         db.close();
 
-        assertTestData(getMigratedDatabase(SgRoomDatabase.VERSION_44_RECREATE_SERIES_EPISODES));
+        assertTestData_series_seasons_episodes(getMigratedDatabase(SgRoomDatabase.VERSION_44_RECREATE_SERIES_EPISODES));
     }
 
     @Test
@@ -160,7 +161,7 @@ public class MigrationTest {
                         db);
         db.close();
 
-        assertTestData(getMigratedDatabase(SgRoomDatabase.VERSION_45_RECREATE_SEASONS));
+        assertTestData_series_seasons_episodes(getMigratedDatabase(SgRoomDatabase.VERSION_45_RECREATE_SEASONS));
     }
 
     @Test
@@ -175,7 +176,7 @@ public class MigrationTest {
         db.close();
 
         db = getMigratedDatabase(SgRoomDatabase.VERSION_46_SERIES_SLUG);
-        assertTestData(db);
+        assertTestData_series_seasons_episodes(db);
         queryAndAssert(db, "SELECT series_slug FROM series",
                 seriesQuery -> assertThat(seriesQuery.isNull(0)).isTrue());
     }
@@ -192,7 +193,7 @@ public class MigrationTest {
         db.close();
 
         db = getMigratedDatabase(SgRoomDatabase.VERSION_47_SERIES_POSTER_THUMB);
-        assertTestData(db);
+        assertTestData_series_seasons_episodes(db);
         queryAndAssert(db, "SELECT series_poster_small, poster FROM series",
                 series -> assertThat(series.getString(0))
                         .isEqualTo(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX + series.getString(1)));
@@ -223,7 +224,7 @@ public class MigrationTest {
         db.close();
 
         db = getMigratedDatabase(SgRoomDatabase.VERSION_48_EPISODE_PLAYS);
-        assertTestData(db);
+        assertTestData_series_seasons_episodes(db);
 
         // Watched episode should have 1 play.
         queryAndAssert(db, "SELECT plays FROM episodes WHERE _id=21",
@@ -240,7 +241,7 @@ public class MigrationTest {
                 movieNotWatched -> assertThat(movieNotWatched.getInt(0)).isEqualTo(0));
     }
 
-    private void assertTestData(SupportSQLiteDatabase db) {
+    private void assertTestData_series_seasons_episodes(SupportSQLiteDatabase db) {
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity.
         // Validate that the data was migrated properly.
         queryAndAssert(db, "SELECT _id, seriestitle, runtime, poster FROM series",
@@ -270,6 +271,79 @@ public class MigrationTest {
                 });
     }
 
+    @Test
+    public void migrationFrom48To49_containsCorrectData() throws IOException {
+        SupportSQLiteDatabase db = migrationTestHelper
+                .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_48_EPISODE_PLAYS);
+        RoomDatabaseTestHelper.insertShow(SHOW, db);
+        RoomDatabaseTestHelper.insertSeason(SEASON, db);
+        RoomDatabaseTestHelper.insertEpisode(db, EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(),
+                SEASON.getNumber(), true);
+        db.close();
+
+        db = getMigratedDatabase(SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION);
+        // Old tables should still exist, data should remain.
+        assertTestData_series_seasons_episodes(db);
+
+        // New tables have different structure.
+        queryAndAssert(db, "SELECT _id, series_tvdb_id, series_tmdb_id, series_title, series_runtime, series_poster FROM sg_show",
+                dbShow -> {
+                    // Row id should be auto-generated.
+                    assertThat(dbShow.getLong(0)).isNotEqualTo(SHOW.getTvdbId());
+                    // TVDB id should be in new column.
+                    assertThat(dbShow.getInt(1)).isEqualTo(SHOW.getTvdbId());
+                    // TMDB id should not be set, but exist.
+                    assertThat(dbShow.isNull(2)).isTrue();
+                    // Some other values that should have moved to other columns.
+                    assertThat(dbShow.getString(3)).isEqualTo(SHOW.getTitle());
+                    assertThat(dbShow.getInt(4)).isEqualTo(SHOW.getRuntime());
+                    assertThat(dbShow.getString(5)).isEqualTo(SHOW.getPoster());
+                });
+
+        Cursor showIdQuery = db.query("SELECT _id FROM sg_show");
+        showIdQuery.moveToFirst();
+        long showId = showIdQuery.getLong(0);
+        showIdQuery.close();
+
+        queryAndAssert(db, "SELECT _id, series_id, season_tmdb_id, season_tvdb_id, season_number, season_order FROM sg_season",
+                dbSeason -> {
+                    // Row id should be auto-generated.
+                    assertThat(dbSeason.getLong(0)).isNotEqualTo(SEASON.getTvdbId());
+                    // Show ID should now be internal ID, not TVDB ID.
+                    assertThat(dbSeason.getInt(1)).isEqualTo(showId);
+                    // TMDB id should not be set, but exist.
+                    assertThat(dbSeason.isNull(2)).isTrue();
+                    // TVDB ID should be in new column.
+                    assertThat(dbSeason.getInt(3)).isEqualTo(SEASON.getTvdbId());
+                    assertThat(dbSeason.getInt(4)).isEqualTo(SEASON.getNumber());
+                    // order is new, should be the number.
+                    assertThat(dbSeason.getInt(5)).isEqualTo(SEASON.getNumber());
+                });
+
+        Cursor seasonIdQuery = db.query("SELECT _id FROM sg_season");
+        seasonIdQuery.moveToFirst();
+        long seasonId = seasonIdQuery.getLong(0);
+        seasonIdQuery.close();
+
+        queryAndAssert(db,
+                "SELECT _id, series_id, season_id, episode_tmdb_id, episode_tvdb_id, episode_title, episode_number, episode_order, episode_season_number FROM sg_episode",
+                dbEpisode -> {
+                    // Row id should be auto-generated.
+                    assertThat(dbEpisode.getLong(0)).isNotEqualTo(EPISODE.getTvdbId());
+                    // Show and season ID should now be internal ID, not TVDB ID.
+                    assertThat(dbEpisode.getLong(1)).isEqualTo(showId);
+                    assertThat(dbEpisode.getLong(2)).isEqualTo(seasonId);
+                    // TMDB id should not be set, but exist.
+                    assertThat(dbEpisode.isNull(3)).isTrue();
+                    assertThat(dbEpisode.getInt(4)).isEqualTo(EPISODE.getTvdbId());
+                    assertThat(dbEpisode.getString(5)).isEqualTo(EPISODE.getName());
+                    assertThat(dbEpisode.getInt(6)).isEqualTo(EPISODE.getNumber());
+                    // order is new, should be the number.
+                    assertThat(dbEpisode.getInt(7)).isEqualTo(EPISODE.getNumber());
+                    assertThat(dbEpisode.getInt(8)).isEqualTo(SEASON.getNumber());
+                });
+    }
+
     private SupportSQLiteDatabase getMigratedDatabase(int version) throws IOException {
         return migrationTestHelper.runMigrationsAndValidate(
                 TEST_DB_NAME, version, false /* adding FTS table ourselves */,
@@ -278,7 +352,8 @@ public class MigrationTest {
                 MIGRATION_44_45,
                 MIGRATION_45_46,
                 MIGRATION_46_47,
-                MIGRATION_47_48
+                MIGRATION_47_48,
+                MIGRATION_48_49
         );
     }
 
