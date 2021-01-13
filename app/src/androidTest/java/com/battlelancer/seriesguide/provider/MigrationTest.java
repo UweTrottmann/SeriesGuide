@@ -8,23 +8,20 @@ import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_46_
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_47_48;
 import static com.google.common.truth.Truth.assertThat;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.Nullable;
-import androidx.room.Room;
 import androidx.room.testing.MigrationTestHelper;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.model.SgEpisode;
-import com.battlelancer.seriesguide.model.SgMovie;
-import com.battlelancer.seriesguide.model.SgSeason;
-import com.battlelancer.seriesguide.model.SgShow;
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode;
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason;
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.movies.MovieDetails;
-import com.uwetrottmann.thetvdb.entities.Episode;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.io.IOException;
 import org.junit.After;
@@ -38,35 +35,29 @@ public class MigrationTest {
 
     private static final String TEST_DB_NAME = "test-db";
 
-    private static final Show SHOW = new Show();
-    private static final SgSeason SEASON = new SgSeason();
-    private static final Episode EPISODE = new Episode();
+    private static final TestShow SHOW = new TestShow(
+            21,
+            "The No Answers Show",
+            45,
+            "example.jpg"
+    );
+    private static final TestSeason SEASON = new TestSeason(
+            21,
+            "21",
+            2
+    );
+    private static final TestEpisode EPISODE = new TestEpisode(
+            21,
+            "Episode Title",
+            1
+    );
 
-    static {
-        SHOW.tvdb_id = 21;
-        SHOW.title = "The No Answers Show";
-        SHOW.runtime = 45;
-        SHOW.poster = "example.jpg";
-
-        SEASON.tvdbId = 21;
-        SEASON.showTvdbId = "21";
-        SEASON.number = 2;
-
-        EPISODE.id = 21;
-        EPISODE.episodeName = "Episode Title";
-        EPISODE.airedEpisodeNumber = 1;
-    }
-
-    private static Episode getTestEpisode(@Nullable Integer tvdbId) {
-        Episode episode = new Episode();
-        if (tvdbId != null) {
-            episode.id = tvdbId;
-        } else {
-            episode.id = 21;
-        }
-        episode.episodeName = "Episode Title";
-        episode.airedEpisodeNumber = 1;
-        return episode;
+    private static TestEpisode getTestEpisode(@Nullable Integer tvdbId) {
+        return new TestEpisode(
+                tvdbId != null ? tvdbId : 21,
+                "Episode Title",
+                1
+        );
     }
 
     private static MovieDetails getTestMovieDetails(@Nullable Integer tmdbId) {
@@ -114,9 +105,10 @@ public class MigrationTest {
 
         // Re-open the database with version 43 and
         // provide MIGRATION_42_43 as the migration process.
-        migrationTestHelper.runMigrationsAndValidate(TEST_DB_NAME, 43,
-                false /* adding FTS table ourselves */, MIGRATION_42_43);
-        assertTestData(getMigratedRoomDatabase());
+        SupportSQLiteDatabase database = migrationTestHelper
+                .runMigrationsAndValidate(TEST_DB_NAME, 43,
+                        false /* adding FTS table ourselves */, MIGRATION_42_43);
+        assertTestData(database);
     }
 
     @Test
@@ -128,7 +120,7 @@ public class MigrationTest {
 
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity
         // Validate that the data was migrated properly.
-        assertTestData(getMigratedRoomDatabase());
+        assertTestData(getMigratedDatabase(44));
     }
 
     private void insertTestDataSqlite() {
@@ -137,82 +129,89 @@ public class MigrationTest {
         SqliteDatabaseTestHelper.insertShow(SHOW, db);
         SqliteDatabaseTestHelper.insertSeason(SEASON, db);
         SqliteDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(),
+                        db);
         db.close();
     }
 
     @Test
     public void migrationFrom43To44_containsCorrectData() throws IOException {
         // First version that uses Room, so can use migration test helper
-        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 43);
-        RoomDatabaseTestHelper.insertShow(SHOW, db, 43);
+        SupportSQLiteDatabase db = migrationTestHelper
+                .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_43_ROOM);
+        RoomDatabaseTestHelper.insertShow(SHOW, db);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(),
+                        db);
         db.close();
 
-        assertTestData(getMigratedRoomDatabase());
+        assertTestData(getMigratedDatabase(SgRoomDatabase.VERSION_44_RECREATE_SERIES_EPISODES));
     }
 
     @Test
     public void migrationFrom44To45_containsCorrectData() throws IOException {
-        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 44);
-        RoomDatabaseTestHelper.insertShow(SHOW, db, 44);
+        SupportSQLiteDatabase db = migrationTestHelper
+                .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_44_RECREATE_SERIES_EPISODES);
+        RoomDatabaseTestHelper.insertShow(SHOW, db);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(),
+                        db);
         db.close();
 
-        assertTestData(getMigratedRoomDatabase());
+        assertTestData(getMigratedDatabase(SgRoomDatabase.VERSION_45_RECREATE_SEASONS));
     }
 
     @Test
     public void migrationFrom45To46_containsCorrectData() throws IOException {
-        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 45);
-        RoomDatabaseTestHelper.insertShow(SHOW, db, 45);
+        SupportSQLiteDatabase db = migrationTestHelper
+                .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_45_RECREATE_SEASONS);
+        RoomDatabaseTestHelper.insertShow(SHOW, db);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(),
+                        db);
         db.close();
 
-        SgRoomDatabase database = getMigratedRoomDatabase();
-        assertTestData(database);
-        SgShow dbShow = database.showHelper().getShow();
-        assertThat(dbShow.slug).isNull();
+        db = getMigratedDatabase(SgRoomDatabase.VERSION_46_SERIES_SLUG);
+        assertTestData(db);
+        queryAndAssert(db, "SELECT series_slug FROM series",
+                seriesQuery -> assertThat(seriesQuery.isNull(0)).isTrue());
     }
 
     @Test
     public void migrationFrom46To47_containsCorrectData() throws IOException {
-        SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, 46);
-        RoomDatabaseTestHelper.insertShow(SHOW, db, 46);
+        SupportSQLiteDatabase db = migrationTestHelper
+                .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_46_SERIES_SLUG);
+        RoomDatabaseTestHelper.insertShow(SHOW, db);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
         RoomDatabaseTestHelper
-                .insertEpisode(EPISODE, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number, db);
+                .insertEpisode(EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(), SEASON.getNumber(),
+                        db);
         db.close();
 
-        SgRoomDatabase database = getMigratedRoomDatabase();
-        assertTestData(database);
-        SgShow dbShow = database.showHelper().getShow();
-        assertThat(dbShow.posterSmall)
-                .isEqualTo(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX + dbShow.poster);
+        db = getMigratedDatabase(SgRoomDatabase.VERSION_47_SERIES_POSTER_THUMB);
+        assertTestData(db);
+        queryAndAssert(db, "SELECT series_poster_small, poster FROM series",
+                series -> assertThat(series.getString(0))
+                        .isEqualTo(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX + series.getString(1)));
     }
 
     @Test
     public void migrationFrom47To48_containsCorrectData() throws IOException {
         int v47 = SgRoomDatabase.VERSION_47_SERIES_POSTER_THUMB;
         SupportSQLiteDatabase db = migrationTestHelper.createDatabase(TEST_DB_NAME, v47);
-        RoomDatabaseTestHelper.insertShow(SHOW, db, v47);
+        RoomDatabaseTestHelper.insertShow(SHOW, db);
         RoomDatabaseTestHelper.insertSeason(SEASON, db);
 
-        Episode testEpisode = getTestEpisode(21);
-        RoomDatabaseTestHelper
-                .insertEpisode(db, v47, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
-                        true);
+        TestEpisode testEpisode = getTestEpisode(21);
+        RoomDatabaseTestHelper.insertEpisode(db, testEpisode, SHOW.getTvdbId(), SEASON.getTvdbId(),
+                SEASON.getNumber(), true);
 
         testEpisode = getTestEpisode(22);
-        RoomDatabaseTestHelper
-                .insertEpisode(db, v47, testEpisode, SHOW.tvdb_id, SEASON.tvdbId, SEASON.number,
-                        false);
+        RoomDatabaseTestHelper.insertEpisode(db, testEpisode, SHOW.getTvdbId(), SEASON.getTvdbId(),
+                SEASON.getNumber(), false);
 
         MovieDetails testMovieDetails = getTestMovieDetails(12);
         testMovieDetails.setWatched(true);
@@ -223,61 +222,75 @@ public class MigrationTest {
         RoomDatabaseTestHelper.insertMovie(db, testMovieDetails);
         db.close();
 
-        SgRoomDatabase database = getMigratedRoomDatabase();
-        assertTestData(database);
+        db = getMigratedDatabase(SgRoomDatabase.VERSION_48_EPISODE_PLAYS);
+        assertTestData(db);
 
         // Watched episode should have 1 play.
-        SgEpisode episodeWatched = database.episodeHelper().getEpisode(21);
-        assertThat(episodeWatched.plays).isEqualTo(1);
+        queryAndAssert(db, "SELECT plays FROM episodes WHERE _id=21",
+                episodeWatched -> assertThat(episodeWatched.getInt(0)).isEqualTo(1));
 
-        SgEpisode episodeNotWatched = database.episodeHelper().getEpisode(22);
-        assertThat(episodeNotWatched.plays).isEqualTo(0);
+        queryAndAssert(db, "SELECT plays FROM episodes WHERE _id=22",
+                episodeNotWatched -> assertThat(episodeNotWatched.getInt(0)).isEqualTo(0));
 
         // Watched movie should have 1 play.
-        SgMovie movieWatched = database.movieHelper().getMovie(12);
-        assertThat(movieWatched.plays).isEqualTo(1);
+        queryAndAssert(db, "SELECT movies_plays FROM movies WHERE movies_tmdbid=12",
+                movieWatched -> assertThat(movieWatched.getInt(0)).isEqualTo(1));
 
-        SgMovie movieNotWatched = database.movieHelper().getMovie(13);
-        assertThat(movieNotWatched.plays).isEqualTo(0);
+        queryAndAssert(db, "SELECT movies_plays FROM movies WHERE movies_tmdbid=13",
+                movieNotWatched -> assertThat(movieNotWatched.getInt(0)).isEqualTo(0));
     }
 
-    private void assertTestData(SgRoomDatabase database) {
+    private void assertTestData(SupportSQLiteDatabase db) {
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity.
         // Validate that the data was migrated properly.
-        SgShow dbShow = database.showHelper().getShow();
-        assertThat(dbShow.tvdbId).isEqualTo(SHOW.tvdb_id);
-        assertThat(dbShow.title).isEqualTo(SHOW.title);
-        assertThat(dbShow.runtime).isEqualTo(String.valueOf(SHOW.runtime));
-        assertThat(dbShow.poster).isEqualTo(SHOW.poster);
+        queryAndAssert(db, "SELECT _id, seriestitle, runtime, poster FROM series",
+                dbShow -> {
+                    assertThat(dbShow.getInt(0)).isEqualTo(SHOW.getTvdbId());
+                    assertThat(dbShow.getString(1)).isEqualTo(SHOW.getTitle());
+                    assertThat(dbShow.getInt(2)).isEqualTo(SHOW.getRuntime());
+                    assertThat(dbShow.getString(3)).isEqualTo(SHOW.getPoster());
+                });
 
-        SgSeason dbSeason = database.seasonHelper().getSeason();
-        assertThat(dbSeason.tvdbId).isEqualTo(SEASON.tvdbId);
-        assertThat(dbSeason.showTvdbId).isEqualTo(SEASON.showTvdbId);
-        assertThat(dbSeason.number).isEqualTo(SEASON.number);
+        queryAndAssert(db, "SELECT _id, series_id, combinednr FROM seasons",
+                dbSeason -> {
+                    assertThat(dbSeason.getInt(0)).isEqualTo(SEASON.getTvdbId());
+                    assertThat(dbSeason.getString(1)).isEqualTo(SEASON.getShowTvdbId());
+                    assertThat(dbSeason.getInt(2)).isEqualTo(SEASON.getNumber());
+                });
 
-        SgEpisode dbEpisode = database.episodeHelper().getEpisode();
-        assertThat(dbEpisode.tvdbId).isEqualTo(EPISODE.id);
-        assertThat(dbEpisode.showTvdbId).isEqualTo(SHOW.tvdb_id);
-        assertThat(dbEpisode.seasonTvdbId).isEqualTo(SEASON.tvdbId);
-        assertThat(dbEpisode.title).isEqualTo(EPISODE.episodeName);
-        assertThat(dbEpisode.number).isEqualTo(EPISODE.airedEpisodeNumber);
-        assertThat(dbEpisode.season).isEqualTo(SEASON.number);
+        queryAndAssert(db,
+                "SELECT _id, series_id, season_id, episodetitle, episodenumber, season FROM episodes",
+                dbEpisode -> {
+                    assertThat(dbEpisode.getInt(0)).isEqualTo(EPISODE.getTvdbId());
+                    assertThat(dbEpisode.getInt(1)).isEqualTo(SHOW.getTvdbId());
+                    assertThat(dbEpisode.getInt(2)).isEqualTo(SEASON.getTvdbId());
+                    assertThat(dbEpisode.getString(3)).isEqualTo(EPISODE.getName());
+                    assertThat(dbEpisode.getInt(4)).isEqualTo(EPISODE.getNumber());
+                    assertThat(dbEpisode.getInt(5)).isEqualTo(SEASON.getNumber());
+                });
     }
 
-    private SgRoomDatabase getMigratedRoomDatabase() {
-        SgRoomDatabase database = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
-                SgRoomDatabase.class, TEST_DB_NAME)
-                .addMigrations(
-                        MIGRATION_42_43,
-                        MIGRATION_43_44,
-                        MIGRATION_44_45,
-                        MIGRATION_45_46,
-                        MIGRATION_46_47,
-                        MIGRATION_47_48
-                )
-                .build();
-        // close the database and release any stream resources when the test finishes
-        migrationTestHelper.closeWhenFinished(database);
-        return database;
+    private SupportSQLiteDatabase getMigratedDatabase(int version) throws IOException {
+        return migrationTestHelper.runMigrationsAndValidate(
+                TEST_DB_NAME, version, false /* adding FTS table ourselves */,
+                MIGRATION_42_43,
+                MIGRATION_43_44,
+                MIGRATION_44_45,
+                MIGRATION_45_46,
+                MIGRATION_46_47,
+                MIGRATION_47_48
+        );
+    }
+
+    private interface CursorAsserter {
+        void assertCursor(Cursor cursor);
+    }
+
+    private void queryAndAssert(SupportSQLiteDatabase database, String query,
+            CursorAsserter asserter) {
+        Cursor cursor = database.query(query);
+        assertThat(cursor.moveToFirst()).isTrue();
+        asserter.assertCursor(cursor);
+        cursor.close();
     }
 }

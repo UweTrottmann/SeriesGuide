@@ -42,9 +42,9 @@ abstract class SgRoomDatabase : RoomDatabase() {
 
     companion object {
 
-        private const val VERSION_43_ROOM = 43
-        private const val VERSION_44_RECREATE_SERIES_EPISODES = 44
-        private const val VERSION_45_RECREATE_SEASONS = 45
+        const val VERSION_43_ROOM = 43
+        const val VERSION_44_RECREATE_SERIES_EPISODES = 44
+        const val VERSION_45_RECREATE_SEASONS = 45
         const val VERSION_46_SERIES_SLUG = 46
         const val VERSION_47_SERIES_POSTER_THUMB = 47
         const val VERSION_48_EPISODE_PLAYS = 48
