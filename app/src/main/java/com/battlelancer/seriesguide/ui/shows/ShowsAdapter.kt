@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.model.SgShow
+import com.battlelancer.seriesguide.provider.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -71,7 +71,7 @@ class ShowsAdapter(
 
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ShowItem>() {
             override fun areItemsTheSame(old: ShowItem, new: ShowItem): Boolean =
-                old.showTvdbId == new.showTvdbId
+                old.rowId == new.rowId
 
             override fun areContentsTheSame(old: ShowItem, new: ShowItem): Boolean {
                 return old == new
@@ -80,7 +80,8 @@ class ShowsAdapter(
     }
 
     data class ShowItem(
-        val showTvdbId: Int,
+        val rowId: Long,
+        val showTvdbId: Int?,
         val episodeTvdbId: Int,
         val hasNextEpisode: Boolean,
         val isFavorite: Boolean,
@@ -99,22 +100,23 @@ class ShowsAdapter(
 
             fun header(): ShowItem {
                 return ShowItem(
-                    0,
-                    0,
-                    false,
-                    false,
-                    false,
-                    "",
-                    "",
-                    "",
-                    null,
-                    null,
-                    null,
-                    true
+                    rowId = 0,
+                    showTvdbId = 0,
+                    episodeTvdbId = 0,
+                    hasNextEpisode = false,
+                    isFavorite = false,
+                    isHidden = false,
+                    name = "",
+                    timeAndNetwork = "",
+                    episode = "",
+                    episodeTime = null,
+                    remainingCount = null,
+                    posterPath = null,
+                    isHeader = true
                 )
             }
 
-            fun map(sgShow: SgShow, context: Context): ShowItem {
+            fun map(sgShow: SgShow2ForLists, context: Context): ShowItem {
                 val episodeTvdbId = sgShow.nextEpisode?.toIntOrNull() ?: 0
 
                 val remainingCount = if (sgShow.unwatchedCount > 0) {
@@ -152,7 +154,10 @@ class ShowsAdapter(
                 val hasNextEpisode = !TextUtils.isEmpty(fieldValue)
                 if (!hasNextEpisode) {
                     // display show status if there is no next episode
-                    episodeTime = ShowTools.getStatus(context, sgShow.status?.toInt() ?: -1)
+                    episodeTime = ShowTools.getStatus(
+                        context,
+                        sgShow.status ?: ShowTools.Status.UNKNOWN
+                    )
                     episode = ""
                 } else {
                     episode = fieldValue
@@ -185,6 +190,7 @@ class ShowsAdapter(
                     TextTools.networkAndTime(context, releaseTimeShow, weekDay, network)
 
                 return ShowItem(
+                    sgShow.id,
                     sgShow.tvdbId,
                     episodeTvdbId,
                     hasNextEpisode,

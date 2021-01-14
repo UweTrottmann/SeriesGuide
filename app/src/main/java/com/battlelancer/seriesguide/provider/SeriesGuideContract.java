@@ -430,6 +430,24 @@ public class SeriesGuideContract {
     public interface SgShow2Columns extends BaseColumns {
 
         /**
+         * SgShow2 table.
+         * See {@link SeriesGuideProvider#SG_SHOW} and {@link SeriesGuideProvider#SG_SHOW_ID}.
+         */
+        Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_SG_SHOW)
+                .build();
+
+        /**
+         * Use if multiple items get returned
+         */
+        String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.sgshow";
+
+        /**
+         * Use if a single item is returned
+         */
+        String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.sgshow";
+
+        /**
          * This column is NOT in this table, it is for reference purposes only.
          */
         String REF_SHOW_ID = "series_id";
@@ -680,9 +698,59 @@ public class SeriesGuideContract {
          * SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
          */
         String UNWATCHED_COUNT = "series_unwatched_count";
+
+        String SELECTION_FAVORITES = FAVORITE + "=1";
+        String SELECTION_NOT_FAVORITES = FAVORITE + "=0";
+        String SELECTION_HIDDEN = HIDDEN + "=1";
+        String SELECTION_NO_HIDDEN = HIDDEN + "=0";
+        /**
+         * Technically continuing or upcoming shows (as they do continue).
+         */
+        String SELECTION_STATUS_CONTINUING = "(" + STATUS + "=" + ShowTools.Status.CONTINUING
+                + " OR " + STATUS + "=" + ShowTools.Status.UPCOMING + ")";
+        /**
+         * Technically ended or unknown state shows.
+         */
+        String SELECTION_STATUS_NO_CONTINUING = "(" + STATUS + "=" + ShowTools.Status.ENDED
+                + " OR " + STATUS + "=" + ShowTools.Status.UNKNOWN + ")";
+
+        String SORT_TITLE = TITLE + " COLLATE NOCASE ASC";
+        String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE NOCASE ASC";
+        String SORT_STATUS = STATUS + " DESC";
+        String SORT_LATEST_EPISODE = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
+
+        static Uri buildIdUri(long rowId) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
+        }
+
+        static long getId(Uri uri) {
+            String lastPathSegment = uri.getLastPathSegment();
+            if (lastPathSegment == null) {
+                throw new IllegalArgumentException("Path of URI is empty: " + uri);
+            }
+            return Long.parseLong(lastPathSegment);
+        }
     }
 
     public interface SgSeason2Columns extends BaseColumns {
+
+        /**
+         * SgSeason2 table.
+         * See {@link SeriesGuideProvider#SG_SEASON} and {@link SeriesGuideProvider#SG_SEASON_ID}.
+         */
+        Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_SG_SEASON)
+                .build();
+
+        /**
+         * Use if multiple items get returned
+         */
+        String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.sgseason";
+
+        /**
+         * Use if a single item is returned
+         */
+        String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.sgseason";
 
         /**
          * This column is NOT in this table, it is for reference purposes only.
@@ -739,9 +807,39 @@ public class SeriesGuideContract {
          * Integer to order seasons by, typically equal to the season number.
          */
         String ORDER = "season_order";
+
+        static Uri buildIdUri(long rowId) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
+        }
+
+        static long getId(Uri uri) {
+            String lastPathSegment = uri.getLastPathSegment();
+            if (lastPathSegment == null) {
+                throw new IllegalArgumentException("Path of URI is empty: " + uri);
+            }
+            return Long.parseLong(lastPathSegment);
+        }
     }
 
     public interface SgEpisode2Columns extends BaseColumns {
+
+        /**
+         * SgEpisode2 table.
+         * See {@link SeriesGuideProvider#SG_EPISODE} and {@link SeriesGuideProvider#SG_EPISODE_ID}.
+         */
+        Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_SG_EPISODE)
+                .build();
+
+        /**
+         * Use if multiple items get returned
+         */
+        String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.sgepisode";
+
+        /**
+         * Use if a single item is returned
+         */
+        String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.sgepisode";
 
         /**
          * The TMDB ID of an episode, may be null for existing shows
@@ -857,6 +955,10 @@ public class SeriesGuideContract {
          * </pre>
          */
         String LAST_UPDATED = "episode_lastupdate";
+
+        static Uri buildIdUri(long rowId) {
+            return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
+        }
     }
 
     interface EpisodeSearchColumns {
@@ -1022,6 +1124,10 @@ public class SeriesGuideContract {
     public static final String PATH_SEASONS = "seasons";
 
     public static final String PATH_EPISODES = "episodes";
+
+    public static final String PATH_SG_SHOW = "sg_show";
+    public static final String PATH_SG_SEASON = "sg_season";
+    public static final String PATH_SG_EPISODE = "sg_episode";
 
     public static final String PATH_OFSHOW = "ofshow";
 

@@ -174,7 +174,7 @@ public class ShowsFragment extends Fragment {
     private void updateShowsQuery() {
         Timber.d("Running query update.");
         model.updateQuery(showFilter, ShowsDistillationSettings
-                .getSortQuery(showSortOrder.getSortOrderId(), showSortOrder.isSortFavoritesFirst(),
+                .getSortQuery2(showSortOrder.getSortOrderId(), showSortOrder.isSortFavoritesFirst(),
                         showSortOrder.isSortIgnoreArticles()));
     }
 

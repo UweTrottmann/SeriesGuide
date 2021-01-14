@@ -45,6 +45,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
 
     abstract fun episodeHelper(): EpisodeHelper
 
+    abstract fun sgShow2Helper(): SgShow2Helper
     abstract fun sgActivityHelper(): SgActivityHelper
 
     abstract fun movieHelper(): MovieHelper

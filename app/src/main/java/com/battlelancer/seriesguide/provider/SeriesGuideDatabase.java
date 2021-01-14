@@ -156,6 +156,10 @@ public class SeriesGuideDatabase {
 
         String EPISODES = "episodes";
 
+        String SG_SHOW = "sg_show";
+        String SG_SEASON = "sg_season";
+        String SG_EPISODE = "sg_episode";
+
         String SHOWS_JOIN_EPISODES_ON_LAST_EPISODE = SHOWS + " LEFT OUTER JOIN " + EPISODES
                 + " ON " + Qualified.SHOWS_LAST_EPISODE + "=" + Qualified.EPISODES_ID;
 

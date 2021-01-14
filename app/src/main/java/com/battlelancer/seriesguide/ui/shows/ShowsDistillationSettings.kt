@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 
 /**
@@ -50,6 +51,39 @@ object ShowsDistillationSettings {
                 Shows.SORT_TITLE_NOARTICLE
             } else {
                 Shows.SORT_TITLE
+            }
+        )
+
+        return query.toString()
+    }
+
+    /**
+     * Builds an appropriate SQL sort statement for sorting SgShow2 table results.
+     */
+    @JvmStatic
+    fun getSortQuery2(
+        sortOrderId: Int,
+        isSortFavoritesFirst: Boolean,
+        isSortIgnoreArticles: Boolean
+    ): String {
+        val query = StringBuilder()
+
+        if (isSortFavoritesFirst) {
+            query.append(SgShow2SortQuery.FAVORITES_FIRST)
+        }
+
+        when (sortOrderId) {
+            ShowsSortOrder.OLDEST_EPISODE_ID -> query.append(SgShow2SortQuery.OLDEST_EPISODE)
+            ShowsSortOrder.LATEST_EPISODE_ID -> query.append(SgShow2SortQuery.LATEST_EPISODE)
+            ShowsSortOrder.LAST_WATCHED_ID -> query.append(SgShow2SortQuery.LAST_WATCHED)
+            ShowsSortOrder.LEAST_REMAINING_EPISODES_ID -> query.append(SgShow2SortQuery.REMAINING_EPISODES)
+        }
+        // always sort by title at last
+        query.append(
+            if (isSortIgnoreArticles) {
+                SgShow2Columns.SORT_TITLE_NOARTICLE
+            } else {
+                SgShow2Columns.SORT_TITLE
             }
         )
 
@@ -156,19 +190,35 @@ object ShowsDistillationSettings {
         }
     }
 
+    private object SgShow2SortQuery {
+        // by oldest next episode, then continued first
+        const val OLDEST_EPISODE =
+            "${SgShow2Columns.NEXTAIRDATEMS} ASC,${SgShow2Columns.SORT_STATUS},"
+
+        // by latest next episode, then continued first
+        const val LATEST_EPISODE = "${SgShow2Columns.SORT_LATEST_EPISODE},"
+
+        // by latest watched first
+        const val LAST_WATCHED = "${SgShow2Columns.LASTWATCHED_MS} DESC,"
+
+        // by least episodes remaining to watch, then continued first
+        const val REMAINING_EPISODES =
+            "${SgShow2Columns.UNWATCHED_COUNT} ASC,${SgShow2Columns.SORT_STATUS},"
+
+        // add as prefix to sort favorites first
+        const val FAVORITES_FIRST = "${SgShow2Columns.FAVORITE} DESC,"
+    }
+
     /**
-     * Used by [ShowsFragment] loader to sort the list of
-     * shows.
+     * Used by [ShowsFragment] loader and various others to determine sort order of shows.
      */
-    interface ShowsSortOrder {
-        companion object {
-            const val TITLE_ID = 0
-            // @deprecated Only supporting alphabetical sort order going forward.
-            // int TITLE_REVERSE_ID = 1;
-            const val OLDEST_EPISODE_ID = 2
-            const val LATEST_EPISODE_ID = 3
-            const val LAST_WATCHED_ID = 4
-            const val LEAST_REMAINING_EPISODES_ID = 5
-        }
+    object ShowsSortOrder {
+        const val TITLE_ID = 0
+        // @deprecated Only supporting alphabetical sort order going forward.
+        // int TITLE_REVERSE_ID = 1;
+        const val OLDEST_EPISODE_ID = 2
+        const val LATEST_EPISODE_ID = 3
+        const val LAST_WATCHED_ID = 4
+        const val LEAST_REMAINING_EPISODES_ID = 5
     }
 }

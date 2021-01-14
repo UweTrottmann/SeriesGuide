@@ -30,6 +30,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.util.SelectionBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +43,13 @@ public class SeriesGuideProvider extends ContentProvider {
     public static final boolean LOGV = false;
 
     private static UriMatcher sUriMatcher;
+
+    static final int SG_SHOW = 10;
+    static final int SG_SHOW_ID = 11;
+    static final int SG_SEASON = 20;
+    static final int SG_SEASON_ID = 21;
+    static final int SG_EPISODE = 30;
+    static final int SG_EPISODE_ID = 31;
 
     static final int SHOWS = 100;
 
@@ -110,6 +120,16 @@ public class SeriesGuideProvider extends ContentProvider {
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = SgApp.CONTENT_AUTHORITY;
+
+        // SgShow2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SHOW, SG_SHOW);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SHOW + "/*", SG_SHOW_ID);
+        // SgSeason2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SEASON, SG_SEASON);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SEASON + "/*", SG_SEASON_ID);
+        // SgEpisode2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_EPISODE, SG_EPISODE);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_EPISODE + "/*", SG_EPISODE_ID);
 
         // Shows
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS, SHOWS);
@@ -267,6 +287,18 @@ public class SeriesGuideProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
+            case SG_SHOW:
+                return SgShow2Columns.CONTENT_TYPE;
+            case SG_SHOW_ID:
+                return SgShow2Columns.CONTENT_ITEM_TYPE;
+            case SG_SEASON:
+                return SgSeason2Columns.CONTENT_TYPE;
+            case SG_SEASON_ID:
+                return SgSeason2Columns.CONTENT_ITEM_TYPE;
+            case SG_EPISODE:
+                return SgEpisode2Columns.CONTENT_TYPE;
+            case SG_EPISODE_ID:
+                return SgEpisode2Columns.CONTENT_ITEM_TYPE;
             case SHOWS:
             case SHOWS_FILTERED:
             case SHOWS_WITH_LAST_EPISODE:
@@ -598,6 +630,15 @@ public class SeriesGuideProvider extends ContentProvider {
     private static SelectionBuilder buildSelection(Uri uri, int match) {
         final SelectionBuilder builder = new SelectionBuilder();
         switch (match) {
+            case SG_SHOW: {
+                return builder.table(Tables.SG_SHOW);
+            }
+            case SG_SEASON: {
+                return builder.table(Tables.SG_SEASON);
+            }
+            case SG_EPISODE: {
+                return builder.table(Tables.SG_EPISODE);
+            }
             case SHOWS: {
                 return builder.table(Tables.SHOWS);
             }
