@@ -15,14 +15,13 @@ import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.model.EpisodeWithShow
+import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
@@ -105,7 +104,7 @@ class CalendarFragment2 : Fragment() {
             .scrollTabToTopLiveData
             .observe(
                 viewLifecycleOwner,
-                Observer { tabPosition: Int? ->
+                { tabPosition: Int? ->
                     if (tabPosition != null) {
                         if (CalendarType.UPCOMING == type
                             && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING
@@ -121,7 +120,7 @@ class CalendarFragment2 : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.upcomingEpisodesLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.upcomingEpisodesLiveData.observe(viewLifecycleOwner, {
             adapter.submitList(it)
             updateEmptyView(it.isEmpty())
         })
@@ -227,7 +226,7 @@ class CalendarFragment2 : Fragment() {
             Utils.startActivityWithAnimation(activity, intent, view)
         }
 
-        override fun onItemLongClick(anchor: View, episode: EpisodeWithShow) {
+        override fun onItemLongClick(anchor: View, episode: SgEpisode2WithShow) {
             val context = anchor.context
 
             val popupMenu = PopupMenu(context, anchor)
@@ -299,7 +298,7 @@ class CalendarFragment2 : Fragment() {
             popupMenu.show()
         }
 
-        override fun onItemWatchBoxClick(episode: EpisodeWithShow, isWatched: Boolean) {
+        override fun onItemWatchBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean) {
             updateEpisodeWatchedState(
                 episode.showTvdbId, episode.episodeTvdbId, episode.season, episode.episodenumber,
                 !isWatched

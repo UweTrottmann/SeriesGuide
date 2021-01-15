@@ -11,9 +11,9 @@ import androidx.paging.Config
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.model.EpisodeWithShow
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.TimeTools
@@ -34,7 +34,7 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
 
     init {
         upcomingEpisodesLiveData = Transformations.switchMap(queryLiveData) { queryString ->
-            SgRoomDatabase.getInstance(getApplication()).episodeHelper()
+            SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
                 .getEpisodesWithShow(SimpleSQLiteQuery(queryString, null))
                 .mapByPage { episodes ->
                     val calendar = Calendar.getInstance()
@@ -76,8 +76,11 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
                     System.currentTimeMillis() - CALENDAR_DAY_LIMIT_MS
                 }
                 query =
-                    StringBuilder("${Episodes.SELECTION_HAS_RELEASE_DATE} AND ${Episodes.FIRSTAIREDMS}<$recentThreshold AND ${Episodes.FIRSTAIREDMS}>$timeThreshold AND ${Shows.SELECTION_NO_HIDDEN}")
-                sortOrder = CalendarQuery.SORTING_RECENT
+                    StringBuilder("${SgEpisode2Columns.SELECTION_HAS_RELEASE_DATE} " +
+                            "AND ${SgEpisode2Columns.FIRSTAIREDMS}<$recentThreshold " +
+                            "AND ${SgEpisode2Columns.FIRSTAIREDMS}>$timeThreshold " +
+                            "AND ${SgShow2Columns.SELECTION_NO_HIDDEN}")
+                sortOrder = SgEpisode2Columns.SORT_RECENT
             } else /* UPCOMING */ {
                 val timeThreshold = if (isInfiniteCalendar) {
                     // Include all future episodes.
@@ -86,43 +89,42 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
                     // Only episodes from the next few days.
                     System.currentTimeMillis() + CALENDAR_DAY_LIMIT_MS
                 }
-                query = StringBuilder("${Episodes.FIRSTAIREDMS}>=$recentThreshold AND ${Episodes.FIRSTAIREDMS}<$timeThreshold AND ${Shows.SELECTION_NO_HIDDEN}")
-                sortOrder = CalendarQuery.SORTING_UPCOMING
+                query = StringBuilder("${SgEpisode2Columns.FIRSTAIREDMS}>=$recentThreshold " +
+                        "AND ${SgEpisode2Columns.FIRSTAIREDMS}<$timeThreshold " +
+                        "AND ${SgShow2Columns.SELECTION_NO_HIDDEN}")
+                sortOrder = SgEpisode2Columns.SORT_UPCOMING
             }
 
             // append only favorites selection if necessary
             if (CalendarSettings.isOnlyFavorites(getApplication())) {
-                query.append(" AND ").append(Shows.SELECTION_FAVORITES)
+                query.append(" AND ").append(SgShow2Columns.SELECTION_FAVORITES)
             }
 
             // append no specials selection if necessary
             if (DisplaySettings.isHidingSpecials(getApplication())) {
-                query.append(" AND ").append(Episodes.SELECTION_NO_SPECIALS)
+                query.append(" AND ").append(SgEpisode2Columns.SELECTION_NO_SPECIALS)
             }
 
             // append unwatched selection if necessary
             if (CalendarSettings.isHidingWatchedEpisodes(getApplication())) {
-                query.append(" AND ").append(Episodes.SELECTION_UNWATCHED)
+                query.append(" AND ").append(SgEpisode2Columns.SELECTION_UNWATCHED)
             }
 
             // only show collected episodes
             if (CalendarSettings.isOnlyCollected(getApplication())) {
-                query.append(" AND ").append(Episodes.SELECTION_COLLECTED)
+                query.append(" AND ").append(SgEpisode2Columns.SELECTION_COLLECTED)
             }
 
             // Only premieres (first episodes).
             if (CalendarSettings.isOnlyPremieres(getApplication())) {
-                query.append(" AND ").append(Episodes.SELECTION_ONLY_PREMIERES)
+                query.append(" AND ").append(SgEpisode2Columns.SELECTION_ONLY_PREMIERES)
             }
 
             // Post value because not on main thread + also avoids race condition if data is
             // delivered too early causing RecyclerView to jump to next page.
             // However, could not narrow down why that is an issue (it should not be?).
             queryLiveData.postValue(
-                "${EpisodeWithShow.select} " +
-                        "LEFT OUTER JOIN series ON episodes.series_id=series._id " +
-                        "WHERE $query " +
-                        "ORDER BY $sortOrder "
+                "${SgEpisode2WithShow.SELECT} WHERE $query ORDER BY $sortOrder "
             )
         }
 
@@ -140,7 +142,7 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
         return calendar.timeInMillis
     }
 
-    data class CalendarItem(val headerTime: Long, val episode: EpisodeWithShow)
+    data class CalendarItem(val headerTime: Long, val episode: SgEpisode2WithShow)
 
     companion object {
         private const val CALENDAR_DAY_LIMIT_MS = 31 * DateUtils.DAY_IN_MILLIS

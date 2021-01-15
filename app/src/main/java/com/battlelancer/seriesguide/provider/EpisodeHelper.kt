@@ -1,15 +1,10 @@
 package com.battlelancer.seriesguide.provider
 
-import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Query
-import androidx.room.RawQuery
-import androidx.sqlite.db.SupportSQLiteQuery
-import com.battlelancer.seriesguide.model.EpisodeWithShow
 import com.battlelancer.seriesguide.model.SgEpisode
 import com.battlelancer.seriesguide.model.SgEpisodeForTraktSync
 import com.battlelancer.seriesguide.model.SgEpisodeSeasonAndShow
-import com.battlelancer.seriesguide.model.SgShow
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
 
 /**
@@ -40,9 +35,6 @@ interface EpisodeHelper {
 
     @Query("SELECT season_id, season, series_id  FROM episodes WHERE _id=:episodeTvdbId")
     fun getEpisodeMinimal(episodeTvdbId: Int): SgEpisodeSeasonAndShow?
-
-    @RawQuery(observedEntities = [SgEpisode::class, SgShow::class])
-    fun getEpisodesWithShow(query: SupportSQLiteQuery): DataSource.Factory<Int, EpisodeWithShow>
 
     @Query("UPDATE episodes SET watched = 0, plays = 0 WHERE _id=:episodeTvdbId")
     fun setNotWatchedAndRemovePlays(episodeTvdbId: Int): Int

@@ -956,6 +956,15 @@ public class SeriesGuideContract {
          */
         String LAST_UPDATED = "episode_lastupdate";
 
+        String SELECTION_UNWATCHED = WATCHED + "=" + EpisodeFlags.UNWATCHED;
+        String SELECTION_COLLECTED = COLLECTED + "=1";
+        String SELECTION_NO_SPECIALS = SEASON + "!=0";
+        String SELECTION_HAS_RELEASE_DATE = FIRSTAIREDMS + "!=" + Constants.EPISODE_UNKNOWN_RELEASE;
+        String SELECTION_ONLY_PREMIERES = NUMBER + "=1";
+
+        String SORT_UPCOMING = FIRSTAIREDMS + " ASC," + SgShow2Columns.SORT_TITLE + "," + NUMBER + " ASC";
+        String SORT_RECENT = FIRSTAIREDMS + " DESC," + SgShow2Columns.SORT_TITLE + "," + NUMBER + " DESC";
+
         static Uri buildIdUri(long rowId) {
             return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
         }
