@@ -1120,8 +1120,6 @@ public class SeriesGuideContract {
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.activity";
 
-        public static final String SORT_LATEST = Activity.TIMESTAMP_MS + " DESC";
-
         public static Uri buildActivityUri(String episodeTvdbId) {
             return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();
         }

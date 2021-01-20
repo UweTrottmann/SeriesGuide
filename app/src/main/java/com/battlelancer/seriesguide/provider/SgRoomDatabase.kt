@@ -38,6 +38,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
 
     abstract fun episodeHelper(): EpisodeHelper
 
+    abstract fun sgActivityHelper(): SgActivityHelper
+
     abstract fun movieHelper(): MovieHelper
 
     companion object {

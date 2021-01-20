@@ -3,10 +3,11 @@ package com.battlelancer.seriesguide.ui.shows;
 import android.content.Context;
 import android.database.Cursor;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
+import com.battlelancer.seriesguide.model.SgActivity;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -25,22 +26,18 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
     @Override
     public List<NowAdapter.NowItem> loadInBackground() {
         // get all activity with the latest one first
-        Cursor query = getContext().getContentResolver()
-                .query(Activity.CONTENT_URI,
-                        new String[] { Activity.TIMESTAMP_MS, Activity.EPISODE_TVDB_OR_TMDB_ID},
-                        null, null, Activity.SORT_LATEST);
-        if (query == null) {
-            return null;
-        }
+        List<SgActivity> activityByLatest = SgRoomDatabase.getInstance(getContext())
+                .sgActivityHelper()
+                .getActivityByLatest();
 
         List<NowAdapter.NowItem> items = new ArrayList<>();
-        while (query.moveToNext()) {
+        for (SgActivity activity : activityByLatest) {
             if (items.size() == 50) {
                 break; // take at most 50 items
             }
 
-            long timestamp = query.getLong(0);
-            int episodeTvdbId = query.getInt(1);
+            long timestamp = activity.getTimestampMs();
+            int episodeTvdbId = Integer.parseInt(activity.getEpisodeTvdbOrTmdbId());
 
             // get episode details
             Cursor episodeQuery = getContext().getContentResolver().query(
@@ -74,8 +71,6 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
 
             episodeQuery.close();
         }
-
-        query.close();
 
         // add header
         if (items.size() > 0) {
