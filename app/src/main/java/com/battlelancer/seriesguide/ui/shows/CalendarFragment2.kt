@@ -136,7 +136,7 @@ class CalendarFragment2 : Fragment() {
 
     private fun updateCalendarQuery() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.updateCalendarQuery(type)
+            viewModel.updateCalendarQuery(type == CalendarType.UPCOMING)
         }
     }
 
