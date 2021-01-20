@@ -356,8 +356,8 @@ class ShowFragment : Fragment() {
                 showCursor.getString(ShowQuery.RELEASE_TIMEZONE),
                 releaseCountry, network
             )
-            val dayString = TimeTools.formatToLocalDayOrDaily(activity, release, weekDay)
-            val timeString = TimeTools.formatToLocalTime(activity, release)
+            val dayString = TimeTools.formatToLocalDayOrDaily(requireContext(), release, weekDay)
+            val timeString = TimeTools.formatToLocalTime(requireContext(), release)
             String.format("%s %s", dayString, timeString)
         } else {
             null

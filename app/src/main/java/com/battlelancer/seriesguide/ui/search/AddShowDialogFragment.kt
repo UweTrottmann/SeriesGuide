@@ -327,15 +327,15 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         val timeAndNetworkText = SpannableStringBuilder().apply {
             if (show.release_time != -1) {
                 val release = TimeTools.getShowReleaseDateTime(
-                    requireActivity(),
+                    requireContext(),
                     show.release_time,
                     show.release_weekday,
                     show.release_timezone,
                     show.country,
                     show.network
                 )
-                val day = TimeTools.formatToLocalDayOrDaily(activity, release, show.release_weekday)
-                val time = TimeTools.formatToLocalTime(activity, release)
+                val day = TimeTools.formatToLocalDayOrDaily(requireContext(), release, show.release_weekday)
+                val time = TimeTools.formatToLocalTime(requireContext(), release)
                 append(day).append(" ").append(time)
                 append("\n")
             }

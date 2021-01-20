@@ -413,7 +413,7 @@ public class TimeTools {
     /**
      * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale.
      */
-    public static String formatToLocalDay(Date dateTime) {
+    public static String formatToLocalDay(@NonNull Date dateTime) {
         SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
         return localDayFormat.format(dateTime);
     }
@@ -432,7 +432,7 @@ public class TimeTools {
     /**
      * Formats to absolute time format (e.g. "08:00 PM") as defined by the devices locale.
      */
-    public static String formatToLocalTime(Context context, Date dateTime) {
+    public static String formatToLocalTime(@NonNull Context context, @NonNull Date dateTime) {
         java.text.DateFormat localTimeFormat = DateFormat.getTimeFormat(context);
         return localTimeFormat.format(dateTime);
     }
@@ -461,7 +461,8 @@ public class TimeTools {
      * days") as defined by the devices locale. If the time is today, returns the local equivalent
      * for "today".
      */
-    public static String formatToLocalDayAndRelativeTime(Context context, Date dateTime) {
+    public static String formatToLocalDayAndRelativeTime(@NonNull Context context,
+            @NonNull Date dateTime) {
         StringBuilder dayAndTime = new StringBuilder();
 
         // day abbreviation, e.g. "Mon"
@@ -544,7 +545,7 @@ public class TimeTools {
      *
      * @see #formatToLocalDate(Context, Date)
      */
-    public static String formatToLocalDateShort(Context context, Date dateTime) {
+    public static String formatToLocalDateShort(@NonNull Context context, @NonNull Date dateTime) {
         return DateUtils.formatDateTime(context, dateTime.getTime(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
     }
