@@ -564,10 +564,14 @@ public class SeriesGuideContract {
     interface ActivityColumns {
 
         String TIMESTAMP_MS = "activity_time";
-
-        String EPISODE_TVDB_ID = "activity_episode";
-
-        String SHOW_TVDB_ID = "activity_show";
+        /**
+         * A TVDB ID is stored as an int, a TMDB ID is stored as an int prefixed with `tmdb-`.
+         */
+        String EPISODE_TVDB_OR_TMDB_ID = "activity_episode";
+        /**
+         * A TVDB ID is stored as an int, a TMDB ID is stored as an int prefixed with `tmdb-`.
+         */
+        String SHOW_TVDB_OR_TMDB_ID = "activity_show";
     }
 
     interface JobsColumns {

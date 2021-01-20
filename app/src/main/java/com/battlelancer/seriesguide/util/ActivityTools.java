@@ -36,8 +36,8 @@ public class ActivityTools {
 
         // add new entry
         ContentValues values = new ContentValues();
-        values.put(Activity.EPISODE_TVDB_ID, episodeTvdbId);
-        values.put(Activity.SHOW_TVDB_ID, showTvdbId);
+        values.put(Activity.EPISODE_TVDB_OR_TMDB_ID, episodeTvdbId);
+        values.put(Activity.SHOW_TVDB_OR_TMDB_ID, showTvdbId);
         long currentTime = System.currentTimeMillis();
         values.put(Activity.TIMESTAMP_MS, currentTime);
 
@@ -50,7 +50,7 @@ public class ActivityTools {
      */
     public static void removeActivity(Context context, int episodeTvdbId) {
         int deleted = context.getContentResolver().delete(Activity.CONTENT_URI,
-                Activity.EPISODE_TVDB_ID + "=" + episodeTvdbId, null);
+                Activity.EPISODE_TVDB_OR_TMDB_ID + "=" + episodeTvdbId, null);
         Timber.d("removeActivity: deleted %d activity entries", deleted);
     }
 
@@ -60,7 +60,7 @@ public class ActivityTools {
     public static void populateShowsLastWatchedTime(Context context) {
         Cursor query = context.getContentResolver()
                 .query(Activity.CONTENT_URI,
-                        new String[] { Activity.TIMESTAMP_MS, Activity.SHOW_TVDB_ID },
+                        new String[] { Activity.TIMESTAMP_MS, Activity.SHOW_TVDB_OR_TMDB_ID},
                         null, null,
                         Activity.SORT_LATEST);
         if (query == null) {

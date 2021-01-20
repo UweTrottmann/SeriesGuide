@@ -27,7 +27,7 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
         // get all activity with the latest one first
         Cursor query = getContext().getContentResolver()
                 .query(Activity.CONTENT_URI,
-                        new String[] { Activity.TIMESTAMP_MS, Activity.EPISODE_TVDB_ID },
+                        new String[] { Activity.TIMESTAMP_MS, Activity.EPISODE_TVDB_OR_TMDB_ID},
                         null, null, Activity.SORT_LATEST);
         if (query == null) {
             return null;

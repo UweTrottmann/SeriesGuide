@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import timber.log.Timber;
 
 public class SeriesGuideDatabase {
@@ -529,10 +528,10 @@ public class SeriesGuideDatabase {
     private static final String ACTIVITY_TABLE = Tables.ACTIVITY
             + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + ActivityColumns.EPISODE_TVDB_ID + " TEXT NOT NULL,"
-            + ActivityColumns.SHOW_TVDB_ID + " TEXT NOT NULL,"
+            + ActivityColumns.EPISODE_TVDB_OR_TMDB_ID + " TEXT NOT NULL,"
+            + ActivityColumns.SHOW_TVDB_OR_TMDB_ID + " TEXT NOT NULL,"
             + ActivityColumns.TIMESTAMP_MS + " INTEGER NOT NULL,"
-            + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_ID + ") ON CONFLICT REPLACE"
+            + "UNIQUE (" + ActivityColumns.EPISODE_TVDB_OR_TMDB_ID + ") ON CONFLICT REPLACE"
             + ");";
     @VisibleForTesting
     public static final String CREATE_ACTIVITY_TABLE = "CREATE TABLE " + ACTIVITY_TABLE;

@@ -449,7 +449,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 if (id < 0) {
                     break;
                 }
-                notifyUri = Activity.buildActivityUri(values.getAsString(Activity.EPISODE_TVDB_ID));
+                notifyUri = Activity.buildActivityUri(values.getAsString(Activity.EPISODE_TVDB_OR_TMDB_ID));
                 break;
             }
             case JOBS: {

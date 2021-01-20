@@ -19,7 +19,7 @@ data class SgActivity (
     /**
      * Unique string identifier.
      */
-    @ColumnInfo(name = Activity.EPISODE_TVDB_ID) val episodeTvdbId: String,
-    @ColumnInfo(name = Activity.SHOW_TVDB_ID) val showTvdbId: String,
+    @ColumnInfo(name = Activity.EPISODE_TVDB_OR_TMDB_ID) val episodeTvdbOrTmdbId: String,
+    @ColumnInfo(name = Activity.SHOW_TVDB_OR_TMDB_ID) val showTvdbOrTmdbId: String,
     @ColumnInfo(name = Activity.TIMESTAMP_MS) val timestampMs: Long
 )
