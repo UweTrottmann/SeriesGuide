@@ -28,6 +28,12 @@ interface SgEpisode2Helper {
      * See [SgEpisode2WithShow.buildEpisodesWithShowQuery].
      */
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
+    fun getEpisodesWithShow(query: SupportSQLiteQuery): List<SgEpisode2WithShow>
+
+    /**
+     * See [SgEpisode2WithShow.buildEpisodesWithShowQuery].
+     */
+    @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
     fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
 
 }
@@ -43,7 +49,7 @@ data class SgEpisode2WithShow(
     @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val episode_collected: Boolean,
 
     @ColumnInfo(name = SgShow2Columns.TVDB_ID) val showTvdbId: Int,
-    @ColumnInfo(name = SgShow2Columns.TITLE) val seriestitle: String?,
+    @ColumnInfo(name = SgShow2Columns.TITLE) val seriestitle: String,
     @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String?,
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val series_poster_small: String?
 ) {

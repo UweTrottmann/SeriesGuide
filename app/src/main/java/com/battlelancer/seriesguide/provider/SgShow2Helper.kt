@@ -12,7 +12,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 interface SgShow2Helper {
 
     @RawQuery(observedEntities = [SgShow2::class])
-    fun queryShows(query: SupportSQLiteQuery): LiveData<List<SgShow2ForLists>>
+    fun getShows(query: SupportSQLiteQuery): List<SgShow2ForLists>
+
+    @RawQuery(observedEntities = [SgShow2::class])
+    fun getShowsLiveData(query: SupportSQLiteQuery): LiveData<List<SgShow2ForLists>>
 
 }
 

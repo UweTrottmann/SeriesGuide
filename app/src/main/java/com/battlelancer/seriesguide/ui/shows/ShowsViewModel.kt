@@ -30,7 +30,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
     init {
         sgShowsLiveData = Transformations.switchMap(queryString) { queryString ->
             SgRoomDatabase.getInstance(getApplication()).sgShow2Helper()
-                .queryShows(SimpleSQLiteQuery(queryString, null))
+                .getShowsLiveData(SimpleSQLiteQuery(queryString, null))
         }
 
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
