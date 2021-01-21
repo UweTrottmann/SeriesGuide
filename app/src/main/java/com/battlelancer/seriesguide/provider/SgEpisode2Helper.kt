@@ -9,6 +9,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.model.SgEpisode2
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
@@ -40,6 +41,19 @@ interface SgEpisode2Helper {
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
     fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
 
+    /**
+     * Returns how many episodes of a show are left to collect. Only considers regular, released
+     * episodes (no specials, must have a release date in the past).
+     */
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 0 AND episode_season_number != 0 AND episode_firstairedms != ${Constants.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
+    fun countNotCollectedEpisodesOfShow(showId: Long, currentTimeToolsTime: Long): Int
+
+    /**
+     * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
+     * episodes with no air date and without specials).
+     */
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_season_number != 0 AND episode_firstairedms != ${Constants.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
+    fun countNotWatchedEpisodesOfShow(showId: Long, currentTimeToolsTime: Long): Int
 }
 
 data class SgEpisode2WithShow(

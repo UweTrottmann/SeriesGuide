@@ -218,6 +218,7 @@ public class DBUtils {
      * episodes with no air date and without specials).
      *
      * @return {@link #UNKNOWN_UNWATCHED_COUNT} if the number is unknown or failed to be determined.
+     * @deprecated Use {@link com.battlelancer.seriesguide.provider.SgEpisode2Helper#countNotWatchedEpisodesOfShow(long, long)}.
      */
     public static int getUnwatchedEpisodesOfShow(Context context, String showId) {
         if (context == null) {
@@ -231,27 +232,6 @@ public class DBUtils {
                 new String[]{
                         String.valueOf(TimeTools.getCurrentTime(context))
                 }, UNKNOWN_UNWATCHED_COUNT);
-    }
-
-    /**
-     * Returns how many episodes of a show are left to collect. Only considers regular, released
-     * episodes (no specials, must have a release date in the past).
-     */
-    public static int getUncollectedEpisodesOfShow(Context context, String showId) {
-        if (context == null) {
-            return UNKNOWN_COLLECTED_COUNT;
-        }
-
-        // not collected, no special, previously released episodes
-        return getCountOf(context.getContentResolver(), Episodes.buildEpisodesOfShowUri(showId),
-                Episodes.SELECTION_NOT_COLLECTED
-                        + " AND " + Episodes.SELECTION_NO_SPECIALS
-                        + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
-                        + " AND " + Episodes.SELECTION_RELEASED_BEFORE_X,
-                new String[]{
-                        String.valueOf(TimeTools.getCurrentTime(context))
-                },
-                UNKNOWN_COLLECTED_COUNT);
     }
 
     public static int getCountOf(@NonNull ContentResolver resolver, @NonNull Uri uri,

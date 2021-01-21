@@ -2,7 +2,8 @@ package com.battlelancer.seriesguide.ui.overview
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,22 +26,23 @@ class RemainingCountLiveData(
             val uncollectedEpisodes: Int
     )
 
-    fun load(showTvdbId: Int) {
-        if (showTvdbId > 0) {
+    fun load(showRowId: Long) {
+        if (showRowId > 0) {
             scope.launch(Dispatchers.IO) {
                 // Use Semaphore with 1 permit to only run one calculation at a time and to
                 // guarantee results are delivered in order.
                 semaphore.withPermit {
-                    calcRemainingCounts(showTvdbId)
+                    calcRemainingCounts(showRowId)
                 }
             }
         }
     }
 
-    private suspend fun calcRemainingCounts(showTvdbId: Int) = withContext(Dispatchers.IO) {
-        val showTvdbIdStr = showTvdbId.toString()
-        val unwatchedEpisodes = DBUtils.getUnwatchedEpisodesOfShow(context, showTvdbIdStr)
-        val uncollectedEpisodes = DBUtils.getUncollectedEpisodesOfShow(context, showTvdbIdStr)
+    private suspend fun calcRemainingCounts(showRowId: Long) = withContext(Dispatchers.IO) {
+        val helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+        val currentTime = TimeTools.getCurrentTime(context)
+        val unwatchedEpisodes = helper.countNotWatchedEpisodesOfShow(showRowId, currentTime)
+        val uncollectedEpisodes = helper.countNotCollectedEpisodesOfShow(showRowId, currentTime)
         postValue(Result(unwatchedEpisodes, uncollectedEpisodes))
     }
 
