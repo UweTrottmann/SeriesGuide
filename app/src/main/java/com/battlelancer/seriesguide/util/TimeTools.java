@@ -66,7 +66,7 @@ public class TimeTools {
      *
      * Note: this may seem harsh, but is equal to how to be released are calculated for seasons.
      *
-     * @see DBUtils#updateUnwatchedCount
+     * @see com.battlelancer.seriesguide.ui.overview.UnwatchedUpdateWorker
      */
     public static boolean isReleased(Date actualRelease) {
         return actualRelease.before(new Date(System.currentTimeMillis()));

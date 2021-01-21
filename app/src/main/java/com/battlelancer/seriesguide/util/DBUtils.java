@@ -21,7 +21,6 @@ import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.enums.SeasonTags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
@@ -122,66 +121,6 @@ public class DBUtils {
 
         String AIRED_SELECTION_NO_SPECIALS = AIRED_SELECTION
                 + " AND " + Episodes.SELECTION_NO_SPECIALS;
-
-        String FUTURE_SELECTION = Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIREDMS
-                + ">?";
-
-        String NOAIRDATE_SELECTION = Episodes.WATCHED + "=0 AND "
-                + Episodes.FIRSTAIREDMS + "=-1";
-
-        String SKIPPED_SELECTION = Episodes.WATCHED + "=" + EpisodeFlags.SKIPPED;
-    }
-
-    /**
-     * Looks up the episodes of a given season and stores the count of all, unwatched and skipped
-     * ones in the seasons watch counters.
-     */
-    public static void updateUnwatchedCount(Context context, int seasonTvdbId) {
-        final ContentResolver resolver = context.getContentResolver();
-        final Uri uri = Episodes.buildEpisodesOfSeasonUri(seasonTvdbId);
-
-        // all a seasons episodes
-        final int totalCount = getCountOf(resolver, uri, null, null, -1);
-        if (totalCount == -1) {
-            return;
-        }
-
-        // unwatched, aired episodes
-        String[] customCurrentTimeArgs = {String.valueOf(TimeTools.getCurrentTime(context))};
-        final int count = getCountOf(resolver, uri, UnwatchedQuery.AIRED_SELECTION,
-                customCurrentTimeArgs, -1);
-        if (count == -1) {
-            return;
-        }
-
-        // unwatched, aired in the future episodes
-        final int unairedCount = getCountOf(resolver, uri, UnwatchedQuery.FUTURE_SELECTION,
-                customCurrentTimeArgs, -1);
-        if (unairedCount == -1) {
-            return;
-        }
-
-        // unwatched, no airdate
-        final int noAirDateCount = getCountOf(resolver, uri,
-                UnwatchedQuery.NOAIRDATE_SELECTION, null, -1);
-        if (noAirDateCount == -1) {
-            return;
-        }
-
-        // any skipped episodes
-        int skippedCount = getCountOf(resolver, uri, UnwatchedQuery.SKIPPED_SELECTION, null,
-                -1);
-        if (skippedCount == -1) {
-            return;
-        }
-
-        final ContentValues update = new ContentValues();
-        update.put(Seasons.WATCHCOUNT, count);
-        update.put(Seasons.UNAIREDCOUNT, unairedCount);
-        update.put(Seasons.NOAIRDATECOUNT, noAirDateCount);
-        update.put(Seasons.TAGS, skippedCount > 0 ? SeasonTags.SKIPPED : SeasonTags.NONE);
-        update.put(Seasons.TOTALCOUNT, totalCount);
-        resolver.update(Seasons.buildSeasonUri(seasonTvdbId), update, null, null);
     }
 
     /**
@@ -190,7 +129,7 @@ public class DBUtils {
      *
      * @return {@link #UNKNOWN_UNWATCHED_COUNT} if the number is unknown or failed to be determined.
      *
-     * This should match the results of {@link #updateUnwatchedCount}.
+     * This should match the results of {@link com.battlelancer.seriesguide.provider.SgEpisode2Helper#countNotWatchedReleasedEpisodesOfSeason(long, long)}.
      */
     public static int getUnwatchedEpisodesOfSeason(@NonNull Context context, int seasonTvdbId) {
         return getCountOf(context.getContentResolver(),
