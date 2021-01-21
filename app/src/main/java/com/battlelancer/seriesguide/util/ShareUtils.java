@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 public class ShareUtils {
 
     public static void shareEpisode(Activity activity, @Nullable String showTvdbSlug,
-            int showTvdbId, int seasonTvdbId, int episodeTvdbId, int seasonNumber,
+            int showTvdbId, @Nullable Integer seasonTvdbId, int episodeTvdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
         String message = showTitle + " - " + TextTools.getNextEpisodeString(activity, seasonNumber,
                 episodeNumber, episodeTitle) + " "
