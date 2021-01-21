@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
@@ -290,21 +291,11 @@ public class DBUtils {
     }
 
     /**
-     * Queries the show table for the given TVDb id and returns whether there are entries, e.g. the
-     * show is already in the database.
+     * Queries the show table for the given TVDb id and returns whether there is an entry,
+     * e.g. the show is already in the database.
      */
     public static boolean isShowExists(Context context, int showTvdbId) {
-        Cursor testsearch = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
-                new String[]{
-                        Shows._ID
-                }, null, null, null
-        );
-        if (testsearch == null) {
-            return false;
-        }
-        boolean isShowExists = testsearch.getCount() != 0;
-        testsearch.close();
-        return isShowExists;
+        return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowId(showTvdbId) != 0;
     }
 
     /**

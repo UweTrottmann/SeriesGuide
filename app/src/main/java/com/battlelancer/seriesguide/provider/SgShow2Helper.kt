@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.provider
 import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Dao
+import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.model.SgShow2
@@ -10,6 +11,15 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 
 @Dao
 interface SgShow2Helper {
+
+    @Query("SELECT _id FROM sg_show WHERE series_tvdb_id=:tvdbId")
+    fun getShowId(tvdbId: Long): Long
+
+    @Query("SELECT series_tvdb_id FROM sg_show WHERE _id=:id")
+    fun getShowTvdbId(id: Long): Int
+
+    @Query("SELECT series_title FROM sg_show WHERE _id=:id")
+    fun getShowTitle(id: Long): String?
 
     @RawQuery(observedEntities = [SgShow2::class])
     fun getShows(query: SupportSQLiteQuery): List<SgShow2ForLists>
