@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.battlelancer.seriesguide.R;
@@ -81,8 +82,8 @@ public class ViewTools {
      *
      * @return True if the views are visible.
      */
-    public static boolean setLabelValueOrHide(View label, TextView text, double value) {
-        if (value > 0.0) {
+    public static boolean setLabelValueOrHide(View label, TextView text, @Nullable Double value) {
+        if (value != null && value > 0.0) {
             label.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
             text.setText(String.valueOf(value));
