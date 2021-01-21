@@ -2,9 +2,11 @@ package com.battlelancer.seriesguide.tmdbapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
+import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
@@ -82,5 +84,33 @@ class TmdbTools2 {
             }
         }
     }
+
+    suspend fun loadCreditsForShow(context: Context, showRowId: Long): Credits? =
+        withContext(Dispatchers.IO) {
+            // Get TMDB id from database, or look up via legacy TVDB id.
+            val showIds = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIds(showRowId)
+                ?: return@withContext null
+            val tmdbId = showIds.tmdbId
+                ?: if (showIds.tvdbId != null) {
+                    findShowTmdbId(context, showIds.tvdbId)
+                } else {
+                    null
+                } ?: return@withContext null
+
+            // get credits for that show
+            try {
+                val response = SgApp.getServicesComponent(context).tmdb().tvService()
+                    .credits(tmdbId, null)
+                    .execute()
+                if (response.isSuccessful) {
+                    return@withContext response.body()
+                } else {
+                    Errors.logAndReport("get show credits", response)
+                }
+            } catch (e: Exception) {
+                Errors.logAndReport("get show credits", e)
+            }
+            return@withContext null
+        }
 
 }

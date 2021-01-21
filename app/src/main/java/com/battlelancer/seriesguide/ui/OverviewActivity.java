@@ -34,8 +34,6 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public class OverviewActivity extends BaseMessageActivity {
 
-    public static final int SHOW_LOADER_ID = 100;
-    public static final int SHOW_CREDITS_LOADER_ID = 101;
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
     public static final int SEASONS_LOADER_ID = 105;
     private static final String EXTRA_INT_SHOW_TVDBID = "show_tvdbid";
@@ -145,7 +143,7 @@ public class OverviewActivity extends BaseMessageActivity {
     }
 
     private void setupPanes() {
-        Fragment showsFragment = ShowFragment.newInstance(showTvdbId);
+        Fragment showsFragment = new ShowFragment(showId);
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft1.replace(R.id.fragment_show, showsFragment);
@@ -170,9 +168,7 @@ public class OverviewActivity extends BaseMessageActivity {
         // setup tab strip
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
                 findViewById(R.id.tabsOverview));
-        Bundle argsShow = new Bundle();
-        argsShow.putInt(ShowFragment.ARG_SHOW_TVDBID, showTvdbId);
-        tabsAdapter.addTab(R.string.show_details, ShowFragment.class, argsShow);
+        tabsAdapter.addTab(R.string.show_details, ShowFragment.class, ShowFragment.buildArgs(showId));
 
         tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, OverviewFragment.buildArgs(showId));
 

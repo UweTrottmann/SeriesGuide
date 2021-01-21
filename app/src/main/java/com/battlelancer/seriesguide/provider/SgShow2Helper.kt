@@ -15,6 +15,9 @@ interface SgShow2Helper {
     @Query("SELECT * FROM sg_show WHERE _id=:id")
     fun getShowLiveData(id: Long): LiveData<SgShow2?>
 
+    @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show WHERE _id=:id")
+    fun getShowIds(id: Long): SgShow2Ids?
+
     @Query("SELECT _id FROM sg_show WHERE series_tvdb_id=:tvdbId")
     fun getShowId(tvdbId: Long): Long
 
@@ -31,6 +34,12 @@ interface SgShow2Helper {
     fun getShowsLiveData(query: SupportSQLiteQuery): LiveData<List<SgShow2ForLists>>
 
 }
+
+data class SgShow2Ids(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.TMDB_ID) val tmdbId: Int?,
+    @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?
+)
 
 data class SgShow2ForLists(
     @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
