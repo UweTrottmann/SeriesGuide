@@ -20,7 +20,7 @@ class ShowsAdapter(
     ListAdapter<ShowsAdapter.ShowItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     interface OnItemClickListener {
-        fun onItemClick(anchor: View, showTvdbId: Int)
+        fun onItemClick(anchor: View, showRowId: Long)
 
         fun onItemMenuClick(anchor: View, show: ShowItem)
 

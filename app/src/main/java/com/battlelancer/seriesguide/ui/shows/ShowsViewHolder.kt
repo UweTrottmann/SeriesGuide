@@ -32,8 +32,7 @@ class ShowsViewHolder(
         // item
         itemView.setOnClickListener { view ->
             showItem?.let {
-                // FIXME Use row ID
-                onItemClickListener.onItemClick(view, it.showTvdbId!!)
+                onItemClickListener.onItemClick(view, it.rowId)
             }
         }
         // set watched button

@@ -303,19 +303,19 @@ public class ShowsFragment extends Fragment {
     }
 
     // Note: do not just re-run existing query, make sure timestamps in query are updated.
-    private Runnable dataRefreshRunnable = this::updateShowsQuery;
+    private final Runnable dataRefreshRunnable = this::updateShowsQuery;
 
     private void startActivityAddShows() {
         startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
                 SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
     }
 
-    private ShowsAdapter.OnItemClickListener onItemClickListener
+    private final ShowsAdapter.OnItemClickListener onItemClickListener
             = new ShowsAdapter.OnItemClickListener() {
         @Override
-        public void onItemClick(@NotNull View anchor, int showTvdbId) {
+        public void onItemClick(@NotNull View anchor, long showRowId) {
             // display overview for this show
-            Intent intent = OverviewActivity.intentShow(requireContext(), showTvdbId);
+            Intent intent = OverviewActivity.intentShow(requireContext(), showRowId);
             ActivityCompat.startActivity(requireContext(), intent,
                     ActivityOptionsCompat
                             .makeScaleUpAnimation(anchor, 0, 0, anchor.getWidth(),
