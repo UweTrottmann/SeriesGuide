@@ -61,13 +61,14 @@ public class ShareUtils {
      * Launches a calendar insert intent for the given episode.
      */
     public static void suggestCalendarEvent(Context context, String showTitle, String episodeTitle,
-            long episodeReleaseTime, int showRunTime) {
+            long episodeReleaseTime, @Nullable Integer showRunTimeOrNull) {
         Intent intent = new Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
                 .putExtra(CalendarContract.Events.TITLE, showTitle)
                 .putExtra(CalendarContract.Events.DESCRIPTION, episodeTitle);
 
         long beginTime = TimeTools.applyUserOffset(context, episodeReleaseTime).getTime();
+        int showRunTime = showRunTimeOrNull != null ? showRunTimeOrNull : 0;
         long endTime = beginTime + showRunTime * DateUtils.MINUTE_IN_MILLIS;
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime);
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime);
