@@ -155,7 +155,7 @@ public class OverviewActivity extends BaseMessageActivity {
         ft2.replace(R.id.fragment_overview, overviewFragment);
         ft2.commit();
 
-        Fragment seasonsFragment = SeasonsFragment.newInstance(showTvdbId);
+        Fragment seasonsFragment = new SeasonsFragment(showId);
         FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
         ft3.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft3.replace(R.id.fragment_seasons, seasonsFragment);
@@ -172,9 +172,7 @@ public class OverviewActivity extends BaseMessageActivity {
 
         tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, OverviewFragment.buildArgs(showId));
 
-        Bundle argsSeason = new Bundle();
-        argsSeason.putInt(SeasonsFragment.ARG_SHOW_TVDBID, showTvdbId);
-        tabsAdapter.addTab(R.string.episodes, SeasonsFragment.class, argsSeason);
+        tabsAdapter.addTab(R.string.episodes, SeasonsFragment.class, SeasonsFragment.buildArgs(showId));
         tabsAdapter.notifyTabsChanged();
 
         // select overview to be shown initially

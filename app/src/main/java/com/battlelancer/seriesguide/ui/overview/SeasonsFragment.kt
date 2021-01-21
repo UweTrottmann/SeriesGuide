@@ -17,6 +17,7 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +32,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -46,7 +48,11 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Displays a list of seasons of one show.
  */
-class SeasonsFragment : Fragment() {
+class SeasonsFragment() : Fragment() {
+
+    constructor(showId: Long) : this() {
+        arguments = buildArgs(showId)
+    }
 
     @BindView(R.id.listViewSeasons)
     lateinit var listViewSeasons: ListView
@@ -63,14 +69,17 @@ class SeasonsFragment : Fragment() {
     private var watchedAllEpisodes: Boolean = false
     private var collectedAllEpisodes: Boolean = false
 
-    private var showId: Int = 0
+    private var showId: Long = 0
+    private var showTvdbId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.run {
-            showId = getInt(ARG_SHOW_TVDBID)
+            showId = getLong(ARG_LONG_SHOW_ROW_ID)
         } ?: throw IllegalArgumentException("Missing arguments")
+        showTvdbId =
+            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowTvdbId(showId)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -114,7 +123,7 @@ class SeasonsFragment : Fragment() {
         super.onStart()
 
         updateUnwatchedCounts()
-        model.remainingCountData.load(showId)
+        model.remainingCountData.load(showTvdbId)
 
         EventBus.getDefault().register(this)
     }
@@ -176,12 +185,12 @@ class SeasonsFragment : Fragment() {
         if (!isAdded) {
             return  // no longer added to activity
         }
-        model.remainingCountData.load(showId)
+        model.remainingCountData.load(showTvdbId)
         if (event.flagJob is SeasonWatchedJob) {
             // If we can narrow it down to just one season...
             UnwatchedUpdateWorker.updateUnwatchedCountFor(
                 requireContext(),
-                showId,
+                showTvdbId,
                 event.flagJob.seasonTvdbId
             )
         } else {
@@ -190,7 +199,7 @@ class SeasonsFragment : Fragment() {
     }
 
     private fun onFlagSeasonSkipped(seasonId: Long, seasonNumber: Int) {
-        EpisodeTools.seasonWatched(context, showId, seasonId.toInt(),
+        EpisodeTools.seasonWatched(context, showTvdbId, seasonId.toInt(),
                 seasonNumber, EpisodeFlags.SKIPPED)
     }
 
@@ -198,7 +207,7 @@ class SeasonsFragment : Fragment() {
      * Changes the seasons episodes watched flags, updates the status label of the season.
      */
     private fun onFlagSeasonWatched(seasonId: Long, seasonNumber: Int, isWatched: Boolean) {
-        EpisodeTools.seasonWatched(context, showId, seasonId.toInt(),
+        EpisodeTools.seasonWatched(context, showTvdbId, seasonId.toInt(),
                 seasonNumber, if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED)
     }
 
@@ -206,7 +215,7 @@ class SeasonsFragment : Fragment() {
      * Changes the seasons episodes collected flags.
      */
     private fun onFlagSeasonCollected(seasonId: Long, seasonNumber: Int, isCollected: Boolean) {
-        EpisodeTools.seasonCollected(context, showId, seasonId.toInt(), seasonNumber, isCollected)
+        EpisodeTools.seasonCollected(context, showTvdbId, seasonId.toInt(), seasonNumber, isCollected)
     }
 
     /**
@@ -214,7 +223,7 @@ class SeasonsFragment : Fragment() {
      * seasons.
      */
     private fun onFlagShowWatched(isWatched: Boolean) {
-        EpisodeTools.showWatched(context, showId, isWatched)
+        EpisodeTools.showWatched(context, showTvdbId, isWatched)
     }
 
     /**
@@ -222,7 +231,7 @@ class SeasonsFragment : Fragment() {
      * all seasons.
      */
     private fun onFlagShowCollected(isCollected: Boolean) {
-        EpisodeTools.showCollected(context, showId, isCollected)
+        EpisodeTools.showCollected(context, showTvdbId, isCollected)
     }
 
     /**
@@ -230,7 +239,7 @@ class SeasonsFragment : Fragment() {
      * notifies provider causing the loader to reload.
      */
     private fun updateUnwatchedCounts() {
-        UnwatchedUpdateWorker.updateUnwatchedCountFor(requireContext(), showId)
+        UnwatchedUpdateWorker.updateUnwatchedCountFor(requireContext(), showTvdbId)
     }
 
     private fun handleRemainingCountUpdate(result: RemainingCountLiveData.Result?) {
@@ -347,7 +356,7 @@ class SeasonsFragment : Fragment() {
             val sortOrder = DisplaySettings.getSeasonSortOrder(activity)
             // can use SELECTION_WITH_EPISODES as count is updated when this fragment runs
             return CursorLoader(requireActivity(),
-                    Seasons.buildSeasonsOfShowUri(showId.toString()),
+                    Seasons.buildSeasonsOfShowUri(showTvdbId.toString()),
                     SeasonsAdapter.SeasonsQuery.PROJECTION,
                     Seasons.SELECTION_WITH_EPISODES, null, sortOrder.query())
         }
@@ -408,7 +417,7 @@ class SeasonsFragment : Fragment() {
     companion object {
 
         /** Value is integer */
-        const val ARG_SHOW_TVDBID = "show_tvdbid"
+        private const val ARG_LONG_SHOW_ROW_ID = "show_id"
 
         private const val CONTEXT_WATCHED_SHOW_ALL_ID = 0
         private const val CONTEXT_WATCHED_SHOW_NONE_ID = 1
@@ -416,14 +425,8 @@ class SeasonsFragment : Fragment() {
         private const val CONTEXT_COLLECTED_SHOW_NONE_ID = 3
 
         @JvmStatic
-        fun newInstance(showId: Int): SeasonsFragment {
-            val f = SeasonsFragment()
-
-            val args = Bundle()
-            args.putInt(ARG_SHOW_TVDBID, showId)
-            f.arguments = args
-
-            return f
+        fun buildArgs(showId: Long): Bundle {
+            return bundleOf(ARG_LONG_SHOW_ROW_ID to showId)
         }
     }
 }
