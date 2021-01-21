@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.provider
 
 import android.content.Context
 import android.text.format.DateUtils
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.ColumnInfo
 import androidx.room.Dao
@@ -17,6 +18,9 @@ import com.battlelancer.seriesguide.util.TimeTools
 
 @Dao
 interface SgEpisode2Helper {
+
+    @Query("SELECT * FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
+    fun getEpisodeLiveData(tvdbId: Int): LiveData<SgEpisode2?>
 
     /**
      * WAIT, just used for compile time validation of [SgEpisode2WithShow.SELECT].

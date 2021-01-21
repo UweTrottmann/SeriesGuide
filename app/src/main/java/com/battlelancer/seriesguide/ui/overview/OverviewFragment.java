@@ -1,9 +1,7 @@
 package com.battlelancer.seriesguide.ui.overview;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,10 +37,9 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract;
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
+import com.battlelancer.seriesguide.model.SgEpisode2;
 import com.battlelancer.seriesguide.model.SgShow2;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -68,7 +64,6 @@ import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.ClipboardTools;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -92,8 +87,7 @@ import timber.log.Timber;
  * Displays general information about a show and its next episode.
  */
 @SuppressLint("NonConstantResourceId")
-public class OverviewFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, EpisodeActionsContract {
+public class OverviewFragment extends Fragment implements EpisodeActionsContract {
 
     private static final String ARG_LONG_SHOW_ROWID = "show_id";
     private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
@@ -158,13 +152,10 @@ public class OverviewFragment extends Fragment implements
     private Job ratingFetchJob;
     private Unbinder unbinder;
 
-    private boolean isEpisodeDataAvailable;
-    private Cursor currentEpisodeCursor;
-    private int currentEpisodeTvdbId;
-
     private long showId;
     private int showTvdbId;
     @Nullable private SgShow2 show;
+    @Nullable private SgEpisode2 episode;
 
     private boolean hasSetEpisodeWatched;
 
@@ -204,14 +195,13 @@ public class OverviewFragment extends Fragment implements
         containerEpisode.setVisibility(View.GONE);
         containerEpisodeEmpty.setVisibility(View.GONE);
 
-        containerEpisodePrimary.setOnClickListener(viewContainer -> {
-            if (isEpisodeDataAvailable) {
-                // display episode details
-                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
-                intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, currentEpisodeTvdbId);
-                Utils.startActivityWithAnimation(getActivity(), intent, viewContainer);
-            }
-        });
+        containerEpisodePrimary.setOnClickListener(
+                v -> runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+                    // display episode details
+                    Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                    intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeTvdbId);
+                    Utils.startActivityWithAnimation(getActivity(), intent, v);
+                }));
 
         // Empty view buttons.
         buttonSimilarShows.setOnClickListener(v -> {
@@ -237,16 +227,12 @@ public class OverviewFragment extends Fragment implements
 
         buttonShare.setOnClickListener(v -> shareEpisode());
         buttonAddToCalendar.setOnClickListener(v -> createCalendarEvent());
-        buttonManageLists.setOnClickListener(v -> {
-                    if (isEpisodeDataAvailable) {
-                        ManageListsDialogFragment.show(
-                                getParentFragmentManager(),
-                                currentEpisodeCursor.getInt(EpisodeQuery._ID),
-                                ListItemTypes.EPISODE
-                        );
-                    }
-                }
-        );
+        buttonManageLists.setOnClickListener(v -> runIfEpisodeHasTvdbId(
+                (episode1, episodeTvdbId) -> ManageListsDialogFragment.show(
+                        getParentFragmentManager(),
+                        episodeTvdbId,
+                        ListItemTypes.EPISODE
+                )));
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textDescription);
@@ -263,16 +249,19 @@ public class OverviewFragment extends Fragment implements
         containerShow.setVisibility(isDisplayShowInfo ? View.VISIBLE : View.GONE);
 
         OverviewViewModel model = new ViewModelProvider(this).get(OverviewViewModel.class);
-        model.setShowId(showId);
+        model.setShowId(showId, showTvdbId);
         model.getShow().observe(getViewLifecycleOwner(), sgShow2 -> {
             if (sgShow2 != null) {
                 show = sgShow2;
                 populateShowViews(sgShow2);
             }
         });
-
-        LoaderManager loaderManager = LoaderManager.getInstance(this);
-        loaderManager.initLoader(OverviewActivity.OVERVIEW_EPISODE_LOADER_ID, null, this);
+        model.getEpisode().observe(getViewLifecycleOwner(), sgEpisode2 -> {
+            // May be null if there is no next episode.
+            episode = sgEpisode2;
+            maybeAddFeedbackView();
+            updateEpisodeViews(sgEpisode2);
+        });
     }
 
     @Override
@@ -318,20 +307,19 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void createCalendarEvent() {
-        if (show == null || !isEpisodeDataAvailable) {
+        SgShow2 currentShow = this.show;
+        SgEpisode2 currentEpisode = this.episode;
+        if (currentShow == null || currentEpisode == null) {
             return;
         }
-        final int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
-        final int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        final String episodeTitle = currentEpisodeCursor.getString(EpisodeQuery.TITLE);
         // add calendar event
         ShareUtils.suggestCalendarEvent(
                 getActivity(),
-                show.getTitle(),
-                TextTools.getNextEpisodeString(getActivity(), seasonNumber, episodeNumber,
-                        episodeTitle),
-                currentEpisodeCursor.getLong(EpisodeQuery.FIRST_RELEASE_MS),
-                show.getRuntime()
+                currentShow.getTitle(),
+                TextTools.getNextEpisodeString(getActivity(), currentEpisode.getSeason(),
+                        currentEpisode.getNumber(), currentEpisode.getTitle()),
+                currentEpisode.getFirstReleasedMs(),
+                currentShow.getRuntime()
         );
     }
 
@@ -349,12 +337,8 @@ public class OverviewFragment extends Fragment implements
 
     @OnClick(R.id.buttonEpisodeCheckin)
     void onButtonCheckInClick() {
-        if (!isEpisodeDataAvailable) {
-            return;
-        }
-        int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
-        // check in
-        CheckInDialogFragment.show(requireContext(), getParentFragmentManager(), episodeTvdbId);
+        runIfEpisodeHasTvdbId((episode1, episodeTvdbId) -> CheckInDialogFragment
+                .show(requireContext(), getParentFragmentManager(), episodeTvdbId));
     }
 
     @OnClick(R.id.buttonEpisodeStreamingSearch)
@@ -396,14 +380,12 @@ public class OverviewFragment extends Fragment implements
 
     @OnClick(R.id.buttonEpisodeCollected)
     void onButtonCollectedClick() {
-        if (!isEpisodeDataAvailable) {
-            return;
-        }
-        final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
-        final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        final boolean isCollected = currentEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1;
-        EpisodeTools.episodeCollected(getContext(), showTvdbId,
-                currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, !isCollected);
+        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+            final boolean isCollected = episode.getCollected();
+            EpisodeTools
+                    .episodeCollected(getContext(), showTvdbId, episodeTvdbId, episode.getSeason(),
+                            episode.getNumber(), !isCollected);
+        });
     }
 
     @OnClick(R.id.buttonEpisodeSkip)
@@ -412,145 +394,49 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
-        if (!isEpisodeDataAvailable) {
-            return;
-        }
-        final int season = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
-        final int episode = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        EpisodeTools.episodeWatched(getContext(), showTvdbId,
-                currentEpisodeCursor.getInt(EpisodeQuery._ID), season, episode, episodeFlag);
+        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> EpisodeTools
+                .episodeWatched(getContext(), showTvdbId, episodeTvdbId, episode.getSeason(),
+                        episode.getNumber(), episodeFlag));
     }
 
     @OnClick(R.id.containerRatings)
     void onButtonRateClick() {
-        if (currentEpisodeTvdbId == 0) {
-            return;
-        }
-        RateDialogFragment.newInstanceEpisode(currentEpisodeTvdbId)
-                .safeShow(getContext(), getParentFragmentManager());
+        runIfEpisodeHasTvdbId(
+                (episode, episodeTvdbId) -> RateDialogFragment.newInstanceEpisode(episodeTvdbId)
+                        .safeShow(getContext(), getParentFragmentManager()));
     }
 
     @OnClick(R.id.buttonEpisodeComments)
     void onButtonCommentsClick(View v) {
-        if (isEpisodeDataAvailable) {
+        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
             Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
             i.putExtras(TraktCommentsActivity.createInitBundleEpisode(
-                    currentEpisodeCursor.getString(EpisodeQuery.TITLE),
-                    currentEpisodeTvdbId
+                    episode.getTitle(),
+                    episodeTvdbId
             ));
             Utils.startActivityWithAnimation(getActivity(), i, v);
-        }
+        });
     }
 
     private void shareEpisode() {
-        if (show == null || !isEpisodeDataAvailable) {
+        SgShow2 currentShow = this.show;
+        if (currentShow == null) {
             return;
         }
-        int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
-        int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
-        int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-        String episodeTitle = currentEpisodeCursor.getString(EpisodeQuery.TITLE);
-
-        ShareUtils.shareEpisode(getActivity(), show.getSlug(), showTvdbId, seasonTvdbId,
-                currentEpisodeTvdbId, seasonNumber, episodeNumber, show.getTitle(), episodeTitle);
-    }
-
-    public static class EpisodeLoader extends CursorLoader {
-
-        private int showTvdbId;
-
-        public EpisodeLoader(Context context, int showTvdbId) {
-            super(context);
-            this.showTvdbId = showTvdbId;
-            setProjection(EpisodeQuery.PROJECTION);
-        }
-
-        @Override
-        public Cursor loadInBackground() {
-            // get episode id, set query params
-            int episodeId = (int) DBUtils.updateLatestEpisode(getContext(), showTvdbId);
-            setUri(Episodes.buildEpisodeUri(episodeId));
-
-            return super.loadInBackground();
-        }
-    }
-
-    interface EpisodeQuery {
-
-        String[] PROJECTION = new String[]{
-                Episodes._ID,
-                Episodes.NUMBER,
-                Episodes.ABSOLUTE_NUMBER,
-                Episodes.DVDNUMBER,
-                Episodes.SEASON,
-                Seasons.REF_SEASON_ID,
-                Episodes.IMDBID,
-                Episodes.TITLE,
-                Episodes.OVERVIEW,
-                Episodes.FIRSTAIREDMS,
-                Episodes.GUESTSTARS,
-                Episodes.RATING_GLOBAL,
-                Episodes.RATING_VOTES,
-                Episodes.RATING_USER,
-                Episodes.WATCHED,
-                Episodes.COLLECTED,
-                Episodes.IMAGE,
-                Episodes.LAST_EDITED,
-        };
-
-        int _ID = 0;
-        int NUMBER = 1;
-        int ABSOLUTE_NUMBER = 2;
-        int DVD_NUMBER = 3;
-        int SEASON = 4;
-        int SEASON_ID = 5;
-        int IMDBID = 6;
-        int TITLE = 7;
-        int OVERVIEW = 8;
-        int FIRST_RELEASE_MS = 9;
-        int GUESTSTARS = 10;
-        int RATING_GLOBAL = 11;
-        int RATING_VOTES = 12;
-        int RATING_USER = 13;
-        int WATCHED = 14;
-        int COLLECTED = 15;
-        int IMAGE = 16;
-        int LAST_EDITED = 17;
-    }
-
-    @NonNull
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new EpisodeLoader(getActivity(), showTvdbId);
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        if (!isAdded()) {
-            return;
-        }
-        if (loader.getId() == OverviewActivity.OVERVIEW_EPISODE_LOADER_ID) {
-            isEpisodeDataAvailable = data != null && data.moveToFirst();
-            currentEpisodeCursor = data;
-            maybeAddFeedbackView();
-            updateEpisodeViews(data);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        if (loader.getId() == OverviewActivity.OVERVIEW_EPISODE_LOADER_ID) {
-            isEpisodeDataAvailable = false;
-            currentEpisodeCursor = null;
-        }
+        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> ShareUtils
+                .shareEpisode(getActivity(), currentShow.getSlug(), showTvdbId, null, episodeTvdbId,
+                        episode.getSeason(), episode.getNumber(), currentShow.getTitle(),
+                        episode.getTitle()));
     }
 
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
-        if (currentEpisodeTvdbId == event.episodeTvdbId) {
-            loadEpisodeActionsDelayed();
-        }
+        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+            if (episodeTvdbId == event.episodeTvdbId) {
+                loadEpisodeActionsDelayed();
+            }
+        });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -575,11 +461,8 @@ public class OverviewFragment extends Fragment implements
         buttonStreamingSearch.setEnabled(enabled);
     }
 
-    private void updateEpisodeViews(Cursor episode) {
-        if (isEpisodeDataAvailable) {
-            // some episode properties
-            currentEpisodeTvdbId = episode.getInt(EpisodeQuery._ID);
-
+    private void updateEpisodeViews(@Nullable SgEpisode2 episode) {
+        if (episode != null) {
             // hide check-in if not connected to trakt or hexagon is enabled
             boolean isConnectedToTrakt = TraktCredentials.get(getActivity()).hasCredentials();
             boolean displayCheckIn = isConnectedToTrakt
@@ -599,7 +482,7 @@ public class OverviewFragment extends Fragment implements
 
             // load full info and ratings, image, actions
             loadEpisodeDetails();
-            loadEpisodeImage(episode.getString(EpisodeQuery.IMAGE));
+            loadEpisodeImage(episode.getImage());
             loadEpisodeActionsDelayed();
 
             containerEpisodeEmpty.setVisibility(View.GONE);
@@ -607,8 +490,6 @@ public class OverviewFragment extends Fragment implements
             containerEpisodeMeta.setVisibility(View.VISIBLE);
         } else {
             // No next episode: display empty view with suggestion on what to do.
-            currentEpisodeTvdbId = 0;
-
             containerEpisodeEmpty.setVisibility(View.VISIBLE);
             containerEpisodePrimary.setVisibility(View.GONE);
             containerEpisodeMeta.setVisibility(View.GONE);
@@ -625,13 +506,12 @@ public class OverviewFragment extends Fragment implements
         }
     }
 
-    private void populateEpisodeViews(Cursor episode) {
+    private void populateEpisodeViews(@NonNull SgEpisode2 episode) {
         // title
-        int season = episode.getInt(EpisodeQuery.SEASON);
-        int number = episode.getInt(EpisodeQuery.NUMBER);
+        int season = episode.getSeason();
+        int number = episode.getNumber();
         final String title = TextTools.getEpisodeTitle(getContext(),
-                DisplaySettings.preventSpoilers(getContext())
-                        ? null : episode.getString(EpisodeQuery.TITLE), number);
+                DisplaySettings.preventSpoilers(getContext()) ? null : episode.getTitle(), number);
         textEpisodeTitle.setText(title);
 
         // number
@@ -639,20 +519,21 @@ public class OverviewFragment extends Fragment implements
         infoText.append(getString(R.string.season_number, season));
         infoText.append(" ");
         infoText.append(getString(R.string.episode_number, number));
-        int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
-        if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
+        Integer episodeAbsoluteNumber = episode.getAbsoluteNumber();
+        if (episodeAbsoluteNumber != null
+                && episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
             infoText.append(" (").append(episodeAbsoluteNumber).append(")");
         }
         textEpisodeNumbers.setText(infoText);
 
         // air date
-        long releaseTime = episode.getLong(EpisodeQuery.FIRST_RELEASE_MS);
+        long releaseTime = episode.getFirstReleasedMs();
         if (releaseTime != -1) {
             Date actualRelease = TimeTools.applyUserOffset(getContext(), releaseTime);
             // "Oct 31 (Fri)" or "in 14 mins (Fri)"
             String dateTime;
             if (DisplaySettings.isDisplayExactDate(getContext())) {
-                dateTime = TimeTools.formatToLocalDateShort(getContext(), actualRelease);
+                dateTime = TimeTools.formatToLocalDateShort(requireContext(), actualRelease);
             } else {
                 dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
             }
@@ -663,7 +544,7 @@ public class OverviewFragment extends Fragment implements
         }
 
         // collected button
-        boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
+        boolean isCollected = episode.getCollected();
         if (isCollected) {
             ViewTools.setVectorDrawableTop(buttonCollect, R.drawable.ic_collected_24dp);
         } else {
@@ -676,25 +557,24 @@ public class OverviewFragment extends Fragment implements
 
         // dvd number
         boolean isShowingMeta = ViewTools.setLabelValueOrHide(labelDvdNumber, textDvdNumber,
-                episode.getDouble(EpisodeQuery.DVD_NUMBER));
+                episode.getDvdNumber());
         // guest stars
         isShowingMeta |= ViewTools.setLabelValueOrHide(labelGuestStars, textGuestStars,
-                TextTools.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
+                TextTools.splitAndKitTVDBStrings(episode.getGuestStars()));
         // hide divider if no meta is visible
         dividerEpisodeMeta.setVisibility(isShowingMeta ? View.VISIBLE : View.GONE);
 
         // trakt rating
-        textRating.setText(
-                TraktTools.buildRatingString(episode.getDouble(EpisodeQuery.RATING_GLOBAL)));
+        textRating.setText(TraktTools.buildRatingString(episode.getRatingGlobal()));
         textRatingVotes.setText(TraktTools.buildRatingVotesString(getActivity(),
-                episode.getInt(EpisodeQuery.RATING_VOTES)));
+                episode.getRatingVotes()));
 
         // user rating
         textUserRating.setText(TraktTools.buildUserRatingString(getActivity(),
-                episode.getInt(EpisodeQuery.RATING_USER)));
+                episode.getRatingUser()));
 
         // IMDb button
-        String imdbId = episode.getString(EpisodeQuery.IMDBID);
+        String imdbId = episode.getImdbId();
         if (TextUtils.isEmpty(imdbId) && show != null) {
             // fall back to show IMDb id
             imdbId = show.getImdbId();
@@ -702,20 +582,22 @@ public class OverviewFragment extends Fragment implements
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb);
 
         // trakt button
-        String traktLink = TraktTools.buildEpisodeUrl(currentEpisodeTvdbId);
-        ViewTools.openUriOnClick(buttonTrakt, traktLink);
-        ClipboardTools.copyTextToClipboardOnLongClick(buttonTrakt, traktLink);
+        if (episode.getTvdbId() != null) {
+            String traktLink = TraktTools.buildEpisodeUrl(episode.getTvdbId());
+            ViewTools.openUriOnClick(buttonTrakt, traktLink);
+            ClipboardTools.copyTextToClipboardOnLongClick(buttonTrakt, traktLink);
+        }
     }
 
     /**
      * Updates the episode description and TVDB button. Need both show and episode data loaded.
      */
     private void populateEpisodeDescriptionAndTvdbButton() {
-        if (show == null || !isEpisodeDataAvailable) {
+        if (show == null || episode == null) {
             // no show or episode data available
             return;
         }
-        String overview = currentEpisodeCursor.getString(EpisodeQuery.OVERVIEW);
+        String overview = episode.getOverview();
         String languageCode = show.getLanguage();
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
@@ -725,30 +607,30 @@ public class OverviewFragment extends Fragment implements
         } else if (DisplaySettings.preventSpoilers(getContext())) {
             overview = getString(R.string.no_spoilers);
         }
-        long lastEditSeconds = currentEpisodeCursor.getLong(EpisodeQuery.LAST_EDITED);
+        long lastEditSeconds = episode.getLastEditedSec();
         textDescription.setText(TextTools.textWithTvdbSource(textDescription.getContext(),
                 overview, lastEditSeconds));
 
         // TVDb button
-        final int episodeTvdbId = currentEpisodeCursor.getInt(EpisodeQuery._ID);
-        final int seasonTvdbId = currentEpisodeCursor.getInt(EpisodeQuery.SEASON_ID);
-        String tvdbLink = TvdbLinks
-                .episode(show.getSlug(), showTvdbId, seasonTvdbId, episodeTvdbId);
-        ViewTools.openUriOnClick(buttonTvdb, tvdbLink);
-        ClipboardTools.copyTextToClipboardOnLongClick(buttonTvdb, tvdbLink);
+        final Integer episodeTvdbId = episode.getTvdbId();
+        if (episodeTvdbId != null) {
+            String tvdbLink = TvdbLinks
+                    .episode(show.getSlug(), showTvdbId, null, episodeTvdbId);
+            ViewTools.openUriOnClick(buttonTvdb, tvdbLink);
+            ClipboardTools.copyTextToClipboardOnLongClick(buttonTvdb, tvdbLink);
+        }
     }
 
     @Override
     public void loadEpisodeActions() {
-        if (currentEpisodeTvdbId == 0) {
-            // do not load actions if there is no episode
-            return;
-        }
-        Bundle args = new Bundle();
-        args.putInt(ARG_EPISODE_TVDB_ID, currentEpisodeTvdbId);
-        LoaderManager.getInstance(this)
-                .restartLoader(OverviewActivity.OVERVIEW_ACTIONS_LOADER_ID, args,
-                        episodeActionsLoaderCallbacks);
+        // do not load actions if there is no episode
+        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+            Bundle args = new Bundle();
+            args.putInt(ARG_EPISODE_TVDB_ID, episodeTvdbId);
+            LoaderManager.getInstance(this)
+                    .restartLoader(OverviewActivity.OVERVIEW_ACTIONS_LOADER_ID, args,
+                            episodeActionsLoaderCallbacks);
+        });
     }
 
     Runnable episodeActionsRunnable = this::loadEpisodeActions;
@@ -791,20 +673,17 @@ public class OverviewFragment extends Fragment implements
     }
 
     private void loadEpisodeDetails() {
-        if (!isEpisodeDataAvailable) {
-            return;
-        }
-        if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
-            int seasonNumber = currentEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            int episodeNumber = currentEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
-                    requireContext(),
-                    showTvdbId,
-                    currentEpisodeTvdbId,
-                    seasonNumber,
-                    episodeNumber
-            );
-        }
+        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+            if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
+                ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
+                        requireContext(),
+                        showTvdbId,
+                        episodeTvdbId,
+                        episode.getSeason(),
+                        episode.getNumber()
+                );
+            }
+        });
     }
 
     private void populateShowViews(@NonNull SgShow2 show) {
@@ -867,6 +746,17 @@ public class OverviewFragment extends Fragment implements
 
         // episode description might need show language, so update it here as well
         populateEpisodeDescriptionAndTvdbButton();
+    }
+
+    private interface EpisodeTvdbIdBlock {
+        void run(@NonNull SgEpisode2 episode, int episodeTvdbId);
+    }
+
+    private void runIfEpisodeHasTvdbId(EpisodeTvdbIdBlock block) {
+        SgEpisode2 currentEpisode = this.episode;
+        if (currentEpisode != null && currentEpisode.getTvdbId() != null) {
+            block.run(currentEpisode, currentEpisode.getTvdbId());
+        }
     }
 
     private void maybeAddFeedbackView() {

@@ -36,7 +36,6 @@ public class OverviewActivity extends BaseMessageActivity {
 
     public static final int SHOW_LOADER_ID = 100;
     public static final int SHOW_CREDITS_LOADER_ID = 101;
-    public static final int OVERVIEW_EPISODE_LOADER_ID = 102;
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
     public static final int SEASONS_LOADER_ID = 105;
     private static final String EXTRA_INT_SHOW_TVDBID = "show_tvdbid";
