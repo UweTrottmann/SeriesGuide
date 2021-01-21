@@ -469,7 +469,7 @@ public class DBUtils {
      *
      * @return If only one show was passed, the TVDb id of the new next episode. Otherwise -1.
      */
-    public static long updateLatestEpisode(Context context, Integer showTvdbIdToUpdate) {
+    public static int updateLatestEpisode(Context context, Integer showTvdbIdToUpdate) {
         // get a list of shows and their last watched episodes
         Cursor shows;
         try {
