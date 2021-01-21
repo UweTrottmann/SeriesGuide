@@ -113,7 +113,7 @@ public class TraktTools {
      * Converts a rating index from 1 to 10 into the localized string representation. Any other
      * value will return the rate action string.
      */
-    public static String buildUserRatingString(Context context, int rating) {
+    public static String buildUserRatingString(Context context, @Nullable Integer rating) {
         int resId = getRatingStringRes(rating);
         if (resId == 0) {
             return context.getString(R.string.action_rate);
@@ -124,7 +124,10 @@ public class TraktTools {
     }
 
     @StringRes
-    private static int getRatingStringRes(int rating) {
+    private static int getRatingStringRes(@Nullable Integer rating) {
+        if (rating == null) {
+            return 0;
+        }
         switch (rating) {
             case 1:
                 return R.string.hate;
