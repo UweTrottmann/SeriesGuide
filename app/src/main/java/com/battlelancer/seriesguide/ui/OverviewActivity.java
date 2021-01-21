@@ -37,7 +37,6 @@ public class OverviewActivity extends BaseMessageActivity {
     public static final int SHOW_LOADER_ID = 100;
     public static final int SHOW_CREDITS_LOADER_ID = 101;
     public static final int OVERVIEW_EPISODE_LOADER_ID = 102;
-    public static final int OVERVIEW_SHOW_LOADER_ID = 103;
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
     public static final int SEASONS_LOADER_ID = 105;
     private static final String EXTRA_INT_SHOW_TVDBID = "show_tvdbid";
@@ -153,7 +152,7 @@ public class OverviewActivity extends BaseMessageActivity {
         ft1.replace(R.id.fragment_show, showsFragment);
         ft1.commit();
 
-        Fragment overviewFragment = OverviewFragment.newInstance(showTvdbId);
+        Fragment overviewFragment = new OverviewFragment(showId);
         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
         ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft2.replace(R.id.fragment_overview, overviewFragment);
@@ -176,9 +175,7 @@ public class OverviewActivity extends BaseMessageActivity {
         argsShow.putInt(ShowFragment.ARG_SHOW_TVDBID, showTvdbId);
         tabsAdapter.addTab(R.string.show_details, ShowFragment.class, argsShow);
 
-        Bundle argsOverview = new Bundle();
-        argsOverview.putInt(OverviewFragment.ARG_INT_SHOW_TVDBID, showTvdbId);
-        tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, argsOverview);
+        tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, OverviewFragment.buildArgs(showId));
 
         Bundle argsSeason = new Bundle();
         argsSeason.putInt(SeasonsFragment.ARG_SHOW_TVDBID, showTvdbId);

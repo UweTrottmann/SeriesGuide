@@ -12,6 +12,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 @Dao
 interface SgShow2Helper {
 
+    @Query("SELECT * FROM sg_show WHERE _id=:id")
+    fun getShowLiveData(id: Long): LiveData<SgShow2?>
+
     @Query("SELECT _id FROM sg_show WHERE series_tvdb_id=:tvdbId")
     fun getShowId(tvdbId: Long): Long
 

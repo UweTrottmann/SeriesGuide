@@ -72,4 +72,9 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.HIDDEN) val hidden: Boolean = false,
     @ColumnInfo(name = SgShow2Columns.NOTIFY) val notify: Boolean = true,
     @ColumnInfo(name = SgShow2Columns.HEXAGON_MERGE_COMPLETE) val hexagonMergeComplete: Boolean = true
-)
+) {
+    val releaseWeekDayOrDefault: Int
+        get() = releaseWeekDay ?: -1
+    val statusOrUnknown: Int
+        get() = status ?: ShowTools.Status.UNKNOWN
+}
