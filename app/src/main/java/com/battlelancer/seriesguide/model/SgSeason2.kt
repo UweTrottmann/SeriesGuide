@@ -22,12 +22,23 @@ data class SgSeason2(
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
     @ColumnInfo(name = SgSeason2Columns.TMDB_ID) val tmdbId: String?,
     @ColumnInfo(name = SgSeason2Columns.TVDB_ID) val tvdbId: Int?,
-    @ColumnInfo(name = SgSeason2Columns.COMBINED) val number: Int?,
+    @ColumnInfo(name = SgSeason2Columns.COMBINED) val numberOrNull: Int?,
     @ColumnInfo(name = SgSeason2Columns.NAME) val name: String?,
     @ColumnInfo(name = SgSeason2Columns.ORDER) val order: Int,
-    @ColumnInfo(name = SgSeason2Columns.WATCHCOUNT) val watchCount: Int? = 0,
-    @ColumnInfo(name = SgSeason2Columns.UNAIREDCOUNT) val notReleasedCount: Int? = 0,
-    @ColumnInfo(name = SgSeason2Columns.NOAIRDATECOUNT) val noReleaseDateCount: Int? = 0,
-    @ColumnInfo(name = SgSeason2Columns.TOTALCOUNT) val totalCount: Int? = 0,
+    @ColumnInfo(name = SgSeason2Columns.WATCHCOUNT) val notWatchedReleasedOrNull: Int? = 0,
+    @ColumnInfo(name = SgSeason2Columns.UNAIREDCOUNT) val notWatchedToBeReleasedOrNull: Int? = 0,
+    @ColumnInfo(name = SgSeason2Columns.NOAIRDATECOUNT) val notWatchedNoReleaseOrNull: Int? = 0,
+    @ColumnInfo(name = SgSeason2Columns.TOTALCOUNT) val totalOrNull: Int? = 0,
     @ColumnInfo(name = SgSeason2Columns.TAGS) val tags: String? = ""
-)
+) {
+    val number: Int
+        get() = numberOrNull ?: 0 // == Specials, but should ignore seasons without number.
+    val notWatchedReleased: Int
+        get() = notWatchedReleasedOrNull ?: 0
+    val notWatchedToBeReleased: Int
+        get() = notWatchedToBeReleasedOrNull ?: 0
+    val notWatchedNoRelease: Int
+        get() = notWatchedNoReleaseOrNull ?: 0
+    val total: Int
+        get() = totalOrNull ?: 0
+}

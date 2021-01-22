@@ -26,9 +26,9 @@ interface SgSeason2Helper {
 
 data class SgSeason2CountUpdate(
     @ColumnInfo(name = SgSeason2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgSeason2Columns.WATCHCOUNT) val watchCount: Int,
-    @ColumnInfo(name = SgSeason2Columns.UNAIREDCOUNT) val notReleasedCount: Int,
-    @ColumnInfo(name = SgSeason2Columns.NOAIRDATECOUNT) val noReleaseDateCount: Int,
+    @ColumnInfo(name = SgSeason2Columns.WATCHCOUNT) val notWatchedReleasedCount: Int,
+    @ColumnInfo(name = SgSeason2Columns.UNAIREDCOUNT) val notWatchedToBeReleasedCount: Int,
+    @ColumnInfo(name = SgSeason2Columns.NOAIRDATECOUNT) val notWatchedNoReleaseCount: Int,
     @ColumnInfo(name = SgSeason2Columns.TOTALCOUNT) val totalCount: Int,
     @ColumnInfo(name = SgSeason2Columns.TAGS) val tags: String
 )

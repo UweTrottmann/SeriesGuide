@@ -59,15 +59,15 @@ object UnwatchedUpdateWorker {
             SgSeason2CountUpdate(
                 seasonRowId,
                 totalCount = helper.countEpisodesOfSeason(seasonRowId),
-                watchCount = helper.countNotWatchedReleasedEpisodesOfSeason(
+                notWatchedReleasedCount = helper.countNotWatchedReleasedEpisodesOfSeason(
                     seasonRowId,
                     currentTime
                 ),
-                notReleasedCount = helper.countNotWatchedToBeReleasedEpisodesOfSeason(
+                notWatchedToBeReleasedCount = helper.countNotWatchedToBeReleasedEpisodesOfSeason(
                     seasonRowId,
                     currentTime
                 ),
-                noReleaseDateCount = helper.countNotWatchedNoReleaseEpisodesOfSeason(seasonRowId),
+                notWatchedNoReleaseCount = helper.countNotWatchedNoReleaseEpisodesOfSeason(seasonRowId),
                 tags = if (skippedCount > 0) SeasonTags.SKIPPED else SeasonTags.NONE
             )
         )
