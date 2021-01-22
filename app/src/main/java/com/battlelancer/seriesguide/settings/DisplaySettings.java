@@ -153,7 +153,7 @@ public class DisplaySettings {
 
     public static Constants.SeasonSorting getSeasonSortOrder(Context context) {
         String orderId = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SEASON_SORT_ORDER, Constants.SeasonSorting.LATEST_FIRST.value());
+                .getString(KEY_SEASON_SORT_ORDER, null);
         return Constants.SeasonSorting.fromValue(orderId);
     }
 

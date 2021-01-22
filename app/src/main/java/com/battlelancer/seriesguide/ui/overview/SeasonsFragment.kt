@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.overview
 
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,32 +9,21 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.ListView
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentSeasonsBinding
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
-import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
@@ -54,18 +42,12 @@ class SeasonsFragment() : Fragment() {
         arguments = buildArgs(showId)
     }
 
-    @BindView(R.id.listViewSeasons)
-    lateinit var listViewSeasons: ListView
-    @BindView(R.id.textViewSeasonsRemaining)
-    lateinit var textViewRemaining: TextView
-    @BindView(R.id.imageViewSeasonsCollectedToggle)
-    lateinit var buttonCollectedAll: ImageView
-    @BindView(R.id.imageViewSeasonsWatchedToggle)
-    lateinit var buttonWatchedAll: ImageView
-    private lateinit var unbinder: Unbinder
-
-    private lateinit var model: SeasonsViewModel
+    private var binding: FragmentSeasonsBinding? = null
     private lateinit var adapter: SeasonsAdapter
+    private val model by viewModels<SeasonsViewModel> {
+        SeasonsViewModelFactory(requireActivity().application, showId)
+    }
+
     private var watchedAllEpisodes: Boolean = false
     private var collectedAllEpisodes: Boolean = false
 
@@ -82,34 +64,45 @@ class SeasonsFragment() : Fragment() {
             SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowTvdbId(showId)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_seasons, container, false)
-        unbinder = ButterKnife.bind(this, view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = FragmentSeasonsBinding.inflate(inflater, container, false)
+        this.binding = binding
+        return binding.root
+    }
 
-        buttonWatchedAll.setImageResource(R.drawable.ic_watch_all_black_24dp)
-        buttonCollectedAll.setImageResource(R.drawable.ic_collect_all_black_24dp)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        listViewSeasons.onItemClickListener = listOnItemClickListener
+        adapter = SeasonsAdapter(
+            requireContext(),
+            listOnItemClickListener
+        )
 
-        return view
+        binding?.apply {
+            imageViewSeasonsWatchedToggle.setImageResource(R.drawable.ic_watch_all_black_24dp)
+            imageViewSeasonsCollectedToggle.setImageResource(R.drawable.ic_collect_all_black_24dp)
+
+            recyclerViewSeasons.also {
+                it.setHasFixedSize(true)
+                it.layoutManager = LinearLayoutManager(requireContext())
+                it.adapter = adapter
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        model = ViewModelProvider(this).get(SeasonsViewModel::class.java).also {
-            it.remainingCountData.observe(viewLifecycleOwner,
-                    Observer { result -> handleRemainingCountUpdate(result) })
+        model.seasons.observe(viewLifecycleOwner) { seasons ->
+            adapter.submitList(seasons)
         }
-
-        // populate list
-        adapter = SeasonsAdapter(activity, popupMenuClickListener).also {
-            listViewSeasons.adapter = it
+        model.remainingCountData.observe(viewLifecycleOwner) { result ->
+            handleRemainingCountUpdate(result)
         }
-        // now let's get a loader or reconnect to existing one
-        LoaderManager.getInstance(this)
-            .initLoader(OverviewActivity.SEASONS_LOADER_ID, null, seasonsLoaderCallbacks)
 
         // listen to changes to the sorting preference
         PreferenceManager.getDefaultSharedPreferences(activity).apply {
@@ -135,7 +128,7 @@ class SeasonsFragment() : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder.unbind()
+        binding = null
     }
 
     override fun onDestroy() {
@@ -162,15 +155,54 @@ class SeasonsFragment() : Fragment() {
         }
     }
 
-    private val listOnItemClickListener = AdapterView.OnItemClickListener { _, view, _, id ->
-        view?.let {
+    private val listOnItemClickListener = object : SeasonsAdapter.ItemClickListener {
+        override fun onItemClick(v: View, seasonTvdbId: Int) {
             val intent = Intent(activity, EpisodesActivity::class.java).apply {
-                putExtra(EpisodesActivity.EXTRA_SEASON_TVDBID, id.toInt())
+                putExtra(EpisodesActivity.EXTRA_SEASON_TVDBID, seasonTvdbId)
             }
             ActivityCompat.startActivity(requireActivity(), intent,
                 ActivityOptionsCompat
-                    .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
+                    .makeScaleUpAnimation(v, 0, 0, v.width, v.height)
                     .toBundle())
+        }
+
+        override fun onPopupMenuClick(v: View, seasonTvdbId: Int, seasonNumber: Int) {
+            PopupMenu(v.context, v).apply {
+                inflate(R.menu.seasons_popup_menu)
+                setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.menu_action_seasons_watched_all -> {
+                            onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, true)
+                            true
+                        }
+                        R.id.menu_action_seasons_watched_none -> {
+                            onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, false)
+                            true
+                        }
+                        R.id.menu_action_seasons_collection_add -> {
+                            onFlagSeasonCollected(seasonTvdbId.toLong(), seasonNumber, true)
+                            true
+                        }
+                        R.id.menu_action_seasons_collection_remove -> {
+                            onFlagSeasonCollected(seasonTvdbId.toLong(), seasonNumber, false)
+                            true
+                        }
+                        R.id.menu_action_seasons_skip -> {
+                            onFlagSeasonSkipped(seasonTvdbId.toLong(), seasonNumber)
+                            true
+                        }
+                        R.id.menu_action_seasons_manage_lists -> {
+                            ManageListsDialogFragment.show(
+                                parentFragmentManager,
+                                seasonTvdbId,
+                                ListItemTypes.SEASON
+                            )
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }.show()
         }
     }
 
@@ -248,10 +280,14 @@ class SeasonsFragment() : Fragment() {
         }
         val unwatched = result.unwatchedEpisodes
         if (unwatched <= 0) {
-            textViewRemaining.text = null // failed to calculate
+            binding?.textViewSeasonsRemaining?.text = null // failed to calculate
         } else {
-            textViewRemaining.text = textViewRemaining.resources
-                    .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched)
+            binding?.textViewSeasonsRemaining?.text =
+                requireContext().resources.getQuantityString(
+                    R.plurals.remaining_episodes_plural,
+                    unwatched,
+                    unwatched
+                )
         }
         setWatchedToggleState(unwatched)
         setCollectedToggleState(result.uncollectedEpisodes)
@@ -259,14 +295,14 @@ class SeasonsFragment() : Fragment() {
 
     private fun setWatchedToggleState(unwatchedEpisodes: Int) {
         watchedAllEpisodes = unwatchedEpisodes == 0
-        buttonWatchedAll.apply {
+        binding?.imageViewSeasonsWatchedToggle?.apply {
             // using vectors is safe because it will be an AppCompatImageView
-            if (watchedAllEpisodes) {
+            contentDescription = if (watchedAllEpisodes) {
                 setImageResource(R.drawable.ic_watched_all_24dp)
-                contentDescription = getString(R.string.unmark_all)
+                getString(R.string.unmark_all)
             } else {
                 setImageResource(R.drawable.ic_watch_all_black_24dp)
-                contentDescription = getString(R.string.mark_all)
+                getString(R.string.mark_all)
             }
             // set onClick listener not before here to avoid unexpected actions
             setOnClickListener(watchedAllClickListener)
@@ -297,14 +333,14 @@ class SeasonsFragment() : Fragment() {
 
     private fun setCollectedToggleState(uncollectedEpisodes: Int) {
         collectedAllEpisodes = uncollectedEpisodes == 0
-        buttonCollectedAll.apply {
+        binding?.imageViewSeasonsCollectedToggle?.apply {
             // using vectors is safe because it will be an AppCompatImageView
-            if (collectedAllEpisodes) {
+            contentDescription = if (collectedAllEpisodes) {
                 setImageResource(R.drawable.ic_collected_all_24dp)
-                contentDescription = getString(R.string.uncollect_all)
+                getString(R.string.uncollect_all)
             } else {
                 setImageResource(R.drawable.ic_collect_all_black_24dp)
-                contentDescription = getString(R.string.collect_all)
+                getString(R.string.collect_all)
             }
             // set onClick listener not before here to avoid unexpected actions
             setOnClickListener(collectedAllClickListener)
@@ -337,7 +373,7 @@ class SeasonsFragment() : Fragment() {
         val sortOrder = DisplaySettings.getSeasonSortOrder(activity)
         SingleChoiceDialogFragment.show(parentFragmentManager,
                 R.array.sesorting,
-                R.array.sesortingData, sortOrder.index(),
+                R.array.sesortingData, sortOrder.index,
                 DisplaySettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
                 "seasonSortOrderDialog")
     }
@@ -345,78 +381,12 @@ class SeasonsFragment() : Fragment() {
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
         if (DisplaySettings.KEY_SEASON_SORT_ORDER == key) {
             // reload seasons in new order
-            LoaderManager.getInstance(this)
-                .restartLoader(OverviewActivity.SEASONS_LOADER_ID, null,
-                    seasonsLoaderCallbacks)
+            model.updateOrder()
         }
-    }
-
-    private val seasonsLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Cursor> {
-        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-            val sortOrder = DisplaySettings.getSeasonSortOrder(activity)
-            // can use SELECTION_WITH_EPISODES as count is updated when this fragment runs
-            return CursorLoader(requireActivity(),
-                    Seasons.buildSeasonsOfShowUri(showTvdbId.toString()),
-                    SeasonsAdapter.SeasonsQuery.PROJECTION,
-                    Seasons.SELECTION_WITH_EPISODES, null, sortOrder.query())
-        }
-
-        override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
-            // Swap the new cursor in. (The framework will take care of closing the
-            // old cursor once we return.)
-            adapter.swapCursor(data)
-        }
-
-        override fun onLoaderReset(loader: Loader<Cursor>) {
-            // This is called when the last Cursor provided to onLoadFinished()
-            // above is about to be closed. We need to make sure we are no
-            // longer using it.
-            adapter.swapCursor(null)
-        }
-    }
-
-    private val popupMenuClickListener = SeasonsAdapter.PopupMenuClickListener { v, seasonTvdbId, seasonNumber ->
-        PopupMenu(v.context, v).apply {
-            inflate(R.menu.seasons_popup_menu)
-            setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.menu_action_seasons_watched_all -> {
-                        onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, true)
-                        true
-                    }
-                    R.id.menu_action_seasons_watched_none -> {
-                        onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, false)
-                        true
-                    }
-                    R.id.menu_action_seasons_collection_add -> {
-                        onFlagSeasonCollected(seasonTvdbId.toLong(), seasonNumber, true)
-                        true
-                    }
-                    R.id.menu_action_seasons_collection_remove -> {
-                        onFlagSeasonCollected(seasonTvdbId.toLong(), seasonNumber, false)
-                        true
-                    }
-                    R.id.menu_action_seasons_skip -> {
-                        onFlagSeasonSkipped(seasonTvdbId.toLong(), seasonNumber)
-                        true
-                    }
-                    R.id.menu_action_seasons_manage_lists -> {
-                        ManageListsDialogFragment.show(
-                            parentFragmentManager,
-                            seasonTvdbId,
-                            ListItemTypes.SEASON
-                        )
-                        true
-                    }
-                    else -> false
-                }
-            }
-        }.show()
     }
 
     companion object {
 
-        /** Value is integer */
         private const val ARG_LONG_SHOW_ROW_ID = "show_id"
 
         private const val CONTEXT_WATCHED_SHOW_ALL_ID = 0

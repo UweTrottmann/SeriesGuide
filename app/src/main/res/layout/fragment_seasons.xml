@@ -44,15 +44,15 @@
         tools:text="199 remaining" />
 
     <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
-    <ListView
-        android:id="@+id/listViewSeasons"
-        style="@style/DefaultPadding.List"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSeasons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/imageViewSeasonsWatchedToggle"
+        android:clipToPadding="false"
         android:nestedScrollingEnabled="true"
         android:paddingTop="0dp"
-        tools:ignore="UnusedAttribute"
+        android:paddingBottom="@dimen/default_padding"
         tools:listitem="@layout/item_season" />
 
 </RelativeLayout>

@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import java.util.HashMap;
 import java.util.Locale;
@@ -76,32 +76,16 @@ public class Constants {
     }
 
     public enum SeasonSorting {
-        LATEST_FIRST(0, "latestfirst", Seasons.COMBINED + " DESC"),
+        LATEST_FIRST(0, "latestfirst"),
 
-        OLDEST_FIRST(1, "oldestfirst", Seasons.COMBINED + " ASC");
+        OLDEST_FIRST(1, "oldestfirst");
 
-        private final int index;
-
+        public final int index;
         private final String value;
 
-        private final String query;
-
-        SeasonSorting(int index, String value, String query) {
+        SeasonSorting(int index, String value) {
             this.index = index;
             this.value = value;
-            this.query = query;
-        }
-
-        public int index() {
-            return index;
-        }
-
-        public String value() {
-            return value;
-        }
-
-        public String query() {
-            return query;
         }
 
         @NonNull
@@ -110,16 +94,15 @@ public class Constants {
             return this.value;
         }
 
-        private static final Map<String, SeasonSorting> STRING_MAPPING = new HashMap<>();
-
-        static {
-            for (SeasonSorting via : SeasonSorting.values()) {
-                STRING_MAPPING.put(via.toString().toUpperCase(Locale.US), via);
+        public static SeasonSorting fromValue(@Nullable String value) {
+            if (value != null) {
+                for (SeasonSorting sorting : values()) {
+                    if (sorting.value.equals(value)) {
+                        return sorting;
+                    }
+                }
             }
-        }
-
-        public static SeasonSorting fromValue(String value) {
-            return STRING_MAPPING.get(value.toUpperCase(Locale.US));
+            return LATEST_FIRST;
         }
     }
 

@@ -35,7 +35,6 @@ import org.greenrobot.eventbus.ThreadMode;
 public class OverviewActivity extends BaseMessageActivity {
 
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
-    public static final int SEASONS_LOADER_ID = 105;
     private static final String EXTRA_INT_SHOW_TVDBID = "show_tvdbid";
     private static final String EXTRA_LONG_SHOW_ROWID = "show_id";
     private static final String EXTRA_BOOLEAN_DISPLAY_SEASONS = "EXTRA_DISPLAY_SEASONS";

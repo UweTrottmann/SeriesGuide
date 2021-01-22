@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.provider
 
+import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Query
@@ -18,6 +19,18 @@ interface SgSeason2Helper {
      */
     @Query("SELECT _id FROM sg_season WHERE series_id = :showId ORDER BY season_number DESC")
     fun getSeasonIdsOfShow(showId: Long): List<Long>
+
+    /**
+     * Excludes seasons where total episode count is 0.
+     */
+    @Query("SELECT * FROM sg_season WHERE series_id = :showId AND season_totalcount != 0 ORDER BY season_number DESC")
+    fun getSeasonsOfShowLatestFirst(showId: Long): LiveData<List<SgSeason2>>
+
+    /**
+     * Excludes seasons where total episode count is 0.
+     */
+    @Query("SELECT * FROM sg_season WHERE series_id = :showId AND season_totalcount != 0 ORDER BY season_number ASC")
+    fun getSeasonsOfShowOldestFirst(showId: Long): LiveData<List<SgSeason2>>
 
     @Update(entity = SgSeason2::class)
     fun updateSeasonCounters(seasonCountUpdate: SgSeason2CountUpdate)
