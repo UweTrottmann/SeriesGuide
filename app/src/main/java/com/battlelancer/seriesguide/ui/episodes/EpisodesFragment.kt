@@ -110,8 +110,9 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         adapter = EpisodesAdapter(requireActivity(), this, this)
         listViewEpisodes.adapter = adapter
 
-        model.episodeCountLiveData.observe(viewLifecycleOwner) { result ->
-            handleCountUpdate(result)
+        model.episodeCounts.observe(viewLifecycleOwner) { result ->
+            setWatchedToggleState(result.unwatchedEpisodes)
+            setCollectedToggleState(result.uncollectedEpisodes)
         }
         model.episodes.observe(viewLifecycleOwner) { episodes ->
             adapter.setData(episodes)
@@ -126,18 +127,10 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 lastCheckedItemId = -1
             }
             // update count state every time data changes
-            model.episodeCountLiveData.load(model.seasonTvdbId)
+            model.updateCounts()
         }
 
         setHasOptionsMenu(true)
-    }
-
-    private fun handleCountUpdate(result: EpisodeCountLiveData.Result?) {
-        if (result == null) {
-            return
-        }
-        setWatchedToggleState(result.unwatchedEpisodes)
-        setCollectedToggleState(result.uncollectedEpisodes)
     }
 
     /**

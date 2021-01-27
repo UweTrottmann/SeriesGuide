@@ -91,6 +91,9 @@ interface SgEpisode2Helper {
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.SKIPPED}")
     fun countSkippedEpisodesOfSeason(seasonId: Long): Int
 
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_collected = 0")
+    fun countNotCollectedEpisodesOfSeason(seasonId: Long): Int
+
 }
 
 data class SgEpisode2WithShow(

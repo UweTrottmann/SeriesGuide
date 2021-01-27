@@ -11,13 +11,19 @@ import com.battlelancer.seriesguide.Constants.EpisodeSorting
 import com.battlelancer.seriesguide.provider.SgEpisode2Info
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class EpisodesViewModel(
     application: Application,
-    seasonId: Long
+    private val seasonId: Long
 ) : AndroidViewModel(application) {
+
+    data class Counts(
+        val unwatchedEpisodes: Int,
+        val uncollectedEpisodes: Int
+    )
 
     var seasonTvdbId: Int = 0
     var seasonNumber: Int = 0
@@ -27,7 +33,7 @@ class EpisodesViewModel(
         SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
             .getEpisodeInfoOfSeasonLiveData(SgEpisode2Info.buildQuery(seasonId, it))
     }
-    val episodeCountLiveData = EpisodeCountLiveData(application)
+    val episodeCounts = MutableLiveData<Counts>()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -43,6 +49,18 @@ class EpisodesViewModel(
 
     fun updateOrder() {
         order.value = DisplaySettings.getEpisodeSortOrder(getApplication())
+    }
+
+    fun updateCounts() = viewModelScope.launch(Dispatchers.IO) {
+        val helper = SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
+        val unwatchedEpisodes = helper.countNotWatchedReleasedEpisodesOfSeason(
+            seasonId,
+            TimeTools.getCurrentTime(getApplication())
+        )
+        val uncollectedEpisodes = helper.countNotCollectedEpisodesOfSeason(seasonId)
+        episodeCounts.postValue(
+            Counts(unwatchedEpisodes, uncollectedEpisodes)
+        )
     }
 }
 

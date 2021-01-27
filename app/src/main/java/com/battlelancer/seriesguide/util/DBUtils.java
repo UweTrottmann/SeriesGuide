@@ -50,7 +50,6 @@ public class DBUtils {
      * @see Shows#UNWATCHED_COUNT
      */
     public static final int UNKNOWN_UNWATCHED_COUNT = -1;
-    public static final int UNKNOWN_COLLECTED_COUNT = -1;
 
     private static final int SMALL_BATCH_SIZE = 50;
 
@@ -121,35 +120,6 @@ public class DBUtils {
 
         String AIRED_SELECTION_NO_SPECIALS = AIRED_SELECTION
                 + " AND " + Episodes.SELECTION_NO_SPECIALS;
-    }
-
-    /**
-     * Returns how many episodes of a season are left to watch (only aired and not watched, exclusive
-     * episodes with no air date, includes specials).
-     *
-     * @return {@link #UNKNOWN_UNWATCHED_COUNT} if the number is unknown or failed to be determined.
-     *
-     * This should match the results of {@link com.battlelancer.seriesguide.provider.SgEpisode2Helper#countNotWatchedReleasedEpisodesOfSeason(long, long)}.
-     */
-    public static int getUnwatchedEpisodesOfSeason(@NonNull Context context, int seasonTvdbId) {
-        return getCountOf(context.getContentResolver(),
-                Episodes.buildEpisodesOfSeasonUri(seasonTvdbId),
-                UnwatchedQuery.AIRED_SELECTION,
-                new String[]{String.valueOf(TimeTools.getCurrentTime(context))},
-                UNKNOWN_UNWATCHED_COUNT);
-    }
-
-    /**
-     * Returns how many episodes of a season are left to collect.
-     *
-     * @return {@link #UNKNOWN_COLLECTED_COUNT} if the number is unknown or failed to be determined.
-     */
-    public static int getUncollectedEpisodesOfSeason(@NonNull Context context, int seasonTvdbId) {
-        return getCountOf(context.getContentResolver(),
-                Episodes.buildEpisodesOfSeasonUri(seasonTvdbId),
-                Episodes.SELECTION_NOT_COLLECTED,
-                null,
-                UNKNOWN_COLLECTED_COUNT);
     }
 
     /**
