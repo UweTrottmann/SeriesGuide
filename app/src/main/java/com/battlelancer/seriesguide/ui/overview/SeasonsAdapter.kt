@@ -24,7 +24,7 @@ class SeasonsAdapter(
 ) : ListAdapter<SgSeason2, SeasonsAdapter.ViewHolder>(SgSeason2DiffCallback()) {
 
     interface ItemClickListener {
-        fun onItemClick(v: View, seasonTvdbId: Int)
+        fun onItemClick(v: View, seasonRowId: Long)
         fun onPopupMenuClick(v: View, seasonTvdbId: Int, seasonNumber: Int)
     }
 
@@ -37,10 +37,9 @@ class SeasonsAdapter(
         private var season: SgSeason2? = null
 
         init {
-            itemView.setOnClickListener {
-                val season = this.season
-                if (season?.tvdbId != null) {
-                    itemClickListener.onItemClick(it, season.tvdbId)
+            itemView.setOnClickListener { view ->
+                season?.also {
+                    itemClickListener.onItemClick(view, it.id)
                 }
             }
             binding.imageViewContextMenu.setOnClickListener {

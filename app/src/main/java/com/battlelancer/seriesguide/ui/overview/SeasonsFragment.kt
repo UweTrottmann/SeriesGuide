@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.overview
 
-import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -156,10 +155,8 @@ class SeasonsFragment() : Fragment() {
     }
 
     private val listOnItemClickListener = object : SeasonsAdapter.ItemClickListener {
-        override fun onItemClick(v: View, seasonTvdbId: Int) {
-            val intent = Intent(activity, EpisodesActivity::class.java).apply {
-                putExtra(EpisodesActivity.EXTRA_SEASON_TVDBID, seasonTvdbId)
-            }
+        override fun onItemClick(v: View, seasonRowId: Long) {
+            val intent = EpisodesActivity.intentSeason(seasonRowId, requireActivity())
             ActivityCompat.startActivity(requireActivity(), intent,
                 ActivityOptionsCompat
                     .makeScaleUpAnimation(v, 0, 0, v.width, v.height)

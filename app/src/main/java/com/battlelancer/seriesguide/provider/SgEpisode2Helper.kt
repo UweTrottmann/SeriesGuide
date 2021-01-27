@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.model.SgEpisode2
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
@@ -20,6 +21,12 @@ import com.battlelancer.seriesguide.util.TimeTools
 
 @Dao
 interface SgEpisode2Helper {
+
+    @Query("SELECT _id FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
+    fun getEpisodeId(tvdbId: Int): Long
+
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_number, episode_season_number FROM sg_episode WHERE _id = :episodeId")
+    fun getEpisodeInfo(episodeId: Long): SgEpisode2Numbers?
 
     @Query("SELECT * FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
     fun getEpisodeLiveData(tvdbId: Int): LiveData<SgEpisode2?>
@@ -41,6 +48,27 @@ interface SgEpisode2Helper {
      */
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
     fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
+
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_number, episode_season_number FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_number DESC")
+    fun getEpisodeInfoOfSeasonLatestFirst(seasonId: Long): List<SgEpisode2Numbers>
+
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_number, episode_season_number FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_number ASC")
+    fun getEpisodeInfoOfSeasonOldestFirst(seasonId: Long): List<SgEpisode2Numbers>
+
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_number, episode_season_number FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_watched ASC, episode_number ASC")
+    fun getEpisodeInfoOfSeasonNotWatchedFirst(seasonId: Long): List<SgEpisode2Numbers>
+
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_number, episode_season_number FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_title COLLATE NOCASE ASC")
+    fun getEpisodeInfoOfSeasonByTitle(seasonId: Long): List<SgEpisode2Numbers>
+
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_number, episode_season_number FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_rating COLLATE NOCASE ASC")
+    fun getEpisodeInfoOfSeasonByRating(seasonId: Long): List<SgEpisode2Numbers>
+
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_number, episode_season_number FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_dvd_number DESC, episode_number DESC")
+    fun getEpisodeInfoOfSeasonDvdLatestFirst(seasonId: Long): List<SgEpisode2Numbers>
+
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_number, episode_season_number FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_dvd_number ASC, episode_number ASC")
+    fun getEpisodeInfoOfSeasonDvdOldestFirst(seasonId: Long): List<SgEpisode2Numbers>
 
     /**
      * Returns how many episodes of a show are left to collect. Only considers regular, released
@@ -171,3 +199,12 @@ data class SgEpisode2WithShow(
         }
     }
 }
+
+data class SgEpisode2Numbers (
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
+    @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TVDB_ID) val episodeTvdbId: Int,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
+    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int
+)

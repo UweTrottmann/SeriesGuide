@@ -20,6 +20,9 @@ interface SgSeason2Helper {
     @Query("SELECT _id FROM sg_season WHERE series_id = :showId ORDER BY season_number DESC")
     fun getSeasonIdsOfShow(showId: Long): List<Long>
 
+    @Query("SELECT series_id, season_tmdb_id, season_tvdb_id, season_number FROM sg_season WHERE _id = :seasonId")
+    fun getSeasonNumbers(seasonId: Long): SgSeason2Numbers?
+
     /**
      * Excludes seasons where total episode count is 0.
      */
@@ -35,6 +38,16 @@ interface SgSeason2Helper {
     @Update(entity = SgSeason2::class)
     fun updateSeasonCounters(seasonCountUpdate: SgSeason2CountUpdate)
 
+}
+
+data class SgSeason2Numbers(
+    @ColumnInfo(name = SeriesGuideContract.SgShow2Columns.REF_SHOW_ID) val showId: Long,
+    @ColumnInfo(name = SgSeason2Columns.TMDB_ID) val tmdbId: String?,
+    @ColumnInfo(name = SgSeason2Columns.TVDB_ID) val tvdbId: Int?,
+    @ColumnInfo(name = SgSeason2Columns.COMBINED) val numberOrNull: Int?
+) {
+    val number: Int
+        get() = numberOrNull ?: 0 // == Specials, but should ignore seasons without number.
 }
 
 data class SgSeason2CountUpdate(

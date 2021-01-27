@@ -14,8 +14,7 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
@@ -38,17 +37,17 @@ import com.battlelancer.seriesguide.util.safeShow
  */
 class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.PopupMenuClickListener {
 
-    private lateinit var sortOrder: Constants.EpisodeSorting
-    private lateinit var adapter: EpisodesAdapter
-    private lateinit var model: EpisodesViewModel
-
-    private var showTvdbId: Int = 0
-    private var seasonTvdbId: Int = 0
-    private var seasonNumber: Int = 0
+    private var seasonId: Long = 0
     private var startingPosition: Int = 0
     private var lastCheckedItemId: Long = 0
     private var watchedAllEpisodes: Boolean = false
     private var collectedAllEpisodes: Boolean = false
+
+    private lateinit var sortOrder: Constants.EpisodeSorting
+    private lateinit var adapter: EpisodesAdapter
+    private val model by viewModels<EpisodesViewModel> {
+        EpisodesViewModelFactory(requireActivity().application, seasonId)
+    }
 
     @BindView(R.id.listViewEpisodes)
     lateinit var listViewEpisodes: ListView
@@ -60,10 +59,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
 
     companion object {
 
-        private const val ARG_SHOW_TVDBID = "show_tvdbid"
-        private const val ARG_SEASON_TVDBID = "season_tvdbid"
-        private const val ARG_SEASON_NUMBER = "season_number"
-        private const val ARG_STARTING_POSITION = "starting_position"
+        private const val ARG_LONG_SEASON_ID = "season_id"
+        private const val ARG_INT_STARTING_POSITION = "starting_position"
 
         private const val CONTEXT_WATCHED_ALL = 1
         private const val CONTEXT_WATCHED_NONE = 2
@@ -71,14 +68,14 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         private const val CONTEXT_COLLECTED_NONE = 4
 
         @JvmStatic
-        fun newInstance(showId: Int, seasonId: Int, seasonNumber: Int,
-                startingPosition: Int): EpisodesFragment {
+        fun newInstance(
+            seasonId: Long,
+            startingPosition: Int
+        ): EpisodesFragment {
             return EpisodesFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_SHOW_TVDBID, showId)
-                    putInt(ARG_SEASON_TVDBID, seasonId)
-                    putInt(ARG_SEASON_NUMBER, seasonNumber)
-                    putInt(ARG_STARTING_POSITION, startingPosition)
+                    putLong(ARG_LONG_SEASON_ID, seasonId)
+                    putInt(ARG_INT_STARTING_POSITION, startingPosition)
                 }
             }
         }
@@ -88,10 +85,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            showTvdbId = it.getInt(ARG_SHOW_TVDBID)
-            seasonTvdbId = it.getInt(ARG_SEASON_TVDBID)
-            seasonNumber = it.getInt(ARG_SEASON_NUMBER)
-            startingPosition = it.getInt(ARG_STARTING_POSITION)
+            seasonId = it.getLong(ARG_LONG_SEASON_ID)
+            startingPosition = it.getInt(ARG_INT_STARTING_POSITION)
         } ?: throw IllegalArgumentException("Missing arguments")
     }
 
@@ -111,10 +106,8 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        model = ViewModelProvider(this).get(EpisodesViewModel::class.java).also {
-            it.episodeCountLiveData.observe(viewLifecycleOwner, Observer { result ->
-                handleCountUpdate(result)
-            })
+        model.episodeCountLiveData.observe(viewLifecycleOwner) { result ->
+            handleCountUpdate(result)
         }
 
         loadSortOrder()
@@ -233,7 +226,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                     }
                     R.id.menu_action_episodes_watched_up_to -> {
                         EpisodeWatchedUpToDialog.newInstance(
-                            showTvdbId,
+                            model.showTvdbId,
                             releaseTimeMs,
                             episodeNumber
                         ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
@@ -255,20 +248,20 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     }
 
     override fun onFlagEpisodeWatched(episodeTvdbId: Int, episode: Int, isWatched: Boolean) {
-        EpisodeTools.episodeWatched(requireContext(), showTvdbId, episodeTvdbId,
-                seasonNumber, episode,
+        EpisodeTools.episodeWatched(requireContext(), model.showTvdbId, episodeTvdbId,
+            model.seasonNumber, episode,
                 if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED)
     }
 
     private fun onFlagEpisodeSkipped(episodeTvdbId: Int, episode: Int, isSkipped: Boolean) {
-        EpisodeTools.episodeWatched(requireContext(), showTvdbId, episodeTvdbId,
-                seasonNumber, episode,
+        EpisodeTools.episodeWatched(requireContext(), model.showTvdbId, episodeTvdbId,
+            model.seasonNumber, episode,
                 if (isSkipped) EpisodeFlags.SKIPPED else EpisodeFlags.UNWATCHED)
     }
 
     private fun onFlagEpisodeCollected(episodeTvdbId: Int, episode: Int, isCollected: Boolean) {
-        EpisodeTools.episodeCollected(requireContext(), showTvdbId, episodeTvdbId,
-                seasonNumber, episode, isCollected)
+        EpisodeTools.episodeCollected(requireContext(), model.showTvdbId, episodeTvdbId,
+            model.seasonNumber, episode, isCollected)
     }
 
     private fun loadSortOrder() {
@@ -335,13 +328,23 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_WATCHED_ALL -> {
-                        EpisodeTools.seasonWatched(context, showTvdbId, seasonTvdbId, seasonNumber,
-                            EpisodeFlags.WATCHED)
+                        EpisodeTools.seasonWatched(
+                            context,
+                            model.showTvdbId,
+                            model.seasonTvdbId,
+                            model.seasonNumber,
+                            EpisodeFlags.WATCHED
+                        )
                         true
                     }
                     CONTEXT_WATCHED_NONE -> {
-                        EpisodeTools.seasonWatched(context, showTvdbId, seasonTvdbId, seasonNumber,
-                            EpisodeFlags.UNWATCHED)
+                        EpisodeTools.seasonWatched(
+                            context,
+                            model.showTvdbId,
+                            model.seasonTvdbId,
+                            model.seasonNumber,
+                            EpisodeFlags.UNWATCHED
+                        )
                         true
                     }
                     else -> false
@@ -375,13 +378,23 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_COLLECTED_ALL -> {
-                        EpisodeTools.seasonCollected(context, showTvdbId, seasonTvdbId,
-                            seasonNumber, true)
+                        EpisodeTools.seasonCollected(
+                            context,
+                            model.showTvdbId,
+                            model.seasonTvdbId,
+                            model.seasonNumber,
+                            true
+                        )
                         true
                     }
                     CONTEXT_COLLECTED_NONE -> {
-                        EpisodeTools.seasonCollected(context, showTvdbId, seasonTvdbId,
-                            seasonNumber, false)
+                        EpisodeTools.seasonCollected(
+                            context,
+                            model.showTvdbId,
+                            model.seasonTvdbId,
+                            model.seasonNumber,
+                            false
+                        )
                         true
                     }
                     else -> false
@@ -393,7 +406,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     private val episodesLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Cursor> {
         override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
             return CursorLoader(requireContext(),
-                    Episodes.buildEpisodesOfSeasonWithShowUri(seasonTvdbId.toString()),
+                    Episodes.buildEpisodesOfSeasonWithShowUri(model.seasonTvdbId.toString()),
                     EpisodesAdapter.EpisodesQuery.PROJECTION,
                     null, null, sortOrder.query())
         }
@@ -411,7 +424,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 lastCheckedItemId = -1
             }
             // update count state every time data changes
-            model.episodeCountLiveData.load(seasonTvdbId)
+            model.episodeCountLiveData.load(model.seasonTvdbId)
         }
 
         override fun onLoaderReset(loader: Loader<Cursor>) {
