@@ -147,7 +147,7 @@ public class DisplaySettings {
 
     public static Constants.EpisodeSorting getEpisodeSortOrder(Context context) {
         String orderId = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_EPISODE_SORT_ORDER, Constants.EpisodeSorting.OLDEST_FIRST.value());
+                .getString(KEY_EPISODE_SORT_ORDER, null);
         return Constants.EpisodeSorting.fromValue(orderId);
     }
 

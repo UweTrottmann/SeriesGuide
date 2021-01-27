@@ -6,8 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.battlelancer.seriesguide.Constants.EpisodeSorting
-import com.battlelancer.seriesguide.provider.SgEpisode2Numbers
+import com.battlelancer.seriesguide.provider.SgEpisode2Info
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgShow2Minimal
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -77,17 +76,8 @@ class EpisodesActivityViewModel(
         // Get episode list.
         val seasonId = seasonInfo.seasonId
         val sortOrder = DisplaySettings.getEpisodeSortOrder(getApplication())
-        val helper = database.sgEpisode2Helper()
-        val episodes = when (sortOrder) {
-            EpisodeSorting.LATEST_FIRST -> helper.getEpisodeInfoOfSeasonLatestFirst(seasonId)
-            EpisodeSorting.OLDEST_FIRST -> helper.getEpisodeInfoOfSeasonOldestFirst(seasonId)
-            EpisodeSorting.UNWATCHED_FIRST -> helper.getEpisodeInfoOfSeasonNotWatchedFirst(seasonId)
-            EpisodeSorting.ALPHABETICAL_ASC -> helper.getEpisodeInfoOfSeasonByTitle(seasonId)
-            EpisodeSorting.TOP_RATED -> helper.getEpisodeInfoOfSeasonByRating(seasonId)
-            EpisodeSorting.DVDLATEST_FIRST -> helper.getEpisodeInfoOfSeasonDvdLatestFirst(seasonId)
-            EpisodeSorting.DVDOLDEST_FIRST -> helper.getEpisodeInfoOfSeasonDvdOldestFirst(seasonId)
-            else -> throw UnsupportedOperationException("Sort order $sortOrder not supported")
-        }
+        val episodes = database.sgEpisode2Helper()
+            .getEpisodeInfoOfSeason(SgEpisode2Info.buildQuery(seasonId, sortOrder))
 
         val episodeIndexOrMinus1 = episodes.indexOfFirst { it.id == initialEpisodeId }
 
@@ -122,7 +112,7 @@ class EpisodesActivityViewModel(
     data class EpisodeSeasonAndShowInfo(
         val seasonAndShowInfo: SeasonAndShowInfo,
         val startPosition: Int,
-        val episodes: List<SgEpisode2Numbers>
+        val episodes: List<SgEpisode2Info>
     )
 
 }
