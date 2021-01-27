@@ -29,6 +29,9 @@ interface SgEpisode2Helper {
     @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeInfo(episodeId: Long): SgEpisode2Info?
 
+    @Query("SELECT * FROM sg_episode WHERE _id=:id")
+    fun getEpisodeLiveData(id: Long): LiveData<SgEpisode2?>
+
     @Query("SELECT * FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
     fun getEpisodeLiveData(tvdbId: Int): LiveData<SgEpisode2?>
 

@@ -24,7 +24,7 @@ internal class EpisodePagerAdapter(
     }
 
     override fun getItem(position: Int): Fragment {
-        return EpisodeDetailsFragment.newInstance(episodes[position].episodeTvdbId)
+        return EpisodeDetailsFragment.newInstance(episodes[position].id)
     }
 
     override fun getItemPosition(`object`: Any): Int {
