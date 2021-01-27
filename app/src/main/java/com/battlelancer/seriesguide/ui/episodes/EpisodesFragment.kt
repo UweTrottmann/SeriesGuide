@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.episodes
 
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -15,16 +14,11 @@ import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
 import androidx.preference.PreferenceManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
@@ -43,7 +37,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     private var watchedAllEpisodes: Boolean = false
     private var collectedAllEpisodes: Boolean = false
 
-    private lateinit var sortOrder: Constants.EpisodeSorting
     private lateinit var adapter: EpisodesAdapter
     private val model by viewModels<EpisodesViewModel> {
         EpisodesViewModelFactory(requireActivity().application, seasonId)
@@ -106,12 +99,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        model.episodeCountLiveData.observe(viewLifecycleOwner) { result ->
-            handleCountUpdate(result)
-        }
-
-        loadSortOrder()
-
         // listen to changes to the sorting preference
         PreferenceManager.getDefaultSharedPreferences(requireActivity()).apply {
             registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
@@ -123,8 +110,24 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         adapter = EpisodesAdapter(requireActivity(), this, this)
         listViewEpisodes.adapter = adapter
 
-        LoaderManager.getInstance(this)
-            .initLoader(EpisodesActivity.EPISODES_LOADER_ID, null, episodesLoaderCallbacks)
+        model.episodeCountLiveData.observe(viewLifecycleOwner) { result ->
+            handleCountUpdate(result)
+        }
+        model.episodes.observe(viewLifecycleOwner) { episodes ->
+            adapter.setData(episodes)
+            // set an initial checked item
+            if (startingPosition != -1) {
+                setItemChecked(startingPosition)
+                startingPosition = -1
+            }
+            // correctly restore the last checked item
+            else if (lastCheckedItemId != -1L) {
+                setItemChecked(adapter.getItemPosition(lastCheckedItemId))
+                lastCheckedItemId = -1
+            }
+            // update count state every time data changes
+            model.episodeCountLiveData.load(model.seasonTvdbId)
+        }
 
         setHasOptionsMenu(true)
     }
@@ -148,11 +151,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
 
     private val listOnItemClickListener =
         AdapterView.OnItemClickListener { _, _, position, _ -> showDetails(position) }
-
-    override fun onResume() {
-        super.onResume()
-        loadSortOrder()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -264,31 +262,21 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
             model.seasonNumber, episode, isCollected)
     }
 
-    private fun loadSortOrder() {
-        sortOrder = DisplaySettings.getEpisodeSortOrder(requireActivity())
-    }
-
     private fun showSortDialog() {
         SingleChoiceDialogFragment.show(parentFragmentManager,
                 R.array.epsorting,
-                R.array.epsortingData, sortOrder.index(),
+                R.array.epsortingData, DisplaySettings.getEpisodeSortOrder(requireActivity()).index(),
                 DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
                 "episodeSortOrderDialog")
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
         if (DisplaySettings.KEY_EPISODE_SORT_ORDER == key) {
-            onSortOrderChanged()
-        }
-    }
-
-    private fun onSortOrderChanged() {
-        loadSortOrder()
-
-        lastCheckedItemId =
+            // Remember currently checked item, then update order.
+            lastCheckedItemId =
                 listViewEpisodes.getItemIdAtPosition(listViewEpisodes.checkedItemPosition)
-        LoaderManager.getInstance(this)
-            .restartLoader(EpisodesActivity.EPISODES_LOADER_ID, null, episodesLoaderCallbacks)
+            model.updateOrder()
+        }
     }
 
     /**
@@ -401,35 +389,6 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
                 }
             }
         }.show()
-    }
-
-    private val episodesLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Cursor> {
-        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-            return CursorLoader(requireContext(),
-                    Episodes.buildEpisodesOfSeasonWithShowUri(model.seasonTvdbId.toString()),
-                    EpisodesAdapter.EpisodesQuery.PROJECTION,
-                    null, null, sortOrder.query())
-        }
-
-        override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
-            adapter.swapCursor(data)
-            // set an initial checked item
-            if (startingPosition != -1) {
-                setItemChecked(startingPosition)
-                startingPosition = -1
-            }
-            // correctly restore the last checked item
-            else if (lastCheckedItemId != -1L) {
-                setItemChecked(adapter.getItemPosition(lastCheckedItemId))
-                lastCheckedItemId = -1
-            }
-            // update count state every time data changes
-            model.episodeCountLiveData.load(model.seasonTvdbId)
-        }
-
-        override fun onLoaderReset(loader: Loader<Cursor>) {
-            adapter.swapCursor(null)
-        }
     }
 
 }

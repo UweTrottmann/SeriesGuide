@@ -2,10 +2,15 @@ package com.battlelancer.seriesguide.ui.episodes
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.battlelancer.seriesguide.Constants.EpisodeSorting
+import com.battlelancer.seriesguide.provider.SgEpisode2Info
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -14,10 +19,15 @@ class EpisodesViewModel(
     seasonId: Long
 ) : AndroidViewModel(application) {
 
-    val episodeCountLiveData = EpisodeCountLiveData(application)
     var seasonTvdbId: Int = 0
     var seasonNumber: Int = 0
     var showTvdbId: Int = 0
+    private val order = MutableLiveData<EpisodeSorting>()
+    val episodes = Transformations.switchMap(order) {
+        SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
+            .getEpisodeInfoOfSeasonLiveData(SgEpisode2Info.buildQuery(seasonId, it))
+    }
+    val episodeCountLiveData = EpisodeCountLiveData(application)
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -28,8 +38,12 @@ class EpisodesViewModel(
                 showTvdbId = db.sgShow2Helper().getShowTvdbId(it.showId)
             }
         }
+        updateOrder()
     }
 
+    fun updateOrder() {
+        order.value = DisplaySettings.getEpisodeSortOrder(getApplication())
+    }
 }
 
 class EpisodesViewModelFactory(
