@@ -6,14 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.TextViewCompat;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.ItemEpisodeBinding;
 import com.battlelancer.seriesguide.provider.SgEpisode2Info;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -26,24 +23,18 @@ import java.util.List;
 
 class EpisodesAdapter extends ArrayAdapter<SgEpisode2Info> {
 
-    interface OnFlagEpisodeListener {
-        void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched);
-    }
-
-    interface PopupMenuClickListener {
-        void onPopupMenuClick(View v, int episodeTvdbId, int episodeNumber,
+    interface ClickListener {
+        void onWatchedBoxClick(int episodeTvdbId, int episodeNumber, boolean isWatched);
+        void onPopupMenuClick(@NonNull View v, int episodeTvdbId, int episodeNumber,
                 long releaseTimeMs, int watchedFlag, boolean isCollected);
     }
 
-    private final PopupMenuClickListener popupMenuClickListener;
-    private final OnFlagEpisodeListener onFlagListener;
+    private final ClickListener clickListener;
     private final NumberFormat integerFormat;
 
-    EpisodesAdapter(Context context, PopupMenuClickListener listener,
-            OnFlagEpisodeListener flagListener) {
+    EpisodesAdapter(Context context, ClickListener listener) {
         super(context, 0);
-        popupMenuClickListener = listener;
-        onFlagListener = flagListener;
+        clickListener = listener;
         integerFormat = NumberFormat.getIntegerInstance();
     }
 
@@ -94,115 +85,111 @@ class EpisodesAdapter extends ArrayAdapter<SgEpisode2Info> {
         ViewHolder viewHolder;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_episode, parent, false);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
+            viewHolder = new ViewHolder(parent, clickListener, integerFormat);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         SgEpisode2Info item = getItem(position);
         if (item != null) {
-            bindView(viewHolder, item, getContext());
+            viewHolder.bindTo(item, getContext());
         }
 
-        return convertView;
-    }
-
-    public void bindView(ViewHolder viewHolder, SgEpisode2Info episode, Context context) {
-        // episode title
-        final int watchedFlag = episode.getWatched();
-        final int episodeNumber = episode.getEpisodenumber();
-        boolean hideTitle = EpisodeTools.isUnwatched(watchedFlag)
-                && DisplaySettings.preventSpoilers(context);
-        viewHolder.episodeTitle.setText(TextTools.getEpisodeTitle(context,
-                hideTitle ? null : episode.getTitle(), episodeNumber));
-
-        // number
-        viewHolder.episodeNumber.setText(integerFormat.format(episodeNumber));
-
-        // watched box
-        viewHolder.watchedBox.setEpisodeFlag(watchedFlag);
-        final int episodeTvdbId = episode.getEpisodeTvdbId();
-        viewHolder.watchedBox.setOnClickListener(v -> {
-            WatchedBox box = (WatchedBox) v;
-            // disable button, will be re-enabled on data reload once action completes
-            box.setEnabled(false);
-            onFlagListener.onFlagEpisodeWatched(episodeTvdbId, episodeNumber,
-                    !EpisodeTools.isWatched(box.getEpisodeFlag()));
-        });
-        viewHolder.watchedBox.setEnabled(true);
-        boolean watched = EpisodeTools.isWatched(watchedFlag);
-        viewHolder.watchedBox.setContentDescription(
-                context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
-        CheatSheet.setup(viewHolder.watchedBox,
-                watched ? R.string.action_unwatched : R.string.action_watched
-        );
-
-        // collected tag
-        final boolean isCollected = episode.getCollected();
-        viewHolder.collected.setVisibility(isCollected ? View.VISIBLE : View.INVISIBLE);
-
-        // alternative numbers
-        int absoluteNumber = episode.getAbsoluteNumber();
-        String absoluteNumberText = null;
-        if (absoluteNumber > 0) {
-            absoluteNumberText = NumberFormat.getIntegerInstance().format(absoluteNumber);
-        }
-        double dvdNumber = episode.getDvdNumber();
-        String dvdNumberText = null;
-        if (dvdNumber > 0) {
-            dvdNumberText = context.getString(R.string.episode_number_disk) + " " + dvdNumber;
-        }
-        viewHolder.episodeAlternativeNumbers.setText(
-                TextTools.dotSeparate(absoluteNumberText, dvdNumberText));
-
-        // release time
-        boolean isReleased;
-        final long releaseTime = episode.getFirstReleasedMs();
-        if (releaseTime != -1) {
-            Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
-            isReleased = TimeTools.isReleased(actualRelease);
-            // "in 15 mins" or "Oct 31, 2010"
-            boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
-            viewHolder.episodeAirdate.setText(displayExactDate ?
-                    TimeTools.formatToLocalDateShort(context, actualRelease)
-                    : TimeTools.formatToLocalRelativeTime(context, actualRelease));
-        } else {
-            viewHolder.episodeAirdate.setText(context
-                    .getString(R.string.episode_firstaired_unknown));
-            isReleased = false;
-        }
-
-        // dim text color if not released
-        TextViewCompat.setTextAppearance(viewHolder.episodeTitle, isReleased
-                ? R.style.TextAppearance_SeriesGuide_Subtitle1
-                : R.style.TextAppearance_SeriesGuide_Subtitle1_Dim);
-        TextViewCompat.setTextAppearance(viewHolder.episodeAirdate, isReleased
-                ? R.style.TextAppearance_SeriesGuide_Body2_Secondary
-                : R.style.TextAppearance_SeriesGuide_Body2_Dim);
-
-        // context menu
-        viewHolder.contextMenu.setOnClickListener(v -> {
-            if (popupMenuClickListener != null) {
-                popupMenuClickListener.onPopupMenuClick(v, episodeTvdbId, episodeNumber,
-                        releaseTime, watchedFlag, isCollected);
-            }
-        });
+        return viewHolder.binding.getRoot();
     }
 
     static class ViewHolder {
-        @BindView(R.id.textViewEpisodeAlternativeNumbers) TextView episodeAlternativeNumbers;
-        @BindView(R.id.textViewEpisodeAirdate) TextView episodeAirdate;
-        @BindView(R.id.textViewEpisodeNumber) TextView episodeNumber;
-        @BindView(R.id.textViewEpisodeTitle) TextView episodeTitle;
-        @BindView(R.id.watchedBoxEpisode) WatchedBox watchedBox;
-        @BindView(R.id.imageViewCollected) ImageView collected;
-        @BindView(R.id.imageViewContextMenu) ImageView contextMenu;
+        private final ItemEpisodeBinding binding;
+        private final ClickListener clickListener;
+        private final NumberFormat integerFormat;
 
-        public ViewHolder(View itemView) {
-            ButterKnife.bind(this, itemView);
+        public ViewHolder(ViewGroup parent,
+                ClickListener clickListener,
+                NumberFormat integerFormat) {
+            this.clickListener = clickListener;
+            this.integerFormat = integerFormat;
+            this.binding = ItemEpisodeBinding
+                    .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            this.binding.getRoot().setTag(this);
+        }
+
+        public void bindTo(SgEpisode2Info episode, Context context) {
+            // episode title
+            final int watchedFlag = episode.getWatched();
+            final int episodeNumber = episode.getEpisodenumber();
+            boolean hideTitle = EpisodeTools.isUnwatched(watchedFlag)
+                    && DisplaySettings.preventSpoilers(context);
+            binding.textViewEpisodeTitle.setText(TextTools.getEpisodeTitle(context,
+                    hideTitle ? null : episode.getTitle(), episodeNumber));
+
+            // number
+            binding.textViewEpisodeNumber.setText(integerFormat.format(episodeNumber));
+
+            // watched box
+            binding.watchedBoxEpisode.setEpisodeFlag(watchedFlag);
+            final int episodeTvdbId = episode.getEpisodeTvdbId();
+            binding.watchedBoxEpisode.setOnClickListener(v -> {
+                WatchedBox box = (WatchedBox) v;
+                // disable button, will be re-enabled on data reload once action completes
+                box.setEnabled(false);
+                clickListener.onWatchedBoxClick(episodeTvdbId, episodeNumber,
+                        !EpisodeTools.isWatched(box.getEpisodeFlag()));
+            });
+            binding.watchedBoxEpisode.setEnabled(true);
+            boolean watched = EpisodeTools.isWatched(watchedFlag);
+            binding.watchedBoxEpisode.setContentDescription(
+                    context.getString(watched ? R.string.action_unwatched : R.string.action_watched));
+            CheatSheet.setup(binding.watchedBoxEpisode,
+                    watched ? R.string.action_unwatched : R.string.action_watched
+            );
+
+            // collected tag
+            final boolean isCollected = episode.getCollected();
+            binding.imageViewCollected.setVisibility(isCollected ? View.VISIBLE : View.INVISIBLE);
+
+            // alternative numbers
+            int absoluteNumber = episode.getAbsoluteNumber();
+            String absoluteNumberText = null;
+            if (absoluteNumber > 0) {
+                absoluteNumberText = NumberFormat.getIntegerInstance().format(absoluteNumber);
+            }
+            double dvdNumber = episode.getDvdNumber();
+            String dvdNumberText = null;
+            if (dvdNumber > 0) {
+                dvdNumberText = context.getString(R.string.episode_number_disk) + " " + dvdNumber;
+            }
+            binding.textViewEpisodeAlternativeNumbers.setText(
+                    TextTools.dotSeparate(absoluteNumberText, dvdNumberText));
+
+            // release time
+            boolean isReleased;
+            final long releaseTime = episode.getFirstReleasedMs();
+            if (releaseTime != -1) {
+                Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
+                isReleased = TimeTools.isReleased(actualRelease);
+                // "in 15 mins" or "Oct 31, 2010"
+                boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+                binding.textViewEpisodeAirdate.setText(displayExactDate ?
+                        TimeTools.formatToLocalDateShort(context, actualRelease)
+                        : TimeTools.formatToLocalRelativeTime(context, actualRelease));
+            } else {
+                binding.textViewEpisodeAirdate.setText(context
+                        .getString(R.string.episode_firstaired_unknown));
+                isReleased = false;
+            }
+
+            // dim text color if not released
+            TextViewCompat.setTextAppearance(binding.textViewEpisodeTitle, isReleased
+                    ? R.style.TextAppearance_SeriesGuide_Subtitle1
+                    : R.style.TextAppearance_SeriesGuide_Subtitle1_Dim);
+            TextViewCompat.setTextAppearance(binding.textViewEpisodeAirdate, isReleased
+                    ? R.style.TextAppearance_SeriesGuide_Body2_Secondary
+                    : R.style.TextAppearance_SeriesGuide_Body2_Dim);
+
+            // context menu
+            this.binding.imageViewContextMenu.setOnClickListener(v -> clickListener
+                    .onPopupMenuClick(v, episodeTvdbId, episodeNumber, releaseTime, watchedFlag,
+                            isCollected));
         }
     }
 }

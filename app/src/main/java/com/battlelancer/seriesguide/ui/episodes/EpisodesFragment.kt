@@ -9,27 +9,23 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ImageView
 import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
-import com.battlelancer.seriesguide.ui.episodes.EpisodesAdapter.OnFlagEpisodeListener
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.util.safeShow
 
 /**
  * Displays a list of episodes of a season.
  */
-class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.PopupMenuClickListener {
+class EpisodesFragment : Fragment() {
 
     private var seasonId: Long = 0
     private var startingPosition: Int = 0
@@ -37,18 +33,11 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     private var watchedAllEpisodes: Boolean = false
     private var collectedAllEpisodes: Boolean = false
 
+    private var binding: FragmentEpisodesBinding? = null
     private lateinit var adapter: EpisodesAdapter
     private val model by viewModels<EpisodesViewModel> {
         EpisodesViewModelFactory(requireActivity().application, seasonId)
     }
-
-    @BindView(R.id.listViewEpisodes)
-    lateinit var listViewEpisodes: ListView
-    @BindView(R.id.imageViewEpisodesCollectedToggle)
-    lateinit var buttonCollectedAll: ImageView
-    @BindView(R.id.imageViewEpisodesWatchedToggle)
-    lateinit var buttonWatchedAll: ImageView
-    private lateinit var unbinder: Unbinder
 
     companion object {
 
@@ -83,17 +72,31 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         } ?: throw IllegalArgumentException("Missing arguments")
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_episodes, container, false)
-        unbinder = ButterKnife.bind(this, view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = FragmentEpisodesBinding.inflate(inflater, container, false)
+        this.binding = binding
+        return binding.root
+    }
 
-        buttonWatchedAll.setImageResource(R.drawable.ic_watch_all_black_24dp)
-        buttonCollectedAll.setImageResource(R.drawable.ic_collect_all_black_24dp)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        listViewEpisodes.onItemClickListener = listOnItemClickListener
+        adapter = EpisodesAdapter(requireActivity(), episodesListClickListener)
 
-        return view
+        binding?.also {
+            it.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
+            it.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
+
+            it.listViewEpisodes.also { lv ->
+                lv.onItemClickListener = listOnItemClickListener
+                lv.choiceMode = ListView.CHOICE_MODE_SINGLE
+                lv.adapter = adapter
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -104,11 +107,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
             registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
         }
 
-        listViewEpisodes.choiceMode = ListView.CHOICE_MODE_SINGLE
         lastCheckedItemId = -1
-
-        adapter = EpisodesAdapter(requireActivity(), this, this)
-        listViewEpisodes.adapter = adapter
 
         model.episodeCounts.observe(viewLifecycleOwner) { result ->
             setWatchedToggleState(result.unwatchedEpisodes)
@@ -147,7 +146,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder.unbind()
+        binding = null
     }
 
     override fun onDestroy() {
@@ -174,71 +173,84 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
         }
     }
 
-    override fun onPopupMenuClick(v: View, episodeTvdbId: Int, episodeNumber: Int,
-            releaseTimeMs: Long, watchedFlag: Int, isCollected: Boolean) {
-        PopupMenu(v.context, v).apply {
-            inflate(R.menu.episodes_popup_menu)
-            menu.apply {
-                findItem(R.id.menu_action_episodes_collection_add).isVisible = !isCollected
-                findItem(R.id.menu_action_episodes_collection_remove).isVisible = isCollected
-                val isWatched = EpisodeTools.isWatched(watchedFlag)
-                findItem(R.id.menu_action_episodes_watched).isVisible = !isWatched
-                findItem(R.id.menu_action_episodes_not_watched).isVisible = isWatched
-                findItem(R.id.menu_action_episodes_watched_up_to).isVisible = !isWatched
-                val isSkipped = EpisodeTools.isSkipped(watchedFlag)
-                findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
-                findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
-            }
-            setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.menu_action_episodes_watched -> {
-                        onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true)
-                        true
-                    }
-                    R.id.menu_action_episodes_not_watched -> {
-                        onFlagEpisodeWatched(episodeTvdbId, episodeNumber, false)
-                        true
-                    }
-                    R.id.menu_action_episodes_collection_add -> {
-                        onFlagEpisodeCollected(episodeTvdbId, episodeNumber, true)
-                        true
-                    }
-                    R.id.menu_action_episodes_collection_remove -> {
-                        onFlagEpisodeCollected(episodeTvdbId, episodeNumber, false)
-                        true
-                    }
-                    R.id.menu_action_episodes_skip -> {
-                        onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, true)
-                        true
-                    }
-                    R.id.menu_action_episodes_dont_skip -> {
-                        onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false)
-                        true
-                    }
-                    R.id.menu_action_episodes_watched_up_to -> {
-                        EpisodeWatchedUpToDialog.newInstance(
-                            model.showTvdbId,
-                            releaseTimeMs,
-                            episodeNumber
-                        ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
-                        true
-                    }
-                    R.id.menu_action_episodes_manage_lists -> {
-                        ManageListsDialogFragment.show(
-                            parentFragmentManager,
-                            episodeTvdbId,
-                            ListItemTypes.EPISODE
-                        )
-                        true
-                    }
-                    else -> false
+    private val episodesListClickListener = object : EpisodesAdapter.ClickListener {
+        override fun onWatchedBoxClick(episodeTvdbId: Int, episodeNumber: Int, isWatched: Boolean) {
+            onFlagEpisodeWatched(episodeTvdbId, episodeNumber, isWatched)
+        }
+
+        override fun onPopupMenuClick(
+            v: View,
+            episodeTvdbId: Int,
+            episodeNumber: Int,
+            releaseTimeMs: Long,
+            watchedFlag: Int,
+            isCollected: Boolean
+        ) {
+            PopupMenu(v.context, v).apply {
+                inflate(R.menu.episodes_popup_menu)
+                menu.apply {
+                    findItem(R.id.menu_action_episodes_collection_add).isVisible = !isCollected
+                    findItem(R.id.menu_action_episodes_collection_remove).isVisible = isCollected
+                    val isWatched = EpisodeTools.isWatched(watchedFlag)
+                    findItem(R.id.menu_action_episodes_watched).isVisible = !isWatched
+                    findItem(R.id.menu_action_episodes_not_watched).isVisible = isWatched
+                    findItem(R.id.menu_action_episodes_watched_up_to).isVisible = !isWatched
+                    val isSkipped = EpisodeTools.isSkipped(watchedFlag)
+                    findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
+                    findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
                 }
+                setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.menu_action_episodes_watched -> {
+                            onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true)
+                            true
+                        }
+                        R.id.menu_action_episodes_not_watched -> {
+                            onFlagEpisodeWatched(episodeTvdbId, episodeNumber, false)
+                            true
+                        }
+                        R.id.menu_action_episodes_collection_add -> {
+                            onFlagEpisodeCollected(episodeTvdbId, episodeNumber, true)
+                            true
+                        }
+                        R.id.menu_action_episodes_collection_remove -> {
+                            onFlagEpisodeCollected(episodeTvdbId, episodeNumber, false)
+                            true
+                        }
+                        R.id.menu_action_episodes_skip -> {
+                            onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, true)
+                            true
+                        }
+                        R.id.menu_action_episodes_dont_skip -> {
+                            onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false)
+                            true
+                        }
+                        R.id.menu_action_episodes_watched_up_to -> {
+                            EpisodeWatchedUpToDialog.newInstance(
+                                model.showTvdbId,
+                                releaseTimeMs,
+                                episodeNumber
+                            ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
+                            true
+                        }
+                        R.id.menu_action_episodes_manage_lists -> {
+                            ManageListsDialogFragment.show(
+                                parentFragmentManager,
+                                episodeTvdbId,
+                                ListItemTypes.EPISODE
+                            )
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                show()
             }
-            show()
+
         }
     }
 
-    override fun onFlagEpisodeWatched(episodeTvdbId: Int, episode: Int, isWatched: Boolean) {
+    private fun onFlagEpisodeWatched(episodeTvdbId: Int, episode: Int, isWatched: Boolean) {
         EpisodeTools.episodeWatched(requireContext(), model.showTvdbId, episodeTvdbId,
             model.seasonNumber, episode,
                 if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED)
@@ -266,9 +278,10 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
         if (DisplaySettings.KEY_EPISODE_SORT_ORDER == key) {
             // Remember currently checked item, then update order.
-            lastCheckedItemId =
-                listViewEpisodes.getItemIdAtPosition(listViewEpisodes.checkedItemPosition)
-            model.updateOrder()
+            binding?.listViewEpisodes?.also {
+                lastCheckedItemId = it.getItemIdAtPosition(it.checkedItemPosition)
+                model.updateOrder()
+            }
         }
     }
 
@@ -276,7 +289,7 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
      * Highlight the given episode in the list.
      */
     fun setItemChecked(position: Int) {
-        with(listViewEpisodes) {
+        binding?.listViewEpisodes?.apply {
             setItemChecked(position, true)
             if (position <= firstVisiblePosition || position >= lastVisiblePosition) {
                 smoothScrollToPosition(position)
@@ -286,14 +299,14 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
 
     private fun setWatchedToggleState(unwatchedEpisodes: Int) {
         watchedAllEpisodes = unwatchedEpisodes == 0
-        buttonWatchedAll.apply {
+        binding?.imageViewEpisodesWatched?.apply {
             // using vectors is safe because it will be an AppCompatImageView
-            if (watchedAllEpisodes) {
+            contentDescription = if (watchedAllEpisodes) {
                 setImageResource(R.drawable.ic_watched_all_24dp)
-                contentDescription = getString(R.string.unmark_all)
+                getString(R.string.unmark_all)
             } else {
                 setImageResource(R.drawable.ic_watch_all_black_24dp)
-                contentDescription = getString(R.string.mark_all)
+                getString(R.string.mark_all)
             }
             // set onClick listener not before here to avoid unexpected actions
             setOnClickListener(watchedAllClickListener)
@@ -336,14 +349,14 @@ class EpisodesFragment : Fragment(), OnFlagEpisodeListener, EpisodesAdapter.Popu
 
     private fun setCollectedToggleState(uncollectedEpisodes: Int) {
         collectedAllEpisodes = uncollectedEpisodes == 0
-        buttonCollectedAll.apply {
+        binding?.imageViewEpisodesCollected?.apply {
             // using vectors is safe because it will be an AppCompatImageView
-            if (collectedAllEpisodes) {
+            contentDescription = if (collectedAllEpisodes) {
                 setImageResource(R.drawable.ic_collected_all_24dp)
-                contentDescription = getString(R.string.uncollect_all)
+                getString(R.string.uncollect_all)
             } else {
                 setImageResource(R.drawable.ic_collect_all_black_24dp)
-                contentDescription = getString(R.string.collect_all)
+                getString(R.string.collect_all)
             }
             // set onClick listener not before here to avoid unexpected actions
             setOnClickListener(collectedAllClickListener)
