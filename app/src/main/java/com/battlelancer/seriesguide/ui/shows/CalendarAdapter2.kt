@@ -17,7 +17,7 @@ class CalendarAdapter2(
     AutoGridLayoutManager.SpanCountListener {
 
     interface ItemClickListener {
-        fun onItemClick(episodeTvdbId: Int)
+        fun onItemClick(episodeId: Long)
         fun onItemLongClick(anchor: View, episode: SgEpisode2WithShow)
         fun onItemWatchBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean)
     }

@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.shows
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -220,9 +219,8 @@ class CalendarFragment2 : Fragment() {
 
     private val calendarItemClickListener = object :
         CalendarAdapter2.ItemClickListener {
-        override fun onItemClick(episodeTvdbId: Int) {
-            val intent = Intent(activity, EpisodesActivity::class.java)
-                .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeTvdbId)
+        override fun onItemClick(episodeId: Long) {
+            val intent = EpisodesActivity.intentEpisode(episodeId, requireContext())
             Utils.startActivityWithAnimation(activity, intent, view)
         }
 
@@ -249,10 +247,6 @@ class CalendarFragment2 : Fragment() {
                 menu.add(0, CONTEXT_CHECKIN_ID, 2, R.string.checkin)
             }
 
-            val showTvdbId = episode.showTvdbId
-            val episodeTvdbId = episode.episodeTvdbId
-            val seasonNumber = episode.season
-            val episodeNumber = episode.episodenumber
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_CHECKIN_ID -> {
@@ -264,31 +258,19 @@ class CalendarFragment2 : Fragment() {
                         return@setOnMenuItemClickListener true
                     }
                     CONTEXT_FLAG_WATCHED_ID -> {
-                        updateEpisodeWatchedState(
-                            showTvdbId, episodeTvdbId, seasonNumber,
-                            episodeNumber, true
-                        )
+                        updateEpisodeWatchedState(episode.id, true)
                         return@setOnMenuItemClickListener true
                     }
                     CONTEXT_FLAG_UNWATCHED_ID -> {
-                        updateEpisodeWatchedState(
-                            showTvdbId, episodeTvdbId, seasonNumber,
-                            episodeNumber, false
-                        )
+                        updateEpisodeWatchedState(episode.id, false)
                         return@setOnMenuItemClickListener true
                     }
                     CONTEXT_COLLECTION_ADD_ID -> {
-                        updateEpisodeCollectionState(
-                            showTvdbId, episodeTvdbId, seasonNumber,
-                            episodeNumber, true
-                        )
+                        updateEpisodeCollectionState(episode.id, true)
                         return@setOnMenuItemClickListener true
                     }
                     CONTEXT_COLLECTION_REMOVE_ID -> {
-                        updateEpisodeCollectionState(
-                            showTvdbId, episodeTvdbId, seasonNumber,
-                            episodeNumber, false
-                        )
+                        updateEpisodeCollectionState(episode.id, false)
                         return@setOnMenuItemClickListener true
                     }
                 }
@@ -299,31 +281,17 @@ class CalendarFragment2 : Fragment() {
         }
 
         override fun onItemWatchBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean) {
-            updateEpisodeWatchedState(
-                episode.showTvdbId, episode.episodeTvdbId, episode.season, episode.episodenumber,
-                !isWatched
-            )
+            updateEpisodeWatchedState(episode.id, !isWatched)
         }
     }
 
-    private fun updateEpisodeCollectionState(
-        showTvdbId: Int, episodeTvdbId: Int, seasonNumber: Int,
-        episodeNumber: Int, addToCollection: Boolean
-    ) {
-        EpisodeTools.episodeCollected(
-            context, showTvdbId, episodeTvdbId,
-            seasonNumber, episodeNumber, addToCollection
-        )
+    private fun updateEpisodeCollectionState(episodeId: Long, addToCollection: Boolean) {
+        EpisodeTools.episodeCollected(context, episodeId, addToCollection)
     }
 
-    private fun updateEpisodeWatchedState(
-        showTvdbId: Int, episodeTvdbId: Int, seasonNumber: Int,
-        episodeNumber: Int, isWatched: Boolean
-    ) {
+    private fun updateEpisodeWatchedState(episodeId: Long, isWatched: Boolean) {
         EpisodeTools.episodeWatched(
-            context, showTvdbId, episodeTvdbId,
-            seasonNumber, episodeNumber,
-            if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
+            context, episodeId, if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
         )
     }
 

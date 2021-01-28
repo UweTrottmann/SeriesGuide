@@ -45,7 +45,7 @@ class CalendarItemViewHolder(
     init {
         itemContainer.setOnClickListener {
             item?.episode?.let {
-                itemClickListener.onItemClick(it.episodeTvdbId)
+                itemClickListener.onItemClick(it.id)
             }
         }
         itemContainer.setOnLongClickListener {
