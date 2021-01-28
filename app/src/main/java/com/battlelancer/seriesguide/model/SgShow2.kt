@@ -64,7 +64,7 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.NEXTTEXT) val nextText: String? = "",
     @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long = 0,
     @ColumnInfo(name = SgShow2Columns.LASTEDIT) val lastEditedSec: Long = 0,
-    @ColumnInfo(name = SgShow2Columns.LASTWATCHEDID) val lastWatchedEpisodeId: Int = 0,
+    @ColumnInfo(name = SgShow2Columns.LASTWATCHEDID) val lastWatchedEpisodeId: Long = 0,
     @ColumnInfo(name = SgShow2Columns.LASTWATCHED_MS) val lastWatchedMs: Long = 0,
     @ColumnInfo(name = SgShow2Columns.LANGUAGE) val language: String? = "",
     @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int = DBUtils.UNKNOWN_UNWATCHED_COUNT,
