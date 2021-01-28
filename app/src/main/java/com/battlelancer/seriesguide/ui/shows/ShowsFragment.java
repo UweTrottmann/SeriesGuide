@@ -31,9 +31,9 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SgFastScroller;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -338,13 +338,13 @@ public class ShowsFragment extends Fragment {
 
             popupMenu.setOnMenuItemClickListener(
                     new ShowMenuItemClickListener(getContext(), getParentFragmentManager(),
-                            show.getShowTvdbId(), show.getEpisodeTvdbId()));
+                            show.getShowTvdbId(), show.getNextEpisodeId()));
             popupMenu.show();
         }
 
         @Override
         public void onItemSetWatchedClick(@NotNull ShowsAdapter.ShowItem show) {
-            DBUtils.markNextEpisode(getContext(), show.getShowTvdbId(), show.getEpisodeTvdbId());
+            EpisodeTools.episodeWatchedIfNotZero(getContext(), show.getNextEpisodeId());
         }
     };
 

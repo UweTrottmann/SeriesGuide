@@ -82,7 +82,7 @@ class ShowsAdapter(
     data class ShowItem(
         val rowId: Long,
         val showTvdbId: Int?,
-        val episodeTvdbId: Int,
+        val nextEpisodeId: Long,
         val hasNextEpisode: Boolean,
         val isFavorite: Boolean,
         val isHidden: Boolean,
@@ -102,7 +102,7 @@ class ShowsAdapter(
                 return ShowItem(
                     rowId = 0,
                     showTvdbId = 0,
-                    episodeTvdbId = 0,
+                    nextEpisodeId = 0,
                     hasNextEpisode = false,
                     isFavorite = false,
                     isHidden = false,
@@ -117,8 +117,6 @@ class ShowsAdapter(
             }
 
             fun map(sgShow: SgShow2ForLists, context: Context): ShowItem {
-                val episodeTvdbId = sgShow.nextEpisode?.toIntOrNull() ?: 0
-
                 val remainingCount = if (sgShow.unwatchedCount > 0) {
                     context.resources.getQuantityString(
                         R.plurals.remaining_episodes_plural,
@@ -192,7 +190,7 @@ class ShowsAdapter(
                 return ShowItem(
                     sgShow.id,
                     sgShow.tvdbId,
-                    episodeTvdbId,
+                    sgShow.nextEpisode?.toLongOrNull() ?: 0,
                     hasNextEpisode,
                     sgShow.favorite,
                     sgShow.hidden,

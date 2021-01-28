@@ -27,8 +27,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -156,27 +154,6 @@ public class DBUtils {
         int count = cursor.getInt(0);
         cursor.close();
         return count;
-    }
-
-    /**
-     * Marks the next episode (if there is one) of the given show as watched. Submits it to trakt if
-     * possible.
-     */
-    public static void markNextEpisode(Context context, int showId, int episodeId) {
-        if (episodeId > 0) {
-            Cursor episode = context.getContentResolver().query(
-                    Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[]{
-                            Episodes.SEASON, Episodes.NUMBER
-                    }, null, null, null
-            );
-            if (episode != null) {
-                if (episode.moveToFirst()) {
-                    EpisodeTools.episodeWatched(context, showId, episodeId, episode.getInt(0),
-                            episode.getInt(1), EpisodeFlags.WATCHED);
-                }
-                episode.close();
-            }
-        }
     }
 
     /**
