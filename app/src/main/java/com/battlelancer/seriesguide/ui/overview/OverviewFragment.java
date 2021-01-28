@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.overview;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -86,7 +85,6 @@ import timber.log.Timber;
 /**
  * Displays general information about a show and its next episode.
  */
-@SuppressLint("NonConstantResourceId")
 public class OverviewFragment extends Fragment implements EpisodeActionsContract {
 
     private static final String ARG_LONG_SHOW_ROWID = "show_id";
@@ -196,10 +194,9 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         containerEpisodeEmpty.setVisibility(View.GONE);
 
         containerEpisodePrimary.setOnClickListener(
-                v -> runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+                v -> runIfHasEpisode((episode) -> {
                     // display episode details
-                    Intent intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeTvdbId);
+                    Intent intent = EpisodesActivity.intentEpisode(episode.getId(), requireContext());
                     Utils.startActivityWithAnimation(getActivity(), intent, v);
                 }));
 
@@ -227,12 +224,15 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
         buttonShare.setOnClickListener(v -> shareEpisode());
         buttonAddToCalendar.setOnClickListener(v -> createCalendarEvent());
-        buttonManageLists.setOnClickListener(v -> runIfEpisodeHasTvdbId(
-                (episode1, episodeTvdbId) -> ManageListsDialogFragment.show(
-                        getParentFragmentManager(),
-                        episodeTvdbId,
-                        ListItemTypes.EPISODE
-                )));
+        buttonManageLists.setOnClickListener(v ->
+                runIfHasEpisode((e) ->
+                        ManageListsDialogFragment.show(
+                                getParentFragmentManager(),
+                                e.getId(),
+                                ListItemTypes.EPISODE
+                        )
+                )
+        );
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textDescription);
@@ -380,11 +380,9 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
     @OnClick(R.id.buttonEpisodeCollected)
     void onButtonCollectedClick() {
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+        runIfHasEpisode((episode) -> {
             final boolean isCollected = episode.getCollected();
-            EpisodeTools
-                    .episodeCollected(getContext(), showTvdbId, episodeTvdbId, episode.getSeason(),
-                            episode.getNumber(), !isCollected);
+            EpisodeTools.episodeCollected(getContext(), episode.getId(), !isCollected);
         });
     }
 
@@ -394,9 +392,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> EpisodeTools
-                .episodeWatched(getContext(), showTvdbId, episodeTvdbId, episode.getSeason(),
-                        episode.getNumber(), episodeFlag));
+        runIfHasEpisode((episode) -> EpisodeTools
+                .episodeWatched(getContext(), episode.getId(), episodeFlag));
     }
 
     @OnClick(R.id.containerRatings)
@@ -746,6 +743,17 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
         // episode description might need show language, so update it here as well
         populateEpisodeDescriptionAndTvdbButton();
+    }
+
+    private interface EpisodeBlock {
+        void run(@NonNull SgEpisode2 episode);
+    }
+
+    private void runIfHasEpisode(EpisodeBlock block) {
+        SgEpisode2 currentEpisode = this.episode;
+        if (currentEpisode != null) {
+            block.run(currentEpisode);
+        }
     }
 
     private interface EpisodeTvdbIdBlock {
