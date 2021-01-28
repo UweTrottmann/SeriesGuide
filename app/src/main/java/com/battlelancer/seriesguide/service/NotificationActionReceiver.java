@@ -3,10 +3,8 @@ package com.battlelancer.seriesguide.service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import androidx.core.app.NotificationManagerCompat;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 
@@ -22,33 +20,13 @@ public class NotificationActionReceiver extends BroadcastReceiver {
             return;
         }
 
-        int episodeTvdbvId = intent.getIntExtra(NotificationService.EXTRA_EPISODE_TVDBID, -1);
-        if (episodeTvdbvId <= 0) {
+        long episodeId = intent.getLongExtra(NotificationService.EXTRA_EPISODE_ID, -1);
+        if (episodeId <= 0) {
             return; // not notification set watched action
         }
 
-        // query for episode details
-        Cursor query = context.getContentResolver()
-                .query(SeriesGuideContract.Episodes.buildEpisodeWithShowUri(episodeTvdbvId),
-                        new String[] {
-                                SeriesGuideContract.Shows.REF_SHOW_ID,
-                                SeriesGuideContract.Episodes.SEASON,
-                                SeriesGuideContract.Episodes.NUMBER }, null, null, null);
-        if (query == null) {
-            return;
-        }
-        if (!query.moveToFirst()) {
-            query.close();
-            return;
-        }
-        int showTvdbId = query.getInt(0);
-        int season = query.getInt(1);
-        int episode = query.getInt(2);
-        query.close();
-
         // mark episode watched
-        EpisodeTools.episodeWatched(context, showTvdbId, episodeTvdbvId, season, episode,
-                EpisodeFlags.WATCHED);
+        EpisodeTools.episodeWatched(context, episodeId, EpisodeFlags.WATCHED);
 
         // dismiss the notification
         NotificationManagerCompat manager = NotificationManagerCompat.from(context);

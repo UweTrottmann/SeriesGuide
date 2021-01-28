@@ -77,8 +77,8 @@ import timber.log.Timber;
 public class NotificationService {
 
     public static final String ACTION_CLEARED = "seriesguide.intent.action.CLEARED";
-    public static final String EXTRA_EPISODE_TVDBID
-            = "com.battlelancer.seriesguide.EXTRA_EPISODE_TVDBID";
+    public static final String EXTRA_EPISODE_ID
+            = "com.battlelancer.seriesguide.EXTRA_EPISODE_ID";
     private static final String EXTRA_EPISODE_CLEARED_TIME
             = "com.battlelancer.seriesguide.episode_cleared_time";
 
@@ -470,8 +470,8 @@ public class NotificationService {
 
             // Action button to set watched
             Intent setWatchedIntent = new Intent(context, NotificationActionReceiver.class);
-            setWatchedIntent.putExtra(EXTRA_EPISODE_TVDBID,
-                    upcomingEpisodes.getInt(NotificationQuery._ID));
+            // FIXME Use new row ID.
+//            setWatchedIntent.putExtra(EXTRA_EPISODE_ID, episodeId);
             // data to handle delete
             checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime);
             PendingIntent setWatchedPendingIntent = PendingIntent.getBroadcast(context,
