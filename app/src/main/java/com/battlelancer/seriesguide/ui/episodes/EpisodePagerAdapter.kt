@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.battlelancer.seriesguide.provider.SgEpisode2Info
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers
 import com.battlelancer.seriesguide.util.TextTools
 
 /**
@@ -17,7 +17,7 @@ internal class EpisodePagerAdapter(
     fm: FragmentManager
 ) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val episodes = ArrayList<SgEpisode2Info>()
+    private val episodes = ArrayList<SgEpisode2Numbers>()
 
     override fun getCount(): Int {
         return episodes.size
@@ -58,7 +58,7 @@ internal class EpisodePagerAdapter(
         return TextTools.getEpisodeNumber(context, episode.season, episode.episodenumber)
     }
 
-    fun updateEpisodeList(list: List<SgEpisode2Info>) {
+    fun updateEpisodeList(list: List<SgEpisode2Numbers>) {
         episodes.clear()
         episodes.addAll(list)
         notifyDataSetChanged()

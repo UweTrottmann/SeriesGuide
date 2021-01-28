@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.battlelancer.seriesguide.provider.SgEpisode2Info
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgShow2Minimal
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -77,7 +77,7 @@ class EpisodesActivityViewModel(
         val seasonId = seasonInfo.seasonId
         val sortOrder = DisplaySettings.getEpisodeSortOrder(getApplication())
         val episodes = database.sgEpisode2Helper()
-            .getEpisodeInfoOfSeason(SgEpisode2Info.buildQuery(seasonId, sortOrder))
+            .getEpisodeNumbersOfSeason(SgEpisode2Numbers.buildQuery(seasonId, sortOrder))
 
         val episodeIndexOrMinus1 = episodes.indexOfFirst { it.id == initialEpisodeId }
 
@@ -112,7 +112,7 @@ class EpisodesActivityViewModel(
     data class EpisodeSeasonAndShowInfo(
         val seasonAndShowInfo: SeasonAndShowInfo,
         val startPosition: Int,
-        val episodes: List<SgEpisode2Info>
+        val episodes: List<SgEpisode2Numbers>
     )
 
 }

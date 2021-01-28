@@ -54,13 +54,19 @@ interface SgEpisode2Helper {
     fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
 
     /**
-     * WAIT, just for compile time validation of [SgEpisode2Info.SELECT]
+     * WAIT, just for compile time validation of [SgEpisode2Numbers.buildQuery]
+     */
+    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = :seasonId")
+    fun dummyToValidateSgEpisode2Numbers(seasonId: Long): List<SgEpisode2Numbers>
+
+    @RawQuery(observedEntities = [SgEpisode2::class])
+    fun getEpisodeNumbersOfSeason(query: SupportSQLiteQuery): List<SgEpisode2Numbers>
+
+    /**
+     * WAIT, just for compile time validation of [SgEpisode2Info.buildQuery]
      */
     @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE season_id = :seasonId")
     fun dummyToValidateSgEpisode2Info(seasonId: Long): List<SgEpisode2Info>
-
-    @RawQuery(observedEntities = [SgEpisode2::class])
-    fun getEpisodeInfoOfSeason(query: SupportSQLiteQuery): List<SgEpisode2Info>
 
     @RawQuery(observedEntities = [SgEpisode2::class])
     fun getEpisodeInfoOfSeasonLiveData(query: SupportSQLiteQuery): LiveData<List<SgEpisode2Info>>
@@ -198,7 +204,7 @@ data class SgEpisode2WithShow(
     }
 }
 
-data class SgEpisode2Info (
+data class SgEpisode2Info(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
     @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
@@ -221,6 +227,28 @@ data class SgEpisode2Info (
             val orderClause = order.query()
             return SimpleSQLiteQuery(
                 "SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
+            )
+        }
+    }
+}
+
+data class SgEpisode2Numbers(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
+    @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
+    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
+    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int
+) {
+    companion object {
+
+        /**
+         * Compile time validated using copy at [SgEpisode2Helper.dummyToValidateSgEpisode2Numbers].
+         */
+        fun buildQuery(seasonId: Long, order: Constants.EpisodeSorting): SimpleSQLiteQuery {
+            val orderClause = order.query()
+            return SimpleSQLiteQuery(
+                "SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
             )
         }
     }
