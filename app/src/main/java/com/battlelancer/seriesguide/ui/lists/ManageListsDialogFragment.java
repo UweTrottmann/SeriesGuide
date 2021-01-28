@@ -57,6 +57,12 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
         return f;
     }
 
+    // FIXME Implement
+    public static boolean show(FragmentManager fm, long itemRowId,
+            @SeriesGuideContract.ListItemTypes int itemType) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
     /**
      * Display a dialog which asks if the user wants to add the given show to one or more lists.
      *  @param itemTvdbId TVDb id of the item to add

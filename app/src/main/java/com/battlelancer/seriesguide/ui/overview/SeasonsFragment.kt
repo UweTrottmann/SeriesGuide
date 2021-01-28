@@ -19,8 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentSeasonsBinding
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
@@ -51,7 +50,6 @@ class SeasonsFragment() : Fragment() {
     private var collectedAllEpisodes: Boolean = false
 
     private var showId: Long = 0
-    private var showTvdbId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,8 +57,6 @@ class SeasonsFragment() : Fragment() {
         arguments?.run {
             showId = getLong(ARG_LONG_SHOW_ROW_ID)
         } ?: throw IllegalArgumentException("Missing arguments")
-        showTvdbId =
-            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowTvdbId(showId)
     }
 
     override fun onCreateView(
@@ -163,36 +159,36 @@ class SeasonsFragment() : Fragment() {
                     .toBundle())
         }
 
-        override fun onPopupMenuClick(v: View, seasonTvdbId: Int, seasonNumber: Int) {
+        override fun onPopupMenuClick(v: View, seasonRowId: Long) {
             PopupMenu(v.context, v).apply {
                 inflate(R.menu.seasons_popup_menu)
                 setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.menu_action_seasons_watched_all -> {
-                            onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, true)
+                            onFlagSeasonWatched(seasonRowId, true)
                             true
                         }
                         R.id.menu_action_seasons_watched_none -> {
-                            onFlagSeasonWatched(seasonTvdbId.toLong(), seasonNumber, false)
+                            onFlagSeasonWatched(seasonRowId, false)
                             true
                         }
                         R.id.menu_action_seasons_collection_add -> {
-                            onFlagSeasonCollected(seasonTvdbId.toLong(), seasonNumber, true)
+                            onFlagSeasonCollected(seasonRowId, true)
                             true
                         }
                         R.id.menu_action_seasons_collection_remove -> {
-                            onFlagSeasonCollected(seasonTvdbId.toLong(), seasonNumber, false)
+                            onFlagSeasonCollected(seasonRowId, false)
                             true
                         }
                         R.id.menu_action_seasons_skip -> {
-                            onFlagSeasonSkipped(seasonTvdbId.toLong(), seasonNumber)
+                            onFlagSeasonSkipped(seasonRowId)
                             true
                         }
                         R.id.menu_action_seasons_manage_lists -> {
                             ManageListsDialogFragment.show(
                                 parentFragmentManager,
-                                seasonTvdbId,
-                                ListItemTypes.SEASON
+                                seasonRowId,
+                                SeriesGuideContract.ListItemTypes.SEASON
                             )
                             true
                         }
@@ -220,31 +216,33 @@ class SeasonsFragment() : Fragment() {
             UnwatchedUpdateWorker.updateUnwatchedCountFor(
                 requireContext(),
                 showId,
-                event.flagJob.seasonTvdbId
+                event.flagJob.seasonId
             )
         } else {
             updateUnwatchedCounts()
         }
     }
 
-    private fun onFlagSeasonSkipped(seasonId: Long, seasonNumber: Int) {
-        EpisodeTools.seasonWatched(context, showTvdbId, seasonId.toInt(),
-                seasonNumber, EpisodeFlags.SKIPPED)
+    private fun onFlagSeasonSkipped(seasonId: Long) {
+        EpisodeTools.seasonWatched(context, seasonId, EpisodeFlags.SKIPPED)
     }
 
     /**
      * Changes the seasons episodes watched flags, updates the status label of the season.
      */
-    private fun onFlagSeasonWatched(seasonId: Long, seasonNumber: Int, isWatched: Boolean) {
-        EpisodeTools.seasonWatched(context, showTvdbId, seasonId.toInt(),
-                seasonNumber, if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED)
+    private fun onFlagSeasonWatched(seasonId: Long, isWatched: Boolean) {
+        EpisodeTools.seasonWatched(
+            context,
+            seasonId,
+            if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
+        )
     }
 
     /**
      * Changes the seasons episodes collected flags.
      */
-    private fun onFlagSeasonCollected(seasonId: Long, seasonNumber: Int, isCollected: Boolean) {
-        EpisodeTools.seasonCollected(context, showTvdbId, seasonId.toInt(), seasonNumber, isCollected)
+    private fun onFlagSeasonCollected(seasonId: Long, isCollected: Boolean) {
+        EpisodeTools.seasonCollected(context, seasonId, isCollected)
     }
 
     /**
@@ -252,7 +250,7 @@ class SeasonsFragment() : Fragment() {
      * seasons.
      */
     private fun onFlagShowWatched(isWatched: Boolean) {
-        EpisodeTools.showWatched(context, showTvdbId, isWatched)
+        EpisodeTools.showWatched(context, showId, isWatched)
     }
 
     /**
@@ -260,7 +258,7 @@ class SeasonsFragment() : Fragment() {
      * all seasons.
      */
     private fun onFlagShowCollected(isCollected: Boolean) {
-        EpisodeTools.showCollected(context, showTvdbId, isCollected)
+        EpisodeTools.showCollected(context, showId, isCollected)
     }
 
     /**

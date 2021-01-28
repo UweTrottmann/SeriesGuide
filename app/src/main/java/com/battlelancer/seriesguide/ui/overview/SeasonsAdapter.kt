@@ -25,7 +25,7 @@ class SeasonsAdapter(
 
     interface ItemClickListener {
         fun onItemClick(v: View, seasonRowId: Long)
-        fun onPopupMenuClick(v: View, seasonTvdbId: Int, seasonNumber: Int)
+        fun onPopupMenuClick(v: View, seasonRowId: Long)
     }
 
     class ViewHolder(
@@ -42,10 +42,9 @@ class SeasonsAdapter(
                     itemClickListener.onItemClick(view, it.id)
                 }
             }
-            binding.imageViewContextMenu.setOnClickListener {
-                val season = this.season
-                if (season?.tvdbId != null) {
-                    itemClickListener.onPopupMenuClick(it, season.tvdbId, season.number)
+            binding.imageViewContextMenu.setOnClickListener { view ->
+                season?.also {
+                    itemClickListener.onPopupMenuClick(view, it.id)
                 }
             }
         }

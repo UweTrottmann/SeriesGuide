@@ -39,4 +39,8 @@ public abstract class SeasonBaseJob extends BaseEpisodesJob {
     protected long getShowId() {
         return getSeason().getShowId();
     }
+
+    public long getSeasonId() {
+        return seasonId;
+    }
 }

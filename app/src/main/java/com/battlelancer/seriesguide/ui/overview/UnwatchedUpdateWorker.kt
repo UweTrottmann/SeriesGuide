@@ -19,24 +19,22 @@ object UnwatchedUpdateWorker {
      *
      * May be cancelled when the app process dies.
      */
-    fun updateUnwatchedCountFor(context: Context, showRowId: Long, seasonTvdbId: Int = -1) {
+    fun updateUnwatchedCountFor(context: Context, showRowId: Long, seasonRowId: Long = -1) {
         SgApp.coroutineScope.launch {
-            updateUnwatchedCount(context.applicationContext, showRowId, seasonTvdbId)
+            updateUnwatchedCount(context.applicationContext, showRowId, seasonRowId)
         }
     }
 
-    private suspend fun updateUnwatchedCount(context: Context, showRowId: Long, seasonTvdbId: Int) =
+    private suspend fun updateUnwatchedCount(context: Context, showRowId: Long, seasonRowId: Long) =
         withContext(SgApp.SINGLE) {
             if (showRowId <= 0) {
                 Timber.e("Not running: invalid show row ID.")
             }
 
             val helper = SgRoomDatabase.getInstance(context).sgSeason2Helper()
-            if (seasonTvdbId != -1) {
+            if (seasonRowId != -1L) {
                 // update one season
-                val seasonId = helper.getSeasonId(seasonTvdbId)
-                if (seasonId == 0L) return@withContext
-                updateUnwatchedCountForSeason(context, seasonId)
+                updateUnwatchedCountForSeason(context, seasonRowId)
             } else {
                 // update all seasons of this show, start with the most recent one
                 val seasons = helper.getSeasonIdsOfShow(showRowId)
@@ -45,7 +43,7 @@ object UnwatchedUpdateWorker {
                 }
             }
 
-            Timber.d("Updated watched count: show %d, season %d", showRowId, seasonTvdbId)
+            Timber.d("Updated watched count: show %d, season %d", showRowId, seasonRowId)
         }
 
     private fun updateUnwatchedCountForSeason(context: Context, seasonRowId: Long) {
