@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -280,6 +281,8 @@ public class ShowTools {
     /**
      * Returns the trakt id of a show. Returns {@code null} if the query failed, there is no trakt
      * id or if it is invalid.
+     *
+     * @deprecated Use {@link #getShowTraktId(Context, long)} and show row ID instead.
      */
     @Nullable
     public static Integer getShowTraktId(@NonNull Context context, int showTvdbId) {
@@ -301,6 +304,20 @@ public class ShowTools {
         traktIdQuery.close();
 
         return traktId;
+    }
+
+    /**
+     * Returns the Trakt id of a show, or {@code null} if it is invalid or there is none.
+     */
+    @Nullable
+    public static Integer getShowTraktId(@NonNull Context context, long showId) {
+        int traktIdOrZero = SgRoomDatabase.getInstance(context).sgShow2Helper()
+                .getShowTraktId(showId);
+        if (traktIdOrZero <= 0) {
+            return null;
+        } else {
+            return traktIdOrZero;
+        }
     }
 
     /**

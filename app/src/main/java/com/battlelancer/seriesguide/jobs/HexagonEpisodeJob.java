@@ -7,6 +7,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
@@ -32,8 +33,15 @@ public class HexagonEpisodeJob extends BaseNetworkEpisodeJob {
     @NonNull
     @Override
     public NetworkJobProcessor.JobResult execute(Context context) {
+        int showTvdbIdOrZero = SgRoomDatabase.getInstance(context).sgShow2Helper()
+                .getShowTvdbId(jobInfo.showId());
+        if (showTvdbIdOrZero <= 0) {
+            // Can't run this job (for now), report error and remove.
+            return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT);
+        }
+
         EpisodeList uploadWrapper = new EpisodeList();
-        uploadWrapper.setShowTvdbId(jobInfo.showTvdbId());
+        uploadWrapper.setShowTvdbId(showTvdbIdOrZero);
 
         // upload in small batches
         List<Episode> smallBatch = new ArrayList<>();

@@ -3,13 +3,12 @@ package com.battlelancer.seriesguide.jobs;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.TaskStackBuilder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
@@ -22,22 +21,7 @@ public abstract class BaseNetworkEpisodeJob extends BaseNetworkJob {
 
     @Nullable
     protected String getItemTitle(Context context) {
-        int showTvdbId = jobInfo.showTvdbId();
-        Cursor query = context.getContentResolver()
-                .query(SeriesGuideContract.Shows.buildShowUri(showTvdbId),
-                        SeriesGuideContract.Shows.PROJECTION_TITLE, null,
-                        null, null);
-        if (query == null) {
-            return null;
-        }
-        if (!query.moveToFirst()) {
-            query.close();
-            return null;
-        }
-        String title = query.getString(
-                query.getColumnIndexOrThrow(SeriesGuideContract.Shows.TITLE));
-        query.close();
-        return title;
+        return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTitle(jobInfo.showId());
     }
 
     @Nullable
@@ -64,7 +48,7 @@ public abstract class BaseNetworkEpisodeJob extends BaseNetworkJob {
         // tapping the notification should open the affected show
         return TaskStackBuilder.create(context)
                 .addNextIntent(new Intent(context, ShowsActivity.class))
-                .addNextIntent(OverviewActivity.intentShow(context, jobInfo.showTvdbId()))
+                .addNextIntent(OverviewActivity.intentShow(context, jobInfo.showId()))
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
