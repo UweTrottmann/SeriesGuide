@@ -19,7 +19,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter
-import com.battlelancer.seriesguide.ui.shows.ShowMenuItemClickListener
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.EmptyView
@@ -136,14 +135,15 @@ class ShowSearchFragment : BaseSearchFragment() {
                     // hide unused actions
                     findItem(R.id.menu_action_shows_watched_next).isVisible = false
                 }
-                setOnMenuItemClickListener(
-                    ShowMenuItemClickListener(
-                        context,
-                        parentFragmentManager,
-                        viewHolder.showTvdbId,
-                        viewHolder.episodeTvdbId
-                    )
-                )
+                // FIXME Use row IDs.
+//                setOnMenuItemClickListener(
+//                    ShowMenuItemClickListener(
+//                        context,
+//                        parentFragmentManager,
+//                        viewHolder.showTvdbId,
+//                        viewHolder.episodeTvdbId
+//                    )
+//                )
             }.show()
         }
 
