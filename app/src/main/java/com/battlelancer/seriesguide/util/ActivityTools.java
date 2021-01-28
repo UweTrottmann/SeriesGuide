@@ -25,9 +25,16 @@ public class ActivityTools {
      *
      * <p>Also cleans up old entries.
      */
-    public static void addActivity(Context context, int episodeTvdbId, int showTvdbId) {
+    public static void addActivity(Context context, long episodeId, long showId) {
+        // Need to use global IDs (in case a show is removed and added again).
+        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+        int showTvdbIdOrZero = database.sgShow2Helper().getShowTvdbId(showId);
+        if (showTvdbIdOrZero == 0) return;
+        int episodeTvdbIdOrZero = database.sgEpisode2Helper().getEpisodeTvdbId(episodeId);
+        if (episodeTvdbIdOrZero == 0) return;
+
         long timeMonthAgo = System.currentTimeMillis() - HISTORY_THRESHOLD;
-        SgActivityHelper helper = SgRoomDatabase.getInstance(context).sgActivityHelper();
+        SgActivityHelper helper = database.sgActivityHelper();
 
         // delete all entries older than 30 days
         int deleted = helper.deleteOldActivity(timeMonthAgo);
@@ -36,19 +43,23 @@ public class ActivityTools {
         // add new entry
         long currentTime = System.currentTimeMillis();
         SgActivity activity = new SgActivity(null,
-                String.valueOf(episodeTvdbId),
-                String.valueOf(showTvdbId),
+                String.valueOf(episodeTvdbIdOrZero),
+                String.valueOf(showTvdbIdOrZero),
                 currentTime);
         helper.insertActivity(activity);
-        Timber.d("addActivity: episode: %d timestamp: %d", episodeTvdbId, currentTime);
+        Timber.d("addActivity: episode: %d timestamp: %d", episodeId, currentTime);
     }
 
     /**
-     * Tries to remove any activity with the given episode TheTVDB id.
+     * Tries to remove any activity with the given episode id.
      */
-    public static void removeActivity(Context context, int episodeTvdbId) {
+    public static void removeActivity(Context context, long episodeId) {
+        // Need to use global IDs (in case a show is removed and added again).
+        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+        int episodeTvdbIdOrZero = database.sgEpisode2Helper().getEpisodeTvdbId(episodeId);
+        if (episodeTvdbIdOrZero == 0) return;
         int deleted = SgRoomDatabase.getInstance(context).sgActivityHelper()
-                .deleteActivity(String.valueOf(episodeTvdbId));
+                .deleteActivity(String.valueOf(episodeTvdbIdOrZero));
         Timber.d("removeActivity: deleted %d activity entries", deleted);
     }
 

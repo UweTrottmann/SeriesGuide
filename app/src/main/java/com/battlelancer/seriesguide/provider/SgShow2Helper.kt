@@ -33,6 +33,9 @@ interface SgShow2Helper {
     @Query("SELECT series_title FROM sg_show WHERE _id=:id")
     fun getShowTitle(id: Long): String?
 
+    @Query("SELECT series_lastwatchedid FROM sg_show WHERE _id = :id")
+    fun getShowLastWatchedEpisodeId(id: Long): Long
+
     @RawQuery(observedEntities = [SgShow2::class])
     fun getShows(query: SupportSQLiteQuery): List<SgShow2ForLists>
 

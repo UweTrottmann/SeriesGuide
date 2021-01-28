@@ -26,6 +26,12 @@ interface SgEpisode2Helper {
     @Query("SELECT _id FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
     fun getEpisodeId(tvdbId: Int): Long
 
+    @Query("SELECT episode_tvdb_id FROM sg_episode WHERE _id = :episodeId")
+    fun getEpisodeTvdbId(episodeId: Long): Int
+
+    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE _id = :episodeId")
+    fun getEpisodeNumbers(episodeId: Long): SgEpisode2Numbers?
+
     @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeInfo(episodeId: Long): SgEpisode2Info?
 
@@ -34,6 +40,12 @@ interface SgEpisode2Helper {
 
     @Query("SELECT * FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
     fun getEpisodeLiveData(tvdbId: Int): LiveData<SgEpisode2?>
+
+    @Query("""SELECT _id FROM sg_episode WHERE series_id = :showId 
+        AND episode_season_number > 0 AND episode_watched != ${EpisodeFlags.UNWATCHED} 
+        AND (episode_season_number < :seasonNumber OR (episode_season_number = :seasonNumber AND episode_number < :episodeNumber))
+        ORDER BY episode_season_number DESC, episode_number DESC, episode_firstairedms DESC""")
+    fun getPreviousWatchedEpisodeOfShow(showId: Long, seasonNumber: Int, episodeNumber: Int): Long
 
     /**
      * WAIT, just used for compile time validation of [SgEpisode2WithShow.SELECT].
@@ -103,6 +115,17 @@ interface SgEpisode2Helper {
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_collected = 0")
     fun countNotCollectedEpisodesOfSeason(seasonId: Long): Int
 
+    @Query("UPDATE sg_episode SET episode_watched = 0, episode_plays = 0 WHERE _id = :episodeId")
+    fun setNotWatchedAndRemovePlays(episodeId: Long): Int
+
+    @Query("UPDATE sg_episode SET episode_watched = 1, episode_plays = episode_plays + 1 WHERE _id = :episodeId")
+    fun setWatchedAndAddPlay(episodeId: Long): Int
+
+    @Query("UPDATE sg_episode SET episode_watched = 2 WHERE _id = :episodeId")
+    fun setSkipped(episodeId: Long): Int
+
+    @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE _id = :episodeId")
+    fun updateCollected(episodeId: Long, isCollected: Boolean): Int
 }
 
 data class SgEpisode2WithShow(

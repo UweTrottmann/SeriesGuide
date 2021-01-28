@@ -633,6 +633,11 @@ public class SeriesGuideProvider extends ContentProvider {
             case SG_SHOW: {
                 return builder.table(Tables.SG_SHOW);
             }
+            case SG_SHOW_ID: {
+                long id = SgShow2Columns.getId(uri);
+                return builder.table(Tables.SG_SHOW).where(SgShow2Columns._ID + "=?",
+                        String.valueOf(id));
+            }
             case SG_SEASON: {
                 return builder.table(Tables.SG_SEASON);
             }

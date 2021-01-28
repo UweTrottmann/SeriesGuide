@@ -2,8 +2,6 @@ package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,34 +11,24 @@ import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.google.flatbuffers.FlatBufferBuilder;
+import java.util.List;
 
 public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
 
     public static final String[] PROJECTION_EPISODE = new String[] {
             Episodes._ID
     };
-    public static final String[] PROJECTION_EPISODES_NETWORK_JOB = new String[] {
-            Episodes.SEASON,
-            Episodes.NUMBER,
-            Episodes.PLAYS
-    };
-    public static final String ORDER_SEASON_ASC_NUMBER_ASC =
-            Episodes.SORT_SEASON_ASC + ", " + Episodes.SORT_NUMBER_ASC;
 
-    private final int showTvdbId;
     private final int flagValue;
 
-    public BaseEpisodesJob(int showTvdbId, int flagValue, JobAction action) {
+    public BaseEpisodesJob(int flagValue, JobAction action) {
         super(action);
-        this.showTvdbId = showTvdbId;
         this.flagValue = flagValue;
-    }
-
-    public int getShowTvdbId() {
-        return showTvdbId;
     }
 
     @Override
@@ -59,15 +47,7 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         return flagValue;
     }
 
-    protected abstract Uri getDatabaseUri();
-
-    protected abstract String getDatabaseSelection();
-
-    /**
-     * Return the column which should get updated, either {@link Episodes}
-     * .WATCHED or {@link Episodes}.COLLECTED.
-     */
-    protected abstract String getDatabaseColumnToUpdate();
+    protected abstract long getShowId();
 
     /**
      * Builds and executes the database op required to flag episodes in the local database,
@@ -76,23 +56,17 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
     @Override
     @CallSuper
     public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
-        // determine query uri
-        Uri uri = getDatabaseUri();
-        if (uri == null) {
-            return false;
-        }
-
         // prepare network job
         byte[] networkJobInfo = null;
         if (requiresNetworkJob) {
-            networkJobInfo = prepareNetworkJob(context, uri);
+            networkJobInfo = prepareNetworkJob(context);
             if (networkJobInfo == null) {
                 return false;
             }
         }
 
         // apply local updates
-        boolean updated = applyDatabaseChanges(context, uri);
+        boolean updated = applyDatabaseChanges(context);
         if (!updated) {
             return false;
         }
@@ -113,13 +87,14 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
         return true;
     }
 
-    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
-        ContentValues values = new ContentValues();
-        values.put(getDatabaseColumnToUpdate(), getFlagValue());
-        int updated = context.getContentResolver()
-                .update(uri, values, getDatabaseSelection(), null);
-        return updated >= 0; // -1 means error
-    }
+    protected abstract boolean applyDatabaseChanges(@NonNull Context context);
+
+    /**
+     * Note: Ensure episodes are ordered by season number (lowest first),
+     * then episode number (lowest first).
+     */
+    @NonNull
+    protected abstract List<SgEpisode2Numbers> getEpisodesForNetworkJob(@NonNull Context context);
 
     /**
      * Returns the number of plays to upload to Cloud (Trakt currently not supported)
@@ -128,34 +103,23 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
     protected abstract int getPlaysForNetworkJob(int plays);
 
     @Nullable
-    private byte[] prepareNetworkJob(Context context, @NonNull Uri uri) {
+    private byte[] prepareNetworkJob(Context context) {
         // store affected episodes for network part
-        Cursor query = context.getContentResolver()
-                .query(uri, PROJECTION_EPISODES_NETWORK_JOB, getDatabaseSelection(), null,
-                        ORDER_SEASON_ASC_NUMBER_ASC);
-        if (query == null) {
-            return null;
-        }
-        if (!query.moveToFirst()) {
-            query.close();
-            return null;
-        }
+        List<SgEpisode2Numbers> episodes = getEpisodesForNetworkJob(context);
 
         FlatBufferBuilder builder = new FlatBufferBuilder(0);
 
-        int[] episodeInfos = new int[query.getCount()];
-        int i = 0;
-        do {
-            int season = query.getInt(0);
-            int number = query.getInt(1);
-            int plays = getPlaysForNetworkJob(query.getInt(2));
-            episodeInfos[i] = EpisodeInfo.createEpisodeInfo(builder, season, number, plays);
-            i++;
-        } while (query.moveToNext());
-        query.close();
+        int[] episodeInfos = new int[episodes.size()];
+        for (int i = 0; i < episodes.size(); i++) {
+            SgEpisode2Numbers episode = episodes.get(i);
+            int plays = getPlaysForNetworkJob(episode.getPlays());
+            episodeInfos[i] = EpisodeInfo
+                    .createEpisodeInfo(builder, episode.getSeason(), episode.getEpisodenumber(),
+                            plays);
+        }
 
-        int episodes = SgJobInfo.createEpisodesVector(builder, episodeInfos);
-        int jobInfo = SgJobInfo.createSgJobInfo(builder, showTvdbId, flagValue, episodes, 0, 0);
+        int episodesVector = SgJobInfo.createEpisodesVector(builder, episodeInfos);
+        int jobInfo = SgJobInfo.createSgJobInfo(builder, flagValue, episodesVector, 0, 0, getShowId());
 
         builder.finish(jobInfo);
         return builder.sizedByteArray();
@@ -170,20 +134,19 @@ public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
      * @param setLastWatchedToNow Whether to set the last watched time of a show to now.
      */
     protected final void updateLastWatched(Context context,
-            int lastWatchedEpisodeId, boolean setLastWatchedToNow) {
+            long lastWatchedEpisodeId, boolean setLastWatchedToNow) {
         if (lastWatchedEpisodeId != -1 || setLastWatchedToNow) {
             ContentValues values = new ContentValues();
             if (lastWatchedEpisodeId != -1) {
-                values.put(SeriesGuideContract.Shows.LASTWATCHEDID, lastWatchedEpisodeId);
+                values.put(SgShow2Columns.LASTWATCHEDID, lastWatchedEpisodeId);
             }
             if (setLastWatchedToNow) {
-                values.put(SeriesGuideContract.Shows.LASTWATCHED_MS,
-                        System.currentTimeMillis());
+                values.put(SgShow2Columns.LASTWATCHED_MS, System.currentTimeMillis());
             }
             context.getContentResolver().update(
-                    SeriesGuideContract.Shows.buildShowUri(String.valueOf(showTvdbId)),
+                    SgShow2Columns.buildIdUri(getShowId()),
                     values, null, null);
         }
-        LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, getShowTvdbId());
+        LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, getShowId());
     }
 }

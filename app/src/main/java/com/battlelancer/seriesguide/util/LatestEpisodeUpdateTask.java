@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import timber.log.Timber;
 
 /**
@@ -22,10 +23,7 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
 
     @Override
     protected Void doInBackground(Integer... params) {
-        int showTvdbId = (params != null && params.length > 0) ? params[0] : -1;
-
-        updateLatestEpisodeFor(context, showTvdbId);
-
+        updateLatestEpisodeFor(context, null);
         return null;
     }
 
@@ -34,11 +32,15 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
         TaskManager.getInstance().releaseNextEpisodeUpdateTaskRef();
     }
 
-    public static void updateLatestEpisodeFor(Context context, int showTvdbId) {
-        if (showTvdbId > 0) {
+    public static void updateLatestEpisodeFor(Context context, Long showId) {
+        if (showId != null) {
             // update single show
-            Timber.d("Updating next episode for show %s", showTvdbId);
-            DBUtils.updateLatestEpisode(context, showTvdbId);
+            Timber.d("Updating next episode for show %s", showId);
+            int showTvdbId = SgRoomDatabase.getInstance(context).sgShow2Helper()
+                    .getShowTvdbId(showId);
+            if (showTvdbId != 0) {
+                DBUtils.updateLatestEpisode(context, showTvdbId);
+            }
         } else {
             // update all shows
             Timber.d("Updating next episodes for all shows");
