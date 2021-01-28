@@ -41,6 +41,13 @@ interface SgEpisode2Helper {
     @Query("SELECT * FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
     fun getEpisodeLiveData(tvdbId: Int): LiveData<SgEpisode2?>
 
+    @Query(
+        """SELECT _id FROM sg_episode WHERE season_id = :seasonId 
+        AND episode_firstairedms <= :currentTimePlusOneHour
+        ORDER BY episode_number DESC, episode_firstairedms DESC"""
+    )
+    fun getHighestWatchedEpisodeOfSeason(seasonId: Long, currentTimePlusOneHour: Long): Long
+
     @Query("""SELECT _id FROM sg_episode WHERE series_id = :showId 
         AND episode_season_number > 0 AND episode_watched != ${EpisodeFlags.UNWATCHED} 
         AND (episode_season_number < :seasonNumber OR (episode_season_number = :seasonNumber AND episode_number < :episodeNumber))
@@ -66,10 +73,10 @@ interface SgEpisode2Helper {
     fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
 
     /**
-     * WAIT, just for compile time validation of [SgEpisode2Numbers.buildQuery]
+     * Also serves as compile time validation of [SgEpisode2Numbers.buildQuery]
      */
-    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = :seasonId")
-    fun dummyToValidateSgEpisode2Numbers(seasonId: Long): List<SgEpisode2Numbers>
+    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_season_number ASC, episode_number ASC")
+    fun getEpisodeNumbersOfSeason(seasonId: Long): List<SgEpisode2Numbers>
 
     @RawQuery(observedEntities = [SgEpisode2::class])
     fun getEpisodeNumbersOfSeason(query: SupportSQLiteQuery): List<SgEpisode2Numbers>
@@ -158,8 +165,73 @@ interface SgEpisode2Helper {
             ORDER BY episode_season_number ASC, episode_number ASC""")
     fun getEpisodeNumbersForWatchedUpTo(showId: Long, episodeFirstAired: Long, episodeNumber: Int): List<SgEpisode2Numbers>
 
+    /**
+     * Note: keep in sync with [setSeasonNotWatchedAndRemovePlays].
+     */
+    @Query(
+        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.UNWATCHED}
+        ORDER BY episode_season_number ASC, episode_number ASC"""
+    )
+    fun getWatchedOrSkippedEpisodeNumbersOfSeason(seasonId: Long): List<SgEpisode2Numbers>
+
+    /**
+     * Sets all watched or skipped as not watched and removes all plays.
+     *
+     * Note: keep in sync with [getWatchedOrSkippedEpisodeNumbersOfSeason].
+     */
+    @Query(
+        """UPDATE sg_episode SET episode_watched = 0, episode_plays = 0
+        WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.UNWATCHED}"""
+    )
+    fun setSeasonNotWatchedAndRemovePlays(seasonId: Long): Int
+
+    /**
+     * Does NOT include watched episodes to avoid Trakt adding a new play,
+     * only includes episodes that have been released until within the hour.
+     *
+     * Note: keep in sync with [setSeasonSkipped] and [setSeasonWatchedAndAddPlay].
+     */
+    @Query(
+        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.WATCHED}
+        AND episode_firstairedms <= :currentTimePlusOneHour AND episode_firstairedms != -1
+        ORDER BY episode_season_number ASC, episode_number ASC"""
+    )
+    fun getNotWatchedOrSkippedEpisodeNumbersOfSeason(seasonId: Long, currentTimePlusOneHour: Long): List<SgEpisode2Numbers>
+
+    /**
+     * Sets not watched or skipped episodes, released until within the hour,
+     * as watched and adds play.
+     *
+     * Does NOT mark watched episodes again to avoid adding a new play (Trakt and local).
+     *
+     * Note: keep in sync with [getNotWatchedOrSkippedEpisodeNumbersOfSeason].
+     */
+    @Query(
+        """UPDATE sg_episode SET episode_watched = 1, episode_plays = episode_plays + 1 
+            WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.WATCHED}
+            AND episode_firstairedms <= :currentTimePlusOneHour AND episode_firstairedms != -1"""
+    )
+    fun setSeasonWatchedAndAddPlay(seasonId: Long, currentTimePlusOneHour: Long): Int
+
+    /**
+     * Sets not watched episodes, released until within the hour, as skipped.
+     *
+     * Note: keep in sync with [getNotWatchedOrSkippedEpisodeNumbersOfSeason].
+     */
+    @Query(
+        """UPDATE sg_episode SET episode_watched = 2 
+            WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED}
+            AND episode_firstairedms <= :currentTimePlusOneHour AND episode_firstairedms != -1"""
+    )
+    fun setSeasonSkipped(seasonId: Long, currentTimePlusOneHour: Long): Int
+
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE _id = :episodeId")
     fun updateCollected(episodeId: Long, isCollected: Boolean): Int
+
+    @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE season_id = :seasonId")
+    fun updateCollectedOfSeason(seasonId: Long, isCollected: Boolean): Int
 }
 
 data class SgEpisode2WithShow(
@@ -300,7 +372,7 @@ data class SgEpisode2Numbers(
     companion object {
 
         /**
-         * Compile time validated using copy at [SgEpisode2Helper.dummyToValidateSgEpisode2Numbers].
+         * Compile time validated using copy at [SgEpisode2Helper.getEpisodeNumbersOfSeason].
          */
         fun buildQuery(seasonId: Long, order: Constants.EpisodeSorting): SimpleSQLiteQuery {
             val orderClause = order.query()

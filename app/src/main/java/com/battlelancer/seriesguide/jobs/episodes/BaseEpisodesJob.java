@@ -20,10 +20,6 @@ import java.util.List;
 
 public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
 
-    public static final String[] PROJECTION_EPISODE = new String[] {
-            Episodes._ID
-    };
-
     private final int flagValue;
 
     public BaseEpisodesJob(int flagValue, JobAction action) {

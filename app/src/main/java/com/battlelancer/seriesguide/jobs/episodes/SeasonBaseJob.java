@@ -1,30 +1,42 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
-import android.net.Uri;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import android.content.Context;
+import androidx.annotation.NonNull;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.provider.SgSeason2Numbers;
 
 /**
  * Flagging whole seasons watched or collected.
  */
 public abstract class SeasonBaseJob extends BaseEpisodesJob {
 
-    protected int seasonTvdbId;
-    protected int season;
+    protected final long seasonId;
+    private SgSeason2Numbers season;
 
-    public SeasonBaseJob(int showTvdbId, int seasonTvdbId, int season, int flagValue,
-            JobAction action) {
-        super(showTvdbId, flagValue, action);
-        this.seasonTvdbId = seasonTvdbId;
-        this.season = season;
-    }
-
-    public int getSeasonTvdbId() {
-        return seasonTvdbId;
+    public SeasonBaseJob(long seasonId, int flagValue, JobAction action) {
+        super(flagValue, action);
+        this.seasonId = seasonId;
     }
 
     @Override
-    public Uri getDatabaseUri() {
-        return SeriesGuideContract.Episodes.buildEpisodesOfSeasonUri(
-                String.valueOf(seasonTvdbId));
+    public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
+        SgSeason2Numbers season = SgRoomDatabase.getInstance(context).sgSeason2Helper()
+                .getSeasonNumbers(seasonId);
+        if (season == null) {
+            return false;
+        }
+        this.season = season;
+
+        return super.applyLocalChanges(context, requiresNetworkJob);
+    }
+
+    @NonNull
+    public SgSeason2Numbers getSeason() {
+        return season;
+    }
+
+    @Override
+    protected long getShowId() {
+        return getSeason().getShowId();
     }
 }

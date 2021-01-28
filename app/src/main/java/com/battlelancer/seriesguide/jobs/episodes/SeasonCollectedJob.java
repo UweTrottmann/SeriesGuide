@@ -3,28 +3,32 @@ package com.battlelancer.seriesguide.jobs.episodes;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.util.TextTools;
+import java.util.List;
 
 public class SeasonCollectedJob extends SeasonBaseJob {
 
     private final boolean isCollected;
 
-    public SeasonCollectedJob(int showTvdbId, int seasonTvdbId, int season, boolean isCollected) {
-        super(showTvdbId, seasonTvdbId, season, isCollected ? 1 : 0,
-                JobAction.EPISODE_COLLECTION);
+    public SeasonCollectedJob(long seasonId, boolean isCollected) {
+        super(seasonId, isCollected ? 1 : 0, JobAction.EPISODE_COLLECTION);
         this.isCollected = isCollected;
     }
 
     @Override
-    public String getDatabaseSelection() {
-        // include all episodes of season
-        return null;
+    protected boolean applyDatabaseChanges(@NonNull Context context) {
+        int rowsUpdated = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+                .updateCollectedOfSeason(seasonId, isCollected);
+        return rowsUpdated >= 0; // -1 means error.
     }
 
+    @NonNull
     @Override
-    protected String getDatabaseColumnToUpdate() {
-        return SeriesGuideContract.Episodes.COLLECTED;
+    protected List<SgEpisode2Numbers> getEpisodesForNetworkJob(@NonNull Context context) {
+        return SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+                .getEpisodeNumbersOfSeason(seasonId);
     }
 
     @Override
@@ -35,7 +39,7 @@ public class SeasonCollectedJob extends SeasonBaseJob {
     @NonNull
     @Override
     public String getConfirmationText(Context context) {
-        String number = TextTools.getEpisodeNumber(context, season, -1);
+        String number = TextTools.getEpisodeNumber(context, getSeason().getNumber(), -1);
         return TextTools.dotSeparate(number, context.getString(isCollected
                 ? R.string.action_collection_add : R.string.action_collection_remove));
     }
