@@ -124,6 +124,40 @@ interface SgEpisode2Helper {
     @Query("UPDATE sg_episode SET episode_watched = 2 WHERE _id = :episodeId")
     fun setSkipped(episodeId: Long): Int
 
+    /**
+     * Sets not watched or skipped episodes, that have been released,
+     * as watched and adds play if these conditions are met:
+     *
+     * Must
+     * - be released before given episode release time,
+     * - OR at the same time, but with same (itself) or lower (others released at same time) number.
+     *
+     * Note: keep in sync with EpisodeWatchedUpToJob.
+     */
+    @Query(
+        """UPDATE sg_episode SET episode_watched = 1, episode_plays = episode_plays + 1 WHERE series_id = :showId
+            AND (
+            episode_firstairedms < :episodeFirstAired
+            OR (episode_firstairedms = :episodeFirstAired AND episode_number <= :episodeNumber)
+            )
+            AND episode_firstairedms != -1
+            AND episode_watched != ${EpisodeFlags.WATCHED}"""
+    )
+    fun setWatchedUpToAndAddPlay(showId: Long, episodeFirstAired: Long, episodeNumber: Int): Int
+
+    /**
+     * See [setWatchedUpToAndAddPlay] for which episodes are returned.
+     */
+    @Query("""SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId 
+            AND (
+            episode_firstairedms < :episodeFirstAired
+            OR (episode_firstairedms = :episodeFirstAired AND episode_number <= :episodeNumber)
+            )
+            AND episode_firstairedms != -1
+            AND episode_watched != ${EpisodeFlags.WATCHED}
+            ORDER BY episode_season_number ASC, episode_number ASC""")
+    fun getEpisodeNumbersForWatchedUpTo(showId: Long, episodeFirstAired: Long, episodeNumber: Int): List<SgEpisode2Numbers>
+
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE _id = :episodeId")
     fun updateCollected(episodeId: Long, isCollected: Boolean): Int
 }
