@@ -296,27 +296,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     private void changeEpisodeFlag(int episodeFlag) {
-        SgShow2 showOrNull = this.show;
-        SgEpisode2 episodeOrNull = this.episode;
-        if (showOrNull != null && showOrNull.getTvdbId() != null
-                && episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            this.episodeFlag = episodeFlag;
-            EpisodeTools.episodeWatched(requireContext(), showOrNull.getTvdbId(),
-                    episodeOrNull.getTvdbId(), episodeOrNull.getSeason(), episodeOrNull.getNumber(),
-                    episodeFlag);
-        }
+        this.episodeFlag = episodeFlag;
+        EpisodeTools.episodeWatched(requireContext(), episodeId, episodeFlag);
     }
 
     private void onToggleCollected() {
-        SgShow2 showOrNull = this.show;
-        SgEpisode2 episodeOrNull = this.episode;
-        if (showOrNull != null && showOrNull.getTvdbId() != null
-                && episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            collected = !collected;
-            EpisodeTools.episodeCollected(requireContext(), showOrNull.getTvdbId(),
-                    episodeOrNull.getTvdbId(), episodeOrNull.getSeason(), episodeOrNull.getNumber(),
-                    collected);
-        }
+        collected = !collected;
+        EpisodeTools.episodeCollected(requireContext(), episodeId, collected);
     }
 
     private void onButtonStreamingSearchClick() {
@@ -524,16 +510,11 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 .setVisibility(displayWatchedUpTo ? View.VISIBLE : View.GONE);
         bindingButtons.buttonEpisodeWatchedUpTo
                 .setNextFocusUpId(displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
-        bindingButtons.buttonEpisodeWatchedUpTo.setOnClickListener(v -> {
-            if (show.getTvdbId() != null) {
-                DialogTools.safeShow(
-                        EpisodeWatchedUpToDialog
-                                .newInstance(show.getTvdbId(), episode.getFirstReleasedMs(),
-                                        episode.getNumber()),
-                        getParentFragmentManager(), "EpisodeWatchedUpToDialog"
-                );
-            }
-        });
+        bindingButtons.buttonEpisodeWatchedUpTo.setOnClickListener(v -> DialogTools.safeShow(
+                EpisodeWatchedUpToDialog.newInstance(show.getId(), episode.getFirstReleasedMs(),
+                        episode.getNumber()),
+                getParentFragmentManager(), "EpisodeWatchedUpToDialog"
+        ));
 
         // Streaming search button.
         int streamingSearchNextFocusUpId;

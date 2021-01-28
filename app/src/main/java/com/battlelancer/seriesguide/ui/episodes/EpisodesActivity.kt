@@ -371,6 +371,7 @@ class EpisodesActivity : BaseMessageActivity() {
                 .putExtra(EXTRA_LONG_SEASON_ID, seasonRowId)
         }
 
+        @JvmStatic
         fun intentEpisode(episodeRowId: Long, context: Context): Intent {
             return Intent(context, EpisodesActivity::class.java)
                 .putExtra(EXTRA_LONG_EPISODE_ID, episodeRowId)

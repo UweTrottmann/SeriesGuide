@@ -174,13 +174,13 @@ class EpisodesFragment : Fragment() {
     }
 
     private val episodesListClickListener = object : EpisodesAdapter.ClickListener {
-        override fun onWatchedBoxClick(episodeTvdbId: Int, episodeNumber: Int, isWatched: Boolean) {
-            onFlagEpisodeWatched(episodeTvdbId, episodeNumber, isWatched)
+        override fun onWatchedBoxClick(episodeId: Long, isWatched: Boolean) {
+            onFlagEpisodeWatched(episodeId, isWatched)
         }
 
         override fun onPopupMenuClick(
             v: View,
-            episodeTvdbId: Int,
+            episodeId: Long,
             episodeNumber: Int,
             releaseTimeMs: Long,
             watchedFlag: Int,
@@ -202,32 +202,32 @@ class EpisodesFragment : Fragment() {
                 setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.menu_action_episodes_watched -> {
-                            onFlagEpisodeWatched(episodeTvdbId, episodeNumber, true)
+                            onFlagEpisodeWatched(episodeId, true)
                             true
                         }
                         R.id.menu_action_episodes_not_watched -> {
-                            onFlagEpisodeWatched(episodeTvdbId, episodeNumber, false)
+                            onFlagEpisodeWatched(episodeId, false)
                             true
                         }
                         R.id.menu_action_episodes_collection_add -> {
-                            onFlagEpisodeCollected(episodeTvdbId, episodeNumber, true)
+                            onFlagEpisodeCollected(episodeId, true)
                             true
                         }
                         R.id.menu_action_episodes_collection_remove -> {
-                            onFlagEpisodeCollected(episodeTvdbId, episodeNumber, false)
+                            onFlagEpisodeCollected(episodeId, false)
                             true
                         }
                         R.id.menu_action_episodes_skip -> {
-                            onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, true)
+                            onFlagEpisodeSkipped(episodeId, true)
                             true
                         }
                         R.id.menu_action_episodes_dont_skip -> {
-                            onFlagEpisodeSkipped(episodeTvdbId, episodeNumber, false)
+                            onFlagEpisodeSkipped(episodeId, false)
                             true
                         }
                         R.id.menu_action_episodes_watched_up_to -> {
                             EpisodeWatchedUpToDialog.newInstance(
-                                model.showTvdbId,
+                                model.showId,
                                 releaseTimeMs,
                                 episodeNumber
                             ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
@@ -236,7 +236,7 @@ class EpisodesFragment : Fragment() {
                         R.id.menu_action_episodes_manage_lists -> {
                             ManageListsDialogFragment.show(
                                 parentFragmentManager,
-                                episodeTvdbId,
+                                episodeId,
                                 ListItemTypes.EPISODE
                             )
                             true
@@ -250,21 +250,24 @@ class EpisodesFragment : Fragment() {
         }
     }
 
-    private fun onFlagEpisodeWatched(episodeTvdbId: Int, episode: Int, isWatched: Boolean) {
-        EpisodeTools.episodeWatched(requireContext(), model.showTvdbId, episodeTvdbId,
-            model.seasonNumber, episode,
-                if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED)
+    private fun onFlagEpisodeWatched(episodeId: Long, isWatched: Boolean) {
+        EpisodeTools.episodeWatched(
+            requireContext(),
+            episodeId,
+            if (isWatched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED
+        )
     }
 
-    private fun onFlagEpisodeSkipped(episodeTvdbId: Int, episode: Int, isSkipped: Boolean) {
-        EpisodeTools.episodeWatched(requireContext(), model.showTvdbId, episodeTvdbId,
-            model.seasonNumber, episode,
-                if (isSkipped) EpisodeFlags.SKIPPED else EpisodeFlags.UNWATCHED)
+    private fun onFlagEpisodeSkipped(episodeId: Long, isSkipped: Boolean) {
+        EpisodeTools.episodeWatched(
+            requireContext(),
+            episodeId,
+            if (isSkipped) EpisodeFlags.SKIPPED else EpisodeFlags.UNWATCHED
+        )
     }
 
-    private fun onFlagEpisodeCollected(episodeTvdbId: Int, episode: Int, isCollected: Boolean) {
-        EpisodeTools.episodeCollected(requireContext(), model.showTvdbId, episodeTvdbId,
-            model.seasonNumber, episode, isCollected)
+    private fun onFlagEpisodeCollected(episodeId: Long, isCollected: Boolean) {
+        EpisodeTools.episodeCollected(requireContext(), episodeId, isCollected)
     }
 
     private fun showSortDialog() {
@@ -322,23 +325,11 @@ class EpisodesFragment : Fragment() {
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_WATCHED_ALL -> {
-                        EpisodeTools.seasonWatched(
-                            context,
-                            model.showTvdbId,
-                            model.seasonTvdbId,
-                            model.seasonNumber,
-                            EpisodeFlags.WATCHED
-                        )
+                        EpisodeTools.seasonWatched(context, seasonId, EpisodeFlags.WATCHED)
                         true
                     }
                     CONTEXT_WATCHED_NONE -> {
-                        EpisodeTools.seasonWatched(
-                            context,
-                            model.showTvdbId,
-                            model.seasonTvdbId,
-                            model.seasonNumber,
-                            EpisodeFlags.UNWATCHED
-                        )
+                        EpisodeTools.seasonWatched(context, seasonId, EpisodeFlags.UNWATCHED)
                         true
                     }
                     else -> false
@@ -372,23 +363,11 @@ class EpisodesFragment : Fragment() {
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_COLLECTED_ALL -> {
-                        EpisodeTools.seasonCollected(
-                            context,
-                            model.showTvdbId,
-                            model.seasonTvdbId,
-                            model.seasonNumber,
-                            true
-                        )
+                        EpisodeTools.seasonCollected(context, seasonId, true)
                         true
                     }
                     CONTEXT_COLLECTED_NONE -> {
-                        EpisodeTools.seasonCollected(
-                            context,
-                            model.showTvdbId,
-                            model.seasonTvdbId,
-                            model.seasonNumber,
-                            false
-                        )
+                        EpisodeTools.seasonCollected(context, seasonId, false)
                         true
                     }
                     else -> false

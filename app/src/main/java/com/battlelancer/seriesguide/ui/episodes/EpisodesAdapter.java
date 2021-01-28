@@ -24,8 +24,8 @@ import java.util.List;
 class EpisodesAdapter extends ArrayAdapter<SgEpisode2Info> {
 
     interface ClickListener {
-        void onWatchedBoxClick(int episodeTvdbId, int episodeNumber, boolean isWatched);
-        void onPopupMenuClick(@NonNull View v, int episodeTvdbId, int episodeNumber,
+        void onWatchedBoxClick(long episodeId, boolean isWatched);
+        void onPopupMenuClick(@NonNull View v, long episodeId, int episodeNumber,
                 long releaseTimeMs, int watchedFlag, boolean isCollected);
     }
 
@@ -127,12 +127,11 @@ class EpisodesAdapter extends ArrayAdapter<SgEpisode2Info> {
 
             // watched box
             binding.watchedBoxEpisode.setEpisodeFlag(watchedFlag);
-            final int episodeTvdbId = episode.getEpisodeTvdbId();
             binding.watchedBoxEpisode.setOnClickListener(v -> {
                 WatchedBox box = (WatchedBox) v;
                 // disable button, will be re-enabled on data reload once action completes
                 box.setEnabled(false);
-                clickListener.onWatchedBoxClick(episodeTvdbId, episodeNumber,
+                clickListener.onWatchedBoxClick(episode.getId(),
                         !EpisodeTools.isWatched(box.getEpisodeFlag()));
             });
             binding.watchedBoxEpisode.setEnabled(true);
@@ -188,7 +187,7 @@ class EpisodesAdapter extends ArrayAdapter<SgEpisode2Info> {
 
             // context menu
             this.binding.imageViewContextMenu.setOnClickListener(v -> clickListener
-                    .onPopupMenuClick(v, episodeTvdbId, episodeNumber, releaseTime, watchedFlag,
+                    .onPopupMenuClick(v, episode.getId(), episodeNumber, releaseTime, watchedFlag,
                             isCollected));
         }
     }

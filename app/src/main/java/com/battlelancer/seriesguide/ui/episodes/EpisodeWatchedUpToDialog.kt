@@ -13,14 +13,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
  */
 class EpisodeWatchedUpToDialog : AppCompatDialogFragment() {
 
-    private var showTvdbId: Int = 0
+    private var showId: Long = 0
     private var episodeReleaseTime: Long = 0
     private var episodeNumber: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireArguments().run {
-            showTvdbId = getInt(ARG_SHOW_TVDB_ID)
+            showId = getLong(ARG_SHOW_ID)
             episodeReleaseTime = getLong(ARG_EPISODE_RELEASE_TIME)
             episodeNumber = getInt(ARG_EPISODE_NUMBER)
         }
@@ -31,7 +31,7 @@ class EpisodeWatchedUpToDialog : AppCompatDialogFragment() {
             .setTitle(R.string.confirmation_watched_up_to)
             .setPositiveButton(R.string.action_watched_up_to) { _, _ ->
                 EpisodeTools.episodeWatchedUpTo(
-                    context, showTvdbId, episodeReleaseTime, episodeNumber
+                    context, showId, episodeReleaseTime, episodeNumber
                 )
             }
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
@@ -39,19 +39,19 @@ class EpisodeWatchedUpToDialog : AppCompatDialogFragment() {
     }
 
     companion object {
-        private const val ARG_SHOW_TVDB_ID = "ARG_SHOW_TVDB_ID"
+        private const val ARG_SHOW_ID = "ARG_SHOW_ID"
         private const val ARG_EPISODE_RELEASE_TIME = "ARG_EPISODE_RELEASE_TIME"
         private const val ARG_EPISODE_NUMBER = "ARG_EPISODE_NUMBER"
 
         @JvmStatic
         fun newInstance(
-            showTvdbId: Int,
+            showId: Long,
             episodeReleaseTime: Long,
             episodeNumber: Int
         ): EpisodeWatchedUpToDialog {
             return EpisodeWatchedUpToDialog().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_SHOW_TVDB_ID, showTvdbId)
+                    putLong(ARG_SHOW_ID, showId)
                     putLong(ARG_EPISODE_RELEASE_TIME, episodeReleaseTime)
                     putInt(ARG_EPISODE_NUMBER, episodeNumber)
                 }

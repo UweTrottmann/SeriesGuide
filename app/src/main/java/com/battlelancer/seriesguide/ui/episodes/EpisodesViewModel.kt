@@ -25,9 +25,7 @@ class EpisodesViewModel(
         val uncollectedEpisodes: Int
     )
 
-    var seasonTvdbId: Int = 0
-    var seasonNumber: Int = 0
-    var showTvdbId: Int = 0
+    var showId: Long = 0
     private val order = MutableLiveData<EpisodeSorting>()
     val episodes = Transformations.switchMap(order) {
         SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
@@ -39,9 +37,7 @@ class EpisodesViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val db = SgRoomDatabase.getInstance(getApplication())
             db.sgSeason2Helper().getSeasonNumbers(seasonId)?.also {
-                seasonTvdbId = it.tvdbId ?: 0
-                seasonNumber = it.number
-                showTvdbId = db.sgShow2Helper().getShowTvdbId(it.showId)
+                showId = it.showId
             }
         }
         updateOrder()
