@@ -4,19 +4,17 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.util.DBUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class OverviewViewModel(application: Application) : AndroidViewModel(application) {
+class OverviewViewModel(
+    showId: Long,
+    application: Application
+) : AndroidViewModel(application) {
 
-    private val showId = MutableLiveData<Long>()
     val show by lazy {
-        Transformations.switchMap(showId) {
-            SgRoomDatabase.getInstance(application).sgShow2Helper().getShowLiveData(it)
-        }
+        SgRoomDatabase.getInstance(application).sgShow2Helper().getShowLiveData(showId)
     }
     private val episodeId = MutableLiveData<Long>()
     val episode by lazy {
@@ -25,13 +23,18 @@ class OverviewViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun setShowId(showId: Long) {
-        this.showId.value = showId
-
-        viewModelScope.launch(Dispatchers.IO) {
-            val episodeRowId = DBUtils.updateLatestEpisode(getApplication(), showId)
-            episodeId.postValue(episodeRowId)
-        }
+    fun setEpisodeId(episodeId: Long) {
+        this.episodeId.value = episodeId
     }
 
+}
+
+class OverviewViewModelFactory(
+    val showId: Long,
+    val application: Application
+) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return OverviewViewModel(showId, application) as T
+    }
 }

@@ -248,13 +248,20 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         boolean isDisplayShowInfo = getResources().getBoolean(R.bool.isOverviewSinglePane);
         containerShow.setVisibility(isDisplayShowInfo ? View.VISIBLE : View.GONE);
 
-        OverviewViewModel model = new ViewModelProvider(this).get(OverviewViewModel.class);
-        model.setShowId(showId);
+        OverviewViewModel model = new ViewModelProvider(this,
+                new OverviewViewModelFactory(showId, requireActivity().getApplication()))
+                .get(OverviewViewModel.class);
         model.getShow().observe(getViewLifecycleOwner(), sgShow2 -> {
-            if (sgShow2 != null) {
-                show = sgShow2;
-                populateShowViews(sgShow2);
+            if (sgShow2 == null) {
+                Timber.e("Failed to load show %s", showId);
+                requireActivity().finish();
+                return;
             }
+            show = sgShow2;
+            populateShowViews(sgShow2);
+            long episodeId = sgShow2.getNextEpisode() != null && !sgShow2.getNextEpisode().isEmpty()
+                    ? Long.parseLong(sgShow2.getNextEpisode()) : -1;
+            model.setEpisodeId(episodeId);
         });
         model.getEpisode().observe(getViewLifecycleOwner(), sgEpisode2 -> {
             // May be null if there is no next episode.
