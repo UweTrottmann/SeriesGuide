@@ -164,8 +164,8 @@ public class ShowTools {
     /**
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
-    public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        showTools2.storeIsFavorite(showTvdbId, isFavorite);
+    public void storeIsFavorite(long showId, boolean isFavorite) {
+        showTools2.storeIsFavorite(showId, isFavorite);
     }
 
     /**

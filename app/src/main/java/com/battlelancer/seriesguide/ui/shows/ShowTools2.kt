@@ -24,13 +24,13 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     /**
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
-    fun storeIsFavorite(showTvdbId: Int, isFavorite: Boolean) {
+    fun storeIsFavorite(showId: Long, isFavorite: Boolean) {
         SgApp.coroutineScope.launch {
-            storeIsFavoriteAsync(showTvdbId, isFavorite)
+            storeIsFavoriteAsync(showId, isFavorite)
         }
     }
 
-    private suspend fun storeIsFavoriteAsync(showTvdbId: Int, isFavorite: Boolean) {
+    private suspend fun storeIsFavoriteAsync(showId: Long, isFavorite: Boolean) {
         // Send to cloud.
         val isCloudFailed = withContext(Dispatchers.Default) {
             if (!HexagonSettings.isEnabled(context)) {
@@ -38,6 +38,11 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             }
             if (isNotConnected(context)) {
                 return@withContext true
+            }
+            val showTvdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
+            if (showTvdbId == 0) {
+                return@withContext false
             }
 
             val show = Show()
@@ -52,13 +57,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         // Save to local database.
         withContext(Dispatchers.IO) {
-            val values = ContentValues()
-            values.put(SeriesGuideContract.Shows.FAVORITE, if (isFavorite) 1 else 0)
-            context.contentResolver.update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null
-            )
+            SgRoomDatabase.getInstance(context).sgShow2Helper().setShowFavorite(showId, isFavorite)
 
-            // also notify URIs used by search and lists
+            // FIXME also notify URIs used by search and lists
             context.contentResolver
                 .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null)
             context.contentResolver

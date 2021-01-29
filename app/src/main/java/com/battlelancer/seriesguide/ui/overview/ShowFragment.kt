@@ -311,11 +311,9 @@ class ShowFragment() : Fragment() {
             )
             isEnabled = true
             setOnClickListener { v ->
-                show.tvdbId?.also {
-                    // disable until action is complete
-                    v.isEnabled = false
-                    showTools.storeIsFavorite(it, !isFavorite)
-                }
+                // disable until action is complete
+                v.isEnabled = false
+                showTools.storeIsFavorite(showId, !isFavorite)
             }
         }
 

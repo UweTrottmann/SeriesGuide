@@ -339,7 +339,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         // store new value
         boolean isFavorite = (Boolean) view.getTag();
         SgApp.getServicesComponent(requireContext()).showTools()
-                .storeIsFavorite(showTvdbId, !isFavorite);
+                .storeIsFavorite(showId, !isFavorite);
     }
 
     @OnClick(R.id.buttonEpisodeCheckin)

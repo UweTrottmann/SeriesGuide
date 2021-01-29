@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
@@ -193,8 +194,10 @@ public class ListsFragment extends Fragment {
 
         @Override
         public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
+            long showId = SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
+                    .getShowId(showTvdbId);
             SgApp.getServicesComponent(requireContext()).showTools()
-                    .storeIsFavorite(showTvdbId, isFavorite);
+                    .storeIsFavorite(showId, isFavorite);
         }
     };
 

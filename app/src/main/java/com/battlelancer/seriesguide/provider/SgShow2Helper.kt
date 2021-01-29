@@ -24,7 +24,7 @@ interface SgShow2Helper {
     fun getShowIds(id: Long): SgShow2Ids?
 
     @Query("SELECT _id FROM sg_show WHERE series_tvdb_id=:tvdbId")
-    fun getShowId(tvdbId: Long): Long
+    fun getShowId(tvdbId: Int): Long
 
     @Query("SELECT series_trakt_id FROM sg_show WHERE _id = :id")
     fun getShowTraktId(id: Long): Int
@@ -52,6 +52,9 @@ interface SgShow2Helper {
 
     @Update(entity = SgShow2::class)
     fun updateShowNextEpisode(updates: List<SgShow2NextEpisodeUpdate>): Int
+
+    @Query("UPDATE sg_show SET series_favorite = :isFavorite WHERE _id = :id")
+    fun setShowFavorite(id: Long, isFavorite: Boolean): Int
 
     @Query("UPDATE sg_show SET series_hidden = :isHidden WHERE _id = :id")
     fun setShowHidden(id: Long, isHidden: Boolean): Int

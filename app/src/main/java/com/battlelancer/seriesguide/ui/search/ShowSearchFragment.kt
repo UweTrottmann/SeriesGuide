@@ -16,9 +16,11 @@ import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter
+import com.battlelancer.seriesguide.ui.shows.ShowMenuItemClickListener
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.EmptyView
@@ -135,21 +137,25 @@ class ShowSearchFragment : BaseSearchFragment() {
                     // hide unused actions
                     findItem(R.id.menu_action_shows_watched_next).isVisible = false
                 }
-                // FIXME Use row IDs.
-//                setOnMenuItemClickListener(
-//                    ShowMenuItemClickListener(
-//                        context,
-//                        parentFragmentManager,
-//                        viewHolder.showTvdbId,
-//                        viewHolder.episodeTvdbId
-//                    )
-//                )
+                val database = SgRoomDatabase.getInstance(requireContext())
+                val showId = database.sgShow2Helper().getShowId(viewHolder.showTvdbId)
+                val episodeId = database.sgEpisode2Helper().getEpisodeId(viewHolder.episodeTvdbId)
+                setOnMenuItemClickListener(
+                    ShowMenuItemClickListener(
+                        context,
+                        parentFragmentManager,
+                        showId,
+                        episodeId
+                    )
+                )
             }.show()
         }
 
         override fun onFavoriteClick(showTvdbId: Int, isFavorite: Boolean) {
+            val showId =
+                SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowId(showTvdbId)
             SgApp.getServicesComponent(requireContext()).showTools()
-                    .storeIsFavorite(showTvdbId, isFavorite)
+                    .storeIsFavorite(showId, isFavorite)
         }
     }
 }

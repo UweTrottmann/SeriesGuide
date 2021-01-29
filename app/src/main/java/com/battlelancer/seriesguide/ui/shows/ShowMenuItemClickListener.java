@@ -40,10 +40,10 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
             EpisodeTools.episodeWatchedIfNotZero(context, nextEpisodeId);
             return true;
         } else if (itemId == R.id.menu_action_shows_favorites_add) {
-            showTools.storeIsFavorite(showTvdbId, true);
+            showTools.storeIsFavorite(showId, true);
             return true;
         } else if (itemId == R.id.menu_action_shows_favorites_remove) {
-            showTools.storeIsFavorite(showTvdbId, false);
+            showTools.storeIsFavorite(showId, false);
             return true;
         } else if (itemId == R.id.menu_action_shows_hide) {
             showTools.storeIsHidden(showId, true);
