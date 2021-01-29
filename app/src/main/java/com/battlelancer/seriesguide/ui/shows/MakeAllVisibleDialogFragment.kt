@@ -50,7 +50,7 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment() {
     @SuppressLint("StringFormatMatches") // Int as format arg is intentional.
     private suspend fun updateHiddenShowCountAsync() {
         val count = withContext(Dispatchers.IO) {
-            SgRoomDatabase.getInstance(requireContext()).showHelper().countHiddenShows()
+            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().countHiddenShows()
         }
         withContext(Dispatchers.Main) {
             dialog.setMessage(getString(R.string.description_make_all_visible_format, count))

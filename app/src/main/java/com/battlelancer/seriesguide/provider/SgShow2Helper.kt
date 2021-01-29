@@ -52,6 +52,18 @@ interface SgShow2Helper {
 
     @Update(entity = SgShow2::class)
     fun updateShowNextEpisode(updates: List<SgShow2NextEpisodeUpdate>): Int
+
+    @Query("UPDATE sg_show SET series_hidden = :isHidden WHERE _id = :id")
+    fun setShowHidden(id: Long, isHidden: Boolean): Int
+
+    @Query("SELECT count(_id) FROM sg_show WHERE series_hidden=1")
+    fun countHiddenShows(): Int
+
+    @Query("SELECT series_tvdb_id FROM sg_show WHERE series_hidden = 1")
+    fun getHiddenShowsTvdbIds(): List<Int?>
+
+    @Query("UPDATE sg_show SET series_hidden = 0 WHERE series_hidden = 1")
+    fun makeHiddenVisible(): Int
 }
 
 data class SgShow2Ids(

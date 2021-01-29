@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
@@ -19,20 +20,21 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
     private final Context context;
     private final ShowTools showTools;
     private final FragmentManager fragmentManager;
-    private final int showTvdbId;
+    private final long showId;
     private final long nextEpisodeId;
 
-    public ShowMenuItemClickListener(Context context, FragmentManager fm, int showTvdbId,
+    public ShowMenuItemClickListener(Context context, FragmentManager fm, long showId,
             long nextEpisodeId) {
         this.context = context;
         this.fragmentManager = fm;
-        this.showTvdbId = showTvdbId;
+        this.showId = showId;
         this.nextEpisodeId = nextEpisodeId;
         this.showTools = SgApp.getServicesComponent(context).showTools();
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        int showTvdbId = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId);
         switch (item.getItemId()) {
             case R.id.menu_action_shows_watched_next: {
                 EpisodeTools.episodeWatchedIfNotZero(context, nextEpisodeId);
@@ -47,11 +49,11 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
                 return true;
             }
             case R.id.menu_action_shows_hide: {
-                showTools.storeIsHidden(showTvdbId, true);
+                showTools.storeIsHidden(showId, true);
                 return true;
             }
             case R.id.menu_action_shows_unhide: {
-                showTools.storeIsHidden(showTvdbId, false);
+                showTools.storeIsHidden(showId, false);
                 return true;
             }
             case R.id.menu_action_shows_manage_lists: {

@@ -338,7 +338,7 @@ public class ShowsFragment extends Fragment {
 
             popupMenu.setOnMenuItemClickListener(
                     new ShowMenuItemClickListener(getContext(), getParentFragmentManager(),
-                            show.getShowTvdbId(), show.getNextEpisodeId()));
+                            show.getRowId(), show.getNextEpisodeId()));
             popupMenu.show();
         }
 

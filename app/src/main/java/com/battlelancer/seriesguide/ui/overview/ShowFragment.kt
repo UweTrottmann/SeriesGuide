@@ -368,11 +368,9 @@ class ShowFragment() : Fragment() {
             )
             isEnabled = true
             setOnClickListener { v ->
-                show.tvdbId?.also {
-                    // disable until action is complete
-                    v.isEnabled = false
-                    showTools.storeIsHidden(it, !isHidden)
-                }
+                // disable until action is complete
+                v.isEnabled = false
+                showTools.storeIsHidden(showId, !isHidden)
             }
         }
 

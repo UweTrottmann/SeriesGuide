@@ -81,13 +81,13 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     /**
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
-    fun storeIsHidden(showTvdbId: Int, isHidden: Boolean) {
+    fun storeIsHidden(showId: Long, isHidden: Boolean) {
         SgApp.coroutineScope.launch {
-            storeIsHiddenAsync(showTvdbId, isHidden)
+            storeIsHiddenAsync(showId, isHidden)
         }
     }
 
-    private suspend fun storeIsHiddenAsync(showTvdbId: Int, isHidden: Boolean) {
+    private suspend fun storeIsHiddenAsync(showId: Long, isHidden: Boolean) {
         // Send to cloud.
         val isCloudFailed = withContext(Dispatchers.Default) {
             if (!HexagonSettings.isEnabled(context)) {
@@ -95,6 +95,12 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             }
             if (isNotConnected(context)) {
                 return@withContext true
+            }
+
+            val showTvdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
+            if (showTvdbId == 0) {
+                return@withContext false
             }
 
             val show = Show()
@@ -109,13 +115,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         // Save to local database.
         withContext(Dispatchers.IO) {
-            val values = ContentValues()
-            values.put(SeriesGuideContract.Shows.HIDDEN, if (isHidden) 1 else 0)
-            context.contentResolver.update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null
-            )
+            SgRoomDatabase.getInstance(context).sgShow2Helper().setShowHidden(showId, isHidden)
 
-            // also notify filter URI used by search
+            // FIXME also notify filter URI used by search
             context.contentResolver
                 .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null)
         }
@@ -193,7 +195,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 }
 
                 val hiddenShowTvdbIds = withContext(Dispatchers.IO) {
-                    SgRoomDatabase.getInstance(context).showHelper().getHiddenShowsTvdbIds()
+                    SgRoomDatabase.getInstance(context).sgShow2Helper().getHiddenShowsTvdbIds()
                 }
 
                 val shows = hiddenShowTvdbIds.map { showTvdbId ->
@@ -211,7 +213,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
             // Save to local database.
             withContext(Dispatchers.IO) {
-                SgRoomDatabase.getInstance(context).showHelper().makeHiddenVisible()
+                SgRoomDatabase.getInstance(context).sgShow2Helper().makeHiddenVisible()
             }
         }
     }

@@ -171,8 +171,8 @@ public class ShowTools {
     /**
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
-    public void storeIsHidden(int showTvdbId, boolean isHidden) {
-        showTools2.storeIsHidden(showTvdbId, isHidden);
+    public void storeIsHidden(long showId, boolean isHidden) {
+        showTools2.storeIsHidden(showId, isHidden);
     }
 
     /**
