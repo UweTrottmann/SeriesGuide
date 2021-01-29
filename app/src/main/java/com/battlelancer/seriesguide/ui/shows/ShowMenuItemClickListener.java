@@ -35,43 +35,34 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         int showTvdbId = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId);
-        switch (item.getItemId()) {
-            case R.id.menu_action_shows_watched_next: {
-                EpisodeTools.episodeWatchedIfNotZero(context, nextEpisodeId);
-                return true;
-            }
-            case R.id.menu_action_shows_favorites_add: {
-                showTools.storeIsFavorite(showTvdbId, true);
-                return true;
-            }
-            case R.id.menu_action_shows_favorites_remove: {
-                showTools.storeIsFavorite(showTvdbId, false);
-                return true;
-            }
-            case R.id.menu_action_shows_hide: {
-                showTools.storeIsHidden(showId, true);
-                return true;
-            }
-            case R.id.menu_action_shows_unhide: {
-                showTools.storeIsHidden(showId, false);
-                return true;
-            }
-            case R.id.menu_action_shows_manage_lists: {
-                ManageListsDialogFragment.show(fragmentManager, showTvdbId,
-                        SeriesGuideContract.ListItemTypes.SHOW);
-                return true;
-            }
-            case R.id.menu_action_shows_update: {
-                SgSyncAdapter.requestSyncSingleImmediate(context, true, showTvdbId);
-                return true;
-            }
-            case R.id.menu_action_shows_remove: {
-                RemoveShowDialogFragment.show(context, fragmentManager, showTvdbId);
-                return true;
-            }
-            default:
-                return false;
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_action_shows_watched_next) {
+            EpisodeTools.episodeWatchedIfNotZero(context, nextEpisodeId);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_favorites_add) {
+            showTools.storeIsFavorite(showTvdbId, true);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_favorites_remove) {
+            showTools.storeIsFavorite(showTvdbId, false);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_hide) {
+            showTools.storeIsHidden(showId, true);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_unhide) {
+            showTools.storeIsHidden(showId, false);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_manage_lists) {
+            ManageListsDialogFragment.show(fragmentManager, showTvdbId,
+                    SeriesGuideContract.ListItemTypes.SHOW);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_update) {
+            SgSyncAdapter.requestSyncSingleImmediate(context, true, showTvdbId);
+            return true;
+        } else if (itemId == R.id.menu_action_shows_remove) {
+            RemoveShowDialogFragment.show(context, fragmentManager, showTvdbId);
+            return true;
         }
+        return false;
     }
 
 }
