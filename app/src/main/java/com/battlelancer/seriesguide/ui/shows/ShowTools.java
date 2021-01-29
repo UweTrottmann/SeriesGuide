@@ -229,8 +229,8 @@ public class ShowTools {
     /**
      * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
      */
-    public void storeNotify(int showTvdbId, boolean notify) {
-        showTools2.storeNotify(showTvdbId, notify);
+    public void storeNotify(long showId, boolean notify) {
+        showTools2.storeNotify(showId, notify);
     }
 
     /**

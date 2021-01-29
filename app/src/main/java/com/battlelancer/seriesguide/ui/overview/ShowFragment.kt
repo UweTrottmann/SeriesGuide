@@ -337,11 +337,9 @@ class ShowFragment() : Fragment() {
             isEnabled = true
             setOnClickListener { v ->
                 if (Utils.hasAccessToX(activity)) {
-                    show.tvdbId?.also {
-                        // disable until action is complete
-                        v.isEnabled = false
-                        showTools.storeNotify(it, !notify)
-                    }
+                    // disable until action is complete
+                    v.isEnabled = false
+                    showTools.storeNotify(showId, !notify)
                 } else {
                     Utils.advertiseSubscription(activity)
                 }

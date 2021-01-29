@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.shows
 
-import android.content.ContentValues
 import android.content.Context
 import android.widget.Toast
 import com.battlelancer.seriesguide.R
@@ -139,13 +138,13 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     /**
      * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
      */
-    fun storeNotify(showTvdbId: Int, notify: Boolean) {
+    fun storeNotify(showId: Long, notify: Boolean) {
         SgApp.coroutineScope.launch {
-            storeNotifyAsync(showTvdbId, notify)
+            storeNotifyAsync(showId, notify)
         }
     }
 
-    private suspend fun storeNotifyAsync(showTvdbId: Int, notify: Boolean) {
+    private suspend fun storeNotifyAsync(showId: Long, notify: Boolean) {
         // Send to cloud.
         val isCloudFailed = withContext(Dispatchers.Default) {
             if (!HexagonSettings.isEnabled(context)) {
@@ -153,6 +152,11 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             }
             if (isNotConnected(context)) {
                 return@withContext true
+            }
+            val showTvdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
+            if (showTvdbId == 0) {
+                return@withContext false
             }
 
             val show = Show()
@@ -167,11 +171,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         // Save to local database.
         withContext(Dispatchers.IO) {
-            val values = ContentValues()
-            values.put(SeriesGuideContract.Shows.NOTIFY, if (notify) 1 else 0)
-            context.contentResolver.update(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null
-            )
+            SgRoomDatabase.getInstance(context).sgShow2Helper().setShowNotify(showId, notify)
         }
 
         // new notify setting may determine eligibility for notifications

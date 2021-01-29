@@ -56,6 +56,15 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_favorite = :isFavorite WHERE _id = :id")
     fun setShowFavorite(id: Long, isFavorite: Boolean): Int
 
+    @Query("UPDATE sg_show SET series_notify = :isNotify WHERE _id = :id")
+    fun setShowNotify(id: Long, isNotify: Boolean): Int
+
+    @RawQuery(observedEntities = [SgShow2::class])
+    fun getShowsNotifyStates(query: SupportSQLiteQuery): LiveData<List<SgShow2Notify>>
+
+    @Query("SELECT count(_id) FROM sg_show WHERE series_notify = 1")
+    fun countShowsNotifyEnabled(): Int
+
     @Query("UPDATE sg_show SET series_hidden = :isHidden WHERE _id = :id")
     fun setShowHidden(id: Long, isHidden: Boolean): Int
 
@@ -80,6 +89,12 @@ data class SgShow2Minimal(
     @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.TITLE) val title: String,
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val posterSmall: String?
+)
+
+data class SgShow2Notify(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.TITLE) val title: String,
+    @ColumnInfo(name = SgShow2Columns.NOTIFY) val notify: Boolean
 )
 
 data class SgShow2ForLists(
