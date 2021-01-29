@@ -1,15 +1,10 @@
 package com.battlelancer.seriesguide.util;
 
-import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.text.format.DateUtils;
 import com.battlelancer.seriesguide.model.SgActivity;
 import com.battlelancer.seriesguide.provider.SgActivityHelper;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import timber.log.Timber;
 
 /**
@@ -63,22 +58,4 @@ public class ActivityTools {
         Timber.d("removeActivity: deleted %d activity entries", deleted);
     }
 
-    /**
-     * Get latest activity for each show and update last watched time if newer.
-     */
-    public static void populateShowsLastWatchedTime(Context context) {
-        List<SgActivity> activities = SgRoomDatabase.getInstance(context).sgActivityHelper()
-                .getActivityByLatest();
-
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        HashSet<Integer> handledShows = new HashSet<>();
-        for (SgActivity activity : activities) {
-            int showTvdbId = Integer.parseInt(activity.getShowTvdbOrTmdbId());
-            if (!handledShows.contains(showTvdbId)) {
-                handledShows.add(showTvdbId);
-                ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
-                        activity.getTimestampMs());
-            }
-        }
-    }
 }
