@@ -21,7 +21,9 @@ class OverviewViewModel(application: Application) : AndroidViewModel(application
     private val episodeTvdbId = MutableLiveData<Int>()
     val episode by lazy {
         Transformations.switchMap(episodeTvdbId) {
-            SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper().getEpisodeLiveData(it)
+            val helper = SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
+            val episodeId = helper.getEpisodeId(it)
+            helper.getEpisodeLiveData(episodeId)
         }
     }
 

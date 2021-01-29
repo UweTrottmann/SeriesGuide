@@ -38,9 +38,6 @@ interface SgEpisode2Helper {
     @Query("SELECT * FROM sg_episode WHERE _id=:id")
     fun getEpisodeLiveData(id: Long): LiveData<SgEpisode2?>
 
-    @Query("SELECT * FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
-    fun getEpisodeLiveData(tvdbId: Int): LiveData<SgEpisode2?>
-
     @Query(
         """SELECT _id FROM sg_episode WHERE season_id = :seasonId 
         AND episode_firstairedms <= :currentTimePlusOneHour
