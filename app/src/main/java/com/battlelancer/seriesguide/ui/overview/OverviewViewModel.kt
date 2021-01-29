@@ -18,21 +18,19 @@ class OverviewViewModel(application: Application) : AndroidViewModel(application
             SgRoomDatabase.getInstance(application).sgShow2Helper().getShowLiveData(it)
         }
     }
-    private val episodeTvdbId = MutableLiveData<Int>()
+    private val episodeId = MutableLiveData<Long>()
     val episode by lazy {
-        Transformations.switchMap(episodeTvdbId) {
-            val helper = SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
-            val episodeId = helper.getEpisodeId(it)
-            helper.getEpisodeLiveData(episodeId)
+        Transformations.switchMap(episodeId) {
+            SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper().getEpisodeLiveData(it)
         }
     }
 
-    fun setShowId(showId: Long, showTvdbId: Int) {
+    fun setShowId(showId: Long) {
         this.showId.value = showId
 
         viewModelScope.launch(Dispatchers.IO) {
-            val tvdbId = DBUtils.updateLatestEpisode(getApplication(), showTvdbId)
-            episodeTvdbId.postValue(tvdbId)
+            val episodeRowId = DBUtils.updateLatestEpisode(getApplication(), showId)
+            episodeId.postValue(episodeRowId)
         }
     }
 

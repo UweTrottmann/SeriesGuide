@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync;
@@ -163,7 +164,8 @@ public class TvdbTools {
         }
 
         // calculate next episode
-        DBUtils.updateLatestEpisode(context, showTvdbId);
+        long showId = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowId(showTvdbId);
+        DBUtils.updateLatestEpisode(context, showId);
 
         return true;
     }

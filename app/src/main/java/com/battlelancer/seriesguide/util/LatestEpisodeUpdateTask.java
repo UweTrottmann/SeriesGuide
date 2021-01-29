@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import timber.log.Timber;
 
 /**
@@ -36,11 +35,7 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
         if (showId != null) {
             // update single show
             Timber.d("Updating next episode for show %s", showId);
-            int showTvdbId = SgRoomDatabase.getInstance(context).sgShow2Helper()
-                    .getShowTvdbId(showId);
-            if (showTvdbId != 0) {
-                DBUtils.updateLatestEpisode(context, showTvdbId);
-            }
+            DBUtils.updateLatestEpisode(context, showId);
         } else {
             // update all shows
             Timber.d("Updating next episodes for all shows");

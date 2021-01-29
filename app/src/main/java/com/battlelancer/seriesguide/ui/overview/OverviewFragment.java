@@ -249,7 +249,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         containerShow.setVisibility(isDisplayShowInfo ? View.VISIBLE : View.GONE);
 
         OverviewViewModel model = new ViewModelProvider(this).get(OverviewViewModel.class);
-        model.setShowId(showId, showTvdbId);
+        model.setShowId(showId);
         model.getShow().observe(getViewLifecycleOwner(), sgShow2 -> {
             if (sgShow2 != null) {
                 show = sgShow2;

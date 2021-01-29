@@ -5,8 +5,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.RawQuery
+import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.model.SgShow2
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 
 @Dao
@@ -42,6 +44,14 @@ interface SgShow2Helper {
     @RawQuery(observedEntities = [SgShow2::class])
     fun getShowsLiveData(query: SupportSQLiteQuery): LiveData<List<SgShow2ForLists>>
 
+    @Query("SELECT sg_show._id, series_lastwatchedid, episode_number, episode_season_number, episode_firstairedms, episode_title FROM sg_show LEFT OUTER JOIN sg_episode ON series_lastwatchedid = sg_episode._id WHERE sg_show._id = :id")
+    fun getShowWithLastWatchedEpisode(id: Long): SgShow2LastWatchedEpisode?
+
+    @Query("SELECT sg_show._id, series_lastwatchedid, episode_number, episode_season_number, episode_firstairedms, episode_title FROM sg_show LEFT OUTER JOIN sg_episode ON series_lastwatchedid = sg_episode._id")
+    fun getShowsWithLastWatchedEpisode(): List<SgShow2LastWatchedEpisode>
+
+    @Update(entity = SgShow2::class)
+    fun updateShowNextEpisode(updates: List<SgShow2NextEpisodeUpdate>): Int
 }
 
 data class SgShow2Ids(
@@ -75,4 +85,24 @@ data class SgShow2ForLists(
     @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int,
     @ColumnInfo(name = SgShow2Columns.FAVORITE) val favorite: Boolean,
     @ColumnInfo(name = SgShow2Columns.HIDDEN) val hidden: Boolean
+)
+
+/**
+ * Note: using LEFT OUTER JOIN, so episode table values may be null!
+ */
+data class SgShow2LastWatchedEpisode(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.LASTWATCHEDID) val lastWatchedEpisodeId: Long,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodeNumber: Int?,
+    @ColumnInfo(name = SgEpisode2Columns.SEASON) val seasonNumber: Int?,
+    @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val episodeReleaseDateMs: Long?,
+    @ColumnInfo(name = SgEpisode2Columns.TITLE) val episodeTitle: String?
+)
+
+data class SgShow2NextEpisodeUpdate(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.NEXTEPISODE) val nextEpisode: String,
+    @ColumnInfo(name = SgShow2Columns.NEXTAIRDATEMS) val nextAirdateMs: Long,
+    @ColumnInfo(name = SgShow2Columns.NEXTTEXT) val nextText: String,
+    @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int
 )
