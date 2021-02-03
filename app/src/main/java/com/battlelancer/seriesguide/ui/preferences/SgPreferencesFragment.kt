@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.preferences
 
 import android.app.backup.BackupManager
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,7 +24,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.AppSettings
@@ -417,15 +415,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
 
         if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
-            // reset last edit date of all episodes so they will get updated
+            // reset last updated date of all episodes so they will get updated
             Thread {
                 android.os.Process
                     .setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND)
-
-                val values = ContentValues()
-                values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0)
-                requireActivity().contentResolver
-                    .update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null)
+                SgRoomDatabase.getInstance(requireContext()).sgEpisode2Helper()
+                    .resetLastUpdatedForAll()
             }.start()
         }
 

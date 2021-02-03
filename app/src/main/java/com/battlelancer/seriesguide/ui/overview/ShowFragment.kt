@@ -554,9 +554,7 @@ class ShowFragment() : Fragment() {
         this.languageCode = languageCode
 
         Timber.d("Changing show language to %s", languageCode)
-        show?.tvdbId?.also {
-            showTools.storeLanguage(it, languageCode)
-        }
+        showTools.storeLanguage(showId, languageCode)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

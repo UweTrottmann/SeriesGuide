@@ -295,6 +295,12 @@ interface SgEpisode2Helper {
      */
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId AND episode_season_number != 0")
     fun updateCollectedOfShow(showId: Long, isCollected: Boolean): Int
+
+    @Query("UPDATE sg_episode SET episode_lastupdate = 0")
+    fun resetLastUpdatedForAll()
+
+    @Query("UPDATE sg_episode SET episode_lastupdate = 0 WHERE series_id = :showId")
+    fun resetLastUpdatedForShow(showId: Long)
 }
 
 data class SgEpisode2WithShow(

@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.sync.HexagonShowSync
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.Show
 import kotlinx.coroutines.Dispatchers
@@ -215,6 +216,55 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             // Save to local database.
             withContext(Dispatchers.IO) {
                 SgRoomDatabase.getInstance(context).sgShow2Helper().makeHiddenVisible()
+            }
+        }
+    }
+
+    fun storeLanguage(showId: Long, languageCode: String) = SgApp.coroutineScope.launch {
+        // Send to cloud.
+        val isCloudFailed = withContext(Dispatchers.Default) {
+            if (!HexagonSettings.isEnabled(context)) {
+                return@withContext false
+            }
+            if (isNotConnected(context)) {
+                return@withContext true
+            }
+            val showTvdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
+            if (showTvdbId == 0) {
+                return@withContext true
+            }
+
+            val show = Show()
+            show.tvdbId = showTvdbId
+            show.language = languageCode
+
+            val success = uploadShowToCloudAsync(show)
+            return@withContext !success
+        }
+        // Do not save to local database if sending to cloud has failed.
+        if (isCloudFailed) return@launch
+
+        // Save to local database and schedule sync.
+        withContext(Dispatchers.IO) {
+            // change language
+            val database = SgRoomDatabase.getInstance(context)
+            database.sgShow2Helper().updateLanguage(showId, languageCode)
+            // reset episode last update time so all get updated
+            database.sgEpisode2Helper().resetLastUpdatedForShow(showId)
+            // trigger update
+            val showTvdbId = database.sgShow2Helper().getShowTvdbId(showId)
+            SgSyncAdapter.requestSyncSingleImmediate(context, false, showTvdbId)
+        }
+
+        withContext(Dispatchers.Main) {
+            // show immediate feedback, also if offline and sync won't go through
+            if (AndroidUtils.isNetworkConnected(context)) {
+                // notify about upcoming sync
+                Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show()
+            } else {
+                // offline
+                Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show()
             }
         }
     }

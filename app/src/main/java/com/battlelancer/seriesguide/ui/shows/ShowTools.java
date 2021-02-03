@@ -1,14 +1,12 @@
 package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
@@ -20,7 +18,6 @@ import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
@@ -183,47 +180,8 @@ public class ShowTools {
         showTools2.storeAllHiddenVisible();
     }
 
-    public void storeLanguage(final int showTvdbId, final String languageCode) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setLanguage(languageCode);
-            uploadShowAsync(show);
-        }
-
-        // schedule database update and sync
-        Runnable runnable = () -> {
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-
-            // change language
-            ContentValues values = new ContentValues();
-            values.put(SeriesGuideContract.Shows.LANGUAGE, languageCode);
-            context.getContentResolver()
-                    .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null,
-                            null);
-            // reset episode last edit time so all get updated
-            values = new ContentValues();
-            values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0);
-            context.getContentResolver()
-                    .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
-                            values, null, null);
-            // trigger update
-            SgSyncAdapter.requestSyncSingleImmediate(context, false, showTvdbId);
-        };
-        AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);
-
-        // show immediate feedback, also if offline and sync won't go through
-        if (AndroidUtils.isNetworkConnected(context)) {
-            // notify about upcoming sync
-            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
-        } else {
-            // offline
-            Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
-        }
+    public void storeLanguage(final long showId, @NonNull final String languageCode) {
+        showTools2.storeLanguage(showId, languageCode);
     }
 
     /**

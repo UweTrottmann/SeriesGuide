@@ -76,6 +76,9 @@ interface SgShow2Helper {
 
     @Query("UPDATE sg_show SET series_hidden = 0 WHERE series_hidden = 1")
     fun makeHiddenVisible(): Int
+
+    @Query("UPDATE sg_show SET series_language = :languageCode WHERE _id = :id")
+    fun updateLanguage(id: Long, languageCode: String)
 }
 
 data class SgShow2Ids(
