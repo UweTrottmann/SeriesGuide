@@ -96,7 +96,7 @@ class EpisodeSearchFragment : BaseSearchFragment() {
 
         override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
             adapter.swapCursor(data)
-            updateEmptyState(data)
+            updateEmptyState(data.count == 0)
         }
 
         override fun onLoaderReset(loader: Loader<Cursor>) {
