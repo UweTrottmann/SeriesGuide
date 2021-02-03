@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -123,7 +124,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // Renew search table
-        DBUtils.rebuildFtsTable(context);
+        SeriesGuideDatabase.rebuildFtsTable(context);
 
         return SUCCESS;
     }

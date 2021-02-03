@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
@@ -17,7 +18,6 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -264,7 +264,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
 
             // renew FTS3 table
             Timber.d("Renewing search table.");
-            DBUtils.rebuildFtsTable(context);
+            SeriesGuideDatabase.rebuildFtsTable(context);
         }
 
         Timber.d("Finished adding shows.");

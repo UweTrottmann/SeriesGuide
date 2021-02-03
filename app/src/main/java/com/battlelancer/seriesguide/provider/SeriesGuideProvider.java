@@ -81,8 +81,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     static final int SEASONS_OFSHOW = 302;
 
-    static final int EPISODESEARCH = 400;
-
     static final int EPISODESEARCH_ID = 401;
 
     static final int LISTS = 500;
@@ -104,8 +102,6 @@ public class SeriesGuideProvider extends ContentProvider {
     static final int ACTIVITY = 800;
 
     static final int SEARCH_SUGGEST = 900;
-
-    static final int RENEW_FTSTABLE = 1000;
 
     static final int JOBS = 1100;
 
@@ -193,8 +189,6 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesGuideContract.PATH_JOBS + "/*", JOBS_ID);
 
         // Search
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
-                + SeriesGuideContract.PATH_SEARCH, EPISODESEARCH);
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/*", EPISODESEARCH_ID);
 
         // Suggestions
@@ -202,7 +196,6 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SearchManager.SUGGEST_URI_PATH_QUERY + "/*", SEARCH_SUGGEST);
 
         // Ops
-        matcher.addURI(authority, SeriesGuideContract.PATH_RENEWFTSTABLE, RENEW_FTSTABLE);
         matcher.addURI(authority, SeriesGuideContract.PATH_CLOSE, CLOSE);
 
         return matcher;
@@ -244,17 +237,6 @@ public class SeriesGuideProvider extends ContentProvider {
         final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         switch (match) {
-            case RENEW_FTSTABLE: {
-                SeriesGuideDatabase.rebuildFtsTable(db);
-                return null;
-            }
-            case EPISODESEARCH: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.search(db, selection, selectionArgs);
-            }
             case SEARCH_SUGGEST: {
                 if (selectionArgs == null) {
                     throw new IllegalArgumentException(
@@ -342,8 +324,6 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Jobs.CONTENT_ITEM_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
-            case RENEW_FTSTABLE:
-                return Episodes.CONTENT_TYPE; // however there is nothing returned
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

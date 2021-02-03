@@ -96,6 +96,9 @@ interface SgEpisode2Helper {
     @RawQuery(observedEntities = [SgEpisode2::class])
     fun getEpisodeInfoOfSeasonLiveData(query: SupportSQLiteQuery): LiveData<List<SgEpisode2Info>>
 
+    @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
+    fun getEpisodeSearchResults(query: SupportSQLiteQuery): LiveData<List<SgEpisode2SearchResult>>
+
     /**
      * Returns how many episodes of a show are left to collect. Only considers regular, released
      * episodes (no specials, must have a release date in the past).
@@ -401,6 +404,18 @@ data class SgEpisode2WithShow(
         }
     }
 }
+
+data class SgEpisode2SearchResult(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TITLE) val episodetitle: String?,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
+    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
+    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
+    @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
+
+    @ColumnInfo(name = SgShow2Columns.TITLE) val seriestitle: String,
+    @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val series_poster_small: String?
+)
 
 data class SgEpisode2Info(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,

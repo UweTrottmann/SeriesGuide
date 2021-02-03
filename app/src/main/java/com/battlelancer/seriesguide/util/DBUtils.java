@@ -20,7 +20,6 @@ import androidx.sqlite.db.SimpleSQLiteQuery;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
@@ -99,24 +98,6 @@ public class DBUtils {
             return 0;
         }
         return value ? 1 : 0;
-    }
-
-    /**
-     * Maps an integer value stored in the database to a boolean.
-     */
-    public static boolean restoreBooleanFromInt(int value) {
-        return value == 1;
-    }
-
-    /**
-     * Triggers the rebuilding of the episode search table.
-     */
-    @SuppressLint("Recycle") // Cursor is null
-    public static void rebuildFtsTable(Context context) {
-        Timber.d("Query to renew FTS table");
-        context.getContentResolver()
-                .query(SeriesGuideContract.EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
-                        null, null);
     }
 
     public static int getCountOf(@NonNull ContentResolver resolver, @NonNull Uri uri,

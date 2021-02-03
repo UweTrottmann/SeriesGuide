@@ -974,9 +974,6 @@ public class SeriesGuideContract {
 
         String _DOCID = "docid";
 
-        String TITLE = Episodes.TITLE;
-
-        String OVERVIEW = Episodes.OVERVIEW;
     }
 
     interface ListsColumns {
@@ -1145,8 +1142,6 @@ public class SeriesGuideContract {
     public static final String PATH_EPISODESEARCH = "episodesearch";
 
     public static final String PATH_WITHSHOW = "withshow";
-
-    public static final String PATH_RENEWFTSTABLE = "renewftstable";
 
     public static final String PATH_SEARCH = "search";
 
@@ -1438,20 +1433,6 @@ public class SeriesGuideContract {
          */
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_EPISODESEARCH).build();
-
-        /**
-         * Search table joined with series and episodes table.
-         * See {@link SeriesGuideProvider#EPISODESEARCH}.
-         */
-        public static final Uri CONTENT_URI_SEARCH = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_EPISODESEARCH).appendPath(PATH_SEARCH).build();
-
-        /**
-         * If "queried" rebuilds the search table.
-         * See {@link SeriesGuideProvider#RENEW_FTSTABLE}.
-         */
-        public static final Uri CONTENT_URI_RENEWFTSTABLE = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_RENEWFTSTABLE).build();
 
         public static Uri buildDocIdUri(String rowId) {
             return CONTENT_URI.buildUpon().appendPath(rowId).build();
