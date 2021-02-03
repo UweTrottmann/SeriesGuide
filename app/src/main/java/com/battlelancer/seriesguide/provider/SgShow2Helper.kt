@@ -79,6 +79,9 @@ interface SgShow2Helper {
 
     @Query("UPDATE sg_show SET series_language = :languageCode WHERE _id = :id")
     fun updateLanguage(id: Long, languageCode: String)
+
+    @Query("DELETE FROM sg_show WHERE _id = :showId")
+    fun deleteShow(showId: Long): Int
 }
 
 data class SgShow2Ids(

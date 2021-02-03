@@ -5,7 +5,10 @@ import android.widget.Toast
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.enums.NetworkResult
+import com.battlelancer.seriesguide.enums.Result
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.sync.HexagonShowSync
@@ -15,11 +18,100 @@ import com.uwetrottmann.seriesguide.backend.shows.model.Show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Provides some show operations as (async) suspend functions, running within global scope.
  */
 class ShowTools2(val showTools: ShowTools, val context: Context) {
+
+    /**
+     * Posted if a show is about to get removed.
+     */
+    data class OnRemovingShowEvent(val showId: Long)
+
+    /**
+     * Posted if show was just removed (or failure).
+     */
+    data class OnShowRemovedEvent(
+        val showId: Long,
+        /** One of [com.battlelancer.seriesguide.enums.NetworkResult]. */
+        val resultCode: Int
+    )
+
+    /**
+     * Removes a show and its seasons and episodes, including search docs. Sends isRemoved flag to
+     * Hexagon so the show will not be auto-added on any device connected to Hexagon.
+     *
+     * Posts [OnRemovingShowEvent] when starting and [OnShowRemovedEvent] once completed.
+     */
+    fun removeShow(showId: Long) {
+        SgApp.coroutineScope.launch(SgApp.SINGLE) {
+            withContext(Dispatchers.Main) {
+                EventBus.getDefault().post(OnRemovingShowEvent(showId))
+            }
+
+            val result = removeShowAsync(showId)
+
+            withContext(Dispatchers.Main) {
+                if (result == NetworkResult.OFFLINE) {
+                    Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show()
+                } else if (result == NetworkResult.ERROR) {
+                    Toast.makeText(context, R.string.delete_error, Toast.LENGTH_LONG).show()
+                }
+                EventBus.getDefault().post(OnShowRemovedEvent(showId, result))
+            }
+        }
+    }
+
+    /**
+     * Returns [com.battlelancer.seriesguide.enums.NetworkResult].
+     */
+    private suspend fun removeShowAsync(showId: Long): Int {
+        // Send to cloud.
+        val isCloudFailed = withContext(Dispatchers.Default) {
+            if (!HexagonSettings.isEnabled(context)) {
+                return@withContext false
+            }
+            if (isNotConnected(context)) {
+                return@withContext true
+            }
+            val showTvdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
+            if (showTvdbId == 0) {
+                return@withContext true
+            }
+
+            // Sets the isRemoved flag of the given show on Hexagon, so the show will
+            // not be auto-added on any device connected to Hexagon.
+            val show = Show()
+            show.tvdbId = showTvdbId
+            show.isRemoved = true
+
+            val success = uploadShowToCloudAsync(show)
+            return@withContext !success
+        }
+        // Do not save to local database if sending to cloud has failed.
+        if (isCloudFailed) return Result.ERROR
+
+        return withContext(Dispatchers.IO) {
+            // Remove database entries in stages, so if an earlier stage fails,
+            // user can try again. Also saves memory by using smaller database transactions.
+            val database = SgRoomDatabase.getInstance(context)
+
+            var rowsUpdated = database.sgEpisode2Helper().deleteEpisodesOfShow(showId)
+            if (rowsUpdated == -1) return@withContext Result.ERROR
+
+            rowsUpdated = database.sgSeason2Helper().deleteSeasonsOfShow(showId)
+            if (rowsUpdated == -1) return@withContext Result.ERROR
+
+            rowsUpdated = database.sgShow2Helper().deleteShow(showId)
+            if (rowsUpdated == -1) return@withContext Result.ERROR
+
+            SeriesGuideDatabase.rebuildFtsTable(context)
+            Result.SUCCESS
+        }
+    }
 
     /**
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.

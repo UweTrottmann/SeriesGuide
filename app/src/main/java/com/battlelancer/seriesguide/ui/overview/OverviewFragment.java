@@ -208,8 +208,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             }
         });
         buttonRemoveShow.setOnClickListener(v ->
-                RemoveShowDialogFragment
-                        .show(requireContext(), getParentFragmentManager(), showTvdbId)
+                RemoveShowDialogFragment.show(showId, getParentFragmentManager(), requireContext())
         );
 
         // episode buttons

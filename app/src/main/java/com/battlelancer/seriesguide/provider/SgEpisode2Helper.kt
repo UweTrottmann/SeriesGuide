@@ -304,6 +304,9 @@ interface SgEpisode2Helper {
 
     @Query("UPDATE sg_episode SET episode_lastupdate = 0 WHERE series_id = :showId")
     fun resetLastUpdatedForShow(showId: Long)
+
+    @Query("DELETE FROM sg_episode WHERE series_id = :showId")
+    fun deleteEpisodesOfShow(showId: Long): Int
 }
 
 data class SgEpisode2WithShow(

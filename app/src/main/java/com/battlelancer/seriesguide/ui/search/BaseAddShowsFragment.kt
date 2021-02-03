@@ -3,9 +3,10 @@ package com.battlelancer.seriesguide.ui.search
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.enums.NetworkResult
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.OverviewActivity
+import com.battlelancer.seriesguide.ui.shows.ShowTools2
 import com.battlelancer.seriesguide.util.TaskManager
-import com.battlelancer.seriesguide.util.tasks.RemoveShowTask
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -50,9 +51,11 @@ abstract class BaseAddShowsFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventShowRemoved(event: RemoveShowTask.OnShowRemovedEvent) {
+    fun onEventShowRemoved(event: ShowTools2.OnShowRemovedEvent) {
         if (event.resultCode == NetworkResult.SUCCESS) {
-            setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADD)
+            val showTvdbId = SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
+                .getShowTvdbId(event.showId)
+            setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD)
         }
     }
 

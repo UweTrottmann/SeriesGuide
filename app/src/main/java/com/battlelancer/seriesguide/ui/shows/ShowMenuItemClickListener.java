@@ -59,7 +59,7 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
             SgSyncAdapter.requestSyncSingleImmediate(context, true, showTvdbId);
             return true;
         } else if (itemId == R.id.menu_action_shows_remove) {
-            RemoveShowDialogFragment.show(context, fragmentManager, showTvdbId);
+            RemoveShowDialogFragment.show(showId, fragmentManager, context);
             return true;
         }
         return false;

@@ -21,8 +21,8 @@ import com.battlelancer.seriesguide.ui.overview.SeasonsFragment;
 import com.battlelancer.seriesguide.ui.overview.ShowFragment;
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
+import com.battlelancer.seriesguide.ui.shows.ShowTools2;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -227,15 +227,15 @@ public class OverviewActivity extends BaseMessageActivity {
             return true;
         }
         if (itemId == R.id.menu_overview_remove_show) {
-            RemoveShowDialogFragment.show(this, getSupportFragmentManager(), showTvdbId);
+            RemoveShowDialogFragment.show(showId, getSupportFragmentManager(), this);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowTask.OnRemovingShowEvent event) {
-        if (event.showTvdbId == showTvdbId) {
+    public void onEventMainThread(ShowTools2.OnRemovingShowEvent event) {
+        if (event.getShowId() == showId) {
             finish(); // finish this activity if the show it displays is about to get removed
         }
     }

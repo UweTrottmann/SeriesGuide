@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.ContentProviderOperation;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -12,22 +11,15 @@ import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import javax.inject.Inject;
 import timber.log.Timber;
 
@@ -63,76 +55,8 @@ public class ShowTools {
         this.showTools2 = new ShowTools2(this, context);
     }
 
-    /**
-     * Removes a show and its seasons and episodes, including all images. Sends isRemoved flag to
-     * Hexagon.
-     *
-     * @return One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
-     */
-    public int removeShow(int showTvdbId) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return NetworkResult.OFFLINE;
-            }
-            // send to cloud
-            sendIsRemoved(showTvdbId);
-        }
-
-        // remove database entries in stages, so if an earlier stage fails, user can at least try again
-        // also saves memory by applying batches early
-
-        // SEARCH DATABASE ENTRIES
-        final Cursor episodes = context.getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                        SeriesGuideContract.Episodes._ID
-                }, null, null, null
-        );
-        if (episodes == null) {
-            // failed
-            return Result.ERROR;
-        }
-        List<String> episodeTvdbIds = new LinkedList<>(); // need those for search entries
-        while (episodes.moveToNext()) {
-            episodeTvdbIds.add(episodes.getString(0));
-        }
-        episodes.close();
-
-        // remove episode search database entries
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        for (String episodeTvdbId : episodeTvdbIds) {
-            batch.add(ContentProviderOperation.newDelete(
-                    SeriesGuideContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
-        }
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "Removing episode search entries failed");
-            return Result.ERROR;
-        }
-        batch.clear();
-
-        // ACTUAL ENTITY ENTRIES
-        // remove episodes, seasons and show
-        batch.add(ContentProviderOperation.newDelete(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());
-        batch.add(ContentProviderOperation.newDelete(
-                SeriesGuideContract.Seasons.buildSeasonsOfShowUri(showTvdbId)).build());
-        batch.add(ContentProviderOperation.newDelete(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId)).build());
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "Removing episodes, seasons and show failed");
-            return Result.ERROR;
-        }
-
-        // make sure other loaders (activity, overview, details, search) are notified
-        context.getContentResolver().notifyChange(
-                SeriesGuideContract.Episodes.CONTENT_URI_WITHSHOW, null);
-        context.getContentResolver().notifyChange(
-                SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
-
-        return Result.SUCCESS;
+    public void removeShow(long showId) {
+        showTools2.removeShow(showId);
     }
 
     /**
@@ -144,17 +68,6 @@ public class ShowTools {
         show.setTvdbId(showTvdbId);
         show.setLanguage(language);
         show.setIsRemoved(false);
-        uploadShowAsync(show);
-    }
-
-    /**
-     * Sets the isRemoved flag of the given show on Hexagon, so the show will not be auto-added on
-     * any device connected to Hexagon.
-     */
-    public void sendIsRemoved(int showTvdbId) {
-        Show show = new Show();
-        show.setTvdbId(showTvdbId);
-        show.setIsRemoved(true);
         uploadShowAsync(show);
     }
 

@@ -38,6 +38,8 @@ interface SgSeason2Helper {
     @Update(entity = SgSeason2::class)
     fun updateSeasonCounters(seasonCountUpdate: SgSeason2CountUpdate)
 
+    @Query("DELETE FROM sg_season WHERE series_id = :showId")
+    fun deleteSeasonsOfShow(showId: Long): Int
 }
 
 data class SgSeason2Numbers(
