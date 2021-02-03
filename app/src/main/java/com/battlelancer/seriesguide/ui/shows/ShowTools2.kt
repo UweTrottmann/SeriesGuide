@@ -42,7 +42,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             val showTvdbId =
                 SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
             if (showTvdbId == 0) {
-                return@withContext false
+                return@withContext true
             }
 
             val show = Show()
@@ -101,7 +101,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             val showTvdbId =
                 SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
             if (showTvdbId == 0) {
-                return@withContext false
+                return@withContext true
             }
 
             val show = Show()
@@ -157,7 +157,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             val showTvdbId =
                 SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
             if (showTvdbId == 0) {
-                return@withContext false
+                return@withContext true
             }
 
             val show = Show()
