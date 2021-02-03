@@ -55,6 +55,18 @@ interface MovieHelper {
     )
     fun getMovieFlags(tmdbId: Int): SgMovieFlags?
 
+    @Query("SELECT COUNT(_id) FROM movies")
+    fun countMovies(): Int
+
+    @Query("SELECT COUNT(_id) as count, SUM(movies_runtime) as runtime FROM movies WHERE movies_inwatchlist = 1")
+    fun getStatsInWatchlist(): MovieStats?
+
+    @Query("SELECT COUNT(_id) as count, SUM(movies_runtime) as runtime FROM movies WHERE movies_incollection = 1")
+    fun getStatsInCollection(): MovieStats?
+
+    @Query("SELECT COUNT(_id) as count, SUM(movies_runtime) as runtime FROM movies WHERE movies_watched = 1")
+    fun getStatsWatched(): MovieStats?
+
     @Query("SELECT movies_title FROM movies WHERE movies_tmdbid=:tmdbId")
     fun getMovieTitle(tmdbId: Int): String?
 
@@ -79,3 +91,8 @@ interface MovieHelper {
     @Query("SELECT * FROM movies")
     fun getAllMovies(): List<SgMovie>
 }
+
+data class MovieStats(
+    val count: Int,
+    val runtime: Long
+)

@@ -50,6 +50,9 @@ interface SgShow2Helper {
     @Query("SELECT sg_show._id, series_lastwatchedid, episode_number, episode_season_number, episode_firstairedms, episode_title FROM sg_show LEFT OUTER JOIN sg_episode ON series_lastwatchedid = sg_episode._id")
     fun getShowsWithLastWatchedEpisode(): List<SgShow2LastWatchedEpisode>
 
+    @Query("SELECT _id, series_status, series_next, series_runtime FROM sg_show")
+    fun getStats(): List<SgShow2Stats>
+
     @Update(entity = SgShow2::class)
     fun updateShowNextEpisode(updates: List<SgShow2NextEpisodeUpdate>): Int
 
@@ -133,6 +136,13 @@ data class SgShow2LastWatchedEpisode(
     @ColumnInfo(name = SgEpisode2Columns.SEASON) val seasonNumber: Int?,
     @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val episodeReleaseDateMs: Long?,
     @ColumnInfo(name = SgEpisode2Columns.TITLE) val episodeTitle: String?
+)
+
+data class SgShow2Stats(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int,
+    @ColumnInfo(name = SgShow2Columns.NEXTEPISODE) val nextEpisode: String?,
+    @ColumnInfo(name = SgShow2Columns.RUNTIME) val runtime: Int
 )
 
 data class SgShow2NextEpisodeUpdate(

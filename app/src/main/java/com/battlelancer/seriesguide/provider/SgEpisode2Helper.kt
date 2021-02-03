@@ -99,6 +99,24 @@ interface SgEpisode2Helper {
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
     fun getEpisodeSearchResults(query: SupportSQLiteQuery): LiveData<List<SgEpisode2SearchResult>>
 
+    @Query("SELECT COUNT(_id) FROM sg_episode")
+    fun countEpisodes(): Int
+
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_season_number != 0")
+    fun countEpisodesWithoutSpecials(): Int
+
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_watched == ${EpisodeFlags.WATCHED}")
+    fun countWatchedEpisodes(): Int
+
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_watched == ${EpisodeFlags.WATCHED} AND episode_season_number != 0")
+    fun countWatchedEpisodesWithoutSpecials(): Int
+
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.WATCHED}")
+    fun countWatchedEpisodesOfShow(showId: Long): Int
+
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.WATCHED} AND episode_season_number != 0")
+    fun countWatchedEpisodesOfShowWithoutSpecials(showId: Long): Int
+
     /**
      * Returns how many episodes of a show are left to collect. Only considers regular, released
      * episodes (no specials, must have a release date in the past).

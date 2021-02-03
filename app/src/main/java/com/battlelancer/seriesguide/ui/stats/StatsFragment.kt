@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentStatsBinding
@@ -26,8 +26,8 @@ import java.text.NumberFormat
 class StatsFragment : Fragment() {
 
     private var binding: FragmentStatsBinding? = null
-    private lateinit var model: StatsViewModel
-    private var currentStats: StatsLiveData.Stats? = null
+    private val model by viewModels<StatsViewModel>()
+    private var currentStats: Stats? = null
     private var hasFinalValues: Boolean = false
 
     override fun onCreateView(
@@ -84,9 +84,7 @@ class StatsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
-        model = ViewModelProvider(this).get(StatsViewModel::class.java)
         model.statsData.observe(viewLifecycleOwner, { this.handleStatsUpdate(it) })
-        loadStats()
     }
 
     override fun onDestroyView() {
@@ -128,10 +126,10 @@ class StatsFragment : Fragment() {
     }
 
     private fun loadStats() {
-        model.statsData.loadStats()
+        model.hideSpecials.value = DisplaySettings.isHidingSpecials(context)
     }
 
-    private fun handleStatsUpdate(event: StatsLiveData.StatsUpdateEvent) {
+    private fun handleStatsUpdate(event: StatsUpdateEvent) {
         if (!isAdded) {
             return
         }
@@ -141,7 +139,7 @@ class StatsFragment : Fragment() {
     }
 
     private fun updateStats(
-        stats: StatsLiveData.Stats, hasFinalValues: Boolean,
+        stats: Stats, hasFinalValues: Boolean,
         successful: Boolean
     ) {
         val binding = binding ?: return
