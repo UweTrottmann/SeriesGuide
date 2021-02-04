@@ -493,7 +493,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         bindingButtons.buttonEpisodeCheckin.setOnClickListener(v -> {
             if (episode.getTvdbId() != null) {
                 CheckInDialogFragment
-                        .show(requireContext(), getParentFragmentManager(), episode.getTvdbId());
+                        .show(requireContext(), getParentFragmentManager(), episode.getId());
             }
         });
         CheatSheet.setup(bindingButtons.buttonEpisodeCheckin);

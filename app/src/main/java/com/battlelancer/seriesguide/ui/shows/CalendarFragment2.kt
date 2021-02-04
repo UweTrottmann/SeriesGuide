@@ -253,7 +253,7 @@ class CalendarFragment2 : Fragment() {
                         CheckInDialogFragment.show(
                             requireContext(),
                             parentFragmentManager,
-                            episode.episodeTvdbId
+                            episode.id
                         )
                         return@setOnMenuItemClickListener true
                     }

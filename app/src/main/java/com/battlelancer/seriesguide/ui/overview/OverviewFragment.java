@@ -343,8 +343,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
     @OnClick(R.id.buttonEpisodeCheckin)
     void onButtonCheckInClick() {
-        runIfEpisodeHasTvdbId((episode1, episodeTvdbId) -> CheckInDialogFragment
-                .show(requireContext(), getParentFragmentManager(), episodeTvdbId));
+        runIfHasEpisode((e) -> CheckInDialogFragment
+                .show(requireContext(), getParentFragmentManager(), e.getId()));
     }
 
     @OnClick(R.id.buttonEpisodeStreamingSearch)
