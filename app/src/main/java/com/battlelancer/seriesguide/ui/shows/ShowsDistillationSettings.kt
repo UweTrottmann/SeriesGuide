@@ -5,7 +5,6 @@ import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 
 /**
  * Provides settings used to filter and sort displayed shows in [ShowsFragment].
@@ -24,38 +23,6 @@ object ShowsDistillationSettings {
     private const val KEY_FILTER_UPCOMING = "seriesguide.show_filter.upcoming"
     private const val KEY_FILTER_HIDDEN = "seriesguide.show_filter.hidden"
     private const val KEY_FILTER_CONTINUING = "seriesguide.show_filter.continuing"
-
-    /**
-     * Builds an appropriate SQL sort statement for sorting shows.
-     */
-    @JvmStatic
-    fun getSortQuery(
-        sortOrderId: Int, isSortFavoritesFirst: Boolean,
-        isSortIgnoreArticles: Boolean
-    ): String {
-        val query = StringBuilder()
-
-        if (isSortFavoritesFirst) {
-            query.append(ShowsSortQuery.FAVORITES_FIRST)
-        }
-
-        when (sortOrderId) {
-            ShowsSortOrder.OLDEST_EPISODE_ID -> query.append(ShowsSortQuery.OLDEST_EPISODE)
-            ShowsSortOrder.LATEST_EPISODE_ID -> query.append(ShowsSortQuery.LATEST_EPISODE)
-            ShowsSortOrder.LAST_WATCHED_ID -> query.append(ShowsSortQuery.LAST_WATCHED)
-            ShowsSortOrder.LEAST_REMAINING_EPISODES_ID -> query.append(ShowsSortQuery.REMAINING_EPISODES)
-        }
-        // always sort by title at last
-        query.append(
-            if (isSortIgnoreArticles) {
-                Shows.SORT_TITLE_NOARTICLE
-            } else {
-                Shows.SORT_TITLE
-            }
-        )
-
-        return query.toString()
-    }
 
     /**
      * Builds an appropriate SQL sort statement for sorting SgShow2 table results.
@@ -170,23 +137,6 @@ object ShowsDistillationSettings {
             null -> FILTER_DISABLED
             true -> FILTER_INCLUDE
             false -> FILTER_EXCLUDE
-        }
-    }
-
-    private interface ShowsSortQuery {
-        companion object {
-            // by oldest next episode, then continued first
-            const val OLDEST_EPISODE = (Shows.NEXTAIRDATEMS + " ASC,"
-                    + Shows.SORT_STATUS + ",")
-            // by latest next episode, then continued first
-            const val LATEST_EPISODE = Shows.SORT_LATEST_EPISODE + ","
-            // by latest watched first
-            const val LAST_WATCHED = Shows.LASTWATCHED_MS + " DESC,"
-            // by least episodes remaining to watch, then continued first
-            const val REMAINING_EPISODES = (Shows.UNWATCHED_COUNT + " ASC,"
-                    + Shows.SORT_STATUS + ",")
-            // add as prefix to sort favorites first
-            const val FAVORITES_FIRST = Shows.FAVORITE + " DESC,"
         }
     }
 

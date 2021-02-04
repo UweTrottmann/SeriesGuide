@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
 import androidx.preference.PreferenceManager;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
@@ -42,11 +42,11 @@ public class ListsDistillationSettings {
                 break;
         }
 
-        String baseQuery = ShowsDistillationSettings.getSortQuery(sortOrderId, false,
+        String baseQuery = ShowsDistillationSettings.getSortQuery2(sortOrderId, false,
                 DisplaySettings.isSortOrderIgnoringArticles(context));
 
         // append sorting by list type
-        return baseQuery + "," + SeriesGuideContract.ListItems.SORT_TYPE;
+        return baseQuery + "," + ListItems.SORT_TYPE;
     }
 
     /**

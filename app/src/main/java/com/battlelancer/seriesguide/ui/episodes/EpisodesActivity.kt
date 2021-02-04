@@ -366,6 +366,7 @@ class EpisodesActivity : BaseMessageActivity() {
         const val EPISODE_LOADER_ID = 101
         const val ACTIONS_LOADER_ID = 102
 
+        @JvmStatic
         fun intentSeason(seasonRowId: Long, context: Context): Intent {
             return Intent(context, EpisodesActivity::class.java)
                 .putExtra(EXTRA_LONG_SEASON_ID, seasonRowId)

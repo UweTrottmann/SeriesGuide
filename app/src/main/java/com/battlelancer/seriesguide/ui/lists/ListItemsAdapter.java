@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
-import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
@@ -32,7 +32,7 @@ class ListItemsAdapter extends BaseShowsAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ListItemViewHolder viewHolder = (ListItemViewHolder) view.getTag();
 
-        viewHolder.showTvdbId = cursor.getInt(Query.SHOW_ID);
+        viewHolder.showId = cursor.getLong(Query.SHOW_ID);
         viewHolder.isFavorited = cursor.getInt(Query.SHOW_FAVORITE) == 1;
 
         // show title
@@ -162,21 +162,21 @@ class ListItemsAdapter extends BaseShowsAdapter {
                 ListItems.LIST_ITEM_ID,
                 ListItems.ITEM_REF_ID,
                 ListItems.TYPE,
-                Shows.REF_SHOW_ID,
-                Shows.TITLE, // 5
-                Shows.OVERVIEW,
-                Shows.POSTER_SMALL,
-                Shows.NETWORK,
-                Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY, // 10
-                Shows.RELEASE_TIMEZONE,
-                Shows.RELEASE_COUNTRY,
-                Shows.STATUS,
-                Shows.NEXTTEXT,
-                Shows.NEXTEPISODE, // 15
-                Shows.NEXTAIRDATEMS,
-                Shows.FAVORITE,
-                Shows.UNWATCHED_COUNT // 18
+                SgShow2Columns.REF_SHOW_ID,
+                SgShow2Columns.TITLE, // 5
+                SgShow2Columns.OVERVIEW,
+                SgShow2Columns.POSTER_SMALL,
+                SgShow2Columns.NETWORK,
+                SgShow2Columns.RELEASE_TIME,
+                SgShow2Columns.RELEASE_WEEKDAY, // 10
+                SgShow2Columns.RELEASE_TIMEZONE,
+                SgShow2Columns.RELEASE_COUNTRY,
+                SgShow2Columns.STATUS,
+                SgShow2Columns.NEXTTEXT,
+                SgShow2Columns.NEXTEPISODE, // 15
+                SgShow2Columns.NEXTAIRDATEMS,
+                SgShow2Columns.FAVORITE,
+                SgShow2Columns.UNWATCHED_COUNT // 18
         };
 
         int LIST_ITEM_ID = 1;
