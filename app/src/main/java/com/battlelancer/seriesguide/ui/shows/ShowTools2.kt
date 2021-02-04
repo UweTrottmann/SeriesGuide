@@ -151,9 +151,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         withContext(Dispatchers.IO) {
             SgRoomDatabase.getInstance(context).sgShow2Helper().setShowFavorite(showId, isFavorite)
 
-            // FIXME also notify URIs used by search and lists
-            context.contentResolver
-                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null)
+            // Also notify URI used by lists.
             context.contentResolver
                 .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null)
         }
@@ -209,10 +207,6 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // Save to local database.
         withContext(Dispatchers.IO) {
             SgRoomDatabase.getInstance(context).sgShow2Helper().setShowHidden(showId, isHidden)
-
-            // FIXME also notify filter URI used by search
-            context.contentResolver
-                .notifyChange(SeriesGuideContract.Shows.CONTENT_URI_FILTER, null)
         }
 
         // display info toast
