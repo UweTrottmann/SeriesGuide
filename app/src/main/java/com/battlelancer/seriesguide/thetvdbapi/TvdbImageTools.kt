@@ -1,17 +1,11 @@
 package com.battlelancer.seriesguide.thetvdbapi
 
 import android.content.Context
-import android.util.Base64
 import android.widget.ImageView
-import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
-import timber.log.Timber
-import java.security.InvalidKeyException
-import java.security.NoSuchAlgorithmException
-import javax.crypto.Mac
-import javax.crypto.spec.SecretKeySpec
 
 object TvdbImageTools {
 
@@ -19,12 +13,12 @@ object TvdbImageTools {
     private const val TVDB_LEGACY_MIRROR_BANNERS = "https://www.thetvdb.com/banners/"
     const val TVDB_THUMBNAIL_POSTFIX = "_t.jpg"
     const val TVDB_LEGACY_CACHE_PREFIX = "_cache/"
-    private var sha256_hmac: Mac? = null
 
     /**
      * Builds a url for a TVDb poster or screenshot (episode still) using the given image path.
      */
     @JvmStatic
+    @Deprecated("Use ImageTools instead")
     fun artworkUrl(imagePath: String?): String? {
         return if (imagePath.isNullOrEmpty()) {
             null
@@ -39,7 +33,7 @@ object TvdbImageTools {
             } else {
                 "$TVDB_MIRROR_BANNERS$imagePath"
             }
-            buildImageCacheUrl(imageUrl)
+            ImageTools.buildImageCacheUrl(imageUrl)
         }
     }
 
@@ -50,6 +44,7 @@ object TvdbImageTools {
      * small poster using additional network requests.
      */
     @JvmStatic
+    @Deprecated("Use ImageTools instead")
     fun posterUrlOrResolve(
         imagePath: String?,
         showTvdbId: Int,
@@ -115,6 +110,7 @@ object TvdbImageTools {
     }
 
     @JvmStatic
+    @Deprecated("Use ImageTools instead")
     fun loadUrlResizeCrop(
         context: Context,
         imageView: ImageView,
@@ -169,46 +165,4 @@ object TvdbImageTools {
             .into(imageView)
     }
 
-    /**
-     * @param posterUrlTvdb Expected to be not empty.
-     */
-    private fun buildImageCacheUrl(posterUrlTvdb: String): String? {
-        @Suppress("SENSELESS_COMPARISON")
-        if (BuildConfig.IMAGE_CACHE_URL == null) {
-            return posterUrlTvdb // no cache
-        }
-
-        val mac = encodeImageUrl(BuildConfig.IMAGE_CACHE_SECRET, posterUrlTvdb)
-        return if (mac != null) {
-            String.format("%s/s%s/%s", BuildConfig.IMAGE_CACHE_URL, mac, posterUrlTvdb)
-        } else {
-            null
-        }
-    }
-
-    @Synchronized
-    private fun encodeImageUrl(
-        @Suppress("SameParameterValue") key: String,
-        data: String
-    ): String? {
-        try {
-            if (sha256_hmac == null) {
-                sha256_hmac = Mac.getInstance("HmacSHA256")
-                val secretKey = SecretKeySpec(key.toByteArray(), "HmacSHA256")
-                sha256_hmac!!.init(secretKey)
-            }
-
-            return Base64.encodeToString(
-                sha256_hmac!!.doFinal(data.toByteArray()),
-                Base64.NO_WRAP or Base64.URL_SAFE
-            )
-        } catch (e: NoSuchAlgorithmException) {
-            Timber.e(e, "Signing image URL failed.")
-            return null
-        } catch (e: InvalidKeyException) {
-            Timber.e(e, "Signing image URL failed.")
-            return null
-        }
-
-    }
 }

@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
 
 class ShowsDiscoverAdapter(
@@ -148,11 +148,8 @@ class ShowsDiscoverAdapter(
                 holder.title.text = showTitle
                 holder.description.text = item.overview
 
-                // only local shows will have a poster path set
-                // resolve the TVDB poster URL for all others
-                val posterUrl = TvdbImageTools.posterUrlOrResolve(item.posterPath,
-                        item.tvdbid, item.language)
-                TvdbImageTools.loadUrlResizeCrop(context, holder.poster, posterUrl)
+                val posterUrl = ImageTools.tmdbOrTvdbPosterUrl(item.posterPath, context)
+                ImageTools.loadAndResizeAndCrop(posterUrl, holder.poster, context)
             }
         }
     }
