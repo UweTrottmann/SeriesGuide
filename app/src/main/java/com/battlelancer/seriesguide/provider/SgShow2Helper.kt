@@ -17,8 +17,11 @@ interface SgShow2Helper {
     @Query("SELECT * FROM sg_show WHERE _id=:id")
     fun getShowLiveData(id: Long): LiveData<SgShow2?>
 
-    @Query("SELECT _id, series_tvdb_id, series_title, series_poster_small FROM sg_show WHERE _id = :id")
+    @Query("SELECT _id, series_tmdb_id, series_tvdb_id, series_title, series_poster_small FROM sg_show WHERE _id = :id")
     fun getShowMinimal(id: Long): SgShow2Minimal?
+
+    @Query("SELECT _id, series_tmdb_id, series_tvdb_id, series_title, series_poster_small FROM sg_show")
+    fun getShowsMinimal(): List<SgShow2Minimal>
 
     @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show WHERE _id=:id")
     fun getShowIds(id: Long): SgShow2Ids?
@@ -95,6 +98,7 @@ data class SgShow2Ids(
 
 data class SgShow2Minimal(
     @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.TMDB_ID) val tmdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.TITLE) val title: String,
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val posterSmall: String?

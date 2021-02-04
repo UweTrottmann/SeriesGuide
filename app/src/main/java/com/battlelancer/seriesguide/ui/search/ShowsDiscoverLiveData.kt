@@ -24,8 +24,8 @@ import java.util.Date
  * Gets search results for the given query, or if the query is blank gets shows with new episodes.
  */
 class ShowsDiscoverLiveData(
-    val context: Context,
-    val scope: CoroutineScope
+    private val context: Context,
+    private val scope: CoroutineScope
 ) : LiveData<ShowsDiscoverLiveData.Result>() {
 
     data class Result(
@@ -76,7 +76,7 @@ class ShowsDiscoverLiveData(
         }
     }
 
-    private suspend fun getShowsWithNewEpisodes(language: String): Result? =
+    private suspend fun getShowsWithNewEpisodes(language: String): Result =
         withContext(Dispatchers.IO) {
             val languageActual = language
 
@@ -105,11 +105,10 @@ class ShowsDiscoverLiveData(
                 ?: return@withContext buildResultFailure(R.string.tmdb, false)
 
             val searchResults = TmdbTools2().mapTvShowsToSearchResults(
-                context,
                 languageActual,
                 results
             )
-            SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, searchResults)
+            SearchTools().markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
             return@withContext buildResultSuccess(searchResults, R.string.add_empty, false)
         }
 
@@ -118,7 +117,7 @@ class ShowsDiscoverLiveData(
 
         try {
             val results = tvdbTools.searchSeries(query, language)
-            SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, results)
+            SearchTools().markLocalShowsAsAddedAndPreferLocalPoster(context, results)
             return buildResultSuccess(results, R.string.no_results, true)
         } catch (e: TvdbException) {
             Timber.e(e, "Searching show failed")

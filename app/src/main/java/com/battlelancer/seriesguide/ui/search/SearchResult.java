@@ -13,6 +13,7 @@ public class SearchResult implements Parcelable {
     static final int STATE_ADDED = 2;
 
     private int tvdbid;
+    private int tmdbId;
     private String language;
     private String title;
     private String overview;
@@ -35,6 +36,7 @@ public class SearchResult implements Parcelable {
 
     public SearchResult(Parcel in) {
         setTvdbid(in.readInt());
+        setTmdbId(in.readInt());
         setLanguage(in.readString());
         setTitle(in.readString());
         setOverview(in.readString());
@@ -45,6 +47,7 @@ public class SearchResult implements Parcelable {
     public SearchResult copy() {
         SearchResult copy = new SearchResult();
         copy.setTvdbid(this.getTvdbid());
+        copy.setTmdbId(this.getTmdbId());
         copy.setLanguage(this.getLanguage());
         copy.setTitle(this.getTitle());
         copy.setOverview(this.getOverview());
@@ -61,6 +64,7 @@ public class SearchResult implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(getTvdbid());
+        dest.writeInt(getTmdbId());
         dest.writeString(getLanguage());
         dest.writeString(getTitle());
         dest.writeString(getOverview());
@@ -68,12 +72,26 @@ public class SearchResult implements Parcelable {
         dest.writeInt(getState());
     }
 
+    /**
+     * @deprecated Use {@link #getTmdbId()} instead.
+     */
     public int getTvdbid() {
         return tvdbid;
     }
 
+    /**
+     * @deprecated Use {@link #setTmdbId(int)} instead.
+     */
     public void setTvdbid(int tvdbid) {
         this.tvdbid = tvdbid;
+    }
+
+    public int getTmdbId() {
+        return tmdbId;
+    }
+
+    public void setTmdbId(int tmdbId) {
+        this.tmdbId = tmdbId;
     }
 
     /** Two-letter ISO 639-1 language code. */

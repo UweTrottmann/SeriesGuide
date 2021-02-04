@@ -9,7 +9,6 @@ import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 
 class TmdbTools2 {
@@ -43,44 +42,19 @@ class TmdbTools2 {
 
     /**
      * Maps TMDB TV shows to search results.
-     * Resolves the TheTVDB id using a network call on the calling thread!
-     * Excludes shows where no TheTVDB id could be resolved (for any reason).
      */
     suspend fun mapTvShowsToSearchResults(
-        context: Context,
         languageCode: String,
         results: List<BaseTvShow>
     ): List<SearchResult> = withContext(Dispatchers.IO) {
-        val tvService = SgApp.getServicesComponent(context.applicationContext)
-            .tmdb()
-            .tvService()
         return@withContext results.mapNotNull { tvShow ->
-            if (!isActive) {
-                return@mapNotNull null // do not bother fetching ids for remaining results
-            }
-
-            // Find TheTVDB id.
-            val idResponse = tvShow.id?.let {
-                try {
-                    tvService.externalIds(it, null).execute()
-                } catch (e: Exception) {
-                    null
-                }
-            }
-
-            // On TMDB the TheTVDB id might be 0, ignore those shows, too.
-            val externalIds = idResponse?.body()
-            if (idResponse == null || !idResponse.isSuccessful
-                || externalIds == null || externalIds.tvdb_id == null
-                || externalIds.tvdb_id == 0) {
-                null // Ignore this show.
-            } else {
-                SearchResult().apply {
-                    tvdbid = externalIds.tvdb_id!!
-                    title = tvShow.name
-                    overview = tvShow.overview
-                    language = languageCode
-                }
+            val tmdbId = tvShow.id ?: return@mapNotNull null
+            SearchResult().also {
+                it.tmdbId = tmdbId
+                it.title = tvShow.name
+                it.overview = tvShow.overview
+                it.language = languageCode
+                it.posterPath = tvShow.poster_path
             }
         }
     }

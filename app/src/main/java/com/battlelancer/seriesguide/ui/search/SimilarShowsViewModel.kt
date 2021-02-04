@@ -70,10 +70,9 @@ class SimilarShowsViewModel(
             }
 
             // Map to search results by resolving TheTVDB id.
-            val searchResults =
-                tmdbTools.mapTvShowsToSearchResults(context, languageCode, results)
+            val searchResults = tmdbTools.mapTvShowsToSearchResults(languageCode, results)
             // Mark local shows and use existing TheTVDB poster path.
-            SearchTools().markLocalShowsAsAddedAndSetPosterPath(context, searchResults)
+            SearchTools().markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
 
             postSuccessfulResult(searchResults)
         }

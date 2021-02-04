@@ -241,6 +241,11 @@ public class ShowTools {
         return existingShows;
     }
 
+    @NonNull
+    public SparseArrayCompat<String> getTmdbIdsToPoster() {
+        return showTools2.getTmdbIdsToPoster(context);
+    }
+
     /**
      * Decodes the show status and returns the localized text representation. May be {@code null} if
      * status is unknown.

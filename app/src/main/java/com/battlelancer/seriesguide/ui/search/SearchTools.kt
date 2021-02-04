@@ -1,24 +1,31 @@
 package com.battlelancer.seriesguide.ui.search
 
 import android.content.Context
-import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.SgApp
 
 class SearchTools {
 
-    fun markLocalShowsAsAddedAndSetPosterPath(context: Context, results: List<SearchResult>?) {
-        val existingPosterPaths = ShowTools.getSmallPostersByTvdbId(context)
-        if (existingPosterPaths == null || results == null) {
+    /**
+     * Replaces with local poster (e.g. if the user added the show in a different language to
+     * ensure it shows up with the same poster and to avoid fetching another image).
+     */
+    fun markLocalShowsAsAddedAndPreferLocalPoster(context: Context, results: List<SearchResult>?) {
+        if (results == null) {
             return
         }
 
+        val localShowsToPoster = SgApp.getServicesComponent(context).showTools().tmdbIdsToPoster
         for (result in results) {
             result.overview = String.format("(%s) %s", result.language, result.overview)
 
-            if (existingPosterPaths.indexOfKey(result.tvdbid) >= 0) {
+            if (localShowsToPoster.indexOfKey(result.tmdbId) >= 0) {
                 // Is already in local database.
                 result.state = SearchResult.STATE_ADDED
-                // Use the poster we fetched for it (or null if there is none).
-                result.posterPath = existingPosterPaths[result.tvdbid]
+                // Use the poster already fetched for it.
+                val posterOrNull = localShowsToPoster[result.tmdbId]
+                if (posterOrNull != null) {
+                    result.posterPath = posterOrNull
+                }
             }
         }
     }

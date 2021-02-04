@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
 import android.widget.Toast
+import androidx.collection.SparseArrayCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -381,6 +382,17 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             HexagonShowSync(context, SgApp.getServicesComponent(context).hexagonTools())
                 .upload(shows)
         }
+    }
+
+    fun getTmdbIdsToPoster(context: Context): SparseArrayCompat<String> {
+        val shows = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowsMinimal()
+        val map = SparseArrayCompat<String>()
+        shows.forEach {
+            if (it.tmdbId != null && it.tmdbId != 0) {
+                map.put(it.tmdbId, it.posterSmall)
+            }
+        }
+        return map
     }
 
 }
