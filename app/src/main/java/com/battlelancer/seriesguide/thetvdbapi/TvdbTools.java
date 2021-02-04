@@ -164,7 +164,7 @@ public class TvdbTools {
         }
 
         // calculate next episode
-        long showId = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowId(showTvdbId);
+        long showId = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIdByTvdbId(showTvdbId);
         DBUtils.updateLatestEpisode(context, showId);
 
         return true;

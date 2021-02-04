@@ -8,23 +8,153 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.enums.Result
+import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
+import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.seriesguide.backend.shows.model.Show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
+import com.uwetrottmann.seriesguide.backend.shows.model.Show as CloudShow
 
 /**
  * Provides some show operations as (async) suspend functions, running within global scope.
  */
 class ShowTools2(val showTools: ShowTools, val context: Context) {
+
+    /**
+     * Gets row ID of a show by TMDB id first, then if given by TVDB id. Null if not in database.
+     */
+    fun getShowId(showTmdbId: Int, showTvdbId: Int?): Long? {
+        val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
+
+        val showIdByTmdbId = helper.getShowIdByTmdbId(showTmdbId)
+        if (showIdByTmdbId > 0) return showIdByTmdbId
+
+        if (showTvdbId != null) {
+            val showIdByTvdbId = helper.getShowIdByTvdbId(showTvdbId)
+            if (showIdByTvdbId > 0) return showIdByTvdbId
+        }
+
+        return null
+    }
+
+    /**
+     * Returns true if the show is null because it no longer exists.
+     */
+    fun getShowDetails(showTmdbId: Int, desiredLanguage: String): Pair<SgShow2?, Boolean> {
+        val tmdbResult = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
+        var tmdbShow = tmdbResult.first ?: return Pair(null, tmdbResult.second)
+
+        val noTranslation = tmdbShow.overview.isNullOrEmpty()
+        if (noTranslation) {
+            val tmdbResultFallback = TmdbTools2().getShowAndExternalIds(
+                showTmdbId,
+                DisplaySettings.getShowsLanguageFallback(context),
+                context
+            )
+            tmdbShow = tmdbResultFallback.first ?: return Pair(null, tmdbResultFallback.second)
+        }
+
+        val traktResult = TraktTools2.getShowByTmdbId(showTmdbId, context)
+        // Fail if looking up Trakt details failed to avoid removing them for existing shows.
+        if (traktResult.failed) return Pair(null, false)
+        val traktShow = traktResult.show
+        if (traktShow == null) {
+            Timber.w("getShowDetails: no Trakt show found, using default values.")
+        }
+
+        val title = if (tmdbShow.name.isNullOrEmpty()) {
+            context.getString(R.string.no_translation_title)
+        } else {
+            tmdbShow.name
+        }
+
+        val overview = if (noTranslation || tmdbShow.overview.isNullOrEmpty()) {
+            // add note about non-translated or non-existing overview
+            var overview = context.getString(
+                R.string.no_translation,
+                LanguageTools.getShowLanguageStringFor(context, desiredLanguage),
+                context.getString(R.string.tmdb)
+            )
+            // if there is one, append non-translated overview
+            if (!tmdbShow.overview.isNullOrEmpty()) {
+                overview += "\n\n${tmdbShow.overview}"
+            }
+            overview
+        } else {
+            tmdbShow.overview
+        }
+
+        val rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 }
+
+        return Pair(
+            SgShow2(
+                tmdbId = tmdbShow.id,
+                tvdbId = tmdbShow.external_ids?.tvdb_id ?: 0,
+                traktId = traktShow?.ids?.trakt,
+                title = title,
+                titleNoArticle = DBUtils.trimLeadingArticle(tmdbShow.name),
+                overview = overview,
+                releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time),
+                releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day),
+                releaseCountry = traktShow?.country,
+                releaseTimeZone = traktShow?.airs?.timezone,
+                firstRelease = TimeTools.parseShowFirstRelease(traktShow?.first_aired),
+                ratingGlobal = rating ?: 0.0,
+                genres = TextTools.mendTvdbStrings(tmdbShow.genres?.map { genre -> genre.name }),
+                network = tmdbShow.networks?.firstOrNull()?.name ?: "",
+                imdbId = tmdbShow.external_ids?.imdb_id ?: "",
+                runtime = tmdbShow.episode_run_time?.first() ?: 45, // estimate 45 minutes if none.
+                status = when (tmdbShow.status) {
+                    "Returning Series" -> Status.CONTINUING
+                    "Planned" -> Status.UPCOMING
+                    "Pilot" -> Status.PILOT
+                    "Ended" -> Status.ENDED
+                    "Canceled" -> Status.CANCELED
+                    "In Production" -> Status.IN_PRODUCTION
+                    else -> Status.UNKNOWN
+                },
+                poster = tmdbShow.poster_path ?: "",
+                posterSmall = tmdbShow.poster_path ?: "",
+                // set desired language, might not be the content language if fallback used above.
+                language = desiredLanguage
+            ), false
+        )
+    }
+
+    /**
+     * Decodes the [ShowTools.Status] and returns the localized text representation.
+     * May be `null` if status is unknown.
+     */
+    fun getStatus(encodedStatus: Int): String? {
+        return when (encodedStatus) {
+            Status.IN_PRODUCTION -> context.getString(R.string.show_status_in_production)
+            Status.PILOT -> context.getString(R.string.show_status_pilot)
+            Status.CANCELED -> context.getString(R.string.show_status_canceled)
+            Status.UPCOMING -> context.getString(R.string.show_isUpcoming)
+            Status.CONTINUING -> context.getString(R.string.show_isalive)
+            Status.ENDED -> context.getString(R.string.show_isnotalive)
+            else -> {
+                // status unknown, display nothing
+                null
+            }
+        }
+    }
 
     /**
      * Posted if a show is about to get removed.
@@ -85,7 +215,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
             // Sets the isRemoved flag of the given show on Hexagon, so the show will
             // not be auto-added on any device connected to Hexagon.
-            val show = Show()
+            val show = CloudShow()
             show.tvdbId = showTvdbId
             show.isRemoved = true
 
@@ -138,7 +268,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 return@withContext true
             }
 
-            val show = Show()
+            val show = CloudShow()
             show.tvdbId = showTvdbId
             show.isFavorite = isFavorite
 
@@ -195,7 +325,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 return@withContext true
             }
 
-            val show = Show()
+            val show = CloudShow()
             show.tvdbId = showTvdbId
             show.isHidden = isHidden
 
@@ -247,7 +377,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 return@withContext true
             }
 
-            val show = Show()
+            val show = CloudShow()
             show.tvdbId = showTvdbId
             show.notify = notify
 
@@ -288,7 +418,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 }
 
                 val shows = hiddenShowTvdbIds.map { showTvdbId ->
-                    val show = Show()
+                    val show = CloudShow()
                     show.tvdbId = showTvdbId
                     show.isHidden = false
                     show
@@ -322,7 +452,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 return@withContext true
             }
 
-            val show = Show()
+            val show = CloudShow()
             show.tvdbId = showTvdbId
             show.language = languageCode
 
@@ -367,17 +497,17 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return !isConnected
     }
 
-    fun uploadShowToCloud(show: Show) {
+    fun uploadShowToCloud(show: CloudShow) {
         SgApp.coroutineScope.launch {
             uploadShowToCloudAsync(show)
         }
     }
 
-    private suspend fun uploadShowToCloudAsync(show: Show): Boolean {
+    private suspend fun uploadShowToCloudAsync(show: CloudShow): Boolean {
         return uploadShowsToCloudAsync(listOf(show))
     }
 
-    private suspend fun uploadShowsToCloudAsync(shows: List<Show>): Boolean {
+    private suspend fun uploadShowsToCloudAsync(shows: List<CloudShow>): Boolean {
         return withContext(Dispatchers.IO) {
             HexagonShowSync(context, SgApp.getServicesComponent(context).hexagonTools())
                 .upload(shows)

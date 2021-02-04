@@ -8,12 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -69,8 +69,8 @@ class ListItemsAdapter extends BaseShowsAdapter {
                 String fieldValue = cursor.getString(Query.SHOW_NEXTTEXT);
                 if (TextUtils.isEmpty(fieldValue)) {
                     // display show status if there is no next episode
-                    viewHolder.episodeTime.setText(ShowTools.getStatus(context,
-                            cursor.getInt(Query.SHOW_STATUS)));
+                    viewHolder.episodeTime.setText(SgApp.getServicesComponent(context).showTools()
+                            .getStatus(cursor.getInt(Query.SHOW_STATUS)));
                     viewHolder.episode.setText(null);
                 } else {
                     viewHolder.episode.setText(fieldValue);

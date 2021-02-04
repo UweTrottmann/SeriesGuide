@@ -61,7 +61,6 @@ import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -704,7 +703,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
         // status
         final TextView statusText = getView().findViewById(R.id.showStatus);
-        ShowTools.setStatusAndColor(statusText, show.getStatusOrUnknown());
+        SgApp.getServicesComponent(requireContext()).showTools()
+                .setStatusAndColor(statusText, show.getStatusOrUnknown());
 
         // favorite
         boolean isFavorite = show.getFavorite();

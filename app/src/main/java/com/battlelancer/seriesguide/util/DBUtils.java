@@ -120,7 +120,7 @@ public class DBUtils {
      * e.g. the show is already in the database.
      */
     public static boolean isShowExists(Context context, int showTvdbId) {
-        return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowId(showTvdbId) != 0;
+        return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIdByTvdbId(showTvdbId) != 0;
     }
 
     /**

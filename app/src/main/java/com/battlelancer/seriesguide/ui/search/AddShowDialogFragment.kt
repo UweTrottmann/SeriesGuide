@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.TextUtils
 import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +12,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
 import butterknife.BindView
 import butterknife.BindViews
 import butterknife.ButterKnife
@@ -26,15 +25,14 @@ import butterknife.Setter
 import butterknife.Unbinder
 import butterknife.ViewCollections
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.dataliberation.DataLiberationTools
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -101,7 +99,11 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
     private lateinit var unbinder: Unbinder
     private lateinit var addShowListener: OnAddShowListener
-    private var displayedShow: SearchResult? = null
+    private var showTmdbId: Int = 0
+    private lateinit var languageCode: String
+    private val model by viewModels<AddShowDialogViewModel> {
+        AddShowDialogViewModelFactory(requireActivity().application, showTmdbId, languageCode)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -110,21 +112,19 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         } catch (e: ClassCastException) {
             throw ClassCastException("$context must implement OnAddShowListener")
         }
+
+        showTmdbId = requireArguments().getInt(ARG_INT_SHOW_TMDBID)
+        val languageCodeOrNull = requireArguments().getString(ARG_STRING_LANGUAGE_CODE)
+        if (languageCodeOrNull.isNullOrEmpty()) {
+            // Use search language.
+            this.languageCode = DisplaySettings.getShowsSearchLanguage(context)
+        } else {
+            this.languageCode = languageCodeOrNull
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val searchResultArg: SearchResult? = requireArguments().getParcelable(ARG_SEARCH_RESULT)
-        if (searchResultArg == null || searchResultArg.tvdbid <= 0) {
-            // Not a valid TVDb id or show.
-            displayedShow = null
-            Timber.e("Not a valid show, closing.")
-            dismiss()
-            // Note: After dismiss still continues through lifecycle methods.
-        } else {
-            displayedShow = searchResultArg
-        }
 
         // hide title, use custom theme
         setStyle(DialogFragment.STYLE_NO_TITLE, 0)
@@ -167,19 +167,19 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val displayedShow = this.displayedShow
-        if (displayedShow == null) {
-            // No progress, dialog will be dismissed.
+        if (showTmdbId <= 0) {
+            Timber.e("Not a valid show, closing.")
+            dismiss()
+            // Note: After dismiss still continues through lifecycle methods.
+            return
+        }
+
+        // Load show details.
+        showProgressBar(true)
+        model.showDetails.observe(viewLifecycleOwner) { show ->
             showProgressBar(false)
-        } else {
-            // Load show details.
-            showProgressBar(true)
-            val args = Bundle().apply {
-                putInt(KEY_SHOW_TVDBID, displayedShow.tvdbid)
-                putString(KEY_SHOW_LANGUAGE, displayedShow.language)
-            }
-            LoaderManager.getInstance(this)
-                .initLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args, showLoaderCallbacks)
+            overview.isGone = false
+            populateShowViews(show)
         }
     }
 
@@ -200,26 +200,28 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
     @OnClick(R.id.buttonAddLanguage)
     fun onClickButtonLanguage() {
-        displayedShow?.let {
-            ShowL10nDialogFragment.show(
-                parentFragmentManager,
-                it.language,
-                ShowL10nDialogFragment.TAG_ADD_DIALOG
-            )
-        }
+        ShowL10nDialogFragment.show(
+            parentFragmentManager,
+            languageCode,
+            ShowL10nDialogFragment.TAG_ADD_DIALOG
+        )
     }
 
     @OnClick(R.id.buttonAddDisplaySimilar)
     fun onClickButtonDisplaySimilarShows() {
-        displayedShow?.let {
+        val details = model.showDetails.value
+        if (details?.show != null) {
             dismissAllowingStateLoss()
-            SimilarShowsFragment.displaySimilarShowsEventLiveData.postValue(it)
+            SimilarShowsFragment.displaySimilarShowsEventLiveData.postValue(SearchResult().also {
+                it.tmdbId = showTmdbId
+                it.title = details.show.title
+            })
         }
     }
 
     @OnClick(R.id.buttonAddStreamingSearch)
     fun onClickButtonStreamingSearch() {
-        displayedShow?.title?.let {
+        model.showDetails.value?.show?.title?.let {
             StreamingSearch.searchForShow(requireContext(), it)
         }
     }
@@ -234,18 +236,11 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         showProgressBar(true)
         overview.visibility = View.INVISIBLE
 
-        val displayedShow = this.displayedShow!!
-        displayedShow.language = event.selectedLanguageCode
-        val args = Bundle().apply {
-            putInt(KEY_SHOW_TVDBID, displayedShow.tvdbid)
-            putString(KEY_SHOW_LANGUAGE, displayedShow.language)
-        }
-        LoaderManager.getInstance(this)
-            .restartLoader(ShowsActivity.ADD_SHOW_LOADER_ID, args, showLoaderCallbacks)
+        this.languageCode = event.selectedLanguageCode
+        model.languageCode.value = event.selectedLanguageCode
     }
 
-    private fun populateShowViews(result: TvdbShowLoader.Result) {
-        val displayedShow = this.displayedShow!!
+    private fun populateShowViews(result: AddShowDialogViewModel.ShowDetails) {
         val show = result.show
         if (show == null) {
             // Failed to load, can't be added.
@@ -256,34 +251,34 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             } else {
                 overview.text = getString(
                     R.string.api_error_generic,
-                    "${getString(R.string.tvdb)}/${getString(R.string.trakt)}"
+                    "${getString(R.string.tmdb)}/${getString(R.string.trakt)}"
                 )
             }
             return
         }
-        if (result.isAdded) {
+        if (result.localShowId != null) {
             // Already added, offer to open show instead.
             buttonPositive.setText(R.string.action_open)
             buttonPositive.setOnClickListener {
-                startActivity(OverviewActivity.intentShow(context, displayedShow.tvdbid))
+                startActivity(OverviewActivity.intentShow(context, result.localShowId))
                 dismiss()
             }
         } else {
             // Not added, offer to add.
             buttonPositive.setText(R.string.action_shows_add)
             buttonPositive.setOnClickListener {
-                EventBus.getDefault().post(AddFragment.OnAddingShowEvent(displayedShow.tvdbid))
-                addShowListener.onAddShow(displayedShow)
+                EventBus.getDefault().post(AddFragment.OnAddingShowEvent(showTmdbId))
+                addShowListener.onAddShow(SearchResult().also {
+                    it.tmdbId = showTmdbId
+                    it.title = show.title
+                    it.language = languageCode
+                })
                 dismiss()
             }
         }
         buttonPositive.isGone = false
 
-        // Store title for add task.
-        displayedShow.title = show.title
-
-        buttonLanguage.text =
-            LanguageTools.getShowLanguageStringFor(context, displayedShow.language)
+        buttonLanguage.text = LanguageTools.getShowLanguageStringFor(context, languageCode)
 
         // Title, overview.
         title.text = show.title
@@ -291,50 +286,53 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         // Release year.
         val statusText = SpannableStringBuilder().also { statusText ->
-            TimeTools.getShowReleaseYear(show.first_aired)?.let {
+            TimeTools.getShowReleaseYear(show.firstRelease)?.let {
                 statusText.append(it)
             }
             // Continuing/ended status.
-            val encodedStatus = DataLiberationTools.encodeShowStatus(show.status)
-            if (encodedStatus != ShowTools.Status.UNKNOWN) {
-                val decodedStatus = ShowTools.getStatus(requireActivity(), encodedStatus)
-                if (decodedStatus != null) {
-                    if (statusText.isNotEmpty()) {
-                        statusText.append(" / ") // Like "2016 / Continuing".
-                    }
-
-                    val currentTextLength = statusText.length
-                    statusText.append(decodedStatus)
-
-                    // If continuing, paint status green.
-                    val style = if (encodedStatus == ShowTools.Status.CONTINUING) {
-                        R.style.TextAppearance_SeriesGuide_Body2_Accent
-                    } else {
-                        R.style.TextAppearance_SeriesGuide_Body2_Secondary
-                    }
-                    statusText.setSpan(
-                        TextAppearanceSpan(activity, style),
-                        currentTextLength,
-                        statusText.length,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
+            val status = show.statusOrUnknown
+            val statusString = SgApp.getServicesComponent(requireContext()).showTools()
+                .getStatus(status)
+            if (statusString != null) {
+                if (statusText.isNotEmpty()) {
+                    statusText.append(" / ") // Like "2016 / Continuing".
                 }
+
+                val currentTextLength = statusText.length
+                statusText.append(statusString)
+
+                // If continuing, paint status green.
+                val style = if (status == ShowTools.Status.CONTINUING) {
+                    R.style.TextAppearance_SeriesGuide_Body2_Accent
+                } else {
+                    R.style.TextAppearance_SeriesGuide_Body2_Secondary
+                }
+                statusText.setSpan(
+                    TextAppearanceSpan(activity, style),
+                    currentTextLength,
+                    statusText.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
             }
         }
         releasedTextView.text = statusText
 
         // Next release day and time.
         val timeAndNetworkText = SpannableStringBuilder().apply {
-            if (show.release_time != -1) {
+            if (show.releaseTimeOrDefault != -1) {
                 val release = TimeTools.getShowReleaseDateTime(
                     requireContext(),
-                    show.release_time,
-                    show.release_weekday,
-                    show.release_timezone,
-                    show.country,
+                    show.releaseTimeOrDefault,
+                    show.releaseWeekDayOrDefault,
+                    show.releaseTimeZone,
+                    show.releaseCountry,
                     show.network
                 )
-                val day = TimeTools.formatToLocalDayOrDaily(requireContext(), release, show.release_weekday)
+                val day = TimeTools.formatToLocalDayOrDaily(
+                    requireContext(),
+                    release,
+                    show.releaseWeekDayOrDefault
+                )
                 val time = TimeTools.formatToLocalTime(requireContext(), release)
                 append(day).append(" ").append(time)
                 append("\n")
@@ -348,13 +346,13 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         showmeta.text = timeAndNetworkText
 
         // Rating.
-        rating.text = TraktTools.buildRatingString(show.rating)
+        rating.text = TraktTools.buildRatingString(show.ratingGlobal)
 
         // Genres.
         ViewTools.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres))
 
         // Poster.
-        TvdbImageTools.loadShowPosterFitCrop(requireActivity(), poster, show.poster_small)
+        ImageTools.loadShowPosterFitCrop(show.posterSmall, poster, requireActivity())
 
         // Enable adding of show, display views.
         buttonPositive.isEnabled = true
@@ -365,53 +363,25 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         progressBar.isGone = !isVisible
     }
 
-    private val showLoaderCallbacks =
-        object : LoaderManager.LoaderCallbacks<TvdbShowLoader.Result> {
-            override fun onCreateLoader(id: Int, args: Bundle?): Loader<TvdbShowLoader.Result> {
-                val showTvdbId = args!!.getInt(KEY_SHOW_TVDBID)
-                val language = args.getString(KEY_SHOW_LANGUAGE)!!
-                return TvdbShowLoader(context, showTvdbId, language)
-            }
-
-            override fun onLoadFinished(
-                loader: Loader<TvdbShowLoader.Result>,
-                data: TvdbShowLoader.Result
-            ) {
-                if (!isAdded) {
-                    return
-                }
-                showProgressBar(false)
-                overview.isGone = false
-                populateShowViews(data)
-            }
-
-            override fun onLoaderReset(loader: Loader<TvdbShowLoader.Result>) {
-                // Do nothing.
-            }
-        }
-
     companion object {
 
         private const val TAG = "AddShowDialogFragment"
-
-        private const val ARG_SEARCH_RESULT = "search_result"
-
-        private const val KEY_SHOW_TVDBID = "show_tvdbid"
-        private const val KEY_SHOW_LANGUAGE = "show_language"
+        private const val ARG_INT_SHOW_TMDBID = "show_tmdbid"
+        private const val ARG_STRING_LANGUAGE_CODE = "language"
 
         /**
          * Display a [AddShowDialogFragment] for the given show. The language of the show should
          * be set.
          */
         @JvmStatic
-        fun show(context: Context, fm: FragmentManager, show: SearchResult) {
+        fun show(fm: FragmentManager, show: SearchResult) {
             // Replace any currently showing add dialog (do not add it to the back stack).
             val ft = fm.beginTransaction()
             val prev = fm.findFragmentByTag(TAG)
             if (prev != null) {
                 ft.remove(prev)
             }
-            newInstance(context, show).safeShow(fm, ft, TAG)
+            newInstance(show.tmdbId, show.language).safeShow(fm, ft, TAG)
         }
 
         /**
@@ -425,19 +395,15 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             val fakeResult = SearchResult().apply {
                 tvdbid = showTvdbId
             }
-            show(context, fm, fakeResult)
+            show(fm, fakeResult)
         }
 
-        private fun newInstance(context: Context, show: SearchResult): AddShowDialogFragment {
-            if (TextUtils.isEmpty(show.language)) {
-                // Use search language.
-                show.language = DisplaySettings.getShowsSearchLanguage(context)
-            }
-
-            return AddShowDialogFragment().apply { 
-                arguments = Bundle().apply {
-                    putParcelable(ARG_SEARCH_RESULT, show)
-                }
+        private fun newInstance(showTmdbId: Int, languageCode: String?): AddShowDialogFragment {
+            return AddShowDialogFragment().apply {
+                arguments = bundleOf(
+                    ARG_INT_SHOW_TMDBID to showTmdbId,
+                    ARG_STRING_LANGUAGE_CODE to languageCode
+                )
             }
         }
 

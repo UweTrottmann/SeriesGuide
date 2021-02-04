@@ -118,4 +118,23 @@ object ImageTools {
             .into(imageView)
     }
 
+    /**
+     * Tries to load a resized, center cropped version of the show poster into the given
+     * [ImageView]. On failure displays an error drawable (ensure image view is set to center
+     * inside).
+     *
+     * The resize dimensions are determined based on the image view size.
+     */
+    fun loadShowPosterFitCrop(
+        posterPath: String?,
+        imageView: ImageView,
+        context: Context
+    ) {
+        ServiceUtils.loadWithPicasso(context, tmdbOrTvdbPosterUrl(posterPath, context))
+            .fit()
+            .centerCrop()
+            .error(R.drawable.ic_photo_gray_24dp)
+            .into(imageView)
+    }
+
 }

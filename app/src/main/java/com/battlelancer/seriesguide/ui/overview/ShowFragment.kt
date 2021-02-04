@@ -263,7 +263,7 @@ class ShowFragment() : Fragment() {
     private fun populateShow(show: SgShow2) {
         // status
         textViewStatus?.let {
-            ShowTools.setStatusAndColor(it, show.statusOrUnknown)
+            showTools.setStatusAndColor(it, show.statusOrUnknown)
         }
 
         // Network, next release day and time, runtime

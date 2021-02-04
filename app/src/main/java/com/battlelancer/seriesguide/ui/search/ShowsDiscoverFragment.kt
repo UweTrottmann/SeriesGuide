@@ -133,7 +133,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     startActivity(OverviewActivity.intentShow(context, item.tvdbid))
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(context!!, parentFragmentManager, item)
+                    AddShowDialogFragment.show(parentFragmentManager, item)
                 }
             }
         }

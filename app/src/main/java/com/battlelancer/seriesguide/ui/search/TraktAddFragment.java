@@ -101,7 +101,7 @@ public class TraktAddFragment extends AddFragment {
                     startActivity(OverviewActivity.intentShow(requireContext(), item.getTvdbid()));
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(requireContext(), getParentFragmentManager(), item);
+                    AddShowDialogFragment.show(getParentFragmentManager(), item);
                 }
             }
         }

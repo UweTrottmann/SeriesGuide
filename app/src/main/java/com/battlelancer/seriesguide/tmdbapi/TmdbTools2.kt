@@ -4,10 +4,12 @@ import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.entities.TvShow
+import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -59,6 +61,35 @@ class TmdbTools2 {
             Errors.logAndReport("show details", e)
         }
         return null
+    }
+
+    /**
+     * Returns true if the show is null because it no longer exists (TMDB returned HTTP 404).
+     */
+    fun getShowAndExternalIds(
+        showTmdbId: Int,
+        language: String,
+        context: Context
+    ): Pair<TvShow?, Boolean> {
+        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
+        try {
+            val response = tmdb.tvService()
+                .tv(showTmdbId, language, AppendToResponse(AppendToResponseItem.EXTERNAL_IDS))
+                .execute()
+            if (response.isSuccessful) {
+                val results = response.body()
+                if (results != null) return Pair(results, false)
+            } else {
+                // Explicitly indicate if result is null because show no longer exists.
+                if (response.code() == 404) {
+                    return Pair(null, true)
+                }
+                Errors.logAndReport("show n ids", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("show n ids", e)
+        }
+        return Pair(null, false)
     }
 
     /**

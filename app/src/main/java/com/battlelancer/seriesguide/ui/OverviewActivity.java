@@ -90,7 +90,7 @@ public class OverviewActivity extends BaseMessageActivity {
             showTvdbId = helper.getShowTvdbId(showId);
         } else {
             showTvdbId = getIntent().getIntExtra(EXTRA_INT_SHOW_TVDBID, -1);
-            showId = helper.getShowId(showTvdbId);
+            showId = helper.getShowIdByTvdbId(showTvdbId);
         }
 
         if (showTvdbId < 0 || !DBUtils.isShowExists(this, showTvdbId)) {

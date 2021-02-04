@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
@@ -21,6 +22,7 @@ import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.inject.Inject;
+import kotlin.Pair;
 import timber.log.Timber;
 
 /**
@@ -40,6 +42,9 @@ public class ShowTools {
      * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
      */
     public interface Status {
+        int IN_PRODUCTION = 5;
+        int PILOT = 4;
+        int CANCELED = 3;
         int UPCOMING = 2;
         int CONTINUING = 1;
         int ENDED = 0;
@@ -53,6 +58,16 @@ public class ShowTools {
     public ShowTools(@ApplicationContext Context context) {
         this.context = context;
         this.showTools2 = new ShowTools2(this, context);
+    }
+
+    @NonNull
+    public Pair<SgShow2, Boolean> getShowDetails(int showTmdbId, String desiredLanguage) {
+        return showTools2.getShowDetails(showTmdbId, desiredLanguage);
+    }
+
+    @Nullable
+    public Long getShowId(int showTmdbId, Integer showTvdbId) {
+        return showTools2.getShowId(showTmdbId, showTvdbId);
     }
 
     public void removeShow(long showId) {
@@ -253,17 +268,8 @@ public class ShowTools {
      * @param encodedStatus Detection based on {@link ShowTools.Status}.
      */
     @Nullable
-    public static String getStatus(@NonNull Context context, int encodedStatus) {
-        if (encodedStatus == Status.UPCOMING) {
-            return context.getString(R.string.show_isUpcoming);
-        } else if (encodedStatus == Status.CONTINUING) {
-            return context.getString(R.string.show_isalive);
-        } else if (encodedStatus == Status.ENDED) {
-            return context.getString(R.string.show_isnotalive);
-        } else {
-            // status unknown, display nothing
-            return null;
-        }
+    public String getStatus(int encodedStatus) {
+        return showTools2.getStatus(encodedStatus);
     }
 
     /**
@@ -272,8 +278,8 @@ public class ShowTools {
      *
      * @param encodedStatus Detection based on {@link ShowTools.Status}.
      */
-    public static void setStatusAndColor(@NonNull TextView view, int encodedStatus) {
-        view.setText(getStatus(view.getContext(), encodedStatus));
+    public void setStatusAndColor(@NonNull TextView view, int encodedStatus) {
+        view.setText(getStatus(encodedStatus));
         if (encodedStatus == Status.CONTINUING) {
             view.setTextColor(
                     ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(

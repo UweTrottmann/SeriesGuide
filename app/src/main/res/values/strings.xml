@@ -101,6 +101,9 @@
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>
     <string name="show_isUpcoming">Upcoming</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Not translated</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -215,7 +218,7 @@
     <string name="no_results">No results, try complete words</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">Try again</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Add all</string>
     <string name="add_multiple">All shows will appear in your show list shortly</string>
     <string name="add_started">%s will appear in your show list shortly</string>

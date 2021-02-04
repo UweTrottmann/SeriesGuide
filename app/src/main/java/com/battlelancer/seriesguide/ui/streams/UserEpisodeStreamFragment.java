@@ -39,11 +39,12 @@ public class UserEpisodeStreamFragment extends StreamFragment {
 
     private EpisodeHistoryAdapter.OnItemClickListener itemClickListener = (view, item) -> {
         if (item.episode == null || item.episode.season == null || item.episode.number == null
-                || item.show == null || item.show.ids == null || item.show.ids.tvdb == null) {
+                || item.show == null || item.show.ids == null || item.show.ids.tmdb == null) {
             // no episode or show? give up
             return;
         }
 
+        // FIXME Look up using TMDB id.
         Cursor episodeQuery = requireContext().getContentResolver().query(
                 SeriesGuideContract.Episodes.buildEpisodesOfShowUri(item.show.ids.tvdb),
                 new String[]{

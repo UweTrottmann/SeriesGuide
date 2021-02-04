@@ -67,7 +67,7 @@ abstract class BaseAddShowsFragment : Fragment() {
                     startActivity(OverviewActivity.intentShow(context, item.tvdbid))
                 } else {
                     // Display more details in a dialog.
-                    AddShowDialogFragment.show(context!!, parentFragmentManager, item)
+                    AddShowDialogFragment.show(parentFragmentManager, item)
                 }
             }
         }
