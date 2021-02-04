@@ -13,6 +13,13 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
  */
 public class NotificationActionReceiver extends BroadcastReceiver {
 
+    private static final String EXTRA_LONG_EPISODE_ID = "episode_id";
+
+    public static Intent intent(long episodeId, Context context) {
+        return new Intent(context, NotificationActionReceiver.class)
+                .putExtra(EXTRA_LONG_EPISODE_ID, episodeId);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (NotificationService.ACTION_CLEARED.equals(intent.getAction())) {
@@ -20,7 +27,7 @@ public class NotificationActionReceiver extends BroadcastReceiver {
             return;
         }
 
-        long episodeId = intent.getLongExtra(NotificationService.EXTRA_EPISODE_ID, -1);
+        long episodeId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0);
         if (episodeId <= 0) {
             return; // not notification set watched action
         }

@@ -154,6 +154,7 @@ public class SeriesGuideDatabase {
         String LIST_ITEMS_REF_ID = Tables.LIST_ITEMS + "." + ListItems.ITEM_REF_ID;
 
         String SG_SHOW_ID = Tables.SG_SHOW + "." + SgShow2Columns._ID;
+        String SG_EPISODE_ID = Tables.SG_EPISODE + "." + SgEpisode2Columns._ID;
     }
 
     public interface Tables {
