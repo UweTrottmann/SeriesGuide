@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.episodes
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
@@ -8,10 +9,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -20,7 +21,6 @@ import butterknife.ButterKnife
 import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob
-import com.battlelancer.seriesguide.model.SgShowMinimal
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
@@ -31,7 +31,6 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.ArrayList
 
 /**
  * Hosts a fragment which displays episodes of a season in a list and in a [ViewPager].
@@ -58,8 +57,8 @@ class EpisodesActivity : BaseMessageActivity() {
     private var episodeDetailsAdapter: EpisodePagerAdapter? = null
 
     private lateinit var viewModel: EpisodesActivityViewModel
-    private var showTvdbId: Int = 0
-    private var seasonTvdbId: Int = 0
+    private var showId: Long = 0
+    private var seasonId: Long = 0
 
     /** Keeps list visibility even in multi-pane view. */
     private var isListVisibleInSinglePaneView: Boolean = false
@@ -76,7 +75,7 @@ class EpisodesActivity : BaseMessageActivity() {
         get() = containerList.visibility == View.GONE
 
     private val isViewingSeason: Boolean
-        get() = intent.hasExtra(EXTRA_SEASON_TVDBID)
+        get() = intent.hasExtra(EXTRA_LONG_SEASON_ID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,26 +99,24 @@ class EpisodesActivity : BaseMessageActivity() {
         ButterKnife.bind(this)
         setupViews()
 
+        val episodeRowId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
         val episodeTvdbId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, 0)
-        val seasonTvdbId = intent.getIntExtra(EXTRA_SEASON_TVDBID, 0)
+        val seasonId = intent.getLongExtra(EXTRA_LONG_SEASON_ID, 0)
 
-        val viewModelFactory = EpisodesActivityViewModelFactory(
-            application,
-            episodeTvdbId,
-            seasonTvdbId
-        )
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(EpisodesActivityViewModel::class.java)
+        val viewModel by viewModels<EpisodesActivityViewModel> {
+            EpisodesActivityViewModelFactory(application, episodeTvdbId, episodeRowId, seasonId)
+        }
+        this.viewModel = viewModel
         viewModel.seasonAndShowInfoLiveData.observe(this, Observer { info ->
             if (info == null) {
                 finish() // Missing required data.
                 return@Observer
             }
-            this.seasonTvdbId = info.seasonAndShowInfo.seasonTvdbId
-            this.showTvdbId = info.seasonAndShowInfo.showTvdbId
+            this.seasonId = info.seasonAndShowInfo.seasonId
+            this.showId = info.seasonAndShowInfo.showId
 
             updateActionBar(
-                info.seasonAndShowInfo.show,
+                info.seasonAndShowInfo.show.title,
                 info.seasonAndShowInfo.seasonNumber
             )
 
@@ -130,15 +127,9 @@ class EpisodesActivity : BaseMessageActivity() {
                 info.seasonAndShowInfo.show.posterSmall
             )
 
-            updateViews(
-                info.seasonAndShowInfo.showTvdbId,
-                info.seasonAndShowInfo.seasonTvdbId,
-                info.seasonAndShowInfo.seasonNumber,
-                info.startPosition,
-                info.episodes
-            )
+            updateViews(info)
 
-            updateShowDelayed(info.seasonAndShowInfo.showTvdbId)
+            updateShowDelayed(info.seasonAndShowInfo.show.tvdbId!!)
         })
     }
 
@@ -150,8 +141,7 @@ class EpisodesActivity : BaseMessageActivity() {
         }
     }
 
-    private fun updateActionBar(show: SgShowMinimal, seasonNumber: Int) {
-        val showTitle = show.title
+    private fun updateActionBar(showTitle: String, seasonNumber: Int) {
         val seasonString = SeasonTools.getSeasonString(this, seasonNumber)
         title = "$showTitle $seasonString"
         supportActionBar?.let {
@@ -210,22 +200,14 @@ class EpisodesActivity : BaseMessageActivity() {
         }
     }
 
-    private fun updateViews(
-        showTvdbId: Int,
-        seasonTvdbId: Int,
-        seasonNumber: Int,
-        startPosition: Int,
-        episodes: ArrayList<Episode>
-    ) {
+    private fun updateViews(info: EpisodesActivityViewModel.EpisodeSeasonAndShowInfo) {
         // Episode list.
         if (episodesListFragment == null) {
             val existingFragment = supportFragmentManager
                 .findFragmentByTag("episodes") as EpisodesFragment?
             episodesListFragment = existingFragment ?: EpisodesFragment.newInstance(
-                showTvdbId,
-                seasonTvdbId,
-                seasonNumber,
-                startPosition
+                info.seasonAndShowInfo.seasonId,
+                info.startPosition
             ).also {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.fragment_episodes, it, "episodes")
@@ -238,17 +220,18 @@ class EpisodesActivity : BaseMessageActivity() {
         if (adapter == null) {
             episodeDetailsAdapter = EpisodePagerAdapter(
                 this,
-                supportFragmentManager,
-                episodes
-            )
+                supportFragmentManager
+            ).also {
+                it.updateEpisodeList(info.episodes)
+            }
             episodeDetailsPager.adapter = episodeDetailsAdapter
         } else {
-            adapter.updateEpisodeList(episodes)
+            adapter.updateEpisodeList(info.episodes)
         }
         // Refresh pager tab decoration.
         episodeDetailsTabs.setViewPager(episodeDetailsPager)
 
-        episodeDetailsPager.setCurrentItem(startPosition, false)
+        episodeDetailsPager.setCurrentItem(info.startPosition, false)
         // Set page listener after current item to avoid null pointer for non-existing content view.
         episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener)
     }
@@ -305,7 +288,7 @@ class EpisodesActivity : BaseMessageActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                val upIntent = OverviewActivity.intentSeasons(this, showTvdbId)
+                val upIntent = OverviewActivity.intentSeasons(this, showId)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(upIntent)
                 true
@@ -358,16 +341,20 @@ class EpisodesActivity : BaseMessageActivity() {
     private fun reorderAndUpdateTabs() {
         // Get currently selected episode
         val oldPosition = episodeDetailsPager.currentItem
-        val episodeTvdbId = episodeDetailsAdapter?.getItemEpisodeTvdbId(oldPosition) ?: 0
+        val episodeRowId = episodeDetailsAdapter?.getItemEpisodeId(oldPosition) ?: 0
 
         // Launch update.
-        viewModel.updateEpisodesData(episodeTvdbId, seasonTvdbId)
+        viewModel.updateEpisodesData(0, episodeRowId, seasonId)
     }
 
     companion object {
+        private const val EXTRA_LONG_SEASON_ID = "season_id"
+        private const val EXTRA_LONG_EPISODE_ID = "episode_id"
         /** Either this or [EXTRA_EPISODE_TVDBID] is required. */
+        @Deprecated("Use intentSeason and season row ID instead.")
         const val EXTRA_SEASON_TVDBID = "season_tvdbid"
         /** Either this or [EXTRA_SEASON_TVDBID] is required. */
+        @Deprecated("Use intentEpisode and episode row ID instead.")
         const val EXTRA_EPISODE_TVDBID = "episode_tvdbid"
 
         private const val PREF_PREFER_LIST_TO_VIEW_SEASON = "com.uwetrottmann.seriesguide.episodes.preferlist"
@@ -378,5 +365,17 @@ class EpisodesActivity : BaseMessageActivity() {
         const val EPISODES_LOADER_ID = 100
         const val EPISODE_LOADER_ID = 101
         const val ACTIONS_LOADER_ID = 102
+
+        @JvmStatic
+        fun intentSeason(seasonRowId: Long, context: Context): Intent {
+            return Intent(context, EpisodesActivity::class.java)
+                .putExtra(EXTRA_LONG_SEASON_ID, seasonRowId)
+        }
+
+        @JvmStatic
+        fun intentEpisode(episodeRowId: Long, context: Context): Intent {
+            return Intent(context, EpisodesActivity::class.java)
+                .putExtra(EXTRA_LONG_EPISODE_ID, episodeRowId)
+        }
     }
 }

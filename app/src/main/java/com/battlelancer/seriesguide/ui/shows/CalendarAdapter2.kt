@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.model.EpisodeWithShow
+import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.CalendarItem
 
@@ -17,9 +17,9 @@ class CalendarAdapter2(
     AutoGridLayoutManager.SpanCountListener {
 
     interface ItemClickListener {
-        fun onItemClick(episodeTvdbId: Int)
-        fun onItemLongClick(anchor: View, episode: EpisodeWithShow)
-        fun onItemWatchBoxClick(episode: EpisodeWithShow, isWatched: Boolean)
+        fun onItemClick(episodeId: Long)
+        fun onItemLongClick(anchor: View, episode: SgEpisode2WithShow)
+        fun onItemWatchBoxClick(episode: SgEpisode2WithShow, isWatched: Boolean)
     }
 
     var isMultiColumn: Boolean = false
@@ -50,7 +50,7 @@ class CalendarAdapter2(
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CalendarItem>() {
             override fun areItemsTheSame(old: CalendarItem, new: CalendarItem): Boolean =
-                old.episode.episodeTvdbId == new.episode.episodeTvdbId
+                old.episode.id == new.episode.id
 
             override fun areContentsTheSame(old: CalendarItem, new: CalendarItem): Boolean {
                 return old.episode == new.episode

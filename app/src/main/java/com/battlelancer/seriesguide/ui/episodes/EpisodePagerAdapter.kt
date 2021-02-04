@@ -5,8 +5,8 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers
 import com.battlelancer.seriesguide.util.TextTools
-import java.util.ArrayList
 
 /**
  * Maps [Episode] objects to [EpisodeDetailsFragment] pages.
@@ -14,16 +14,17 @@ import java.util.ArrayList
 @SuppressLint("WrongConstant") // Behavior flag not recognized as valid.
 internal class EpisodePagerAdapter(
     private val context: Context,
-    fm: FragmentManager,
-    private val episodes: ArrayList<Episode>
+    fm: FragmentManager
 ) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    private val episodes = ArrayList<SgEpisode2Numbers>()
 
     override fun getCount(): Int {
         return episodes.size
     }
 
     override fun getItem(position: Int): Fragment {
-        return EpisodeDetailsFragment.newInstance(episodes[position].episodeId)
+        return EpisodeDetailsFragment.newInstance(episodes[position].id)
     }
 
     override fun getItemPosition(`object`: Any): Int {
@@ -44,9 +45,9 @@ internal class EpisodePagerAdapter(
         return POSITION_NONE
     }
 
-    fun getItemEpisodeTvdbId(position: Int): Int? {
+    fun getItemEpisodeId(position: Int): Long? {
         return if (position < episodes.size) {
-            episodes[position].episodeId
+            episodes[position].id
         } else {
             null
         }
@@ -54,10 +55,10 @@ internal class EpisodePagerAdapter(
 
     override fun getPageTitle(position: Int): CharSequence? {
         val episode = episodes[position]
-        return TextTools.getEpisodeNumber(context, episode.seasonNumber, episode.episodeNumber)
+        return TextTools.getEpisodeNumber(context, episode.season, episode.episodenumber)
     }
 
-    fun updateEpisodeList(list: ArrayList<Episode>) {
+    fun updateEpisodeList(list: List<SgEpisode2Numbers>) {
         episodes.clear()
         episodes.addAll(list)
         notifyDataSetChanged()

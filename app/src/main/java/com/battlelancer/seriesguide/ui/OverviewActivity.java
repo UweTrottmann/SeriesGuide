@@ -14,15 +14,15 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
-import com.battlelancer.seriesguide.model.SgShowMinimal;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.provider.SgShow2Helper;
 import com.battlelancer.seriesguide.ui.overview.OverviewFragment;
 import com.battlelancer.seriesguide.ui.overview.SeasonsFragment;
 import com.battlelancer.seriesguide.ui.overview.ShowFragment;
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
+import com.battlelancer.seriesguide.ui.shows.ShowTools2;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,26 +34,46 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public class OverviewActivity extends BaseMessageActivity {
 
-    public static final int SHOW_LOADER_ID = 100;
-    public static final int SHOW_CREDITS_LOADER_ID = 101;
-    public static final int OVERVIEW_EPISODE_LOADER_ID = 102;
-    public static final int OVERVIEW_SHOW_LOADER_ID = 103;
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
-    public static final int SEASONS_LOADER_ID = 105;
-    private static final String EXTRA_INT_SHOW_TVDBID = OverviewFragment.ARG_INT_SHOW_TVDBID;
+    private static final String EXTRA_INT_SHOW_TVDBID = "show_tvdbid";
+    private static final String EXTRA_LONG_SHOW_ROWID = "show_id";
     private static final String EXTRA_BOOLEAN_DISPLAY_SEASONS = "EXTRA_DISPLAY_SEASONS";
 
+    private long showId;
     private int showTvdbId;
 
-    /** After opening, switches to overview tab (only if not multi-pane). */
+    /**
+     * After opening, switches to overview tab (only if not multi-pane).
+     *
+     * @deprecated Use {@link #intentShow(Context, long)} with row ID.
+     */
     public static Intent intentShow(Context context, int showTvdbId) {
         return new Intent(context, OverviewActivity.class)
                 .putExtra(EXTRA_INT_SHOW_TVDBID, showTvdbId);
     }
 
-    /** After opening, switches to seasons tab (only if not multi-pane). */
+    /**
+     * After opening, switches to seasons tab (only if not multi-pane).
+     *
+     * @deprecated Use {@link #intentSeasons(Context, long)} with row ID.
+     */
     public static Intent intentSeasons(Context context, int showTvdbId) {
         return intentShow(context, showTvdbId).putExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, true);
+    }
+
+    /**
+     * After opening, switches to overview tab (only if not multi-pane).
+     */
+    public static Intent intentShow(Context context, long showRowId) {
+        return new Intent(context, OverviewActivity.class)
+                .putExtra(EXTRA_LONG_SHOW_ROWID, showRowId);
+    }
+
+    /**
+     * After opening, switches to seasons tab (only if not multi-pane).
+     */
+    public static Intent intentSeasons(Context context, long showRowId) {
+        return intentShow(context, showRowId).putExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, true);
     }
 
     @Override
@@ -63,7 +83,16 @@ public class OverviewActivity extends BaseMessageActivity {
         ButterKnife.bind(this);
         setupActionBar();
 
-        showTvdbId = getIntent().getIntExtra(EXTRA_INT_SHOW_TVDBID, -1);
+        SgShow2Helper helper = SgRoomDatabase.getInstance(this).sgShow2Helper();
+        showId = getIntent().getLongExtra(EXTRA_LONG_SHOW_ROWID, 0);
+        // Need TVDB id for backwards compat, will replace with row ID in the future.
+        if (showId > 0) {
+            showTvdbId = helper.getShowTvdbId(showId);
+        } else {
+            showTvdbId = getIntent().getIntExtra(EXTRA_INT_SHOW_TVDBID, -1);
+            showId = helper.getShowId(showTvdbId);
+        }
+
         if (showTvdbId < 0 || !DBUtils.isShowExists(this, showTvdbId)) {
             finish();
             return;
@@ -113,19 +142,19 @@ public class OverviewActivity extends BaseMessageActivity {
     }
 
     private void setupPanes() {
-        Fragment showsFragment = ShowFragment.newInstance(showTvdbId);
+        Fragment showsFragment = new ShowFragment(showId);
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft1.replace(R.id.fragment_show, showsFragment);
         ft1.commit();
 
-        Fragment overviewFragment = OverviewFragment.newInstance(showTvdbId);
+        Fragment overviewFragment = new OverviewFragment(showId);
         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
         ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft2.replace(R.id.fragment_overview, overviewFragment);
         ft2.commit();
 
-        Fragment seasonsFragment = SeasonsFragment.newInstance(showTvdbId);
+        Fragment seasonsFragment = new SeasonsFragment(showId);
         FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
         ft3.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft3.replace(R.id.fragment_seasons, seasonsFragment);
@@ -138,16 +167,11 @@ public class OverviewActivity extends BaseMessageActivity {
         // setup tab strip
         TabStripAdapter tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, pager,
                 findViewById(R.id.tabsOverview));
-        Bundle argsShow = new Bundle();
-        argsShow.putInt(ShowFragment.ARG_SHOW_TVDBID, showTvdbId);
-        tabsAdapter.addTab(R.string.show_details, ShowFragment.class, argsShow);
+        tabsAdapter.addTab(R.string.show_details, ShowFragment.class, ShowFragment.buildArgs(showId));
 
-        tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
-                .getExtras());
+        tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, OverviewFragment.buildArgs(showId));
 
-        Bundle argsSeason = new Bundle();
-        argsSeason.putInt(SeasonsFragment.ARG_SHOW_TVDBID, showTvdbId);
-        tabsAdapter.addTab(R.string.episodes, SeasonsFragment.class, argsSeason);
+        tabsAdapter.addTab(R.string.episodes, SeasonsFragment.class, SeasonsFragment.buildArgs(showId));
         tabsAdapter.notifyTabsChanged();
 
         // select overview to be shown initially
@@ -203,26 +227,25 @@ public class OverviewActivity extends BaseMessageActivity {
             return true;
         }
         if (itemId == R.id.menu_overview_remove_show) {
-            RemoveShowDialogFragment.show(this, getSupportFragmentManager(), showTvdbId);
+            RemoveShowDialogFragment.show(showId, getSupportFragmentManager(), this);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(RemoveShowTask.OnRemovingShowEvent event) {
-        if (event.showTvdbId == showTvdbId) {
+    public void onEventMainThread(ShowTools2.OnRemovingShowEvent event) {
+        if (event.getShowId() == showId) {
             finish(); // finish this activity if the show it displays is about to get removed
         }
     }
 
     private void launchSearch() {
         // refine search with the show's title
-        SgShowMinimal show = SgRoomDatabase.getInstance(this)
-                .showHelper().getShowMinimal(showTvdbId);
-        if (show != null) {
+        String titleOrNull = SgRoomDatabase.getInstance(this).sgShow2Helper().getShowTitle(showId);
+        if (titleOrNull != null) {
             Bundle appSearchData = new Bundle();
-            appSearchData.putString(EpisodeSearchFragment.ARG_SHOW_TITLE, show.getTitle());
+            appSearchData.putString(EpisodeSearchFragment.ARG_SHOW_TITLE, titleOrNull);
 
             Intent intent = new Intent(this, SearchActivity.class);
             intent.putExtra(SearchManager.APP_DATA, appSearchData);

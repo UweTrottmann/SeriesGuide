@@ -1,13 +1,10 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.provider.EpisodeHelper;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
@@ -16,64 +13,38 @@ import com.battlelancer.seriesguide.util.TextTools;
 
 public class EpisodeWatchedJob extends EpisodeBaseJob {
 
-    public EpisodeWatchedJob(int showTvdbId, int episodeTvdbId, int season, int episode,
-            int episodeFlags) {
-        super(showTvdbId, episodeTvdbId, season, episode, episodeFlags,
-                JobAction.EPISODE_WATCHED_FLAG);
+    public EpisodeWatchedJob(long episodeId, int episodeFlags) {
+        super(episodeId, episodeFlags, JobAction.EPISODE_WATCHED_FLAG);
     }
 
-    @Override
-    protected String getDatabaseColumnToUpdate() {
-        return SeriesGuideContract.Episodes.WATCHED;
-    }
-
-    private int getLastWatchedEpisodeTvdbId(Context context) {
+    private long getLastWatchedEpisodeId(Context context) {
         if (!EpisodeTools.isUnwatched(getFlagValue())) {
-            return episodeTvdbId; // watched or skipped episode
+            // watched or skipped episode
+            return episodeId;
         } else {
-            // unwatched episode
-            int lastWatchedId = -1; // don't change last watched episode by default
+            // changed episode to not watched
+            long lastWatchedId = -1; // don't change last watched episode by default
 
             // if modified episode is identical to last watched one (e.g. was just watched),
             // find an appropriate last watched episode
-            final Cursor show = context.getContentResolver().query(
-                    SeriesGuideContract.Shows.buildShowUri(String.valueOf(getShowTvdbId())),
-                    new String[]{
-                            SeriesGuideContract.Shows._ID,
-                            SeriesGuideContract.Shows.LASTWATCHEDID
-                    }, null, null, null
-            );
-            if (show != null) {
-                // identical to last watched episode?
-                if (show.moveToFirst() && show.getInt(1) == episodeTvdbId) {
-                    if (season == 0) {
-                        // keep last watched (= this episode) if we got a special
-                        show.close();
-                        return -1;
-                    }
-                    lastWatchedId = 0; // re-set if we don't find one
-
-                    // get latest watched before this one
-                    String season = String.valueOf(this.season);
-                    final Cursor latestWatchedEpisode = context.getContentResolver()
-                            .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(String
-                                            .valueOf(getShowTvdbId())),
-                                    BaseEpisodesJob.PROJECTION_EPISODE,
-                                    SeriesGuideContract.Episodes.SELECTION_PREVIOUS_WATCHED,
-                                    new String[]{
-                                            season, season, String.valueOf(episode)
-                                    }, SeriesGuideContract.Episodes.SORT_PREVIOUS_WATCHED
-                            );
-                    if (latestWatchedEpisode != null) {
-                        if (latestWatchedEpisode.moveToFirst()) {
-                            lastWatchedId = latestWatchedEpisode.getInt(0);
-                        }
-
-                        latestWatchedEpisode.close();
-                    }
+            SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+            long lastWatchedEpisodeId = database.sgShow2Helper()
+                    .getShowLastWatchedEpisodeId(getShowId());
+            // identical to last watched episode?
+            if (episodeId == lastWatchedEpisodeId) {
+                if (getEpisode().getSeason() == 0) {
+                    // keep last watched (= this episode) if we got a special
+                    return -1;
                 }
+                lastWatchedId = 0; // re-set if we don't find one
 
-                show.close();
+                // get newest watched before this one
+                long previousWatchedEpisodeId = database.sgEpisode2Helper()
+                        .getPreviousWatchedEpisodeOfShow(getShowId(), getEpisode().getSeason(),
+                                getEpisode().getEpisodenumber());
+                if (previousWatchedEpisodeId > 0) {
+                    lastWatchedId = previousWatchedEpisodeId;
+                }
             }
 
             return lastWatchedId;
@@ -89,15 +60,15 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
         // set a new last watched episode
         // set last watched time to now if marking as watched or skipped
         boolean unwatched = EpisodeTools.isUnwatched(getFlagValue());
-        updateLastWatched(context, getLastWatchedEpisodeTvdbId(context), !unwatched);
+        updateLastWatched(context, getLastWatchedEpisodeId(context), !unwatched);
 
         if (EpisodeTools.isWatched(getFlagValue())) {
             // create activity entry for watched episode
-            ActivityTools.addActivity(context, episodeTvdbId, getShowTvdbId());
+            ActivityTools.addActivity(context, episodeId, getShowId());
         } else if (unwatched) {
             // remove any previous activity entries for this episode
             // use case: user accidentally toggled watched flag
-            ActivityTools.removeActivity(context, episodeTvdbId);
+            ActivityTools.removeActivity(context, episodeId);
         }
 
         ListWidgetProvider.notifyDataChanged(context);
@@ -106,20 +77,20 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
     }
 
     @Override
-    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
-        EpisodeHelper episodeHelper = SgRoomDatabase.getInstance(context).episodeHelper();
+    protected boolean applyDatabaseChanges(@NonNull Context context) {
+        SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
         int flagValue = getFlagValue();
 
         int rowsUpdated;
         switch (flagValue) {
             case EpisodeFlags.SKIPPED:
-                rowsUpdated = episodeHelper.setSkipped(episodeTvdbId);
+                rowsUpdated = episodeHelper.setSkipped(episodeId);
                 break;
             case EpisodeFlags.WATCHED:
-                rowsUpdated = episodeHelper.setWatchedAndAddPlay(episodeTvdbId);
+                rowsUpdated = episodeHelper.setWatchedAndAddPlay(episodeId);
                 break;
             case EpisodeFlags.UNWATCHED:
-                rowsUpdated = episodeHelper.setNotWatchedAndRemovePlays(episodeTvdbId);
+                rowsUpdated = episodeHelper.setNotWatchedAndRemovePlays(episodeId);
                 break;
             default:
                 throw new IllegalArgumentException("Flag value not supported");
@@ -129,7 +100,7 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
     }
 
     /**
-     * Note: this should mirror the planned database changes in {@link #applyDatabaseChanges(Context, Uri)}.
+     * Note: this should mirror the planned database changes in {@link #applyDatabaseChanges(Context)}.
      */
     @Override
     protected int getPlaysForNetworkJob(int plays) {
@@ -158,7 +129,8 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
             actionResId = R.string.action_unwatched;
         }
         // format like '6x42 · Set watched'
-        String number = TextTools.getEpisodeNumber(context, season, episode);
+        String number = TextTools.getEpisodeNumber(context, getEpisode().getSeason(),
+                getEpisode().getEpisodenumber());
         return TextTools.dotSeparate(number, context.getString(actionResId));
     }
 }

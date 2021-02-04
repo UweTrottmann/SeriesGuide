@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.preferences
 
 import android.app.backup.BackupManager
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,7 +24,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -35,11 +34,10 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
-import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
-import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
@@ -417,15 +415,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
 
         if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
-            // reset last edit date of all episodes so they will get updated
+            // reset last updated date of all episodes so they will get updated
             Thread {
                 android.os.Process
                     .setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND)
-
-                val values = ContentValues()
-                values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0)
-                requireActivity().contentResolver
-                    .update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null)
+                SgRoomDatabase.getInstance(requireContext()).sgEpisode2Helper()
+                    .resetLastUpdatedForAll()
             }.start()
         }
 
@@ -482,11 +477,8 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     private fun updateSelectionSummary(selectionPref: Preference) {
-        val countOfShowsNotifyOn = DBUtils.getCountOf(
-            requireActivity().contentResolver,
-            SeriesGuideContract.Shows.CONTENT_URI,
-            SeriesGuideContract.Shows.SELECTION_NOTIFY, null, 0
-        )
+        val countOfShowsNotifyOn =
+            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().countShowsNotifyEnabled()
         selectionPref.summary = getString(
             R.string.pref_notifications_select_shows_summary,
             countOfShowsNotifyOn

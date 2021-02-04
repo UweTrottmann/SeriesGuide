@@ -31,9 +31,9 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.SgFastScroller;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -174,7 +174,7 @@ public class ShowsFragment extends Fragment {
     private void updateShowsQuery() {
         Timber.d("Running query update.");
         model.updateQuery(showFilter, ShowsDistillationSettings
-                .getSortQuery(showSortOrder.getSortOrderId(), showSortOrder.isSortFavoritesFirst(),
+                .getSortQuery2(showSortOrder.getSortOrderId(), showSortOrder.isSortFavoritesFirst(),
                         showSortOrder.isSortIgnoreArticles()));
     }
 
@@ -303,19 +303,19 @@ public class ShowsFragment extends Fragment {
     }
 
     // Note: do not just re-run existing query, make sure timestamps in query are updated.
-    private Runnable dataRefreshRunnable = this::updateShowsQuery;
+    private final Runnable dataRefreshRunnable = this::updateShowsQuery;
 
     private void startActivityAddShows() {
         startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
                 SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
     }
 
-    private ShowsAdapter.OnItemClickListener onItemClickListener
+    private final ShowsAdapter.OnItemClickListener onItemClickListener
             = new ShowsAdapter.OnItemClickListener() {
         @Override
-        public void onItemClick(@NotNull View anchor, int showTvdbId) {
+        public void onItemClick(@NotNull View anchor, long showRowId) {
             // display overview for this show
-            Intent intent = OverviewActivity.intentShow(requireContext(), showTvdbId);
+            Intent intent = OverviewActivity.intentShow(requireContext(), showRowId);
             ActivityCompat.startActivity(requireContext(), intent,
                     ActivityOptionsCompat
                             .makeScaleUpAnimation(anchor, 0, 0, anchor.getWidth(),
@@ -338,13 +338,13 @@ public class ShowsFragment extends Fragment {
 
             popupMenu.setOnMenuItemClickListener(
                     new ShowMenuItemClickListener(getContext(), getParentFragmentManager(),
-                            show.getShowTvdbId(), show.getEpisodeTvdbId()));
+                            show.getRowId(), show.getNextEpisodeId()));
             popupMenu.show();
         }
 
         @Override
         public void onItemSetWatchedClick(@NotNull ShowsAdapter.ShowItem show) {
-            DBUtils.markNextEpisode(getContext(), show.getShowTvdbId(), show.getEpisodeTvdbId());
+            EpisodeTools.episodeWatchedIfNotZero(getContext(), show.getNextEpisodeId());
         }
     };
 

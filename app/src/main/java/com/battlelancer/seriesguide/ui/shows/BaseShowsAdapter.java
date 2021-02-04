@@ -24,7 +24,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
 
         void onMenuClick(View view, ShowViewHolder viewHolder);
 
-        void onFavoriteClick(int showTvdbId, boolean isFavorite);
+        void onFavoriteClick(long showId, boolean isFavorite);
     }
 
     protected OnItemClickListener onItemClickListener;
@@ -81,7 +81,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
         public ImageView favorited;
         public ImageView contextMenu;
 
-        public int showTvdbId;
+        public long showId;
         public int episodeTvdbId;
         public boolean isFavorited;
         public boolean isHidden;
@@ -100,7 +100,7 @@ public abstract class BaseShowsAdapter extends CursorAdapter {
             v.setOnClickListener(view -> onItemClickListener.onItemClick(view, this));
             // favorite star
             favorited.setOnClickListener(
-                    view -> onItemClickListener.onFavoriteClick(showTvdbId, !isFavorited));
+                    view -> onItemClickListener.onFavoriteClick(showId, !isFavorited));
             // context menu
             contextMenu.setOnClickListener(
                     view -> onItemClickListener.onMenuClick(view, ShowViewHolder.this));

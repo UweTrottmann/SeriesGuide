@@ -9,10 +9,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.model.SgShow
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.provider.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
@@ -23,14 +23,14 @@ import kotlinx.coroutines.sync.withPermit
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
-    private val sgShowsLiveData: LiveData<List<SgShow>>
+    private val sgShowsLiveData: LiveData<List<SgShow2ForLists>>
     val showItemsLiveData = MediatorLiveData<List<ShowsAdapter.ShowItem>>()
     private val showItemsLiveDataSemaphore = Semaphore(1)
 
     init {
         sgShowsLiveData = Transformations.switchMap(queryString) { queryString ->
-            SgRoomDatabase.getInstance(getApplication()).showHelper()
-                .queryShows(SimpleSQLiteQuery(queryString, null))
+            SgRoomDatabase.getInstance(getApplication()).sgShow2Helper()
+                .getShowsLiveData(SimpleSQLiteQuery(queryString, null))
         }
 
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
@@ -71,9 +71,9 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         // include or exclude favorites?
         filter.isFilterFavorites?.let {
             if (it) {
-                selection.append(SeriesGuideContract.Shows.SELECTION_FAVORITES)
+                selection.append(SgShow2Columns.SELECTION_FAVORITES)
             } else {
-                selection.append(SeriesGuideContract.Shows.SELECTION_NOT_FAVORITES)
+                selection.append(SgShow2Columns.SELECTION_NOT_FAVORITES)
             }
         }
 
@@ -83,9 +83,9 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                 selection.append(" AND ")
             }
             if (it) {
-                selection.append(SeriesGuideContract.Shows.SELECTION_STATUS_CONTINUING)
+                selection.append(SgShow2Columns.SELECTION_STATUS_CONTINUING)
             } else {
-                selection.append(SeriesGuideContract.Shows.SELECTION_STATUS_NO_CONTINUING)
+                selection.append(SgShow2Columns.SELECTION_STATUS_NO_CONTINUING)
             }
         }
 
@@ -95,9 +95,9 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                 selection.append(" AND ")
             }
             if (it) {
-                selection.append(SeriesGuideContract.Shows.SELECTION_HIDDEN)
+                selection.append(SgShow2Columns.SELECTION_HIDDEN)
             } else {
-                selection.append(SeriesGuideContract.Shows.SELECTION_NO_HIDDEN)
+                selection.append(SgShow2Columns.SELECTION_NO_HIDDEN)
             }
         }
 
@@ -117,52 +117,52 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         if (filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isTrue()) {
             // unwatched and upcoming
-            selection.append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+            selection.append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
                 .append(maxAirtime)
         } else if (
             filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isNullOrFalse()
         ) {
             // unwatched only
-            selection.append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+            selection.append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
                 .append(timeInAnHour)
         } else if (
             filter.isFilterUpcoming.isTrue() && filter.isFilterUnwatched.isNullOrFalse()
         ) {
             // upcoming only
             selection
-                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
                 .append(timeInAnHour)
                 .append(" AND ")
-                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
                 .append(maxAirtime)
         } else if (filter.isFilterUnwatched.isFalse()) {
             if (filter.isFilterUpcoming == null) {
                 // unwatched excluded (== anything in the future or no next episode)
                 selection
-                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                    .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
                     .append(timeInAnHour)
             } else if (!filter.isFilterUpcoming) {
                 // unwatched and upcoming excluded (== further into the future or no next episode)
                 selection
-                    .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                    .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
                     .append(maxAirtime)
             }
         } else if (filter.isFilterUpcoming.isFalse() && filter.isFilterUnwatched == null) {
             // upcoming excluded
             selection
                 .append("(")
-                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append("<=")
+                .append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
                 .append(timeInAnHour)
                 .append(" OR ")
-                .append(SeriesGuideContract.Shows.NEXTAIRDATEMS).append(">")
+                .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
                 .append(maxAirtime)
                 .append(")")
         }
 
         queryString.value = if (selection.isNotEmpty()) {
-            "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS} WHERE $selection ORDER BY $orderClause"
+            "SELECT * FROM ${Tables.SG_SHOW} WHERE $selection ORDER BY $orderClause"
         } else {
-            "SELECT * FROM ${SeriesGuideDatabase.Tables.SHOWS} ORDER BY $orderClause"
+            "SELECT * FROM ${Tables.SG_SHOW} ORDER BY $orderClause"
         }
     }
 

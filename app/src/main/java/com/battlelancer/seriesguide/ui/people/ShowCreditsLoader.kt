@@ -14,6 +14,7 @@ import timber.log.Timber
  *
  * @param findTmdbId If true, the loader assumes the passed id is from TVDb id and will try to
  */
+@Deprecated("Use TmdbTools2 instead.")
 class ShowCreditsLoader(
     context: Context,
     private var showId: Int,

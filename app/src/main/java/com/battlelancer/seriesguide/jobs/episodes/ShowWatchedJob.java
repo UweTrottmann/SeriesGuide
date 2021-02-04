@@ -1,47 +1,24 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
-import android.net.Uri;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.provider.EpisodeHelper;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
+import java.util.List;
 
 public class ShowWatchedJob extends ShowBaseJob {
 
     private final long currentTimePlusOneHour;
 
-    public ShowWatchedJob(int showTvdbId, int flagValue, long currentTime) {
-        super(showTvdbId, flagValue, JobAction.EPISODE_WATCHED_FLAG);
+    public ShowWatchedJob(long showId, int flagValue, long currentTime) {
+        super(showId, flagValue, JobAction.EPISODE_WATCHED_FLAG);
         this.currentTimePlusOneHour = currentTime + DateUtils.HOUR_IN_MILLIS;
-    }
-
-    @Override
-    public String getDatabaseSelection() {
-        if (EpisodeTools.isUnwatched(getFlagValue())) {
-            // set unwatched
-            // include watched or skipped episodes
-            return Episodes.SELECTION_WATCHED_OR_SKIPPED
-                    + " AND " + Episodes.SELECTION_NO_SPECIALS;
-        } else {
-            // set watched or skipped
-            // do NOT mark watched episodes again to avoid trakt adding a new watch
-            // only mark episodes that have been released until within the hour
-            return Episodes.FIRSTAIREDMS + "<=" + currentTimePlusOneHour
-                    + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
-                    + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED
-                    + " AND " + Episodes.SELECTION_NO_SPECIALS;
-        }
-    }
-
-    @Override
-    protected String getDatabaseColumnToUpdate() {
-        return Episodes.WATCHED;
     }
 
     @Override
@@ -65,17 +42,16 @@ public class ShowWatchedJob extends ShowBaseJob {
     }
 
     @Override
-    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
-        EpisodeHelper episodeHelper = SgRoomDatabase.getInstance(context).episodeHelper();
+    protected boolean applyDatabaseChanges(@NonNull Context context) {
+        SgEpisode2Helper helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
 
         int rowsUpdated;
         switch (getFlagValue()) {
             case EpisodeFlags.UNWATCHED:
-                rowsUpdated = episodeHelper.setShowNotWatchedAndRemovePlays(getShowTvdbId());
+                rowsUpdated = helper.setShowNotWatchedAndRemovePlays(getShowId());
                 break;
             case EpisodeFlags.WATCHED:
-                rowsUpdated = episodeHelper
-                        .setShowWatchedAndAddPlay(getShowTvdbId(), currentTimePlusOneHour);
+                rowsUpdated = helper.setShowWatchedAndAddPlay(getShowId(), currentTimePlusOneHour);
                 break;
             default:
                 // Note: Skip not supported for whole show.
@@ -84,8 +60,25 @@ public class ShowWatchedJob extends ShowBaseJob {
         return rowsUpdated >= 0; // -1 means error.
     }
 
+    @NonNull
+    @Override
+    protected List<SgEpisode2Numbers> getEpisodesForNetworkJob(@NonNull Context context) {
+        SgEpisode2Helper helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
+        if (EpisodeTools.isUnwatched(getFlagValue())) {
+            // set unwatched
+            // include watched or skipped episodes
+            return helper.getWatchedOrSkippedEpisodeNumbersOfShow(getShowId());
+        } else {
+            // set watched or skipped
+            // do NOT mark watched episodes again to avoid trakt adding a new watch
+            // only mark episodes that have been released until within the hour
+            return helper.getNotWatchedOrSkippedEpisodeNumbersOfShow(getShowId(),
+                    currentTimePlusOneHour);
+        }
+    }
+
     /**
-     * Note: this should mirror the planned database changes in {@link #applyDatabaseChanges(Context, Uri)}.
+     * Note: this should mirror the planned database changes in {@link #applyDatabaseChanges(Context)}.
      */
     @Override
     protected int getPlaysForNetworkJob(int plays) {

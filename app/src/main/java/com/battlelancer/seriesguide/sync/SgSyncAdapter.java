@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
@@ -25,7 +26,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
@@ -185,7 +185,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // renew search table if shows were updated and it will not be renewed by add task
             if (tvdbSync.hasUpdatedShows() && newShows.size() == 0) {
-                DBUtils.rebuildFtsTable(getContext());
+                SeriesGuideDatabase.rebuildFtsTable(getContext());
             }
 
             // update next episodes for all shows

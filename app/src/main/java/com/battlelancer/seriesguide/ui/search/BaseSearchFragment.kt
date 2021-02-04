@@ -1,7 +1,5 @@
 package com.battlelancer.seriesguide.ui.search
 
-import android.app.SearchManager
-import android.database.Cursor
 import android.os.Bundle
 import android.view.View
 import android.widget.GridView
@@ -17,27 +15,22 @@ abstract class BaseSearchFragment : Fragment() {
 
     @BindView(R.id.textViewSearchEmpty)
     lateinit var emptyView: View
+
     @BindView(R.id.gridViewSearch)
     lateinit var gridView: GridView
 
-    var loaderArgs: Bundle? = null
+    var initialSearchArgs: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState != null) {
-            // restore last query
-            loaderArgs = savedInstanceState.getBundle(STATE_LOADER_ARGS)
-        } else {
+        if (savedInstanceState == null) {
             // use initial query (if any)
             val queryEvent = EventBus.getDefault()
-                    .getStickyEvent(SearchActivity.SearchQueryEvent::class.java)
+                .getStickyEvent(SearchActivity.SearchQueryEvent::class.java)
             if (queryEvent != null) {
-                loaderArgs = queryEvent.args
+                initialSearchArgs = queryEvent.args
             }
-        }
-        if (loaderArgs == null) {
-            loaderArgs = Bundle()
         }
     }
 
@@ -64,25 +57,14 @@ abstract class BaseSearchFragment : Fragment() {
         EventBus.getDefault().unregister(this)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        // loader args are not saved if fragment is killed, so do it manually
-        outState.putBundle(STATE_LOADER_ARGS, loaderArgs)
-    }
-
-    protected fun updateEmptyState(data: Cursor) {
-        val query = loaderArgs?.getString(SearchManager.QUERY)
-        if (data.count == 0 && !(query.isNullOrEmpty())) {
+    protected fun updateEmptyState(hasNoResults: Boolean, hasQuery: Boolean) {
+        if (hasNoResults && hasQuery) {
             emptyView.visibility = View.VISIBLE
             gridView.visibility = View.GONE
         } else {
             emptyView.visibility = View.GONE
             gridView.visibility = View.VISIBLE
         }
-    }
-
-    companion object {
-        private const val STATE_LOADER_ARGS = "loaderArgs"
     }
 
 }

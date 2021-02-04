@@ -1,12 +1,9 @@
 package com.battlelancer.seriesguide;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
 
 public class Constants {
 
@@ -16,21 +13,22 @@ public class Constants {
     public static final int EPISODE_UNKNOWN_RELEASE = -1;
 
     public enum EpisodeSorting {
-        LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " DESC"),
+        LATEST_FIRST(0, "latestfirst", SgEpisode2Columns.NUMBER + " DESC"),
 
-        OLDEST_FIRST(1, "oldestfirst", Episodes.NUMBER + " ASC"),
+        OLDEST_FIRST(1, "oldestfirst", SgEpisode2Columns.NUMBER + " ASC"),
 
-        UNWATCHED_FIRST(2, "unwatchedfirst", Episodes.WATCHED + " ASC," + Episodes.NUMBER + " ASC"),
+        UNWATCHED_FIRST(2, "unwatchedfirst",
+                SgEpisode2Columns.WATCHED + " ASC," + SgEpisode2Columns.NUMBER + " ASC"),
 
-        ALPHABETICAL_ASC(3, "atoz", Episodes.TITLE + " COLLATE NOCASE ASC"),
+        ALPHABETICAL_ASC(3, "atoz", SgEpisode2Columns.TITLE + " COLLATE NOCASE ASC"),
 
-        TOP_RATED(4, "toprated", Tables.EPISODES + "." + Episodes.RATING_GLOBAL + " COLLATE NOCASE DESC"),
+        TOP_RATED(4, "toprated", SgEpisode2Columns.RATING_GLOBAL + " COLLATE NOCASE DESC"),
 
-        DVDLATEST_FIRST(5, "dvdlatestfirst", Episodes.DVDNUMBER + " DESC," + Episodes.NUMBER
-                + " DESC"),
+        DVDLATEST_FIRST(5, "dvdlatestfirst",
+                SgEpisode2Columns.DVDNUMBER + " DESC," + SgEpisode2Columns.NUMBER + " DESC"),
 
-        DVDOLDEST_FIRST(6, "dvdoldestfirst", Episodes.DVDNUMBER + " ASC," + Episodes.NUMBER
-                + " ASC");
+        DVDOLDEST_FIRST(6, "dvdoldestfirst",
+                SgEpisode2Columns.DVDNUMBER + " ASC," + SgEpisode2Columns.NUMBER + " ASC");
 
         private final int index;
 
@@ -62,46 +60,29 @@ public class Constants {
             return this.value;
         }
 
-        private static final Map<String, EpisodeSorting> STRING_MAPPING = new HashMap<>();
-
-        static {
-            for (EpisodeSorting via : EpisodeSorting.values()) {
-                STRING_MAPPING.put(via.toString().toUpperCase(Locale.US), via);
+        public static EpisodeSorting fromValue(@Nullable  String value) {
+            if (value != null) {
+                for (EpisodeSorting sorting : values()) {
+                    if (sorting.value.equals(value)) {
+                        return sorting;
+                    }
+                }
             }
-        }
-
-        public static EpisodeSorting fromValue(String value) {
-            return STRING_MAPPING.get(value.toUpperCase(Locale.US));
+            return OLDEST_FIRST;
         }
     }
 
     public enum SeasonSorting {
-        LATEST_FIRST(0, "latestfirst", Seasons.COMBINED + " DESC"),
+        LATEST_FIRST(0, "latestfirst"),
 
-        OLDEST_FIRST(1, "oldestfirst", Seasons.COMBINED + " ASC");
+        OLDEST_FIRST(1, "oldestfirst");
 
-        private final int index;
-
+        public final int index;
         private final String value;
 
-        private final String query;
-
-        SeasonSorting(int index, String value, String query) {
+        SeasonSorting(int index, String value) {
             this.index = index;
             this.value = value;
-            this.query = query;
-        }
-
-        public int index() {
-            return index;
-        }
-
-        public String value() {
-            return value;
-        }
-
-        public String query() {
-            return query;
         }
 
         @NonNull
@@ -110,16 +91,15 @@ public class Constants {
             return this.value;
         }
 
-        private static final Map<String, SeasonSorting> STRING_MAPPING = new HashMap<>();
-
-        static {
-            for (SeasonSorting via : SeasonSorting.values()) {
-                STRING_MAPPING.put(via.toString().toUpperCase(Locale.US), via);
+        public static SeasonSorting fromValue(@Nullable String value) {
+            if (value != null) {
+                for (SeasonSorting sorting : values()) {
+                    if (sorting.value.equals(value)) {
+                        return sorting;
+                    }
+                }
             }
-        }
-
-        public static SeasonSorting fromValue(String value) {
-            return STRING_MAPPING.get(value.toUpperCase(Locale.US));
+            return LATEST_FIRST;
         }
     }
 

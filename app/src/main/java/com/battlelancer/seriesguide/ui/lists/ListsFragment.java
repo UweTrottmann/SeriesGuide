@@ -23,7 +23,8 @@ import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
@@ -124,7 +125,7 @@ public class ListsFragment extends Fragment {
                     ListItemsAdapter.Query.PROJECTION,
                     // items of this list, but exclude any if show was removed from the database
                     // (the join on show data will fail, hence the show id will be 0/null)
-                    ListItems.SELECTION_LIST + " AND " + Shows.REF_SHOW_ID + ">0",
+                    ListItems.SELECTION_LIST + " AND " + SgShow2Columns.REF_SHOW_ID + ">0",
                     new String[] {
                             listId
                     }, ListsDistillationSettings.getSortQuery(getActivity())
@@ -142,7 +143,7 @@ public class ListsFragment extends Fragment {
         }
     };
 
-    private ListItemsAdapter.OnItemClickListener onItemClickListener
+    private final ListItemsAdapter.OnItemClickListener onItemClickListener
             = new ListItemsAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View anchor, BaseShowsAdapter.ShowViewHolder showViewHolder) {
@@ -154,19 +155,21 @@ public class ListsFragment extends Fragment {
             switch (itemType) {
                 case 1: {
                     // display show overview
-                    intent = OverviewActivity.intentShow(getActivity(), itemTvdbId);
+                    intent = OverviewActivity.intentShow(getActivity(), viewHolder.showId);
                     break;
                 }
                 case 2: {
                     // display episodes of season
-                    intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.EXTRA_SEASON_TVDBID, itemTvdbId);
+                    long seasonId = SgRoomDatabase.getInstance(requireContext()).sgSeason2Helper()
+                            .getSeasonId(itemTvdbId);
+                    intent = EpisodesActivity.intentSeason(seasonId, requireContext());
                     break;
                 }
                 case 3: {
                     // display episode details
-                    intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, itemTvdbId);
+                    long episodeId = SgRoomDatabase.getInstance(requireContext()).sgEpisode2Helper()
+                            .getEpisodeId(itemTvdbId);
+                    intent = EpisodesActivity.intentEpisode(episodeId, requireContext());
                     break;
                 }
             }
@@ -192,9 +195,9 @@ public class ListsFragment extends Fragment {
         }
 
         @Override
-        public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
+        public void onFavoriteClick(long showId, boolean isFavorite) {
             SgApp.getServicesComponent(requireContext()).showTools()
-                    .storeIsFavorite(showTvdbId, isFavorite);
+                    .storeIsFavorite(showId, isFavorite);
         }
     };
 

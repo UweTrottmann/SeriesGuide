@@ -30,6 +30,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.util.SelectionBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +43,13 @@ public class SeriesGuideProvider extends ContentProvider {
     public static final boolean LOGV = false;
 
     private static UriMatcher sUriMatcher;
+
+    static final int SG_SHOW = 10;
+    static final int SG_SHOW_ID = 11;
+    static final int SG_SEASON = 20;
+    static final int SG_SEASON_ID = 21;
+    static final int SG_EPISODE = 30;
+    static final int SG_EPISODE_ID = 31;
 
     static final int SHOWS = 100;
 
@@ -71,8 +81,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     static final int SEASONS_OFSHOW = 302;
 
-    static final int EPISODESEARCH = 400;
-
     static final int EPISODESEARCH_ID = 401;
 
     static final int LISTS = 500;
@@ -95,8 +103,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     static final int SEARCH_SUGGEST = 900;
 
-    static final int RENEW_FTSTABLE = 1000;
-
     static final int JOBS = 1100;
 
     static final int JOBS_ID = 1101;
@@ -110,6 +116,16 @@ public class SeriesGuideProvider extends ContentProvider {
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = SgApp.CONTENT_AUTHORITY;
+
+        // SgShow2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SHOW, SG_SHOW);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SHOW + "/*", SG_SHOW_ID);
+        // SgSeason2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SEASON, SG_SEASON);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SEASON + "/*", SG_SEASON_ID);
+        // SgEpisode2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_EPISODE, SG_EPISODE);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_EPISODE + "/*", SG_EPISODE_ID);
 
         // Shows
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS, SHOWS);
@@ -173,8 +189,6 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesGuideContract.PATH_JOBS + "/*", JOBS_ID);
 
         // Search
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
-                + SeriesGuideContract.PATH_SEARCH, EPISODESEARCH);
         matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/*", EPISODESEARCH_ID);
 
         // Suggestions
@@ -182,7 +196,6 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SearchManager.SUGGEST_URI_PATH_QUERY + "/*", SEARCH_SUGGEST);
 
         // Ops
-        matcher.addURI(authority, SeriesGuideContract.PATH_RENEWFTSTABLE, RENEW_FTSTABLE);
         matcher.addURI(authority, SeriesGuideContract.PATH_CLOSE, CLOSE);
 
         return matcher;
@@ -224,17 +237,6 @@ public class SeriesGuideProvider extends ContentProvider {
         final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         switch (match) {
-            case RENEW_FTSTABLE: {
-                SeriesGuideDatabase.rebuildFtsTable(db);
-                return null;
-            }
-            case EPISODESEARCH: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.search(db, selection, selectionArgs);
-            }
             case SEARCH_SUGGEST: {
                 if (selectionArgs == null) {
                     throw new IllegalArgumentException(
@@ -267,6 +269,18 @@ public class SeriesGuideProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
+            case SG_SHOW:
+                return SgShow2Columns.CONTENT_TYPE;
+            case SG_SHOW_ID:
+                return SgShow2Columns.CONTENT_ITEM_TYPE;
+            case SG_SEASON:
+                return SgSeason2Columns.CONTENT_TYPE;
+            case SG_SEASON_ID:
+                return SgSeason2Columns.CONTENT_ITEM_TYPE;
+            case SG_EPISODE:
+                return SgEpisode2Columns.CONTENT_TYPE;
+            case SG_EPISODE_ID:
+                return SgEpisode2Columns.CONTENT_ITEM_TYPE;
             case SHOWS:
             case SHOWS_FILTERED:
             case SHOWS_WITH_LAST_EPISODE:
@@ -310,8 +324,6 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Jobs.CONTENT_ITEM_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
-            case RENEW_FTSTABLE:
-                return Episodes.CONTENT_TYPE; // however there is nothing returned
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -598,6 +610,20 @@ public class SeriesGuideProvider extends ContentProvider {
     private static SelectionBuilder buildSelection(Uri uri, int match) {
         final SelectionBuilder builder = new SelectionBuilder();
         switch (match) {
+            case SG_SHOW: {
+                return builder.table(Tables.SG_SHOW);
+            }
+            case SG_SHOW_ID: {
+                long id = SgShow2Columns.getId(uri);
+                return builder.table(Tables.SG_SHOW).where(SgShow2Columns._ID + "=?",
+                        String.valueOf(id));
+            }
+            case SG_SEASON: {
+                return builder.table(Tables.SG_SEASON);
+            }
+            case SG_EPISODE: {
+                return builder.table(Tables.SG_EPISODE);
+            }
             case SHOWS: {
                 return builder.table(Tables.SHOWS);
             }

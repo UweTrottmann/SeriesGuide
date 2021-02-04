@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.traktapi;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -13,9 +15,13 @@ import org.greenrobot.eventbus.Subscribe;
  */
 public class QuickCheckInActivity extends FragmentActivity {
 
-    public interface InitBundle {
+    private static final String EXTRA_LONG_EPISODE_ID = "episode_id";
 
-        String EPISODE_TVDBID = "episode_tvdbid";
+    public static Intent intent(long episodeId, Context context) {
+        return new Intent(context, QuickCheckInActivity.class)
+                .putExtra(EXTRA_LONG_EPISODE_ID, episodeId)
+                .addFlags(
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
     }
 
     @Override
@@ -24,14 +30,14 @@ public class QuickCheckInActivity extends FragmentActivity {
         setTheme(android.R.style.Theme_Holo_Wallpaper_NoTitleBar);
         super.onCreate(arg0);
 
-        int episodeTvdbId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
-        if (episodeTvdbId == 0) {
+        long episodeId = getIntent().getLongExtra(EXTRA_LONG_EPISODE_ID, 0);
+        if (episodeId == 0) {
             finish();
             return;
         }
 
         // show check-in dialog
-        if (!CheckInDialogFragment.show(this, getSupportFragmentManager(), episodeTvdbId)) {
+        if (!CheckInDialogFragment.show(this, getSupportFragmentManager(), episodeId)) {
             finish();
         }
     }

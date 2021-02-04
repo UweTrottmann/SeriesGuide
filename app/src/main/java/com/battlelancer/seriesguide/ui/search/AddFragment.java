@@ -19,8 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
-import com.battlelancer.seriesguide.util.tasks.RemoveShowTask;
+import com.battlelancer.seriesguide.ui.shows.ShowTools2;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -155,9 +156,11 @@ public abstract class AddFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(RemoveShowTask.OnShowRemovedEvent event) {
-        if (event.resultCode == NetworkResult.SUCCESS) {
-            setShowNotAdded(event.showTvdbId);
+    public void onEvent(ShowTools2.OnShowRemovedEvent event) {
+        if (event.getResultCode() == NetworkResult.SUCCESS) {
+            int showTvdbId = SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
+                    .getShowTvdbId(event.getShowId());
+            setShowNotAdded(showTvdbId);
         }
     }
 

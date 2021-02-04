@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.ui.shows.CalendarFragment2;
 import com.battlelancer.seriesguide.ui.shows.ShowsActivityViewModel;
 import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
-import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -404,9 +403,10 @@ public class ShowsActivity extends BaseTopActivity implements
                 // force a sync
                 SgSyncAdapter.requestSyncFullImmediate(this, true);
             }
-            if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
-                ActivityTools.populateShowsLastWatchedTime(this);
-            }
+            // This was never doing anything (ops batch never applied), so removed.
+//            if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
+//                 ActivityTools.populateShowsLastWatchedTime(this);
+//            }
             Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
             if (lastVersion < SgApp.RELEASE_VERSION_36_BETA2) {
                 // used account name to determine sign-in state before switch to Google Sign-In

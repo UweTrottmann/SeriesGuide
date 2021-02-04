@@ -55,7 +55,7 @@ abstract class MovieJob(
     private fun prepareNetworkJob(): ByteArray? {
         val builder = FlatBufferBuilder(0)
 
-        val jobInfo = SgJobInfo.createSgJobInfo(builder, 0, 0, 0, movieTmdbId, plays)
+        val jobInfo = SgJobInfo.createSgJobInfo(builder, 0, 0, movieTmdbId, plays, 0)
 
         builder.finish(jobInfo)
         return builder.sizedByteArray()
