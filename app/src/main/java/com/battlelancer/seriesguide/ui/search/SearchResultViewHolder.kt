@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.search.AddFragment.AddAdapter.OnItemClickListener
+import com.battlelancer.seriesguide.util.ImageTools
 
 class SearchResultViewHolder(
     itemView: View,
@@ -56,12 +56,16 @@ class SearchResultViewHolder(
         description.text = searchResult?.overview
 
         // only local shows will have a poster path set
-        // try to fall back to the first uploaded TVDB poster for all others
+        // try to fall back to the TMDB poster for all others
         val posterUrl = if (searchResult != null) {
-            TvdbImageTools.posterUrlOrResolve(searchResult.posterPath,
-                    searchResult.tvdbid, searchResult.language)
+            ImageTools.posterUrlOrResolve(
+                searchResult.posterPath,
+                searchResult.tmdbId,
+                searchResult.language,
+                itemView.context
+            )
         } else null
-        TvdbImageTools.loadUrlResizeCrop(itemView.context, poster, posterUrl)
+        ImageTools.loadAndResizeAndCrop(posterUrl, poster, itemView.context)
     }
 
     companion object {

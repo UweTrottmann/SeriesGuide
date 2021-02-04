@@ -7,10 +7,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.squareup.picasso.Downloader;
 import com.squareup.picasso.NetworkPolicy;
@@ -20,6 +22,7 @@ import com.squareup.picasso.RequestHandler;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResult;
 import com.uwetrottmann.thetvdb.entities.SeriesImageQueryResultResponse;
 import com.uwetrottmann.tmdb2.entities.Movie;
+import com.uwetrottmann.tmdb2.entities.TvShow;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.CacheControl;
@@ -33,6 +36,7 @@ import okhttp3.ResponseBody;
 public class SgPicassoRequestHandler extends RequestHandler {
 
     public static final String SCHEME_SHOW_TVDB = "showtvdb";
+    public static final String SCHEME_SHOW_TMDB = "showtmdb";
     public static final String SCHEME_MOVIE_TMDB = "movietmdb";
     public static final String QUERY_LANGUAGE = "language";
 
@@ -47,15 +51,19 @@ public class SgPicassoRequestHandler extends RequestHandler {
     @Override
     public boolean canHandleRequest(Request data) {
         String scheme = data.uri.getScheme();
-        return SCHEME_SHOW_TVDB.equals(scheme) || SCHEME_MOVIE_TMDB.equals(scheme);
+        return SCHEME_SHOW_TVDB.equals(scheme)
+                || SCHEME_SHOW_TMDB.equals(scheme)
+                || SCHEME_MOVIE_TMDB.equals(scheme);
     }
 
     @Override
     public Result load(Request request, int networkPolicy) throws IOException {
         String scheme = request.uri.getScheme();
+        String host = request.uri.getHost();
+        if (host == null) return null;
 
         if (SCHEME_SHOW_TVDB.equals(scheme)) {
-            int showTvdbId = Integer.valueOf(request.uri.getHost());
+            int showTvdbId = Integer.parseInt(host);
 
             String language = request.uri.getQueryParameter(QUERY_LANGUAGE);
             if (TextUtils.isEmpty(language)) {
@@ -85,8 +93,23 @@ public class SgPicassoRequestHandler extends RequestHandler {
             }
         }
 
+        if (SCHEME_SHOW_TMDB.equals(scheme)) {
+            int showTmdbId = Integer.parseInt(host);
+            String language = request.uri.getQueryParameter(QUERY_LANGUAGE);
+            if (language == null || language.length() == 0) {
+                language = DisplaySettings.LANGUAGE_EN;
+            }
+            TvShow showDetails = new TmdbTools2().getShowDetails(showTmdbId, language, context);
+            if (showDetails != null) {
+                String url = ImageTools.tmdbOrTvdbPosterUrl(showDetails.poster_path, context);
+                if (url != null) {
+                    return loadFromNetwork(Uri.parse(url), networkPolicy);
+                }
+            }
+        }
+
         if (SCHEME_MOVIE_TMDB.equals(scheme)) {
-            int movieTmdbId = Integer.valueOf(request.uri.getHost());
+            int movieTmdbId = Integer.valueOf(host);
 
             MovieTools movieTools = SgApp.getServicesComponent(context).movieTools();
             Movie movieSummary = movieTools.getMovieSummary(movieTmdbId);

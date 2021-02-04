@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.TmdbDate
+import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -39,6 +40,24 @@ class TmdbTools2 {
             Errors.logAndReport("find tvdb show", e)
         }
 
+        return null
+    }
+
+    fun getShowDetails(showTmdbId: Int, language: String, context: Context): TvShow? {
+        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
+        try {
+            val response = tmdb.tvService()
+                .tv(showTmdbId, language)
+                .execute()
+            if (response.isSuccessful) {
+                val results = response.body()
+                if (results != null) return results
+            } else {
+                Errors.logAndReport("show details", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("show details", e)
+        }
         return null
     }
 

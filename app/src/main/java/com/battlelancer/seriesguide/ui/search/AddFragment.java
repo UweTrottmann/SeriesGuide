@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools2;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -254,11 +254,12 @@ public abstract class AddFragment extends Fragment {
             holder.description.setText(item.getOverview());
 
             // only local shows will have a poster path set
-            // try to fall back to the first uploaded TVDB poster for all others
-            String posterUrl = TvdbImageTools.posterUrlOrResolve(item.getPosterPath(),
-                    item.getTvdbid(),
-                    item.getLanguage());
-            TvdbImageTools.loadUrlResizeCrop(getContext(), holder.poster, posterUrl);
+            // try to fall back to the TMDB poster for all others
+            String posterUrl = ImageTools.posterUrlOrResolve(item.getPosterPath(),
+                    item.getTmdbId(),
+                    item.getLanguage(),
+                    getContext());
+            ImageTools.loadAndResizeAndCrop(posterUrl, holder.poster, getContext());
 
             return convertView;
         }

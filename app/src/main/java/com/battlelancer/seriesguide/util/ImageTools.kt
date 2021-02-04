@@ -23,6 +23,27 @@ object ImageTools {
     private val cacheKey: String
         get() = BuildConfig.IMAGE_CACHE_SECRET
 
+    /**
+     * Like [tmdbOrTvdbPosterUrl], only if [imagePath] is empty, will return an URL
+     * that will be resolved to a poster by [SgPicassoRequestHandler].
+     */
+    @JvmStatic
+    fun posterUrlOrResolve(
+        imagePath: String?,
+        showTmdbId: Int,
+        language: String?,
+        context: Context
+    ): String? {
+        if (imagePath.isNullOrEmpty()) {
+            var url = "${SgPicassoRequestHandler.SCHEME_SHOW_TMDB}://$showTmdbId"
+            if (!language.isNullOrEmpty()) {
+                url += "?${SgPicassoRequestHandler.QUERY_LANGUAGE}=$language"
+            }
+            return url
+        }
+        return tmdbOrTvdbPosterUrl(imagePath, context)
+    }
+
     @JvmStatic
     fun tmdbOrTvdbPosterUrl(imagePath: String?, context: Context): String? {
         return if (imagePath.isNullOrEmpty()) {

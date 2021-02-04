@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -133,23 +132,24 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
-        SparseArrayCompat<String> existingPosterPaths = ShowTools.getSmallPostersByTvdbId(context);
+        SparseArrayCompat<String> existingPosterPaths = SgApp.getServicesComponent(context)
+                .showTools().getTmdbIdsToPoster();
         for (Show show : traktShows) {
-            if (show.ids == null || show.ids.tvdb == null) {
-                // has no TheTVDB id
+            if (show.ids == null || show.ids.tmdb == null) {
+                // has no TMDB id
                 continue;
             }
             SearchResult result = new SearchResult();
-            result.setTvdbid(show.ids.tvdb);
+            result.setTmdbId(show.ids.tmdb);
             result.setTitle(show.title);
             // search results return an overview, while trending and other lists do not
             result.setOverview(!TextUtils.isEmpty(show.overview) ? show.overview
                     : show.year != null ? String.valueOf(show.year) : "");
-            if (existingPosterPaths != null && existingPosterPaths.indexOfKey(show.ids.tvdb) >= 0) {
+            if (existingPosterPaths.indexOfKey(show.ids.tmdb) >= 0) {
                 // is already in local database
                 result.setState(SearchResult.STATE_ADDED);
-                // use the poster we fetched for it (or null if there is none)
-                result.setPosterPath(existingPosterPaths.get(show.ids.tvdb));
+                // use the poster fetched for it (or null if there is none)
+                result.setPosterPath(existingPosterPaths.get(show.ids.tmdb));
             }
             if (overrideLanguage != null) {
                 result.setLanguage(overrideLanguage);
