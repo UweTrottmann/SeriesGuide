@@ -1,12 +1,10 @@
 package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Context;
-import android.database.Cursor;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.model.SgActivity;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.provider.SgEpisode2WithShow;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -26,7 +24,8 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
     @Override
     public List<NowAdapter.NowItem> loadInBackground() {
         // get all activity with the latest one first
-        List<SgActivity> activityByLatest = SgRoomDatabase.getInstance(getContext())
+        SgRoomDatabase database = SgRoomDatabase.getInstance(getContext());
+        List<SgActivity> activityByLatest = database
                 .sgActivityHelper()
                 .getActivityByLatest();
 
@@ -40,36 +39,25 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
             int episodeTvdbId = Integer.parseInt(activity.getEpisodeTvdbOrTmdbId());
 
             // get episode details
-            Cursor episodeQuery = getContext().getContentResolver().query(
-                    Episodes.buildEpisodeWithShowUri(episodeTvdbId),
-                    new String[] {
-                            SeriesGuideDatabase.Tables.EPISODES + "."
-                                    + Episodes._ID, // 0
-                            Episodes.TITLE,
-                            Episodes.NUMBER,
-                            Episodes.SEASON, // 3
-                            Episodes.FIRSTAIREDMS,
-                            Shows.REF_SHOW_ID,
-                            Shows.TITLE,
-                            Shows.POSTER_SMALL // 7
-                    }, null, null, null);
-            if (episodeQuery == null) {
+            SgEpisode2Helper helper = database.sgEpisode2Helper();
+            long episodeId = helper.getEpisodeId(episodeTvdbId);
+            SgEpisode2WithShow episode = helper.getEpisodeWithShow(episodeId);
+            if (episode == null) {
                 continue;
             }
 
             // add items
-            if (episodeQuery.moveToFirst()) {
-                NowAdapter.NowItem item = new NowAdapter.NowItem().displayData(
-                        timestamp,
-                        episodeQuery.getString(6),
-                        TextTools.getNextEpisodeString(getContext(), episodeQuery.getInt(3),
-                                episodeQuery.getInt(2), episodeQuery.getString(1)),
-                        TvdbImageTools.artworkUrl(episodeQuery.getString(7))
-                ).tvdbIds(episodeTvdbId, episodeQuery.getInt(5)).recentlyWatchedLocal();
-                items.add(item);
-            }
-
-            episodeQuery.close();
+            NowAdapter.NowItem item = new NowAdapter.NowItem()
+                    .displayData(
+                            timestamp,
+                            episode.getSeriestitle(),
+                            TextTools.getNextEpisodeString(getContext(),
+                                    episode.getSeason(),
+                                    episode.getEpisodenumber(),
+                                    episode.getEpisodetitle()),
+                            TvdbImageTools.artworkUrl(episode.getSeries_poster_small()))
+                    .tvdbIds(episodeTvdbId, episode.getShowTvdbId()).recentlyWatchedLocal();
+            items.add(item);
         }
 
         // add header
