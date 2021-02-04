@@ -2,8 +2,30 @@ package com.battlelancer.seriesguide.ui.search
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
+import com.uwetrottmann.tmdb2.entities.BaseTvShow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class SearchTools {
+object SearchTools {
+
+    /**
+     * Maps TMDB TV shows to search results.
+     */
+    suspend fun mapTvShowsToSearchResults(
+        languageCode: String,
+        results: List<BaseTvShow>
+    ): List<SearchResult> = withContext(Dispatchers.IO) {
+        return@withContext results.mapNotNull { tvShow ->
+            val tmdbId = tvShow.id ?: return@mapNotNull null
+            SearchResult().also {
+                it.tmdbId = tmdbId
+                it.title = tvShow.name
+                it.overview = tvShow.overview
+                it.language = languageCode
+                it.posterPath = tvShow.poster_path
+            }
+        }
+    }
 
     /**
      * Replaces with local poster (e.g. if the user added the show in a different language to

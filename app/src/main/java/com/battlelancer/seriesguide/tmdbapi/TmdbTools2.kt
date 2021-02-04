@@ -3,13 +3,15 @@ package com.battlelancer.seriesguide.tmdbapi
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
+import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.Calendar
+import java.util.Date
 
 class TmdbTools2 {
 
@@ -41,22 +43,58 @@ class TmdbTools2 {
     }
 
     /**
-     * Maps TMDB TV shows to search results.
+     * Returns null if network call fails.
      */
-    suspend fun mapTvShowsToSearchResults(
-        languageCode: String,
-        results: List<BaseTvShow>
-    ): List<SearchResult> = withContext(Dispatchers.IO) {
-        return@withContext results.mapNotNull { tvShow ->
-            val tmdbId = tvShow.id ?: return@mapNotNull null
-            SearchResult().also {
-                it.tmdbId = tmdbId
-                it.title = tvShow.name
-                it.overview = tvShow.overview
-                it.language = languageCode
-                it.posterPath = tvShow.poster_path
+    fun searchShows(query: String, language: String, context: Context): List<BaseTvShow>? {
+        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
+        try {
+            val response = tmdb.searchService()
+                .tv(query, null, language, null)
+                .execute()
+            if (response.isSuccessful) {
+                val results = response.body()?.results
+                if (results != null) return results
+            } else {
+                Errors.logAndReport("search shows", response)
             }
+        } catch (e: Exception) {
+            Errors.logAndReport("search shows", e)
         }
+        return null
+    }
+
+    private val dateNow: TmdbDate
+        get() = TmdbDate(Date())
+
+    private val dateOneWeekAgo: TmdbDate
+        get() {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_MONTH, -7)
+            return TmdbDate(calendar.time)
+        }
+
+    /**
+     * Returns null if network call fails.
+     */
+    fun getShowsWithNewEpisodes(language: String, context: Context): List<BaseTvShow>? {
+        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
+        try {
+            val response = tmdb.discoverTv()
+                .air_date_lte(dateNow)
+                .air_date_gte(dateOneWeekAgo)
+                .language(language)
+                .build()
+                .execute()
+            if (response.isSuccessful) {
+                val results = response.body()?.results
+                if (results != null) return results
+            } else {
+                Errors.logAndReport("get shows w new episodes", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("get shows w new episodes", e)
+        }
+        return null
     }
 
     suspend fun loadCreditsForShow(context: Context, showRowId: Long): Credits? =
