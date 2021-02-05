@@ -3,17 +3,17 @@ package com.battlelancer.seriesguide.ui.search
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.uwetrottmann.trakt5.services.Shows
+import com.uwetrottmann.tmdb2.Tmdb
 
 class ShowsPopularDataSourceFactory(
-        val context: Context,
-        val traktShows: Shows
+        private val context: Context,
+        private val tmdb: Tmdb
 ) : DataSource.Factory<Int, SearchResult>() {
 
     val dataSourceLiveData = MutableLiveData<ShowsPopularDataSource>()
 
     override fun create(): DataSource<Int, SearchResult> {
-        val source = ShowsPopularDataSource(context, traktShows)
+        val source = ShowsPopularDataSource(context, tmdb)
         dataSourceLiveData.postValue(source)
         return source
     }

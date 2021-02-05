@@ -15,8 +15,8 @@ class ShowsPopularViewModel(application: Application) : AndroidViewModel(applica
     val networkState: LiveData<NetworkState>
 
     init {
-        val traktShows = SgApp.getServicesComponent(application).trakt().shows()
-        val sourceFactory = ShowsPopularDataSourceFactory(application, traktShows)
+        val tmdb = SgApp.getServicesComponent(application).tmdb()
+        val sourceFactory = ShowsPopularDataSourceFactory(application, tmdb)
 
         dataSourceLiveData = sourceFactory.dataSourceLiveData
 
