@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.enums.Result
+import com.battlelancer.seriesguide.model.SgSeason2
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -25,6 +26,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -65,12 +67,18 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return null
     }
 
-    fun getShowDetails(showTmdbId: Int, desiredLanguage: String): Pair<SgShow2?, ShowResult> {
+    data class ShowDetails(
+        val result: ShowResult,
+        val show: SgShow2? = null,
+        val seasons: List<TvSeason>? = null
+    )
+
+    fun getShowDetails(showTmdbId: Int, desiredLanguage: String): ShowDetails {
         val tmdbResult = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
-        var tmdbShow = tmdbResult.first ?: return Pair(
-            null,
+        var tmdbShow = tmdbResult.first ?: return ShowDetails(
             if (tmdbResult.second) ShowResult.DOES_NOT_EXIST else ShowResult.TMDB_ERROR
         )
+        val tmdbSeasons = tmdbShow.seasons
 
         val noTranslation = tmdbShow.overview.isNullOrEmpty()
         if (noTranslation) {
@@ -79,15 +87,14 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 DisplaySettings.getShowsLanguageFallback(context),
                 context
             )
-            tmdbShow = tmdbResultFallback.first ?: return Pair(
-                null,
+            tmdbShow = tmdbResultFallback.first ?: return ShowDetails(
                 if (tmdbResultFallback.second) ShowResult.DOES_NOT_EXIST else ShowResult.TMDB_ERROR
             )
         }
 
         val traktResult = TraktTools2.getShowByTmdbId(showTmdbId, context)
         // Fail if looking up Trakt details failed to avoid removing them for existing shows.
-        if (traktResult.failed) return Pair(null, ShowResult.TRAKT_ERROR)
+        if (traktResult.failed) return ShowDetails(ShowResult.TRAKT_ERROR)
         val traktShow = traktResult.show
         if (traktShow == null) {
             Timber.w("getShowDetails: no Trakt show found, using default values.")
@@ -117,7 +124,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         val rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 }
 
-        return Pair(
+        return ShowDetails(
+            ShowResult.SUCCESS,
             SgShow2(
                 tmdbId = tmdbShow.id,
                 tvdbId = tmdbShow.external_ids?.tvdb_id ?: 0,
@@ -148,7 +156,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 posterSmall = tmdbShow.poster_path ?: "",
                 // set desired language, might not be the content language if fallback used above.
                 language = desiredLanguage
-            ), ShowResult.SUCCESS
+            ),
+            tmdbSeasons
         )
     }
 
@@ -183,9 +192,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         val language = desiredLanguage ?: DisplaySettings.LANGUAGE_EN
 
-        val result = getShowDetails(showTmdbId, language)
-        if (result.second != ShowResult.SUCCESS) return result.second
-        val show = result.first!!
+        val showDetails = getShowDetails(showTmdbId, language)
+        if (showDetails.result != ShowResult.SUCCESS) return showDetails.result
+        val show = showDetails.show!!
 
         // Check again if in database using TVDB id, show might not have TMDB id, yet.
         if (getShowId(showTmdbId, show.tvdbId) != null) return ShowResult.IN_DATABASE

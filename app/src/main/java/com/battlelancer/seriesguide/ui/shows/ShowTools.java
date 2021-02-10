@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowDetails;
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import javax.inject.Inject;
-import kotlin.Pair;
 import timber.log.Timber;
 
 /**
@@ -65,7 +64,7 @@ public class ShowTools {
     }
 
     @NonNull
-    public Pair<SgShow2, ShowResult> getShowDetails(int showTmdbId, String desiredLanguage) {
+    public ShowDetails getShowDetails(int showTmdbId, String desiredLanguage) {
         return showTools2.getShowDetails(showTmdbId, desiredLanguage);
     }
 

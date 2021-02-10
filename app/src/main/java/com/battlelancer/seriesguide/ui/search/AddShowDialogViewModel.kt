@@ -35,15 +35,15 @@ class AddShowDialogViewModel(
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 val showTools = SgApp.getServicesComponent(application).showTools()
 
-                val showResult = showTools.getShowDetails(showTmdbId, languageCode)
+                val showDetails = showTools.getShowDetails(showTmdbId, languageCode)
                 val localShowIdOrNull =
-                    showTools.getShowId(showTmdbId, showResult.first?.tvdbId)
+                    showTools.getShowId(showTmdbId, showDetails.show?.tvdbId)
 
                 emit(
                     ShowDetails(
-                        showResult.first,
+                        showDetails.show,
                         localShowIdOrNull,
-                        showResult.second == ShowResult.DOES_NOT_EXIST
+                        showDetails.result == ShowResult.DOES_NOT_EXIST
                     )
                 )
             }
