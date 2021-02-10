@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.ColumnInfo
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -22,6 +23,9 @@ import com.battlelancer.seriesguide.util.TimeTools
 
 @Dao
 interface SgEpisode2Helper {
+
+    @Insert
+    fun insertEpisodes(episodes: List<SgEpisode2>): LongArray
 
     @Query("SELECT _id FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
     fun getEpisodeId(tvdbId: Int): Long

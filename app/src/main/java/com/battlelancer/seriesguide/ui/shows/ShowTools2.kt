@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.enums.Result
+import com.battlelancer.seriesguide.model.SgEpisode2
 import com.battlelancer.seriesguide.model.SgSeason2
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
@@ -26,6 +27,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +35,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
+import java.util.TimeZone
 import com.uwetrottmann.seriesguide.backend.shows.model.Show as CloudShow
 
 /**
@@ -218,13 +221,35 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             }
         }
 
-        // TODO Get episodes; store to database; restore episode flags from Cloud/Trakt
+        // Store show to database to get row ID
         val database = SgRoomDatabase.getInstance(context)
         val showId = database.sgShow2Helper().insertShow(show)
         if (showId == -1L) return ShowResult.DATABASE_ERROR
 
+        // Store seasons to database to get row IDs
         val seasons = mapToSgSeason2(showDetails.seasons, showId)
         val seasonIds = database.sgSeason2Helper().insertSeasons(seasons)
+
+        // Download episodes by season and store to database
+        val episodeHelper = database.sgEpisode2Helper()
+        seasons.forEachIndexed { index, season ->
+            val seasonId = seasonIds[index]
+            if (seasonId == -1L) return@forEachIndexed
+
+            val seasonDetails = getEpisodesOfSeason(
+                show,
+                showTmdbId,
+                showId,
+                season.number,
+                seasonId,
+                language
+            )
+            if (seasonDetails.result != ShowResult.SUCCESS) return seasonDetails.result
+            val episodes = seasonDetails.episodes!!
+            episodeHelper.insertEpisodes(episodes)
+        }
+
+        // TODO restore episode flags from Cloud/Trakt
 
         // Calculate next episode
         DBUtils.updateLatestEpisode(context, showId)
@@ -245,6 +270,118 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 numberOrNull = number,
                 order = number,
                 name = it.name
+            )
+        }
+    }
+
+    data class SeasonDetails(
+        val result: ShowResult,
+        val episodes: List<SgEpisode2>? = null
+    )
+
+    private fun getEpisodesOfSeason(
+        show: SgShow2,
+        showTmdbId: Int,
+        showId: Long,
+        seasonNumber: Int,
+        seasonId: Long,
+        language: String
+    ): SeasonDetails {
+        val fallbackLanguage: String? = DisplaySettings.getShowsLanguageFallback(context)
+            .let { if (it != language) it else null }
+
+        val tmdbEpisodes = TmdbTools2().getSeason(showTmdbId, seasonNumber, language, context)
+            ?.episodes
+            ?: return SeasonDetails(ShowResult.TMDB_ERROR)
+
+        val tmdbEpisodesFallback = if (fallbackLanguage != null
+            && tmdbEpisodes.find { it.name.isNullOrEmpty() || it.overview.isNullOrEmpty() } != null) {
+            // Also fetch in fallback language if some episodes have no name or overview.
+            TmdbTools2().getSeason(showTmdbId, seasonNumber, fallbackLanguage, context)
+                ?.episodes
+                ?: return SeasonDetails(ShowResult.TMDB_ERROR)
+        } else {
+            null
+        }
+
+        val episodes = mapToSgEpisode2(
+            tmdbEpisodes,
+            tmdbEpisodesFallback,
+            show,
+            showId,
+            seasonId,
+            seasonNumber
+        )
+
+        return SeasonDetails(
+            ShowResult.SUCCESS,
+            episodes
+        )
+    }
+
+    private fun mapToSgEpisode2(
+        tmdbEpisodes: List<TvEpisode>,
+        tmdbEpisodesFallback: List<TvEpisode>?,
+        show: SgShow2,
+        showId: Long,
+        seasonId: Long,
+        seasonNumber: Int
+    ): List<SgEpisode2> {
+        val showTimeZone = TimeTools.getDateTimeZone(show.releaseTimeZone)
+        val showReleaseTime = TimeTools.getShowReleaseTime(show.releaseTimeOrDefault)
+        val deviceTimeZone = TimeZone.getDefault().id
+
+        return tmdbEpisodes.mapNotNull { tmdbEpisode ->
+            val tmdbId = tmdbEpisode.id
+            if (tmdbEpisode.id == null) return@mapNotNull null
+
+            // If name or overview are empty use fallback
+            val isMissingTitle = tmdbEpisode.name.isNullOrEmpty()
+            val isMissingOverview = tmdbEpisode.overview.isNullOrEmpty()
+            val fallbackEpisode = if (isMissingTitle || isMissingOverview) {
+                tmdbEpisodesFallback?.find { it.id == tmdbId }
+            } else {
+                null
+            }
+            val titleOrNull = if (isMissingTitle) fallbackEpisode?.name else tmdbEpisode.name
+            // Note: trim as contributors sometimes add pointless new lines.
+            val overviewOrNull =
+                (if (isMissingOverview) fallbackEpisode?.overview else tmdbEpisode.overview)?.trim()
+
+            // calculate release time
+            val releaseDateTime = TimeTools.parseEpisodeReleaseDate(
+                showTimeZone,
+                tmdbEpisode.air_date,
+                showReleaseTime,
+                show.releaseCountry,
+                show.network,
+                deviceTimeZone
+            )
+
+            val guestStars = tmdbEpisode.guest_stars?.mapNotNull { it.name } ?: emptyList()
+            val directors = tmdbEpisode.crew?.filter { it.job == "Director" }
+                ?.mapNotNull { it.name }
+                ?: emptyList()
+            val writers = tmdbEpisode.crew?.filter { it.job == "Writer" }
+                ?.mapNotNull { it.name }
+                ?: emptyList()
+
+            // TODO last edited and last updated, are they used besides for updating?
+
+            SgEpisode2(
+                showId = showId,
+                seasonId = seasonId,
+                tmdbId = tmdbEpisode.id,
+                title = titleOrNull ?: "",
+                overview = overviewOrNull,
+                number = tmdbEpisode.episode_number ?: 0,
+                order = tmdbEpisode.episode_number ?: 0,
+                season = seasonNumber,
+                image = tmdbEpisode.still_path,
+                firstReleasedMs = releaseDateTime,
+                directors = TextTools.mendTvdbStrings(directors),
+                guestStars = TextTools.mendTvdbStrings(guestStars),
+                writers = TextTools.mendTvdbStrings(writers)
             )
         }
     }

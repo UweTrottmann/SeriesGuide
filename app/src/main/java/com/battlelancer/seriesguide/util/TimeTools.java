@@ -29,7 +29,6 @@ import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeParseException;
 import org.threeten.bp.temporal.ChronoField;
 import org.threeten.bp.temporal.ChronoUnit;
-import timber.log.Timber;
 
 /**
  * Helper tools for converting and formatting date times for shows and episodes.
@@ -177,23 +176,18 @@ public class TimeTools {
      * @param showReleaseTime See {@link #getShowReleaseTime(int)}.
      * @return -1 if no conversion was possible. Otherwise, any other long value (may be negative!).
      */
-    public static long parseEpisodeReleaseDate(@Nullable Context context,
-            @NonNull ZoneId showTimeZone, @Nullable String releaseDate,
+    public static long parseEpisodeReleaseDate(@NonNull ZoneId showTimeZone,
+            @Nullable Date releaseDate,
             @NonNull LocalTime showReleaseTime, @Nullable String showCountry,
             @Nullable String showNetwork, @NonNull String deviceTimeZone) {
-        if (releaseDate == null || releaseDate.length() == 0) {
+        if (releaseDate == null) {
             return Constants.EPISODE_UNKNOWN_RELEASE;
         }
 
-        // get date
-        LocalDate localDate;
-        try {
-            localDate = LocalDate.parse(releaseDate);
-        } catch (DateTimeParseException e) {
-            // date string could not be parsed
-            Timber.e(e, "TheTVDB date could not be parsed: %s", releaseDate);
-            return Constants.EPISODE_UNKNOWN_RELEASE;
-        }
+        // Get local date: tmdb-java parses date string to Date using SimpleDateFormat,
+        // which uses the default time zone.
+        Instant instant = Instant.ofEpochMilli(releaseDate.getTime());
+        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
 
         // set time
         LocalDateTime localDateTime = localDate.atTime(showReleaseTime);

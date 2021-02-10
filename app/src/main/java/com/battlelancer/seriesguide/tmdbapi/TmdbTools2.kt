@@ -8,6 +8,7 @@ import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.TmdbDate
+import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
@@ -175,4 +176,25 @@ class TmdbTools2 {
             return@withContext null
         }
 
+    fun getSeason(
+        showTmdbId: Int,
+        seasonNumber: Int,
+        language: String,
+        context: Context
+    ): TvSeason? {
+        val tmdb = SgApp.getServicesComponent(context).tmdb()
+        try {
+            val response = tmdb.tvSeasonsService()
+                .season(showTmdbId, seasonNumber, language)
+                .execute()
+            if (response.isSuccessful) {
+                return response.body()
+            } else {
+                Errors.logAndReport("get shows w new episodes", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("get shows w new episodes", e)
+        }
+        return null
+    }
 }
