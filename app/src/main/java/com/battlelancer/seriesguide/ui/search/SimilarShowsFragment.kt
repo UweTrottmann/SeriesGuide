@@ -128,8 +128,8 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         similarShowsViewModel.setAllPendingNotAdded()
     }
 
-    override fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
-        similarShowsViewModel.setStateForTvdbId(showTvdbId, newState)
+    override fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
+        similarShowsViewModel.setStateForTmdbId(showTmdbId, newState)
     }
 
     companion object {

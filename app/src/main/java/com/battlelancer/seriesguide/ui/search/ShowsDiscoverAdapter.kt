@@ -43,10 +43,10 @@ class ShowsDiscoverAdapter(
         notifyDataSetChanged()
     }
 
-    fun setStateForTvdbId(showTvdbId: Int, state: Int) {
-        // multiple items may have the same TVDB id
+    fun setStateForTmdbId(showTmdbId: Int, state: Int) {
+        // multiple items may have the same TMDB id
         val matching = searchResults.asSequence()
-                .filter { it.tvdbid == showTvdbId }
+                .filter { it.tmdbId == showTmdbId }
                 .onEach { it.state = state }
                 .toList()
         if (matching.isNotEmpty()) {

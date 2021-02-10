@@ -18,13 +18,13 @@ class ShowsPopularAdapter(
         (holder as SearchResultViewHolder).bindTo(getItem(position))
     }
 
-    fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
+    fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
         // use the current PagedList instead of getItem to avoid loading more items
         currentList?.let {
             val count = it.size
             for (i in 0 until count) {
                 val item = it[i]
-                if (item != null && item.tvdbid == showTvdbId) {
+                if (item != null && item.tmdbId == showTmdbId) {
                     item.state = newState
                     notifyDataSetChanged()
                     break

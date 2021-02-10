@@ -35,6 +35,9 @@ interface SgShow2Helper {
     @Query("SELECT series_trakt_id FROM sg_show WHERE _id = :id")
     fun getShowTraktId(id: Long): Int
 
+    @Query("SELECT series_tmdb_id FROM sg_show WHERE _id=:id")
+    fun getShowTmdbId(id: Long): Int
+
     @Query("SELECT series_tvdb_id FROM sg_show WHERE _id=:id")
     fun getShowTvdbId(id: Long): Int
 

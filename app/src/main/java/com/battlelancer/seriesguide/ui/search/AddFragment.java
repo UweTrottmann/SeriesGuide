@@ -19,7 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.shows.ShowTools2;
 import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.widgets.EmptyView;
@@ -35,14 +34,14 @@ public abstract class AddFragment extends Fragment {
 
     public static class OnAddingShowEvent {
         /** Is -1 if adding all shows of a tab. Not updating other tabs then. */
-        public final int showTvdbId;
+        public final int showTmdbId;
 
-        OnAddingShowEvent(int showTvdbId) {
-            this.showTvdbId = showTvdbId;
+        OnAddingShowEvent(int showTmdbId) {
+            this.showTmdbId = showTmdbId;
         }
 
         /**
-         * Sets TVDB id to -1 to indicate all shows of a tab are added.
+         * Sets TMDB id to -1 to indicate all shows of a tab are added.
          */
         OnAddingShowEvent() {
             this(-1);
@@ -139,17 +138,17 @@ public abstract class AddFragment extends Fragment {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(OnAddingShowEvent event) {
-        if (event.showTvdbId > 0) {
-            adapter.setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADDING);
+        if (event.showTmdbId > 0) {
+            adapter.setStateForTmdbId(event.showTmdbId, SearchResult.STATE_ADDING);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(AddShowTask.OnShowAddedEvent event) {
         if (event.successful) {
-            setShowAdded(event.showTvdbId);
-        } else if (event.showTvdbId > 0) {
-            setShowNotAdded(event.showTvdbId);
+            setShowAdded(event.showTmdbId);
+        } else if (event.showTmdbId > 0) {
+            setShowNotAdded(event.showTmdbId);
         } else {
             adapter.setAllPendingNotAdded();
         }
@@ -158,18 +157,16 @@ public abstract class AddFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ShowTools2.OnShowRemovedEvent event) {
         if (event.getResultCode() == NetworkResult.SUCCESS) {
-            int showTvdbId = SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
-                    .getShowTvdbId(event.getShowId());
-            setShowNotAdded(showTvdbId);
+            setShowNotAdded(event.getShowTmdbId());
         }
     }
 
-    private void setShowAdded(int showTvdbId) {
-        adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADDED);
+    private void setShowAdded(int showTmdbId) {
+        adapter.setStateForTmdbId(showTmdbId, SearchResult.STATE_ADDED);
     }
 
-    private void setShowNotAdded(int showTvdbId) {
-        adapter.setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD);
+    private void setShowNotAdded(int showTmdbId) {
+        adapter.setStateForTmdbId(showTmdbId, SearchResult.STATE_ADD);
     }
 
     public static class AddAdapter extends ArrayAdapter<SearchResult> {
@@ -191,19 +188,19 @@ public abstract class AddFragment extends Fragment {
         }
 
         @Nullable
-        private SearchResult getItemForShowTvdbId(int showTvdbId) {
+        private SearchResult getItemForShowTmdbId(int showTmdbId) {
             int count = getCount();
             for (int i = 0; i < count; i++) {
                 SearchResult item = getItem(i);
-                if (item != null && item.getTvdbid() == showTvdbId) {
+                if (item != null && item.getTmdbId() == showTmdbId) {
                     return item;
                 }
             }
             return null;
         }
 
-        public void setStateForTvdbId(int showTvdbId, int state) {
-            SearchResult item = getItemForShowTvdbId(showTvdbId);
+        public void setStateForTmdbId(int showTmdbId, int state) {
+            SearchResult item = getItemForShowTmdbId(showTmdbId);
             if (item != null) {
                 item.setState(state);
                 notifyDataSetChanged();

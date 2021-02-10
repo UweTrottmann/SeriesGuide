@@ -165,7 +165,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
      * Posted if show was just removed (or failure).
      */
     data class OnShowRemovedEvent(
-        val showId: Long,
+        val showTmdbId: Int,
         /** One of [com.battlelancer.seriesguide.enums.NetworkResult]. */
         val resultCode: Int
     )
@@ -182,6 +182,11 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 EventBus.getDefault().post(OnRemovingShowEvent(showId))
             }
 
+            // Get TMDB id for OnShowRemovedEvent before removing show.
+            val showTmdbId = withContext(Dispatchers.IO) {
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+            }
+
             val result = removeShowAsync(showId)
 
             withContext(Dispatchers.Main) {
@@ -190,7 +195,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 } else if (result == NetworkResult.ERROR) {
                     Toast.makeText(context, R.string.delete_error, Toast.LENGTH_LONG).show()
                 }
-                EventBus.getDefault().post(OnShowRemovedEvent(showId, result))
+                EventBus.getDefault().post(OnShowRemovedEvent(showTmdbId, result))
             }
         }
     }

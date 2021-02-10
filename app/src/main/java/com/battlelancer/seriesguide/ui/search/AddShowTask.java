@@ -42,11 +42,11 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
 
         public final boolean successful;
         /** Is -1 if add task was aborted. */
-        public final int showTvdbId;
+        public final int showTmdbId;
         private final String message;
 
-        private OnShowAddedEvent(int showTvdbId, String message, boolean successful) {
-            this.showTvdbId = showTvdbId;
+        private OnShowAddedEvent(int showTmdbId, String message, boolean successful) {
+            this.showTmdbId = showTmdbId;
             this.message = message;
             this.successful = successful;
         }

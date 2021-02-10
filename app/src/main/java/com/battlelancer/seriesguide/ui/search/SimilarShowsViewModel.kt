@@ -97,7 +97,7 @@ class SimilarShowsViewModel(
         )
     }
 
-    fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
+    fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
         val results = resultLiveData.value?.results ?: return
         viewModelScope.launch(Dispatchers.IO) {
             // Make a copy (otherwise will modify the item instances used by the adapter).
@@ -106,7 +106,7 @@ class SimilarShowsViewModel(
             }
             // Set new state on affected shows.
             for (element in modifiedResults) {
-                if (element.tvdbid == showTvdbId) {
+                if (element.tmdbId == showTmdbId) {
                     element.state = newState
                 }
             }
