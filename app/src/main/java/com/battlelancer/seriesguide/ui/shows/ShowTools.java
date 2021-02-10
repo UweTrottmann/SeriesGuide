@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
@@ -61,7 +62,7 @@ public class ShowTools {
     }
 
     @NonNull
-    public Pair<SgShow2, Boolean> getShowDetails(int showTmdbId, String desiredLanguage) {
+    public Pair<SgShow2, ShowResult> getShowDetails(int showTmdbId, String desiredLanguage) {
         return showTools2.getShowDetails(showTmdbId, desiredLanguage);
     }
 

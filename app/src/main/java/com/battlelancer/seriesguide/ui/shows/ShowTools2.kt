@@ -36,6 +36,14 @@ import com.uwetrottmann.seriesguide.backend.shows.model.Show as CloudShow
  */
 class ShowTools2(val showTools: ShowTools, val context: Context) {
 
+    enum class ShowResult {
+        SUCCESS,
+        IN_DATABASE,
+        DOES_NOT_EXIST,
+        TMDB_ERROR,
+        TRAKT_ERROR
+    }
+
     /**
      * Gets row ID of a show by TMDB id first, then if given by TVDB id. Null if not in database.
      */
@@ -53,12 +61,12 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return null
     }
 
-    /**
-     * Returns true if the show is null because it no longer exists.
-     */
-    fun getShowDetails(showTmdbId: Int, desiredLanguage: String): Pair<SgShow2?, Boolean> {
+    fun getShowDetails(showTmdbId: Int, desiredLanguage: String): Pair<SgShow2?, ShowResult> {
         val tmdbResult = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
-        var tmdbShow = tmdbResult.first ?: return Pair(null, tmdbResult.second)
+        var tmdbShow = tmdbResult.first ?: return Pair(
+            null,
+            if (tmdbResult.second) ShowResult.DOES_NOT_EXIST else ShowResult.TMDB_ERROR
+        )
 
         val noTranslation = tmdbShow.overview.isNullOrEmpty()
         if (noTranslation) {
@@ -67,12 +75,15 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 DisplaySettings.getShowsLanguageFallback(context),
                 context
             )
-            tmdbShow = tmdbResultFallback.first ?: return Pair(null, tmdbResultFallback.second)
+            tmdbShow = tmdbResultFallback.first ?: return Pair(
+                null,
+                if (tmdbResultFallback.second) ShowResult.DOES_NOT_EXIST else ShowResult.TMDB_ERROR
+            )
         }
 
         val traktResult = TraktTools2.getShowByTmdbId(showTmdbId, context)
         // Fail if looking up Trakt details failed to avoid removing them for existing shows.
-        if (traktResult.failed) return Pair(null, false)
+        if (traktResult.failed) return Pair(null, ShowResult.TRAKT_ERROR)
         val traktShow = traktResult.show
         if (traktShow == null) {
             Timber.w("getShowDetails: no Trakt show found, using default values.")
@@ -133,7 +144,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 posterSmall = tmdbShow.poster_path ?: "",
                 // set desired language, might not be the content language if fallback used above.
                 language = desiredLanguage
-            ), false
+            ), ShowResult.SUCCESS
         )
     }
 

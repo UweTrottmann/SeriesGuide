@@ -11,6 +11,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
 import kotlinx.coroutines.Dispatchers
 
 class AddShowDialogViewModel(
@@ -38,7 +39,13 @@ class AddShowDialogViewModel(
                 val localShowIdOrNull =
                     showTools.getShowId(showTmdbId, showResult.first?.tvdbId)
 
-                emit(ShowDetails(showResult.first, localShowIdOrNull, showResult.second))
+                emit(
+                    ShowDetails(
+                        showResult.first,
+                        localShowIdOrNull,
+                        showResult.second == ShowResult.DOES_NOT_EXIST
+                    )
+                )
             }
         }
     }
