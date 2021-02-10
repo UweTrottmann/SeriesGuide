@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.provider
 import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.battlelancer.seriesguide.model.SgSeason2
@@ -10,6 +11,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Column
 
 @Dao
 interface SgSeason2Helper {
+
+    @Insert
+    fun insertSeasons(seasons: List<SgSeason2>): LongArray
 
     @Query("SELECT _id FROM sg_season WHERE season_tvdb_id = :seasonTvdbId")
     fun getSeasonId(seasonTvdbId: Int): Long

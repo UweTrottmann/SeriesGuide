@@ -18,10 +18,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
     indices = [Index(SgShow2Columns.REF_SHOW_ID)]
 )
 data class SgSeason2(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = SgSeason2Columns._ID) val id: Long,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = SgSeason2Columns._ID) val id: Long = 0,
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
     @ColumnInfo(name = SgSeason2Columns.TMDB_ID) val tmdbId: String?,
-    @ColumnInfo(name = SgSeason2Columns.TVDB_ID) val tvdbId: Int?,
+    @ColumnInfo(name = SgSeason2Columns.TVDB_ID) val tvdbId: Int? = null,
     @ColumnInfo(name = SgSeason2Columns.COMBINED) val numberOrNull: Int?,
     @ColumnInfo(name = SgSeason2Columns.NAME) val name: String?,
     @ColumnInfo(name = SgSeason2Columns.ORDER) val order: Int,

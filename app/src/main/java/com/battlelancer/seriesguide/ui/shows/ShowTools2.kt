@@ -219,13 +219,34 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         }
 
         // TODO Get episodes; store to database; restore episode flags from Cloud/Trakt
-        val showId = SgRoomDatabase.getInstance(context).sgShow2Helper().insertShow(show)
+        val database = SgRoomDatabase.getInstance(context)
+        val showId = database.sgShow2Helper().insertShow(show)
         if (showId == -1L) return ShowResult.DATABASE_ERROR
+
+        val seasons = mapToSgSeason2(showDetails.seasons, showId)
+        val seasonIds = database.sgSeason2Helper().insertSeasons(seasons)
 
         // Calculate next episode
         DBUtils.updateLatestEpisode(context, showId)
 
         return ShowResult.SUCCESS
+    }
+
+    private fun mapToSgSeason2(seasons: List<TvSeason>?, showId: Long): List<SgSeason2> {
+        if (seasons.isNullOrEmpty()) return emptyList()
+        return seasons.mapNotNull {
+            val tmdbId = it.id
+            val number = it.season_number
+            if (tmdbId == null || number == null) return@mapNotNull null
+
+            SgSeason2(
+                showId = showId,
+                tmdbId = tmdbId.toString(),
+                numberOrNull = number,
+                order = number,
+                name = it.name
+            )
+        }
     }
 
     /**
