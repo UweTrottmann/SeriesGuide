@@ -8,25 +8,21 @@ import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools2;
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseShow;
-import com.uwetrottmann.trakt5.services.Sync;
-import dagger.Lazy;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import javax.inject.Inject;
 import kotlin.Pair;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
@@ -40,7 +36,9 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
     public static class OnShowAddedEvent {
 
         public final boolean successful;
-        /** Is -1 if add task was aborted. */
+        /**
+         * Is -1 if add task was aborted.
+         */
         public final int showTmdbId;
         private final String message;
 
@@ -99,9 +97,6 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
     @SuppressLint("StaticFieldLeak") private final Context context;
     private final LinkedList<SearchResult> addQueue = new LinkedList<>();
 
-    @Inject HexagonTools hexagonTools;
-    @Inject TvdbTools tvdbTools;
-    @Inject Lazy<Sync> traktSync;
     private boolean isFinishedAddingShows = false;
     private boolean isSilentMode;
     private boolean isMergingShows;
@@ -109,8 +104,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
     public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode,
             boolean isMergingShows) {
         this.context = context.getApplicationContext();
-        SgApp.getServicesComponent(context).inject(this);
-        addQueue.addAll(shows);
+        this.addQueue.addAll(shows);
         this.isSilentMode = isSilentMode;
         this.isMergingShows = isMergingShows;
     }
@@ -173,7 +167,8 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
             traktWatched = traktShows;
         }
 
-        HexagonEpisodeSync hexagonEpisodeSync = new HexagonEpisodeSync(context, hexagonTools);
+        HexagonEpisodeSync hexagonEpisodeSync = new HexagonEpisodeSync(context,
+                SgApp.getServicesComponent(context).hexagonTools());
 
         int result;
         boolean addedAtLeastOneShow = false;
@@ -211,37 +206,44 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                 break;
             }
 
-            try {
-                boolean addedShow = tvdbTools
-                        .addShow(nextShow.getTvdbid(), nextShow.getLanguage(), traktCollection,
-                                traktWatched, hexagonEpisodeSync);
-                result = addedShow ? PROGRESS_SUCCESS : PROGRESS_EXISTS;
-                addedAtLeastOneShow = addedShow
-                        || addedAtLeastOneShow; // do not overwrite previous success
-            } catch (TvdbException e) {
-                // prevent a hexagon merge from failing if a show can not be added
-                // because it does not exist (any longer)
-                if (!(isMergingShows && e.itemDoesNotExist())) {
+            ShowResult addResult = SgApp.getServicesComponent(context).showTools()
+                    .addShow(nextShow.getTmdbId(), nextShow.getLanguage(),
+                            traktCollection, traktWatched, hexagonEpisodeSync);
+            if (addResult == ShowResult.SUCCESS) {
+                result = PROGRESS_SUCCESS;
+                addedAtLeastOneShow = true;
+            } else if (addResult == ShowResult.IN_DATABASE) {
+                result = PROGRESS_EXISTS;
+            } else {
+                Timber.e("Adding show failed: %s", addResult);
+
+                // Only fail a hexagon merge if show can not be added due to network error,
+                // not because it does not (longer) exist.
+                if (isMergingShows && addResult != ShowResult.DOES_NOT_EXIST) {
                     failedMergingShows = true;
                 }
-                if (e.service() == TvdbException.Service.TVDB) {
-                    if (e.itemDoesNotExist()) {
-                        result = PROGRESS_ERROR_TVDB_NOT_EXISTS;
-                    } else {
-                        result = PROGRESS_ERROR_TVDB;
-                    }
-                } else if (e.service() == TvdbException.Service.TRAKT) {
-                    result = PROGRESS_ERROR_TRAKT;
-                } else if (e.service() == TvdbException.Service.HEXAGON) {
-                    result = PROGRESS_ERROR_HEXAGON;
-                } else if (e.service() == TvdbException.Service.DATA) {
-                    result = PROGRESS_ERROR_DATA;
-                } else {
-                    result = PROGRESS_ERROR;
-                }
-                Timber.e(e, "Adding show failed");
-            }
 
+                switch (addResult) {
+                    case DOES_NOT_EXIST:
+                        result = PROGRESS_ERROR_TVDB_NOT_EXISTS;
+                        break;
+                    case TMDB_ERROR:
+                        result = PROGRESS_ERROR_TVDB;
+                        break;
+                    case TRAKT_ERROR:
+                        result = PROGRESS_ERROR_TRAKT;
+                        break;
+                    case HEXAGON_ERROR:
+                        result = PROGRESS_ERROR_HEXAGON;
+                        break;
+                    case DATABASE_ERROR:
+                        result = PROGRESS_ERROR_DATA;
+                        break;
+                    default:
+                        result = PROGRESS_ERROR;
+                        break;
+                }
+            }
             publishProgress(result, currentShowTmdbId, currentShowName);
             Timber.d("Finished adding show. (Result code: %s)", result);
         }

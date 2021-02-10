@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.backend;
 import android.content.Context;
 import android.os.SystemClock;
 import android.text.format.DateUtils;
+import android.util.Pair;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
@@ -26,6 +27,8 @@ import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
+import com.uwetrottmann.seriesguide.backend.shows.model.Show;
+import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import timber.log.Timber;
@@ -275,5 +278,27 @@ public class HexagonTools {
                     .build();
         }
         return googleSignInOptions;
+    }
+
+    /**
+     * Returns false on service error.
+     */
+    public Pair<Show, Boolean> getShow(int showTvdbId) {
+        try {
+            Shows showsService = getShowsService();
+            Show showOrNull;
+            if (showsService != null) {
+                showOrNull = showsService.getShow()
+                        .setShowTvdbId(showTvdbId)
+                        .execute();
+            } else {
+                showOrNull = null;
+            }
+            return new Pair<>(showOrNull, true);
+        } catch (IOException | IllegalArgumentException e) {
+            // Note: JSON parser may throw IllegalArgumentException.
+            Errors.logAndReportHexagon("h: get show", e);
+            return new Pair<>(null, false);
+        }
     }
 }

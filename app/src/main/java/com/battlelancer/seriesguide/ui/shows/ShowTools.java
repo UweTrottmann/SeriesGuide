@@ -15,13 +15,16 @@ import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.uwetrottmann.seriesguide.backend.shows.model.Show;
+import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import javax.inject.Inject;
 import kotlin.Pair;
 import timber.log.Timber;
@@ -69,6 +72,15 @@ public class ShowTools {
     @Nullable
     public Long getShowId(int showTmdbId, Integer showTvdbId) {
         return showTools2.getShowId(showTmdbId, showTvdbId);
+    }
+
+    public ShowResult addShow(int showTmdbId,
+            @Nullable String desiredLanguage,
+            @Nullable Map<Integer, BaseShow> traktCollection,
+            @Nullable Map<Integer, BaseShow> traktWatched,
+            HexagonEpisodeSync hexagonEpisodeSync) {
+        return showTools2.addShow(showTmdbId, desiredLanguage, traktCollection, traktWatched,
+                hexagonEpisodeSync);
     }
 
     public void removeShow(long showId) {

@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.provider
 import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Update
@@ -13,6 +14,12 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 
 @Dao
 interface SgShow2Helper {
+
+    /**
+     * Returns row ID.
+     */
+    @Insert
+    fun insertShow(sgShow2: SgShow2): Long
 
     @Query("SELECT * FROM sg_show WHERE _id=:id")
     fun getShowLiveData(id: Long): LiveData<SgShow2?>

@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
@@ -24,6 +25,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.trakt5.entities.BaseShow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -41,7 +43,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         IN_DATABASE,
         DOES_NOT_EXIST,
         TMDB_ERROR,
-        TRAKT_ERROR
+        TRAKT_ERROR,
+        HEXAGON_ERROR,
+        DATABASE_ERROR
     }
 
     /**
@@ -165,6 +169,54 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 null
             }
         }
+    }
+
+    fun addShow(
+        showTmdbId: Int,
+        desiredLanguage: String?,
+        traktCollection: Map<Int, BaseShow>?,
+        traktWatched: Map<Int, BaseShow>?,
+        hexagonEpisodeSync: HexagonEpisodeSync
+    ): ShowResult {
+        // Do nothing if TMDB ID already in database.
+        if (getShowId(showTmdbId, null) != null) return ShowResult.IN_DATABASE
+
+        val language = desiredLanguage ?: DisplaySettings.LANGUAGE_EN
+
+        val result = getShowDetails(showTmdbId, language)
+        if (result.second != ShowResult.SUCCESS) return result.second
+        val show = result.first!!
+
+        // Check again if in database using TVDB id, show might not have TMDB id, yet.
+        if (getShowId(showTmdbId, show.tvdbId) != null) return ShowResult.IN_DATABASE
+
+        // Restore properties from Hexagon
+        if (show.tvdbId != null && HexagonSettings.isEnabled(context)) {
+            val hexagonResult = SgApp.getServicesComponent(context).hexagonTools()
+                .getShow(show.tvdbId)
+            if (!hexagonResult.second) return ShowResult.HEXAGON_ERROR
+            val hexagonShow = hexagonResult.first
+            if (hexagonShow != null) {
+                if (hexagonShow.isFavorite != null) {
+                    show.favorite = hexagonShow.isFavorite
+                }
+                if (hexagonShow.notify != null) {
+                    show.notify = hexagonShow.notify
+                }
+                if (hexagonShow.isHidden != null) {
+                    show.hidden = hexagonShow.isHidden
+                }
+            }
+        }
+
+        // TODO Get episodes; store to database; restore episode flags from Cloud/Trakt
+        val showId = SgRoomDatabase.getInstance(context).sgShow2Helper().insertShow(show)
+        if (showId == -1L) return ShowResult.DATABASE_ERROR
+
+        // Calculate next episode
+        DBUtils.updateLatestEpisode(context, showId)
+
+        return ShowResult.SUCCESS
     }
 
     /**
