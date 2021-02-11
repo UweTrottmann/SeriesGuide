@@ -935,7 +935,10 @@ public class SeriesGuideContract {
         String IMDBID = "episode_imdbid";
 
         /**
-         * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds).
+         * Note: currently unused, TMDB does not provide this info.
+         * See {@link com.battlelancer.seriesguide.ui.shows.ShowTools2}.
+         *
+         * Last time episode was edited (lastupdated field) in Unix time (seconds).
          * Added in {@link SeriesGuideDatabase#DBVER_27_IMDBIDSLASTEDIT}.
          *
          * <pre>
@@ -946,6 +949,9 @@ public class SeriesGuideContract {
         String LAST_EDITED = "episode_lastedit";
 
         /**
+         * Note: currently last updated value is unused, all episodes are always updated.
+         * See {@link com.battlelancer.seriesguide.ui.shows.ShowTools2}.
+         *
          * Stores the last edited time after fetching full episode data from TVDB.
          * Added in {@link SeriesGuideDatabase#DBVER_41_EPISODE_LAST_UPDATED}.
          *

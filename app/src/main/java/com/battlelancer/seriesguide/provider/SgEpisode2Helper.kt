@@ -385,9 +385,17 @@ interface SgEpisode2Helper {
         }
     }
 
+    /**
+     * Note: currently last updated value is unused, all episodes are always updated.
+     * See [com.battlelancer.seriesguide.ui.shows.ShowTools2].
+     */
     @Query("UPDATE sg_episode SET episode_lastupdate = 0")
     fun resetLastUpdatedForAll()
 
+    /**
+     * Note: currently last updated value is unused, all episodes are always updated.
+     * See [com.battlelancer.seriesguide.ui.shows.ShowTools2].
+     */
     @Query("UPDATE sg_episode SET episode_lastupdate = 0 WHERE series_id = :showId")
     fun resetLastUpdatedForShow(showId: Long)
 

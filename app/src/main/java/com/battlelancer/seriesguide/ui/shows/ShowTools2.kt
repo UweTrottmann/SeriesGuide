@@ -399,7 +399,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 ?.mapNotNull { it.name }
                 ?: emptyList()
 
-            // TODO last edited and last updated, are they used besides for updating?
+            // Note: last edited time is not available on TMDB,
+            // so it and last updated time are currently not used
+            // to only update changed episodes.
 
             SgEpisode2(
                 showId = showId,
