@@ -15,6 +15,8 @@ import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.provider.SgSeason2Numbers
+import com.battlelancer.seriesguide.provider.SgSeason2Update
 import com.battlelancer.seriesguide.provider.SgShow2Update
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -348,18 +350,21 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     private fun mapToSgSeason2(seasons: List<TvSeason>?, showId: Long): List<SgSeason2> {
         if (seasons.isNullOrEmpty()) return emptyList()
         return seasons.mapNotNull {
-            val tmdbId = it.id
-            val number = it.season_number
-            if (tmdbId == null || number == null) return@mapNotNull null
-
-            SgSeason2(
-                showId = showId,
-                tmdbId = tmdbId.toString(),
-                numberOrNull = number,
-                order = number,
-                name = it.name
-            )
+            mapToSgSeason2(it, showId)
         }
+    }
+
+    private fun mapToSgSeason2(tmdbSeason: TvSeason, showId: Long): SgSeason2? {
+        val tmdbId = tmdbSeason.id
+        val number = tmdbSeason.season_number
+        if (tmdbId == null || number == null) return null
+        return SgSeason2(
+            showId = showId,
+            tmdbId = tmdbId.toString(),
+            numberOrNull = number,
+            order = number,
+            name = tmdbSeason.name
+        )
     }
 
     data class SeasonDetails(
@@ -505,7 +510,57 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val updated = database.sgShow2Helper().updateShow(show)
         if (updated != 1) return ShowResult.DATABASE_ERROR
 
+        // TODO add, update and remove seasons and episodes.
+        updateSeasons(showDetails.seasons, showId)
+
         return ShowResult.SUCCESS
+    }
+
+    private fun updateSeasons(tmdbSeasons: List<TvSeason>?, showId: Long) {
+        if (tmdbSeasons.isNullOrEmpty()) return
+
+        val helper = SgRoomDatabase.getInstance(context).sgSeason2Helper()
+        val seasons = helper.getSeasonNumbersOfShow(showId)
+
+        val seasonsByTmdbId = mutableMapOf<String, SgSeason2Numbers>()
+        seasons.forEach {
+            if (it.tmdbId != null) seasonsByTmdbId[it.tmdbId] = it
+        }
+
+        val toInsert = mutableListOf<SgSeason2>()
+        val toUpdate = mutableListOf<SgSeason2Update>()
+        tmdbSeasons.forEach { tmdbSeason ->
+            val tmdbId = tmdbSeason.id
+            val number = tmdbSeason.season_number
+            if (tmdbId == null || number == null) return@forEach
+
+            val seasonOrNull = seasonsByTmdbId[tmdbId.toString()]
+            if (seasonOrNull == null) {
+                // Insert
+                mapToSgSeason2(tmdbSeason, showId)?.also {
+                    toInsert.add(it)
+                }
+            } else {
+                // Update
+                toUpdate.add(
+                    SgSeason2Update(
+                        id = seasonOrNull.id,
+                        number = number,
+                        order = number,
+                        name = tmdbSeason.name
+                    )
+                )
+                // Remove from map so it will not get deleted.
+                seasonsByTmdbId.remove(tmdbId.toString())
+            }
+        }
+
+        if (toInsert.isNotEmpty()) helper.insertSeasons(toInsert)
+        if (toUpdate.isNotEmpty()) helper.updateSeasons(toUpdate)
+
+        // Remove any local season that is not on TMDB any longer.
+        val toRemove = seasonsByTmdbId.map { it.value.id }
+        if (toRemove.isNotEmpty()) helper.deleteSeasons(toRemove)
     }
 
     /**

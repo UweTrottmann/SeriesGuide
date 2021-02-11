@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.battlelancer.seriesguide.model.SgSeason2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
@@ -14,6 +15,19 @@ interface SgSeason2Helper {
 
     @Insert
     fun insertSeasons(seasons: List<SgSeason2>): LongArray
+
+    @Update(entity = SgSeason2::class)
+    fun updateSeasons(seasons: List<SgSeason2Update>): Int
+
+    @Query("DELETE FROM sg_season WHERE _id = :seasonId")
+    fun deleteSeason(seasonId: Long)
+
+    @Transaction
+    fun deleteSeasons(seasonIds: List<Long>) {
+        seasonIds.forEach {
+            deleteSeason(it)
+        }
+    }
 
     @Query("SELECT _id FROM sg_season WHERE season_tvdb_id = :seasonTvdbId")
     fun getSeasonId(seasonTvdbId: Int): Long
@@ -67,4 +81,11 @@ data class SgSeason2CountUpdate(
     @ColumnInfo(name = SgSeason2Columns.NOAIRDATECOUNT) val notWatchedNoReleaseCount: Int,
     @ColumnInfo(name = SgSeason2Columns.TOTALCOUNT) val totalCount: Int,
     @ColumnInfo(name = SgSeason2Columns.TAGS) val tags: String
+)
+
+data class SgSeason2Update(
+    @ColumnInfo(name = SgSeason2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgSeason2Columns.COMBINED) val number: Int,
+    @ColumnInfo(name = SgSeason2Columns.ORDER) val order: Int,
+    @ColumnInfo(name = SgSeason2Columns.NAME) val name: String?
 )
