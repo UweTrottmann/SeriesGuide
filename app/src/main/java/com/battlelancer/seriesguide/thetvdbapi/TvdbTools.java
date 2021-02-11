@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
@@ -80,28 +79,6 @@ public class TvdbTools {
         this.tvdbSeries = tvdbSeries;
         this.traktSearch = traktSearch;
         this.traktShows = traktShows;
-    }
-
-    /**
-     * Returns true if the given show has not been updated in the last 12 hours.
-     */
-    public static boolean isUpdateShow(Context context, int showTvdbId) {
-        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
-                new String[]{
-                        Shows._ID, Shows.LASTUPDATED
-                }, null, null, null
-        );
-        boolean isUpdate = false;
-        if (show != null) {
-            if (show.moveToFirst()) {
-                long lastUpdateTime = show.getLong(1);
-                if (System.currentTimeMillis() - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 12) {
-                    isUpdate = true;
-                }
-            }
-            show.close();
-        }
-        return isUpdate;
     }
 
     /**

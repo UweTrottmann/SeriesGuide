@@ -56,7 +56,7 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
                     SeriesGuideContract.ListItemTypes.SHOW);
             return true;
         } else if (itemId == R.id.menu_action_shows_update) {
-            SgSyncAdapter.requestSyncSingleImmediate(context, true, showTvdbId);
+            SgSyncAdapter.requestSyncSingleImmediate(context, true, showId);
             return true;
         } else if (itemId == R.id.menu_action_shows_remove) {
             RemoveShowDialogFragment.show(showId, fragmentManager, context);

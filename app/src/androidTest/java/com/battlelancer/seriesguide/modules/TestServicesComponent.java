@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.modules;
 
 import com.battlelancer.seriesguide.sync.TmdbSyncTest;
-import com.battlelancer.seriesguide.sync.TvdbSyncTest;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -15,5 +14,4 @@ import javax.inject.Singleton;
 })
 public interface TestServicesComponent extends ServicesComponent {
     void inject(TmdbSyncTest tmdbSyncTest);
-    void inject(TvdbSyncTest tvdbSyncTest);
 }

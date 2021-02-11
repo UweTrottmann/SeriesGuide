@@ -181,17 +181,16 @@ public abstract class BaseActivity extends AppCompatActivity {
      * is also delayed so it won't reduce UI setup performance (= you can run this in {@link
      * #onCreate(android.os.Bundle)}).
      *
-     * <p> See {@link com.battlelancer.seriesguide.sync.SgSyncAdapter#requestSyncIfTime(android.content.Context,
-     * int)}.
+     * <p> See {@link SgSyncAdapter#requestSyncIfTime(Context, long)}.
      */
-    protected void updateShowDelayed(final int showTvdbId) {
+    protected void updateShowDelayed(final long showId) {
         if (handler == null) {
             handler = new Handler(Looper.getMainLooper());
         }
 
         // delay sync request to avoid slowing down UI
         final Context context = getApplicationContext();
-        updateShowRunnable = () -> SgSyncAdapter.requestSyncIfTime(context, showTvdbId);
+        updateShowRunnable = () -> SgSyncAdapter.requestSyncIfTime(context, showId);
         handler.postDelayed(updateShowRunnable, DateUtils.SECOND_IN_MILLIS);
     }
 }

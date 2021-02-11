@@ -65,7 +65,7 @@ public class ShowTools {
 
     @NonNull
     public ShowDetails getShowDetails(int showTmdbId, String desiredLanguage) {
-        return showTools2.getShowDetails(showTmdbId, desiredLanguage);
+        return showTools2.getShowDetails(showTmdbId, desiredLanguage, false);
     }
 
     @Nullable
@@ -80,6 +80,10 @@ public class ShowTools {
             HexagonEpisodeSync hexagonEpisodeSync) {
         return showTools2.addShow(showTmdbId, desiredLanguage, traktCollection, traktWatched,
                 hexagonEpisodeSync);
+    }
+
+    public ShowResult updateShow(long showId) {
+        return showTools2.updateShow(showId);
     }
 
     public void removeShow(long showId) {
@@ -301,5 +305,9 @@ public class ShowTools {
                     ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(
                             view.getContext().getTheme(), android.R.attr.textColorSecondary)));
         }
+    }
+
+    public boolean shouldUpdateShow(long showId) {
+        return showTools2.shouldUpdateShow(showId);
     }
 }

@@ -100,7 +100,7 @@ public class OverviewActivity extends BaseMessageActivity {
 
         setupViews(savedInstanceState);
 
-        updateShowDelayed(showTvdbId);
+        updateShowDelayed(showId);
     }
 
     @Override

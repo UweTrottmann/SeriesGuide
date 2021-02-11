@@ -23,11 +23,11 @@ public class SyncOptions {
 
     public final SyncType syncType;
     public final boolean syncImmediately;
-    public final int singleShowTvdbId;
+    public final long singleShowId;
 
     public SyncOptions(Bundle extras) {
         syncType = SyncType.from(extras.getInt(SgSyncAdapter.EXTRA_SYNC_TYPE, SyncType.DELTA.id));
-        singleShowTvdbId = extras.getInt(SgSyncAdapter.EXTRA_SYNC_SHOW_TVDB_ID, 0);
+        singleShowId = extras.getLong(SgSyncAdapter.EXTRA_SYNC_SHOW_ID, 0);
         syncImmediately = extras.getBoolean(SgSyncAdapter.EXTRA_SYNC_IMMEDIATE, false);
     }
 

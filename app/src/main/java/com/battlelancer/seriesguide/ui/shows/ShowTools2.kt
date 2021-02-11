@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
+import android.text.format.DateUtils
 import android.widget.Toast
 import androidx.collection.SparseArrayCompat
 import com.battlelancer.seriesguide.R
@@ -14,6 +15,7 @@ import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.provider.SgShow2Update
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
@@ -75,10 +77,18 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     data class ShowDetails(
         val result: ShowResult,
         val show: SgShow2? = null,
+        val showUpdate: SgShow2Update? = null,
         val seasons: List<TvSeason>? = null
     )
 
-    fun getShowDetails(showTmdbId: Int, desiredLanguage: String): ShowDetails {
+    /**
+     * If [updateOnly] returns a show for updating, but without its ID set!
+     */
+    fun getShowDetails(
+        showTmdbId: Int,
+        desiredLanguage: String,
+        updateOnly: Boolean = false
+    ): ShowDetails {
         val tmdbResult = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
         var tmdbShow = tmdbResult.first ?: return ShowDetails(tmdbResult.second)
         val tmdbSeasons = tmdbShow.seasons
@@ -123,43 +133,91 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             tmdbShow.overview
         }
 
-        val rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 }
+        val tvdbId = tmdbShow.external_ids?.tvdb_id ?: 0
+        val traktId = traktShow?.ids?.trakt
+        val titleNoArticle = DBUtils.trimLeadingArticle(tmdbShow.name)
+        val releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time)
+        val releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day)
+        val releaseCountry = traktShow?.country
+        val releaseTimeZone = traktShow?.airs?.timezone
+        val firstRelease = TimeTools.parseShowFirstRelease(traktShow?.first_aired)
+        val rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 } ?: 0.0
+        val votes = traktShow?.votes?.let { if (it >= 0) it else 0 } ?: 0
+        val genres = TextTools.mendTvdbStrings(tmdbShow.genres?.map { genre -> genre.name })
+        val network = tmdbShow.networks?.firstOrNull()?.name ?: ""
+        val imdbId = tmdbShow.external_ids?.imdb_id ?: ""
+        val runtime = tmdbShow.episode_run_time?.first() ?: 45 // estimate 45 minutes if none.
+        val status = when (tmdbShow.status) {
+            "Returning Series" -> Status.CONTINUING
+            "Planned" -> Status.UPCOMING
+            "Pilot" -> Status.PILOT
+            "Ended" -> Status.ENDED
+            "Canceled" -> Status.CANCELED
+            "In Production" -> Status.IN_PRODUCTION
+            else -> Status.UNKNOWN
+        }
+        val poster = tmdbShow.poster_path ?: ""
 
-        return ShowDetails(
-            ShowResult.SUCCESS,
-            SgShow2(
-                tmdbId = tmdbShow.id,
-                tvdbId = tmdbShow.external_ids?.tvdb_id ?: 0,
-                traktId = traktShow?.ids?.trakt,
-                title = title,
-                titleNoArticle = DBUtils.trimLeadingArticle(tmdbShow.name),
-                overview = overview,
-                releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time),
-                releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day),
-                releaseCountry = traktShow?.country,
-                releaseTimeZone = traktShow?.airs?.timezone,
-                firstRelease = TimeTools.parseShowFirstRelease(traktShow?.first_aired),
-                ratingGlobal = rating ?: 0.0,
-                genres = TextTools.mendTvdbStrings(tmdbShow.genres?.map { genre -> genre.name }),
-                network = tmdbShow.networks?.firstOrNull()?.name ?: "",
-                imdbId = tmdbShow.external_ids?.imdb_id ?: "",
-                runtime = tmdbShow.episode_run_time?.first() ?: 45, // estimate 45 minutes if none.
-                status = when (tmdbShow.status) {
-                    "Returning Series" -> Status.CONTINUING
-                    "Planned" -> Status.UPCOMING
-                    "Pilot" -> Status.PILOT
-                    "Ended" -> Status.ENDED
-                    "Canceled" -> Status.CANCELED
-                    "In Production" -> Status.IN_PRODUCTION
-                    else -> Status.UNKNOWN
-                },
-                poster = tmdbShow.poster_path ?: "",
-                posterSmall = tmdbShow.poster_path ?: "",
-                // set desired language, might not be the content language if fallback used above.
-                language = desiredLanguage
-            ),
-            tmdbSeasons
-        )
+        if (updateOnly) {
+            // For updating existing show.
+            return ShowDetails(
+                ShowResult.SUCCESS,
+                showUpdate = SgShow2Update(
+                    tvdbId = tvdbId,
+                    traktId = traktId,
+                    title = title,
+                    titleNoArticle = titleNoArticle,
+                    overview = overview,
+                    releaseTime = releaseTime,
+                    releaseWeekDay = releaseWeekDay,
+                    releaseCountry = releaseCountry,
+                    releaseTimeZone = releaseTimeZone,
+                    firstRelease = firstRelease,
+                    ratingGlobal = rating,
+                    ratingVotes = votes,
+                    genres = genres,
+                    network = network,
+                    imdbId = imdbId,
+                    runtime = runtime,
+                    status = status,
+                    poster = poster,
+                    posterSmall = poster,
+                    lastUpdatedMs = System.currentTimeMillis() // now
+                ),
+                seasons = tmdbSeasons
+            )
+        } else {
+            // For inserting new show.
+            return ShowDetails(
+                ShowResult.SUCCESS,
+                show = SgShow2(
+                    tmdbId = tmdbShow.id,
+                    tvdbId = tvdbId,
+                    traktId = traktId,
+                    title = title,
+                    titleNoArticle = titleNoArticle,
+                    overview = overview,
+                    releaseTime = releaseTime,
+                    releaseWeekDay = releaseWeekDay,
+                    releaseCountry = releaseCountry,
+                    releaseTimeZone = releaseTimeZone,
+                    firstRelease = firstRelease,
+                    ratingGlobal = rating,
+                    ratingVotes = votes,
+                    genres = genres,
+                    network = network,
+                    imdbId = imdbId,
+                    runtime = runtime,
+                    status = status,
+                    poster = poster,
+                    posterSmall = poster,
+                    // set desired language, might not be the content language if fallback used above.
+                    language = desiredLanguage,
+                    lastUpdatedMs = System.currentTimeMillis() // now
+                ),
+                seasons = tmdbSeasons
+            )
+        }
     }
 
     /**
@@ -416,6 +474,38 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 writers = TextTools.mendTvdbStrings(writers)
             )
         }
+    }
+
+    /**
+     * Updates a show. Adds new, updates changed and removes orphaned episodes.
+     */
+    fun updateShow(showId: Long): ShowResult {
+        val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
+        val showTmdbId = helper.getShowTmdbId(showId)
+        if (showTmdbId == 0) {
+            // TODO Try migration to TMDB instead, but still mark as updated to try again later?
+            helper.setLastUpdated(showId, System.currentTimeMillis())
+            return ShowResult.SUCCESS
+        }
+
+        val language = helper.getLanguage(showId).let {
+            // handle legacy records
+            // default to 'en' for consistent behavior across devices
+            // and to encourage users to set language
+            if (it.isNullOrEmpty()) DisplaySettings.LANGUAGE_EN else it
+        }
+
+        val showDetails = getShowDetails(showTmdbId, language, true)
+        if (showDetails.result != ShowResult.SUCCESS) return showDetails.result
+        val show = showDetails.showUpdate!!
+        show.id = showId
+
+        // Store show to database
+        val database = SgRoomDatabase.getInstance(context)
+        val updated = database.sgShow2Helper().updateShow(show)
+        if (updated != 1) return ShowResult.DATABASE_ERROR
+
+        return ShowResult.SUCCESS
     }
 
     /**
@@ -737,8 +827,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             // reset episode last update time so all get updated
             database.sgEpisode2Helper().resetLastUpdatedForShow(showId)
             // trigger update
-            val showTvdbId = database.sgShow2Helper().getShowTvdbId(showId)
-            SgSyncAdapter.requestSyncSingleImmediate(context, false, showTvdbId)
+            SgSyncAdapter.requestSyncSingleImmediate(context, false, showId)
         }
 
         withContext(Dispatchers.Main) {
@@ -792,4 +881,12 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return map
     }
 
+    /**
+     * Returns true if the given show has not been updated in the last 12 hours.
+     */
+    fun shouldUpdateShow(showId: Long): Boolean {
+        val lastUpdatedMs = SgRoomDatabase.getInstance(context).sgShow2Helper()
+            .getLastUpdated(showId) ?: return false
+        return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12
+    }
 }

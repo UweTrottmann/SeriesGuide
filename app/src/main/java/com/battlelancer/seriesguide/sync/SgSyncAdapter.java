@@ -54,10 +54,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     static final String EXTRA_SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
     /**
-     * If {@link #EXTRA_SYNC_TYPE} is {@link SyncType#SINGLE}, the TVDb id of the show
+     * If {@link #EXTRA_SYNC_TYPE} is {@link SyncType#SINGLE}, the row id of the show
      * to sync.
      */
-    static final String EXTRA_SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
+    static final String EXTRA_SYNC_SHOW_ID = "com.battlelancer.seriesguide.sync_show";
     /**
      * Whether the sync should occur despite time or backoff limits.
      */
@@ -75,6 +75,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         SgApp.getServicesComponent(context).inject(this);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private static boolean isTimeForSync(Context context, long currentTime) {
         long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
         return (currentTime - previousUpdateTime) >
@@ -99,11 +100,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // SYNC
-        TvdbSync tvdbSync = new TvdbSync(options.syncType, options.singleShowTvdbId);
+        ShowSync showSync = new ShowSync(options.syncType, options.singleShowId);
 
         // should we sync?
         final long currentTime = System.currentTimeMillis();
-        if (!options.syncImmediately && tvdbSync.isSyncMultiple()) {
+        if (!options.syncImmediately && showSync.isSyncMultiple()) {
             if (!isTimeForSync(getContext(), currentTime)) {
                 Timber.d("Syncing: ABORT_DID_JUST_SYNC");
                 return;
@@ -113,8 +114,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // from here on we need more sophisticated abort handling, so keep track of errors
         SyncProgress progress = new SyncProgress();
         progress.publish(SyncProgress.Step.TVDB);
-        UpdateResult resultCode = tvdbSync.sync(getContext(), getContext().getContentResolver(),
-                tvdbTools, currentTime, progress);
+        ShowTools showTools = SgApp.getServicesComponent(getContext()).showTools();
+        UpdateResult resultCode = showSync.sync(getContext(), showTools, currentTime, progress);
         if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
             progress.recordError();
         }
@@ -125,7 +126,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // do some more things if this is not a quick update
-        if (tvdbSync.isSyncMultiple()) {
+        if (showSync.isSyncMultiple()) {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getContext());
 
@@ -184,7 +185,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // renew search table if shows were updated and it will not be renewed by add task
-            if (tvdbSync.hasUpdatedShows() && newShows.size() == 0) {
+            if (showSync.hasUpdatedShows() && newShows.size() == 0) {
                 SeriesGuideDatabase.rebuildFtsTable(getContext());
             }
 
@@ -257,14 +258,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Schedules a sync for a single show if {@link TvdbTools#isUpdateShow(android.content.Context,
-     * int)} returns true.
+     * Schedules a sync for a single show if {@link ShowTools#shouldUpdateShow(long)} returns true.
      *
      * <p> <em>Note: Runs a content provider op, so you should do this on a background thread.</em>
      */
-    public static void requestSyncIfTime(Context context, int showTvdbId) {
-        if (TvdbTools.isUpdateShow(context, showTvdbId)) {
-            requestSyncIfConnected(context, SyncType.SINGLE, showTvdbId);
+    public static void requestSyncIfTime(Context context, long showId) {
+        if (SgApp.getServicesComponent(context).showTools().shouldUpdateShow(showId)) {
+            requestSyncIfConnected(context, SyncType.SINGLE, showId);
         }
     }
 
@@ -272,10 +272,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *
-     * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
+     * @param showId If using {@link SyncType#SINGLE}, the row id of a show.
      */
-    private static void requestSyncIfConnected(Context context, SyncType syncType,
-            int showTvdbId) {
+    private static void requestSyncIfConnected(Context context, SyncType syncType, long showId) {
         if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
             // offline or auto-sync disabled: abort
             return;
@@ -283,7 +282,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         Bundle args = new Bundle();
         args.putInt(EXTRA_SYNC_TYPE, syncType.id);
-        args.putInt(EXTRA_SYNC_SHOW_TVDB_ID, showTvdbId);
+        args.putLong(EXTRA_SYNC_SHOW_ID, showId);
 
         requestSync(context, args);
     }
@@ -315,8 +314,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * @see #requestSyncDeltaImmediate(Context, boolean)
      */
     public static void requestSyncSingleImmediate(Context context, boolean showStatusToast,
-            int showTvdbId) {
-        requestSyncImmediate(context, SyncType.SINGLE, showTvdbId, showStatusToast);
+            long showId) {
+        requestSyncImmediate(context, SyncType.SINGLE, showId, showStatusToast);
     }
 
     /**
@@ -327,7 +326,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static void requestSyncImmediate(Context context, SyncType syncType,
-            int showTvdbId, boolean showStatusToast) {
+            long showId, boolean showStatusToast) {
         if (showStatusToast) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 // offline: notify and abort
@@ -341,7 +340,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Bundle args = new Bundle();
         args.putBoolean(EXTRA_SYNC_IMMEDIATE, true);
         args.putInt(EXTRA_SYNC_TYPE, syncType.id);
-        args.putInt(EXTRA_SYNC_SHOW_TVDB_ID, showTvdbId);
+        args.putLong(EXTRA_SYNC_SHOW_ID, showId);
 
         // ignore sync settings and backoff
         args.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);

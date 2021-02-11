@@ -21,6 +21,9 @@ interface SgShow2Helper {
     @Insert
     fun insertShow(sgShow2: SgShow2): Long
 
+    @Update(entity = SgShow2::class)
+    fun updateShow(show: SgShow2Update): Int
+
     @Query("SELECT * FROM sg_show WHERE _id=:id")
     fun getShowLiveData(id: Long): LiveData<SgShow2?>
 
@@ -32,6 +35,12 @@ interface SgShow2Helper {
 
     @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show WHERE _id=:id")
     fun getShowIds(id: Long): SgShow2Ids?
+
+    @Query("SELECT _id FROM sg_show")
+    fun getShowIds(): List<Long>
+
+    @Query("SELECT _id, series_lastupdate, series_airsdayofweek FROM sg_show")
+    fun getShowsUpdateInfo(): List<SgShow2UpdateInfo>
 
     @Query("SELECT _id FROM sg_show WHERE series_tmdb_id=:tmdbId")
     fun getShowIdByTmdbId(tmdbId: Int): Long
@@ -96,6 +105,9 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_hidden = 0 WHERE series_hidden = 1")
     fun makeHiddenVisible(): Int
 
+    @Query("SELECT series_language FROM sg_show WHERE _id = :id")
+    fun getLanguage(id: Long): String?
+
     @Query("UPDATE sg_show SET series_language = :languageCode WHERE _id = :id")
     fun updateLanguage(id: Long, languageCode: String)
 
@@ -113,12 +125,24 @@ interface SgShow2Helper {
 
     @Query("UPDATE sg_show SET series_lastwatched_ms = :lastWatchedMs WHERE _id = :id AND series_lastwatched_ms < :lastWatchedMs")
     fun updateLastWatchedMsIfLater(id: Long, lastWatchedMs: Long)
+
+    @Query("UPDATE sg_show SET series_lastupdate = :lastUpdatedMs WHERE _id = :id")
+    fun setLastUpdated(id: Long, lastUpdatedMs: Long)
+
+    @Query("SELECT series_lastupdate FROM sg_show WHERE _id = :id")
+    fun getLastUpdated(id: Long): Long?
 }
 
 data class SgShow2Ids(
     @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
     @ColumnInfo(name = SgShow2Columns.TMDB_ID) val tmdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?
+)
+
+data class SgShow2UpdateInfo(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long,
+    @ColumnInfo(name = SgShow2Columns.RELEASE_WEEKDAY) val releaseWeekDay: Int,
 )
 
 data class SgShow2Minimal(
@@ -180,4 +204,28 @@ data class SgShow2NextEpisodeUpdate(
     @ColumnInfo(name = SgShow2Columns.NEXTAIRDATEMS) val nextAirdateMs: Long,
     @ColumnInfo(name = SgShow2Columns.NEXTTEXT) val nextText: String,
     @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int
+)
+
+data class SgShow2Update(
+    @ColumnInfo(name = SgShow2Columns._ID) var id: Long = 0,
+    @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?,
+    @ColumnInfo(name = SgShow2Columns.TRAKT_ID) val traktId: Int?,
+    @ColumnInfo(name = SgShow2Columns.TITLE) val title: String,
+    @ColumnInfo(name = SgShow2Columns.TITLE_NOARTICLE) val titleNoArticle: String?,
+    @ColumnInfo(name = SgShow2Columns.OVERVIEW) val overview: String?,
+    @ColumnInfo(name = SgShow2Columns.RELEASE_TIME) val releaseTime: Int,
+    @ColumnInfo(name = SgShow2Columns.RELEASE_WEEKDAY) val releaseWeekDay: Int,
+    @ColumnInfo(name = SgShow2Columns.RELEASE_COUNTRY) val releaseCountry: String?,
+    @ColumnInfo(name = SgShow2Columns.RELEASE_TIMEZONE) val releaseTimeZone: String?,
+    @ColumnInfo(name = SgShow2Columns.FIRST_RELEASE) val firstRelease: String?,
+    @ColumnInfo(name = SgShow2Columns.GENRES) val genres: String?,
+    @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String?,
+    @ColumnInfo(name = SgShow2Columns.IMDBID) val imdbId: String?,
+    @ColumnInfo(name = SgShow2Columns.RATING_GLOBAL) val ratingGlobal: Double,
+    @ColumnInfo(name = SgShow2Columns.RATING_VOTES) val ratingVotes: Int,
+    @ColumnInfo(name = SgShow2Columns.RUNTIME) val runtime: Int?,
+    @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int,
+    @ColumnInfo(name = SgShow2Columns.POSTER) val poster: String?,
+    @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val posterSmall: String?,
+    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long
 )

@@ -129,7 +129,7 @@ class EpisodesActivity : BaseMessageActivity() {
 
             updateViews(info)
 
-            updateShowDelayed(info.seasonAndShowInfo.show.tvdbId!!)
+            updateShowDelayed(info.seasonAndShowInfo.showId)
         })
     }
 
