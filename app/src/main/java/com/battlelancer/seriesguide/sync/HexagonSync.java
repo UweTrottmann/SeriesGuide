@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.sync;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.provider.SgShow2Helper;
+import com.battlelancer.seriesguide.provider.SgShow2Ids;
 import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
@@ -81,26 +81,24 @@ public class HexagonSync {
 
     private boolean syncEpisodes() {
         // get shows that need episode merging
-        Cursor query = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[] { SeriesGuideContract.Shows._ID },
-                SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE + "=0",
-                null, null);
-        if (query == null) {
-            return false;
-        }
+        SgShow2Helper helper = SgRoomDatabase.getInstance(context).sgShow2Helper();
+        List<SgShow2Ids> showsToMerge = helper.getHexagonMergeNotCompleted();
 
         // try merging episodes for them
         boolean mergeSuccessful = true;
         HexagonEpisodeSync episodeSync = new HexagonEpisodeSync(context, hexagonTools);
-        while (query.moveToNext()) {
+        for (SgShow2Ids show : showsToMerge) {
             // abort if connection is lost
             if (!AndroidUtils.isNetworkConnected(context)) {
                 return false;
             }
 
-            int showTvdbId = query.getInt(0);
+            // Currently TVDB ID is required.
+            if (show.getTvdbId() == null) continue;
 
-            boolean success = episodeSync.downloadFlags(showTvdbId);
+            int showTvdbId = show.getTvdbId();
+
+            boolean success = episodeSync.downloadFlags(show.getId(), showTvdbId);
             if (!success) {
                 // try again next time
                 mergeSuccessful = false;
@@ -110,16 +108,11 @@ public class HexagonSync {
             success = episodeSync.uploadFlags(showTvdbId);
             if (success) {
                 // set merge as completed
-                ContentValues values = new ContentValues();
-                values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, 1);
-                context.getContentResolver()
-                        .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values,
-                                null, null);
+                helper.setHexagonMergeCompleted(show.getId());
             } else {
                 mergeSuccessful = false;
             }
         }
-        query.close();
 
         // download changed episodes and update properties on existing episodes
         boolean changedDownloadSuccessful = episodeSync.downloadChangedFlags();

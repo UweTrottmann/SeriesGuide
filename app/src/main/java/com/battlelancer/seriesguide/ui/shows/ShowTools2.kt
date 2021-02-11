@@ -251,10 +251,18 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             episodeHelper.insertEpisodes(episodes)
         }
 
-        // TODO restore episode flags from Cloud/Trakt
         // restore episode flags...
-        if (hexagonEnabled) {
+        if (show.tvdbId != null && hexagonEnabled) {
             // ...from Hexagon
+            val success = hexagonEpisodeSync.downloadFlags(showId, show.tvdbId)
+            if (!success) {
+                // failed to download episode flags
+                // flag show as needing an episode merge
+                database.sgShow2Helper().setHexagonMergeNotCompleted(showId)
+            }
+
+            // flag show to be auto-added (again), send (new) language to Hexagon
+            showTools.sendIsAdded(show.tvdbId, language)
         } else {
             // ...from Trakt
             val traktEpisodeSync = TraktEpisodeSync(context, null)

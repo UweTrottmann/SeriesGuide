@@ -137,15 +137,15 @@ public class TvdbTools {
         // restore episode flags...
         if (hexagonEnabled) {
             // ...from Hexagon
-            boolean success = hexagonEpisodeSync.downloadFlags(showTvdbId);
-            if (!success) {
-                // failed to download episode flags
-                // flag show as needing an episode merge
-                ContentValues values = new ContentValues();
-                values.put(Shows.HEXAGON_MERGE_COMPLETE, 0);
-                context.getContentResolver()
-                        .update(Shows.buildShowUri(showTvdbId), values, null, null);
-            }
+//            boolean success = hexagonEpisodeSync.downloadFlags(showTvdbId);
+//            if (!success) {
+//                // failed to download episode flags
+//                // flag show as needing an episode merge
+//                ContentValues values = new ContentValues();
+//                values.put(Shows.HEXAGON_MERGE_COMPLETE, 0);
+//                context.getContentResolver()
+//                        .update(Shows.buildShowUri(showTvdbId), values, null, null);
+//            }
 
             // flag show to be auto-added (again), send (new) language to Hexagon
             showTools.get().sendIsAdded(showTvdbId, language);
