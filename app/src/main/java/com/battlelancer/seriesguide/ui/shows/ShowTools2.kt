@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
+import com.battlelancer.seriesguide.sync.TraktEpisodeSync
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
@@ -203,7 +204,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         if (getShowId(showTmdbId, show.tvdbId) != null) return ShowResult.IN_DATABASE
 
         // Restore properties from Hexagon
-        if (show.tvdbId != null && HexagonSettings.isEnabled(context)) {
+        val hexagonEnabled = HexagonSettings.isEnabled(context)
+        if (show.tvdbId != null && hexagonEnabled) {
             val hexagonResult = SgApp.getServicesComponent(context).hexagonTools()
                 .getShow(show.tvdbId)
             if (!hexagonResult.second) return ShowResult.HEXAGON_ERROR
@@ -250,6 +252,29 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         }
 
         // TODO restore episode flags from Cloud/Trakt
+        // restore episode flags...
+        if (hexagonEnabled) {
+            // ...from Hexagon
+        } else {
+            // ...from Trakt
+            val traktEpisodeSync = TraktEpisodeSync(context, null)
+            if (!traktEpisodeSync.storeEpisodeFlags(
+                    traktWatched,
+                    showTmdbId,
+                    showId,
+                    TraktEpisodeSync.Flag.WATCHED
+                )) {
+                return ShowResult.DATABASE_ERROR
+            }
+            if (!traktEpisodeSync.storeEpisodeFlags(
+                    traktCollection,
+                    showTmdbId,
+                    showId,
+                    TraktEpisodeSync.Flag.COLLECTED
+                )) {
+                return ShowResult.DATABASE_ERROR
+            }
+        }
 
         // Calculate next episode
         DBUtils.updateLatestEpisode(context, showId)

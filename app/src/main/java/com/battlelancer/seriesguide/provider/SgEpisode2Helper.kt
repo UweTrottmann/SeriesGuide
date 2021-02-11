@@ -9,6 +9,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RawQuery
+import androidx.room.Transaction
+import androidx.room.Update
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.Constants
@@ -90,6 +92,15 @@ interface SgEpisode2Helper {
      */
     @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfShow(showId: Long): List<SgEpisode2Numbers>
+
+    @Query("SELECT _id, episode_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId")
+    fun getEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForTraktSync>
+
+    @Query("SELECT _id, episode_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_watched = 1 ORDER BY episode_number ASC")
+    fun getWatchedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForTraktSync>
+
+    @Query("SELECT _id, episode_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_collected = 1 ORDER BY episode_number ASC")
+    fun getCollectedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForTraktSync>
 
     /**
      * WAIT, just for compile time validation of [SgEpisode2Info.buildQuery]
@@ -217,6 +228,19 @@ interface SgEpisode2Helper {
     )
     fun setSeasonNotWatchedAndRemovePlays(seasonId: Long): Int
 
+    @Query(
+        """UPDATE sg_episode SET episode_watched = 0, episode_plays = 0
+        WHERE season_id = :seasonId AND episode_watched == ${EpisodeFlags.WATCHED}"""
+    )
+    fun setSeasonNotWatchedExcludeSkipped(seasonId: Long): Int
+
+    @Transaction
+    fun setSeasonsNotWatchedExcludeSkipped(seasonIds: List<Long>) {
+        for (seasonId in seasonIds) {
+            setSeasonNotWatchedExcludeSkipped(seasonId)
+        }
+    }
+
     /**
      * Does NOT include watched episodes to avoid Trakt adding a new play,
      * only includes episodes that have been released until within the hour.
@@ -230,6 +254,9 @@ interface SgEpisode2Helper {
         ORDER BY episode_season_number ASC, episode_number ASC"""
     )
     fun getNotWatchedOrSkippedEpisodeNumbersOfSeason(seasonId: Long, currentTimePlusOneHour: Long): List<SgEpisode2Numbers>
+
+    @Query("UPDATE sg_episode SET episode_watched = 1, episode_plays = 1 WHERE season_id = :seasonId")
+    fun setSeasonWatched(seasonId: Long): Int
 
     /**
      * Sets not watched or skipped episodes, released until within the hour,
@@ -309,11 +336,24 @@ interface SgEpisode2Helper {
     )
     fun setShowWatchedAndAddPlay(showId: Long, currentTimePlusOneHour: Long): Int
 
+    @Update(entity = SgEpisode2::class)
+    fun updateEpisodesWatched(episodes: List<SgEpisode2WatchedUpdate>): Int
+
+    @Update(entity = SgEpisode2::class)
+    fun updateEpisodesCollected(episodes: List<SgEpisode2CollectedUpdate>): Int
+
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE _id = :episodeId")
     fun updateCollected(episodeId: Long, isCollected: Boolean): Int
 
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE season_id = :seasonId")
     fun updateCollectedOfSeason(seasonId: Long, isCollected: Boolean): Int
+
+    @Transaction
+    fun updateCollectedOfSeasons(seasonIds: List<Long>, isCollected: Boolean) {
+        for (seasonId in seasonIds) {
+            updateCollectedOfSeason(seasonId, isCollected)
+        }
+    }
 
     /**
      * Excludes specials.
@@ -492,3 +532,22 @@ data class SgEpisode2Numbers(
         }
     }
 }
+
+data class SgEpisode2ForTraktSync(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int,
+    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
+    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
+    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
+)
+
+data class SgEpisode2WatchedUpdate(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
+    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
+)
+
+data class SgEpisode2CollectedUpdate(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
+)

@@ -39,7 +39,7 @@ public class TraktTools {
     }
 
     @NonNull
-    public static HashMap<Integer, BaseSeason> buildTraktSeasonsMap(List<BaseSeason> seasons) {
+    public static HashMap<Integer, BaseSeason> mapSeasonsByNumber(List<BaseSeason> seasons) {
         @SuppressLint("UseSparseArrays")
         HashMap<Integer, BaseSeason> traktSeasonsMap = new HashMap<>(seasons.size());
         for (BaseSeason season : seasons) {

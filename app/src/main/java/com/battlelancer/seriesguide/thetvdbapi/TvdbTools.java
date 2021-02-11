@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
-import com.battlelancer.seriesguide.sync.TraktEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
@@ -152,15 +151,15 @@ public class TvdbTools {
             showTools.get().sendIsAdded(showTvdbId, language);
         } else {
             // ...from trakt
-            TraktEpisodeSync traktEpisodeSync = new TraktEpisodeSync(context, null);
-            if (!traktEpisodeSync.storeEpisodeFlags(traktWatched, showTvdbId,
-                    TraktEpisodeSync.Flag.WATCHED)) {
-                throw new TvdbDataException("addShow: storing trakt watched episodes failed.");
-            }
-            if (!traktEpisodeSync.storeEpisodeFlags(traktCollection, showTvdbId,
-                    TraktEpisodeSync.Flag.COLLECTED)) {
-                throw new TvdbDataException("addShow: storing trakt collected episodes failed.");
-            }
+//            TraktEpisodeSync traktEpisodeSync = new TraktEpisodeSync(context, null);
+//            if (!traktEpisodeSync.storeEpisodeFlags(traktWatched, showTvdbId,
+//                    TraktEpisodeSync.Flag.WATCHED)) {
+//                throw new TvdbDataException("addShow: storing trakt watched episodes failed.");
+//            }
+//            if (!traktEpisodeSync.storeEpisodeFlags(traktCollection, showTvdbId,
+//                    TraktEpisodeSync.Flag.COLLECTED)) {
+//                throw new TvdbDataException("addShow: storing trakt collected episodes failed.");
+//            }
         }
 
         // calculate next episode

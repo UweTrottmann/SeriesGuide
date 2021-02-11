@@ -24,8 +24,11 @@ interface SgSeason2Helper {
     @Query("SELECT _id FROM sg_season WHERE series_id = :showId ORDER BY season_number DESC")
     fun getSeasonIdsOfShow(showId: Long): List<Long>
 
-    @Query("SELECT series_id, season_tmdb_id, season_tvdb_id, season_number FROM sg_season WHERE _id = :seasonId")
+    @Query("SELECT _id, series_id, season_tmdb_id, season_tvdb_id, season_number FROM sg_season WHERE _id = :seasonId")
     fun getSeasonNumbers(seasonId: Long): SgSeason2Numbers?
+
+    @Query("SELECT _id, series_id, season_tmdb_id, season_tvdb_id, season_number FROM sg_season WHERE series_id = :showId")
+    fun getSeasonNumbersOfShow(showId: Long): List<SgSeason2Numbers>
 
     /**
      * Excludes seasons where total episode count is 0.
@@ -47,6 +50,7 @@ interface SgSeason2Helper {
 }
 
 data class SgSeason2Numbers(
+    @ColumnInfo(name = SgSeason2Columns._ID) val id: Long,
     @ColumnInfo(name = SeriesGuideContract.SgShow2Columns.REF_SHOW_ID) val showId: Long,
     @ColumnInfo(name = SgSeason2Columns.TMDB_ID) val tmdbId: String?,
     @ColumnInfo(name = SgSeason2Columns.TVDB_ID) val tvdbId: Int?,
