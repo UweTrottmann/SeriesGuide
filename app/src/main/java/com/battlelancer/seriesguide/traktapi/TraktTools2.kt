@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.Show
@@ -9,19 +10,20 @@ import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.IdType
 import com.uwetrottmann.trakt5.enums.Type
 import retrofit2.Response
+import java.net.SocketTimeoutException
 import java.util.HashMap
 
 object TraktTools2 {
 
-    data class SearchResult(val failed: Boolean, val show: Show?)
+    data class SearchResult(val result: ShowResult, val show: Show?)
 
     /**
      * Look up a show by its TMDB ID, may return `null` if not found.
-     * The boolean will be false if the network request failed.
      */
     fun getShowByTmdbId(showTmdbId: Int, context: Context): SearchResult {
-        val searchResults = SgTrakt.executeCall(
-            getServicesComponent(context).trakt()
+        val action = "show trakt lookup"
+        try {
+            val response = getServicesComponent(context).trakt()
                 .search()
                 .idLookup(
                     IdType.TMDB,
@@ -30,10 +32,17 @@ object TraktTools2 {
                     Extended.FULL,
                     1,
                     1
-                ),
-            "show trakt lookup"
-        )
-        return SearchResult(searchResults == null, searchResults?.first()?.show)
+                ).execute()
+            if (response.isSuccessful) {
+                return SearchResult(ShowResult.SUCCESS, response.body()?.first()?.show)
+            } else {
+                Errors.logAndReport(action, response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport(action, e)
+            if (e is SocketTimeoutException) return SearchResult(ShowResult.TIMEOUT_ERROR, null)
+        }
+        return SearchResult(ShowResult.TRAKT_ERROR, null)
     }
 
     enum class ServiceResult {

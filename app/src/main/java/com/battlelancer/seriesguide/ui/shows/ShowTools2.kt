@@ -48,6 +48,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         SUCCESS,
         IN_DATABASE,
         DOES_NOT_EXIST,
+        TIMEOUT_ERROR,
         TMDB_ERROR,
         TRAKT_ERROR,
         HEXAGON_ERROR,
@@ -79,9 +80,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
     fun getShowDetails(showTmdbId: Int, desiredLanguage: String): ShowDetails {
         val tmdbResult = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
-        var tmdbShow = tmdbResult.first ?: return ShowDetails(
-            if (tmdbResult.second) ShowResult.DOES_NOT_EXIST else ShowResult.TMDB_ERROR
-        )
+        var tmdbShow = tmdbResult.first ?: return ShowDetails(tmdbResult.second)
         val tmdbSeasons = tmdbShow.seasons
 
         val noTranslation = tmdbShow.overview.isNullOrEmpty()
@@ -91,14 +90,12 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 DisplaySettings.getShowsLanguageFallback(context),
                 context
             )
-            tmdbShow = tmdbResultFallback.first ?: return ShowDetails(
-                if (tmdbResultFallback.second) ShowResult.DOES_NOT_EXIST else ShowResult.TMDB_ERROR
-            )
+            tmdbShow = tmdbResultFallback.first ?: return ShowDetails(tmdbResult.second)
         }
 
         val traktResult = TraktTools2.getShowByTmdbId(showTmdbId, context)
         // Fail if looking up Trakt details failed to avoid removing them for existing shows.
-        if (traktResult.failed) return ShowDetails(ShowResult.TRAKT_ERROR)
+        if (traktResult.result != ShowResult.SUCCESS) return ShowDetails(traktResult.result)
         val traktShow = traktResult.show
         if (traktShow == null) {
             Timber.w("getShowDetails: no Trakt show found, using default values.")

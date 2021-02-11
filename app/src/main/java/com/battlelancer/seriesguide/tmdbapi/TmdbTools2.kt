@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.tmdbapi
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
@@ -14,6 +15,7 @@ import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.net.SocketTimeoutException
 import java.util.Calendar
 import java.util.Date
 
@@ -71,7 +73,7 @@ class TmdbTools2 {
         showTmdbId: Int,
         language: String,
         context: Context
-    ): Pair<TvShow?, Boolean> {
+    ): Pair<TvShow?, ShowResult> {
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
         try {
             val response = tmdb.tvService()
@@ -79,18 +81,19 @@ class TmdbTools2 {
                 .execute()
             if (response.isSuccessful) {
                 val results = response.body()
-                if (results != null) return Pair(results, false)
+                if (results != null) return Pair(results, ShowResult.SUCCESS)
             } else {
                 // Explicitly indicate if result is null because show no longer exists.
                 if (response.code() == 404) {
-                    return Pair(null, true)
+                    return Pair(null, ShowResult.DOES_NOT_EXIST)
                 }
                 Errors.logAndReport("show n ids", response)
             }
         } catch (e: Exception) {
             Errors.logAndReport("show n ids", e)
+            if (e is SocketTimeoutException) return Pair(null, ShowResult.TIMEOUT_ERROR)
         }
-        return Pair(null, false)
+        return Pair(null, ShowResult.TMDB_ERROR)
     }
 
     /**
