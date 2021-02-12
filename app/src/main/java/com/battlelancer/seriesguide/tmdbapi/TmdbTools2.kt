@@ -22,7 +22,8 @@ import java.util.Date
 class TmdbTools2 {
 
     /**
-     * Tries to find the TMDB id for the given show's TheTVDB id. Returns null on error or failure.
+     * Tries to find the TMDB id for the given show's TheTVDB id. Returns -1 if not found,
+     * returns null on error or failure.
      */
     fun findShowTmdbId(context: Context, showTvdbId: Int): Int? {
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
@@ -38,6 +39,7 @@ class TmdbTools2 {
                         return it // found it!
                     }
                 }
+                return -1 // not found
             } else {
                 Errors.logAndReport("find tvdb show", response)
             }
@@ -161,7 +163,8 @@ class TmdbTools2 {
                     findShowTmdbId(context, showIds.tvdbId)
                 } else {
                     null
-                } ?: return@withContext null
+                }
+            if (tmdbId == null || tmdbId < 0) return@withContext null
 
             // get credits for that show
             try {
