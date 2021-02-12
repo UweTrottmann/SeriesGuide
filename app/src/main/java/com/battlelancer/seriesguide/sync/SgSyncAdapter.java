@@ -15,7 +15,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
@@ -30,7 +29,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import java.util.HashSet;
 import javax.inject.Inject;
 import timber.log.Timber;
 
@@ -139,45 +137,35 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
             Timber.d("Syncing: TMDB...DONE");
 
-            // sync with hexagon and trakt
-            final HashSet<Integer> existingShows = ShowTools.getShowTvdbIdsAsSet(getContext());
+            // sync with hexagon
             boolean hasAddedShows = false;
-
-            if (existingShows == null) {
-                resultCode = UpdateResult.INCOMPLETE;
+            boolean isHexagonEnabled = HexagonSettings.isEnabled(getContext());
+            if (isHexagonEnabled) {
+                HexagonResult resultHexagonSync = new HexagonSync(getContext(),
+                        hexagonTools.get(), movieTools.get(), progress).sync();
+                hasAddedShows = resultHexagonSync.hasAddedShows;
+                // don't overwrite failure
+                if (resultCode == UpdateResult.SUCCESS) {
+                    resultCode = resultHexagonSync.success
+                            ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
+                }
+                Timber.d("Syncing: Hexagon...DONE");
             } else {
-                // sync with hexagon
-                boolean isHexagonEnabled = HexagonSettings.isEnabled(getContext());
-                if (isHexagonEnabled) {
-                    HexagonResult resultHexagonSync = new HexagonSync(getContext(),
-                            hexagonTools.get(), movieTools.get(), progress).sync();
-                    hasAddedShows = resultHexagonSync.hasAddedShows;
-                    // don't overwrite failure
-                    if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = resultHexagonSync.success
-                                ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
-                    }
-                    Timber.d("Syncing: Hexagon...DONE");
-                } else {
-                    Timber.d("Syncing: Hexagon...SKIP");
-                }
+                Timber.d("Syncing: Hexagon...SKIP");
+            }
 
-                // sync with trakt (only ratings if hexagon is enabled)
-                if (TraktCredentials.get(getContext()).hasCredentials()) {
-                    UpdateResult resultTraktSync = new TraktSync(getContext(), movieTools.get(),
-                            traktSync.get(), progress)
-                            .sync(existingShows, currentTime, isHexagonEnabled);
-                    // don't overwrite failure
-                    if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = resultTraktSync;
-                    }
-                    Timber.d("Syncing: trakt...DONE");
-                } else {
-                    Timber.d("Syncing: trakt...SKIP");
+            // sync with trakt (only ratings if hexagon is enabled)
+            if (TraktCredentials.get(getContext()).hasCredentials()) {
+                UpdateResult resultTraktSync = new TraktSync(getContext(), movieTools.get(),
+                        traktSync.get(), progress)
+                        .sync(currentTime, isHexagonEnabled);
+                // don't overwrite failure
+                if (resultCode == UpdateResult.SUCCESS) {
+                    resultCode = resultTraktSync;
                 }
-
-                // make sure other loaders (activity, overview, details) are notified of changes
-                getContext().getContentResolver().notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
+                Timber.d("Syncing: trakt...DONE");
+            } else {
+                Timber.d("Syncing: trakt...SKIP");
             }
 
             // renew search table if shows were updated and it will not be renewed by add task

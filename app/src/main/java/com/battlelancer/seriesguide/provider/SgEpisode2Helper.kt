@@ -260,6 +260,19 @@ interface SgEpisode2Helper {
         }
     }
 
+    @Query(
+        """UPDATE sg_episode SET episode_watched = 0, episode_plays = 0
+        WHERE series_id = :showId AND episode_watched == ${EpisodeFlags.WATCHED}"""
+    )
+    fun setShowNotWatchedExcludeSkipped(showId: Long): Int
+
+    @Transaction
+    fun setShowsNotWatchedExcludeSkipped(showIds: List<Long>) {
+        for (seasonId in showIds) {
+            setShowNotWatchedExcludeSkipped(seasonId)
+        }
+    }
+
     /**
      * Does NOT include watched episodes to avoid Trakt adding a new play,
      * only includes episodes that have been released until within the hour.
@@ -374,9 +387,16 @@ interface SgEpisode2Helper {
         }
     }
 
-    /**
-     * Excludes specials.
-     */
+    @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId")
+    fun updateCollectedOfShow(showId: Long, isCollected: Boolean): Int
+
+    @Transaction
+    fun updateCollectedOfShows(showIds: List<Long>, isCollected: Boolean) {
+        for (seasonId in showIds) {
+            updateCollectedOfShow(seasonId, isCollected)
+        }
+    }
+
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId AND episode_season_number != 0")
     fun updateCollectedOfShowExcludeSpecials(showId: Long, isCollected: Boolean): Int
 

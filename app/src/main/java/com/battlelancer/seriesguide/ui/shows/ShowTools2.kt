@@ -1045,6 +1045,15 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return map
     }
 
+    fun getTmdbIdsToShowIds(context: Context): Map<Int, Long> {
+        val showIds = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIds()
+        val map = mutableMapOf<Int, Long>()
+        showIds.forEach {
+            if (it.tmdbId != null) map[it.tmdbId] = it.id
+        }
+        return map
+    }
+
     fun getTvdbIdsToShowIds(context: Context): Map<Int, Long> {
         val showIds = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIds()
         val map = mutableMapOf<Int, Long>()

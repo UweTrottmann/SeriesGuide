@@ -41,7 +41,7 @@ interface SgSeason2Helper {
     @Query("SELECT _id, series_id, season_tmdb_id, season_tvdb_id, season_number FROM sg_season WHERE _id = :seasonId")
     fun getSeasonNumbers(seasonId: Long): SgSeason2Numbers?
 
-    @Query("SELECT _id, series_id, season_tmdb_id, season_tvdb_id, season_number FROM sg_season WHERE series_id = :showId")
+    @Query("SELECT _id, series_id, season_tmdb_id, season_tvdb_id, season_number FROM sg_season WHERE series_id = :showId ORDER BY season_number")
     fun getSeasonNumbersOfShow(showId: Long): List<SgSeason2Numbers>
 
     /**

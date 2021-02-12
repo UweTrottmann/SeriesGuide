@@ -10,7 +10,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
-import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -19,23 +18,6 @@ import java.util.Locale;
 public class TraktTools {
 
     private TraktTools() {
-    }
-
-    @NonNull
-    public static HashMap<Integer, BaseShow> buildTraktShowsMap(List<BaseShow> traktShows) {
-        @SuppressLint("UseSparseArrays")
-        HashMap<Integer, BaseShow> traktShowsMap = new HashMap<>(traktShows.size());
-        for (BaseShow traktShow : traktShows) {
-            if (traktShow.show == null
-                    || traktShow.show.ids == null
-                    || traktShow.show.ids.tvdb == null
-                    || traktShow.seasons == null
-                    || traktShow.seasons.isEmpty()) {
-                continue; // trakt show misses required data, skip.
-            }
-            traktShowsMap.put(traktShow.show.ids.tvdb, traktShow);
-        }
-        return traktShowsMap;
     }
 
     @NonNull

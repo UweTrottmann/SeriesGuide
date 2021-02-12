@@ -247,6 +247,11 @@ public class ShowTools {
     }
 
     @NonNull
+    public Map<Integer, Long> getTmdbIdsToShowIds() {
+        return showTools2.getTmdbIdsToShowIds(context);
+    }
+
+    @NonNull
     public Map<Integer, Long> getTvdbIdsToShowIds() {
         return showTools2.getTvdbIdsToShowIds(context);
     }

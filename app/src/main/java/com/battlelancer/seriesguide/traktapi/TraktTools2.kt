@@ -78,7 +78,8 @@ object TraktTools2 {
         return Pair(null, ServiceResult.API_ERROR)
     }
 
-    private fun mapByTmdbId(traktShows: List<BaseShow>?): Map<Int, BaseShow> {
+    @JvmStatic
+    fun mapByTmdbId(traktShows: List<BaseShow>?): Map<Int, BaseShow> {
         if (traktShows == null) return emptyMap()
 
         val traktShowsMap = HashMap<Int, BaseShow>(traktShows.size)

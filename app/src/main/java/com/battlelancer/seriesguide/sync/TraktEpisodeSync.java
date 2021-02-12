@@ -1,8 +1,6 @@
 package com.battlelancer.seriesguide.sync;
 
-import android.content.ContentProviderOperation;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +15,10 @@ import com.battlelancer.seriesguide.provider.SgSeason2Numbers;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
+import com.battlelancer.seriesguide.traktapi.TraktTools2;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
@@ -35,7 +33,6 @@ import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -56,24 +53,23 @@ public class TraktEpisodeSync {
     /**
      * Similar to the sync methods, but does not download anything and only processes a single show.
      */
-    public boolean storeEpisodeFlags(@Nullable Map<Integer, BaseShow> traktShowsByTmdbId,
+    public boolean storeEpisodeFlags(@Nullable Map<Integer, BaseShow> tmdbIdsToTraktShow,
             int showTmdbId, long showRowId, @NonNull TraktEpisodeSync.Flag flag) {
-        if (traktShowsByTmdbId == null || traktShowsByTmdbId.isEmpty()) {
+        if (tmdbIdsToTraktShow == null || tmdbIdsToTraktShow.isEmpty()) {
             return true; // no watched/collected shows on trakt, done.
         }
-        if (!traktShowsByTmdbId.containsKey(showTmdbId)) {
+        BaseShow traktShow = tmdbIdsToTraktShow.get(showTmdbId);
+        if (traktShow == null) {
             return true; // show is not watched/collected on trakt, done.
         }
-        BaseShow traktShow = traktShowsByTmdbId.get(showTmdbId);
         return processTraktSeasons(false, showRowId, traktShow, flag);
     }
 
     /**
      * @param isInitialSync If true, will upload any episodes flagged locally, but not flagged on
      *                      trakt. If false, all watched and collected (and only those, e.g. not skipped flag) flags will
-     *                      be removed prior to getting the actual flags from trakt (season by season).
      */
-    public boolean syncWatched(@NonNull HashSet<Integer> localShows,
+    public boolean syncWatched(@NonNull Map<Integer, Long> tmdbIdsToShowIds,
             @Nullable OffsetDateTime watchedAt, boolean isInitialSync) {
         if (watchedAt == null) {
             Timber.e("syncWatched: null watched_at");
@@ -106,7 +102,7 @@ public class TraktEpisodeSync {
 
             // apply database updates, if initial sync upload diff
             long startTime = System.currentTimeMillis();
-            boolean success = processTraktShows(watchedShowsTrakt, localShows, Flag.WATCHED,
+            boolean success = processTraktShows(watchedShowsTrakt, tmdbIdsToShowIds, Flag.WATCHED,
                     isInitialSync);
             Timber.d("syncWatched: processing took %s ms", System.currentTimeMillis() - startTime);
             if (!success) {
@@ -127,7 +123,7 @@ public class TraktEpisodeSync {
         return true;
     }
 
-    public boolean syncCollected(@NonNull HashSet<Integer> localShows,
+    public boolean syncCollected(@NonNull Map<Integer, Long> tmdbIdsToShowIds,
             @Nullable OffsetDateTime collectedAt, boolean isInitialSync) {
         if (collectedAt == null) {
             Timber.e("syncCollected: null collected_at");
@@ -160,8 +156,8 @@ public class TraktEpisodeSync {
 
             // apply database updates, if initial sync upload diff
             long startTime = System.currentTimeMillis();
-            boolean success = processTraktShows(collectedShowsTrakt, localShows, Flag.COLLECTED,
-                    isInitialSync);
+            boolean success = processTraktShows(collectedShowsTrakt, tmdbIdsToShowIds,
+                    Flag.COLLECTED, isInitialSync);
             Timber.d("syncCollected: processing took %s ms",
                     System.currentTimeMillis() - startTime);
             if (!success) {
@@ -183,59 +179,67 @@ public class TraktEpisodeSync {
     }
 
     private boolean processTraktShows(@NonNull List<BaseShow> remoteShows,
-            @NonNull HashSet<Integer> localShows, Flag flag, boolean isInitialSync) {
-        HashMap<Integer, BaseShow> traktShows = TraktTools.buildTraktShowsMap(remoteShows);
+            @NonNull Map<Integer, Long> tmdbIdsToShowIds, Flag flag, boolean isInitialSync) {
+        Map<Integer, BaseShow> tmdbIdsToTraktShow = TraktTools2.mapByTmdbId(remoteShows);
 
         int uploadedShowsCount = 0;
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        for (Integer localShow : localShows) {
-            if (traktShows.containsKey(localShow)) {
+        Map<Long, Long> showIdsToLastWatched = new HashMap<>();
+        final ArrayList<Long> showsToClear = new ArrayList<>();
+
+        for (Map.Entry<Integer, Long> tmdbIdToShowId : tmdbIdsToShowIds.entrySet()) {
+            int tmdbId = tmdbIdToShowId.getKey();
+            long showId = tmdbIdToShowId.getValue();
+
+            BaseShow traktShow = tmdbIdsToTraktShow.get(tmdbId);
+            if (traktShow != null) {
                 // show watched/collected on trakt
-                BaseShow traktShow = traktShows.get(localShow);
-                if (!processTraktSeasons(isInitialSync, localShow, traktShow, flag)) {
+                if (!processTraktSeasons(isInitialSync, showId, traktShow, flag)) {
                     return false; // processing seasons failed, give up.
                 }
                 if (flag == Flag.WATCHED) {
-                    updateLastWatchedTime(localShow, traktShow, batch);
+                    if (traktShow.last_watched_at != null) {
+                        showIdsToLastWatched
+                                .put(showId, traktShow.last_watched_at.toInstant().toEpochMilli());
+                    }
                 }
             } else {
                 // show not watched/collected on trakt
                 // check if this is because the show can not be tracked with trakt (yet)
                 // some shows only exist on TheTVDB, keep state local and maybe upload in the future
-                Integer showTraktId = ShowTools.getShowTraktId(context, localShow);
+                Integer showTraktId = ShowTools.getShowTraktId(context, showId);
                 if (showTraktId != null) {
                     // Show can be tracked with Trakt.
 
                     if (isInitialSync) {
                         // upload all watched/collected episodes of the show
                         // do in between processing to stretch uploads over longer time periods
-                        upload(localShow, showTraktId, flag);
+                        uploadShow(showId, showTraktId, flag);
                         uploadedShowsCount++;
                     } else {
                         // Set all watched/collected episodes of show not watched/collected,
                         // clear plays if watched.
-                        ContentProviderOperation.Builder update = ContentProviderOperation
-                                .newUpdate(Episodes.buildEpisodesOfShowUri(localShow))
-                                .withSelection(flag.clearFlagSelection, null)
-                                .withValue(flag.databaseColumn, flag.notFlaggedValue);
-                        if (flag == Flag.WATCHED) {
-                            update.withValue(Episodes.PLAYS, 0);
-                        }
-                        batch.add(update.build());
+                        showsToClear.add(showId);
                     }
                 }
             }
         }
 
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "processTraktShows: failed to remove flag for %s.", flag.name);
+        // Clear all watched/collected episodes of marked shows.
+        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+        if (!showsToClear.isEmpty()) {
+            if (flag == Flag.WATCHED) {
+                database.sgEpisode2Helper().setShowsNotWatchedExcludeSkipped(showsToClear);
+            } else {
+                database.sgEpisode2Helper().updateCollectedOfShows(showsToClear, false);
+            }
         }
+
+        // Update last watched timestamps.
+        database.sgShow2Helper().updateLastWatchedMsIfLater(showIdsToLastWatched);
 
         if (uploadedShowsCount > 0) {
             Timber.d("processTraktShows: uploaded %s flags for %s complete shows.", flag.name,
-                    localShows.size());
+                    uploadedShowsCount);
         }
         return true;
     }
@@ -464,42 +468,20 @@ public class TraktEpisodeSync {
     }
 
     /**
-     * Adds an update op for the last watched time of the given show if the last watched time on
-     * trakt is later.
-     */
-    private void updateLastWatchedTime(Integer showTvdbId, BaseShow traktShow,
-            ArrayList<ContentProviderOperation> batch) {
-        if (traktShow.last_watched_at == null) {
-            return;
-        }
-        ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
-                traktShow.last_watched_at.toInstant().toEpochMilli());
-    }
-
-    /**
      * Uploads all watched/collected episodes for the given show to trakt.
-     *
-     * @return Any of the {@link TraktTools} result codes.
      */
-    private boolean upload(int showTvdbId, int showTraktId, Flag flag) {
-        // query for watched/collected episodes
-        Cursor localEpisodes = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showTvdbId),
-                EpisodesQuery.PROJECTION,
-                flag.flagSelection,
-                null,
-                Episodes.SORT_SEASON_ASC);
-        if (localEpisodes == null) {
-            Timber.e("upload: query failed");
-            return false;
+    private boolean uploadShow(long showId, int showTraktId, Flag flag) {
+        List<SgSeason2Numbers> localSeasons = SgRoomDatabase.getInstance(context)
+                .sgSeason2Helper()
+                .getSeasonNumbersOfShow(showId);
+
+        List<SyncSeason> syncSeasons = new ArrayList<>();
+        for (SgSeason2Numbers localSeason : localSeasons) {
+            syncSeasons.add(
+                    buildSyncSeason(localSeason.getId(), localSeason.getNumber(), flag));
         }
 
-        // build a list of watched/collected episodes
-        List<SyncSeason> syncSeasons = buildSyncSeasons(localEpisodes);
-        localEpisodes.close();
-
-        //noinspection SimplifiableIfStatement
-        if (syncSeasons.size() == 0) {
+        if (syncSeasons.isEmpty()) {
             return true; // nothing to upload for this show
         }
 
