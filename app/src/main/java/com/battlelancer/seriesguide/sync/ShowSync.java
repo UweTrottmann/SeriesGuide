@@ -120,7 +120,7 @@ public class ShowSync {
             }
             case FULL: {
                 // get all show IDs for a full update
-                return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIds();
+                return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIdsLong();
             }
             case DELTA:
                 return getShowsToDeltaUpdate(context, currentTime);

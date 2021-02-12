@@ -37,7 +37,7 @@ interface SgShow2Helper {
     fun getShowIds(id: Long): SgShow2Ids?
 
     @Query("SELECT _id FROM sg_show")
-    fun getShowIds(): List<Long>
+    fun getShowIdsLong(): List<Long>
 
     @Query("SELECT _id, series_lastupdate, series_airsdayofweek FROM sg_show")
     fun getShowsUpdateInfo(): List<SgShow2UpdateInfo>
