@@ -114,6 +114,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // from here on we need more sophisticated abort handling, so keep track of errors
         SyncProgress progress = new SyncProgress();
         progress.publish(SyncProgress.Step.TMDB);
+
+        TmdbSync tmdbSync = new TmdbSync(getContext(), tmdbConfigService.get(), movieTools.get());
+        // get latest TMDb configuration
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!tmdbSync.updateConfiguration(prefs)) {
+            progress.recordError();
+        }
+
         ShowTools showTools = SgApp.getServicesComponent(getContext()).showTools();
         UpdateResult resultCode = showSync.sync(getContext(), showTools, currentTime, progress);
         if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
@@ -127,15 +135,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // do some more things if this is not a quick update
         if (showSync.isSyncMultiple()) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getContext());
-
-            TmdbSync tmdbSync = new TmdbSync(getContext(), tmdbConfigService.get(),
-                    movieTools.get());
-            // get latest TMDb configuration, hexagon+trakt might add movies and need it
-            if (!tmdbSync.updateConfiguration(prefs)) {
-                progress.recordError();
-            }
             // update data of to be released movies
             if (!tmdbSync.updateMovies(progress)) {
                 progress.recordError();
