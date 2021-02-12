@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SgEpisode2CollectedUpdate;
-import com.battlelancer.seriesguide.provider.SgEpisode2ForTraktSync;
+import com.battlelancer.seriesguide.provider.SgEpisode2ForSync;
 import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
 import com.battlelancer.seriesguide.provider.SgEpisode2WatchedUpdate;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
@@ -321,13 +321,13 @@ public class TraktEpisodeSync {
                 .buildTraktEpisodesMap(traktSeason.episodes);
 
         SgEpisode2Helper helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
-        List<SgEpisode2ForTraktSync> localEpisodes = helper.getEpisodesForTraktSync(seasonId);
+        List<SgEpisode2ForSync> localEpisodes = helper.getEpisodesForTraktSync(seasonId);
 
         ArrayList<SgEpisode2WatchedUpdate> batch = new ArrayList<>();
         List<SyncEpisode> syncEpisodes = new ArrayList<>();
         int episodesSetOnePlayCount = 0;
         int episodesUnsetCount = 0;
-        for (SgEpisode2ForTraktSync localEpisode : localEpisodes) {
+        for (SgEpisode2ForSync localEpisode : localEpisodes) {
             long episodeId = localEpisode.getId();
             int episodeNumber = localEpisode.getNumber();
             boolean isWatchedLocally = EpisodeTools.isWatched(localEpisode.getWatched());
@@ -408,13 +408,13 @@ public class TraktEpisodeSync {
                 .buildTraktEpisodesMap(traktSeason.episodes);
 
         SgEpisode2Helper helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
-        List<SgEpisode2ForTraktSync> localEpisodes = helper.getEpisodesForTraktSync(seasonId);
+        List<SgEpisode2ForSync> localEpisodes = helper.getEpisodesForTraktSync(seasonId);
 
         ArrayList<SgEpisode2CollectedUpdate> batch = new ArrayList<>();
         List<SyncEpisode> syncEpisodes = new ArrayList<>();
         int episodesAddCount = 0;
         int episodesRemoveCount = 0;
-        for (SgEpisode2ForTraktSync localEpisode : localEpisodes) {
+        for (SgEpisode2ForSync localEpisode : localEpisodes) {
             long episodeId = localEpisode.getId();
             int episodeNumber = localEpisode.getNumber();
             boolean isCollectedLocally = localEpisode.getCollected();
@@ -549,7 +549,7 @@ public class TraktEpisodeSync {
     private SyncSeason buildSyncSeason(long seasonId, int seasonNumber, Flag flag) {
         // query for watched/collected episodes of the given season
         SgEpisode2Helper helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
-        List<SgEpisode2ForTraktSync> episodes;
+        List<SgEpisode2ForSync> episodes;
         if (flag == Flag.WATCHED) {
             episodes = helper.getWatchedEpisodesForTraktSync(seasonId);
         } else if (flag == Flag.COLLECTED){
@@ -559,7 +559,7 @@ public class TraktEpisodeSync {
         }
 
         List<SyncEpisode> syncEpisodes = new ArrayList<>();
-        for (SgEpisode2ForTraktSync episode : episodes) {
+        for (SgEpisode2ForSync episode : episodes) {
             SyncEpisode syncEpisode = new SyncEpisode().number(episode.getNumber());
 
             // Add an episode for each play, Trakt will create a separate play for each.

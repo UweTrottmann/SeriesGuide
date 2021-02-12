@@ -109,14 +109,14 @@ interface SgEpisode2Helper {
     @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfShow(showId: Long): List<SgEpisode2Numbers>
 
-    @Query("SELECT _id, episode_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId")
-    fun getEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForTraktSync>
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId")
+    fun getEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
 
-    @Query("SELECT _id, episode_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_watched = 1 ORDER BY episode_number ASC")
-    fun getWatchedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForTraktSync>
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_watched = 1 ORDER BY episode_number ASC")
+    fun getWatchedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
 
-    @Query("SELECT _id, episode_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_collected = 1 ORDER BY episode_number ASC")
-    fun getCollectedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForTraktSync>
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_collected = 1 ORDER BY episode_number ASC")
+    fun getCollectedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
 
     /**
      * WAIT, just for compile time validation of [SgEpisode2Info.buildQuery]
@@ -596,9 +596,10 @@ data class SgEpisode2Numbers(
     }
 }
 
-data class SgEpisode2ForTraktSync(
+data class SgEpisode2ForSync(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
     @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int,
+    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
     @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
     @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
     @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
