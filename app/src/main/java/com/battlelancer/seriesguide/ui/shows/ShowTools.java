@@ -246,6 +246,11 @@ public class ShowTools {
         return existingShows;
     }
 
+    @NonNull
+    public Map<Integer, Long> getTvdbIdsToShowIds() {
+        return showTools2.getTvdbIdsToShowIds(context);
+    }
+
     /**
      * Returns a set of the TVDb ids of all shows in the local database mapped
      * to their small poster path (null if there is no poster).

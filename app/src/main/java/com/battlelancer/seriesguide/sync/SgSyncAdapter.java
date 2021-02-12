@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.sync;
 
 import android.accounts.Account;
-import android.annotation.SuppressLint;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
@@ -20,18 +19,17 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.sync.HexagonSync.HexagonResult;
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import java.util.HashMap;
 import java.util.HashSet;
 import javax.inject.Inject;
 import timber.log.Timber;
@@ -142,9 +140,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             Timber.d("Syncing: TMDB...DONE");
 
             // sync with hexagon and trakt
-            @SuppressLint("UseSparseArrays") final HashMap<Integer, SearchResult> newShows
-                    = new HashMap<>();
             final HashSet<Integer> existingShows = ShowTools.getShowTvdbIdsAsSet(getContext());
+            boolean hasAddedShows = false;
 
             if (existingShows == null) {
                 resultCode = UpdateResult.INCOMPLETE;
@@ -152,12 +149,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 // sync with hexagon
                 boolean isHexagonEnabled = HexagonSettings.isEnabled(getContext());
                 if (isHexagonEnabled) {
-                    UpdateResult resultHexagonSync = new HexagonSync(getContext(),
-                            hexagonTools.get(), movieTools.get(), progress)
-                            .sync(existingShows, newShows);
+                    HexagonResult resultHexagonSync = new HexagonSync(getContext(),
+                            hexagonTools.get(), movieTools.get(), progress).sync();
+                    hasAddedShows = resultHexagonSync.hasAddedShows;
                     // don't overwrite failure
                     if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = resultHexagonSync;
+                        resultCode = resultHexagonSync.success
+                                ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
                     }
                     Timber.d("Syncing: Hexagon...DONE");
                 } else {
@@ -183,7 +181,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             // renew search table if shows were updated and it will not be renewed by add task
-            if (showSync.hasUpdatedShows() && newShows.size() == 0) {
+            if (showSync.hasUpdatedShows() && !hasAddedShows) {
                 SeriesGuideDatabase.rebuildFtsTable(getContext());
             }
 

@@ -109,6 +109,9 @@ interface SgEpisode2Helper {
     @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfShow(showId: Long): List<SgEpisode2Numbers>
 
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED} OR episode_collected = 1")
+    fun getEpisodesForHexagonSync(showId: Long): List<SgEpisode2ForSync>
+
     @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId")
     fun getEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
 
@@ -380,23 +383,28 @@ interface SgEpisode2Helper {
     @Query("UPDATE sg_episode SET episode_watched = :watched, episode_plays = :plays WHERE series_id = :showId AND episode_season_number = :seasonNumber AND episode_number = :episodeNumber")
     fun updateWatchedByNumber(showId: Long, seasonNumber: Int, episodeNumber: Int, watched: Int, plays: Int)
 
-    @Query("UPDATE sg_episode SET episode_collected = 1 WHERE series_id = :showId AND episode_season_number = :seasonNumber AND episode_number = :episodeNumber")
-    fun updateCollectedByNumber(showId: Long, seasonNumber: Int, episodeNumber: Int)
+    @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId AND episode_season_number = :seasonNumber AND episode_number = :episodeNumber")
+    fun updateCollectedByNumber(showId: Long, seasonNumber: Int, episodeNumber: Int, isCollected: Boolean)
 
     @Transaction
-    fun updateWatchedAndCollectedByNumber(episodes: List<SgEpisode2UpdateByNumber>, showId: Long) {
+    fun updateWatchedAndCollectedByNumber(episodes: List<SgEpisode2UpdateByNumber>) {
         for (episode in episodes) {
             if (episode.watched != null && episode.plays != null) {
                 updateWatchedByNumber(
-                    showId,
+                    episode.showId,
                     episode.seasonNumber,
                     episode.episodeNumber,
                     episode.watched,
                     episode.plays
                 )
             }
-            if (episode.collected) {
-                updateCollectedByNumber(showId, episode.seasonNumber, episode.episodeNumber)
+            if (episode.collected != null) {
+                updateCollectedByNumber(
+                    episode.showId,
+                    episode.seasonNumber,
+                    episode.episodeNumber,
+                    episode.collected
+                )
             }
         }
     }
@@ -630,9 +638,10 @@ data class SgEpisode2CollectedUpdate(
 )
 
 data class SgEpisode2UpdateByNumber(
+    val showId: Long,
     val episodeNumber: Int,
     val seasonNumber: Int,
     val watched: Int?,
     val plays: Int?,
-    val collected: Boolean
+    val collected: Boolean?
 )

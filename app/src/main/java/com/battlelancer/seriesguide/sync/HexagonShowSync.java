@@ -1,17 +1,15 @@
 package com.battlelancer.seriesguide.sync;
 
-import android.content.ContentProviderOperation;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
-import android.database.Cursor;
 import android.text.TextUtils;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.provider.SgShow2CloudUpdate;
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -21,15 +19,15 @@ import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import timber.log.Timber;
 
 public class HexagonShowSync {
 
-    private Context context;
-    private HexagonTools hexagonTools;
+    private final Context context;
+    private final HexagonTools hexagonTools;
 
     public HexagonShowSync(Context context, HexagonTools hexagonTools) {
         this.context = context;
@@ -41,8 +39,8 @@ public class HexagonShowSync {
      * shows not yet in the local database, determined by the given TVDb id set, will be added
      * to the given map.
      */
-    public boolean download(HashSet<Integer> existingShows, HashMap<Integer, SearchResult> newShows,
-            boolean hasMergedShows) {
+    public boolean download(Map<Integer, Long> tvdbIdsToShowIds,
+            HashMap<Integer, SearchResult> newShows, boolean hasMergedShows) {
         List<Show> shows;
         boolean hasMoreShows = true;
         String cursor = null;
@@ -104,16 +102,11 @@ public class HexagonShowSync {
                 break;
             }
 
-            // update all received shows, ContentProvider will ignore those not added locally
-            ArrayList<ContentProviderOperation> batch = buildShowUpdateOps(shows, existingShows,
+            // update all received shows, will ignore those not added locally
+            ArrayList<SgShow2CloudUpdate> batchOrNull = buildShowUpdates(shows, tvdbIdsToShowIds,
                     newShows, !hasMergedShows);
-
-            try {
-                DBUtils.applyInSmallBatches(context, batch);
-            } catch (OperationApplicationException e) {
-                Timber.e(e, "download: applying show updates failed");
-                return false;
-            }
+            if (batchOrNull == null) return false;
+            SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(batchOrNull);
         }
 
         if (hasMergedShows) {
@@ -127,75 +120,77 @@ public class HexagonShowSync {
         return true;
     }
 
-    private ArrayList<ContentProviderOperation> buildShowUpdateOps(List<Show> shows,
-            HashSet<Integer> existingShows, HashMap<Integer, SearchResult> newShows,
+    /**
+     * Returns null on network error while looking up TMDB id of new show.
+     */
+    @Nullable
+    private ArrayList<SgShow2CloudUpdate> buildShowUpdates(List<Show> shows,
+            Map<Integer, Long> tvdbIdsToShowIds, HashMap<Integer, SearchResult> newShows,
             boolean mergeValues) {
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-
-        ContentValues values = new ContentValues();
+        ArrayList<SgShow2CloudUpdate> batch = new ArrayList<>();
         for (Show show : shows) {
             // schedule to add shows not in local database
-            if (!existingShows.contains(show.getTvdbId())) {
+            Long showIdOrNull = tvdbIdsToShowIds.get(show.getTvdbId());
+            if (showIdOrNull == null) {
                 // ...but do NOT add shows marked as removed
                 if (show.getIsRemoved() != null && show.getIsRemoved()) {
                     continue;
                 }
 
                 if (!newShows.containsKey(show.getTvdbId())) {
-                    SearchResult item = new SearchResult();
-                    item.setTvdbid(show.getTvdbId());
-                    item.setLanguage(show.getLanguage());
-                    item.setTitle("");
-                    newShows.put(show.getTvdbId(), item);
+                    // Look up TMDB id
+                    Integer showTmdbIdOrNull = new TmdbTools2()
+                            .findShowTmdbId(context, show.getTvdbId());
+                    if (showTmdbIdOrNull == null) {
+                        // Network error, abort.
+                        return null;
+                    }
+                    // Only add if TMDB id found
+                    if (showTmdbIdOrNull != -1) {
+                        SearchResult item = new SearchResult();
+                        item.setTmdbId(showTmdbIdOrNull);
+                        item.setLanguage(show.getLanguage());
+                        item.setTitle("");
+                        newShows.put(show.getTvdbId(), item);
+                    }
                 }
-
-                continue;
-            }
-
-            buildShowPropertyValues(show, values, mergeValues);
-
-            // build update op
-            if (values.size() > 0) {
-                ContentProviderOperation op = ContentProviderOperation
-                        .newUpdate(SeriesGuideContract.Shows.buildShowUri(show.getTvdbId()))
-                        .withValues(values).build();
-                batch.add(op);
-
-                // clean up for re-use
-                values.clear();
+            } else {
+                SgShow2CloudUpdate update = SgRoomDatabase.getInstance(context)
+                        .sgShow2Helper()
+                        .getForCloudUpdate(showIdOrNull);
+                if (update != null) {
+                    boolean hasUpdates = false;
+                    if (show.getIsFavorite() != null) {
+                        // when merging, favorite shows, but never unfavorite them
+                        if (!mergeValues || show.getIsFavorite()) {
+                            update.setFavorite(show.getIsFavorite());
+                            hasUpdates = true;
+                        }
+                    }
+                    if (show.getNotify() != null) {
+                        // when merging, enable notifications, but never disable them
+                        if (!mergeValues || show.getNotify()) {
+                            update.setNotify(show.getNotify());
+                            hasUpdates = true;
+                        }
+                    }
+                    if (show.getIsHidden() != null) {
+                        // when merging, un-hide shows, but never hide them
+                        if (!mergeValues || !show.getIsHidden()) {
+                            update.setHidden(show.getIsHidden());
+                            hasUpdates = true;
+                        }
+                    }
+                    if (!TextUtils.isEmpty(show.getLanguage())) {
+                        // always overwrite with hexagon language value
+                        update.setLanguage(show.getLanguage());
+                        hasUpdates = true;
+                    }
+                    if (hasUpdates) batch.add(update);
+                }
             }
         }
-
         return batch;
-    }
-
-    /**
-     * @param mergeValues If set, only overwrites property if remote show property has a certain
-     * value.
-     */
-    private void buildShowPropertyValues(Show show, ContentValues values, boolean mergeValues) {
-        if (show.getIsFavorite() != null) {
-            // when merging, favorite shows, but never unfavorite them
-            if (!mergeValues || show.getIsFavorite()) {
-                values.put(SeriesGuideContract.Shows.FAVORITE, show.getIsFavorite() ? 1 : 0);
-            }
-        }
-        if (show.getNotify() != null) {
-            // when merging, enable notifications, but never disable them
-            if (!mergeValues || show.getNotify()) {
-                values.put(SeriesGuideContract.Shows.NOTIFY, show.getNotify() ? 1 : 0);
-            }
-        }
-        if (show.getIsHidden() != null) {
-            // when merging, un-hide shows, but never hide them
-            if (!mergeValues || !show.getIsHidden()) {
-                values.put(SeriesGuideContract.Shows.HIDDEN, show.getIsHidden() ? 1 : 0);
-            }
-        }
-        if (!TextUtils.isEmpty(show.getLanguage())) {
-            // always overwrite with hexagon language value
-            values.put(SeriesGuideContract.Shows.LANGUAGE, show.getLanguage());
-        }
     }
 
     /**
@@ -203,16 +198,26 @@ public class HexagonShowSync {
      */
     public boolean uploadAll() {
         Timber.d("uploadAll: uploading all shows");
-        List<Show> shows = buildShowList();
-        if (shows == null) {
-            Timber.e("uploadAll: show query was null");
-            return false;
+        List<SgShow2CloudUpdate> forCloudUpdate = SgRoomDatabase.getInstance(context)
+                .sgShow2Helper().getForCloudUpdate();
+
+        List<Show> shows = new LinkedList<>();
+        for (SgShow2CloudUpdate localShow : forCloudUpdate) {
+            if (localShow.getTvdbId() == null) continue;
+            Show show = new Show();
+            show.setTvdbId(localShow.getTvdbId());
+            show.setIsFavorite(localShow.getFavorite());
+            show.setNotify(localShow.getNotify());
+            show.setIsHidden(localShow.getHidden());
+            show.setLanguage(localShow.getLanguage());
+            shows.add(show);
         }
         if (shows.size() == 0) {
             Timber.d("uploadAll: no shows to upload");
             // nothing to upload
             return true;
         }
+
         return upload(shows);
     }
 
@@ -243,35 +248,5 @@ public class HexagonShowSync {
         }
 
         return true;
-    }
-
-    private List<Show> buildShowList() {
-        List<Show> shows = new LinkedList<>();
-
-        Cursor query = context.getContentResolver()
-                .query(SeriesGuideContract.Shows.CONTENT_URI, new String[] {
-                        SeriesGuideContract.Shows._ID, // 0
-                        SeriesGuideContract.Shows.FAVORITE, // 1
-                        SeriesGuideContract.Shows.NOTIFY, // 2
-                        SeriesGuideContract.Shows.HIDDEN, // 3
-                        SeriesGuideContract.Shows.LANGUAGE // 4
-                }, null, null, null);
-        if (query == null) {
-            return null;
-        }
-
-        while (query.moveToNext()) {
-            Show show = new Show();
-            show.setTvdbId(query.getInt(0));
-            show.setIsFavorite(query.getInt(1) == 1);
-            show.setNotify(query.getInt(2) == 1);
-            show.setIsHidden(query.getInt(3) == 1);
-            show.setLanguage(query.getString(4));
-            shows.add(show);
-        }
-
-        query.close();
-
-        return shows;
     }
 }

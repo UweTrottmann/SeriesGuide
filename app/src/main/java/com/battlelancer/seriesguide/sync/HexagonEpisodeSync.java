@@ -1,22 +1,16 @@
 package com.battlelancer.seriesguide.sync;
 
-import android.content.ContentProviderOperation;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
-import android.database.Cursor;
 import android.text.TextUtils;
-import androidx.collection.SparseArrayCompat;
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgEpisode2ForSync;
 import com.battlelancer.seriesguide.provider.SgEpisode2UpdateByNumber;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -25,16 +19,17 @@ import com.uwetrottmann.seriesguide.backend.episodes.model.Episode;
 import com.uwetrottmann.seriesguide.backend.episodes.model.EpisodeList;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import timber.log.Timber;
 
 public class HexagonEpisodeSync {
 
     public static final int MAX_BATCH_SIZE = 500;
 
-    private Context context;
-    private HexagonTools hexagonTools;
+    private final Context context;
+    private final HexagonTools hexagonTools;
 
     public HexagonEpisodeSync(Context context, HexagonTools hexagonTools) {
         this.context = context;
@@ -45,20 +40,16 @@ public class HexagonEpisodeSync {
      * Downloads all episodes changed since the last time this was called and applies changes to
      * the database.
      */
-    public boolean downloadChangedFlags() {
-        HashSet<Integer> showTvdbIds = ShowTools.getShowTvdbIdsAsSet(context);
-        if (showTvdbIds == null) {
-            return false;
-        }
-
+    public boolean downloadChangedFlags(@NonNull Map<Integer, Long> tvdbIdsToShowIds) {
         long currentTime = System.currentTimeMillis();
+        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
         DateTime lastSyncTime = new DateTime(HexagonSettings.getLastEpisodesSyncTime(context));
         Timber.d("downloadChangedFlags: since %s", lastSyncTime);
 
         List<Episode> episodes;
         String cursor = null;
         boolean hasMoreEpisodes = true;
-        SparseArrayCompat<Long> showsLastWatchedMs = new SparseArrayCompat<>();
+        Map<Long, Long> showIdsToLastWatched = new HashMap<>();
         while (hasMoreEpisodes) {
             try {
                 // get service each time to check if auth was removed
@@ -100,70 +91,57 @@ public class HexagonEpisodeSync {
             }
 
             // build batch of episode flag updates
-            ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+            ArrayList<SgEpisode2UpdateByNumber> batch = new ArrayList<>();
             for (Episode episode : episodes) {
                 Integer showTvdbId = episode.getShowTvdbId();
-                if (!showTvdbIds.contains(showTvdbId)) {
+                Long showId = tvdbIdsToShowIds.get(showTvdbId);
+                if (showId == null) {
                     continue; // ignore, show not added on this device
                 }
 
-                ContentValues values = new ContentValues();
                 Integer watchedFlag = episode.getWatchedFlag();
+                Integer playsOrNull = null;
                 if (watchedFlag != null) {
-                    values.put(SeriesGuideContract.Episodes.WATCHED, watchedFlag);
                     if (watchedFlag == EpisodeFlags.WATCHED) {
                         // Watched.
                         // Note: plays may be null for legacy data. Protect against invalid data.
                         if (episode.getPlays() != null && episode.getPlays() >= 1) {
-                            values.put(SeriesGuideContract.Episodes.PLAYS, episode.getPlays());
+                            playsOrNull = episode.getPlays();
                         } else {
-                            values.put(SeriesGuideContract.Episodes.PLAYS, 1);
+                            playsOrNull = 1;
                         }
                     } else {
                         // Skipped or not watched.
-                        values.put(SeriesGuideContract.Episodes.PLAYS, 0);
+                        playsOrNull = 0;
                     }
 
                     // record the latest last watched time for a show
                     if (!EpisodeTools.isUnwatched(watchedFlag)) {
-                        Long lastWatchedMs = showsLastWatchedMs.get(showTvdbId);
+                        Long lastWatchedMs = showIdsToLastWatched.get(showId);
                         // episodes returned in reverse chrono order, so just get the first time
                         if (lastWatchedMs == null && episode.getUpdatedAt() != null) {
                             long updatedAtMs = episode.getUpdatedAt().getValue();
-                            showsLastWatchedMs.put(showTvdbId, updatedAtMs);
+                            showIdsToLastWatched.put(showId, updatedAtMs);
                         }
                     }
                 }
-                if (episode.getIsInCollection() != null) {
-                    values.put(SeriesGuideContract.Episodes.COLLECTED,
-                            episode.getIsInCollection() ? 1 : 0);
-                }
 
-                ContentProviderOperation op = ContentProviderOperation
-                        .newUpdate(SeriesGuideContract.Episodes.CONTENT_URI)
-                        .withSelection(SeriesGuideContract.Shows.REF_SHOW_ID + "="
-                                + showTvdbId + " AND "
-                                + SeriesGuideContract.Episodes.SEASON + "="
-                                + episode.getSeasonNumber() + " AND "
-                                + SeriesGuideContract.Episodes.NUMBER + "="
-                                + episode.getEpisodeNumber(), null)
-                        .withValues(values)
-                        .build();
-
-                batch.add(op);
+                batch.add(new SgEpisode2UpdateByNumber(
+                        showId,
+                        episode.getEpisodeNumber(),
+                        episode.getSeasonNumber(),
+                        watchedFlag,
+                        playsOrNull,
+                        episode.getIsInCollection()
+                ));
             }
 
             // execute database update
-            try {
-                DBUtils.applyInSmallBatches(context, batch);
-            } catch (OperationApplicationException e) {
-                Timber.e(e, "downloadChangedFlags: failed to apply updates");
-                return false;
-            }
+            database.sgEpisode2Helper().updateWatchedAndCollectedByNumber(batch);
         }
 
-        if (!updateLastWatchedTimeOfShows(showsLastWatchedMs)) {
-            return false;
+        if (!showIdsToLastWatched.isEmpty()) {
+            database.sgShow2Helper().updateLastWatchedMsIfLater(showIdsToLastWatched);
         }
 
         // store new last sync time
@@ -269,17 +247,18 @@ public class HexagonEpisodeSync {
                 }
 
                 batch.add(new SgEpisode2UpdateByNumber(
+                        showId,
                         episode.getEpisodeNumber(),
                         episode.getSeasonNumber(),
                         watchedFlagOrNull,
                         playsOrNull,
-                        inCollection
+                        episode.getIsInCollection()
                 ));
             }
 
             // execute database update
             SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-                    .updateWatchedAndCollectedByNumber(batch, showId);
+                    .updateWatchedAndCollectedByNumber(batch);
         }
 
         if (lastWatchedMs != null) {
@@ -290,79 +269,49 @@ public class HexagonEpisodeSync {
         return true;
     }
 
-    private boolean updateLastWatchedTimeOfShows(SparseArrayCompat<Long> showsLastWatchedMs) {
-        if (showsLastWatchedMs.size() == 0) {
-            return true; // no episodes were watched, no last watched time to update
-        }
-
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        for (int i = 0; i < showsLastWatchedMs.size(); i++) {
-            int showTvdbId = showsLastWatchedMs.keyAt(i);
-            long lastWatchedMsNew = showsLastWatchedMs.valueAt(i);
-            if (!ShowTools.addLastWatchedUpdateOpIfNewer(context, batch, showTvdbId,
-                    lastWatchedMsNew)) {
-                return false; // failed to query current last watched ms
-            }
-        }
-
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "updateLastWatchedTimeOfShows: failed to apply updates");
-            return false;
-        }
-
-        return true;
-    }
-
     /**
      * Uploads all watched, skipped including plays or collected episodes of this show to Hexagon.
      *
      * @return Whether the upload was successful.
      */
-    public boolean uploadFlags(int showTvdbId) {
-        Timber.d("uploadFlags: for show %s", showTvdbId);
+    public boolean uploadFlags(long showId, int showTvdbId) {
+        Timber.d("uploadFlags: for show %s", showId);
 
         // query for watched, skipped or collected episodes
-        Cursor query = context.getContentResolver()
-                .query(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
-                        FlaggedEpisodesQuery.PROJECTION, FlaggedEpisodesQuery.SELECTION,
-                        null, null
-                );
-        if (query == null) {
-            Timber.e("uploadFlags: query was null");
-            return false;
-        }
-        if (query.getCount() == 0) {
+        List<SgEpisode2ForSync> episodesForSync = SgRoomDatabase.getInstance(context)
+                .sgEpisode2Helper()
+                .getEpisodesForHexagonSync(showId);
+        if (episodesForSync.isEmpty()) {
             Timber.d("uploadFlags: no flags to upload");
-            query.close();
             return true;
         }
 
         // build list of episodes to upload
         List<Episode> episodes = new ArrayList<>();
-        while (query.moveToNext()) {
-            Episode episode = new Episode();
-            episode.setSeasonNumber(query.getInt(FlaggedEpisodesQuery.SEASON));
-            episode.setEpisodeNumber(query.getInt(FlaggedEpisodesQuery.NUMBER));
+        int count = episodesForSync.size();
+        for (int i = 0; i < count; i++) {
+            SgEpisode2ForSync episodeForSync = episodesForSync.get(i);
 
-            int watchedFlag = query.getInt(FlaggedEpisodesQuery.WATCHED);
+            Episode episode = new Episode();
+            episode.setSeasonNumber(episodeForSync.getSeason());
+            episode.setEpisodeNumber(episodeForSync.getNumber());
+
+            int watchedFlag = episodeForSync.getWatched();
             if (!EpisodeTools.isUnwatched(watchedFlag)) {
                 // Skipped or watched.
                 episode.setWatchedFlag(watchedFlag);
-                episode.setPlays(query.getInt(FlaggedEpisodesQuery.PLAYS));
+                episode.setPlays(episodeForSync.getPlays());
             }
 
-            boolean isInCollection = EpisodeTools.isCollected(
-                    query.getInt(FlaggedEpisodesQuery.IN_COLLECTION));
-            if (isInCollection) {
+            if (episodeForSync.getCollected()) {
                 episode.setIsInCollection(true);
             }
 
             episodes.add(episode);
 
             // upload a batch
-            if (episodes.size() == MAX_BATCH_SIZE || query.isLast()) {
+            boolean isLast = i + 1 == count;
+            if (episodes.size() == MAX_BATCH_SIZE || isLast) {
                 EpisodeList episodeList = new EpisodeList();
                 episodeList.setEpisodes(episodes);
                 episodeList.setShowTvdbId(showTvdbId);
@@ -377,7 +326,6 @@ public class HexagonEpisodeSync {
                 } catch (IOException e) {
                     // abort
                     Errors.logAndReportHexagon("save episodes of show", e);
-                    query.close();
                     return false;
                 }
 
@@ -386,29 +334,6 @@ public class HexagonEpisodeSync {
             }
         }
 
-        query.close();
-
         return true;
     }
-
-    private interface FlaggedEpisodesQuery {
-        String[] PROJECTION = new String[] {
-                SeriesGuideContract.Episodes._ID,
-                SeriesGuideContract.Episodes.SEASON,
-                SeriesGuideContract.Episodes.NUMBER,
-                SeriesGuideContract.Episodes.WATCHED,
-                SeriesGuideContract.Episodes.PLAYS,
-                SeriesGuideContract.Episodes.COLLECTED
-        };
-
-        String SELECTION = SeriesGuideContract.Episodes.WATCHED + "!=" + EpisodeFlags.UNWATCHED
-                + " OR " + SeriesGuideContract.Episodes.COLLECTED + "=1";
-
-        int SEASON = 1;
-        int NUMBER = 2;
-        int WATCHED = 3;
-        int PLAYS = 4;
-        int IN_COLLECTION = 5;
-    }
-
 }

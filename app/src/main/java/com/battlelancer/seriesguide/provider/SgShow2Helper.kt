@@ -6,6 +6,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RawQuery
+import androidx.room.Transaction
 import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.model.SgShow2
@@ -35,6 +36,9 @@ interface SgShow2Helper {
 
     @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show WHERE _id=:id")
     fun getShowIds(id: Long): SgShow2Ids?
+
+    @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show")
+    fun getShowIds(): List<SgShow2Ids>
 
     @Query("SELECT _id FROM sg_show")
     fun getShowIdsLong(): List<Long>
@@ -123,8 +127,24 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_syncenabled = 1 WHERE _id = :id")
     fun setHexagonMergeCompleted(id: Long)
 
+    @Query("SELECT _id, series_tvdb_id, series_language, series_favorite, series_hidden, series_notify FROM sg_show WHERE _id = :id")
+    fun getForCloudUpdate(id: Long): SgShow2CloudUpdate?
+
+    @Query("SELECT _id, series_tvdb_id, series_language, series_favorite, series_hidden, series_notify FROM sg_show")
+    fun getForCloudUpdate(): List<SgShow2CloudUpdate>
+
+    @Update(entity = SgShow2::class)
+    fun updateForCloudUpdate(updates: List<SgShow2CloudUpdate>)
+
     @Query("UPDATE sg_show SET series_lastwatched_ms = :lastWatchedMs WHERE _id = :id AND series_lastwatched_ms < :lastWatchedMs")
     fun updateLastWatchedMsIfLater(id: Long, lastWatchedMs: Long)
+
+    @Transaction
+    fun updateLastWatchedMsIfLater(showIdsToLastWatched: Map<Long, Long>) {
+        showIdsToLastWatched.forEach {
+            updateLastWatchedMsIfLater(it.key, it.value)
+        }
+    }
 
     @Query("UPDATE sg_show SET series_lastupdate = :lastUpdatedMs WHERE _id = :id")
     fun setLastUpdated(id: Long, lastUpdatedMs: Long)
@@ -228,4 +248,13 @@ data class SgShow2Update(
     @ColumnInfo(name = SgShow2Columns.POSTER) val poster: String?,
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val posterSmall: String?,
     @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long
+)
+
+data class SgShow2CloudUpdate(
+    @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?,
+    @ColumnInfo(name = SgShow2Columns.LANGUAGE) var language: String?,
+    @ColumnInfo(name = SgShow2Columns.FAVORITE) var favorite: Boolean,
+    @ColumnInfo(name = SgShow2Columns.HIDDEN) var hidden: Boolean,
+    @ColumnInfo(name = SgShow2Columns.NOTIFY) var notify: Boolean
 )
