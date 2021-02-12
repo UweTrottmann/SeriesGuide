@@ -29,6 +29,19 @@ interface SgEpisode2Helper {
     @Insert
     fun insertEpisodes(episodes: List<SgEpisode2>): LongArray
 
+    @Update(entity = SgEpisode2::class)
+    fun updateEpisodes(episodes: List<SgEpisode2Update>): Int
+
+    @Query("DELETE FROM sg_episode WHERE _id = :episodeId")
+    fun deleteEpisode(episodeId: Long)
+
+    @Transaction
+    fun deleteEpisodes(episodeIds: List<Long>) {
+        episodeIds.forEach {
+            deleteEpisode(it)
+        }
+    }
+
     @Query("SELECT _id FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
     fun getEpisodeId(tvdbId: Int): Long
 
@@ -77,6 +90,9 @@ interface SgEpisode2Helper {
      */
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
     fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
+
+    @Query("SELECT _id, episode_tmdb_id FROM sg_episode WHERE season_id = :seasonId")
+    fun getEpisodeIdsOfSeason(seasonId: Long): List<SgEpisode2Ids>
 
     /**
      * Also serves as compile time validation of [SgEpisode2Numbers.buildQuery]
@@ -399,6 +415,16 @@ interface SgEpisode2Helper {
     @Query("UPDATE sg_episode SET episode_lastupdate = 0 WHERE series_id = :showId")
     fun resetLastUpdatedForShow(showId: Long)
 
+    @Query("DELETE FROM sg_episode WHERE season_id = :seasonId")
+    fun deleteEpisodesOfSeason(seasonId: Long): Int
+
+    @Transaction
+    fun deleteEpisodesOfSeasons(seasonIds: List<Long>) {
+        seasonIds.forEach {
+            deleteEpisodesOfSeason(it)
+        }
+    }
+
     @Query("DELETE FROM sg_episode WHERE series_id = :showId")
     fun deleteEpisodesOfShow(showId: Long): Int
 }
@@ -543,6 +569,11 @@ data class SgEpisode2Info(
     }
 }
 
+data class SgEpisode2Ids(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?
+)
+
 data class SgEpisode2Numbers(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
     @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
@@ -571,6 +602,19 @@ data class SgEpisode2ForTraktSync(
     @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
     @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
     @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
+)
+
+data class SgEpisode2Update(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TITLE) val title: String?,
+    @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int,
+    @ColumnInfo(name = SgEpisode2Columns.ORDER) val order: Int,
+    @ColumnInfo(name = SgEpisode2Columns.DIRECTORS) val directors: String?,
+    @ColumnInfo(name = SgEpisode2Columns.GUESTSTARS) val guestStars: String?,
+    @ColumnInfo(name = SgEpisode2Columns.WRITERS) val writers: String?,
+    @ColumnInfo(name = SgEpisode2Columns.IMAGE) val image: String?,
+    @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val firstReleasedMs: Long,
 )
 
 data class SgEpisode2WatchedUpdate(

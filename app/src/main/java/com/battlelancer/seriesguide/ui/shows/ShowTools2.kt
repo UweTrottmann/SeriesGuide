@@ -14,6 +14,8 @@ import com.battlelancer.seriesguide.model.SgSeason2
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.provider.SgEpisode2Ids
+import com.battlelancer.seriesguide.provider.SgEpisode2Update
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgSeason2Numbers
 import com.battlelancer.seriesguide.provider.SgSeason2Update
@@ -296,15 +298,21 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             if (seasonId == -1L) return@forEachIndexed
 
             val seasonDetails = getEpisodesOfSeason(
-                show,
+                ReleaseInfo(
+                    show.releaseTimeZone,
+                    show.releaseTimeOrDefault,
+                    show.releaseCountry,
+                    show.network
+                ),
                 showTmdbId,
                 showId,
                 season.number,
                 seasonId,
-                language
+                language,
+                null
             )
             if (seasonDetails.result != ShowResult.SUCCESS) return seasonDetails.result
-            val episodes = seasonDetails.episodes!!
+            val episodes = seasonDetails.episodeDetails!!.toInsert
             episodeHelper.insertEpisodes(episodes)
         }
 
@@ -369,16 +377,17 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
     data class SeasonDetails(
         val result: ShowResult,
-        val episodes: List<SgEpisode2>? = null
+        val episodeDetails: EpisodeDetails? = null
     )
 
     private fun getEpisodesOfSeason(
-        show: SgShow2,
+        releaseInfo: ReleaseInfo,
         showTmdbId: Int,
         showId: Long,
         seasonNumber: Int,
         seasonId: Long,
-        language: String
+        language: String,
+        localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?
     ): SeasonDetails {
         val fallbackLanguage: String? = DisplaySettings.getShowsLanguageFallback(context)
             .let { if (it != language) it else null }
@@ -397,36 +406,55 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             null
         }
 
-        val episodes = mapToSgEpisode2(
+        val episodeDetails = mapToSgEpisode2(
             tmdbEpisodes,
             tmdbEpisodesFallback,
-            show,
+            releaseInfo,
             showId,
             seasonId,
-            seasonNumber
+            seasonNumber,
+            localEpisodesByTmdbId
         )
 
         return SeasonDetails(
             ShowResult.SUCCESS,
-            episodes
+            episodeDetails
         )
     }
 
+    data class EpisodeDetails(
+        val toInsert: List<SgEpisode2>,
+        val toUpdate: List<SgEpisode2Update>,
+        val toRemove: List<Long>
+    )
+
+    data class ReleaseInfo(
+        val releaseTimeZone: String?,
+        val releaseTimeOrDefault: Int,
+        val releaseCountry: String?,
+        val network: String?
+    )
+
+    /**
+     * If [localEpisodesByTmdbId] is not null, will add update or delete info.
+     */
     private fun mapToSgEpisode2(
         tmdbEpisodes: List<TvEpisode>,
         tmdbEpisodesFallback: List<TvEpisode>?,
-        show: SgShow2,
+        releaseInfo: ReleaseInfo,
         showId: Long,
         seasonId: Long,
-        seasonNumber: Int
-    ): List<SgEpisode2> {
-        val showTimeZone = TimeTools.getDateTimeZone(show.releaseTimeZone)
-        val showReleaseTime = TimeTools.getShowReleaseTime(show.releaseTimeOrDefault)
+        seasonNumber: Int,
+        localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?
+    ): EpisodeDetails {
+        val showTimeZone = TimeTools.getDateTimeZone(releaseInfo.releaseTimeZone)
+        val showReleaseTime = TimeTools.getShowReleaseTime(releaseInfo.releaseTimeOrDefault)
         val deviceTimeZone = TimeZone.getDefault().id
 
-        return tmdbEpisodes.mapNotNull { tmdbEpisode ->
-            val tmdbId = tmdbEpisode.id
-            if (tmdbEpisode.id == null) return@mapNotNull null
+        val toInsert = mutableListOf<SgEpisode2>()
+        val toUpdate = mutableListOf<SgEpisode2Update>()
+        tmdbEpisodes.forEach { tmdbEpisode ->
+            val tmdbId = tmdbEpisode.id ?: return@forEach
 
             // If name or overview are empty use fallback
             val isMissingTitle = tmdbEpisode.name.isNullOrEmpty()
@@ -446,8 +474,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 showTimeZone,
                 tmdbEpisode.air_date,
                 showReleaseTime,
-                show.releaseCountry,
-                show.network,
+                releaseInfo.releaseCountry,
+                releaseInfo.network,
                 deviceTimeZone
             )
 
@@ -463,22 +491,51 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             // so it and last updated time are currently not used
             // to only update changed episodes.
 
-            SgEpisode2(
-                showId = showId,
-                seasonId = seasonId,
-                tmdbId = tmdbEpisode.id,
-                title = titleOrNull ?: "",
-                overview = overviewOrNull,
-                number = tmdbEpisode.episode_number ?: 0,
-                order = tmdbEpisode.episode_number ?: 0,
-                season = seasonNumber,
-                image = tmdbEpisode.still_path,
-                firstReleasedMs = releaseDateTime,
-                directors = TextTools.mendTvdbStrings(directors),
-                guestStars = TextTools.mendTvdbStrings(guestStars),
-                writers = TextTools.mendTvdbStrings(writers)
-            )
+            val localEpisodeIdOrNull = localEpisodesByTmdbId?.get(tmdbId)
+            if (localEpisodeIdOrNull == null) {
+                // Insert
+                toInsert.add(
+                    SgEpisode2(
+                        showId = showId,
+                        seasonId = seasonId,
+                        tmdbId = tmdbEpisode.id,
+                        title = titleOrNull ?: "",
+                        overview = overviewOrNull,
+                        number = tmdbEpisode.episode_number ?: 0,
+                        order = tmdbEpisode.episode_number ?: 0,
+                        season = seasonNumber,
+                        image = tmdbEpisode.still_path,
+                        firstReleasedMs = releaseDateTime,
+                        directors = TextTools.mendTvdbStrings(directors),
+                        guestStars = TextTools.mendTvdbStrings(guestStars),
+                        writers = TextTools.mendTvdbStrings(writers)
+                    )
+                )
+            } else {
+                // Update
+                toUpdate.add(
+                    SgEpisode2Update(
+                        id = localEpisodeIdOrNull.id,
+                        title = titleOrNull ?: "",
+                        overview = overviewOrNull,
+                        number = tmdbEpisode.episode_number ?: 0,
+                        order = tmdbEpisode.episode_number ?: 0,
+                        directors = TextTools.mendTvdbStrings(directors),
+                        guestStars = TextTools.mendTvdbStrings(guestStars),
+                        writers = TextTools.mendTvdbStrings(writers),
+                        image = tmdbEpisode.still_path,
+                        firstReleasedMs = releaseDateTime
+                    )
+                )
+                // Remove from map so episode will not get deleted.
+                localEpisodesByTmdbId.remove(tmdbId)
+            }
         }
+
+        // Mark any local episodes that are no longer on TMDB for removal.
+        val toRemove = localEpisodesByTmdbId?.map { it.value.id } ?: emptyList()
+
+        return EpisodeDetails(toInsert, toUpdate, toRemove)
     }
 
     /**
@@ -510,16 +567,53 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val updated = database.sgShow2Helper().updateShow(show)
         if (updated != 1) return ShowResult.DATABASE_ERROR
 
-        // TODO add, update and remove seasons and episodes.
-        updateSeasons(showDetails.seasons, showId)
+        // Insert, update and remove seasons.
+        val seasons = updateSeasons(showDetails.seasons, showId)
+        // Insert, update and remove episodes of inserted or updated seasons.
+        seasons.forEach { season ->
+            val episodeHelper = database.sgEpisode2Helper()
+            val episodes = episodeHelper.getEpisodeIdsOfSeason(season.id)
+
+            val episodesByTmdbId = mutableMapOf<Int, SgEpisode2Ids>()
+            episodes.forEach {
+                if (it.tmdbId != null) episodesByTmdbId[it.tmdbId] = it
+            }
+
+            val seasonDetails = getEpisodesOfSeason(
+                ReleaseInfo(
+                    show.releaseTimeZone,
+                    show.releaseTime,
+                    show.releaseCountry,
+                    show.network
+                ),
+                showTmdbId,
+                showId,
+                season.number,
+                season.id,
+                language,
+                episodesByTmdbId
+            )
+            if (seasonDetails.result != ShowResult.SUCCESS) return seasonDetails.result
+            val episodeDetails = seasonDetails.episodeDetails!!
+            episodeHelper.insertEpisodes(episodeDetails.toInsert)
+            episodeHelper.updateEpisodes(episodeDetails.toUpdate)
+            episodeHelper.deleteEpisodes(episodeDetails.toRemove)
+        }
 
         return ShowResult.SUCCESS
     }
 
-    private fun updateSeasons(tmdbSeasons: List<TvSeason>?, showId: Long) {
-        if (tmdbSeasons.isNullOrEmpty()) return
+    data class SeasonInfo(val id: Long, val number: Int)
 
-        val helper = SgRoomDatabase.getInstance(context).sgSeason2Helper()
+    /**
+     * Returns season IDs (and numbers) that were inserted or updated, excluding removed seasons.
+     * Use to update episodes of those e
+     */
+    private fun updateSeasons(tmdbSeasons: List<TvSeason>?, showId: Long): List<SeasonInfo> {
+        if (tmdbSeasons.isNullOrEmpty()) return emptyList()
+
+        val database = SgRoomDatabase.getInstance(context)
+        val helper = database.sgSeason2Helper()
         val seasons = helper.getSeasonNumbersOfShow(showId)
 
         val seasonsByTmdbId = mutableMapOf<String, SgSeason2Numbers>()
@@ -529,6 +623,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         val toInsert = mutableListOf<SgSeason2>()
         val toUpdate = mutableListOf<SgSeason2Update>()
+        val toReturn = mutableListOf<SeasonInfo>()
         tmdbSeasons.forEach { tmdbSeason ->
             val tmdbId = tmdbSeason.id
             val number = tmdbSeason.season_number
@@ -550,17 +645,31 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                         name = tmdbSeason.name
                     )
                 )
+                toReturn.add(SeasonInfo(seasonOrNull.id, number))
                 // Remove from map so it will not get deleted.
                 seasonsByTmdbId.remove(tmdbId.toString())
             }
         }
 
-        if (toInsert.isNotEmpty()) helper.insertSeasons(toInsert)
+        if (toInsert.isNotEmpty()) {
+            val seasonIds = helper.insertSeasons(toInsert)
+            toInsert.forEachIndexed { index, season ->
+                val seasonId = seasonIds[index]
+                if (seasonId == -1L) return@forEachIndexed
+                toReturn.add(SeasonInfo(seasonId, season.number))
+            }
+        }
         if (toUpdate.isNotEmpty()) helper.updateSeasons(toUpdate)
 
-        // Remove any local season that is not on TMDB any longer.
+        // Remove any local season (and its episodes) that is not on TMDB any longer.
+        // Note: this rarely happens as seasons can only be removed by mods.
         val toRemove = seasonsByTmdbId.map { it.value.id }
-        if (toRemove.isNotEmpty()) helper.deleteSeasons(toRemove)
+        if (toRemove.isNotEmpty()) {
+            database.sgEpisode2Helper().deleteEpisodesOfSeasons(toRemove)
+            helper.deleteSeasons(toRemove)
+        }
+
+        return toReturn
     }
 
     /**
