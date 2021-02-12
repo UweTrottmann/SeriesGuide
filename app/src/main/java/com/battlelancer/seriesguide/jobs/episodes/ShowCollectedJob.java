@@ -19,7 +19,7 @@ public class ShowCollectedJob extends ShowBaseJob {
     @Override
     protected boolean applyDatabaseChanges(@NonNull Context context) {
         int rowsUpdated = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-                .updateCollectedOfShow(getShowId(), isCollected);
+                .updateCollectedOfShowExcludeSpecials(getShowId(), isCollected);
         return rowsUpdated >= 0; // -1 means error.
     }
 
