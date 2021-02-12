@@ -49,7 +49,6 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -384,17 +383,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         String overview = episode.getOverview();
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            String languageCode = show.getLanguage();
-            overview = getString(R.string.no_translation,
-                    LanguageTools.getShowLanguageStringFor(getContext(), languageCode),
-                    getString(R.string.tvdb));
+            overview = TextToolsK.textNoTranslation(requireContext(), show.getLanguage());
         } else if (hideDetails) {
             overview = getString(R.string.no_spoilers);
         }
-        long lastEditSeconds = episode.getLastEditedSec();
         binding.textviewDescription.setText(
-                TextTools.textWithTvdbSource(binding.textviewDescription.getContext(), overview,
-                        lastEditSeconds));
+                TextTools.textWithTmdbSource(binding.textviewDescription.getContext(), overview));
 
         // release date, also build release time and day
         boolean isReleased;

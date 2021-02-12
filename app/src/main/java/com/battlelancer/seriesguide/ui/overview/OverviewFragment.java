@@ -62,10 +62,10 @@ import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.ClipboardTools;
-import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
+import com.battlelancer.seriesguide.util.TextToolsK;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
@@ -603,15 +603,12 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         String languageCode = show.getLanguage();
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            overview = getString(R.string.no_translation,
-                    LanguageTools.getShowLanguageStringFor(getContext(), languageCode),
-                    getString(R.string.tvdb));
+            overview = TextToolsK.textNoTranslation(requireContext(), languageCode);
         } else if (DisplaySettings.preventSpoilers(getContext())) {
             overview = getString(R.string.no_spoilers);
         }
-        long lastEditSeconds = episode.getLastEditedSec();
-        textDescription.setText(TextTools.textWithTvdbSource(textDescription.getContext(),
-                overview, lastEditSeconds));
+        textDescription.setText(TextTools.textWithTmdbSource(textDescription.getContext(),
+                overview));
 
         // TVDb button
         final Integer episodeTvdbId = episode.getTvdbId();

@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -375,19 +376,9 @@ class ShowFragment() : Fragment() {
         val languageCode = show.language
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            overview = getString(
-                R.string.no_translation,
-                LanguageTools.getShowLanguageStringFor(
-                    context,
-                    languageCode
-                ), getString(R.string.tvdb)
-            )
+            overview = TextToolsK.textNoTranslation(requireContext(), languageCode)
         }
-        val lastEditSeconds = show.lastEditedSec
-        textViewOverview.text = TextTools.textWithTvdbSource(
-            textViewOverview.context,
-            overview, lastEditSeconds
-        )
+        textViewOverview.text = TextTools.textWithTmdbSource(textViewOverview.context, overview)
 
         // language preferred for content
         val languageData = LanguageTools.getShowLanguageDataFor(
