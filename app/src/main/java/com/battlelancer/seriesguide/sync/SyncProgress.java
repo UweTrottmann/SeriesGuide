@@ -12,7 +12,6 @@ import timber.log.Timber;
 public class SyncProgress {
 
     public enum Step {
-        TVDB(R.string.tvdb, 0),
         TMDB(R.string.tmdb, 0),
         HEXAGON_EPISODES(R.string.hexagon, R.string.episodes),
         HEXAGON_SHOWS(R.string.hexagon, R.string.shows),
