@@ -12,8 +12,8 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -125,7 +125,7 @@ class ListItemsAdapter extends BaseShowsAdapter {
         }
 
         // poster
-        TvdbImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
+        ImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
                 cursor.getString(Query.SHOW_POSTER_SMALL));
 
         // context menu

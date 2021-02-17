@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
@@ -83,7 +82,8 @@ public class SgPicassoRequestHandler extends RequestHandler {
                     if (data != null && !data.isEmpty()) {
 
                         String imagePath = TvdbTools.getHighestRatedPoster(data).smallSize;
-                        String imageUrl = TvdbImageTools.artworkUrl(imagePath);
+                        String imageUrl = ImageTools
+                                .tmdbOrTvdbPosterUrl(imagePath, context, false);
                         if (imageUrl != null) {
                             return loadFromNetwork(Uri.parse(imageUrl), networkPolicy);
                         }
@@ -101,7 +101,8 @@ public class SgPicassoRequestHandler extends RequestHandler {
             }
             TvShow showDetails = new TmdbTools2().getShowDetails(showTmdbId, language, context);
             if (showDetails != null) {
-                String url = ImageTools.tmdbOrTvdbPosterUrl(showDetails.poster_path, context);
+                String url = ImageTools
+                        .tmdbOrTvdbPosterUrl(showDetails.poster_path, context, false);
                 if (url != null) {
                     return loadFromNetwork(Uri.parse(url), networkPolicy);
                 }

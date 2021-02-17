@@ -13,7 +13,6 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.drawable.Icon
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
@@ -58,7 +57,7 @@ class ShortcutCreator(
 
     private suspend fun createBitmap(): Bitmap? = suspendCoroutine { continuation ->
         // Try to get the show poster
-        val posterUrl = TvdbImageTools.artworkUrl(posterPath)
+        val posterUrl = ImageTools.tmdbOrTvdbPosterUrl(posterPath, context)
         if (posterUrl == null) {
             continuation.resume(null)
             return@suspendCoroutine

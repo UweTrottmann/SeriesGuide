@@ -9,10 +9,10 @@ import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.util.Errors;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -95,7 +95,8 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     protected void addItems(List<NowAdapter.NowItem> items, List<HistoryEntry> history) {
-        SparseArrayCompat<String> localShows = ShowTools.getSmallPostersByTvdbId(getContext());
+        SparseArrayCompat<String> tmdbIdsToPoster = SgApp.getServicesComponent(getContext())
+                .showTools().getTmdbIdsToPoster();
         long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
         for (int i = 0, size = history.size(); i < size; i++) {
             HistoryEntry entry = history.get(i);
@@ -115,10 +116,11 @@ public class TraktRecentEpisodeHistoryLoader
             // look for a TVDB poster
             String posterUrl;
             Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
-            if (showTvdbId != null && localShows != null) {
+            Integer showTmdbId = entry.show.ids == null ? null : entry.show.ids.tmdb;
+            if (showTmdbId != null && tmdbIdsToPoster != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
-                posterUrl = TvdbImageTools.posterUrlOrResolve(localShows.get(showTvdbId),
-                        showTvdbId, DisplaySettings.LANGUAGE_EN);
+                posterUrl = ImageTools.posterUrlOrResolve(tmdbIdsToPoster.get(showTmdbId),
+                        showTmdbId, DisplaySettings.LANGUAGE_EN, getContext());
             } else {
                 posterUrl = null;
             }

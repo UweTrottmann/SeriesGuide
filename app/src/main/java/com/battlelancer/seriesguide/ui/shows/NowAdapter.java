@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -243,7 +243,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
 
             // a TVDb or no poster
-            TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
+            ImageTools.loadShowPosterUrlResizeSmallCrop(getContext(), holder.poster,
                     item.tvdbPosterUrl);
 
             holder.show.setText(item.title);

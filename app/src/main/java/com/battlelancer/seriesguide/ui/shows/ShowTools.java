@@ -256,32 +256,6 @@ public class ShowTools {
         return showTools2.getTvdbIdsToShowIds(context);
     }
 
-    /**
-     * Returns a set of the TVDb ids of all shows in the local database mapped
-     * to their small poster path (null if there is no poster).
-     *
-     * @return null if there was an error, empty list if there are no shows.
-     */
-    @Nullable
-    public static SparseArrayCompat<String> getSmallPostersByTvdbId(Context context) {
-        SparseArrayCompat<String> existingShows = new SparseArrayCompat<>();
-
-        Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[]{SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.POSTER_SMALL},
-                null, null, null);
-        if (shows == null) {
-            return null;
-        }
-
-        while (shows.moveToNext()) {
-            existingShows.put(shows.getInt(0), shows.getString(1));
-        }
-
-        shows.close();
-
-        return existingShows;
-    }
-
     @NonNull
     public SparseArrayCompat<String> getTmdbIdsToPoster() {
         return showTools2.getTmdbIdsToPoster(context);

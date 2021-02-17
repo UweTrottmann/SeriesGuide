@@ -45,7 +45,11 @@ object ImageTools {
     }
 
     @JvmStatic
-    fun tmdbOrTvdbPosterUrl(imagePath: String?, context: Context): String? {
+    fun tmdbOrTvdbPosterUrl(
+        imagePath: String?,
+        context: Context,
+        originalSize: Boolean = false
+    ): String? {
         return if (imagePath.isNullOrEmpty()) {
             null
         } else {
@@ -63,7 +67,13 @@ object ImageTools {
                 }
                 else -> {
                     // TMDB images have no path at all.
-                    "${TmdbSettings.getPosterBaseUrl(context)}$imagePath"
+                    // Use small size based on density, or original size (as large as possible).
+                    val tmdbBaseUrl = if (originalSize) {
+                        TmdbSettings.getImageBaseUrl(context) + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL
+                    } else {
+                        TmdbSettings.getPosterBaseUrl(context)
+                    }
+                    "$tmdbBaseUrl$imagePath"
                 }
             }
             buildImageCacheUrl(imageUrl)
@@ -105,14 +115,94 @@ object ImageTools {
         }
     }
 
-    @JvmStatic
-    fun loadAndResizeAndCrop(
-        url: String?,
+    /**
+     * Tries to load the given show poster into the given [ImageView]
+     * without any resizing or cropping.
+     */
+    fun loadShowPoster(
+        context: Context,
         imageView: ImageView,
-        context: Context
+        posterPath: String?
+    ) {
+        ServiceUtils.loadWithPicasso(context, tmdbOrTvdbPosterUrl(posterPath, context))
+            .noFade()
+            .into(imageView)
+    }
+
+    /**
+     * Tries to load the given TVDb show poster into the given [ImageView] without any
+     * resizing or cropping. In addition sets alpha on the view.
+     */
+    @JvmStatic
+    fun loadShowPosterAlpha(
+        context: Context,
+        imageView: ImageView,
+        posterPath: String?
+    ) {
+        imageView.imageAlpha = 30
+        loadShowPoster(context, imageView, posterPath)
+    }
+
+    /**
+     * Tries to load a resized, center cropped version of the show poster into the given
+     * [ImageView]. On failure displays an error drawable (ensure image view is set to center
+     * inside).
+     *
+     * The resize dimensions are those used for posters in the show list and change depending on
+     * screen size.
+     */
+    @JvmStatic
+    fun loadShowPosterResizeCrop(
+        context: Context,
+        imageView: ImageView,
+        posterPath: String?
+    ) {
+        loadShowPosterUrlResizeCrop(context, imageView, tmdbOrTvdbPosterUrl(posterPath, context))
+    }
+
+    @JvmStatic
+    fun loadShowPosterUrlResizeCrop(
+        context: Context,
+        imageView: ImageView,
+        url: String?
     ) {
         ServiceUtils.loadWithPicasso(context, url)
             .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
+            .centerCrop()
+            .error(R.drawable.ic_photo_gray_24dp)
+            .into(imageView)
+    }
+
+    fun loadShowPosterResizeSmallCrop(
+        context: Context,
+        imageView: ImageView,
+        posterPath: String?
+    ) {
+        loadShowPosterUrlResizeSmallCrop(
+            context,
+            imageView,
+            tmdbOrTvdbPosterUrl(posterPath, context)
+        )
+    }
+
+    /**
+     * Tries to load a resized, center cropped version of the show poster into the given
+     * [ImageView]. On failure displays an error drawable (ensure image view is set to center
+     * inside).
+     *
+     * The resize dimensions are fixed for all screen sizes. Like for items using the show list
+     * layout, use [loadShowPosterResizeCrop].
+     *
+     * @param posterUrl This should already be a built poster URL, not just a poster path!
+     */
+    @JvmStatic
+    fun loadShowPosterUrlResizeSmallCrop(
+        context: Context,
+        imageView: ImageView,
+        posterUrl: String?
+    ) {
+        ServiceUtils.loadWithPicasso(context, posterUrl)
+            .resizeDimen(R.dimen.show_poster_width_default, R.dimen.show_poster_height_default)
             .centerCrop()
             .error(R.drawable.ic_photo_gray_24dp)
             .into(imageView)

@@ -6,7 +6,7 @@ import com.battlelancer.seriesguide.model.SgActivity;
 import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
 import com.battlelancer.seriesguide.provider.SgEpisode2WithShow;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import java.util.ArrayList;
@@ -55,7 +55,8 @@ class RecentlyWatchedLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>
                                     episode.getSeason(),
                                     episode.getEpisodenumber(),
                                     episode.getEpisodetitle()),
-                            TvdbImageTools.artworkUrl(episode.getSeries_poster_small()))
+                            ImageTools.tmdbOrTvdbPosterUrl(episode.getSeries_poster_small(),
+                                    getContext(), false))
                     .tvdbIds(episodeTvdbId, episode.getShowTvdbId()).recentlyWatchedLocal();
             items.add(item);
         }

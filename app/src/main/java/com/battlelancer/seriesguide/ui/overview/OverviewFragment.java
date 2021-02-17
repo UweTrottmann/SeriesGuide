@@ -62,6 +62,7 @@ import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.util.ClipboardTools;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -714,7 +715,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         buttonFavorite.setTag(isFavorite);
 
         // poster background
-        TvdbImageTools.loadShowPosterAlpha(requireContext(), imageBackground,
+        ImageTools.loadShowPosterAlpha(requireContext(), imageBackground,
                 show.getPosterSmall());
 
         // Regular network, release time and length.

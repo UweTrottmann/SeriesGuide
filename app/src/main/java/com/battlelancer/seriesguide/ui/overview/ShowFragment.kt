@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher
@@ -38,6 +37,7 @@ import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
@@ -461,23 +461,27 @@ class ShowFragment() : Fragment() {
             containerPoster.isFocusable = false
         } else {
             // poster and fullscreen button
-            TvdbImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterSmall)
+            ImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
                 val intent = Intent(activity, FullscreenImageActivity::class.java)
                 intent.putExtra(
                     FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
-                    TvdbImageTools.artworkUrl(posterSmall)
+                    ImageTools.tmdbOrTvdbPosterUrl(posterSmall, requireContext())
                 )
                 intent.putExtra(
                     FullscreenImageActivity.EXTRA_IMAGE,
-                    TvdbImageTools.artworkUrl(show.poster)
+                    ImageTools.tmdbOrTvdbPosterUrl(
+                        show.poster,
+                        requireContext(),
+                        originalSize = true
+                    )
                 )
                 Utils.startActivityWithAnimation(activity, intent, v)
             }
 
             // poster background
-            TvdbImageTools.loadShowPosterAlpha(
+            ImageTools.loadShowPosterAlpha(
                 requireActivity(),
                 imageViewBackground,
                 posterSmall

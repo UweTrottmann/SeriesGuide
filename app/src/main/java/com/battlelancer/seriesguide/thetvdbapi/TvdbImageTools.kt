@@ -18,7 +18,7 @@ object TvdbImageTools {
      * Builds a url for a TVDb poster or screenshot (episode still) using the given image path.
      */
     @JvmStatic
-    @Deprecated("Use ImageTools instead")
+    @Deprecated("Use ImageTools.tmdbOrTvdbPosterUrl instead")
     fun artworkUrl(imagePath: String?): String? {
         return if (imagePath.isNullOrEmpty()) {
             null
@@ -61,34 +61,6 @@ object TvdbImageTools {
     }
 
     /**
-     * Tries to load the given TVDb show poster into the given [ImageView]
-     * without any resizing or cropping.
-     */
-    fun loadShowPoster(
-        context: Context,
-        imageView: ImageView,
-        posterPath: String?
-    ) {
-        ServiceUtils.loadWithPicasso(context, artworkUrl(posterPath))
-            .noFade()
-            .into(imageView)
-    }
-
-    /**
-     * Tries to load the given TVDb show poster into the given [ImageView] without any
-     * resizing or cropping. In addition sets alpha on the view.
-     */
-    @JvmStatic
-    fun loadShowPosterAlpha(
-        context: Context,
-        imageView: ImageView,
-        posterPath: String?
-    ) {
-        imageView.imageAlpha = 30
-        loadShowPoster(context, imageView, posterPath)
-    }
-
-    /**
      * Tries to load a resized, center cropped version of the show poster into the given
      * [ImageView]. On failure displays an error drawable (ensure image view is set to center
      * inside).
@@ -97,26 +69,13 @@ object TvdbImageTools {
      * screen size.
      */
     @JvmStatic
+    @Deprecated("Use ImageTools.loadShowPosterResizeCrop instead")
     fun loadShowPosterResizeCrop(
         context: Context,
         imageView: ImageView,
         posterPath: String?
     ) {
         ServiceUtils.loadWithPicasso(context, artworkUrl(posterPath))
-            .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
-            .centerCrop()
-            .error(R.drawable.ic_photo_gray_24dp)
-            .into(imageView)
-    }
-
-    @JvmStatic
-    @Deprecated("Use ImageTools instead")
-    fun loadUrlResizeCrop(
-        context: Context,
-        imageView: ImageView,
-        url: String?
-    ) {
-        ServiceUtils.loadWithPicasso(context, url)
             .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
             .centerCrop()
             .error(R.drawable.ic_photo_gray_24dp)
@@ -134,6 +93,7 @@ object TvdbImageTools {
      * @param posterUrl This should already be a built TVDB poster URL, not just a poster path!
      */
     @JvmStatic
+    @Deprecated("Use ImageTools.loadShowPosterResizeSmallCrop instead")
     fun loadShowPosterResizeSmallCrop(
         context: Context,
         imageView: ImageView,

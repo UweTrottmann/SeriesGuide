@@ -10,8 +10,8 @@ import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.HistoryEntry
@@ -89,18 +89,19 @@ class HistoryItemViewHolder(
         // show title
         binding.textViewHistoryShow.text = item.show?.title
         // show poster, use a TVDB one
-        val showTvdbId = item.show?.ids?.tvdb
-        val posterUrl = if (localShowPosters != null && showTvdbId != null) {
+        val showTmdbId = item.show?.ids?.tmdb
+        val posterUrl = if (localShowPosters != null && showTmdbId != null) {
             // prefer poster of already added show, fall back to first uploaded poster
-            TvdbImageTools.posterUrlOrResolve(
-                localShowPosters.get(showTvdbId),
-                showTvdbId,
-                DisplaySettings.LANGUAGE_EN
+            ImageTools.posterUrlOrResolve(
+                localShowPosters.get(showTmdbId),
+                showTmdbId,
+                DisplaySettings.LANGUAGE_EN,
+                context
             )
         } else {
             null
         }
-        TvdbImageTools.loadShowPosterResizeSmallCrop(
+        ImageTools.loadShowPosterUrlResizeSmallCrop(
             context,
             binding.imageViewHistoryPoster,
             posterUrl
@@ -130,7 +131,7 @@ class HistoryItemViewHolder(
             null // no poster
         }
         val context = binding.root.context.applicationContext
-        TvdbImageTools.loadShowPosterResizeSmallCrop(
+        ImageTools.loadShowPosterUrlResizeSmallCrop(
             context,
             binding.imageViewHistoryPoster,
             posterUrl

@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgShow2ForLists
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools.loadShowPosterResizeCrop
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 
@@ -124,7 +124,7 @@ class ShowSearchAdapter(
             remainingCount.visibility = View.GONE // unused
 
             // poster
-            loadShowPosterResizeCrop(context, poster, show.posterSmall)
+            ImageTools.loadShowPosterResizeCrop(context, poster, show.posterSmall)
 
             // context menu
             isHidden = show.hidden

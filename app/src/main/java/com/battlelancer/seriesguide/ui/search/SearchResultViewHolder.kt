@@ -65,7 +65,7 @@ class SearchResultViewHolder(
                 itemView.context
             )
         } else null
-        ImageTools.loadAndResizeAndCrop(posterUrl, poster, itemView.context)
+        ImageTools.loadShowPosterUrlResizeCrop(itemView.context, poster, posterUrl)
     }
 
     companion object {

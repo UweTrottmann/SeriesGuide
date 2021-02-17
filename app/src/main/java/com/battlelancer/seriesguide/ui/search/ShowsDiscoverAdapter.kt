@@ -148,8 +148,7 @@ class ShowsDiscoverAdapter(
                 holder.title.text = showTitle
                 holder.description.text = item.overview
 
-                val posterUrl = ImageTools.tmdbOrTvdbPosterUrl(item.posterPath, context)
-                ImageTools.loadAndResizeAndCrop(posterUrl, holder.poster, context)
+                ImageTools.loadShowPosterResizeCrop(context, holder.poster, item.posterPath)
             }
         }
     }

@@ -256,7 +256,7 @@ public abstract class AddFragment extends Fragment {
                     item.getTmdbId(),
                     item.getLanguage(),
                     getContext());
-            ImageTools.loadAndResizeAndCrop(posterUrl, holder.poster, getContext());
+            ImageTools.loadShowPosterUrlResizeCrop(getContext(), holder.poster, posterUrl);
 
             return convertView;
         }
