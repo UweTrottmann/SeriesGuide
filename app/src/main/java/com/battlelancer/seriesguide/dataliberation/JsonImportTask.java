@@ -29,8 +29,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -328,7 +328,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         if ((show.poster_small == null || show.poster_small.length() == 0)
                 && show.poster != null && show.poster.length() > 0) {
             show.poster_small = show.poster
-                    .replace(".jpg", TvdbImageTools.TVDB_THUMBNAIL_POSTFIX);
+                    .replace(".jpg", ImageTools.TVDB_THUMBNAIL_POSTFIX);
         }
         // ensure a show will be updated (last_updated might be far into the future)
         if (show.last_updated > System.currentTimeMillis()) {

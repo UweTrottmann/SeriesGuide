@@ -484,12 +484,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.also {
                 it.isFocusable = true
                 it.setOnClickListener { view ->
-                    val largeImageUrl = (TmdbSettings.getImageBaseUrl(activity)
-                            + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL + tmdbMovie.poster_path)
-                    val intent = Intent(activity, FullscreenImageActivity::class.java).apply {
-                        putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE, smallImageUrl)
-                        putExtra(FullscreenImageActivity.EXTRA_IMAGE, largeImageUrl)
-                    }
+                    val largeImageUrl =
+                        TmdbSettings.getImageOriginalUrl(activity, tmdbMovie.poster_path)
+                    val intent = FullscreenImageActivity.intent(
+                        requireActivity(),
+                        smallImageUrl,
+                        largeImageUrl
+                    )
                     Utils.startActivityWithAnimation(activity, intent, view)
                 }
             }

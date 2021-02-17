@@ -464,19 +464,13 @@ class ShowFragment() : Fragment() {
             ImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
-                val intent = Intent(activity, FullscreenImageActivity::class.java)
-                intent.putExtra(
-                    FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
-                    ImageTools.tmdbOrTvdbPosterUrl(posterSmall, requireContext())
-                )
-                intent.putExtra(
-                    FullscreenImageActivity.EXTRA_IMAGE,
+                val intent = FullscreenImageActivity.intent(requireContext(),
+                    ImageTools.tmdbOrTvdbPosterUrl(posterSmall, requireContext()),
                     ImageTools.tmdbOrTvdbPosterUrl(
                         show.poster,
                         requireContext(),
                         originalSize = true
-                    )
-                )
+                    ))
                 Utils.startActivityWithAnimation(activity, intent, v)
             }
 

@@ -36,7 +36,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
@@ -49,6 +48,7 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.DialogTools;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -466,9 +466,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // episode image
         final String imagePath = episode.getImage();
         binding.containerImage.setOnClickListener(v -> {
-            Intent intent = new Intent(requireActivity(), FullscreenImageActivity.class);
-            intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
-                    TvdbImageTools.artworkUrl(imagePath));
+            Intent intent = FullscreenImageActivity.intent(requireContext(),
+                    ImageTools.tmdbOrTvdbStillUrl(imagePath, requireContext(), false),
+                    ImageTools.tmdbOrTvdbStillUrl(imagePath, requireContext(), true));
             Utils.startActivityWithAnimation(requireActivity(), intent, v);
         });
         loadImage(imagePath, hideDetails);
@@ -670,7 +670,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             // try loading image
             binding.containerImage.setVisibility(View.VISIBLE);
-            ServiceUtils.loadWithPicasso(requireContext(), TvdbImageTools.artworkUrl(imagePath))
+            ServiceUtils.loadWithPicasso(requireContext(),
+                    ImageTools.tmdbOrTvdbStillUrl(imagePath, requireContext(), false))
                     .error(R.drawable.ic_photo_gray_24dp)
                     .into(binding.imageviewScreenshot,
                             new Callback() {

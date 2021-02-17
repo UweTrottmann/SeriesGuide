@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
@@ -654,7 +653,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             imageEpisode.setImageResource(R.drawable.ic_photo_gray_24dp);
         } else {
             // try loading image
-            ServiceUtils.loadWithPicasso(requireContext(), TvdbImageTools.artworkUrl(imagePath))
+            ServiceUtils.loadWithPicasso(requireContext(),
+                    ImageTools.tmdbOrTvdbStillUrl(imagePath, requireContext(), false))
                     .error(R.drawable.ic_photo_gray_24dp)
                     .into(imageEpisode,
                             new Callback() {

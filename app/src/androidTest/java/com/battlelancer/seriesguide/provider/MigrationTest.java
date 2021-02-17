@@ -21,8 +21,8 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.movies.MovieDetails;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.io.IOException;
 import org.junit.After;
@@ -196,7 +196,7 @@ public class MigrationTest {
         assertTestData_series_seasons_episodes(db);
         queryAndAssert(db, "SELECT series_poster_small, poster FROM series",
                 series -> assertThat(series.getString(0))
-                        .isEqualTo(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX + series.getString(1)));
+                        .isEqualTo(ImageTools.TVDB_LEGACY_CACHE_PREFIX + series.getString(1)));
     }
 
     @Test

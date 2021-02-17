@@ -6,7 +6,6 @@ import android.widget.ImageView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.TmdbSettings
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import timber.log.Timber
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -16,6 +15,8 @@ import javax.crypto.spec.SecretKeySpec
  */
 object ImageTools {
 
+    const val TVDB_THUMBNAIL_POSTFIX = "_t.jpg"
+    const val TVDB_LEGACY_CACHE_PREFIX = "_cache/"
     private const val TVDB_MIRROR_BANNERS = "https://artworks.thetvdb.com/banners/"
     private const val TVDB_LEGACY_MIRROR_BANNERS = "https://www.thetvdb.com/banners/"
 
@@ -59,7 +60,7 @@ object ImageTools {
             // https://artworks.thetvdb.com/banners/posters/example_t.jpg
             // Using the artworks subdomain with the legacy cache prefix is not supported.
             val imageUrl = when {
-                imagePath.contains(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX, false) -> {
+                imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
                     "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
                 }
                 imagePath.startsWith("posters/") -> {
@@ -68,12 +69,46 @@ object ImageTools {
                 else -> {
                     // TMDB images have no path at all.
                     // Use small size based on density, or original size (as large as possible).
-                    val tmdbBaseUrl = if (originalSize) {
-                        TmdbSettings.getImageBaseUrl(context) + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL
+                    if (originalSize) {
+                        TmdbSettings.getImageOriginalUrl(context, imagePath)
                     } else {
-                        TmdbSettings.getPosterBaseUrl(context)
+                        "${TmdbSettings.getPosterBaseUrl(context)}$imagePath"
                     }
-                    "$tmdbBaseUrl$imagePath"
+                }
+            }
+            buildImageCacheUrl(imageUrl)
+        }
+    }
+
+    @JvmStatic
+    fun tmdbOrTvdbStillUrl(
+        imagePath: String?,
+        context: Context,
+        originalSize: Boolean = false
+    ): String? {
+        return if (imagePath.isNullOrEmpty()) {
+            null
+        } else {
+            // If the path contains the legacy TVDB cache prefix, use the www subdomain as it has
+            // a redirect to the new thumbnail URL set up (artworks subdomain + file name postfix).
+            // E.g. https://www.thetvdb.com/banners/_cache/posters/example.jpg redirects to
+            // https://artworks.thetvdb.com/banners/posters/example_t.jpg
+            // Using the artworks subdomain with the legacy cache prefix is not supported.
+            val imageUrl = when {
+                imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
+                    "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
+                }
+                imagePath.startsWith("episodes/") -> {
+                    "${TVDB_MIRROR_BANNERS}$imagePath"
+                }
+                else -> {
+                    // TMDB images have no path at all.
+                    // Use small size based on density, or original size (as large as possible).
+                    if (originalSize) {
+                        TmdbSettings.getImageOriginalUrl(context, imagePath)
+                    } else {
+                        TmdbSettings.getStillUrl(context, imagePath)
+                    }
                 }
             }
             buildImageCacheUrl(imageUrl)
