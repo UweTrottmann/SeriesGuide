@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.HexagonSync.HexagonResult;
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
@@ -59,7 +58,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     static final String EXTRA_SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
 
-    @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<HexagonTools> hexagonTools;
     @Inject Lazy<Sync> traktSync;
     @Inject Lazy<MovieTools> movieTools;

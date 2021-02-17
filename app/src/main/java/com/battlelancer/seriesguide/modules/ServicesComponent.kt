@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.modules
 
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools
 import com.battlelancer.seriesguide.traktapi.ConnectTraktTask
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.ui.movies.MovieTools
@@ -45,7 +44,6 @@ interface ServicesComponent {
     fun traktUsers(): Users
     fun tvdb(): TheTvdb
     fun tvdbEpisodes(): TheTvdbEpisodes
-    fun tvdbTools(): TvdbTools
 
     fun inject(addShowTask: AddShowTask)
     fun inject(connectTraktTask: ConnectTraktTask)
