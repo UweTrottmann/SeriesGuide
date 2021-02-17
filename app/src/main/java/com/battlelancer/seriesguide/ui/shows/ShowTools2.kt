@@ -15,9 +15,11 @@ import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgEpisode2Ids
+import com.battlelancer.seriesguide.provider.SgEpisode2TmdbIdUpdate
 import com.battlelancer.seriesguide.provider.SgEpisode2Update
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgSeason2Numbers
+import com.battlelancer.seriesguide.provider.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.provider.SgSeason2Update
 import com.battlelancer.seriesguide.provider.SgShow2Update
 import com.battlelancer.seriesguide.service.NotificationService
@@ -543,18 +545,27 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
      */
     fun updateShow(showId: Long): ShowResult {
         val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
-        val showTmdbId = helper.getShowTmdbId(showId)
-        if (showTmdbId == 0) {
-            // TODO Try migration to TMDB instead, but still mark as updated to try again later?
-            helper.setLastUpdated(showId, System.currentTimeMillis())
-            return ShowResult.SUCCESS
-        }
 
         val language = helper.getLanguage(showId).let {
             // handle legacy records
             // default to 'en' for consistent behavior across devices
             // and to encourage users to set language
             if (it.isNullOrEmpty()) DisplaySettings.LANGUAGE_EN else it
+        }
+
+        var showTmdbId = helper.getShowTmdbId(showId)
+        if (showTmdbId == 0) {
+            Timber.d("Try to migrate show %d to TMDB IDs", showId)
+            val migrationResult = migrateShowToTmdbIds(showId, language)
+            if (migrationResult != ShowResult.SUCCESS) {
+                // Failed to migrate, try again later.
+                helper.setLastUpdated(showId, System.currentTimeMillis())
+                return ShowResult.SUCCESS
+            } else {
+                // Continue with updating now that show has TMDB IDs
+                showTmdbId = helper.getShowTmdbId(showId)
+                if (showTmdbId == 0) return ShowResult.DATABASE_ERROR
+            }
         }
 
         val showDetails = getShowDetails(showTmdbId, language, true)
@@ -670,6 +681,122 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         }
 
         return toReturn
+    }
+
+    private fun migrateShowToTmdbIds(showId: Long, language: String): ShowResult {
+        val database = SgRoomDatabase.getInstance(context)
+        val helper = database.sgShow2Helper()
+
+        val showTvdbId = helper.getShowTvdbId(showId)
+        if (showTvdbId == 0) return ShowResult.DATABASE_ERROR
+
+        // Find TMDB ID
+        val showTmdbId = TmdbTools2().findShowTmdbId(context, showTvdbId)
+        if (showTmdbId == null) {
+            return ShowResult.TMDB_ERROR
+        } else if (showTmdbId == -1) {
+            return ShowResult.DOES_NOT_EXIST
+        }
+
+        val result = migrateSeasonsToTmdbIds(showId, showTmdbId, language)
+        if (result != ShowResult.SUCCESS) return result
+
+        // Set TMDB ID on show last, is used to determine if successfully migrated.
+        helper.updateTmdbId(showId, showTmdbId)
+
+        return ShowResult.SUCCESS
+    }
+
+    private fun migrateSeasonsToTmdbIds(
+        showId: Long,
+        showTmdbId: Int,
+        language: String
+    ): ShowResult {
+        val database = SgRoomDatabase.getInstance(context)
+        val seasonNumbers = database.sgSeason2Helper().getSeasonNumbersOfShow(showId)
+        val tmdbResult = TmdbTools2().getShowAndExternalIds(showTmdbId, language, context)
+        val tmdbShow = tmdbResult.first ?: return tmdbResult.second
+        val tmdbSeasons = tmdbShow.seasons
+
+        if (tmdbSeasons.isNullOrEmpty()) {
+            return if (seasonNumbers.isEmpty()) {
+                // No seasons locally or on TMDB, done.
+                Timber.d("Migration done early, no seasons")
+                ShowResult.SUCCESS
+            } else {
+                // TMDB has no data, avoid removing and try again later.
+                Timber.d("Stopping migration, no seasons on TMDB")
+                ShowResult.DOES_NOT_EXIST
+            }
+        }
+
+        // Set TMDB IDs on seasons, match by number.
+        val seasonUpdates = mutableListOf<SgSeason2TmdbIdUpdate>()
+        seasonNumbers.forEach { localSeason ->
+            val seasonTmdbId = tmdbSeasons.find { it.season_number == localSeason.number }?.id
+            if (seasonTmdbId == null) {
+                Timber.d("Failed to find TMDB ID for season %d", localSeason.number)
+                return@forEach
+            }
+
+            seasonUpdates.add(SgSeason2TmdbIdUpdate(localSeason.id, seasonTmdbId.toString()))
+
+            val episodeNumbers =
+                database.sgEpisode2Helper().getEpisodeNumbersOfSeason(localSeason.id)
+            val tmdbEpisodes =
+                TmdbTools2().getSeason(showTmdbId, localSeason.number, language, context)
+                    ?.episodes
+                    ?: return ShowResult.TMDB_ERROR
+
+            if (tmdbEpisodes.isEmpty()) {
+                if (episodeNumbers.isEmpty()) {
+                    // No episodes, done with this season.
+                    Timber.d("Migration done early, season %d has no episodes", localSeason.number)
+                    return@forEach
+                } else {
+                    // TMDB has no data, avoid removing and try again later.
+                    Timber.d(
+                        "Stopping migration, no episodes for season %d on TMDB",
+                        localSeason.number
+                    )
+                    return ShowResult.DOES_NOT_EXIST
+                }
+            }
+
+            // Set TMDB IDs on episodes, match by number.
+            val episodeUpdates = mutableListOf<SgEpisode2TmdbIdUpdate>()
+            episodeNumbers.forEach { localEpisode ->
+                val episodeTmdbId =
+                    tmdbEpisodes.find { it.episode_number == localEpisode.episodenumber }?.id
+                // Note: not aborting if an episode is not found,
+                // let it get removed by update process.
+                if (episodeTmdbId != null) {
+                    episodeUpdates.add(
+                        SgEpisode2TmdbIdUpdate(localEpisode.id, episodeTmdbId)
+                    )
+                } else {
+                    Timber.d(
+                        "Failed to find TMDB ID for episode %d:%d",
+                        localSeason.number,
+                        localEpisode.episodenumber
+                    )
+                }
+            }
+            // Apply episode updates for season.
+            Timber.d(
+                "Adding TMDB ID to %d of %d episodes of season %d",
+                episodeUpdates.size,
+                episodeNumbers.size,
+                localSeason.number
+            )
+            database.sgEpisode2Helper().updateTmdbIds(episodeUpdates)
+        }
+
+        // Apply season updates.
+        Timber.d("Adding TMDB ID to %d of %d seasons", seasonUpdates.size, seasonNumbers.size)
+        database.sgSeason2Helper().updateTmdbIds(seasonUpdates)
+
+        return ShowResult.SUCCESS
     }
 
     /**

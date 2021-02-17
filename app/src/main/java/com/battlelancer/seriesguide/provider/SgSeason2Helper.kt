@@ -19,6 +19,9 @@ interface SgSeason2Helper {
     @Update(entity = SgSeason2::class)
     fun updateSeasons(seasons: List<SgSeason2Update>): Int
 
+    @Update(entity = SgSeason2::class)
+    fun updateTmdbIds(seasons: List<SgSeason2TmdbIdUpdate>): Int
+
     @Query("DELETE FROM sg_season WHERE _id = :seasonId")
     fun deleteSeason(seasonId: Long)
 
@@ -88,4 +91,9 @@ data class SgSeason2Update(
     @ColumnInfo(name = SgSeason2Columns.COMBINED) val number: Int,
     @ColumnInfo(name = SgSeason2Columns.ORDER) val order: Int,
     @ColumnInfo(name = SgSeason2Columns.NAME) val name: String?
+)
+
+data class SgSeason2TmdbIdUpdate(
+    @ColumnInfo(name = SgSeason2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgSeason2Columns.TMDB_ID) val tmdbId: String,
 )

@@ -32,6 +32,9 @@ interface SgEpisode2Helper {
     @Update(entity = SgEpisode2::class)
     fun updateEpisodes(episodes: List<SgEpisode2Update>): Int
 
+    @Update(entity = SgEpisode2::class)
+    fun updateTmdbIds(episodes: List<SgEpisode2TmdbIdUpdate>): Int
+
     @Query("DELETE FROM sg_episode WHERE _id = :episodeId")
     fun deleteEpisode(episodeId: Long)
 
@@ -655,6 +658,11 @@ data class SgEpisode2WatchedUpdate(
 data class SgEpisode2CollectedUpdate(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
     @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
+)
+
+data class SgEpisode2TmdbIdUpdate(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int
 )
 
 data class SgEpisode2UpdateByNumber(
