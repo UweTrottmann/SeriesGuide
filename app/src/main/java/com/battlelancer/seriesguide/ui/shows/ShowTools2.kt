@@ -688,6 +688,11 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return toReturn
     }
 
+    /**
+     * Finds TMDB ID by TVDB ID, then sets season and episode TMDB IDs by matching on numbers.
+     * If Hexagon is enabled and not uploaded via TMDB ID, uploads show info and schedules
+     * episode upload.
+     */
     private fun migrateShowToTmdbIds(showId: Long, language: String): ShowResult {
         val database = SgRoomDatabase.getInstance(context)
         val helper = database.sgShow2Helper()
@@ -705,6 +710,32 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         val result = migrateSeasonsToTmdbIds(showId, showTmdbId, language)
         if (result != ShowResult.SUCCESS) return result
+
+        // If Hexagon does not have this show by TMDB ID,
+        // send current show info and schedule re-upload of episodes using TMDB IDs.
+        if (HexagonSettings.isEnabled(context)) {
+            val hexagonResult = SgApp.getServicesComponent(context).hexagonTools()
+                .getShow(showTmdbId)
+            if (!hexagonResult.second) return ShowResult.HEXAGON_ERROR
+            val hexagonShow = hexagonResult.first
+            if (hexagonShow == null) {
+                // Hexagon does not have show via TMDB ID
+                // Upload local show info
+                val show = helper.getForCloudUpdate(showId)
+                    ?: return ShowResult.DATABASE_ERROR
+                val uploadSuccess = uploadShowsToCloud(listOf(SgCloudShow().also {
+                    it.tmdbId = showTmdbId
+                    it.isFavorite = show.favorite
+                    it.notify = show.notify
+                    it.isHidden = show.hidden
+                    it.language = show.language
+                    it.isRemoved = false
+                }))
+                if (!uploadSuccess) return ShowResult.HEXAGON_ERROR
+                // Schedule episode upload
+                helper.setHexagonMergeNotCompleted(showId)
+            }
+        }
 
         // Set TMDB ID on show last, is used to determine if successfully migrated.
         helper.updateTmdbId(showId, showTmdbId)
