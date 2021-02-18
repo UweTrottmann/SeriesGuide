@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.sync;
 
 import android.content.Context;
 import android.text.TextUtils;
-import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
@@ -18,9 +17,11 @@ import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShowList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import timber.log.Timber;
 
 public class HexagonShowSync {
@@ -38,8 +39,14 @@ public class HexagonShowSync {
      * shows not yet in the local database, determined by the given TMDB ID map, will be added
      * to the given map.
      */
-    public boolean download(Map<Integer, Long> tmdbIdsToShowIds,
-            HashMap<Integer, SearchResult> newShows, boolean hasMergedShows) {
+    public boolean download(
+            Map<Integer, Long> tmdbIdsToShowIds,
+            HashMap<Integer, SearchResult> toAdd,
+            boolean hasMergedShows
+    ) {
+        List<SgShow2CloudUpdate> udpates = new ArrayList<>();
+        Set<Long> toUpdate = new HashSet<>();
+
         List<SgCloudShow> shows;
         boolean hasMoreShows = true;
         String cursor = null;
@@ -77,9 +84,9 @@ public class HexagonShowSync {
 
                 SgCloudShowList response = request.execute();
                 if (response == null) {
-                    // we're done
-                    Timber.d("download: response was null, done here");
-                    break;
+                    // If empty should send status 200 and empty list, so no body is a failure.
+                    Timber.e("download: response was null");
+                    return false;
                 }
 
                 shows = response.getShows();
@@ -101,11 +108,13 @@ public class HexagonShowSync {
                 break;
             }
 
-            // update all received shows, will ignore those not added locally
-            ArrayList<SgShow2CloudUpdate> batch = buildShowUpdates(shows, tmdbIdsToShowIds,
-                    newShows, !hasMergedShows);
-            SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(batch);
+            // append updates for received shows if there isn't one,
+            // or appends shows not added locally
+            appendShowUpdates(udpates, toUpdate, toAdd, shows, tmdbIdsToShowIds, !hasMergedShows);
         }
+
+        // Apply all updates
+        SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(udpates);
 
         if (hasMergedShows) {
             // set new last sync time
@@ -118,11 +127,14 @@ public class HexagonShowSync {
         return true;
     }
 
-    @NonNull
-    private ArrayList<SgShow2CloudUpdate> buildShowUpdates(List<SgCloudShow> shows,
-            Map<Integer, Long> tmdbIdsToShowIds, HashMap<Integer, SearchResult> newShows,
-            boolean mergeValues) {
-        ArrayList<SgShow2CloudUpdate> batch = new ArrayList<>();
+    private void appendShowUpdates(
+            List<SgShow2CloudUpdate> updates,
+            Set<Long> toUpdate,
+            Map<Integer, SearchResult> toAdd,
+            List<SgCloudShow> shows,
+            Map<Integer, Long> tmdbIdsToShowIds,
+            boolean mergeValues
+    ) {
         for (SgCloudShow show : shows) {
             // schedule to add shows not in local database
             Integer showTmdbId = show.getTmdbId();
@@ -135,14 +147,15 @@ public class HexagonShowSync {
                     continue;
                 }
 
-                if (!newShows.containsKey(showTmdbId)) {
+                if (!toAdd.containsKey(showTmdbId)) {
                     SearchResult item = new SearchResult();
                     item.setTmdbId(showTmdbId);
                     item.setLanguage(show.getLanguage());
                     item.setTitle("");
-                    newShows.put(showTmdbId, item);
+                    toAdd.put(showTmdbId, item);
                 }
-            } else {
+            } else if (!toUpdate.contains(showIdOrNull)) {
+                // Create update if there isn't already one.
                 SgShow2CloudUpdate update = SgRoomDatabase.getInstance(context)
                         .sgShow2Helper()
                         .getForCloudUpdate(showIdOrNull);
@@ -174,11 +187,14 @@ public class HexagonShowSync {
                         update.setLanguage(show.getLanguage());
                         hasUpdates = true;
                     }
-                    if (hasUpdates) batch.add(update);
+
+                    if (hasUpdates) {
+                        updates.add(update);
+                        toUpdate.add(showIdOrNull);
+                    }
                 }
             }
         }
-        return batch;
     }
 
     /**
