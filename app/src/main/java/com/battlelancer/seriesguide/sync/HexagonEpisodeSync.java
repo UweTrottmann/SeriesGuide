@@ -407,7 +407,7 @@ public class HexagonEpisodeSync {
      *
      * @return Whether the upload was successful.
      */
-    public boolean uploadFlags(long showId, int showTvdbId) {
+    boolean uploadFlags(long showId, int showTmdbId) {
         Timber.d("uploadFlags: for show %s", showId);
 
         // query for watched, skipped or collected episodes
@@ -420,12 +420,12 @@ public class HexagonEpisodeSync {
         }
 
         // build list of episodes to upload
-        List<Episode> episodes = new ArrayList<>();
+        List<SgCloudEpisode> episodes = new ArrayList<>();
         int count = episodesForSync.size();
         for (int i = 0; i < count; i++) {
             SgEpisode2ForSync episodeForSync = episodesForSync.get(i);
 
-            Episode episode = new Episode();
+            SgCloudEpisode episode = new SgCloudEpisode();
             episode.setSeasonNumber(episodeForSync.getSeason());
             episode.setEpisodeNumber(episodeForSync.getNumber());
 
@@ -445,9 +445,9 @@ public class HexagonEpisodeSync {
             // upload a batch
             boolean isLast = i + 1 == count;
             if (episodes.size() == MAX_BATCH_SIZE || isLast) {
-                EpisodeList episodeList = new EpisodeList();
+                SgCloudEpisodeList episodeList = new SgCloudEpisodeList();
                 episodeList.setEpisodes(episodes);
-                episodeList.setShowTvdbId(showTvdbId);
+                episodeList.setShowTmdbId(showTmdbId);
 
                 try {
                     // get service each time to check if auth was removed
@@ -455,7 +455,7 @@ public class HexagonEpisodeSync {
                     if (episodesService == null) {
                         return false;
                     }
-                    episodesService.save(episodeList).execute();
+                    episodesService.saveSgEpisodes(episodeList).execute();
                 } catch (IOException e) {
                     // abort
                     Errors.logAndReportHexagon("save episodes of show", e);

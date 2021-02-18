@@ -117,7 +117,7 @@ public class HexagonSync {
                 continue;
             }
 
-            success = episodeSync.uploadFlags(show.getId(), showTvdbId);
+            success = episodeSync.uploadFlags(show.getId(), showTmdbId);
             if (success) {
                 // set merge as completed
                 helper.setHexagonMergeCompleted(show.getId());
