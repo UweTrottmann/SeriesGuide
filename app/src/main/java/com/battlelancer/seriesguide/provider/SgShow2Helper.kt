@@ -103,8 +103,8 @@ interface SgShow2Helper {
     @Query("SELECT count(_id) FROM sg_show WHERE series_hidden=1")
     fun countHiddenShows(): Int
 
-    @Query("SELECT series_tvdb_id FROM sg_show WHERE series_hidden = 1")
-    fun getHiddenShowsTvdbIds(): List<Int?>
+    @Query("SELECT series_tmdb_id FROM sg_show WHERE series_hidden = 1")
+    fun getHiddenShowsTmdbIds(): List<Int?>
 
     @Query("UPDATE sg_show SET series_hidden = 0 WHERE series_hidden = 1")
     fun makeHiddenVisible(): Int

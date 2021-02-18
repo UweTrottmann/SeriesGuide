@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
@@ -45,7 +46,6 @@ import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.util.TimeZone
-import com.uwetrottmann.seriesguide.backend.shows.model.Show as CloudShow
 
 /**
  * Provides some show operations as (async) suspend functions, running within global scope.
@@ -319,7 +319,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         }
 
         // restore episode flags...
-        if (show.tvdbId != null && hexagonEnabled) {
+        if (hexagonEnabled) {
             // ...from Hexagon
             val success = hexagonEpisodeSync.downloadFlags(showId, show.tvdbId)
             if (!success) {
@@ -328,8 +328,13 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 database.sgShow2Helper().setHexagonMergeNotCompleted(showId)
             }
 
-            // flag show to be auto-added (again), send (new) language to Hexagon
-            showTools.sendIsAdded(show.tvdbId, language)
+            // Adds the show on Hexagon. Or if it does already exist, clears the isRemoved flag and
+            // updates the language, so the show will be auto-added on other connected devices.
+            val cloudShow = SgCloudShow()
+            cloudShow.tmdbId = showTmdbId
+            cloudShow.language = language
+            cloudShow.isRemoved = false
+            uploadShowsToCloud(listOf(cloudShow))
         } else {
             // ...from Trakt
             val traktEpisodeSync = TraktEpisodeSync(context, null)
@@ -855,19 +860,20 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             if (isNotConnected(context)) {
                 return@withContext true
             }
-            val showTvdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
-            if (showTvdbId == 0) {
+
+            val showTmdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+            if (showTmdbId == 0) {
                 return@withContext true
             }
 
             // Sets the isRemoved flag of the given show on Hexagon, so the show will
             // not be auto-added on any device connected to Hexagon.
-            val show = CloudShow()
-            show.tvdbId = showTvdbId
+            val show = SgCloudShow()
+            show.tmdbId = showTmdbId
             show.isRemoved = true
 
-            val success = uploadShowToCloudAsync(show)
+            val success = uploadShowToCloud(show)
             return@withContext !success
         }
         // Do not save to local database if sending to cloud has failed.
@@ -910,17 +916,18 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             if (isNotConnected(context)) {
                 return@withContext true
             }
-            val showTvdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
-            if (showTvdbId == 0) {
+
+            val showTmdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+            if (showTmdbId == 0) {
                 return@withContext true
             }
 
-            val show = CloudShow()
-            show.tvdbId = showTvdbId
+            val show = SgCloudShow()
+            show.tmdbId = showTmdbId
             show.isFavorite = isFavorite
 
-            val success = uploadShowToCloudAsync(show)
+            val success = uploadShowToCloud(show)
             return@withContext !success
         }
         // Do not save to local database if sending to cloud has failed.
@@ -967,17 +974,17 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 return@withContext true
             }
 
-            val showTvdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
-            if (showTvdbId == 0) {
+            val showTmdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+            if (showTmdbId == 0) {
                 return@withContext true
             }
 
-            val show = CloudShow()
-            show.tvdbId = showTvdbId
+            val show = SgCloudShow()
+            show.tmdbId = showTmdbId
             show.isHidden = isHidden
 
-            val success = uploadShowToCloudAsync(show)
+            val success = uploadShowToCloud(show)
             return@withContext !success
         }
         // Do not save to local database if sending to cloud has failed.
@@ -1019,17 +1026,18 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             if (isNotConnected(context)) {
                 return@withContext true
             }
-            val showTvdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
-            if (showTvdbId == 0) {
+
+            val showTmdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+            if (showTmdbId == 0) {
                 return@withContext true
             }
 
-            val show = CloudShow()
-            show.tvdbId = showTvdbId
+            val show = SgCloudShow()
+            show.tmdbId = showTmdbId
             show.notify = notify
 
-            val success = uploadShowToCloudAsync(show)
+            val success = uploadShowToCloud(show)
             return@withContext !success
         }
         // Do not save to local database if sending to cloud has failed.
@@ -1061,18 +1069,20 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                     return@withContext true
                 }
 
-                val hiddenShowTvdbIds = withContext(Dispatchers.IO) {
-                    SgRoomDatabase.getInstance(context).sgShow2Helper().getHiddenShowsTvdbIds()
+                val hiddenShowTmdbIds = withContext(Dispatchers.IO) {
+                    SgRoomDatabase.getInstance(context).sgShow2Helper().getHiddenShowsTmdbIds()
                 }
 
-                val shows = hiddenShowTvdbIds.map { showTvdbId ->
-                    val show = CloudShow()
-                    show.tvdbId = showTvdbId
+                val shows = hiddenShowTmdbIds.map { tmdbId ->
+                    val show = SgCloudShow()
+                    show.tmdbId = tmdbId
                     show.isHidden = false
                     show
                 }
 
-                val success = uploadShowsToCloudAsync(shows)
+                val success = withContext(Dispatchers.IO) {
+                    uploadShowsToCloud(shows)
+                }
                 return@withContext !success
             }
             // Do not save to local database if sending to cloud has failed.
@@ -1094,17 +1104,17 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             if (isNotConnected(context)) {
                 return@withContext true
             }
-            val showTvdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
-            if (showTvdbId == 0) {
+            val showTmdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+            if (showTmdbId == 0) {
                 return@withContext true
             }
 
-            val show = CloudShow()
-            show.tvdbId = showTvdbId
+            val show = SgCloudShow()
+            show.tmdbId = showTmdbId
             show.language = languageCode
 
-            val success = uploadShowToCloudAsync(show)
+            val success = uploadShowToCloud(show)
             return@withContext !success
         }
         // Do not save to local database if sending to cloud has failed.
@@ -1144,21 +1154,17 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return !isConnected
     }
 
-    fun uploadShowToCloud(show: CloudShow) {
-        SgApp.coroutineScope.launch {
-            uploadShowToCloudAsync(show)
-        }
-    }
-
-    private suspend fun uploadShowToCloudAsync(show: CloudShow): Boolean {
-        return uploadShowsToCloudAsync(listOf(show))
-    }
-
-    private suspend fun uploadShowsToCloudAsync(shows: List<CloudShow>): Boolean {
+    private suspend fun uploadShowToCloud(show: SgCloudShow): Boolean {
         return withContext(Dispatchers.IO) {
-            HexagonShowSync(context, SgApp.getServicesComponent(context).hexagonTools())
-                .upload(shows)
+            uploadShowsToCloud(listOf(show))
         }
+    }
+
+    private fun uploadShowsToCloud(shows: List<SgCloudShow>): Boolean {
+        return HexagonShowSync(
+            context,
+            SgApp.getServicesComponent(context).hexagonTools()
+        ).upload(shows)
     }
 
     fun getTmdbIdsToPoster(context: Context): SparseArrayCompat<String> {

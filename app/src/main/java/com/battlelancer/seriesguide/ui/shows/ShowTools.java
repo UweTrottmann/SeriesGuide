@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
-import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -91,18 +90,6 @@ public class ShowTools {
     }
 
     /**
-     * Adds the show on Hexagon. Or if it does already exist, clears the isRemoved flag and updates
-     * the language, so the show will be auto-added on other connected devices.
-     */
-    public void sendIsAdded(int showTvdbId, @NonNull String language) {
-        Show show = new Show();
-        show.setTvdbId(showTvdbId);
-        show.setLanguage(language);
-        show.setIsRemoved(false);
-        uploadShowAsync(show);
-    }
-
-    /**
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
     public void storeIsFavorite(long showId, boolean isFavorite) {
@@ -149,10 +136,6 @@ public class ShowTools {
     public static void removeFromWatchlist(Context context, int showTvdbId) {
         new RemoveShowFromWatchlistTask(context, showTvdbId).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    private void uploadShowAsync(Show show) {
-        showTools2.uploadShowToCloud(show);
     }
 
     public static boolean addLastWatchedUpdateOpIfNewer(Context context,
