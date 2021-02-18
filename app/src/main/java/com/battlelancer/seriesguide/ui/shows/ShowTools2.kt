@@ -321,7 +321,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // restore episode flags...
         if (hexagonEnabled) {
             // ...from Hexagon
-            val success = hexagonEpisodeSync.downloadFlags(showId, show.tvdbId)
+            val success = hexagonEpisodeSync.downloadFlags(showId, showTmdbId, show.tvdbId)
             if (!success) {
                 // failed to download episode flags
                 // flag show as needing an episode merge

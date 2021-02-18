@@ -106,12 +106,11 @@ public class HexagonSync {
                 return false;
             }
 
-            // Currently TVDB ID is required.
-            if (show.getTvdbId() == null) continue;
+            // TMDB ID is required, legacy shows with TVDB only data will no longer be synced.
+            Integer showTmdbId = show.getTmdbId();
+            if (showTmdbId == null || showTmdbId == 0) continue;
 
-            int showTvdbId = show.getTvdbId();
-
-            boolean success = episodeSync.downloadFlags(show.getId(), showTvdbId);
+            boolean success = episodeSync.downloadFlags(show.getId(), showTmdbId, show.getTvdbId());
             if (!success) {
                 // try again next time
                 mergeSuccessful = false;
