@@ -268,7 +268,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val hexagonEnabled = HexagonSettings.isEnabled(context)
         if (show.tvdbId != null && hexagonEnabled) {
             val hexagonResult = SgApp.getServicesComponent(context).hexagonTools()
-                .getShow(show.tvdbId)
+                .getShow(showTmdbId)
             if (!hexagonResult.second) return ShowResult.HEXAGON_ERROR
             val hexagonShow = hexagonResult.first
             if (hexagonShow != null) {

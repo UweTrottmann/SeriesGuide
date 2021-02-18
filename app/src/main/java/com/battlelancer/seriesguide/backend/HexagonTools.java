@@ -27,7 +27,7 @@ import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
-import com.uwetrottmann.seriesguide.backend.shows.model.Show;
+import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -283,13 +283,13 @@ public class HexagonTools {
     /**
      * Returns false on service error.
      */
-    public Pair<Show, Boolean> getShow(int showTvdbId) {
+    public Pair<SgCloudShow, Boolean> getShow(int showTmdbId) {
         try {
             Shows showsService = getShowsService();
-            Show showOrNull;
+            SgCloudShow showOrNull;
             if (showsService != null) {
-                showOrNull = showsService.getShow()
-                        .setShowTvdbId(showTvdbId)
+                showOrNull = showsService.getSgShow()
+                        .setShowTmdbId(showTmdbId)
                         .execute();
             } else {
                 showOrNull = null;
