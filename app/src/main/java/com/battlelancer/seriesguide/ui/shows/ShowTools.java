@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Map;
 import javax.inject.Inject;
 import timber.log.Timber;
@@ -205,38 +204,9 @@ public class ShowTools {
         }
     }
 
-    /**
-     * Returns a set of the TVDb ids of all shows in the local database.
-     *
-     * @return null if there was an error, empty list if there are no shows.
-     */
-    @Nullable
-    public static HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
-        HashSet<Integer> existingShows = new HashSet<>();
-
-        Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[]{SeriesGuideContract.Shows._ID}, null, null, null);
-        if (shows == null) {
-            return null;
-        }
-
-        while (shows.moveToNext()) {
-            existingShows.add(shows.getInt(0));
-        }
-
-        shows.close();
-
-        return existingShows;
-    }
-
     @NonNull
     public Map<Integer, Long> getTmdbIdsToShowIds() {
         return showTools2.getTmdbIdsToShowIds(context);
-    }
-
-    @NonNull
-    public Map<Integer, Long> getTvdbIdsToShowIds() {
-        return showTools2.getTvdbIdsToShowIds(context);
     }
 
     @NonNull

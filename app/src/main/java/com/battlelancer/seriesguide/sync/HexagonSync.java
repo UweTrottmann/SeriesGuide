@@ -53,12 +53,12 @@ public class HexagonSync {
      * changes to shows, episodes and movies.
      */
     public HexagonResult sync() {
-        Map<Integer, Long> tvdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
-                .getTvdbIdsToShowIds();
+        Map<Integer, Long> tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
+                .getTmdbIdsToShowIds();
 
         //// EPISODES
         progress.publish(SyncProgress.Step.HEXAGON_EPISODES);
-        boolean syncEpisodesSuccessful = syncEpisodes(tvdbIdsToShowIds);
+        boolean syncEpisodesSuccessful = syncEpisodes(tmdbIdsToShowIds);
         if (!syncEpisodesSuccessful) {
             progress.recordError();
         }
@@ -92,7 +92,7 @@ public class HexagonSync {
         return new HexagonResult(syncShowsResult.hasAddedShows, success);
     }
 
-    private boolean syncEpisodes(@NonNull Map<Integer, Long> tvdbIdsToShowIds) {
+    private boolean syncEpisodes(@NonNull Map<Integer, Long> tmdbIdsToShowIds) {
         // get shows that need episode merging
         SgShow2Helper helper = SgRoomDatabase.getInstance(context).sgShow2Helper();
         List<SgShow2Ids> showsToMerge = helper.getHexagonMergeNotCompleted();
@@ -127,7 +127,7 @@ public class HexagonSync {
         }
 
         // download changed episodes and update properties on existing episodes
-        boolean changedDownloadSuccessful = episodeSync.downloadChangedFlags(tvdbIdsToShowIds);
+        boolean changedDownloadSuccessful = episodeSync.downloadChangedFlags(tmdbIdsToShowIds);
 
         return mergeSuccessful && changedDownloadSuccessful;
     }

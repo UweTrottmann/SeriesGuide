@@ -1218,15 +1218,6 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return map
     }
 
-    fun getTvdbIdsToShowIds(context: Context): Map<Int, Long> {
-        val showIds = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIds()
-        val map = mutableMapOf<Int, Long>()
-        showIds.forEach {
-            if (it.tvdbId != null) map[it.tvdbId] = it.id
-        }
-        return map
-    }
-
     /**
      * Returns true if the given show has not been updated in the last 12 hours.
      */

@@ -44,13 +44,13 @@ public class HexagonEpisodeSync {
      * Downloads all episodes changed since the last time this was called and applies changes to
      * the database.
      */
-    public boolean downloadChangedFlags(@NonNull Map<Integer, Long> tvdbIdsToShowIds) {
+    public boolean downloadChangedFlags(@NonNull Map<Integer, Long> tmdbIdsToShowIds) {
         long currentTime = System.currentTimeMillis();
         SgRoomDatabase database = SgRoomDatabase.getInstance(context);
         DateTime lastSyncTime = new DateTime(HexagonSettings.getLastEpisodesSyncTime(context));
         Timber.d("downloadChangedFlags: since %s", lastSyncTime);
 
-        List<Episode> episodes;
+        List<SgCloudEpisode> episodes;
         String cursor = null;
         boolean hasMoreEpisodes = true;
         Map<Long, Long> showIdsToLastWatched = new HashMap<>();
@@ -62,13 +62,13 @@ public class HexagonEpisodeSync {
                     return false;
                 }
 
-                Episodes.Get request = episodesService.get()
+                Episodes.GetSgEpisodes request = episodesService.getSgEpisodes()
                         .setUpdatedSince(lastSyncTime); // use default server limit
                 if (!TextUtils.isEmpty(cursor)) {
                     request.setCursor(cursor);
                 }
 
-                EpisodeList response = request.execute();
+                SgCloudEpisodeList response = request.execute();
                 if (response == null) {
                     // we're done here
                     Timber.d("downloadChangedFlags: response was null, done here");
@@ -96,9 +96,9 @@ public class HexagonEpisodeSync {
 
             // build batch of episode flag updates
             ArrayList<SgEpisode2UpdateByNumber> batch = new ArrayList<>();
-            for (Episode episode : episodes) {
-                Integer showTvdbId = episode.getShowTvdbId();
-                Long showId = tvdbIdsToShowIds.get(showTvdbId);
+            for (SgCloudEpisode episode : episodes) {
+                Integer showTmdbId = episode.getShowTmdbId();
+                Long showId = tmdbIdsToShowIds.get(showTmdbId);
                 if (showId == null) {
                     continue; // ignore, show not added on this device
                 }
