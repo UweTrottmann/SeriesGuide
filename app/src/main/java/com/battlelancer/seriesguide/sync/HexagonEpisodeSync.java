@@ -172,6 +172,11 @@ public class HexagonEpisodeSync {
             // If no data by TMDB ID, try to get legacy data by TVDB ID.
             Timber.d("downloadFlags: no data by TMDB ID, trying by TVDB ID");
             result = downloadFlagsByTvdbId(showId, showTvdbId);
+            if (result.getSuccess()) {
+                // If had to use legacy show data, schedule episode upload (using TMDB IDs).
+                SgRoomDatabase.getInstance(context).sgShow2Helper()
+                        .setHexagonMergeNotCompleted(showId);
+            }
         }
 
         if (result.getLastWatchedMs() != null) {
