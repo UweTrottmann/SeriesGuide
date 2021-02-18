@@ -124,6 +124,9 @@ interface SgShow2Helper {
     @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show WHERE series_syncenabled = 0")
     fun getHexagonMergeNotCompleted(): List<SgShow2Ids>
 
+    @Query("UPDATE sg_show SET series_syncenabled = 0")
+    fun setHexagonMergeNotCompletedForAll()
+
     @Query("UPDATE sg_show SET series_syncenabled = 0 WHERE _id = :id")
     fun setHexagonMergeNotCompleted(id: Long)
 
