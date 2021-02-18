@@ -2,11 +2,13 @@ package com.battlelancer.seriesguide.sync;
 
 import android.content.Context;
 import android.text.TextUtils;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.provider.SgShow2CloudUpdate;
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.util.DateTime;
@@ -14,6 +16,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow;
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShowList;
+import com.uwetrottmann.seriesguide.backend.shows.model.Show;
+import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,18 +42,17 @@ public class HexagonShowSync {
      * Downloads shows from Hexagon and updates existing shows with new property values. Any
      * shows not yet in the local database, determined by the given TMDB ID map, will be added
      * to the given map.
+     *
+     * When merging shows (e.g. just signed in) also downloads legacy cloud shows.
      */
     public boolean download(
             Map<Integer, Long> tmdbIdsToShowIds,
             HashMap<Integer, SearchResult> toAdd,
             boolean hasMergedShows
     ) {
-        List<SgShow2CloudUpdate> udpates = new ArrayList<>();
+        List<SgShow2CloudUpdate> updates = new ArrayList<>();
         Set<Long> toUpdate = new HashSet<>();
 
-        List<SgCloudShow> shows;
-        boolean hasMoreShows = true;
-        String cursor = null;
         long currentTime = System.currentTimeMillis();
         DateTime lastSyncTime = new DateTime(HexagonSettings.getLastShowsSyncTime(context));
 
@@ -59,6 +62,40 @@ public class HexagonShowSync {
             Timber.d("download: all shows");
         }
 
+        boolean success = downloadShows(updates, toUpdate, toAdd, tmdbIdsToShowIds,
+                hasMergedShows, lastSyncTime);
+        if (!success) return false;
+        // When just signed in, try to get legacy cloud shows. Get changed shows only via TMDB ID
+        // to encourage users to update the app.
+        if (!hasMergedShows) {
+            boolean successLegacy = downloadLegacyShows(updates, toUpdate, toAdd, tmdbIdsToShowIds);
+            if (!successLegacy) return false;
+        }
+
+        // Apply all updates
+        SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(updates);
+
+        if (hasMergedShows) {
+            // set new last sync time
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .edit()
+                    .putLong(HexagonSettings.KEY_LAST_SYNC_SHOWS, currentTime)
+                    .apply();
+        }
+
+        return true;
+    }
+
+    private boolean downloadShows(
+            List<SgShow2CloudUpdate> updates,
+            Set<Long> toUpdate,
+            HashMap<Integer, SearchResult> toAdd,
+            Map<Integer, Long> tmdbIdsToShowIds,
+            boolean hasMergedShows,
+            DateTime lastSyncTime
+    ) {
+        String cursor = null;
+        boolean hasMoreShows = true;
         while (hasMoreShows) {
             // abort if connection is lost
             if (!AndroidUtils.isNetworkConnected(context)) {
@@ -66,6 +103,7 @@ public class HexagonShowSync {
                 return false;
             }
 
+            List<SgCloudShow> shows;
             try {
                 // get service each time to check if auth was removed
                 Shows showsService = hexagonTools.getShowsService();
@@ -110,21 +148,108 @@ public class HexagonShowSync {
 
             // append updates for received shows if there isn't one,
             // or appends shows not added locally
-            appendShowUpdates(udpates, toUpdate, toAdd, shows, tmdbIdsToShowIds, !hasMergedShows);
+            appendShowUpdates(updates, toUpdate, toAdd, shows, tmdbIdsToShowIds, !hasMergedShows);
         }
-
-        // Apply all updates
-        SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(udpates);
-
-        if (hasMergedShows) {
-            // set new last sync time
-            PreferenceManager.getDefaultSharedPreferences(context)
-                    .edit()
-                    .putLong(HexagonSettings.KEY_LAST_SYNC_SHOWS, currentTime)
-                    .apply();
-        }
-
         return true;
+    }
+
+    private boolean downloadLegacyShows(
+            List<SgShow2CloudUpdate> updates,
+            Set<Long> toUpdate,
+            HashMap<Integer, SearchResult> toAdd,
+            Map<Integer, Long> tmdbIdsToShowIds
+    ) {
+        String cursor = null;
+        boolean hasMoreShows = true;
+        while (hasMoreShows) {
+            // abort if connection is lost
+            if (!AndroidUtils.isNetworkConnected(context)) {
+                Timber.e("download: no network connection");
+                return false;
+            }
+
+            List<Show> legacyShows;
+            try {
+                // get service each time to check if auth was removed
+                Shows showsService = hexagonTools.getShowsService();
+                if (showsService == null) {
+                    return false;
+                }
+
+                Shows.Get request = showsService.get(); // use default server limit
+                if (!TextUtils.isEmpty(cursor)) {
+                    request.setCursor(cursor);
+                }
+
+                ShowList response = request.execute();
+                if (response == null) {
+                    // If empty should send status 200 and empty list, so no body is a failure.
+                    Timber.e("download: response was null");
+                    return false;
+                }
+
+                legacyShows = response.getShows();
+
+                // check for more items
+                if (response.getCursor() != null) {
+                    cursor = response.getCursor();
+                } else {
+                    hasMoreShows = false;
+                }
+            } catch (IOException | IllegalArgumentException e) {
+                // Note: JSON parser may throw IllegalArgumentException.
+                Errors.logAndReportHexagon("get legacy shows", e);
+                return false;
+            }
+
+            if (legacyShows == null || legacyShows.size() == 0) {
+                // nothing to do here
+                break;
+            }
+
+            List<SgCloudShow> shows = mapLegacyShows(legacyShows);
+            if (shows == null) {
+                return false;
+            }
+
+            // append updates for received shows if there isn't one,
+            // or appends shows not added locally
+            appendShowUpdates(updates, toUpdate, toAdd, shows, tmdbIdsToShowIds, true);
+        }
+        return true;
+    }
+
+    /**
+     * Returns null on network error while looking up TMDB ID.
+     */
+    @Nullable
+    private List<SgCloudShow> mapLegacyShows(List<Show> legacyShows) {
+        List<SgCloudShow> shows = new ArrayList<>();
+
+        for (Show legacyShow : legacyShows) {
+            Integer showTvdbId = legacyShow.getTvdbId();
+            if (showTvdbId == null || showTvdbId <= 0) {
+                continue;
+            }
+            Integer showTmdbIdOrNull = new TmdbTools2().findShowTmdbId(context, showTvdbId);
+            if (showTmdbIdOrNull == null) {
+                // Network error, abort.
+                return null;
+            }
+            // Only add if TMDB id found
+            if (showTmdbIdOrNull != -1) {
+                SgCloudShow show = new SgCloudShow();
+                show.setTmdbId(showTmdbIdOrNull);
+                show.setIsRemoved(legacyShow.getIsRemoved());
+                show.setIsFavorite(legacyShow.getIsFavorite());
+                show.setNotify(legacyShow.getNotify());
+                show.setIsHidden(legacyShow.getIsHidden());
+                show.setLanguage(legacyShow.getLanguage());
+                shows.add(show);
+            }
+        }
+
+        return shows;
     }
 
     private void appendShowUpdates(
