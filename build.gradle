@@ -53,7 +53,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/ben-manes/gradle-versions-plugin/releases
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.36.0'
-        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0' // SeriesGuide
         // https://github.com/Codearte/gradle-nexus-staging-plugin/releases
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0' // api
         // Firebase Crashlytics
