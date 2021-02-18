@@ -130,10 +130,10 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_syncenabled = 1 WHERE _id = :id")
     fun setHexagonMergeCompleted(id: Long)
 
-    @Query("SELECT _id, series_tvdb_id, series_language, series_favorite, series_hidden, series_notify FROM sg_show WHERE _id = :id")
+    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify FROM sg_show WHERE _id = :id")
     fun getForCloudUpdate(id: Long): SgShow2CloudUpdate?
 
-    @Query("SELECT _id, series_tvdb_id, series_language, series_favorite, series_hidden, series_notify FROM sg_show")
+    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify FROM sg_show")
     fun getForCloudUpdate(): List<SgShow2CloudUpdate>
 
     @Update(entity = SgShow2::class)
@@ -255,7 +255,7 @@ data class SgShow2Update(
 
 data class SgShow2CloudUpdate(
     @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?,
+    @ColumnInfo(name = SgShow2Columns.TMDB_ID) val tmdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.LANGUAGE) var language: String?,
     @ColumnInfo(name = SgShow2Columns.FAVORITE) var favorite: Boolean,
     @ColumnInfo(name = SgShow2Columns.HIDDEN) var hidden: Boolean,

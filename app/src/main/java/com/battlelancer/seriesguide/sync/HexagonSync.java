@@ -65,7 +65,7 @@ public class HexagonSync {
 
         //// SHOWS
         progress.publish(SyncProgress.Step.HEXAGON_SHOWS);
-        HexagonResult syncShowsResult = syncShows(tvdbIdsToShowIds);
+        HexagonResult syncShowsResult = syncShows(tmdbIdsToShowIds);
         if (!syncShowsResult.success) {
             progress.recordError();
         }
@@ -132,13 +132,13 @@ public class HexagonSync {
         return mergeSuccessful && changedDownloadSuccessful;
     }
 
-    private HexagonResult syncShows(Map<Integer, Long> tvdbIdsToShowIds) {
+    private HexagonResult syncShows(Map<Integer, Long> tmdbIdsToShowIds) {
         boolean hasMergedShows = HexagonSettings.hasMergedShows(context);
 
         // download shows and apply property changes (if merging only overwrite some properties)
         HexagonShowSync showSync = new HexagonShowSync(context, hexagonTools);
         HashMap<Integer, SearchResult> newShows = new HashMap<>();
-        boolean downloadSuccessful = showSync.download(tvdbIdsToShowIds, newShows, hasMergedShows);
+        boolean downloadSuccessful = showSync.download(tmdbIdsToShowIds, newShows, hasMergedShows);
         if (!downloadSuccessful) {
             return new HexagonResult(false, false);
         }

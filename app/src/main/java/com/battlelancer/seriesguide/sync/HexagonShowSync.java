@@ -2,20 +2,19 @@ package com.battlelancer.seriesguide.sync;
 
 import android.content.Context;
 import android.text.TextUtils;
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.provider.SgShow2CloudUpdate;
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.util.Errors;
 import com.google.api.client.util.DateTime;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
-import com.uwetrottmann.seriesguide.backend.shows.model.Show;
-import com.uwetrottmann.seriesguide.backend.shows.model.ShowList;
+import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow;
+import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShowList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,12 +35,12 @@ public class HexagonShowSync {
 
     /**
      * Downloads shows from Hexagon and updates existing shows with new property values. Any
-     * shows not yet in the local database, determined by the given TVDb id set, will be added
+     * shows not yet in the local database, determined by the given TMDB ID map, will be added
      * to the given map.
      */
-    public boolean download(Map<Integer, Long> tvdbIdsToShowIds,
+    public boolean download(Map<Integer, Long> tmdbIdsToShowIds,
             HashMap<Integer, SearchResult> newShows, boolean hasMergedShows) {
-        List<Show> shows;
+        List<SgCloudShow> shows;
         boolean hasMoreShows = true;
         String cursor = null;
         long currentTime = System.currentTimeMillis();
@@ -67,7 +66,7 @@ public class HexagonShowSync {
                     return false;
                 }
 
-                Shows.Get request = showsService.get(); // use default server limit
+                Shows.GetSgShows request = showsService.getSgShows(); // use default server limit
                 if (hasMergedShows) {
                     // only get changed shows (otherwise returns all)
                     request.setUpdatedSince(lastSyncTime);
@@ -76,7 +75,7 @@ public class HexagonShowSync {
                     request.setCursor(cursor);
                 }
 
-                ShowList response = request.execute();
+                SgCloudShowList response = request.execute();
                 if (response == null) {
                     // we're done
                     Timber.d("download: response was null, done here");
@@ -103,10 +102,9 @@ public class HexagonShowSync {
             }
 
             // update all received shows, will ignore those not added locally
-            ArrayList<SgShow2CloudUpdate> batchOrNull = buildShowUpdates(shows, tvdbIdsToShowIds,
+            ArrayList<SgShow2CloudUpdate> batch = buildShowUpdates(shows, tmdbIdsToShowIds,
                     newShows, !hasMergedShows);
-            if (batchOrNull == null) return false;
-            SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(batchOrNull);
+            SgRoomDatabase.getInstance(context).sgShow2Helper().updateForCloudUpdate(batch);
         }
 
         if (hasMergedShows) {
@@ -120,39 +118,29 @@ public class HexagonShowSync {
         return true;
     }
 
-    /**
-     * Returns null on network error while looking up TMDB id of new show.
-     */
-    @Nullable
-    private ArrayList<SgShow2CloudUpdate> buildShowUpdates(List<Show> shows,
-            Map<Integer, Long> tvdbIdsToShowIds, HashMap<Integer, SearchResult> newShows,
+    @NonNull
+    private ArrayList<SgShow2CloudUpdate> buildShowUpdates(List<SgCloudShow> shows,
+            Map<Integer, Long> tmdbIdsToShowIds, HashMap<Integer, SearchResult> newShows,
             boolean mergeValues) {
         ArrayList<SgShow2CloudUpdate> batch = new ArrayList<>();
-        for (Show show : shows) {
+        for (SgCloudShow show : shows) {
             // schedule to add shows not in local database
-            Long showIdOrNull = tvdbIdsToShowIds.get(show.getTvdbId());
+            Integer showTmdbId = show.getTmdbId();
+            if (showTmdbId == null) continue; // Invalid data.
+
+            Long showIdOrNull = tmdbIdsToShowIds.get(showTmdbId);
             if (showIdOrNull == null) {
                 // ...but do NOT add shows marked as removed
                 if (show.getIsRemoved() != null && show.getIsRemoved()) {
                     continue;
                 }
 
-                if (!newShows.containsKey(show.getTvdbId())) {
-                    // Look up TMDB id
-                    Integer showTmdbIdOrNull = new TmdbTools2()
-                            .findShowTmdbId(context, show.getTvdbId());
-                    if (showTmdbIdOrNull == null) {
-                        // Network error, abort.
-                        return null;
-                    }
-                    // Only add if TMDB id found
-                    if (showTmdbIdOrNull != -1) {
-                        SearchResult item = new SearchResult();
-                        item.setTmdbId(showTmdbIdOrNull);
-                        item.setLanguage(show.getLanguage());
-                        item.setTitle("");
-                        newShows.put(show.getTvdbId(), item);
-                    }
+                if (!newShows.containsKey(showTmdbId)) {
+                    SearchResult item = new SearchResult();
+                    item.setTmdbId(showTmdbId);
+                    item.setLanguage(show.getLanguage());
+                    item.setTitle("");
+                    newShows.put(showTmdbId, item);
                 }
             } else {
                 SgShow2CloudUpdate update = SgRoomDatabase.getInstance(context)
@@ -201,11 +189,11 @@ public class HexagonShowSync {
         List<SgShow2CloudUpdate> forCloudUpdate = SgRoomDatabase.getInstance(context)
                 .sgShow2Helper().getForCloudUpdate();
 
-        List<Show> shows = new LinkedList<>();
+        List<SgCloudShow> shows = new LinkedList<>();
         for (SgShow2CloudUpdate localShow : forCloudUpdate) {
-            if (localShow.getTvdbId() == null) continue;
-            Show show = new Show();
-            show.setTvdbId(localShow.getTvdbId());
+            if (localShow.getTmdbId() == null) continue;
+            SgCloudShow show = new SgCloudShow();
+            show.setTmdbId(localShow.getTmdbId());
             show.setIsFavorite(localShow.getFavorite());
             show.setNotify(localShow.getNotify());
             show.setIsHidden(localShow.getHidden());
@@ -224,14 +212,14 @@ public class HexagonShowSync {
     /**
      * Uploads the given list of shows to Hexagon.
      */
-    public boolean upload(List<Show> shows) {
+    public boolean upload(List<SgCloudShow> shows) {
         if (shows.isEmpty()) {
             Timber.d("upload: no shows to upload");
             return true;
         }
 
         // wrap into helper object
-        ShowList showList = new ShowList();
+        SgCloudShowList showList = new SgCloudShowList();
         showList.setShows(shows);
 
         // upload shows
@@ -241,7 +229,7 @@ public class HexagonShowSync {
             if (showsService == null) {
                 return false;
             }
-            showsService.save(showList).execute();
+            showsService.saveSgShows(showList).execute();
         } catch (IOException e) {
             Errors.logAndReportHexagon("save shows", e);
             return false;
