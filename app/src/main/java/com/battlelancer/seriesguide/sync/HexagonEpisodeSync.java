@@ -159,7 +159,7 @@ public class HexagonEpisodeSync {
     /**
      * Downloads watched, skipped or collected episodes of this show from Hexagon and applies
      * those flags and plays to episodes in the database.
-     *
+     * <p>
      * If a TVDB ID is given tries to use legacy data if no data using TMDB ID is found.
      *
      * @return Whether the download was successful and all changes were applied to the database.
@@ -408,15 +408,15 @@ public class HexagonEpisodeSync {
      * @return Whether the upload was successful.
      */
     boolean uploadFlags(long showId, int showTmdbId) {
-        Timber.d("uploadFlags: for show %s", showId);
-
         // query for watched, skipped or collected episodes
         List<SgEpisode2ForSync> episodesForSync = SgRoomDatabase.getInstance(context)
                 .sgEpisode2Helper()
                 .getEpisodesForHexagonSync(showId);
         if (episodesForSync.isEmpty()) {
-            Timber.d("uploadFlags: no flags to upload");
+            Timber.d("uploadFlags: uploading none for show %d", showId);
             return true;
+        } else {
+            Timber.d("uploadFlags: uploading %d for show %d", episodesForSync.size(), showId);
         }
 
         // build list of episodes to upload
