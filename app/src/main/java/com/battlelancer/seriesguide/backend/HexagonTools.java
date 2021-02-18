@@ -28,6 +28,7 @@ import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow;
+import com.uwetrottmann.seriesguide.backend.shows.model.Show;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -281,18 +282,31 @@ public class HexagonTools {
     }
 
     /**
+     * Gets show by TMDB ID, or if not found and TVDB ID given, gets show by that.
      * Returns false on service error.
      */
-    public Pair<SgCloudShow, Boolean> getShow(int showTmdbId) {
+    @NonNull
+    public Pair<SgCloudShow, Boolean> getShow(int showTmdbId, @Nullable Integer showTvdbId) {
         try {
             Shows showsService = getShowsService();
-            SgCloudShow showOrNull;
-            if (showsService != null) {
-                showOrNull = showsService.getSgShow()
+            if (showsService == null) {
+                return new Pair<>(null, false);
+            }
+
+            SgCloudShow showOrNull = showsService.getSgShow()
                         .setShowTmdbId(showTmdbId)
                         .execute();
-            } else {
-                showOrNull = null;
+            if (showOrNull == null && showTvdbId != null) {
+                // Not found using TMDB ID, try with legacy TVDB ID.
+                Show legacyShowOrNull = showsService.getShow()
+                        .setShowTvdbId(showTvdbId)
+                        .execute();
+                if (legacyShowOrNull != null) {
+                    showOrNull = new SgCloudShow();
+                    showOrNull.setIsFavorite(legacyShowOrNull.getIsFavorite());
+                    showOrNull.setIsHidden(legacyShowOrNull.getIsHidden());
+                    showOrNull.setNotify(legacyShowOrNull.getNotify());
+                }
             }
             return new Pair<>(showOrNull, true);
         } catch (IOException | IllegalArgumentException e) {

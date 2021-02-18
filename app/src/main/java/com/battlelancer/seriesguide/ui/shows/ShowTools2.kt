@@ -266,9 +266,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         // Restore properties from Hexagon
         val hexagonEnabled = HexagonSettings.isEnabled(context)
-        if (show.tvdbId != null && hexagonEnabled) {
+        if (hexagonEnabled) {
             val hexagonResult = SgApp.getServicesComponent(context).hexagonTools()
-                .getShow(showTmdbId)
+                .getShow(showTmdbId, show.tvdbId)
             if (!hexagonResult.second) return ShowResult.HEXAGON_ERROR
             val hexagonShow = hexagonResult.first
             if (hexagonShow != null) {
@@ -334,6 +334,10 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             cloudShow.tmdbId = showTmdbId
             cloudShow.language = language
             cloudShow.isRemoved = false
+            // Prevent losing restored properties from a legacy cloud show by always sending them.
+            cloudShow.isFavorite = show.favorite
+            cloudShow.isHidden = show.hidden
+            cloudShow.notify = show.notify
             uploadShowsToCloud(listOf(cloudShow))
         } else {
             // ...from Trakt
@@ -715,7 +719,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // send current show info and schedule re-upload of episodes using TMDB IDs.
         if (HexagonSettings.isEnabled(context)) {
             val hexagonResult = SgApp.getServicesComponent(context).hexagonTools()
-                .getShow(showTmdbId)
+                .getShow(showTmdbId, null)
             if (!hexagonResult.second) return ShowResult.HEXAGON_ERROR
             val hexagonShow = hexagonResult.first
             if (hexagonShow == null) {
