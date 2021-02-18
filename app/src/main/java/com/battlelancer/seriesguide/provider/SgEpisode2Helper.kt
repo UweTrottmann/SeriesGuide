@@ -112,7 +112,7 @@ interface SgEpisode2Helper {
     @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfShow(showId: Long): List<SgEpisode2Numbers>
 
-    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED} OR episode_collected = 1")
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_tmdb_id > 0 AND episode_watched != ${EpisodeFlags.UNWATCHED} OR episode_collected = 1")
     fun getEpisodesForHexagonSync(showId: Long): List<SgEpisode2ForSync>
 
     @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId")
