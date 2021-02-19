@@ -474,10 +474,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private void updatePrimaryButtons(SgEpisode2 episode, SgShow2 show) {
         // Check in button.
         bindingButtons.buttonEpisodeCheckin.setOnClickListener(v -> {
-            if (episode.getTvdbId() != null) {
-                CheckInDialogFragment
-                        .show(requireContext(), getParentFragmentManager(), episode.getId());
-            }
+            CheckInDialogFragment.show(requireContext(), getParentFragmentManager(), episodeId);
         });
         CheatSheet.setup(bindingButtons.buttonEpisodeCheckin);
         // hide check-in if not connected to trakt or hexagon is enabled
