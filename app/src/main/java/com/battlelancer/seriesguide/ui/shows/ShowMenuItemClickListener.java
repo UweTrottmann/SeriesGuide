@@ -6,8 +6,6 @@ import android.widget.PopupMenu;
 import androidx.fragment.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
@@ -34,7 +32,6 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        int showTvdbId = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId);
         int itemId = item.getItemId();
         if (itemId == R.id.menu_action_shows_watched_next) {
             EpisodeTools.episodeWatchedIfNotZero(context, nextEpisodeId);
@@ -52,8 +49,7 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
             showTools.storeIsHidden(showId, false);
             return true;
         } else if (itemId == R.id.menu_action_shows_manage_lists) {
-            ManageListsDialogFragment.show(fragmentManager, showTvdbId,
-                    SeriesGuideContract.ListItemTypes.SHOW);
+            ManageListsDialogFragment.show(fragmentManager, showId);
             return true;
         } else if (itemId == R.id.menu_action_shows_update) {
             SgSyncAdapter.requestSyncSingleImmediate(context, true, showId);

@@ -32,9 +32,6 @@ interface SgSeason2Helper {
         }
     }
 
-    @Query("SELECT _id FROM sg_season WHERE season_tvdb_id = :seasonTvdbId")
-    fun getSeasonId(seasonTvdbId: Int): Long
-
     /**
      * Get IDs of seasons of a show, sorted by most recent one.
      */

@@ -25,7 +25,6 @@ import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher
@@ -252,9 +251,7 @@ class ShowFragment() : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_show_manage_lists -> {
-                show?.tvdbId?.also {
-                    ManageListsDialogFragment.show(parentFragmentManager, it, ListItemTypes.SHOW)
-                }
+                ManageListsDialogFragment.show(parentFragmentManager, showId)
                 true
             }
             else -> super.onOptionsItemSelected(item)

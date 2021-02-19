@@ -1021,13 +1021,13 @@ public class SeriesGuideContract {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
-            ListItemTypes.SHOW,
+            ListItemTypes.TVDB_SHOW,
             ListItemTypes.SEASON,
             ListItemTypes.EPISODE,
             ListItemTypes.TMDB_SHOW
     })
     public @interface ListItemTypes {
-        int SHOW = 1;
+        int TVDB_SHOW = 1;
         /**
          * @deprecated Support for seasons on lists has been removed since the TMDB switch.
          */
@@ -1543,7 +1543,7 @@ public class SeriesGuideContract {
 
         public static final String SELECTION_LIST = Lists.LIST_ID + "=?";
         public static final String SELECTION_TVDB_SHOWS =
-                ListItems.TYPE + "=" + ListItemTypes.SHOW;
+                ListItems.TYPE + "=" + ListItemTypes.TVDB_SHOW;
         public static final String SELECTION_TMDB_SHOWS =
                 ListItems.TYPE + "=" + ListItemTypes.TMDB_SHOW;
 
@@ -1557,13 +1557,13 @@ public class SeriesGuideContract {
             return uri.getPathSegments().get(1);
         }
 
-        public static String generateListItemId(int itemTvdbId, int type, String listId) {
-            return itemTvdbId + "-" + type + "-" + listId;
+        public static String generateListItemId(int itemStableId, int type, String listId) {
+            return itemStableId + "-" + type + "-" + listId;
         }
 
-        public static String generateListItemIdWildcard(int itemTvdbId, int type) {
+        public static String generateListItemIdWildcard(int itemStableId, int type) {
             // The SQL % wildcard is added by the content provider
-            return itemTvdbId + "-" + type + "-";
+            return itemStableId + "-" + type + "-";
         }
 
         /**
@@ -1583,7 +1583,7 @@ public class SeriesGuideContract {
          * Checks if the given type index is one of {@link ListItemTypes}.
          */
         public static boolean isValidItemType(int type) {
-            return type == ListItemTypes.SHOW
+            return type == ListItemTypes.TVDB_SHOW
                     || type == ListItemTypes.SEASON
                     || type == ListItemTypes.EPISODE;
         }

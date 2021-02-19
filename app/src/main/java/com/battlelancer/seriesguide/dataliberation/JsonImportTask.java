@@ -416,7 +416,7 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         for (ListItem item : list.items) {
             int type;
             if (ListItemTypesExport.SHOW.equals(item.type)) {
-                type = ListItemTypes.SHOW;
+                type = ListItemTypes.TVDB_SHOW;
             } else if (ListItemTypesExport.SEASON.equals(item.type)) {
                 type = ListItemTypes.SEASON;
             } else if (ListItemTypesExport.EPISODE.equals(item.type)) {

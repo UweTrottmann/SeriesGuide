@@ -32,7 +32,7 @@ class ListItemsAdapter extends BaseShowsAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Support for seasons and episodes was removed, only shows are supported.
         final int itemType = cursor.getInt(Query.ITEM_TYPE);
-        if (itemType != ListItemTypes.SHOW && itemType != ListItemTypes.TMDB_SHOW) {
+        if (itemType != ListItemTypes.TVDB_SHOW && itemType != ListItemTypes.TMDB_SHOW) {
             throw new IllegalArgumentException("List item type is not supported: " + itemType);
         }
 
@@ -103,7 +103,7 @@ class ListItemsAdapter extends BaseShowsAdapter {
         // context menu
         viewHolder.itemType = itemType;
         viewHolder.itemId = cursor.getString(Query.LIST_ITEM_ID);
-        viewHolder.itemTvdbId = cursor.getInt(Query.ITEM_REF_ID);
+        viewHolder.itemStableId = cursor.getInt(Query.ITEM_REF_ID);
     }
 
     @Override
@@ -119,7 +119,7 @@ class ListItemsAdapter extends BaseShowsAdapter {
     public static class ListItemViewHolder extends ShowViewHolder {
 
         public String itemId;
-        public int itemTvdbId;
+        public int itemStableId;
         public int itemType;
 
         public ListItemViewHolder(View v, OnItemClickListener onItemClickListener) {

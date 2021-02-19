@@ -466,7 +466,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             item.listItemId = listItems.getString(ListItemsQuery.ID);
             item.tvdbId = listItems.getInt(ListItemsQuery.ITEM_REF_ID);
             switch (listItems.getInt(ListItemsQuery.TYPE)) {
-                case ListItemTypes.SHOW:
+                case ListItemTypes.TVDB_SHOW:
                     item.type = ListItemTypesExport.SHOW;
                     break;
                 case ListItemTypes.SEASON:
