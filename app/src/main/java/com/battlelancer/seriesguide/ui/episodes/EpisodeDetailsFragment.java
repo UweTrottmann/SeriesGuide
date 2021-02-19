@@ -594,9 +594,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
             // trakt comments
             bindingBottom.buttonEpisodeComments.setOnClickListener(v -> {
-                Intent intent = new Intent(requireActivity(), TraktCommentsActivity.class);
-                intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
-                        episode.getTvdbId()));
+                Intent intent = TraktCommentsActivity
+                        .intentEpisode(requireContext(), episodeTitle, episodeId);
                 Utils.startActivityWithAnimation(requireActivity(), intent, v);
             });
         }

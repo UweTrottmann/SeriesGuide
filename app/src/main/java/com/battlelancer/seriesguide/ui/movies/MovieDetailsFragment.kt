@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
@@ -444,8 +443,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // trakt comments link
         binding.buttonMovieComments.setOnClickListener { v ->
-            val i = Intent(activity, TraktCommentsActivity::class.java)
-            i.putExtras(TraktCommentsActivity.createInitBundleMovie(movieTitle, tmdbId))
+            val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
             Utils.startActivityWithAnimation(activity, i, v)
         }
         binding.buttonMovieComments.isGone = false

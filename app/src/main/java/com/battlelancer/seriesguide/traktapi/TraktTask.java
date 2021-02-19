@@ -20,6 +20,7 @@ import com.uwetrottmann.trakt5.entities.CheckinError;
 import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.EpisodeCheckin;
+import com.uwetrottmann.trakt5.entities.EpisodeIds;
 import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.MovieCheckin;
 import com.uwetrottmann.trakt5.entities.MovieIds;
@@ -388,25 +389,16 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         // episode?
         long episodeId = args.getLong(InitBundle.EPISODE_ID);
         if (episodeId != 0) {
-            // Check in using show Trakt ID
-            // and season and episode number (likely most reliable).
-            SgRoomDatabase database = SgRoomDatabase.getInstance(context);
-            SgEpisode2Numbers episode = database.sgEpisode2Helper()
-                    .getEpisodeNumbers(episodeId);
-            if (episode == null) {
+            // Check in using episode TMDB ID
+            // Note: using show Trakt ID and episode numbers does not work (comments on show).
+            int episodeTmdbIdOrZero = SgRoomDatabase.getInstance(context)
+                    .sgEpisode2Helper().getEpisodeTmdbId(episodeId);
+            if (episodeTmdbIdOrZero == 0) {
                 Timber.e("Failed to get episode %d", episodeId);
                 return null;
             }
-            Integer showTraktId = ShowTools.getShowTraktId(context, episode.getShowId());
-            if (showTraktId == null) {
-                Timber.e("Failed to get show %d", episode.getShowId());
-                return null;
-            }
-            comment.show = new Show();
-            comment.show.ids = ShowIds.trakt(showTraktId);
             comment.episode = new Episode();
-            comment.episode.number = episode.getEpisodenumber();
-            comment.episode.season = episode.getSeason();
+            comment.episode.ids = EpisodeIds.tmdb(episodeTmdbIdOrZero);
             return comment;
         }
 

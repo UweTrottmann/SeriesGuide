@@ -67,6 +67,9 @@ interface SgEpisode2Helper {
     @Query("SELECT episode_tvdb_id FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeTvdbId(episodeId: Long): Int
 
+    @Query("SELECT episode_tmdb_id FROM sg_episode WHERE _id = :episodeId")
+    fun getEpisodeTmdbId(episodeId: Long): Int
+
     @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeNumbers(episodeId: Long): SgEpisode2Numbers?
 

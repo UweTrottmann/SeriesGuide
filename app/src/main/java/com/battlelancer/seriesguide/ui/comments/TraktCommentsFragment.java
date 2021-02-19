@@ -49,8 +49,8 @@ public class TraktCommentsFragment extends Fragment {
 
     public interface InitBundle {
         String MOVIE_TMDB_ID = "movie";
-        String SHOW_TVDB_ID = "show";
-        String EPISODE_TVDB_ID = "episode";
+        String SHOW_ID = "show";
+        String EPISODE_ID = "episode";
     }
 
     @BindView(R.id.listViewShouts) ListView list;
@@ -120,9 +120,9 @@ public class TraktCommentsFragment extends Fragment {
 
         // as determined by "science", episode comments are most likely, so check for them first
         // comment for an episode?
-        int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDB_ID);
-        if (episodeTvdbId != 0) {
-            new TraktTask(getContext()).commentEpisode(episodeTvdbId, comment, isSpoiler)
+        long episodeId = args.getLong(InitBundle.EPISODE_ID);
+        if (episodeId != 0) {
+            new TraktTask(getContext()).commentEpisode(episodeId, comment, isSpoiler)
                     .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             return;
         }
@@ -136,9 +136,9 @@ public class TraktCommentsFragment extends Fragment {
         }
 
         // comment for a show?
-        int showTvdbId = args.getInt(InitBundle.SHOW_TVDB_ID);
-        if (showTvdbId != 0) {
-            new TraktTask(getContext()).commentShow(showTvdbId, comment, isSpoiler)
+        long showId = args.getLong(InitBundle.SHOW_ID);
+        if (showId != 0) {
+            new TraktTask(getContext()).commentShow(showId, comment, isSpoiler)
                     .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 

@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.overview
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -427,12 +426,8 @@ class ShowFragment() : Fragment() {
 
         // shout button
         buttonComments.setOnClickListener { v ->
-            show.tvdbId?.also {
-                val i = Intent(activity, TraktCommentsActivity::class.java).putExtras(
-                    TraktCommentsActivity.createInitBundleShow(show.title, it)
-                )
+                val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
                 Utils.startActivityWithAnimation(activity, i, v)
-            }
         }
 
         // poster, full screen poster button

@@ -398,12 +398,9 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
     @OnClick(R.id.buttonEpisodeComments)
     void onButtonCommentsClick(View v) {
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
-            Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-            i.putExtras(TraktCommentsActivity.createInitBundleEpisode(
-                    episode.getTitle(),
-                    episodeTvdbId
-            ));
+        runIfHasEpisode(episode -> {
+            Intent i = TraktCommentsActivity
+                    .intentEpisode(requireContext(), episode.getTitle(), episode.getId());
             Utils.startActivityWithAnimation(getActivity(), i, v);
         });
     }
