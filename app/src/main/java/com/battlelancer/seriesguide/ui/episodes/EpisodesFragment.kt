@@ -16,10 +16,8 @@ import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.util.safeShow
 
 /**
@@ -231,14 +229,6 @@ class EpisodesFragment : Fragment() {
                                 releaseTimeMs,
                                 episodeNumber
                             ).safeShow(parentFragmentManager, "EpisodeWatchedUpToDialog")
-                            true
-                        }
-                        R.id.menu_action_episodes_manage_lists -> {
-                            ManageListsDialogFragment.show(
-                                parentFragmentManager,
-                                episodeId,
-                                ListItemTypes.EPISODE
-                            )
                             true
                         }
                         else -> false

@@ -32,7 +32,6 @@ import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.model.SgEpisode2;
 import com.battlelancer.seriesguide.model.SgShow2;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
@@ -45,7 +44,6 @@ import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.ImageTools;
@@ -153,15 +151,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                         ),
                         episode.getFirstReleasedMs(),
                         show.getRuntime()
-                );
-            }
-        });
-        bindingBottom.buttonEpisodeLists.setOnClickListener(v -> {
-            if (episode != null && episode.getTvdbId() != null) {
-                ManageListsDialogFragment.show(
-                        getParentFragmentManager(),
-                        episode.getTvdbId(),
-                        ListItemTypes.EPISODE
                 );
             }
         });

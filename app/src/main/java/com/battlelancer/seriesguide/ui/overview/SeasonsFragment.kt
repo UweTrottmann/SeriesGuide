@@ -19,14 +19,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentSeasonsBinding
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -182,14 +180,6 @@ class SeasonsFragment() : Fragment() {
                         }
                         R.id.menu_action_seasons_skip -> {
                             onFlagSeasonSkipped(seasonRowId)
-                            true
-                        }
-                        R.id.menu_action_seasons_manage_lists -> {
-                            ManageListsDialogFragment.show(
-                                parentFragmentManager,
-                                seasonRowId,
-                                SeriesGuideContract.ListItemTypes.SEASON
-                            )
                             true
                         }
                         else -> false

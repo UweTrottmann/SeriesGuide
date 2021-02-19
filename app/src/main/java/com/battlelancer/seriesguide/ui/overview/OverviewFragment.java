@@ -38,7 +38,6 @@ import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.model.SgEpisode2;
 import com.battlelancer.seriesguide.model.SgShow2;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
@@ -56,7 +55,6 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
@@ -140,7 +138,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     @BindView(R.id.buttonEpisodeTrakt) Button buttonTrakt;
     @BindView(R.id.buttonEpisodeShare) Button buttonShare;
     @BindView(R.id.buttonEpisodeCalendar) Button buttonAddToCalendar;
-    @BindView(R.id.buttonEpisodeLists) Button buttonManageLists;
     @BindView(R.id.buttonEpisodeComments) Button buttonComments;
 
     @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
@@ -222,15 +219,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
         buttonShare.setOnClickListener(v -> shareEpisode());
         buttonAddToCalendar.setOnClickListener(v -> createCalendarEvent());
-        buttonManageLists.setOnClickListener(v ->
-                runIfHasEpisode((e) ->
-                        ManageListsDialogFragment.show(
-                                getParentFragmentManager(),
-                                e.getId(),
-                                ListItemTypes.EPISODE
-                        )
-                )
-        );
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textDescription);
