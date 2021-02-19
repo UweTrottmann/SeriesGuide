@@ -154,13 +154,13 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             TaskManager.getInstance().performAddTask(context, item)
         }
 
-        override fun onMenuWatchlistClick(view: View, showTvdbId: Int) {
+        override fun onMenuWatchlistClick(view: View, showTmdbId: Int) {
             PopupMenu(view.context, view).apply {
                 inflate(R.menu.add_dialog_popup_menu)
                 // only support adding shows to watchlist
                 menu.findItem(R.id.menu_action_show_watchlist_remove).isVisible = false
                 setOnMenuItemClickListener(
-                        TraktAddFragment.AddItemMenuItemClickListener(context, showTvdbId))
+                        TraktAddFragment.AddItemMenuItemClickListener(context, showTmdbId))
             }.show()
         }
     }

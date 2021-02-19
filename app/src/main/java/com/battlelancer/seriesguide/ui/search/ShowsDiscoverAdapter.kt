@@ -157,7 +157,7 @@ class ShowsDiscoverAdapter(
         fun onLinkClick(anchor: View, link: TraktShowsLink)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
-        fun onMenuWatchlistClick(view: View, showTvdbId: Int)
+        fun onMenuWatchlistClick(view: View, showTmdbId: Int)
     }
 
     class LinkViewHolder(itemView: View, onItemClickListener: OnItemClickListener)
@@ -205,7 +205,7 @@ class ShowsDiscoverAdapter(
                 onItemClickListener.onAddClick(item)
             }
             buttonContextMenu.setOnClickListener {
-                onItemClickListener.onMenuWatchlistClick(it, item.tvdbid)
+                onItemClickListener.onMenuWatchlistClick(it, item.tmdbId)
             }
         }
     }

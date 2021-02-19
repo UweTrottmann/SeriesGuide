@@ -174,7 +174,7 @@ public abstract class AddFragment extends Fragment {
         public interface OnItemClickListener {
             void onItemClick(SearchResult item);
             void onAddClick(SearchResult item);
-            void onMenuWatchlistClick(View view, int showTvdbId);
+            void onMenuWatchlistClick(View view, int showTmdbId);
         }
 
         private final OnItemClickListener menuClickListener;
@@ -286,7 +286,7 @@ public abstract class AddFragment extends Fragment {
                 });
                 buttonContextMenu.setOnClickListener(v -> {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onMenuWatchlistClick(v, item.getTvdbid());
+                        onItemClickListener.onMenuWatchlistClick(v, item.getTmdbId());
                     }
                 });
             }

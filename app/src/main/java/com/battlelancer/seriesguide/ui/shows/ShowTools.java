@@ -31,14 +31,6 @@ import timber.log.Timber;
  */
 public class ShowTools {
 
-    public static class ShowChangedEvent {
-        public int showTvdbId;
-
-        public ShowChangedEvent(int showTvdbId) {
-            this.showTvdbId = showTvdbId;
-        }
-    }
-
     /**
      * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
      */
@@ -124,16 +116,16 @@ public class ShowTools {
     /**
      * Add a show to the users trakt watchlist.
      */
-    public static void addToWatchlist(Context context, int showTvdbId) {
-        new AddShowToWatchlistTask(context, showTvdbId).executeOnExecutor(
+    public static void addToWatchlist(Context context, int showTmdbId) {
+        new AddShowToWatchlistTask(context, showTmdbId).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
      * Remove a show from the users trakt watchlist.
      */
-    public static void removeFromWatchlist(Context context, int showTvdbId) {
-        new RemoveShowFromWatchlistTask(context, showTvdbId).executeOnExecutor(
+    public static void removeFromWatchlist(Context context, int showTmdbId) {
+        new RemoveShowFromWatchlistTask(context, showTmdbId).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 

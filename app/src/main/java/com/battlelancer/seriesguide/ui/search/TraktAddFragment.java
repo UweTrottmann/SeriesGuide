@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -113,7 +114,7 @@ public class TraktAddFragment extends AddFragment {
         }
 
         @Override
-        public void onMenuWatchlistClick(View view, int showTvdbId) {
+        public void onMenuWatchlistClick(View view, int showTmdbId) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.add_dialog_popup_menu);
 
@@ -123,7 +124,7 @@ public class TraktAddFragment extends AddFragment {
             }
 
             popupMenu.setOnMenuItemClickListener(
-                    new AddItemMenuItemClickListener(requireContext(), showTvdbId));
+                    new AddItemMenuItemClickListener(requireContext(), showTmdbId));
             popupMenu.show();
         }
     };
@@ -131,22 +132,22 @@ public class TraktAddFragment extends AddFragment {
     public static class AddItemMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
         private final Context context;
-        private final int showTvdbId;
+        private final int showTmdbId;
 
-        public AddItemMenuItemClickListener(Context context, int showTvdbId) {
+        public AddItemMenuItemClickListener(Context context, int showTmdbId) {
             this.context = context;
-            this.showTvdbId = showTvdbId;
+            this.showTmdbId = showTmdbId;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_action_show_watchlist_add) {
-                ShowTools.addToWatchlist(context, showTvdbId);
+                ShowTools.addToWatchlist(context, showTmdbId);
                 return true;
             }
             if (itemId == R.id.menu_action_show_watchlist_remove) {
-                ShowTools.removeFromWatchlist(context, showTvdbId);
+                ShowTools.removeFromWatchlist(context, showTmdbId);
                 return true;
             }
             return false;
@@ -190,7 +191,7 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(ShowTools.ShowChangedEvent event) {
+    public void onEventMainThread(BaseShowActionTask.ShowChangedEvent event) {
         if (listType == TraktShowsLink.WATCHLIST) {
             // reload watchlist if a show was removed
             LoaderManager.getInstance(this)

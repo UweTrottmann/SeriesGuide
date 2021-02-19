@@ -10,8 +10,8 @@ import retrofit2.Call;
 
 public class AddShowToWatchlistTask extends BaseShowActionTask {
 
-    public AddShowToWatchlistTask(Context context, int showTvdbId) {
-        super(context, showTvdbId);
+    public AddShowToWatchlistTask(Context context, int showTmdbId) {
+        super(context, showTmdbId);
     }
 
     @NonNull

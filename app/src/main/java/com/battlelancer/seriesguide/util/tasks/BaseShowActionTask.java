@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
@@ -18,11 +17,14 @@ import retrofit2.Response;
 
 public abstract class BaseShowActionTask extends BaseActionTask {
 
-    private final int showTvdbId;
+    public static class ShowChangedEvent {
+    }
 
-    public BaseShowActionTask(Context context, int showTvdbId) {
+    private final int showTmdbId;
+
+    public BaseShowActionTask(Context context, int showTmdbId) {
         super(context);
-        this.showTvdbId = showTvdbId;
+        this.showTmdbId = showTmdbId;
     }
 
     @Override
@@ -37,7 +39,7 @@ public abstract class BaseShowActionTask extends BaseActionTask {
                 return ERROR_TRAKT_AUTH;
             }
 
-            SyncItems items = new SyncItems().shows(new SyncShow().id(ShowIds.tvdb(showTvdbId)));
+            SyncItems items = new SyncItems().shows(new SyncShow().id(ShowIds.tmdb(showTmdbId)));
 
             try {
                 Sync traktSync = SgApp.getServicesComponent(getContext()).traktSync();
@@ -67,7 +69,7 @@ public abstract class BaseShowActionTask extends BaseActionTask {
         super.onPostExecute(result);
 
         if (result == SUCCESS) {
-            EventBus.getDefault().post(new ShowTools.ShowChangedEvent(showTvdbId));
+            EventBus.getDefault().post(new ShowChangedEvent());
         }
     }
 
