@@ -6,9 +6,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
@@ -16,7 +20,6 @@ import com.uwetrottmann.trakt5.entities.CheckinError;
 import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.EpisodeCheckin;
-import com.uwetrottmann.trakt5.entities.EpisodeIds;
 import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.MovieCheckin;
 import com.uwetrottmann.trakt5.entities.MovieIds;
@@ -28,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.greenrobot.eventbus.EventBus;
 import org.threeten.bp.OffsetDateTime;
+import timber.log.Timber;
 
 public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
@@ -41,9 +45,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
 
         String MOVIE_TMDB_ID = "movie-tmdbid";
 
-        String SHOW_TVDBID = "show-tvdbid";
+        String SHOW_ID = "show-id";
 
-        String EPISODE_TVDBID = "episode-tvdbid";
+        String EPISODE_ID = "episode-id";
 
         String MESSAGE = "message";
 
@@ -134,8 +138,8 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     private TraktAction action;
 
     /**
-     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode(int,
-     * String, boolean)} afterwards.<br> <br> Make sure the user has valid trakt credentials (check
+     * Initial constructor. Call <b>one</b> of the setup-methods like {@link #commentEpisode}
+     * afterwards.<br> <br> Make sure the user has valid trakt credentials (check
      * with {@link TraktCredentials#hasCredentials()} and then
      * possibly launch {@link ConnectTraktActivity}) or execution will fail.
      */
@@ -157,9 +161,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     /**
      * Check into an episode. Optionally provide a checkin message.
      */
-    public TraktTask checkInEpisode(int episodeTvdbId, String title, String message) {
+    public TraktTask checkInEpisode(long episodeId, String title, String message) {
         args.putString(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.name());
-        args.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbId);
+        args.putLong(InitBundle.EPISODE_ID, episodeId);
         args.putString(InitBundle.TITLE, title);
         args.putString(InitBundle.MESSAGE, message);
         return this;
@@ -179,9 +183,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     /**
      * Post a comment for a show.
      */
-    public TraktTask commentShow(int showTvdbid, String comment, boolean isSpoiler) {
+    public TraktTask commentShow(long showId, String comment, boolean isSpoiler) {
         args.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
-        args.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
+        args.putLong(InitBundle.SHOW_ID, showId);
         args.putString(InitBundle.MESSAGE, comment);
         args.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
@@ -190,9 +194,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     /**
      * Post a comment for an episode.
      */
-    public TraktTask commentEpisode(int episodeTvdbid, String comment, boolean isSpoiler) {
+    public TraktTask commentEpisode(long episodeId, String comment, boolean isSpoiler) {
         args.putString(InitBundle.TRAKTACTION, TraktAction.COMMENT.name());
-        args.putInt(InitBundle.EPISODE_TVDBID, episodeTvdbid);
+        args.putLong(InitBundle.EPISODE_ID, episodeId);
         args.putString(InitBundle.MESSAGE, comment);
         args.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
@@ -249,12 +253,32 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
             String message = args.getString(InitBundle.MESSAGE);
             switch (action) {
                 case CHECKIN_EPISODE: {
-                    int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDBID);
+                    // Check in using show Trakt ID
+                    // and season and episode number (likely most reliable).
+                    long episodeId = args.getLong(InitBundle.EPISODE_ID);
+                    SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+                    SgEpisode2Numbers episode = database.sgEpisode2Helper()
+                            .getEpisodeNumbers(episodeId);
+                    if (episode == null) {
+                        Timber.e("Failed to get episode %d", episodeId);
+                        return buildErrorResponse();
+                    }
+                    Integer showTraktId = ShowTools.getShowTraktId(context, episode.getShowId());
+                    if (showTraktId == null) {
+                        Timber.e("Failed to get show %d", episode.getShowId());
+                        return buildErrorResponse();
+                    }
+                    SyncEpisode traktEpisode = new SyncEpisode()
+                            .season(episode.getSeason())
+                            .number(episode.getEpisodenumber());
+                    Show traktShow = new Show();
+                    traktShow.ids = ShowIds.trakt(showTraktId);
                     EpisodeCheckin checkin = new EpisodeCheckin.Builder(
-                            new SyncEpisode().id(EpisodeIds.tvdb(episodeTvdbId)), APP_VERSION, null)
+                            traktEpisode,
+                            APP_VERSION, null)
+                            .show(traktShow)
                             .message(message)
                             .build();
-
                     response = trakt.checkin().checkin(checkin).execute();
                     break;
                 }
@@ -305,10 +329,13 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
     }
 
     private TraktResponse doCommentAction() {
+        Comment commentOrNull = buildComment();
+        if (commentOrNull == null) return buildErrorResponse();
+
         TraktV2 trakt = SgApp.getServicesComponent(context).trakt();
         try {
             // post comment
-            retrofit2.Response<Comment> response = trakt.comments().post(buildComment())
+            retrofit2.Response<Comment> response = trakt.comments().post(commentOrNull)
                     .execute();
             if (response.isSuccessful()) {
                 Comment postedComment = response.body();
@@ -352,25 +379,47 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         return buildErrorResponse();
     }
 
+    @Nullable
     private Comment buildComment() {
         Comment comment = new Comment();
         comment.comment = args.getString(InitBundle.MESSAGE);
         comment.spoiler = args.getBoolean(InitBundle.ISSPOILER);
 
-        // as determined by "science", episode comments are most likely, so check for them first
         // episode?
-        int episodeTvdbId = args.getInt(InitBundle.EPISODE_TVDBID);
-        if (episodeTvdbId != 0) {
+        long episodeId = args.getLong(InitBundle.EPISODE_ID);
+        if (episodeId != 0) {
+            // Check in using show Trakt ID
+            // and season and episode number (likely most reliable).
+            SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+            SgEpisode2Numbers episode = database.sgEpisode2Helper()
+                    .getEpisodeNumbers(episodeId);
+            if (episode == null) {
+                Timber.e("Failed to get episode %d", episodeId);
+                return null;
+            }
+            Integer showTraktId = ShowTools.getShowTraktId(context, episode.getShowId());
+            if (showTraktId == null) {
+                Timber.e("Failed to get show %d", episode.getShowId());
+                return null;
+            }
+            comment.show = new Show();
+            comment.show.ids = ShowIds.trakt(showTraktId);
             comment.episode = new Episode();
-            comment.episode.ids = EpisodeIds.tvdb(episodeTvdbId);
+            comment.episode.number = episode.getEpisodenumber();
+            comment.episode.season = episode.getSeason();
             return comment;
         }
 
         // show?
-        int showTvdbId = args.getInt(InitBundle.SHOW_TVDBID);
-        if (showTvdbId != 0) {
+        long showId = args.getLong(InitBundle.SHOW_ID);
+        if (showId != 0) {
+            Integer showTraktId = ShowTools.getShowTraktId(context, showId);
+            if (showTraktId == null) {
+                Timber.e("Failed to get show %d", showId);
+                return null;
+            }
             comment.show = new Show();
-            comment.show.ids = ShowIds.tvdb(showTvdbId);
+            comment.show.ids = ShowIds.trakt(showTraktId);
             return comment;
         }
 

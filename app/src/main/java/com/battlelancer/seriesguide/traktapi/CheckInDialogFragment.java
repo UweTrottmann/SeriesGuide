@@ -31,7 +31,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         CheckInDialogFragment f = new CheckInDialogFragment();
 
         Bundle args = new Bundle();
-        args.putInt(InitBundle.EPISODE_TVDB_ID, episode.getEpisodeTvdbId());
+        args.putLong(InitBundle.EPISODE_ID, episodeId);
         String episodeTitleWithNumbers = episode.getSeriestitle()
                 + " "
                 + TextTools.getNextEpisodeString(context,
@@ -48,7 +48,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     @Override
     protected void checkInTrakt(String message) {
         new TraktTask(getContext()).checkInEpisode(
-                requireArguments().getInt(InitBundle.EPISODE_TVDB_ID),
+                requireArguments().getLong(InitBundle.EPISODE_ID),
                 requireArguments().getString(InitBundle.ITEM_TITLE),
                 message).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
