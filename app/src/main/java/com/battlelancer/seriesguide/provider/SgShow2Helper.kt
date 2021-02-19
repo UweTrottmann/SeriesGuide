@@ -160,6 +160,16 @@ interface SgShow2Helper {
 
     @Query("SELECT series_lastupdate FROM sg_show WHERE _id = :id")
     fun getLastUpdated(id: Long): Long?
+
+    @Query("UPDATE sg_show SET series_rating_user = :userRating WHERE series_tmdb_id = :tmdbId")
+    fun updateUserRating(tmdbId: Int, userRating: Int)
+
+    @Transaction
+    fun updateUserRatings(tmdbIdsToRating: Map<Int, Int>) {
+        tmdbIdsToRating.forEach {
+            updateUserRating(it.key, it.value)
+        }
+    }
 }
 
 data class SgShow2Ids(
