@@ -44,12 +44,12 @@ public class RateDialogFragment extends AppCompatDialogFragment {
     /**
      * Create {@link RateDialogFragment} to rate a show.
      */
-    public static RateDialogFragment newInstanceShow(int showTvdbId) {
+    public static RateDialogFragment newInstanceShow(long showId) {
         RateDialogFragment f = new RateDialogFragment();
 
         Bundle args = new Bundle();
         args.putString(InitBundle.ITEM_TYPE, ITEM_SHOW);
-        args.putInt(InitBundle.ITEM_ID, showTvdbId);
+        args.putLong(InitBundle.ITEM_ID, showId);
         f.setArguments(args);
 
         return f;
@@ -58,12 +58,12 @@ public class RateDialogFragment extends AppCompatDialogFragment {
     /**
      * Create {@link RateDialogFragment} to rate an episode.
      */
-    public static RateDialogFragment newInstanceEpisode(int episodeTvdbId) {
+    public static RateDialogFragment newInstanceEpisode(long episodeId) {
         RateDialogFragment f = new RateDialogFragment();
 
         Bundle args = new Bundle();
         args.putString(InitBundle.ITEM_TYPE, ITEM_EPISODE);
-        args.putInt(InitBundle.ITEM_ID, episodeTvdbId);
+        args.putLong(InitBundle.ITEM_ID, episodeId);
         f.setArguments(args);
 
         return f;
@@ -77,7 +77,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
 
         Bundle args = new Bundle();
         args.putString(InitBundle.ITEM_TYPE, ITEM_MOVIE);
-        args.putInt(InitBundle.ITEM_ID, movieTmdbId);
+        args.putLong(InitBundle.ITEM_ID, movieTmdbId);
         f.setArguments(args);
 
         return f;
@@ -147,11 +147,11 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         if (itemType == null) {
             return;
         }
-        int itemId = args.getInt(InitBundle.ITEM_ID);
+        long itemId = args.getLong(InitBundle.ITEM_ID);
         BaseRateItemTask task = null;
         switch (itemType) {
             case ITEM_MOVIE: {
-                task = new RateMovieTask(getContext(), rating, itemId);
+                task = new RateMovieTask(getContext(), rating, (int) itemId);
                 break;
             }
             case ITEM_SHOW: {

@@ -391,9 +391,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
     @OnClick(R.id.containerRatings)
     void onButtonRateClick() {
-        runIfEpisodeHasTvdbId(
-                (episode, episodeTvdbId) -> RateDialogFragment.newInstanceEpisode(episodeTvdbId)
-                        .safeShow(getContext(), getParentFragmentManager()));
+        runIfHasEpisode(episode -> RateDialogFragment.newInstanceEpisode(episode.getId())
+                .safeShow(getContext(), getParentFragmentManager()));
     }
 
     @OnClick(R.id.buttonEpisodeComments)

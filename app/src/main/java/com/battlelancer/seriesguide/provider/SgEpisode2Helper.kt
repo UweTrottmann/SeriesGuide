@@ -38,13 +38,16 @@ interface SgEpisode2Helper {
     @Query("UPDATE sg_episode SET episode_rating = :rating, episode_rating_votes = :votes WHERE _id = :episodeId")
     fun updateRating(episodeId: Long, rating: Double, votes: Int)
 
+    @Query("UPDATE sg_episode SET episode_rating_user = :userRating WHERE _id = :episodeId")
+    fun updateUserRating(episodeId: Long, userRating: Int): Int
+
     @Query("UPDATE sg_episode SET episode_rating_user = :userRating WHERE episode_tmdb_id = :tmdbId")
-    fun updateUserRating(tmdbId: Int, userRating: Int)
+    fun updateUserRatingByTmdbId(tmdbId: Int, userRating: Int)
 
     @Transaction
     fun updateUserRatings(tmdbIdsToRating: Map<Int, Int>) {
         tmdbIdsToRating.forEach {
-            updateUserRating(it.key, it.value)
+            updateUserRatingByTmdbId(it.key, it.value)
         }
     }
 

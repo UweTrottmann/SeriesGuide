@@ -1,11 +1,10 @@
 package com.battlelancer.seriesguide.util.tasks;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncItems;
@@ -15,14 +14,11 @@ import com.uwetrottmann.trakt5.enums.Rating;
 
 public class RateEpisodeTask extends BaseRateItemTask {
 
-    private final int episodeTvdbId;
+    private final long episodeId;
 
-    /**
-     * Stores the rating for the given episode in the database and sends it to trakt.
-     */
-    public RateEpisodeTask(Context context, Rating rating, int episodeTvdbId) {
+    public RateEpisodeTask(Context context, Rating rating, long episodeId) {
         super(context, rating);
-        this.episodeTvdbId = episodeTvdbId;
+        this.episodeId = episodeId;
     }
 
     @NonNull
@@ -34,49 +30,25 @@ public class RateEpisodeTask extends BaseRateItemTask {
     @Nullable
     @Override
     protected SyncItems buildTraktSyncItems() {
-        int season = -1;
-        int episode = -1;
-        int showTvdbId = -1;
-        Cursor query = getContext().getContentResolver()
-                .query(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId),
-                        new String[] {
-                                SeriesGuideContract.Episodes.SEASON,
-                                SeriesGuideContract.Episodes.NUMBER,
-                                SeriesGuideContract.Shows.REF_SHOW_ID }, null, null, null);
-        if (query != null) {
-            if (query.moveToFirst()) {
-                season = query.getInt(0);
-                episode = query.getInt(1);
-                showTvdbId = query.getInt(2);
-            }
-            query.close();
-        }
+        SgRoomDatabase database = SgRoomDatabase.getInstance(getContext());
 
-        if (season == -1 || episode == -1 || showTvdbId == -1) {
-            return null;
-        }
+        SgEpisode2Numbers episode = database.sgEpisode2Helper().getEpisodeNumbers(episodeId);
+        if (episode == null) return null;
+
+        int showTmdbId = database.sgShow2Helper().getShowTmdbId(episode.getShowId());
+        if (showTmdbId == 0) return null;
 
         return new SyncItems()
-                .shows(new SyncShow().id(ShowIds.tvdb(showTvdbId))
-                        .seasons(new SyncSeason().number(season)
-                                .episodes(new SyncEpisode().number(episode)
+                .shows(new SyncShow().id(ShowIds.tmdb(showTmdbId))
+                        .seasons(new SyncSeason().number(episode.getSeason())
+                                .episodes(new SyncEpisode().number(episode.getEpisodenumber())
                                         .rating(getRating()))));
     }
 
     @Override
     protected boolean doDatabaseUpdate() {
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Episodes.RATING_USER, getRating().value);
-
-        int rowsUpdated = getContext().getContentResolver()
-                .update(SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId), values, null,
-                        null);
-
-        // notify withshow uri as well (used by episode details view)
-        getContext().getContentResolver()
-                .notifyChange(SeriesGuideContract.Episodes.buildEpisodeWithShowUri(episodeTvdbId),
-                        null);
-
+        int rowsUpdated = SgRoomDatabase.getInstance(getContext()).sgEpisode2Helper()
+                .updateUserRating(episodeId, getRating().value);
         return rowsUpdated > 0;
     }
 }

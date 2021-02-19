@@ -498,9 +498,7 @@ class ShowFragment() : Fragment() {
     }
 
     private fun rateShow() {
-        show?.tvdbId?.also {
-            RateDialogFragment.newInstanceShow(it).safeShow(context, parentFragmentManager)
-        }
+        RateDialogFragment.newInstanceShow(showId).safeShow(context, parentFragmentManager)
     }
 
     private fun displayLanguageSettings() {

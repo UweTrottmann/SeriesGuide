@@ -616,11 +616,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     }
 
     private void rateEpisode() {
-        SgEpisode2 episodeOrNull = this.episode;
-        if (episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            RateDialogFragment.newInstanceEpisode(episodeOrNull.getTvdbId())
-                    .safeShow(getContext(), getParentFragmentManager());
-        }
+        RateDialogFragment.newInstanceEpisode(episodeId)
+                .safeShow(getContext(), getParentFragmentManager());
     }
 
     private void shareEpisode() {
