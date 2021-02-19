@@ -1020,11 +1020,23 @@ public class SeriesGuideContract {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ ListItemTypes.SHOW, ListItemTypes.SEASON, ListItemTypes.EPISODE })
+    @IntDef({
+            ListItemTypes.SHOW,
+            ListItemTypes.SEASON,
+            ListItemTypes.EPISODE,
+            ListItemTypes.TMDB_SHOW
+    })
     public @interface ListItemTypes {
         int SHOW = 1;
+        /**
+         * @deprecated Support for seasons on lists has been removed since the TMDB switch.
+         */
         int SEASON = 2;
+        /**
+         * @deprecated Support for seasons on lists has been removed since the TMDB switch.
+         */
         int EPISODE = 3;
+        int TMDB_SHOW = 4;
     }
 
     interface MoviesColumns {
@@ -1530,10 +1542,10 @@ public class SeriesGuideContract {
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
 
         public static final String SELECTION_LIST = Lists.LIST_ID + "=?";
-        public static final String SELECTION_SHOWS = ListItems.TYPE + "=" + ListItemTypes.SHOW;
-        public static final String SELECTION_SEASONS = ListItems.TYPE + "=" + ListItemTypes.SEASON;
-        public static final String SELECTION_EPISODES = ListItems.TYPE + "="
-                + ListItemTypes.EPISODE;
+        public static final String SELECTION_TVDB_SHOWS =
+                ListItems.TYPE + "=" + ListItemTypes.SHOW;
+        public static final String SELECTION_TMDB_SHOWS =
+                ListItems.TYPE + "=" + ListItemTypes.TMDB_SHOW;
 
         public static final String SORT_TYPE = ListItems.TYPE + " ASC";
 

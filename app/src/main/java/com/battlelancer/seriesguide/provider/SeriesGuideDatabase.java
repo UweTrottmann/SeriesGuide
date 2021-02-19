@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.provider;
 
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -26,7 +25,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
@@ -149,8 +147,6 @@ public class SeriesGuideDatabase {
         String SHOWS_NEXT_EPISODE = Tables.SHOWS + "." + Shows.NEXTEPISODE;
         String EPISODES_ID = Tables.EPISODES + "." + Episodes._ID;
         String EPISODES_SHOW_ID = Tables.EPISODES + "." + Shows.REF_SHOW_ID;
-        String SEASONS_ID = Tables.SEASONS + "." + Seasons._ID;
-        String SEASONS_SHOW_ID = Tables.SEASONS + "." + Shows.REF_SHOW_ID;
         String LIST_ITEMS_REF_ID = Tables.LIST_ITEMS + "." + ListItems.ITEM_REF_ID;
 
         String SG_SHOW_ID = Tables.SG_SHOW + "." + SgShow2Columns._ID;
@@ -184,33 +180,20 @@ public class SeriesGuideDatabase {
 
         String LIST_ITEMS = "listitems";
 
-        String SG_SEASON_JOIN_SG_SHOW = SG_SEASON + " LEFT OUTER JOIN " + SG_SHOW
-                + " ON " + Tables.SG_SEASON + "." + SgShow2Columns.REF_SHOW_ID
-                + "=" + Qualified.SG_SHOW_ID;
-        String SG_EPISODE_JOIN_SG_SHOW = SG_EPISODE + " LEFT OUTER JOIN " + SG_SHOW
-                + " ON " + Tables.SG_EPISODE + "." + SgShow2Columns.REF_SHOW_ID
-                + "=" + Qualified.SG_SHOW_ID;
         String LIST_ITEMS_WITH_DETAILS = "("
-                // shows
-                + "SELECT " + ListsSelect.SHOWS_COLUMNS + " FROM "
+                // new TMDB shows
+                + ItemsQuery.SELECT_ITEMS_AND_SHOWS_COLUMNS + " FROM "
                 + "("
-                + ListsSelect.LIST_ITEMS_SHOWS
+                + ItemsQuery.SELECT_TMDB_SHOWS
+                + " LEFT OUTER JOIN " + Tables.SG_SHOW
+                + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgShow2Columns.TMDB_ID
+                + ")"
+                // legacy TVDB shows
+                + " UNION " + ItemsQuery.SELECT_ITEMS_AND_SHOWS_COLUMNS + " FROM "
+                + "("
+                + ItemsQuery.SELECT_TVDB_SHOWS
                 + " LEFT OUTER JOIN " + Tables.SG_SHOW
                 + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgShow2Columns.TVDB_ID
-                + ")"
-                // seasons
-                + " UNION SELECT " + ListsSelect.SEASONS_COLUMNS + " FROM "
-                + "("
-                + ListsSelect.LIST_ITEMS_SEASONS
-                + " LEFT OUTER JOIN " + "(" + SG_SEASON_JOIN_SG_SHOW + ") AS " + Tables.SG_SEASON
-                + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgSeason2Columns.TVDB_ID
-                + ")"
-                // episodes
-                + " UNION SELECT " + ListsSelect.EPISODES_COLUMNS + " FROM "
-                + "("
-                + ListsSelect.LIST_ITEMS_EPISODES
-                + " LEFT OUTER JOIN " + "(" + SG_EPISODE_JOIN_SG_SHOW + ") AS " + Tables.SG_EPISODE
-                + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgEpisode2Columns.TVDB_ID
                 + ")"
                 //
                 + ")";
@@ -222,73 +205,42 @@ public class SeriesGuideDatabase {
         String JOBS = "jobs";
     }
 
-    private interface ListsSelect {
+    private interface ItemsQuery {
 
-        String LIST_ITEMS_SHOWS = "(SELECT " + ListsSelect.LIST_ITEMS_COLUMNS_INTERNAL
-                + " FROM " + Tables.LIST_ITEMS
-                + " WHERE " + ListItems.SELECTION_SHOWS + ")"
+        String ITEMS_COLUMNS = ListItems.LIST_ITEM_ID + ","
+                + Lists.LIST_ID + ","
+                + ListItems.TYPE + ","
+                + ListItems.ITEM_REF_ID;
+
+        String SELECT_LIST_ITEMS_MAP_ROW_ID = "SELECT " + ListItems._ID + " as item_row_id,"
+                + ITEMS_COLUMNS
+                + " FROM " + Tables.LIST_ITEMS;
+
+        String SELECT_TVDB_SHOWS = "(" + SELECT_LIST_ITEMS_MAP_ROW_ID
+                + " WHERE " + ListItems.SELECTION_TVDB_SHOWS + ")"
                 + " AS " + Tables.LIST_ITEMS;
 
-        String LIST_ITEMS_SEASONS = "(SELECT " + ListsSelect.LIST_ITEMS_COLUMNS_INTERNAL
-                + " FROM " + Tables.LIST_ITEMS
-                + " WHERE " + ListItems.SELECTION_SEASONS + ")"
+        String SELECT_TMDB_SHOWS = "(" + SELECT_LIST_ITEMS_MAP_ROW_ID
+                + " WHERE " + ListItems.SELECTION_TMDB_SHOWS + ")"
                 + " AS " + Tables.LIST_ITEMS;
 
-        String LIST_ITEMS_EPISODES = "(SELECT " + ListsSelect.LIST_ITEMS_COLUMNS_INTERNAL
-                + " FROM " + Tables.LIST_ITEMS
-                + " WHERE " + ListItems.SELECTION_EPISODES + ")"
-                + " AS " + Tables.LIST_ITEMS;
-
-        String LIST_ITEMS_COLUMNS_INTERNAL =
-                ListItems._ID + " as listitem_id,"
-                        + ListItems.LIST_ITEM_ID + ","
-                        + Lists.LIST_ID + ","
-                        + ListItems.TYPE + ","
-                        + ListItems.ITEM_REF_ID;
-
-        String COMMON_LIST_ITEMS_COLUMNS =
-                // from list items table
-                "listitem_id as " + ListItems._ID + ","
-                        + ListItems.LIST_ITEM_ID + ","
-                        + Lists.LIST_ID + ","
-                        + ListItems.TYPE + ","
-                        + ListItems.ITEM_REF_ID + ","
-                        // from shows table
-                        + SgShow2Columns.TITLE + ","
-                        + SgShow2Columns.TITLE_NOARTICLE + ","
-                        + SgShow2Columns.POSTER_SMALL + ","
-                        + SgShow2Columns.NETWORK + ","
-                        + SgShow2Columns.STATUS + ","
-                        + SgShow2Columns.FAVORITE + ","
-                        + SgShow2Columns.RELEASE_WEEKDAY + ","
-                        + SgShow2Columns.RELEASE_TIMEZONE + ","
-                        + SgShow2Columns.RELEASE_COUNTRY + ","
-                        + SgShow2Columns.LASTWATCHED_MS + ","
-                        + SgShow2Columns.UNWATCHED_COUNT;
-
-        String SHOWS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
+        String SELECT_ITEMS_AND_SHOWS_COLUMNS = "SELECT item_row_id as " + ListItems._ID + ","
+                + ITEMS_COLUMNS + ","
                 + Qualified.SG_SHOW_ID + " as " + SgShow2Columns.REF_SHOW_ID + ","
-                + SgShow2Columns.OVERVIEW + ","
                 + SgShow2Columns.RELEASE_TIME + ","
                 + SgShow2Columns.NEXTTEXT + ","
-                + SgShow2Columns.NEXTEPISODE + ","
-                + SgShow2Columns.NEXTAIRDATEMS;
-
-        String SEASONS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
-                + SgShow2Columns.REF_SHOW_ID + ","
-                + SgSeason2Columns.COMBINED + " as " + SgShow2Columns.OVERVIEW + ","
-                + SgShow2Columns.RELEASE_TIME + ","
-                + SgShow2Columns.NEXTTEXT + ","
-                + SgShow2Columns.NEXTEPISODE + ","
-                + SgShow2Columns.NEXTAIRDATEMS;
-
-        String EPISODES_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + ","
-                + SgShow2Columns.REF_SHOW_ID + ","
-                + SgEpisode2Columns.TITLE + " as " + SgShow2Columns.OVERVIEW + ","
-                + SgEpisode2Columns.FIRSTAIREDMS + " as " + SgShow2Columns.RELEASE_TIME + ","
-                + SgEpisode2Columns.SEASON + " as " + SgShow2Columns.NEXTTEXT + ","
-                + SgEpisode2Columns.NUMBER + " as " + SgShow2Columns.NEXTEPISODE + ","
-                + SgEpisode2Columns.FIRSTAIREDMS + " as " + SgShow2Columns.NEXTAIRDATEMS;
+                + SgShow2Columns.NEXTAIRDATEMS + ","
+                + SgShow2Columns.TITLE + ","
+                + SgShow2Columns.TITLE_NOARTICLE + ","
+                + SgShow2Columns.POSTER_SMALL + ","
+                + SgShow2Columns.NETWORK + ","
+                + SgShow2Columns.STATUS + ","
+                + SgShow2Columns.FAVORITE + ","
+                + SgShow2Columns.RELEASE_WEEKDAY + ","
+                + SgShow2Columns.RELEASE_TIMEZONE + ","
+                + SgShow2Columns.RELEASE_COUNTRY + ","
+                + SgShow2Columns.LASTWATCHED_MS + ","
+                + SgShow2Columns.UNWATCHED_COUNT;
     }
 
     interface References {

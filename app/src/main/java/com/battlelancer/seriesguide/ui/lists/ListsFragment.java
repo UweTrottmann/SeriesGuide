@@ -35,7 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 /**
- * Displays one user created list which includes a mixture of shows, seasons and episodes.
+ * Displays one user created list of shows.
  */
 public class ListsFragment extends Fragment {
 

@@ -241,7 +241,7 @@
     <string name="list_manage">Manage list</string>
     <string name="list_item_manage">Manage lists</string>
     <string name="list_item_remove">Remove from list</string>
-    <string name="list_empty">You can add shows, seasons or episodes to this list</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sort lists</string>
     <string name="action_lists_reorder">Reorder lists</string>
     <string name="error_name_already_exists">A list with this name already exists</string>
