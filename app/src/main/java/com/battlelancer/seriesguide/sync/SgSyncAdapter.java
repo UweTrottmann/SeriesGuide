@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.battlelancer.seriesguide.sync.HexagonSync.HexagonResult;
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.ui.lists.ListsTools2;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -129,6 +130,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // do some more things if this is not a quick update
         if (showSync.isSyncMultiple()) {
+            // migrate legacy list items
+            ListsTools2.migrateTvdbShowListItemsToTmdbIds(getContext());
+
             // update data of to be released movies
             if (!tmdbSync.updateMovies(progress)) {
                 progress.recordError();

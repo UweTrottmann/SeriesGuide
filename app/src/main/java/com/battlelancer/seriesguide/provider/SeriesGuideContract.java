@@ -1585,7 +1585,8 @@ public class SeriesGuideContract {
         public static boolean isValidItemType(int type) {
             return type == ListItemTypes.TVDB_SHOW
                     || type == ListItemTypes.SEASON
-                    || type == ListItemTypes.EPISODE;
+                    || type == ListItemTypes.EPISODE
+                    || type == ListItemTypes.TMDB_SHOW;
         }
     }
 

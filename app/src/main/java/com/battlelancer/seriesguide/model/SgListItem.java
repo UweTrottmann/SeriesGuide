@@ -43,4 +43,14 @@ public class SgListItem {
      */
     @ColumnInfo(name = Lists.LIST_ID)
     public String listId;
+
+    public SgListItem() {
+    }
+
+    public SgListItem(int itemRefId, int type, @NonNull String listId) {
+        this.listItemId = ListItems.generateListItemId(itemRefId, type, listId);
+        this.itemRefId = String.valueOf(itemRefId);
+        this.type = type;
+        this.listId = listId;
+    }
 }
