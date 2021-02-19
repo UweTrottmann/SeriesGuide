@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
-import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
@@ -51,7 +50,6 @@ import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -143,14 +141,7 @@ class ShowFragment() : Fragment() {
 
     private var showId: Long = 0
     private var show: SgShow2? = null
-//    private var showTvdbId: Int = 0
-//    private var showCursor: Cursor? = null
     private lateinit var showTools: ShowTools
-    private var ratingFetchJob: Job? = null
-//    private var showSlug: String? = null
-//    private var showTitle: String? = null
-//    private var posterPath: String? = null
-//    private var posterPathSmall: String? = null
     private var languageCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -235,12 +226,6 @@ class ShowFragment() : Fragment() {
         super.onDestroyView()
 
         unbinder.unbind()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // Release reference to any job.
-        ratingFetchJob = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -478,8 +463,6 @@ class ShowFragment() : Fragment() {
                 posterSmall
             )
         }
-
-        loadTraktRatings()
     }
 
     private fun populateCredits(credits: Credits?) {
@@ -517,15 +500,6 @@ class ShowFragment() : Fragment() {
     private fun rateShow() {
         show?.tvdbId?.also {
             RateDialogFragment.newInstanceShow(it).safeShow(context, parentFragmentManager)
-        }
-    }
-
-    private fun loadTraktRatings() {
-        show?.tvdbId?.also {
-            val oldRatingFetchJob = ratingFetchJob
-            if (oldRatingFetchJob == null || !oldRatingFetchJob.isActive) {
-                ratingFetchJob = TraktRatingsFetcher.fetchShowRatingsAsync(requireContext(), it)
-            }
         }
     }
 

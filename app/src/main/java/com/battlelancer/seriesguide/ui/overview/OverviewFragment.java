@@ -661,14 +661,11 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     }
 
     private void loadEpisodeDetails() {
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+        runIfHasEpisode(episode -> {
             if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
                 ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
                         requireContext(),
-                        showTvdbId,
-                        episodeTvdbId,
-                        episode.getSeason(),
-                        episode.getNumber()
+                        episode.getId()
                 );
             }
         });

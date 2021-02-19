@@ -35,6 +35,9 @@ interface SgEpisode2Helper {
     @Update(entity = SgEpisode2::class)
     fun updateTmdbIds(episodes: List<SgEpisode2TmdbIdUpdate>): Int
 
+    @Query("UPDATE sg_episode SET episode_rating = :rating, episode_rating_votes = :votes WHERE _id = :episodeId")
+    fun updateRating(episodeId: Long, rating: Double, votes: Int)
+
     @Query("DELETE FROM sg_episode WHERE _id = :episodeId")
     fun deleteEpisode(episodeId: Long)
 

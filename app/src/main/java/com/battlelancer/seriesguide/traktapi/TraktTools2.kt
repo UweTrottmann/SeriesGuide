@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.entities.BaseShow
+import com.uwetrottmann.trakt5.entities.Ratings
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.IdType
@@ -91,6 +92,27 @@ object TraktTools2 {
             traktShowsMap[tmdbId] = traktShow
         }
         return traktShowsMap
+    }
+
+    fun getEpisodeRatings(
+        context: Context,
+        showTraktId: String,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): Pair<Double, Int>? {
+        val ratings: Ratings =
+            SgTrakt.executeCall(
+                getServicesComponent(context).trakt()
+                    .episodes().ratings(showTraktId, seasonNumber, episodeNumber),
+                "get episode rating"
+            ) ?: return null
+        val rating = ratings.rating
+        val votes = ratings.votes
+        return if (rating != null && votes != null) {
+            Pair(rating, votes)
+        } else {
+            null
+        }
     }
 
 }

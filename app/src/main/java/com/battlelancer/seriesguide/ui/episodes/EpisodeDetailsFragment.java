@@ -468,7 +468,7 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         binding.getRoot().setVisibility(View.VISIBLE);
 
-        loadDetails();
+        loadTraktRatings();
     }
 
     private void updatePrimaryButtons(SgEpisode2 episode, SgShow2 show) {
@@ -605,21 +605,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
     }
 
-    private void loadDetails() {
-        SgShow2 showOrNull = this.show;
-        SgEpisode2 episodeOrNull = this.episode;
-        if (showOrNull != null && showOrNull.getTvdbId() != null
-                && episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            // update trakt ratings
-            if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
-                ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
-                        requireContext(),
-                        showOrNull.getTvdbId(),
-                        episodeOrNull.getTvdbId(),
-                        episodeOrNull.getSeason(),
-                        episodeOrNull.getNumber()
-                );
-            }
+    private void loadTraktRatings() {
+        // update trakt ratings
+        if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
+            ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
+                    requireContext(),
+                    episodeId
+            );
         }
     }
 
