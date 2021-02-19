@@ -198,9 +198,10 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
         // Empty view buttons.
         buttonSimilarShows.setOnClickListener(v -> {
-            if (show != null) {
+            if (show != null && show.getTmdbId() != null) {
                 startActivity(
-                        SimilarShowsActivity.intent(requireContext(), showTvdbId, show.getTitle()));
+                        SimilarShowsActivity
+                                .intent(requireContext(), show.getTmdbId(), show.getTitle()));
             }
         });
         buttonRemoveShow.setOnClickListener(v ->

@@ -398,7 +398,7 @@ class ShowFragment() : Fragment() {
 
         // Similar shows button.
         buttonSimilar.setOnClickListener {
-            show.tvdbId?.also {
+            show.tmdbId?.also {
                 startActivity(SimilarShowsActivity.intent(requireContext(), it, show.title))
             }
         }

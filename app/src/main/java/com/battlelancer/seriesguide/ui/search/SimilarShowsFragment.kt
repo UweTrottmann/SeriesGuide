@@ -23,11 +23,11 @@ import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 
 class SimilarShowsFragment : BaseAddShowsFragment() {
 
-    private var showTvdbId: Int = 0
+    private var showTmdbId: Int = 0
     private var showTitle: String? = null
 
     private val similarShowsViewModel: SimilarShowsViewModel by viewModels {
-        SimilarShowsViewModelFactory(requireActivity().application, showTvdbId)
+        SimilarShowsViewModelFactory(requireActivity().application, showTmdbId)
     }
 
     private lateinit var swipeRefreshLayout: EmptyViewSwipeRefreshLayout
@@ -39,7 +39,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        showTvdbId = requireArguments().getInt(ARG_SHOW_TVDB_ID)
+        showTmdbId = requireArguments().getInt(ARG_SHOW_TMDB_ID)
         showTitle = requireArguments().getString(ARG_SHOW_TITLE)
 
         setHasOptionsMenu(true)
@@ -80,7 +80,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     }
 
     private fun loadSimilarShows() {
-        similarShowsViewModel.loadSimilarShows(showTvdbId)
+        similarShowsViewModel.loadSimilarShows(showTmdbId)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -133,17 +133,17 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     }
 
     companion object {
-        private const val ARG_SHOW_TVDB_ID = "ARG_SHOW_TVDB_ID"
+        private const val ARG_SHOW_TMDB_ID = "ARG_SHOW_TMDB_ID"
         private const val ARG_SHOW_TITLE = "ARG_SHOW_TITLE"
         private const val MENU_ITEM_SEARCH_ID = 1
 
         @JvmStatic
         val displaySimilarShowsEventLiveData = SingleLiveEvent<SearchResult>()
 
-        fun newInstance(showTvdbId: Int, showTitle: String?): SimilarShowsFragment {
+        fun newInstance(showTmdbId: Int, showTitle: String?): SimilarShowsFragment {
             return SimilarShowsFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_SHOW_TVDB_ID, showTvdbId)
+                    putInt(ARG_SHOW_TMDB_ID, showTmdbId)
                     putString(ARG_SHOW_TITLE, showTitle)
                 }
             }

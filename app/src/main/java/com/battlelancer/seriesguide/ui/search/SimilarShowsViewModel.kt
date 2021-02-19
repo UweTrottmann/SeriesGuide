@@ -7,40 +7,28 @@ import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * Loads similar shows from TMDB and maps the results to standard search results with TheTVDB id.
  */
 class SimilarShowsViewModel(
     application: Application,
-    showTvdbId: Int
+    showTmdbId: Int
 ) : AndroidViewModel(application) {
 
     val resultLiveData = MutableLiveData<Result>()
 
     init {
-        loadSimilarShows(showTvdbId)
+        loadSimilarShows(showTmdbId)
     }
 
-    fun loadSimilarShows(showTvdbId: Int) {
+    fun loadSimilarShows(showTmdbId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val context = getApplication<Application>()
-            val tmdbTools = TmdbTools2()
-
-            // Resolve TMDB id.
-            val showTmdbId = withContext(Dispatchers.IO) {
-                tmdbTools.findShowTmdbId(context, showTvdbId)
-            }
-            if (showTmdbId == null || showTmdbId <= 0) {
-                postFailedResult()
-                return@launch
-            }
 
             // Get similar shows.
             val languageCode = DisplaySettings.getShowsSearchLanguage(getApplication())
@@ -69,9 +57,8 @@ class SimilarShowsViewModel(
                 page.results
             }
 
-            // Map to search results by resolving TheTVDB id.
             val searchResults = SearchTools.mapTvShowsToSearchResults(languageCode, results)
-            // Mark local shows and use existing TheTVDB poster path.
+            // Mark local shows and use existing posters.
             SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
 
             postSuccessfulResult(searchResults)

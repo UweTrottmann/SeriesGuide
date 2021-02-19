@@ -12,7 +12,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
@@ -72,8 +71,8 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
 
         setupViews(savedInstanceState == null)
 
-        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
-            startActivity(SimilarShowsActivity.intent(this, it.tvdbid, it.title))
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, {
+            startActivity(SimilarShowsActivity.intent(this, it.tmdbId, it.title))
         })
 
         handleSearchIntent(intent)
