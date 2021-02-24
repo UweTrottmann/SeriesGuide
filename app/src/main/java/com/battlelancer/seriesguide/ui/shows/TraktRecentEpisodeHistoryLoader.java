@@ -8,6 +8,8 @@ import androidx.annotation.StringRes;
 import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -97,7 +99,10 @@ public class TraktRecentEpisodeHistoryLoader
     protected void addItems(List<NowAdapter.NowItem> items, List<HistoryEntry> history) {
         SparseArrayCompat<String> tmdbIdsToPoster = SgApp.getServicesComponent(getContext())
                 .showTools().getTmdbIdsToPoster();
+        SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(getContext())
+                .sgEpisode2Helper();
         long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;
+
         for (int i = 0, size = history.size(); i < size; i++) {
             HistoryEntry entry = history.get(i);
 
@@ -115,9 +120,8 @@ public class TraktRecentEpisodeHistoryLoader
 
             // look for a TVDB poster
             String posterUrl;
-            Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
             Integer showTmdbId = entry.show.ids == null ? null : entry.show.ids.tmdb;
-            if (showTmdbId != null && tmdbIdsToPoster != null) {
+            if (showTmdbId != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
                 posterUrl = ImageTools.posterUrlOrResolve(tmdbIdsToPoster.get(showTmdbId),
                         showTmdbId, DisplaySettings.LANGUAGE_EN, getContext());
@@ -129,6 +133,11 @@ public class TraktRecentEpisodeHistoryLoader
                     ? entry.episode.title
                     : TextTools.getNextEpisodeString(getContext(), entry.episode.season,
                             entry.episode.number, entry.episode.title);
+
+            Integer episodeTmdbIdOrNull = entry.episode.ids != null ? entry.episode.ids.tmdb : null;
+            long localEpisodeIdOrZero = episodeTmdbIdOrNull != null
+                    ? episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull) : 0;
+
             NowAdapter.NowItem item = new NowAdapter.NowItem()
                     .displayData(
                             entry.watched_at.toInstant().toEpochMilli(),
@@ -136,7 +145,7 @@ public class TraktRecentEpisodeHistoryLoader
                             description,
                             posterUrl
                     )
-                    .tvdbIds(entry.episode.ids.tvdb, showTvdbId)
+                    .episodeIds(localEpisodeIdOrZero, showTmdbId != null ? showTmdbId : 0)
                     .recentlyWatchedTrakt(entry.action);
             items.add(item);
         }

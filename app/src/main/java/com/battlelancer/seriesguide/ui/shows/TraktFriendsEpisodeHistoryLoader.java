@@ -6,6 +6,8 @@ import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -60,6 +62,8 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
 
         // add last watched episode for each friend
         SparseArrayCompat<String> tmdbIdsToPoster = services.showTools().getTmdbIdsToPoster();
+        SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(getContext())
+                .sgEpisode2Helper();
         boolean hideTitle = DisplaySettings.preventSpoilers(getContext());
         for (int i = 0; i < size; i++) {
             Friend friend = friends.get(i);
@@ -91,9 +95,8 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
 
             // look for a TVDB poster
             String posterUrl;
-            Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
             Integer showTmdbId = entry.show.ids == null ? null : entry.show.ids.tmdb;
-            if (showTmdbId != null && tmdbIdsToPoster != null) {
+            if (showTmdbId != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
                 posterUrl = ImageTools.posterUrlOrResolve(tmdbIdsToPoster.get(showTmdbId),
                         showTmdbId, DisplaySettings.LANGUAGE_EN, getContext());
@@ -106,6 +109,11 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             String episodeString = TextTools.getNextEpisodeString(getContext(),
                     entry.episode.season, entry.episode.number,
                     hideTitle ? null : entry.episode.title);
+
+            Integer episodeTmdbIdOrNull = entry.episode.ids != null ? entry.episode.ids.tmdb : null;
+            long localEpisodeIdOrZero = episodeTmdbIdOrNull != null
+                    ? episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull) : 0;
+
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
                             entry.watched_at.toInstant().toEpochMilli(),
@@ -113,7 +121,7 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
                             episodeString,
                             posterUrl
                     )
-                    .tvdbIds(entry.episode.ids == null ? null : entry.episode.ids.tvdb, showTvdbId)
+                    .episodeIds(localEpisodeIdOrZero, showTmdbId != null ? showTmdbId : 0)
                     .friend(friend.user.username, avatar, entry.action);
             items.add(nowItem);
         }
