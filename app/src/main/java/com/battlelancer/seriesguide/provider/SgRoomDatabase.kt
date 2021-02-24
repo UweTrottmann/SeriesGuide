@@ -8,6 +8,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.battlelancer.seriesguide.model.ActivityType
 import com.battlelancer.seriesguide.model.SgActivity
 import com.battlelancer.seriesguide.model.SgEpisode
 import com.battlelancer.seriesguide.model.SgEpisode2
@@ -61,6 +62,13 @@ abstract class SgRoomDatabase : RoomDatabase() {
         const val VERSION_46_SERIES_SLUG = 46
         const val VERSION_47_SERIES_POSTER_THUMB = 47
         const val VERSION_48_EPISODE_PLAYS = 48
+
+        /**
+         * Shows, seasons and episodes now use auto-generated row IDs,
+         * a TMDB ID column is introduced. Also renames some columns for consistency.
+         *
+         * Also adds new activity table column modifies its index.
+         */
         const val VERSION_49_AUTO_ID_MIGRATION = 49
         const val VERSION = VERSION_49_AUTO_ID_MIGRATION
 
@@ -225,6 +233,13 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 // Create table indexes
                 database.execSQL("CREATE INDEX `index_sg_episode_season_id` ON `sg_episode` (`season_id`)")
                 database.execSQL("CREATE INDEX `index_sg_episode_series_id` ON `sg_episode` (`series_id`)")
+
+                // Add new column to the activity table, add it to unique index.
+                // Note: setting default value, as it is easier than creating a totally new table.
+                database.execSQL("ALTER TABLE activity ADD COLUMN activity_type INTEGER NOT NULL DEFAULT ${ActivityType.TVDB_ID}")
+                database.execSQL("UPDATE activity SET activity_type = ${ActivityType.TVDB_ID}")
+                database.execSQL("DROP INDEX IF EXISTS index_activity_activity_episode")
+                database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_activity_activity_episode_activity_type` ON `activity` (`activity_episode`, `activity_type`)")
             }
         }
 

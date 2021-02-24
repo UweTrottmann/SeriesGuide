@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 49,
-    "identityHash": "979a9f4afcc8fd605d82f9d499e42123",
+    "identityHash": "5da7695cd0881bd24633d0fea190cd41",
     "entities": [
       {
         "tableName": "series",
@@ -785,7 +785,7 @@
             "notNull": false
           },
           {
-            "fieldPath": "number",
+            "fieldPath": "numberOrNull",
             "columnName": "season_number",
             "affinity": "INTEGER",
             "notNull": false
@@ -803,25 +803,25 @@
             "notNull": true
           },
           {
-            "fieldPath": "watchCount",
+            "fieldPath": "notWatchedReleasedOrNull",
             "columnName": "season_watchcount",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "notReleasedCount",
+            "fieldPath": "notWatchedToBeReleasedOrNull",
             "columnName": "season_willaircount",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "noReleaseDateCount",
+            "fieldPath": "notWatchedNoReleaseOrNull",
             "columnName": "season_noairdatecount",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "totalCount",
+            "fieldPath": "totalOrNull",
             "columnName": "season_totalcount",
             "affinity": "INTEGER",
             "notNull": false
@@ -1339,7 +1339,7 @@
       },
       {
         "tableName": "activity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `activity_episode` TEXT NOT NULL, `activity_show` TEXT NOT NULL, `activity_time` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `activity_episode` TEXT NOT NULL, `activity_show` TEXT NOT NULL, `activity_time` INTEGER NOT NULL, `activity_type` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -1348,13 +1348,13 @@
             "notNull": false
           },
           {
-            "fieldPath": "episodeTvdbId",
+            "fieldPath": "episodeTvdbOrTmdbId",
             "columnName": "activity_episode",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "showTvdbId",
+            "fieldPath": "showTvdbOrTmdbId",
             "columnName": "activity_show",
             "affinity": "TEXT",
             "notNull": true
@@ -1362,6 +1362,12 @@
           {
             "fieldPath": "timestampMs",
             "columnName": "activity_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "activity_type",
+            "columnName": "activity_type",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -1374,12 +1380,13 @@
         },
         "indices": [
           {
-            "name": "index_activity_activity_episode",
+            "name": "index_activity_activity_episode_activity_type",
             "unique": true,
             "columnNames": [
-              "activity_episode"
+              "activity_episode",
+              "activity_type"
             ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_activity_activity_episode` ON `${TABLE_NAME}` (`activity_episode`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_activity_activity_episode_activity_type` ON `${TABLE_NAME}` (`activity_episode`, `activity_type`)"
           }
         ],
         "foreignKeys": []
@@ -1435,7 +1442,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '979a9f4afcc8fd605d82f9d499e42123')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5da7695cd0881bd24633d0fea190cd41')"
     ]
   }
 }

@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.util
 
 import android.content.Context
 import android.text.format.DateUtils
+import com.battlelancer.seriesguide.model.ActivityType
 import com.battlelancer.seriesguide.model.SgActivity
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
 import timber.log.Timber
@@ -19,6 +20,7 @@ object ActivityTools {
      *
      * Also cleans up old entries.
      */
+    @JvmStatic
     fun addActivity(context: Context, episodeId: Long, showId: Long) {
         // Need to use global IDs (in case a show is removed and added again).
         val database = getInstance(context)
@@ -40,7 +42,8 @@ object ActivityTools {
             null,
             episodeTvdbIdOrZero.toString(),
             showTvdbIdOrZero.toString(),
-            currentTime
+            currentTime,
+            ActivityType.TVDB_ID
         )
         helper.insertActivity(activity)
         Timber.d("addActivity: episode: %d timestamp: %d", episodeId, currentTime)
@@ -49,6 +52,7 @@ object ActivityTools {
     /**
      * Tries to remove any activity with the given episode id.
      */
+    @JvmStatic
     fun removeActivity(context: Context, episodeId: Long) {
         // Need to use global IDs (in case a show is removed and added again).
         val database = getInstance(context)
