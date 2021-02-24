@@ -15,7 +15,6 @@ import javax.crypto.spec.SecretKeySpec
  */
 object ImageTools {
 
-    const val TVDB_THUMBNAIL_POSTFIX = "_t.jpg"
     const val TVDB_LEGACY_CACHE_PREFIX = "_cache/"
     private const val TVDB_MIRROR_BANNERS = "https://artworks.thetvdb.com/banners/"
     private const val TVDB_LEGACY_MIRROR_BANNERS = "https://www.thetvdb.com/banners/"

@@ -124,6 +124,9 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_tmdb_id = :tmdbId WHERE _id = :id")
     fun updateTmdbId(id: Long, tmdbId: Int)
 
+    @Query("DELETE FROM sg_show")
+    fun deleteAllShows()
+
     @Query("DELETE FROM sg_show WHERE _id = :showId")
     fun deleteShow(showId: Long): Int
 

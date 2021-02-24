@@ -51,6 +51,9 @@ interface SgEpisode2Helper {
         }
     }
 
+    @Query("DELETE FROM sg_episode")
+    fun deleteAllEpisodes()
+
     @Query("DELETE FROM sg_episode WHERE _id = :episodeId")
     fun deleteEpisode(episodeId: Long)
 

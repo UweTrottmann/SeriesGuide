@@ -14,6 +14,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Column
 interface SgSeason2Helper {
 
     @Insert
+    fun insertSeason(season: SgSeason2): Long
+
+    @Insert
     fun insertSeasons(seasons: List<SgSeason2>): LongArray
 
     @Update(entity = SgSeason2::class)
@@ -21,6 +24,9 @@ interface SgSeason2Helper {
 
     @Update(entity = SgSeason2::class)
     fun updateTmdbIds(seasons: List<SgSeason2TmdbIdUpdate>): Int
+
+    @Query("DELETE FROM sg_season")
+    fun deleteAllSeasons()
 
     @Query("DELETE FROM sg_season WHERE _id = :seasonId")
     fun deleteSeason(seasonId: Long)
