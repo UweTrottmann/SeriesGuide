@@ -28,16 +28,12 @@ import kotlin.coroutines.suspendCoroutine
 
 /**
  * Add a shortcut to the overview page of the given show to the Home screen.
- *
- * @param showTitle The name of the shortcut.
- * @param posterPath A TVDb show small poster path.
- * @param showTvdbId The TVDb ID of the show.
  */
 class ShortcutCreator(
     localContext: Context,
     private val showTitle: String,
     private val posterPath: String,
-    private val showTvdbId: Int
+    private val showTmdbId: Int
 ) {
 
     private val context = localContext.applicationContext
@@ -90,7 +86,7 @@ class ShortcutCreator(
 
     private fun pinShortcut(posterBitmap: Bitmap?) {
         // Intent used when the shortcut is tapped
-        val shortcutIntent = OverviewActivity.intentShow(context, showTvdbId)
+        val shortcutIntent = OverviewActivity.intentShowByTmdbId(context, showTmdbId)
         shortcutIntent.action = Intent.ACTION_MAIN
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -100,7 +96,7 @@ class ShortcutCreator(
             if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported) {
                 val builder = ShortcutInfo.Builder(
                     context,
-                    "shortcut-show-$showTvdbId"
+                    "shortcut-show-tmdb-$showTmdbId"
                 )
                     .setIntent(shortcutIntent)
                     .setShortLabel(showTitle)
@@ -163,9 +159,7 @@ class ShortcutCreator(
     }
 
     /** A [Transformation] used to draw a [Bitmap] with round corners  */
-    private class RoundedCornerTransformation
-    /** Constructor for `RoundedCornerTransformation`  */
-    internal constructor(
+    private class RoundedCornerTransformation(
         /** A key used to uniquely identify this [Transformation]  */
         private val key: String,
         /** The corner radius  */

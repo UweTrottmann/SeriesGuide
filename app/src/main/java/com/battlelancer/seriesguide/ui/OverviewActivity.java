@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.ui.overview.ShowFragment;
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowTools2;
-import com.battlelancer.seriesguide.util.DBUtils;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,30 +34,33 @@ import org.greenrobot.eventbus.ThreadMode;
 public class OverviewActivity extends BaseMessageActivity {
 
     public static final int OVERVIEW_ACTIONS_LOADER_ID = 104;
+    /**
+     * Used by legacy shortcuts.
+     */
     private static final String EXTRA_INT_SHOW_TVDBID = "show_tvdbid";
+    /**
+     * Used by shortcuts.
+     */
+    private static final String EXTRA_INT_SHOW_TMDBID = "show_tmdbid";
     private static final String EXTRA_LONG_SHOW_ROWID = "show_id";
     private static final String EXTRA_BOOLEAN_DISPLAY_SEASONS = "EXTRA_DISPLAY_SEASONS";
 
     private long showId;
-    private int showTvdbId;
 
     /**
      * After opening, switches to overview tab (only if not multi-pane).
-     *
-     * @deprecated Use {@link #intentShow(Context, long)} with row ID.
      */
-    public static Intent intentShow(Context context, int showTvdbId) {
+    public static Intent intentShowByTvdbId(Context context, int showTvdbId) {
         return new Intent(context, OverviewActivity.class)
                 .putExtra(EXTRA_INT_SHOW_TVDBID, showTvdbId);
     }
 
     /**
-     * After opening, switches to seasons tab (only if not multi-pane).
-     *
-     * @deprecated Use {@link #intentSeasons(Context, long)} with row ID.
+     * After opening, switches to overview tab (only if not multi-pane).
      */
-    public static Intent intentSeasons(Context context, int showTvdbId) {
-        return intentShow(context, showTvdbId).putExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, true);
+    public static Intent intentShowByTmdbId(Context context, int showTmdbId) {
+        return new Intent(context, OverviewActivity.class)
+                .putExtra(EXTRA_INT_SHOW_TMDBID, showTmdbId);
     }
 
     /**
@@ -84,16 +86,20 @@ public class OverviewActivity extends BaseMessageActivity {
         setupActionBar();
 
         SgShow2Helper helper = SgRoomDatabase.getInstance(this).sgShow2Helper();
+
         showId = getIntent().getLongExtra(EXTRA_LONG_SHOW_ROWID, 0);
-        // Need TVDB id for backwards compat, will replace with row ID in the future.
-        if (showId > 0) {
-            showTvdbId = helper.getShowTvdbId(showId);
-        } else {
-            showTvdbId = getIntent().getIntExtra(EXTRA_INT_SHOW_TVDBID, -1);
-            showId = helper.getShowIdByTvdbId(showTvdbId);
+        if (showId == 0) {
+            // Try to look up by TMDB ID or TVDB ID (used by shortcuts).
+            int showTmdbIdOrZero = getIntent().getIntExtra(EXTRA_INT_SHOW_TMDBID, 0);
+            int showTvdbIdOrZero = getIntent().getIntExtra(EXTRA_INT_SHOW_TVDBID, 0);
+            if (showTmdbIdOrZero > 0) {
+                showId = helper.getShowIdByTmdbId(showTmdbIdOrZero);
+            } else if (showTvdbIdOrZero > 0) {
+                showId = helper.getShowIdByTvdbId(showTvdbIdOrZero);
+            }
         }
 
-        if (showTvdbId < 0 || !DBUtils.isShowExists(this, showTvdbId)) {
+        if (showId <= 0) {
             finish();
             return;
         }

@@ -523,12 +523,12 @@ class ShowFragment() : Fragment() {
 
         // create the shortcut
         show?.also { show ->
-            if (show.tvdbId != null && show.posterSmall != null) {
+            if (show.tmdbId != null && show.posterSmall != null) {
                 val shortcutLiveData = ShortcutCreator(
                     requireContext(),
                     show.title,
                     show.posterSmall,
-                    show.tvdbId
+                    show.tmdbId
                 )
                 viewLifecycleOwner.lifecycleScope.launch {
                     whenStarted {

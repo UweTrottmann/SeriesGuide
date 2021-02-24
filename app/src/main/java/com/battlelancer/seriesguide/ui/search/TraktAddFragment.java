@@ -99,7 +99,7 @@ public class TraktAddFragment extends AddFragment {
             if (item != null && item.getState() != SearchResult.STATE_ADDING) {
                 if (item.getState() == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(OverviewActivity.intentShow(requireContext(), item.getTvdbid()));
+                    startActivity(OverviewActivity.intentShowByTvdbId(requireContext(), item.getTvdbid()));
                 } else {
                     // display more details in a dialog
                     AddShowDialogFragment.show(getParentFragmentManager(), item);
