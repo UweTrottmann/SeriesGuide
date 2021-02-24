@@ -14,6 +14,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Column
 interface SgSeason2Helper {
 
     @Insert
+    fun insertSeason(season: SgSeason2): Long
+
+    @Insert
     fun insertSeasons(seasons: List<SgSeason2>): LongArray
 
     @Update(entity = SgSeason2::class)
@@ -21,6 +24,9 @@ interface SgSeason2Helper {
 
     @Update(entity = SgSeason2::class)
     fun updateTmdbIds(seasons: List<SgSeason2TmdbIdUpdate>): Int
+
+    @Query("DELETE FROM sg_season")
+    fun deleteAllSeasons()
 
     @Query("DELETE FROM sg_season WHERE _id = :seasonId")
     fun deleteSeason(seasonId: Long)
@@ -31,6 +37,9 @@ interface SgSeason2Helper {
             deleteSeason(it)
         }
     }
+
+    @Query("SELECT * FROM sg_season WHERE _id = :seasonId")
+    fun getSeason(seasonId: Long): SgSeason2?
 
     /**
      * Get IDs of seasons of a show, sorted by most recent one.
@@ -55,6 +64,12 @@ interface SgSeason2Helper {
      */
     @Query("SELECT * FROM sg_season WHERE series_id = :showId AND season_totalcount != 0 ORDER BY season_number ASC")
     fun getSeasonsOfShowOldestFirst(showId: Long): LiveData<List<SgSeason2>>
+
+    /**
+     * Excludes seasons where total episode count is 0.
+     */
+    @Query("SELECT * FROM sg_season WHERE series_id = :showId AND season_totalcount != 0 ORDER BY season_number ASC")
+    fun getSeasonsForExport(showId: Long): List<SgSeason2>
 
     @Update(entity = SgSeason2::class)
     fun updateSeasonCounters(seasonCountUpdate: SgSeason2CountUpdate)

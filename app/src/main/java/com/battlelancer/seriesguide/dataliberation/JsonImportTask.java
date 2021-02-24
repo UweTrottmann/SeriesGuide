@@ -20,17 +20,17 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.model.SgEpisode2;
+import com.battlelancer.seriesguide.model.SgSeason2;
+import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -56,12 +56,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR_LARGE_DB_OP = -2;
     private static final int ERROR_FILE_ACCESS = -3;
 
-    @SuppressLint("StaticFieldLeak") private Context context;
-    private String[] languageCodes;
+    @SuppressLint("StaticFieldLeak") private final Context context;
+    private final String[] languageCodes;
     private boolean isImportingAutoBackup;
-    private boolean isImportShows;
-    private boolean isImportLists;
-    private boolean isImportMovies;
+    private final boolean isImportShows;
+    private final boolean isImportLists;
+    private final boolean isImportMovies;
     @Nullable private String errorCause;
 
     public JsonImportTask(Context context, boolean importShows, boolean importLists,
@@ -250,11 +250,13 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     private boolean clearExistingData(@JsonExportTask.BackupType int type) {
         ArrayList<ContentProviderOperation> batch = new ArrayList<>();
         if (type == JsonExportTask.BACKUP_SHOWS) {
-            // delete episodes before seasons + shows to prevent violating foreign key constraints
-            batch.add(ContentProviderOperation.newDelete(Episodes.CONTENT_URI).build());
-            // delete seasons before shows to prevent violating foreign key constraints
-            batch.add(ContentProviderOperation.newDelete(Seasons.CONTENT_URI).build());
-            batch.add(ContentProviderOperation.newDelete(Shows.CONTENT_URI).build());
+            SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+            database.runInTransaction(() -> {
+                // delete episodes and seasons first to prevent violating foreign key constraints
+                database.sgEpisode2Helper().deleteAllEpisodes();
+                database.sgSeason2Helper().deleteAllSeasons();
+                database.sgShow2Helper().deleteAllShows();
+            });
         } else if (type == JsonExportTask.BACKUP_LISTS) {
             // delete list items before lists to prevent violating foreign key constraints
             batch.add(ContentProviderOperation.newDelete(ListItems.CONTENT_URI).build());
@@ -308,7 +310,8 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void addShowToDatabase(Show show) {
-        if (show.tvdb_id <= 0) {
+        if ((show.tmdb_id == null || show.tmdb_id <= 0)
+                && (show.tvdb_id == null || show.tvdb_id <= 0)) {
             // valid id required
             return;
         }
@@ -324,45 +327,30 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         if (!languageSupported) {
             show.language = null;
         }
-        // Construct missing small poster URL if there is a poster URL.
-        if ((show.poster_small == null || show.poster_small.length() == 0)
-                && show.poster != null && show.poster.length() > 0) {
-            show.poster_small = show.poster
-                    .replace(".jpg", ImageTools.TVDB_THUMBNAIL_POSTFIX);
-        }
-        // ensure a show will be updated (last_updated might be far into the future)
-        if (show.last_updated > System.currentTimeMillis()) {
-            show.last_updated = 0;
-        }
 
-        ContentValues showValues = show.toContentValues(context, true);
-        context.getContentResolver().insert(Shows.CONTENT_URI, showValues);
+        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+
+        SgShow2 sgShow = ImportTools.toSgShowForImport(show);
+        long showId = database.sgShow2Helper().insertShow(sgShow);
+        if (showId == -1) {
+            return; // Insert failed.
+        }
 
         if (show.seasons == null || show.seasons.isEmpty()) {
             // no seasons (or episodes)
             return;
         }
 
-        ContentValues[][] seasonsAndEpisodes = buildSeasonAndEpisodeBatches(show);
-        if (seasonsAndEpisodes[0] != null && seasonsAndEpisodes[1] != null) {
-            // Insert all seasons
-            context.getContentResolver().bulkInsert(Seasons.CONTENT_URI, seasonsAndEpisodes[0]);
-            // Insert all episodes
-            context.getContentResolver().bulkInsert(Episodes.CONTENT_URI, seasonsAndEpisodes[1]);
-        }
+        // Parse and insert seasons and episodes.
+        insertSeasonsAndEpisodes(show, showId);
     }
 
-    /**
-     * Returns all seasons and episodes of this show in neat {@link ContentValues} packages put into
-     * arrays. The first array returned includes all seasons, the second array all episodes.
-     */
-    private static ContentValues[][] buildSeasonAndEpisodeBatches(Show show) {
-        ArrayList<ContentValues> seasonBatch = new ArrayList<>();
-        ArrayList<ContentValues> episodeBatch = new ArrayList<>();
+    private void insertSeasonsAndEpisodes(Show show, long showId) {
+        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
 
-        // Populate arrays...
         for (Season season : show.seasons) {
-            if (season.tvdbId <= 0) {
+            if ((season.tmdb_id == null || season.tmdb_id.isEmpty())
+                    && (season.tvdbId == null || season.tvdbId <= 0)) {
                 // valid id is required
                 continue;
             }
@@ -371,28 +359,34 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 continue;
             }
 
-            // add the season...
-            seasonBatch.add(season.toContentValues(show.tvdb_id));
+            // Insert season.
+            SgSeason2 sgSeason = ImportTools.toSgSeasonForImport(season, showId);
+            long seasonId = database.sgSeason2Helper().insertSeason(sgSeason);
 
-            // ...and its episodes
-            for (Episode episode : season.episodes) {
-                if (episode.tvdbId <= 0) {
-                    // valid id is required
-                    continue;
-                }
-
-                ContentValues episodeValues = episode
-                        .toContentValues(show.tvdb_id, season.tvdbId, season.season);
-                episodeBatch.add(episodeValues);
+            // If inserted, insert episodes.
+            if (seasonId != -1) {
+                ArrayList<SgEpisode2> episodes = buildEpisodeBatch(season, showId, seasonId);
+                database.sgEpisode2Helper().insertEpisodes(episodes);
             }
         }
+    }
 
-        return new ContentValues[][]{
-                seasonBatch.size() == 0 ? null
-                        : seasonBatch.toArray(new ContentValues[seasonBatch.size()]),
-                episodeBatch.size() == 0 ? null
-                        : episodeBatch.toArray(new ContentValues[episodeBatch.size()])
-        };
+    private static ArrayList<SgEpisode2> buildEpisodeBatch(Season season, long showId,
+            long seasonId) {
+        ArrayList<SgEpisode2> episodeBatch = new ArrayList<>();
+
+        for (Episode episode : season.episodes) {
+            if ((episode.tmdb_id == null || episode.tmdb_id <= 0)
+                    && (episode.tvdbId == null || episode.tvdbId <= 0)) {
+                // valid id is required
+                continue;
+            }
+
+            episodeBatch.add(ImportTools
+                    .toSgEpisodeForImport(episode, showId, seasonId, season.season));
+        }
+
+        return episodeBatch;
     }
 
     private void addListToDatabase(List list) {
@@ -414,30 +408,31 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         // Insert the lists items
         ArrayList<ContentValues> items = new ArrayList<>();
         for (ListItem item : list.items) {
+            // Note: do not import legacy types (seasons and episodes).
             int type;
             if (ListItemTypesExport.SHOW.equals(item.type)) {
                 type = ListItemTypes.TVDB_SHOW;
-            } else if (ListItemTypesExport.SEASON.equals(item.type)) {
-                type = ListItemTypes.SEASON;
-            } else if (ListItemTypesExport.EPISODE.equals(item.type)) {
-                type = ListItemTypes.EPISODE;
+            } else if (ListItemTypesExport.TMDB_SHOW.equals(item.type)) {
+                type = ListItemTypes.TMDB_SHOW;
             } else {
                 // Unknown item type, skip
                 continue;
             }
 
-            if (TextUtils.isEmpty(item.listItemId)) {
-                if (item.tvdbId <= 0) {
-                    continue; // can't rebuild item id
-                }
-                item.listItemId = SeriesGuideContract.ListItems.generateListItemId(item.tvdbId,
-                        type, list.listId);
+            if (TextUtils.isEmpty(item.listItemId)) continue;
+
+            String externalId = null;
+            if (item.externalId != null && !item.externalId.isEmpty()) {
+                externalId = item.externalId;
+            } else if (item.tvdbId > 0) {
+                externalId = String.valueOf(item.tvdbId);
             }
+            if (externalId == null) continue;
 
             ContentValues itemValues = new ContentValues();
             itemValues.put(ListItems.LIST_ITEM_ID, item.listItemId);
             itemValues.put(Lists.LIST_ID, list.listId);
-            itemValues.put(ListItems.ITEM_REF_ID, item.tvdbId);
+            itemValues.put(ListItems.ITEM_REF_ID, externalId);
             itemValues.put(ListItems.TYPE, type);
 
             items.add(itemValues);

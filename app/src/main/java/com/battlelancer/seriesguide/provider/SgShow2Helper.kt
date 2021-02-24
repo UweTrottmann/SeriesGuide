@@ -25,6 +25,9 @@ interface SgShow2Helper {
     @Update(entity = SgShow2::class)
     fun updateShow(show: SgShow2Update): Int
 
+    @Query("SELECT * FROM sg_show WHERE _id = :id")
+    fun getShow(id: Long): SgShow2?
+
     @Query("SELECT * FROM sg_show WHERE _id=:id")
     fun getShowLiveData(id: Long): LiveData<SgShow2?>
 
@@ -69,6 +72,9 @@ interface SgShow2Helper {
 
     @Query("SELECT series_lastwatchedid FROM sg_show WHERE _id = :id")
     fun getShowLastWatchedEpisodeId(id: Long): Long
+
+    @Query("SELECT * FROM sg_show ORDER BY ${SgShow2Columns.SORT_TITLE}")
+    fun getShowsForExport(): List<SgShow2>
 
     @RawQuery(observedEntities = [SgShow2::class])
     fun getShows(query: SupportSQLiteQuery): List<SgShow2ForLists>
@@ -120,6 +126,9 @@ interface SgShow2Helper {
 
     @Query("UPDATE sg_show SET series_tmdb_id = :tmdbId WHERE _id = :id")
     fun updateTmdbId(id: Long, tmdbId: Int)
+
+    @Query("DELETE FROM sg_show")
+    fun deleteAllShows()
 
     @Query("DELETE FROM sg_show WHERE _id = :showId")
     fun deleteShow(showId: Long): Int

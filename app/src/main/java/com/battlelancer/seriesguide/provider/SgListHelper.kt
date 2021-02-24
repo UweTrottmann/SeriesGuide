@@ -5,11 +5,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.battlelancer.seriesguide.model.SgList
 import com.battlelancer.seriesguide.model.SgListItem
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 
 @Dao
 interface SgListHelper {
+
+    @Query("SELECT * FROM lists ORDER BY ${Lists.SORT_ORDER_THEN_NAME}")
+    fun getListsForExport(): List<SgList>
+
+    @Query("SELECT * FROM listitems WHERE list_id = :listId")
+    fun getListItemsForExport(listId: String): List<SgListItem>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertListItems(listItems: List<SgListItem>)

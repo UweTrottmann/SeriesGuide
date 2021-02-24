@@ -79,4 +79,8 @@ data class SgShow2(
         get() = releaseWeekDay ?: -1
     val statusOrUnknown: Int
         get() = status ?: ShowTools.Status.UNKNOWN
+    val ratingGlobalOrZero: Double
+        get() = ratingGlobal ?: 0.0
+    val ratingVotesOrZero: Int
+        get() = ratingVotes ?: 0
 }

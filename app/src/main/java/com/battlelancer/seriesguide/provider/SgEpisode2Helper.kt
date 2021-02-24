@@ -27,6 +27,9 @@ import com.battlelancer.seriesguide.util.TimeTools
 interface SgEpisode2Helper {
 
     @Insert
+    fun insertEpisode(episode: SgEpisode2): Long
+
+    @Insert
     fun insertEpisodes(episodes: List<SgEpisode2>): LongArray
 
     @Update(entity = SgEpisode2::class)
@@ -50,6 +53,9 @@ interface SgEpisode2Helper {
             updateUserRatingByTmdbId(it.key, it.value)
         }
     }
+
+    @Query("DELETE FROM sg_episode")
+    fun deleteAllEpisodes()
 
     @Query("DELETE FROM sg_episode WHERE _id = :episodeId")
     fun deleteEpisode(episodeId: Long)
@@ -81,6 +87,9 @@ interface SgEpisode2Helper {
 
     @RawQuery
     fun getEpisodeInfo(query: SupportSQLiteQuery): SgEpisode2Info?
+
+    @Query("SELECT * FROM sg_episode WHERE _id = :episodeId")
+    fun getEpisode(episodeId: Long): SgEpisode2?
 
     @Query("SELECT * FROM sg_episode WHERE _id=:id")
     fun getEpisodeLiveData(id: Long): LiveData<SgEpisode2?>
@@ -145,6 +154,12 @@ interface SgEpisode2Helper {
 
     @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_collected = 1 ORDER BY episode_number ASC")
     fun getCollectedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
+
+    /**
+     * Gets episodes of season ordered by episode number.
+     */
+    @Query("SELECT * FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_number ASC")
+    fun getEpisodesForExport(seasonId: Long): List<SgEpisode2>
 
     /**
      * WAIT, just for compile time validation of [SgEpisode2Info.buildQuery]

@@ -49,4 +49,7 @@ data class SgEpisode2(
     @ColumnInfo(name = SgEpisode2Columns.IMDBID) val imdbId: String? = "",
     @ColumnInfo(name = SgEpisode2Columns.LAST_EDITED) val lastEditedSec: Long = 0,
     @ColumnInfo(name = SgEpisode2Columns.LAST_UPDATED) val lastUpdatedSec: Long = 0
-)
+) {
+    val playsOrZero: Int
+        get() = plays ?: 0
+}
