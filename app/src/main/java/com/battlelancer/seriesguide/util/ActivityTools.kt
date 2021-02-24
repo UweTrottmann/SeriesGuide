@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.format.DateUtils
 import com.battlelancer.seriesguide.model.ActivityType
 import com.battlelancer.seriesguide.model.SgActivity
-import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import timber.log.Timber
 
 /**
@@ -23,11 +23,28 @@ object ActivityTools {
     @JvmStatic
     fun addActivity(context: Context, episodeId: Long, showId: Long) {
         // Need to use global IDs (in case a show is removed and added again).
-        val database = getInstance(context)
-        val showTvdbIdOrZero = database.sgShow2Helper().getShowTvdbId(showId)
-        if (showTvdbIdOrZero == 0) return
-        val episodeTvdbIdOrZero = database.sgEpisode2Helper().getEpisodeTvdbId(episodeId)
-        if (episodeTvdbIdOrZero == 0) return
+        val database = SgRoomDatabase.getInstance(context)
+
+        // Try using TMDB ID
+        var type = ActivityType.TMDB_ID
+        var showStableIdOrZero = database.sgShow2Helper().getShowTmdbId(showId)
+        var episodeStableIdOrZero = database.sgEpisode2Helper().getEpisodeTmdbId(episodeId)
+
+        // Fall back to TVDB ID
+        if (showStableIdOrZero == 0 || episodeStableIdOrZero == 0) {
+            type = ActivityType.TVDB_ID
+            showStableIdOrZero = database.sgShow2Helper().getShowTvdbId(showId)
+            episodeStableIdOrZero = database.sgEpisode2Helper().getEpisodeTvdbId(episodeId)
+            if (showStableIdOrZero == 0 || episodeStableIdOrZero == 0) {
+                // Should never happen: have neither TMDB or TVDB ID.
+                Timber.e(
+                    "Failed to add activity, no TMDB or TVDB ID for show %d episode %d",
+                    showId,
+                    episodeId
+                )
+                return
+            }
+        }
 
         val timeMonthAgo = System.currentTimeMillis() - HISTORY_THRESHOLD
         val helper = database.sgActivityHelper()
@@ -40,10 +57,10 @@ object ActivityTools {
         val currentTime = System.currentTimeMillis()
         val activity = SgActivity(
             null,
-            episodeTvdbIdOrZero.toString(),
-            showTvdbIdOrZero.toString(),
+            episodeStableIdOrZero.toString(),
+            showStableIdOrZero.toString(),
             currentTime,
-            ActivityType.TVDB_ID
+            type
         )
         helper.insertActivity(activity)
         Timber.d("addActivity: episode: %d timestamp: %d", episodeId, currentTime)
@@ -55,11 +72,21 @@ object ActivityTools {
     @JvmStatic
     fun removeActivity(context: Context, episodeId: Long) {
         // Need to use global IDs (in case a show is removed and added again).
-        val database = getInstance(context)
+        val database = SgRoomDatabase.getInstance(context)
+
+        // Try removal using TMDB ID.
+        var deleted = 0
+        val episodeTmdbIdOrZero = database.sgEpisode2Helper().getEpisodeTmdbId(episodeId)
+        if (episodeTmdbIdOrZero != 0) {
+            deleted += database.sgActivityHelper()
+                .deleteActivity(episodeTmdbIdOrZero.toString(), ActivityType.TMDB_ID)
+        }
+        // Try removal using TVDB ID.
         val episodeTvdbIdOrZero = database.sgEpisode2Helper().getEpisodeTvdbId(episodeId)
-        if (episodeTvdbIdOrZero == 0) return
-        val deleted = getInstance(context).sgActivityHelper()
-            .deleteActivity(episodeTvdbIdOrZero.toString())
+        if (episodeTvdbIdOrZero != 0) {
+            deleted += database.sgActivityHelper()
+                .deleteActivity(episodeTvdbIdOrZero.toString(), ActivityType.TVDB_ID)
+        }
         Timber.d("removeActivity: deleted %d activity entries", deleted)
     }
 }
