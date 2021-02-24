@@ -56,6 +56,12 @@ interface SgSeason2Helper {
     @Query("SELECT * FROM sg_season WHERE series_id = :showId AND season_totalcount != 0 ORDER BY season_number ASC")
     fun getSeasonsOfShowOldestFirst(showId: Long): LiveData<List<SgSeason2>>
 
+    /**
+     * Excludes seasons where total episode count is 0.
+     */
+    @Query("SELECT * FROM sg_season WHERE series_id = :showId AND season_totalcount != 0 ORDER BY season_number ASC")
+    fun getSeasonsForExport(showId: Long): List<SgSeason2>
+
     @Update(entity = SgSeason2::class)
     fun updateSeasonCounters(seasonCountUpdate: SgSeason2CountUpdate)
 

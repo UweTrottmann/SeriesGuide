@@ -24,12 +24,6 @@ interface EpisodeHelper {
     @Query("SELECT * FROM episodes WHERE _id=:episodeTvdbId")
     fun getEpisode(episodeTvdbId: Int): SgEpisode?
 
-    /**
-     * Gets episodes of season ordered by episode number.
-     */
-    @Query("SELECT * FROM episodes WHERE season_id=:seasonTvdbId ORDER BY episodenumber ASC")
-    fun getSeason(seasonTvdbId: Int): List<SgEpisode>
-
     @Query("SELECT _id, episodenumber, watched, plays, episode_collected FROM episodes WHERE season_id=:seasonTvdbId")
     fun getSeasonForTraktSync(seasonTvdbId: Int): List<SgEpisodeForTraktSync>
 

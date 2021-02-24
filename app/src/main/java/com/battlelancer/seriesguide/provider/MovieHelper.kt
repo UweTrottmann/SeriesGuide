@@ -18,6 +18,9 @@ interface MovieHelper {
     @Query("SELECT * FROM movies WHERE movies_tmdbid=:tmdbId")
     fun getMovie(tmdbId: Int): SgMovie?
 
+    @Query("SELECT * FROM movies ORDER BY movies_title COLLATE NOCASE ASC")
+    fun getMoviesForExport(): List<SgMovie>
+
     @Query("SELECT COUNT(movies_tmdbid) FROM movies WHERE movies_tmdbid=:tmdbId")
     fun getCount(tmdbId: Int): Int
 

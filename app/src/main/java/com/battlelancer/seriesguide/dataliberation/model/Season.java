@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.dataliberation.model;
 
 import android.content.ContentValues;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.google.gson.annotations.SerializedName;
@@ -9,8 +10,16 @@ import java.util.List;
 
 public class Season {
 
+    /**
+     * May be null for legacy backups.
+     */
+    @Nullable public String tmdb_id;
+    /**
+     * Is null on new backups.
+     */
     @SerializedName("tvdb_id")
-    public int tvdbId;
+    @Nullable
+    public Integer tvdbId;
 
     public int season;
 
@@ -28,5 +37,4 @@ public class Season {
         values.put(Seasons.TOTALCOUNT, 0);
         return values;
     }
-
 }

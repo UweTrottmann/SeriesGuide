@@ -147,6 +147,12 @@ interface SgEpisode2Helper {
     fun getCollectedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
 
     /**
+     * Gets episodes of season ordered by episode number.
+     */
+    @Query("SELECT * FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_number ASC")
+    fun getEpisodesForExport(seasonId: Long): List<SgEpisode2>
+
+    /**
      * WAIT, just for compile time validation of [SgEpisode2Info.buildQuery]
      */
     @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE season_id = :seasonId")

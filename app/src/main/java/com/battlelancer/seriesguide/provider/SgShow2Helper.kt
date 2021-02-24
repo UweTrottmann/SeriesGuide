@@ -70,6 +70,9 @@ interface SgShow2Helper {
     @Query("SELECT series_lastwatchedid FROM sg_show WHERE _id = :id")
     fun getShowLastWatchedEpisodeId(id: Long): Long
 
+    @Query("SELECT * FROM sg_show ORDER BY ${SgShow2Columns.SORT_TITLE}")
+    fun getShowsForExport(): List<SgShow2>
+
     @RawQuery(observedEntities = [SgShow2::class])
     fun getShows(query: SupportSQLiteQuery): List<SgShow2ForLists>
 

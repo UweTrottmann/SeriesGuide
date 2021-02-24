@@ -92,35 +92,24 @@ class AutoBackupTask(
         backup: Backup,
         backupFile: File
     ) {
-        val dataCursor = jsonExportTask.getDataCursor(backup.type)
-            ?: throw AutoBackupException("Querying for data failed.")
+        var out: FileOutputStream? = null
+        try {
+            out = FileOutputStream(backupFile)
 
-        dataCursor.use {
-            // If there is no data, create an empty file.
-            if (dataCursor.count == 0) {
-                backupFile.createNewFile()
-                return
+            when (backup) {
+                Backup.Shows -> jsonExportTask.writeJsonStreamShows(out)
+                Backup.Lists -> jsonExportTask.writeJsonStreamLists(out)
+                Backup.Movies -> jsonExportTask.writeJsonStreamMovies(out)
             }
-
-            var out: FileOutputStream? = null
-            try {
-                out = FileOutputStream(backupFile)
-
-                when (backup) {
-                    Backup.Shows -> jsonExportTask.writeJsonStreamShows(out, dataCursor)
-                    Backup.Lists -> jsonExportTask.writeJsonStreamLists(out, dataCursor)
-                    Backup.Movies -> jsonExportTask.writeJsonStreamMovies(out, dataCursor)
-                }
-            } catch (e: Exception) {
-                if (backupFile.delete()) {
-                    Timber.e("Backup failed, deleted backup file.")
-                } else {
-                    Timber.e("Backup failed, failed to delete backup file.")
-                }
-                throw e
-            } finally {
-                out?.closeFinally()
+        } catch (e: Exception) {
+            if (backupFile.delete()) {
+                Timber.e("Backup failed, deleted backup file.")
+            } else {
+                Timber.e("Backup failed, failed to delete backup file.")
             }
+            throw e
+        } finally {
+            out?.closeFinally()
         }
     }
 
