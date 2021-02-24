@@ -38,7 +38,7 @@ class EpisodesActivityViewModel(
         val database = SgRoomDatabase.getInstance(getApplication())
 
         val initialEpisodeId = if (episodeRowId == 0L && episodeTvdbId > 0) {
-            database.sgEpisode2Helper().getEpisodeId(episodeTvdbId)
+            database.sgEpisode2Helper().getEpisodeIdByTvdbId(episodeTvdbId)
         } else {
             episodeRowId
         }

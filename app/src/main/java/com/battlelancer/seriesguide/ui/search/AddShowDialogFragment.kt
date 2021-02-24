@@ -391,9 +391,9 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
          * or fall back language.
          */
         @JvmStatic
-        fun show(context: Context, fm: FragmentManager, showTvdbId: Int) {
+        fun show(context: Context, fm: FragmentManager, showTmdbId: Int) {
             val fakeResult = SearchResult().apply {
-                tvdbid = showTvdbId
+                tmdbId = showTmdbId
             }
             show(fm, fakeResult)
         }

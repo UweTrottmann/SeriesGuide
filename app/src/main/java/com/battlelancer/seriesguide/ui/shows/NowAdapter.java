@@ -112,8 +112,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<NowItem> friendsRecently;
 
     public static class NowItem {
-        public Integer episodeTvdbId;
-        public Integer showTvdbId;
+        public Long episodeRowId;
+        public Integer showTmdbId;
         public Integer movieTmdbId;
         public long timestamp;
         public String title;
@@ -144,9 +144,12 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return this;
         }
 
-        public NowItem tvdbIds(Integer episodeTvdbId, Integer showTvdbId) {
-            this.episodeTvdbId = episodeTvdbId;
-            this.showTvdbId = showTvdbId;
+        /**
+         * Pass 0 if no value.
+         */
+        public NowItem episodeIds(long episodeRowId, int showTmdbId) {
+            this.episodeRowId = episodeRowId;
+            this.showTmdbId = showTmdbId;
             return this;
         }
 

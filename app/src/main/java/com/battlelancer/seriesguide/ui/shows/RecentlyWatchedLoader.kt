@@ -2,11 +2,13 @@ package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.model.ActivityType
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.shows.NowAdapter.NowItem
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
 import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.androidutils.GenericSimpleLoader
+import timber.log.Timber
 
 /**
  * Loads a list of recently watched episodes from the local activity table.
@@ -23,16 +25,23 @@ class RecentlyWatchedLoader(
             .getActivityByLatest()
 
         val items = mutableListOf<NowItem>()
-        for ((_, episodeTvdbOrTmdbId, _, timestamp) in activityByLatest) {
+        for ((_, episodeStableId, _, timestamp, type) in activityByLatest) {
             if (items.size == 50) {
                 break // take at most 50 items
             }
 
-            val episodeTvdbId = episodeTvdbOrTmdbId.toInt()
+            val episodeTmdbOrTvdbId = episodeStableId.toInt()
 
             // get episode details
             val helper = database.sgEpisode2Helper()
-            val episodeId = helper.getEpisodeIdByTvdbId(episodeTvdbId)
+            val episodeId = if (type == ActivityType.TMDB_ID) {
+                helper.getEpisodeIdByTmdbId(episodeTmdbOrTvdbId)
+            } else if (type == ActivityType.TVDB_ID) {
+                helper.getEpisodeIdByTvdbId(episodeTmdbOrTvdbId)
+            } else {
+                Timber.e("Unknown activity type %d", type)
+                continue
+            }
             val episode = helper.getEpisodeWithShow(episodeId)
                 ?: continue
 
@@ -52,7 +61,8 @@ class RecentlyWatchedLoader(
                         context, false
                     )
                 )
-                .tvdbIds(episodeTvdbId, episode.showTvdbId).recentlyWatchedLocal()
+                // No need to add ID for adding show, query only returns if show is added.
+                .episodeIds(episodeId, 0).recentlyWatchedLocal()
             items.add(item)
         }
 
