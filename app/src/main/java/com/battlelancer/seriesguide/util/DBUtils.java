@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
@@ -121,29 +120,6 @@ public class DBUtils {
      */
     public static boolean isShowExists(Context context, int showTvdbId) {
         return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIdByTvdbId(showTvdbId) != 0;
-    }
-
-    /**
-     * Builds a {@link ContentProviderOperation} for inserting or updating a show (depending on
-     * {@code isNew}).
-     *
-     * <p> If the show is new, sets some default values and the (TheTVDB) id.
-     */
-    public static ContentProviderOperation buildShowOp(Context context, Show show, boolean isNew) {
-        // last updated now
-        show.last_updated = System.currentTimeMillis();
-
-        ContentValues values = show.toContentValues(context, isNew);
-
-        if (isNew) {
-            return ContentProviderOperation
-                    .newInsert(Shows.CONTENT_URI)
-                    .withValues(values).build();
-        } else {
-            return ContentProviderOperation
-                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdb_id)))
-                    .withValues(values).build();
-        }
     }
 
     /**
