@@ -27,6 +27,9 @@ import com.battlelancer.seriesguide.util.TimeTools
 interface SgEpisode2Helper {
 
     @Insert
+    fun insertEpisode(episode: SgEpisode2): Long
+
+    @Insert
     fun insertEpisodes(episodes: List<SgEpisode2>): LongArray
 
     @Update(entity = SgEpisode2::class)
@@ -84,6 +87,9 @@ interface SgEpisode2Helper {
 
     @RawQuery
     fun getEpisodeInfo(query: SupportSQLiteQuery): SgEpisode2Info?
+
+    @Query("SELECT * FROM sg_episode WHERE _id = :episodeId")
+    fun getEpisode(episodeId: Long): SgEpisode2?
 
     @Query("SELECT * FROM sg_episode WHERE _id=:id")
     fun getEpisodeLiveData(id: Long): LiveData<SgEpisode2?>

@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.util;
 import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
@@ -166,43 +165,6 @@ public class DBUtils {
             seasons.close();
         }
         return seasonIds;
-    }
-
-    /**
-     * Creates an update {@link ContentProviderOperation} for the given episode values.
-     */
-    public static ContentProviderOperation buildEpisodeUpdateOp(ContentValues values) {
-        final String episodeId = values.getAsString(Episodes._ID);
-        return ContentProviderOperation
-                .newUpdate(Episodes.buildEpisodeUri(episodeId))
-                .withValues(values).build();
-    }
-
-    /**
-     * Creates a {@link ContentProviderOperation} for insert if isNew, or update instead for with
-     * the given season values.
-     */
-    public static ContentProviderOperation buildSeasonOp(int showTvdbId, int seasonTvdbId,
-            int seasonNumber, boolean isNew) {
-        ContentProviderOperation op;
-        final ContentValues values = new ContentValues();
-        values.put(Seasons.COMBINED, seasonNumber);
-
-        if (isNew) {
-            values.put(Seasons._ID, seasonTvdbId);
-            values.put(Shows.REF_SHOW_ID, showTvdbId);
-            // set default values
-            values.put(Seasons.WATCHCOUNT, 0);
-            values.put(Seasons.UNAIREDCOUNT, 0);
-            values.put(Seasons.NOAIRDATECOUNT, 0);
-            values.put(Seasons.TOTALCOUNT, 0);
-            op = ContentProviderOperation.newInsert(Seasons.CONTENT_URI).withValues(values)
-                    .build();
-        } else {
-            op = ContentProviderOperation.newUpdate(Seasons.buildSeasonUri(seasonTvdbId))
-                    .withValues(values).build();
-        }
-        return op;
     }
 
     private interface NextEpisodesQuery {
