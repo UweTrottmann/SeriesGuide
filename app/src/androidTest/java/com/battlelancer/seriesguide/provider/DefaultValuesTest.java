@@ -13,9 +13,11 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.dataliberation.ImportTools;
 import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
@@ -34,7 +36,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class ProviderTest {
+public class DefaultValuesTest {
 
     private static final Show SHOW;
     private static final Season SEASON;
@@ -47,9 +49,11 @@ public class ProviderTest {
 
     static {
         SHOW = new Show();
+        SHOW.tmdb_id = 12;
         SHOW.tvdb_id = 12;
 
         SEASON = new Season();
+        SEASON.tmdb_id = "1234";
         SEASON.tvdbId = 1234;
         SEASON.season = 42;
 
@@ -57,6 +61,7 @@ public class ProviderTest {
         EPISODE.id = 123456;
 
         EPISODE_I = new com.battlelancer.seriesguide.dataliberation.model.Episode();
+        EPISODE_I.tmdb_id = EPISODE.id;
         EPISODE_I.tvdbId = EPISODE.id;
 
         LIST = new List();
@@ -89,51 +94,41 @@ public class ProviderTest {
     }
 
     @Test
-    public void showDefaultValues() throws Exception {
+    public void showDefaultValuesImport() {
         Context context = ApplicationProvider.getApplicationContext();
+        SgShow2Helper showHelper = SgRoomDatabase.getInstance(context).sgShow2Helper();
 
-        ContentValues values = SHOW.toContentValues(context, true);
-        ContentProviderOperation op = ContentProviderOperation.newInsert(Shows.CONTENT_URI)
-                .withValues(values).build();
+        SgShow2 sgShow = ImportTools.toSgShowForImport(SHOW);
+        long showId = showHelper.insertShow(sgShow);
 
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(op);
-        resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch);
+        SgShow2 show = showHelper.getShow(showId);
+        assertThat(show).isNotNull();
 
-        Cursor query = resolver.query(Shows.CONTENT_URI, null,
-                null, null, null);
-        assertThat(query).isNotNull();
-        assertThat(query.getCount()).isEqualTo(1);
-        assertThat(query.moveToFirst()).isTrue();
-
-        assertThat(query.getInt(query.getColumnIndexOrThrow(Shows._ID))).isEqualTo(SHOW.tvdb_id);
-        assertNotNullValue(query, Shows.TITLE);
-        assertNotNullValue(query, Shows.TITLE);
-        assertNotNullValue(query, Shows.OVERVIEW);
-        assertNotNullValue(query, Shows.GENRES);
-        assertNotNullValue(query, Shows.NETWORK);
-        assertNotNullValue(query, Shows.RUNTIME);
-        assertNotNullValue(query, Shows.STATUS);
-        assertNotNullValue(query, Shows.CONTENTRATING);
-        assertNotNullValue(query, Shows.NEXTEPISODE);
-        assertNotNullValue(query, Shows.POSTER);
-        assertNotNullValue(query, Shows.POSTER_SMALL);
-        assertNotNullValue(query, Shows.NEXTTEXT);
-        assertNotNullValue(query, Shows.IMDBID);
-        // getInt returns 0 if NULL, so check explicitly
-        assertDefaultValue(query, Shows.TRAKT_ID, 0);
-        assertDefaultValue(query, Shows.FAVORITE, 0);
-        assertDefaultValue(query, Shows.HEXAGON_MERGE_COMPLETE, 1);
-        assertDefaultValue(query, Shows.HIDDEN, 0);
-        assertDefaultValue(query, Shows.LASTUPDATED, 0);
-        assertDefaultValue(query, Shows.LASTEDIT, 0);
-        assertDefaultValue(query, Shows.LASTWATCHEDID, 0);
-        assertDefaultValue(query, Shows.LASTWATCHED_MS, 0);
-        assertNotNullValue(query, Shows.LANGUAGE);
-        assertDefaultValue(query, Shows.UNWATCHED_COUNT, DBUtils.UNKNOWN_UNWATCHED_COUNT);
-        assertDefaultValue(query, Shows.NOTIFY, 1);
-
-        query.close();
+        // Note: compare with SgShow and ShowTools.
+        assertThat(show.getTvdbId()).isEqualTo(SHOW.tvdb_id);
+        assertThat(show.getTitle()).isNotNull();
+        assertThat(show.getOverview()).isNotNull();
+        assertThat(show.getGenres()).isNotNull();
+        assertThat(show.getNetwork()).isNotNull();
+        assertThat(show.getRuntime()).isNotNull();
+        assertThat(show.getStatus()).isNotNull();
+        assertThat(show.getContentRating()).isNotNull();
+        assertThat(show.getNextEpisode()).isNotNull();
+        assertThat(show.getPoster()).isNotNull();
+        assertThat(show.getPosterSmall()).isNotNull();
+        assertThat(show.getNextText()).isNotNull();
+        assertThat(show.getImdbId()).isNotNull();
+        assertThat(show.getTraktId()).isEqualTo(0);
+        assertThat(show.getFavorite()).isFalse();
+        assertThat(show.getHexagonMergeComplete()).isTrue();
+        assertThat(show.getHidden()).isFalse();
+        assertThat(show.getLastUpdatedMs()).isEqualTo(0);
+        assertThat(show.getLastEditedSec()).isEqualTo(0);
+        assertThat(show.getLastWatchedEpisodeId()).isEqualTo(0);
+        assertThat(show.getLastWatchedMs()).isEqualTo(0);
+        assertThat(show.getLanguage()).isNotNull();
+        assertThat(show.getUnwatchedCount()).isEqualTo(DBUtils.UNKNOWN_UNWATCHED_COUNT);
+        assertThat(show.getNotify()).isTrue();
     }
 
     @Test

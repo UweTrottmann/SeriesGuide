@@ -25,6 +25,9 @@ interface SgShow2Helper {
     @Update(entity = SgShow2::class)
     fun updateShow(show: SgShow2Update): Int
 
+    @Query("SELECT * FROM sg_show WHERE _id = :id")
+    fun getShow(id: Long): SgShow2?
+
     @Query("SELECT * FROM sg_show WHERE _id=:id")
     fun getShowLiveData(id: Long): LiveData<SgShow2?>
 
