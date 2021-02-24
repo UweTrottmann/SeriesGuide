@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.util;
 
-import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -18,8 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
@@ -32,8 +29,6 @@ import com.battlelancer.seriesguide.provider.SgShow2LastWatchedEpisode;
 import com.battlelancer.seriesguide.provider.SgShow2NextEpisodeUpdate;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
@@ -119,52 +114,6 @@ public class DBUtils {
      */
     public static boolean isShowExists(Context context, int showTvdbId) {
         return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIdByTvdbId(showTvdbId) != 0;
-    }
-
-    /**
-     * Returns the episode IDs and their last updated time for a given show as a efficiently
-     * searchable HashMap. Using instead of last edited time, which might be wrong when for example
-     * restoring from a backup.
-     *
-     * @return HashMap containing the shows existing episodes
-     */
-    public static HashMap<Integer, Long> getLastUpdatedByEpisodeId(Context context,
-            int showTvdbId) {
-        Cursor episodes = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                        Episodes._ID, Episodes.LAST_UPDATED
-                }, null, null, null
-        );
-        @SuppressLint("UseSparseArrays") HashMap<Integer, Long> episodeMap = new HashMap<>();
-        if (episodes != null) {
-            while (episodes.moveToNext()) {
-                episodeMap.put(episodes.getInt(0), episodes.getLong(1));
-            }
-            episodes.close();
-        }
-        return episodeMap;
-    }
-
-    /**
-     * Returns the season IDs for a given show as a efficiently searchable HashMap.
-     *
-     * @return HashMap containing the shows existing seasons
-     */
-    public static HashSet<Integer> getSeasonIdsOfShow(Context context, int showTvdbId) {
-        Cursor seasons = context.getContentResolver().query(
-                Seasons.buildSeasonsOfShowUri(showTvdbId),
-                new String[]{
-                        Seasons._ID
-                }, null, null, null
-        );
-        HashSet<Integer> seasonIds = new HashSet<>();
-        if (seasons != null) {
-            while (seasons.moveToNext()) {
-                seasonIds.add(seasons.getInt(0));
-            }
-            seasons.close();
-        }
-        return seasonIds;
     }
 
     private interface NextEpisodesQuery {
