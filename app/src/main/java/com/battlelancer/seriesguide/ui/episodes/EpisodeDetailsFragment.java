@@ -35,7 +35,6 @@ import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -52,6 +51,7 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TextToolsK;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.squareup.picasso.Callback;
@@ -569,8 +569,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
     private void updateSecondaryButtons(SgEpisode2 episode, SgShow2 show) {
         // trakt
-        if (episode.getTvdbId() != null) {
-            String traktLink = TraktTools.buildEpisodeUrl(episode.getTvdbId());
+        if (episode.getTmdbId() != null) {
+            String traktLink = TraktTools.buildEpisodeUrl(episode.getTmdbId());
             ViewTools.openUriOnClick(bindingBottom.buttonEpisodeTrakt, traktLink);
             ClipboardTools
                     .copyTextToClipboardOnLongClick(bindingBottom.buttonEpisodeTrakt, traktLink);
@@ -584,21 +584,20 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
         ServiceUtils.setUpImdbButton(imdbId, bindingBottom.buttonEpisodeImdb);
 
-        // TVDb
-        if (episode.getTvdbId() != null) {
-            String tvdbLink = TvdbLinks
-                    .episode(show.getSlug(), null, null, episode.getTvdbId());
-            ViewTools.openUriOnClick(bindingBottom.buttonEpisodeTvdb, tvdbLink);
-            ClipboardTools
-                    .copyTextToClipboardOnLongClick(bindingBottom.buttonEpisodeTvdb, tvdbLink);
-
-            // trakt comments
-            bindingBottom.buttonEpisodeComments.setOnClickListener(v -> {
-                Intent intent = TraktCommentsActivity
-                        .intentEpisode(requireContext(), episodeTitle, episodeId);
-                Utils.startActivityWithAnimation(requireActivity(), intent, v);
-            });
+        // TMDb
+        if (show.getTmdbId() != null) {
+            String url = TmdbTools
+                    .buildEpisodeUrl(show.getTmdbId(), episode.getSeason(), episode.getNumber());
+            ViewTools.openUriOnClick(bindingBottom.buttonEpisodeTmdb, url);
+            ClipboardTools.copyTextToClipboardOnLongClick(bindingBottom.buttonEpisodeTmdb, url);
         }
+
+        // trakt comments
+        bindingBottom.buttonEpisodeComments.setOnClickListener(v -> {
+            Intent intent = TraktCommentsActivity
+                    .intentEpisode(requireContext(), episodeTitle, episodeId);
+            Utils.startActivityWithAnimation(requireActivity(), intent, v);
+        });
     }
 
     private void loadTraktRatings() {

@@ -24,7 +24,6 @@ import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
-import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
@@ -43,6 +42,7 @@ import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
@@ -116,8 +116,8 @@ class ShowFragment() : Fragment() {
     internal lateinit var buttonImdb: Button
     @BindView(R.id.buttonShowMetacritic)
     internal lateinit var buttonShowMetacritic: Button
-    @BindView(R.id.buttonShowTvdb)
-    internal lateinit var buttonTvdb: Button
+    @BindView(R.id.buttonShowTmdb)
+    internal lateinit var buttonTmdb: Button
     @BindView(R.id.buttonShowTrakt)
     internal lateinit var buttonTrakt: Button
     @BindView(R.id.buttonShowWebSearch)
@@ -405,13 +405,13 @@ class ShowFragment() : Fragment() {
         // IMDb button
         ServiceUtils.setUpImdbButton(show.imdbId, buttonImdb)
 
-        // TVDb button
-        val tvdbLink = TvdbLinks.show(show.slug, 0)
-        ViewTools.openUriOnClick(buttonTvdb, tvdbLink)
-        buttonTvdb.copyTextToClipboardOnLongClick(tvdbLink)
+        show.tmdbId?.also {
+            // TMDb button
+            val url = TmdbTools.buildShowUrl(it)
+            ViewTools.openUriOnClick(buttonTmdb, url)
+            buttonTmdb.copyTextToClipboardOnLongClick(url)
 
-        // trakt button
-        show.tvdbId?.also {
+            // Trakt button
             val traktLink = TraktTools.buildShowUrl(it)
             ViewTools.openUriOnClick(buttonTrakt, traktLink)
             buttonTrakt.copyTextToClipboardOnLongClick(traktLink)

@@ -47,12 +47,12 @@ public class TraktTools {
         return traktEpisodesMap;
     }
 
-    public static String buildShowUrl(int showTvdbId) {
-        return TraktLink.tvdb(showTvdbId) + "?id_type=show";
+    public static String buildShowUrl(int showTmdbId) {
+        return TraktLink.tmdb(showTmdbId) + "?id_type=show";
     }
 
-    public static String buildEpisodeUrl(int episodeTvdbId) {
-        return TraktLink.tvdb(episodeTvdbId) + "?id_type=episode";
+    public static String buildEpisodeUrl(int episodeTmdbId) {
+        return TraktLink.tmdb(episodeTmdbId) + "?id_type=episode";
     }
 
     public static String buildMovieUrl(int movieTmdbId) {

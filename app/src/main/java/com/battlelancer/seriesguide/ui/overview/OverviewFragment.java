@@ -43,7 +43,6 @@ import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -65,6 +64,7 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TextToolsK;
 import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.util.TmdbTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.battlelancer.seriesguide.widgets.FeedbackView;
@@ -134,7 +134,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     @BindView(R.id.textViewRatingsUser) TextView textUserRating;
 
     @BindView(R.id.buttonEpisodeImdb) Button buttonImdb;
-    @BindView(R.id.buttonEpisodeTvdb) Button buttonTvdb;
+    @BindView(R.id.buttonEpisodeTmdb) Button buttonTmdb;
     @BindView(R.id.buttonEpisodeTrakt) Button buttonTrakt;
     @BindView(R.id.buttonEpisodeShare) Button buttonShare;
     @BindView(R.id.buttonEpisodeCalendar) Button buttonAddToCalendar;
@@ -571,8 +571,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         ServiceUtils.setUpImdbButton(imdbId, buttonImdb);
 
         // trakt button
-        if (episode.getTvdbId() != null) {
-            String traktLink = TraktTools.buildEpisodeUrl(episode.getTvdbId());
+        if (episode.getTmdbId() != null) {
+            String traktLink = TraktTools.buildEpisodeUrl(episode.getTmdbId());
             ViewTools.openUriOnClick(buttonTrakt, traktLink);
             ClipboardTools.copyTextToClipboardOnLongClick(buttonTrakt, traktLink);
         }
@@ -597,13 +597,13 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         textDescription.setText(TextTools.textWithTmdbSource(textDescription.getContext(),
                 overview));
 
-        // TVDb button
-        final Integer episodeTvdbId = episode.getTvdbId();
-        if (episodeTvdbId != null) {
-            String tvdbLink = TvdbLinks
-                    .episode(show.getSlug(), showTvdbId, null, episodeTvdbId);
-            ViewTools.openUriOnClick(buttonTvdb, tvdbLink);
-            ClipboardTools.copyTextToClipboardOnLongClick(buttonTvdb, tvdbLink);
+        // TMDb button
+        final Integer showTmdbId = show.getTmdbId();
+        if (showTmdbId != null) {
+            String url = TmdbTools
+                    .buildEpisodeUrl(showTmdbId, episode.getSeason(), episode.getNumber());
+            ViewTools.openUriOnClick(buttonTmdb, url);
+            ClipboardTools.copyTextToClipboardOnLongClick(buttonTmdb, url);
         }
     }
 
