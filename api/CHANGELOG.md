@@ -1,5 +1,9 @@
 # SeriesGuide API change log
 
+## 2.2.0 (2021-02-25, required as of SeriesGuide 58-beta1)
+- Episode info now contains TMDB ID of episode and show, and may now contain 0 for TVDB IDs.
+- View intents now expect TMDB IDs for shows and episodes.
+
 ## 2.1.0 (2020-09-17)
 - Migrate to AndroidX.
 - Use Java 8 language features.
