@@ -62,17 +62,17 @@ object ImageTools {
                 imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
                     "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
                 }
-                imagePath.startsWith("posters/") -> {
-                    "${TVDB_MIRROR_BANNERS}$imagePath"
-                }
-                else -> {
-                    // TMDB images have no path at all.
+                imagePath.startsWith("/") -> {
+                    // TMDB images have no path at all, but always start with /.
                     // Use small size based on density, or original size (as large as possible).
                     if (originalSize) {
                         TmdbSettings.getImageOriginalUrl(context, imagePath)
                     } else {
                         "${TmdbSettings.getPosterBaseUrl(context)}$imagePath"
                     }
+                }
+                else -> {
+                    "${TVDB_MIRROR_BANNERS}$imagePath"
                 }
             }
             buildImageCacheUrl(imageUrl)
@@ -97,17 +97,17 @@ object ImageTools {
                 imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
                     "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
                 }
-                imagePath.startsWith("episodes/") -> {
-                    "${TVDB_MIRROR_BANNERS}$imagePath"
-                }
-                else -> {
-                    // TMDB images have no path at all.
+                imagePath.startsWith("/") -> {
+                    // TMDB images have no path at all, but always start with /.
                     // Use small size based on density, or original size (as large as possible).
                     if (originalSize) {
                         TmdbSettings.getImageOriginalUrl(context, imagePath)
                     } else {
                         TmdbSettings.getStillUrl(context, imagePath)
                     }
+                }
+                else -> {
+                    "${TVDB_MIRROR_BANNERS}$imagePath"
                 }
             }
             buildImageCacheUrl(imageUrl)
