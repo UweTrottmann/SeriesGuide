@@ -349,7 +349,7 @@ class EpisodesActivity : BaseMessageActivity() {
 
     companion object {
         private const val EXTRA_LONG_SEASON_ID = "season_id"
-        private const val EXTRA_LONG_EPISODE_ID = "episode_id"
+        const val EXTRA_LONG_EPISODE_ID = "episode_id"
         /** Either this or [EXTRA_EPISODE_TVDBID] is required. */
         @Deprecated("Use intentSeason and season row ID instead.")
         const val EXTRA_SEASON_TVDBID = "season_tvdbid"

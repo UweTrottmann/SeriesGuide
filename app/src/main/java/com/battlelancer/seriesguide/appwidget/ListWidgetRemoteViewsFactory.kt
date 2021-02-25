@@ -154,7 +154,7 @@ class ListWidgetRemoteViewsFactory(
                 if (hasNextEpisode) TimeTools.applyUserOffset(context, show.nextAirdateMs) else null
             return bindViewAt(
                 rv,
-                show.nextEpisode?.toIntOrNull(),
+                show.nextEpisode?.toLongOrNull(),
                 episodeDescription,
                 actualRelease,
                 show.network,
@@ -177,7 +177,7 @@ class ListWidgetRemoteViewsFactory(
             )
             return bindViewAt(
                 rv,
-                episode.episodeTvdbId,
+                episode.id,
                 episodeDescription,
                 actualRelease = TimeTools.applyUserOffset(context, episode.episode_firstairedms),
                 episode.network,
@@ -189,7 +189,7 @@ class ListWidgetRemoteViewsFactory(
 
     private fun bindViewAt(
         rv: RemoteViews,
-        mediaItemId: Int?,
+        episodeId: Long?,
         episodeDescription: String,
         actualRelease: Date?,
         network: String?,
@@ -197,9 +197,9 @@ class ListWidgetRemoteViewsFactory(
         posterPath: String?
     ): RemoteViews {
         // Set the fill-in intent for the collection item.
-        if (mediaItemId != null) {
+        if (episodeId != null) {
             bundleOf(
-                EpisodesActivity.EXTRA_EPISODE_TVDBID to mediaItemId
+                EpisodesActivity.EXTRA_LONG_EPISODE_ID to episodeId
             ).let {
                 Intent().putExtras(it)
             }.let {

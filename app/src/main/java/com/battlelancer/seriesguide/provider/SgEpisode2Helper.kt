@@ -113,7 +113,7 @@ interface SgEpisode2Helper {
     /**
      * Also used for compile time validation of [SgEpisode2WithShow.SELECT] (minus the WHERE clause).
      */
-    @Query("SELECT sg_episode._id, episode_tvdb_id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id WHERE sg_episode._id = :episodeId")
+    @Query("SELECT sg_episode._id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id WHERE sg_episode._id = :episodeId")
     fun getEpisodeWithShow(episodeId: Long): SgEpisode2WithShow?
 
     /**
@@ -502,7 +502,6 @@ interface SgEpisode2Helper {
 
 data class SgEpisode2WithShow(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TVDB_ID) val episodeTvdbId: Int,
     @ColumnInfo(name = SgEpisode2Columns.TITLE) val episodetitle: String?,
     @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
     @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
@@ -518,7 +517,7 @@ data class SgEpisode2WithShow(
     companion object {
         // WAIT, make sure to update the above dummy query so there is compile time validation!
         const val SELECT =
-            "SELECT sg_episode._id, episode_tvdb_id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id"
+            "SELECT sg_episode._id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id"
 
         private const val CALENDAR_DAY_LIMIT_MS = 31 * DateUtils.DAY_IN_MILLIS
 

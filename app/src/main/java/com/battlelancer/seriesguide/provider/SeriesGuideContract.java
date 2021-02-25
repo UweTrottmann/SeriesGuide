@@ -630,7 +630,7 @@ public class SeriesGuideContract {
         String HEXAGON_MERGE_COMPLETE = "series_syncenabled";
 
         /**
-         * Next episode TheTVDB id.
+         * Next episode row id.
          *
          * <pre>
          * Example: "42"
