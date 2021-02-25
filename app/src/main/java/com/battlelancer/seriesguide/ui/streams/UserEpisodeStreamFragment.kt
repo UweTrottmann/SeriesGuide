@@ -2,12 +2,18 @@ package com.battlelancer.seriesguide.ui.streams
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment.Companion.show
-import com.battlelancer.seriesguide.ui.streams.UserEpisodeStreamFragment
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
 import com.uwetrottmann.trakt5.entities.HistoryEntry
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Displays the latest Trakt episode watch history of the user.
@@ -39,35 +45,46 @@ class UserEpisodeStreamFragment : StreamFragment() {
     private val itemClickListener: BaseHistoryAdapter.OnItemClickListener =
         object : BaseHistoryAdapter.OnItemClickListener {
             override fun onItemClick(view: View, item: HistoryEntry) {
-                if (item.episode == null || item.episode?.season == null || item.episode?.number == null
-                    || item.show == null || item.show?.ids == null || item.show?.ids?.tmdb == null) {
+                val season = item.episode?.season
+                val number = item.episode?.number
+                val showTmdbId = item.show?.ids?.tmdb
+                if (season == null || number == null || showTmdbId == null) {
                     // no episode or show? give up
                     return
                 }
 
-                // FIXME Look up using TMDB id.
-                val episodeQuery = requireContext()
-                    .contentResolver.query(
-                        SeriesGuideContract.Episodes.buildEpisodesOfShowUri(item.show.ids.tvdb),
-                        arrayOf(SeriesGuideContract.Episodes._ID),
-                        "${SeriesGuideContract.Episodes.NUMBER}=${item.episode.number} AND " +
-                                "${SeriesGuideContract.Episodes.SEASON}=${item.episode.season}",
-                        null,
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val episodeIdOrNull = withContext(Dispatchers.IO) {
+                        val database = SgRoomDatabase.getInstance(requireContext())
+                        val showId = database.sgShow2Helper().getShowIdByTmdbId(showTmdbId)
+                        if (showId != 0L) {
+                            val episodeId = database.sgEpisode2Helper()
+                                .getEpisodeIdByNumber(showId, season, number)
+                            if (episodeId != 0L) {
+                                return@withContext episodeId
+                            }
+                        }
                         null
-                    ) ?: return
-                if (episodeQuery.count != 0) {
-                    // display the episode details if we have a match
-                    episodeQuery.moveToFirst()
-                    showDetails(view, episodeQuery.getInt(0))
-                } else {
-                    // offer to add the show if it's not in the show database yet
-                    show(
-                        requireContext(),
-                        this@UserEpisodeStreamFragment.parentFragmentManager,
-                        item.show.ids.tvdb
-                    )
+                    }
+                    if (episodeIdOrNull != null) {
+                        // Is in database, show details.
+                        val intent =
+                            EpisodesActivity.intentEpisode(episodeIdOrNull, requireContext())
+                        ActivityCompat.startActivity(
+                            requireActivity(), intent,
+                            ActivityOptionsCompat
+                                .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
+                                .toBundle()
+                        )
+                    } else {
+                        // Offer to add the show if not in database.
+                        AddShowDialogFragment.show(
+                            requireContext(),
+                            this@UserEpisodeStreamFragment.parentFragmentManager,
+                            showTmdbId
+                        )
+                    }
                 }
-                episodeQuery.close()
             }
         }
 
