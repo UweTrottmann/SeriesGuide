@@ -410,10 +410,12 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         if (currentShow == null) {
             return;
         }
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> ShareUtils
-                .shareEpisode(getActivity(), currentShow.getSlug(), showTvdbId, null, episodeTvdbId,
-                        episode.getSeason(), episode.getNumber(), currentShow.getTitle(),
-                        episode.getTitle()));
+        runIfHasEpisode(episode -> {
+            if (currentShow.getTmdbId() != null) {
+                ShareUtils.shareEpisode(getActivity(), currentShow.getTmdbId(), episode.getSeason(),
+                        episode.getNumber(), currentShow.getTitle(), episode.getTitle());
+            }
+        });
     }
 
     @Override

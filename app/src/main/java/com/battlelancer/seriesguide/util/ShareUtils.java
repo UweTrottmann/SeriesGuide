@@ -12,25 +12,23 @@ import androidx.annotation.StringRes;
 import androidx.core.app.ShareCompat;
 import androidx.core.app.ShareCompat.IntentBuilder;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 
 /**
  * Contains helpers to share a show, episode (share intent, calendar event) or movie.
  */
 public class ShareUtils {
 
-    public static void shareEpisode(Activity activity, @Nullable String showTvdbSlug,
-            int showTvdbId, @Nullable Integer seasonTvdbId, int episodeTvdbId, int seasonNumber,
+    public static void shareEpisode(Activity activity, int showTmdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
-        String message = showTitle + " - " + TextTools.getNextEpisodeString(activity, seasonNumber,
-                episodeNumber, episodeTitle) + " "
-                + TvdbLinks.episode(showTvdbSlug, showTvdbId, seasonTvdbId, episodeTvdbId);
+        String message = showTitle + " - "
+                + TextTools.getNextEpisodeString(activity, seasonNumber, episodeNumber, episodeTitle)
+                + " "
+                + TmdbTools.buildEpisodeUrl(showTmdbId, seasonNumber, episodeNumber);
         startShareIntentChooser(activity, message, R.string.share_episode);
     }
 
-    public static void shareShow(Activity activity, @Nullable String showTvdbSlug, int showTvdbId,
-            String showTitle) {
-        String message = showTitle + " " + TvdbLinks.show(showTvdbSlug, showTvdbId);
+    public static void shareShow(Activity activity, int showTmdbId, String showTitle) {
+        String message = showTitle + " " + TmdbTools.buildShowUrl(showTmdbId);
         startShareIntentChooser(activity, message, R.string.share_show);
     }
 

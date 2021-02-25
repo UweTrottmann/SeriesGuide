@@ -541,7 +541,7 @@ class ShowFragment() : Fragment() {
 
     private fun shareShow() {
         show?.also {
-            ShareUtils.shareShow(activity, it.slug, it.tvdbId ?: 0, it.title)
+            ShareUtils.shareShow(activity, it.tmdbId ?: 0, it.title)
         }
     }
 

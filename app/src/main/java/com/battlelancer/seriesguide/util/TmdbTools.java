@@ -27,6 +27,7 @@ public class TmdbTools {
     }
 
     private static final String BASE_URL = "https://www.themoviedb.org/";
+    private static final String PATH_TV = "tv/";
     private static final String PATH_MOVIES = "movie/";
     private static final String PATH_PERSON = "person/";
 
@@ -46,6 +47,14 @@ public class TmdbTools {
 
     private static void openTmdbUrl(Context context, String url) {
         Utils.launchWebsite(context, url);
+    }
+
+    public static String buildEpisodeUrl(int showTmdbId, int season, int episode) {
+        return BASE_URL + PATH_TV + showTmdbId + "/season/" + season + "/episode/" + episode;
+    }
+
+    public static String buildShowUrl(int showTmdbId) {
+        return BASE_URL + PATH_TV + showTmdbId;
     }
 
     public static String buildMovieUrl(int movieTmdbId) {

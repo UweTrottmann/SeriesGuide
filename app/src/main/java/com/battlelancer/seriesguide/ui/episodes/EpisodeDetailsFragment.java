@@ -622,11 +622,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
         SgShow2 showOrNull = this.show;
         SgEpisode2 episodeOrNull = this.episode;
-        if (showOrNull != null && showOrNull.getTvdbId() != null
-                && episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            ShareUtils.shareEpisode(requireActivity(), show.getSlug(), showOrNull.getTvdbId(), null,
-                    episodeOrNull.getTvdbId(), episodeOrNull.getSeason(), episodeOrNull.getNumber(),
-                    showOrNull.getTitle(), episodeTitle);
+        if (showOrNull != null && showOrNull.getTmdbId() != null && episodeOrNull != null) {
+            ShareUtils.shareEpisode(requireActivity(), showOrNull.getTmdbId(),
+                    episodeOrNull.getSeason(), episodeOrNull.getNumber(), showOrNull.getTitle(),
+                    episodeTitle);
         }
     }
 
