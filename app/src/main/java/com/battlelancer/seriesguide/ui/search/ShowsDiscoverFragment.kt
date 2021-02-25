@@ -11,7 +11,6 @@ import android.widget.PopupMenu
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -33,8 +31,6 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -134,13 +130,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             if (item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    lifecycleScope.launchWhenStarted {
-                        val showId = withContext(Dispatchers.IO) {
-                            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
-                                .getShowIdByTmdbId(item.tmdbId)
-                        }
-                        startActivity(OverviewActivity.intentShow(context, showId))
-                    }
+                    startActivity(OverviewActivity.intentShowByTmdbId(context, item.tmdbId))
                 } else {
                     // display more details in a dialog
                     AddShowDialogFragment.show(parentFragmentManager, item)
