@@ -90,6 +90,9 @@
     <string name="show_isalive">Продолжается</string>
     <string name="show_isnotalive">Завершён</string>
     <string name="show_isUpcoming">Следующие эпизоды</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
     <string name="no_translation_title">Не переведено</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
@@ -202,7 +205,7 @@
     <string name="no_results">Результатов нет, попробуйте полное название.</string>
     <string name="empty_show_search">Не найдено в вашем списке</string>
     <string name="action_try_again">Повторить попытку</string>
-    <string name="tvdb_error_does_not_exist">Сериала не существует (пока) на TheTVDB. Попробуйте позже.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Добавить все</string>
     <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
     <string name="add_started">%s скоро появится в вашем списке.</string>
@@ -223,7 +226,7 @@
     <string name="list_manage">Управление списком</string>
     <string name="list_item_manage">Управление списками</string>
     <string name="list_item_remove">Удалить из списка</string>
-    <string name="list_empty">К списку можно добавить сериалы, сезоны или серии.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Отсортировать списки</string>
     <string name="action_lists_reorder">Сортировка списков</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>

@@ -88,6 +88,9 @@
     <string name="show_isalive">Fortsetter</string>
     <string name="show_isnotalive">Avsluttet</string>
     <string name="show_isUpcoming">Kommer snart</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Det er ingen beskrivelse oversatt til %1$s på %2$s.</string>
     <string name="no_translation_title">Ikke oversatt</string>
     <string name="no_spoilers">Noen detaljer er skjult for å unngå spoilere. Gå til Innstillinger for å deaktivere dette.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">Ingen treff, prøv hele ord.</string>
     <string name="empty_show_search">Ikke funnet i listen over tv-serier</string>
     <string name="action_try_again">Prøv igjen</string>
-    <string name="tvdb_error_does_not_exist">Serien finnes ikke (enda) på TheTVDB. Prøv igjen senere.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Legg til alle</string>
     <string name="add_multiple">Alle serier vil vises i serielisten om kort tid.</string>
     <string name="add_started">%s vil vises i serielisten om kort tid.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">Behandle liste</string>
     <string name="list_item_manage">Behandle lister</string>
     <string name="list_item_remove">Fjern fra liste</string>
-    <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sorter lister</string>
     <string name="action_lists_reorder">Omorganiser lister</string>
     <string name="error_name_already_exists">En liste med dette navnet finnes allerede</string>

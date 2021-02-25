@@ -90,6 +90,9 @@
     <string name="show_isalive">Pokračuje</string>
     <string name="show_isnotalive">Skončil</string>
     <string name="show_isUpcoming">Nadchádzajúce</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Na %2$s nie je dostupný žiadny popis v %1$s.</string>
     <string name="no_translation_title">Nie je preložené</string>
     <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo prezradeniu deja. Pre ich zobrazenie prejdite do nastavení.</string>
@@ -202,7 +205,7 @@
     <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
     <string name="empty_show_search">Nebolo nájdené vo vašich seriáloch</string>
     <string name="action_try_again">Skúsiť znova</string>
-    <string name="tvdb_error_does_not_exist">Seriál (momentálne) nie je dostupný na TheTVDB. Skúste to znova neskôr.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Pridať všetky</string>
     <string name="add_multiple">Všetky seriály sa čoskoro zobrazia vo vašom zozname.</string>
     <string name="add_started">%s sa čoskoro zobrazí v zozname seriálov.</string>
@@ -223,7 +226,7 @@
     <string name="list_manage">Spravovať zoznam</string>
     <string name="list_item_manage">Spravovať zoznamy</string>
     <string name="list_item_remove">Odstrániť zo zoznamu</string>
-    <string name="list_empty">Pridajte seriály, série alebo epizódy.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Zoradiť zoznamy</string>
     <string name="action_lists_reorder">Zoradiť zoznamy</string>
     <string name="error_name_already_exists">Zoznam s týmto názvom už existuje</string>

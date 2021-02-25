@@ -89,6 +89,9 @@
     <string name="show_isalive">Continuă</string>
     <string name="show_isnotalive">Terminat</string>
     <string name="show_isUpcoming">Urmează</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
     <string name="no_translation_title">Ne tradus</string>
     <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
@@ -198,7 +201,7 @@
     <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
     <string name="empty_show_search">Nu a fost găsit in lista de dumneavoastră de showuri</string>
     <string name="action_try_again">Încearcă din nou</string>
-    <string name="tvdb_error_does_not_exist">Acest serial nu există (încă) pe TheTVDB. Încercați mai târziu.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Adaugă-le pe toate</string>
     <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>
     <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
@@ -219,7 +222,7 @@
     <string name="list_manage">Gestionați lista</string>
     <string name="list_item_manage">Gestionați listele</string>
     <string name="list_item_remove">Șterge din listă</string>
-    <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sortează lista</string>
     <string name="action_lists_reorder">Reordonaţi lista</string>
     <string name="error_name_already_exists">O listă cu acest nume deja există</string>

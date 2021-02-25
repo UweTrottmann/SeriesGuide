@@ -87,6 +87,9 @@
     <string name="show_isalive">継続中</string>
     <string name="show_isnotalive">完結済み</string>
     <string name="show_isUpcoming">次回</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">%2$s に %1$s で利用できる説明がありません。</string>
     <string name="no_translation_title">翻訳されていません</string>
     <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これを無効にするには設定に移動します。</string>
@@ -190,7 +193,7 @@
     <string name="no_results">検索結果はありません。完全な単語で試してください。</string>
     <string name="empty_show_search">番組リストにありません</string>
     <string name="action_try_again">もう一度やり直してください</string>
-    <string name="tvdb_error_does_not_exist">番組は TheTVDB に存在しません。後でもう一度試してください。</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">すべて追加</string>
     <string name="add_multiple">すぐにすべての番組が番組リストに表示されます</string>
     <string name="add_started">すぐに %s が番組リストに表示されます</string>
@@ -211,7 +214,7 @@
     <string name="list_manage">リストを管理</string>
     <string name="list_item_manage">リストを管理</string>
     <string name="list_item_remove">リストから削除</string>
-    <string name="list_empty">番組、シーズン、エピソードをこのリストに追加することができます</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">リストの並べ替え</string>
     <string name="action_lists_reorder">リストの再並べ替え</string>
     <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
@@ -286,7 +289,7 @@
     <string name="traktcheckin_inprogress">すでに別のエピソードや映画にチェックインしています。以前のチェックインを上書きするか、 %s まで待ってもう一度やり直してください。</string>
     <string name="traktcheckin_wait">待つ</string>
     <string name="trakt_success">Trakt に送信しました</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Trakt アカウントがロックされています。Trakt サポートにお問い合わせください。</string>
     <string name="trakt_error_credentials">問題が起きました。Trakt の認証情報を確認して、もう一度やり直してください。</string>
     <string name="trakt_error_not_exists">Trakt では利用できません。後でもう一度やり直してください。</string>
     <string name="trakt_notice_not_exists">Trakt では追跡できません。</string>

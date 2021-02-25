@@ -87,6 +87,9 @@
     <string name="show_isalive">Berkelanjutan</string>
     <string name="show_isnotalive">Berakhir</string>
     <string name="show_isUpcoming">Mendatang</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
     <string name="no_translation_title">Belum diterjemahkan</string>
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
@@ -190,7 +193,7 @@
     <string name="no_results">Tidak ada hasil, coba kata-kata lengkap.</string>
     <string name="empty_show_search">Tidak ditemukan di daftar acara anda</string>
     <string name="action_try_again">Coba lagi</string>
-    <string name="tvdb_error_does_not_exist">Acara tidak (belum) ada di TheTVDB. Coba lagi nanti.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Tambah semua</string>
     <string name="add_multiple">Semua acara akan segera muncul dalam daftar acara anda.</string>
     <string name="add_started">%s akan muncul dalam daftar acara anda.</string>
@@ -211,7 +214,7 @@
     <string name="list_manage">Kelola daftar</string>
     <string name="list_item_manage">Kelola daftar</string>
     <string name="list_item_remove">Hapus dari daftar</string>
-    <string name="list_empty">Anda dapat menambahkan acara, musim atau episode ke daftar ini.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Urutkan daftar</string>
     <string name="action_lists_reorder">Susun ulang daftar</string>
     <string name="error_name_already_exists">Daftar dengan nama ini sudah ada</string>

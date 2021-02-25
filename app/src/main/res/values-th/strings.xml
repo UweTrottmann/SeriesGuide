@@ -87,6 +87,9 @@
     <string name="show_isalive">ยังไม่จบ</string>
     <string name="show_isnotalive">จบแล้ว</string>
     <string name="show_isUpcoming">เร็วๆ นี้</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">ไม่มีรายละเอียดที่ถูกแปลเป็น %1$s พร้อมใช้งานที่ %2$s</string>
     <string name="no_translation_title">ยังไม่ถูกแปล</string>
     <string name="no_spoilers">รายละเอียดบางอย่างถูกซ่อนเพื่อป้องกันการสปอยล์ ปิดการป้องกันนี้ได้ในการตั้งค่า</string>
@@ -190,7 +193,7 @@
     <string name="no_results">ไม่พบผลลัพธ์ ลองคำที่สมบูรณ์</string>
     <string name="empty_show_search">ไม่พบอยู่ในรายการซีรีส์ของคุณ</string>
     <string name="action_try_again">ลองอีกครั้ง</string>
-    <string name="tvdb_error_does_not_exist">รายการนี้(ยัง)ไม่มีบน TheTVDB ลองอีกครั้งในภายหลัง</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">เพิ่มทั้งหมด</string>
     <string name="add_multiple">ซีรีส์ทั้งหมดจะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
     <string name="add_started">%s จะปรากฏในรายการซีรีส์ของคุณในไม่ช้า</string>
@@ -211,7 +214,7 @@
     <string name="list_manage">จัดการรายการ</string>
     <string name="list_item_manage">จัดการรายการ</string>
     <string name="list_item_remove">ลบออกจากรายการ</string>
-    <string name="list_empty">คุณสามารถเพิ่มซีรีส์, ซีซั่น หรือตอนมายังรายการนี้</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">เรียงรายการ</string>
     <string name="action_lists_reorder">เรียงรายการใหม่</string>
     <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>

@@ -88,6 +88,9 @@
     <string name="show_isalive">در حال پخش</string>
     <string name="show_isnotalive">به پایان رسیده</string>
     <string name="show_isUpcoming">پیش رو</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
     <string name="no_translation_title">ترجمه نشده</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
     <string name="empty_show_search">در لیست برنامه‌ها پیدا نشد</string>
     <string name="action_try_again">دوباره امتحان کنید</string>
-    <string name="tvdb_error_does_not_exist">اثر نمایشی (هنوز) در TheTVDB وجود ندارد. بعداً دوباره سعی کنید.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">افزودن همه</string>
     <string name="add_multiple">تمام نمایش‌ها به زودی در فهرست نمایشتان ظاهر خواهند شد.</string>
     <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">مدیریت فهرست</string>
     <string name="list_item_manage">مدیریت فهرست‌ها</string>
     <string name="list_item_remove">برداشتن از فهرست</string>
-    <string name="list_empty">می‌توانید نمایش‌ها، فصل‌ها یا قسمت‌هایی به این فهرست بیفزایید.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">چینش فهرست‌ها</string>
     <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>

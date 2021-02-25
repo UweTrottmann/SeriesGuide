@@ -89,6 +89,9 @@
     <string name="show_isalive">Nastavlja se</string>
     <string name="show_isnotalive">Završilo</string>
     <string name="show_isUpcoming">Nadolazeće</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Nema prevedenog opisa za %1$s dostupnoh na %2$s.</string>
     <string name="no_translation_title">Nije prevedeno</string>
     <string name="no_spoilers">Neki detalji su skriveni kako bi se spriječili spojleri. Ovo možete isključiti u postavkama.</string>
@@ -198,7 +201,7 @@
     <string name="no_results">Nema rezultata, pokušajte cijele riječi.</string>
     <string name="empty_show_search">Nije pronađeno u vašem popisu serija</string>
     <string name="action_try_again">Pokušaj ponovno</string>
-    <string name="tvdb_error_does_not_exist">Serija (još) ne postoji na TheTVDB. Pokušajte ponovno kasnije.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Dodaj sve</string>
     <string name="add_multiple">Sve serije uskoro će se pojaviti na tvom popisu serija.</string>
     <string name="add_started">%s će se ubrzo pojaviti na vašem popisu serija.</string>
@@ -219,7 +222,7 @@
     <string name="list_manage">Uredi popis</string>
     <string name="list_item_manage">Uredi popise</string>
     <string name="list_item_remove">Ukloni s popisa</string>
-    <string name="list_empty">Na ovaj popis možete dodati serije, sezone ili epizode.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sortiraj popise</string>
     <string name="action_lists_reorder">Promijeni redoslijed popisa</string>
     <string name="error_name_already_exists">Popis sa ovim nazivom već postoji</string>

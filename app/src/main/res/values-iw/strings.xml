@@ -90,6 +90,9 @@
     <string name="show_isalive">ממשיכה</string>
     <string name="show_isnotalive">הסתיימה</string>
     <string name="show_isUpcoming">בקרוב</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
     <string name="no_translation_title">לא תורגם</string>
     <string name="no_spoilers">פרטים מסוימים מוסתרים כדי למנוע ספוילרים. כדי לבטל את זה עבור להגדרות.</string>
@@ -202,7 +205,7 @@
     <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
     <string name="empty_show_search">לא נמצא ברשימת הסדרות</string>
     <string name="action_try_again">נסה שוב</string>
-    <string name="tvdb_error_does_not_exist">הסדרה אינה קיימת (עדיין) ב-TheTVDB. נסה שוב מאוחר יותר.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">הוסף הכל</string>
     <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
     <string name="add_started">%s יופיע ברשימת התכניות שלך בהקדם.</string>
@@ -223,7 +226,7 @@
     <string name="list_manage">נהל רשימה</string>
     <string name="list_item_manage">נהל רשימות</string>
     <string name="list_item_remove">הסר מהרשימה</string>
-    <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">מיין רשימה</string>
     <string name="action_lists_reorder">סדר מחדש רשימות</string>
     <string name="error_name_already_exists">רשימה עם השם הזה כבר קיימת</string>
