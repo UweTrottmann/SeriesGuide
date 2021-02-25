@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
@@ -444,8 +443,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // trakt comments link
         binding.buttonMovieComments.setOnClickListener { v ->
-            val i = Intent(activity, TraktCommentsActivity::class.java)
-            i.putExtras(TraktCommentsActivity.createInitBundleMovie(movieTitle, tmdbId))
+            val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
             Utils.startActivityWithAnimation(activity, i, v)
         }
         binding.buttonMovieComments.isGone = false
@@ -484,12 +482,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.also {
                 it.isFocusable = true
                 it.setOnClickListener { view ->
-                    val largeImageUrl = (TmdbSettings.getImageBaseUrl(activity)
-                            + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL + tmdbMovie.poster_path)
-                    val intent = Intent(activity, FullscreenImageActivity::class.java).apply {
-                        putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE, smallImageUrl)
-                        putExtra(FullscreenImageActivity.EXTRA_IMAGE, largeImageUrl)
-                    }
+                    val largeImageUrl =
+                        TmdbSettings.getImageOriginalUrl(activity, tmdbMovie.poster_path)
+                    val intent = FullscreenImageActivity.intent(
+                        requireActivity(),
+                        smallImageUrl,
+                        largeImageUrl
+                    )
                     Utils.startActivityWithAnimation(activity, intent, view)
                 }
             }

@@ -18,4 +18,13 @@ object TextToolsK {
         }
     }
 
+    @JvmStatic
+    fun textNoTranslation(context: Context, languageCode: String?): String {
+        return context.getString(
+            R.string.no_translation,
+            LanguageTools.getShowLanguageStringFor(context, languageCode),
+            context.getString(R.string.tmdb)
+        )
+    }
+
 }

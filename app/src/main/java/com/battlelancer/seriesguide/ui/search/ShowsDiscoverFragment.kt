@@ -130,27 +130,27 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             if (item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(OverviewActivity.intentShow(context, item.tvdbid))
+                    startActivity(OverviewActivity.intentShowByTmdbId(context, item.tmdbId))
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(context!!, parentFragmentManager, item)
+                    AddShowDialogFragment.show(parentFragmentManager, item)
                 }
             }
         }
 
         override fun onAddClick(item: SearchResult) {
             // post to let other fragments know show is getting added
-            EventBus.getDefault().post(OnAddingShowEvent(item.tvdbid))
+            EventBus.getDefault().post(OnAddingShowEvent(item.tmdbId))
             TaskManager.getInstance().performAddTask(context, item)
         }
 
-        override fun onMenuWatchlistClick(view: View, showTvdbId: Int) {
+        override fun onMenuWatchlistClick(view: View, showTmdbId: Int) {
             PopupMenu(view.context, view).apply {
                 inflate(R.menu.add_dialog_popup_menu)
                 // only support adding shows to watchlist
                 menu.findItem(R.id.menu_action_show_watchlist_remove).isVisible = false
                 setOnMenuItemClickListener(
-                        TraktAddFragment.AddItemMenuItemClickListener(context, showTvdbId))
+                        TraktAddFragment.AddItemMenuItemClickListener(context, showTmdbId))
             }.show()
         }
     }
@@ -262,8 +262,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         adapter.setAllPendingNotAdded()
     }
 
-    override fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
-        adapter.setStateForTvdbId(showTvdbId, newState)
+    override fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
+        adapter.setStateForTmdbId(showTmdbId, newState)
     }
 
 }

@@ -935,7 +935,10 @@ public class SeriesGuideContract {
         String IMDBID = "episode_imdbid";
 
         /**
-         * Last time episode was edited on theTVDb.com (lastupdated field) in Unix time (seconds).
+         * Note: currently unused, TMDB does not provide this info.
+         * See {@link com.battlelancer.seriesguide.ui.shows.ShowTools2}.
+         *
+         * Last time episode was edited (lastupdated field) in Unix time (seconds).
          * Added in {@link SeriesGuideDatabase#DBVER_27_IMDBIDSLASTEDIT}.
          *
          * <pre>
@@ -946,6 +949,9 @@ public class SeriesGuideContract {
         String LAST_EDITED = "episode_lastedit";
 
         /**
+         * Note: currently last updated value is unused, all episodes are always updated.
+         * See {@link com.battlelancer.seriesguide.ui.shows.ShowTools2}.
+         *
          * Stores the last edited time after fetching full episode data from TVDB.
          * Added in {@link SeriesGuideDatabase#DBVER_41_EPISODE_LAST_UPDATED}.
          *
@@ -1014,11 +1020,23 @@ public class SeriesGuideContract {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ ListItemTypes.SHOW, ListItemTypes.SEASON, ListItemTypes.EPISODE })
+    @IntDef({
+            ListItemTypes.TVDB_SHOW,
+            ListItemTypes.SEASON,
+            ListItemTypes.EPISODE,
+            ListItemTypes.TMDB_SHOW
+    })
     public @interface ListItemTypes {
-        int SHOW = 1;
+        int TVDB_SHOW = 1;
+        /**
+         * @deprecated Support for seasons on lists has been removed since the TMDB switch.
+         */
         int SEASON = 2;
+        /**
+         * @deprecated Support for seasons on lists has been removed since the TMDB switch.
+         */
         int EPISODE = 3;
+        int TMDB_SHOW = 4;
     }
 
     interface MoviesColumns {
@@ -1524,10 +1542,10 @@ public class SeriesGuideContract {
                 = "vnd.android.cursor.item/vnd.seriesguide.listitem";
 
         public static final String SELECTION_LIST = Lists.LIST_ID + "=?";
-        public static final String SELECTION_SHOWS = ListItems.TYPE + "=" + ListItemTypes.SHOW;
-        public static final String SELECTION_SEASONS = ListItems.TYPE + "=" + ListItemTypes.SEASON;
-        public static final String SELECTION_EPISODES = ListItems.TYPE + "="
-                + ListItemTypes.EPISODE;
+        public static final String SELECTION_TVDB_SHOWS =
+                ListItems.TYPE + "=" + ListItemTypes.TVDB_SHOW;
+        public static final String SELECTION_TMDB_SHOWS =
+                ListItems.TYPE + "=" + ListItemTypes.TMDB_SHOW;
 
         public static final String SORT_TYPE = ListItems.TYPE + " ASC";
 
@@ -1539,13 +1557,13 @@ public class SeriesGuideContract {
             return uri.getPathSegments().get(1);
         }
 
-        public static String generateListItemId(int itemTvdbId, int type, String listId) {
-            return itemTvdbId + "-" + type + "-" + listId;
+        public static String generateListItemId(int itemStableId, int type, String listId) {
+            return itemStableId + "-" + type + "-" + listId;
         }
 
-        public static String generateListItemIdWildcard(int itemTvdbId, int type) {
+        public static String generateListItemIdWildcard(int itemStableId, int type) {
             // The SQL % wildcard is added by the content provider
-            return itemTvdbId + "-" + type + "-";
+            return itemStableId + "-" + type + "-";
         }
 
         /**
@@ -1565,9 +1583,10 @@ public class SeriesGuideContract {
          * Checks if the given type index is one of {@link ListItemTypes}.
          */
         public static boolean isValidItemType(int type) {
-            return type == ListItemTypes.SHOW
+            return type == ListItemTypes.TVDB_SHOW
                     || type == ListItemTypes.SEASON
-                    || type == ListItemTypes.EPISODE;
+                    || type == ListItemTypes.EPISODE
+                    || type == ListItemTypes.TMDB_SHOW;
         }
     }
 

@@ -55,15 +55,6 @@
         app:iconGravity="start" />
 
     <Button
-        android:id="@+id/buttonEpisodeLists"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/list_item_manage"
-        app:icon="@drawable/ic_list_white_24dp"
-        app:iconGravity="start" />
-
-    <Button
         android:id="@+id/buttonEpisodeComments"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"

@@ -38,13 +38,11 @@ import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.model.SgEpisode2;
 import com.battlelancer.seriesguide.model.SgShow2;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
@@ -57,16 +55,15 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity;
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.ClipboardTools;
-import com.battlelancer.seriesguide.util.LanguageTools;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
+import com.battlelancer.seriesguide.util.TextToolsK;
 import com.battlelancer.seriesguide.util.TimeTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
@@ -141,7 +138,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     @BindView(R.id.buttonEpisodeTrakt) Button buttonTrakt;
     @BindView(R.id.buttonEpisodeShare) Button buttonShare;
     @BindView(R.id.buttonEpisodeCalendar) Button buttonAddToCalendar;
-    @BindView(R.id.buttonEpisodeLists) Button buttonManageLists;
     @BindView(R.id.buttonEpisodeComments) Button buttonComments;
 
     @BindView(R.id.containerEpisodeActions) LinearLayout containerActions;
@@ -202,9 +198,10 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
         // Empty view buttons.
         buttonSimilarShows.setOnClickListener(v -> {
-            if (show != null) {
+            if (show != null && show.getTmdbId() != null) {
                 startActivity(
-                        SimilarShowsActivity.intent(requireContext(), showTvdbId, show.getTitle()));
+                        SimilarShowsActivity
+                                .intent(requireContext(), show.getTmdbId(), show.getTitle()));
             }
         });
         buttonRemoveShow.setOnClickListener(v ->
@@ -223,15 +220,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
         buttonShare.setOnClickListener(v -> shareEpisode());
         buttonAddToCalendar.setOnClickListener(v -> createCalendarEvent());
-        buttonManageLists.setOnClickListener(v ->
-                runIfHasEpisode((e) ->
-                        ManageListsDialogFragment.show(
-                                getParentFragmentManager(),
-                                e.getId(),
-                                ListItemTypes.EPISODE
-                        )
-                )
-        );
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         ClipboardTools.copyTextToClipboardOnLongClick(textDescription);
@@ -404,19 +392,15 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
     @OnClick(R.id.containerRatings)
     void onButtonRateClick() {
-        runIfEpisodeHasTvdbId(
-                (episode, episodeTvdbId) -> RateDialogFragment.newInstanceEpisode(episodeTvdbId)
-                        .safeShow(getContext(), getParentFragmentManager()));
+        runIfHasEpisode(episode -> RateDialogFragment.newInstanceEpisode(episode.getId())
+                .safeShow(getContext(), getParentFragmentManager()));
     }
 
     @OnClick(R.id.buttonEpisodeComments)
     void onButtonCommentsClick(View v) {
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
-            Intent i = new Intent(getActivity(), TraktCommentsActivity.class);
-            i.putExtras(TraktCommentsActivity.createInitBundleEpisode(
-                    episode.getTitle(),
-                    episodeTvdbId
-            ));
+        runIfHasEpisode(episode -> {
+            Intent i = TraktCommentsActivity
+                    .intentEpisode(requireContext(), episode.getTitle(), episode.getId());
             Utils.startActivityWithAnimation(getActivity(), i, v);
         });
     }
@@ -604,15 +588,12 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         String languageCode = show.getLanguage();
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            overview = getString(R.string.no_translation,
-                    LanguageTools.getShowLanguageStringFor(getContext(), languageCode),
-                    getString(R.string.tvdb));
+            overview = TextToolsK.textNoTranslation(requireContext(), languageCode);
         } else if (DisplaySettings.preventSpoilers(getContext())) {
             overview = getString(R.string.no_spoilers);
         }
-        long lastEditSeconds = episode.getLastEditedSec();
-        textDescription.setText(TextTools.textWithTvdbSource(textDescription.getContext(),
-                overview, lastEditSeconds));
+        textDescription.setText(TextTools.textWithTmdbSource(textDescription.getContext(),
+                overview));
 
         // TVDb button
         final Integer episodeTvdbId = episode.getTvdbId();
@@ -657,7 +638,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             imageEpisode.setImageResource(R.drawable.ic_photo_gray_24dp);
         } else {
             // try loading image
-            ServiceUtils.loadWithPicasso(requireContext(), TvdbImageTools.artworkUrl(imagePath))
+            ServiceUtils.loadWithPicasso(requireContext(),
+                    ImageTools.tmdbOrTvdbStillUrl(imagePath, requireContext(), false))
                     .error(R.drawable.ic_photo_gray_24dp)
                     .into(imageEpisode,
                             new Callback() {
@@ -676,14 +658,11 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     }
 
     private void loadEpisodeDetails() {
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+        runIfHasEpisode(episode -> {
             if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
                 ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
                         requireContext(),
-                        showTvdbId,
-                        episodeTvdbId,
-                        episode.getSeason(),
-                        episode.getNumber()
+                        episode.getId()
                 );
             }
         });
@@ -704,7 +683,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
 
         // status
         final TextView statusText = getView().findViewById(R.id.showStatus);
-        ShowTools.setStatusAndColor(statusText, show.getStatusOrUnknown());
+        SgApp.getServicesComponent(requireContext()).showTools()
+                .setStatusAndColor(statusText, show.getStatusOrUnknown());
 
         // favorite
         boolean isFavorite = show.getFavorite();
@@ -717,7 +697,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         buttonFavorite.setTag(isFavorite);
 
         // poster background
-        TvdbImageTools.loadShowPosterAlpha(requireContext(), imageBackground,
+        ImageTools.loadShowPosterAlpha(requireContext(), imageBackground,
                 show.getPosterSmall());
 
         // Regular network, release time and length.

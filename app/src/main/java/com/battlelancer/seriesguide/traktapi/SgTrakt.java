@@ -98,6 +98,7 @@ public class SgTrakt extends TraktV2 {
      * Executes the given call. Will return null if the call fails for any reason, including auth
      * failures.
      */
+    @Nullable
     public static <T> T executeCall(Call<T> call, String action) {
         try {
             Response<T> response = call.execute();

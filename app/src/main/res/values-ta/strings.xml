@@ -88,6 +88,9 @@
     <string name="show_isalive">தொடரும்</string>
     <string name="show_isnotalive">முடிவுக்கு வந்தது</string>
     <string name="show_isUpcoming">வரவிருக்கும்</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">%1$s at %2$s கிடைக்கப்பெறும் மொழிபெயர்க்க விளக்கம் உள்ளது.</string>
     <string name="no_translation_title">இல்லை மொழிபெயர்க்க</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">மீண்டும் முயற்சி</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">எல்லாம் சேர்</string>
     <string name="add_multiple">அனைத்து காட்சிகள் தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
     <string name="add_started">%s தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">பட்டியலை நிர்வகி</string>
     <string name="list_item_manage">பட்டியல்களை நிர்வகி</string>
     <string name="list_item_remove">பட்டியலில் இருந்து அகற்று</string>
-    <string name="list_empty">காட்சிகள், சீசன்ஸ் அல்லது episodes இந்த பட்டியலில் சேர்க்கலாம்.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">அடுக்கு பட்டியல்கள்</string>
     <string name="action_lists_reorder">பட்டியல்களை மறு வரிசையாக்க இழுத்து</string>
     <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>

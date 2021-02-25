@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.backend;
 import android.content.Context;
 import android.os.SystemClock;
 import android.text.format.DateUtils;
+import android.util.Pair;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
@@ -26,6 +27,9 @@ import com.uwetrottmann.seriesguide.backend.episodes.Episodes;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.movies.Movies;
 import com.uwetrottmann.seriesguide.backend.shows.Shows;
+import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow;
+import com.uwetrottmann.seriesguide.backend.shows.model.Show;
+import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import timber.log.Timber;
@@ -275,5 +279,40 @@ public class HexagonTools {
                     .build();
         }
         return googleSignInOptions;
+    }
+
+    /**
+     * Gets show by TMDB ID, or if not found and TVDB ID given, gets show by that.
+     * Returns false on service error.
+     */
+    @NonNull
+    public Pair<SgCloudShow, Boolean> getShow(int showTmdbId, @Nullable Integer showTvdbId) {
+        try {
+            Shows showsService = getShowsService();
+            if (showsService == null) {
+                return new Pair<>(null, false);
+            }
+
+            SgCloudShow showOrNull = showsService.getSgShow()
+                        .setShowTmdbId(showTmdbId)
+                        .execute();
+            if (showOrNull == null && showTvdbId != null) {
+                // Not found using TMDB ID, try with legacy TVDB ID.
+                Show legacyShowOrNull = showsService.getShow()
+                        .setShowTvdbId(showTvdbId)
+                        .execute();
+                if (legacyShowOrNull != null) {
+                    showOrNull = new SgCloudShow();
+                    showOrNull.setIsFavorite(legacyShowOrNull.getIsFavorite());
+                    showOrNull.setIsHidden(legacyShowOrNull.getIsHidden());
+                    showOrNull.setNotify(legacyShowOrNull.getNotify());
+                }
+            }
+            return new Pair<>(showOrNull, true);
+        } catch (IOException | IllegalArgumentException e) {
+            // Note: JSON parser may throw IllegalArgumentException.
+            Errors.logAndReportHexagon("h: get show", e);
+            return new Pair<>(null, false);
+        }
     }
 }

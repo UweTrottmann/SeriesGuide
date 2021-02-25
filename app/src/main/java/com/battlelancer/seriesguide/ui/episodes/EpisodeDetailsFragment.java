@@ -32,11 +32,9 @@ import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.model.SgEpisode2;
 import com.battlelancer.seriesguide.model.SgShow2;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
@@ -46,10 +44,9 @@ import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity;
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.util.ClipboardTools;
 import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.LanguageTools;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TextTools;
@@ -154,15 +151,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                         ),
                         episode.getFirstReleasedMs(),
                         show.getRuntime()
-                );
-            }
-        });
-        bindingBottom.buttonEpisodeLists.setOnClickListener(v -> {
-            if (episode != null && episode.getTvdbId() != null) {
-                ManageListsDialogFragment.show(
-                        getParentFragmentManager(),
-                        episode.getTvdbId(),
-                        ListItemTypes.EPISODE
                 );
             }
         });
@@ -384,17 +372,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         String overview = episode.getOverview();
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            String languageCode = show.getLanguage();
-            overview = getString(R.string.no_translation,
-                    LanguageTools.getShowLanguageStringFor(getContext(), languageCode),
-                    getString(R.string.tvdb));
+            overview = TextToolsK.textNoTranslation(requireContext(), show.getLanguage());
         } else if (hideDetails) {
             overview = getString(R.string.no_spoilers);
         }
-        long lastEditSeconds = episode.getLastEditedSec();
         binding.textviewDescription.setText(
-                TextTools.textWithTvdbSource(binding.textviewDescription.getContext(), overview,
-                        lastEditSeconds));
+                TextTools.textWithTmdbSource(binding.textviewDescription.getContext(), overview));
 
         // release date, also build release time and day
         boolean isReleased;
@@ -472,9 +455,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // episode image
         final String imagePath = episode.getImage();
         binding.containerImage.setOnClickListener(v -> {
-            Intent intent = new Intent(requireActivity(), FullscreenImageActivity.class);
-            intent.putExtra(FullscreenImageActivity.EXTRA_IMAGE,
-                    TvdbImageTools.artworkUrl(imagePath));
+            Intent intent = FullscreenImageActivity.intent(requireContext(),
+                    ImageTools.tmdbOrTvdbStillUrl(imagePath, requireContext(), false),
+                    ImageTools.tmdbOrTvdbStillUrl(imagePath, requireContext(), true));
             Utils.startActivityWithAnimation(requireActivity(), intent, v);
         });
         loadImage(imagePath, hideDetails);
@@ -485,16 +468,13 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         binding.getRoot().setVisibility(View.VISIBLE);
 
-        loadDetails();
+        loadTraktRatings();
     }
 
     private void updatePrimaryButtons(SgEpisode2 episode, SgShow2 show) {
         // Check in button.
         bindingButtons.buttonEpisodeCheckin.setOnClickListener(v -> {
-            if (episode.getTvdbId() != null) {
-                CheckInDialogFragment
-                        .show(requireContext(), getParentFragmentManager(), episode.getId());
-            }
+            CheckInDialogFragment.show(requireContext(), getParentFragmentManager(), episodeId);
         });
         CheatSheet.setup(bindingButtons.buttonEpisodeCheckin);
         // hide check-in if not connected to trakt or hexagon is enabled
@@ -614,38 +594,26 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
             // trakt comments
             bindingBottom.buttonEpisodeComments.setOnClickListener(v -> {
-                Intent intent = new Intent(requireActivity(), TraktCommentsActivity.class);
-                intent.putExtras(TraktCommentsActivity.createInitBundleEpisode(episodeTitle,
-                        episode.getTvdbId()));
+                Intent intent = TraktCommentsActivity
+                        .intentEpisode(requireContext(), episodeTitle, episodeId);
                 Utils.startActivityWithAnimation(requireActivity(), intent, v);
             });
         }
     }
 
-    private void loadDetails() {
-        SgShow2 showOrNull = this.show;
-        SgEpisode2 episodeOrNull = this.episode;
-        if (showOrNull != null && showOrNull.getTvdbId() != null
-                && episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            // update trakt ratings
-            if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
-                ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
-                        requireContext(),
-                        showOrNull.getTvdbId(),
-                        episodeOrNull.getTvdbId(),
-                        episodeOrNull.getSeason(),
-                        episodeOrNull.getNumber()
-                );
-            }
+    private void loadTraktRatings() {
+        // update trakt ratings
+        if (ratingFetchJob == null || !ratingFetchJob.isActive()) {
+            ratingFetchJob = TraktRatingsFetcher.fetchEpisodeRatingsAsync(
+                    requireContext(),
+                    episodeId
+            );
         }
     }
 
     private void rateEpisode() {
-        SgEpisode2 episodeOrNull = this.episode;
-        if (episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            RateDialogFragment.newInstanceEpisode(episodeOrNull.getTvdbId())
-                    .safeShow(getContext(), getParentFragmentManager());
-        }
+        RateDialogFragment.newInstanceEpisode(episodeId)
+                .safeShow(getContext(), getParentFragmentManager());
     }
 
     private void shareEpisode() {
@@ -676,7 +644,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         } else {
             // try loading image
             binding.containerImage.setVisibility(View.VISIBLE);
-            ServiceUtils.loadWithPicasso(requireContext(), TvdbImageTools.artworkUrl(imagePath))
+            ServiceUtils.loadWithPicasso(requireContext(),
+                    ImageTools.tmdbOrTvdbStillUrl(imagePath, requireContext(), false))
                     .error(R.drawable.ic_photo_gray_24dp)
                     .into(binding.imageviewScreenshot,
                             new Callback() {

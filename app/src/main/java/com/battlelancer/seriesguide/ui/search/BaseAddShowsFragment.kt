@@ -2,11 +2,14 @@ package com.battlelancer.seriesguide.ui.search
 
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools2
 import com.battlelancer.seriesguide.util.TaskManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -18,7 +21,7 @@ abstract class BaseAddShowsFragment : Fragment() {
 
     abstract fun setAllPendingNotAdded()
 
-    abstract fun setStateForTvdbId(showTvdbId: Int, newState: Int)
+    abstract fun setStateForTmdbId(showTmdbId: Int, newState: Int)
 
     override fun onStart() {
         super.onStart()
@@ -36,16 +39,16 @@ abstract class BaseAddShowsFragment : Fragment() {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventAddingShow(event: AddFragment.OnAddingShowEvent) {
-        if (event.showTvdbId > 0) {
-            setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADDING)
+        if (event.showTmdbId > 0) {
+            setStateForTmdbId(event.showTmdbId, SearchResult.STATE_ADDING)
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventShowAdded(event: AddShowTask.OnShowAddedEvent) {
         when {
-            event.successful -> setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADDED)
-            event.showTvdbId > 0 -> setStateForTvdbId(event.showTvdbId, SearchResult.STATE_ADD)
+            event.successful -> setStateForTmdbId(event.showTmdbId, SearchResult.STATE_ADDED)
+            event.showTmdbId > 0 -> setStateForTmdbId(event.showTmdbId, SearchResult.STATE_ADD)
             else -> setAllPendingNotAdded()
         }
     }
@@ -53,9 +56,7 @@ abstract class BaseAddShowsFragment : Fragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventShowRemoved(event: ShowTools2.OnShowRemovedEvent) {
         if (event.resultCode == NetworkResult.SUCCESS) {
-            val showTvdbId = SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
-                .getShowTvdbId(event.showId)
-            setStateForTvdbId(showTvdbId, SearchResult.STATE_ADD)
+            setStateForTmdbId(event.showTmdbId, SearchResult.STATE_ADD)
         }
     }
 
@@ -64,16 +65,22 @@ abstract class BaseAddShowsFragment : Fragment() {
             if (item != null && item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {
                     // Already in library, open it.
-                    startActivity(OverviewActivity.intentShow(context, item.tvdbid))
+                    lifecycleScope.launchWhenStarted {
+                        val showId = withContext(Dispatchers.IO) {
+                            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
+                                .getShowIdByTmdbId(item.tmdbId)
+                        }
+                        startActivity(OverviewActivity.intentShow(context, showId))
+                    }
                 } else {
                     // Display more details in a dialog.
-                    AddShowDialogFragment.show(context!!, parentFragmentManager, item)
+                    AddShowDialogFragment.show(parentFragmentManager, item)
                 }
             }
         }
 
         override fun onAddClick(item: SearchResult) {
-            EventBus.getDefault().post(AddFragment.OnAddingShowEvent(item.tvdbid))
+            EventBus.getDefault().post(AddFragment.OnAddingShowEvent(item.tmdbId))
             TaskManager.getInstance().performAddTask(context, item)
         }
 

@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.overview
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -25,11 +24,8 @@ import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
-import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
@@ -38,12 +34,14 @@ import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -51,7 +49,6 @@ import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -143,14 +140,7 @@ class ShowFragment() : Fragment() {
 
     private var showId: Long = 0
     private var show: SgShow2? = null
-//    private var showTvdbId: Int = 0
-//    private var showCursor: Cursor? = null
     private lateinit var showTools: ShowTools
-    private var ratingFetchJob: Job? = null
-//    private var showSlug: String? = null
-//    private var showTitle: String? = null
-//    private var posterPath: String? = null
-//    private var posterPathSmall: String? = null
     private var languageCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -237,12 +227,6 @@ class ShowFragment() : Fragment() {
         unbinder.unbind()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Release reference to any job.
-        ratingFetchJob = null
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.show_menu, menu)
@@ -251,9 +235,7 @@ class ShowFragment() : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_show_manage_lists -> {
-                show?.tvdbId?.also {
-                    ManageListsDialogFragment.show(parentFragmentManager, it, ListItemTypes.SHOW)
-                }
+                ManageListsDialogFragment.show(parentFragmentManager, showId)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -263,7 +245,7 @@ class ShowFragment() : Fragment() {
     private fun populateShow(show: SgShow2) {
         // status
         textViewStatus?.let {
-            ShowTools.setStatusAndColor(it, show.statusOrUnknown)
+            showTools.setStatusAndColor(it, show.statusOrUnknown)
         }
 
         // Network, next release day and time, runtime
@@ -375,19 +357,9 @@ class ShowFragment() : Fragment() {
         val languageCode = show.language
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            overview = getString(
-                R.string.no_translation,
-                LanguageTools.getShowLanguageStringFor(
-                    context,
-                    languageCode
-                ), getString(R.string.tvdb)
-            )
+            overview = TextToolsK.textNoTranslation(requireContext(), languageCode)
         }
-        val lastEditSeconds = show.lastEditedSec
-        textViewOverview.text = TextTools.textWithTvdbSource(
-            textViewOverview.context,
-            overview, lastEditSeconds
-        )
+        textViewOverview.text = TextTools.textWithTmdbSource(textViewOverview.context, overview)
 
         // language preferred for content
         val languageData = LanguageTools.getShowLanguageDataFor(
@@ -425,7 +397,7 @@ class ShowFragment() : Fragment() {
 
         // Similar shows button.
         buttonSimilar.setOnClickListener {
-            show.tvdbId?.also {
+            show.tmdbId?.also {
                 startActivity(SimilarShowsActivity.intent(requireContext(), it, show.title))
             }
         }
@@ -454,12 +426,8 @@ class ShowFragment() : Fragment() {
 
         // shout button
         buttonComments.setOnClickListener { v ->
-            show.tvdbId?.also {
-                val i = Intent(activity, TraktCommentsActivity::class.java).putExtras(
-                    TraktCommentsActivity.createInitBundleShow(show.title, it)
-                )
+                val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
                 Utils.startActivityWithAnimation(activity, i, v)
-            }
         }
 
         // poster, full screen poster button
@@ -470,30 +438,26 @@ class ShowFragment() : Fragment() {
             containerPoster.isFocusable = false
         } else {
             // poster and fullscreen button
-            TvdbImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterSmall)
+            ImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
-                val intent = Intent(activity, FullscreenImageActivity::class.java)
-                intent.putExtra(
-                    FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
-                    TvdbImageTools.artworkUrl(posterSmall)
-                )
-                intent.putExtra(
-                    FullscreenImageActivity.EXTRA_IMAGE,
-                    TvdbImageTools.artworkUrl(show.poster)
-                )
+                val intent = FullscreenImageActivity.intent(requireContext(),
+                    ImageTools.tmdbOrTvdbPosterUrl(posterSmall, requireContext()),
+                    ImageTools.tmdbOrTvdbPosterUrl(
+                        show.poster,
+                        requireContext(),
+                        originalSize = true
+                    ))
                 Utils.startActivityWithAnimation(activity, intent, v)
             }
 
             // poster background
-            TvdbImageTools.loadShowPosterAlpha(
+            ImageTools.loadShowPosterAlpha(
                 requireActivity(),
                 imageViewBackground,
                 posterSmall
             )
         }
-
-        loadTraktRatings()
     }
 
     private fun populateCredits(credits: Credits?) {
@@ -529,18 +493,7 @@ class ShowFragment() : Fragment() {
     }
 
     private fun rateShow() {
-        show?.tvdbId?.also {
-            RateDialogFragment.newInstanceShow(it).safeShow(context, parentFragmentManager)
-        }
-    }
-
-    private fun loadTraktRatings() {
-        show?.tvdbId?.also {
-            val oldRatingFetchJob = ratingFetchJob
-            if (oldRatingFetchJob == null || !oldRatingFetchJob.isActive) {
-                ratingFetchJob = TraktRatingsFetcher.fetchShowRatingsAsync(requireContext(), it)
-            }
-        }
+        RateDialogFragment.newInstanceShow(showId).safeShow(context, parentFragmentManager)
     }
 
     private fun displayLanguageSettings() {
@@ -570,12 +523,12 @@ class ShowFragment() : Fragment() {
 
         // create the shortcut
         show?.also { show ->
-            if (show.tvdbId != null && show.posterSmall != null) {
+            if (show.tmdbId != null && show.posterSmall != null) {
                 val shortcutLiveData = ShortcutCreator(
                     requireContext(),
                     show.title,
                     show.posterSmall,
-                    show.tvdbId
+                    show.tmdbId
                 )
                 viewLifecycleOwner.lifecycleScope.launch {
                     whenStarted {

@@ -1,20 +1,20 @@
 package com.battlelancer.seriesguide.ui.search
 
 import android.content.Context
-import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.trakt5.entities.Show
-import com.uwetrottmann.trakt5.enums.Extended
-import com.uwetrottmann.trakt5.services.Shows
+import com.uwetrottmann.tmdb2.Tmdb
 
+/**
+ * Loads popular shows in pages from TMDB.
+ */
 class ShowsPopularDataSource(
         private val context: Context,
-        private val traktShows: Shows
+        private val tmdb: Tmdb
 ) : PageKeyedDataSource<Int, SearchResult>() {
 
     val networkState = MutableLiveData<NetworkState>()
@@ -54,38 +54,50 @@ class ShowsPopularDataSource(
     private fun loadPage(page: Int): Page {
         networkState.postValue(NetworkState.LOADING)
 
-        val shows: List<Show>?
-        val totalCount: Int
+        val languageCode = DisplaySettings.getShowsSearchLanguage(context)
         val action = "load popular shows"
 
-        try {
-            val response = traktShows.popular(page, 25, Extended.FULL).execute()
-            if (response.isSuccessful) {
-                shows = response.body()
-                totalCount = response.headers().get("X-Pagination-Item-Count")?.toInt()
-                        ?: throw IllegalStateException("Item count header missing")
-            } else {
-                Errors.logAndReport(action, response)
-                return buildResultGenericFailure()
-            }
+        val response = try {
+            tmdb.tvService().popular(
+                page,
+                languageCode
+            ).execute()
         } catch (e: Exception) {
             Errors.logAndReport(action, e)
-            // only check for network here to allow hitting the response cache
+            // Not checking for connection until here to allow hitting the response cache.
             return if (AndroidUtils.isNetworkConnected(context)) {
                 buildResultGenericFailure()
             } else {
-                buildResultFailure(R.string.offline)
+                buildResultOffline()
             }
+        } finally {
+            networkState.postValue(NetworkState.LOADED)
         }
 
-        networkState.postValue(NetworkState.LOADED)
+        // Check for failures or broken body.
+        if (!response.isSuccessful) {
+            Errors.logAndReport(action, response)
+            return buildResultGenericFailure()
+        }
+        val body = response.body()
+        if (body == null) {
+            Errors.logAndReport(action, IllegalStateException("body is null"))
+            return buildResultGenericFailure()
+        }
+        val totalResults = body.total_results
+        if (totalResults == null) {
+            Errors.logAndReport(action, IllegalStateException("total_results is null"))
+            return buildResultGenericFailure()
+        }
+
+        val shows = body.results?.filterNotNull()
         return if (shows == null || shows.isEmpty()) {
             // return empty list right away if there are no results
-            Page(emptyList(), totalCount)
+            Page(emptyList(), totalResults)
         } else {
-            Page(TraktAddLoader.parseTraktShowsToSearchResults(context, shows,
-                    DisplaySettings.getShowsSearchLanguage(context)),
-                    totalCount)
+            val searchResults = SearchTools.mapTvShowsToSearchResults(languageCode, shows)
+            SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
+            Page(searchResults, totalResults)
         }
     }
 
@@ -95,8 +107,8 @@ class ShowsPopularDataSource(
         return Page(null)
     }
 
-    private fun buildResultFailure(@StringRes errorResId: Int): Page {
-        networkState.postValue(NetworkState.error(context.getString(errorResId)))
+    private fun buildResultOffline(): Page {
+        networkState.postValue(NetworkState.error(context.getString(R.string.offline)))
         return Page(null)
     }
 }

@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.ui.comments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.battlelancer.seriesguide.R
@@ -64,31 +66,28 @@ class TraktCommentsActivity : BaseActivity() {
          * Display comments of an episode.
          */
         @JvmStatic
-        fun createInitBundleEpisode(title: String?, episodeTvdbId: Int): Bundle {
-            val extras = Bundle()
-            extras.putInt(TraktCommentsFragment.InitBundle.EPISODE_TVDB_ID, episodeTvdbId)
-            extras.putString(EXTRA_TITLE, title)
-            return extras
+        fun intentEpisode(context: Context, title: String?, episodeId: Long): Intent {
+            return Intent(context, TraktCommentsActivity::class.java)
+                .putExtra(TraktCommentsFragment.InitBundle.EPISODE_ID, episodeId)
+                .putExtra(EXTRA_TITLE, title)
         }
 
         /**
          * Display comments of a show.
          */
-        fun createInitBundleShow(title: String?, showTvdbId: Int): Bundle {
-            val extras = Bundle()
-            extras.putInt(TraktCommentsFragment.InitBundle.SHOW_TVDB_ID, showTvdbId)
-            extras.putString(EXTRA_TITLE, title)
-            return extras
+        fun intentShow(context: Context, title: String?, showId: Long): Intent {
+            return Intent(context, TraktCommentsActivity::class.java)
+                .putExtra(TraktCommentsFragment.InitBundle.SHOW_ID, showId)
+                .putExtra(EXTRA_TITLE, title)
         }
 
         /**
          * Display comments of a movie.
          */
-        fun createInitBundleMovie(title: String?, movieTmdbId: Int): Bundle {
-            val extras = Bundle()
-            extras.putInt(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID, movieTmdbId)
-            extras.putString(EXTRA_TITLE, title)
-            return extras
+        fun intentMovie(context: Context, title: String?, movieTmdbId: Int): Intent {
+            return Intent(context, TraktCommentsActivity::class.java)
+                .putExtra(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID, movieTmdbId)
+                .putExtra(EXTRA_TITLE, title)
         }
     }
 }

@@ -23,8 +23,5 @@
     <item
         android:id="@+id/menu_action_episodes_dont_skip"
         android:title="@string/action_dont_skip" />
-    <item
-        android:id="@+id/menu_action_episodes_manage_lists"
-        android:title="@string/list_item_manage" />
 
 </menu>

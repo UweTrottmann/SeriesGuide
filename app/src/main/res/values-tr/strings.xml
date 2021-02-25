@@ -88,6 +88,9 @@
     <string name="show_isalive">Devam ediyor</string>
     <string name="show_isnotalive">Sona erdi</string>
     <string name="show_isUpcoming">Yaklaşan</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
     <string name="no_translation_title">Çevrilmedi</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
     <string name="empty_show_search">Listenizde bulunamadı</string>
     <string name="action_try_again">Yeniden deneyin</string>
-    <string name="tvdb_error_does_not_exist">TheTVDB üzerinde bu dizi/film (şimdilik) bulunamadı. Daha sonra tekrar deneyin.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Tümünü ekle</string>
     <string name="add_multiple">Tüm diziler kısa süre içinde listenizde görünecektir.</string>
     <string name="add_started">%s az sonra dizi listenizde görünecek.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">Listeyi yönet</string>
     <string name="list_item_manage">Listeleri yönet</string>
     <string name="list_item_remove">Listeden kaldır</string>
-    <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Listeyi sırala</string>
     <string name="action_lists_reorder">Listeleri tekrar sırala</string>
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>

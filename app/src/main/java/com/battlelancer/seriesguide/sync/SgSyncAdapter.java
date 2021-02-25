@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.sync;
 
 import android.accounts.Account;
-import android.annotation.SuppressLint;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
@@ -16,23 +15,20 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
+import com.battlelancer.seriesguide.sync.HexagonSync.HexagonResult;
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.ui.lists.ListsTools2;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.services.ConfigurationService;
 import com.uwetrottmann.trakt5.services.Sync;
 import dagger.Lazy;
-import java.util.HashMap;
-import java.util.HashSet;
 import javax.inject.Inject;
 import timber.log.Timber;
 
@@ -54,16 +50,15 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      */
     static final String EXTRA_SYNC_TYPE = "com.battlelancer.seriesguide.sync_type";
     /**
-     * If {@link #EXTRA_SYNC_TYPE} is {@link SyncType#SINGLE}, the TVDb id of the show
+     * If {@link #EXTRA_SYNC_TYPE} is {@link SyncType#SINGLE}, the row id of the show
      * to sync.
      */
-    static final String EXTRA_SYNC_SHOW_TVDB_ID = "com.battlelancer.seriesguide.sync_show";
+    static final String EXTRA_SYNC_SHOW_ID = "com.battlelancer.seriesguide.sync_show";
     /**
      * Whether the sync should occur despite time or backoff limits.
      */
     static final String EXTRA_SYNC_IMMEDIATE = "com.battlelancer.seriesguide.sync_immediate";
 
-    @Inject Lazy<TvdbTools> tvdbTools;
     @Inject Lazy<HexagonTools> hexagonTools;
     @Inject Lazy<Sync> traktSync;
     @Inject Lazy<MovieTools> movieTools;
@@ -75,6 +70,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         SgApp.getServicesComponent(context).inject(this);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private static boolean isTimeForSync(Context context, long currentTime) {
         long previousUpdateTime = UpdateSettings.getLastAutoUpdateTime(context);
         return (currentTime - previousUpdateTime) >
@@ -99,11 +95,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         // SYNC
-        TvdbSync tvdbSync = new TvdbSync(options.syncType, options.singleShowTvdbId);
+        ShowSync showSync = new ShowSync(options.syncType, options.singleShowId);
 
         // should we sync?
         final long currentTime = System.currentTimeMillis();
-        if (!options.syncImmediately && tvdbSync.isSyncMultiple()) {
+        if (!options.syncImmediately && showSync.isSyncMultiple()) {
             if (!isTimeForSync(getContext(), currentTime)) {
                 Timber.d("Syncing: ABORT_DID_JUST_SYNC");
                 return;
@@ -112,79 +108,70 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // from here on we need more sophisticated abort handling, so keep track of errors
         SyncProgress progress = new SyncProgress();
-        progress.publish(SyncProgress.Step.TVDB);
-        UpdateResult resultCode = tvdbSync.sync(getContext(), getContext().getContentResolver(),
-                tvdbTools, currentTime, progress);
+        progress.publish(SyncProgress.Step.TMDB);
+
+        TmdbSync tmdbSync = new TmdbSync(getContext(), tmdbConfigService.get(), movieTools.get());
+        // get latest TMDb configuration
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!tmdbSync.updateConfiguration(prefs)) {
+            progress.recordError();
+        }
+
+        ShowTools showTools = SgApp.getServicesComponent(getContext()).showTools();
+        UpdateResult resultCode = showSync.sync(getContext(), showTools, currentTime, progress);
         if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
             progress.recordError();
         }
-        Timber.d("Syncing: TVDB...DONE");
+        Timber.d("Syncing: TMDB shows...DONE");
         if (resultCode == null) {
             progress.publishFinished();
             return; // invalid show(s), abort
         }
 
         // do some more things if this is not a quick update
-        if (tvdbSync.isSyncMultiple()) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getContext());
+        if (showSync.isSyncMultiple()) {
+            // migrate legacy list items
+            ListsTools2.migrateTvdbShowListItemsToTmdbIds(getContext());
 
-            progress.publish(SyncProgress.Step.TMDB);
-            TmdbSync tmdbSync = new TmdbSync(getContext(), tmdbConfigService.get(),
-                    movieTools.get());
-            // get latest TMDb configuration, hexagon+trakt might add movies and need it
-            if (!tmdbSync.updateConfiguration(prefs)) {
-                progress.recordError();
-            }
             // update data of to be released movies
             if (!tmdbSync.updateMovies(progress)) {
                 progress.recordError();
             }
             Timber.d("Syncing: TMDB...DONE");
 
-            // sync with hexagon and trakt
-            @SuppressLint("UseSparseArrays") final HashMap<Integer, SearchResult> newShows
-                    = new HashMap<>();
-            final HashSet<Integer> existingShows = ShowTools.getShowTvdbIdsAsSet(getContext());
-
-            if (existingShows == null) {
-                resultCode = UpdateResult.INCOMPLETE;
+            // sync with hexagon
+            boolean hasAddedShows = false;
+            boolean isHexagonEnabled = HexagonSettings.isEnabled(getContext());
+            if (isHexagonEnabled) {
+                HexagonResult resultHexagonSync = new HexagonSync(getContext(),
+                        hexagonTools.get(), movieTools.get(), progress).sync();
+                hasAddedShows = resultHexagonSync.hasAddedShows;
+                // don't overwrite failure
+                if (resultCode == UpdateResult.SUCCESS) {
+                    resultCode = resultHexagonSync.success
+                            ? UpdateResult.SUCCESS : UpdateResult.INCOMPLETE;
+                }
+                Timber.d("Syncing: Hexagon...DONE");
             } else {
-                // sync with hexagon
-                boolean isHexagonEnabled = HexagonSettings.isEnabled(getContext());
-                if (isHexagonEnabled) {
-                    UpdateResult resultHexagonSync = new HexagonSync(getContext(),
-                            hexagonTools.get(), movieTools.get(), progress)
-                            .sync(existingShows, newShows);
-                    // don't overwrite failure
-                    if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = resultHexagonSync;
-                    }
-                    Timber.d("Syncing: Hexagon...DONE");
-                } else {
-                    Timber.d("Syncing: Hexagon...SKIP");
-                }
+                Timber.d("Syncing: Hexagon...SKIP");
+            }
 
-                // sync with trakt (only ratings if hexagon is enabled)
-                if (TraktCredentials.get(getContext()).hasCredentials()) {
-                    UpdateResult resultTraktSync = new TraktSync(getContext(), movieTools.get(),
-                            traktSync.get(), progress)
-                            .sync(existingShows, currentTime, isHexagonEnabled);
-                    // don't overwrite failure
-                    if (resultCode == UpdateResult.SUCCESS) {
-                        resultCode = resultTraktSync;
-                    }
-                    Timber.d("Syncing: trakt...DONE");
-                } else {
-                    Timber.d("Syncing: trakt...SKIP");
+            // sync with trakt (only ratings if hexagon is enabled)
+            if (TraktCredentials.get(getContext()).hasCredentials()) {
+                UpdateResult resultTraktSync = new TraktSync(getContext(), movieTools.get(),
+                        traktSync.get(), progress)
+                        .sync(currentTime, isHexagonEnabled);
+                // don't overwrite failure
+                if (resultCode == UpdateResult.SUCCESS) {
+                    resultCode = resultTraktSync;
                 }
-
-                // make sure other loaders (activity, overview, details) are notified of changes
-                getContext().getContentResolver().notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
+                Timber.d("Syncing: trakt...DONE");
+            } else {
+                Timber.d("Syncing: trakt...SKIP");
             }
 
             // renew search table if shows were updated and it will not be renewed by add task
-            if (tvdbSync.hasUpdatedShows() && newShows.size() == 0) {
+            if (showSync.hasUpdatedShows() && !hasAddedShows) {
                 SeriesGuideDatabase.rebuildFtsTable(getContext());
             }
 
@@ -257,14 +244,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Schedules a sync for a single show if {@link TvdbTools#isUpdateShow(android.content.Context,
-     * int)} returns true.
+     * Schedules a sync for a single show if {@link ShowTools#shouldUpdateShow(long)} returns true.
      *
      * <p> <em>Note: Runs a content provider op, so you should do this on a background thread.</em>
      */
-    public static void requestSyncIfTime(Context context, int showTvdbId) {
-        if (TvdbTools.isUpdateShow(context, showTvdbId)) {
-            requestSyncIfConnected(context, SyncType.SINGLE, showTvdbId);
+    public static void requestSyncIfTime(Context context, long showId) {
+        if (SgApp.getServicesComponent(context).showTools().shouldUpdateShow(showId)) {
+            requestSyncIfConnected(context, SyncType.SINGLE, showId);
         }
     }
 
@@ -272,10 +258,9 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * Schedules a sync. Will only queue a sync request if there is a network connection and
      * auto-sync is enabled.
      *
-     * @param showTvdbId If using {@link SyncType#SINGLE}, the TVDb id of a show.
+     * @param showId If using {@link SyncType#SINGLE}, the row id of a show.
      */
-    private static void requestSyncIfConnected(Context context, SyncType syncType,
-            int showTvdbId) {
+    private static void requestSyncIfConnected(Context context, SyncType syncType, long showId) {
         if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
             // offline or auto-sync disabled: abort
             return;
@@ -283,7 +268,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         Bundle args = new Bundle();
         args.putInt(EXTRA_SYNC_TYPE, syncType.id);
-        args.putInt(EXTRA_SYNC_SHOW_TVDB_ID, showTvdbId);
+        args.putLong(EXTRA_SYNC_SHOW_ID, showId);
 
         requestSync(context, args);
     }
@@ -315,8 +300,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * @see #requestSyncDeltaImmediate(Context, boolean)
      */
     public static void requestSyncSingleImmediate(Context context, boolean showStatusToast,
-            int showTvdbId) {
-        requestSyncImmediate(context, SyncType.SINGLE, showTvdbId, showStatusToast);
+            long showId) {
+        requestSyncImmediate(context, SyncType.SINGLE, showId, showStatusToast);
     }
 
     /**
@@ -327,7 +312,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static void requestSyncImmediate(Context context, SyncType syncType,
-            int showTvdbId, boolean showStatusToast) {
+            long showId, boolean showStatusToast) {
         if (showStatusToast) {
             if (!AndroidUtils.isNetworkConnected(context)) {
                 // offline: notify and abort
@@ -341,7 +326,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Bundle args = new Bundle();
         args.putBoolean(EXTRA_SYNC_IMMEDIATE, true);
         args.putInt(EXTRA_SYNC_TYPE, syncType.id);
-        args.putInt(EXTRA_SYNC_SHOW_TVDB_ID, showTvdbId);
+        args.putLong(EXTRA_SYNC_SHOW_ID, showId);
 
         // ignore sync settings and backoff
         args.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);

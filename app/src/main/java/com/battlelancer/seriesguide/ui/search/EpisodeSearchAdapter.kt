@@ -9,9 +9,8 @@ import android.widget.ArrayAdapter
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemSearchResultBinding
 import com.battlelancer.seriesguide.provider.SgEpisode2SearchResult
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools.artworkUrl
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools.loadShowPosterResizeSmallCrop
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 
 /**
@@ -96,8 +95,10 @@ class EpisodeSearchViewHolder(
         )
 
         // poster
-        loadShowPosterResizeSmallCrop(
-            context, binding.imageViewSearchPoster, artworkUrl(episode.series_poster_small)
+        ImageTools.loadShowPosterResizeSmallCrop(
+            context,
+            binding.imageViewSearchPoster,
+            episode.series_poster_small
         )
     }
 

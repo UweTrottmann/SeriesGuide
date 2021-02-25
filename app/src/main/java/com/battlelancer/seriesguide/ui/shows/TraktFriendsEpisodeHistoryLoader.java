@@ -5,10 +5,13 @@ import android.text.TextUtils;
 import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.modules.ServicesComponent;
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Friend;
@@ -37,7 +40,8 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
         }
 
         // get all trakt friends
-        Users traktUsers = SgApp.getServicesComponent(getContext()).traktUsers();
+        ServicesComponent services = SgApp.getServicesComponent(getContext());
+        Users traktUsers = services.traktUsers();
         List<Friend> friends = SgTrakt.executeAuthenticatedCall(getContext(),
                 traktUsers.friends(UserSlug.ME, Extended.FULL), "get friends");
         if (friends == null) {
@@ -57,7 +61,9 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
                 new NowAdapter.NowItem().header(getContext().getString(R.string.friends_recently)));
 
         // add last watched episode for each friend
-        SparseArrayCompat<String> localShows = ShowTools.getSmallPostersByTvdbId(getContext());
+        SparseArrayCompat<String> tmdbIdsToPoster = services.showTools().getTmdbIdsToPoster();
+        SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(getContext())
+                .sgEpisode2Helper();
         boolean hideTitle = DisplaySettings.preventSpoilers(getContext());
         for (int i = 0; i < size; i++) {
             Friend friend = friends.get(i);
@@ -89,11 +95,11 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
 
             // look for a TVDB poster
             String posterUrl;
-            Integer showTvdbId = entry.show.ids == null ? null : entry.show.ids.tvdb;
-            if (showTvdbId != null && localShows != null) {
+            Integer showTmdbId = entry.show.ids == null ? null : entry.show.ids.tmdb;
+            if (showTmdbId != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
-                posterUrl = TvdbImageTools.posterUrlOrResolve(localShows.get(showTvdbId),
-                        showTvdbId, DisplaySettings.LANGUAGE_EN);
+                posterUrl = ImageTools.posterUrlOrResolve(tmdbIdsToPoster.get(showTmdbId),
+                        showTmdbId, DisplaySettings.LANGUAGE_EN, getContext());
             } else {
                 posterUrl = null;
             }
@@ -103,6 +109,11 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             String episodeString = TextTools.getNextEpisodeString(getContext(),
                     entry.episode.season, entry.episode.number,
                     hideTitle ? null : entry.episode.title);
+
+            Integer episodeTmdbIdOrNull = entry.episode.ids != null ? entry.episode.ids.tmdb : null;
+            long localEpisodeIdOrZero = episodeTmdbIdOrNull != null
+                    ? episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull) : 0;
+
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
                             entry.watched_at.toInstant().toEpochMilli(),
@@ -110,7 +121,7 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
                             episodeString,
                             posterUrl
                     )
-                    .tvdbIds(entry.episode.ids == null ? null : entry.episode.ids.tvdb, showTvdbId)
+                    .episodeIds(localEpisodeIdOrZero, showTmdbId != null ? showTmdbId : 0)
                     .friend(friend.user.username, avatar, entry.action);
             items.add(nowItem);
         }

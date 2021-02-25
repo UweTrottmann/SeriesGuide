@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,7 +27,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -259,10 +257,8 @@ public class ShowsNowFragment extends Fragment {
     /**
      * Starts an activity to display the given episode.
      */
-    private void showDetails(View view, int episodeId) {
-        Intent intent = new Intent();
-        intent.setClass(requireContext(), EpisodesActivity.class);
-        intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeId);
+    private void showDetails(View view, long episodeId) {
+        Intent intent = EpisodesActivity.intentEpisode(episodeId, requireContext());
 
         ActivityCompat.startActivity(requireContext(), intent,
                 ActivityOptionsCompat
@@ -324,7 +320,7 @@ public class ShowsNowFragment extends Fragment {
         }
     }
 
-    private NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
+    private final NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
             NowAdapter.NowItem item = adapter.getItem(position);
@@ -340,28 +336,14 @@ public class ShowsNowFragment extends Fragment {
                 return;
             }
 
-            // other actions need at least an episode TVDB id
-            if (item.episodeTvdbId == null) {
-                return;
-            }
-
-            // check if episode is in database
-            Cursor query = requireActivity().getContentResolver()
-                    .query(SeriesGuideContract.Episodes.buildEpisodeUri(item.episodeTvdbId),
-                            new String[] { SeriesGuideContract.Episodes._ID }, null, null, null);
-            if (query == null) {
-                // query failed
-                return;
-            }
-            if (query.getCount() == 1) {
+            if (item.episodeRowId != null && item.episodeRowId > 0) {
                 // episode in database: display details
-                showDetails(view, item.episodeTvdbId);
-            } else if (item.showTvdbId != null) {
+                showDetails(view, item.episodeRowId);
+            } else if (item.showTmdbId != null && item.showTmdbId > 0) {
                 // episode missing: show likely not in database, suggest adding it
                 AddShowDialogFragment
-                        .show(requireContext(), getParentFragmentManager(), item.showTvdbId);
+                        .show(requireContext(), getParentFragmentManager(), item.showTmdbId);
             }
-            query.close();
         }
     };
 
@@ -369,7 +351,7 @@ public class ShowsNowFragment extends Fragment {
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
         @Override
         public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
-            return new RecentlyWatchedLoader(getActivity());
+            return new RecentlyWatchedLoader(requireContext());
         }
 
         @Override

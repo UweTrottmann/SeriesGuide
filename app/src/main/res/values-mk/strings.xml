@@ -88,6 +88,9 @@
     <string name="show_isalive">Продолжува</string>
     <string name="show_isnotalive">Завршена</string>
     <string name="show_isUpcoming">Идни</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Не преведено</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
     <string name="empty_show_search">Не е пронајдено во твојата прикажи листа</string>
     <string name="action_try_again">Прoбaј пoвтoрнo</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Додај се</string>
     <string name="add_multiple">Сите серии ќе се прикажат во твојата листа од серии за кратко.</string>
     <string name="add_started">%s ќе се појави во вашата листа од серии за кратко.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">Уреди листа</string>
     <string name="list_item_manage">Уреду листи</string>
     <string name="list_item_remove">Избриши од листа</string>
-    <string name="list_empty">Можете да додате серија, сезона или епизода на оваа листа.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Листа за сортирање</string>
     <string name="action_lists_reorder">Поново сортирајте листа</string>
     <string name="error_name_already_exists">Една група со ова име веќе постои</string>

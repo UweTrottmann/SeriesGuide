@@ -169,7 +169,7 @@ public class ShowsActivity extends BaseTopActivity implements
             }
             if (DBUtils.isShowExists(this, showTvdbId)) {
                 // show exists, display it
-                viewIntent = OverviewActivity.intentShow(this, showTvdbId);
+                viewIntent = OverviewActivity.intentShowByTvdbId(this, showTvdbId);
             } else {
                 // no such show, offer to add it
                 AddShowDialogFragment.show(this, getSupportFragmentManager(),

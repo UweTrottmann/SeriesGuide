@@ -88,6 +88,9 @@
     <string name="show_isalive">Em exibição</string>
     <string name="show_isnotalive">Finalizada</string>
     <string name="show_isUpcoming">Próximos</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Não há descrição traduzida para %1$s disponível em %2$s.</string>
     <string name="no_translation_title">Não traduzido</string>
     <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar, vá até as configurações.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">Sem resultados, tente palavras completas.</string>
     <string name="empty_show_search">Nada encontrado em sua lista</string>
     <string name="action_try_again">Tentar novamente</string>
-    <string name="tvdb_error_does_not_exist">A série não existe (ainda) no TheTVDB. Tente mais tarde.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Adicionar tudo</string>
     <string name="add_multiple">Todas as séries aparecerão na sua lista em breve.</string>
     <string name="add_started">%s aparecerá na sua lista de séries brevemente.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">Gerenciar lista</string>
     <string name="list_item_manage">Gerenciar listas</string>
     <string name="list_item_remove">Remover da lista</string>
-    <string name="list_empty">Você pode adicionar séries, temporadas ou episódios a esta lista</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>

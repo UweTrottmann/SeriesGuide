@@ -18,10 +18,10 @@ import com.battlelancer.seriesguide.provider.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.WidgetSettings
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -245,7 +245,10 @@ class ListWidgetRemoteViewsFactory(
 
     private fun maybeSetPoster(rv: RemoteViews, posterPath: String?) {
         val poster = try {
-            ServiceUtils.loadWithPicasso(context, TvdbImageTools.artworkUrl(posterPath))
+            ServiceUtils.loadWithPicasso(
+                context,
+                ImageTools.tmdbOrTvdbPosterUrl(posterPath, context)
+            )
                 .centerCrop()
                 .resizeDimen(
                     if (isLargeFont) R.dimen.widget_item_width_large else R.dimen.widget_item_width,

@@ -29,10 +29,10 @@ import com.battlelancer.seriesguide.provider.SgEpisode2WithShow;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -537,7 +537,7 @@ public class NotificationService {
     private void maybeSetPoster(NotificationCompat.Builder nb, String posterPath) {
         try {
             Bitmap poster = ServiceUtils.loadWithPicasso(context,
-                    TvdbImageTools.artworkUrl(posterPath))
+                    ImageTools.tmdbOrTvdbPosterUrl(posterPath, context, false))
                     .centerCrop()
                     .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
                     .get();
@@ -546,7 +546,7 @@ public class NotificationService {
             // add special large resolution background for wearables
             // https://developer.android.com/training/wearables/notifications/creating.html#AddWearableFeatures
             Bitmap posterSquare = ServiceUtils.loadWithPicasso(context,
-                    TvdbImageTools.artworkUrl(posterPath))
+                    ImageTools.tmdbOrTvdbPosterUrl(posterPath, context, false))
                     .centerCrop()
                     .resize(400, 400)
                     .get();

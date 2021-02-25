@@ -39,7 +39,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 /**
- * Hosts a view pager to display and manage lists of shows, seasons and episodes.
+ * Hosts a view pager to display and manage user created lists.
  */
 public class ListsActivity extends BaseTopActivity {
 

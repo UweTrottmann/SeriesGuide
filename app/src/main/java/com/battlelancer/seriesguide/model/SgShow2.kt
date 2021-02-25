@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.util.DBUtils
     ]
 )
 data class SgShow2(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = SgShow2Columns._ID) val id: Long = 0,
     @ColumnInfo(name = SgShow2Columns.TMDB_ID) val tmdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.TVDB_ID) val tvdbId: Int?,
     @ColumnInfo(name = SgShow2Columns.SLUG) val slug: String? = "",
@@ -53,28 +53,34 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.IMDBID) val imdbId: String? = "",
     @ColumnInfo(name = SgShow2Columns.RATING_GLOBAL) val ratingGlobal: Double?,
     @ColumnInfo(name = SgShow2Columns.RATING_VOTES) val ratingVotes: Int?,
-    @ColumnInfo(name = SgShow2Columns.RATING_USER) val ratingUser: Int?,
+    @ColumnInfo(name = SgShow2Columns.RATING_USER) val ratingUser: Int? = 0,
     @ColumnInfo(name = SgShow2Columns.RUNTIME) val runtime: Int? = 0,
     @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int? = ShowTools.Status.UNKNOWN,
     @ColumnInfo(name = SgShow2Columns.CONTENTRATING) val contentRating: String? = "",
     @ColumnInfo(name = SgShow2Columns.NEXTEPISODE) val nextEpisode: String? = "",
     @ColumnInfo(name = SgShow2Columns.POSTER) val poster: String? = "",
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val posterSmall: String? = "",
-    @ColumnInfo(name = SgShow2Columns.NEXTAIRDATEMS) val nextAirdateMs: Long?,
+    @ColumnInfo(name = SgShow2Columns.NEXTAIRDATEMS) val nextAirdateMs: Long? = DBUtils.UNKNOWN_NEXT_RELEASE_DATE,
     @ColumnInfo(name = SgShow2Columns.NEXTTEXT) val nextText: String? = "",
-    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long = 0,
+    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long,
     @ColumnInfo(name = SgShow2Columns.LASTEDIT) val lastEditedSec: Long = 0,
     @ColumnInfo(name = SgShow2Columns.LASTWATCHEDID) val lastWatchedEpisodeId: Long = 0,
     @ColumnInfo(name = SgShow2Columns.LASTWATCHED_MS) val lastWatchedMs: Long = 0,
     @ColumnInfo(name = SgShow2Columns.LANGUAGE) val language: String? = "",
     @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int = DBUtils.UNKNOWN_UNWATCHED_COUNT,
-    @ColumnInfo(name = SgShow2Columns.FAVORITE) val favorite: Boolean = false,
-    @ColumnInfo(name = SgShow2Columns.HIDDEN) val hidden: Boolean = false,
-    @ColumnInfo(name = SgShow2Columns.NOTIFY) val notify: Boolean = true,
+    @ColumnInfo(name = SgShow2Columns.FAVORITE) var favorite: Boolean = false,
+    @ColumnInfo(name = SgShow2Columns.HIDDEN) var hidden: Boolean = false,
+    @ColumnInfo(name = SgShow2Columns.NOTIFY) var notify: Boolean = true,
     @ColumnInfo(name = SgShow2Columns.HEXAGON_MERGE_COMPLETE) val hexagonMergeComplete: Boolean = true
 ) {
+    val releaseTimeOrDefault: Int
+        get() = releaseTime ?: -1
     val releaseWeekDayOrDefault: Int
         get() = releaseWeekDay ?: -1
     val statusOrUnknown: Int
         get() = status ?: ShowTools.Status.UNKNOWN
+    val ratingGlobalOrZero: Double
+        get() = ratingGlobal ?: 0.0
+    val ratingVotesOrZero: Int
+        get() = ratingVotes ?: 0
 }

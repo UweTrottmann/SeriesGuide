@@ -8,8 +8,10 @@ import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_46_
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_47_48;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_48_49;
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.Nullable;
 import androidx.room.testing.MigrationTestHelper;
@@ -18,11 +20,12 @@ import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
+import com.battlelancer.seriesguide.model.ActivityType;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
 import com.battlelancer.seriesguide.ui.movies.MovieDetails;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.io.IOException;
 import org.junit.After;
@@ -196,7 +199,7 @@ public class MigrationTest {
         assertTestData_series_seasons_episodes(db);
         queryAndAssert(db, "SELECT series_poster_small, poster FROM series",
                 series -> assertThat(series.getString(0))
-                        .isEqualTo(TvdbImageTools.TVDB_LEGACY_CACHE_PREFIX + series.getString(1)));
+                        .isEqualTo(ImageTools.TVDB_LEGACY_CACHE_PREFIX + series.getString(1)));
     }
 
     @Test
@@ -273,15 +276,18 @@ public class MigrationTest {
 
     @Test
     public void migrationFrom48To49_containsCorrectData() throws IOException {
-        SupportSQLiteDatabase db = migrationTestHelper
+        SupportSQLiteDatabase dbOld = migrationTestHelper
                 .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_48_EPISODE_PLAYS);
-        RoomDatabaseTestHelper.insertShow(SHOW, db);
-        RoomDatabaseTestHelper.insertSeason(SEASON, db);
-        RoomDatabaseTestHelper.insertEpisode(db, EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(),
+        RoomDatabaseTestHelper.insertShow(SHOW, dbOld);
+        RoomDatabaseTestHelper.insertSeason(SEASON, dbOld);
+        RoomDatabaseTestHelper.insertEpisode(dbOld, EPISODE, SHOW.getTvdbId(), SEASON.getTvdbId(),
                 SEASON.getNumber(), true);
-        db.close();
+        // Insert activity
+        dbOld.execSQL("INSERT INTO activity (activity_episode, activity_show, activity_time) VALUES (21, 42, 123456789)");
+        dbOld.close();
 
-        db = getMigratedDatabase(SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION);
+        final SupportSQLiteDatabase db = getMigratedDatabase(
+                SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION);
         // Old tables should still exist, data should remain.
         assertTestData_series_seasons_episodes(db);
 
@@ -342,6 +348,20 @@ public class MigrationTest {
                     assertThat(dbEpisode.getInt(7)).isEqualTo(EPISODE.getNumber());
                     assertThat(dbEpisode.getInt(8)).isEqualTo(SEASON.getNumber());
                 });
+
+        // Ensure new type column was populated.
+        queryAndAssert(db, "SELECT * FROM activity", cursor -> {
+            int activity_type = cursor.getColumnIndex("activity_type");
+            assertThat(cursor.getInt(activity_type)).isEqualTo(ActivityType.TVDB_ID);
+        });
+        // Ensure unique index now includes type column by inserting same IDs, but different type.
+        String activityStmt =
+                "INSERT INTO activity (activity_episode, activity_show, activity_time, activity_type)"
+                        + " VALUES (21, 42, 123456789, " + ActivityType.TMDB_ID + ")";
+        db.execSQL(activityStmt);
+        SQLiteConstraintException constraintException = assertThrows(
+                SQLiteConstraintException.class, () -> db.execSQL(activityStmt));
+        assertThat(constraintException).hasMessageThat().contains("UNIQUE constraint");
     }
 
     private SupportSQLiteDatabase getMigratedDatabase(int version) throws IOException {

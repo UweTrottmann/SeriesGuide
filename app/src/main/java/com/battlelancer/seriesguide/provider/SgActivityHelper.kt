@@ -15,8 +15,8 @@ interface SgActivityHelper {
     @Query("DELETE FROM activity WHERE activity_time < :deleteOlderThanMs")
     fun deleteOldActivity(deleteOlderThanMs: Long): Int
 
-    @Query("DELETE FROM activity WHERE activity_episode = :episodeTvdbOrTmdbId")
-    fun deleteActivity(episodeTvdbOrTmdbId: String): Int
+    @Query("DELETE FROM activity WHERE activity_episode = :episodeStableId AND activity_type = :type")
+    fun deleteActivity(episodeStableId: String, type: Int): Int
 
     @Query("SELECT * FROM activity ORDER BY activity_time DESC")
     fun getActivityByLatest(): List<SgActivity>

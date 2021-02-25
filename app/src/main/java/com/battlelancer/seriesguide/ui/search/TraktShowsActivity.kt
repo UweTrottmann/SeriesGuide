@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.TaskManager
@@ -29,8 +28,8 @@ class TraktShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
                     .commit()
         }
 
-        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
-            startActivity(SimilarShowsActivity.intent(this, it.tvdbid, it.title))
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, {
+            startActivity(SimilarShowsActivity.intent(this, it.tmdbId, it.title))
         })
     }
 

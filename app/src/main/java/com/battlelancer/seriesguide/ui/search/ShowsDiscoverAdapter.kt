@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
 
 class ShowsDiscoverAdapter(
@@ -43,10 +43,10 @@ class ShowsDiscoverAdapter(
         notifyDataSetChanged()
     }
 
-    fun setStateForTvdbId(showTvdbId: Int, state: Int) {
-        // multiple items may have the same TVDB id
+    fun setStateForTmdbId(showTmdbId: Int, state: Int) {
+        // multiple items may have the same TMDB id
         val matching = searchResults.asSequence()
-                .filter { it.tvdbid == showTvdbId }
+                .filter { it.tmdbId == showTmdbId }
                 .onEach { it.state = state }
                 .toList()
         if (matching.isNotEmpty()) {
@@ -148,11 +148,7 @@ class ShowsDiscoverAdapter(
                 holder.title.text = showTitle
                 holder.description.text = item.overview
 
-                // only local shows will have a poster path set
-                // resolve the TVDB poster URL for all others
-                val posterUrl = TvdbImageTools.posterUrlOrResolve(item.posterPath,
-                        item.tvdbid, item.language)
-                TvdbImageTools.loadUrlResizeCrop(context, holder.poster, posterUrl)
+                ImageTools.loadShowPosterResizeCrop(context, holder.poster, item.posterPath)
             }
         }
     }
@@ -161,7 +157,7 @@ class ShowsDiscoverAdapter(
         fun onLinkClick(anchor: View, link: TraktShowsLink)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
-        fun onMenuWatchlistClick(view: View, showTvdbId: Int)
+        fun onMenuWatchlistClick(view: View, showTmdbId: Int)
     }
 
     class LinkViewHolder(itemView: View, onItemClickListener: OnItemClickListener)
@@ -209,7 +205,7 @@ class ShowsDiscoverAdapter(
                 onItemClickListener.onAddClick(item)
             }
             buttonContextMenu.setOnClickListener {
-                onItemClickListener.onMenuWatchlistClick(it, item.tvdbid)
+                onItemClickListener.onMenuWatchlistClick(it, item.tmdbId)
             }
         }
     }

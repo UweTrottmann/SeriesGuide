@@ -25,7 +25,7 @@ buildscript {
             'androidUtils': '2.4.1', // https://github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
             'thetvdb': '2.3.0', // https://github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
             'tmdb': '2.2.0', // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-            'trakt': '6.8.0', // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
+            'trakt': '6.9.0', // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
             'truth': '1.1', // https://github.com/google/truth/releases
 
@@ -53,7 +53,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/ben-manes/gradle-versions-plugin/releases
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.36.0'
-        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0' // SeriesGuide
         // https://github.com/Codearte/gradle-nexus-staging-plugin/releases
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0' // api
         // Firebase Crashlytics

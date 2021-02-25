@@ -88,6 +88,9 @@
     <string name="show_isalive">Συνεχίζεται</string>
     <string name="show_isnotalive">Σταμάτησε</string>
     <string name="show_isUpcoming">Επερχόμενα</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
     <string name="no_translation_title">Χωρίς μετάφραση</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
     <string name="empty_show_search">Δεν βρέθηκε στη λίστα σειρών σας</string>
     <string name="action_try_again">Δοκιμάσετε πάλι</string>
-    <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TheTVDB. Δοκιμάστε ξανά αργότερα.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Προσθήκη όλων</string>
     <string name="add_multiple">Όλες οι σειρές θα εμφανιστούν στη λίστα σύντομα.</string>
     <string name="add_started">%s θα εμφανιστεί στην λίστα με τις σειρές σου σύντομα.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">Διαχείριση λίστας</string>
     <string name="list_item_manage">Διαχείριση λιστών</string>
     <string name="list_item_remove">Κατάργηση από τη λίστα</string>
-    <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Ταξινόμημένες λίστες</string>
     <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
@@ -293,7 +296,7 @@
     <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
     <string name="traktcheckin_wait">Θα περιμένω</string>
     <string name="trakt_success">Στάλθηκε στο trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Ο λογαριασμός σας Trakt είναι κλειδωμένος. Επικοινωνήστε με την υποστήριξη Trakt.</string>
     <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>

@@ -88,6 +88,9 @@
     <string name="show_isalive">Em exibição</string>
     <string name="show_isnotalive">Terminou</string>
     <string name="show_isUpcoming">Próximos</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
     <string name="no_translation_title">Por traduzir</string>
     <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Definições para desactivar esta prevenção.</string>
@@ -99,8 +102,8 @@
     <string name="daily">Diário</string>
     <string name="runtime_minutes">%s min.</string>
     <!-- Flagging -->
-    <string name="mark_all">Assisti a todos</string>
-    <string name="unmark_all">Não assisti a nenhum</string>
+    <string name="mark_all">Vi todos</string>
+    <string name="unmark_all">Não vi nenhum</string>
     <string name="action_watched_up_to">Visto até aqui</string>
     <string name="confirmation_watched_up_to">Marcar como vistos todos os episódios até aqui?</string>
     <string name="collect_all">Todos adquiridos</string>
@@ -112,7 +115,7 @@
     <string name="action_watched">Marcar como visto</string>
     <string name="action_unwatched">Marcado como não visto</string>
     <string name="state_watched">Visto</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
+    <string name="state_watched_multiple_format">Visto (%d)</string>
     <string name="state_skipped">Ignorado</string>
     <string name="state_in_collection">Na Coleção</string>
     <string name="state_on_watchlist">Na Lista dos que Desejo Ver</string>
@@ -194,7 +197,7 @@
     <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
     <string name="empty_show_search">Não foi encontrado na tua lista de séries</string>
     <string name="action_try_again">Tentar novamente</string>
-    <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TheTVDB. Tenta mais tarde.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Adicionar todas as séries</string>
     <string name="add_multiple">Todas as séries irão aparecer na sua lista brevemente.</string>
     <string name="add_started">%s irá aparecer na sua lista de séries brevemente.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">Renomear/Remover lista</string>
     <string name="list_item_manage">Adicionar às listas</string>
     <string name="list_item_remove">Remover da lista</string>
-    <string name="list_empty">Podes adicionar séries, temporadas ou episódios a esta lista.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>
@@ -250,7 +253,7 @@
     <string name="shows_continuing">%s em exibição</string>
     <string name="episodes_watched">%s vistos</string>
     <string name="movies_on_watchlist">%s por ver</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d na coleção</string>
     <string name="movies_watched_format">%s vistos</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
@@ -293,7 +296,7 @@
     <string name="traktcheckin_inprogress">Já deste entrada a outro episódio ou filme. Podes substituir a entrada anterior ou esperar %s e tentar novamente.</string>
     <string name="traktcheckin_wait">Prefiro esperar</string>
     <string name="trakt_success">Submetido com sucesso ao Trakt</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">A tua conta Trakt está bloqueada. Contacta o suporte de apoio do Trakt.</string>
     <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais estão correctas e tenta de novo.</string>
     <string name="trakt_error_not_exists">Não está (ainda) disponível no Trakt. Tenta mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>

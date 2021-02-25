@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.streams
 
 import android.content.Context
 import androidx.collection.SparseArrayCompat
-import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.SgApp
 
 class EpisodeHistoryAdapter(
     context: Context,
@@ -13,7 +13,7 @@ class EpisodeHistoryAdapter(
 
     override fun submitList(list: MutableList<TraktEpisodeHistoryLoader.HistoryItem>?) {
         // TODO This should be done async (e.g. in view model).
-        localShowPosters = ShowTools.getSmallPostersByTvdbId(context)
+        localShowPosters = SgApp.getServicesComponent(context).showTools().tmdbIdsToPoster
         super.submitList(list)
     }
 

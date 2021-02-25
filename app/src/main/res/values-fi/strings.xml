@@ -26,7 +26,7 @@
     <string name="description_menu_overflow">Lisäasetukset</string>
     <!-- Actions -->
     <string name="clear">Tyhjennä</string>
-    <string name="discard">Peruuta</string>
+    <string name="discard">Hylkää</string>
     <string name="save_selection">Tallenna valinta</string>
     <string name="action_display_all">Näytä kaikki</string>
     <string name="web_search">Verkkohaku</string>
@@ -59,7 +59,7 @@
     <string name="share_episode">Jaa jakso</string>
     <string name="share_movie">Jaa elokuva</string>
     <string name="addtocalendar">Lisää kalenteriin</string>
-    <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
+    <string name="addtocalendar_failed">Kalenteritapahtumaa ei voi luoda</string>
     <string name="links">Linkit</string>
     <!-- Comments -->
     <string name="comments">Kommentit</string>
@@ -88,6 +88,9 @@
     <string name="show_isalive">Jatkuu</string>
     <string name="show_isnotalive">Päättynyt</string>
     <string name="show_isUpcoming">Tulevat</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
     <string name="no_translation_title">Ei käännetty</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
     <string name="empty_show_search">Ei löytynyt ohjelmalistastasi</string>
     <string name="action_try_again">Yritä uudelleen</string>
-    <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TheTVDB:ssä. Yritä myöhemmin uudelleen.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Lisää kaikki</string>
     <string name="add_multiple">Kaikki ohjelmat ilmestyvät pian ohjelmalistaasi</string>
     <string name="add_started">%s ilmestyy pian ohjelmalistallesi</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">Hallitse listaa</string>
     <string name="list_item_manage">Hallitse listoja</string>
     <string name="list_item_remove">Poista listalta</string>
-    <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Lajittele listat</string>
     <string name="action_lists_reorder">Järjestä listat uudelleen</string>
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
@@ -246,7 +249,7 @@
     <string name="statistics_shows">ohjelmaa</string>
     <string name="statistics_episodes">jaksoa</string>
     <string name="statistics_movies">elokuvaa</string>
-    <string name="shows_with_next">%s on seuraavia jaksoja</string>
+    <string name="shows_with_next">%s, jossa on seuraavia jaksoja</string>
     <string name="shows_continuing">%s jatkuu</string>
     <string name="episodes_watched">%s katsottu</string>
     <string name="movies_on_watchlist">%s seurantalistalla</string>
@@ -301,7 +304,7 @@
     <string name="connect_trakt">Yhdistä Traktiin</string>
     <string name="trakt_reconnect">Yhdistä SeriesGuide Traktiin</string>
     <string name="trakt_reconnect_details">Tarkista Trakt-tunnuksesi</string>
-    <string name="waitplease">Hetkinen, kiitos&#8230;</string>
+    <string name="waitplease">Odota hetki&#8230;</string>
     <string name="connect">Yhdistä</string>
     <string name="disconnect">Katkaise yhteys</string>
     <string name="use_integrated_browser">Käytä sisäistä selainta</string>
@@ -474,7 +477,7 @@
     <string name="billing_action_subscribe">Tilaa</string>
     <string name="billing_action_manage_subscriptions">Hallitse tilauksia</string>
     <string name="billing_action_pass">Hanki X Pass</string>
-    <string name="billing_price_subscribe">%1$s/vuosi, kokeile ilmaiseksi, peruuta milloin tahansa %2$s Kaupan kautta</string>
+    <string name="billing_price_subscribe">%1$s/vuosi, kokeile ilmaiseksi, peruuta milloin tahansa %2$s -sovelluksen kautta</string>
     <string name="billing_duration_format">%1$s/vuosi</string>
     <string name="billing_sub_description">Kokeile 30 päivää ilmaiseksi, peruuta milloin tahansa.</string>
     <string name="billing_price_pass">kertaluontoinen osto</string>

@@ -88,6 +88,9 @@
     <string name="show_isalive">No ha finalitzat</string>
     <string name="show_isnotalive">Finalitzat</string>
     <string name="show_isUpcoming">Propers</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
     <string name="no_translation_title">No traduït</string>
     <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
@@ -194,7 +197,7 @@
     <string name="no_results">Cap resultat, proveu paraules senceres.</string>
     <string name="empty_show_search">No es troba a la llista</string>
     <string name="action_try_again">Torneu-ho a intentar</string>
-    <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Afegeix-ho tot</string>
     <string name="add_multiple">Totes les sèries apareixeran desseguida a la vostra llista de sèries.</string>
     <string name="add_started">De seguida apareixerà %s a la vostra llista de sèries.</string>
@@ -215,7 +218,7 @@
     <string name="list_manage">Gestiona llista</string>
     <string name="list_item_manage">Gestiona llistes</string>
     <string name="list_item_remove">Esborra de la llista</string>
-    <string name="list_empty">Podeu afegir sèries, temporades o episodis a aquesta llista.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Ordena les llistes</string>
     <string name="action_lists_reorder">Reordenar les llistes</string>
     <string name="error_name_already_exists">Ja existeix una llista amb aquest nom</string>

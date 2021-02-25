@@ -17,9 +17,6 @@
     <item
         android:id="@+id/menu_action_seasons_collection_remove"
         android:title="@string/action_collection_remove" />
-    <item
-        android:id="@+id/menu_action_seasons_manage_lists"
-        android:title="@string/list_item_manage" />
 
 
 </menu>

@@ -6,8 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.ColumnInfo
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RawQuery
+import androidx.room.Transaction
+import androidx.room.Update
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.Constants
@@ -23,11 +26,61 @@ import com.battlelancer.seriesguide.util.TimeTools
 @Dao
 interface SgEpisode2Helper {
 
-    @Query("SELECT _id FROM sg_episode WHERE episode_tvdb_id=:tvdbId")
-    fun getEpisodeId(tvdbId: Int): Long
+    @Insert
+    fun insertEpisode(episode: SgEpisode2): Long
+
+    @Insert
+    fun insertEpisodes(episodes: List<SgEpisode2>): LongArray
+
+    @Update(entity = SgEpisode2::class)
+    fun updateEpisodes(episodes: List<SgEpisode2Update>): Int
+
+    @Update(entity = SgEpisode2::class)
+    fun updateTmdbIds(episodes: List<SgEpisode2TmdbIdUpdate>): Int
+
+    @Query("UPDATE sg_episode SET episode_rating = :rating, episode_rating_votes = :votes WHERE _id = :episodeId")
+    fun updateRating(episodeId: Long, rating: Double, votes: Int)
+
+    @Query("UPDATE sg_episode SET episode_rating_user = :userRating WHERE _id = :episodeId")
+    fun updateUserRating(episodeId: Long, userRating: Int): Int
+
+    @Query("UPDATE sg_episode SET episode_rating_user = :userRating WHERE episode_tmdb_id = :tmdbId")
+    fun updateUserRatingByTmdbId(tmdbId: Int, userRating: Int)
+
+    @Transaction
+    fun updateUserRatings(tmdbIdsToRating: Map<Int, Int>) {
+        tmdbIdsToRating.forEach {
+            updateUserRatingByTmdbId(it.key, it.value)
+        }
+    }
+
+    @Query("DELETE FROM sg_episode")
+    fun deleteAllEpisodes()
+
+    @Query("DELETE FROM sg_episode WHERE _id = :episodeId")
+    fun deleteEpisode(episodeId: Long)
+
+    @Transaction
+    fun deleteEpisodes(episodeIds: List<Long>) {
+        episodeIds.forEach {
+            deleteEpisode(it)
+        }
+    }
+
+    @Query("SELECT _id FROM sg_episode WHERE episode_tmdb_id = :tmdbId")
+    fun getEpisodeIdByTmdbId(tmdbId: Int): Long
+
+    @Query("SELECT _id FROM sg_episode WHERE episode_tvdb_id = :tvdbId")
+    fun getEpisodeIdByTvdbId(tvdbId: Int): Long
+
+    @Query("SELECT _id FROM sg_episode WHERE series_id = :showId AND episode_season_number = :season AND episode_number = :number")
+    fun getEpisodeIdByNumber(showId: Long, season: Int, number: Int): Long
 
     @Query("SELECT episode_tvdb_id FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeTvdbId(episodeId: Long): Int
+
+    @Query("SELECT episode_tmdb_id FROM sg_episode WHERE _id = :episodeId")
+    fun getEpisodeTmdbId(episodeId: Long): Int
 
     @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeNumbers(episodeId: Long): SgEpisode2Numbers?
@@ -37,6 +90,9 @@ interface SgEpisode2Helper {
 
     @RawQuery
     fun getEpisodeInfo(query: SupportSQLiteQuery): SgEpisode2Info?
+
+    @Query("SELECT * FROM sg_episode WHERE _id = :episodeId")
+    fun getEpisode(episodeId: Long): SgEpisode2?
 
     @Query("SELECT * FROM sg_episode WHERE _id=:id")
     fun getEpisodeLiveData(id: Long): LiveData<SgEpisode2?>
@@ -57,7 +113,7 @@ interface SgEpisode2Helper {
     /**
      * Also used for compile time validation of [SgEpisode2WithShow.SELECT] (minus the WHERE clause).
      */
-    @Query("SELECT sg_episode._id, episode_tvdb_id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_tvdb_id, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id WHERE sg_episode._id = :episodeId")
+    @Query("SELECT sg_episode._id, episode_tvdb_id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id WHERE sg_episode._id = :episodeId")
     fun getEpisodeWithShow(episodeId: Long): SgEpisode2WithShow?
 
     /**
@@ -71,6 +127,9 @@ interface SgEpisode2Helper {
      */
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
     fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
+
+    @Query("SELECT _id, episode_tmdb_id FROM sg_episode WHERE season_id = :seasonId")
+    fun getEpisodeIdsOfSeason(seasonId: Long): List<SgEpisode2Ids>
 
     /**
      * Also serves as compile time validation of [SgEpisode2Numbers.buildQuery]
@@ -86,6 +145,24 @@ interface SgEpisode2Helper {
      */
     @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfShow(showId: Long): List<SgEpisode2Numbers>
+
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_tmdb_id > 0 AND (episode_watched != ${EpisodeFlags.UNWATCHED} OR episode_collected = 1)")
+    fun getEpisodesForHexagonSync(showId: Long): List<SgEpisode2ForSync>
+
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId")
+    fun getEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
+
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_watched = 1 ORDER BY episode_number ASC")
+    fun getWatchedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
+
+    @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id=:seasonId AND episode_collected = 1 ORDER BY episode_number ASC")
+    fun getCollectedEpisodesForTraktSync(seasonId: Long): List<SgEpisode2ForSync>
+
+    /**
+     * Gets episodes of season ordered by episode number.
+     */
+    @Query("SELECT * FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_number ASC")
+    fun getEpisodesForExport(seasonId: Long): List<SgEpisode2>
 
     /**
      * WAIT, just for compile time validation of [SgEpisode2Info.buildQuery]
@@ -213,6 +290,32 @@ interface SgEpisode2Helper {
     )
     fun setSeasonNotWatchedAndRemovePlays(seasonId: Long): Int
 
+    @Query(
+        """UPDATE sg_episode SET episode_watched = 0, episode_plays = 0
+        WHERE season_id = :seasonId AND episode_watched == ${EpisodeFlags.WATCHED}"""
+    )
+    fun setSeasonNotWatchedExcludeSkipped(seasonId: Long): Int
+
+    @Transaction
+    fun setSeasonsNotWatchedExcludeSkipped(seasonIds: List<Long>) {
+        for (seasonId in seasonIds) {
+            setSeasonNotWatchedExcludeSkipped(seasonId)
+        }
+    }
+
+    @Query(
+        """UPDATE sg_episode SET episode_watched = 0, episode_plays = 0
+        WHERE series_id = :showId AND episode_watched == ${EpisodeFlags.WATCHED}"""
+    )
+    fun setShowNotWatchedExcludeSkipped(showId: Long): Int
+
+    @Transaction
+    fun setShowsNotWatchedExcludeSkipped(showIds: List<Long>) {
+        for (seasonId in showIds) {
+            setShowNotWatchedExcludeSkipped(seasonId)
+        }
+    }
+
     /**
      * Does NOT include watched episodes to avoid Trakt adding a new play,
      * only includes episodes that have been released until within the hour.
@@ -226,6 +329,9 @@ interface SgEpisode2Helper {
         ORDER BY episode_season_number ASC, episode_number ASC"""
     )
     fun getNotWatchedOrSkippedEpisodeNumbersOfSeason(seasonId: Long, currentTimePlusOneHour: Long): List<SgEpisode2Numbers>
+
+    @Query("UPDATE sg_episode SET episode_watched = 1, episode_plays = 1 WHERE season_id = :seasonId")
+    fun setSeasonWatched(seasonId: Long): Int
 
     /**
      * Sets not watched or skipped episodes, released until within the hour,
@@ -305,23 +411,90 @@ interface SgEpisode2Helper {
     )
     fun setShowWatchedAndAddPlay(showId: Long, currentTimePlusOneHour: Long): Int
 
+    @Update(entity = SgEpisode2::class)
+    fun updateEpisodesWatched(episodes: List<SgEpisode2WatchedUpdate>): Int
+
+    @Update(entity = SgEpisode2::class)
+    fun updateEpisodesCollected(episodes: List<SgEpisode2CollectedUpdate>): Int
+
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE _id = :episodeId")
     fun updateCollected(episodeId: Long, isCollected: Boolean): Int
 
     @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE season_id = :seasonId")
     fun updateCollectedOfSeason(seasonId: Long, isCollected: Boolean): Int
 
-    /**
-     * Excludes specials.
-     */
-    @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId AND episode_season_number != 0")
+    @Transaction
+    fun updateCollectedOfSeasons(seasonIds: List<Long>, isCollected: Boolean) {
+        for (seasonId in seasonIds) {
+            updateCollectedOfSeason(seasonId, isCollected)
+        }
+    }
+
+    @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId")
     fun updateCollectedOfShow(showId: Long, isCollected: Boolean): Int
 
+    @Transaction
+    fun updateCollectedOfShows(showIds: List<Long>, isCollected: Boolean) {
+        for (seasonId in showIds) {
+            updateCollectedOfShow(seasonId, isCollected)
+        }
+    }
+
+    @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId AND episode_season_number != 0")
+    fun updateCollectedOfShowExcludeSpecials(showId: Long, isCollected: Boolean): Int
+
+    @Query("UPDATE sg_episode SET episode_watched = :watched, episode_plays = :plays WHERE series_id = :showId AND episode_season_number = :seasonNumber AND episode_number = :episodeNumber")
+    fun updateWatchedByNumber(showId: Long, seasonNumber: Int, episodeNumber: Int, watched: Int, plays: Int)
+
+    @Query("UPDATE sg_episode SET episode_collected = :isCollected WHERE series_id = :showId AND episode_season_number = :seasonNumber AND episode_number = :episodeNumber")
+    fun updateCollectedByNumber(showId: Long, seasonNumber: Int, episodeNumber: Int, isCollected: Boolean)
+
+    @Transaction
+    fun updateWatchedAndCollectedByNumber(episodes: List<SgEpisode2UpdateByNumber>) {
+        for (episode in episodes) {
+            if (episode.watched != null && episode.plays != null) {
+                updateWatchedByNumber(
+                    episode.showId,
+                    episode.seasonNumber,
+                    episode.episodeNumber,
+                    episode.watched,
+                    episode.plays
+                )
+            }
+            if (episode.collected != null) {
+                updateCollectedByNumber(
+                    episode.showId,
+                    episode.seasonNumber,
+                    episode.episodeNumber,
+                    episode.collected
+                )
+            }
+        }
+    }
+
+    /**
+     * Note: currently last updated value is unused, all episodes are always updated.
+     * See [com.battlelancer.seriesguide.ui.shows.ShowTools2].
+     */
     @Query("UPDATE sg_episode SET episode_lastupdate = 0")
     fun resetLastUpdatedForAll()
 
+    /**
+     * Note: currently last updated value is unused, all episodes are always updated.
+     * See [com.battlelancer.seriesguide.ui.shows.ShowTools2].
+     */
     @Query("UPDATE sg_episode SET episode_lastupdate = 0 WHERE series_id = :showId")
     fun resetLastUpdatedForShow(showId: Long)
+
+    @Query("DELETE FROM sg_episode WHERE season_id = :seasonId")
+    fun deleteEpisodesOfSeason(seasonId: Long): Int
+
+    @Transaction
+    fun deleteEpisodesOfSeasons(seasonIds: List<Long>) {
+        seasonIds.forEach {
+            deleteEpisodesOfSeason(it)
+        }
+    }
 
     @Query("DELETE FROM sg_episode WHERE series_id = :showId")
     fun deleteEpisodesOfShow(showId: Long): Int
@@ -338,7 +511,6 @@ data class SgEpisode2WithShow(
     @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val episode_collected: Boolean,
     @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
 
-    @ColumnInfo(name = SgShow2Columns.TVDB_ID) val showTvdbId: Int,
     @ColumnInfo(name = SgShow2Columns.TITLE) val seriestitle: String,
     @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String?,
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val series_poster_small: String?
@@ -346,7 +518,7 @@ data class SgEpisode2WithShow(
     companion object {
         // WAIT, make sure to update the above dummy query so there is compile time validation!
         const val SELECT =
-            "SELECT sg_episode._id, episode_tvdb_id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_tvdb_id, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id"
+            "SELECT sg_episode._id, episode_tvdb_id, episode_title, episode_number, episode_season_number, episode_firstairedms, episode_watched, episode_collected, episode_description, series_title, series_network, series_poster_small FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id=sg_show._id"
 
         private const val CALENDAR_DAY_LIMIT_MS = 31 * DateUtils.DAY_IN_MILLIS
 
@@ -467,6 +639,11 @@ data class SgEpisode2Info(
     }
 }
 
+data class SgEpisode2Ids(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?
+)
+
 data class SgEpisode2Numbers(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
     @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
@@ -488,3 +665,50 @@ data class SgEpisode2Numbers(
         }
     }
 }
+
+data class SgEpisode2ForSync(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int,
+    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
+    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
+    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
+    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
+)
+
+data class SgEpisode2Update(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TITLE) val title: String?,
+    @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int,
+    @ColumnInfo(name = SgEpisode2Columns.ORDER) val order: Int,
+    @ColumnInfo(name = SgEpisode2Columns.DIRECTORS) val directors: String?,
+    @ColumnInfo(name = SgEpisode2Columns.GUESTSTARS) val guestStars: String?,
+    @ColumnInfo(name = SgEpisode2Columns.WRITERS) val writers: String?,
+    @ColumnInfo(name = SgEpisode2Columns.IMAGE) val image: String?,
+    @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val firstReleasedMs: Long,
+)
+
+data class SgEpisode2WatchedUpdate(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
+    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
+)
+
+data class SgEpisode2CollectedUpdate(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
+)
+
+data class SgEpisode2TmdbIdUpdate(
+    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int
+)
+
+data class SgEpisode2UpdateByNumber(
+    val showId: Long,
+    val episodeNumber: Int,
+    val seasonNumber: Int,
+    val watched: Int?,
+    val plays: Int?,
+    val collected: Boolean?
+)

@@ -23,9 +23,9 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.SeasonTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
@@ -121,7 +121,7 @@ class EpisodesActivity : BaseMessageActivity() {
             )
 
             // Set the image background.
-            TvdbImageTools.loadShowPosterAlpha(
+            ImageTools.loadShowPosterAlpha(
                 this,
                 backgroundImageView,
                 info.seasonAndShowInfo.show.posterSmall
@@ -129,7 +129,7 @@ class EpisodesActivity : BaseMessageActivity() {
 
             updateViews(info)
 
-            updateShowDelayed(info.seasonAndShowInfo.show.tvdbId!!)
+            updateShowDelayed(info.seasonAndShowInfo.showId)
         })
     }
 
