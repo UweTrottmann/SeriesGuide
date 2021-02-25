@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.streams
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,15 +8,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentStreamBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.util.Utils
@@ -156,21 +152,6 @@ abstract class StreamFragment : Fragment() {
      * Once finished you should hide the progress bar with [.showProgressBar].
      */
     protected abstract fun refreshStream()
-
-    /**
-     * Starts an activity to display the given episode.
-     */
-    protected fun showDetails(view: View, episodeId: Int) {
-        val intent = Intent(requireActivity(), EpisodesActivity::class.java)
-            .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeId)
-
-        ActivityCompat.startActivity(
-            requireActivity(), intent,
-            ActivityOptionsCompat
-                .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
-                .toBundle()
-        )
-    }
 
     /**
      * Show or hide the progress bar of the [SwipeRefreshLayout]

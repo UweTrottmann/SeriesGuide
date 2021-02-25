@@ -88,7 +88,7 @@ class HistoryItemViewHolder(
 
         // show title
         binding.textViewHistoryShow.text = item.show?.title
-        // show poster, use a TVDB one
+        // show poster, use a TMDB one
         val showTmdbId = item.show?.ids?.tmdb
         val posterUrl = if (localShowPosters != null && showTmdbId != null) {
             // prefer poster of already added show, fall back to first uploaded poster

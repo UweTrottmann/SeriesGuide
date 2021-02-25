@@ -91,7 +91,7 @@ public class TraktAddFragment extends AddFragment {
         setHasOptionsMenu(true);
     }
 
-    private AddAdapter.OnItemClickListener itemClickListener
+    private final AddAdapter.OnItemClickListener itemClickListener
             = new AddAdapter.OnItemClickListener() {
 
         @Override
@@ -99,7 +99,8 @@ public class TraktAddFragment extends AddFragment {
             if (item != null && item.getState() != SearchResult.STATE_ADDING) {
                 if (item.getState() == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(OverviewActivity.intentShowByTvdbId(requireContext(), item.getTvdbid()));
+                    startActivity(OverviewActivity
+                            .intentShowByTmdbId(requireContext(), item.getTmdbId()));
                 } else {
                     // display more details in a dialog
                     AddShowDialogFragment.show(getParentFragmentManager(), item);
@@ -109,7 +110,7 @@ public class TraktAddFragment extends AddFragment {
 
         @Override
         public void onAddClick(SearchResult item) {
-            EventBus.getDefault().post(new OnAddingShowEvent(item.getTvdbid()));
+            EventBus.getDefault().post(new OnAddingShowEvent(item.getTmdbId()));
             TaskManager.getInstance().performAddTask(requireContext(), item);
         }
 
@@ -210,7 +211,7 @@ public class TraktAddFragment extends AddFragment {
         });
     }
 
-    private LoaderManager.LoaderCallbacks<TraktAddLoader.Result> traktAddCallbacks
+    private final LoaderManager.LoaderCallbacks<TraktAddLoader.Result> traktAddCallbacks
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {
