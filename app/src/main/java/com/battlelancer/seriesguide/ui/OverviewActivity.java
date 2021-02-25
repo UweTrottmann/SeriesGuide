@@ -50,14 +50,6 @@ public class OverviewActivity extends BaseMessageActivity {
     /**
      * After opening, switches to overview tab (only if not multi-pane).
      */
-    public static Intent intentShowByTvdbId(Context context, int showTvdbId) {
-        return new Intent(context, OverviewActivity.class)
-                .putExtra(EXTRA_INT_SHOW_TVDBID, showTvdbId);
-    }
-
-    /**
-     * After opening, switches to overview tab (only if not multi-pane).
-     */
     public static Intent intentShowByTmdbId(Context context, int showTmdbId) {
         return new Intent(context, OverviewActivity.class)
                 .putExtra(EXTRA_INT_SHOW_TMDBID, showTmdbId);
