@@ -73,7 +73,7 @@ import timber.log.Timber;
 public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsContract {
 
     private static final String ARG_LONG_EPISODE_ID = "episode_id";
-    private static final String KEY_EPISODE_TVDB_ID = "episodeTvdbId";
+    private static final String KEY_EPISODE_ID = "episode_id";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Job ratingFetchJob;
@@ -328,8 +328,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
         SgEpisode2 episodeOrNull = this.episode;
-        if (episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            if (episodeOrNull.getTvdbId() == event.episodeTvdbId) {
+        if (episodeOrNull != null) {
+            if (episodeOrNull.getTmdbId() == event.episodeTmdbId) {
                 loadEpisodeActionsDelayed();
             }
         }
@@ -665,12 +665,12 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         }
     }
 
-    private LoaderManager.LoaderCallbacks<List<Action>> actionsLoaderCallbacks =
+    private final LoaderManager.LoaderCallbacks<List<Action>> actionsLoaderCallbacks =
             new LoaderManager.LoaderCallbacks<List<Action>>() {
                 @Override
                 public Loader<List<Action>> onCreateLoader(int id, Bundle args) {
-                    int episodeTvdbId = args.getInt(KEY_EPISODE_TVDB_ID);
-                    return new EpisodeActionsLoader(requireContext(), episodeTvdbId);
+                    long episodeId = args.getLong(KEY_EPISODE_ID);
+                    return new EpisodeActionsLoader(requireContext(), episodeId);
                 }
 
                 @Override
@@ -698,14 +698,10 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             };
 
     public void loadEpisodeActions() {
-        SgEpisode2 episodeOrNull = this.episode;
-        if (episodeOrNull != null && episodeOrNull.getTvdbId() != null) {
-            Bundle args = new Bundle();
-            args.putInt(KEY_EPISODE_TVDB_ID, episodeOrNull.getTvdbId());
-            LoaderManager.getInstance(this)
-                    .restartLoader(EpisodesActivity.ACTIONS_LOADER_ID, args,
-                            actionsLoaderCallbacks);
-        }
+        Bundle args = new Bundle();
+        args.putLong(KEY_EPISODE_ID, episodeId);
+        LoaderManager.getInstance(this).restartLoader(EpisodesActivity.ACTIONS_LOADER_ID, args,
+                actionsLoaderCallbacks);
     }
 
     Runnable actionsRunnable = this::loadEpisodeActions;

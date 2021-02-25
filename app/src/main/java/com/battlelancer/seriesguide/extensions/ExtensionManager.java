@@ -56,10 +56,10 @@ public class ExtensionManager {
      * want to requery available actions.
      */
     public static class EpisodeActionReceivedEvent {
-        public int episodeTvdbId;
+        public int episodeTmdbId;
 
-        public EpisodeActionReceivedEvent(int episodeTvdbId) {
-            this.episodeTvdbId = episodeTvdbId;
+        public EpisodeActionReceivedEvent(int episodeTmdbId) {
+            this.episodeTmdbId = episodeTmdbId;
         }
     }
 
@@ -303,10 +303,10 @@ public class ExtensionManager {
 
     /**
      * Returns the currently available {@link com.battlelancer.seriesguide.api.Action} list for the
-     * given episode, identified through its TVDb id. Sorted in the order determined by the user.
+     * given episode, identified through its TMDB id. Sorted in the order determined by the user.
      */
-    synchronized List<Action> getLatestEpisodeActions(Context context, int episodeTvdbId) {
-        Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episodeTvdbId);
+    synchronized List<Action> getLatestEpisodeActions(Context context, int episodeTmdbId) {
+        Map<ComponentName, Action> actionMap = sEpisodeActionsCache.get(episodeTmdbId);
         return actionListFrom(context, actionMap);
     }
 
@@ -347,15 +347,16 @@ public class ExtensionManager {
      */
     private synchronized void requestEpisodeAction(Context context, ComponentName extension,
             Episode episode) {
-        Timber.d("requestAction: requesting from %s for %s", extension, episode.getTvdbId());
+        Integer episodeIdentifier = episode.getTmdbId();
+        Timber.d("requestAction: requesting from %s for %s", extension, episodeIdentifier);
         // prepare to receive actions for the given episode
-        if (sEpisodeActionsCache.get(episode.getTvdbId()) == null) {
-            sEpisodeActionsCache.put(episode.getTvdbId(), new HashMap<>());
+        if (sEpisodeActionsCache.get(episodeIdentifier) == null) {
+            sEpisodeActionsCache.put(episodeIdentifier, new HashMap<>());
         }
         // actually request actions
         context.sendBroadcast(new Intent(IncomingConstants.ACTION_UPDATE)
                 .setComponent(extension)
-                .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, episode.getTvdbId())
+                .putExtra(IncomingConstants.EXTRA_ENTITY_IDENTIFIER, episodeIdentifier)
                 .putExtra(IncomingConstants.EXTRA_EPISODE, episode.toBundle())
                 .putExtra(IncomingConstants.EXTRA_VERSION, 2));
     }

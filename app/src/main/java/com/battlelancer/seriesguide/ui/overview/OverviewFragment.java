@@ -85,7 +85,7 @@ import timber.log.Timber;
 public class OverviewFragment extends Fragment implements EpisodeActionsContract {
 
     private static final String ARG_LONG_SHOW_ROWID = "show_id";
-    private static final String ARG_EPISODE_TVDB_ID = "episodeTvdbId";
+    private static final String ARG_EPISODE_ID = "episode_id";
 
     @BindView(R.id.background) ImageView imageBackground;
 
@@ -419,8 +419,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event) {
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
-            if (episodeTvdbId == event.episodeTvdbId) {
+        runIfHasEpisode(episode -> {
+            if (episode.getTmdbId() == event.episodeTmdbId) {
                 loadEpisodeActionsDelayed();
             }
         });
@@ -608,9 +608,9 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     @Override
     public void loadEpisodeActions() {
         // do not load actions if there is no episode
-        runIfEpisodeHasTvdbId((episode, episodeTvdbId) -> {
+        runIfHasEpisode(episode -> {
             Bundle args = new Bundle();
-            args.putInt(ARG_EPISODE_TVDB_ID, episodeTvdbId);
+            args.putLong(ARG_EPISODE_ID, episode.getId());
             LoaderManager.getInstance(this)
                     .restartLoader(OverviewActivity.OVERVIEW_ACTIONS_LOADER_ID, args,
                             episodeActionsLoaderCallbacks);
@@ -793,12 +793,12 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         AppSettings.setAskedForFeedback(getContext());
     }
 
-    private LoaderManager.LoaderCallbacks<List<Action>> episodeActionsLoaderCallbacks =
+    private final LoaderManager.LoaderCallbacks<List<Action>> episodeActionsLoaderCallbacks =
             new LoaderManager.LoaderCallbacks<List<Action>>() {
                 @Override
                 public Loader<List<Action>> onCreateLoader(int id, Bundle args) {
-                    int episodeTvdbId = args.getInt(ARG_EPISODE_TVDB_ID);
-                    return new EpisodeActionsLoader(getActivity(), episodeTvdbId);
+                    long episodeId = args.getLong(ARG_EPISODE_ID);
+                    return new EpisodeActionsLoader(getActivity(), episodeId);
                 }
 
                 @Override

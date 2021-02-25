@@ -7,10 +7,12 @@ public class Episode {
     private static final String KEY_NUMBER = "number";
     private static final String KEY_NUMBER_ABSOLUTE = "numberAbsolute";
     private static final String KEY_SEASON = "season";
+    private static final String KEY_TMDBID = "tmdbid";
     private static final String KEY_TVDBID = "tvdbid";
     private static final String KEY_IMDBID = "imdbid";
 
     private static final String KEY_SHOW_TITLE = "showTitle";
+    private static final String KEY_SHOW_TMDBID = "showTmdbId";
     private static final String KEY_SHOW_TVDBID = "showTvdbId";
     private static final String KEY_SHOW_IMDBID = "showImdbId";
     private static final String KEY_SHOW_FIRST_RELEASE_DATE = "showFirstReleaseDate";
@@ -19,10 +21,12 @@ public class Episode {
     private Integer number;
     private Integer numberAbsolute;
     private Integer season;
+    private int tmdbId;
     private Integer tvdbId;
     private String imdbId;
 
     private String showTitle;
+    private int showTmdbId;
     private Integer showTvdbId;
     private String showImdbId;
     private String showFirstReleaseDate;
@@ -38,6 +42,9 @@ public class Episode {
         return number;
     }
 
+    /**
+     * May be zero if not known.
+     */
     public Integer getNumberAbsolute() {
         return numberAbsolute;
     }
@@ -50,6 +57,13 @@ public class Episode {
         return imdbId;
     }
 
+    public int getTmdbId() {
+        return tmdbId;
+    }
+
+    /**
+     * May be zero for episodes of shows do not have a TheTVDB ID linked on TMDB.
+     */
     public Integer getTvdbId() {
         return tvdbId;
     }
@@ -58,6 +72,13 @@ public class Episode {
         return showTitle;
     }
 
+    public int getShowTmdbId() {
+        return showTmdbId;
+    }
+
+    /**
+     * May be zero for shows that do not have a TheTVDB ID linked on TMDB.
+     */
     public Integer getShowTvdbId() {
         return showTvdbId;
     }
@@ -90,22 +111,27 @@ public class Episode {
             return this;
         }
 
-        public Builder number(Integer episodeNumber) {
+        public Builder number(int episodeNumber) {
             mEpisode.number = episodeNumber;
             return this;
         }
 
-        public Builder numberAbsolute(Integer absoluteNumber) {
+        public Builder numberAbsolute(int absoluteNumber) {
             mEpisode.numberAbsolute = absoluteNumber;
             return this;
         }
 
-        public Builder season(Integer seasonNumber) {
+        public Builder season(int seasonNumber) {
             mEpisode.season = seasonNumber;
             return this;
         }
 
-        public Builder tvdbId(Integer episodeTvdbId) {
+        public Builder tmdbId(int episodeTmdbId) {
+            mEpisode.tmdbId = episodeTmdbId;
+            return this;
+        }
+
+        public Builder tvdbId(int episodeTvdbId) {
             mEpisode.tvdbId = episodeTvdbId;
             return this;
         }
@@ -120,7 +146,12 @@ public class Episode {
             return this;
         }
 
-        public Builder showTvdbId(Integer showTvdbId) {
+        public Builder showTmdbId(int showTmdbId) {
+            mEpisode.showTmdbId = showTmdbId;
+            return this;
+        }
+
+        public Builder showTvdbId(int showTvdbId) {
             mEpisode.showTvdbId = showTvdbId;
             return this;
         }
@@ -149,9 +180,11 @@ public class Episode {
         bundle.putInt(KEY_NUMBER, number);
         bundle.putInt(KEY_NUMBER_ABSOLUTE, numberAbsolute);
         bundle.putInt(KEY_SEASON, season);
+        bundle.putInt(KEY_TMDBID, tmdbId);
         bundle.putInt(KEY_TVDBID, tvdbId);
         bundle.putString(KEY_IMDBID, imdbId);
         bundle.putString(KEY_SHOW_TITLE, showTitle);
+        bundle.putInt(KEY_SHOW_TMDBID, showTmdbId);
         bundle.putInt(KEY_SHOW_TVDBID, showTvdbId);
         bundle.putString(KEY_SHOW_IMDBID, showImdbId);
         bundle.putString(KEY_SHOW_FIRST_RELEASE_DATE, showFirstReleaseDate);
@@ -167,9 +200,11 @@ public class Episode {
                 .number(bundle.getInt(KEY_NUMBER))
                 .numberAbsolute(bundle.getInt(KEY_NUMBER_ABSOLUTE))
                 .season(bundle.getInt(KEY_SEASON))
+                .tmdbId(bundle.getInt(KEY_TMDBID))
                 .tvdbId(bundle.getInt(KEY_TVDBID))
                 .imdbId(bundle.getString(KEY_IMDBID))
                 .showTitle(bundle.getString(KEY_SHOW_TITLE))
+                .showTmdbId(bundle.getInt(KEY_SHOW_TMDBID))
                 .showTvdbId(bundle.getInt(KEY_SHOW_TVDBID))
                 .showImdbId(bundle.getString(KEY_SHOW_IMDBID))
                 .showFirstReleaseDate(bundle.getString(KEY_SHOW_FIRST_RELEASE_DATE));

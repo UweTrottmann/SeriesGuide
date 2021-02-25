@@ -21,7 +21,10 @@ public class VodsterExtension extends SeriesGuideExtension {
 
     @Override
     protected void onRequest(int episodeIdentifier, Episode episode) {
-        publishVodsterAction(episodeIdentifier, "tvdb=" + episode.getShowTvdbId());
+        Integer showTvdbId = episode.getShowTvdbId();
+        if (showTvdbId != 0) {
+            publishVodsterAction(episodeIdentifier, "tvdb=" + showTvdbId);
+        }
     }
 
     @Override
