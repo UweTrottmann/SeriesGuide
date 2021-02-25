@@ -108,14 +108,6 @@ public class DBUtils {
         return count;
     }
 
-    /**
-     * Queries the show table for the given TVDb id and returns whether there is an entry,
-     * e.g. the show is already in the database.
-     */
-    public static boolean isShowExists(Context context, int showTvdbId) {
-        return SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIdByTvdbId(showTvdbId) != 0;
-    }
-
     private interface NextEpisodesQuery {
         /**
          * Unwatched, airing later or has a different number or season if airing the same time.

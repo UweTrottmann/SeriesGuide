@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.episodes;
 
 import android.content.Context;
-import android.database.Cursor;
 import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
@@ -10,28 +9,9 @@ import com.battlelancer.seriesguide.jobs.episodes.SeasonCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob;
 import com.battlelancer.seriesguide.jobs.episodes.ShowCollectedJob;
 import com.battlelancer.seriesguide.jobs.episodes.ShowWatchedJob;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.TimeTools;
 
 public class EpisodeTools {
-
-    /**
-     * Checks the database whether there is an entry for this episode.
-     */
-    public static boolean isEpisodeExists(Context context, int episodeTvdbId) {
-        Cursor query = context.getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodeUri(episodeTvdbId), new String[]{
-                        SeriesGuideContract.Episodes._ID}, null, null, null
-        );
-        if (query == null) {
-            return false;
-        }
-
-        boolean isExists = query.getCount() > 0;
-        query.close();
-
-        return isExists;
-    }
 
     public static boolean isCollected(int collectedFlag) {
         return collectedFlag == 1;
