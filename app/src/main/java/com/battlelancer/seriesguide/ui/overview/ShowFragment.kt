@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -29,7 +26,6 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools
@@ -205,8 +201,6 @@ class ShowFragment() : Fragment() {
         model.credits.observe(viewLifecycleOwner) { credits ->
             populateCredits(credits)
         }
-
-        setHasOptionsMenu(true)
     }
 
     override fun onStart() {
@@ -225,21 +219,6 @@ class ShowFragment() : Fragment() {
         super.onDestroyView()
 
         unbinder.unbind()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.show_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_show_manage_lists -> {
-                ManageListsDialogFragment.show(parentFragmentManager, showId)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun populateShow(show: SgShow2) {

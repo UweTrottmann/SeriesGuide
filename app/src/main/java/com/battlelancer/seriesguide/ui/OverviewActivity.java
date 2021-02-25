@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.provider.SgShow2Helper;
+import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.ui.overview.OverviewFragment;
 import com.battlelancer.seriesguide.ui.overview.SeasonsFragment;
 import com.battlelancer.seriesguide.ui.overview.ShowFragment;
@@ -222,6 +223,10 @@ public class OverviewActivity extends BaseMessageActivity {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_overview_search) {
             launchSearch();
+            return true;
+        }
+        if (itemId == R.id.menu_show_manage_lists) {
+            ManageListsDialogFragment.show(getSupportFragmentManager(), showId);
             return true;
         }
         if (itemId == R.id.menu_overview_remove_show) {
