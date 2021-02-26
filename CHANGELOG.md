@@ -8,6 +8,20 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 58
+----------
+*in development*
+
+#### 58-beta1
+*2021-03-03*
+
+* 🌟 Show data is now powered by themoviedb.org (TMDB). This change required large internal database
+  changes, and changes to how Trakt sync and Cloud integration work. Your shows may need to update
+  before some functionality can be used again. Some shows may not be available on TMDB, they will
+  remain in your library, but functionality is reduced (e.g. no Trakt or Cloud support).
+* 🔧 Allow longer check in messages.
+* 📝 Latest translations from crowdin.
+
 Version 57
 ----------
 *2020-12-04*
