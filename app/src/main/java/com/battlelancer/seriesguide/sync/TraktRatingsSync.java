@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedShow;
+import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.services.Sync;
 import java.util.ArrayList;
@@ -94,9 +95,12 @@ public class TraktRatingsSync {
         // go through ratings, latest first (trakt sends in that order)
         Map<Integer, Integer> tmdbIdsToRatings = new HashMap<>();
         for (RatedShow show : ratedShows) {
-            if (show.rating == null || show.show == null || show.show.ids == null
-                    || show.show.ids.tvdb == null) {
-                // skip, can't handle
+            Rating rating = show.rating;
+            if (rating == null || show.show == null || show.show.ids == null) {
+                continue;
+            }
+            Integer showTmdbId = show.show.ids.tmdb;
+            if (showTmdbId == null) {
                 continue;
             }
             if (show.rated_at != null
@@ -105,7 +109,7 @@ public class TraktRatingsSync {
                 break;
             }
             // if a show does not exist, this update will do nothing
-            tmdbIdsToRatings.put(show.show.ids.tmdb, show.rating.value);
+            tmdbIdsToRatings.put(showTmdbId, rating.value);
         }
 
         // apply database updates
