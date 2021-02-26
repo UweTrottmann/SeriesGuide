@@ -13,8 +13,7 @@
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
@@ -27,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -189,17 +188,17 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#number(java.lang.Integer)">number</a></span>&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;episodeNumber)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#number(int)">number</a></span>&#8203;(int&nbsp;episodeNumber)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numberAbsolute(java.lang.Integer)">numberAbsolute</a></span>&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;absoluteNumber)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numberAbsolute(int)">numberAbsolute</a></span>&#8203;(int&nbsp;absoluteNumber)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#season(java.lang.Integer)">season</a></span>&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;seasonNumber)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#season(int)">season</a></span>&#8203;(int&nbsp;seasonNumber)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -219,17 +218,27 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showTvdbId(java.lang.Integer)">showTvdbId</a></span>&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;showTvdbId)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showTmdbId(int)">showTmdbId</a></span>&#8203;(int&nbsp;showTmdbId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#title(java.lang.String)">title</a></span>&#8203;(<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a>&nbsp;episodeTitle)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showTvdbId(int)">showTvdbId</a></span>&#8203;(int&nbsp;showTvdbId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tvdbId(java.lang.Integer)">tvdbId</a></span>&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;episodeTvdbId)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#title(java.lang.String)">title</a></span>&#8203;(<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a>&nbsp;episodeTitle)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tmdbId(int)">tmdbId</a></span>&#8203;(int&nbsp;episodeTmdbId)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tvdbId(int)">tvdbId</a></span>&#8203;(int&nbsp;episodeTvdbId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -284,40 +293,49 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 <pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;title&#8203;(<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a>&nbsp;episodeTitle)</pre>
 </li>
 </ul>
-<a id="number(java.lang.Integer)">
+<a id="number(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>number</h4>
-<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;number&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;episodeNumber)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;number&#8203;(int&nbsp;episodeNumber)</pre>
 </li>
 </ul>
-<a id="numberAbsolute(java.lang.Integer)">
+<a id="numberAbsolute(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>numberAbsolute</h4>
-<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;numberAbsolute&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;absoluteNumber)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;numberAbsolute&#8203;(int&nbsp;absoluteNumber)</pre>
 </li>
 </ul>
-<a id="season(java.lang.Integer)">
+<a id="season(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>season</h4>
-<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;season&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;seasonNumber)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;season&#8203;(int&nbsp;seasonNumber)</pre>
 </li>
 </ul>
-<a id="tvdbId(java.lang.Integer)">
+<a id="tmdbId(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tmdbId</h4>
+<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;tmdbId&#8203;(int&nbsp;episodeTmdbId)</pre>
+</li>
+</ul>
+<a id="tvdbId(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>tvdbId</h4>
-<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;tvdbId&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;episodeTvdbId)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;tvdbId&#8203;(int&nbsp;episodeTvdbId)</pre>
 </li>
 </ul>
 <a id="imdbId(java.lang.String)">
@@ -338,13 +356,22 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 <pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;showTitle&#8203;(<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a>&nbsp;showTitle)</pre>
 </li>
 </ul>
-<a id="showTvdbId(java.lang.Integer)">
+<a id="showTmdbId(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>showTmdbId</h4>
+<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;showTmdbId&#8203;(int&nbsp;showTmdbId)</pre>
+</li>
+</ul>
+<a id="showTvdbId(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>showTvdbId</h4>
-<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;showTvdbId&#8203;(<a href="https://developer.android.com/reference/java/lang/Integer.html?is-external=true" title="class or interface in java.lang" class="externalLink">Integer</a>&nbsp;showTvdbId)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a>&nbsp;showTvdbId&#8203;(int&nbsp;showTvdbId)</pre>
 </li>
 </ul>
 <a id="showImdbId(java.lang.String)">

@@ -13,8 +13,7 @@
 <!--[if IE]>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="jquery/jquery-ui.js"></script>
 </head>
 <body>
@@ -139,7 +138,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Builds an action with all required properties, ready to <a href="com/battlelancer/seriesguide/api/Action.Builder.html#build()"><code>Action.Builder.build()</code></a>.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Intents.html#buildViewEpisodeIntent(int,int)">buildViewEpisodeIntent(int, int)</a></span> - Static method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Intents.html" title="class in com.battlelancer.seriesguide.api">Intents</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Intents.html#buildViewEpisodeIntent(int,int,int)">buildViewEpisodeIntent(int, int, int)</a></span> - Static method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Intents.html" title="class in com.battlelancer.seriesguide.api">Intents</a></dt>
 <dd>
 <div class="block">Builds an implicit <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>Intent</code></a> to view an episode in SeriesGuide.</div>
 </dd>
@@ -178,7 +177,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/constants/IncomingConstants.html#EXTRA_EPISODE">EXTRA_EPISODE</a></span> - Static variable in interface com.battlelancer.seriesguide.api.constants.<a href="com/battlelancer/seriesguide/api/constants/IncomingConstants.html" title="interface in com.battlelancer.seriesguide.api.constants">IncomingConstants</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Intents.html#EXTRA_EPISODE_TVDBID">EXTRA_EPISODE_TVDBID</a></span> - Static variable in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Intents.html" title="class in com.battlelancer.seriesguide.api">Intents</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Intents.html#EXTRA_EPISODE_NUMBER">EXTRA_EPISODE_NUMBER</a></span> - Static variable in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Intents.html" title="class in com.battlelancer.seriesguide.api">Intents</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Intents.html#EXTRA_EPISODE_SEASON">EXTRA_EPISODE_SEASON</a></span> - Static variable in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Intents.html" title="class in com.battlelancer.seriesguide.api">Intents</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/SeriesGuideExtension.html#EXTRA_FROM_SERIESGUIDE_SETTINGS">EXTRA_FROM_SERIESGUIDE_SETTINGS</a></span> - Static variable in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/SeriesGuideExtension.html" title="class in com.battlelancer.seriesguide.api">SeriesGuideExtension</a></dt>
 <dd>
@@ -187,7 +188,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/constants/IncomingConstants.html#EXTRA_MOVIE">EXTRA_MOVIE</a></span> - Static variable in interface com.battlelancer.seriesguide.api.constants.<a href="com/battlelancer/seriesguide/api/constants/IncomingConstants.html" title="interface in com.battlelancer.seriesguide.api.constants">IncomingConstants</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Intents.html#EXTRA_SHOW_TVDBID">EXTRA_SHOW_TVDBID</a></span> - Static variable in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Intents.html" title="class in com.battlelancer.seriesguide.api">Intents</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Intents.html#EXTRA_SHOW_TMDBID">EXTRA_SHOW_TMDBID</a></span> - Static variable in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Intents.html" title="class in com.battlelancer.seriesguide.api">Intents</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/constants/IncomingConstants.html#EXTRA_SUBSCRIBER_COMPONENT">EXTRA_SUBSCRIBER_COMPONENT</a></span> - Static variable in interface com.battlelancer.seriesguide.api.constants.<a href="com/battlelancer/seriesguide/api/constants/IncomingConstants.html" title="interface in com.battlelancer.seriesguide.api.constants">IncomingConstants</a></dt>
 <dd>&nbsp;</dd>
@@ -246,7 +247,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.html#getNumber()">getNumber()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.html" title="class in com.battlelancer.seriesguide.api">Episode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.html#getNumberAbsolute()">getNumberAbsolute()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.html" title="class in com.battlelancer.seriesguide.api">Episode</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">May be zero if not known.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Movie.html#getReleaseDate()">getReleaseDate()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Movie.html" title="class in com.battlelancer.seriesguide.api">Movie</a></dt>
 <dd>
 <div class="block">The release date of the movie, or null if not known.</div>
@@ -270,8 +273,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.html#getShowTitle()">getShowTitle()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.html" title="class in com.battlelancer.seriesguide.api">Episode</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.html#getShowTvdbId()">getShowTvdbId()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.html" title="class in com.battlelancer.seriesguide.api">Episode</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.html#getShowTmdbId()">getShowTmdbId()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.html" title="class in com.battlelancer.seriesguide.api">Episode</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.html#getShowTvdbId()">getShowTvdbId()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.html" title="class in com.battlelancer.seriesguide.api">Episode</a></dt>
+<dd>
+<div class="block">May be zero for shows that do not have a TheTVDB ID linked on TMDB.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Action.html#getTitle()">getTitle()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Action.html" title="class in com.battlelancer.seriesguide.api">Action</a></dt>
 <dd>
 <div class="block">Returns the user-visible title for this action.</div>
@@ -280,10 +287,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Movie.html#getTitle()">getTitle()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Movie.html" title="class in com.battlelancer.seriesguide.api">Movie</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.html#getTmdbId()">getTmdbId()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.html" title="class in com.battlelancer.seriesguide.api">Episode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Movie.html#getTmdbId()">getTmdbId()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Movie.html" title="class in com.battlelancer.seriesguide.api">Movie</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.html#getTvdbId()">getTvdbId()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.html" title="class in com.battlelancer.seriesguide.api">Episode</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">May be zero for episodes of shows do not have a TheTVDB ID linked on TMDB.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Action.html#getViewIntent()">getViewIntent()</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Action.html" title="class in com.battlelancer.seriesguide.api">Action</a></dt>
 <dd>
 <div class="block">Returns the activity <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>Intent</code></a> that will be started when the user clicks on the button
@@ -325,9 +336,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">N</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#number(java.lang.Integer)">number(Integer)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#number(int)">number(int)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#numberAbsolute(java.lang.Integer)">numberAbsolute(Integer)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#numberAbsolute(int)">numberAbsolute(int)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:O">
@@ -400,7 +411,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">S</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#season(java.lang.Integer)">season(Integer)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#season(int)">season(int)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/battlelancer/seriesguide/api/SeriesGuideExtension.html" title="class in com.battlelancer.seriesguide.api"><span class="typeNameLink">SeriesGuideExtension</span></a> - Class in <a href="com/battlelancer/seriesguide/api/package-summary.html">com.battlelancer.seriesguide.api</a></dt>
 <dd>
@@ -422,7 +433,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#showTitle(java.lang.String)">showTitle(String)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#showTvdbId(java.lang.Integer)">showTvdbId(Integer)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#showTmdbId(int)">showTmdbId(int)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#showTvdbId(int)">showTvdbId(int)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:T">
@@ -433,6 +446,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#title(java.lang.String)">title(String)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Movie.Builder.html#title(java.lang.String)">title(String)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Movie.Builder.html" title="class in com.battlelancer.seriesguide.api">Movie.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#tmdbId(int)">tmdbId(int)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Movie.Builder.html#tmdbId(java.lang.Integer)">tmdbId(Integer)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Movie.Builder.html" title="class in com.battlelancer.seriesguide.api">Movie.Builder</a></dt>
 <dd>&nbsp;</dd>
@@ -452,7 +467,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Serializes this <a href="com/battlelancer/seriesguide/api/Action.html" title="class in com.battlelancer.seriesguide.api"><code>Action</code></a> object to a <a href="https://developer.android.com/reference/org/json/JSONObject.html?is-external=true" title="class or interface in org.json" class="externalLink"><code>JSONObject</code></a> representation.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#tvdbId(java.lang.Integer)">tvdbId(Integer)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="com/battlelancer/seriesguide/api/Episode.Builder.html#tvdbId(int)">tvdbId(int)</a></span> - Method in class com.battlelancer.seriesguide.api.<a href="com/battlelancer/seriesguide/api/Episode.Builder.html" title="class in com.battlelancer.seriesguide.api">Episode.Builder</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:V">

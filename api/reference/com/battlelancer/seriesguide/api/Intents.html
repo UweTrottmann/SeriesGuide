@@ -13,8 +13,7 @@
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
@@ -165,12 +164,17 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXTRA_EPISODE_TVDBID">EXTRA_EPISODE_TVDBID</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXTRA_EPISODE_NUMBER">EXTRA_EPISODE_NUMBER</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXTRA_SHOW_TVDBID">EXTRA_SHOW_TVDBID</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXTRA_EPISODE_SEASON">EXTRA_EPISODE_SEASON</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXTRA_SHOW_TMDBID">EXTRA_SHOW_TMDBID</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -214,15 +218,16 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink">Intent</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildViewEpisodeIntent(int,int)">buildViewEpisodeIntent</a></span>&#8203;(int&nbsp;showTvdbId,
-                      int&nbsp;episodeTvdbId)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildViewEpisodeIntent(int,int,int)">buildViewEpisodeIntent</a></span>&#8203;(int&nbsp;showTmdbId,
+                      int&nbsp;seasonNumber,
+                      int&nbsp;episodeNumber)</code></th>
 <td class="colLast">
 <div class="block">Builds an implicit <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>Intent</code></a> to view an episode in SeriesGuide.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink">Intent</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildViewShowIntent(int)">buildViewShowIntent</a></span>&#8203;(int&nbsp;showTvdbId)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildViewShowIntent(int)">buildViewShowIntent</a></span>&#8203;(int&nbsp;showTmdbId)</code></th>
 <td class="colLast">
 <div class="block">Builds an implicit <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>Intent</code></a> to view a show in SeriesGuide.</div>
 </td>
@@ -277,29 +282,42 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 </dl>
 </li>
 </ul>
-<a id="EXTRA_EPISODE_TVDBID">
+<a id="EXTRA_EPISODE_NUMBER">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>EXTRA_EPISODE_TVDBID</h4>
-<pre>public static final&nbsp;<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a> EXTRA_EPISODE_TVDBID</pre>
+<h4>EXTRA_EPISODE_NUMBER</h4>
+<pre>public static final&nbsp;<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a> EXTRA_EPISODE_NUMBER</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#com.battlelancer.seriesguide.api.Intents.EXTRA_EPISODE_TVDBID">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#com.battlelancer.seriesguide.api.Intents.EXTRA_EPISODE_NUMBER">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
-<a id="EXTRA_SHOW_TVDBID">
+<a id="EXTRA_EPISODE_SEASON">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTRA_EPISODE_SEASON</h4>
+<pre>public static final&nbsp;<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a> EXTRA_EPISODE_SEASON</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#com.battlelancer.seriesguide.api.Intents.EXTRA_EPISODE_SEASON">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a id="EXTRA_SHOW_TMDBID">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>EXTRA_SHOW_TVDBID</h4>
-<pre>public static final&nbsp;<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a> EXTRA_SHOW_TVDBID</pre>
+<h4>EXTRA_SHOW_TMDBID</h4>
+<pre>public static final&nbsp;<a href="https://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a> EXTRA_SHOW_TMDBID</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#com.battlelancer.seriesguide.api.Intents.EXTRA_SHOW_TVDBID">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#com.battlelancer.seriesguide.api.Intents.EXTRA_SHOW_TMDBID">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -332,22 +350,20 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="buildViewEpisodeIntent(int,int)">
+<a id="buildViewEpisodeIntent(int,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>buildViewEpisodeIntent</h4>
-<pre class="methodSignature">public static&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink">Intent</a>&nbsp;buildViewEpisodeIntent&#8203;(int&nbsp;showTvdbId,
-                                            int&nbsp;episodeTvdbId)</pre>
-<div class="block">Builds an implicit <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>Intent</code></a> to view an episode in SeriesGuide. Make
- sure to check with <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true#resolveActivity(android.content.pm.PackageManager)" title="class or interface in android.content" class="externalLink"><code>Intent.resolveActivity(android.content.pm.PackageManager)</code></a> if
- SeriesGuide (or another app capable of handling this intent) is available.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>showTvdbId</code> - If valid and the episode does not exist, the user will be asked if the show
-                   should be added to SeriesGuide.</dd>
-</dl>
+<pre class="methodSignature">public static&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink">Intent</a>&nbsp;buildViewEpisodeIntent&#8203;(int&nbsp;showTmdbId,
+                                            int&nbsp;seasonNumber,
+                                            int&nbsp;episodeNumber)</pre>
+<div class="block">Builds an implicit <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>Intent</code></a> to view an episode in SeriesGuide. Like
+ any Intent it may throw <a href="https://developer.android.com/reference/android/content/ActivityNotFoundException.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>ActivityNotFoundException</code></a>, e.g. if
+ SeriesGuide (or another app capable of handling this intent) is not available.
+ <p>
+ If the show does not exist, the user will be asked if the show should be added.</div>
 </li>
 </ul>
 <a id="buildViewShowIntent(int)">
@@ -356,10 +372,10 @@ extends <a href="https://developer.android.com/reference/java/lang/Object.html?i
 <ul class="blockListLast">
 <li class="blockList">
 <h4>buildViewShowIntent</h4>
-<pre class="methodSignature">public static&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink">Intent</a>&nbsp;buildViewShowIntent&#8203;(int&nbsp;showTvdbId)</pre>
-<div class="block">Builds an implicit <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>Intent</code></a> to view a show in SeriesGuide. Make
- sure to check with <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true#resolveActivity(android.content.pm.PackageManager)" title="class or interface in android.content" class="externalLink"><code>Intent.resolveActivity(android.content.pm.PackageManager)</code></a> if
- SeriesGuide (or another app capable of handling this intent) is available.
+<pre class="methodSignature">public static&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink">Intent</a>&nbsp;buildViewShowIntent&#8203;(int&nbsp;showTmdbId)</pre>
+<div class="block">Builds an implicit <a href="https://developer.android.com/reference/android/content/Intent.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>Intent</code></a> to view a show in SeriesGuide. Like
+ any Intent it may throw <a href="https://developer.android.com/reference/android/content/ActivityNotFoundException.html?is-external=true" title="class or interface in android.content" class="externalLink"><code>ActivityNotFoundException</code></a>, e.g. if
+ SeriesGuide (or another app capable of handling this intent) is not available.
 
  <p> If the show is not added to SeriesGuide, the user will be asked if it should be.</div>
 </li>
