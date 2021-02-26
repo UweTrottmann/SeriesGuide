@@ -9,8 +9,7 @@ import javax.inject.Singleton;
         AppModule.class,
         HttpClientModule.class,
         TmdbModule.class,
-        TraktModule.class,
-        TvdbModule.class
+        TraktModule.class
 })
 public interface TestServicesComponent extends ServicesComponent {
     void inject(TmdbSyncTest tmdbSyncTest);

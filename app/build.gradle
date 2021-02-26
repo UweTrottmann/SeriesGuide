@@ -24,7 +24,6 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "TVDB_API_KEY", propertyOrEmpty("SG_TVDB_API_KEY"))
         buildConfigField("String", "TMDB_API_KEY", propertyOrEmpty("SG_TMDB_API_KEY"))
         buildConfigField("String", "TRAKT_CLIENT_ID", propertyOrEmpty("SG_TRAKT_CLIENT_ID"))
         buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
@@ -194,7 +193,6 @@ dependencies {
         exclude group: 'com.android.support'
     }
     implementation 'com.uwetrottmann.photoview:library:1.2.4'
-    implementation "com.uwetrottmann.thetvdb-java:thetvdb-java:${versions.thetvdb}"
     implementation("com.uwetrottmann.trakt5:trakt-java:${versions.trakt}") {
         exclude group: 'org.threeten', module: 'threetenbp' // using ThreeTenABP instead
     }

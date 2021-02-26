@@ -6,7 +6,6 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.BuildConfig
-import com.battlelancer.seriesguide.thetvdbapi.TvdbException
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -230,22 +229,6 @@ class Errors {
         @JvmStatic
         fun logAndReport(action: String, response: Response<*>) {
             logAndReport(action, response.raw(), null)
-        }
-
-        @JvmStatic
-        @Throws(TvdbException::class)
-        fun throwAndReportIfNotSuccessfulTvdb(action: String, response: okhttp3.Response) {
-            if (!response.isSuccessful) {
-                logAndReport(action, response, null)
-
-                if (response.code == 404) {
-                    // special case: item does not exist (any longer)
-                    throw TvdbException("$action: ${response.code} ${response.message}", true)
-                } else {
-                    // other non-2xx response
-                    throw TvdbException("$action: ${response.code} ${response.message}")
-                }
-            }
         }
 
         @JvmStatic

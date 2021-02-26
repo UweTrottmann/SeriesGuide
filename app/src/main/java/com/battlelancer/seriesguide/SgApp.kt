@@ -15,7 +15,6 @@ import com.battlelancer.seriesguide.modules.HttpClientModule
 import com.battlelancer.seriesguide.modules.ServicesComponent
 import com.battlelancer.seriesguide.modules.TmdbModule
 import com.battlelancer.seriesguide.modules.TraktModule
-import com.battlelancer.seriesguide.modules.TvdbModule
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -128,7 +127,6 @@ class SgApp : Application() {
                         .httpClientModule(HttpClientModule())
                         .tmdbModule(TmdbModule())
                         .traktModule(TraktModule())
-                        .tvdbModule(TvdbModule())
                         .build()
             }
             return servicesComponent!!

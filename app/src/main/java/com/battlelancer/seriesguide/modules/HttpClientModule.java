@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.modules;
 
 import android.content.Context;
 import android.os.StatFs;
-import com.battlelancer.seriesguide.thetvdbapi.SgTheTvdbInterceptor;
 import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
 import com.battlelancer.seriesguide.util.AllApisAuthenticator;
 import com.uwetrottmann.seriesguide.tmdbapi.SgTmdbInterceptor;
@@ -32,7 +31,6 @@ public class HttpClientModule {
     @Singleton
     OkHttpClient provideOkHttpClient(
             Cache cache,
-            SgTheTvdbInterceptor tvdbInterceptor,
             SgTraktInterceptor traktInterceptor,
             SgTmdbInterceptor tmdbInterceptor,
             AllApisAuthenticator authenticator
@@ -42,7 +40,6 @@ public class HttpClientModule {
         builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         builder.addInterceptor(tmdbInterceptor);
         builder.addInterceptor(traktInterceptor);
-        builder.addNetworkInterceptor(tvdbInterceptor);
         builder.authenticator(authenticator);
         builder.cache(cache);
         return builder.build();

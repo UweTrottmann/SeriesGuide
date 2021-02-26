@@ -73,7 +73,6 @@
 -keep class com.uwetrottmann.trakt5.enums.** { *; }
 -keep class com.uwetrottmann.tmdb2.entities.** { *; }
 -keep class com.uwetrottmann.tmdb2.enumerations.** { *; }
--keep class com.uwetrottmann.thetvdb.entities.** { *; }
 
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**
