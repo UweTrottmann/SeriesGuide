@@ -40,12 +40,6 @@ import timber.log.Timber
 )
 abstract class SgRoomDatabase : RoomDatabase() {
 
-    abstract fun showHelper(): ShowHelper
-
-    abstract fun seasonHelper(): SeasonHelper
-
-    abstract fun episodeHelper(): EpisodeHelper
-
     abstract fun sgShow2Helper(): SgShow2Helper
     abstract fun sgSeason2Helper(): SgSeason2Helper
     abstract fun sgEpisode2Helper(): SgEpisode2Helper
