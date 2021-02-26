@@ -28,7 +28,7 @@ import com.battlelancer.seriesguide.ui.search.ShowSearchFragment
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.search.SimilarShowsFragment
-import com.battlelancer.seriesguide.ui.search.TvdbIdExtractor
+import com.battlelancer.seriesguide.ui.search.TmdbIdExtractor
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
@@ -219,13 +219,12 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             return
         }
 
-        // try to match TVDB URLs
+        // try to match TMDB URLs
         lifecycleScope.launch {
-            val showTvdbId = TvdbIdExtractor(applicationContext, sharedText)
-                .tryToExtractTvdbId()
-            if (showTvdbId > 0) {
+            val showTmdbId = TmdbIdExtractor(applicationContext, sharedText).tryToExtract()
+            if (showTmdbId > 0) {
                 // found an id, display the add dialog
-                AddShowDialogFragment.show(this@SearchActivity, supportFragmentManager, showTvdbId)
+                AddShowDialogFragment.show(this@SearchActivity, supportFragmentManager, showTmdbId)
             } else {
                 // no id, populate the search field instead
                 viewPager.currentItem = TAB_POSITION_SEARCH

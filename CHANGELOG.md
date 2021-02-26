@@ -19,6 +19,7 @@ Version 58
   changes, and changes to how Trakt sync and Cloud integration work. Your shows may need to update
   before some functionality can be used again. Some shows may not be available on TMDB, they will
   remain in your library, but functionality is reduced (e.g. no Trakt or Cloud support).
+* 🌟 Share a TMDB show url to SeriesGuide to add a show (support for TVDB URLs was removed).
 * 🔧 Allow longer check in messages.
 * 📝 Latest translations from crowdin.
 
