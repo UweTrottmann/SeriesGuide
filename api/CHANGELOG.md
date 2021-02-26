@@ -1,6 +1,6 @@
 # SeriesGuide API change log
 
-## 2.2.0 (2021-02-25, required as of SeriesGuide 58-beta1)
+## 2.2.0 (2021-02-25, supported as of SeriesGuide 58-beta1)
 - Episode info now contains TMDB ID of episode and show, and may now contain 0 for TVDB IDs.
 - View intents now expect TMDB IDs for shows and episodes.
 
