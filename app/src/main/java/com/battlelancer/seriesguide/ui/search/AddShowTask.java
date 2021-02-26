@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbException;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools2;
@@ -190,7 +189,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
             if (currentShowTmdbId <= 0) {
                 // Invalid ID, should never have been passed, report.
                 // Background: Hexagon gets requests with ID 0.
-                TvdbException invalidIdException = new TvdbException(
+                IllegalStateException invalidIdException = new IllegalStateException(
                         "Show id invalid: " + currentShowTmdbId
                                 + ", silentMode=" + isSilentMode
                                 + ", merging=" + isMergingShows
