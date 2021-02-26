@@ -53,7 +53,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     @Override
     public Result loadInBackground() {
-        List<Show> shows = new LinkedList<>();
+        List<BaseShow> shows = new LinkedList<>();
         String action = null;
         try {
             Response<List<BaseShow>> response;
@@ -74,7 +74,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             if (response.isSuccessful()) {
                 List<BaseShow> body = response.body();
                 if (body != null) {
-                    extractShows(body, shows);
+                    shows = body;
                 }
             } else {
                 if (SgTrakt.isUnauthorized(getContext(), response)) {
@@ -99,16 +99,6 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 DisplaySettings.getShowsSearchLanguage(getContext())));
     }
 
-    private void extractShows(List<BaseShow> watchedShows, List<Show> shows) {
-        for (BaseShow show : watchedShows) {
-            if (show.show == null || show.show.ids == null
-                    || show.show.ids.tvdb == null) {
-                continue; // skip if required values are missing
-            }
-            shows.add(show.show);
-        }
-    }
-
     private Result buildResultSuccess(List<SearchResult> results) {
         return new Result(results, getContext(), R.string.add_empty);
     }
@@ -128,14 +118,18 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
      * the local database as added.
      */
     static List<SearchResult> parseTraktShowsToSearchResults(Context context,
-            @NonNull List<Show> traktShows, @Nullable String overrideLanguage) {
+            @NonNull List<BaseShow> traktShows, @Nullable String overrideLanguage) {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
         SparseArrayCompat<String> existingPosterPaths = SgApp.getServicesComponent(context)
                 .showTools().getTmdbIdsToPoster();
-        for (Show show : traktShows) {
-            if (show.ids == null || show.ids.tmdb == null) {
+        for (BaseShow baseShow : traktShows) {
+            if (baseShow == null) {
+                continue;
+            }
+            Show show = baseShow.show;
+            if (show == null || show.ids == null || show.ids.tmdb == null) {
                 // has no TMDB id
                 continue;
             }
