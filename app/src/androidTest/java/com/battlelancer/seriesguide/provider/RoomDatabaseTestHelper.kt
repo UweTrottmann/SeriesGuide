@@ -14,7 +14,8 @@ object RoomDatabaseTestHelper {
         val tvdbId: Int,
         val title: String,
         val runtime: Int,
-        val poster: String
+        val poster: String,
+        val nextEpisode: String
     ) {
         fun toContentValuesDb48OrLower(): ContentValues {
             val values = ContentValues()
@@ -22,6 +23,7 @@ object RoomDatabaseTestHelper {
             values.put("seriestitle", title)
             values.put("runtime", runtime)
             values.put("poster", poster)
+            values.put("next", nextEpisode)
 
             values.put("series_favorite", false)
             values.put("series_syncenabled", true)

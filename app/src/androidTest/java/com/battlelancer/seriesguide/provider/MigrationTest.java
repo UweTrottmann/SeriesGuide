@@ -43,7 +43,8 @@ public class MigrationTest {
             21,
             "The No Answers Show",
             45,
-            "example.jpg"
+            "example.jpg",
+            "21"
     );
     private static final TestSeason SEASON = new TestSeason(
             21,
@@ -292,7 +293,7 @@ public class MigrationTest {
         assertTestData_series_seasons_episodes(db);
 
         // New tables have different structure.
-        queryAndAssert(db, "SELECT _id, series_tvdb_id, series_tmdb_id, series_title, series_runtime, series_poster FROM sg_show",
+        queryAndAssert(db, "SELECT _id, series_tvdb_id, series_tmdb_id, series_title, series_runtime, series_poster, series_next FROM sg_show",
                 dbShow -> {
                     // Row id should be auto-generated.
                     assertThat(dbShow.getLong(0)).isNotEqualTo(SHOW.getTvdbId());
@@ -304,6 +305,8 @@ public class MigrationTest {
                     assertThat(dbShow.getString(3)).isEqualTo(SHOW.getTitle());
                     assertThat(dbShow.getInt(4)).isEqualTo(SHOW.getRuntime());
                     assertThat(dbShow.getString(5)).isEqualTo(SHOW.getPoster());
+                    // Next episode changed from TVDB to row ID, so reset to default value.
+                    assertThat(dbShow.getString(6)).isEmpty();
                 });
 
         Cursor showIdQuery = db.query("SELECT _id FROM sg_show");
