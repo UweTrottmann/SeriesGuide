@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.provider;
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_NONE;
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
@@ -12,7 +11,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
-import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
@@ -81,8 +79,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     static final int SEASONS_OFSHOW = 302;
 
-    static final int EPISODESEARCH_ID = 401;
-
     static final int LISTS = 500;
 
     static final int LISTS_ID = 501;
@@ -100,8 +96,6 @@ public class SeriesGuideProvider extends ContentProvider {
     static final int MOVIES_ID = 701;
 
     static final int ACTIVITY = 800;
-
-    static final int SEARCH_SUGGEST = 900;
 
     static final int JOBS = 1100;
 
@@ -188,13 +182,6 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesGuideContract.PATH_JOBS, JOBS);
         matcher.addURI(authority, SeriesGuideContract.PATH_JOBS + "/*", JOBS_ID);
 
-        // Search
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/*", EPISODESEARCH_ID);
-
-        // Suggestions
-        matcher.addURI(authority, SearchManager.SUGGEST_URI_PATH_QUERY, SEARCH_SUGGEST);
-        matcher.addURI(authority, SearchManager.SUGGEST_URI_PATH_QUERY + "/*", SEARCH_SUGGEST);
-
         // Ops
         matcher.addURI(authority, SeriesGuideContract.PATH_CLOSE, CLOSE);
 
@@ -237,13 +224,6 @@ public class SeriesGuideProvider extends ContentProvider {
         final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         switch (match) {
-            case SEARCH_SUGGEST: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.getSuggestions(db, selectionArgs[0]);
-            }
             default: {
                 // Most cases are handled with simple SelectionBuilder
                 final SelectionBuilder builder = buildSelection(uri, match);
@@ -322,8 +302,6 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Jobs.CONTENT_TYPE;
             case JOBS_ID:
                 return Jobs.CONTENT_ITEM_TYPE;
-            case SEARCH_SUGGEST:
-                return SearchManager.SUGGEST_MIME_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -690,11 +668,6 @@ public class SeriesGuideProvider extends ContentProvider {
             case SEASONS_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.SEASONS).where(Shows.REF_SHOW_ID + "=?", showId);
-            }
-            case EPISODESEARCH_ID: {
-                final String rowid = EpisodeSearch.getDocId(uri);
-                return builder.table(Tables.EPISODES_SEARCH).where(EpisodeSearch._DOCID + "=?",
-                        rowid);
             }
             case LISTS: {
                 return builder.table(Tables.LISTS);

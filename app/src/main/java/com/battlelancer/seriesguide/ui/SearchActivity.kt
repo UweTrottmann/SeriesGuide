@@ -198,14 +198,6 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             val query = launchIntent.getStringExtra(SearchManager.QUERY)
             searchAutoCompleteView.setText(query)
             triggerLocalSearch(query)
-        } else if (Intent.ACTION_VIEW == action) {
-            val data = intent.data
-                ?: // no data, just stay inside search activity
-                return
-            data.lastPathSegment?.let {
-                displayEpisode(it)
-            }
-            finish()
         } else if (Intent.ACTION_SEND == action) {
             // text share intents from other apps
             if ("text/plain" == intent.type) {
@@ -288,12 +280,6 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
                 }
             }
         }
-    }
-
-    private fun displayEpisode(episodeTvdbId: String) {
-        val i = Intent(this, EpisodesActivity::class.java)
-        i.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, Integer.valueOf(episodeTvdbId))
-        startActivity(i)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

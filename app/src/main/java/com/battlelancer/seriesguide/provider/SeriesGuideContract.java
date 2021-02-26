@@ -1157,11 +1157,7 @@ public class SeriesGuideContract {
 
     public static final String PATH_OFSEASON = "ofseason";
 
-    public static final String PATH_EPISODESEARCH = "episodesearch";
-
     public static final String PATH_WITHSHOW = "withshow";
-
-    public static final String PATH_SEARCH = "search";
 
     public static final String PATH_FILTER = "filter";
 
@@ -1440,24 +1436,6 @@ public class SeriesGuideContract {
 
         public static Uri buildSeasonsOfShowUri(int showTvdbId) {
             return buildSeasonsOfShowUri(String.valueOf(showTvdbId));
-        }
-    }
-
-    public static class EpisodeSearch implements EpisodeSearchColumns {
-
-        /**
-         * Search table.
-         * See {@link SeriesGuideProvider#EPISODESEARCH_ID}.
-         */
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_EPISODESEARCH).build();
-
-        public static Uri buildDocIdUri(String rowId) {
-            return CONTENT_URI.buildUpon().appendPath(rowId).build();
-        }
-
-        public static String getDocId(Uri uri) {
-            return uri.getLastPathSegment();
         }
     }
 

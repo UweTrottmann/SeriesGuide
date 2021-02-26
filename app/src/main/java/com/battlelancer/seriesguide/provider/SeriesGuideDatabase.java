@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.provider;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
@@ -15,7 +14,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.JobsColumns;
@@ -1093,7 +1092,7 @@ public class SeriesGuideDatabase {
             + " FROM " + Tables.SG_SHOW;
 
     private final static String SELECT_MATCH = "SELECT "
-            + EpisodeSearch._DOCID + ","
+            + EpisodeSearchColumns._DOCID + ","
             + "snippet(" + Tables.EPISODES_SEARCH + ",'<b>','</b>','...') AS " + SgEpisode2Columns.OVERVIEW
             + " FROM " + Tables.EPISODES_SEARCH
             + " WHERE " + Tables.EPISODES_SEARCH + " MATCH ?";
@@ -1106,7 +1105,7 @@ public class SeriesGuideDatabase {
             + EPISODE_COLUMNS + "," + SgEpisode2Columns.OVERVIEW + "," + SgShow2Columns.REF_SHOW_ID
             + " FROM (" + SELECT_MATCH + ")"
             + " JOIN (" + SELECT_EPISODES + ")"
-            + " ON " + EpisodeSearch._DOCID + "=" + SgEpisode2Columns._ID;
+            + " ON " + EpisodeSearchColumns._DOCID + "=" + SgEpisode2Columns._ID;
 
     private final static String QUERY_SEARCH_EPISODES = "SELECT "
             + EPISODE_COLUMNS + "," + SgEpisode2Columns.OVERVIEW + ","
@@ -1149,39 +1148,7 @@ public class SeriesGuideDatabase {
                 .getEpisodeSearchResults(new SimpleSQLiteQuery(query.toString(), selectionArgs));
     }
 
-    private final static String QUERY_SEARCH_SHOWS = "select _id,"
-            + Episodes.TITLE + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1 + ","
-            + Shows.TITLE + " as " + SearchManager.SUGGEST_COLUMN_TEXT_2 + ","
-            + "_id as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
-            + " from ((select _id as sid," + Shows.TITLE + " from " + Tables.SHOWS + ")"
-            + " join "
-            + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID
-            + " from " + "(select docid" + " from " + Tables.EPISODES_SEARCH
-            + " where " + Tables.EPISODES_SEARCH + " match " + "?)"
-            + " join "
-            + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID + " from episodes)"
-            + "on _id=docid)"
-            + "on sid=" + Shows.REF_SHOW_ID + ")";
-
-    @Nullable
-    public static Cursor getSuggestions(SupportSQLiteDatabase db, String searchTerm) {
-        // ensure to strip double quotation marks (would break the MATCH query)
-        if (searchTerm != null) {
-            searchTerm = searchTerm.replace("\"", "");
-        }
-
-        try {
-            // search for anything starting with the given search term
-            return db.query(QUERY_SEARCH_SHOWS, new String[]{
-                    "\"" + searchTerm + "*\""
-            });
-        } catch (SQLiteException e) {
-            Timber.e(e, "getSuggestions: failed, database error.");
-            return null;
-        }
-    }
-
-//    /**
+    //    /**
 //     * Checks whether a table exists in the given database.
 //     */
 //    private static boolean isTableExisting(SQLiteDatabase db, String table) {
