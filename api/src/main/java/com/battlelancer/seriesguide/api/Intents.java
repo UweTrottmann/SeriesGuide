@@ -13,7 +13,8 @@ public class Intents {
     public static final String ACTION_VIEW_SHOW
             = "com.battlelancer.seriesguide.api.action.VIEW_SHOW";
 
-    public static final String EXTRA_EPISODE_TMDBID = "episode_tmdbid";
+    public static final String EXTRA_EPISODE_NUMBER = "episode_number";
+    public static final String EXTRA_EPISODE_SEASON = "episode_season";
 
     public static final String EXTRA_SHOW_TMDBID = "show_tmdbid";
 
@@ -22,12 +23,14 @@ public class Intents {
      * any Intent it may throw {@link android.content.ActivityNotFoundException}, e.g. if
      * SeriesGuide (or another app capable of handling this intent) is not available.
      * <p>
-     * If the episode does not exist, the user will be asked if the show should be added.
+     * If the show does not exist, the user will be asked if the show should be added.
      */
-    public static Intent buildViewEpisodeIntent(int showTmdbId, int episodeTmdbId) {
+    public static Intent buildViewEpisodeIntent(int showTmdbId, int seasonNumber,
+            int episodeNumber) {
         return new Intent(ACTION_VIEW_EPISODE)
                 .putExtra(EXTRA_SHOW_TMDBID, showTmdbId)
-                .putExtra(EXTRA_EPISODE_TMDBID, episodeTmdbId)
+                .putExtra(EXTRA_EPISODE_SEASON, seasonNumber)
+                .putExtra(EXTRA_EPISODE_NUMBER, episodeNumber)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
     }
 

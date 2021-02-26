@@ -142,21 +142,32 @@ public class ShowsActivity extends BaseTopActivity implements
             return false;
         }
 
+        SgRoomDatabase database = SgRoomDatabase.getInstance(this);
         Intent viewIntent = null;
 
         // view an episode
         if (Intents.ACTION_VIEW_EPISODE.equals(action)) {
-            int episodeTmdbId = intent.getIntExtra(Intents.EXTRA_EPISODE_TMDBID, 0);
-            if (episodeTmdbId > 0) {
-                long episodeId = SgRoomDatabase.getInstance(this).sgEpisode2Helper()
-                        .getEpisodeIdByTmdbId(episodeTmdbId);
-                // episode exists, display it
-                viewIntent = EpisodesActivity.intentEpisode(episodeId, this);
-            }
-            if (viewIntent == null) {
-                // no such episode, offer to add show
-                int showTmdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TMDBID, 0);
-                if (showTmdbId > 0) {
+            int showTmdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TMDBID, 0);
+            // Note: season may be 0 for specials.
+            int season = intent.getIntExtra(Intents.EXTRA_EPISODE_SEASON, -1);
+            int number = intent.getIntExtra(Intents.EXTRA_EPISODE_NUMBER, 0);
+            if (showTmdbId > 0) {
+                long showId = database.sgShow2Helper().getShowIdByTmdbId(showTmdbId);
+                if (showId != 0) {
+                    if (season >= 0 && number >= 1) {
+                        long episodeId = database.sgEpisode2Helper()
+                                .getEpisodeIdByNumber(showId, season, number);
+                        if (episodeId != 0) {
+                            // episode exists, display it
+                            viewIntent = EpisodesActivity.intentEpisode(episodeId, this);
+                        }
+                    }
+                    if (viewIntent == null) {
+                        // No valid episode given or found, display show instead.
+                        viewIntent = OverviewActivity.intentShow(this, showId);
+                    }
+                } else {
+                    // Show not added, offer to.
                     AddShowDialogFragment.show(this, getSupportFragmentManager(),
                             showTmdbId);
                 }
@@ -168,8 +179,7 @@ public class ShowsActivity extends BaseTopActivity implements
             if (showTmdbId <= 0) {
                 return false;
             }
-            long showId = SgRoomDatabase.getInstance(this).sgShow2Helper()
-                    .getShowIdByTmdbId(showTmdbId);
+            long showId = database.sgShow2Helper().getShowIdByTmdbId(showTmdbId);
             if (showId != 0) {
                 // show exists, display it
                 viewIntent = OverviewActivity.intentShow(this, showId);
