@@ -101,7 +101,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
         }
 
         // setup search history (only used by TVDb search)
-        searchHistory = SearchHistory(this, SearchSettings.KEY_SUFFIX_THETVDB)
+        searchHistory = SearchHistory(this, SearchSettings.KEY_SUFFIX_SHOWS)
         searchHistoryAdapter = ArrayAdapter(
             this, R.layout.item_dropdown, searchHistory.searchHistory
         )

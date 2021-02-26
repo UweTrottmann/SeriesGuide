@@ -6,6 +6,6 @@ package com.battlelancer.seriesguide.settings;
  */
 public class SearchSettings {
 
-    public static final String KEY_SUFFIX_THETVDB = "thetvdb";
-    public static final String KEY_SUFFIX_TMDB = "tmdb";
+    public static final String KEY_SUFFIX_SHOWS = "thetvdb";
+    public static final String KEY_SUFFIX_MOVIES = "tmdb";
 }

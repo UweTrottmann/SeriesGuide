@@ -99,7 +99,7 @@ public class MoviesSearchActivity extends BaseMessageActivity implements
         searchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
 
         // setup search history
-        searchHistory = new SearchHistory(this, SearchSettings.KEY_SUFFIX_TMDB);
+        searchHistory = new SearchHistory(this, SearchSettings.KEY_SUFFIX_MOVIES);
         searchHistoryAdapter = new ArrayAdapter<>(this, R.layout.item_dropdown,
                 searchHistory.getSearchHistory());
         searchView.setAdapter(searchHistoryAdapter);
