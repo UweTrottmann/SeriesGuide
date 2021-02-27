@@ -899,7 +899,11 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             val showTmdbId =
                 SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
             if (showTmdbId == 0) {
-                return@withContext true
+                // If this is a legacy show (has TVDB ID but no TMDB ID), still allow removal
+                // from local database. Do not send to Cloud but pretend no failure.
+                val showTvdbId =
+                    SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
+                return@withContext showTvdbId == 0
             }
 
             // Sets the isRemoved flag of the given show on Hexagon, so the show will
