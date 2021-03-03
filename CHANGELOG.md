@@ -15,13 +15,11 @@ Version 58
 #### 58-beta1
 *2021-03-03*
 
-* 🌟 Show data is now powered by themoviedb.org (TMDB). This change required large internal database
-  changes, and changes to how Trakt sync and Cloud integration work. Your shows may need to update
-  before some functionality can be used again. Some shows may not be available on TMDB, they will
-  remain in your library, but functionality is reduced (e.g. no Trakt or Cloud support).
+* 🌟 Show data is now powered by themoviedb.org (TMDB). Your shows need to update before some
+  functionality, incl. Trakt or Cloud can be used again. Shows or episodes not available on TMDB
+  currently remain in your library, but functionality is reduced (e.g. no Trakt or Cloud support).
 * 🌟 Share a TMDB show url to SeriesGuide to add a show (support for TVDB URLs was removed).
-* 🔧 Lists can now only contain shows. Using the backup tool you can still export seasons and
-  episodes on your existing lists should you need this data.
+* 🔧 Lists can now only contain shows. Note: use the backup tool to export your season and episode lists.
 * 🔧 Allow longer check in messages.
 * 📝 Latest translations from crowdin.
 
