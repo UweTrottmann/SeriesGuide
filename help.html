@@ -226,13 +226,10 @@ title: Help
     <span class="anchor" id="sources"></span>
     <section class="mt-2">
       <h3>Improve show, episode and movie data</h3>
-      <p>The main data provider</p>
-      <ul>
-        <li>for <strong>shows and episodes</strong> is <a href="{{ site.data.links.thetvdb }}">TheTVDB.com <span class="fas fa-external-link-alt"></span></a>,</li>
-        <li>and for <strong>movies</strong> is <a href="{{ site.data.links.tmdb }}">themoviedb.org <span class="fas fa-external-link-alt"></span></a>.</li>
+      <p>The main data provider for shows and movies is <a href="{{ site.data.links.tmdb }}">themoviedb.org (TMDb) <span class="fas fa-external-link-alt"></span></a>. Additional data for shows is provided by <a href="{{ site.data.links.trakt }}">Trakt <span class="fas fa-external-link-alt"></span></a>.</li>
       </ul>
       
-      <p>Both are open, user-maintained databases. <strong>Consider to help those projects by adding or updating information!</strong></p>
+      <p>The data in TMDB is contributed by its users. <strong>Consider to help this project by adding or updating information!</strong></p>
       <p>Below are the sources of some important data in SeriesGuide:</p>
       <div class="table-responsive">
         <table class="table table-hover">
@@ -244,20 +241,16 @@ title: Help
           </thead>
           <tbody>
             <tr>
-              <td>Release time<br/>and day:</td>
-              <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Show > Airs field</td>
-            </tr>
-            <tr>
-              <td>Release country<br/>(time zone):</td>
-              <td><a href="{{ site.data.links.tmdb }}tv">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Show > Production Information > Origin Country<br/><strong>Note:</strong> The TVDB ID has to be linked under External IDs.</td>
+              <td>Release time, day<br/>and country (time zone):</td>
+              <td><a href="{{ site.data.links.trakt }}">Trakt <span class="fas fa-external-link-alt"></span></a></td>
             </tr>
             <tr>
               <td>Cast and Crew:</td>
-              <td><a href="{{ site.data.links.tmdb }}tv">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Show > Regular Cast/Crew</td>
+              <td><a href="{{ site.data.links.tmdb }}tv">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Show > Regular Cast/Crew.</td>
             </tr>
             <tr>
               <td>Poster:</td>
-              <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Using the highest rated show poster in your language.</td>
+              <td><a href="{{ site.data.links.tmdb }}">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Show > Media > Posters</td>
             </tr>
           </tbody>
         </table>
@@ -273,11 +266,11 @@ title: Help
           <tbody>
             <tr>
               <td>Release date:</td>
-              <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a><br/>Episode > First Aired field</td>
+              <td><a href="{{ site.data.links.tmdb }}">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Episode > Air Date</td>
             </tr>
             <tr>
               <td>Image:</td>
-              <td><a href="{{ site.data.links.thetvdb }}">TheTVDB <span class="fas fa-external-link-alt"></span></a></td>
+              <td><a href="{{ site.data.links.tmdb }}">TMDb <span class="fas fa-external-link-alt"></span></a><br/>Episode > Images</td>
             </tr>
           </tbody>
         </table>
