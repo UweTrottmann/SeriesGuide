@@ -88,9 +88,9 @@
     <string name="show_isalive">Jatkuu</string>
     <string name="show_isnotalive">Päättynyt</string>
     <string name="show_isUpcoming">Tulevat</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">Tuotannossa</string>
+    <string name="show_status_pilot">Pilotti</string>
+    <string name="show_status_canceled">Peruttu</string>
     <string name="no_translation">Kuvausta ei ole saatavilla kielellä %1$s palvelussa %2$s.</string>
     <string name="no_translation_title">Ei käännetty</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
@@ -197,7 +197,7 @@
     <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
     <string name="empty_show_search">Ei löytynyt ohjelmalistastasi</string>
     <string name="action_try_again">Yritä uudelleen</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TheTVDB:ssä. Yritä myöhemmin uudelleen.</string>
     <string name="add_all">Lisää kaikki</string>
     <string name="add_multiple">Kaikki ohjelmat ilmestyvät pian ohjelmalistaasi</string>
     <string name="add_started">%s ilmestyy pian ohjelmalistallesi</string>
@@ -218,7 +218,7 @@
     <string name="list_manage">Hallitse listaa</string>
     <string name="list_item_manage">Hallitse listoja</string>
     <string name="list_item_remove">Poista listalta</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Voit lisätä ohjelmia tähän listaan</string>
     <string name="action_lists_sort">Lajittele listat</string>
     <string name="action_lists_reorder">Järjestä listat uudelleen</string>
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>

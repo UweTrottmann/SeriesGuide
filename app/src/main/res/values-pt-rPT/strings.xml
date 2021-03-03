@@ -88,9 +88,9 @@
     <string name="show_isalive">Em exibição</string>
     <string name="show_isnotalive">Terminou</string>
     <string name="show_isUpcoming">Próximos</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">Em Produção</string>
+    <string name="show_status_pilot">Piloto</string>
+    <string name="show_status_canceled">Cancelado</string>
     <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
     <string name="no_translation_title">Por traduzir</string>
     <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Definições para desactivar esta prevenção.</string>
@@ -197,7 +197,7 @@
     <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
     <string name="empty_show_search">Não foi encontrado na tua lista de séries</string>
     <string name="action_try_again">Tentar novamente</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TMDB. Tenta mais tarde.</string>
     <string name="add_all">Adicionar todas as séries</string>
     <string name="add_multiple">Todas as séries irão aparecer na sua lista brevemente.</string>
     <string name="add_started">%s irá aparecer na sua lista de séries brevemente.</string>
@@ -218,7 +218,7 @@
     <string name="list_manage">Renomear/Remover lista</string>
     <string name="list_item_manage">Adicionar às listas</string>
     <string name="list_item_remove">Remover da lista</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Podes adicionar séries à esta lista</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>

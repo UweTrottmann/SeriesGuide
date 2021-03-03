@@ -87,9 +87,9 @@
     <string name="show_isalive">连载中</string>
     <string name="show_isnotalive">已完结</string>
     <string name="show_isUpcoming">即将播出</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">正在制片</string>
+    <string name="show_status_pilot">试播</string>
+    <string name="show_status_canceled">已取消</string>
     <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
     <string name="no_translation_title">未翻译</string>
     <string name="no_spoilers">隐藏部分细节信息以防止剧透. 您可在设置菜单中关闭此功能</string>
@@ -193,7 +193,7 @@
     <string name="no_results">请键入完整的原始剧目名称\n暂时不提供译名或内容摘要搜索</string>
     <string name="empty_show_search">在您的节目列表中找不到</string>
     <string name="action_try_again">重试</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">此节目在 TMDB 上（尚）不存在。请稍后再试。</string>
     <string name="add_all">全部添加</string>
     <string name="add_multiple">已选项将很快出现在节目单中</string>
     <string name="add_started">%s 将很快出现在节目单中</string>
@@ -214,7 +214,7 @@
     <string name="list_manage">管理列表</string>
     <string name="list_item_manage">管理列表</string>
     <string name="list_item_remove">移出列表</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">您可以添加节目到此列表</string>
     <string name="action_lists_sort">列表排序</string>
     <string name="action_lists_reorder">重新排序</string>
     <string name="error_name_already_exists">同名列表已存在。</string>

@@ -90,9 +90,9 @@
     <string name="show_isalive">W emisji</string>
     <string name="show_isnotalive">Zakończony</string>
     <string name="show_isUpcoming">Nadchodzące</string>
-    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_in_production">W produkcji</string>
     <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_canceled">Anulowany</string>
     <string name="no_translation">Brak opisu w języku %1$s dostępnego w %2$s.</string>
     <string name="no_translation_title">Nie przetłumaczone</string>
     <string name="no_spoilers">Niektóre informacje zostały ukryte, aby zapobiec spoilerowaniu. W celu wyłączenia tej funkcji wejdź do ustawień.</string>
@@ -205,7 +205,7 @@
     <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
     <string name="empty_show_search">Nie znaleziono na liście seriali</string>
     <string name="action_try_again">Spróbuj ponownie</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">Brak serialu na TMDB. Spróbuj ponownie później.</string>
     <string name="add_all">Dodaj wszystkie</string>
     <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
     <string name="add_started">%s za chwilę zostanie dodany do listy.</string>
@@ -226,7 +226,7 @@
     <string name="list_manage">Zarządzaj listą</string>
     <string name="list_item_manage">Zarządzaj listami</string>
     <string name="list_item_remove">Usuń z listy</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Można dodać seriale do tej listy</string>
     <string name="action_lists_sort">Sortowanie list</string>
     <string name="action_lists_reorder">Zmień kolejność list</string>
     <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>

@@ -92,9 +92,9 @@
     <string name="show_isalive">مستمر</string>
     <string name="show_isnotalive">انتهى</string>
     <string name="show_isUpcoming">القادم</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">في الانتاج</string>
+    <string name="show_status_pilot">طيار</string>
+    <string name="show_status_canceled">ملغى</string>
     <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
     <string name="no_translation_title">غير مترجمة</string>
     <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا الانتقال إلى إعدادات.</string>
@@ -213,7 +213,7 @@
     <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
     <string name="empty_show_search">غير متوفر في قائمة العرض الخاصة بك</string>
     <string name="action_try_again">حاول مرة أخرى</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TMDB. حاول مرة أخرى.</string>
     <string name="add_all">إضافة الكل </string>
     <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
     <string name="add_started">%s سوف تظهر في قائمة العرض الخاص بك قريبا.</string>
@@ -234,7 +234,7 @@
     <string name="list_manage">إدارة القائمة</string>
     <string name="list_item_manage">إدارة القوائم</string>
     <string name="list_item_remove">إزالة من القائمة</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">يمكنك إضافة مسلسلات إلى هذه القائمة</string>
     <string name="action_lists_sort">ترتيب القوائم</string>
     <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
     <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
