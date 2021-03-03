@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.sync;
 import android.content.Context;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.backend.HexagonTools;
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
 import timber.log.Timber;
 
 public class HexagonEpisodeSync {
@@ -267,7 +267,7 @@ public class HexagonEpisodeSync {
                         showId,
                         lastWatchedMs
                 );
-                if (update.first != null) {
+                if (update != null) {
                     batch.add(update.first);
                 }
                 lastWatchedMs = update.second;
@@ -347,7 +347,7 @@ public class HexagonEpisodeSync {
                         showId,
                         lastWatchedMs
                 );
-                if (update.first != null) {
+                if (update != null) {
                     batch.add(update.first);
                 }
                 lastWatchedMs = update.second;
