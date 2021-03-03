@@ -12,6 +12,12 @@ Version 58
 ----------
 *in development*
 
+#### 58-beta2
+*2021-03-03*
+
+* 🔨 Resolve crash when adding show without run time info.
+* 🔨 Resolve crash when downloading not watched/collected episode info from Cloud.
+
 #### 58-beta1
 *2021-03-03*
 
