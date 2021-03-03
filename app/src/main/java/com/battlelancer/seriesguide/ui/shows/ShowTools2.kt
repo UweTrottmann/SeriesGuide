@@ -152,7 +152,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val genres = TextTools.mendTvdbStrings(tmdbShow.genres?.map { genre -> genre.name })
         val network = tmdbShow.networks?.firstOrNull()?.name ?: ""
         val imdbId = tmdbShow.external_ids?.imdb_id ?: ""
-        val runtime = tmdbShow.episode_run_time?.first() ?: 45 // estimate 45 minutes if none.
+        val runtime = tmdbShow.episode_run_time?.firstOrNull() ?: 45 // estimate 45 minutes if none.
         val status = when (tmdbShow.status) {
             "Returning Series" -> Status.CONTINUING
             "Planned" -> Status.UPCOMING
