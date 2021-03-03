@@ -20,6 +20,8 @@ Version 58
   before some functionality can be used again. Some shows may not be available on TMDB, they will
   remain in your library, but functionality is reduced (e.g. no Trakt or Cloud support).
 * 🌟 Share a TMDB show url to SeriesGuide to add a show (support for TVDB URLs was removed).
+* 🔧 Lists can now only contain shows. Using the backup tool you can still export seasons and
+  episodes on your existing lists should you need this data.
 * 🔧 Allow longer check in messages.
 * 📝 Latest translations from crowdin.
 
