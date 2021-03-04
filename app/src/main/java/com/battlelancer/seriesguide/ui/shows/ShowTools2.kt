@@ -590,8 +590,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // Insert, update and remove seasons.
         val seasons = updateSeasons(showDetails.seasons, showId)
         // Insert, update and remove episodes of inserted or updated seasons.
+        val episodeHelper = database.sgEpisode2Helper()
         seasons.forEach { season ->
-            val episodeHelper = database.sgEpisode2Helper()
             val episodes = episodeHelper.getEpisodeIdsOfSeason(season.id)
 
             val episodesByTmdbId = mutableMapOf<Int, SgEpisode2Ids>()
@@ -619,6 +619,10 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             episodeHelper.updateEpisodes(episodeDetails.toUpdate)
             episodeHelper.deleteEpisodes(episodeDetails.toRemove)
         }
+
+        // Remove legacy seasons and episodes that only have a TVDB ID
+        episodeHelper.deleteEpisodesWithoutTmdbId(showId)
+        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
 
         return ShowResult.SUCCESS
     }

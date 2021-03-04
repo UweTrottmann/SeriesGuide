@@ -67,6 +67,9 @@ interface SgEpisode2Helper {
         }
     }
 
+    @Query("DELETE FROM sg_episode WHERE series_id = :showId AND episode_tmdb_id IS NULL")
+    fun deleteEpisodesWithoutTmdbId(showId: Long)
+
     @Query("SELECT _id FROM sg_episode WHERE episode_tmdb_id = :tmdbId")
     fun getEpisodeIdByTmdbId(tmdbId: Int): Long
 

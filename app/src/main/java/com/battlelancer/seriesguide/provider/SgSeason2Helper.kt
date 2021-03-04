@@ -38,6 +38,9 @@ interface SgSeason2Helper {
         }
     }
 
+    @Query("DELETE FROM sg_season WHERE series_id = :showId AND season_tmdb_id IS NULL")
+    fun deleteSeasonsWithoutTmdbId(showId: Long)
+
     @Query("SELECT * FROM sg_season WHERE _id = :seasonId")
     fun getSeason(seasonId: Long): SgSeason2?
 
