@@ -139,8 +139,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             tmdbShow.overview
         }
 
-        val tvdbId = tmdbShow.external_ids?.tvdb_id ?: 0
-        val traktId = traktShow?.ids?.trakt
+        val tvdbIdOrNull = tmdbShow.external_ids?.tvdb_id
+        val traktIdOrNull = traktShow?.ids?.trakt
         val titleNoArticle = DBUtils.trimLeadingArticle(tmdbShow.name)
         val releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time)
         val releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day)
@@ -169,8 +169,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             return ShowDetails(
                 ShowResult.SUCCESS,
                 showUpdate = SgShow2Update(
-                    tvdbId = tvdbId,
-                    traktId = traktId,
+                    tvdbId = tvdbIdOrNull,
+                    traktId = traktIdOrNull,
                     title = title,
                     titleNoArticle = titleNoArticle,
                     overview = overview,
@@ -198,8 +198,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 ShowResult.SUCCESS,
                 show = SgShow2(
                     tmdbId = tmdbShow.id,
-                    tvdbId = tvdbId,
-                    traktId = traktId,
+                    tvdbId = tvdbIdOrNull,
+                    traktId = traktIdOrNull,
                     title = title,
                     titleNoArticle = titleNoArticle,
                     overview = overview,
