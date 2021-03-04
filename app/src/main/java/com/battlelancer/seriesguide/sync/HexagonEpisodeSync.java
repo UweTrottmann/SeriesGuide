@@ -428,7 +428,12 @@ public class HexagonEpisodeSync {
             Timber.d("uploadFlags: uploading none for show %d", showId);
             return true;
         } else {
-            Timber.d("uploadFlags: uploading %d for show %d", episodesForSync.size(), showId);
+            // Issues with some requests failing at Cloud due to
+            // EOFException: Unexpected end of ZLIB input stream
+            // Using info log to report sizes that are uploaded to determine
+            // if MAX_BATCH_SIZE is actually too large.
+            // https://github.com/UweTrottmann/SeriesGuide/issues/781
+            Timber.i("uploadFlags: uploading %d for show %d", episodesForSync.size(), showId);
         }
 
         // build list of episodes to upload

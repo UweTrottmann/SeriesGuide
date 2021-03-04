@@ -358,6 +358,12 @@ public class HexagonShowSync {
             Timber.d("upload: no shows to upload");
             return true;
         }
+        // Issues with some requests failing at Cloud due to
+        // EOFException: Unexpected end of ZLIB input stream
+        // Using info log to report sizes that are uploaded to determine
+        // if there is need for batching.
+        // https://github.com/UweTrottmann/SeriesGuide/issues/781
+        Timber.i("upload: %d shows", shows.size());
 
         // wrap into helper object
         SgCloudShowList showList = new SgCloudShowList();
