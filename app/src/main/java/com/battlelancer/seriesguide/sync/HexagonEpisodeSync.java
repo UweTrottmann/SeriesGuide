@@ -269,8 +269,8 @@ public class HexagonEpisodeSync {
                 );
                 if (update != null) {
                     batch.add(update.first);
+                    lastWatchedMs = update.second;
                 }
-                lastWatchedMs = update.second;
             }
 
             // execute database update
@@ -349,8 +349,8 @@ public class HexagonEpisodeSync {
                 );
                 if (update != null) {
                     batch.add(update.first);
+                    lastWatchedMs = update.second;
                 }
-                lastWatchedMs = update.second;
             }
 
             // execute database update
