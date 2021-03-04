@@ -296,7 +296,7 @@ public class HexagonTools {
             SgCloudShow showOrNull = showsService.getSgShow()
                         .setShowTmdbId(showTmdbId)
                         .execute();
-            if (showOrNull == null && showTvdbId != null) {
+            if (showOrNull == null && showTvdbId != null && showTvdbId > 0) {
                 // Not found using TMDB ID, try with legacy TVDB ID.
                 Show legacyShowOrNull = showsService.getShow()
                         .setShowTvdbId(showTvdbId)
