@@ -35,7 +35,7 @@ object TraktTools2 {
                     1
                 ).execute()
             if (response.isSuccessful) {
-                return SearchResult(ShowResult.SUCCESS, response.body()?.first()?.show)
+                return SearchResult(ShowResult.SUCCESS, response.body()?.firstOrNull()?.show)
             } else {
                 Errors.logAndReport(action, response)
             }
