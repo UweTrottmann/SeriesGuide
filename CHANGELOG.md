@@ -12,6 +12,14 @@ Version 58
 ----------
 *in development*
 
+#### 58-beta3
+*2021-03-04*
+
+* 🔧 Seasons and episodes that are not on TMDB are now removed from shows. This should be a better
+  user experience, e.g. it avoids errors when setting watched on Trakt.
+* 🔨 Resolve crash when downloading not watched/collected episode info from Cloud.
+* 🔨 Do not fail update if a show can not be found on Trakt.
+
 #### 58-beta2
 *2021-03-03*
 
