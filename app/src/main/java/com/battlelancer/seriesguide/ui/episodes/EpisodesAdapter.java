@@ -55,6 +55,10 @@ class EpisodesAdapter extends ArrayAdapter<SgEpisode2Info> {
      */
     @Override
     public long getItemId(int position) {
+        // AbsListView tries to confirm checked positions regardless if count is 0, so check.
+        if (position > getCount() - 1) {
+            return -1;
+        }
         SgEpisode2Info item = getItem(position);
         if (item != null) {
             return item.getId();
