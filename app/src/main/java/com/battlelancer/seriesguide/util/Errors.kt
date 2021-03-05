@@ -155,7 +155,11 @@ class Errors {
 
             Timber.e(throwable, action)
 
-            if (!throwable.shouldReport()) return
+            // Also do not report IOException: Error on service connection
+            // caused by InterruptedException from GoogleAuthUtil.getToken.
+            if (!throwable.shouldReport() || throwable.getUltimateCause() is InterruptedException) {
+                return
+            }
 
             getReporter()?.setCustomKey("action", action)
             getReporter()?.recordException(throwable)
