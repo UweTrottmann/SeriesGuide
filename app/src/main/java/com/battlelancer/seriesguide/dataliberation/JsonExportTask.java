@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -123,7 +124,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 BackupSettings.setAutoBackupErrorOrNull(context, null);
                 return SUCCESS;
             } catch (Exception e) {
-                Timber.e(e, "Unable to auto backup.");
+                Errors.logAndReport("Unable to auto backup.", e);
                 BackupSettings.setAutoBackupErrorOrNull(context,
                         e.getClass().getSimpleName() + ": " + e.getMessage());
                 return ERROR;
