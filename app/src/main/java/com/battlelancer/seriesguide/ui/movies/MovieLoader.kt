@@ -60,11 +60,11 @@ internal class MovieLoader(
             tmdbMovie.title = dbMovieOrNull.title
             tmdbMovie.overview = dbMovieOrNull.overview
             tmdbMovie.poster_path = dbMovieOrNull.poster
-            tmdbMovie.runtime = dbMovieOrNull.runtimeMin ?: 0
+            tmdbMovie.runtime = dbMovieOrNull.runtimeMinOrDefault
             tmdbMovie.vote_average = dbMovieOrNull.ratingTmdb ?: 0.0
             tmdbMovie.vote_count = dbMovieOrNull.ratingVotesTmdb ?: 0
             // if stored release date is Long.MAX, movie has no release date
-            val releaseDateMs = dbMovieOrNull.releasedMs ?: 0
+            val releaseDateMs = dbMovieOrNull.releasedMsOrDefault
             tmdbMovie.release_date = MovieTools.movieReleaseDateFrom(releaseDateMs)
             details.tmdbMovie(tmdbMovie)
         }

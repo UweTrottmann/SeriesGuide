@@ -397,7 +397,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             List list = new List();
             list.listId = sgList.listId;
             list.name = sgList.name;
-            list.order = sgList.order;
+            list.order = sgList.getOrderOrDefault();
 
             addListItems(list);
 
@@ -461,14 +461,14 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             movie.tmdbId = sgMovie.tmdbId;
             movie.imdbId = sgMovie.imdbId;
             movie.title = sgMovie.title;
-            movie.releasedUtcMs = sgMovie.releasedMs;
-            movie.runtimeMin = sgMovie.runtimeMin;
+            movie.releasedUtcMs = sgMovie.getReleasedMsOrDefault();
+            movie.runtimeMin = sgMovie.getRuntimeMinOrDefault();
             movie.poster = sgMovie.poster;
             movie.inCollection = sgMovie.inCollection;
             movie.inWatchlist = sgMovie.inWatchlist;
             movie.watched = sgMovie.watched;
             movie.plays = sgMovie.plays;
-            movie.lastUpdatedMs = sgMovie.lastUpdated;
+            movie.lastUpdatedMs = sgMovie.getLastUpdatedOrDefault();
 
             if (isFullDump) {
                 movie.overview = sgMovie.overview;

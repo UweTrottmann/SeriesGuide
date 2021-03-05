@@ -40,4 +40,7 @@ public class SgList {
     @ColumnInfo(name = Lists.ORDER)
     public Integer order = 0;
 
+    public int getOrderOrDefault() {
+        return order != null ? order : 0;
+    }
 }
