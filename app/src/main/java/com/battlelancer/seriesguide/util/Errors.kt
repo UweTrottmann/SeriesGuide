@@ -124,7 +124,7 @@ class Errors {
 
             val elementToInject = synthStackTrace[callStackIndex]
 
-            val ultimateCause = throwable.getUlimateCause()
+            val ultimateCause = throwable.getUltimateCause()
 
             val stackTrace = ultimateCause.stackTrace
             val newStackTrace = arrayOfNulls<StackTraceElement>(stackTrace.size + 1)
@@ -291,6 +291,6 @@ private fun Throwable.shouldReport(): Boolean {
     }
 }
 
-private fun Throwable.getUlimateCause(): Throwable {
-    return cause?.getUlimateCause() ?: this
+private fun Throwable.getUltimateCause(): Throwable {
+    return cause?.getUltimateCause() ?: this
 }
