@@ -176,6 +176,14 @@ interface SgEpisode2Helper {
     @RawQuery(observedEntities = [SgEpisode2::class])
     fun getEpisodeInfoOfSeasonLiveData(query: SupportSQLiteQuery): LiveData<List<SgEpisode2Info>>
 
+    /**
+     * Note: make sure to limit the result set to avoid memory issues, otherwise this may return
+     * thousands of rows depending on how many shows are added.
+     *
+     * If no limit may cause "RuntimeException: Exception while computing database live data."
+     * caused by "IllegalStateException: Couldn't read row 2645, col 0 from CursorWindow.
+     * Make sure the Cursor is initialized correctly before accessing data from it."
+     */
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
     fun getEpisodeSearchResults(query: SupportSQLiteQuery): LiveData<List<SgEpisode2SearchResult>>
 

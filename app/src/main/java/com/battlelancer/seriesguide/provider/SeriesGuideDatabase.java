@@ -1129,6 +1129,8 @@ public class SeriesGuideDatabase {
             query.append(" WHERE (").append(SgShow2Columns.TITLE).append(" = ?)");
         }
         query.append(ORDER_SEARCH_EPISODES);
+        // Limit result set to avoid memory issues.
+        query.append(" LIMIT 500");
 
         String searchTerm = searchTermOrNull == null || searchTermOrNull.isEmpty()
                 ? "" : searchTermOrNull;
