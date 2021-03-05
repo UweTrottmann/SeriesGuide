@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.format.DateUtils
 import android.widget.Toast
 import androidx.collection.SparseArrayCompat
+import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -64,7 +65,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     }
 
     /**
-     * Gets row ID of a show by TMDB id first, then if given by TVDB id. Null if not in database.
+     * Gets row ID of a show by TMDB id first, then if given by TVDB id and null TMDB id (show is
+     * not migrated, yet). Null if not in database or matched by TVDB id, but has different TMDB id.
      */
     fun getShowId(showTmdbId: Int, showTvdbId: Int?): Long? {
         val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
@@ -73,7 +75,10 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         if (showIdByTmdbId > 0) return showIdByTmdbId
 
         if (showTvdbId != null) {
-            val showIdByTvdbId = helper.getShowIdByTvdbId(showTvdbId)
+            // Note: TVDB might have a single show that is split into two or more shows on TMDB,
+            // so on TMDB the same TVDB is linked for both. To not prevent adding the second one,
+            // only return show ID if it was not migrated to avoid adding a duplicate show.
+            val showIdByTvdbId = helper.getShowIdByTvdbIdWithNullTmdbId(showTvdbId)
             if (showIdByTvdbId > 0) return showIdByTvdbId
         }
 
