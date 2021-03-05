@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.format.DateUtils
 import android.widget.Toast
 import androidx.collection.SparseArrayCompat
-import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -111,7 +110,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 DisplaySettings.getShowsLanguageFallback(context),
                 context
             )
-            tmdbShow = tmdbResultFallback.first ?: return ShowDetails(tmdbResult.second)
+            tmdbShow = tmdbResultFallback.first ?: return ShowDetails(tmdbResultFallback.second)
         }
 
         val traktResult = TraktTools2.getShowByTmdbId(showTmdbId, context)
