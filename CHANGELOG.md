@@ -12,6 +12,15 @@ Version 58
 ----------
 *in development*
 
+#### 58-beta4
+*2021-03-05*
+
+* 🔧 Allow adding show with duplicate TheTVDB ID if the TMDB ID is different. Background: TheTVDB
+  recently started combining shows that are still separate on TMDB. TMDB may then link to the same TheTVDB ID.
+* 🔨 Do not crash if show fallback response failed.
+* 🔨 Limit episode search results to 500 to avoid crash.
+* 🔧 Report auto backup errors.
+
 #### 58-beta3
 *2021-03-04*
 
