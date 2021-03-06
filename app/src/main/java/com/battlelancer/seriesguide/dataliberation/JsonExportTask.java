@@ -248,7 +248,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             errorCause = e.getMessage();
             return ERROR;
         } catch (Exception e) {
-            Timber.e(e, "Backup failed.");
+            // Only report unexpected errors.
+            Errors.logAndReport("Backup failed.", e);
             errorCause = e.getMessage();
             return ERROR;
         }

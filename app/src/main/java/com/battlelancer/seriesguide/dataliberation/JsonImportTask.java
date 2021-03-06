@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -194,7 +195,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 pfd.close();
             } catch (JsonParseException | IOException | IllegalStateException e) {
                 // the given Json might not be valid or unreadable
-                Timber.e(e, "JSON import failed");
+                Timber.e(e, "Import failed");
+                errorCause = e.getMessage();
+                return ERROR;
+            } catch (Exception e) {
+                // Only report unexpected errors.
+                Errors.logAndReport("Import failed", e);
                 errorCause = e.getMessage();
                 return ERROR;
             }
@@ -232,7 +238,12 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 importFromJson(type, in);
             } catch (JsonParseException | IOException | IllegalStateException e) {
                 // the given Json might not be valid or unreadable
-                Timber.e(e, "JSON show import failed");
+                Timber.e(e, "Import failed");
+                errorCause = e.getMessage();
+                return ERROR;
+            } catch (Exception e) {
+                // Only report unexpected errors.
+                Errors.logAndReport("Import failed", e);
                 errorCause = e.getMessage();
                 return ERROR;
             }
