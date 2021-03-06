@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AndroidViewModel
 import androidx.recyclerview.widget.DiffUtil
@@ -51,6 +52,9 @@ class NotificationSelectionDialogFragment : AppCompatDialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         model.shows.observe(viewLifecycleOwner) { shows ->
+            val hasNoData = shows.isEmpty()
+            binding?.textViewSelectionEmpty?.isGone = !hasNoData
+            binding?.recyclerViewSelection?.isGone = hasNoData
             adapter.submitList(shows)
         }
     }
