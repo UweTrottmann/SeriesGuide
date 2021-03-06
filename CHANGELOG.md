@@ -12,6 +12,13 @@ Version 58
 ----------
 *in development*
 
+#### 58-beta5
+*2021-03-06*
+
+* 🔨 Resolve (auto) backup failing if lists or movies are missing some properties.
+* 🔨 Notification selection: show empty text only if list is empty.
+* 📝 Latest translations from crowdin.
+
 #### 58-beta4
 *2021-03-05*
 
