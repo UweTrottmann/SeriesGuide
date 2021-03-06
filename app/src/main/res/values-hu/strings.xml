@@ -88,9 +88,9 @@
     <string name="show_isalive">Még fut</string>
     <string name="show_isnotalive">Véget ért</string>
     <string name="show_isUpcoming">Következő</string>
-    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_in_production">Gyártás alatt</string>
     <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_canceled">Törölve</string>
     <string name="no_translation">Nincs leírás %1$s nyelven a %2$s adatbázisban.</string>
     <string name="no_translation_title">Nincs lefordítva</string>
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
@@ -197,7 +197,7 @@
     <string name="no_results">Nincs találat, próbálkozz teljes szavakkal.</string>
     <string name="empty_show_search">Nem található a sorozat listádban</string>
     <string name="action_try_again">Próbáld újra</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">A sorozat (még) nem létezik a TMDB adatbázisban. Próbálkozzon később.</string>
     <string name="add_all">Add hozzá mindet</string>
     <string name="add_multiple">Nemsokára megjelenik az összes sorozat a listában.</string>
     <string name="add_started">A(z) %s hamarosan megjelenik a sorozatlistában.</string>
@@ -218,7 +218,7 @@
     <string name="list_manage">Lista kezelése</string>
     <string name="list_item_manage">Listák kezelése</string>
     <string name="list_item_remove">Eltávolítás a listáról</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Sorozatokat adhat hozzá a listhoz</string>
     <string name="action_lists_sort">Listák rendezése</string>
     <string name="action_lists_reorder">Listák újrarendezése</string>
     <string name="error_name_already_exists">Már létezik egy lista ezzel a névvel</string>
