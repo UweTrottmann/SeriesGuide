@@ -18,6 +18,7 @@ import java.io.InterruptedIOException
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.UUID
+import javax.net.ssl.SSLException
 
 
 class Errors {
@@ -291,6 +292,10 @@ private fun Throwable.shouldReport(): Boolean {
         is ConnectException -> false
         is InterruptedIOException -> false
         is UnknownHostException -> false
+        is SSLException -> {
+            message?.contains("Connection reset by peer") == false
+                    && message?.contains("Software caused connection abort") == false
+        }
         else -> true
     }
 }
