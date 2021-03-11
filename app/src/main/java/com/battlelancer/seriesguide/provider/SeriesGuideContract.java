@@ -704,15 +704,22 @@ public class SeriesGuideContract {
         String SELECTION_HIDDEN = HIDDEN + "=1";
         String SELECTION_NO_HIDDEN = HIDDEN + "=0";
         /**
-         * Technically continuing or upcoming shows (as they do continue).
+         * Technically continuing, upcoming, in production and pilot shows (as they might continue).
+         * Using inverse of {@link SgShow2Columns#SELECTION_STATUS_NO_CONTINUING} as that is shorter.
          */
-        String SELECTION_STATUS_CONTINUING = "(" + STATUS + "=" + ShowTools.Status.CONTINUING
-                + " OR " + STATUS + "=" + ShowTools.Status.UPCOMING + ")";
+        String SELECTION_STATUS_CONTINUING = "("
+                + STATUS + "!=" + ShowTools.Status.ENDED
+                + " AND " + STATUS + "!=" + ShowTools.Status.CANCELED
+                + " AND " + STATUS + "!=" + ShowTools.Status.UNKNOWN
+                + ")";
         /**
-         * Technically ended or unknown state shows.
+         * Technically ended, canceled and unknown state shows.
          */
-        String SELECTION_STATUS_NO_CONTINUING = "(" + STATUS + "=" + ShowTools.Status.ENDED
-                + " OR " + STATUS + "=" + ShowTools.Status.UNKNOWN + ")";
+        String SELECTION_STATUS_NO_CONTINUING = "("
+                + STATUS + "=" + ShowTools.Status.ENDED
+                + " OR " + STATUS + "=" + ShowTools.Status.CANCELED
+                + " OR " + STATUS + "=" + ShowTools.Status.UNKNOWN
+                + ")";
 
         String SORT_TITLE = TITLE + " COLLATE NOCASE ASC";
         String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE NOCASE ASC";

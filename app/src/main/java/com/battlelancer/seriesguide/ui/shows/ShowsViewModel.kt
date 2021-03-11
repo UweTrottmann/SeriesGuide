@@ -77,7 +77,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        // include or exclude continuing shows?
+        // include or exclude continuing/upcoming/pilot/in production shows?
         filter.isFilterContinuing?.let {
             if (selection.isNotEmpty()) {
                 selection.append(" AND ")
