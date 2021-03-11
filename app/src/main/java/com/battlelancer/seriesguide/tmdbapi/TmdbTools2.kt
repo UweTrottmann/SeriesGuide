@@ -11,6 +11,7 @@ import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.tmdb2.entities.TvShow
+import com.uwetrottmann.tmdb2.entities.WatchProviders
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import kotlinx.coroutines.Dispatchers
@@ -200,6 +201,69 @@ class TmdbTools2 {
             }
         } catch (e: Exception) {
             Errors.logAndReport("get shows w new episodes", e)
+        }
+        return null
+    }
+
+    data class WatchInfo(
+        val url: String?,
+        val provider: WatchProviders.WatchProvider?,
+        val count: Int
+    )
+
+    fun getTopWatchProvider(providers: WatchProviders.CountryInfo?): WatchInfo {
+        if (providers == null) return WatchInfo(null, null, 0)
+        val topProvider = providers.flatrate.minByOrNull { it.display_priority }
+            ?: providers.free.minByOrNull { it.display_priority }
+            ?: providers.ads.minByOrNull { it.display_priority }
+            ?: providers.buy.minByOrNull { it.display_priority }
+        return WatchInfo(
+            providers.link,
+            topProvider,
+            providers.flatrate.size
+                    + providers.free.size
+                    + providers.ads.size
+                    + providers.buy.size
+        )
+    }
+
+    fun getWatchProvidersForShow(
+        showTmdbId: Int,
+        region: String,
+        context: Context
+    ): WatchProviders.CountryInfo? {
+        try {
+            val response = SgApp.getServicesComponent(context).tmdb().tvService()
+                .watchProviders(showTmdbId)
+                .execute()
+            if (response.isSuccessful) {
+                return response.body()?.results?.get(region)
+            } else {
+                Errors.logAndReport("providers show", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("providers show", e)
+        }
+        return null
+    }
+
+    // TODO Use movie watch provider
+    fun getWatchProvidersForMovie(
+        movieTmdbId: Int,
+        region: String,
+        context: Context
+    ): WatchProviders.CountryInfo? {
+        try {
+            val response = SgApp.getServicesComponent(context).tmdb().moviesService()
+                .watchProviders(movieTmdbId)
+                .execute()
+            if (response.isSuccessful) {
+                return response.body()?.results?.get(region)
+            } else {
+                Errors.logAndReport("providers movie", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("providers show", e)
         }
         return null
     }

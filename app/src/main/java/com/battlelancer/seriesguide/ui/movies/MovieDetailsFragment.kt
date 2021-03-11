@@ -313,10 +313,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val isConnectedToTrakt = TraktCredentials.get(activity).hasCredentials()
         val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(activity)
         binding.containerMovieButtons.buttonMovieCheckIn.isGone = hideCheckIn
-        // hide streaming search if turned off
-        val hideStreamingSearch = StreamingSearch.isTurnedOff(requireContext())
-        binding.containerMovieButtons.buttonMovieStreamingSearch.isGone = hideStreamingSearch
-        binding.containerMovieButtons.dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {

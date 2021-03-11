@@ -206,7 +206,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
     private fun setupBasicSettings() {
         // show currently set values for some prefs
-        updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_SERVICE)!!)
+        updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_REGION)!!)
         updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET)!!)
 
         findPreference<Preference>(DisplaySettings.KEY_LANGUAGE_FALLBACK)!!.also {
@@ -285,7 +285,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             )
             return true
         }
-        if (StreamingSearch.KEY_SETTING_SERVICE == key) {
+        if (StreamingSearch.KEY_SETTING_REGION == key) {
             StreamingSearchConfigureDialog().safeShow(
                 supportFragmentManager, "streaming-service"
             )
@@ -394,7 +394,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 @Suppress("DEPRECATION") // Not visible on O+, no need to use new API.
                 vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
             }
-            if (StreamingSearch.KEY_SETTING_SERVICE == key) {
+            if (StreamingSearch.KEY_SETTING_REGION == key) {
                 updateStreamSearchServiceSummary(pref)
             }
         }
@@ -486,12 +486,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     private fun updateStreamSearchServiceSummary(pref: Preference) {
-        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(requireActivity())
-        when {
-            serviceOrEmptyOrNull == null -> pref.summary = null
-            serviceOrEmptyOrNull.isEmpty() -> pref.setSummary(R.string.action_turn_off)
-            else -> pref.summary = StreamingSearch.getServiceDisplayName(serviceOrEmptyOrNull)
-        }
+        pref.summary = StreamingSearch.getCurrentRegionOrSelectString(requireContext())
     }
 
     private fun updateTimeOffsetSummary(offsetListPref: Preference) {

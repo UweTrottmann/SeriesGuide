@@ -143,7 +143,8 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         // Long press hint.
         CheatSheet.setup(buttonLanguage, R.string.pref_language)
         // Buttons.
-        buttonStreamingSearch.isGone = StreamingSearch.isNotConfiguredOrTurnedOff(requireContext())
+        // TODO Use new watch provider info.
+        buttonStreamingSearch.isGone = true
         buttonNegative.setText(R.string.dismiss)
         buttonNegative.setOnClickListener { dismiss() }
         buttonPositive.isGone = true

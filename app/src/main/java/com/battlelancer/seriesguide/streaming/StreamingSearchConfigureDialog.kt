@@ -7,45 +7,46 @@ import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import org.greenrobot.eventbus.EventBus
 
+/**
+ * Single choice of regions, selected region set to [StreamingSearch.regionLiveData].
+ */
 class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
 
     data class StreamingSearchConfiguredEvent(val turnedOff: Boolean)
 
+    data class RegionItem(
+        val code: String,
+        val displayText: String
+    )
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val services = StreamingSearch.serviceToUrl.keys.toList()
+        val regions = StreamingSearch.serviceToUrl.keys.toList()
 
-        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(requireContext())
-        val currentSelection = when {
-            serviceOrEmptyOrNull == null -> -1 // not configured
-            serviceOrEmptyOrNull.isEmpty() -> 0 // turned off
-            else -> services.indexOf(serviceOrEmptyOrNull) + 1
-        }
+        val regionItems = List(regions.size) { i ->
+            RegionItem(regions[i], StreamingSearch.getServiceDisplayName(regions[i]))
+        }.sortedBy { it.displayText }
 
-        val items = Array<CharSequence>(1 + services.size) { i ->
-            if (i == 0) {
-                getString(R.string.action_turn_off)
-            } else {
-                StreamingSearch.getServiceDisplayName(services[i - 1])
+        val currentSelection =
+            when (val regionOrNull = StreamingSearch.getCurrentRegionOrNull(requireContext())) {
+                null -> -1 // not configured
+                else -> regionItems.indexOfFirst { it.code == regionOrNull }
             }
+
+        val items = Array<CharSequence>(regionItems.size) { i ->
+            regionItems[i].displayText
         }
 
         return MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.action_stream)
-                .setSingleChoiceItems(
-                        items,
-                        currentSelection
-                ) { _, position ->
-                    val countryOrEmpty = if (position == 0) {
-                        ""
-                    } else {
-                        services[position - 1]
-                    }
-                    StreamingSearch.setServiceOrEmpty(requireContext(), countryOrEmpty)
-                    EventBus.getDefault().post(StreamingSearchConfiguredEvent(position == 0))
-                    dismiss()
-                }.create()
+            .setTitle(R.string.action_select_region)
+            .setSingleChoiceItems(
+                items,
+                currentSelection
+            ) { _, position ->
+                val region = regionItems[position].code
+                StreamingSearch.setRegion(requireContext(), region)
+                dismiss()
+            }.create()
     }
 
     companion object {

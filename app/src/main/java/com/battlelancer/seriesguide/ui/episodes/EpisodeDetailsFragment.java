@@ -509,13 +509,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             streamingSearchNextFocusUpId = R.id.buttonEpisodeWatched;
         }
         bindingButtons.buttonEpisodeStreamingSearch.setNextFocusUpId(streamingSearchNextFocusUpId);
-        // hide streaming search if turned off
-        boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
-        bindingButtons.buttonEpisodeStreamingSearch
-                .setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
-
-        bindingButtons.dividerEpisodeButtons.setVisibility(displayCheckIn || displayStreamingSearch
-                ? View.VISIBLE : View.GONE);
 
         // watched button
         if (isWatched) {
