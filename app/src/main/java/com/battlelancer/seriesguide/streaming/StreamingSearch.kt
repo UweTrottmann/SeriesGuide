@@ -25,7 +25,7 @@ object StreamingSearch {
 
     val regionLiveData = MutableLiveData<String>()
 
-    data class WatchInfo(val showTmdbId: Int?, val region: String?)
+    data class WatchInfo(val tmdbId: Int?, val region: String?)
 
     /** if null = not configured, also used in settings_basic.xml */
     const val KEY_SETTING_REGION = "com.uwetrottmann.seriesguide.watch.region"
@@ -73,27 +73,39 @@ object StreamingSearch {
         regionLiveData.value = getCurrentRegionOrNull(context)
     }
 
-    fun getWatchInfoMediator(showTmdbId: LiveData<Int>): MediatorLiveData<WatchInfo> {
+    fun getWatchInfoMediator(tmdbId: LiveData<Int>): MediatorLiveData<WatchInfo> {
         return MediatorLiveData<WatchInfo>().apply {
-            addSource(showTmdbId) { value = WatchInfo(it, value?.region) }
-            addSource(regionLiveData) { value = WatchInfo(value?.showTmdbId, it) }
+            addSource(tmdbId) { value = WatchInfo(it, value?.region) }
+            addSource(regionLiveData) { value = WatchInfo(value?.tmdbId, it) }
         }
     }
 
+    /**
+     * Defaults to show providers, set [isMovie] to get for a movie.
+     */
     fun getWatchProviderLiveData(
-        watchInfoMediator: MediatorLiveData<WatchInfo>,
+        watchInfo: LiveData<WatchInfo>,
         viewModelContext: CoroutineContext,
-        context: Context
+        context: Context,
+        isMovie: Boolean = false
     ): LiveData<TmdbTools2.WatchInfo> {
-        return Transformations.switchMap(watchInfoMediator) {
+        return Transformations.switchMap(watchInfo) {
             liveData(context = viewModelContext + Dispatchers.IO) {
-                if (it.showTmdbId != null && it.region != null) {
+                if (it.tmdbId != null && it.region != null) {
                     val tmdbTools = TmdbTools2()
-                    val providers = tmdbTools.getWatchProvidersForShow(
-                        it.showTmdbId,
-                        it.region,
-                        context
-                    )
+                    val providers = if (isMovie) {
+                        tmdbTools.getWatchProvidersForMovie(
+                            it.tmdbId,
+                            it.region,
+                            context
+                        )
+                    } else {
+                        tmdbTools.getWatchProvidersForShow(
+                            it.tmdbId,
+                            it.region,
+                            context
+                        )
+                    }
                     emit(tmdbTools.getTopWatchProvider(providers))
                 }
             }
