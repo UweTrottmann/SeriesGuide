@@ -753,13 +753,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         void run(@NonNull SgEpisode2 episode, int episodeTvdbId);
     }
 
-    private void runIfEpisodeHasTvdbId(EpisodeTvdbIdBlock block) {
-        SgEpisode2 currentEpisode = this.episode;
-        if (currentEpisode != null && currentEpisode.getTvdbId() != null) {
-            block.run(currentEpisode, currentEpisode.getTvdbId());
-        }
-    }
-
     private void maybeAddFeedbackView() {
         if (feedbackView != null || feedbackViewStub == null
                 || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(getContext())) {
