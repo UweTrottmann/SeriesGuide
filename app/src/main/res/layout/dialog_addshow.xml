@@ -162,7 +162,7 @@
 
             <Button
                 android:id="@+id/buttonAddDisplaySimilar"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAddRatingLabel"
@@ -174,18 +174,52 @@
                 app:icon="@drawable/ic_search_white_24dp"
                 app:iconGravity="start" />
 
-            <Button
-                android:id="@+id/buttonAddStreamingSearch"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerAddStreamingSearch"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonAddDisplaySimilar"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:drawablePadding="@dimen/default_padding"
-                android:text="@string/action_stream"
-                app:icon="@drawable/ic_play_arrow_black_24dp"
-                app:iconGravity="start" />
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding">
+
+                <!-- MaterialButton ignores line breaks here (wtf?), so use separate TextView. -->
+                <Button
+                    android:id="@+id/buttonAddStreamingSearch"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_stream"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/action_stream"
+                    app:icon="@drawable/ic_play_arrow_black_24dp"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonAddStreamingSearchInfo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewAddStreamingSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:contentDescription="@string/action_stream"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonAddStreamingSearchInfo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonAddStreamingSearch"
+                    tools:text="Watch provider + 1 more" />
+
+                <ImageButton
+                    android:id="@+id/buttonAddStreamingSearchInfo"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/action_stream_info"
+                    android:src="@drawable/ic_info_control_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
     </ScrollView>

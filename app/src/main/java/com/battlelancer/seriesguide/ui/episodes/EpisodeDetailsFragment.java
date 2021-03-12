@@ -199,7 +199,8 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             }
         });
         model.getWatchProvider().observe(getViewLifecycleOwner(), watchInfo -> StreamingSearch
-                .configureButton(binding.includeButtons.buttonEpisodeStreamingSearch, watchInfo));
+                .configureButton(binding.includeButtons.buttonEpisodeStreamingSearch, watchInfo,
+                        true));
     }
 
     @Override

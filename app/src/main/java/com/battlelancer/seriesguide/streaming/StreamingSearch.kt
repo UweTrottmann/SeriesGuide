@@ -125,7 +125,11 @@ object StreamingSearch {
 
     @SuppressLint("SetTextI18n")
     @JvmStatic
-    fun configureButton(button: Button, watchInfo: TmdbTools2.WatchInfo) {
+    fun configureButton(
+        button: Button,
+        watchInfo: TmdbTools2.WatchInfo,
+        addToButtonText: Boolean = true
+    ): String? {
         val context = button.context
         val urlOrNull = watchInfo.url
         if (urlOrNull != null) {
@@ -137,14 +141,19 @@ object StreamingSearch {
             button.isEnabled = false
         }
         val providerOrNull = watchInfo.provider
-        if (providerOrNull != null) {
+        return if (providerOrNull != null) {
             val moreText = if (watchInfo.countMore > 0) {
                 " + " + context.getString(R.string.more, watchInfo.countMore)
             } else ""
-            button.text = context.getString(R.string.action_stream) +
-                    "\n" + providerOrNull.provider_name + moreText
+            val providerText = (providerOrNull.provider_name ?: "") + moreText
+            if (addToButtonText) {
+                button.text = context.getString(R.string.action_stream) +
+                        "\n" + providerText
+            }
+            providerText
         } else {
             button.setText(R.string.action_stream)
+            null
         }
     }
 

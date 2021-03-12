@@ -262,7 +262,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             updateEpisodeViews(sgEpisode2);
         });
         model.getWatchProvider().observe(getViewLifecycleOwner(),
-                watchInfo -> StreamingSearch.configureButton(buttonStreamingSearch, watchInfo));
+                watchInfo -> StreamingSearch
+                        .configureButton(buttonStreamingSearch, watchInfo, true));
     }
 
     @Override
