@@ -208,7 +208,7 @@ class TmdbTools2 {
     data class WatchInfo(
         val url: String?,
         val provider: WatchProviders.WatchProvider?,
-        val count: Int
+        val countMore: Int
     )
 
     fun getTopWatchProvider(providers: WatchProviders.CountryInfo?): WatchInfo {
@@ -217,14 +217,11 @@ class TmdbTools2 {
             ?: providers.free.minByOrNull { it.display_priority }
             ?: providers.ads.minByOrNull { it.display_priority }
             ?: providers.buy.minByOrNull { it.display_priority }
-        return WatchInfo(
-            providers.link,
-            topProvider,
-            providers.flatrate.size
-                    + providers.free.size
-                    + providers.ads.size
-                    + providers.buy.size
-        )
+        val count = providers.flatrate.size +
+                providers.free.size +
+                providers.ads.size +
+                providers.buy.size
+        return WatchInfo(providers.link, topProvider, (count - 1).coerceAtLeast(0))
     }
 
     fun getWatchProvidersForShow(

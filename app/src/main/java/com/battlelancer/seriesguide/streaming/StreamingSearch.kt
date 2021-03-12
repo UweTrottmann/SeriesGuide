@@ -126,9 +126,11 @@ object StreamingSearch {
         }
         val providerOrNull = watchInfo.provider
         if (providerOrNull != null) {
-            button.text = (context.getString(R.string.action_stream)
-                    + "\n" + providerOrNull.provider_name
-                    + " + " + context.getString(R.string.more, watchInfo.count))
+            val moreText = if (watchInfo.countMore > 0) {
+                " + " + context.getString(R.string.more, watchInfo.countMore)
+            } else ""
+            button.text = context.getString(R.string.action_stream) +
+                    "\n" + providerOrNull.provider_name + moreText
         } else {
             button.setText(R.string.action_stream)
         }
