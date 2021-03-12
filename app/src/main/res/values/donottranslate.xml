@@ -10,7 +10,6 @@
     <string name="ontrakt">(Trakt)</string>
     <string name="metacritic">Metacritic</string>
     <string name="amazon">Amazon</string>
-    <string name="powered_by_ttt">powered by TMDb, TheTVDB.com</string>
     <string name="powered_by_trakt">powered by Trakt</string>
     <string name="powered_by_tmdb">powered by TMDb</string>
     <string name="placeholder_rating">--</string>
