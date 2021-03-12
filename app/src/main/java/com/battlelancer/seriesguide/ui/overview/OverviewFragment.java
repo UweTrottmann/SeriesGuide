@@ -41,7 +41,6 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
-import com.battlelancer.seriesguide.streaming.StreamingSearchInfoDialog;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -216,11 +215,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         CheatSheet.setup(buttonCheckin);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
-        buttonStreamingSearch.setOnClickListener(
-                v -> StreamingSearchInfoDialog.show(getParentFragmentManager()));
-        CheatSheet.setup(buttonEpisodeStreamingSearchInfo);
-        buttonEpisodeStreamingSearchInfo.setOnClickListener(
-                v -> StreamingSearchInfoDialog.show(getParentFragmentManager()));
+        StreamingSearch.initButtons(buttonStreamingSearch, buttonEpisodeStreamingSearchInfo,
+                getParentFragmentManager());
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);

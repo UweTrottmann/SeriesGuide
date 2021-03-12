@@ -3,8 +3,10 @@ package com.battlelancer.seriesguide.streaming
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import android.view.View
 import android.widget.Button
 import androidx.core.content.edit
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +16,7 @@ import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.Utils
+import com.uwetrottmann.androidutils.CheatSheet
 import kotlinx.coroutines.Dispatchers
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
@@ -94,6 +97,17 @@ object StreamingSearch {
                     emit(tmdbTools.getTopWatchProvider(providers))
                 }
             }
+        }
+    }
+
+    @JvmStatic
+    fun initButtons(linkButton: View, configureButton: View, fragmentManager: FragmentManager) {
+        linkButton.setOnClickListener {
+            StreamingSearchInfoDialog.show(fragmentManager)
+        }
+        CheatSheet.setup(configureButton)
+        configureButton.setOnClickListener {
+            StreamingSearchInfoDialog.show(fragmentManager)
         }
     }
 
