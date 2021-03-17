@@ -53,7 +53,7 @@
     <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
     <string name="api_failed">Échec : %s</string>
     <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Introuvable sur TMDb, sera supprimé dans une prochaine mise à jour. Appuyez pour plus de détails.</string>
     <!-- Sharing -->
     <string name="share">Partager</string>
     <string name="share_show">Partager la série</string>

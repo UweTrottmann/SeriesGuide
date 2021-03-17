@@ -53,7 +53,7 @@
     <string name="api_error_generic">ไม่สามารถติดต่อกับ %s ลองอีกครั้งในภายหลัง</string>
     <string name="api_failed">ล้มเหลว: %s</string>
     <string name="copy_to_clipboard">คัดลอกไปยังคลิปบอร์ดแล้ว</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">ไม่พบบน TMDb และจะถูกลบในอัปเดตที่กำลังจะมาถึง แตะเพื่อดูรายละเอียด</string>
     <!-- Sharing -->
     <string name="share">แบ่งปัน</string>
     <string name="share_show">แบ่งปันซีรีส์</string>
