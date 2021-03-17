@@ -35,8 +35,9 @@
     <string name="sync_manually">Sincronizare manuala</string>
     <string name="sync_and_update">Sincronizare &amp; innoita</string>
     <string name="sync_and_download_all">Sincronizare &amp; Descărcă tot</string>
-    <string name="action_turn_off">Dezactivați</string>
     <string name="action_stream">Stream sau cumpăra</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Ștergere istoric căutare</string>
     <string name="search_hint">Căutaţi episoade</string>

@@ -35,8 +35,9 @@
     <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
     <string name="sync_and_update">ஒத்திசை &amp; புதுப்பி</string>
     <string name="sync_and_download_all">Sync &amp; Download all</string>
-    <string name="action_turn_off">Turn off</string>
     <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>

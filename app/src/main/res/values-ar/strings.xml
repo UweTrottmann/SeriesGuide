@@ -35,8 +35,9 @@
     <string name="sync_manually">قم بالمزامنة يدوياً</string>
     <string name="sync_and_update">المزامنة &amp; والتحديث</string>
     <string name="sync_and_download_all">المزامنة &amp; وتحميل كل البيانات</string>
-    <string name="action_turn_off">إيقاف تشغيل</string>
     <string name="action_stream">بث أو شراء</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>

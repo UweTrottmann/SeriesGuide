@@ -35,8 +35,9 @@
     <string name="sync_manually">Sincronizar manualmente</string>
     <string name="sync_and_update">Sincronizar e atualizar</string>
     <string name="sync_and_download_all">Sincronizar e baixar dados</string>
-    <string name="action_turn_off">Desativar</string>
     <string name="action_stream">Assista ou compre</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Pesquisar episódios</string>

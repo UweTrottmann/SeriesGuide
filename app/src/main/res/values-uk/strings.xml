@@ -35,8 +35,9 @@
     <string name="sync_manually">Синхронізація вручну</string>
     <string name="sync_and_update">Синхронізація та Оновлення</string>
     <string name="sync_and_download_all">Синхронізація; Завантажити все</string>
-    <string name="action_turn_off">Вимкнути</string>
     <string name="action_stream">Переглянути або замовити</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>

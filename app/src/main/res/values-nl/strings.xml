@@ -35,8 +35,9 @@
     <string name="sync_manually">Handmatig synchroniseren</string>
     <string name="sync_and_update">Synchroniseren &amp; bijwerken</string>
     <string name="sync_and_download_all">Synchroniseren &amp; alles downloaden</string>
-    <string name="action_turn_off">Uitschakelen</string>
     <string name="action_stream">Streamen of kopen</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>

@@ -35,8 +35,9 @@
     <string name="sync_manually">Synchronizovať ručne</string>
     <string name="sync_and_update">Synchronizovať a aktualizovať</string>
     <string name="sync_and_download_all">Synchronizovať a stiahnuť všetko</string>
-    <string name="action_turn_off">Vypnúť</string>
     <string name="action_stream">Streamovanie alebo zakúpenie</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>

@@ -35,8 +35,9 @@
     <string name="sync_manually">Sincronitza manualment</string>
     <string name="sync_and_update">Sincronització i actualització</string>
     <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
-    <string name="action_turn_off">Apagar</string>
     <string name="action_stream">Veure on-line o comprar</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>

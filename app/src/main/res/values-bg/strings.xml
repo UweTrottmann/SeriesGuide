@@ -35,8 +35,9 @@
     <string name="sync_manually">Само ръчна синхронизация</string>
     <string name="sync_and_update">Синхронизиране &amp; актуализация</string>
     <string name="sync_and_download_all">Синхронизиране &amp; Изтегли всички</string>
-    <string name="action_turn_off">Изключи</string>
     <string name="action_stream">Стрийм или закупи</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>

@@ -35,8 +35,9 @@
     <string name="sync_manually">Synkroniser manuelt</string>
     <string name="sync_and_update">Synkronisering og oppdatering</string>
     <string name="sync_and_download_all">Synkroniser og last ned alle</string>
-    <string name="action_turn_off">Slå av</string>
     <string name="action_stream">Strøm eller kjøp</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Tøm søkelogg</string>
     <string name="search_hint">Søk episoder</string>
