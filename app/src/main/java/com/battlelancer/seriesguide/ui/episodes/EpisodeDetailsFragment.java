@@ -358,6 +358,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         this.episode = episode;
         this.show = show;
 
+        ViewTools.configureNotMigratedWarning(binding.textViewEpisodeNotMigrated,
+                episode.getTmdbId() == null);
+
         int episodeNumber = episode.getNumber();
 
         // title and description

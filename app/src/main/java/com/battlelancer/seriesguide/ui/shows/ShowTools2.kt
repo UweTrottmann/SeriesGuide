@@ -624,9 +624,12 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             episodeHelper.deleteEpisodes(episodeDetails.toRemove)
         }
 
+        // Temporarily disabled to make migration easier for users.
+        // - Remakes: newer seasons might be in a separate show.
+        // - Anime: all episodes might be combined into single season on TMDb.
         // Remove legacy seasons and episodes that only have a TVDB ID
-        episodeHelper.deleteEpisodesWithoutTmdbId(showId)
-        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
+//        episodeHelper.deleteEpisodesWithoutTmdbId(showId)
+//        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
 
         return ShowResult.SUCCESS
     }

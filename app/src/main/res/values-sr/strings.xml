@@ -53,6 +53,7 @@
     <string name="api_error_generic">Neuspešna komunikacija sa %s. Pokušajte ponovo kasnije.</string>
     <string name="api_failed">Neuspelo %s</string>
     <string name="copy_to_clipboard">Kopirano u klipbord</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Подели</string>
     <string name="share_show">Подели серију</string>

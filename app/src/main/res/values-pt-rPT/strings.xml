@@ -53,6 +53,7 @@
     <string name="api_error_generic">Houve uma falha ao comunicar com o %s. Tenta mais tarde.</string>
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Partilhar</string>
     <string name="share_show">Partilhar série</string>

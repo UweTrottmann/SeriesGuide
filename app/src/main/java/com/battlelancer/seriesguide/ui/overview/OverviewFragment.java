@@ -106,6 +106,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     @BindView(R.id.buttonOverviewSimilarShows) Button buttonSimilarShows;
     @BindView(R.id.buttonOverviewRemoveShow) Button buttonRemoveShow;
 
+    @BindView(R.id.textViewOverviewNotMigrated) View textViewOverviewNotMigrated;
     @BindView(R.id.episode_primary_container) View containerEpisodePrimary;
     @BindView(R.id.dividerHorizontalOverviewEpisodeMeta) View dividerEpisodeMeta;
     @BindView(R.id.imageViewOverviewEpisode) ImageView imageEpisode;
@@ -479,6 +480,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             containerEpisodeMeta.setVisibility(View.VISIBLE);
         } else {
             // No next episode: display empty view with suggestion on what to do.
+            textViewOverviewNotMigrated.setVisibility(View.GONE);
             containerEpisodeEmpty.setVisibility(View.VISIBLE);
             containerEpisodePrimary.setVisibility(View.GONE);
             containerEpisodeMeta.setVisibility(View.GONE);
@@ -496,6 +498,9 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     }
 
     private void populateEpisodeViews(@NonNull SgEpisode2 episode) {
+        ViewTools.configureNotMigratedWarning(textViewOverviewNotMigrated,
+                episode.getTmdbId() == null);
+
         // title
         int season = episode.getSeason();
         int number = episode.getNumber();

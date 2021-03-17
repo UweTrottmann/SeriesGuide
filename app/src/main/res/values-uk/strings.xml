@@ -53,6 +53,7 @@
     <string name="api_error_generic">Не вдалося зв\'язатися з %s. Спробуйте пізніше.</string>
     <string name="api_failed">Не вдалося: %s</string>
     <string name="copy_to_clipboard">Скопійовано до буфера обміну</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Поділитись</string>
     <string name="share_show">Поділитись серіалом</string>

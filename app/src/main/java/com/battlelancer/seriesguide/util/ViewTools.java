@@ -122,4 +122,11 @@ public class ViewTools {
             button.setOnClickListener(v -> Utils.launchWebsite(v.getContext(), uri));
         }
     }
+
+    public static void configureNotMigratedWarning(View view, boolean notMigrated) {
+        view.setVisibility(notMigrated ? View.VISIBLE : View.GONE);
+        view.setOnClickListener(
+                v -> Utils.launchWebsite(view.getContext(),
+                        view.getContext().getString(R.string.url_tmdb_migration)));
+    }
 }
