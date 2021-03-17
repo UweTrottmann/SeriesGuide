@@ -12,6 +12,14 @@ Version 58
 ----------
 *in development*
 
+#### 58-beta6
+*2021-03-17*
+
+* 🌟 Display most popular watch provider inside stream or purchase button. Support more regions. Powered by JustWatch via TMDb.
+* 🔧 Do no longer remove episodes that are not on TMDB, instead display info message.
+* 🔧 When filtering for continuing shows, include pilot and in production shows. Include canceled if excluding.
+* 📝 Latest translations from crowdin.
+
 #### 58-beta5
 *2021-03-06*
 
