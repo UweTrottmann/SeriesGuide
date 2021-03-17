@@ -144,6 +144,19 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <TextView
+                        android:id="@+id/textViewOverviewNotMigrated"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:background="?attr/selectableItemBackground"
+                        android:focusable="true"
+                        android:nextFocusDown="@+id/episode_primary_container"
+                        android:text="@string/not_migrated"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error" />
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"

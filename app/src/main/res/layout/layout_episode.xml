@@ -9,6 +9,19 @@
     android:orientation="vertical"
     tools:showIn="@layout/fragment_episode">
 
+    <TextView
+        android:id="@+id/textViewEpisodeNotMigrated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="@dimen/large_padding"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:nextFocusDown="@+id/textview_title"
+        android:text="@string/not_migrated"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error" />
+
     <!-- Text appearance set in code. -->
     <TextView
         android:id="@+id/textview_title"
