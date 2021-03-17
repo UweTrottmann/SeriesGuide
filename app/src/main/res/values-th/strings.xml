@@ -35,8 +35,9 @@
     <string name="sync_manually">ซิงค์ด้วยตนเอง</string>
     <string name="sync_and_update">ซิงค์ &amp; อัปเดต</string>
     <string name="sync_and_download_all">ซิงค์ &amp; ดาวน์โหลดทั้งหมด</string>
-    <string name="action_turn_off">ปิด</string>
     <string name="action_stream">สตรีมหรือซื้อ</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>

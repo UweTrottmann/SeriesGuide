@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
@@ -69,6 +70,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     lateinit var buttonDisplaySimilar: Button
     @BindView(R.id.buttonAddStreamingSearch)
     lateinit var buttonStreamingSearch: Button
+    @BindView(R.id.textViewAddStreamingSearch)
+    lateinit var textViewAddStreamingSearch: TextView
+    @BindView(R.id.buttonAddStreamingSearchInfo)
+    lateinit var buttonAddStreamingSearchInfo: ImageButton
     @BindView(R.id.textViewAddDescription)
     lateinit var overview: TextView
     @BindView(R.id.textViewAddRatingValue)
@@ -143,7 +148,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         // Long press hint.
         CheatSheet.setup(buttonLanguage, R.string.pref_language)
         // Buttons.
-        buttonStreamingSearch.isGone = StreamingSearch.isNotConfiguredOrTurnedOff(requireContext())
+        StreamingSearch.initButtons(
+            buttonStreamingSearch, buttonAddStreamingSearchInfo, parentFragmentManager
+        )
+        textViewAddStreamingSearch.isGone = true
         buttonNegative.setText(R.string.dismiss)
         buttonNegative.setOnClickListener { dismiss() }
         buttonPositive.isGone = true
@@ -181,6 +189,12 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             overview.isGone = false
             populateShowViews(show)
         }
+        model.watchProvider.observe(viewLifecycleOwner, { watchInfo ->
+            val providerInfo =
+                StreamingSearch.configureButton(buttonStreamingSearch, watchInfo, false)
+            textViewAddStreamingSearch.text = providerInfo
+            textViewAddStreamingSearch.isGone = providerInfo == null
+        })
     }
 
     override fun onStart() {
@@ -216,13 +230,6 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 it.tmdbId = showTmdbId
                 it.title = details.show.title
             })
-        }
-    }
-
-    @OnClick(R.id.buttonAddStreamingSearch)
-    fun onClickButtonStreamingSearch() {
-        model.showDetails.value?.show?.title?.let {
-            StreamingSearch.searchForShow(requireContext(), it)
         }
     }
 

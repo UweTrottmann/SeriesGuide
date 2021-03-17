@@ -35,8 +35,9 @@
     <string name="sync_manually">Manuell synchronisieren</string>
     <string name="sync_and_update">Synch. &amp; Aktualisieren</string>
     <string name="sync_and_download_all">Synch. &amp; Alles herunterladen</string>
-    <string name="action_turn_off">Deaktivieren</string>
-    <string name="action_stream">Streamen oder kaufen</string>
+    <string name="action_stream">Streamen oder Kaufen</string>
+    <string name="action_stream_info">Streamen oder Kaufen Info</string>
+    <string name="action_select_region">Region auswählen</string>
     <!-- Search -->
     <string name="clear_search_history">Suchverlauf löschen</string>
     <string name="search_hint">Suche Folgen</string>

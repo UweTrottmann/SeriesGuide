@@ -19,6 +19,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -31,7 +32,6 @@ import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.extensions.MovieActionsContract
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
@@ -81,12 +81,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var movieDetails: MovieDetails? = MovieDetails()
     private var movieTitle: String? = null
     private var trailer: Videos.Video? = null
+    private val model: MovieDetailsModel by viewModels {
+        MovieDetailsModelFactory(tmdbId, requireActivity().application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -96,10 +99,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // important action buttons
         binding.containerMovieButtons.root.isGone = true
         binding.containerMovieButtons.buttonMovieCheckIn.setOnClickListener { onButtonCheckInClick() }
-        binding.containerMovieButtons.buttonMovieStreamingSearch.apply {
-            setOnClickListener { onButtonStreamingSearchClick() }
-            setOnLongClickListener { onButtonStreamingSearchLongClick() }
-        }
+        StreamingSearch.initButtons(
+            binding.containerMovieButtons.buttonMovieStreamingSearch,
+            binding.containerMovieButtons.buttonMovieStreamingSearchInfo,
+            parentFragmentManager
+        )
         binding.containerRatings.root.isGone = true
         CheatSheet.setup(binding.containerMovieButtons.buttonMovieCheckIn)
 
@@ -146,6 +150,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             )
             initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_CREDITS, args, creditsLoaderCallbacks)
         }
+        model.watchProvider.observe(viewLifecycleOwner, { watchInfo ->
+            StreamingSearch.configureButton(
+                binding.containerMovieButtons.buttonMovieStreamingSearch,
+                watchInfo
+            )
+        })
 
         setHasOptionsMenu(true)
     }
@@ -313,10 +323,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val isConnectedToTrakt = TraktCredentials.get(activity).hasCredentials()
         val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(activity)
         binding.containerMovieButtons.buttonMovieCheckIn.isGone = hideCheckIn
-        // hide streaming search if turned off
-        val hideStreamingSearch = StreamingSearch.isTurnedOff(requireContext())
-        binding.containerMovieButtons.buttonMovieStreamingSearch.isGone = hideStreamingSearch
-        binding.containerMovieButtons.dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {
@@ -561,39 +567,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    private fun onButtonStreamingSearchClick() {
-        movieTitle?.let {
-            if (it.isEmpty()) {
-                return
-            }
-            if (StreamingSearch.isNotConfigured(requireContext())) {
-                showStreamingSearchConfigDialog()
-            } else {
-                StreamingSearch.searchForMovie(requireContext(), it)
-            }
-        }
-    }
-
-    private fun onButtonStreamingSearchLongClick(): Boolean {
-        showStreamingSearchConfigDialog()
-        return true
-    }
-
-    private fun showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(parentFragmentManager)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onStreamingSearchConfigured(
-        event: StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent
-    ) {
-        if (event.turnedOff) {
-            binding.containerMovieButtons.buttonMovieStreamingSearch.isGone = true
-        } else {
-            onButtonStreamingSearchClick()
-        }
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     override fun onEventMainThread(event: ExtensionManager.MovieActionReceivedEvent) {
         if (event.movieTmdbId != tmdbId) {
@@ -627,7 +600,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             buttonMovieWatched.isEnabled = enabled
             buttonMovieCollected.isEnabled = enabled
             buttonMovieWatchlisted.isEnabled = enabled
-            buttonMovieStreamingSearch.isEnabled = enabled
         }
     }
 

@@ -26,7 +26,6 @@ import androidx.loader.content.Loader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
@@ -42,7 +41,6 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -119,7 +117,9 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     @BindView(R.id.dividerEpisodeButtons) View dividerEpisodeButtons;
     @BindView(R.id.buttonEpisodeCheckin) Button buttonCheckin;
     @BindView(R.id.buttonEpisodeWatchedUpTo) Button buttonWatchedUpTo;
+    @BindView(R.id.containerEpisodeStreamingSearch) ViewGroup containerEpisodeStreamingSearch;
     @BindView(R.id.buttonEpisodeStreamingSearch) Button buttonStreamingSearch;
+    @BindView(R.id.buttonEpisodeStreamingSearchInfo) ImageButton buttonEpisodeStreamingSearchInfo;
     @BindView(R.id.buttonEpisodeWatched) Button buttonWatch;
     @BindView(R.id.buttonEpisodeCollected) Button buttonCollect;
     @BindView(R.id.buttonEpisodeSkip) Button buttonSkip;
@@ -146,6 +146,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Job ratingFetchJob;
     private Unbinder unbinder;
+    private OverviewViewModel model;
 
     private long showId;
     private int showTvdbId;
@@ -214,6 +215,8 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         CheatSheet.setup(buttonCheckin);
         CheatSheet.setup(buttonWatch);
         CheatSheet.setup(buttonSkip);
+        StreamingSearch.initButtons(buttonStreamingSearch, buttonEpisodeStreamingSearchInfo,
+                getParentFragmentManager());
 
         // ratings
         CheatSheet.setup(containerRatings, R.string.action_rate);
@@ -236,7 +239,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         boolean isDisplayShowInfo = getResources().getBoolean(R.bool.isOverviewSinglePane);
         containerShow.setVisibility(isDisplayShowInfo ? View.VISIBLE : View.GONE);
 
-        OverviewViewModel model = new ViewModelProvider(this,
+        model = new ViewModelProvider(this,
                 new OverviewViewModelFactory(showId, requireActivity().getApplication()))
                 .get(OverviewViewModel.class);
         model.getShow().observe(getViewLifecycleOwner(), sgShow2 -> {
@@ -250,6 +253,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             long episodeId = sgShow2.getNextEpisode() != null && !sgShow2.getNextEpisode().isEmpty()
                     ? Long.parseLong(sgShow2.getNextEpisode()) : -1;
             model.setEpisodeId(episodeId);
+            model.setShowTmdbId(sgShow2.getTmdbId());
         });
         model.getEpisode().observe(getViewLifecycleOwner(), sgEpisode2 -> {
             // May be null if there is no next episode.
@@ -257,6 +261,9 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             maybeAddFeedbackView();
             updateEpisodeViews(sgEpisode2);
         });
+        model.getWatchProvider().observe(getViewLifecycleOwner(),
+                watchInfo -> StreamingSearch
+                        .configureButton(buttonStreamingSearch, watchInfo, true));
     }
 
     @Override
@@ -334,37 +341,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     void onButtonCheckInClick() {
         runIfHasEpisode((e) -> CheckInDialogFragment
                 .show(requireContext(), getParentFragmentManager(), e.getId()));
-    }
-
-    @OnClick(R.id.buttonEpisodeStreamingSearch)
-    void onButtonStreamingSearchClick() {
-        if (StreamingSearch.isNotConfigured(requireContext())) {
-            showStreamingSearchConfigDialog();
-        } else {
-            if (show != null) {
-                StreamingSearch.searchForShow(requireContext(), show.getTitle());
-            }
-        }
-    }
-
-    @OnLongClick(R.id.buttonEpisodeStreamingSearch)
-    boolean onButtonStreamingSearchLongClick() {
-        showStreamingSearchConfigDialog();
-        return true;
-    }
-
-    private void showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(getParentFragmentManager());
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStreamingSearchConfigured(
-            StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
-        if (event.getTurnedOff()) {
-            buttonStreamingSearch.setVisibility(View.GONE);
-        } else {
-            onButtonStreamingSearchClick();
-        }
     }
 
     @OnClick(R.id.buttonEpisodeWatched)
@@ -448,7 +424,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         buttonCollect.setEnabled(enabled);
         buttonSkip.setEnabled(enabled);
         buttonCheckin.setEnabled(enabled);
-        buttonStreamingSearch.setEnabled(enabled);
     }
 
     private void updateEpisodeViews(@Nullable SgEpisode2 episode) {
@@ -460,11 +435,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             buttonCheckin.setVisibility(displayCheckIn ? View.VISIBLE : View.GONE);
             buttonStreamingSearch.setNextFocusUpId(
                     displayCheckIn ? R.id.buttonCheckIn : R.id.buttonEpisodeWatched);
-            // hide streaming search if turned off
-            boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
-            buttonStreamingSearch.setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
-            dividerEpisodeButtons.setVisibility(displayCheckIn || displayStreamingSearch
-                    ? View.VISIBLE : View.GONE);
 
             // populate episode details
             populateEpisodeViews(episode);

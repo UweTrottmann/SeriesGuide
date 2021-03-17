@@ -12,6 +12,7 @@
     <string name="amazon">Amazon</string>
     <string name="powered_by_trakt">powered by Trakt</string>
     <string name="powered_by_tmdb">powered by TMDb</string>
+    <string name="powered_by_justwatch">powered by JustWatch</string>
     <string name="placeholder_rating">--</string>
     <string name="rating_number_text_format">%1$d - %2$s</string>
     <string name="not_available">n/a</string>

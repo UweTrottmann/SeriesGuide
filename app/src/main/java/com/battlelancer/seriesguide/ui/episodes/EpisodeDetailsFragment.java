@@ -34,7 +34,6 @@ import com.battlelancer.seriesguide.model.SgEpisode2;
 import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog;
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment;
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -131,10 +130,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
 
         bindingRatings.textViewRatingsRange.setText(getString(R.string.format_rating_range, 10));
 
-        bindingButtons.buttonEpisodeStreamingSearch.setOnClickListener(
-                v -> onButtonStreamingSearchClick());
-        bindingButtons.buttonEpisodeStreamingSearch.setOnLongClickListener(
-                v -> onButtonStreamingSearchLongClick());
+        StreamingSearch.initButtons(bindingButtons.buttonEpisodeStreamingSearch,
+                bindingButtons.buttonEpisodeStreamingSearchInfo,
+                getParentFragmentManager());
 
         // other bottom buttons
         bindingBottom.buttonEpisodeShare.setOnClickListener(v -> shareEpisode());
@@ -176,6 +174,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
         // Once episode is loaded, trigger show loading: so set show observer first.
         model.getShow().observe(getViewLifecycleOwner(), show -> {
             if (show != null) {
+                if (show.getTmdbId() != null) {
+                    model.setShowTmdbId(show.getTmdbId());
+                }
                 SgEpisode2 episode = model.getEpisode().getValue();
                 if (episode != null) {
                     populateEpisodeData(episode, show);
@@ -197,6 +198,9 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
                 }
             }
         });
+        model.getWatchProvider().observe(getViewLifecycleOwner(), watchInfo -> StreamingSearch
+                .configureButton(binding.includeButtons.buttonEpisodeStreamingSearch, watchInfo,
+                        true));
     }
 
     @Override
@@ -291,37 +295,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
     private void onToggleCollected() {
         collected = !collected;
         EpisodeTools.episodeCollected(requireContext(), episodeId, collected);
-    }
-
-    private void onButtonStreamingSearchClick() {
-        SgShow2 showOrNull = this.show;
-        if (showOrNull == null) {
-            return;
-        }
-        if (StreamingSearch.isNotConfigured(requireContext())) {
-            showStreamingSearchConfigDialog();
-        } else {
-            StreamingSearch.searchForShow(requireContext(), showOrNull.getTitle());
-        }
-    }
-
-    private boolean onButtonStreamingSearchLongClick() {
-        showStreamingSearchConfigDialog();
-        return true;
-    }
-
-    private void showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(getParentFragmentManager());
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStreamingSearchConfigured(
-            StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent event) {
-        if (event.getTurnedOff()) {
-            bindingButtons.buttonEpisodeStreamingSearch.setVisibility(View.GONE);
-        } else {
-            onButtonStreamingSearchClick();
-        }
     }
 
     @Override
@@ -509,13 +482,6 @@ public class EpisodeDetailsFragment extends Fragment implements EpisodeActionsCo
             streamingSearchNextFocusUpId = R.id.buttonEpisodeWatched;
         }
         bindingButtons.buttonEpisodeStreamingSearch.setNextFocusUpId(streamingSearchNextFocusUpId);
-        // hide streaming search if turned off
-        boolean displayStreamingSearch = !StreamingSearch.isTurnedOff(requireContext());
-        bindingButtons.buttonEpisodeStreamingSearch
-                .setVisibility(displayStreamingSearch ? View.VISIBLE : View.GONE);
-
-        bindingButtons.dividerEpisodeButtons.setVisibility(displayCheckIn || displayStreamingSearch
-                ? View.VISIBLE : View.GONE);
 
         // watched button
         if (isWatched) {

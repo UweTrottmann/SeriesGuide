@@ -35,8 +35,9 @@
     <string name="sync_manually">סנכרון ידני</string>
     <string name="sync_and_update">סנכרון &amp; עדכון</string>
     <string name="sync_and_download_all">סנכרון &amp; הורד הכל</string>
-    <string name="action_turn_off">כבה</string>
     <string name="action_stream">צפה או רכוש</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">נקה את היסטוריית החיפוש</string>
     <string name="search_hint">חפש פרקים</string>

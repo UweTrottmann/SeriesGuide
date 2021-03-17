@@ -1,124 +1,205 @@
 package com.battlelancer.seriesguide.streaming
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
+import android.view.View
+import android.widget.Button
 import androidx.core.content.edit
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.liveData
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.Utils
+import com.uwetrottmann.androidutils.CheatSheet
+import kotlinx.coroutines.Dispatchers
 import java.util.Locale
+import kotlin.coroutines.CoroutineContext
 
 object StreamingSearch {
 
-    /** if null = not configured, if has value = enabled, if is empty = disabled */
-    const val KEY_SETTING_SERVICE = "com.battlelancer.seriesguide.justwatch"
+    val regionLiveData = MutableLiveData<String>()
 
-    val serviceToUrl = mapOf(
-            "us" to "search",
-            "reelgood-us" to "",
-            "ca" to "search",
-            "mx" to "buscar",
-            "br" to "busca",
-            "de" to "Suche",
-            "at" to "Suche",
-            "ch" to "Suche",
-            "uk" to "search",
-            "ie" to "search",
-            "ru" to "поиск",
-            "it" to "cerca",
-            "fr" to "recherche",
-            "es" to "buscar",
-            "nl" to "search",
-            "no" to "search",
-            "se" to "search",
-            "dk" to "search",
-            "fi" to "search",
-            "lt" to "search",
-            "lv" to "search",
-            "ee" to "search",
-            "pt" to "search",
-            "pl" to "search",
-            "za" to "search",
-            "au" to "search",
-            "nz" to "search",
-            "in" to "search",
-            "jp" to "検索",
-            "kr" to "검색",
-            "th" to "search",
-            "tr" to "arama",
-            "my" to "search",
-            "ph" to "search",
-            "sg" to "search",
-            "id" to "search"
+    data class WatchInfo(val tmdbId: Int?, val region: String?)
+
+    /** if null = not configured, also used in settings_basic.xml */
+    const val KEY_SETTING_REGION = "com.uwetrottmann.seriesguide.watch.region"
+
+    val supportedRegions = listOf(
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BR",
+        "CA",
+        "CH",
+        "CL",
+        "CO",
+        "CZ",
+        "DE",
+        "DK",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "HU",
+        "ID",
+        "IE",
+        "IN",
+        "IT",
+        "JP",
+        "KR",
+        "LT",
+        "LV",
+        "MX",
+        "MY",
+        "NL",
+        "NO",
+        "NZ",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "RO",
+        "RU",
+        "SE",
+        "SG",
+        "TH",
+        "TR",
+        "US",
+        "VE",
+        "ZA"
     )
 
+    fun initRegionLiveData(context: Context) {
+        regionLiveData.value = getCurrentRegionOrNull(context)
+    }
+
+    fun getWatchInfoMediator(tmdbId: LiveData<Int>): MediatorLiveData<WatchInfo> {
+        return MediatorLiveData<WatchInfo>().apply {
+            addSource(tmdbId) { value = WatchInfo(it, value?.region) }
+            addSource(regionLiveData) { value = WatchInfo(value?.tmdbId, it) }
+        }
+    }
+
+    /**
+     * Defaults to show providers, set [isMovie] to get for a movie.
+     */
+    fun getWatchProviderLiveData(
+        watchInfo: LiveData<WatchInfo>,
+        viewModelContext: CoroutineContext,
+        context: Context,
+        isMovie: Boolean = false
+    ): LiveData<TmdbTools2.WatchInfo> {
+        return Transformations.switchMap(watchInfo) {
+            liveData(context = viewModelContext + Dispatchers.IO) {
+                if (it.tmdbId != null && it.region != null) {
+                    val tmdbTools = TmdbTools2()
+                    val providers = if (isMovie) {
+                        tmdbTools.getWatchProvidersForMovie(
+                            it.tmdbId,
+                            it.region,
+                            context
+                        )
+                    } else {
+                        tmdbTools.getWatchProvidersForShow(
+                            it.tmdbId,
+                            it.region,
+                            context
+                        )
+                    }
+                    emit(tmdbTools.getTopWatchProvider(providers))
+                }
+            }
+        }
+    }
+
     @JvmStatic
-    fun isTurnedOff(context: Context): Boolean {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_SERVICE, null)?.isEmpty() == true
+    fun initButtons(linkButton: View, configureButton: View, fragmentManager: FragmentManager) {
+        linkButton.setOnClickListener {
+            StreamingSearchInfoDialog.show(fragmentManager)
+        }
+        CheatSheet.setup(configureButton)
+        configureButton.setOnClickListener {
+            StreamingSearchInfoDialog.show(fragmentManager)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @JvmStatic
+    fun configureButton(
+        button: Button,
+        watchInfo: TmdbTools2.WatchInfo,
+        addToButtonText: Boolean = true
+    ): String? {
+        val context = button.context
+        val urlOrNull = watchInfo.url
+        if (urlOrNull != null) {
+            button.isEnabled = true
+            button.setOnClickListener {
+                Utils.launchWebsite(context, watchInfo.url)
+            }
+        } else {
+            button.isEnabled = false
+        }
+        val providerOrNull = watchInfo.provider
+        return if (providerOrNull != null) {
+            val moreText = if (watchInfo.countMore > 0) {
+                " + " + context.getString(R.string.more, watchInfo.countMore)
+            } else ""
+            val providerText = (providerOrNull.provider_name ?: "") + moreText
+            if (addToButtonText) {
+                button.text = context.getString(R.string.action_stream) +
+                        "\n" + providerText
+            }
+            providerText
+        } else {
+            button.setText(R.string.action_stream)
+            null
+        }
     }
 
     @JvmStatic
     fun isNotConfigured(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_SERVICE, null) == null
+            .getString(KEY_SETTING_REGION, null) == null
     }
 
     @JvmStatic
-    fun isNotConfiguredOrTurnedOff(context: Context): Boolean {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_SETTING_SERVICE, null).isNullOrEmpty()
-    }
-
-    @JvmStatic
-    fun getServiceOrEmptyOrNull(context: Context): String? {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_SERVICE, null)
+    fun getCurrentRegionOrNull(context: Context): String? {
+        val regionOrNull = PreferenceManager.getDefaultSharedPreferences(context)
+            .getString(KEY_SETTING_REGION, null) ?: return null
+        return if (supportedRegions.find { it == regionOrNull } != null) {
+            regionOrNull
+        } else {
+            null // Region not supported (any longer).
+        }
     }
 
     @JvmStatic
     fun getServiceDisplayName(service: String): String {
-        return if (service == "reelgood-us") {
-            "Reelgood ${Locale("", "us").displayCountry}"
-        } else {
-            "JustWatch ${Locale("", service).displayCountry}"
-        }
+        return Locale("", service).displayCountry
     }
 
-    fun setServiceOrEmpty(context: Context, countryOrEmpty: String) {
+    fun setRegion(context: Context, region: String) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putString(KEY_SETTING_SERVICE, countryOrEmpty)
+            putString(KEY_SETTING_REGION, region)
         }
+        regionLiveData.postValue(region)
     }
 
-    private fun getServiceSearchUrl(context: Context, type: String): String {
-        val service = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_SETTING_SERVICE, null) ?: ""
-        return if (service == "reelgood-us") {
-            "https://reelgood.com/search?q="
-        } else {
-            val searchPath = serviceToUrl[service] ?: "search"
-            "https://www.justwatch.com/$service/$searchPath?content_type=$type&q="
+    fun getCurrentRegionOrSelectString(context: Context): String {
+        return when (val serviceOrEmptyOrNull = getCurrentRegionOrNull(context)) {
+            null -> context.getString(R.string.action_select_region)
+            else -> getServiceDisplayName(serviceOrEmptyOrNull)
         }
-    }
-
-    private fun buildAndLaunch(
-        context: Context,
-        title: String,
-        justWatchType: String) {
-        val titleEncoded = Uri.encode(title)
-        val searchUrl = getServiceSearchUrl(context, justWatchType)
-        val url = "$searchUrl$titleEncoded"
-        Utils.launchWebsite(context, url)
-    }
-
-    @JvmStatic
-    fun searchForShow(context: Context, showTitle: String) {
-        buildAndLaunch(context, showTitle, "show")
-    }
-
-    @JvmStatic
-    fun searchForMovie(context: Context, movieTitle: String) {
-        buildAndLaunch(context, movieTitle, "movie")
     }
 
 }

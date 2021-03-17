@@ -35,8 +35,9 @@
     <string name="sync_manually">Ručno sinhronizovanje</string>
     <string name="sync_and_update">Sinhronizuj &amp; Unapredi</string>
     <string name="sync_and_download_all">Sinhronizuj &amp; Skini sve</string>
-    <string name="action_turn_off">Uključi</string>
     <string name="action_stream">Strimuj ili kupi</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>

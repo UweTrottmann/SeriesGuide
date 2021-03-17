@@ -35,8 +35,9 @@
     <string name="sync_manually">Synkronisera manuellt</string>
     <string name="sync_and_update">Synkronisera &amp; Uppdatera</string>
     <string name="sync_and_download_all">Synkronisera &amp; Ladda ner alla</string>
-    <string name="action_turn_off">Stäng av</string>
     <string name="action_stream">Streama eller köp</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>

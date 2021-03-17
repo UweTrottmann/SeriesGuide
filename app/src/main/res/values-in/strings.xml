@@ -35,8 +35,9 @@
     <string name="sync_manually">Sync Manual</string>
     <string name="sync_and_update">Sync &amp; Perbarui</string>
     <string name="sync_and_download_all">Sync &amp; unduh semua</string>
-    <string name="action_turn_off">Matikan</string>
     <string name="action_stream">Tonton atau beli</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>

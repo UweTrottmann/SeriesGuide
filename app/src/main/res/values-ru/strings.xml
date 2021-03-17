@@ -35,8 +35,9 @@
     <string name="sync_manually">Синхронизировать вручную</string>
     <string name="sync_and_update">Синхронизировать и обновить</string>
     <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
-    <string name="action_turn_off">Отключить</string>
     <string name="action_stream">Стриминг или покупка</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
