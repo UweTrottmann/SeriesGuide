@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.streaming
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
 import android.view.View
 import android.widget.Button
 import androidx.core.content.edit
@@ -30,43 +29,42 @@ object StreamingSearch {
     /** if null = not configured, also used in settings_basic.xml */
     const val KEY_SETTING_REGION = "com.uwetrottmann.seriesguide.watch.region"
 
-    // TODO Add all newly supported countries.
-    val serviceToUrl = mapOf(
-        "US" to "search",
-        "CA" to "search",
-        "MX" to "buscar",
-        "BR" to "busca",
-        "DE" to "Suche",
-        "AT" to "Suche",
-        "CH" to "Suche",
-        "UK" to "search",
-        "IE" to "search",
-        "RU" to "поиск",
-        "IT" to "cerca",
-        "FR" to "recherche",
-        "ES" to "buscar",
-        "NL" to "search",
-        "NO" to "search",
-        "SE" to "search",
-        "DK" to "search",
-        "FI" to "search",
-        "LT" to "search",
-        "LV" to "search",
-        "EE" to "search",
-        "PT" to "search",
-        "PL" to "search",
-        "ZA" to "search",
-        "AU" to "search",
-        "NZ" to "search",
-        "IN" to "search",
-        "JP" to "検索",
-        "KR" to "검색",
-        "TH" to "search",
-        "TR" to "arama",
-        "MY" to "search",
-        "PH" to "search",
-        "SG" to "search",
-        "ID" to "search"
+    val supportedRegions = listOf(
+        "AT",
+        "AU",
+        "BR",
+        "CA",
+        "CH",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "ID",
+        "IE",
+        "IN",
+        "IT",
+        "JP",
+        "KR",
+        "LT",
+        "LV",
+        "MX",
+        "MY",
+        "NL",
+        "NO",
+        "NZ",
+        "PH",
+        "PL",
+        "PT",
+        "RU",
+        "SE",
+        "SG",
+        "TH",
+        "TR",
+        "UK",
+        "US",
+        "ZA"
     )
 
     fun initRegionLiveData(context: Context) {
@@ -167,7 +165,7 @@ object StreamingSearch {
     fun getCurrentRegionOrNull(context: Context): String? {
         val regionOrNull = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_SETTING_REGION, null) ?: return null
-        return if (serviceToUrl.keys.find { it == regionOrNull } != null) {
+        return if (supportedRegions.find { it == regionOrNull } != null) {
             regionOrNull
         } else {
             null // Region not supported (any longer).
@@ -191,38 +189,6 @@ object StreamingSearch {
             null -> context.getString(R.string.action_select_region)
             else -> getServiceDisplayName(serviceOrEmptyOrNull)
         }
-    }
-
-    private fun getServiceSearchUrl(context: Context, type: String): String {
-        val service = PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_SETTING_REGION, null) ?: ""
-        return if (service == "reelgood-us") {
-            "https://reelgood.com/search?q="
-        } else {
-            val searchPath = serviceToUrl[service] ?: "search"
-            "https://www.justwatch.com/$service/$searchPath?content_type=$type&q="
-        }
-    }
-
-    private fun buildAndLaunch(
-        context: Context,
-        title: String,
-        justWatchType: String
-    ) {
-        val titleEncoded = Uri.encode(title)
-        val searchUrl = getServiceSearchUrl(context, justWatchType)
-        val url = "$searchUrl$titleEncoded"
-        Utils.launchWebsite(context, url)
-    }
-
-    @JvmStatic
-    fun searchForShow(context: Context, showTitle: String) {
-        buildAndLaunch(context, showTitle, "show")
-    }
-
-    @JvmStatic
-    fun searchForMovie(context: Context, movieTitle: String) {
-        buildAndLaunch(context, movieTitle, "movie")
     }
 
 }

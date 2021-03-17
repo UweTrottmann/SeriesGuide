@@ -13,15 +13,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
  */
 class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
 
-    data class StreamingSearchConfiguredEvent(val turnedOff: Boolean)
-
     data class RegionItem(
         val code: String,
         val displayText: String
     )
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val regions = StreamingSearch.serviceToUrl.keys.toList()
+        val regions = StreamingSearch.supportedRegions
 
         val regionItems = List(regions.size) { i ->
             RegionItem(regions[i], StreamingSearch.getServiceDisplayName(regions[i]))
