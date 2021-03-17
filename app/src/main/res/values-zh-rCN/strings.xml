@@ -53,6 +53,7 @@
     <string name="api_error_generic">无法连接到 %s。请稍后再试。</string>
     <string name="api_failed">失败：%s</string>
     <string name="copy_to_clipboard">已复制到剪贴板</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">分享</string>
     <string name="share_show">分享此节目</string>
