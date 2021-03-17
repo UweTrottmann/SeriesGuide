@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.text.Collator
 
 /**
  * Single choice of regions, selected region set to [StreamingSearch.regionLiveData].
@@ -21,9 +22,10 @@ class StreamingSearchConfigureDialog : AppCompatDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val regions = StreamingSearch.supportedRegions
 
+        // Note use default locale collator so e.g. umlauts in German are sorted correctly.
         val regionItems = List(regions.size) { i ->
             RegionItem(regions[i], StreamingSearch.getServiceDisplayName(regions[i]))
-        }.sortedBy { it.displayText }
+        }.sortedWith(compareBy(Collator.getInstance()) { it.displayText })
 
         val currentSelection =
             when (val regionOrNull = StreamingSearch.getCurrentRegionOrNull(requireContext())) {
