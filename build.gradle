@@ -63,18 +63,14 @@ buildscript {
 }
 
 apply plugin: 'com.github.ben-manes.versions'
-
-// reject preview releases for dependencyUpdates task
-dependencyUpdates.resolutionStrategy {
-    componentSelection { rules ->
-        rules.all { ComponentSelection selection ->
-            boolean rejected = ['alpha', 'beta', 'rc', 'eap'].any { qualifier ->
-                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-            }
-            if (rejected) {
-                selection.reject('Preview release')
-            }
-        }
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+tasks.named("dependencyUpdates").configure {
+    rejectVersionIf {
+        isNonStable(it.candidate.version)
     }
 }
 
