@@ -18,7 +18,7 @@ buildscript {
             'crashlytics': '17.3.0', // https://firebase.google.com/support/release-notes/android
             'dagger': '2.30.1', // https://github.com/google/dagger/releases
             'gson': '2.8.6', // https://github.com/google/gson/blob/master/CHANGELOG.md
-            'okhttp': '4.9.0', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
+            'okhttp': '4.9.1', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
             'retrofit': '2.9.0', // https://github.com/square/retrofit/blob/master/CHANGELOG.md
             'timber': '4.7.1', // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
