@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.view.isGone
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -55,11 +54,11 @@ class BillingActivity : BaseActivity() {
         // Users might want to support even if unlock app is installed.
         billingViewModel = ViewModelProvider(this)
             .get(BillingViewModel::class.java).also {
-                it.subsSkuDetailsListLiveData.observe(this, Observer { skuDetails ->
+                it.subsSkuDetailsListLiveData.observe(this, { skuDetails ->
                     adapter.setSkuDetailsList(skuDetails)
                 })
             }
-        billingViewModel.errorEvent.observe(this, Observer { message ->
+        billingViewModel.errorEvent.observe(this, { message ->
             message?.let {
                 textViewBillingError.apply {
                     text = "${getString(R.string.subscription_unavailable)} ($message)"
@@ -73,7 +72,7 @@ class BillingActivity : BaseActivity() {
             updateViewStates(true)
         } else {
             setWaitMode(true)
-            billingViewModel.goldStatusLiveData.observe(this, Observer { goldStatus ->
+            billingViewModel.goldStatusLiveData.observe(this, { goldStatus ->
                 setWaitMode(false)
                 updateViewStates(goldStatus != null && goldStatus.entitled)
                 manageSubscriptionUrl =
