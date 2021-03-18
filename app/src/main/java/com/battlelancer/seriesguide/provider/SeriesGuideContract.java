@@ -1036,11 +1036,11 @@ public class SeriesGuideContract {
     public @interface ListItemTypes {
         int TVDB_SHOW = 1;
         /**
-         * @deprecated Support for seasons on lists has been removed since the TMDB switch.
+         * Support for seasons on lists has been removed since the TMDB switch (version 58).
          */
         int SEASON = 2;
         /**
-         * @deprecated Support for seasons on lists has been removed since the TMDB switch.
+         * Support for episodes on lists has been removed since the TMDB switch (version 58).
          */
         int EPISODE = 3;
         int TMDB_SHOW = 4;
@@ -1531,6 +1531,10 @@ public class SeriesGuideContract {
                 ListItems.TYPE + "=" + ListItemTypes.TVDB_SHOW;
         public static final String SELECTION_TMDB_SHOWS =
                 ListItems.TYPE + "=" + ListItemTypes.TMDB_SHOW;
+        public static final String SELECTION_SEASONS =
+                ListItems.TYPE + "=" + ListItemTypes.SEASON;
+        public static final String SELECTION_EPISODES =
+                ListItems.TYPE + "=" + ListItemTypes.EPISODE;
 
         public static final String SORT_TYPE = ListItems.TYPE + " ASC";
 

@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.MoviesColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
@@ -179,6 +180,13 @@ public class SeriesGuideDatabase {
 
         String LIST_ITEMS = "listitems";
 
+        String SG_SEASON_JOIN_SG_SHOW = SG_SEASON + " LEFT OUTER JOIN " + SG_SHOW
+                + " ON " + Tables.SG_SEASON + "." + SgShow2Columns.REF_SHOW_ID
+                + "=" + Qualified.SG_SHOW_ID;
+        String SG_EPISODE_JOIN_SG_SHOW = SG_EPISODE + " LEFT OUTER JOIN " + SG_SHOW
+                + " ON " + Tables.SG_EPISODE + "." + SgShow2Columns.REF_SHOW_ID
+                + "=" + Qualified.SG_SHOW_ID;
+
         String LIST_ITEMS_WITH_DETAILS = "("
                 // new TMDB shows
                 + ItemsQuery.SELECT_ITEMS_AND_SHOWS_COLUMNS + " FROM "
@@ -193,6 +201,20 @@ public class SeriesGuideDatabase {
                 + ItemsQuery.SELECT_TVDB_SHOWS
                 + " LEFT OUTER JOIN " + Tables.SG_SHOW
                 + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgShow2Columns.TVDB_ID
+                + ")"
+                // legacy TVDB seasons
+                + " UNION " + ItemsQuery.SELECT_ITEMS_AND_SHOWS_COLUMNS + " FROM "
+                + "("
+                + ItemsQuery.SELECT_TVDB_SEASONS
+                + " LEFT OUTER JOIN " + "(" + SG_SEASON_JOIN_SG_SHOW + ") AS " + Tables.SG_SEASON
+                + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgSeason2Columns.TVDB_ID
+                + ")"
+                // legacy TVDB episodes
+                + " UNION " + ItemsQuery.SELECT_ITEMS_AND_SHOWS_COLUMNS + " FROM "
+                + "("
+                + ItemsQuery.SELECT_TVDB_EPISODES
+                + " LEFT OUTER JOIN " + "(" + SG_EPISODE_JOIN_SG_SHOW + ") AS " + Tables.SG_EPISODE
+                + " ON " + Qualified.LIST_ITEMS_REF_ID + "=" + SgEpisode2Columns.TVDB_ID
                 + ")"
                 //
                 + ")";
@@ -215,12 +237,20 @@ public class SeriesGuideDatabase {
                 + ITEMS_COLUMNS
                 + " FROM " + Tables.LIST_ITEMS;
 
+        String SELECT_TMDB_SHOWS = "(" + SELECT_LIST_ITEMS_MAP_ROW_ID
+                + " WHERE " + ListItems.SELECTION_TMDB_SHOWS + ")"
+                + " AS " + Tables.LIST_ITEMS;
+
         String SELECT_TVDB_SHOWS = "(" + SELECT_LIST_ITEMS_MAP_ROW_ID
                 + " WHERE " + ListItems.SELECTION_TVDB_SHOWS + ")"
                 + " AS " + Tables.LIST_ITEMS;
 
-        String SELECT_TMDB_SHOWS = "(" + SELECT_LIST_ITEMS_MAP_ROW_ID
-                + " WHERE " + ListItems.SELECTION_TMDB_SHOWS + ")"
+        String SELECT_TVDB_SEASONS = "(" + SELECT_LIST_ITEMS_MAP_ROW_ID
+                + " WHERE " + ListItems.SELECTION_SEASONS + ")"
+                + " AS " + Tables.LIST_ITEMS;
+
+        String SELECT_TVDB_EPISODES = "(" + SELECT_LIST_ITEMS_MAP_ROW_ID
+                + " WHERE " + ListItems.SELECTION_EPISODES + ")"
                 + " AS " + Tables.LIST_ITEMS;
 
         String SELECT_ITEMS_AND_SHOWS_COLUMNS = "SELECT item_row_id as " + ListItems._ID + ","

@@ -30,11 +30,9 @@ class ListItemsAdapter extends BaseShowsAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        // Support for seasons and episodes was removed, only shows are supported.
+        // Note: Support for seasons and episodes was removed, only shows are supported.
+        // So legacy seasons and episodes are displayed as shows.
         final int itemType = cursor.getInt(Query.ITEM_TYPE);
-        if (itemType != ListItemTypes.TVDB_SHOW && itemType != ListItemTypes.TMDB_SHOW) {
-            throw new IllegalArgumentException("List item type is not supported: " + itemType);
-        }
 
         ListItemViewHolder viewHolder = (ListItemViewHolder) view.getTag();
 
@@ -62,9 +60,15 @@ class ListItemsAdapter extends BaseShowsAdapter {
             releaseTimeShow = null;
         }
 
-        // network, regular day and time
-        viewHolder.timeAndNetwork.setText(
-                TextTools.networkAndTime(context, releaseTimeShow, weekDay, network));
+        // network, regular day and time, or type for legacy season/episode
+        if (itemType == ListItemTypes.TMDB_SHOW || itemType == ListItemTypes.TVDB_SHOW) {
+            viewHolder.timeAndNetwork.setText(
+                    TextTools.networkAndTime(context, releaseTimeShow, weekDay, network));
+        } else if (itemType == ListItemTypes.SEASON) {
+            viewHolder.timeAndNetwork.setText(R.string.season);
+        } else if (itemType == ListItemTypes.EPISODE) {
+            viewHolder.timeAndNetwork.setText(R.string.episode);
+        }
 
         // next episode info
         String fieldValue = cursor.getString(Query.SHOW_NEXTTEXT);

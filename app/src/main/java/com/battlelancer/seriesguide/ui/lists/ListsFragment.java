@@ -162,7 +162,7 @@ public class ListsFragment extends Fragment {
                                 viewHolderActual.itemId, viewHolderActual.showId
                         ));
                 // Hide manage lists option for legacy show items, only allow removal.
-                if (viewHolderActual.itemType == ListItemTypes.TVDB_SHOW) {
+                if (viewHolderActual.itemType != ListItemTypes.TMDB_SHOW) {
                     popupMenu.getMenu().removeItem(R.id.menu_action_lists_manage);
                 }
                 popupMenu.show();
