@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.DebugViewFragment
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.Subscribe
@@ -90,18 +91,16 @@ class MoreOptionsActivity : BaseTopActivity() {
                 }
             Utils.tryStartActivity(this, customTabsIntent, true)
         }
-        binding.buttonCommunity.setOnClickListener {
-            Utils.launchWebsite(this, getString(R.string.url_community))
-        }
+        ViewTools.openUriOnClick(binding.buttonCommunity, getString(R.string.url_community))
+        ViewTools.openUriOnClick(binding.buttonTwitter, getString(R.string.url_twitter))
         binding.buttonFeedback.setOnClickListener {
             startActivity(getFeedbackEmailIntent(this))
         }
-        binding.buttonTranslations.setOnClickListener {
-            Utils.launchWebsite(this, getString(R.string.url_translations))
-        }
-        binding.buttonContributeContent.setOnClickListener {
-            Utils.launchWebsite(this, getString(R.string.url_contribute_content))
-        }
+        ViewTools.openUriOnClick(binding.buttonTranslations, getString(R.string.url_translations))
+        ViewTools.openUriOnClick(
+            binding.buttonContributeContent,
+            getString(R.string.url_contribute_content)
+        )
         binding.buttonDebugView.setOnClickListener {
             if (AppSettings.isUserDebugModeEnabled(this)) {
                 DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")
