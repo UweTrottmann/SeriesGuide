@@ -474,6 +474,7 @@
     <string name="billing_price_pass">一次性支付</string>
     <string name="upgrade_description">每种订阅都会解锁所有功能并支持未来的更新。使用此应用程序无需订阅。</string>
     <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">更多信息与帮助</string>
     <string name="subscription_expired">订阅已过期</string>
     <string name="subscription_expired_details">您的专业版订阅已过期。</string>

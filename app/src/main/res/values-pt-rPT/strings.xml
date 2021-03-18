@@ -485,6 +485,7 @@
     <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Cada subscrição desbloqueia todas as funcionalidades e suporta atualizações futuras. Não é necessário subscrever para usar a aplicação.</string>
     <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Mais Informações e Ajuda</string>
     <string name="subscription_expired">Subscrição expirada</string>
     <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>

@@ -507,6 +507,7 @@
     <string name="billing_price_pass">jednorázový nákup</string>
     <string name="upgrade_description">Každé předplatné odemyká všechny funkce a podporuje budoucí aktualizace. Ale k používání této aplikace není zapotřebí mít předplatné.</string>
     <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Další informace / pomoc</string>
     <string name="subscription_expired">Vypršela platnost</string>
     <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>

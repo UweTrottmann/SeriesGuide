@@ -486,6 +486,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_price_pass">Compra por única vez</string>
     <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Más información y ayuda.</string>
     <string name="subscription_expired">Suscripción caducada</string>
     <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>

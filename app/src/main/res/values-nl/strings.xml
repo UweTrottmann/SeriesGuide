@@ -485,6 +485,7 @@
     <string name="billing_price_pass">eenmalige aankoop</string>
     <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Meer informatie en ondersteuning</string>
     <string name="subscription_expired">Abonnement verlopen</string>
     <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>

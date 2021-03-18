@@ -485,6 +485,7 @@
     <string name="billing_price_pass">engangskjøp</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Abonnement utløpt</string>
     <string name="subscription_expired_details">X Pass-abonnementet har utløpt.</string>

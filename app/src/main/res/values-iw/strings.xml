@@ -507,6 +507,7 @@
     <string name="billing_price_pass">רכישה חד פעמית</string>
     <string name="upgrade_description">המינוי נותן את כל האפשרויות ותורם לעדכונים עתידיים. מינוי לא דרוש בשביל שימוש באפליקציה.</string>
     <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">עוד מידע ועזרה</string>
     <string name="subscription_expired">פג תוקף המנוי</string>
     <string name="subscription_expired_details">פג מנוי ה-SeriesGuide שלך.</string>

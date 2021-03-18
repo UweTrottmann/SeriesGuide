@@ -485,6 +485,7 @@
     <string name="billing_price_pass">engångsköp</string>
     <string name="upgrade_description">Varje prenumeration låser upp alla funktioner och stöder framtida uppdateringar. En prenumeration krävs inte för att använda den här appen.</string>
     <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Mer info och hjälp</string>
     <string name="subscription_expired">Prenumerationen har gått ut</string>
     <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>

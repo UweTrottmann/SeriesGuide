@@ -485,6 +485,7 @@
     <string name="billing_price_pass">engangskøb</string>
     <string name="upgrade_description">Hver type abonnement oplåser alle funktioner og støtter fremtidige opdateringer. Et abonnement er ikke påkrævet for at benytte denne app.</string>
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Flere oplysninger og hjælp</string>
     <string name="subscription_expired">Abonnement udløbet</string>
     <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>

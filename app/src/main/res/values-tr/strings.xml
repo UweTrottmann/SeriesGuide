@@ -485,6 +485,7 @@
     <string name="billing_price_pass">tek seferlik ödeme</string>
     <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
     <string name="subscription_expired">Abonelik sona erdi</string>
     <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>

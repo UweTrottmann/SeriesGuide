@@ -485,6 +485,7 @@
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
     <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
     <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>

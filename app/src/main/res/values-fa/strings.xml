@@ -485,6 +485,7 @@
     <string name="billing_price_pass">خرید یک باره</string>
     <string name="upgrade_description">هر اشتراکی، همهٔ ویژگی‌ها را گشوده و از به‌روز رسانی‌های آتی پشیبانی می‌کند. برای استفاده از این کاره نیازی به اشتراک نیست.</string>
     <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">اطّلاعات بیش‌تر و راهنمایی</string>
     <string name="subscription_expired">اشتراک پایان یافت</string>
     <string name="subscription_expired_details">اشتراک سریزگایدتان به پایان رسیده است.</string>

@@ -485,6 +485,7 @@
     <string name="billing_price_pass">kertaluontoinen osto</string>
     <string name="upgrade_description">Jokainen tilaus avaa kaikki ominaisuudet ja tukee tulevia päivityksiä. Tilausta ei tarvita tämän sovelluksen käyttämiseksi.</string>
     <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Lisätietoja ja apua</string>
     <string name="subscription_expired">Tilaus vanhentunut</string>
     <string name="subscription_expired_details">SeriesGuide-tilauksesi on vanhentunut.</string>

@@ -474,6 +474,7 @@
     <string name="billing_price_pass">一回限りの支払</string>
     <string name="upgrade_description">サブスクリプションで、すべての機能がロック解除され、将来のアップデートをサポートします。サブスクリプションはこのアプリを使用する上で必須ではありません。</string>
     <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">詳細情報とヘルプ</string>
     <string name="subscription_expired">サブスクリプションの有効期限が切れました</string>
     <string name="subscription_expired_details">SeriesGuide サブスクリプションの有効期限が切れています。</string>

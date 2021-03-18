@@ -49,6 +49,15 @@
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Accent"
                     android:textSize="16sp" />
 
+                <TextView
+                    android:id="@+id/textViewBillingUnlockDetected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/large_padding"
+                    android:gravity="center_horizontal"
+                    android:text="@string/billing_unlock_detected"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold.Accent" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewBilling"
                     android:layout_width="match_parent"

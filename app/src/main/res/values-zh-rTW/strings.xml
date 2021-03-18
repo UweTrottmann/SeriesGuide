@@ -474,6 +474,7 @@
     <string name="billing_price_pass">一次購買</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">訂閱已過期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 訂閱已過期。</string>

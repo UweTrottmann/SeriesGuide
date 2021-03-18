@@ -507,6 +507,7 @@
     <string name="billing_price_pass">Единоразовая покупка</string>
     <string name="upgrade_description">Каждая подписка открывает все функции и поддерживает будущие обновления. Для использования этого приложения подписка не требуется.</string>
     <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Дополнительная информация и помощь</string>
     <string name="subscription_expired">Срок действия подписки истек</string>
     <string name="subscription_expired_details">Подписка X функции истекла.</string>

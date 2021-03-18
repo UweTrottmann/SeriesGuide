@@ -474,6 +474,7 @@
     <string name="billing_price_pass">pembelian satu kali</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Langganan berakhir</string>
     <string name="subscription_expired_details">Langganan SeriesGuide anda telah berakhir.</string>
