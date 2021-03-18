@@ -15,7 +15,7 @@ buildscript {
             'room': '2.2.6', // https://developer.android.com/jetpack/androidx/releases/room
 
             'butterknife': '10.2.3', // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '17.3.0', // https://firebase.google.com/support/release-notes/android
+            'crashlytics': '17.4.0', // https://firebase.google.com/support/release-notes/android
             'dagger': '2.30.1', // https://github.com/google/dagger/releases
             'gson': '2.8.6', // https://github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '4.9.1', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
@@ -57,8 +57,8 @@ buildscript {
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0' // api
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
-        classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+        classpath 'com.google.gms:google-services:4.3.5'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.1'
     }
 }
 
