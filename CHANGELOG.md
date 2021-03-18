@@ -12,6 +12,14 @@ Version 58
 ----------
 *in development*
 
+#### 58-beta7
+*2021-03-19*
+
+* 🔧 Lists again display (unsupported) seasons and episodes (as long as a show is not removed and re-added).
+* 🔧 Display X Pass detected message, restore X Pass App button, sort subscription tiers by price.
+* 📝 Add Twitter account link.
+* 📝 Latest translations from crowdin.
+
 #### 58-beta6
 *2021-03-17*
 
