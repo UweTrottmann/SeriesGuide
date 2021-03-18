@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
 
@@ -34,6 +35,7 @@ class BillingActivity : BaseActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SkuDetailsAdapter
     private lateinit var buttonManageSubs: Button
+    private lateinit var buttonPass: Button
     private lateinit var textViewHasUpgrade: View
     private lateinit var textViewBillingError: TextView
 
@@ -116,6 +118,9 @@ class BillingActivity : BaseActivity() {
                 )
             }
         }
+
+        buttonPass = findViewById(R.id.buttonBillingGetPass)
+        ViewTools.openUriOnClick(buttonPass, getString(R.string.url_x_pass))
 
         progressScreen = findViewById(R.id.progressBarBilling)
         contentContainer = findViewById(R.id.containerBilling)

@@ -86,6 +86,24 @@
                     android:text="@string/billing_action_manage_subscriptions" />
 
                 <Button
+                    android:id="@+id/buttonBillingGetPass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:text="@string/billing_action_pass" />
+
+                <TextView
+                    android:id="@+id/textViewBillingPricePass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/inline_padding"
+                    android:gravity="center_horizontal"
+                    android:text="@string/billing_price_pass"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Italic"
+                    android:textStyle="italic" />
+
+                <Button
                     android:id="@+id/textViewBillingMoreInfo"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
                     android:layout_width="wrap_content"
