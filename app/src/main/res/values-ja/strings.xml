@@ -467,7 +467,7 @@
     <string name="action_upgrade">すべての機能のロックを解除</string>
     <string name="billing_action_subscribe">登録する</string>
     <string name="billing_action_manage_subscriptions">サブスクリプションを管理する</string>
-    <string name="billing_action_pass">X Pass を入手</string>
+    <string name="billing_action_pass">X Pass App を入手</string>
     <string name="billing_price_subscribe">%1$s/年、無料でお試しください、%2$s からいつでもキャンセルできます</string>
     <string name="billing_duration_format">%1$s/年</string>
     <string name="billing_sub_description">無料で30日間お試しください。いつでもキャンセルできます</string>

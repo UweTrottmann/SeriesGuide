@@ -478,7 +478,7 @@
     <string name="action_upgrade">Отключване на всички функции</string>
     <string name="billing_action_subscribe">Абониране</string>
     <string name="billing_action_manage_subscriptions">Управление на абонаменти</string>
-    <string name="billing_action_pass">Вземете X Pass</string>
+    <string name="billing_action_pass">Вземете X Pass App</string>
     <string name="billing_price_subscribe">%1$s/година, пробвай безплатно, откажи се по всяко време през %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>

@@ -36,8 +36,8 @@
     <string name="sync_and_update">ซิงค์ &amp; อัปเดต</string>
     <string name="sync_and_download_all">ซิงค์ &amp; ดาวน์โหลดทั้งหมด</string>
     <string name="action_stream">สตรีมหรือซื้อ</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">ข้อมูลการสตรีมหรือซื้อ</string>
+    <string name="action_select_region">เลือกภูมิภาค</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>
@@ -467,7 +467,7 @@
     <string name="action_upgrade">ปลดล็อกคุณสมบัติทั้งหมด</string>
     <string name="billing_action_subscribe">สมัครสมาชิก</string>
     <string name="billing_action_manage_subscriptions">จัดการการสมัครสมาชิก​</string>
-    <string name="billing_action_pass">รับ X Pass</string>
+    <string name="billing_action_pass">รับ X Pass App</string>
     <string name="billing_price_subscribe">%1$s/ปี, ลองใช้ฟรี, ยกเลิกได้ทุกเวลาผ่าน %2$s</string>
     <string name="billing_duration_format">%1$s/ปี</string>
     <string name="billing_sub_description">ลองใช้ฟรี 30 วัน ยกเลิกได้ทุกเมื่อ</string>

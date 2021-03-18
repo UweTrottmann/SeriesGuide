@@ -36,7 +36,7 @@
     <string name="sync_and_update">동기화하고 업데이트</string>
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
     <string name="action_stream">스트리밍 or 구매</string>
-    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_stream_info">스트리밍 or 구매</string>
     <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
@@ -120,7 +120,7 @@
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_favorite">즐겨찾기</string>
     <!-- Shows -->
     <string name="confirm_delete">%s을(를) 제거 하시겠습니까?</string>
     <string name="delete_error">프로그램을 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
@@ -467,7 +467,7 @@
     <string name="action_upgrade">모든 기능 사용하기</string>
     <string name="billing_action_subscribe">구독</string>
     <string name="billing_action_manage_subscriptions">구독 관리</string>
-    <string name="billing_action_pass">X Pass 구매</string>
+    <string name="billing_action_pass">X Pass App 구매</string>
     <string name="billing_price_subscribe">1년 사용 요금: %1$s, 무료 체험 가능, %2$s에서 취소 가능</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>

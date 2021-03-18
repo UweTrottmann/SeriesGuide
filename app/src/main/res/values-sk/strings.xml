@@ -36,8 +36,8 @@
     <string name="sync_and_update">Synchronizovať a aktualizovať</string>
     <string name="sync_and_download_all">Synchronizovať a stiahnuť všetko</string>
     <string name="action_stream">Streamovanie alebo zakúpenie</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Streamovanie alebo info o zakúpení</string>
+    <string name="action_select_region">Vybrať región</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
     <string name="api_failed">Zlyhanie: %s</string>
     <string name="copy_to_clipboard">Skopírované do schránky</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Nenašiel sa na TMDb, bude odstránený v budúcej aktualizácii. Klepnutím zobrazíte ďalšie podrobnosti.</string>
     <!-- Sharing -->
     <string name="share">Zdieľať</string>
     <string name="share_show">Zdieľať seriál</string>
@@ -500,7 +500,7 @@
     <string name="action_upgrade">Odomknúť všetky funkcie</string>
     <string name="billing_action_subscribe">Predplatiť</string>
     <string name="billing_action_manage_subscriptions">Správa predplatného</string>
-    <string name="billing_action_pass">Získať X Pass</string>
+    <string name="billing_action_pass">Získať X Pass App</string>
     <string name="billing_price_subscribe">%1$s/ročne, vyskúšajte zadarmo, zrušte kedykoľvek prostredníctvom %2$s</string>
     <string name="billing_duration_format">%1$s/rok</string>
     <string name="billing_sub_description">Vyskúšajte 30 dní zadarmo, kedykoľvek môžete zrušiť.</string>

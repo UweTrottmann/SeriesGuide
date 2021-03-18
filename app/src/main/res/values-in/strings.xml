@@ -467,7 +467,7 @@
     <string name="action_upgrade">Buka semua fitur</string>
     <string name="billing_action_subscribe">Berlangganan</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">Dapatkan X Pass</string>
+    <string name="billing_action_pass">Dapatkan X Pass App</string>
     <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>

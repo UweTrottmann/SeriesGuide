@@ -36,8 +36,8 @@
     <string name="sync_and_update">المزامنة &amp; والتحديث</string>
     <string name="sync_and_download_all">المزامنة &amp; وتحميل كل البيانات</string>
     <string name="action_stream">بث أو شراء</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">معلومات البث أو الشراء</string>
+    <string name="action_select_region">حدد المنطقة</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
@@ -522,7 +522,7 @@
     <string name="action_upgrade">فتح كافة الميزات</string>
     <string name="billing_action_subscribe">إشتراك</string>
     <string name="billing_action_manage_subscriptions">إدارة الإشتراكات</string>
-    <string name="billing_action_pass">أحصل على X Pass</string>
+    <string name="billing_action_pass">أحصل على X Pass App</string>
     <string name="billing_price_subscribe">%1$s/سنة، جرب مجاناً، و قم بالإلغاء في أي وقت عبر %2$s</string>
     <string name="billing_duration_format">%1$s/سنة</string>
     <string name="billing_sub_description">جرب 30 يوماً مجاناً، قم بإلغاء أي وقت.</string>

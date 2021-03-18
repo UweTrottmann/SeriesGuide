@@ -36,8 +36,8 @@
     <string name="sync_and_update">Synkronoi &amp; päivitä</string>
     <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
     <string name="action_stream">Suoratoista tai osta</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Suoratoisto- tai ostotiedot</string>
+    <string name="action_select_region">Valitse alue</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">Kommunikointi palvelun %s kanssa ei onnistunut. Yritä myöhemmin uudelleen.</string>
     <string name="api_failed">Epäonnistui: %s</string>
     <string name="copy_to_clipboard">Kopioitu leikepöydälle</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Ei löydy TMDb:stä, poistetaan tulevassa päivityksessä. Napauta saadaksesi lisätietoja.</string>
     <!-- Sharing -->
     <string name="share">Jaa</string>
     <string name="share_show">Jaa ohjelma</string>
@@ -478,7 +478,7 @@
     <string name="action_upgrade">Avaa kaikki ominaisuudet</string>
     <string name="billing_action_subscribe">Tilaa</string>
     <string name="billing_action_manage_subscriptions">Hallitse tilauksia</string>
-    <string name="billing_action_pass">Hanki X Pass</string>
+    <string name="billing_action_pass">Hanki X Pass App</string>
     <string name="billing_price_subscribe">%1$s/vuosi, kokeile ilmaiseksi, peruuta milloin tahansa %2$s -sovelluksen kautta</string>
     <string name="billing_duration_format">%1$s/vuosi</string>
     <string name="billing_sub_description">Kokeile 30 päivää ilmaiseksi, peruuta milloin tahansa.</string>

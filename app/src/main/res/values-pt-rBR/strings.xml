@@ -36,8 +36,8 @@
     <string name="sync_and_update">Sincronizar e atualizar</string>
     <string name="sync_and_download_all">Sincronizar e baixar dados</string>
     <string name="action_stream">Assista ou compre</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Informação de stream ou compra</string>
+    <string name="action_select_region">Selecionar região</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Pesquisar episódios</string>
@@ -478,7 +478,7 @@
     <string name="action_upgrade">Desbloqueie todos os recursos</string>
     <string name="billing_action_subscribe">Assinar</string>
     <string name="billing_action_manage_subscriptions">Gerenciar assinaturas</string>
-    <string name="billing_action_pass">Adquira o X Pass</string>
+    <string name="billing_action_pass">Adquira o X Pass App</string>
     <string name="billing_price_subscribe">%1$s/ano, teste gratuitamente, cancele a qualquer momento até %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
     <string name="billing_sub_description">Teste grátis por 30 dias, cancele a qualquer momento</string>
