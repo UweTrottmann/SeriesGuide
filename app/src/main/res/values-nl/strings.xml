@@ -36,7 +36,7 @@
     <string name="sync_and_update">Synchroniseren &amp; bijwerken</string>
     <string name="sync_and_download_all">Synchroniseren &amp; alles downloaden</string>
     <string name="action_stream">Streamen of kopen</string>
-    <string name="action_stream_info">Stream of koop informatie</string>
+    <string name="action_stream_info">Streaming- of aankoopinformatie</string>
     <string name="action_select_region">Regio selecteren</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
@@ -485,7 +485,7 @@
     <string name="billing_price_pass">eenmalige aankoop</string>
     <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">X Pass-app gedetecteerd. U kunt zich nog steeds abonneren om toekomstige updates te ondersteunen.</string>
     <string name="billing_learn_more">Meer informatie en ondersteuning</string>
     <string name="subscription_expired">Abonnement verlopen</string>
     <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>

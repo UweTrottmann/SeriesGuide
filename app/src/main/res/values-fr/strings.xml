@@ -485,7 +485,7 @@
     <string name="billing_price_pass">Achat à vie</string>
     <string name="upgrade_description">Chaque abonnement débloque toutes les fonctionnalités et prend en charge les mises à jour futures. Un abonnement n\'est pas nécessaire pour utiliser cette application.</string>
     <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">Application X Pass détectée. Vous pouvez toujours vous abonner pour soutenir les mises à jour à venir.</string>
     <string name="billing_learn_more">Plus d\'infos et d\'aide</string>
     <string name="subscription_expired">Abonnement expiré</string>
     <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>

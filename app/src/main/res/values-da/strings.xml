@@ -37,7 +37,7 @@
     <string name="sync_and_download_all">Synkronisér og opdatér alle</string>
     <string name="action_stream">Stream eller køb</string>
     <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_select_region">Vælg region</string>
     <!-- Search -->
     <string name="clear_search_history">Ryd søgehistorik</string>
     <string name="search_hint">Søg episoder</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">Kunne ikke tale med %s. Forsøg venligst igen senere.</string>
     <string name="api_failed">Mislykkedes: %s</string>
     <string name="copy_to_clipboard">Kopieret til udklipsholder</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Ikke fundet på TMDb, vil blive fjernet med en fremtidig opdatering. Tryk for detaljer.</string>
     <!-- Sharing -->
     <string name="share">Del</string>
     <string name="share_show">Del serie</string>
@@ -485,7 +485,7 @@
     <string name="billing_price_pass">engangskøb</string>
     <string name="upgrade_description">Hver type abonnement oplåser alle funktioner og støtter fremtidige opdateringer. Et abonnement er ikke påkrævet for at benytte denne app.</string>
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">X Pass app fundet. Du kan stadig abonnere for at supportere fremtidige opdateringer.</string>
     <string name="billing_learn_more">Flere oplysninger og hjælp</string>
     <string name="subscription_expired">Abonnement udløbet</string>
     <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>

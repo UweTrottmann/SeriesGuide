@@ -36,8 +36,8 @@
     <string name="sync_and_update">Sincronització i actualització</string>
     <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
     <string name="action_stream">Veure on-line o comprar</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Veure en línia o informació de la compra</string>
+    <string name="action_select_region">Selecciona la regió</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">Copiat al portapapers</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">No es troba a TMDb, serà esborrat en una futura actualització. Toca per més detalls.</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
     <string name="share_show">Comparteix la serie</string>
@@ -485,7 +485,7 @@
     <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Cada subscripció allibera totes les característiques i ajuda a futures actualitzacions. No és necessita cap subscripció per fer servir aquesta aplicació.</string>
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">Aplicació X Pass detectada. Encara hauries de subscriure\'t per ajudar a futures actualitzacions.</string>
     <string name="billing_learn_more">Més informació i ajuda</string>
     <string name="subscription_expired">La subscripció ha caducat</string>
     <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>

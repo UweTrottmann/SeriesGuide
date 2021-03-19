@@ -507,7 +507,7 @@
     <string name="billing_price_pass">Одноразове замовлення</string>
     <string name="upgrade_description">Кожна підписка розблоковує всі функції та підтримує майбутні оновлення. Підписка не обов\'язкова для використання цього додатка.</string>
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">Виявлено додаток X Pass. Ви все ще можете підписатися на підтримку майбутніх оновлень.</string>
     <string name="billing_learn_more">Додаткова інформація та допомога</string>
     <string name="subscription_expired">Закінчився термін дії підписки</string>
     <string name="subscription_expired_details">Підписка функцій X минула.</string>

@@ -507,7 +507,7 @@
     <string name="billing_price_pass">jednorazowy zakup</string>
     <string name="upgrade_description">Każda subskrypcja odblokowuje wszystkie funkcje i wspiera kolejne aktualizacje. Subskrypcja nie jest wymagana do korzystania z tej aplikacji.</string>
     <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">Wykryto aplikację X Pass. Nadal możesz subskrybować w celu wsparcia przyszłych aktualizacji.</string>
     <string name="billing_learn_more">Więcej informacji i pomoc</string>
     <string name="subscription_expired">Subskrypcja wygasła</string>
     <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>

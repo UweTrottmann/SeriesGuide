@@ -529,7 +529,7 @@
     <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
     <string name="upgrade_description">كل اشتراك يفتح جميع الميزات ويدعم التحديثات المستقبلية. ليس مطلوب الاشتراك لاستخدام هذا التطبيق.</string>
     <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">تم اكتشاف تطبيق X Pass . يمكنك الاشتراك لدعم التحديثات المستقبلية.</string>
     <string name="billing_learn_more">المزيد من المعلومات والمساعدة</string>
     <string name="subscription_expired">انتهت مدة الإشتراك</string>
     <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
