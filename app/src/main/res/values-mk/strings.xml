@@ -518,4 +518,6 @@
     <string name="feedback_question_feedback">Кажи ми како да го подобрам?</string>
     <string name="feedback_action_ok">OK, се разбира</string>
     <string name="feedback_action_nothanks">Не, благодарам</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

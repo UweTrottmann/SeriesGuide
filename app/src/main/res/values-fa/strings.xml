@@ -518,4 +518,6 @@
     <string name="feedback_question_feedback">می‌گویید چگونه بهبودش بخشم؟</string>
     <string name="feedback_action_ok">بله، حتماً</string>
     <string name="feedback_action_nothanks">نه، ممنون</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

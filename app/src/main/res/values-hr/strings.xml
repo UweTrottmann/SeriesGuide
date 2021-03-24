@@ -529,4 +529,6 @@
     <string name="feedback_question_feedback">Recite mi kako poboljšati?</string>
     <string name="feedback_action_ok">U redu, naravno</string>
     <string name="feedback_action_nothanks">Ne, hvala</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

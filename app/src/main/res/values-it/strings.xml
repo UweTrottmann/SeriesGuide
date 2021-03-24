@@ -518,4 +518,6 @@
     <string name="feedback_question_feedback">Vuoi dirmi come migliorarlo?</string>
     <string name="feedback_action_ok">OK, sicuro</string>
     <string name="feedback_action_nothanks">No, grazie</string>
+    <!-- Support -->
+    <string name="support_the_dev">Vuoi supportare lo sviluppatore?</string>
 </resources>

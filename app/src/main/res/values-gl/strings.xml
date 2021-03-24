@@ -519,4 +519,6 @@ Páxina de Amazon</string>
     <string name="feedback_question_feedback">Disme como milloralo?</string>
     <string name="feedback_action_ok">Si, por suposto</string>
     <string name="feedback_action_nothanks">Non, grazas</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>
