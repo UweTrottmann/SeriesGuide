@@ -67,48 +67,42 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
     private void onNavItemClick(int itemId) {
         Intent launchIntent = null;
 
-        switch (itemId) {
-            case R.id.navigation_item_shows:
-                if (this instanceof ShowsActivity) {
-                    onSelectedCurrentNavItem();
-                    return;
-                }
-                launchIntent = new Intent(this, ShowsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
-                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
-            case R.id.navigation_item_lists:
-                if (this instanceof ListsActivity) {
-                    onSelectedCurrentNavItem();
-                    return;
-                }
-                launchIntent = new Intent(this, ListsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
-            case R.id.navigation_item_movies:
-                if (this instanceof MoviesActivity) {
-                    onSelectedCurrentNavItem();
-                    return;
-                }
-                launchIntent = new Intent(this, MoviesActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
-            case R.id.navigation_item_stats:
-                if (this instanceof StatsActivity) {
-                    onSelectedCurrentNavItem();
-                    return;
-                }
-                launchIntent = new Intent(this, StatsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
-            case R.id.navigation_item_more:
-                if (this instanceof MoreOptionsActivity) {
-                    onSelectedCurrentNavItem();
-                    return;
-                }
-                launchIntent = new Intent(this, MoreOptionsActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                break;
+        if (itemId == R.id.navigation_item_shows) {
+            if (this instanceof ShowsActivity) {
+                onSelectedCurrentNavItem();
+                return;
+            }
+            launchIntent = new Intent(this, ShowsActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        } else if (itemId == R.id.navigation_item_lists) {
+            if (this instanceof ListsActivity) {
+                onSelectedCurrentNavItem();
+                return;
+            }
+            launchIntent = new Intent(this, ListsActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        } else if (itemId == R.id.navigation_item_movies) {
+            if (this instanceof MoviesActivity) {
+                onSelectedCurrentNavItem();
+                return;
+            }
+            launchIntent = new Intent(this, MoviesActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        } else if (itemId == R.id.navigation_item_stats) {
+            if (this instanceof StatsActivity) {
+                onSelectedCurrentNavItem();
+                return;
+            }
+            launchIntent = new Intent(this, StatsActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        } else if (itemId == R.id.navigation_item_more) {
+            if (this instanceof MoreOptionsActivity) {
+                onSelectedCurrentNavItem();
+                return;
+            }
+            launchIntent = new Intent(this, MoreOptionsActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
 
         if (launchIntent != null) {
@@ -325,7 +319,7 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
      * onResume(), and removed in onPause(). If a sync is active or pending, a progress bar is
      * shown.
      */
-    private SyncStatusObserver syncStatusObserver = new SyncStatusObserver() {
+    private final SyncStatusObserver syncStatusObserver = new SyncStatusObserver() {
         /** Callback invoked with the sync adapter status changes. */
         @Override
         public void onStatusChanged(int which) {
