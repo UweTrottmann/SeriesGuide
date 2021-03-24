@@ -36,8 +36,8 @@
     <string name="sync_and_update">Synkronisera &amp; Uppdatera</string>
     <string name="sync_and_download_all">Synkronisera &amp; Ladda ner alla</string>
     <string name="action_stream">Streama eller köp</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Stream- eller köpinfo</string>
+    <string name="action_select_region">Välj region</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
     <string name="api_failed">Misslyckades: %s</string>
     <string name="copy_to_clipboard">Kopierat till urklipp</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Hittades inte på TMDb, kommer att tas bort i en framtida uppdatering. Tryck för detaljer.</string>
     <!-- Sharing -->
     <string name="share">Dela</string>
     <string name="share_show">Dela serie</string>
@@ -485,7 +485,7 @@
     <string name="billing_price_pass">engångsköp</string>
     <string name="upgrade_description">Varje prenumeration låser upp alla funktioner och stöder framtida uppdateringar. En prenumeration krävs inte för att använda den här appen.</string>
     <string name="upgrade_success">Tack för att du stödjer SeriesGuide! Du har tillgång till alla funktioner.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">X Pass-app upptäckt. Du kan fortfarande prenumerera för att stödja framtida uppdateringar.</string>
     <string name="billing_learn_more">Mer info och hjälp</string>
     <string name="subscription_expired">Prenumerationen har gått ut</string>
     <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>

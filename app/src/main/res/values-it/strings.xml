@@ -485,7 +485,7 @@
     <string name="billing_price_pass">paga una sola volta</string>
     <string name="upgrade_description">Ogni abbonamento sblocca tutte le funzionalità e supporta gli aggiornamenti futuri. Non è necessario un abbonamento per utilizzare questa app.</string>
     <string name="upgrade_success">Grazie per il sostegno a SeriesGuide! Hai accesso a tutte le funzionalità.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">Rilevata app X Pass. Puoi comunque iscriverti per supportare gli aggiornamenti futuri.</string>
     <string name="billing_learn_more">Più informazioni e aiuto</string>
     <string name="subscription_expired">Abbonamento scaduto</string>
     <string name="subscription_expired_details">Il tuo abbonamento alle funzioni X è scaduto.</string>
