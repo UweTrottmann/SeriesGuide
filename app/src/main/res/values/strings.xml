@@ -587,4 +587,7 @@
     <string name="feedback_action_ok">OK, sure</string>
     <string name="feedback_action_nothanks">No, thanks</string>
 
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
+
 </resources>

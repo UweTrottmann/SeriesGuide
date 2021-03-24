@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
 import com.battlelancer.seriesguide.util.Errors;
+import com.battlelancer.seriesguide.util.SupportTheDev;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -134,6 +135,10 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
 
         if (Utils.hasAccessToX(this) && HexagonSettings.shouldValidateAccount(this)) {
             onShowCloudAccountWarning();
+        }
+
+        if (SupportTheDev.shouldAsk(this)) {
+            askForSupport();
         }
 
         // Trigger session start only for top activities.
@@ -297,6 +302,17 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
             startActivity(new Intent(BaseTopActivity.this, CloudSetupActivity.class));
         }).show();
 
+        snackbar = newSnackbar;
+    }
+
+    private void askForSupport() {
+        if (snackbar != null && snackbar.isShown()) {
+            Timber.d("NOT asking for support: existing snackbar.");
+            return;
+        }
+
+        Snackbar newSnackbar = SupportTheDev.buildSnackbar(this, getSnackbarParentView());
+        newSnackbar.show();
         snackbar = newSnackbar;
     }
 
