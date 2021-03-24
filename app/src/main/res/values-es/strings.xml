@@ -519,4 +519,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="feedback_question_feedback">¿Me dirías como mejorarlo?</string>
     <string name="feedback_action_ok">OK, seguro</string>
     <string name="feedback_action_nothanks">No, gracias</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

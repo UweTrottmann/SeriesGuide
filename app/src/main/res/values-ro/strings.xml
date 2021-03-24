@@ -529,4 +529,6 @@
     <string name="feedback_question_feedback">Spune-mi cum sa o improvizez</string>
     <string name="feedback_action_ok">Ok, sigur</string>
     <string name="feedback_action_nothanks">Nu, mulțumesc</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

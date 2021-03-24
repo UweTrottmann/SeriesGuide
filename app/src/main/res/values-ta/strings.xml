@@ -518,4 +518,6 @@
     <string name="feedback_question_feedback">எனக்கு அதை மேம்படுத்துவது எப்படி என்பதை கூறுங்கள்?</string>
     <string name="feedback_action_ok">சரி, நிச்சயமாக</string>
     <string name="feedback_action_nothanks">இல்லை, நன்றி</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

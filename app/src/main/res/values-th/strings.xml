@@ -507,4 +507,6 @@
     <string name="feedback_question_feedback">บอกเราว่าจะปรับปรุงได้อย่างไร?</string>
     <string name="feedback_action_ok">ตกลง, แน่นอน</string>
     <string name="feedback_action_nothanks">ไม่, ขอบคุณ</string>
+    <!-- Support -->
+    <string name="support_the_dev">สนับสนุนนักพัฒนา?</string>
 </resources>

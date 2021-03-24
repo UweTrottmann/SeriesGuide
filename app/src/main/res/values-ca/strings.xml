@@ -518,4 +518,6 @@
     <string name="feedback_question_feedback">Digues-me com millorar-ho?</string>
     <string name="feedback_action_ok">OK, d\'acord</string>
     <string name="feedback_action_nothanks">No, gràcies</string>
+    <!-- Support -->
+    <string name="support_the_dev">Donar suport a l´autor</string>
 </resources>

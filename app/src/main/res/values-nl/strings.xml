@@ -518,4 +518,6 @@
     <string name="feedback_question_feedback">Vertel me hoe ik het kan verbeteren?</string>
     <string name="feedback_action_ok">Oké, natuurlijk</string>
     <string name="feedback_action_nothanks">Nee, bedankt</string>
+    <!-- Support -->
+    <string name="support_the_dev">De ontwikkelaar steunen?</string>
 </resources>

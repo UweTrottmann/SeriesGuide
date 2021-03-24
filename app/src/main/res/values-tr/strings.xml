@@ -518,4 +518,6 @@
     <string name="feedback_question_feedback">Nasıl geliştirileceğini göster?</string>
     <string name="feedback_action_ok">TAMAM, tabi ki</string>
     <string name="feedback_action_nothanks">Hayır, teşekkürler</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

@@ -507,4 +507,6 @@
     <string name="feedback_question_feedback">告诉我如何改进？</string>
     <string name="feedback_action_ok">好的</string>
     <string name="feedback_action_nothanks">不，谢谢</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

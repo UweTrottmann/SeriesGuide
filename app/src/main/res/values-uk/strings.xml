@@ -540,4 +540,6 @@
     <string name="feedback_question_feedback">Розкажіть, що Вас не влаштовує?</string>
     <string name="feedback_action_ok">Так, звісно</string>
     <string name="feedback_action_nothanks">Ні, дякую</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

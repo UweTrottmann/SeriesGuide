@@ -507,4 +507,6 @@
     <string name="feedback_question_feedback">개선 방법을 알려주실 수 있을까요?</string>
     <string name="feedback_action_ok">네</string>
     <string name="feedback_action_nothanks">아니오</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>
