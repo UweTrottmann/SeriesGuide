@@ -261,7 +261,7 @@ dependencies {
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
     }
     // https://github.com/robolectric/robolectric/releases/
-    testImplementation 'org.robolectric:robolectric:4.4'
+    testImplementation 'org.robolectric:robolectric:4.5.1'
     testImplementation "androidx.test:core:$androidXtestCoreVersion"
 
 }
