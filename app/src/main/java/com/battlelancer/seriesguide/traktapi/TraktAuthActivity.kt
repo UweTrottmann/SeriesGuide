@@ -1,16 +1,12 @@
 package com.battlelancer.seriesguide.traktapi
 
-import android.os.AsyncTask
 import android.os.Bundle
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
-import com.battlelancer.seriesguide.traktapi.ConnectTraktTask.TaskResult
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.Utils
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import java.math.BigInteger
 import java.security.SecureRandom
@@ -28,6 +24,9 @@ class TraktAuthActivity : BaseOAuthActivity() {
         super.onCreate(savedInstanceState)
 
         model = ViewModelProvider(this).get(TraktAuthActivityModel::class.java)
+        model.connectResult.observe(this, {
+            handleTraktConnectResult(it)
+        })
 
         if (savedInstanceState != null) {
             // restore state on recreation
@@ -55,8 +54,7 @@ class TraktAuthActivity : BaseOAuthActivity() {
     override fun fetchTokensAndFinish(authCode: String?, state: String?) {
         activateFallbackButtons()
 
-        val connectTask = model.connectTask
-        if (connectTask != null && connectTask.status != AsyncTask.Status.FINISHED) {
+        if (model.connectInProgress) {
             // connect task is still running
             setMessage(getString(R.string.waitplease), true)
             return
@@ -89,17 +87,15 @@ class TraktAuthActivity : BaseOAuthActivity() {
 
         // fetch access token with given OAuth auth code
         setMessage(getString(R.string.waitplease), true)
-        val task = ConnectTraktTask(this)
-        Utils.executeInOrder(task, authCode)
-        model.connectTask = task
+        model.connectTrakt(authCode)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: TaskResult) {
-        model.connectTask = null
-        val resultCode = event.resultCode
+    private fun handleTraktConnectResult(event: TraktAuthActivityModel.ConnectResult) {
+        val resultCode = event.code
         if (resultCode == TraktResult.SUCCESS) {
             // if we got here, looks like credentials were stored successfully
+            // trigger a sync, notifies user via toast
+            SgSyncAdapter.requestSyncDeltaImmediate(this, true)
             finish()
             return
         }
