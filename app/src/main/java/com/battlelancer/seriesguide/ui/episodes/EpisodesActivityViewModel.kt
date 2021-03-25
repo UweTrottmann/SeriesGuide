@@ -24,7 +24,7 @@ class EpisodesActivityViewModel(
     seasonRowId: Long
 ) : AndroidViewModel(application) {
 
-    val seasonAndShowInfoLiveData = MutableLiveData<EpisodeSeasonAndShowInfo>()
+    val seasonAndShowInfoLiveData = MutableLiveData<EpisodeSeasonAndShowInfo?>()
 
     init {
         updateEpisodesData(episodeTvdbId, episodeRowId, seasonRowId)

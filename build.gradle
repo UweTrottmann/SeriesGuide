@@ -9,14 +9,14 @@ buildscript {
 
             // https://developer.android.com/jetpack/androidx/releases
             'core': '1.3.2', // https://developer.android.com/jetpack/androidx/releases/core
-            'annotation': '1.1.0',
-            'lifecycle': '2.2.0',
+            'annotation': '1.2.0',
+            'lifecycle': '2.3.1',
             'paging': '2.1.2',
             'room': '2.2.6', // https://developer.android.com/jetpack/androidx/releases/room
 
             'butterknife': '10.2.3', // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '17.4.0', // https://firebase.google.com/support/release-notes/android
-            'dagger': '2.30.1', // https://github.com/google/dagger/releases
+            'dagger': '2.33', // https://github.com/google/dagger/releases
             'gson': '2.8.6', // https://github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '4.9.1', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
             'retrofit': '2.9.0', // https://github.com/square/retrofit/blob/master/CHANGELOG.md
@@ -26,7 +26,7 @@ buildscript {
             'tmdb': '2.3.1', // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
             'trakt': '6.9.0', // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
-            'truth': '1.1', // https://github.com/google/truth/releases
+            'truth': '1.1.2', // https://github.com/google/truth/releases
 
             // version 21xxxyy -> min SDK 21, release xxx, build yy
             'code': 2105806,
@@ -48,7 +48,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2' // libraries, SeriesGuide
+        classpath 'com.android.tools.build:gradle:4.1.3' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/ben-manes/gradle-versions-plugin/releases
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.36.0'

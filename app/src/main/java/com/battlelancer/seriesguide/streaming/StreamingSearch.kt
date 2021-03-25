@@ -22,7 +22,7 @@ import kotlin.coroutines.CoroutineContext
 
 object StreamingSearch {
 
-    val regionLiveData = MutableLiveData<String>()
+    val regionLiveData = MutableLiveData<String?>()
 
     data class WatchInfo(val tmdbId: Int?, val region: String?)
 

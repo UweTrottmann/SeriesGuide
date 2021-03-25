@@ -24,7 +24,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
     private val sgShowsLiveData: LiveData<List<SgShow2ForLists>>
-    val showItemsLiveData = MediatorLiveData<List<ShowsAdapter.ShowItem>>()
+    val showItemsLiveData = MediatorLiveData<List<ShowsAdapter.ShowItem>?>()
     private val showItemsLiveDataSemaphore = Semaphore(1)
 
     init {

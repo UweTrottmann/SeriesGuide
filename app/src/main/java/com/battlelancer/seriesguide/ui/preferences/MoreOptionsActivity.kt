@@ -79,13 +79,16 @@ class MoreOptionsActivity : BaseTopActivity() {
                     ContextCompat.getColor(this, R.color.sg_background_app_bar_dark)
                 )
                 .build()
-            val customTabsIntent = CustomTabsIntent.Builder()
-                .setShowTitle(true)
+            val defaultParams = CustomTabColorSchemeParams.Builder()
                 .setToolbarColor(
                     ContextCompat.getColor(this, R.color.sg_color_primary_light)
                 )
+                .build()
+            val customTabsIntent = CustomTabsIntent.Builder()
+                .setShowTitle(true)
                 .setColorScheme(COLOR_SCHEME_SYSTEM)
                 .setColorSchemeParams(COLOR_SCHEME_DARK, darkParams)
+                .setDefaultColorSchemeParams(defaultParams)
                 .build().intent.apply {
                     data = Uri.parse(getString(R.string.help_url))
                 }
