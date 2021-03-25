@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.text.HtmlCompat;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.util.Errors;
@@ -24,22 +24,18 @@ import timber.log.Timber;
 public class TraktAuthActivity extends BaseOAuthActivity {
 
     private static final String KEY_STATE = "state";
-    private static final String TRAKT_CONNECT_TASK_TAG = "trakt-connect-task";
     private static final String ACTION_FETCHING_TOKENS = "fetching tokens";
     private static final String ERROR_DESCRIPTION_STATE_MISMATCH
             = "invalid_state, State is null or does not match.";
 
     private String state;
-    private ConnectTraktTaskFragment taskFragment;
+    private TraktAuthActivityModel model;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TRAKT_CONNECT_TASK_TAG);
-        if (fragment != null) {
-            taskFragment = (ConnectTraktTaskFragment) fragment;
-        }
+        model = new ViewModelProvider(this).get(TraktAuthActivityModel.class);
 
         if (savedInstanceState != null) {
             // restore state on recreation
@@ -70,15 +66,8 @@ public class TraktAuthActivity extends BaseOAuthActivity {
     protected void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state) {
         activateFallbackButtons();
 
-        if (taskFragment == null) {
-            taskFragment = new ConnectTraktTaskFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(taskFragment, TRAKT_CONNECT_TASK_TAG)
-                    .commit();
-        }
-
-        if (taskFragment.getTask() != null
-                && taskFragment.getTask().getStatus() != AsyncTask.Status.FINISHED) {
+        if (model.getConnectTask() != null
+                && model.getConnectTask().getStatus() != AsyncTask.Status.FINISHED) {
             // connect task is still running
             setMessage(getString(R.string.waitplease), true);
             return;
@@ -107,12 +96,12 @@ public class TraktAuthActivity extends BaseOAuthActivity {
         setMessage(getString(R.string.waitplease), true);
         ConnectTraktTask task = new ConnectTraktTask(this);
         Utils.executeInOrder(task, authCode);
-        taskFragment.setTask(task);
+        model.setConnectTask(task);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ConnectTraktTask.TaskResult event) {
-        taskFragment.setTask(null);
+        model.setConnectTask(null);
 
         int resultCode = event.resultCode;
         if (resultCode == TraktResult.SUCCESS) {
