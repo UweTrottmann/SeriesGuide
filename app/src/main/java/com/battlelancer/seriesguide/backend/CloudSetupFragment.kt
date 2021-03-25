@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.backend
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -45,23 +44,20 @@ class CloudSetupFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private var signInAccount: GoogleSignInAccount? = null
     private lateinit var hexagonTools: HexagonTools
-    private var hexagonSetupTask: HexagonSetupTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /*
-         * Try to keep the fragment around on config changes so the setup task
-         * does not have to be finished.
-         */
-        retainInstance = true
+        hexagonTools = SgApp.getServicesComponent(requireContext()).hexagonTools()
+        googleSignInClient = GoogleSignIn
+            .getClient(requireActivity(), HexagonTools.getGoogleSignInOptions())
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCloudSetupBinding.inflate(inflater, container, false)
 
         binding!!.textViewCloudWarnings.setOnClickListener {
@@ -85,34 +81,24 @@ class CloudSetupFragment : Fragment() {
         return binding!!.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        hexagonTools = SgApp.getServicesComponent(requireContext()).hexagonTools()
-        googleSignInClient = GoogleSignIn
-            .getClient(requireActivity(), HexagonTools.getGoogleSignInOptions())
-    }
-
     override fun onStart() {
         super.onStart()
 
-        if (!isHexagonSetupRunning) {
-            // check if the user is still signed in
-            val signInTask = googleSignInClient.silentSignIn()
-            if (signInTask.isSuccessful) {
-                // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-                // and the GoogleSignInResult will be available instantly.
-                Timber.d("Got cached sign-in")
-                handleSignInResult(signInTask)
-            } else {
-                // If the user has not previously signed in on this device or the sign-in has expired,
-                // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-                // single sign-on will occur in this branch.
-                Timber.d("Trying async sign-in")
-                signInTask.addOnCompleteListener { task ->
-                    if (isAdded) {
-                        handleSignInResult(task)
-                    }
+        // check if the user is still signed in
+        val signInTask = googleSignInClient.silentSignIn()
+        if (signInTask.isSuccessful) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            Timber.d("Got cached sign-in")
+            handleSignInResult(signInTask)
+        } else {
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            Timber.d("Trying async sign-in")
+            signInTask.addOnCompleteListener { task ->
+                if (isAdded) {
+                    handleSignInResult(task)
                 }
             }
         }
@@ -144,14 +130,6 @@ class CloudSetupFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (isHexagonSetupRunning) {
-            hexagonSetupTask?.cancel(true)
-        }
-        hexagonSetupTask = null
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -337,96 +315,37 @@ class CloudSetupFragment : Fragment() {
         dismissSnackbar()
         setProgressVisible(true)
 
-        if (signInAccount == null) {
+        val signInAccountOrNull = signInAccount
+        if (signInAccountOrNull == null) {
             signIn()
-        } else if (!isHexagonSetupRunning) {
-            HexagonSettings.setSetupIncomplete(context)
-            hexagonSetupTask =
-                HexagonSetupTask(
-                    hexagonTools,
-                    signInAccount!!,
-                    onHexagonSetupFinishedListener
-                ).also {
-                    it.execute()
-                }
-        }
-    }
-
-    private val isHexagonSetupRunning: Boolean
-        get() = hexagonSetupTask != null && hexagonSetupTask!!.status != AsyncTask.Status.FINISHED
-
-    private class HexagonSetupTask
-    /**
-     * Checks for local and remote shows and uploads shows accordingly. If there are some shows
-     * in the local database as well as on hexagon, will download and merge data first, then
-     * upload.
-     */
-    internal constructor(
-        private val hexagonTools: HexagonTools,
-        private val signInAccount: GoogleSignInAccount,
-        private val onSetupFinishedListener: OnSetupFinishedListener
-    ) : AsyncTask<String, Void, Int>() {
-
-        interface OnSetupFinishedListener {
-            fun onSetupFinished(resultCode: Int)
-        }
-
-        override fun doInBackground(vararg params: String): Int {
-            // set setup incomplete flag
+        } else {
             Timber.i("Setting up Hexagon...")
 
+            // set setup incomplete flag
+            HexagonSettings.setSetupIncomplete(context)
+
             // validate account data
-            val account = signInAccount.account
-            if (TextUtils.isEmpty(signInAccount.email) || account == null) {
-                return FAILURE_AUTH
+            val account = signInAccountOrNull.account
+            if (TextUtils.isEmpty(signInAccountOrNull.email) || account == null) {
+                Timber.d("Setting up Hexagon...FAILURE_AUTH")
+                // show setup incomplete message + error toast
+                view?.let {
+                    Snackbar.make(it, R.string.hexagon_setup_fail_auth, Snackbar.LENGTH_LONG)
+                        .show()
+                }
             }
-
             // at last reset sync state, store the new credentials and enable hexagon integration
-            return if (!hexagonTools.setEnabled(signInAccount)) {
-                FAILURE
+            else if (hexagonTools.setEnabled(signInAccountOrNull)) {
+                // schedule full sync
+                Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED")
+                SgSyncAdapter.requestSyncFullImmediate(activity, false)
+                HexagonSettings.setSetupCompleted(activity)
             } else {
-                SUCCESS_SYNC_REQUIRED
-            }
-        }
-
-        override fun onPostExecute(result: Int) {
-            onSetupFinishedListener.onSetupFinished(result)
-        }
-
-        companion object {
-            internal const val SUCCESS_SYNC_REQUIRED = 1
-            internal const val FAILURE = -1
-            internal const val FAILURE_AUTH = -2
-        }
-    }
-
-    private val onHexagonSetupFinishedListener = object : HexagonSetupTask.OnSetupFinishedListener {
-        override fun onSetupFinished(resultCode: Int) {
-            when (resultCode) {
-                HexagonSetupTask.SUCCESS_SYNC_REQUIRED -> {
-                    // schedule full sync
-                    Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED")
-                    SgSyncAdapter.requestSyncFullImmediate(activity, false)
-                    HexagonSettings.setSetupCompleted(activity)
-                }
-                HexagonSetupTask.FAILURE_AUTH -> {
-                    // show setup incomplete message + error toast
-                    view?.let {
-                        Snackbar.make(it, R.string.hexagon_setup_fail_auth, Snackbar.LENGTH_LONG)
-                            .show()
-                    }
-                    Timber.d("Setting up Hexagon...FAILURE_AUTH")
-                }
-                HexagonSetupTask.FAILURE -> {
-                    // show setup incomplete message
-                    Timber.d("Setting up Hexagon...FAILURE")
-                }
+                // Do not set completed, will show setup incomplete message.
+                Timber.d("Setting up Hexagon...FAILURE")
             }
 
-            if (view == null) {
-                return
-            }
-            setProgressVisible(false) // allow new task
+            setProgressVisible(false)
             updateViews()
         }
     }
