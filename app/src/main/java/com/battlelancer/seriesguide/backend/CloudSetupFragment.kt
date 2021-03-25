@@ -8,6 +8,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -104,12 +106,10 @@ class CloudSetupFragment : Fragment() {
         }
     }
 
+    @Suppress("DEPRECATION") // Can't use ActivityResult API as third-party starts intent.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when {
-            requestCode == REQUEST_SIGN_IN -> {
-                handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(data))
-            }
             requestCode == REQUEST_RESOLUTION && resultCode == Activity.RESULT_OK -> {
                 // not doing anything for now, user has to press sign-in button again
                 Timber.i("Resolved an issue with Google sign-in.")
@@ -215,9 +215,13 @@ class CloudSetupFragment : Fragment() {
         }
     }
 
+    private val signInWithGoogle =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(result.data))
+        }
+
     private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, REQUEST_SIGN_IN)
+        signInWithGoogle.launch(googleSignInClient.signInIntent)
     }
 
     private fun signOut() {
@@ -351,7 +355,6 @@ class CloudSetupFragment : Fragment() {
     }
 
     companion object {
-        private const val REQUEST_SIGN_IN = 1
         private const val REQUEST_RESOLUTION = 2
         private const val ACTION_SIGN_IN = "sign-in"
     }
