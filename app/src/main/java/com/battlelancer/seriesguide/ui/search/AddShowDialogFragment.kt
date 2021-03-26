@@ -8,25 +8,15 @@ import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import butterknife.BindView
-import butterknife.BindViews
-import butterknife.ButterKnife
-import butterknife.OnClick
-import butterknife.Setter
-import butterknife.Unbinder
-import butterknife.ViewCollections
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.traktapi.TraktTools
@@ -58,51 +48,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         fun onAddShow(show: SearchResult)
     }
 
-    @BindView(R.id.containerShowInfo)
-    lateinit var containerShowInfo: ViewGroup
-    @BindView(R.id.textViewAddTitle)
-    lateinit var title: TextView
-    @BindView(R.id.textViewAddShowMeta)
-    lateinit var showmeta: TextView
-    @BindView(R.id.buttonAddLanguage)
-    lateinit var buttonLanguage: Button
-    @BindView(R.id.buttonAddDisplaySimilar)
-    lateinit var buttonDisplaySimilar: Button
-    @BindView(R.id.buttonAddStreamingSearch)
-    lateinit var buttonStreamingSearch: Button
-    @BindView(R.id.textViewAddStreamingSearch)
-    lateinit var textViewAddStreamingSearch: TextView
-    @BindView(R.id.buttonAddStreamingSearchInfo)
-    lateinit var buttonAddStreamingSearchInfo: ImageButton
-    @BindView(R.id.textViewAddDescription)
-    lateinit var overview: TextView
-    @BindView(R.id.textViewAddRatingValue)
-    lateinit var rating: TextView
-    @BindView(R.id.textViewAddRatingRange)
-    lateinit var ratingRange: TextView
-    @BindView(R.id.textViewAddGenres)
-    lateinit var genres: TextView
-    @BindView(R.id.textViewAddReleased)
-    lateinit var releasedTextView: TextView
-    @BindView(R.id.imageViewAddPoster)
-    lateinit var poster: ImageView
-
-    @BindViews(
-        R.id.textViewAddRatingValue,
-        R.id.textViewAddRatingLabel,
-        R.id.textViewAddRatingRange,
-        R.id.textViewAddGenresLabel
-    )
-    lateinit var labelViews: List<@JvmSuppressWildcards View>
-
-    @BindView(R.id.buttonPositive)
-    lateinit var buttonPositive: Button
-    @BindView(R.id.buttonNegative)
-    lateinit var buttonNegative: Button
-    @BindView(R.id.progressBarAdd)
-    lateinit var progressBar: View
-
-    private lateinit var unbinder: Unbinder
+    private var binding: DialogAddshowBinding? = null
     private lateinit var addShowListener: OnAddShowListener
     private var showTmdbId: Int = 0
     private lateinit var languageCode: String
@@ -138,38 +84,61 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.dialog_addshow, container, false)
+    ): View {
+        return DialogAddshowBinding.inflate(layoutInflater).also {
+            this.binding = it
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        unbinder = ButterKnife.bind(this, view)
-
-        // Long press hint.
-        CheatSheet.setup(buttonLanguage, R.string.pref_language)
-        // Buttons.
-        StreamingSearch.initButtons(
-            buttonStreamingSearch, buttonAddStreamingSearchInfo, parentFragmentManager
-        )
-        textViewAddStreamingSearch.isGone = true
-        buttonNegative.setText(R.string.dismiss)
-        buttonNegative.setOnClickListener { dismiss() }
-        buttonPositive.isGone = true
-
-        ratingRange.text = getString(R.string.format_rating_range, 10)
-
-        // Set up long-press to copy text to clipboard (d-pad friendly vs text selection).
-        containerShowInfo.setOnLongClickListener {
-            // Just copy text from views instead of re-building.
-            val summaryBuilder = StringBuilder().apply {
-                append(title.text).append("\n")
-                append(releasedTextView.text).append("\n")
-                append(showmeta.text)
+        binding?.apply {
+            // Long press hint.
+            CheatSheet.setup(buttonAddLanguage, R.string.pref_language)
+            // Buttons.
+            StreamingSearch.initButtons(
+                buttonAddStreamingSearch, buttonAddStreamingSearchInfo, parentFragmentManager
+            )
+            textViewAddStreamingSearch.isGone = true
+            buttonNegative.apply {
+                setText(R.string.dismiss)
+                setOnClickListener { dismiss() }
             }
-            copyTextToClipboard(it.context, summaryBuilder)
+            buttonPositive.isGone = true
+
+            textViewAddRatingRange.text = getString(R.string.format_rating_range, 10)
+
+            // Set up long-press to copy text to clipboard (d-pad friendly vs text selection).
+            containerShowInfo.setOnLongClickListener {
+                // Just copy text from views instead of re-building.
+                val summaryBuilder = StringBuilder().apply {
+                    append(textViewAddTitle.text).append("\n")
+                    append(textViewAddReleased.text).append("\n")
+                    append(textViewAddShowMeta.text)
+                }
+                copyTextToClipboard(it.context, summaryBuilder)
+            }
+            textViewAddDescription.copyTextToClipboardOnLongClick()
+            textViewAddGenres.copyTextToClipboardOnLongClick()
+
+            buttonAddLanguage.setOnClickListener {
+                ShowL10nDialogFragment.show(
+                    parentFragmentManager,
+                    languageCode,
+                    ShowL10nDialogFragment.TAG_ADD_DIALOG
+                )
+            }
+
+            buttonAddDisplaySimilar.setOnClickListener {
+                val details = model.showDetails.value
+                if (details?.show != null) {
+                    dismissAllowingStateLoss()
+                    SimilarShowsFragment.displaySimilarShowsEventLiveData.postValue(SearchResult().also {
+                        it.tmdbId = showTmdbId
+                        it.title = details.show.title
+                    })
+                }
+            }
         }
-        overview.copyTextToClipboardOnLongClick()
-        genres.copyTextToClipboardOnLongClick()
 
         if (showTmdbId <= 0) {
             Timber.e("Not a valid show, closing.")
@@ -182,14 +151,17 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         showProgressBar(true)
         model.showDetails.observe(viewLifecycleOwner) { show ->
             showProgressBar(false)
-            overview.isGone = false
+            binding?.textViewAddDescription?.isGone = false
             populateShowViews(show)
         }
         model.watchProvider.observe(viewLifecycleOwner, { watchInfo ->
-            val providerInfo =
-                StreamingSearch.configureButton(buttonStreamingSearch, watchInfo, false)
-            textViewAddStreamingSearch.text = providerInfo
-            textViewAddStreamingSearch.isGone = providerInfo == null
+            binding?.buttonAddStreamingSearch?.let {
+                val providerInfo = StreamingSearch.configureButton(it, watchInfo, false)
+                binding?.textViewAddStreamingSearch?.apply {
+                    text = providerInfo
+                    isGone = providerInfo == null
+                }
+            }
         })
     }
 
@@ -205,28 +177,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder.unbind()
-    }
-
-    @OnClick(R.id.buttonAddLanguage)
-    fun onClickButtonLanguage() {
-        ShowL10nDialogFragment.show(
-            parentFragmentManager,
-            languageCode,
-            ShowL10nDialogFragment.TAG_ADD_DIALOG
-        )
-    }
-
-    @OnClick(R.id.buttonAddDisplaySimilar)
-    fun onClickButtonDisplaySimilarShows() {
-        val details = model.showDetails.value
-        if (details?.show != null) {
-            dismissAllowingStateLoss()
-            SimilarShowsFragment.displaySimilarShowsEventLiveData.postValue(SearchResult().also {
-                it.tmdbId = showTmdbId
-                it.title = details.show.title
-            })
-        }
+        binding = null
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -237,39 +188,42 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         // Reload show details with new language.
         showProgressBar(true)
-        overview.visibility = View.INVISIBLE
+        binding?.textViewAddDescription?.visibility = View.INVISIBLE
 
         this.languageCode = event.selectedLanguageCode
         model.languageCode.value = event.selectedLanguageCode
     }
 
     private fun populateShowViews(result: AddShowDialogViewModel.ShowDetails) {
+        val binding = this.binding!!
+
         val show = result.show
         if (show == null) {
             // Failed to load, can't be added.
             if (!AndroidUtils.isNetworkConnected(requireContext())) {
-                overview.setText(R.string.offline)
+                binding.textViewAddDescription.setText(R.string.offline)
             } else if (result.doesNotExist) {
-                overview.setText(R.string.tvdb_error_does_not_exist)
+                binding.textViewAddDescription.setText(R.string.tvdb_error_does_not_exist)
             } else {
-                overview.text = getString(
+                binding.textViewAddDescription.text = getString(
                     R.string.api_error_generic,
                     "${getString(R.string.tmdb)}/${getString(R.string.trakt)}"
                 )
             }
             return
         }
+
         if (result.localShowId != null) {
             // Already added, offer to open show instead.
-            buttonPositive.setText(R.string.action_open)
-            buttonPositive.setOnClickListener {
+            binding.buttonPositive.setText(R.string.action_open)
+            binding.buttonPositive.setOnClickListener {
                 startActivity(OverviewActivity.intentShow(context, result.localShowId))
                 dismiss()
             }
         } else {
             // Not added, offer to add.
-            buttonPositive.setText(R.string.action_shows_add)
-            buttonPositive.setOnClickListener {
+            binding.buttonPositive.setText(R.string.action_shows_add)
+            binding.buttonPositive.setOnClickListener {
                 EventBus.getDefault().post(AddFragment.OnAddingShowEvent(showTmdbId))
                 addShowListener.onAddShow(SearchResult().also {
                     it.tmdbId = showTmdbId
@@ -279,13 +233,14 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 dismiss()
             }
         }
-        buttonPositive.isGone = false
+        binding.buttonPositive.isGone = false
 
-        buttonLanguage.text = LanguageTools.getShowLanguageStringFor(context, languageCode)
+        binding.buttonAddLanguage.text =
+            LanguageTools.getShowLanguageStringFor(context, languageCode)
 
         // Title, overview.
-        title.text = show.title
-        overview.text = show.overview
+        binding.textViewAddTitle.text = show.title
+        binding.textViewAddDescription.text = show.overview
 
         // Release year.
         val statusText = SpannableStringBuilder().also { statusText ->
@@ -318,7 +273,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 )
             }
         }
-        releasedTextView.text = statusText
+        binding.textViewAddReleased.text = statusText
 
         // Next release day and time.
         val timeAndNetworkText = SpannableStringBuilder().apply {
@@ -346,24 +301,30 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             append("\n")
             append(getString(R.string.runtime_minutes, show.runtime.toString()))
         }
-        showmeta.text = timeAndNetworkText
+        binding.textViewAddShowMeta.text = timeAndNetworkText
 
         // Rating.
-        rating.text = TraktTools.buildRatingString(show.ratingGlobal)
+        binding.textViewAddRatingValue.text = TraktTools.buildRatingString(show.ratingGlobal)
 
         // Genres.
-        ViewTools.setValueOrPlaceholder(genres, TextTools.splitAndKitTVDBStrings(show.genres))
+        ViewTools.setValueOrPlaceholder(
+            binding.textViewAddGenres,
+            TextTools.splitAndKitTVDBStrings(show.genres)
+        )
 
         // Poster.
-        ImageTools.loadShowPosterFitCrop(show.posterSmall, poster, requireActivity())
+        ImageTools.loadShowPosterFitCrop(
+            show.posterSmall,
+            binding.imageViewAddPoster,
+            requireActivity()
+        )
 
-        // Enable adding of show, display views.
-        buttonPositive.isEnabled = true
-        ViewCollections.set(labelViews, VISIBLE_SETTER, true)
+        // Enable adding of show.
+        binding.buttonPositive.isEnabled = true
     }
 
     private fun showProgressBar(isVisible: Boolean) {
-        progressBar.isGone = !isVisible
+        binding?.progressBarAdd?.isGone = !isVisible
     }
 
     companion object {
@@ -410,8 +371,5 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
         }
 
-        val VISIBLE_SETTER = Setter<View, Boolean> { view, value, _ ->
-            view.visibility = if (value == true) View.VISIBLE else View.INVISIBLE
-        }
     }
 }
