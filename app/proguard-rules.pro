@@ -66,6 +66,7 @@
 -dontwarn org.codehaus.mojo.animal_sniffer.*
 # OkHttp platform used only on JVM and when Conscrypt dependency is available.
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
 
 # Retrofit 2.x
 # Keep entity and enum classes. R8 may strip unused, but required fields from entities.
