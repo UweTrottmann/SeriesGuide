@@ -508,5 +508,5 @@
     <string name="feedback_action_ok">好的</string>
     <string name="feedback_action_nothanks">不，谢谢</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">支持一下开发者？</string>
 </resources>
