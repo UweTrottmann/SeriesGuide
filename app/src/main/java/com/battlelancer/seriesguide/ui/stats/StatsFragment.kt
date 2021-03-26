@@ -30,10 +30,15 @@ class StatsFragment : Fragment() {
     private var currentStats: Stats? = null
     private var hasFinalValues: Boolean = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentStatsBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -78,11 +83,6 @@ class StatsFragment : Fragment() {
         binding.textViewMoviesWatchedRuntime.copyTextToClipboardOnLongClick()
         binding.textViewMoviesCollection.copyTextToClipboardOnLongClick()
         binding.textViewMoviesCollectionRuntime.copyTextToClipboardOnLongClick()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setHasOptionsMenu(true)
 
         model.statsData.observe(viewLifecycleOwner, { this.handleStatsUpdate(it) })
     }

@@ -170,10 +170,6 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         }
         overview.copyTextToClipboardOnLongClick()
         genres.copyTextToClipboardOnLongClick()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         if (showTmdbId <= 0) {
             Timber.e("Not a valid show, closing.")
