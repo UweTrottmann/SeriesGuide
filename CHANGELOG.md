@@ -12,6 +12,12 @@ Version 58
 ----------
 *in development*
 
+#### 58-beta8
+*2021-03-26*
+
+* 🔧 Occasionally suggest to support with a sub as apparently many users do not know it is possible.
+* 📝 Latest translations from crowdin.
+
 #### 58-beta7
 *2021-03-19*
 
