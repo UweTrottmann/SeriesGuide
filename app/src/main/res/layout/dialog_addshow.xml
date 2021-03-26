@@ -250,11 +250,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Note: Lint MissingConstraints false positive, new Flow not recognized.
+         https://issuetracker.google.com/issues/181056543 -->
         <Button
             android:id="@+id/buttonNegative"
             style="?attr/buttonBarNegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
             tools:text="Button Negative With Long Text" />
 
         <Button
@@ -262,6 +265,7 @@
             style="?attr/buttonBarPositiveButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
             tools:text="Button Positive" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
