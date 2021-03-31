@@ -1,13 +1,12 @@
 package com.battlelancer.seriesguide.ui.search
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.TextAppearanceSpan
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
@@ -31,6 +30,7 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.CheatSheet
 import org.greenrobot.eventbus.EventBus
@@ -81,17 +81,12 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         setStyle(DialogFragment.STYLE_NO_TITLE, 0)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return DialogAddshowBinding.inflate(layoutInflater).also {
+    // Note: using onCreateDialog as onCreateView does not have proper auto-sizing depending on screen.
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogAddshowBinding.inflate(layoutInflater).also {
             this.binding = it
-        }.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.apply {
+        }
+        binding.apply {
             // Long press hint.
             CheatSheet.setup(buttonAddLanguage, R.string.pref_language)
             // Buttons.
@@ -144,25 +139,29 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             Timber.e("Not a valid show, closing.")
             dismiss()
             // Note: After dismiss still continues through lifecycle methods.
-            return
+        } else {
+            // Load show details.
+            showProgressBar(true)
+            // Note: viewLifeCycleOwner not available for DialogFragment, use DialogFragment itself.
+            model.showDetails.observe(this) { show ->
+                showProgressBar(false)
+                this.binding?.textViewAddDescription?.isGone = false
+                populateShowViews(show)
+            }
+            model.watchProvider.observe(this, { watchInfo ->
+                this.binding?.buttonAddStreamingSearch?.let {
+                    val providerInfo = StreamingSearch.configureButton(it, watchInfo, false)
+                    this.binding?.textViewAddStreamingSearch?.apply {
+                        text = providerInfo
+                        isGone = providerInfo == null
+                    }
+                }
+            })
         }
 
-        // Load show details.
-        showProgressBar(true)
-        model.showDetails.observe(viewLifecycleOwner) { show ->
-            showProgressBar(false)
-            binding?.textViewAddDescription?.isGone = false
-            populateShowViews(show)
-        }
-        model.watchProvider.observe(viewLifecycleOwner, { watchInfo ->
-            binding?.buttonAddStreamingSearch?.let {
-                val providerInfo = StreamingSearch.configureButton(it, watchInfo, false)
-                binding?.textViewAddStreamingSearch?.apply {
-                    text = providerInfo
-                    isGone = providerInfo == null
-                }
-            }
-        })
+        return MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.root)
+            .create()
     }
 
     override fun onStart() {

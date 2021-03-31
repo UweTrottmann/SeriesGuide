@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:minWidth="@dimen/dialog_min_width"
             android:paddingBottom="@dimen/large_padding">
 
             <ProgressBar
@@ -179,6 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonAddDisplaySimilar"
+                android:maxWidth="@dimen/max_width_text_size_body"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding">
 
