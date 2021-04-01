@@ -39,7 +39,6 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
-import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
@@ -148,8 +147,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             initLoader(
                 MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
             )
-            initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_CREDITS, args, creditsLoaderCallbacks)
         }
+        model.credits.observe(viewLifecycleOwner, {
+            populateMovieCreditsViews(it)
+        })
         model.watchProvider.observe(viewLifecycleOwner, { watchInfo ->
             StreamingSearch.configureButton(
                 binding.containerMovieButtons.buttonMovieStreamingSearch,
@@ -727,23 +728,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         override fun onLoaderReset(trailersLoader: Loader<Videos.Video>) {
-            // do nothing
-        }
-    }
-
-    private val creditsLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Credits?> {
-        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Credits?> {
-            return MovieCreditsLoader(context!!, args!!.getInt(ARG_TMDB_ID))
-        }
-
-        override fun onLoadFinished(creditsLoader: Loader<Credits?>, credits: Credits?) {
-            if (!isAdded) {
-                return
-            }
-            populateMovieCreditsViews(credits)
-        }
-
-        override fun onLoaderReset(creditsLoader: Loader<Credits?>) {
             // do nothing
         }
     }

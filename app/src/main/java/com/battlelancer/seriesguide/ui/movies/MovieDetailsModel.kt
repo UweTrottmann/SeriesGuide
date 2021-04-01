@@ -5,8 +5,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import kotlinx.coroutines.Dispatchers
 
 class MovieDetailsModel(
     movieTmdbId: Int,
@@ -30,6 +33,10 @@ class MovieDetailsModel(
             getApplication(),
             isMovie = true
         )
+    }
+
+    val credits = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+        emit(TmdbTools2().getCreditsForMovie(application, movieTmdbId))
     }
 
 }
