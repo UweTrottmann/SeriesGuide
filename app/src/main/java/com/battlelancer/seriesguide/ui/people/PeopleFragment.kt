@@ -10,12 +10,11 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.tmdb2.entities.Credits
 
 /**
  * A fragment loading and showing a list of cast or crew members.
@@ -34,6 +33,10 @@ class PeopleFragment : Fragment() {
     private var activateOnItemClick: Boolean = false
     /** The current activated item position. Only used on tablets.  */
     private var activatedPosition = ListView.INVALID_POSITION
+
+    private val model by viewModels<PeopleViewModel> {
+        PeopleViewModelFactory(requireActivity().application, tmdbId, mediaType)
+    }
 
     internal interface OnShowPersonListener {
         fun showPerson(tmdbId: Int)
@@ -86,21 +89,6 @@ class PeopleFragment : Fragment() {
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION))
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        try {
-            onShowPersonListener = context as OnShowPersonListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement OnShowPersonListener")
-        }
-
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         adapter = PeopleAdapter(context)
         listView.adapter = adapter
@@ -113,8 +101,31 @@ class PeopleFragment : Fragment() {
 
         emptyView.setButtonClickListener { refresh() }
 
-        LoaderManager.getInstance(this)
-            .initLoader(PeopleActivity.PEOPLE_LOADER_ID, null, creditsLoaderCallbacks)
+        model.credits.observe(viewLifecycleOwner, Observer {
+            setProgressVisibility(false)
+            setEmptyMessage()
+
+            if (it == null) {
+                adapter.setData(null)
+                return@Observer
+            }
+            if (peopleType == PeopleActivity.PeopleType.CAST) {
+                adapter.setData(PeopleListHelper.transformCastToPersonList(it.cast))
+            } else {
+                adapter.setData(PeopleListHelper.transformCrewToPersonList(it.crew))
+            }
+        })
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        try {
+            onShowPersonListener = context as OnShowPersonListener
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement OnShowPersonListener")
+        }
+
     }
 
     override fun onDetach() {
@@ -132,8 +143,7 @@ class PeopleFragment : Fragment() {
     }
 
     private fun refresh() {
-        LoaderManager.getInstance(this)
-            .restartLoader(PeopleActivity.PEOPLE_LOADER_ID, null, creditsLoaderCallbacks)
+        model.loadCredits()
     }
 
     /**
@@ -175,37 +185,6 @@ class PeopleFragment : Fragment() {
             emptyView.setMessage(R.string.people_empty)
         }
         emptyView.setContentVisibility(View.VISIBLE)
-    }
-
-    private val creditsLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Credits?> {
-        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Credits?> {
-            setProgressVisibility(true)
-
-            return if (mediaType == PeopleActivity.MediaType.MOVIE) {
-                MovieCreditsLoader(context!!, tmdbId)
-            } else {
-                ShowCreditsLoader(context!!, tmdbId, false)
-            }
-        }
-
-        override fun onLoadFinished(loader: Loader<Credits?>, data: Credits?) {
-            setProgressVisibility(false)
-            setEmptyMessage()
-
-            if (data == null) {
-                adapter.setData(null)
-                return
-            }
-            if (peopleType == PeopleActivity.PeopleType.CAST) {
-                adapter.setData(PeopleListHelper.transformCastToPersonList(data.cast))
-            } else {
-                adapter.setData(PeopleListHelper.transformCrewToPersonList(data.crew))
-            }
-        }
-
-        override fun onLoaderReset(loader: Loader<Credits?>) {
-            // do nothing, preferring stale data over no data
-        }
     }
 
     companion object {

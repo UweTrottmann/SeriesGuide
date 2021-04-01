@@ -26,7 +26,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
         String PEOPLE_TYPE = "people_type";
     }
 
-    enum MediaType {
+    public enum MediaType {
         SHOW("SHOW"),
         MOVIE("MOVIE");
 

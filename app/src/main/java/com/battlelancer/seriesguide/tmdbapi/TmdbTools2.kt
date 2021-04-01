@@ -165,23 +165,43 @@ class TmdbTools2 {
                 } else {
                     null
                 }
-            if (tmdbId == null || tmdbId < 0) return@withContext null
-
-            // get credits for that show
-            try {
-                val response = SgApp.getServicesComponent(context).tmdb().tvService()
-                    .credits(tmdbId, null)
-                    .execute()
-                if (response.isSuccessful) {
-                    return@withContext response.body()
-                } else {
-                    Errors.logAndReport("get show credits", response)
-                }
-            } catch (e: Exception) {
-                Errors.logAndReport("get show credits", e)
+            if (tmdbId == null || tmdbId < 0) {
+                return@withContext null
             }
-            return@withContext null
+            return@withContext getCreditsForShow(context, tmdbId)
         }
+
+    fun getCreditsForShow(context: Context, tmdbId: Int): Credits? {
+        try {
+            val response = SgApp.getServicesComponent(context).tmdb().tvService()
+                .credits(tmdbId, null)
+                .execute()
+            if (response.isSuccessful) {
+                return response.body()
+            } else {
+                Errors.logAndReport("get show credits", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("get show credits", e)
+        }
+        return null
+    }
+
+    fun getCreditsForMovie(context: Context, tmdbId: Int): Credits? {
+        try {
+            val response = SgApp.getServicesComponent(context).moviesService()
+                .credits(tmdbId)
+                .execute()
+            if (response.isSuccessful) {
+                return response.body()
+            } else {
+                Errors.logAndReport("get movie credits", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("get movie credits", e)
+        }
+        return null
+    }
 
     fun getSeason(
         showTmdbId: Int,
