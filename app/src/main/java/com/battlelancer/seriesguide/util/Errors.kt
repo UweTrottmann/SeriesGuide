@@ -201,15 +201,17 @@ class Errors {
 //            getReporter()?.recordException(throwable)
 
             getCounter()?.also {
-                val messageOrNone = when {
-                    message != null -> message
-                    response.message.isNotEmpty() -> response.message
-                    else -> "none"
+                // Do not add response code to event key to avoid creating multiple events.
+                // Instead add prefix message with it, can use segmentation and time to filter.
+                val messageOrCodeOnly = when {
+                    message != null -> "${response.code} $message"
+                    response.message.isNotEmpty() -> "${response.code} ${response.message}"
+                    else -> response.code
                 }
                 it.events().recordEvent(
-                    "$action ${response.code}",
+                    action,
                     mapOf(
-                        "message" to messageOrNone,
+                        "message" to messageOrCodeOnly,
                         "android" to Build.VERSION.RELEASE,
                         "version" to appVersion,
                         "device" to Build.MODEL
