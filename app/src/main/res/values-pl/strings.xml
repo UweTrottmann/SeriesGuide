@@ -54,7 +54,7 @@
     <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
     <string name="api_failed">Błąd: %s</string>
     <string name="copy_to_clipboard">Skopiowano do schowka</string>
-    <string name="not_migrated">Nie znaleziono na TMDb. Pozycja zostanie usunięta podczas kolejnej aktualizacji. Naciśnij, aby dowiedzieć się więcej.</string>
+    <string name="not_migrated">Nie znaleziono na TMDb. Pozycja zostanie usunięta w przyszłej aktualizacji. Kliknij, aby zobaczyć szczegóły</string>
     <!-- Sharing -->
     <string name="share">Udostępnij</string>
     <string name="share_show">Współdziel serial</string>
@@ -228,7 +228,7 @@
     <string name="list_manage">Zarządzaj listą</string>
     <string name="list_item_manage">Zarządzaj listami</string>
     <string name="list_item_remove">Usuń z listy</string>
-    <string name="list_empty">Można dodać seriale do tej listy</string>
+    <string name="list_empty">Możesz dodać seriale do tej listy</string>
     <string name="action_lists_sort">Sortowanie list</string>
     <string name="action_lists_reorder">Zmień kolejność list</string>
     <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
@@ -541,5 +541,5 @@
     <string name="feedback_action_ok">Tak, w porządku</string>
     <string name="feedback_action_nothanks">Nie, dziękuję</string>
     <!-- Support -->
-    <string name="support_the_dev">Wesprzyj dewelopera</string>
+    <string name="support_the_dev">Czy wesprzesz dewelopera?</string>
 </resources>
