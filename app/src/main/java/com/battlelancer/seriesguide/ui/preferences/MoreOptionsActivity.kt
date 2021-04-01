@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.ui.DebugViewFragment
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.copyTextToClipboardOnClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.Subscribe
@@ -113,6 +114,7 @@ class MoreOptionsActivity : BaseTopActivity() {
             startActivity(Intent(this, AboutActivity::class.java))
         }
         binding.textViewMoreVersionInfo.text = Utils.getVersionString(this)
+        binding.textViewMoreVersionInfo.copyTextToClipboardOnClick()
     }
 
     override fun onStart() {
