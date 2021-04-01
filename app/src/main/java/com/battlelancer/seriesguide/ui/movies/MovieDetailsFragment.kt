@@ -129,8 +129,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         tmdbId = requireArguments().getInt(ARG_TMDB_ID)
         if (tmdbId <= 0) {
