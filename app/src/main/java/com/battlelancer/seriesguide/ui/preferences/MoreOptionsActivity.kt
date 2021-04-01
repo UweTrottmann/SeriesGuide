@@ -109,6 +109,10 @@ class MoreOptionsActivity : BaseTopActivity() {
                 DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")
             }
         }
+        binding.buttonMoreAbout.setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
+        binding.textViewMoreVersionInfo.text = Utils.getVersionString(this)
     }
 
     override fun onStart() {

@@ -236,6 +236,31 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonTranslations" />
 
+                <Button
+                    android:id="@+id/buttonMoreAbout"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/prefs_category_about"
+                    app:icon="@drawable/ic_info_control_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonDebugView" />
+
+                <TextView
+                    android:id="@+id/textViewMoreVersionInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large_padding"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:layout_marginEnd="@dimen/large_padding"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonMoreAbout"
+                    tools:text="v58 (Database v49)" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
