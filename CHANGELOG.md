@@ -12,6 +12,13 @@ Version 58
 ----------
 *in development*
 
+#### 58-beta9
+*2021-04-01*
+
+* 🔧 The add show dialog is now sized bigger in most cases.
+* 🔧 Move about screen up to more options.
+* 📝 Latest translations from crowdin.
+
 #### 58-beta8
 *2021-03-26*
 
