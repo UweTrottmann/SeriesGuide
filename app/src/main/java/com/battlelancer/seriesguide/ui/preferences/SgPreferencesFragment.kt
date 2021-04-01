@@ -89,9 +89,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 isChecked = true
             }
         }
-
-        // display version as About summary
-        findPreference<Preference>(KEY_ABOUT)!!.summary = Utils.getVersionString(activity)
     }
 
     private fun updateRootSettings() {
@@ -335,13 +332,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             ).show()
             return false // Let the pref handle the click (and change its value).
         }
-        if (KEY_ABOUT == key) {
-            val ft = parentFragmentManager.beginTransaction()
-            ft.replace(R.id.containerSettings, AboutPreferencesFragment())
-            ft.addToBackStack(null)
-            ft.commit()
-            return true
-        }
         return super.onPreferenceTreeClick(preference)
     }
 
@@ -519,7 +509,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         // Preference keys
         private const val KEY_CLEAR_CACHE = "clearCache"
         //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
-        private const val KEY_ABOUT = "aboutPref"
         //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
         private const val KEY_BATTERY_SETTINGS = "com.battlelancer.seriesguide.notifications.battery"
 

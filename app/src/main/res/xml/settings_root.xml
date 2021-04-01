@@ -83,11 +83,6 @@
             app:key="com.battlelancer.seriesguide.sendErrorReports"
             app:title="@string/pref_error_reports" />
 
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="aboutPref"
-            app:title="@string/prefs_category_about" />
-
     </PreferenceCategory>
 
     <!-- Danger Zone - not translated -->
