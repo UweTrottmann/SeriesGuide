@@ -1,8 +1,8 @@
 package com.battlelancer.seriesguide.traktapi
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.text.HtmlCompat
-import androidx.lifecycle.ViewModelProvider
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
@@ -18,12 +18,11 @@ import java.security.SecureRandom
 class TraktAuthActivity : BaseOAuthActivity() {
 
     private var state: String? = null
-    private lateinit var model: TraktAuthActivityModel
+    private val model by viewModels<TraktAuthActivityModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        model = ViewModelProvider(this).get(TraktAuthActivityModel::class.java)
         model.connectResult.observe(this, {
             handleTraktConnectResult(it)
         })
