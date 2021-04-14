@@ -123,7 +123,7 @@
     <string name="state_favorite">收藏</string>
     <!-- Shows -->
     <string name="confirm_delete">您要删除 %s 节目吗？</string>
-    <string name="delete_error">无法移除此节目。请稍后重试</string>
+    <string name="delete_error">无法移除此节目。请稍后重试。</string>
     <string name="delete_show">移除</string>
     <string name="no_nextepisode">没有新剧集信息</string>
     <string name="context_favorite">喜欢</string>
