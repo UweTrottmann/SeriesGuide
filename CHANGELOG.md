@@ -12,6 +12,12 @@ Version 58
 ----------
 *in development*
 
+#### 58
+*2021-04-15*
+
+* 🔨 Resolve crash when connecting to Trakt in some cases.
+* 📝 Latest translations from crowdin.
+
 #### 58-beta9
 *2021-04-01*
 
