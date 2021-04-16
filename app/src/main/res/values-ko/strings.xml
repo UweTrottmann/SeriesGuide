@@ -36,7 +36,7 @@
     <string name="sync_and_update">동기화하고 업데이트</string>
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
     <string name="action_stream">스트리밍 or 구매</string>
-    <string name="action_stream_info">스트리밍 or 구매</string>
+    <string name="action_stream_info">스트리밍 또 구매</string>
     <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>

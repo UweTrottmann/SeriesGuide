@@ -10,7 +10,19 @@ Release notes
 
 Version 58
 ----------
-*in development*
+*2021-04-15*
+
+* 🌟 Switch show data source to themoviedb.org (TMDB). Shows need to update before all features,
+  like Trakt or Cloud, can be used again. Shows or episodes not available on TMDB remain in your
+  library until you remove that show, Trakt and Cloud features do no longer work with them.
+* 🌟 Display most popular watch provider. Supports more regions. Powered by JustWatch via TMDb.
+* 🔧 Lists can now only contain shows. Existing season and episode list items can only be removed.
+
+#### 58
+*2021-04-15*
+
+* 🔨 Resolve crash when connecting to Trakt in some cases.
+* 📝 Latest translations from crowdin.
 
 #### 58-beta9
 *2021-04-01*

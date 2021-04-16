@@ -485,7 +485,7 @@
     <string name="billing_price_pass">Egyszeri fizetés</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">X Pass alkalmazás felismerve. Feliratkozás szükséges lehet a jövőbeni frissítések támogatásához.</string>
     <string name="billing_learn_more">Továbi információk és segítség</string>
     <string name="subscription_expired">Lejárt az előfizetés</string>
     <string name="subscription_expired_details">Lejárt a SeriesGuide előfizetésed.</string>
@@ -519,5 +519,5 @@
     <string name="feedback_action_ok">Ok, miért ne</string>
     <string name="feedback_action_nothanks">Köszönöm, nem</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Támogatod a fejlesztőt?</string>
 </resources>
