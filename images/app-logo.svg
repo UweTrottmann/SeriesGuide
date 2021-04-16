@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="192" height="192" version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:osb="http://www.openswatchbook.org/uri/2009/osb" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>SeriesGuide App Logo</title>
+ <defs>
+  <linearGradient id="linearGradient4094" x1="22.292" x2="97.922" y1="22.005" y2="97.636" gradientTransform="matrix(1.8694 0 0 1.8694 -17.491 655.52)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#000000" offset="0"/>
+   <stop stop-color="#000000" stop-opacity="0" offset="1"/>
+  </linearGradient>
+  <filter id="filter5278">
+   <feGaussianBlur stdDeviation="1.2888594"/>
+  </filter>
+  <filter id="filter4216" x="-.1272" y="-.16591" width="1.2544" height="1.3318">
+   <feGaussianBlur stdDeviation="20.237396"/>
+  </filter>
+  <radialGradient id="radialGradient4235" cx="37.831" cy="-724.21" r="396" gradientTransform="matrix(1.3015e-8 .33333 -.32323 1.3422e-8 -224.26 -68.816)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#ffffff" stop-opacity=".10196" offset="0"/>
+   <stop stop-color="#ffffff" stop-opacity=".05098" offset=".33"/>
+   <stop stop-color="#ffffff" stop-opacity="0" offset="1"/>
+  </radialGradient>
+  <filter id="filter4241" x="-.15533" y="-.13421" width="1.3107" height="1.2684">
+   <feGaussianBlur stdDeviation="10.1775"/>
+  </filter>
+ </defs>
+ <g transform="translate(0,64)" display="none">
+  <rect transform="matrix(1.442 0 0 1.4735 4.3332 -57.306)" x="1.1559" y="19.888" width="124.82" height="86.865" rx="5.4244" ry="5.4291" display="inline" fill="#000000" fill-opacity=".21" fill-rule="evenodd" filter="url(#filter5278)"/>
+ </g>
+ <g transform="translate(-1.8315 88.205)">
+  <rect x="9.8315" y="-56.205" width="176" height="128" rx="8" ry="8" fill="#6545a0" stroke-width=".22222"/>
+ </g>
+ <g transform="translate(0,-672)" fill="none" stroke-width="2">
+  <path d="m9 712c0-4 3-7 7-7h160c4 0 7 3 7 7" opacity=".2" stroke="#ffffff"/>
+  <path d="m9 824c0 4 2.9999 7 7 7h160c4 0 7-3 7-7" opacity=".2" stroke="#1a237e"/>
+ </g>
+ <g transform="translate(0,-672)" display="none" font-family="sans-serif" letter-spacing="0px" word-spacing="0px">
+  <text transform="matrix(.19263 0 0 .19263 7.2078 681.84)" x="684" y="746" display="inline" fill="#000000" filter="url(#filter4241)" opacity=".2" style="line-height:0%" xml:space="preserve"><tspan x="684" y="746" fill="#000000" font-family="Roboto" font-size="256px" font-weight="bold" style="line-height:1.25">X</tspan></text>
+  <text x="143.03549" y="824" fill="#e6e6e6" font-size="2.0576px" stroke-width=".17147" style="line-height:0%" xml:space="preserve"><tspan x="143.03549" y="824" fill="#e6e6e6" font-family="Roboto" font-size="43.896px" font-weight="bold" stroke-width=".17147" style="line-height:1.25">X</tspan></text>
+ </g>
+ <g transform="translate(0,-672)">
+  <path d="m83 801 31 31h70v-44l-44-44z" fill="url(#linearGradient4094)" opacity=".2"/>
+ </g>
+ <g transform="translate(-1.8315 88.205)">
+  <path transform="matrix(.24535 0 0 .24535 41.307 8.3953)" d="m51.046 22.007 126.35 126.35 232.32-232.32-36.682-36.682-195.64 195.64-89.382-89.382z" fill="#000000" filter="url(#filter4216)" opacity=".2"/>
+  <g>
+   <path d="m53.831 9.7947 31 31 57-57-9-9-48 48-22-22z" fill="#ffffff" opacity=".9" stroke="#846ab3" stroke-width=".24535"/>
+   <path d="m53.831 9.7947 31 31 57-57" fill="none" stroke="#808080" stroke-linecap="round" stroke-width=".4907"/>
+   <path d="m141.83-16.205-9-9-48 48-22-22-9 9" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width=".4907"/>
+  </g>
+  <rect x="9.8315" y="-56.205" width="176" height="128" rx="8" ry="8" fill="url(#radialGradient4235)"/>
+ </g>
+ <g transform="translate(0,-672)" display="none">
+  <text x="-2.8284276" y="621.10883" fill="#000000" font-family="sans-serif" font-size="16px" letter-spacing="0px" word-spacing="0px" style="line-height:0%" xml:space="preserve"><tspan x="-2.8284276" y="621.10883" style="line-height:1.25">4px=1 dp (192px =48dp)</tspan><tspan x="-2.8284276" y="641.10883" style="line-height:1.25">1dp margin</tspan><tspan x="-2.8284276" y="661.10883" style="line-height:1.25">12dp inset</tspan></text>
+ </g>
+</svg>

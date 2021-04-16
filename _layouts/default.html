@@ -4,12 +4,15 @@
   {% include head.html %}
 
 <body>
-  <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary" role="navigation">
+  <nav class="navbar navbar-expand-sm navbar-light" role="navigation">
     <div class="container justify-content-start">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand ml-3 ml-md-0 mr-md-3" href="/">SeriesGuide</a>
+      <a class="navbar-brand ml-3 ml-md-0 mr-md-3" href="/">
+        <img src="/images/app-logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        SeriesGuide
+      </a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -46,7 +49,7 @@
     </div>
   </nav> <!-- navbar -->
 
-  <div id="content" class="container">
+  <div id="content" class="container mt-3">
     {{ content }}
   </div> <!-- container -->
     
