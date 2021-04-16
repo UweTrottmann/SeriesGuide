@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
@@ -112,8 +112,8 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<NowItem> friendsRecently;
 
     public static class NowItem {
-        public Integer episodeTvdbId;
-        public Integer showTvdbId;
+        public Long episodeRowId;
+        public Integer showTmdbId;
         public Integer movieTmdbId;
         public long timestamp;
         public String title;
@@ -144,9 +144,12 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return this;
         }
 
-        public NowItem tvdbIds(Integer episodeTvdbId, Integer showTvdbId) {
-            this.episodeTvdbId = episodeTvdbId;
-            this.showTvdbId = showTvdbId;
+        /**
+         * Pass 0 if no value.
+         */
+        public NowItem episodeIds(long episodeRowId, int showTmdbId) {
+            this.episodeRowId = episodeRowId;
+            this.showTmdbId = showTmdbId;
             return this;
         }
 
@@ -243,7 +246,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
 
             // a TVDb or no poster
-            TvdbImageTools.loadShowPosterResizeSmallCrop(getContext(), holder.poster,
+            ImageTools.loadShowPosterUrlResizeSmallCrop(getContext(), holder.poster,
                     item.tvdbPosterUrl);
 
             holder.show.setText(item.title);

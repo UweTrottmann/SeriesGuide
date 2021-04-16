@@ -39,8 +39,9 @@
     <string name="sync_manually">Sync manually</string>
     <string name="sync_and_update">Sync &amp; Update</string>
     <string name="sync_and_download_all">Sync &amp; Download all</string>
-    <string name="action_turn_off">Turn off</string>
     <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
 
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>
@@ -59,6 +60,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
 
     <!-- Sharing -->
     <string name="share">Share</string>
@@ -101,6 +103,9 @@
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>
     <string name="show_isUpcoming">Upcoming</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Not translated</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -215,7 +220,7 @@
     <string name="no_results">No results, try complete words</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">Try again</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Add all</string>
     <string name="add_multiple">All shows will appear in your show list shortly</string>
     <string name="add_started">%s will appear in your show list shortly</string>
@@ -238,7 +243,7 @@
     <string name="list_manage">Manage list</string>
     <string name="list_item_manage">Manage lists</string>
     <string name="list_item_remove">Remove from list</string>
-    <string name="list_empty">You can add shows, seasons or episodes to this list</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sort lists</string>
     <string name="action_lists_reorder">Reorder lists</string>
     <string name="error_name_already_exists">A list with this name already exists</string>
@@ -544,6 +549,7 @@
     <string name="billing_price_pass">one-time purchase</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Thanks for supporting SeriesGuide! You have access to all features.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Subscription expired</string>
     <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
@@ -580,5 +586,8 @@
     <string name="feedback_question_feedback">Tell me how to improve it?</string>
     <string name="feedback_action_ok">OK, sure</string>
     <string name="feedback_action_nothanks">No, thanks</string>
+
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 
 </resources>

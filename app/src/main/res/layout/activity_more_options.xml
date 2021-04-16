@@ -189,6 +189,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/buttonFeedback" />
 
                 <Button
+                    android:id="@+id/buttonTwitter"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/twitter"
+                    app:icon="@drawable/ic_link_black_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonCommunity" />
+
+                <Button
                     android:id="@+id/buttonContributeContent"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
                     android:layout_width="0dp"
@@ -198,7 +210,7 @@
                     app:iconGravity="start"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonCommunity" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonTwitter" />
 
                 <Button
                     android:id="@+id/buttonTranslations"
@@ -223,6 +235,32 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonTranslations" />
+
+                <Button
+                    android:id="@+id/buttonMoreAbout"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:text="@string/prefs_category_about"
+                    app:icon="@drawable/ic_info_control_24dp"
+                    app:iconGravity="start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonDebugView" />
+
+                <TextView
+                    android:id="@+id/textViewMoreVersionInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large_padding"
+                    android:layout_marginEnd="@dimen/large_padding"
+                    android:gravity="center_vertical"
+                    android:minHeight="40dp"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonMoreAbout"
+                    tools:text="v58 (Database v49)" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

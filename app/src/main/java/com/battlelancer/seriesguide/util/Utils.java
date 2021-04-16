@@ -131,7 +131,7 @@ public class Utils {
             }
         } catch (NameNotFoundException e) {
             // Expected exception that occurs if the package is not present.
-            Timber.i("X Pass not found.");
+            Timber.d("X Pass not found.");
         }
 
         return false;
@@ -143,11 +143,7 @@ public class Utils {
      */
     public static void advertiseSubscription(Context context) {
         Toast.makeText(context, R.string.onlyx, Toast.LENGTH_SHORT).show();
-        if (isAmazonVersion()) {
-            context.startActivity(new Intent(context, AmazonBillingActivity.class));
-        } else {
-            context.startActivity(new Intent(context, BillingActivity.class));
-        }
+        context.startActivity(getBillingActivityIntent(context));
     }
 
     /**
@@ -158,6 +154,7 @@ public class Utils {
         return "amazon".equals(BuildConfig.FLAVOR);
     }
 
+    @NonNull
     public static Intent getBillingActivityIntent(Context context) {
         if (Utils.isAmazonVersion()) {
            return new Intent(context, AmazonBillingActivity.class);

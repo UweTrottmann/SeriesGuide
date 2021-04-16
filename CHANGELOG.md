@@ -8,6 +8,92 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 58
+----------
+*2021-04-15*
+
+* 🌟 Switch show data source to themoviedb.org (TMDB). Shows need to update before all features,
+  like Trakt or Cloud, can be used again. Shows or episodes not available on TMDB remain in your
+  library until you remove that show, Trakt and Cloud features do no longer work with them.
+* 🌟 Display most popular watch provider. Supports more regions. Powered by JustWatch via TMDb.
+* 🔧 Lists can now only contain shows. Existing season and episode list items can only be removed.
+
+#### 58
+*2021-04-15*
+
+* 🔨 Resolve crash when connecting to Trakt in some cases.
+* 📝 Latest translations from crowdin.
+
+#### 58-beta9
+*2021-04-01*
+
+* 🔧 The add show dialog is now sized bigger in most cases.
+* 🔧 Move about screen up to more options.
+* 📝 Latest translations from crowdin.
+
+#### 58-beta8
+*2021-03-26*
+
+* 🔧 Occasionally suggest to support with a sub as apparently many users do not know it is possible.
+* 📝 Latest translations from crowdin.
+
+#### 58-beta7
+*2021-03-19*
+
+* 🔧 Lists again display (unsupported) seasons and episodes (as long as a show is not removed and re-added).
+* 🔧 Display X Pass detected message, restore X Pass App button, sort subscription tiers by price.
+* 📝 Add Twitter account link.
+* 📝 Latest translations from crowdin.
+
+#### 58-beta6
+*2021-03-17*
+
+* 🌟 Display most popular watch provider inside stream or purchase button. Support more regions. Powered by JustWatch via TMDb.
+* 🔧 Do no longer remove episodes that are not on TMDB, instead display info message.
+* 🔧 When filtering for continuing shows, include pilot and in production shows. Include canceled if excluding.
+* 📝 Latest translations from crowdin.
+
+#### 58-beta5
+*2021-03-06*
+
+* 🔨 Resolve (auto) backup failing if lists or movies are missing some properties.
+* 🔨 Notification selection: show empty text only if list is empty.
+* 📝 Latest translations from crowdin.
+
+#### 58-beta4
+*2021-03-05*
+
+* 🔧 Allow adding show with duplicate TheTVDB ID if the TMDB ID is different. Background: TheTVDB
+  recently started combining shows that are still separate on TMDB. TMDB may then link to the same TheTVDB ID.
+* 🔨 Do not crash if show fallback response failed.
+* 🔨 Limit episode search results to 500 to avoid crash.
+* 🔧 Report auto backup errors.
+
+#### 58-beta3
+*2021-03-04*
+
+* 🔧 Seasons and episodes that are not on TMDB are now removed from shows. This should be a better
+  user experience, e.g. it avoids errors when setting watched on Trakt.
+* 🔨 Resolve crash when downloading not watched/collected episode info from Cloud.
+* 🔨 Do not fail update if a show can not be found on Trakt.
+
+#### 58-beta2
+*2021-03-03*
+
+* 🔨 Resolve crash when adding show without run time info.
+* 🔨 Resolve crash when downloading not watched/collected episode info from Cloud.
+
+#### 58-beta1
+*2021-03-03*
+
+* 🌟 Show data is now powered by themoviedb.org (TMDB). Your shows need to update before some
+  functionality, incl. Trakt or Cloud can be used again. Shows or episodes not available on TMDB
+  currently remain in your library, but functionality is reduced (e.g. no Trakt or Cloud support).
+* 🌟 Share a TMDB show url to SeriesGuide to add a show (support for TVDB URLs was removed).
+* 🔧 Lists can now only contain shows. Note: use the backup tool to export your season and episode lists.
+* 🔧 Allow longer check in messages.
+* 📝 Latest translations from crowdin.
+
 Version 57
 ----------
 *2020-12-04*

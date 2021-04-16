@@ -35,8 +35,9 @@
     <string name="sync_manually">Sincronizare manuala</string>
     <string name="sync_and_update">Sincronizare &amp; innoita</string>
     <string name="sync_and_download_all">Sincronizare &amp; Descărcă tot</string>
-    <string name="action_turn_off">Dezactivați</string>
     <string name="action_stream">Stream sau cumpăra</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Ștergere istoric căutare</string>
     <string name="search_hint">Căutaţi episoade</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
     <string name="api_failed">Eroare: %s</string>
     <string name="copy_to_clipboard">Copiat în clipboard</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Distribuie</string>
     <string name="share_show">Distribuie emisiunea</string>
@@ -89,6 +91,9 @@
     <string name="show_isalive">Continuă</string>
     <string name="show_isnotalive">Terminat</string>
     <string name="show_isUpcoming">Urmează</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Nu există nici o traducere în %1$s disponibilă pe %2$s.</string>
     <string name="no_translation_title">Ne tradus</string>
     <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
@@ -198,7 +203,7 @@
     <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
     <string name="empty_show_search">Nu a fost găsit in lista de dumneavoastră de showuri</string>
     <string name="action_try_again">Încearcă din nou</string>
-    <string name="tvdb_error_does_not_exist">Acest serial nu există (încă) pe TheTVDB. Încercați mai târziu.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Adaugă-le pe toate</string>
     <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>
     <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
@@ -219,7 +224,7 @@
     <string name="list_manage">Gestionați lista</string>
     <string name="list_item_manage">Gestionați listele</string>
     <string name="list_item_remove">Șterge din listă</string>
-    <string name="list_empty">Puteţi adăuga emisiuni, sezoane sau episoade la această listă.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sortează lista</string>
     <string name="action_lists_reorder">Reordonaţi lista</string>
     <string name="error_name_already_exists">O listă cu acest nume deja există</string>
@@ -484,13 +489,14 @@
     <string name="action_upgrade">Deblocați toate opțiunile</string>
     <string name="billing_action_subscribe">Abonează-te</string>
     <string name="billing_action_manage_subscriptions">Gestionaţi abonamentele</string>
-    <string name="billing_action_pass">Obțineți abonamentul X</string>
+    <string name="billing_action_pass">Obțineți X Pass App</string>
     <string name="billing_price_subscribe">%1$s/ an, testează gratuit, anuleaza oricand prin%2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">plată unică</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Mulțumim pentru suportul SeriesGuide! Ai access la toate opțiunile.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Abonament expirat</string>
     <string name="subscription_expired_details">Abonamentul la opțiunile X a expirat.</string>
@@ -523,4 +529,6 @@
     <string name="feedback_question_feedback">Spune-mi cum sa o improvizez</string>
     <string name="feedback_action_ok">Ok, sigur</string>
     <string name="feedback_action_nothanks">Nu, mulțumesc</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

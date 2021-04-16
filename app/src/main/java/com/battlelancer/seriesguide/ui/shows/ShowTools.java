@@ -1,35 +1,28 @@
 package com.battlelancer.seriesguide.ui.shows;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.enums.Result;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowDetails;
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.seriesguide.backend.shows.model.Show;
+import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import timber.log.Timber;
 
@@ -38,18 +31,13 @@ import timber.log.Timber;
  */
 public class ShowTools {
 
-    public static class ShowChangedEvent {
-        public int showTvdbId;
-
-        public ShowChangedEvent(int showTvdbId) {
-            this.showTvdbId = showTvdbId;
-        }
-    }
-
     /**
      * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
      */
     public interface Status {
+        int IN_PRODUCTION = 5;
+        int PILOT = 4;
+        int CANCELED = 3;
         int UPCOMING = 2;
         int CONTINUING = 1;
         int ENDED = 0;
@@ -65,113 +53,45 @@ public class ShowTools {
         this.showTools2 = new ShowTools2(this, context);
     }
 
-    /**
-     * Removes a show and its seasons and episodes, including all images. Sends isRemoved flag to
-     * Hexagon.
-     *
-     * @return One of {@link com.battlelancer.seriesguide.enums.NetworkResult}.
-     */
-    public int removeShow(int showTvdbId) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (!AndroidUtils.isNetworkConnected(context)) {
-                return NetworkResult.OFFLINE;
-            }
-            // send to cloud
-            sendIsRemoved(showTvdbId);
-        }
-
-        // remove database entries in stages, so if an earlier stage fails, user can at least try again
-        // also saves memory by applying batches early
-
-        // SEARCH DATABASE ENTRIES
-        final Cursor episodes = context.getContentResolver().query(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId), new String[]{
-                        SeriesGuideContract.Episodes._ID
-                }, null, null, null
-        );
-        if (episodes == null) {
-            // failed
-            return Result.ERROR;
-        }
-        List<String> episodeTvdbIds = new LinkedList<>(); // need those for search entries
-        while (episodes.moveToNext()) {
-            episodeTvdbIds.add(episodes.getString(0));
-        }
-        episodes.close();
-
-        // remove episode search database entries
-        final ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        for (String episodeTvdbId : episodeTvdbIds) {
-            batch.add(ContentProviderOperation.newDelete(
-                    SeriesGuideContract.EpisodeSearch.buildDocIdUri(episodeTvdbId)).build());
-        }
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "Removing episode search entries failed");
-            return Result.ERROR;
-        }
-        batch.clear();
-
-        // ACTUAL ENTITY ENTRIES
-        // remove episodes, seasons and show
-        batch.add(ContentProviderOperation.newDelete(
-                SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId)).build());
-        batch.add(ContentProviderOperation.newDelete(
-                SeriesGuideContract.Seasons.buildSeasonsOfShowUri(showTvdbId)).build());
-        batch.add(ContentProviderOperation.newDelete(
-                SeriesGuideContract.Shows.buildShowUri(showTvdbId)).build());
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "Removing episodes, seasons and show failed");
-            return Result.ERROR;
-        }
-
-        // make sure other loaders (activity, overview, details, search) are notified
-        context.getContentResolver().notifyChange(
-                SeriesGuideContract.Episodes.CONTENT_URI_WITHSHOW, null);
-        context.getContentResolver().notifyChange(
-                SeriesGuideContract.Shows.CONTENT_URI_FILTER, null);
-
-        return Result.SUCCESS;
+    @NonNull
+    public ShowDetails getShowDetails(int showTmdbId, String desiredLanguage) {
+        return showTools2.getShowDetails(showTmdbId, desiredLanguage, false);
     }
 
-    /**
-     * Adds the show on Hexagon. Or if it does already exist, clears the isRemoved flag and updates
-     * the language, so the show will be auto-added on other connected devices.
-     */
-    public void sendIsAdded(int showTvdbId, @NonNull String language) {
-        Show show = new Show();
-        show.setTvdbId(showTvdbId);
-        show.setLanguage(language);
-        show.setIsRemoved(false);
-        uploadShowAsync(show);
+    @Nullable
+    public Long getShowId(int showTmdbId, Integer showTvdbId) {
+        return showTools2.getShowId(showTmdbId, showTvdbId);
     }
 
-    /**
-     * Sets the isRemoved flag of the given show on Hexagon, so the show will not be auto-added on
-     * any device connected to Hexagon.
-     */
-    public void sendIsRemoved(int showTvdbId) {
-        Show show = new Show();
-        show.setTvdbId(showTvdbId);
-        show.setIsRemoved(true);
-        uploadShowAsync(show);
+    public ShowResult addShow(int showTmdbId,
+            @Nullable String desiredLanguage,
+            @Nullable Map<Integer, BaseShow> traktCollection,
+            @Nullable Map<Integer, BaseShow> traktWatched,
+            HexagonEpisodeSync hexagonEpisodeSync) {
+        return showTools2.addShow(showTmdbId, desiredLanguage, traktCollection, traktWatched,
+                hexagonEpisodeSync);
+    }
+
+    public ShowResult updateShow(long showId) {
+        return showTools2.updateShow(showId);
+    }
+
+    public void removeShow(long showId) {
+        showTools2.removeShow(showId);
     }
 
     /**
      * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
      */
-    public void storeIsFavorite(int showTvdbId, boolean isFavorite) {
-        showTools2.storeIsFavorite(showTvdbId, isFavorite);
+    public void storeIsFavorite(long showId, boolean isFavorite) {
+        showTools2.storeIsFavorite(showId, isFavorite);
     }
 
     /**
      * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
      */
-    public void storeIsHidden(int showTvdbId, boolean isHidden) {
-        showTools2.storeIsHidden(showTvdbId, isHidden);
+    public void storeIsHidden(long showId, boolean isHidden) {
+        showTools2.storeIsHidden(showId, isHidden);
     }
 
     /**
@@ -182,74 +102,31 @@ public class ShowTools {
         showTools2.storeAllHiddenVisible();
     }
 
-    public void storeLanguage(final int showTvdbId, final String languageCode) {
-        if (HexagonSettings.isEnabled(context)) {
-            if (Utils.isNotConnected(context)) {
-                return;
-            }
-            // send to cloud
-            Show show = new Show();
-            show.setTvdbId(showTvdbId);
-            show.setLanguage(languageCode);
-            uploadShowAsync(show);
-        }
-
-        // schedule database update and sync
-        Runnable runnable = () -> {
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-
-            // change language
-            ContentValues values = new ContentValues();
-            values.put(SeriesGuideContract.Shows.LANGUAGE, languageCode);
-            context.getContentResolver()
-                    .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null,
-                            null);
-            // reset episode last edit time so all get updated
-            values = new ContentValues();
-            values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0);
-            context.getContentResolver()
-                    .update(SeriesGuideContract.Episodes.buildEpisodesOfShowUri(showTvdbId),
-                            values, null, null);
-            // trigger update
-            SgSyncAdapter.requestSyncSingleImmediate(context, false, showTvdbId);
-        };
-        AsyncTask.THREAD_POOL_EXECUTOR.execute(runnable);
-
-        // show immediate feedback, also if offline and sync won't go through
-        if (AndroidUtils.isNetworkConnected(context)) {
-            // notify about upcoming sync
-            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
-        } else {
-            // offline
-            Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show();
-        }
+    public void storeLanguage(final long showId, @NonNull final String languageCode) {
+        showTools2.storeLanguage(showId, languageCode);
     }
 
     /**
      * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
      */
-    public void storeNotify(int showTvdbId, boolean notify) {
-        showTools2.storeNotify(showTvdbId, notify);
+    public void storeNotify(long showId, boolean notify) {
+        showTools2.storeNotify(showId, notify);
     }
 
     /**
      * Add a show to the users trakt watchlist.
      */
-    public static void addToWatchlist(Context context, int showTvdbId) {
-        new AddShowToWatchlistTask(context, showTvdbId).executeOnExecutor(
+    public static void addToWatchlist(Context context, int showTmdbId) {
+        new AddShowToWatchlistTask(context, showTmdbId).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
      * Remove a show from the users trakt watchlist.
      */
-    public static void removeFromWatchlist(Context context, int showTvdbId) {
-        new RemoveShowFromWatchlistTask(context, showTvdbId).executeOnExecutor(
+    public static void removeFromWatchlist(Context context, int showTmdbId) {
+        new RemoveShowFromWatchlistTask(context, showTmdbId).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    private void uploadShowAsync(Show show) {
-        showTools2.uploadShowToCloud(show);
     }
 
     public static boolean addLastWatchedUpdateOpIfNewer(Context context,
@@ -280,6 +157,8 @@ public class ShowTools {
     /**
      * Returns the trakt id of a show. Returns {@code null} if the query failed, there is no trakt
      * id or if it is invalid.
+     *
+     * @deprecated Use {@link #getShowTraktId(Context, long)} and show row ID instead.
      */
     @Nullable
     public static Integer getShowTraktId(@NonNull Context context, int showTvdbId) {
@@ -304,53 +183,27 @@ public class ShowTools {
     }
 
     /**
-     * Returns a set of the TVDb ids of all shows in the local database.
-     *
-     * @return null if there was an error, empty list if there are no shows.
+     * Returns the Trakt id of a show, or {@code null} if it is invalid or there is none.
      */
     @Nullable
-    public static HashSet<Integer> getShowTvdbIdsAsSet(Context context) {
-        HashSet<Integer> existingShows = new HashSet<>();
-
-        Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[]{SeriesGuideContract.Shows._ID}, null, null, null);
-        if (shows == null) {
+    public static Integer getShowTraktId(@NonNull Context context, long showId) {
+        int traktIdOrZero = SgRoomDatabase.getInstance(context).sgShow2Helper()
+                .getShowTraktId(showId);
+        if (traktIdOrZero <= 0) {
             return null;
+        } else {
+            return traktIdOrZero;
         }
-
-        while (shows.moveToNext()) {
-            existingShows.add(shows.getInt(0));
-        }
-
-        shows.close();
-
-        return existingShows;
     }
 
-    /**
-     * Returns a set of the TVDb ids of all shows in the local database mapped
-     * to their small poster path (null if there is no poster).
-     *
-     * @return null if there was an error, empty list if there are no shows.
-     */
-    @Nullable
-    public static SparseArrayCompat<String> getSmallPostersByTvdbId(Context context) {
-        SparseArrayCompat<String> existingShows = new SparseArrayCompat<>();
+    @NonNull
+    public Map<Integer, Long> getTmdbIdsToShowIds() {
+        return showTools2.getTmdbIdsToShowIds(context);
+    }
 
-        Cursor shows = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[]{SeriesGuideContract.Shows._ID, SeriesGuideContract.Shows.POSTER_SMALL},
-                null, null, null);
-        if (shows == null) {
-            return null;
-        }
-
-        while (shows.moveToNext()) {
-            existingShows.put(shows.getInt(0), shows.getString(1));
-        }
-
-        shows.close();
-
-        return existingShows;
+    @NonNull
+    public SparseArrayCompat<String> getTmdbIdsToPoster() {
+        return showTools2.getTmdbIdsToPoster(context);
     }
 
     /**
@@ -360,17 +213,8 @@ public class ShowTools {
      * @param encodedStatus Detection based on {@link ShowTools.Status}.
      */
     @Nullable
-    public static String getStatus(@NonNull Context context, int encodedStatus) {
-        if (encodedStatus == Status.UPCOMING) {
-            return context.getString(R.string.show_isUpcoming);
-        } else if (encodedStatus == Status.CONTINUING) {
-            return context.getString(R.string.show_isalive);
-        } else if (encodedStatus == Status.ENDED) {
-            return context.getString(R.string.show_isnotalive);
-        } else {
-            // status unknown, display nothing
-            return null;
-        }
+    public String getStatus(int encodedStatus) {
+        return showTools2.getStatus(encodedStatus);
     }
 
     /**
@@ -379,8 +223,8 @@ public class ShowTools {
      *
      * @param encodedStatus Detection based on {@link ShowTools.Status}.
      */
-    public static void setStatusAndColor(@NonNull TextView view, int encodedStatus) {
-        view.setText(getStatus(view.getContext(), encodedStatus));
+    public void setStatusAndColor(@NonNull TextView view, int encodedStatus) {
+        view.setText(getStatus(encodedStatus));
         if (encodedStatus == Status.CONTINUING) {
             view.setTextColor(
                     ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(
@@ -390,5 +234,9 @@ public class ShowTools {
                     ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(
                             view.getContext().getTheme(), android.R.attr.textColorSecondary)));
         }
+    }
+
+    public boolean shouldUpdateShow(long showId) {
+        return showTools2.shouldUpdateShow(showId);
     }
 }

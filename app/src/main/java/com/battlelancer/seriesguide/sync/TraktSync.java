@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
@@ -14,7 +15,7 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
 import com.uwetrottmann.trakt5.services.Sync;
-import java.util.HashSet;
+import java.util.Map;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -36,8 +37,7 @@ public class TraktSync {
      * @param onlyRatings To not conflict with Hexagon sync, can turn on so only
      *                    ratings are synced.
      */
-    public SgSyncAdapter.UpdateResult sync(HashSet<Integer> localShows, long currentTime,
-            boolean onlyRatings) {
+    public SgSyncAdapter.UpdateResult sync(long currentTime, boolean onlyRatings) {
         // get last activity timestamps
         progress.publish(SyncProgress.Step.TRAKT);
         if (!AndroidUtils.isNetworkConnected(context)) {
@@ -56,7 +56,9 @@ public class TraktSync {
         }
 
         TraktRatingsSync ratingsSync = new TraktRatingsSync(context, traktSync);
-        if (localShows.size() == 0) {
+        Map<Integer, Long> tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
+                .getTmdbIdsToShowIds();
+        if (tmdbIdsToShowIds.size() == 0) {
             Timber.d("performTraktSync: no local shows, skip shows");
         } else {
             if (!onlyRatings) {
@@ -67,7 +69,7 @@ public class TraktSync {
                     progress.recordError();
                     return SgSyncAdapter.UpdateResult.INCOMPLETE;
                 }
-                if (!syncEpisodes(localShows, lastActivity.episodes, currentTime)) {
+                if (!syncEpisodes(tmdbIdsToShowIds, lastActivity.episodes, currentTime)) {
                     progress.recordError();
                     return SgSyncAdapter.UpdateResult.INCOMPLETE;
                 }
@@ -133,7 +135,7 @@ public class TraktSync {
      *
      * <p> Do <b>NOT</b> call if there are no local shows to avoid unnecessary work.
      */
-    private boolean syncEpisodes(@NonNull HashSet<Integer> localShows,
+    private boolean syncEpisodes(@NonNull Map<Integer, Long> tmdbIdsToShowIds,
             @NonNull LastActivityMore lastActivity, long currentTime) {
         if (!TraktCredentials.get(context).hasCredentials()) {
             return false; // auth was removed
@@ -146,12 +148,13 @@ public class TraktSync {
 
         // watched episodes
         TraktEpisodeSync episodeSync = new TraktEpisodeSync(context, traktSync);
-        if (!episodeSync.syncWatched(localShows, lastActivity.watched_at, isInitialSync)) {
+        if (!episodeSync.syncWatched(tmdbIdsToShowIds, lastActivity.watched_at, isInitialSync)) {
             return false; // failed, give up.
         }
 
         // collected episodes
-        if (!episodeSync.syncCollected(localShows, lastActivity.collected_at, isInitialSync)) {
+        if (!episodeSync
+                .syncCollected(tmdbIdsToShowIds, lastActivity.collected_at, isInitialSync)) {
             return false;
         }
 

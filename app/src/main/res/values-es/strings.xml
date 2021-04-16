@@ -35,8 +35,9 @@
     <string name="sync_manually">Sincronizar manualmente</string>
     <string name="sync_and_update">Sincronizar &amp; Actualizar</string>
     <string name="sync_and_download_all">Sincronizar &amp; Descargar todo</string>
-    <string name="action_turn_off">Desactivar</string>
     <string name="action_stream">Ver en línea o comprar</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">No se pudo hablar con %s. Intenta nuevamente.</string>
     <string name="api_failed">Error: %s</string>
     <string name="copy_to_clipboard">Copiado al portapapeles</string>
+    <string name="not_migrated">No encontrado en TMDb, se eliminará en una actualización futura. Pulse para más detalles.</string>
     <!-- Sharing -->
     <string name="share">Compartir</string>
     <string name="share_show">Compartir serie</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">Continuando</string>
     <string name="show_isnotalive">Terminó</string>
     <string name="show_isUpcoming">Próximos</string>
+    <string name="show_status_in_production">En producción</string>
+    <string name="show_status_pilot">Piloto</string>
+    <string name="show_status_canceled">Cancelado</string>
     <string name="no_translation">No hay ninguna descripción traducida al %1$s disponible en %2$s.</string>
     <string name="no_translation_title">Sin traducir</string>
     <string name="no_spoilers">Algunos detalles están ocultos para evitar spoilers. Para cambiarlo, ir a Ajustes > básico.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">No hay resultados, pruebe con palabras completas.</string>
     <string name="empty_show_search">No encontrado en tu lista de visualización</string>
     <string name="action_try_again">Intentar de nuevo</string>
-    <string name="tvdb_error_does_not_exist">El show no existe (aún) en TheTVDB. Intenta más tarde.</string>
+    <string name="tvdb_error_does_not_exist">La serie no existe (todavía) en TMDB. Inténtalo de nuevo más tarde.</string>
     <string name="add_all">Añadir todo</string>
     <string name="add_multiple">Todos los programas aparecerán en su lista de programas en breve.</string>
     <string name="add_started">%s aparecerá en tu lista dentro de poco.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Gestionar lista</string>
     <string name="list_item_manage">Gestionar listas</string>
     <string name="list_item_remove">Eliminar de la lista</string>
-    <string name="list_empty">Puedes agregar series, temporadas o episodios a la lista.</string>
+    <string name="list_empty">Puedes añadir series a esta lista</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
     <string name="error_name_already_exists">Ya existe una lista con este nombre</string>
@@ -474,13 +479,14 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="action_upgrade">Desbloquea todas las funciones</string>
     <string name="billing_action_subscribe">Suscríbete</string>
     <string name="billing_action_manage_subscriptions">Gestionar suscripciones</string>
-    <string name="billing_action_pass">Obtener X Pass</string>
+    <string name="billing_action_pass">Obtener X Pass App</string>
     <string name="billing_price_subscribe">%1$s/año, prueba gratuita, cancela en cualquier momento mediante %2$s</string>
     <string name="billing_duration_format">%1$s/año</string>
     <string name="billing_sub_description">Pruebe 30 días gratis. Cancela cuando quieras.</string>
     <string name="billing_price_pass">Compra por única vez</string>
     <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Más información y ayuda.</string>
     <string name="subscription_expired">Suscripción caducada</string>
     <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
@@ -513,4 +519,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="feedback_question_feedback">¿Me dirías como mejorarlo?</string>
     <string name="feedback_action_ok">OK, seguro</string>
     <string name="feedback_action_nothanks">No, gracias</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

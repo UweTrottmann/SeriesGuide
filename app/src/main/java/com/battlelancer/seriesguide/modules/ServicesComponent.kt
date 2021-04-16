@@ -2,16 +2,11 @@ package com.battlelancer.seriesguide.modules
 
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.thetvdbapi.TvdbTools
-import com.battlelancer.seriesguide.traktapi.ConnectTraktTask
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.ui.movies.MovieTools
-import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
 import com.battlelancer.seriesguide.ui.search.AddShowTask
 import com.battlelancer.seriesguide.ui.search.TraktAddLoader
 import com.battlelancer.seriesguide.ui.shows.ShowTools
-import com.uwetrottmann.thetvdb.TheTvdb
-import com.uwetrottmann.thetvdb.services.TheTvdbEpisodes
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService
@@ -25,13 +20,14 @@ import javax.inject.Singleton
  * WARNING: for Dagger2 to work with kapt, this interface has to be in Kotlin.
  */
 @Singleton
-@Component(modules = arrayOf(
+@Component(
+    modules = [
         AppModule::class,
         HttpClientModule::class,
         TmdbModule::class,
-        TraktModule::class,
-        TvdbModule::class
-))
+        TraktModule::class
+    ]
+)
 interface ServicesComponent {
 
     fun hexagonTools(): HexagonTools
@@ -43,14 +39,9 @@ interface ServicesComponent {
     fun trakt(): TraktV2
     fun traktSync(): Sync
     fun traktUsers(): Users
-    fun tvdb(): TheTvdb
-    fun tvdbEpisodes(): TheTvdbEpisodes
-    fun tvdbTools(): TvdbTools
 
     fun inject(addShowTask: AddShowTask)
-    fun inject(connectTraktTask: ConnectTraktTask)
     fun inject(sgSyncAdapter: SgSyncAdapter)
-    fun inject(showCreditsLoader: ShowCreditsLoader)
     fun inject(traktAddLoader: TraktAddLoader)
     fun inject(traktCommentsLoader: TraktCommentsLoader)
 }

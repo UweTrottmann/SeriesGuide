@@ -32,10 +32,7 @@ public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragme
          */
         String MOVIE_TMDB_ID = "movietmdbid";
 
-        /**
-         * Season number. <b>Required for episodes.</b>
-         */
-        String EPISODE_TVDB_ID = "episodetvdbid";
+        String EPISODE_ID = "episodeid";
     }
 
     public class CheckInDialogDismissedEvent {

@@ -26,65 +26,58 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.provider.SgShow2Minimal;
 import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.SeasonTools;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Displays a dialog displaying all lists, allowing to add the given show, season or episode to any
- * number of them.
+ * Displays a dialog displaying all user created lists,
+ * allowing to add or remove the given show for any.
  */
 public class ManageListsDialogFragment extends AppCompatDialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
     public static final String TAG = "listsdialog";
+    private static final String ARG_LONG_SHOW_ID = "show_id";
 
-    private static ManageListsDialogFragment newInstance(int itemTvdbId,
-            @SeriesGuideContract.ListItemTypes int itemType) {
+    private static ManageListsDialogFragment newInstance(long showId) {
         ManageListsDialogFragment f = new ManageListsDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(InitBundle.INT_ITEM_TVDB_ID, itemTvdbId);
-        args.putInt(InitBundle.INT_ITEM_TYPE, itemType);
+        args.putLong(ARG_LONG_SHOW_ID, showId);
         f.setArguments(args);
         return f;
     }
 
     /**
      * Display a dialog which asks if the user wants to add the given show to one or more lists.
-     *  @param itemTvdbId TVDb id of the item to add
-     * @param itemType type of the item to add (show, season or episode)
      */
-    public static boolean show(FragmentManager fm, int itemTvdbId,
-            @SeriesGuideContract.ListItemTypes int itemType) {
+    public static boolean show(FragmentManager fm, long showId) {
+        if (showId <= 0) return false;
         // replace any currently showing list dialog (do not add it to the back stack)
         FragmentTransaction ft = fm.beginTransaction();
         Fragment prev = fm.findFragmentByTag(TAG);
         if (prev != null) {
             ft.remove(prev);
         }
-        return DialogTools
-                .safeShow(ManageListsDialogFragment.newInstance(itemTvdbId, itemType), fm, ft, TAG);
-    }
-
-    public interface InitBundle {
-        String INT_ITEM_TVDB_ID = "item-tvdbid";
-        String INT_ITEM_TYPE = "item-type";
+        return DialogTools.safeShow(ManageListsDialogFragment.newInstance(showId), fm, ft, TAG);
     }
 
     private ListView listView;
     private ListsAdapter adapter;
+    private long showId;
+    private int showTmdbId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        showId = requireArguments().getLong(ARG_LONG_SHOW_ID);
 
         // hide title, use custom theme
         setStyle(STYLE_NO_TITLE, 0);
@@ -126,10 +119,8 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
                 }
             }
 
-            int itemTvdbId = requireArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
-            int itemType = requireArguments().getInt(InitBundle.INT_ITEM_TYPE);
-            ListsTools.changeListsOfItem(requireContext(), itemTvdbId, itemType,
-                    addToTheseLists, removeFromTheseLists);
+            ListsTools.changeListsOfItem(requireContext(), showTmdbId,
+                    ListItemTypes.TMDB_SHOW, addToTheseLists, removeFromTheseLists);
 
             dismiss();
         });
@@ -149,59 +140,23 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
     public void onActivityCreated(Bundle args) {
         super.onActivityCreated(args);
 
-        // display item title
-        final int itemTvdbId = requireArguments().getInt(InitBundle.INT_ITEM_TVDB_ID);
-        final int itemType = requireArguments().getInt(InitBundle.INT_ITEM_TYPE);
-        //noinspection ConstantConditions // fragment has a view
-        final TextView itemTitle = getView().findViewById(R.id.item);
-        Uri uri = null;
-        String[] projection = null;
-        switch (itemType) {
-            case 1:
-                // show
-                uri = Shows.buildShowUri(itemTvdbId);
-                projection = new String[]{
-                        Shows._ID, Shows.TITLE
-                };
-                break;
-            case 2:
-                // season
-                uri = Seasons.buildSeasonUri(itemTvdbId);
-                projection = new String[]{
-                        Seasons._ID, Seasons.COMBINED
-                };
-                break;
-            case 3:
-                // episode
-                uri = Episodes.buildEpisodeUri(itemTvdbId);
-                projection = new String[]{
-                        Episodes._ID, Episodes.TITLE
-                };
-                break;
-        }
-        //noinspection ConstantConditions // itemType might not match
-        if (uri != null && projection != null) {
-            Cursor item = requireContext().getContentResolver().query(uri, projection, null, null,
-                    null);
-            if (item != null && item.moveToFirst()) {
-                if (itemType == 2) {
-                    // season just has a number, build string
-                    itemTitle.setText(SeasonTools.getSeasonString(getActivity(), item.getInt(1)));
-                } else {
-                    // shows and episodes
-                    itemTitle.setText(item.getString(1));
-                }
-            }
-
-            if (item != null) {
-                item.close();
-            }
-        }
-
         adapter = new ListsAdapter(getActivity());
         listView.setAdapter(adapter);
 
-        LoaderManager.getInstance(this).initLoader(0, getArguments(), this);
+        SgShow2Minimal showDetails = SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
+                .getShowMinimal(showId);
+        if (showDetails == null || showDetails.getTmdbId() == null || showDetails.getTmdbId() == 0) {
+            dismiss();
+            return;
+        }
+        showTmdbId = showDetails.getTmdbId();
+
+        // display item title
+        final TextView itemTitle = getView().findViewById(R.id.item);
+        itemTitle.setText(showDetails.getTitle());
+
+        // load data
+        LoaderManager.getInstance(this).initLoader(0, null, this);
     }
 
     @Override
@@ -215,12 +170,10 @@ public class ManageListsDialogFragment extends AppCompatDialogFragment implement
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // filter for this item, but keep other lists
-        int itemTvdbId = args.getInt(InitBundle.INT_ITEM_TVDB_ID);
-        int itemType = args.getInt(InitBundle.INT_ITEM_TYPE);
-
-        return new CursorLoader(requireContext(), Lists.buildListsWithListItemUri(ListItems
-                .generateListItemIdWildcard(itemTvdbId, itemType)),
-                ListsQuery.PROJECTION, null, null, Lists.SORT_ORDER_THEN_NAME);
+        Uri uri = Lists.buildListsWithListItemUri(
+                ListItems.generateListItemIdWildcard(showTmdbId, ListItemTypes.TMDB_SHOW));
+        return new CursorLoader(requireContext(), uri, ListsQuery.PROJECTION,
+                null, null, Lists.SORT_ORDER_THEN_NAME);
     }
 
     @Override

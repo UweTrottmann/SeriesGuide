@@ -10,20 +10,11 @@
     tools:showIn="@layout/buttons_services">
 
     <Button
-        android:id="@+id/buttonEpisodeImdb"
+        android:id="@+id/buttonEpisodeTmdb"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/imdb"
-        app:icon="@drawable/ic_link_black_24dp"
-        app:iconGravity="start" />
-
-    <Button
-        android:id="@+id/buttonEpisodeTvdb"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/tvdb"
+        android:text="@string/tmdb"
         app:icon="@drawable/ic_link_black_24dp"
         app:iconGravity="start" />
 
@@ -33,6 +24,15 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/trakt"
+        app:icon="@drawable/ic_link_black_24dp"
+        app:iconGravity="start" />
+
+    <Button
+        android:id="@+id/buttonEpisodeImdb"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/imdb"
         app:icon="@drawable/ic_link_black_24dp"
         app:iconGravity="start" />
 
@@ -52,15 +52,6 @@
         android:layout_height="48dp"
         android:text="@string/addtocalendar"
         app:icon="@drawable/ic_event_white_24dp"
-        app:iconGravity="start" />
-
-    <Button
-        android:id="@+id/buttonEpisodeLists"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/list_item_manage"
-        app:icon="@drawable/ic_list_white_24dp"
         app:iconGravity="start" />
 
     <Button

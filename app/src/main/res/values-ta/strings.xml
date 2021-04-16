@@ -35,8 +35,9 @@
     <string name="sync_manually">கைமுறையாக ஒத்திசை</string>
     <string name="sync_and_update">ஒத்திசை &amp; புதுப்பி</string>
     <string name="sync_and_download_all">Sync &amp; Download all</string>
-    <string name="action_turn_off">Turn off</string>
     <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">பகிர்</string>
     <string name="share_show">பங்கு காண்பி</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">தொடரும்</string>
     <string name="show_isnotalive">முடிவுக்கு வந்தது</string>
     <string name="show_isUpcoming">வரவிருக்கும்</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">%1$s at %2$s கிடைக்கப்பெறும் மொழிபெயர்க்க விளக்கம் உள்ளது.</string>
     <string name="no_translation_title">இல்லை மொழிபெயர்க்க</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">மீண்டும் முயற்சி</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">எல்லாம் சேர்</string>
     <string name="add_multiple">அனைத்து காட்சிகள் தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
     <string name="add_started">%s தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">பட்டியலை நிர்வகி</string>
     <string name="list_item_manage">பட்டியல்களை நிர்வகி</string>
     <string name="list_item_remove">பட்டியலில் இருந்து அகற்று</string>
-    <string name="list_empty">காட்சிகள், சீசன்ஸ் அல்லது episodes இந்த பட்டியலில் சேர்க்கலாம்.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">அடுக்கு பட்டியல்கள்</string>
     <string name="action_lists_reorder">பட்டியல்களை மறு வரிசையாக்க இழுத்து</string>
     <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">அனைத்து அம்சங்களும் பூட்டவிழ்</string>
     <string name="billing_action_subscribe">சந்தாதராகு</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">பெறு X கடவுச்</string>
+    <string name="billing_action_pass">பெறு X Pass App</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">-முறை வாங்குதல்</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide ஆதரவு நன்றி! உங்களுக்கு எல்லா அம்சங்களையும் அனுமதி.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">சந்தா காலாவதியானது</string>
     <string name="subscription_expired_details">உங்கள் SeriesGuide சந்தா காலாவதியாகிவிட்டது.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">எனக்கு அதை மேம்படுத்துவது எப்படி என்பதை கூறுங்கள்?</string>
     <string name="feedback_action_ok">சரி, நிச்சயமாக</string>
     <string name="feedback_action_nothanks">இல்லை, நன்றி</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

@@ -35,8 +35,9 @@
     <string name="sync_manually">قم بالمزامنة يدوياً</string>
     <string name="sync_and_update">المزامنة &amp; والتحديث</string>
     <string name="sync_and_download_all">المزامنة &amp; وتحميل كل البيانات</string>
-    <string name="action_turn_off">إيقاف تشغيل</string>
     <string name="action_stream">بث أو شراء</string>
+    <string name="action_stream_info">معلومات البث أو الشراء</string>
+    <string name="action_select_region">حدد المنطقة</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">لا يمكن الاتصال بـ %s. الرجاء المحاولة لاحقا.</string>
     <string name="api_failed">فشل: %s</string>
     <string name="copy_to_clipboard">تم النسخ إلى الحافظة</string>
+    <string name="not_migrated">غير موجود على TMDb، ستتم إزالته في تحديث مستقبلي. اضغط لاحصال التفاصيل.</string>
     <!-- Sharing -->
     <string name="share">مشاركة</string>
     <string name="share_show">مشاركة المسلسل</string>
@@ -92,6 +94,9 @@
     <string name="show_isalive">مستمر</string>
     <string name="show_isnotalive">انتهى</string>
     <string name="show_isUpcoming">القادم</string>
+    <string name="show_status_in_production">في الانتاج</string>
+    <string name="show_status_pilot">طيار</string>
+    <string name="show_status_canceled">ملغى</string>
     <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
     <string name="no_translation_title">غير مترجمة</string>
     <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا الانتقال إلى إعدادات.</string>
@@ -116,11 +121,11 @@
     <string name="action_watched">تعيين كمشاهد</string>
     <string name="action_unwatched">تعيين كغير مشاهد</string>
     <string name="state_watched">تمت مشاهدتها</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
+    <string name="state_watched_multiple_format">شاهدت (%d)</string>
     <string name="state_skipped">تم تخطيه</string>
     <string name="state_in_collection">قيد التحصيل</string>
     <string name="state_on_watchlist">في قائمة المراقبة</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_favorite">مفضل</string>
     <!-- Shows -->
     <string name="confirm_delete">هل تريد فعلاً إزالة %s؟</string>
     <string name="delete_error">لم تتم إزالة المسلسل، حاول مرة أخرى.</string>
@@ -210,7 +215,7 @@
     <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
     <string name="empty_show_search">غير متوفر في قائمة العرض الخاصة بك</string>
     <string name="action_try_again">حاول مرة أخرى</string>
-    <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TheTVDB. الرجاء المحاولة لاحقا.</string>
+    <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TMDB. حاول مرة أخرى.</string>
     <string name="add_all">إضافة الكل </string>
     <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
     <string name="add_started">%s سوف تظهر في قائمة العرض الخاص بك قريبا.</string>
@@ -231,7 +236,7 @@
     <string name="list_manage">إدارة القائمة</string>
     <string name="list_item_manage">إدارة القوائم</string>
     <string name="list_item_remove">إزالة من القائمة</string>
-    <string name="list_empty">يمكنك إضافة المسلسلات, المواسم أو الحلقات لهذه القائمة.</string>
+    <string name="list_empty">يمكنك إضافة مسلسلات إلى هذه القائمة</string>
     <string name="action_lists_sort">ترتيب القوائم</string>
     <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
     <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
@@ -266,7 +271,7 @@
     <string name="shows_continuing">%s مستمرة</string>
     <string name="episodes_watched">%s تمت مشاهدتها</string>
     <string name="movies_on_watchlist">%s في قائمة المشاهدة لاحقا</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">إضافة إلى مجموعة (%d)</string>
     <string name="movies_watched_format">%s تمت مشاهدتها</string>
     <plurals name="days_plural">
         <item quantity="one">يومان</item>
@@ -321,7 +326,7 @@
     <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
     <string name="traktcheckin_wait">سوف أنتظر</string>
     <string name="trakt_success">تم إرسالها إلى Trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">حسابك في Trakt مقفل. اتصل في Trakt لالدعم.</string>
     <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
     <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>
     <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة trakt بعد.</string>
@@ -366,8 +371,8 @@
     <string name="feedback">أرسل ملاحظاتك</string>
     <string name="action_open_in_browser">فتح في المتصفح</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">ترجم هذا التطبيق</string>
+    <string name="action_contribute_content">ترجمة أو تحسين المحتوى</string>
     <string name="prefs_category_advanced">متقدم</string>
     <string name="prefs_category_about">حول</string>
     <string name="pref_onlyfuture">عدم إظهار الحلقات التي تم عرضها</string>
@@ -384,7 +389,7 @@
     <string name="pref_language_fallback">اللغة البديلة</string>
     <string name="pref_updatewifionly">تحميل الصور بواسطة الواي فاي فقط</string>
     <string name="pref_updatewifionlysummary">لتخفيض الكلفة، لا تحمّل عبر شبكات الجوال أو الشبكات الغير مجانية</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">الإبلاغ عن الأخطاء لمطور التطبيق</string>
     <plurals name="days_before_plural">
         <item quantity="zero">قبل يوم من %d</item>
         <item quantity="one">قبل يوم من %d</item>
@@ -499,8 +504,8 @@
     <string name="pref_notification_channel_errors">أخطاء</string>
     <string name="pref_notifications_next_episodes_only">فقط لمشاهدة الحلقات التالية</string>
     <string name="pref_notifications_next_episodes_only_summary">تنبيه فقط اذا الحلقة الجديدة ستشاهد تالياً</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_battery_settings">إعدادات البطارية</string>
+    <string name="pref_notifications_battery_settings_summary">الذهاب إلى إعدادات البطارية لتعطيل تحسينات البطارية للإشعارات الموثوقة</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
@@ -517,14 +522,15 @@
     <string name="action_upgrade">فتح كافة الميزات</string>
     <string name="billing_action_subscribe">إشتراك</string>
     <string name="billing_action_manage_subscriptions">إدارة الإشتراكات</string>
-    <string name="billing_action_pass">أحصل على X Pass</string>
+    <string name="billing_action_pass">أحصل على X Pass App</string>
     <string name="billing_price_subscribe">%1$s/سنة، جرب مجاناً، و قم بالإلغاء في أي وقت عبر %2$s</string>
     <string name="billing_duration_format">%1$s/سنة</string>
-    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_sub_description">جرب 30 يوماً مجاناً، قم بإلغاء أي وقت.</string>
     <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">كل اشتراك يفتح جميع الميزات ويدعم التحديثات المستقبلية. ليس مطلوب الاشتراك لاستخدام هذا التطبيق.</string>
     <string name="upgrade_success">شكرا لك لدعم SeriesGuide! . لديك حق الوصول إلى كافة الميزات .</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_unlock_detected">تم اكتشاف تطبيق X Pass . يمكنك الاشتراك لدعم التحديثات المستقبلية.</string>
+    <string name="billing_learn_more">المزيد من المعلومات والمساعدة</string>
     <string name="subscription_expired">انتهت مدة الإشتراك</string>
     <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
     <!-- Amazon In-App Billing -->
@@ -556,4 +562,6 @@
     <string name="feedback_question_feedback">اخبرني كيف احسنها ؟</string>
     <string name="feedback_action_ok">بالتأكيد</string>
     <string name="feedback_action_nothanks">لا، شكرا</string>
+    <!-- Support -->
+    <string name="support_the_dev">دعم المطور؟</string>
 </resources>

@@ -44,5 +44,6 @@ signing.secretKeyRingFile=C:/Users/Uwe/AppData/Roaming/gnupg/secring.gpg
     git tag api-1.2.3
     // After changing version back to snapshots
     git commit -am "Prepare next API development version."
-    git push origin dev --tags
+    git push origin dev
+    git push origin api-1.2.3
     ```

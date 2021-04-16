@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:minWidth="@dimen/dialog_min_width"
             android:paddingBottom="@dimen/large_padding">
 
             <ProgressBar
@@ -162,7 +161,7 @@
 
             <Button
                 android:id="@+id/buttonAddDisplaySimilar"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAddRatingLabel"
@@ -174,22 +173,101 @@
                 app:icon="@drawable/ic_search_white_24dp"
                 app:iconGravity="start" />
 
-            <Button
-                android:id="@+id/buttonAddStreamingSearch"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerAddStreamingSearch"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonAddDisplaySimilar"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:drawablePadding="@dimen/default_padding"
-                android:text="@string/action_stream"
-                app:icon="@drawable/ic_play_arrow_black_24dp"
-                app:iconGravity="start" />
+                android:maxWidth="@dimen/max_width_text_size_body"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding">
+
+                <!-- MaterialButton ignores line breaks here (wtf?), so use separate TextView. -->
+                <Button
+                    android:id="@+id/buttonAddStreamingSearch"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_stream"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/action_stream"
+                    app:icon="@drawable/ic_play_arrow_black_24dp"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonAddStreamingSearchInfo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewAddStreamingSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:contentDescription="@string/action_stream"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonAddStreamingSearchInfo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonAddStreamingSearch"
+                    tools:text="Watch provider + 1 more" />
+
+                <ImageButton
+                    android:id="@+id/buttonAddStreamingSearchInfo"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/action_stream_info"
+                    android:src="@drawable/ic_info_control_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
     </ScrollView>
 
-    <include layout="@layout/dialog_buttons_divided" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:contentDescription="@null"
+        android:src="?attr/sgColorDivider" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingTop="@dimen/inline_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingBottom="@dimen/inline_padding">
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="buttonNegative,buttonPositive"
+            app:flow_horizontalBias="1"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Note: Lint MissingConstraints false positive, new Flow not recognized.
+         https://issuetracker.google.com/issues/181056543 -->
+        <Button
+            android:id="@+id/buttonNegative"
+            style="?attr/buttonBarNegativeButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:text="Button Negative With Long Text" />
+
+        <Button
+            android:id="@+id/buttonPositive"
+            style="?attr/buttonBarPositiveButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:text="Button Positive" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

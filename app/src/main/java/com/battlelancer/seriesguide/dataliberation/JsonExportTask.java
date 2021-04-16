@@ -1,10 +1,7 @@
 package com.battlelancer.seriesguide.dataliberation;
 
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
@@ -17,15 +14,17 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Movie;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.model.SgEpisode;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.model.SgEpisode2;
+import com.battlelancer.seriesguide.model.SgList;
+import com.battlelancer.seriesguide.model.SgListItem;
+import com.battlelancer.seriesguide.model.SgMovie;
+import com.battlelancer.seriesguide.model.SgSeason2;
+import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -77,6 +76,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
      * Show status used when exporting data. Compare with {@link ShowTools.Status}.
      */
     public interface ShowStatusExport {
+        String IN_PRODUCTION = "in_production";
+        String PILOT = "pilot";
+        String CANCELED = "canceled";
         String UPCOMING = "upcoming";
         String CONTINUING = "continuing";
         String ENDED = "ended";
@@ -85,14 +87,15 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public interface ListItemTypesExport {
         String SHOW = "show";
+        String TMDB_SHOW = "tmdb-show";
         String SEASON = "season";
         String EPISODE = "episode";
     }
 
-    @SuppressLint("StaticFieldLeak") private Context context;
-    private OnTaskProgressListener progressListener;
-    private boolean isFullDump;
-    private boolean isAutoBackupMode;
+    @SuppressLint("StaticFieldLeak") private final Context context;
+    private final OnTaskProgressListener progressListener;
+    private final boolean isFullDump;
+    private final boolean isAutoBackupMode;
     @Nullable private final Integer type;
     @Nullable private String errorCause;
 
@@ -121,7 +124,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
                 BackupSettings.setAutoBackupErrorOrNull(context, null);
                 return SUCCESS;
             } catch (Exception e) {
-                Timber.e(e, "Unable to auto backup.");
+                Errors.logAndReport("Unable to auto backup.", e);
                 BackupSettings.setAutoBackupErrorOrNull(context,
                         e.getClass().getSimpleName() + ": " + e.getMessage());
                 return ERROR;
@@ -199,20 +202,6 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private int exportData(@BackupType int type) {
-        // check if there is any data to export
-        Cursor data = getDataCursor(type);
-        if (data == null) {
-            // query failed
-            return ERROR;
-        }
-        if (data.getCount() == 0) {
-            // There is no data? Done.
-            data.close();
-            return SUCCESS;
-        }
-
-        publishProgress(data.getCount(), 0);
-
         // try to export all data
         try {
             // ensure the user has selected a backup file
@@ -235,11 +224,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             out.getChannel().truncate(0);
 
             if (type == BACKUP_SHOWS) {
-                writeJsonStreamShows(out, data);
+                writeJsonStreamShows(out);
             } else if (type == BACKUP_LISTS) {
-                writeJsonStreamLists(out, data);
+                writeJsonStreamLists(out);
             } else if (type == BACKUP_MOVIES) {
-                writeJsonStreamMovies(out, data);
+                writeJsonStreamMovies(out);
             }
 
             // let the document provider know we're done.
@@ -259,35 +248,13 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             errorCause = e.getMessage();
             return ERROR;
         } catch (Exception e) {
-            Timber.e(e, "Backup failed.");
+            // Only report unexpected errors.
+            Errors.logAndReport("Backup failed.", e);
             errorCause = e.getMessage();
             return ERROR;
-        } finally {
-            data.close();
         }
 
         return SUCCESS;
-    }
-
-    @Nullable
-    Cursor getDataCursor(@BackupType int type) {
-        if (type == BACKUP_SHOWS) {
-            return context.getContentResolver().query(
-                    Shows.CONTENT_URI, ShowsQuery.PROJECTION_FULL,
-                    null, null, Shows.SORT_TITLE);
-        }
-        if (type == BACKUP_LISTS) {
-            return context.getContentResolver()
-                    .query(SeriesGuideContract.Lists.CONTENT_URI,
-                            ListsQuery.PROJECTION, null, null,
-                            SeriesGuideContract.Lists.SORT_ORDER_THEN_NAME);
-        }
-        if (type == BACKUP_MOVIES) {
-            return context.getContentResolver()
-                    .query(Movies.CONTENT_URI,
-                            MoviesQuery.PROJECTION, null, null, MoviesQuery.SORT_ORDER);
-        }
-        return null;
     }
 
     @Nullable
@@ -299,53 +266,54 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         BackupSettings.storeExportFileUri(context, type, null, isAutoBackupMode);
     }
 
-    void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
-        int numTotal = shows.getCount();
+    void writeJsonStreamShows(OutputStream out) throws IOException {
+        java.util.List<SgShow2> shows = SgRoomDatabase.getInstance(context).sgShow2Helper()
+                .getShowsForExport();
+
+        int numTotal = shows.size();
         int numExported = 0;
+
+        publishProgress(numTotal, 0);
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
-        while (shows.moveToNext()) {
+        for (SgShow2 sgShow : shows) {
             if (isCancelled()) {
                 break;
             }
 
             Show show = new Show();
-            show.tvdb_id = shows.getInt(ShowsQuery.ID);
-            show.tvdb_slug = shows.getString(ShowsQuery.SLUG);
-            show.title = shows.getString(ShowsQuery.TITLE);
-            show.favorite = shows.getInt(ShowsQuery.FAVORITE) == 1;
-            show.notify = shows.getInt(ShowsQuery.NOTIFY) == 1;
-            show.hidden = shows.getInt(ShowsQuery.HIDDEN) == 1;
-            show.language = shows.getString(ShowsQuery.LANGUAGE);
-            show.release_time = shows.getInt(ShowsQuery.RELEASE_TIME);
-            show.release_weekday = shows.getInt(ShowsQuery.RELEASE_WEEKDAY);
-            show.release_timezone = shows.getString(ShowsQuery.RELEASE_TIMEZONE);
-            show.country = shows.getString(ShowsQuery.RELEASE_COUNTRY);
-            show.last_watched_episode = shows.getInt(ShowsQuery.LASTWATCHEDID);
-            show.last_watched_ms = shows.getLong(ShowsQuery.LASTWATCHED_MS);
-            show.poster = shows.getString(ShowsQuery.POSTER);
-            show.poster_small = shows.getString(ShowsQuery.POSTER_THUMBNAIL);
-            show.content_rating = shows.getString(ShowsQuery.CONTENTRATING);
-            show.status = DataLiberationTools.decodeShowStatus(shows.getInt(ShowsQuery.STATUS));
-            show.runtime = shows.getInt(ShowsQuery.RUNTIME);
-            show.network = shows.getString(ShowsQuery.NETWORK);
-            show.imdb_id = shows.getString(ShowsQuery.IMDBID);
-            show.trakt_id = shows.getInt(ShowsQuery.TRAKT_ID);
-            show.first_aired = shows.getString(ShowsQuery.FIRSTAIRED);
-            show.rating_user = shows.getInt(ShowsQuery.RATING_USER);
+            show.tmdb_id = sgShow.getTmdbId();
+            show.tvdb_id = sgShow.getTvdbId();
+            show.title = sgShow.getTitle();
+            show.favorite = sgShow.getFavorite();
+            show.notify = sgShow.getNotify();
+            show.hidden = sgShow.getHidden();
+            show.language = sgShow.getLanguage();
+            show.release_time = sgShow.getReleaseTimeOrDefault();
+            show.release_weekday = sgShow.getReleaseWeekDayOrDefault();
+            show.release_timezone = sgShow.getReleaseTimeZone();
+            show.country = sgShow.getReleaseCountry();
+            show.last_watched_ms = sgShow.getLastWatchedMs();
+            show.poster = sgShow.getPoster();
+            show.content_rating = sgShow.getContentRating();
+            show.status = DataLiberationTools.decodeShowStatus(sgShow.getStatusOrUnknown());
+            show.runtime = sgShow.getRuntime() != null ? sgShow.getRuntime() : 0;
+            show.network = sgShow.getNetwork();
+            show.imdb_id = sgShow.getImdbId();
+            show.trakt_id = sgShow.getTraktId();
+            show.first_aired = sgShow.getFirstRelease();
+            show.rating_user = sgShow.getRatingUser();
             if (isFullDump) {
-                show.overview = shows.getString(ShowsQuery.OVERVIEW);
-                show.rating = shows.getDouble(ShowsQuery.RATING_GLOBAL);
-                show.rating_votes = shows.getInt(ShowsQuery.RATING_VOTES);
-                show.genres = shows.getString(ShowsQuery.GENRES);
-                show.last_updated = shows.getLong(ShowsQuery.LAST_UPDATED);
-                show.last_edited = shows.getLong(ShowsQuery.LAST_EDITED);
+                show.overview = sgShow.getOverview();
+                show.rating = sgShow.getRatingGlobalOrZero();
+                show.rating_votes = sgShow.getRatingVotesOrZero();
+                show.genres = sgShow.getGenres();
             }
 
-            addSeasons(show);
+            addSeasons(show, sgShow.getId());
 
             gson.toJson(show, Show.class, writer);
 
@@ -356,86 +324,81 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         writer.close();
     }
 
-    private void addSeasons(Show show) {
+    private void addSeasons(Show show, long showId) {
         show.seasons = new ArrayList<>();
-        final Cursor seasonsCursor = context.getContentResolver().query(
-                Seasons.buildSeasonsOfShowUri(String.valueOf(show.tvdb_id)),
-                new String[]{
-                        Seasons._ID,
-                        Seasons.COMBINED
-                }, null, null, null
-        );
 
-        if (seasonsCursor == null) {
-            return;
-        }
-
-        while (seasonsCursor.moveToNext()) {
+        java.util.List<SgSeason2> seasons = SgRoomDatabase.getInstance(context)
+                .sgSeason2Helper().getSeasonsForExport(showId);
+        for (SgSeason2 sgSeason : seasons) {
             Season season = new Season();
-            season.tvdbId = seasonsCursor.getInt(0);
-            season.season = seasonsCursor.getInt(1);
+            season.tmdb_id = sgSeason.getTmdbId();
+            season.tvdbId = sgSeason.getTvdbId();
+            season.season = sgSeason.getNumber();
 
-            addEpisodes(season);
+            addEpisodes(season, sgSeason.getId());
 
             show.seasons.add(season);
         }
-
-        seasonsCursor.close();
     }
 
-    private void addEpisodes(Season season) {
+    private void addEpisodes(Season season, long seasonId) {
         season.episodes = new ArrayList<>();
-        java.util.List<SgEpisode> episodes = SgRoomDatabase.getInstance(context)
-                .episodeHelper()
-                .getSeason(season.tvdbId);
+        java.util.List<SgEpisode2> episodes = SgRoomDatabase.getInstance(context)
+                .sgEpisode2Helper()
+                .getEpisodesForExport(seasonId);
 
-        for (SgEpisode episodeDb : episodes) {
+        for (SgEpisode2 episodeDb : episodes) {
             Episode episodeExport = new Episode();
-            episodeExport.tvdbId = episodeDb.tvdbId;
-            episodeExport.episode = episodeDb.number;
-            episodeExport.episodeAbsolute = episodeDb.absoluteNumber;
-            episodeExport.episodeDvd = episodeDb.dvdNumber;
-            int episodeFlag = episodeDb.watched;
+            episodeExport.tmdb_id = episodeDb.getTmdbId();
+            episodeExport.tvdbId = episodeDb.getTvdbId();
+            episodeExport.episode = episodeDb.getNumber();
+            episodeExport.episodeAbsolute = episodeDb.getAbsoluteNumber();
+            episodeExport.episodeDvd = episodeDb.getDvdNumber();
+            int episodeFlag = episodeDb.getWatched();
             episodeExport.watched = EpisodeTools.isWatched(episodeFlag);
             episodeExport.skipped = EpisodeTools.isSkipped(episodeFlag);
-            episodeExport.plays = episodeDb.plays;
-            episodeExport.collected = episodeDb.collected;
-            episodeExport.title = episodeDb.title;
-            episodeExport.firstAired = episodeDb.firstReleasedMs;
-            episodeExport.imdbId = episodeDb.imdbId;
-            episodeExport.rating_user = episodeDb.ratingUser;
+            episodeExport.plays = episodeDb.getPlaysOrZero();
+            episodeExport.collected = episodeDb.getCollected();
+            episodeExport.title = episodeDb.getTitle();
+            episodeExport.firstAired = episodeDb.getFirstReleasedMs();
+            episodeExport.imdbId = episodeDb.getImdbId();
+            episodeExport.rating_user = episodeDb.getRatingUser();
             if (isFullDump) {
-                episodeExport.overview = episodeDb.overview;
-                episodeExport.image = episodeDb.image;
-                episodeExport.writers = episodeDb.writers;
-                episodeExport.gueststars = episodeDb.guestStars;
-                episodeExport.directors = episodeDb.directors;
-                episodeExport.rating = episodeDb.ratingGlobal;
-                episodeExport.rating_votes = episodeDb.ratingVotes;
-                episodeExport.lastEdited = episodeDb.lastEditedSec;
+                episodeExport.overview = episodeDb.getOverview();
+                episodeExport.image = episodeDb.getImage();
+                episodeExport.writers = episodeDb.getWriters();
+                episodeExport.gueststars = episodeDb.getGuestStars();
+                episodeExport.directors = episodeDb.getDirectors();
+                episodeExport.rating = episodeDb.getRatingGlobal();
+                episodeExport.rating_votes = episodeDb.getRatingVotes();
             }
 
             season.episodes.add(episodeExport);
         }
     }
 
-    void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
-        int numTotal = lists.getCount();
+    void writeJsonStreamLists(OutputStream out) throws IOException {
+        java.util.List<SgList> lists = SgRoomDatabase.getInstance(context).sgListHelper()
+                .getListsForExport();
+
+        int numTotal = lists.size();
         int numExported = 0;
+
+        publishProgress(numTotal, 0);
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
-        while (lists.moveToNext()) {
+        for (SgList sgList : lists) {
             if (isCancelled()) {
                 break;
             }
 
             List list = new List();
-            list.listId = lists.getString(ListsQuery.ID);
-            list.name = lists.getString(ListsQuery.NAME);
-            list.order = lists.getInt(ListsQuery.ORDER);
+            list.listId = sgList.listId;
+            list.name = sgList.name;
+            list.order = sgList.getOrderOrDefault();
 
             addListItems(list);
 
@@ -449,25 +412,21 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void addListItems(List list) {
-        final Cursor listItems = context.getContentResolver().query(
-                ListItems.CONTENT_URI, ListItemsQuery.PROJECTION,
-                ListItemsQuery.SELECTION,
-                new String[]{
-                        list.listId
-                }, null
-        );
-        if (listItems == null) {
-            return;
-        }
+        java.util.List<SgListItem> listItems = SgRoomDatabase.getInstance(context)
+                .sgListHelper().getListItemsForExport(list.listId);
 
         list.items = new ArrayList<>();
-        while (listItems.moveToNext()) {
+        for (SgListItem listItem : listItems) {
             ListItem item = new ListItem();
-            item.listItemId = listItems.getString(ListItemsQuery.ID);
-            item.tvdbId = listItems.getInt(ListItemsQuery.ITEM_REF_ID);
-            switch (listItems.getInt(ListItemsQuery.TYPE)) {
-                case ListItemTypes.SHOW:
+            item.listItemId = listItem.listItemId;
+            item.externalId = listItem.itemRefId;
+            // Note: export legacy types so users can get to legacy data if they need to.
+            switch (listItem.type) {
+                case ListItemTypes.TVDB_SHOW:
                     item.type = ListItemTypesExport.SHOW;
+                    break;
+                case ListItemTypes.TMDB_SHOW:
+                    item.type = ListItemTypesExport.TMDB_SHOW;
                     break;
                 case ListItemTypes.SEASON:
                     item.type = ListItemTypesExport.SEASON;
@@ -479,38 +438,41 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
             list.items.add(item);
         }
-
-        listItems.close();
     }
 
-    void writeJsonStreamMovies(OutputStream out, Cursor movies) throws IOException {
-        int numTotal = movies.getCount();
+    void writeJsonStreamMovies(OutputStream out) throws IOException {
+        java.util.List<SgMovie> movies = SgRoomDatabase.getInstance(context).movieHelper()
+                .getMoviesForExport();
+
+        int numTotal = movies.size();
         int numExported = 0;
+
+        publishProgress(numTotal, 0);
 
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         writer.beginArray();
 
-        while (movies.moveToNext()) {
+        for (SgMovie sgMovie : movies) {
             if (isCancelled()) {
                 break;
             }
 
             Movie movie = new Movie();
-            movie.tmdbId = movies.getInt(MoviesQuery.TMDB_ID);
-            movie.imdbId = movies.getString(MoviesQuery.IMDB_ID);
-            movie.title = movies.getString(MoviesQuery.TITLE);
-            movie.releasedUtcMs = movies.getLong(MoviesQuery.RELEASED_UTC_MS);
-            movie.runtimeMin = movies.getInt(MoviesQuery.RUNTIME_MIN);
-            movie.poster = movies.getString(MoviesQuery.POSTER);
-            movie.inCollection = movies.getInt(MoviesQuery.IN_COLLECTION) == 1;
-            movie.inWatchlist = movies.getInt(MoviesQuery.IN_WATCHLIST) == 1;
-            movie.watched = movies.getInt(MoviesQuery.WATCHED) == 1;
-            movie.plays = movies.getInt(MoviesQuery.PLAYS);
-            movie.lastUpdatedMs = movies.getLong(MoviesQuery.LAST_UPDATED);
+            movie.tmdbId = sgMovie.tmdbId;
+            movie.imdbId = sgMovie.imdbId;
+            movie.title = sgMovie.title;
+            movie.releasedUtcMs = sgMovie.getReleasedMsOrDefault();
+            movie.runtimeMin = sgMovie.getRuntimeMinOrDefault();
+            movie.poster = sgMovie.poster;
+            movie.inCollection = sgMovie.inCollection;
+            movie.inWatchlist = sgMovie.inWatchlist;
+            movie.watched = sgMovie.watched;
+            movie.plays = sgMovie.plays;
+            movie.lastUpdatedMs = sgMovie.getLastUpdatedOrDefault();
 
             if (isFullDump) {
-                movie.overview = movies.getString(MoviesQuery.OVERVIEW);
+                movie.overview = sgMovie.overview;
             }
 
             gson.toJson(movie, Movie.class, writer);
@@ -520,129 +482,5 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
         writer.endArray();
         writer.close();
-    }
-
-    public interface ShowsQuery {
-        String[] PROJECTION_FULL = new String[]{
-                Shows._ID,
-                Shows.TITLE,
-                Shows.FAVORITE,
-                Shows.NOTIFY,
-                Shows.HIDDEN,
-                Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY,
-                Shows.RELEASE_TIMEZONE,
-                Shows.RELEASE_COUNTRY,
-                Shows.LASTWATCHEDID,
-                Shows.LASTWATCHED_MS,
-                Shows.POSTER,
-                Shows.POSTER_SMALL,
-                Shows.CONTENTRATING,
-                Shows.STATUS,
-                Shows.RUNTIME,
-                Shows.NETWORK,
-                Shows.IMDBID,
-                Shows.TRAKT_ID,
-                Shows.FIRST_RELEASE,
-                Shows.RATING_USER,
-                Shows.LANGUAGE,
-                Shows.OVERVIEW,
-                Shows.RATING_GLOBAL,
-                Shows.RATING_VOTES,
-                Shows.GENRES,
-                Shows.LASTUPDATED,
-                Shows.LASTEDIT,
-                Shows.SLUG
-        };
-
-        int ID = 0;
-        int TITLE = 1;
-        int FAVORITE = 2;
-        int NOTIFY = 3;
-        int HIDDEN = 4;
-        int RELEASE_TIME = 5;
-        int RELEASE_WEEKDAY = 6;
-        int RELEASE_TIMEZONE = 7;
-        int RELEASE_COUNTRY = 8;
-        int LASTWATCHEDID = 9;
-        int LASTWATCHED_MS = 10;
-        int POSTER = 11;
-        int POSTER_THUMBNAIL = 12;
-        int CONTENTRATING = 13;
-        int STATUS = 14;
-        int RUNTIME = 15;
-        int NETWORK = 16;
-        int IMDBID = 17;
-        int TRAKT_ID = 18;
-        int FIRSTAIRED = 19;
-        int RATING_USER = 20;
-        int LANGUAGE = 21;
-        int OVERVIEW = 22;
-        int RATING_GLOBAL = 23;
-        int RATING_VOTES = 24;
-        int GENRES = 25;
-        int LAST_UPDATED = 26;
-        int LAST_EDITED = 27;
-        int SLUG = 28;
-    }
-
-    public interface ListsQuery {
-        String[] PROJECTION = new String[]{
-                SeriesGuideContract.Lists.LIST_ID,
-                SeriesGuideContract.Lists.NAME,
-                SeriesGuideContract.Lists.ORDER
-        };
-
-        int ID = 0;
-        int NAME = 1;
-        int ORDER = 2;
-    }
-
-    public interface ListItemsQuery {
-        String[] PROJECTION = new String[]{
-                ListItems.LIST_ITEM_ID, SeriesGuideContract.Lists.LIST_ID, ListItems.ITEM_REF_ID,
-                ListItems.TYPE
-        };
-
-        String SELECTION = SeriesGuideContract.Lists.LIST_ID + "=?";
-
-        int ID = 0;
-        int LIST_ID = 1;
-        int ITEM_REF_ID = 2;
-        int TYPE = 3;
-    }
-
-    public interface MoviesQuery {
-        String[] PROJECTION = new String[]{
-                Movies._ID,
-                Movies.TMDB_ID,
-                Movies.IMDB_ID,
-                Movies.TITLE,
-                Movies.RELEASED_UTC_MS,
-                Movies.RUNTIME_MIN,
-                Movies.POSTER,
-                Movies.IN_COLLECTION,
-                Movies.IN_WATCHLIST,
-                Movies.WATCHED,
-                Movies.PLAYS,
-                Movies.LAST_UPDATED,
-                Movies.OVERVIEW
-        };
-
-        String SORT_ORDER = Movies.TITLE + " COLLATE NOCASE ASC";
-
-        int TMDB_ID = 1;
-        int IMDB_ID = 2;
-        int TITLE = 3;
-        int RELEASED_UTC_MS = 4;
-        int RUNTIME_MIN = 5;
-        int POSTER = 6;
-        int IN_COLLECTION = 7;
-        int IN_WATCHLIST = 8;
-        int WATCHED = 9;
-        int PLAYS = 10;
-        int LAST_UPDATED = 11;
-        // only in FULL dump
-        int OVERVIEW = 12;
     }
 }

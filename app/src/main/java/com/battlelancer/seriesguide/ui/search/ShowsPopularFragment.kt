@@ -85,8 +85,8 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
         adapter.setAllPendingNotAdded()
     }
 
-    override fun setStateForTvdbId(showTvdbId: Int, newState: Int) {
-        adapter.setStateForTvdbId(showTvdbId, newState)
+    override fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
+        adapter.setStateForTmdbId(showTmdbId, newState)
     }
 
 }

@@ -35,15 +35,25 @@ public class TimeToolsTest {
         assertThat(year1).isEqualTo(year2);
     }
 
+    private Date getDayAsDate(int year, int month, int dayOfMonth) {
+        // tmdb-java parses date string to Date using SimpleDateFormat,
+        // which uses the default time zone.
+        Instant instant = LocalDate.of(year, month, dayOfMonth)
+                .atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        return new Date(instant.toEpochMilli());
+    }
+
     @Test
     public void test_parseEpisodeReleaseTime() {
         // ensure a US show has its local release time correctly converted to UTC time
         // (we can be sure that in May there is always DST in effect in America/New_York
         // so this test will likely not break if DST rules change)
         ZoneId showTimeZone = ZoneId.of(AMERICA_NEW_YORK);
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
                 showTimeZone,
-                "2013-05-31",
+                getDayAsDate(2013, 5, 31),
                 LocalTime.of(20, 0), // 20:00
                 UNITED_STATES,
                 null,
@@ -59,9 +69,9 @@ public class TimeToolsTest {
         // (we can be sure that in May there is always DST in effect in Europe/Berlin
         // so this test will likely not break if DST rules change)
         ZoneId showTimeZone = ZoneId.of(EUROPE_BERLIN);
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
                 showTimeZone,
-                "2013-05-31",
+                getDayAsDate(2013, 5, 31),
                 LocalTime.of(20, 0), // 20:00
                 GERMANY,
                 null,
@@ -77,9 +87,9 @@ public class TimeToolsTest {
         // e.g. if 00:35, the episode date is typically (wrongly) that of the previous day
         // this is common for late night shows, e.g. "Monday night" is technically "early Tuesday"
         ZoneId showTimeZone = ZoneId.of(AMERICA_NEW_YORK);
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
                 showTimeZone,
-                "2013-05-31",
+                getDayAsDate(2013, 5, 31),
                 LocalTime.of(0, 35), // 00:35
                 UNITED_STATES,
                 null,
@@ -94,9 +104,9 @@ public class TimeToolsTest {
         // ensure episodes releasing in the hour past midnight are NOT moved to the next day
         // if it is a Netflix show
         ZoneId showTimeZone = ZoneId.of(AMERICA_NEW_YORK);
-        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(null,
+        long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
                 showTimeZone,
-                "2013-06-01", // +one day here
+                getDayAsDate(2013, 6, 1), // +one day here
                 LocalTime.of(0, 35), // 00:35
                 UNITED_STATES,
                 "Netflix",

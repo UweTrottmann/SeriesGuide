@@ -68,4 +68,16 @@ public class SgMovie {
 
     @ColumnInfo(name = Movies.LAST_UPDATED)
     public Long lastUpdated;
+
+    public long getReleasedMsOrDefault() {
+        return releasedMs != null ? releasedMs : Long.MAX_VALUE;
+    }
+
+    public int getRuntimeMinOrDefault() {
+        return runtimeMin != null ? runtimeMin : 0;
+    }
+
+    public long getLastUpdatedOrDefault() {
+        return lastUpdated != null ? lastUpdated : 0;
+    }
 }

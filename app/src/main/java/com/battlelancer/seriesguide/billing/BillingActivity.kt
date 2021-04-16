@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.view.isGone
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +24,7 @@ import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
 
@@ -35,7 +35,9 @@ class BillingActivity : BaseActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SkuDetailsAdapter
     private lateinit var buttonManageSubs: Button
+    private lateinit var buttonPass: Button
     private lateinit var textViewHasUpgrade: View
+    private lateinit var textViewBillingUnlockDetected: View
     private lateinit var textViewBillingError: TextView
 
     private lateinit var billingViewModel: BillingViewModel
@@ -55,11 +57,11 @@ class BillingActivity : BaseActivity() {
         // Users might want to support even if unlock app is installed.
         billingViewModel = ViewModelProvider(this)
             .get(BillingViewModel::class.java).also {
-                it.subsSkuDetailsListLiveData.observe(this, Observer { skuDetails ->
+                it.subsSkuDetailsListLiveData.observe(this, { skuDetails ->
                     adapter.setSkuDetailsList(skuDetails)
                 })
             }
-        billingViewModel.errorEvent.observe(this, Observer { message ->
+        billingViewModel.errorEvent.observe(this, { message ->
             message?.let {
                 textViewBillingError.apply {
                     text = "${getString(R.string.subscription_unavailable)} ($message)"
@@ -70,12 +72,12 @@ class BillingActivity : BaseActivity() {
         // Only use subscription state if unlock app is not installed.
         if (Utils.hasXpass(this)) {
             setWaitMode(false)
-            updateViewStates(true)
+            updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         } else {
             setWaitMode(true)
-            billingViewModel.goldStatusLiveData.observe(this, Observer { goldStatus ->
+            billingViewModel.goldStatusLiveData.observe(this, { goldStatus ->
                 setWaitMode(false)
-                updateViewStates(goldStatus != null && goldStatus.entitled)
+                updateViewStates(goldStatus != null && goldStatus.entitled, false)
                 manageSubscriptionUrl =
                     if (goldStatus?.isSub == true && goldStatus.sku != null) {
                         PLAY_MANAGE_SUBS_ONE + goldStatus.sku
@@ -106,6 +108,7 @@ class BillingActivity : BaseActivity() {
         recyclerView.adapter = adapter
 
         textViewHasUpgrade = findViewById(R.id.textViewBillingExisting)
+        textViewBillingUnlockDetected = findViewById(R.id.textViewBillingUnlockDetected)
         textViewBillingError = findViewById<TextView>(R.id.textViewBillingError).apply {
             isGone = true
         }
@@ -117,6 +120,9 @@ class BillingActivity : BaseActivity() {
                 )
             }
         }
+
+        buttonPass = findViewById(R.id.buttonBillingGetPass)
+        ViewTools.openUriOnClick(buttonPass, getString(R.string.url_x_pass))
 
         progressScreen = findViewById(R.id.progressBarBilling)
         contentContainer = findViewById(R.id.containerBilling)
@@ -143,12 +149,13 @@ class BillingActivity : BaseActivity() {
 
         // Check if user has installed key app.
         if (Utils.hasXpass(this)) {
-            updateViewStates(true)
+            updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         }
     }
 
-    private fun updateViewStates(hasUpgrade: Boolean) {
+    private fun updateViewStates(hasUpgrade: Boolean, unlockAppDetected: Boolean) {
         textViewHasUpgrade.isGone = !hasUpgrade
+        textViewBillingUnlockDetected.isGone = !unlockAppDetected
     }
 
     private fun setWaitMode(isActive: Boolean) {

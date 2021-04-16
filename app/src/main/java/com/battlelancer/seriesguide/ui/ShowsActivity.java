@@ -28,13 +28,13 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
@@ -42,8 +42,6 @@ import com.battlelancer.seriesguide.ui.shows.CalendarFragment2;
 import com.battlelancer.seriesguide.ui.shows.ShowsActivityViewModel;
 import com.battlelancer.seriesguide.ui.shows.ShowsFragment;
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment;
-import com.battlelancer.seriesguide.util.ActivityTools;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -144,37 +142,50 @@ public class ShowsActivity extends BaseTopActivity implements
             return false;
         }
 
+        SgRoomDatabase database = SgRoomDatabase.getInstance(this);
         Intent viewIntent = null;
 
         // view an episode
         if (Intents.ACTION_VIEW_EPISODE.equals(action)) {
-            int episodeTvdbId = intent.getIntExtra(Intents.EXTRA_EPISODE_TVDBID, 0);
-            if (episodeTvdbId > 0 && EpisodeTools.isEpisodeExists(this, episodeTvdbId)) {
-                // episode exists, display it
-                viewIntent = new Intent(this, EpisodesActivity.class)
-                        .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeTvdbId);
-            } else {
-                // no such episode, offer to add show
-                int showTvdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
-                if (showTvdbId > 0) {
+            int showTmdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TMDBID, 0);
+            // Note: season may be 0 for specials.
+            int season = intent.getIntExtra(Intents.EXTRA_EPISODE_SEASON, -1);
+            int number = intent.getIntExtra(Intents.EXTRA_EPISODE_NUMBER, 0);
+            if (showTmdbId > 0) {
+                long showId = database.sgShow2Helper().getShowIdByTmdbId(showTmdbId);
+                if (showId != 0) {
+                    if (season >= 0 && number >= 1) {
+                        long episodeId = database.sgEpisode2Helper()
+                                .getEpisodeIdByNumber(showId, season, number);
+                        if (episodeId != 0) {
+                            // episode exists, display it
+                            viewIntent = EpisodesActivity.intentEpisode(episodeId, this);
+                        }
+                    }
+                    if (viewIntent == null) {
+                        // No valid episode given or found, display show instead.
+                        viewIntent = OverviewActivity.intentShow(this, showId);
+                    }
+                } else {
+                    // Show not added, offer to.
                     AddShowDialogFragment.show(this, getSupportFragmentManager(),
-                            showTvdbId);
+                            showTmdbId);
                 }
             }
         }
         // view a show
         else if (Intents.ACTION_VIEW_SHOW.equals(action)) {
-            int showTvdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TVDBID, 0);
-            if (showTvdbId <= 0) {
+            int showTmdbId = intent.getIntExtra(Intents.EXTRA_SHOW_TMDBID, 0);
+            if (showTmdbId <= 0) {
                 return false;
             }
-            if (DBUtils.isShowExists(this, showTvdbId)) {
+            long showId = database.sgShow2Helper().getShowIdByTmdbId(showTmdbId);
+            if (showId != 0) {
                 // show exists, display it
-                viewIntent = OverviewActivity.intentShow(this, showTvdbId);
+                viewIntent = OverviewActivity.intentShow(this, showId);
             } else {
                 // no such show, offer to add it
-                AddShowDialogFragment.show(this, getSupportFragmentManager(),
-                        showTvdbId);
+                AddShowDialogFragment.show(this, getSupportFragmentManager(), showTmdbId);
             }
         }
 
@@ -404,9 +415,10 @@ public class ShowsActivity extends BaseTopActivity implements
                 // force a sync
                 SgSyncAdapter.requestSyncFullImmediate(this, true);
             }
-            if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
-                ActivityTools.populateShowsLastWatchedTime(this);
-            }
+            // This was never doing anything (ops batch never applied), so removed.
+//            if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
+//                 ActivityTools.populateShowsLastWatchedTime(this);
+//            }
             Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
             if (lastVersion < SgApp.RELEASE_VERSION_36_BETA2) {
                 // used account name to determine sign-in state before switch to Google Sign-In

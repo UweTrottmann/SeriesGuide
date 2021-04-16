@@ -35,8 +35,9 @@
     <string name="sync_manually">هم‌گام سازی دستی</string>
     <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
     <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
-    <string name="action_turn_off">غیرفعال سازی</string>
     <string name="action_stream">پخش یا خرید</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
     <string name="api_failed">%s انجام نشد</string>
     <string name="copy_to_clipboard">کپی شد</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">هم‌رسانی</string>
     <string name="share_show">هم‌رسانی نمایش</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">در حال پخش</string>
     <string name="show_isnotalive">به پایان رسیده</string>
     <string name="show_isUpcoming">پیش رو</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
     <string name="no_translation_title">ترجمه نشده</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
     <string name="empty_show_search">در لیست برنامه‌ها پیدا نشد</string>
     <string name="action_try_again">دوباره امتحان کنید</string>
-    <string name="tvdb_error_does_not_exist">اثر نمایشی (هنوز) در TheTVDB وجود ندارد. بعداً دوباره سعی کنید.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">افزودن همه</string>
     <string name="add_multiple">تمام نمایش‌ها به زودی در فهرست نمایشتان ظاهر خواهند شد.</string>
     <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">مدیریت فهرست</string>
     <string name="list_item_manage">مدیریت فهرست‌ها</string>
     <string name="list_item_remove">برداشتن از فهرست</string>
-    <string name="list_empty">می‌توانید نمایش‌ها، فصل‌ها یا قسمت‌هایی به این فهرست بیفزایید.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">چینش فهرست‌ها</string>
     <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">باز کردن تمام ویژگی‌ها</string>
     <string name="billing_action_subscribe">اشتراک</string>
     <string name="billing_action_manage_subscriptions">مدیریت اشتراک‌ها</string>
-    <string name="billing_action_pass">گرفتن X Pass</string>
+    <string name="billing_action_pass">گرفتن X Pass App</string>
     <string name="billing_price_subscribe">%1$s/سال, به رایگان امتحان کرده و هر زمان از طریق %2$s لغو کنید</string>
     <string name="billing_duration_format">%1$s/سال</string>
     <string name="billing_sub_description">۳۰ روز به رایگان آزموده و هر زمان لغو کنید.</string>
     <string name="billing_price_pass">خرید یک باره</string>
     <string name="upgrade_description">هر اشتراکی، همهٔ ویژگی‌ها را گشوده و از به‌روز رسانی‌های آتی پشیبانی می‌کند. برای استفاده از این کاره نیازی به اشتراک نیست.</string>
     <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">اطّلاعات بیش‌تر و راهنمایی</string>
     <string name="subscription_expired">اشتراک پایان یافت</string>
     <string name="subscription_expired_details">اشتراک سریزگایدتان به پایان رسیده است.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">می‌گویید چگونه بهبودش بخشم؟</string>
     <string name="feedback_action_ok">بله، حتماً</string>
     <string name="feedback_action_nothanks">نه، ممنون</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

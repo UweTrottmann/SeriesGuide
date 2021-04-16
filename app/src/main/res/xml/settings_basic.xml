@@ -11,7 +11,7 @@
 
     <Preference
         app:iconSpaceReserved="false"
-        app:key="com.battlelancer.seriesguide.justwatch"
+        app:key="com.uwetrottmann.seriesguide.watch.region"
         app:title="@string/action_stream"
         tools:summary="@string/action_turn_off" />
 

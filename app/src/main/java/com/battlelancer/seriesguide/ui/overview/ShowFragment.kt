@@ -1,61 +1,50 @@
 package com.battlelancer.seriesguide.ui.overview
 
-import android.content.Intent
-import android.database.Cursor
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
-import androidx.loader.app.LoaderManager
-import androidx.loader.app.LoaderManager.LoaderCallbacks
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
-import com.battlelancer.seriesguide.thetvdbapi.TvdbLinks
+import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
-import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
-import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
-import com.battlelancer.seriesguide.ui.people.ShowCreditsLoader
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -66,7 +55,12 @@ import timber.log.Timber
  * Displays extended information (poster, release info, description, ...) and actions (favoriting,
  * shortcut) for a particular show.
  */
-class ShowFragment : Fragment() {
+@SuppressLint("NonConstantResourceId")
+class ShowFragment() : Fragment() {
+
+    constructor(showRowId: Long) : this() {
+        arguments = buildArgs(showRowId)
+    }
 
     @BindView(R.id.imageViewShowPosterBackground)
     internal lateinit var imageViewBackground: ImageView
@@ -118,8 +112,8 @@ class ShowFragment : Fragment() {
     internal lateinit var buttonImdb: Button
     @BindView(R.id.buttonShowMetacritic)
     internal lateinit var buttonShowMetacritic: Button
-    @BindView(R.id.buttonShowTvdb)
-    internal lateinit var buttonTvdb: Button
+    @BindView(R.id.buttonShowTmdb)
+    internal lateinit var buttonTmdb: Button
     @BindView(R.id.buttonShowTrakt)
     internal lateinit var buttonTrakt: Button
     @BindView(R.id.buttonShowWebSearch)
@@ -140,21 +134,16 @@ class ShowFragment : Fragment() {
 
     private lateinit var unbinder: Unbinder
 
-    private var showTvdbId: Int = 0
-    private var showCursor: Cursor? = null
+    private var showId: Long = 0
+    private var show: SgShow2? = null
     private lateinit var showTools: ShowTools
-    private var ratingFetchJob: Job? = null
-    private var showSlug: String? = null
-    private var showTitle: String? = null
-    private var posterPath: String? = null
-    private var posterPathSmall: String? = null
     private var languageCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showTools = SgApp.getServicesComponent(requireContext()).showTools()
         arguments?.let {
-            showTvdbId = it.getInt(ARG_SHOW_TVDBID)
+            showId = it.getLong(ARG_SHOW_ROWID)
         } ?: throw IllegalArgumentException("Missing arguments")
     }
 
@@ -201,13 +190,17 @@ class ShowFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val loaderManager = LoaderManager.getInstance(this)
-        loaderManager.initLoader(OverviewActivity.SHOW_LOADER_ID, null, showLoaderCallbacks)
-        loaderManager.initLoader(
-            OverviewActivity.SHOW_CREDITS_LOADER_ID, null, creditsLoaderCallbacks
-        )
-
-        setHasOptionsMenu(true)
+        val model: ShowViewModel by viewModels()
+        model.setShowId(showId)
+        model.show.observe(viewLifecycleOwner) { sgShow2 ->
+            if (sgShow2 != null) {
+                show = sgShow2
+                populateShow(sgShow2)
+            }
+        }
+        model.credits.observe(viewLifecycleOwner) { credits ->
+            populateCredits(credits)
+        }
     }
 
     override fun onStart() {
@@ -228,150 +221,41 @@ class ShowFragment : Fragment() {
         unbinder.unbind()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Release reference to any job.
-        ratingFetchJob = null
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.show_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_show_manage_lists -> {
-                ManageListsDialogFragment.show(parentFragmentManager, showTvdbId, ListItemTypes.SHOW)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    internal interface ShowQuery {
-        companion object {
-
-            val PROJECTION = arrayOf(
-                Shows._ID,
-                Shows.TITLE,
-                Shows.STATUS,
-                Shows.RELEASE_TIME,
-                Shows.RELEASE_WEEKDAY,
-                Shows.RELEASE_TIMEZONE,
-                Shows.RELEASE_COUNTRY,
-                Shows.NETWORK,
-                Shows.POSTER,
-                Shows.POSTER_SMALL,
-                Shows.IMDBID,
-                Shows.RUNTIME,
-                Shows.FAVORITE,
-                Shows.OVERVIEW,
-                Shows.FIRST_RELEASE,
-                Shows.CONTENTRATING,
-                Shows.GENRES,
-                Shows.RATING_GLOBAL,
-                Shows.RATING_VOTES,
-                Shows.RATING_USER,
-                Shows.LASTEDIT,
-                Shows.LANGUAGE,
-                Shows.NOTIFY,
-                Shows.HIDDEN,
-                Shows.SLUG
-            )
-
-            const val TITLE = 1
-            const val STATUS = 2
-            const val RELEASE_TIME = 3
-            const val RELEASE_WEEKDAY = 4
-            const val RELEASE_TIMEZONE = 5
-            const val RELEASE_COUNTRY = 6
-            const val NETWORK = 7
-            const val POSTER = 8
-            const val POSTER_SMALL = 9
-            const val IMDBID = 10
-            const val RUNTIME = 11
-            const val IS_FAVORITE = 12
-            const val OVERVIEW = 13
-            const val FIRST_RELEASE = 14
-            const val CONTENT_RATING = 15
-            const val GENRES = 16
-            const val RATING_GLOBAL = 17
-            const val RATING_VOTES = 18
-            const val RATING_USER = 19
-            const val LAST_EDIT_MS = 20
-            const val LANGUAGE = 21
-            const val NOTIFY = 22
-            const val HIDDEN = 23
-            const val SLUG = 24
-        }
-    }
-
-    private val showLoaderCallbacks = object : LoaderCallbacks<Cursor> {
-        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-            return CursorLoader(
-                context!!, Shows.buildShowUri(showTvdbId),
-                ShowQuery.PROJECTION, null, null, null
-            )
-        }
-
-        override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-            if (!isAdded) {
-                return
-            }
-            if (data != null && data.moveToFirst()) {
-                showCursor = data
-                populateShow(data)
-            }
-        }
-
-        override fun onLoaderReset(loader: Loader<Cursor>) {
-            // do nothing, prefer stale data
-        }
-    }
-
-    private fun populateShow(showCursor: Cursor) {
-        showSlug = showCursor.getString(ShowQuery.SLUG)
-
-        // title
-        showTitle = showCursor.getString(ShowQuery.TITLE)
-        posterPath = showCursor.getString(ShowQuery.POSTER)
-        posterPathSmall = showCursor.getString(ShowQuery.POSTER_SMALL)
-
+    private fun populateShow(show: SgShow2) {
         // status
         textViewStatus?.let {
-            ShowTools.setStatusAndColor(it, showCursor.getInt(ShowQuery.STATUS))
+            showTools.setStatusAndColor(it, show.statusOrUnknown)
         }
 
         // Network, next release day and time, runtime
-        val releaseCountry = showCursor.getString(ShowQuery.RELEASE_COUNTRY)
-        val releaseTime = showCursor.getInt(ShowQuery.RELEASE_TIME)
-        val network = showCursor.getString(ShowQuery.NETWORK)
-        val time = if (releaseTime != -1) {
-            val weekDay = showCursor.getInt(ShowQuery.RELEASE_WEEKDAY)
+        val releaseCountry = show.releaseCountry
+        val releaseTime = show.releaseTime
+        val network = show.network
+        val time = if (releaseTime != null && releaseTime != -1) {
+            val weekDay = show.releaseWeekDayOrDefault
             val release = TimeTools.getShowReleaseDateTime(
                 requireContext(),
                 releaseTime,
                 weekDay,
-                showCursor.getString(ShowQuery.RELEASE_TIMEZONE),
+                show.releaseTimeZone,
                 releaseCountry, network
             )
-            val dayString = TimeTools.formatToLocalDayOrDaily(activity, release, weekDay)
-            val timeString = TimeTools.formatToLocalTime(activity, release)
+            val dayString = TimeTools.formatToLocalDayOrDaily(requireContext(), release, weekDay)
+            val timeString = TimeTools.formatToLocalTime(requireContext(), release)
             String.format("%s %s", dayString, timeString)
         } else {
             null
         }
         val runtime = getString(
             R.string.runtime_minutes,
-            showCursor.getInt(ShowQuery.RUNTIME).toString()
+            show.runtime.toString()
         )
         val combinedString =
             TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
         textViewReleaseTime?.text = combinedString
 
         // favorite button
-        val isFavorite = showCursor.getInt(ShowQuery.IS_FAVORITE) == 1
+        val isFavorite = show.favorite
         buttonFavorite.apply {
             text = getString(
                 if (isFavorite) R.string.state_favorite else R.string.context_favorite
@@ -390,12 +274,12 @@ class ShowFragment : Fragment() {
             setOnClickListener { v ->
                 // disable until action is complete
                 v.isEnabled = false
-                showTools.storeIsFavorite(showTvdbId, !isFavorite)
+                showTools.storeIsFavorite(showId, !isFavorite)
             }
         }
 
         // notifications button
-        val notify = showCursor.getInt(ShowQuery.NOTIFY) == 1
+        val notify = show.notify
         buttonNotify.apply {
             contentDescription = getString(
                 if (notify) {
@@ -416,7 +300,7 @@ class ShowFragment : Fragment() {
                 if (Utils.hasAccessToX(activity)) {
                     // disable until action is complete
                     v.isEnabled = false
-                    showTools.storeNotify(showTvdbId, !notify)
+                    showTools.storeNotify(showId, !notify)
                 } else {
                     Utils.advertiseSubscription(activity)
                 }
@@ -424,7 +308,7 @@ class ShowFragment : Fragment() {
         }
 
         // hidden button
-        val isHidden = showCursor.getInt(ShowQuery.HIDDEN) == 1
+        val isHidden = show.hidden
         buttonHidden.apply {
             text = getString(
                 if (isHidden) R.string.action_shows_filter_hidden else R.string.context_hide
@@ -443,28 +327,18 @@ class ShowFragment : Fragment() {
             setOnClickListener { v ->
                 // disable until action is complete
                 v.isEnabled = false
-                showTools.storeIsHidden(showTvdbId, !isHidden)
+                showTools.storeIsHidden(showId, !isHidden)
             }
         }
 
         // overview
-        var overview = showCursor.getString(ShowQuery.OVERVIEW)
-        val languageCode = showCursor.getString(ShowQuery.LANGUAGE)
+        var overview = show.overview
+        val languageCode = show.language
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            overview = getString(
-                R.string.no_translation,
-                LanguageTools.getShowLanguageStringFor(
-                    context,
-                    languageCode
-                ), getString(R.string.tvdb)
-            )
+            overview = TextToolsK.textNoTranslation(requireContext(), languageCode)
         }
-        val lastEditSeconds = showCursor.getLong(ShowQuery.LAST_EDIT_MS)
-        textViewOverview.text = TextTools.textWithTvdbSource(
-            textViewOverview.context,
-            overview, lastEditSeconds
-        )
+        textViewOverview.text = TextTools.textWithTmdbSource(textViewOverview.context, overview)
 
         // language preferred for content
         val languageData = LanguageTools.getShowLanguageDataFor(
@@ -480,122 +354,88 @@ class ShowFragment : Fragment() {
         textViewReleaseCountry.text = TimeTools.getCountry(activity, releaseCountry)
 
         // original release
-        val firstRelease = showCursor.getString(ShowQuery.FIRST_RELEASE)
         ViewTools.setValueOrPlaceholder(
             textViewFirstRelease,
-            TimeTools.getShowReleaseYear(firstRelease)
+            TimeTools.getShowReleaseYear(show.firstRelease)
         )
 
         // content rating
-        ViewTools.setValueOrPlaceholder(
-            textViewContentRating,
-            showCursor.getString(ShowQuery.CONTENT_RATING)
-        )
+        ViewTools.setValueOrPlaceholder(textViewContentRating, show.contentRating)
         // genres
         ViewTools.setValueOrPlaceholder(
             textViewGenres,
-            TextTools.splitAndKitTVDBStrings(showCursor.getString(ShowQuery.GENRES))
+            TextTools.splitAndKitTVDBStrings(show.genres)
         )
 
         // trakt rating
-        textViewRating.text = TraktTools.buildRatingString(
-            showCursor.getDouble(ShowQuery.RATING_GLOBAL)
-        )
-        textViewRatingVotes.text = TraktTools.buildRatingVotesString(
-            activity,
-            showCursor.getInt(ShowQuery.RATING_VOTES)
-        )
+        textViewRating.text = TraktTools.buildRatingString(show.ratingGlobal)
+        textViewRatingVotes.text = TraktTools.buildRatingVotesString(activity, show.ratingVotes)
 
         // user rating
-        textViewRatingUser.text = TraktTools.buildUserRatingString(
-            activity,
-            showCursor.getInt(ShowQuery.RATING_USER)
-        )
+        textViewRatingUser.text = TraktTools.buildUserRatingString(activity, show.ratingUser)
 
         // Similar shows button.
         buttonSimilar.setOnClickListener {
-            startActivity(SimilarShowsActivity.intent(requireContext(), showTvdbId, showTitle))
+            show.tmdbId?.also {
+                startActivity(SimilarShowsActivity.intent(requireContext(), it, show.title))
+            }
         }
 
         // IMDb button
-        val imdbId = showCursor.getString(ShowQuery.IMDBID)
-        ServiceUtils.setUpImdbButton(imdbId, buttonImdb)
+        ServiceUtils.setUpImdbButton(show.imdbId, buttonImdb)
 
-        // TVDb button
-        val tvdbLink = TvdbLinks.show(showSlug, showTvdbId)
-        ViewTools.openUriOnClick(buttonTvdb, tvdbLink)
-        buttonTvdb.copyTextToClipboardOnLongClick(tvdbLink)
+        show.tmdbId?.also {
+            // TMDb button
+            val url = TmdbTools.buildShowUrl(it)
+            ViewTools.openUriOnClick(buttonTmdb, url)
+            buttonTmdb.copyTextToClipboardOnLongClick(url)
 
-        // trakt button
-        val traktLink = TraktTools.buildShowUrl(showTvdbId)
-        ViewTools.openUriOnClick(buttonTrakt, traktLink)
-        buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
+            // Trakt button
+            val traktLink = TraktTools.buildShowUrl(it)
+            ViewTools.openUriOnClick(buttonTrakt, traktLink)
+            buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
+        }
 
         buttonShowMetacritic.setOnClickListener {
-            showTitle?.let { Metacritic.searchForTvShow(requireContext(), it) }
+            if (show.title.isNotEmpty()) Metacritic.searchForTvShow(requireContext(), show.title)
         }
 
         // web search button
-        ServiceUtils.setUpWebSearchButton(showTitle, buttonWebSearch)
+        ServiceUtils.setUpWebSearchButton(show.title, buttonWebSearch)
 
         // shout button
         buttonComments.setOnClickListener { v ->
-            val i = Intent(activity, TraktCommentsActivity::class.java)
-            i.putExtras(
-                TraktCommentsActivity.createInitBundleShow(
-                    showTitle,
-                    showTvdbId
-                )
-            )
-            Utils.startActivityWithAnimation(activity, i, v)
+                val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
+                Utils.startActivityWithAnimation(activity, i, v)
         }
 
         // poster, full screen poster button
-        if (TextUtils.isEmpty(posterPathSmall)) {
+        val posterSmall = show.posterSmall
+        if (posterSmall.isNullOrEmpty()) {
             // have no poster
             containerPoster.isClickable = false
             containerPoster.isFocusable = false
         } else {
             // poster and fullscreen button
-            TvdbImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterPathSmall)
+            ImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
-                val intent = Intent(activity, FullscreenImageActivity::class.java)
-                intent.putExtra(
-                    FullscreenImageActivity.EXTRA_PREVIEW_IMAGE,
-                    TvdbImageTools.artworkUrl(posterPathSmall)
-                )
-                intent.putExtra(
-                    FullscreenImageActivity.EXTRA_IMAGE,
-                    TvdbImageTools.artworkUrl(posterPath)
-                )
+                val intent = FullscreenImageActivity.intent(requireContext(),
+                    ImageTools.tmdbOrTvdbPosterUrl(posterSmall, requireContext()),
+                    ImageTools.tmdbOrTvdbPosterUrl(
+                        show.poster,
+                        requireContext(),
+                        originalSize = true
+                    ))
                 Utils.startActivityWithAnimation(activity, intent, v)
             }
 
             // poster background
-            TvdbImageTools.loadShowPosterAlpha(
+            ImageTools.loadShowPosterAlpha(
                 requireActivity(),
                 imageViewBackground,
-                posterPathSmall
+                posterSmall
             )
-        }
-
-        loadTraktRatings()
-    }
-
-    private val creditsLoaderCallbacks = object : LoaderCallbacks<Credits?> {
-        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Credits?> {
-            return ShowCreditsLoader(context!!, showTvdbId, true)
-        }
-
-        override fun onLoadFinished(loader: Loader<Credits?>, data: Credits?) {
-            if (isAdded) {
-                populateCredits(data)
-            }
-        }
-
-        override fun onLoaderReset(loader: Loader<Credits?>) {
-
         }
     }
 
@@ -632,14 +472,7 @@ class ShowFragment : Fragment() {
     }
 
     private fun rateShow() {
-        RateDialogFragment.newInstanceShow(showTvdbId).safeShow(context, parentFragmentManager)
-    }
-
-    private fun loadTraktRatings() {
-        val oldRatingFetchJob = ratingFetchJob
-        if (oldRatingFetchJob == null || !oldRatingFetchJob.isActive) {
-            ratingFetchJob = TraktRatingsFetcher.fetchShowRatingsAsync(requireContext(), showTvdbId)
-        }
+        RateDialogFragment.newInstanceShow(showId).safeShow(context, parentFragmentManager)
     }
 
     private fun displayLanguageSettings() {
@@ -653,7 +486,7 @@ class ShowFragment : Fragment() {
         this.languageCode = languageCode
 
         Timber.d("Changing show language to %s", languageCode)
-        showTools.storeLanguage(showTvdbId, languageCode)
+        showTools.storeLanguage(showId, languageCode)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -667,49 +500,37 @@ class ShowFragment : Fragment() {
             return
         }
 
-        val currentShowTvdbId = showTvdbId
-        val currentShowTitle = showTitle
-        val currentPosterPath = posterPathSmall
-        if (currentShowTvdbId == 0 || currentShowTitle == null || currentPosterPath == null) {
-            return
-        }
-
         // create the shortcut
-        val shortcutLiveData = ShortcutCreator(
-            requireContext(),
-            currentShowTitle,
-            currentPosterPath,
-            currentShowTvdbId
-        )
-        viewLifecycleOwner.lifecycleScope.launch {
-            whenStarted {
-                shortcutLiveData.prepareAndPinShortcut()
+        show?.also { show ->
+            if (show.tmdbId != null && show.posterSmall != null) {
+                val shortcutLiveData = ShortcutCreator(
+                    requireContext(),
+                    show.title,
+                    show.posterSmall,
+                    show.tmdbId
+                )
+                viewLifecycleOwner.lifecycleScope.launch {
+                    whenStarted {
+                        shortcutLiveData.prepareAndPinShortcut()
+                    }
+                }
             }
         }
     }
 
     private fun shareShow() {
-        val currentShowSlug = showSlug
-        val currentShowTvdbId = showTvdbId
-        val currentShowTitle = showTitle
-        if (currentShowSlug != null && currentShowTvdbId != 0 && currentShowTitle != null) {
-            ShareUtils.shareShow(activity, currentShowSlug, currentShowTvdbId, currentShowTitle)
+        show?.also {
+            ShareUtils.shareShow(activity, it.tmdbId ?: 0, it.title)
         }
     }
 
     companion object {
 
-        const val ARG_SHOW_TVDBID = "tvdbid"
+        private const val ARG_SHOW_ROWID = "show_id"
 
         @JvmStatic
-        fun newInstance(showTvdbId: Int): ShowFragment {
-            val f = ShowFragment()
-
-            val args = Bundle()
-            args.putInt(ARG_SHOW_TVDBID, showTvdbId)
-            f.arguments = args
-
-            return f
+        fun buildArgs(showRowId: Long): Bundle {
+            return bundleOf(ARG_SHOW_ROWID to showRowId)
         }
     }
 }

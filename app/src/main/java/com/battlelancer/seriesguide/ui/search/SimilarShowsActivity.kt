@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.TaskManager
@@ -16,19 +15,19 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
         setContentView(R.layout.activity_singlepane)
         setupActionBar()
 
-        val showTvdbId = intent.getIntExtra(EXTRA_SHOW_THETVDB_ID, 0)
-        if (showTvdbId <= 0) {
+        val showTmdbId = intent.getIntExtra(EXTRA_SHOW_TMDB_ID, 0)
+        if (showTmdbId <= 0) {
             finish()
             return
         }
         val showTitle = intent.getStringExtra(EXTRA_SHOW_TITLE)
 
         if (savedInstanceState == null) {
-            addFragmentWithSimilarShows(showTvdbId, showTitle)
+            addFragmentWithSimilarShows(showTmdbId, showTitle)
         }
 
-        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
-            addFragmentWithSimilarShows(it.tvdbid, it.title, true)
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, {
+            addFragmentWithSimilarShows(it.tmdbId, it.title, true)
         })
     }
 
@@ -55,11 +54,11 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
     }
 
     private fun addFragmentWithSimilarShows(
-        showTvdbId: Int,
+        showTmdbId: Int,
         showTitle: String?,
         addToBackStack: Boolean = false
     ) {
-        val fragment = SimilarShowsFragment.newInstance(showTvdbId, showTitle)
+        val fragment = SimilarShowsFragment.newInstance(showTmdbId, showTitle)
         supportFragmentManager.beginTransaction().apply {
             if (addToBackStack) {
                 replace(R.id.content_frame, fragment)
@@ -71,13 +70,13 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
     }
 
     companion object {
-        private const val EXTRA_SHOW_THETVDB_ID = "EXTRA_SHOW_THETVDB_ID"
+        private const val EXTRA_SHOW_TMDB_ID = "EXTRA_SHOW_TMDB_ID"
         private const val EXTRA_SHOW_TITLE = "EXTRA_SHOW_TITLE"
 
         @JvmStatic
-        fun intent(context: Context, showTvdbId: Int, showTitle: String?): Intent {
+        fun intent(context: Context, showTmdbId: Int, showTitle: String?): Intent {
             return Intent(context, SimilarShowsActivity::class.java)
-                .putExtra(EXTRA_SHOW_THETVDB_ID, showTvdbId)
+                .putExtra(EXTRA_SHOW_TMDB_ID, showTmdbId)
                 .putExtra(EXTRA_SHOW_TITLE, showTitle)
         }
     }

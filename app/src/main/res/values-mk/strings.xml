@@ -5,13 +5,13 @@
     <string name="lists">Листи</string>
     <string name="movies">Филмови</string>
     <string name="statistics">Статистики</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Повеќе</string>
     <string name="search">Пребарување</string>
     <string name="preferences">Подесувања</string>
     <string name="help">Помош</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">Детали</string>
     <string name="episode">Епизода</string>
     <string name="episode_number">Епизода %d</string>
     <string name="episodes">Епизоди</string>
@@ -35,8 +35,9 @@
     <string name="sync_manually">Синхронизирај мануелно</string>
     <string name="sync_and_update">Синхронизирај &amp; Обнови</string>
     <string name="sync_and_download_all">Синхронизирај &amp; Преземи сѐ</string>
-    <string name="action_turn_off">Исклучи</string>
     <string name="action_stream">Стримај или купи</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Избриши историја на пребарување</string>
     <string name="search_hint">Пребарај епизоди</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Неможе да се конектира со %s. Пробајте подоцна.</string>
     <string name="api_failed">Грешни: %s</string>
     <string name="copy_to_clipboard">Копирај во кликборд</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
     <string name="share_show">Сподели серија</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">Продолжува</string>
     <string name="show_isnotalive">Завршена</string>
     <string name="show_isUpcoming">Идни</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">There is no description translated to %1$s available at %2$s.</string>
     <string name="no_translation_title">Не преведено</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
     <string name="empty_show_search">Не е пронајдено во твојата прикажи листа</string>
     <string name="action_try_again">Прoбaј пoвтoрнo</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TheTVDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Додај се</string>
     <string name="add_multiple">Сите серии ќе се прикажат во твојата листа од серии за кратко.</string>
     <string name="add_started">%s ќе се појави во вашата листа од серии за кратко.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Уреди листа</string>
     <string name="list_item_manage">Уреду листи</string>
     <string name="list_item_remove">Избриши од листа</string>
-    <string name="list_empty">Можете да додате серија, сезона или епизода на оваа листа.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Листа за сортирање</string>
     <string name="action_lists_reorder">Поново сортирајте листа</string>
     <string name="error_name_already_exists">Една група со ова име веќе постои</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">Отклучи ги сите нови функционалност</string>
     <string name="billing_action_subscribe">Претплати се</string>
     <string name="billing_action_manage_subscriptions">Подеси зачленувања</string>
-    <string name="billing_action_pass">Купи X Pass</string>
+    <string name="billing_action_pass">Купи X Pass App</string>
     <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">еднократно купување</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Ви благодариме за поддршката SeriesGuide! Вие имате пристап до сите функции.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Претплата истече</string>
     <string name="subscription_expired_details">Вашата SeriesGuide претплата истече.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">Кажи ми како да го подобрам?</string>
     <string name="feedback_action_ok">OK, се разбира</string>
     <string name="feedback_action_nothanks">Не, благодарам</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

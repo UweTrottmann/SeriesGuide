@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
@@ -20,6 +19,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -32,7 +32,6 @@ import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.extensions.MovieActionsContract
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
@@ -40,7 +39,6 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
-import com.battlelancer.seriesguide.ui.people.MovieCreditsLoader
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
@@ -82,12 +80,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var movieDetails: MovieDetails? = MovieDetails()
     private var movieTitle: String? = null
     private var trailer: Videos.Video? = null
+    private val model: MovieDetailsModel by viewModels {
+        MovieDetailsModelFactory(tmdbId, requireActivity().application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -97,10 +98,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // important action buttons
         binding.containerMovieButtons.root.isGone = true
         binding.containerMovieButtons.buttonMovieCheckIn.setOnClickListener { onButtonCheckInClick() }
-        binding.containerMovieButtons.buttonMovieStreamingSearch.apply {
-            setOnClickListener { onButtonStreamingSearchClick() }
-            setOnLongClickListener { onButtonStreamingSearchLongClick() }
-        }
+        StreamingSearch.initButtons(
+            binding.containerMovieButtons.buttonMovieStreamingSearch,
+            binding.containerMovieButtons.buttonMovieStreamingSearchInfo,
+            parentFragmentManager
+        )
         binding.containerRatings.root.isGone = true
         CheatSheet.setup(binding.containerMovieButtons.buttonMovieCheckIn)
 
@@ -127,8 +129,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         tmdbId = requireArguments().getInt(ARG_TMDB_ID)
         if (tmdbId <= 0) {
@@ -145,8 +147,16 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             initLoader(
                 MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
             )
-            initLoader(MovieDetailsActivity.LOADER_ID_MOVIE_CREDITS, args, creditsLoaderCallbacks)
         }
+        model.credits.observe(viewLifecycleOwner, {
+            populateMovieCreditsViews(it)
+        })
+        model.watchProvider.observe(viewLifecycleOwner, { watchInfo ->
+            StreamingSearch.configureButton(
+                binding.containerMovieButtons.buttonMovieStreamingSearch,
+                watchInfo
+            )
+        })
 
         setHasOptionsMenu(true)
     }
@@ -314,10 +324,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         val isConnectedToTrakt = TraktCredentials.get(activity).hasCredentials()
         val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(activity)
         binding.containerMovieButtons.buttonMovieCheckIn.isGone = hideCheckIn
-        // hide streaming search if turned off
-        val hideStreamingSearch = StreamingSearch.isTurnedOff(requireContext())
-        binding.containerMovieButtons.buttonMovieStreamingSearch.isGone = hideStreamingSearch
-        binding.containerMovieButtons.dividerMovieButtons.isGone = hideCheckIn && hideStreamingSearch
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {
@@ -444,8 +450,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // trakt comments link
         binding.buttonMovieComments.setOnClickListener { v ->
-            val i = Intent(activity, TraktCommentsActivity::class.java)
-            i.putExtras(TraktCommentsActivity.createInitBundleMovie(movieTitle, tmdbId))
+            val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
             Utils.startActivityWithAnimation(activity, i, v)
         }
         binding.buttonMovieComments.isGone = false
@@ -484,12 +489,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.also {
                 it.isFocusable = true
                 it.setOnClickListener { view ->
-                    val largeImageUrl = (TmdbSettings.getImageBaseUrl(activity)
-                            + TmdbSettings.POSTER_SIZE_SPEC_ORIGINAL + tmdbMovie.poster_path)
-                    val intent = Intent(activity, FullscreenImageActivity::class.java).apply {
-                        putExtra(FullscreenImageActivity.EXTRA_PREVIEW_IMAGE, smallImageUrl)
-                        putExtra(FullscreenImageActivity.EXTRA_IMAGE, largeImageUrl)
-                    }
+                    val largeImageUrl =
+                        TmdbSettings.getImageOriginalUrl(activity, tmdbMovie.poster_path)
+                    val intent = FullscreenImageActivity.intent(
+                        requireActivity(),
+                        smallImageUrl,
+                        largeImageUrl
+                    )
                     Utils.startActivityWithAnimation(activity, intent, view)
                 }
             }
@@ -562,39 +568,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    private fun onButtonStreamingSearchClick() {
-        movieTitle?.let {
-            if (it.isEmpty()) {
-                return
-            }
-            if (StreamingSearch.isNotConfigured(requireContext())) {
-                showStreamingSearchConfigDialog()
-            } else {
-                StreamingSearch.searchForMovie(requireContext(), it)
-            }
-        }
-    }
-
-    private fun onButtonStreamingSearchLongClick(): Boolean {
-        showStreamingSearchConfigDialog()
-        return true
-    }
-
-    private fun showStreamingSearchConfigDialog() {
-        StreamingSearchConfigureDialog.show(parentFragmentManager)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onStreamingSearchConfigured(
-        event: StreamingSearchConfigureDialog.StreamingSearchConfiguredEvent
-    ) {
-        if (event.turnedOff) {
-            binding.containerMovieButtons.buttonMovieStreamingSearch.isGone = true
-        } else {
-            onButtonStreamingSearchClick()
-        }
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     override fun onEventMainThread(event: ExtensionManager.MovieActionReceivedEvent) {
         if (event.movieTmdbId != tmdbId) {
@@ -628,7 +601,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             buttonMovieWatched.isEnabled = enabled
             buttonMovieCollected.isEnabled = enabled
             buttonMovieWatchlisted.isEnabled = enabled
-            buttonMovieStreamingSearch.isEnabled = enabled
         }
     }
 
@@ -756,23 +728,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         override fun onLoaderReset(trailersLoader: Loader<Videos.Video>) {
-            // do nothing
-        }
-    }
-
-    private val creditsLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Credits?> {
-        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Credits?> {
-            return MovieCreditsLoader(context!!, args!!.getInt(ARG_TMDB_ID))
-        }
-
-        override fun onLoadFinished(creditsLoader: Loader<Credits?>, credits: Credits?) {
-            if (!isAdded) {
-                return
-            }
-            populateMovieCreditsViews(credits)
-        }
-
-        override fun onLoaderReset(creditsLoader: Loader<Credits?>) {
             // do nothing
         }
     }

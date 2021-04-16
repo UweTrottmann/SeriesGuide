@@ -29,7 +29,6 @@ import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeParseException;
 import org.threeten.bp.temporal.ChronoField;
 import org.threeten.bp.temporal.ChronoUnit;
-import timber.log.Timber;
 
 /**
  * Helper tools for converting and formatting date times for shows and episodes.
@@ -66,7 +65,7 @@ public class TimeTools {
      *
      * Note: this may seem harsh, but is equal to how to be released are calculated for seasons.
      *
-     * @see DBUtils#updateUnwatchedCount
+     * @see com.battlelancer.seriesguide.ui.overview.UnwatchedUpdateWorker
      */
     public static boolean isReleased(Date actualRelease) {
         return actualRelease.before(new Date(System.currentTimeMillis()));
@@ -177,23 +176,18 @@ public class TimeTools {
      * @param showReleaseTime See {@link #getShowReleaseTime(int)}.
      * @return -1 if no conversion was possible. Otherwise, any other long value (may be negative!).
      */
-    public static long parseEpisodeReleaseDate(@Nullable Context context,
-            @NonNull ZoneId showTimeZone, @Nullable String releaseDate,
+    public static long parseEpisodeReleaseDate(@NonNull ZoneId showTimeZone,
+            @Nullable Date releaseDate,
             @NonNull LocalTime showReleaseTime, @Nullable String showCountry,
             @Nullable String showNetwork, @NonNull String deviceTimeZone) {
-        if (releaseDate == null || releaseDate.length() == 0) {
+        if (releaseDate == null) {
             return Constants.EPISODE_UNKNOWN_RELEASE;
         }
 
-        // get date
-        LocalDate localDate;
-        try {
-            localDate = LocalDate.parse(releaseDate);
-        } catch (DateTimeParseException e) {
-            // date string could not be parsed
-            Timber.e(e, "TheTVDB date could not be parsed: %s", releaseDate);
-            return Constants.EPISODE_UNKNOWN_RELEASE;
-        }
+        // Get local date: tmdb-java parses date string to Date using SimpleDateFormat,
+        // which uses the default time zone.
+        Instant instant = Instant.ofEpochMilli(releaseDate.getTime());
+        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
 
         // set time
         LocalDateTime localDateTime = localDate.atTime(showReleaseTime);
@@ -413,7 +407,7 @@ public class TimeTools {
     /**
      * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale.
      */
-    public static String formatToLocalDay(Date dateTime) {
+    public static String formatToLocalDay(@NonNull Date dateTime) {
         SimpleDateFormat localDayFormat = new SimpleDateFormat("E", Locale.getDefault());
         return localDayFormat.format(dateTime);
     }
@@ -432,7 +426,7 @@ public class TimeTools {
     /**
      * Formats to absolute time format (e.g. "08:00 PM") as defined by the devices locale.
      */
-    public static String formatToLocalTime(Context context, Date dateTime) {
+    public static String formatToLocalTime(@NonNull Context context, @NonNull Date dateTime) {
         java.text.DateFormat localTimeFormat = DateFormat.getTimeFormat(context);
         return localTimeFormat.format(dateTime);
     }
@@ -461,7 +455,8 @@ public class TimeTools {
      * days") as defined by the devices locale. If the time is today, returns the local equivalent
      * for "today".
      */
-    public static String formatToLocalDayAndRelativeTime(Context context, Date dateTime) {
+    public static String formatToLocalDayAndRelativeTime(@NonNull Context context,
+            @NonNull Date dateTime) {
         StringBuilder dayAndTime = new StringBuilder();
 
         // day abbreviation, e.g. "Mon"
@@ -544,7 +539,7 @@ public class TimeTools {
      *
      * @see #formatToLocalDate(Context, Date)
      */
-    public static String formatToLocalDateShort(Context context, Date dateTime) {
+    public static String formatToLocalDateShort(@NonNull Context context, @NonNull Date dateTime) {
         return DateUtils.formatDateTime(context, dateTime.getTime(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
     }

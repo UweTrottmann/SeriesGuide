@@ -66,6 +66,7 @@
 -dontwarn org.codehaus.mojo.animal_sniffer.*
 # OkHttp platform used only on JVM and when Conscrypt dependency is available.
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
 
 # Retrofit 2.x
 # Keep entity and enum classes. R8 may strip unused, but required fields from entities.
@@ -73,7 +74,6 @@
 -keep class com.uwetrottmann.trakt5.enums.** { *; }
 -keep class com.uwetrottmann.tmdb2.entities.** { *; }
 -keep class com.uwetrottmann.tmdb2.enumerations.** { *; }
--keep class com.uwetrottmann.thetvdb.entities.** { *; }
 
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**

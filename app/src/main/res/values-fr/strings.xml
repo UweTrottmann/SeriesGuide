@@ -35,8 +35,9 @@
     <string name="sync_manually">Synchroniser manuellement</string>
     <string name="sync_and_update">Synchroniser &amp; Mettre à jour</string>
     <string name="sync_and_download_all">Synchroniser &amp; Télécharger tout</string>
-    <string name="action_turn_off">Désactiver</string>
     <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream_info">Informations sur le streaming et l\'achat</string>
+    <string name="action_select_region">Sélectionner une région</string>
     <!-- Search -->
     <string name="clear_search_history">Effacer l\'historique de recherche</string>
     <string name="search_hint">Recherche d\'épisodes</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
     <string name="api_failed">Échec : %s</string>
     <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
+    <string name="not_migrated">Introuvable sur TMDb, sera supprimé dans une prochaine mise à jour. Appuyez pour plus de détails.</string>
     <!-- Sharing -->
     <string name="share">Partager</string>
     <string name="share_show">Partager la série</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">En cours</string>
     <string name="show_isnotalive">Terminé</string>
     <string name="show_isUpcoming">À venir</string>
+    <string name="show_status_in_production">En cours de production</string>
+    <string name="show_status_pilot">Pilote</string>
+    <string name="show_status_canceled">Annulé</string>
     <string name="no_translation">La traduction en %1$s n\'est pas disponible sur %2$s.</string>
     <string name="no_translation_title">Non traduit</string>
     <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Gérer la liste</string>
     <string name="list_item_manage">Gérer les listes</string>
     <string name="list_item_remove">Retirer de la liste</string>
-    <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
+    <string name="list_empty">Vous pouvez ajouter des séries à cette liste.</string>
     <string name="action_lists_sort">Trier les listes</string>
     <string name="action_lists_reorder">Réorganiser les listes</string>
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">Déverrouiller toutes les fonctionnalités</string>
     <string name="billing_action_subscribe">Souscrire</string>
     <string name="billing_action_manage_subscriptions">Gérer les abonnements</string>
-    <string name="billing_action_pass">Obtenir X Pass</string>
+    <string name="billing_action_pass">Obtenir X Pass App</string>
     <string name="billing_price_subscribe">%1$s/an, faites l’essai gratuitement, annulez à tout moment via %2$s</string>
     <string name="billing_duration_format">%1$s/an</string>
     <string name="billing_sub_description">Essayez 30 jours gratuitement, annulez à tout moment.</string>
     <string name="billing_price_pass">Achat à vie</string>
     <string name="upgrade_description">Chaque abonnement débloque toutes les fonctionnalités et prend en charge les mises à jour futures. Un abonnement n\'est pas nécessaire pour utiliser cette application.</string>
     <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
+    <string name="billing_unlock_detected">Application X Pass détectée. Vous pouvez toujours vous abonner pour soutenir les mises à jour à venir.</string>
     <string name="billing_learn_more">Plus d\'infos et d\'aide</string>
     <string name="subscription_expired">Abonnement expiré</string>
     <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">Dites-moi comment l’améliorer ?</string>
     <string name="feedback_action_ok">OK, bien sûr</string>
     <string name="feedback_action_nothanks">Non, merci</string>
+    <!-- Support -->
+    <string name="support_the_dev">Soutenir le développeur ?</string>
 </resources>

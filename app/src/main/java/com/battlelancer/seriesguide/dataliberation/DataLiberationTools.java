@@ -5,50 +5,63 @@ import android.content.Intent;
 import android.os.Build;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
+import com.battlelancer.seriesguide.ui.shows.ShowTools.Status;
 import com.battlelancer.seriesguide.util.Utils;
 
 public class DataLiberationTools {
 
     /**
-     * Transform a string representation of {@link com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport}
-     * to a {@link ShowTools.Status} to be stored in the database.
+     * Transform a string representation of {@link ShowStatusExport}
+     * to a {@link Status} to be stored in the database.
      *
-     * <p>Falls back to {@link ShowTools.Status#UNKNOWN}.
+     * <p>Falls back to {@link Status#UNKNOWN}.
      */
     public static int encodeShowStatus(@Nullable String status) {
         if (status == null) {
-            return ShowTools.Status.UNKNOWN;
+            return Status.UNKNOWN;
         }
         switch (status) {
-            case JsonExportTask.ShowStatusExport.UPCOMING:
-                return ShowTools.Status.UPCOMING;
-            case JsonExportTask.ShowStatusExport.CONTINUING:
-                return ShowTools.Status.CONTINUING;
-            case JsonExportTask.ShowStatusExport.ENDED:
-                return ShowTools.Status.ENDED;
+            case ShowStatusExport.IN_PRODUCTION:
+                return Status.IN_PRODUCTION;
+            case ShowStatusExport.PILOT:
+                return Status.PILOT;
+            case ShowStatusExport.CANCELED:
+                return Status.CANCELED;
+            case ShowStatusExport.UPCOMING:
+                return Status.UPCOMING;
+            case ShowStatusExport.CONTINUING:
+                return Status.CONTINUING;
+            case ShowStatusExport.ENDED:
+                return Status.ENDED;
             default:
-                return ShowTools.Status.UNKNOWN;
+                return Status.UNKNOWN;
         }
     }
 
     /**
-     * Transform an int representation of {@link ShowTools.Status}
-     * to a {@link com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport} to
+     * Transform an int representation of {@link Status}
+     * to a {@link ShowStatusExport} to
      * be used for exporting data.
      *
-     * @param encodedStatus Detection based on {@link ShowTools.Status}.
+     * @param encodedStatus Detection based on {@link Status}.
      */
     public static String decodeShowStatus(int encodedStatus) {
         switch (encodedStatus) {
-            case ShowTools.Status.UPCOMING:
-                return JsonExportTask.ShowStatusExport.UPCOMING;
-            case ShowTools.Status.CONTINUING:
-                return JsonExportTask.ShowStatusExport.CONTINUING;
-            case ShowTools.Status.ENDED:
-                return JsonExportTask.ShowStatusExport.ENDED;
+            case Status.IN_PRODUCTION:
+                return ShowStatusExport.IN_PRODUCTION;
+            case Status.PILOT:
+                return ShowStatusExport.PILOT;
+            case Status.CANCELED:
+                return ShowStatusExport.CANCELED;
+            case Status.UPCOMING:
+                return ShowStatusExport.UPCOMING;
+            case Status.CONTINUING:
+                return ShowStatusExport.CONTINUING;
+            case Status.ENDED:
+                return ShowStatusExport.ENDED;
             default:
-                return JsonExportTask.ShowStatusExport.UNKNOWN;
+                return ShowStatusExport.UNKNOWN;
         }
     }
 

@@ -1,20 +1,12 @@
 package com.battlelancer.seriesguide.ui.search
 
 import android.app.SearchManager
-import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.loader.app.LoaderManager
-import androidx.loader.app.LoaderManager.LoaderCallbacks
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -27,10 +19,13 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class EpisodeSearchFragment : BaseSearchFragment() {
 
-    private lateinit var adapter: EpisodeResultsAdapter
+    private val model by viewModels<EpisodeSearchViewModel>()
+    private lateinit var adapter: EpisodeSearchAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
@@ -41,24 +36,39 @@ class EpisodeSearchFragment : BaseSearchFragment() {
             isFastScrollAlwaysVisible = false
             isFastScrollEnabled = true
         }
+        adapter = EpisodeSearchAdapter(requireContext(), onItemClickListener).also {
+            gridView.adapter = it
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        adapter = EpisodeResultsAdapter(activity, onItemClickListener).also {
-            gridView.adapter = it
+        model.episodes.observe(viewLifecycleOwner) { episodes ->
+            adapter.setData(episodes)
+            updateEmptyState(
+                episodes.isEmpty(),
+                !model.searchData.value?.searchTerm.isNullOrEmpty()
+            )
         }
 
-        // load for given query or restore last loader (ignoring args)
-        LoaderManager.getInstance(this)
-            .initLoader(SearchActivity.EPISODES_LOADER_ID, loaderArgs, searchLoaderCallbacks)
+        // load for given query (if just created)
+        val args = initialSearchArgs
+        if (args != null) {
+            updateQuery(args)
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: SearchActivity.SearchQueryEvent) {
-        LoaderManager.getInstance(this)
-            .restartLoader(SearchActivity.EPISODES_LOADER_ID, event.args, searchLoaderCallbacks)
+        updateQuery(event.args)
+    }
+
+    private fun updateQuery(args: Bundle) {
+        model.searchData.value = EpisodeSearchViewModel.SearchData(
+            args.getString(SearchManager.QUERY),
+            args.getBundle(SearchManager.APP_DATA)?.getString(ARG_SHOW_TITLE)
+        )
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -68,48 +78,12 @@ class EpisodeSearchFragment : BaseSearchFragment() {
         }
     }
 
-    private val searchLoaderCallbacks = object : LoaderCallbacks<Cursor> {
-        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-            loaderArgs = args
-            var query = args?.getString(SearchManager.QUERY)
-            if (query.isNullOrEmpty()) {
-                query = ""
-            }
-
-            var selection: String? = null
-            var selectionArgs = arrayOf(query)
-
-            val appData = args?.getBundle(SearchManager.APP_DATA)
-            if (appData != null) {
-                val showtitle = appData.getString(ARG_SHOW_TITLE)
-                // set show filter instead
-                if (showtitle != null) {
-                    selection = Shows.TITLE + "=?"
-                    selectionArgs = arrayOf(query, showtitle)
-                }
-            }
-
-            return CursorLoader(requireContext(), EpisodeSearch.CONTENT_URI_SEARCH,
-                    SeriesGuideDatabase.EpisodeSearchQuery.PROJECTION, selection, selectionArgs,
-                    null)
-        }
-
-        override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
-            adapter.swapCursor(data)
-            updateEmptyState(data)
-        }
-
-        override fun onLoaderReset(loader: Loader<Cursor>) {
-            adapter.swapCursor(null)
-        }
-    }
-
-    private val onItemClickListener =
-        EpisodeResultsAdapter.OnItemClickListener { anchor, episodeTvdbId ->
-            Intent(activity, EpisodesActivity::class.java)
-                .putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, episodeTvdbId)
+    private val onItemClickListener = object : EpisodeSearchAdapter.OnItemClickListener {
+        override fun onItemClick(anchor: View, episodeId: Long) {
+            EpisodesActivity.intentEpisode(episodeId, requireContext())
                 .also { Utils.startActivityWithAnimation(activity, it, anchor) }
         }
+    }
 
     companion object {
         const val ARG_SHOW_TITLE = "title"

@@ -2,13 +2,11 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.uwetrottmann.thetvdb.TheTvdb;
-import com.uwetrottmann.thetvdb.TheTvdbAuthenticator;
 import com.uwetrottmann.trakt5.TraktV2;
 import dagger.Lazy;
-import java.io.IOException;
 import javax.inject.Inject;
 import okhttp3.Authenticator;
 import okhttp3.Request;
@@ -23,25 +21,17 @@ import timber.log.Timber;
 public class AllApisAuthenticator implements Authenticator {
 
     private final Context context;
-    private final Lazy<TheTvdb> theTvdb;
     private final Lazy<TraktV2> trakt;
 
     @Inject
-    public AllApisAuthenticator(@ApplicationContext Context context, Lazy<TheTvdb> theTvdb,
-            Lazy<TraktV2> trakt) {
+    public AllApisAuthenticator(@ApplicationContext Context context, Lazy<TraktV2> trakt) {
         this.context = context;
-        this.theTvdb = theTvdb;
         this.trakt = trakt;
     }
 
     @Override
-    public Request authenticate(@NonNull Route route, @NonNull Response response)
-            throws IOException {
+    public Request authenticate(@Nullable Route route, @NonNull Response response) {
         String host = response.request().url().host();
-        if (TheTvdb.API_HOST.equals(host)) {
-            Timber.d("TheTVDB requires auth.");
-            return TheTvdbAuthenticator.handleRequest(response, theTvdb.get());
-        }
         if (TraktV2.API_HOST.equals(host)) {
             return handleTraktAuth(response);
         }

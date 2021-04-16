@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
@@ -54,7 +53,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
 
     @Override
     public Result loadInBackground() {
-        List<Show> shows = new LinkedList<>();
+        List<BaseShow> shows = new LinkedList<>();
         String action = null;
         try {
             Response<List<BaseShow>> response;
@@ -75,7 +74,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
             if (response.isSuccessful()) {
                 List<BaseShow> body = response.body();
                 if (body != null) {
-                    extractShows(body, shows);
+                    shows = body;
                 }
             } else {
                 if (SgTrakt.isUnauthorized(getContext(), response)) {
@@ -100,16 +99,6 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
                 DisplaySettings.getShowsSearchLanguage(getContext())));
     }
 
-    private void extractShows(List<BaseShow> watchedShows, List<Show> shows) {
-        for (BaseShow show : watchedShows) {
-            if (show.show == null || show.show.ids == null
-                    || show.show.ids.tvdb == null) {
-                continue; // skip if required values are missing
-            }
-            shows.add(show.show);
-        }
-    }
-
     private Result buildResultSuccess(List<SearchResult> results) {
         return new Result(results, getContext(), R.string.add_empty);
     }
@@ -129,27 +118,32 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
      * the local database as added.
      */
     static List<SearchResult> parseTraktShowsToSearchResults(Context context,
-            @NonNull List<Show> traktShows, @Nullable String overrideLanguage) {
+            @NonNull List<BaseShow> traktShows, @Nullable String overrideLanguage) {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
-        SparseArrayCompat<String> existingPosterPaths = ShowTools.getSmallPostersByTvdbId(context);
-        for (Show show : traktShows) {
-            if (show.ids == null || show.ids.tvdb == null) {
-                // has no TheTVDB id
+        SparseArrayCompat<String> existingPosterPaths = SgApp.getServicesComponent(context)
+                .showTools().getTmdbIdsToPoster();
+        for (BaseShow baseShow : traktShows) {
+            if (baseShow == null) {
+                continue;
+            }
+            Show show = baseShow.show;
+            if (show == null || show.ids == null || show.ids.tmdb == null) {
+                // has no TMDB id
                 continue;
             }
             SearchResult result = new SearchResult();
-            result.setTvdbid(show.ids.tvdb);
+            result.setTmdbId(show.ids.tmdb);
             result.setTitle(show.title);
             // search results return an overview, while trending and other lists do not
             result.setOverview(!TextUtils.isEmpty(show.overview) ? show.overview
                     : show.year != null ? String.valueOf(show.year) : "");
-            if (existingPosterPaths != null && existingPosterPaths.indexOfKey(show.ids.tvdb) >= 0) {
+            if (existingPosterPaths.indexOfKey(show.ids.tmdb) >= 0) {
                 // is already in local database
                 result.setState(SearchResult.STATE_ADDED);
-                // use the poster we fetched for it (or null if there is none)
-                result.setPosterPath(existingPosterPaths.get(show.ids.tvdb));
+                // use the poster fetched for it (or null if there is none)
+                result.setPosterPath(existingPosterPaths.get(show.ids.tmdb));
             }
             if (overrideLanguage != null) {
                 result.setLanguage(overrideLanguage);

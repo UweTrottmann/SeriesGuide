@@ -18,7 +18,7 @@
 
         <!-- Icon set in code. -->
         <ImageView
-            android:id="@+id/imageViewEpisodesWatchedToggle"
+            android:id="@+id/imageViewEpisodesWatched"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="12dp"
@@ -30,14 +30,14 @@
 
         <!-- Icon set in code. -->
         <ImageView
-            android:id="@+id/imageViewEpisodesCollectedToggle"
+            android:id="@+id/imageViewEpisodesCollected"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@null"
             android:focusable="true"
             android:padding="@dimen/padding_button"
-            app:layout_constraintStart_toEndOf="@id/imageViewEpisodesWatchedToggle"
+            app:layout_constraintStart_toEndOf="@id/imageViewEpisodesWatched"
             tools:src="@drawable/ic_collect_all_black_24dp" />
 
     </LinearLayout>
@@ -50,19 +50,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutEpisodesToolbar" />
-
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/keyline_minus_16"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dividerEpisodesToolbar"
-        tools:text="Empty Text" />
 
     <!-- Enable nested scrolling to work with CoordinatorLayout. -->
     <ListView

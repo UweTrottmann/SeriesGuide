@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.lists;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,10 +21,10 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
@@ -34,7 +33,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 /**
- * Displays one user created list which includes a mixture of shows, seasons and episodes.
+ * Displays one user created list of shows.
  */
 public class ListsFragment extends Fragment {
 
@@ -124,7 +123,7 @@ public class ListsFragment extends Fragment {
                     ListItemsAdapter.Query.PROJECTION,
                     // items of this list, but exclude any if show was removed from the database
                     // (the join on show data will fail, hence the show id will be 0/null)
-                    ListItems.SELECTION_LIST + " AND " + Shows.REF_SHOW_ID + ">0",
+                    ListItems.SELECTION_LIST + " AND " + SgShow2Columns.REF_SHOW_ID + ">0",
                     new String[] {
                             listId
                     }, ListsDistillationSettings.getSortQuery(getActivity())
@@ -142,38 +141,13 @@ public class ListsFragment extends Fragment {
         }
     };
 
-    private ListItemsAdapter.OnItemClickListener onItemClickListener
+    private final ListItemsAdapter.OnItemClickListener onItemClickListener
             = new ListItemsAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View anchor, BaseShowsAdapter.ShowViewHolder showViewHolder) {
             ListItemsAdapter.ListItemViewHolder viewHolder = (ListItemsAdapter.ListItemViewHolder) showViewHolder;
-            int itemType = viewHolder.itemType;
-            int itemTvdbId = viewHolder.itemTvdbId;
-
-            Intent intent = null;
-            switch (itemType) {
-                case 1: {
-                    // display show overview
-                    intent = OverviewActivity.intentShow(getActivity(), itemTvdbId);
-                    break;
-                }
-                case 2: {
-                    // display episodes of season
-                    intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.EXTRA_SEASON_TVDBID, itemTvdbId);
-                    break;
-                }
-                case 3: {
-                    // display episode details
-                    intent = new Intent(getActivity(), EpisodesActivity.class);
-                    intent.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, itemTvdbId);
-                    break;
-                }
-            }
-
-            if (intent != null) {
-                Utils.startActivityWithAnimation(getActivity(), intent, anchor);
-            }
+            Utils.startActivityWithAnimation(getActivity(),
+                    OverviewActivity.intentShow(getActivity(), viewHolder.showId), anchor);
         }
 
         @Override
@@ -185,16 +159,20 @@ public class ListsFragment extends Fragment {
                 popupMenu.inflate(R.menu.lists_popup_menu);
                 popupMenu.setOnMenuItemClickListener(
                         new PopupMenuItemClickListener(getContext(), getParentFragmentManager(),
-                                viewHolderActual.itemId, viewHolderActual.itemTvdbId,
-                                viewHolderActual.itemType));
+                                viewHolderActual.itemId, viewHolderActual.showId
+                        ));
+                // Hide manage lists option for legacy show items, only allow removal.
+                if (viewHolderActual.itemType != ListItemTypes.TMDB_SHOW) {
+                    popupMenu.getMenu().removeItem(R.id.menu_action_lists_manage);
+                }
                 popupMenu.show();
             }
         }
 
         @Override
-        public void onFavoriteClick(int showTvdbId, boolean isFavorite) {
+        public void onFavoriteClick(long showId, boolean isFavorite) {
             SgApp.getServicesComponent(requireContext()).showTools()
-                    .storeIsFavorite(showTvdbId, isFavorite);
+                    .storeIsFavorite(showId, isFavorite);
         }
     };
 
@@ -203,29 +181,25 @@ public class ListsFragment extends Fragment {
         private final Context context;
         private final FragmentManager fragmentManager;
         private final String itemId;
-        private final int itemTvdbId;
-        private final int itemType;
+        private final long showId;
 
         public PopupMenuItemClickListener(Context context, FragmentManager fm, String itemId,
-                int itemTvdbId, int itemType) {
+                long showId) {
             this.context = context;
             this.fragmentManager = fm;
             this.itemId = itemId;
-            this.itemTvdbId = itemTvdbId;
-            this.itemType = itemType;
+            this.showId = showId;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menu_action_lists_manage: {
-                    ManageListsDialogFragment.show(fragmentManager, itemTvdbId, itemType);
-                    return true;
-                }
-                case R.id.menu_action_lists_remove: {
-                    ListsTools.removeListItem(context, itemId);
-                    return true;
-                }
+            int id = item.getItemId();
+            if (id == R.id.menu_action_lists_manage) {
+                ManageListsDialogFragment.show(fragmentManager, showId);
+                return true;
+            } else if (id == R.id.menu_action_lists_remove) {
+                ListsTools.removeListItem(context, itemId);
+                return true;
             }
             return false;
         }

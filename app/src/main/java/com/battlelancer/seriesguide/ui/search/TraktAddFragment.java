@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -90,7 +91,7 @@ public class TraktAddFragment extends AddFragment {
         setHasOptionsMenu(true);
     }
 
-    private AddAdapter.OnItemClickListener itemClickListener
+    private final AddAdapter.OnItemClickListener itemClickListener
             = new AddAdapter.OnItemClickListener() {
 
         @Override
@@ -98,22 +99,23 @@ public class TraktAddFragment extends AddFragment {
             if (item != null && item.getState() != SearchResult.STATE_ADDING) {
                 if (item.getState() == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(OverviewActivity.intentShow(requireContext(), item.getTvdbid()));
+                    startActivity(OverviewActivity
+                            .intentShowByTmdbId(requireContext(), item.getTmdbId()));
                 } else {
                     // display more details in a dialog
-                    AddShowDialogFragment.show(requireContext(), getParentFragmentManager(), item);
+                    AddShowDialogFragment.show(getParentFragmentManager(), item);
                 }
             }
         }
 
         @Override
         public void onAddClick(SearchResult item) {
-            EventBus.getDefault().post(new OnAddingShowEvent(item.getTvdbid()));
+            EventBus.getDefault().post(new OnAddingShowEvent(item.getTmdbId()));
             TaskManager.getInstance().performAddTask(requireContext(), item);
         }
 
         @Override
-        public void onMenuWatchlistClick(View view, int showTvdbId) {
+        public void onMenuWatchlistClick(View view, int showTmdbId) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.add_dialog_popup_menu);
 
@@ -123,7 +125,7 @@ public class TraktAddFragment extends AddFragment {
             }
 
             popupMenu.setOnMenuItemClickListener(
-                    new AddItemMenuItemClickListener(requireContext(), showTvdbId));
+                    new AddItemMenuItemClickListener(requireContext(), showTmdbId));
             popupMenu.show();
         }
     };
@@ -131,22 +133,22 @@ public class TraktAddFragment extends AddFragment {
     public static class AddItemMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
         private final Context context;
-        private final int showTvdbId;
+        private final int showTmdbId;
 
-        public AddItemMenuItemClickListener(Context context, int showTvdbId) {
+        public AddItemMenuItemClickListener(Context context, int showTmdbId) {
             this.context = context;
-            this.showTvdbId = showTvdbId;
+            this.showTmdbId = showTmdbId;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_action_show_watchlist_add) {
-                ShowTools.addToWatchlist(context, showTvdbId);
+                ShowTools.addToWatchlist(context, showTmdbId);
                 return true;
             }
             if (itemId == R.id.menu_action_show_watchlist_remove) {
-                ShowTools.removeFromWatchlist(context, showTvdbId);
+                ShowTools.removeFromWatchlist(context, showTmdbId);
                 return true;
             }
             return false;
@@ -190,7 +192,7 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(ShowTools.ShowChangedEvent event) {
+    public void onEventMainThread(BaseShowActionTask.ShowChangedEvent event) {
         if (listType == TraktShowsLink.WATCHLIST) {
             // reload watchlist if a show was removed
             LoaderManager.getInstance(this)
@@ -209,7 +211,7 @@ public class TraktAddFragment extends AddFragment {
         });
     }
 
-    private LoaderManager.LoaderCallbacks<TraktAddLoader.Result> traktAddCallbacks
+    private final LoaderManager.LoaderCallbacks<TraktAddLoader.Result> traktAddCallbacks
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {

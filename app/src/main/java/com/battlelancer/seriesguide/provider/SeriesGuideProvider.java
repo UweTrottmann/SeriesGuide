@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.provider;
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_NONE;
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity;
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearch;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
@@ -12,7 +11,6 @@ import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Seasons;
 import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import static com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
-import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
@@ -30,6 +28,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
 import com.battlelancer.seriesguide.util.SelectionBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,67 +42,66 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static UriMatcher sUriMatcher;
 
-    private static final int SHOWS = 100;
+    static final int SG_SHOW = 10;
+    static final int SG_SHOW_ID = 11;
+    static final int SG_SEASON = 20;
+    static final int SG_SEASON_ID = 21;
+    static final int SG_EPISODE = 30;
+    static final int SG_EPISODE_ID = 31;
 
-    private static final int SHOWS_ID = 101;
+    static final int SHOWS = 100;
 
-    private static final int SHOWS_FILTERED = 102;
+    static final int SHOWS_ID = 101;
 
-    private static final int SHOWS_WITH_LAST_EPISODE = 103;
+    static final int SHOWS_FILTERED = 102;
 
-    private static final int SHOWS_WITH_NEXT_EPISODE = 104;
+    static final int SHOWS_WITH_LAST_EPISODE = 103;
 
-    private static final int EPISODES = 200;
+    static final int SHOWS_WITH_NEXT_EPISODE = 104;
 
-    private static final int EPISODES_ID = 201;
+    static final int EPISODES = 200;
 
-    private static final int EPISODES_OFSHOW = 202;
+    static final int EPISODES_ID = 201;
 
-    private static final int EPISODES_OFSEASON = 203;
+    static final int EPISODES_OFSHOW = 202;
 
-    private static final int EPISODES_OFSEASON_WITHSHOW = 204;
+    static final int EPISODES_OFSEASON = 203;
 
-    private static final int EPISODES_WITHSHOW = 205;
+    static final int EPISODES_OFSEASON_WITHSHOW = 204;
 
-    private static final int EPISODES_ID_WITHSHOW = 206;
+    static final int EPISODES_WITHSHOW = 205;
 
-    private static final int SEASONS = 300;
+    static final int EPISODES_ID_WITHSHOW = 206;
 
-    private static final int SEASONS_ID = 301;
+    static final int SEASONS = 300;
 
-    private static final int SEASONS_OFSHOW = 302;
+    static final int SEASONS_ID = 301;
 
-    private static final int EPISODESEARCH = 400;
+    static final int SEASONS_OFSHOW = 302;
 
-    private static final int EPISODESEARCH_ID = 401;
+    static final int LISTS = 500;
 
-    private static final int LISTS = 500;
+    static final int LISTS_ID = 501;
 
-    private static final int LISTS_ID = 501;
+    static final int LISTS_WITH_LIST_ITEM_ID = 502;
 
-    private static final int LISTS_WITH_LIST_ITEM_ID = 502;
+    static final int LIST_ITEMS = 600;
 
-    private static final int LIST_ITEMS = 600;
+    static final int LIST_ITEMS_ID = 601;
 
-    private static final int LIST_ITEMS_ID = 601;
+    static final int LIST_ITEMS_WITH_DETAILS = 602;
 
-    private static final int LIST_ITEMS_WITH_DETAILS = 602;
+    static final int MOVIES = 700;
 
-    private static final int MOVIES = 700;
+    static final int MOVIES_ID = 701;
 
-    private static final int MOVIES_ID = 701;
+    static final int ACTIVITY = 800;
 
-    private static final int ACTIVITY = 800;
+    static final int JOBS = 1100;
 
-    private static final int SEARCH_SUGGEST = 900;
+    static final int JOBS_ID = 1101;
 
-    private static final int RENEW_FTSTABLE = 1000;
-
-    private static final int JOBS = 1100;
-
-    private static final int JOBS_ID = 1101;
-
-    private static final int CLOSE = 1200;
+    static final int CLOSE = 1200;
 
     /**
      * Build and return a {@link UriMatcher} that catches all {@link Uri} variations supported by
@@ -110,6 +110,16 @@ public class SeriesGuideProvider extends ContentProvider {
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = SgApp.CONTENT_AUTHORITY;
+
+        // SgShow2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SHOW, SG_SHOW);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SHOW + "/*", SG_SHOW_ID);
+        // SgSeason2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SEASON, SG_SEASON);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_SEASON + "/*", SG_SEASON_ID);
+        // SgEpisode2
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_EPISODE, SG_EPISODE);
+        matcher.addURI(authority, SeriesGuideContract.PATH_SG_EPISODE + "/*", SG_EPISODE_ID);
 
         // Shows
         matcher.addURI(authority, SeriesGuideContract.PATH_SHOWS, SHOWS);
@@ -172,17 +182,7 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesGuideContract.PATH_JOBS, JOBS);
         matcher.addURI(authority, SeriesGuideContract.PATH_JOBS + "/*", JOBS_ID);
 
-        // Search
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/"
-                + SeriesGuideContract.PATH_SEARCH, EPISODESEARCH);
-        matcher.addURI(authority, SeriesGuideContract.PATH_EPISODESEARCH + "/*", EPISODESEARCH_ID);
-
-        // Suggestions
-        matcher.addURI(authority, SearchManager.SUGGEST_URI_PATH_QUERY, SEARCH_SUGGEST);
-        matcher.addURI(authority, SearchManager.SUGGEST_URI_PATH_QUERY + "/*", SEARCH_SUGGEST);
-
         // Ops
-        matcher.addURI(authority, SeriesGuideContract.PATH_RENEWFTSTABLE, RENEW_FTSTABLE);
         matcher.addURI(authority, SeriesGuideContract.PATH_CLOSE, CLOSE);
 
         return matcher;
@@ -224,24 +224,6 @@ public class SeriesGuideProvider extends ContentProvider {
         final SupportSQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         switch (match) {
-            case RENEW_FTSTABLE: {
-                SeriesGuideDatabase.rebuildFtsTable(db);
-                return null;
-            }
-            case EPISODESEARCH: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.search(db, selection, selectionArgs);
-            }
-            case SEARCH_SUGGEST: {
-                if (selectionArgs == null) {
-                    throw new IllegalArgumentException(
-                            "selectionArgs must be provided for the Uri: " + uri);
-                }
-                return SeriesGuideDatabase.getSuggestions(db, selectionArgs[0]);
-            }
             default: {
                 // Most cases are handled with simple SelectionBuilder
                 final SelectionBuilder builder = buildSelection(uri, match);
@@ -267,6 +249,18 @@ public class SeriesGuideProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
+            case SG_SHOW:
+                return SgShow2Columns.CONTENT_TYPE;
+            case SG_SHOW_ID:
+                return SgShow2Columns.CONTENT_ITEM_TYPE;
+            case SG_SEASON:
+                return SgSeason2Columns.CONTENT_TYPE;
+            case SG_SEASON_ID:
+                return SgSeason2Columns.CONTENT_ITEM_TYPE;
+            case SG_EPISODE:
+                return SgEpisode2Columns.CONTENT_TYPE;
+            case SG_EPISODE_ID:
+                return SgEpisode2Columns.CONTENT_ITEM_TYPE;
             case SHOWS:
             case SHOWS_FILTERED:
             case SHOWS_WITH_LAST_EPISODE:
@@ -308,10 +302,6 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Jobs.CONTENT_TYPE;
             case JOBS_ID:
                 return Jobs.CONTENT_ITEM_TYPE;
-            case SEARCH_SUGGEST:
-                return SearchManager.SUGGEST_MIME_TYPE;
-            case RENEW_FTSTABLE:
-                return Episodes.CONTENT_TYPE; // however there is nothing returned
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -449,7 +439,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 if (id < 0) {
                     break;
                 }
-                notifyUri = Activity.buildActivityUri(values.getAsString(Activity.EPISODE_TVDB_ID));
+                notifyUri = Activity.buildActivityUri(values.getAsString(Activity.EPISODE_TVDB_OR_TMDB_ID));
                 break;
             }
             case JOBS: {
@@ -598,6 +588,20 @@ public class SeriesGuideProvider extends ContentProvider {
     private static SelectionBuilder buildSelection(Uri uri, int match) {
         final SelectionBuilder builder = new SelectionBuilder();
         switch (match) {
+            case SG_SHOW: {
+                return builder.table(Tables.SG_SHOW);
+            }
+            case SG_SHOW_ID: {
+                long id = SgShow2Columns.getId(uri);
+                return builder.table(Tables.SG_SHOW).where(SgShow2Columns._ID + "=?",
+                        String.valueOf(id));
+            }
+            case SG_SEASON: {
+                return builder.table(Tables.SG_SEASON);
+            }
+            case SG_EPISODE: {
+                return builder.table(Tables.SG_EPISODE);
+            }
             case SHOWS: {
                 return builder.table(Tables.SHOWS);
             }
@@ -664,11 +668,6 @@ public class SeriesGuideProvider extends ContentProvider {
             case SEASONS_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.SEASONS).where(Shows.REF_SHOW_ID + "=?", showId);
-            }
-            case EPISODESEARCH_ID: {
-                final String rowid = EpisodeSearch.getDocId(uri);
-                return builder.table(Tables.EPISODES_SEARCH).where(EpisodeSearch._DOCID + "=?",
-                        rowid);
             }
             case LISTS: {
                 return builder.table(Tables.LISTS);

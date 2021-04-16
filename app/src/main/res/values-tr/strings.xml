@@ -35,8 +35,9 @@
     <string name="sync_manually">Manuel senkronizasyon</string>
     <string name="sync_and_update">Senkronize Et &amp; Güncelle</string>
     <string name="sync_and_download_all">Senkronize Et &amp; Tümünü İndir</string>
-    <string name="action_turn_off">Bir özelliği kapat</string>
     <string name="action_stream">Online izle veya satın al</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
     <string name="api_failed">%s başarısız oldu</string>
     <string name="copy_to_clipboard">Panoya kopyalandı</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Paylaş</string>
     <string name="share_show">Diziyi paylaş</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">Devam ediyor</string>
     <string name="show_isnotalive">Sona erdi</string>
     <string name="show_isUpcoming">Yaklaşan</string>
+    <string name="show_status_in_production">Yapım Aşamasında</string>
+    <string name="show_status_pilot">Pilot Bölüm</string>
+    <string name="show_status_canceled">İptal Edildi</string>
     <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
     <string name="no_translation_title">Çevrilmedi</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
     <string name="empty_show_search">Listenizde bulunamadı</string>
     <string name="action_try_again">Yeniden deneyin</string>
-    <string name="tvdb_error_does_not_exist">TheTVDB üzerinde bu dizi/film (şimdilik) bulunamadı. Daha sonra tekrar deneyin.</string>
+    <string name="tvdb_error_does_not_exist">Bu dizi, TMDB\'de (henüz) mevcut değil. Daha sonra tekrar deneyin.</string>
     <string name="add_all">Tümünü ekle</string>
     <string name="add_multiple">Tüm diziler kısa süre içinde listenizde görünecektir.</string>
     <string name="add_started">%s az sonra dizi listenizde görünecek.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Listeyi yönet</string>
     <string name="list_item_manage">Listeleri yönet</string>
     <string name="list_item_remove">Listeden kaldır</string>
-    <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
+    <string name="list_empty">Bu listeye, dizi ekleyebilirsiniz</string>
     <string name="action_lists_sort">Listeyi sırala</string>
     <string name="action_lists_reorder">Listeleri tekrar sırala</string>
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">Tüm özellikleri aç</string>
     <string name="billing_action_subscribe">Abone ol</string>
     <string name="billing_action_manage_subscriptions">Abonelikleri Yönet</string>
-    <string name="billing_action_pass">X Pass alın</string>
+    <string name="billing_action_pass">X Pass App alın</string>
     <string name="billing_price_subscribe">%1$s/yıl, ücretsiz dene, %2$s üzerinden istediğin zaman iptal et</string>
     <string name="billing_duration_format">%1$s/yıl</string>
     <string name="billing_sub_description">30 gün ücretsiz dene, istediğin zaman iptal et</string>
     <string name="billing_price_pass">tek seferlik ödeme</string>
     <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
     <string name="subscription_expired">Abonelik sona erdi</string>
     <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">Nasıl geliştirileceğini göster?</string>
     <string name="feedback_action_ok">TAMAM, tabi ki</string>
     <string name="feedback_action_nothanks">Hayır, teşekkürler</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

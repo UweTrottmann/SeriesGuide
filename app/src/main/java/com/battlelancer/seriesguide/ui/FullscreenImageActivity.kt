@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -150,9 +152,16 @@ class FullscreenImageActivity : BaseActivity() {
          * Image URL that has been cached already. Will show initially before replacing with larger
          * version.
          */
-        const val EXTRA_PREVIEW_IMAGE = "PREVIEW_IMAGE"
-        const val EXTRA_IMAGE = "IMAGE"
+        private const val EXTRA_PREVIEW_IMAGE = "PREVIEW_IMAGE"
+        private const val EXTRA_IMAGE = "IMAGE"
 
         private const val DELAY_100_MS = 100
+
+        @JvmStatic
+        fun intent(context: Context, previewImageUrl: String?, imageUrl: String?): Intent {
+            return Intent(context, FullscreenImageActivity::class.java)
+                .putExtra(EXTRA_PREVIEW_IMAGE, previewImageUrl)
+                .putExtra(EXTRA_IMAGE, imageUrl)
+        }
     }
 }

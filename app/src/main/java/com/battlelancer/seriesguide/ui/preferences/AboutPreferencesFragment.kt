@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentAboutBinding
 import com.battlelancer.seriesguide.util.Utils
 
 /**
@@ -21,56 +17,40 @@ import com.battlelancer.seriesguide.util.Utils
  */
 class AboutPreferencesFragment : Fragment() {
 
-    @BindView(R.id.textViewAboutVersion)
-    internal lateinit var textVersion: TextView
-    @BindView(R.id.buttonAboutWebsite)
-    internal lateinit var buttonWebsite: Button
-    @BindView(R.id.buttonAboutPrivacy)
-    internal lateinit var buttonPrivacy: Button
-    @BindView(R.id.buttonAboutTvdbTerms)
-    internal lateinit var buttonTvdbTerms: Button
-    @BindView(R.id.buttonAboutCreativeCommons)
-    internal lateinit var buttonCreativeCommons: Button
-    @BindView(R.id.buttonAboutTmdbTerms)
-    internal lateinit var buttonTmdbTerms: Button
-    @BindView(R.id.buttonAboutTmdbApiTerms)
-    internal lateinit var buttonTmdbApiTerms: Button
-    @BindView(R.id.buttonAboutTraktTerms)
-    internal lateinit var buttonTraktTerms: Button
-    @BindView(R.id.buttonAboutCredits)
-    internal lateinit var buttonCredits: Button
-
-    private lateinit var unbinder: Unbinder
-
+    private var binding: FragmentAboutBinding? = null
     private val urlButtonClickListener = View.OnClickListener { onWebsiteButtonClick(it.id) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val v = inflater.inflate(R.layout.fragment_about, container, false)
-        unbinder = ButterKnife.bind(this, v)
+    ): View {
+        return FragmentAboutBinding.inflate(inflater, container, false).also {
+            binding = it
+        }.root
+    }
 
-        // display version number and database version
-        textVersion.text = Utils.getVersionString(activity)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        buttonWebsite.setOnClickListener(urlButtonClickListener)
-        buttonPrivacy.setOnClickListener(urlButtonClickListener)
-        buttonTvdbTerms.setOnClickListener(urlButtonClickListener)
-        buttonCreativeCommons.setOnClickListener(urlButtonClickListener)
-        buttonTmdbTerms.setOnClickListener(urlButtonClickListener)
-        buttonTmdbApiTerms.setOnClickListener(urlButtonClickListener)
-        buttonTraktTerms.setOnClickListener(urlButtonClickListener)
-        buttonCredits.setOnClickListener(urlButtonClickListener)
+        binding!!.apply {
+            // display version number and database version
+            textViewAboutVersion.text = Utils.getVersionString(activity)
 
-        return v
+            buttonAboutWebsite.setOnClickListener(urlButtonClickListener)
+            buttonAboutPrivacy.setOnClickListener(urlButtonClickListener)
+            buttonAboutTvdbTerms.setOnClickListener(urlButtonClickListener)
+            buttonAboutCreativeCommons.setOnClickListener(urlButtonClickListener)
+            buttonAboutTmdbTerms.setOnClickListener(urlButtonClickListener)
+            buttonAboutTmdbApiTerms.setOnClickListener(urlButtonClickListener)
+            buttonAboutTraktTerms.setOnClickListener(urlButtonClickListener)
+            buttonAboutCredits.setOnClickListener(urlButtonClickListener)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        unbinder.unbind()
+        binding = null
     }
 
     private fun onWebsiteButtonClick(@IdRes viewId: Int) {

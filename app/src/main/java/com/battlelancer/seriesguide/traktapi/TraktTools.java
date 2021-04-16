@@ -10,7 +10,6 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
-import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -22,24 +21,7 @@ public class TraktTools {
     }
 
     @NonNull
-    public static HashMap<Integer, BaseShow> buildTraktShowsMap(List<BaseShow> traktShows) {
-        @SuppressLint("UseSparseArrays")
-        HashMap<Integer, BaseShow> traktShowsMap = new HashMap<>(traktShows.size());
-        for (BaseShow traktShow : traktShows) {
-            if (traktShow.show == null
-                    || traktShow.show.ids == null
-                    || traktShow.show.ids.tvdb == null
-                    || traktShow.seasons == null
-                    || traktShow.seasons.isEmpty()) {
-                continue; // trakt show misses required data, skip.
-            }
-            traktShowsMap.put(traktShow.show.ids.tvdb, traktShow);
-        }
-        return traktShowsMap;
-    }
-
-    @NonNull
-    public static HashMap<Integer, BaseSeason> buildTraktSeasonsMap(List<BaseSeason> seasons) {
+    public static HashMap<Integer, BaseSeason> mapSeasonsByNumber(List<BaseSeason> seasons) {
         @SuppressLint("UseSparseArrays")
         HashMap<Integer, BaseSeason> traktSeasonsMap = new HashMap<>(seasons.size());
         for (BaseSeason season : seasons) {
@@ -65,12 +47,12 @@ public class TraktTools {
         return traktEpisodesMap;
     }
 
-    public static String buildShowUrl(int showTvdbId) {
-        return TraktLink.tvdb(showTvdbId) + "?id_type=show";
+    public static String buildShowUrl(int showTmdbId) {
+        return TraktLink.tmdb(showTmdbId) + "?id_type=show";
     }
 
-    public static String buildEpisodeUrl(int episodeTvdbId) {
-        return TraktLink.tvdb(episodeTvdbId) + "?id_type=episode";
+    public static String buildEpisodeUrl(int episodeTmdbId) {
+        return TraktLink.tmdb(episodeTmdbId) + "?id_type=episode";
     }
 
     public static String buildMovieUrl(int movieTmdbId) {
@@ -113,7 +95,7 @@ public class TraktTools {
      * Converts a rating index from 1 to 10 into the localized string representation. Any other
      * value will return the rate action string.
      */
-    public static String buildUserRatingString(Context context, int rating) {
+    public static String buildUserRatingString(Context context, @Nullable Integer rating) {
         int resId = getRatingStringRes(rating);
         if (resId == 0) {
             return context.getString(R.string.action_rate);
@@ -124,7 +106,10 @@ public class TraktTools {
     }
 
     @StringRes
-    private static int getRatingStringRes(int rating) {
+    private static int getRatingStringRes(@Nullable Integer rating) {
+        if (rating == null) {
+            return 0;
+        }
         switch (rating) {
             case 1:
                 return R.string.hate;

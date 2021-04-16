@@ -18,7 +18,7 @@
         android:paddingTop="@dimen/inline_padding"
         app:allowStacking="true">
 
-        <androidx.legacy.widget.Space
+        <Space
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />

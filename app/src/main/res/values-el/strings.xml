@@ -35,8 +35,9 @@
     <string name="sync_manually">Χειροκίνητος συγχρονισμός</string>
     <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
     <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
-    <string name="action_turn_off">Απενεργοποίηση</string>
     <string name="action_stream">Stream ή αγορά</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
     <string name="api_failed">Αποτυχία: %s</string>
     <string name="copy_to_clipboard">Αντιγράφηκε στο πρόχειρο</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Μοίρασε</string>
     <string name="share_show">Κοινοποίηση σειράς</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">Συνεχίζεται</string>
     <string name="show_isnotalive">Σταμάτησε</string>
     <string name="show_isUpcoming">Επερχόμενα</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
     <string name="no_translation_title">Χωρίς μετάφραση</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
     <string name="empty_show_search">Δεν βρέθηκε στη λίστα σειρών σας</string>
     <string name="action_try_again">Δοκιμάσετε πάλι</string>
-    <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TheTVDB. Δοκιμάστε ξανά αργότερα.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Προσθήκη όλων</string>
     <string name="add_multiple">Όλες οι σειρές θα εμφανιστούν στη λίστα σύντομα.</string>
     <string name="add_started">%s θα εμφανιστεί στην λίστα με τις σειρές σου σύντομα.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Διαχείριση λίστας</string>
     <string name="list_item_manage">Διαχείριση λιστών</string>
     <string name="list_item_remove">Κατάργηση από τη λίστα</string>
-    <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Ταξινόμημένες λίστες</string>
     <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
@@ -293,7 +298,7 @@
     <string name="traktcheckin_inprogress">Έχετε ήδη κάνει check ένα άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε το προηγούμενο check-in, είτε περιμένετε %s και δοκιμάστε ξανά.</string>
     <string name="traktcheckin_wait">Θα περιμένω</string>
     <string name="trakt_success">Στάλθηκε στο trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Ο λογαριασμός σας Trakt είναι κλειδωμένος. Επικοινωνήστε με την υποστήριξη Trakt.</string>
     <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">Ξεκλειδώσετε όλα τα χαρακτηριστικά</string>
     <string name="billing_action_subscribe">Παρακολούθηση</string>
     <string name="billing_action_manage_subscriptions">Διαχείριση συνδρομών</string>
-    <string name="billing_action_pass">Αποκτήστε το X Pass</string>
+    <string name="billing_action_pass">Αποκτήστε το X Pass App</string>
     <string name="billing_price_subscribe">%1$s/χρόνο, δοκιμάστε δωρεάν, ακυρώστε οποιαδήποτε στιγμή μέσω του %2$s</string>
     <string name="billing_duration_format">%1$s/έτος</string>
     <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε όποτε θέλετε. </string>
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
     <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
     <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">Θα μου πείτε πώς να το βελτιώσω;</string>
     <string name="feedback_action_ok">Εντάξει</string>
     <string name="feedback_action_nothanks">Όχι, ευχαριστώ</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

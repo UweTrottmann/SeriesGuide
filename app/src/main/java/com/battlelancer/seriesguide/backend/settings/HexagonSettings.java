@@ -1,11 +1,10 @@
 package com.battlelancer.seriesguide.backend.settings;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.util.Utils;
 
 public class HexagonSettings {
@@ -101,10 +100,7 @@ public class HexagonSettings {
      */
     public static boolean resetSyncState(Context context) {
         // set all shows as not merged with Hexagon
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, 0);
-        context.getContentResolver()
-                .update(SeriesGuideContract.Shows.CONTENT_URI, values, null, null);
+        SgRoomDatabase.getInstance(context).sgShow2Helper().setHexagonMergeNotCompletedForAll();
 
         // reset sync properties
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context)

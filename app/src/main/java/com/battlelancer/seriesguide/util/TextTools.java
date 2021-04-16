@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.text.style.TextAppearanceSpan;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -187,25 +186,6 @@ public class TextTools {
     public static SpannableStringBuilder textWithTmdbSource(Context context, @Nullable String text) {
         return textWithSource(context, text,
                 context.getString(R.string.format_source, context.getString(R.string.tmdb)));
-    }
-
-    /**
-     * Appends an empty new line and a new line listing the source of the text as TVDB and the last
-     * edited date (is unknown if seconds value is less than 1).
-     */
-    public static SpannableStringBuilder textWithTvdbSource(Context context, @Nullable String text,
-            long lastEditSeconds) {
-        String lastEdited;
-        if (lastEditSeconds > 0) {
-            lastEdited = DateUtils.formatDateTime(context, lastEditSeconds * 1000,
-                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
-        } else {
-            lastEdited = context.getString(R.string.unknown);
-        }
-        String sourceAndTime =
-                context.getString(R.string.format_source, context.getString(R.string.tvdb))
-                        + "\n" + context.getString(R.string.format_last_edited, lastEdited);
-        return textWithSource(context, text, sourceAndTime);
     }
 
     private static SpannableStringBuilder textWithSource(Context context, @Nullable String text,

@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.text.format.DateUtils;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import timber.log.Timber;
 
@@ -70,10 +68,7 @@ public class AppSettings {
             return false; // failed to find our package
         }
 
-        int showsCount = DBUtils.getCountOf(context.getContentResolver(),
-                SeriesGuideContract.Shows.CONTENT_URI, null, null, -1);
-
-        return showsCount >= 5; // only if 5+ shows are added
+        return true;
     }
 
     public static void setAskedForFeedback(Context context) {

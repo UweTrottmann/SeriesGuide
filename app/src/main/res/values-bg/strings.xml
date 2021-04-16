@@ -35,8 +35,9 @@
     <string name="sync_manually">Само ръчна синхронизация</string>
     <string name="sync_and_update">Синхронизиране &amp; актуализация</string>
     <string name="sync_and_download_all">Синхронизиране &amp; Изтегли всички</string>
-    <string name="action_turn_off">Изключи</string>
     <string name="action_stream">Стрийм или закупи</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Няма връзка с %s. trakt. Опитайте отново по-късно.</string>
     <string name="api_failed">Грешно: %s</string>
     <string name="copy_to_clipboard">Копирано в клипборда</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
     <string name="share_show">Сподели ТВ предаване</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">Продължава</string>
     <string name="show_isnotalive">Завършил</string>
     <string name="show_isUpcoming">Предстоящи</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Няма описание преведено на %1$s възможно на %2$s.</string>
     <string name="no_translation_title">Не е преведено</string>
     <string name="no_spoilers">Някои детайли са скрити, за да се избегнат спойлерите. За да изключите това отидете в настройки.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
     <string name="empty_show_search">Не е намерено в твоя списък със сериали</string>
     <string name="action_try_again">Опитай отново</string>
-    <string name="tvdb_error_does_not_exist">Шоуто не съществува (все още) на TheTVDB. Опитайте отново по-късно.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Добави всички</string>
     <string name="add_multiple">Всички сериали ще се появят в списъка ви скоро.</string>
     <string name="add_started">Всеки момент %s ще се появи в списъка със сериали.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Управление на списъка</string>
     <string name="list_item_manage">Управление на списъци</string>
     <string name="list_item_remove">Премахване от списъка</string>
-    <string name="list_empty">Можете да добавите сериали, сезони или епизоди към този списък.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Подреждане на списъка</string>
     <string name="action_lists_reorder">Пренареждане на списъците</string>
     <string name="error_name_already_exists">Списък с това име вече съществува</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">Отключване на всички функции</string>
     <string name="billing_action_subscribe">Абониране</string>
     <string name="billing_action_manage_subscriptions">Управление на абонаменти</string>
-    <string name="billing_action_pass">Вземете X Pass</string>
+    <string name="billing_action_pass">Вземете X Pass App</string>
     <string name="billing_price_subscribe">%1$s/година, пробвай безплатно, откажи се по всяко време през %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">еднократно закупуване</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Абонаментът е изтекъл</string>
     <string name="subscription_expired_details">Вашият абонамент за X функциите е изтекъл.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">Кажете ми как да го подобрим?</string>
     <string name="feedback_action_ok">Да, разбира се</string>
     <string name="feedback_action_nothanks">Не, благодаря</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

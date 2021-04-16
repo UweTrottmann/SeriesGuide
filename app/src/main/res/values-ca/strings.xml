@@ -35,8 +35,9 @@
     <string name="sync_manually">Sincronitza manualment</string>
     <string name="sync_and_update">Sincronització i actualització</string>
     <string name="sync_and_download_all">Sincronitza i descarrega tot</string>
-    <string name="action_turn_off">Apagar</string>
     <string name="action_stream">Veure on-line o comprar</string>
+    <string name="action_stream_info">Veure en línia o informació de la compra</string>
+    <string name="action_select_region">Selecciona la regió</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">Copiat al portapapers</string>
+    <string name="not_migrated">No es troba a TMDb, serà esborrat en una futura actualització. Toca per més detalls.</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
     <string name="share_show">Comparteix la serie</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">No ha finalitzat</string>
     <string name="show_isnotalive">Finalitzat</string>
     <string name="show_isUpcoming">Propers</string>
+    <string name="show_status_in_production">En producció</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Cancel·lat</string>
     <string name="no_translation">No hi ha cap descripció traduïda al %1$s disponible a %2$s.</string>
     <string name="no_translation_title">No traduït</string>
     <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">Cap resultat, proveu paraules senceres.</string>
     <string name="empty_show_search">No es troba a la llista</string>
     <string name="action_try_again">Torneu-ho a intentar</string>
-    <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TheTVDB. Torna-ho a intentar més tard.</string>
+    <string name="tvdb_error_does_not_exist">La sèrie no existeix (encara) a TMDB. Torna-ho a intentar més tard.</string>
     <string name="add_all">Afegeix-ho tot</string>
     <string name="add_multiple">Totes les sèries apareixeran desseguida a la vostra llista de sèries.</string>
     <string name="add_started">De seguida apareixerà %s a la vostra llista de sèries.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Gestiona llista</string>
     <string name="list_item_manage">Gestiona llistes</string>
     <string name="list_item_remove">Esborra de la llista</string>
-    <string name="list_empty">Podeu afegir sèries, temporades o episodis a aquesta llista.</string>
+    <string name="list_empty">Pots afegir sèries a aquesta llista</string>
     <string name="action_lists_sort">Ordena les llistes</string>
     <string name="action_lists_reorder">Reordenar les llistes</string>
     <string name="error_name_already_exists">Ja existeix una llista amb aquest nom</string>
@@ -293,7 +298,7 @@
     <string name="traktcheckin_inprogress">Ja us heu registrat a un altre episodi o peŀlícula. O bé substituïu el darrer registre o bé us espereu %s i ho torneu a provar.</string>
     <string name="traktcheckin_wait">Esperaré</string>
     <string name="trakt_success">Enviat a trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">El teu compte de Trakt està bloquejat. Contacta amb el suport de Trakt.</string>
     <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
     <string name="trakt_error_not_exists">No disponible (encara) a trakt. Prova més tard.</string>
     <string name="trakt_notice_not_exists">No pot ser registrada (encara) a Trakt.</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">Desbloquejar totes les opcions</string>
     <string name="billing_action_subscribe">Vull subscriure\'m</string>
     <string name="billing_action_manage_subscriptions">Gestionar subscripcions</string>
-    <string name="billing_action_pass">Obtenir un «X Pass»</string>
+    <string name="billing_action_pass">Obtenir un «X Pass App»</string>
     <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
     <string name="billing_duration_format">%1$s l\'any</string>
     <string name="billing_sub_description">Prova 30 dies gratuïtament, cancel·la en qualsevol moment</string>
     <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Cada subscripció allibera totes les característiques i ajuda a futures actualitzacions. No és necessita cap subscripció per fer servir aquesta aplicació.</string>
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
+    <string name="billing_unlock_detected">Aplicació X Pass detectada. Encara hauries de subscriure\'t per ajudar a futures actualitzacions.</string>
     <string name="billing_learn_more">Més informació i ajuda</string>
     <string name="subscription_expired">La subscripció ha caducat</string>
     <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">Digues-me com millorar-ho?</string>
     <string name="feedback_action_ok">OK, d\'acord</string>
     <string name="feedback_action_nothanks">No, gràcies</string>
+    <!-- Support -->
+    <string name="support_the_dev">Donar suport a l´autor</string>
 </resources>

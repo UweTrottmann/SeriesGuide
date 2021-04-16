@@ -67,9 +67,9 @@ public class ListsTools {
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    static void changeListsOfItem(@NonNull Context context, int itemTvdbId, int itemType,
+    static void changeListsOfItem(@NonNull Context context, int itemStableId, int itemType,
             @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
-        new ChangeListItemListsTask(context, itemTvdbId, itemType, addToTheseLists,
+        new ChangeListItemListsTask(context, itemStableId, itemType, addToTheseLists,
                 removeFromTheseLists).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 

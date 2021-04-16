@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.4.10' // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-    ext.coroutines_version = '1.4.0' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    ext.kotlin_version = '1.4.31' // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
+    ext.coroutines_version = '1.4.3' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
     ext.versions = [
             'minSdk': 21, // Android 5 (L)
             'compileSdk': 30, // Android 11 (R)
@@ -9,29 +9,28 @@ buildscript {
 
             // https://developer.android.com/jetpack/androidx/releases
             'core': '1.3.2', // https://developer.android.com/jetpack/androidx/releases/core
-            'annotation': '1.1.0',
-            'lifecycle': '2.2.0',
+            'annotation': '1.2.0',
+            'lifecycle': '2.3.1',
             'paging': '2.1.2',
-            'room': '2.2.5',
+            'room': '2.2.6', // https://developer.android.com/jetpack/androidx/releases/room
 
             'butterknife': '10.2.3', // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-            'crashlytics': '17.2.2', // https://firebase.google.com/support/release-notes/android
-            'dagger': '2.29.1', // https://github.com/google/dagger/releases
+            'crashlytics': '17.4.0', // https://firebase.google.com/support/release-notes/android
+            'dagger': '2.33', // https://github.com/google/dagger/releases
             'gson': '2.8.6', // https://github.com/google/gson/blob/master/CHANGELOG.md
-            'okhttp': '4.9.0', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
+            'okhttp': '4.9.1', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
             'retrofit': '2.9.0', // https://github.com/square/retrofit/blob/master/CHANGELOG.md
             'timber': '4.7.1', // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
             'androidUtils': '2.4.1', // https://github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
-            'thetvdb': '2.3.0', // https://github.com/UweTrottmann/thetvdb-java/blob/master/CHANGELOG.md
-            'tmdb': '2.2.0', // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-            'trakt': '6.8.0', // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
+            'tmdb': '2.3.1', // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
+            'trakt': '6.9.0', // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 
-            'truth': '1.1', // https://github.com/google/truth/releases
+            'truth': '1.1.2', // https://github.com/google/truth/releases
 
             // version 21xxxyy -> min SDK 21, release xxx, build yy
-            'code': 2105705,
-            'name': '57',
+            'code': 2105809,
+            'name': '58',
     ]
     // load some properties that should not be part of version control
     if (file('secret.properties').exists()) {
@@ -49,33 +48,29 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0' // libraries, SeriesGuide
+        classpath 'com.android.tools.build:gradle:4.1.3' // libraries, SeriesGuide
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // https://github.com/ben-manes/gradle-versions-plugin/releases
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.33.0'
-        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.0.1' // SeriesGuide
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.36.0'
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0' // SeriesGuide
         // https://github.com/Codearte/gradle-nexus-staging-plugin/releases
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0' // api
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
-        classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
+        classpath 'com.google.gms:google-services:4.3.5'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.1'
     }
 }
 
 apply plugin: 'com.github.ben-manes.versions'
-
-// reject preview releases for dependencyUpdates task
-dependencyUpdates.resolutionStrategy {
-    componentSelection { rules ->
-        rules.all { ComponentSelection selection ->
-            boolean rejected = ['alpha', 'beta', 'rc', 'eap'].any { qualifier ->
-                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-            }
-            if (rejected) {
-                selection.reject('Preview release')
-            }
-        }
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+tasks.named("dependencyUpdates").configure {
+    rejectVersionIf {
+        isNonStable(it.candidate.version)
     }
 }
 

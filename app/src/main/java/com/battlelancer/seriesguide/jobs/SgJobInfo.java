@@ -17,45 +17,48 @@ public final class SgJobInfo extends Table {
   public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public SgJobInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public int showTvdbId() { int o = __offset(4); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
   /**
    * One of EpisodeFlags (watched, not watched or skipped).
    */
   public int flagValue() { int o = __offset(6); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
-  public com.battlelancer.seriesguide.jobs.EpisodeInfo episodes(int j) { return episodes(new com.battlelancer.seriesguide.jobs.EpisodeInfo(), j); }
-  public com.battlelancer.seriesguide.jobs.EpisodeInfo episodes(com.battlelancer.seriesguide.jobs.EpisodeInfo obj, int j) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
+  public EpisodeInfo episodes(int j) { return episodes(new EpisodeInfo(), j); }
+  public EpisodeInfo episodes(EpisodeInfo obj, int j) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
   public int episodesLength() { int o = __offset(8); return o != 0 ? __vector_len(o) : 0; }
-  public com.battlelancer.seriesguide.jobs.EpisodeInfo.Vector episodesVector() { return episodesVector(new com.battlelancer.seriesguide.jobs.EpisodeInfo.Vector()); }
-  public com.battlelancer.seriesguide.jobs.EpisodeInfo.Vector episodesVector(com.battlelancer.seriesguide.jobs.EpisodeInfo.Vector obj) { int o = __offset(8); return o != 0 ? obj.__assign(__vector(o), 4, bb) : null; }
+  public EpisodeInfo.Vector episodesVector() { return episodesVector(new EpisodeInfo.Vector()); }
+  public EpisodeInfo.Vector episodesVector(EpisodeInfo.Vector obj) { int o = __offset(8); return o != 0 ? obj.__assign(__vector(o), 4, bb) : null; }
   public int movieTmdbId() { int o = __offset(10); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
   /**
    * Number of times the movie was watched.
    */
   public int plays() { int o = __offset(12); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  /**
+   * The show row ID.
+   */
+  public long showId() { int o = __offset(14); return o != 0 ? bb.getLong(o + bb_pos) : 0L; }
 
   public static int createSgJobInfo(FlatBufferBuilder builder,
-      int showTvdbId,
       int flagValue,
       int episodesOffset,
       int movieTmdbId,
-      int plays) {
-    builder.startTable(5);
+      int plays,
+      long showId) {
+    builder.startTable(6);
+    SgJobInfo.addShowId(builder, showId);
     SgJobInfo.addPlays(builder, plays);
     SgJobInfo.addMovieTmdbId(builder, movieTmdbId);
     SgJobInfo.addEpisodes(builder, episodesOffset);
     SgJobInfo.addFlagValue(builder, flagValue);
-    SgJobInfo.addShowTvdbId(builder, showTvdbId);
     return SgJobInfo.endSgJobInfo(builder);
   }
 
-  public static void startSgJobInfo(FlatBufferBuilder builder) { builder.startTable(5); }
-  public static void addShowTvdbId(FlatBufferBuilder builder, int showTvdbId) { builder.addInt(0, showTvdbId, 0); }
+  public static void startSgJobInfo(FlatBufferBuilder builder) { builder.startTable(6); }
   public static void addFlagValue(FlatBufferBuilder builder, int flagValue) { builder.addInt(1, flagValue, 0); }
   public static void addEpisodes(FlatBufferBuilder builder, int episodesOffset) { builder.addOffset(2, episodesOffset, 0); }
   public static int createEpisodesVector(FlatBufferBuilder builder, int[] data) { builder.startVector(4, data.length, 4); for (int i = data.length - 1; i >= 0; i--) builder.addOffset(data[i]); return builder.endVector(); }
   public static void startEpisodesVector(FlatBufferBuilder builder, int numElems) { builder.startVector(4, numElems, 4); }
   public static void addMovieTmdbId(FlatBufferBuilder builder, int movieTmdbId) { builder.addInt(3, movieTmdbId, 0); }
   public static void addPlays(FlatBufferBuilder builder, int plays) { builder.addInt(4, plays, 0); }
+  public static void addShowId(FlatBufferBuilder builder, long showId) { builder.addLong(5, showId, 0L); }
   public static int endSgJobInfo(FlatBufferBuilder builder) {
     int o = builder.endTable();
     return o;

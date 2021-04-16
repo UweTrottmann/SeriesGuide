@@ -5,13 +5,13 @@
     <string name="lists">목록</string>
     <string name="movies">영화</string>
     <string name="statistics">통계</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">더보기</string>
     <string name="search">검색</string>
     <string name="preferences">설정</string>
     <string name="help">도움말</string>
     <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">상세내용</string>
     <string name="episode">에피소드</string>
     <string name="episode_number">%d화</string>
     <string name="episodes">에피소드</string>
@@ -35,14 +35,15 @@
     <string name="sync_manually">수동으로 동기화</string>
     <string name="sync_and_update">동기화하고 업데이트</string>
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
-    <string name="action_turn_off">끄기</string>
-    <string name="action_stream">Stream or purchase</string>
+    <string name="action_stream">스트리밍 or 구매</string>
+    <string name="action_stream_info">스트리밍 또 구매</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
     <!-- Status messages -->
     <string name="updated">최신 버전으로 업데이트되었습니다.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">상세내용</string>
     <string name="norating">없음</string>
     <string name="unknown">알 수 없음</string>
     <string name="offline">네트워크에 연결한 후 다시 시도해주세요.</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">%s와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="api_failed">%s 실패</string>
     <string name="copy_to_clipboard">클립보드에 복사됨</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">공유</string>
     <string name="share_show">프로그램 공유</string>
@@ -87,6 +89,9 @@
     <string name="show_isalive">방영중</string>
     <string name="show_isnotalive">종영</string>
     <string name="show_isUpcoming">방영 예정</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">파일럿</string>
+    <string name="show_status_canceled">취소됨</string>
     <string name="no_translation">%2$s에 %1$s로 번역한 설명이 없습니다.</string>
     <string name="no_translation_title">번역되지 않음</string>
     <string name="no_spoilers">일부 내용은 스포일러를 방지하기 위해 숨겨진 상태입니다. 설정에서 이를 해제할 수 있습니다.</string>
@@ -115,7 +120,7 @@
     <string name="state_skipped">Skipped</string>
     <string name="state_in_collection">In collection</string>
     <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_favorite">즐겨찾기</string>
     <!-- Shows -->
     <string name="confirm_delete">%s을(를) 제거 하시겠습니까?</string>
     <string name="delete_error">프로그램을 제거하지 못했습니다. 나중에 다시 시도해주세요.</string>
@@ -190,7 +195,7 @@
     <string name="no_results">결과가 없습니다. 완전한 단어를 입력하세요.</string>
     <string name="empty_show_search">프로그램 목록에서 찾을 수 없습니다</string>
     <string name="action_try_again">재시도</string>
-    <string name="tvdb_error_does_not_exist">아직 TheTVDB에 존재하지 않는 프로그램입니다. 나중에 다시 시도하세요.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">모두 추가</string>
     <string name="add_multiple">모든 프로그램이 곧 목록에 표시됩니다.</string>
     <string name="add_started">%s이(가) 프로그램 리스트에 곧 나타납니다.</string>
@@ -211,7 +216,7 @@
     <string name="list_manage">목록 관리</string>
     <string name="list_item_manage">목록 관리</string>
     <string name="list_item_remove">목록에서 제거</string>
-    <string name="list_empty">프로그램, 시즌, 에피소드를 목록에 추가할 수 있습니다.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">목록 정렬</string>
     <string name="action_lists_reorder">목록 재정렬</string>
     <string name="error_name_already_exists">이 이름을 가진 목록이 이미 존재합니다</string>
@@ -462,13 +467,14 @@
     <string name="action_upgrade">모든 기능 사용하기</string>
     <string name="billing_action_subscribe">구독</string>
     <string name="billing_action_manage_subscriptions">구독 관리</string>
-    <string name="billing_action_pass">X Pass 구매</string>
+    <string name="billing_action_pass">X Pass App 구매</string>
     <string name="billing_price_subscribe">1년 사용 요금: %1$s, 무료 체험 가능, %2$s에서 취소 가능</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">1회 구매로 계속 사용</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">구독 만료되었습니다</string>
     <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
@@ -501,4 +507,6 @@
     <string name="feedback_question_feedback">개선 방법을 알려주실 수 있을까요?</string>
     <string name="feedback_action_ok">네</string>
     <string name="feedback_action_nothanks">아니오</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

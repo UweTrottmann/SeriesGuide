@@ -44,7 +44,7 @@ public class TraktEpisodeJob extends BaseNetworkEpisodeJob {
     @Override
     public NetworkJobProcessor.JobResult execute(Context context) {
         // Do not send if show has no trakt id (was not on trakt last time we checked).
-        Integer showTraktId = ShowTools.getShowTraktId(context, jobInfo.showTvdbId());
+        Integer showTraktId = ShowTools.getShowTraktId(context, jobInfo.showId());
         boolean canSendToTrakt = showTraktId != null;
         if (!canSendToTrakt) {
             return buildResult(context, NetworkJob.ERROR_TRAKT_NOT_FOUND);

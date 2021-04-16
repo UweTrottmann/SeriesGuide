@@ -80,16 +80,38 @@
         android:text="@string/action_watched_up_to"
         app:icon="@drawable/ic_watch_all_black_24dp" />
 
-    <Button
-        android:id="@+id/buttonEpisodeStreamingSearch"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerEpisodeStreamingSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/padding_button"
-        android:layout_marginRight="@dimen/padding_button"
-        android:contentDescription="@string/action_stream"
-        android:gravity="center_vertical|start"
-        android:text="@string/action_stream"
-        app:icon="@drawable/ic_play_arrow_black_24dp" />
+        android:layout_marginStart="@dimen/padding_button"
+        android:layout_marginEnd="@dimen/padding_button">
+
+        <Button
+            android:id="@+id/buttonEpisodeStreamingSearch"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_stream"
+            android:gravity="center_vertical|start"
+            android:text="@string/action_stream"
+            app:icon="@drawable/ic_play_arrow_black_24dp"
+            app:layout_constraintEnd_toStartOf="@+id/buttonEpisodeStreamingSearchInfo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/buttonEpisodeStreamingSearchInfo"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_stream_info"
+            android:src="@drawable/ic_info_control_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </LinearLayout>

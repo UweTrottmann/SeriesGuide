@@ -35,7 +35,7 @@ import com.android.billingclient.api.SkuDetails
 @Dao
 interface AugmentedSkuDetailsDao {
 
-    @Query("SELECT * FROM AugmentedSkuDetails WHERE type = '${BillingClient.SkuType.SUBS}' ORDER BY priceMicros DESC")
+    @Query("SELECT * FROM AugmentedSkuDetails WHERE type = '${BillingClient.SkuType.SUBS}' ORDER BY priceMicros ASC")
     fun getSubscriptionSkuDetails(): LiveData<List<AugmentedSkuDetails>>
 
     @Transaction

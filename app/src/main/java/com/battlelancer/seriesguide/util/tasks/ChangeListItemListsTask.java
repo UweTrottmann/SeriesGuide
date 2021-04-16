@@ -23,15 +23,15 @@ import timber.log.Timber;
  */
 public class ChangeListItemListsTask extends BaseActionTask {
 
-    private final int itemTvdbId;
+    private final int itemStableId;
     private final int itemType;
     private final List<String> addToTheseLists;
     private final List<String> removeFromTheseLists;
 
-    public ChangeListItemListsTask(@NonNull Context context, int itemTvdbId, int itemType,
+    public ChangeListItemListsTask(@NonNull Context context, int itemStableId, int itemType,
             @NonNull List<String> addToTheseLists, @NonNull List<String> removeFromTheseLists) {
         super(context);
-        this.itemTvdbId = itemTvdbId;
+        this.itemStableId = itemStableId;
         this.itemType = itemType;
         this.addToTheseLists = addToTheseLists;
         this.removeFromTheseLists = removeFromTheseLists;
@@ -97,7 +97,7 @@ public class ChangeListItemListsTask extends BaseActionTask {
             list.setListItems(items);
 
             String listItemId = SeriesGuideContract.ListItems
-                    .generateListItemId(itemTvdbId, itemType, listId);
+                    .generateListItemId(itemStableId, itemType, listId);
             SgListItem item = new SgListItem();
             items.add(item);
             item.setListItemId(listItemId);
@@ -109,18 +109,18 @@ public class ChangeListItemListsTask extends BaseActionTask {
         ArrayList<ContentProviderOperation> batch = new ArrayList<>(
                 addToTheseLists.size() + removeFromTheseLists.size());
         for (String listId : addToTheseLists) {
-            String listItemId = SeriesGuideContract.ListItems.generateListItemId(itemTvdbId,
+            String listItemId = SeriesGuideContract.ListItems.generateListItemId(itemStableId,
                     itemType, listId);
             batch.add(ContentProviderOperation
                     .newInsert(SeriesGuideContract.ListItems.CONTENT_URI)
                     .withValue(SeriesGuideContract.ListItems.LIST_ITEM_ID, listItemId)
-                    .withValue(SeriesGuideContract.ListItems.ITEM_REF_ID, itemTvdbId)
+                    .withValue(SeriesGuideContract.ListItems.ITEM_REF_ID, itemStableId)
                     .withValue(SeriesGuideContract.ListItems.TYPE, itemType)
                     .withValue(SeriesGuideContract.Lists.LIST_ID, listId)
                     .build());
         }
         for (String listId : removeFromTheseLists) {
-            String listItemId = SeriesGuideContract.ListItems.generateListItemId(itemTvdbId,
+            String listItemId = SeriesGuideContract.ListItems.generateListItemId(itemStableId,
                     itemType, listId);
             batch.add(ContentProviderOperation
                     .newDelete(SeriesGuideContract.ListItems.buildListItemUri(listItemId))

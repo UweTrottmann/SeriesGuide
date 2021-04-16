@@ -48,7 +48,7 @@
                     android:hint="@string/checkin_hint"
                     android:inputType="textMultiLine"
                     android:lines="3"
-                    android:maxLength="100" />
+                    android:maxLength="1000" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

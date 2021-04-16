@@ -7,6 +7,7 @@ import android.text.format.DateUtils;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
@@ -16,10 +17,13 @@ import com.battlelancer.seriesguide.util.TimeTools;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedShow;
+import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.services.Sync;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.threeten.bp.OffsetDateTime;
 import retrofit2.Response;
 import timber.log.Timber;
@@ -89,11 +93,14 @@ public class TraktRatingsSync {
         long ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS;
 
         // go through ratings, latest first (trakt sends in that order)
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        Map<Integer, Integer> tmdbIdsToRatings = new HashMap<>();
         for (RatedShow show : ratedShows) {
-            if (show.rating == null || show.show == null || show.show.ids == null
-                    || show.show.ids.tvdb == null) {
-                // skip, can't handle
+            Rating rating = show.rating;
+            if (rating == null || show.show == null || show.show.ids == null) {
+                continue;
+            }
+            Integer showTmdbId = show.show.ids.tmdb;
+            if (showTmdbId == null) {
                 continue;
             }
             if (show.rated_at != null
@@ -101,22 +108,12 @@ public class TraktRatingsSync {
                 // no need to apply older ratings again
                 break;
             }
-
             // if a show does not exist, this update will do nothing
-            ContentProviderOperation op = ContentProviderOperation.newUpdate(
-                    SeriesGuideContract.Shows.buildShowUri(show.show.ids.tvdb))
-                    .withValue(SeriesGuideContract.Shows.RATING_USER, show.rating.value)
-                    .build();
-            batch.add(op);
+            tmdbIdsToRatings.put(showTmdbId, rating.value);
         }
 
         // apply database updates
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "downloadForShows: database update failed");
-            return false;
-        }
+        SgRoomDatabase.getInstance(context).sgShow2Helper().updateUserRatings(tmdbIdsToRatings);
 
         // save last rated instant
         long ratedAtTime = ratedAt.toInstant().toEpochMilli();
@@ -184,10 +181,10 @@ public class TraktRatingsSync {
         // so include ratings that are a little older
         long ratedAtThreshold = lastRatedAt - 5 * DateUtils.MINUTE_IN_MILLIS;
 
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
+        Map<Integer, Integer> tmdbIdsToRatings = new HashMap<>();
         for (RatedEpisode episode : ratedEpisodes) {
             if (episode.rating == null || episode.episode == null || episode.episode.ids == null
-                    || episode.episode.ids.tvdb == null) {
+                    || episode.episode.ids.tmdb == null) {
                 // skip, can't handle
                 continue;
             }
@@ -196,22 +193,12 @@ public class TraktRatingsSync {
                 // no need to apply older ratings again
                 break;
             }
-
             // if an episode does not exist, this update will do nothing
-            ContentProviderOperation op = ContentProviderOperation.newUpdate(
-                    SeriesGuideContract.Episodes.buildEpisodeUri(episode.episode.ids.tvdb))
-                    .withValue(SeriesGuideContract.Episodes.RATING_USER, episode.rating.value)
-                    .build();
-            batch.add(op);
+            tmdbIdsToRatings.put(episode.episode.ids.tmdb, episode.rating.value);
         }
 
         // apply database updates
-        try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            Timber.e(e, "downloadForEpisodes: database update failed");
-            return false;
-        }
+        SgRoomDatabase.getInstance(context).sgEpisode2Helper().updateUserRatings(tmdbIdsToRatings);
 
         // save last rated instant
         long ratedAtTime = ratedAt.toInstant().toEpochMilli();

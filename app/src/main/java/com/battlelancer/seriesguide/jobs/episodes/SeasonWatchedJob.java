@@ -1,76 +1,44 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.provider.EpisodeHelper;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
+import java.util.List;
 
 public class SeasonWatchedJob extends SeasonBaseJob {
 
     private final long currentTimePlusOneHour;
 
-    public SeasonWatchedJob(int showTvdbId, int seasonTvdbId, int season,
-            int episodeFlags, long currentTime) {
-        super(showTvdbId, seasonTvdbId, season, episodeFlags, JobAction.EPISODE_WATCHED_FLAG);
+    public SeasonWatchedJob(long seasonId, int episodeFlags, long currentTime) {
+        super(seasonId, episodeFlags, JobAction.EPISODE_WATCHED_FLAG);
         this.currentTimePlusOneHour = currentTime + DateUtils.HOUR_IN_MILLIS;
     }
 
-    @Override
-    public String getDatabaseSelection() {
-        if (EpisodeTools.isUnwatched(getFlagValue())) {
-            // set unwatched
-            // include watched or skipped episodes
-            return Episodes.SELECTION_WATCHED_OR_SKIPPED;
-        } else {
-            // set watched or skipped
-            // do NOT mark watched episodes again to avoid trakt adding a new watch
-            // only mark episodes that have been released until within the hour
-            return Episodes.FIRSTAIREDMS + "<=" + currentTimePlusOneHour
-                    + " AND " + Episodes.SELECTION_HAS_RELEASE_DATE
-                    + " AND " + Episodes.SELECTION_UNWATCHED_OR_SKIPPED;
-        }
-    }
-
-    @Override
-    protected String getDatabaseColumnToUpdate() {
-        return Episodes.WATCHED;
-    }
-
-    private int getLastWatchedEpisodeTvdbId(Context context) {
+    private long getLastWatchedEpisodeId(Context context) {
         if (EpisodeTools.isUnwatched(getFlagValue())) {
             // unwatched season
             // just reset
             return 0;
         } else {
             // watched or skipped season
-            int lastWatchedId = -1;
 
-            // get the last flagged episode of the season
-            final Cursor seasonEpisodes = context.getContentResolver().query(
-                    Episodes.buildEpisodesOfSeasonUri(
-                            String.valueOf(seasonTvdbId)),
-                    BaseEpisodesJob.PROJECTION_EPISODE,
-                    Episodes.FIRSTAIREDMS + "<=" + currentTimePlusOneHour, null,
-                    Episodes.NUMBER + " DESC"
-            );
-            if (seasonEpisodes != null) {
-                if (seasonEpisodes.moveToFirst()) {
-                    lastWatchedId = seasonEpisodes.getInt(0);
-                }
-
-                seasonEpisodes.close();
+            // get the highest flagged episode of the season
+            long highestWatchedId = SgRoomDatabase.getInstance(context)
+                    .sgEpisode2Helper()
+                    .getHighestWatchedEpisodeOfSeason(seasonId, currentTimePlusOneHour);
+            if (highestWatchedId != 0) {
+                return highestWatchedId;
+            } else {
+                return -1; // do not change
             }
-
-            return lastWatchedId;
         }
     }
 
@@ -82,7 +50,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
 
         // set a new last watched episode
         // set last watched time to now if marking as watched or skipped
-        updateLastWatched(context, getLastWatchedEpisodeTvdbId(context),
+        updateLastWatched(context, getLastWatchedEpisodeId(context),
                 !EpisodeTools.isUnwatched(getFlagValue()));
 
         ListWidgetProvider.notifyDataChanged(context);
@@ -91,20 +59,20 @@ public class SeasonWatchedJob extends SeasonBaseJob {
     }
 
     @Override
-    protected boolean applyDatabaseChanges(@NonNull Context context, @NonNull Uri uri) {
-        EpisodeHelper episodeHelper = SgRoomDatabase.getInstance(context).episodeHelper();
+    protected boolean applyDatabaseChanges(@NonNull Context context) {
+        SgEpisode2Helper helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
 
         int rowsUpdated;
         switch (getFlagValue()) {
             case EpisodeFlags.SKIPPED:
-                rowsUpdated = episodeHelper.setSeasonSkipped(seasonTvdbId, currentTimePlusOneHour);
+                rowsUpdated = helper.setSeasonSkipped(seasonId, currentTimePlusOneHour);
                 break;
             case EpisodeFlags.WATCHED:
-                rowsUpdated = episodeHelper
-                        .setSeasonWatchedAndAddPlay(seasonTvdbId, currentTimePlusOneHour);
+                rowsUpdated = helper
+                        .setSeasonWatchedAndAddPlay(seasonId, currentTimePlusOneHour);
                 break;
             case EpisodeFlags.UNWATCHED:
-                rowsUpdated = episodeHelper.setSeasonNotWatchedAndRemovePlays(seasonTvdbId);
+                rowsUpdated = helper.setSeasonNotWatchedAndRemovePlays(seasonId);
                 break;
             default:
                 throw new IllegalArgumentException("Flag value not supported");
@@ -112,8 +80,25 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         return rowsUpdated >= 0; // -1 means error.
     }
 
+    @NonNull
+    @Override
+    protected List<SgEpisode2Numbers> getEpisodesForNetworkJob(@NonNull Context context) {
+        SgEpisode2Helper helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
+        if (EpisodeTools.isUnwatched(getFlagValue())) {
+            // set unwatched
+            // include watched or skipped episodes
+            return helper.getWatchedOrSkippedEpisodeNumbersOfSeason(seasonId);
+        } else {
+            // set watched or skipped
+            // do NOT mark watched episodes again to avoid Trakt adding a new watch
+            // only mark episodes that have been released until within the hour
+            return helper
+                    .getNotWatchedOrSkippedEpisodeNumbersOfSeason(seasonId, currentTimePlusOneHour);
+        }
+    }
+
     /**
-     * Note: this should mirror the planned database changes in {@link #applyDatabaseChanges(Context, Uri)}.
+     * Note: this should mirror the planned database changes in {@link #applyDatabaseChanges(Context)}.
      */
     @Override
     protected int getPlaysForNetworkJob(int plays) {
@@ -142,7 +127,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
             actionResId = R.string.action_unwatched;
         }
         // format like '6x · Set watched'
-        String number = TextTools.getEpisodeNumber(context, season, -1);
+        String number = TextTools.getEpisodeNumber(context, getSeason().getNumber(), -1);
         return TextTools.dotSeparate(number, context.getString(actionResId));
     }
 }

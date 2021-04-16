@@ -15,6 +15,9 @@ import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.services.Sync;
 import retrofit2.Response;
 
+/**
+ * Stores the rating in the database and sends it to Trakt.
+ */
 public abstract class BaseRateItemTask extends BaseActionTask {
 
     private final Rating rating;

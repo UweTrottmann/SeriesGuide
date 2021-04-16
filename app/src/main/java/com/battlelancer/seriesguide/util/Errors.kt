@@ -6,7 +6,6 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.BuildConfig
-import com.battlelancer.seriesguide.thetvdbapi.TvdbException
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -19,6 +18,7 @@ import java.io.InterruptedIOException
 import java.net.ConnectException
 import java.net.UnknownHostException
 import java.util.UUID
+import javax.net.ssl.SSLException
 
 
 class Errors {
@@ -125,7 +125,7 @@ class Errors {
 
             val elementToInject = synthStackTrace[callStackIndex]
 
-            val ultimateCause = throwable.getUlimateCause()
+            val ultimateCause = throwable.getUltimateCause()
 
             val stackTrace = ultimateCause.stackTrace
             val newStackTrace = arrayOfNulls<StackTraceElement>(stackTrace.size + 1)
@@ -156,7 +156,11 @@ class Errors {
 
             Timber.e(throwable, action)
 
-            if (!throwable.shouldReport()) return
+            // Also do not report IOException: Error on service connection
+            // caused by InterruptedException from GoogleAuthUtil.getToken.
+            if (!throwable.shouldReport() || throwable.getUltimateCause() is InterruptedException) {
+                return
+            }
 
             getReporter()?.setCustomKey("action", action)
             getReporter()?.recordException(throwable)
@@ -197,15 +201,17 @@ class Errors {
 //            getReporter()?.recordException(throwable)
 
             getCounter()?.also {
-                val messageOrNone = when {
-                    message != null -> message
-                    response.message.isNotEmpty() -> response.message
-                    else -> "none"
+                // Do not add response code to event key to avoid creating multiple events.
+                // Instead add prefix message with it, can use segmentation and time to filter.
+                val messageOrCodeOnly = when {
+                    message != null -> "${response.code} $message"
+                    response.message.isNotEmpty() -> "${response.code} ${response.message}"
+                    else -> response.code
                 }
                 it.events().recordEvent(
-                    "$action ${response.code}",
+                    action,
                     mapOf(
-                        "message" to messageOrNone,
+                        "message" to messageOrCodeOnly,
                         "android" to Build.VERSION.RELEASE,
                         "version" to appVersion,
                         "device" to Build.MODEL
@@ -230,22 +236,6 @@ class Errors {
         @JvmStatic
         fun logAndReport(action: String, response: Response<*>) {
             logAndReport(action, response.raw(), null)
-        }
-
-        @JvmStatic
-        @Throws(TvdbException::class)
-        fun throwAndReportIfNotSuccessfulTvdb(action: String, response: okhttp3.Response) {
-            if (!response.isSuccessful) {
-                logAndReport(action, response, null)
-
-                if (response.code == 404) {
-                    // special case: item does not exist (any longer)
-                    throw TvdbException("$action: ${response.code} ${response.message}", true)
-                } else {
-                    // other non-2xx response
-                    throw TvdbException("$action: ${response.code} ${response.message}")
-                }
-            }
         }
 
         @JvmStatic
@@ -304,10 +294,14 @@ private fun Throwable.shouldReport(): Boolean {
         is ConnectException -> false
         is InterruptedIOException -> false
         is UnknownHostException -> false
+        is SSLException -> {
+            message?.contains("Connection reset by peer") == false
+                    && message?.contains("Software caused connection abort") == false
+        }
         else -> true
     }
 }
 
-private fun Throwable.getUlimateCause(): Throwable {
-    return cause?.getUlimateCause() ?: this
+private fun Throwable.getUltimateCause(): Throwable {
+    return cause?.getUltimateCause() ?: this
 }

@@ -35,8 +35,9 @@
     <string name="sync_manually">Manuell synchronisieren</string>
     <string name="sync_and_update">Synch. &amp; Aktualisieren</string>
     <string name="sync_and_download_all">Synch. &amp; Alles herunterladen</string>
-    <string name="action_turn_off">Deaktivieren</string>
-    <string name="action_stream">Streamen oder kaufen</string>
+    <string name="action_stream">Streamen oder Kaufen</string>
+    <string name="action_stream_info">Streamen oder Kaufen Info</string>
+    <string name="action_select_region">Region auswählen</string>
     <!-- Search -->
     <string name="clear_search_history">Suchverlauf löschen</string>
     <string name="search_hint">Suche Folgen</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
     <string name="api_failed">Gescheitert: %s</string>
     <string name="copy_to_clipboard">In Zwischenablage kopiert</string>
+    <string name="not_migrated">Nicht bei TMDb gefunden, wird mit einem zukünftigen Update entfernt. Für Details antippen.</string>
     <!-- Sharing -->
     <string name="share">Teilen</string>
     <string name="share_show">Serie teilen</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">Wird fortgesetzt</string>
     <string name="show_isnotalive">Endete</string>
     <string name="show_isUpcoming">Demnächst</string>
+    <string name="show_status_in_production">In Produktion</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Eingestellt</string>
     <string name="no_translation">Es ist keine auf %1$s übersetzte Beschreibung bei %2$s verfügbar.</string>
     <string name="no_translation_title">Nicht übersetzt</string>
     <string name="no_spoilers">Einige Details werden ausgeblendet um Spoiler zu vermeiden. Dies kann in den Einstellungen ausgeschaltet werden.</string>
@@ -194,7 +199,7 @@
     <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter</string>
     <string name="empty_show_search">Nicht in Ihrer Serien-Liste gefunden</string>
     <string name="action_try_again">Erneut versuchen</string>
-    <string name="tvdb_error_does_not_exist">Die Serie existiert (noch) nicht auf TheTVDB. Versuchen Sie es später erneut.</string>
+    <string name="tvdb_error_does_not_exist">Die Serie existiert (noch) nicht auf TMDB. Versuchen Sie es später erneut.</string>
     <string name="add_all">Alle hinzufügen</string>
     <string name="add_multiple">Alle Serien werden in Kürze der Serienliste hinzugefügt</string>
     <string name="add_started">%s erscheint in Kürze in Ihrer Serien-Liste</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Liste verwalten</string>
     <string name="list_item_manage">Listen verwalten</string>
     <string name="list_item_remove">Von Liste entfernen</string>
-    <string name="list_empty">Sie können Serien, Staffeln oder Folgen zu dieser Liste hinzufügen</string>
+    <string name="list_empty">Sie können Serien zu dieser Liste hinzufügen</string>
     <string name="action_lists_sort">Listen sortieren</string>
     <string name="action_lists_reorder">Listen anordnen</string>
     <string name="error_name_already_exists">Eine Liste mit diesem Namen ist bereits vorhanden</string>
@@ -480,6 +485,7 @@
     <string name="billing_price_pass">einmaliger Kauf</string>
     <string name="upgrade_description">Jedes Abo schaltet alle Funktionen frei und unterstützt zukünftige Updates. Ein Abo wird nicht benötigt um diese App zu nutzen.</string>
     <string name="upgrade_success">Danke für die Unterstützung von SeriesGuide! Sie haben Zugriff auf alle Funktionen.</string>
+    <string name="billing_unlock_detected">X Pass App erkannt. Sie können trotzdem abonnieren um zukünftige Updates zu unterstützen.</string>
     <string name="billing_learn_more">Mehr Infos und Hilfe</string>
     <string name="subscription_expired">Abonnement abgelaufen</string>
     <string name="subscription_expired_details">Ihr SeriesGuide Abonnement ist abgelaufen</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">Mitteilen, was ich verbessern kann?</string>
     <string name="feedback_action_ok">OK, gern</string>
     <string name="feedback_action_nothanks">Nein, danke</string>
+    <!-- Support -->
+    <string name="support_the_dev">Den Entwickler unterstützen?</string>
 </resources>

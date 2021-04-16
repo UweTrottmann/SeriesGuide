@@ -35,8 +35,9 @@
     <string name="sync_manually">Sync Manual</string>
     <string name="sync_and_update">Sync &amp; Perbarui</string>
     <string name="sync_and_download_all">Sync &amp; unduh semua</string>
-    <string name="action_turn_off">Matikan</string>
     <string name="action_stream">Tonton atau beli</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Select region</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Tidak dapat bicara ke %s. Coba lagi nanti.</string>
     <string name="api_failed">Gagal: %s</string>
     <string name="copy_to_clipboard">Disalin ke clipboard</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
     <!-- Sharing -->
     <string name="share">Bagikan</string>
     <string name="share_show">Bagikan acara</string>
@@ -87,6 +89,9 @@
     <string name="show_isalive">Berkelanjutan</string>
     <string name="show_isnotalive">Berakhir</string>
     <string name="show_isUpcoming">Mendatang</string>
+    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_canceled">Canceled</string>
     <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
     <string name="no_translation_title">Belum diterjemahkan</string>
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
@@ -190,7 +195,7 @@
     <string name="no_results">Tidak ada hasil, coba kata-kata lengkap.</string>
     <string name="empty_show_search">Tidak ditemukan di daftar acara anda</string>
     <string name="action_try_again">Coba lagi</string>
-    <string name="tvdb_error_does_not_exist">Acara tidak (belum) ada di TheTVDB. Coba lagi nanti.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Tambah semua</string>
     <string name="add_multiple">Semua acara akan segera muncul dalam daftar acara anda.</string>
     <string name="add_started">%s akan muncul dalam daftar acara anda.</string>
@@ -211,7 +216,7 @@
     <string name="list_manage">Kelola daftar</string>
     <string name="list_item_manage">Kelola daftar</string>
     <string name="list_item_remove">Hapus dari daftar</string>
-    <string name="list_empty">Anda dapat menambahkan acara, musim atau episode ke daftar ini.</string>
+    <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Urutkan daftar</string>
     <string name="action_lists_reorder">Susun ulang daftar</string>
     <string name="error_name_already_exists">Daftar dengan nama ini sudah ada</string>
@@ -462,13 +467,14 @@
     <string name="action_upgrade">Buka semua fitur</string>
     <string name="billing_action_subscribe">Berlangganan</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
-    <string name="billing_action_pass">Dapatkan X Pass</string>
+    <string name="billing_action_pass">Dapatkan X Pass App</string>
     <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
     <string name="billing_price_pass">pembelian satu kali</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
     <string name="subscription_expired">Langganan berakhir</string>
     <string name="subscription_expired_details">Langganan SeriesGuide anda telah berakhir.</string>
@@ -501,4 +507,6 @@
     <string name="feedback_question_feedback">Katakan cara untuk memperbaikinya?</string>
     <string name="feedback_action_ok">Ok, tentu saja</string>
     <string name="feedback_action_nothanks">Tidak, terima kasih</string>
+    <!-- Support -->
+    <string name="support_the_dev">Support the developer?</string>
 </resources>

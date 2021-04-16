@@ -10,8 +10,8 @@ import retrofit2.Call;
 
 public class RemoveShowFromWatchlistTask extends BaseShowActionTask {
 
-    public RemoveShowFromWatchlistTask(Context app, int showTvdbId) {
-        super(app, showTvdbId);
+    public RemoveShowFromWatchlistTask(Context app, int showTmdbId) {
+        super(app, showTmdbId);
     }
 
     @NonNull

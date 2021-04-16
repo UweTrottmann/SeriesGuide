@@ -32,7 +32,7 @@ public interface EpisodeActionsContract {
 
     /**
      * Implementing fragments should call {@link #loadEpisodeActionsDelayed()} when appropriate
-     * (e.g. check {@link com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionReceivedEvent#episodeTvdbId}).
+     * (e.g. check {@link ExtensionManager.EpisodeActionReceivedEvent#episodeTmdbId}).
      */
     void onEventMainThread(ExtensionManager.EpisodeActionReceivedEvent event);
 }

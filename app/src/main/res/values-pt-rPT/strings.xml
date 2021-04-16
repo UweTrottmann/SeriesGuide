@@ -35,8 +35,9 @@
     <string name="sync_manually">Sincronizar manualmente</string>
     <string name="sync_and_update">Sincronizar &amp; Atualizar</string>
     <string name="sync_and_download_all">Sincronizar &amp; Retransferir</string>
-    <string name="action_turn_off">Desativar</string>
     <string name="action_stream">Comprar ou Ver Online</string>
+    <string name="action_stream_info">Informação sobre Comprar ou Ver Online</string>
+    <string name="action_select_region">Selecionar região</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
     <string name="search_hint">Procurar episódios</string>
@@ -53,6 +54,7 @@
     <string name="api_error_generic">Houve uma falha ao comunicar com o %s. Tenta mais tarde.</string>
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
+    <string name="not_migrated">Não foi encontrado no TMDb, será removido numa futura atualização. Toque para mais detalhes.</string>
     <!-- Sharing -->
     <string name="share">Partilhar</string>
     <string name="share_show">Partilhar série</string>
@@ -88,6 +90,9 @@
     <string name="show_isalive">Em exibição</string>
     <string name="show_isnotalive">Terminou</string>
     <string name="show_isUpcoming">Próximos</string>
+    <string name="show_status_in_production">Em Produção</string>
+    <string name="show_status_pilot">Piloto</string>
+    <string name="show_status_canceled">Cancelado</string>
     <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
     <string name="no_translation_title">Por traduzir</string>
     <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Definições para desactivar esta prevenção.</string>
@@ -99,8 +104,8 @@
     <string name="daily">Diário</string>
     <string name="runtime_minutes">%s min.</string>
     <!-- Flagging -->
-    <string name="mark_all">Assisti a todos</string>
-    <string name="unmark_all">Não assisti a nenhum</string>
+    <string name="mark_all">Vi todos</string>
+    <string name="unmark_all">Não vi nenhum</string>
     <string name="action_watched_up_to">Visto até aqui</string>
     <string name="confirmation_watched_up_to">Marcar como vistos todos os episódios até aqui?</string>
     <string name="collect_all">Todos adquiridos</string>
@@ -112,7 +117,7 @@
     <string name="action_watched">Marcar como visto</string>
     <string name="action_unwatched">Marcado como não visto</string>
     <string name="state_watched">Visto</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
+    <string name="state_watched_multiple_format">Visto (%d)</string>
     <string name="state_skipped">Ignorado</string>
     <string name="state_in_collection">Na Coleção</string>
     <string name="state_on_watchlist">Na Lista dos que Desejo Ver</string>
@@ -194,7 +199,7 @@
     <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
     <string name="empty_show_search">Não foi encontrado na tua lista de séries</string>
     <string name="action_try_again">Tentar novamente</string>
-    <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TheTVDB. Tenta mais tarde.</string>
+    <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TMDB. Tenta mais tarde.</string>
     <string name="add_all">Adicionar todas as séries</string>
     <string name="add_multiple">Todas as séries irão aparecer na sua lista brevemente.</string>
     <string name="add_started">%s irá aparecer na sua lista de séries brevemente.</string>
@@ -215,7 +220,7 @@
     <string name="list_manage">Renomear/Remover lista</string>
     <string name="list_item_manage">Adicionar às listas</string>
     <string name="list_item_remove">Remover da lista</string>
-    <string name="list_empty">Podes adicionar séries, temporadas ou episódios a esta lista.</string>
+    <string name="list_empty">Podes adicionar séries à esta lista</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>
@@ -250,7 +255,7 @@
     <string name="shows_continuing">%s em exibição</string>
     <string name="episodes_watched">%s vistos</string>
     <string name="movies_on_watchlist">%s por ver</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d na coleção</string>
     <string name="movies_watched_format">%s vistos</string>
     <plurals name="days_plural">
         <item quantity="one">%d dia</item>
@@ -293,7 +298,7 @@
     <string name="traktcheckin_inprogress">Já deste entrada a outro episódio ou filme. Podes substituir a entrada anterior ou esperar %s e tentar novamente.</string>
     <string name="traktcheckin_wait">Prefiro esperar</string>
     <string name="trakt_success">Submetido com sucesso ao Trakt</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">A tua conta Trakt está bloqueada. Contacta o suporte de apoio do Trakt.</string>
     <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais estão correctas e tenta de novo.</string>
     <string name="trakt_error_not_exists">Não está (ainda) disponível no Trakt. Tenta mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>
@@ -473,13 +478,14 @@
     <string name="action_upgrade">Desbloquear Todas as Funcionalidades</string>
     <string name="billing_action_subscribe">Subscrever</string>
     <string name="billing_action_manage_subscriptions">Gerir Subscrições</string>
-    <string name="billing_action_pass">Obter X Pass</string>
+    <string name="billing_action_pass">Obter X Pass App</string>
     <string name="billing_price_subscribe">%1$s/ano, experimenta gratuitamente, cancela a qualquer momento através de %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
     <string name="billing_sub_description">Experimenta gratuitamente durante 30 dias, cancela a qualquer momento.</string>
     <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Cada subscrição desbloqueia todas as funcionalidades e suporta atualizações futuras. Não é necessário subscrever para usar a aplicação.</string>
     <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>
+    <string name="billing_unlock_detected">A app X Pass foi detetada. Podes voltar a subscrever para suportar futuras atualizações.</string>
     <string name="billing_learn_more">Mais Informações e Ajuda</string>
     <string name="subscription_expired">Subscrição expirada</string>
     <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>
@@ -512,4 +518,6 @@
     <string name="feedback_question_feedback">Diz-me o que devo melhorar?</string>
     <string name="feedback_action_ok">Está bem, com certeza</string>
     <string name="feedback_action_nothanks">Não, obrigado</string>
+    <!-- Support -->
+    <string name="support_the_dev">Apoiar o desenvolvedor?</string>
 </resources>

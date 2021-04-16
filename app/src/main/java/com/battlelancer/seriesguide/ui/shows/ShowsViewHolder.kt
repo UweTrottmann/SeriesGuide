@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
+import com.battlelancer.seriesguide.util.ImageTools
 import com.uwetrottmann.androidutils.CheatSheet
 
 class ShowsViewHolder(
@@ -32,7 +32,7 @@ class ShowsViewHolder(
         // item
         itemView.setOnClickListener { view ->
             showItem?.let {
-                onItemClickListener.onItemClick(view, it.showTvdbId)
+                onItemClickListener.onItemClick(view, it.rowId)
             }
         }
         // set watched button
@@ -68,7 +68,7 @@ class ShowsViewHolder(
         setWatchedButton.visibility = if (show.hasNextEpisode) View.VISIBLE else View.GONE
 
         // set poster
-        TvdbImageTools.loadShowPosterResizeCrop(context, poster, show.posterPath)
+        ImageTools.loadShowPosterResizeCrop(context, poster, show.posterPath)
     }
 
     companion object {

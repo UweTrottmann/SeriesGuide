@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.ui.preferences
 
 import android.app.backup.BackupManager
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,7 +24,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -35,11 +34,10 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
-import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
-import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
@@ -91,9 +89,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 isChecked = true
             }
         }
-
-        // display version as About summary
-        findPreference<Preference>(KEY_ABOUT)!!.summary = Utils.getVersionString(activity)
     }
 
     private fun updateRootSettings() {
@@ -208,7 +203,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
     private fun setupBasicSettings() {
         // show currently set values for some prefs
-        updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_SERVICE)!!)
+        updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_REGION)!!)
         updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET)!!)
 
         findPreference<Preference>(DisplaySettings.KEY_LANGUAGE_FALLBACK)!!.also {
@@ -287,7 +282,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             )
             return true
         }
-        if (StreamingSearch.KEY_SETTING_SERVICE == key) {
+        if (StreamingSearch.KEY_SETTING_REGION == key) {
             StreamingSearchConfigureDialog().safeShow(
                 supportFragmentManager, "streaming-service"
             )
@@ -336,13 +331,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 context, R.string.pref_user_debug_mode_note, Toast.LENGTH_LONG
             ).show()
             return false // Let the pref handle the click (and change its value).
-        }
-        if (KEY_ABOUT == key) {
-            val ft = parentFragmentManager.beginTransaction()
-            ft.replace(R.id.containerSettings, AboutPreferencesFragment())
-            ft.addToBackStack(null)
-            ft.commit()
-            return true
         }
         return super.onPreferenceTreeClick(preference)
     }
@@ -396,7 +384,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 @Suppress("DEPRECATION") // Not visible on O+, no need to use new API.
                 vibrator?.vibrate(NotificationService.VIBRATION_PATTERN, -1)
             }
-            if (StreamingSearch.KEY_SETTING_SERVICE == key) {
+            if (StreamingSearch.KEY_SETTING_REGION == key) {
                 updateStreamSearchServiceSummary(pref)
             }
         }
@@ -417,15 +405,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
 
         if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
-            // reset last edit date of all episodes so they will get updated
+            // reset last updated date of all episodes so they will get updated
             Thread {
                 android.os.Process
                     .setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND)
-
-                val values = ContentValues()
-                values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0)
-                requireActivity().contentResolver
-                    .update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null)
+                SgRoomDatabase.getInstance(requireContext()).sgEpisode2Helper()
+                    .resetLastUpdatedForAll()
             }.start()
         }
 
@@ -482,11 +467,8 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     private fun updateSelectionSummary(selectionPref: Preference) {
-        val countOfShowsNotifyOn = DBUtils.getCountOf(
-            requireActivity().contentResolver,
-            SeriesGuideContract.Shows.CONTENT_URI,
-            SeriesGuideContract.Shows.SELECTION_NOTIFY, null, 0
-        )
+        val countOfShowsNotifyOn =
+            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().countShowsNotifyEnabled()
         selectionPref.summary = getString(
             R.string.pref_notifications_select_shows_summary,
             countOfShowsNotifyOn
@@ -494,12 +476,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     private fun updateStreamSearchServiceSummary(pref: Preference) {
-        val serviceOrEmptyOrNull = StreamingSearch.getServiceOrEmptyOrNull(requireActivity())
-        when {
-            serviceOrEmptyOrNull == null -> pref.summary = null
-            serviceOrEmptyOrNull.isEmpty() -> pref.setSummary(R.string.action_turn_off)
-            else -> pref.summary = StreamingSearch.getServiceDisplayName(serviceOrEmptyOrNull)
-        }
+        pref.summary = StreamingSearch.getCurrentRegionOrSelectString(requireContext())
     }
 
     private fun updateTimeOffsetSummary(offsetListPref: Preference) {
@@ -532,7 +509,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         // Preference keys
         private const val KEY_CLEAR_CACHE = "clearCache"
         //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
-        private const val KEY_ABOUT = "aboutPref"
         //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
         private const val KEY_BATTERY_SETTINGS = "com.battlelancer.seriesguide.notifications.battery"
 

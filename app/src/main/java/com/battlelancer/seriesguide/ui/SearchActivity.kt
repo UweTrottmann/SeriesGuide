@@ -12,7 +12,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
@@ -29,7 +28,7 @@ import com.battlelancer.seriesguide.ui.search.ShowSearchFragment
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.search.SimilarShowsFragment
-import com.battlelancer.seriesguide.ui.search.TvdbIdExtractor
+import com.battlelancer.seriesguide.ui.search.TmdbIdExtractor
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
@@ -72,8 +71,8 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
 
         setupViews(savedInstanceState == null)
 
-        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, Observer {
-            startActivity(SimilarShowsActivity.intent(this, it.tvdbid, it.title))
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, {
+            startActivity(SimilarShowsActivity.intent(this, it.tmdbId, it.title))
         })
 
         handleSearchIntent(intent)
@@ -102,7 +101,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
         }
 
         // setup search history (only used by TVDb search)
-        searchHistory = SearchHistory(this, SearchSettings.KEY_SUFFIX_THETVDB)
+        searchHistory = SearchHistory(this, SearchSettings.KEY_SUFFIX_SHOWS)
         searchHistoryAdapter = ArrayAdapter(
             this, R.layout.item_dropdown, searchHistory.searchHistory
         )
@@ -199,14 +198,6 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             val query = launchIntent.getStringExtra(SearchManager.QUERY)
             searchAutoCompleteView.setText(query)
             triggerLocalSearch(query)
-        } else if (Intent.ACTION_VIEW == action) {
-            val data = intent.data
-                ?: // no data, just stay inside search activity
-                return
-            data.lastPathSegment?.let {
-                displayEpisode(it)
-            }
-            finish()
         } else if (Intent.ACTION_SEND == action) {
             // text share intents from other apps
             if ("text/plain" == intent.type) {
@@ -220,13 +211,12 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             return
         }
 
-        // try to match TVDB URLs
+        // try to match TMDB URLs
         lifecycleScope.launch {
-            val showTvdbId = TvdbIdExtractor(applicationContext, sharedText)
-                .tryToExtractTvdbId()
-            if (showTvdbId > 0) {
+            val showTmdbId = TmdbIdExtractor(applicationContext, sharedText).tryToExtract()
+            if (showTmdbId > 0) {
                 // found an id, display the add dialog
-                AddShowDialogFragment.show(this@SearchActivity, supportFragmentManager, showTvdbId)
+                AddShowDialogFragment.show(this@SearchActivity, supportFragmentManager, showTmdbId)
             } else {
                 // no id, populate the search field instead
                 viewPager.currentItem = TAB_POSITION_SEARCH
@@ -290,12 +280,6 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
                 }
             }
         }
-    }
-
-    private fun displayEpisode(episodeTvdbId: String) {
-        val i = Intent(this, EpisodesActivity::class.java)
-        i.putExtra(EpisodesActivity.EXTRA_EPISODE_TVDBID, Integer.valueOf(episodeTvdbId))
-        startActivity(i)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

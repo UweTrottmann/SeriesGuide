@@ -1,12 +1,14 @@
 package com.battlelancer.seriesguide.sync;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.provider.SgShow2Helper;
+import com.battlelancer.seriesguide.provider.SgShow2Ids;
 import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
@@ -35,25 +37,36 @@ public class HexagonSync {
         this.progress = progress;
     }
 
+    public static class HexagonResult {
+        public final boolean hasAddedShows;
+        public final boolean success;
+        public HexagonResult(boolean hasAddedShows, boolean success) {
+            this.hasAddedShows = hasAddedShows;
+            this.success = success;
+        }
+    }
+
     /**
      * Syncs episodes, shows and movies with Hexagon.
      *
      * <p> Merges shows, episodes and movies after a sign-in. Consecutive syncs will only download
      * changes to shows, episodes and movies.
      */
-    public SgSyncAdapter.UpdateResult sync(HashSet<Integer> existingShows,
-            HashMap<Integer, SearchResult> newShows) {
+    public HexagonResult sync() {
+        Map<Integer, Long> tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
+                .getTmdbIdsToShowIds();
+
         //// EPISODES
         progress.publish(SyncProgress.Step.HEXAGON_EPISODES);
-        boolean syncEpisodesSuccessful = syncEpisodes();
+        boolean syncEpisodesSuccessful = syncEpisodes(tmdbIdsToShowIds);
         if (!syncEpisodesSuccessful) {
             progress.recordError();
         }
 
         //// SHOWS
         progress.publish(SyncProgress.Step.HEXAGON_SHOWS);
-        boolean syncShowsSuccessful = syncShows(existingShows, newShows);
-        if (!syncShowsSuccessful) {
+        HexagonResult syncShowsResult = syncShows(tmdbIdsToShowIds);
+        if (!syncShowsResult.success) {
             progress.recordError();
         }
 
@@ -72,82 +85,75 @@ public class HexagonSync {
         }
 
         boolean success = syncEpisodesSuccessful
-                && syncShowsSuccessful
+                && syncShowsResult.success
                 && syncMoviesSuccessful
                 && syncListsSuccessful;
 
-        return success ? SgSyncAdapter.UpdateResult.SUCCESS : SgSyncAdapter.UpdateResult.INCOMPLETE;
+        return new HexagonResult(syncShowsResult.hasAddedShows, success);
     }
 
-    private boolean syncEpisodes() {
+    private boolean syncEpisodes(@NonNull Map<Integer, Long> tmdbIdsToShowIds) {
         // get shows that need episode merging
-        Cursor query = context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI,
-                new String[] { SeriesGuideContract.Shows._ID },
-                SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE + "=0",
-                null, null);
-        if (query == null) {
-            return false;
-        }
+        SgShow2Helper helper = SgRoomDatabase.getInstance(context).sgShow2Helper();
+        List<SgShow2Ids> showsToMerge = helper.getHexagonMergeNotCompleted();
 
         // try merging episodes for them
         boolean mergeSuccessful = true;
         HexagonEpisodeSync episodeSync = new HexagonEpisodeSync(context, hexagonTools);
-        while (query.moveToNext()) {
+        for (SgShow2Ids show : showsToMerge) {
             // abort if connection is lost
             if (!AndroidUtils.isNetworkConnected(context)) {
                 return false;
             }
 
-            int showTvdbId = query.getInt(0);
+            // TMDB ID is required, legacy shows with TVDB only data will no longer be synced.
+            Integer showTmdbId = show.getTmdbId();
+            if (showTmdbId == null || showTmdbId == 0) continue;
 
-            boolean success = episodeSync.downloadFlags(showTvdbId);
+            boolean success = episodeSync.downloadFlags(show.getId(), showTmdbId, show.getTvdbId());
             if (!success) {
                 // try again next time
                 mergeSuccessful = false;
                 continue;
             }
 
-            success = episodeSync.uploadFlags(showTvdbId);
+            success = episodeSync.uploadFlags(show.getId(), showTmdbId);
             if (success) {
                 // set merge as completed
-                ContentValues values = new ContentValues();
-                values.put(SeriesGuideContract.Shows.HEXAGON_MERGE_COMPLETE, 1);
-                context.getContentResolver()
-                        .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values,
-                                null, null);
+                helper.setHexagonMergeCompleted(show.getId());
             } else {
                 mergeSuccessful = false;
             }
         }
-        query.close();
 
         // download changed episodes and update properties on existing episodes
-        boolean changedDownloadSuccessful = episodeSync.downloadChangedFlags();
+        boolean changedDownloadSuccessful = episodeSync.downloadChangedFlags(tmdbIdsToShowIds);
 
         return mergeSuccessful && changedDownloadSuccessful;
     }
 
-    private boolean syncShows(HashSet<Integer> existingShows,
-            HashMap<Integer, SearchResult> newShows) {
+    private HexagonResult syncShows(Map<Integer, Long> tmdbIdsToShowIds) {
         boolean hasMergedShows = HexagonSettings.hasMergedShows(context);
 
         // download shows and apply property changes (if merging only overwrite some properties)
         HexagonShowSync showSync = new HexagonShowSync(context, hexagonTools);
-        boolean downloadSuccessful = showSync.download(existingShows, newShows, hasMergedShows);
+        HashMap<Integer, SearchResult> newShows = new HashMap<>();
+        boolean downloadSuccessful = showSync.download(tmdbIdsToShowIds, newShows, hasMergedShows);
         if (!downloadSuccessful) {
-            return false;
+            return new HexagonResult(false, false);
         }
 
         // if merge required, upload all shows to Hexagon
         if (!hasMergedShows) {
             boolean uploadSuccessful = showSync.uploadAll();
             if (!uploadSuccessful) {
-                return false;
+                return new HexagonResult(false, false);
             }
         }
 
         // add new shows
-        if (newShows.size() > 0) {
+        boolean addNewShows = !newShows.isEmpty();
+        if (addNewShows) {
             List<SearchResult> newShowsList = new LinkedList<>(newShows.values());
             TaskManager.getInstance().performAddTask(context, newShowsList, true, !hasMergedShows);
         } else if (!hasMergedShows) {
@@ -155,7 +161,7 @@ public class HexagonSync {
             HexagonSettings.setHasMergedShows(context, true);
         }
 
-        return true;
+        return new HexagonResult(addNewShows, true);
     }
 
     private boolean syncMovies() {

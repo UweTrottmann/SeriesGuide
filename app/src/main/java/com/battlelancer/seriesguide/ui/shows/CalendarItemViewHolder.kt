@@ -11,8 +11,8 @@ import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.thetvdbapi.TvdbImageTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
@@ -45,7 +45,7 @@ class CalendarItemViewHolder(
     init {
         itemContainer.setOnClickListener {
             item?.episode?.let {
-                itemClickListener.onItemClick(it.episodeTvdbId)
+                itemClickListener.onItemClick(it.id)
             }
         }
         itemContainer.setOnLongClickListener {
@@ -133,10 +133,7 @@ class CalendarItemViewHolder(
         collected.isGone = !episode.episode_collected
 
         // set poster
-        TvdbImageTools.loadShowPosterResizeSmallCrop(
-            context, poster,
-            TvdbImageTools.artworkUrl(episode.series_poster_small)
-        )
+        ImageTools.loadShowPosterResizeSmallCrop(context, poster, episode.series_poster_small)
     }
 
 }

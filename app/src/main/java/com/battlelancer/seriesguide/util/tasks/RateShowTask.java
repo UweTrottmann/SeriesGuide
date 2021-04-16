@@ -1,10 +1,9 @@
 package com.battlelancer.seriesguide.util.tasks;
 
-import android.content.ContentValues;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncShow;
@@ -12,14 +11,11 @@ import com.uwetrottmann.trakt5.enums.Rating;
 
 public class RateShowTask extends BaseRateItemTask {
 
-    private final int showTvdbId;
+    private final long showId;
 
-    /**
-     * Stores the rating for the given episode in the database and sends it to trakt.
-     */
-    public RateShowTask(Context context, Rating rating, int showTvdbId) {
+    public RateShowTask(Context context, Rating rating, long showId) {
         super(context, rating);
-        this.showTvdbId = showTvdbId;
+        this.showId = showId;
     }
 
     @NonNull
@@ -31,18 +27,17 @@ public class RateShowTask extends BaseRateItemTask {
     @Nullable
     @Override
     protected SyncItems buildTraktSyncItems() {
+        int showTmdbIdOrZero = SgRoomDatabase.getInstance(getContext()).sgShow2Helper()
+                .getShowTmdbId(showId);
+        if (showTmdbIdOrZero == 0) return null;
         return new SyncItems()
-                .shows(new SyncShow().id(ShowIds.tvdb(showTvdbId)).rating(getRating()));
+                .shows(new SyncShow().id(ShowIds.tmdb(showTmdbIdOrZero)).rating(getRating()));
     }
 
     @Override
     protected boolean doDatabaseUpdate() {
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Shows.RATING_USER, getRating().value);
-
-        int rowsUpdated = getContext().getContentResolver()
-                .update(SeriesGuideContract.Shows.buildShowUri(showTvdbId), values, null, null);
-
+        int rowsUpdated = SgRoomDatabase.getInstance(getContext()).sgShow2Helper()
+                .updateUserRating(showId, getRating().value);
         return rowsUpdated > 0;
     }
 }
