@@ -45,6 +45,29 @@
             tools:text="42" />
 
         <ProgressBar
+            android:id="@+id/progressBarShowsFinished"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewShows"
+            tools:progress="60" />
+
+        <TextView
+            android:id="@+id/textViewShowsFinished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBarShowsFinished"
+            tools:text="3 finished" />
+
+        <ProgressBar
             android:id="@+id/progressBarShowsWithNextEpisode"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
@@ -52,7 +75,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewShows"
+            app:layout_constraintTop_toBottomOf="@id/textViewShowsFinished"
             tools:progress="60" />
 
         <TextView
