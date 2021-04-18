@@ -117,10 +117,15 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     ): Map<Long, Int> {
         val showStats = SgRoomDatabase.getInstance(getApplication()).sgShow2Helper().getStats()
 
+        var finished = 0
         var continuing = 0
         var withnext = 0
         val showRuntimes = mutableMapOf<Long, Int>()
         for (show in showStats) {
+            // count finished shows
+            if (show.status == ShowTools.Status.ENDED && show.nextEpisode.isNullOrBlank()) {
+                finished++
+            }
             // count continuing shows
             if (show.status == ShowTools.Status.CONTINUING) {
                 continuing++
@@ -134,6 +139,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         stats.shows = showStats.size
+        stats.showsFinished = finished
         stats.showsContinuing = continuing
         stats.showsWithNextEpisodes = withnext
         return showRuntimes
@@ -161,6 +167,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
 data class Stats(
     var shows: Int = 0,
+    var showsFinished: Int = 0,
     var showsContinuing: Int = 0,
     var showsWithNextEpisodes: Int = 0,
     var episodes: Int = 0,
