@@ -181,7 +181,11 @@ class SgApp : Application() {
         // Pass current enabled state to Crashlytics (e.g. in case app was restored from backup).
         val isSendErrors = AppSettings.isSendErrorReports(this)
         Timber.d("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isSendErrors)
+        if (BuildConfig.FIREBASE_ENABLED) {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isSendErrors)
+        } else {
+            Timber.d("Firebase Crashlytics is disabled due to missing google-service.json file")
+        }
         if (isSendErrors) {
             Errors.setUpCounter(this)
         }
