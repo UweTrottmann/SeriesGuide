@@ -31,6 +31,11 @@ android {
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
         buildConfigField("String", "COUNT_URL", propertyOrNull("SG_COUNT_URL"))
         buildConfigField("String", "COUNT_SECRET", propertyOrEmpty("SG_COUNT_SECRET"))
+        buildConfigField(
+                "boolean",
+                "FIREBASE_ENABLED",
+                project.file('google-services.json').exists() ? "true" : "false"
+        )
 
         javaCompileOptions {
             annotationProcessorOptions {
