@@ -49,6 +49,8 @@ class StatsFragment : Fragment() {
         binding.errorView.setButtonClickListener { loadStats() }
 
         // set some views invisible so they can be animated in once stats are computed
+        binding.textViewShowsFinished.visibility = View.INVISIBLE
+        binding.progressBarShowsFinished.visibility = View.INVISIBLE
         binding.textViewShowsWithNextEpisode.visibility = View.INVISIBLE
         binding.progressBarShowsWithNextEpisode.visibility = View.INVISIBLE
         binding.textViewShowsContinuing.visibility = View.INVISIBLE
@@ -71,6 +73,7 @@ class StatsFragment : Fragment() {
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         binding.textViewShows.copyTextToClipboardOnLongClick()
+        binding.textViewShowsFinished.copyTextToClipboardOnLongClick()
         binding.textViewShowsWithNextEpisode.copyTextToClipboardOnLongClick()
         binding.textViewShowsContinuing.copyTextToClipboardOnLongClick()
         binding.textViewEpisodes.copyTextToClipboardOnLongClick()
@@ -151,6 +154,21 @@ class StatsFragment : Fragment() {
 
         // all shows
         binding.textViewShows.text = format.format(stats.shows.toLong())
+
+        // shows finished
+        binding.progressBarShowsFinished.apply {
+            max = stats.shows
+            progress = stats.showsFinished
+            visibility = View.VISIBLE
+        }
+
+        binding.textViewShowsFinished.apply {
+            text = getString(
+                R.string.shows_finished,
+                format.format(stats.showsFinished.toLong())
+            )
+            visibility = View.VISIBLE
+        }
 
         // shows with next episodes
         binding.progressBarShowsWithNextEpisode.apply {
