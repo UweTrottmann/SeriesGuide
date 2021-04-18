@@ -325,6 +325,10 @@ class StatsFragment : Fragment() {
         val format = NumberFormat.getIntegerInstance()
 
         val shows = format.format(currentStats.shows.toLong())
+        val showsFinished = getString(
+            R.string.shows_finished,
+            format.format(currentStats.showsFinished.toLong())
+        )
         val showsWithNext = getString(
             R.string.shows_with_next,
             format.format(currentStats.showsWithNextEpisodes.toLong())
@@ -343,6 +347,7 @@ class StatsFragment : Fragment() {
         val showStats =
             "${getString(R.string.app_name)} ${getString(R.string.statistics)}\n\n" +
                     "$shows ${getString(R.string.statistics_shows)}\n" +
+                    "$showsFinished\n" +
                     "$showsWithNext\n" +
                     "$showsContinuing\n\n" +
                     "$episodes ${getString(R.string.statistics_episodes)}\n" +
