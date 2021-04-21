@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.BuildConfig
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.battlelancer.seriesguide.util.Errors
 import timber.log.Timber
 
 object AppSettings {
@@ -76,7 +76,7 @@ object AppSettings {
                 .apply()
         }
         Timber.d("Turning error reporting %s", if (isEnabled) "ON" else "OFF")
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isEnabled)
+        Errors.getReporter()?.setCrashlyticsCollectionEnabled(isEnabled)
     }
 
     /**

@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -181,7 +180,7 @@ class SgApp : Application() {
         // Pass current enabled state to Crashlytics (e.g. in case app was restored from backup).
         val isSendErrors = AppSettings.isSendErrorReports(this)
         Timber.d("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isSendErrors)
+        Errors.getReporter()?.setCrashlyticsCollectionEnabled(isSendErrors)
         if (isSendErrors) {
             Errors.setUpCounter(this)
         }
