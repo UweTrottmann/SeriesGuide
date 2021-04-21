@@ -18,6 +18,11 @@ Version 58
 * 🌟 Display most popular watch provider. Supports more regions. Powered by JustWatch via TMDb.
 * 🔧 Lists can now only contain shows. Existing season and episode list items can only be removed.
 
+#### 58.1
+*2021-04-21*
+
+* 🔧 Update episodes not found on TMDb if they get added to TMDb at some later point, if the number matches.
+
 #### 58
 *2021-04-15*
 
