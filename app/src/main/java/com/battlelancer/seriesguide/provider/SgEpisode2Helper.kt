@@ -131,7 +131,7 @@ interface SgEpisode2Helper {
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
     fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
 
-    @Query("SELECT _id, episode_tmdb_id FROM sg_episode WHERE season_id = :seasonId")
+    @Query("SELECT _id, episode_tmdb_id, episode_number FROM sg_episode WHERE season_id = :seasonId")
     fun getEpisodeIdsOfSeason(seasonId: Long): List<SgEpisode2Ids>
 
     /**
@@ -651,7 +651,8 @@ data class SgEpisode2Info(
 
 data class SgEpisode2Ids(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?
+    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?,
+    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int
 )
 
 data class SgEpisode2Numbers(
@@ -687,6 +688,7 @@ data class SgEpisode2ForSync(
 
 data class SgEpisode2Update(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int,
     @ColumnInfo(name = SgEpisode2Columns.TITLE) val title: String?,
     @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
     @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int,

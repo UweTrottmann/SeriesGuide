@@ -315,6 +315,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 season.number,
                 seasonId,
                 language,
+                null,
                 null
             )
             if (seasonDetails.result != ShowResult.SUCCESS) return seasonDetails.result
@@ -402,7 +403,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         seasonNumber: Int,
         seasonId: Long,
         language: String,
-        localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?
+        localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?,
+        localEpisodesWithoutTmdbIdByNumber: MutableMap<Int, SgEpisode2Ids>?
     ): SeasonDetails {
         val fallbackLanguage: String? = DisplaySettings.getShowsLanguageFallback(context)
             .let { if (it != language) it else null }
@@ -428,7 +430,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             showId,
             seasonId,
             seasonNumber,
-            localEpisodesByTmdbId
+            localEpisodesByTmdbId,
+            localEpisodesWithoutTmdbIdByNumber
         )
 
         return SeasonDetails(
@@ -452,6 +455,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
     /**
      * If [localEpisodesByTmdbId] is not null, will add update or delete info.
+     * Will choose to update episode if not found in [localEpisodesByTmdbId],
+     * but found in [localEpisodesWithoutTmdbIdByNumber].
      */
     private fun mapToSgEpisode2(
         tmdbEpisodes: List<TvEpisode>,
@@ -460,7 +465,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         showId: Long,
         seasonId: Long,
         seasonNumber: Int,
-        localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?
+        localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?,
+        localEpisodesWithoutTmdbIdByNumber: MutableMap<Int, SgEpisode2Ids>?
     ): EpisodeDetails {
         val showTimeZone = TimeTools.getDateTimeZone(releaseInfo.releaseTimeZone)
         val showReleaseTime = TimeTools.getShowReleaseTime(releaseInfo.releaseTimeOrDefault)
@@ -506,7 +512,12 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             // so it and last updated time are currently not used
             // to only update changed episodes.
 
+            // Update if episode with TMDb ID is in database, or if episode with same number is.
+            // Why same number? If legacy episodes get added to TMDb they would not get updated,
+            // but instead duplicates would be inserted. So instead add the TMDb ID and update
+            // the legacy episode.
             val localEpisodeIdOrNull = localEpisodesByTmdbId?.get(tmdbId)
+                ?: tmdbEpisode.episode_number?.let { localEpisodesWithoutTmdbIdByNumber?.get(it) }
             if (localEpisodeIdOrNull == null) {
                 // Insert
                 toInsert.add(
@@ -528,9 +539,11 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 )
             } else {
                 // Update
+                // Note: update adds TMDb ID in case episode was matched by number.
                 toUpdate.add(
                     SgEpisode2Update(
                         id = localEpisodeIdOrNull.id,
+                        tmdbId = tmdbId,
                         title = titleOrNull ?: "",
                         overview = overviewOrNull,
                         number = tmdbEpisode.episode_number ?: 0,
@@ -543,7 +556,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                     )
                 )
                 // Remove from map so episode will not get deleted.
-                localEpisodesByTmdbId.remove(tmdbId)
+                localEpisodesByTmdbId?.remove(tmdbId)
             }
         }
 
@@ -599,8 +612,13 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             val episodes = episodeHelper.getEpisodeIdsOfSeason(season.id)
 
             val episodesByTmdbId = mutableMapOf<Int, SgEpisode2Ids>()
+            val episodesWithoutTmdbIdByNumber = mutableMapOf<Int, SgEpisode2Ids>()
             episodes.forEach {
-                if (it.tmdbId != null) episodesByTmdbId[it.tmdbId] = it
+                if (it.tmdbId != null) {
+                    episodesByTmdbId[it.tmdbId] = it
+                } else {
+                    episodesWithoutTmdbIdByNumber[it.episodenumber] = it
+                }
             }
 
             val seasonDetails = getEpisodesOfSeason(
@@ -615,7 +633,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 season.number,
                 season.id,
                 language,
-                episodesByTmdbId
+                episodesByTmdbId,
+                episodesWithoutTmdbIdByNumber
             )
             if (seasonDetails.result != ShowResult.SUCCESS) return seasonDetails.result
             val episodeDetails = seasonDetails.episodeDetails!!
