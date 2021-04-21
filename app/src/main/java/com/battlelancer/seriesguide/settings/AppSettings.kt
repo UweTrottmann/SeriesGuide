@@ -25,6 +25,7 @@ object AppSettings {
      * Returns the version code of the previously installed version. Is the current version on fresh
      * installs.
      */
+    @JvmStatic
     fun getLastVersionCode(context: Context): Int {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         var lastVersionCode = prefs.getInt(KEY_VERSION, -1)
@@ -36,6 +37,7 @@ object AppSettings {
         return lastVersionCode
     }
 
+    @JvmStatic
     fun shouldAskForFeedback(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         if (prefs.getBoolean(KEY_ASKED_FOR_FEEDBACK, false)) {
@@ -56,6 +58,7 @@ object AppSettings {
         return true
     }
 
+    @JvmStatic
     fun setAskedForFeedback(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context)
             .edit()
