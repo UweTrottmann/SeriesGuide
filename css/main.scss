@@ -17,6 +17,11 @@ $link-color:                        $primary;
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 $headings-font-weight: 400;
 
+// Spacing
+$spacers: (
+    8: 8rem
+);
+
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
   "bootstrap/functions",
