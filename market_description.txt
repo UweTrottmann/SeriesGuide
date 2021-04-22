@@ -20,11 +20,10 @@ https://seriesgui.de/whypay
 
 NOTE: You can not watch episodes or movies. For episodes only the release date on the original network is listed.
 
-TV information and images are provided by TheTVDB.com, but we are not endorsed or certified by TheTVDB.com or its affiliates. https://www.thetvdb.com/tos
 This product uses the TMDb API but is not endorsed or certified by TMDb. https://www.themoviedb.org/terms-of-use https://www.themoviedb.org/documentation/api/terms-of-use
 This app uses data and images by Trakt. https://trakt.tv/terms
 
-Sample shows by Ross Scott, visit him at https://www.accursedfarms.com
+Example shows by Das Erste/ARD (https://www.ard.de) and ZDF (https://www.zdf.de).
 
 SeriesGuide X Pass – Unlock all features
 
