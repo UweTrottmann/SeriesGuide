@@ -28,7 +28,7 @@ object CloudEndpointUtils {
     @Suppress("SimplifyBooleanWithConstants")
     private val USE_STAGING_VERSION = false && BuildConfig.DEBUG
 
-    private const val ROOT_URL_STAGING = ""
+    private const val ROOT_URL_STAGING = "https://staging-dot-optical-hexagon-364.appspot.com"
 
     /**
      * The root URL of where your DevAppServer is running (if you're running the DevAppServer
