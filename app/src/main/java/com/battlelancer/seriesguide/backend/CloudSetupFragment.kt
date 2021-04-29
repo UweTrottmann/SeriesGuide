@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.backend
 
 import android.app.Activity
 import android.content.Intent
-import android.content.IntentSender
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -21,14 +20,14 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.ResolvableApiException
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.ErrorCodes
+import com.firebase.ui.auth.IdpResponse
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -43,16 +42,13 @@ class CloudSetupFragment : Fragment() {
 
     private var snackbar: Snackbar? = null
 
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private var signInAccount: GoogleSignInAccount? = null
+    private var signInAccount: FirebaseUser? = null
     private lateinit var hexagonTools: HexagonTools
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         hexagonTools = SgApp.getServicesComponent(requireContext()).hexagonTools()
-        googleSignInClient = GoogleSignIn
-            .getClient(requireActivity(), HexagonTools.googleSignInOptions)
     }
 
     override fun onCreateView(
@@ -85,36 +81,7 @@ class CloudSetupFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        // check if the user is still signed in
-        val signInTask = googleSignInClient.silentSignIn()
-        if (signInTask.isSuccessful) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            Timber.d("Got cached sign-in")
-            handleSignInResult(signInTask)
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-            Timber.d("Trying async sign-in")
-            signInTask.addOnCompleteListener { task ->
-                if (isAdded) {
-                    handleSignInResult(task)
-                }
-            }
-        }
-    }
-
-    @Suppress("DEPRECATION") // Can't use ActivityResult API as third-party starts intent.
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when {
-            requestCode == REQUEST_RESOLUTION && resultCode == Activity.RESULT_OK -> {
-                // not doing anything for now, user has to press sign-in button again
-                Timber.i("Resolved an issue with Google sign-in.")
-            }
-        }
+        trySilentSignIn()
     }
 
     override fun onResume() {
@@ -149,49 +116,52 @@ class CloudSetupFragment : Fragment() {
         binding?.syncStatusCloud?.setProgress(event)
     }
 
-    /**
-     * On sign-in success, saves the signed in Google account and auto-starts setup if Cloud is not
-     * enabled, yet. On sign-in failure disables Cloud.
-     *
-     * @param task A completed Google sign-in task.
-     */
-    private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
-        var account: GoogleSignInAccount?
-        var errorCodeString: String? = ""
-        try {
-            account = task.getResult(ApiException::class.java)
-        } catch (e: ApiException) {
-            account = null
-            val statusCode = e.statusCode
-            errorCodeString = GoogleSignInStatusCodes.getStatusCodeString(statusCode)
-            when {
-                statusCode == GoogleSignInStatusCodes.SIGN_IN_REQUIRED -> {
-                    // never signed in or no account on device, show no error message
-                    errorCodeString = null
-                }
-                statusCode == GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> {
-                    // user chose not to sign in or add account, show no error message
-                    errorCodeString = null
-                }
-                statusCode == GoogleSignInStatusCodes.RESOLUTION_REQUIRED
-                        && e is ResolvableApiException -> {
-                    try {
-                        e.startResolutionForResult(activity, REQUEST_RESOLUTION)
-                    } catch (ignored: IntentSender.SendIntentException) {
-                        // ignored
-                    }
-                }
-                else -> Errors.logAndReport(
-                    ACTION_SIGN_IN,
-                    HexagonAuthError.build(ACTION_SIGN_IN, e)
-                )
-            }
-        } catch (e: Exception) {
-            account = null
-            errorCodeString = e.message ?: ""
-            Errors.logAndReport(ACTION_SIGN_IN, HexagonAuthError.build(ACTION_SIGN_IN, e))
+    private fun trySilentSignIn() {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        if (firebaseUser != null) {
+            changeAccount(firebaseUser, null)
+            return
         }
 
+        // check if the user is still signed in
+        val signInTask = AuthUI.getInstance()
+            .silentSignIn(requireContext(), HexagonTools.firebaseSignInProviders)
+        if (signInTask.isSuccessful) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            Timber.d("Got cached sign-in")
+            handleSilentSignInResult(signInTask)
+        } else {
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            Timber.d("Trying async sign-in")
+            signInTask.addOnCompleteListener { task ->
+                if (isAdded) {
+                    handleSilentSignInResult(task)
+                }
+            }
+        }
+    }
+
+    /**
+     * @param task A completed sign-in task.
+     */
+    private fun handleSilentSignInResult(task: Task<AuthResult>) {
+        val account = if (task.isSuccessful) {
+            task.result?.user
+        } else {
+            null
+        }
+        // Note: Do not show error message if silent sign-in fails, just update UI.
+        changeAccount(account, null)
+    }
+
+    /**
+     * If the Firebase account is not null, saves it and auto-starts setup if Cloud is not
+     * enabled, yet. On sign-in failure disables Cloud.
+     */
+    private fun changeAccount(account: FirebaseUser?, errorIfNull: String?) {
         val signedIn = account != null
         if (signedIn) {
             Timber.i("Signed in with Google.")
@@ -199,7 +169,7 @@ class CloudSetupFragment : Fragment() {
         } else {
             signInAccount = null
             hexagonTools.setDisabled()
-            errorCodeString?.let {
+            errorIfNull?.let {
                 showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
             }
         }
@@ -215,35 +185,56 @@ class CloudSetupFragment : Fragment() {
         }
     }
 
-    private val signInWithGoogle =
+    private val signInWithFirebase =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(result.data))
+            if (result.resultCode == Activity.RESULT_OK) {
+                changeAccount(FirebaseAuth.getInstance().currentUser, null)
+            } else {
+                val response = IdpResponse.fromResultIntent(result.data)
+                if (response == null) {
+                    // user chose not to sign in or add account, show no error message
+                    changeAccount(null, null)
+                } else {
+                    val errorMessage: String?
+                    when (val errorCode = response.error?.errorCode ?: 0) {
+                        ErrorCodes.NO_NETWORK -> {
+                            errorMessage = getString(R.string.offline)
+                        }
+                        ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED -> {
+                            // user cancelled, show no error message
+                            errorMessage = null
+                        }
+                        else -> {
+                            errorMessage = errorCode.toString()
+                            Errors.logAndReport(
+                                ACTION_SIGN_IN,
+                                HexagonAuthError(ACTION_SIGN_IN, errorMessage)
+                            )
+                        }
+                    }
+                    changeAccount(null, errorMessage)
+                }
+            }
         }
 
     private fun signIn() {
-        signInWithGoogle.launch(googleSignInClient.signInIntent)
+        // Create and launch sign-in intent
+        val intent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(HexagonTools.firebaseSignInProviders)
+            .build()
+
+        signInWithFirebase.launch(intent)
     }
 
     private fun signOut() {
         setProgressVisible(true)
-        googleSignInClient.signOut().addOnCompleteListener { task ->
-            if (!this@CloudSetupFragment.isAdded) {
-                return@addOnCompleteListener
-            }
-
-            val success = try {
-                task.getResult(ApiException::class.java)
-                true
-            } catch (e: Exception) {
-                Errors.logAndReport("sign-out", HexagonAuthError.build("sign-out", e))
-                false
-            }
-
-            setProgressVisible(false)
-            if (success) {
-                Timber.i("Signed out of Google.")
-                signInAccount = null
-                hexagonTools.setDisabled()
+        AuthUI.getInstance().signOut(requireContext()).addOnCompleteListener {
+            Timber.i("Signed out.")
+            signInAccount = null
+            hexagonTools.setDisabled()
+            if (this@CloudSetupFragment.isAdded) {
+                setProgressVisible(false)
                 updateViews()
             }
         }
@@ -296,14 +287,6 @@ class CloudSetupFragment : Fragment() {
         binding?.buttonCloudRemoveAccount?.isEnabled = !isVisible
     }
 
-    /**
-     * Disables all buttons (use if signing in with Google seems not possible).
-     */
-    private fun setDisabled() {
-        binding?.buttonCloudAction?.isEnabled = false
-        binding?.buttonCloudRemoveAccount?.isEnabled = false
-    }
-
     private fun showSnackbar(message: CharSequence) {
         dismissSnackbar()
         snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE).also {
@@ -329,8 +312,7 @@ class CloudSetupFragment : Fragment() {
             HexagonSettings.setSetupIncomplete(context)
 
             // validate account data
-            val account = signInAccountOrNull.account
-            if (TextUtils.isEmpty(signInAccountOrNull.email) || account == null) {
+            if (TextUtils.isEmpty(signInAccountOrNull.email)) {
                 Timber.d("Setting up Hexagon...FAILURE_AUTH")
                 // show setup incomplete message + error toast
                 view?.let {
@@ -355,7 +337,6 @@ class CloudSetupFragment : Fragment() {
     }
 
     companion object {
-        private const val REQUEST_RESOLUTION = 2
         private const val ACTION_SIGN_IN = "sign-in"
     }
 }

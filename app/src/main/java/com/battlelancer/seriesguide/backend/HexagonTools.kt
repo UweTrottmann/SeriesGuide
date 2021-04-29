@@ -12,16 +12,15 @@ import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.Tasks
 import com.google.api.client.extensions.android.json.AndroidJsonFactory
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.JsonFactory
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.uwetrottmann.seriesguide.backend.account.Account
 import com.uwetrottmann.seriesguide.backend.episodes.Episodes
 import com.uwetrottmann.seriesguide.backend.lists.Lists
@@ -32,7 +31,6 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
-import android.accounts.Account as AndroidAccount
 
 /**
  * Handles credentials and services for interacting with Hexagon.
@@ -42,15 +40,7 @@ class HexagonTools @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) {
 
-    private val googleSignInClient: GoogleSignInClient by lazy {
-        GoogleSignIn.getClient(context, googleSignInOptions)
-    }
-    private val credential: GoogleAccountCredential by lazy {
-        GoogleAccountCredential.usingAudience(
-            context.applicationContext,
-            HexagonSettings.AUDIENCE
-        )
-    }
+    private val httpRequestInitializer by lazy { FirebaseHttpRequestInitializer() }
     private var lastSignInCheck: Long = 0
 
     /**
@@ -61,12 +51,10 @@ class HexagonTools @Inject constructor(
     @get:Synchronized
     var showsService: Shows? = null
         get() {
-            val credential = getAccountCredential(true)
-            if (credential.selectedAccount == null) {
-                return null
-            }
+            val requestInitializer = getHttpRequestInitializerIfSignedIn()
+                ?: return null
             if (field == null) {
-                val builder = Shows.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                val builder = Shows.Builder(HTTP_TRANSPORT, JSON_FACTORY, requestInitializer)
                 field = updateBuilder(context, builder).build()
             }
             return field
@@ -81,12 +69,10 @@ class HexagonTools @Inject constructor(
     @get:Synchronized
     var episodesService: Episodes? = null
         get() {
-            val credential = getAccountCredential(true)
-            if (credential.selectedAccount == null) {
-                return null
-            }
+            val requestInitializer = getHttpRequestInitializerIfSignedIn()
+                ?: return null
             if (field == null) {
-                val builder = Episodes.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                val builder = Episodes.Builder(HTTP_TRANSPORT, JSON_FACTORY, requestInitializer)
                 field = updateBuilder(context, builder).build()
             }
             return field
@@ -101,12 +87,10 @@ class HexagonTools @Inject constructor(
     @get:Synchronized
     var moviesService: Movies? = null
         get() {
-            val credential = getAccountCredential(true)
-            if (credential.selectedAccount == null) {
-                return null
-            }
+            val requestInitializer = getHttpRequestInitializerIfSignedIn()
+                ?: return null
             if (field == null) {
-                val builder = Movies.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                val builder = Movies.Builder(HTTP_TRANSPORT, JSON_FACTORY, requestInitializer)
                 field = updateBuilder(context, builder).build()
             }
             return field
@@ -119,12 +103,10 @@ class HexagonTools @Inject constructor(
     @get:Synchronized
     var listsService: Lists? = null
         get() {
-            val credential = getAccountCredential(true)
-            if (credential.selectedAccount == null) {
-                return null
-            }
+            val requestInitializer = getHttpRequestInitializerIfSignedIn()
+                ?: return null
             if (field == null) {
-                val builder = Lists.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                val builder = Lists.Builder(HTTP_TRANSPORT, JSON_FACTORY, requestInitializer)
                 field = updateBuilder(context, builder).build()
             }
             return field
@@ -138,11 +120,9 @@ class HexagonTools @Inject constructor(
      */
     @Synchronized
     fun buildAccountService(): Account? {
-        val credential = getAccountCredential(true)
-        if (credential.selectedAccount == null) {
-            return null
-        }
-        val builder = Account.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+        val requestInitializer = getHttpRequestInitializerIfSignedIn()
+            ?: return null
+        val builder = Account.Builder(HTTP_TRANSPORT, JSON_FACTORY, requestInitializer)
         return updateBuilder(context, builder).build()
     }
 
@@ -151,7 +131,7 @@ class HexagonTools @Inject constructor(
      *
      * @return `false` if sync state could not be reset.
      */
-    fun setEnabled(account: GoogleSignInAccount): Boolean {
+    fun setEnabled(firebaseUser: FirebaseUser): Boolean {
         if (!HexagonSettings.resetSyncState(context)) {
             return false
         }
@@ -163,7 +143,7 @@ class HexagonTools @Inject constructor(
                 .commit()) {
             return false
         }
-        storeAccount(account)
+        storeAccount(firebaseUser)
         return true
     }
 
@@ -179,55 +159,68 @@ class HexagonTools @Inject constructor(
     }
 
     /**
-     * Get the Google account credentials to talk with Hexagon.
+     * Get the Firebase user credentials to talk with Hexagon.
      *
-     * Make sure to check [GoogleAccountCredential.getSelectedAccount] is not null (the
+     * Make sure to check [FirebaseHttpRequestInitializer.firebaseUser] is not null (the
      * account might have gotten signed out).
      *
      * @param checkSignInState If enabled, tries to silently sign in with Google. If it fails, sets
      * the [HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT] flag. If successful, clears the flag.
      */
     @Synchronized
-    private fun getAccountCredential(checkSignInState: Boolean): GoogleAccountCredential {
+    private fun getHttpRequestInitializer(checkSignInState: Boolean): FirebaseHttpRequestInitializer {
         if (checkSignInState) {
             checkSignInState()
         }
-        return credential
+        return httpRequestInitializer
+    }
+
+    private fun getHttpRequestInitializerIfSignedIn(): HttpRequestInitializer? {
+        val httpRequestInitializer = getHttpRequestInitializer(true)
+        return if (httpRequestInitializer.firebaseUser == null) {
+            null
+        } else {
+            httpRequestInitializer
+        }
     }
 
     private fun checkSignInState() {
-        if (credential.selectedAccount != null && !isTimeForSignInStateCheck) {
+        if (httpRequestInitializer.firebaseUser != null && !isTimeForSignInStateCheck) {
             return
         }
         lastSignInCheck = SystemClock.elapsedRealtime()
 
-        var account: AndroidAccount? = null
-        val signInTask = googleSignInClient.silentSignIn()
-
-        try {
-            val signInAccount = Tasks.await(signInTask)
-            if (signInAccount != null) {
-                Timber.i("%s: successful", ACTION_SILENT_SIGN_IN)
-                account = signInAccount.account
-                credential.selectedAccount = account
-            } else {
-                logAndReport(
-                    ACTION_SILENT_SIGN_IN,
-                    HexagonAuthError(
+        var account = FirebaseAuth.getInstance().currentUser
+        if (account != null) {
+            // still signed in
+            httpRequestInitializer.firebaseUser = account
+        } else {
+            // try to silently sign in
+            val signInTask = AuthUI.getInstance().silentSignIn(context, firebaseSignInProviders)
+            try {
+                val authResult = Tasks.await(signInTask)
+                if (authResult?.user != null) {
+                    Timber.i("%s: successful", ACTION_SILENT_SIGN_IN)
+                    authResult.user.let {
+                        account = it
+                        httpRequestInitializer.firebaseUser = it
+                    }
+                } else {
+                    logAndReport(
                         ACTION_SILENT_SIGN_IN,
-                        "GoogleSignInAccount is null"
+                        HexagonAuthError(ACTION_SILENT_SIGN_IN, "FirebaseUser is null")
                     )
-                )
-            }
-        } catch (e: Exception) {
-            if (e is InterruptedException) {
-                // Do not report thread interruptions, it's expected.
-                Timber.w(e, "Sign-in check interrupted")
-            } else {
-                logAndReport(
-                    ACTION_SILENT_SIGN_IN,
-                    build(ACTION_SILENT_SIGN_IN, e)
-                )
+                }
+            } catch (e: Exception) {
+                if (e is InterruptedException) {
+                    // Do not report thread interruptions, it's expected.
+                    Timber.w(e, "Sign-in check interrupted")
+                } else {
+                    logAndReport(
+                        ACTION_SILENT_SIGN_IN,
+                        build(ACTION_SILENT_SIGN_IN, e)
+                    )
+                }
             }
         }
 
@@ -243,14 +236,14 @@ class HexagonTools @Inject constructor(
     /**
      * Sets the account used for calls to Hexagon and saves the email address to display it in UI.
      */
-    private fun storeAccount(account: GoogleSignInAccount?) {
+    private fun storeAccount(firebaseUser: FirebaseUser?) {
         // store or remove account name in settings
         PreferenceManager.getDefaultSharedPreferences(context).edit()
-            .putString(HexagonSettings.KEY_ACCOUNT_NAME, account?.email)
+            .putString(HexagonSettings.KEY_ACCOUNT_NAME, firebaseUser?.email)
             .apply()
 
         // try to set or remove account on credential
-        getAccountCredential(false).selectedAccount = account?.account
+        getHttpRequestInitializer(false).firebaseUser = firebaseUser
     }
 
     /**
@@ -294,11 +287,11 @@ class HexagonTools @Inject constructor(
         private val HTTP_TRANSPORT: HttpTransport = NetHttpTransport()
         private const val SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS
 
-        @JvmStatic
-        val googleSignInOptions: GoogleSignInOptions by lazy {
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
+        val firebaseSignInProviders: List<AuthUI.IdpConfig> by lazy {
+            listOf(
+                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build()
+            )
         }
     }
 }
