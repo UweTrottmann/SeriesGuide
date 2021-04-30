@@ -106,8 +106,7 @@ public class TraktRecentEpisodeHistoryLoader
         for (int i = 0, size = history.size(); i < size; i++) {
             HistoryEntry entry = history.get(i);
 
-            if (entry.episode == null || entry.episode.ids == null || entry.episode.ids.tvdb == null
-                    || entry.show == null || entry.watched_at == null) {
+            if (entry.episode == null || entry.show == null || entry.watched_at == null) {
                 // missing required values
                 continue;
             }
