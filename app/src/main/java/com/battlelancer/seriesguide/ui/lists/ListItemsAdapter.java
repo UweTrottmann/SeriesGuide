@@ -12,9 +12,14 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.provider.SgEpisode2Info;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
+import com.battlelancer.seriesguide.provider.SgSeason2Numbers;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.ui.shows.BaseShowsAdapter;
 import com.battlelancer.seriesguide.util.ImageTools;
+import com.battlelancer.seriesguide.util.SeasonTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
 import java.util.Date;
@@ -36,6 +41,11 @@ class ListItemsAdapter extends BaseShowsAdapter {
 
         ListItemViewHolder viewHolder = (ListItemViewHolder) view.getTag();
 
+        // context menu
+        viewHolder.itemType = itemType;
+        viewHolder.itemId = cursor.getString(Query.LIST_ITEM_ID);
+        viewHolder.itemStableId = cursor.getInt(Query.ITEM_REF_ID);
+
         viewHolder.showId = cursor.getLong(Query.SHOW_ID);
         viewHolder.isFavorited = cursor.getInt(Query.SHOW_FAVORITE) == 1;
 
@@ -45,69 +55,103 @@ class ListItemsAdapter extends BaseShowsAdapter {
         // favorite label
         setFavoriteState(viewHolder.favorited, viewHolder.isFavorited);
 
-        // show details
-        int time = cursor.getInt(Query.SHOW_RELEASE_TIME);
-        int weekDay = cursor.getInt(Query.SHOW_RELEASE_WEEKDAY);
-        String timeZone = cursor.getString(Query.SHOW_RELEASE_TIMEZONE);
-        String country = cursor.getString(Query.SHOW_RELEASE_COUNTRY);
-        String network = cursor.getString(Query.SHOW_NETWORK);
-
-        Date releaseTimeShow;
-        if (time != -1) {
-            releaseTimeShow = TimeTools.getShowReleaseDateTime(context, time, weekDay,
-                    timeZone, country, network);
-        } else {
-            releaseTimeShow = null;
-        }
-
         // network, regular day and time, or type for legacy season/episode
         if (itemType == ListItemTypes.TMDB_SHOW || itemType == ListItemTypes.TVDB_SHOW) {
+            // show details
+            int time = cursor.getInt(Query.SHOW_RELEASE_TIME);
+            int weekDay = cursor.getInt(Query.SHOW_RELEASE_WEEKDAY);
+            String timeZone = cursor.getString(Query.SHOW_RELEASE_TIMEZONE);
+            String country = cursor.getString(Query.SHOW_RELEASE_COUNTRY);
+            String network = cursor.getString(Query.SHOW_NETWORK);
+
+            Date releaseTimeShow;
+            if (time != -1) {
+                releaseTimeShow = TimeTools.getShowReleaseDateTime(context, time, weekDay,
+                        timeZone, country, network);
+            } else {
+                releaseTimeShow = null;
+            }
+
             viewHolder.timeAndNetwork.setText(
                     TextTools.networkAndTime(context, releaseTimeShow, weekDay, network));
+
+            // next episode info
+            String fieldValue = cursor.getString(Query.SHOW_NEXTTEXT);
+            if (TextUtils.isEmpty(fieldValue)) {
+                // display show status if there is no next episode
+                viewHolder.episodeTime.setText(SgApp.getServicesComponent(context).showTools()
+                        .getStatus(cursor.getInt(Query.SHOW_STATUS)));
+                viewHolder.episode.setText(null);
+            } else {
+                viewHolder.episode.setText(fieldValue);
+
+                Date releaseTimeEpisode = TimeTools.applyUserOffset(context,
+                        cursor.getLong(Query.SHOW_NEXT_DATE_MS));
+                boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
+                String dateTime = displayExactDate ?
+                        TimeTools.formatToLocalDateShort(context, releaseTimeEpisode)
+                        : TimeTools.formatToLocalRelativeTime(context, releaseTimeEpisode);
+                if (TimeTools.isSameWeekDay(releaseTimeEpisode, releaseTimeShow, weekDay)) {
+                    // just display date
+                    viewHolder.episodeTime.setText(dateTime);
+                } else {
+                    // display date and explicitly day
+                    viewHolder.episodeTime.setText(
+                            context.getString(R.string.format_date_and_day, dateTime,
+                                    TimeTools.formatToLocalDay(releaseTimeEpisode)));
+                }
+            }
+
+            // remaining count
+            setRemainingCount(viewHolder.remainingCount, cursor.getInt(Query.SHOW_UNWATCHED_COUNT));
         } else if (itemType == ListItemTypes.SEASON) {
             viewHolder.timeAndNetwork.setText(R.string.season);
+            viewHolder.episodeTime.setText(null);
+            viewHolder.remainingCount.setVisibility(View.GONE);
+
+            // Note: Running query in adapter, but it's for legacy items, so fine for now.
+            int sesaonTvdbId = viewHolder.itemStableId;
+            SgSeason2Numbers seasonNumbersOrNull = SgRoomDatabase.getInstance(context)
+                    .sgSeason2Helper().getSeasonNumbersByTvdbId(sesaonTvdbId);
+            if (seasonNumbersOrNull != null) {
+                viewHolder.episode.setText(SeasonTools.getSeasonString(context,
+                        seasonNumbersOrNull.getNumber()));
+            } else {
+                viewHolder.episode.setText(R.string.unknown);
+            }
         } else if (itemType == ListItemTypes.EPISODE) {
             viewHolder.timeAndNetwork.setText(R.string.episode);
-        }
+            viewHolder.remainingCount.setVisibility(View.GONE);
 
-        // next episode info
-        String fieldValue = cursor.getString(Query.SHOW_NEXTTEXT);
-        if (TextUtils.isEmpty(fieldValue)) {
-            // display show status if there is no next episode
-            viewHolder.episodeTime.setText(SgApp.getServicesComponent(context).showTools()
-                    .getStatus(cursor.getInt(Query.SHOW_STATUS)));
-            viewHolder.episode.setText(null);
-        } else {
-            viewHolder.episode.setText(fieldValue);
+            // Note: Running query in adapter, but it's for legacy items, so fine for now.
+            int episodeTvdbId = viewHolder.itemStableId;
+            SgEpisode2Helper helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper();
+            long episodeIdOrZero = helper.getEpisodeIdByTvdbId(episodeTvdbId);
+            if (episodeIdOrZero > 0) {
+                SgEpisode2Info episodeInfo = helper.getEpisodeInfo(episodeIdOrZero);
 
-            Date releaseTimeEpisode = TimeTools.applyUserOffset(context,
-                    cursor.getLong(Query.SHOW_NEXT_DATE_MS));
-            boolean displayExactDate = DisplaySettings.isDisplayExactDate(context);
-            String dateTime = displayExactDate ?
-                    TimeTools.formatToLocalDateShort(context, releaseTimeEpisode)
-                    : TimeTools.formatToLocalRelativeTime(context, releaseTimeEpisode);
-            if (TimeTools.isSameWeekDay(releaseTimeEpisode, releaseTimeShow, weekDay)) {
-                // just display date
-                viewHolder.episodeTime.setText(dateTime);
+                viewHolder.episode.setText(TextTools.getNextEpisodeString(context,
+                        episodeInfo.getSeason(),
+                        episodeInfo.getEpisodenumber(),
+                        episodeInfo.getTitle()));
+                long releaseTime = episodeInfo.getFirstReleasedMs();
+                if (releaseTime != -1) {
+                    // "in 15 mins (Fri)"
+                    Date actualRelease = TimeTools.applyUserOffset(context, releaseTime);
+                    viewHolder.episodeTime.setText(context.getString(
+                            R.string.format_date_and_day,
+                            TimeTools.formatToLocalRelativeTime(context, actualRelease),
+                            TimeTools.formatToLocalDay(actualRelease)));
+                }
             } else {
-                // display date and explicitly day
-                viewHolder.episodeTime.setText(
-                        context.getString(R.string.format_date_and_day, dateTime,
-                                TimeTools.formatToLocalDay(releaseTimeEpisode)));
+                viewHolder.episode.setText(R.string.unknown);
+                viewHolder.episodeTime.setText(null);
             }
         }
-
-        // remaining count
-        setRemainingCount(viewHolder.remainingCount, cursor.getInt(Query.SHOW_UNWATCHED_COUNT));
 
         // poster
         ImageTools.loadShowPosterResizeCrop(context, viewHolder.poster,
                 cursor.getString(Query.SHOW_POSTER_SMALL));
-
-        // context menu
-        viewHolder.itemType = itemType;
-        viewHolder.itemId = cursor.getString(Query.LIST_ITEM_ID);
-        viewHolder.itemStableId = cursor.getInt(Query.ITEM_REF_ID);
     }
 
     @Override
