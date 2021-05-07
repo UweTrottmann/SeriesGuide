@@ -197,22 +197,32 @@ class CloudSetupFragment : Fragment() {
                     changeAccount(null, null)
                 } else {
                     val errorMessage: String?
-                    when (val errorCode = response.error?.errorCode ?: 0) {
-                        ErrorCodes.NO_NETWORK -> {
-                            errorMessage = getString(R.string.offline)
+                    val ex = response.error
+                    if (ex != null) {
+                        when (ex.errorCode) {
+                            ErrorCodes.NO_NETWORK -> {
+                                errorMessage = getString(R.string.offline)
+                            }
+                            ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED -> {
+                                // user cancelled, show no error message
+                                errorMessage = null
+                            }
+                            else -> {
+                                errorMessage = ex.message
+                                Errors.logAndReport(
+                                    ACTION_SIGN_IN,
+                                    HexagonAuthError.build(ACTION_SIGN_IN, ex)
+                                )
+                            }
                         }
-                        ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED -> {
-                            // user cancelled, show no error message
-                            errorMessage = null
-                        }
-                        else -> {
-                            errorMessage = errorCode.toString()
-                            Errors.logAndReport(
-                                ACTION_SIGN_IN,
-                                HexagonAuthError(ACTION_SIGN_IN, errorMessage)
-                            )
-                        }
+                    } else {
+                        errorMessage = "Unknown error"
+                        Errors.logAndReport(
+                            ACTION_SIGN_IN,
+                            HexagonAuthError(ACTION_SIGN_IN, errorMessage)
+                        )
                     }
+
                     changeAccount(null, errorMessage)
                 }
             }
