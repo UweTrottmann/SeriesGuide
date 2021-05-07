@@ -33,7 +33,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         emit(buildUpdate(stats))
 
         // shows
-        val showRuntimes = countShows(stats)
+        val showRuntimes = countShows(stats, excludeSpecials)
         emit(buildUpdate(stats))
 
         // episodes
@@ -112,10 +112,9 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * Returns shows mapped to their runtime.
      */
-    private fun countShows(
-        stats: Stats
-    ): Map<Long, Int> {
-        val showStats = SgRoomDatabase.getInstance(getApplication()).sgShow2Helper().getStats()
+    private fun countShows(stats: Stats, excludeSpecials: Boolean): Map<Long, Int> {
+        val helper = SgRoomDatabase.getInstance(getApplication()).sgShow2Helper()
+        val showStats = helper.getStats()
 
         var continuing = 0
         var withnext = 0
@@ -136,6 +135,13 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         stats.shows = showStats.size
         stats.showsContinuing = continuing
         stats.showsWithNextEpisodes = withnext
+
+        stats.showsFinished = if (excludeSpecials) {
+            helper.countShowsFinishedWatchingWithoutSpecials()
+        } else {
+            helper.countShowsFinishedWatching()
+        }
+
         return showRuntimes
     }
 
@@ -161,6 +167,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
 data class Stats(
     var shows: Int = 0,
+    var showsFinished: Int = 0,
     var showsContinuing: Int = 0,
     var showsWithNextEpisodes: Int = 0,
     var episodes: Int = 0,
