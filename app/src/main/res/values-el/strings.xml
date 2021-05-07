@@ -37,7 +37,7 @@
     <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
     <string name="action_stream">Stream ή αγορά</string>
     <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_select_region">Επιλογή περιοχής</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -90,9 +90,9 @@
     <string name="show_isalive">Συνεχίζεται</string>
     <string name="show_isnotalive">Σταμάτησε</string>
     <string name="show_isUpcoming">Επερχόμενα</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">Στην Παραγωγή</string>
+    <string name="show_status_pilot">Πιλότος</string>
+    <string name="show_status_canceled">Ακυρώθηκε</string>
     <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
     <string name="no_translation_title">Χωρίς μετάφραση</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
@@ -220,7 +220,7 @@
     <string name="list_manage">Διαχείριση λίστας</string>
     <string name="list_item_manage">Διαχείριση λιστών</string>
     <string name="list_item_remove">Κατάργηση από τη λίστα</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Μπορείτε να προσθέσετε σειρές σε αυτή τη λίστα</string>
     <string name="action_lists_sort">Ταξινόμημένες λίστες</string>
     <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>

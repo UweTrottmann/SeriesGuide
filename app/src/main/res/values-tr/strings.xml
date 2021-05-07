@@ -5,7 +5,7 @@
     <string name="lists">Listeler</string>
     <string name="movies">Filmler</string>
     <string name="statistics">İstatistikler</string>
-    <string name="navigation_more">Daha Fazla</string>
+    <string name="navigation_more">Daha fazla</string>
     <string name="search">Ara</string>
     <string name="preferences">Ayarlar</string>
     <string name="help">Yardım</string>
@@ -36,8 +36,8 @@
     <string name="sync_and_update">Senkronize Et &amp; Güncelle</string>
     <string name="sync_and_download_all">Senkronize Et &amp; Tümünü İndir</string>
     <string name="action_stream">Online izle veya satın al</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Online izleme veya satın alma bilgisi</string>
+    <string name="action_select_region">Bölge seçin</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
     <string name="api_failed">%s başarısız oldu</string>
     <string name="copy_to_clipboard">Panoya kopyalandı</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">TMDb\'de bulunamadı, sonraki güncellemede kaldırılacak. Detaylar için dokunun.</string>
     <!-- Sharing -->
     <string name="share">Paylaş</string>
     <string name="share_show">Diziyi paylaş</string>
@@ -255,7 +255,7 @@
     <string name="shows_continuing">%s devam ediyor</string>
     <string name="episodes_watched">%s izlendi</string>
     <string name="movies_on_watchlist">%s İzleme listesi</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d koleksiyonda</string>
     <string name="movies_watched_format">%s izlendi</string>
     <plurals name="days_plural">
         <item quantity="one">%d gün</item>
@@ -298,7 +298,7 @@
     <string name="traktcheckin_inprogress">Zaten \"şu anda izliyorum\" demiştiniz. Ya önceki girişi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
     <string name="traktcheckin_wait">Bekle</string>
     <string name="trakt_success">Trakt\'a gönder.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Trakt hesabınız kilitlenmiş. Trakt destek ekibi ile iletişime geçin.</string>
     <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
     <string name="trakt_error_not_exists">Trakt (henüz) mevcut değil. Daha sonra yeniden deneyin.</string>
     <string name="trakt_notice_not_exists">(Şimdilik) trakt ile ilişkilendirilememektedir.</string>
@@ -485,7 +485,7 @@
     <string name="billing_price_pass">tek seferlik ödeme</string>
     <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">X Pass uygulaması tespit edildi. Gelecekteki güncellemeri desteklemek için yine de abone olabilirsiniz.</string>
     <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
     <string name="subscription_expired">Abonelik sona erdi</string>
     <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>
@@ -519,5 +519,5 @@
     <string name="feedback_action_ok">TAMAM, tabi ki</string>
     <string name="feedback_action_nothanks">Hayır, teşekkürler</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Geliştiriciyi destekle!</string>
 </resources>

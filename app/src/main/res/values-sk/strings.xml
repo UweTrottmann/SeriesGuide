@@ -507,7 +507,7 @@
     <string name="billing_price_pass">jednorázová platba</string>
     <string name="upgrade_description">Každé predplatné odomkne všetky funkcie a podporuje budúce aktualizácie. Na používanie tejto aplikácie sa nevyžaduje predplatné.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">X Pass aplikácia detekovaná. Stále sa môžete prihlásiť k odberu pre podporu budúcich aktualizácií.</string>
     <string name="billing_learn_more">Viac info a pomoc</string>
     <string name="subscription_expired">Predplatné vypršalo</string>
     <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
@@ -541,5 +541,5 @@
     <string name="feedback_action_ok">Áno, samozrejme</string>
     <string name="feedback_action_nothanks">Nie, ďakujem</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Podporiť vývojára?</string>
 </resources>
