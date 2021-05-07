@@ -208,11 +208,19 @@ class CloudSetupFragment : Fragment() {
                                 errorMessage = null
                             }
                             else -> {
-                                errorMessage = ex.message
-                                Errors.logAndReport(
-                                    ACTION_SIGN_IN,
-                                    HexagonAuthError.build(ACTION_SIGN_IN, ex)
-                                )
+                                if (ex.errorCode == ErrorCodes.DEVELOPER_ERROR
+                                    && !hexagonTools.isGoogleSignInAvailable) {
+                                    // Note: If trying to sign-in with email already used with
+                                    // Google Sign-In on other device, fails to fall back to
+                                    // Google Sign-In because Play Services is not available.
+                                    errorMessage = getString(R.string.hexagon_signin_google_only)
+                                } else {
+                                    errorMessage = ex.message
+                                    Errors.logAndReport(
+                                        ACTION_SIGN_IN,
+                                        HexagonAuthError.build(ACTION_SIGN_IN, ex)
+                                    )
+                                }
                             }
                         }
                     } else {
