@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Note: app_name also required for Firebase AuthUI https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#ui-customization -->
     <string name="app_name">SeriesGuide</string>
     <string name="hexagon">SeriesGuide Cloud</string>
     <string name="imdb">IMDb</string>

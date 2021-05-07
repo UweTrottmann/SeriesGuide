@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.databinding.FragmentCloudSetupBinding
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
@@ -222,6 +223,7 @@ class CloudSetupFragment : Fragment() {
         val intent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(HexagonTools.firebaseSignInProviders)
+            .setTheme(SeriesGuidePreferences.THEME)
             .build()
 
         signInWithFirebase.launch(intent)
