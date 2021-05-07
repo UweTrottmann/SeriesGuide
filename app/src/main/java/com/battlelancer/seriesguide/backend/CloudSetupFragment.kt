@@ -126,7 +126,7 @@ class CloudSetupFragment : Fragment() {
 
         // check if the user is still signed in
         val signInTask = AuthUI.getInstance()
-            .silentSignIn(requireContext(), HexagonTools.firebaseSignInProviders)
+            .silentSignIn(requireContext(), hexagonTools.firebaseSignInProviders)
         if (signInTask.isSuccessful) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
             // and the GoogleSignInResult will be available instantly.
@@ -232,7 +232,8 @@ class CloudSetupFragment : Fragment() {
         // Create and launch sign-in intent
         val intent = AuthUI.getInstance()
             .createSignInIntentBuilder()
-            .setAvailableProviders(HexagonTools.firebaseSignInProviders)
+            .setAvailableProviders(hexagonTools.firebaseSignInProviders)
+            .setIsSmartLockEnabled(hexagonTools.isGoogleSignInAvailable)
             .setTheme(SeriesGuidePreferences.THEME)
             .build()
 

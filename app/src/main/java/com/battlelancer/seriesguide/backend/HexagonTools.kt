@@ -13,6 +13,8 @@ import com.battlelancer.seriesguide.sync.NetworkJobProcessor
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.Tasks
 import com.google.api.client.extensions.android.json.AndroidJsonFactory
 import com.google.api.client.http.HttpRequestInitializer
@@ -39,6 +41,26 @@ import javax.inject.Singleton
 class HexagonTools @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) {
+
+    /**
+     * Only checking once, assuming that if Play Services are missing or invalid this won't change.
+     */
+    val isGoogleSignInAvailable: Boolean by lazy {
+        val code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context)
+        // Return false only on non-resolvable errors. Firebase AuthUI can help resolve others.
+        code != ConnectionResult.SERVICE_MISSING && code != ConnectionResult.SERVICE_INVALID
+    }
+
+    val firebaseSignInProviders: List<AuthUI.IdpConfig> by lazy {
+        if (isGoogleSignInAvailable) {
+            listOf(
+                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build()
+            )
+        } else {
+            listOf(AuthUI.IdpConfig.EmailBuilder().build())
+        }
+    }
 
     private val httpRequestInitializer by lazy { FirebaseHttpRequestInitializer() }
     private var lastSignInCheck: Long = 0
@@ -286,12 +308,5 @@ class HexagonTools @Inject constructor(
         private val JSON_FACTORY: JsonFactory = AndroidJsonFactory()
         private val HTTP_TRANSPORT: HttpTransport = NetHttpTransport()
         private const val SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS
-
-        val firebaseSignInProviders: List<AuthUI.IdpConfig> by lazy {
-            listOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build()
-            )
-        }
     }
 }
