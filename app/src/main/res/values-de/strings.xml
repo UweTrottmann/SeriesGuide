@@ -251,6 +251,7 @@
     <string name="statistics_shows">Serien</string>
     <string name="statistics_episodes">Folgen</string>
     <string name="statistics_movies">Filme</string>
+    <string name="shows_finished">%s komplett angesehen</string>
     <string name="shows_with_next">%s mit nächsten Folgen</string>
     <string name="shows_continuing">%s werden fortgesetzt</string>
     <string name="episodes_watched">%s angesehen</string>

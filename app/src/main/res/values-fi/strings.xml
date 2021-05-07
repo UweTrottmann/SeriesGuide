@@ -251,6 +251,7 @@
     <string name="statistics_shows">ohjelmaa</string>
     <string name="statistics_episodes">jaksoa</string>
     <string name="statistics_movies">elokuvaa</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s, joissa on seuraavia jaksoja</string>
     <string name="shows_continuing">%s jatkuu</string>
     <string name="episodes_watched">%s katsottu</string>

@@ -259,6 +259,7 @@
     <string name="statistics_shows">seriálů</string>
     <string name="statistics_episodes">epizod</string>
     <string name="statistics_movies">filmů</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s s nezhlédnutými epizodami</string>
     <string name="shows_continuing">%s pokračujicích</string>
     <string name="episodes_watched">%s zhlédnutých</string>

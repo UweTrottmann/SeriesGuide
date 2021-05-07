@@ -251,6 +251,7 @@
     <string name="statistics_shows">Σειρές</string>
     <string name="statistics_episodes">Επεισόδια</string>
     <string name="statistics_movies">Ταινίες</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s με τα επόμενα επεισόδια</string>
     <string name="shows_continuing">%s συνεχίζονται</string>
     <string name="episodes_watched">%s παρακολουθήθηκαν</string>

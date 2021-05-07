@@ -251,6 +251,7 @@
     <string name="statistics_shows">سریال‌ها</string>
     <string name="statistics_episodes">قسمت</string>
     <string name="statistics_movies">فیلم</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s با قسمت‌های بعدی</string>
     <string name="shows_continuing">%s ادامه دار</string>
     <string name="episodes_watched">%s تماشا شده</string>

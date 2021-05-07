@@ -251,6 +251,7 @@
     <string name="statistics_shows">Sèries</string>
     <string name="statistics_episodes">Episodis</string>
     <string name="statistics_movies">Peŀlícules</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s amb episodis següents</string>
     <string name="shows_continuing">%s en progrés</string>
     <string name="episodes_watched">%s mirats</string>

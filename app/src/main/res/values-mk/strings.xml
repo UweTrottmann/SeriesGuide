@@ -251,6 +251,7 @@
     <string name="statistics_shows">Серии</string>
     <string name="statistics_episodes">Епизоди</string>
     <string name="statistics_movies">Филмови</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s со следните епизоди</string>
     <string name="shows_continuing">%s продолжува</string>
     <string name="episodes_watched">%s гледано</string>

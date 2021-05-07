@@ -251,6 +251,7 @@
     <string name="statistics_shows">serier</string>
     <string name="statistics_episodes">avsnitt</string>
     <string name="statistics_movies">filmer</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s med kommande avsnitt</string>
     <string name="shows_continuing">%s fortsätter</string>
     <string name="episodes_watched">%s sedda</string>

@@ -247,6 +247,7 @@
     <string name="statistics_shows">节目总数</string>
     <string name="statistics_episodes">剧集总数</string>
     <string name="statistics_movies">电影总数</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
     <string name="shows_continuing">%s 部节目仍在连载</string>
     <string name="episodes_watched">%s 集已观看</string>

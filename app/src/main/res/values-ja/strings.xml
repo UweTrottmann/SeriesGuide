@@ -247,6 +247,7 @@
     <string name="statistics_shows">番組</string>
     <string name="statistics_episodes">エピソード</string>
     <string name="statistics_movies">映画</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">次のエピソードがある番組 %s</string>
     <string name="shows_continuing">継続中 %s</string>
     <string name="episodes_watched">%s 視聴済</string>

@@ -259,6 +259,7 @@
     <string name="statistics_shows">Серіали (-ів)</string>
     <string name="statistics_episodes">Серії</string>
     <string name="statistics_movies">Фільми (-ів)</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s з новою серією</string>
     <string name="shows_continuing">%s продовжуються</string>
     <string name="episodes_watched">%s переглянуто</string>

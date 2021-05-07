@@ -251,6 +251,7 @@
     <string name="statistics_shows">காண்பிக்கும்</string>
     <string name="statistics_episodes">episodes</string>
     <string name="statistics_movies">திரைப்படங்கள்</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">அடுத்த episodes உடன் %s</string>
     <string name="shows_continuing">%s தொடரும்</string>
     <string name="episodes_watched">%s பார்த்த</string>
