@@ -18,6 +18,12 @@ Version 58
 * 🌟 Display most popular watch provider. Supports more regions. Powered by JustWatch via TMDb.
 * 🔧 Lists can now only contain shows. Existing season and episode list items can only be removed.
 
+#### 58.2
+*2021-05-01*
+
+* 🔧 Display details for legacy season and episode list items.
+* 🔨 Display any recently watched show from Trakt in history tab.
+
 #### 58.1
 *2021-04-21*
 
