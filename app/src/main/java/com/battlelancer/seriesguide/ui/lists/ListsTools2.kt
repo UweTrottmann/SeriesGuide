@@ -33,22 +33,28 @@ object ListsTools2 {
             if (tmdbIdOrZero != 0) {
                 // Database changes
                 toRemove.add(oldItem.listItemId)
-                val newListItem = SgListItem(tmdbIdOrZero, ListItemTypes.TMDB_SHOW, oldItem.listId)
-                toInsert.add(newListItem)
 
-                // Cloud changes
-                toRemoveCloud.add(SgCloudList().apply {
-                    listId = oldItem.listId
-                    listItems = listOf(SgCloudListItem().apply {
-                        listItemId = oldItem.listItemId
+                // Note: do not re-insert items with empty list ID (e.g. user modified database);
+                // also do not remove and re-insert to Cloud, would fail.
+                val oldListId = oldItem.listId
+                if (!oldListId.isNullOrEmpty()) {
+                    val newListItem = SgListItem(tmdbIdOrZero, ListItemTypes.TMDB_SHOW, oldListId)
+                    toInsert.add(newListItem)
+
+                    // Cloud changes
+                    toRemoveCloud.add(SgCloudList().apply {
+                        listId = oldListId
+                        listItems = listOf(SgCloudListItem().apply {
+                            listItemId = oldItem.listItemId
+                        })
                     })
-                })
-                toInsertCloud.add(SgCloudList().apply {
-                    listId = oldItem.listId
-                    listItems = listOf(SgCloudListItem().apply {
-                        listItemId = newListItem.listItemId
+                    toInsertCloud.add(SgCloudList().apply {
+                        listId = oldListId
+                        listItems = listOf(SgCloudListItem().apply {
+                            listItemId = newListItem.listItemId
+                        })
                     })
-                })
+                }
             }
         }
 

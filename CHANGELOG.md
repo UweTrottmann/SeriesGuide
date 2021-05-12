@@ -18,6 +18,11 @@ Version 58
 * 🌟 Display most popular watch provider. Supports more regions. Powered by JustWatch via TMDb.
 * 🔧 Lists can now only contain shows. Existing season and episode list items can only be removed.
 
+#### 58.3
+*2021-05-12*
+
+* 🔨 Fix issues when migrating list items that would prevent Cloud sync to succeed.
+
 #### 58.2
 *2021-05-01*
 
