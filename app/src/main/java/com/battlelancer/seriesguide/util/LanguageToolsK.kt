@@ -5,8 +5,11 @@ import java.util.Locale
 object LanguageToolsK {
 
     /**
-     * Based on the first two letters gets the language display name. Except for Portuguese
-     * (pt, pt-PT and pt-BR) and Chinese (zh, zh-CN, zh-TW, zh-HK),
+     * Based on the first two letters gets the language display name. Except for
+     * - Spanish (es-ES, es-MX)
+     * - French (fr-FR, fr-CA)
+     * - Portuguese (pt, pt-PT and pt-BR) and
+     * - Chinese (zh, zh-CN, zh-TW, zh-HK),
      * where the region is added to the display name.
      *
      * For other languages region variants for TMDB appear to be superfluous or make no sense
@@ -27,7 +30,7 @@ object LanguageToolsK {
                 Locale(languageCode.substring(0, 2), "CN")
                     .displayName
             }
-            "pt-PT", "pt-BR", "zh-CN", "zh-HK", "zh-TW" -> {
+            "es-ES", "es-MX", "fr-CA", "fr-FR", "pt-PT", "pt-BR", "zh-CN", "zh-HK", "zh-TW" -> {
                 Locale(languageCode.substring(0, 2), languageCode.substring(3, 5))
                     .displayName
             }
