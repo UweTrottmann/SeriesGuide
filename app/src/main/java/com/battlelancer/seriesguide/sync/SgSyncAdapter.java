@@ -130,9 +130,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // do some more things if this is not a quick update
         if (showSync.isSyncMultiple()) {
-            // migrate legacy list items
-            ListsTools2.migrateTvdbShowListItemsToTmdbIds(getContext());
-
             // update data of to be released movies
             if (!tmdbSync.updateMovies(progress)) {
                 progress.recordError();
@@ -155,6 +152,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             } else {
                 Timber.d("Syncing: Hexagon...SKIP");
             }
+
+            // Migrate legacy list items
+            // Note: might send to Hexagon, so make sure to sync lists with Hexagon before
+            ListsTools2.migrateTvdbShowListItemsToTmdbIds(getContext());
 
             // sync with trakt (only ratings if hexagon is enabled)
             if (TraktCredentials.get(getContext()).hasCredentials()) {
