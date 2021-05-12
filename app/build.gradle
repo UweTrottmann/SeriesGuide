@@ -210,7 +210,7 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics:${versions.crashlytics}"
 
     // Countly https://github.com/Countly/countly-sdk-android/releases
-    implementation "ly.count.android:sdk:20.11.6"
+    implementation "ly.count.android:sdk:20.11.8"
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
