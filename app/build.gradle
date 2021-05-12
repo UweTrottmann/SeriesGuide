@@ -147,7 +147,7 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/browser
     implementation 'androidx.browser:browser:1.3.0'
     // https://developer.android.com/jetpack/androidx/releases/fragment
-    implementation 'androidx.fragment:fragment-ktx:1.3.2'
+    implementation 'androidx.fragment:fragment-ktx:1.3.3'
     // https://github.com/material-components/material-components-android/releases
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.palette:palette-ktx:1.0.0'
