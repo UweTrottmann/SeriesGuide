@@ -12,7 +12,7 @@ buildscript {
             'annotation': '1.2.0',
             'lifecycle': '2.3.1',
             'paging': '2.1.2',
-            'room': '2.2.6', // https://developer.android.com/jetpack/androidx/releases/room
+            'room': '2.3.0', // https://developer.android.com/jetpack/androidx/releases/room
 
             'butterknife': '10.2.3', // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '17.4.0', // https://firebase.google.com/support/release-notes/android
