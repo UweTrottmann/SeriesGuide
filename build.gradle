@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.4.31' // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-    ext.coroutines_version = '1.4.3' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    ext.kotlin_version = '1.5.0' // https://kotlinlang.org/docs/releases.html#release-details
+    ext.coroutines_version = '1.5.0-RC' // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
     ext.versions = [
             'minSdk': 21, // Android 5 (L)
             'compileSdk': 30, // Android 11 (R)
@@ -12,11 +12,11 @@ buildscript {
             'annotation': '1.2.0',
             'lifecycle': '2.3.1',
             'paging': '2.1.2',
-            'room': '2.2.6', // https://developer.android.com/jetpack/androidx/releases/room
+            'room': '2.3.0', // https://developer.android.com/jetpack/androidx/releases/room
 
             'butterknife': '10.2.3', // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
             'crashlytics': '17.4.0', // https://firebase.google.com/support/release-notes/android
-            'dagger': '2.33', // https://github.com/google/dagger/releases
+            'dagger': '2.35.1', // https://github.com/google/dagger/releases
             'gson': '2.8.6', // https://github.com/google/gson/blob/master/CHANGELOG.md
             'okhttp': '4.9.1', // https://github.com/square/okhttp/blob/master/CHANGELOG.md
             'retrofit': '2.9.0', // https://github.com/square/retrofit/blob/master/CHANGELOG.md
