@@ -293,6 +293,8 @@
         <item>yi</item>
         <item>yo</item>
         <item>za</item>
+        <item>zh-HK</item>
+        <item>zh-TW</item>
         <item>zu</item>
     </string-array>
     <string name="language_code_any">xx</string>
@@ -405,6 +407,7 @@
         <item>ml-ML</item>
         <item>mt-MT</item>
         <item>zh-CN</item>
+        <item>zh-HK</item>
         <item>zh-TW</item>
         <item>gv-GV</item>
         <item>mi-MI</item>

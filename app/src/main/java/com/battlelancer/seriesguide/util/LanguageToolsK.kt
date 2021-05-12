@@ -6,10 +6,11 @@ object LanguageToolsK {
 
     /**
      * Based on the first two letters gets the language display name. Except for Portuguese
-     * (pt, pt-PT and pt-BR), where the region is added to the display name.
+     * (pt, pt-PT and pt-BR) and Chinese (zh, zh-CN, zh-TW, zh-HK),
+     * where the region is added to the display name.
      *
-     * For languages other than Portuguese TVDB currently does not support region variants,
-     * and for TMDB they are superfluous or make no sense (report to TMDB?).
+     * For other languages region variants for TMDB appear to be superfluous or make no sense
+     * (report to TMDB?).
      */
     @JvmStatic
     fun buildLanguageDisplayName(languageCode: String): String {
@@ -20,7 +21,13 @@ object LanguageToolsK {
                 Locale(languageCode.substring(0, 2), "PT")
                     .displayName
             }
-            "pt-PT", "pt-BR" -> {
+            "zh" -> {
+                // Manually add country for zh-CN as for backwards compat
+                // the show language code is still zh (and TMDB returns zh-CN data).
+                Locale(languageCode.substring(0, 2), "CN")
+                    .displayName
+            }
+            "pt-PT", "pt-BR", "zh-CN", "zh-HK", "zh-TW" -> {
                 Locale(languageCode.substring(0, 2), languageCode.substring(3, 5))
                     .displayName
             }
