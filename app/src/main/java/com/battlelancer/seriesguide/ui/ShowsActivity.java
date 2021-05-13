@@ -63,22 +63,17 @@ public class ShowsActivity extends BaseTopActivity implements
     public static final int NOW_TRAKT_USER_LOADER_ID = 106;
     public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 107;
 
+    public static final String EXTRA_SELECTED_TAB = "selectedtab";
+    public static final int INDEX_TAB_SHOWS = 0;
+    public static final int INDEX_TAB_NOW = 1;
+    public static final int INDEX_TAB_UPCOMING = 2;
+    public static final int INDEX_TAB_RECENT = 3;
+
     private ShowsTabPageAdapter tabsAdapter;
     private ViewPager viewPager;
 
     private ShowsActivityViewModel viewModel;
     private BillingViewModel billingViewModel;
-
-    @SuppressWarnings("unused")
-    public interface InitBundle {
-
-        String SELECTED_TAB = "selectedtab";
-
-        int INDEX_TAB_SHOWS = 0;
-        int INDEX_TAB_NOW = 1;
-        int INDEX_TAB_UPCOMING = 2;
-        int INDEX_TAB_RECENT = 3;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,7 +256,7 @@ public class ShowsActivity extends BaseTopActivity implements
     private void setInitialTab(Bundle intentExtras) {
         int selection;
         if (intentExtras != null) {
-            selection = intentExtras.getInt(InitBundle.SELECTED_TAB,
+            selection = intentExtras.getInt(EXTRA_SELECTED_TAB,
                     DisplaySettings.getLastShowsTabPosition(this));
         } else {
             // use last saved selection
@@ -493,7 +488,7 @@ public class ShowsActivity extends BaseTopActivity implements
         @Override
         public void onPageSelected(int position) {
             // only display add show button on Shows tab
-            if (position == InitBundle.INDEX_TAB_SHOWS) {
+            if (position == INDEX_TAB_SHOWS) {
                 floatingActionButton.show();
             } else {
                 floatingActionButton.hide();

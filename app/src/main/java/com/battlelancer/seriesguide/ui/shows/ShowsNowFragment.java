@@ -103,7 +103,7 @@ public class ShowsNowFragment extends Fragment {
                 .getScrollTabToTopLiveData()
                 .observe(getViewLifecycleOwner(), tabPosition -> {
                     if (tabPosition != null
-                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_NOW) {
+                            && tabPosition == ShowsActivity.INDEX_TAB_NOW) {
                         recyclerView.smoothScrollToPosition(0);
                     }
                 });

@@ -106,9 +106,9 @@ class CalendarFragment2 : Fragment() {
                 { tabPosition: Int? ->
                     if (tabPosition != null) {
                         if (CalendarType.UPCOMING == type
-                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_UPCOMING
+                            && tabPosition == ShowsActivity.INDEX_TAB_UPCOMING
                             || CalendarType.RECENT == type
-                            && tabPosition == ShowsActivity.InitBundle.INDEX_TAB_RECENT) {
+                            && tabPosition == ShowsActivity.INDEX_TAB_RECENT) {
                             recyclerView.smoothScrollToPosition(0)
                         }
                     }

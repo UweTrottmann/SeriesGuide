@@ -171,7 +171,9 @@ object DisplaySettings {
     @JvmStatic
     fun getLastShowsTabPosition(context: Context): Int {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getInt(KEY_LAST_ACTIVE_SHOWS_TAB, ShowsActivity.InitBundle.INDEX_TAB_SHOWS)
+            .getInt(KEY_LAST_ACTIVE_SHOWS_TAB,
+                ShowsActivity.INDEX_TAB_SHOWS
+            )
     }
 
     /**
