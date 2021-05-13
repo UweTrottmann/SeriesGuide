@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -69,6 +70,7 @@ public class ShowsActivity extends BaseTopActivity implements
     private ViewPager viewPager;
 
     private ShowsActivityViewModel viewModel;
+    @SuppressWarnings("FieldCanBeLocal")
     private BillingViewModel billingViewModel;
 
     @Override
@@ -359,7 +361,7 @@ public class ShowsActivity extends BaseTopActivity implements
      * Called if the user adds a show from a trakt stream fragment.
      */
     @Override
-    public void onAddShow(SearchResult show) {
+    public void onAddShow(@NonNull SearchResult show) {
         TaskManager.getInstance().performAddTask(this, show);
     }
 
