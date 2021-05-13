@@ -58,25 +58,27 @@ object ListsTools2 {
             }
         }
 
-        // Only need to check one, all sized equally
-        if (toRemove.isEmpty()) return
-
         Timber.d("Migrating %d list items to TMDB IDs", toRemove.size)
 
         // For cloud need list ID and item ID
-        if (HexagonSettings.isEnabled(context)) {
+        val requiresCloudUpdate = toRemoveCloud.isNotEmpty() || toInsertCloud.isNotEmpty()
+        if (requiresCloudUpdate && HexagonSettings.isEnabled(context)) {
             val listsService = SgApp.getServicesComponent(context).hexagonTools().listsService
             if (listsService == null) {
                 Timber.e("Cloud not signed in")
                 return
             }
             try {
-                listsService.removeItems(SgListList().apply {
-                    lists = toRemoveCloud
-                }).execute()
-                listsService.save(SgListList().apply {
-                    lists = toInsertCloud
-                }).execute()
+                if (toRemoveCloud.isNotEmpty()) {
+                    listsService.removeItems(SgListList().apply {
+                        lists = toRemoveCloud
+                    }).execute()
+                }
+                if (toInsertCloud.isNotEmpty()) {
+                    listsService.save(SgListList().apply {
+                        lists = toInsertCloud
+                    }).execute()
+                }
             } catch (e: IOException) {
                 Errors.logAndReportHexagon("migrate list items", e)
                 return
@@ -84,8 +86,8 @@ object ListsTools2 {
         }
 
         // Apply database updates
-        database.sgListHelper().deleteListItems(toRemove)
-        database.sgListHelper().insertListItems(toInsert)
+        if (toRemove.isNotEmpty()) database.sgListHelper().deleteListItems(toRemove)
+        if (toInsert.isNotEmpty()) database.sgListHelper().insertListItems(toInsert)
     }
 
 }
