@@ -55,10 +55,6 @@ import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 public class ShowsActivity extends BaseTopActivity implements
         AddShowDialogFragment.OnAddShowListener {
 
-    public static final int SHOWS_LOADER_ID = 100;
-    public static final int UPCOMING_LOADER_ID = 101;
-    public static final int RECENT_LOADER_ID = 102;
-    public static final int ADD_SHOW_LOADER_ID = 103;
     public static final int NOW_RECENTLY_LOADER_ID = 104;
     public static final int NOW_TRAKT_USER_LOADER_ID = 106;
     public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 107;
