@@ -1,8 +1,5 @@
 package com.battlelancer.seriesguide.ui
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,31 +8,21 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.content.getSystemService
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.api.Intents
-import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
-import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager
-import com.battlelancer.seriesguide.extensions.ExtensionManager
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
 import com.battlelancer.seriesguide.service.NotificationService
-import com.battlelancer.seriesguide.settings.AppSettings
-import com.battlelancer.seriesguide.settings.AppSettings.getLastVersionCode
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.getLastShowsTabPosition
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment.OnAddShowListener
@@ -44,6 +31,7 @@ import com.battlelancer.seriesguide.ui.shows.CalendarFragment2
 import com.battlelancer.seriesguide.ui.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.ui.shows.ShowsFragment
 import com.battlelancer.seriesguide.ui.shows.ShowsNowFragment
+import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -84,7 +72,14 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
             AccountUtils.createAccount(this)
         }
 
-        onUpgrade()
+        if (AppUpgrade(applicationContext).upgradeIfNewVersion()) {
+            // Let the user know the app has updated.
+            Snackbar.make(snackbarParentView, R.string.updated, Snackbar.LENGTH_LONG)
+                .setAction(R.string.updated_details) {
+                    Utils.launchWebsite(this@ShowsActivity, getString(R.string.url_release_notes))
+                }
+                .show()
+        }
 
         // may launch from a notification, then set last cleared time
         NotificationService.handleDeleteIntent(this, intent)
@@ -356,92 +351,6 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
      */
     override fun onAddShow(show: SearchResult) {
         TaskManager.getInstance().performAddTask(this, show)
-    }
-
-    /**
-     * Runs any upgrades necessary if coming from earlier versions.
-     */
-    private fun onUpgrade() {
-        val lastVersion = getLastVersionCode(this)
-        val currentVersion = BuildConfig.VERSION_CODE
-
-        if (lastVersion < currentVersion) {
-            // Let the user know the app has updated.
-            Snackbar.make(snackbarParentView, R.string.updated, Snackbar.LENGTH_LONG)
-                .setAction(R.string.updated_details) {
-                    Utils.launchWebsite(this@ShowsActivity, getString(R.string.url_release_notes))
-                }
-                .show()
-
-            // Run some required tasks after updating to certain versions.
-            // NOTE: see version codes for upgrade description.
-            if (lastVersion < SgApp.RELEASE_VERSION_12_BETA5) {
-                // flag all episodes as outdated
-                val values = ContentValues()
-                values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0)
-                contentResolver.update(SeriesGuideContract.Episodes.CONTENT_URI, values, null, null)
-                // sync is triggered in last condition
-                // (if we are in here we will definitely hit the ones below)
-            }
-            if (lastVersion < SgApp.RELEASE_VERSION_16_BETA1) {
-                Utils.clearLegacyExternalFileCache(this)
-            }
-            if (lastVersion < SgApp.RELEASE_VERSION_23_BETA4) {
-                // make next trakt sync download watched movies
-                TraktSettings.resetMoviesLastWatchedAt(this)
-            }
-            if (lastVersion < SgApp.RELEASE_VERSION_26_BETA3) {
-                // flag all shows outdated so delta sync will pick up, if full sync gets aborted
-                scheduleAllShowsUpdate()
-                // force a sync
-                SgSyncAdapter.requestSyncFullImmediate(this, true)
-            }
-            // This was never doing anything (ops batch never applied), so removed.
-//            if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
-//                 ActivityTools.populateShowsLastWatchedTime(this)
-//            }
-            val editor = PreferenceManager.getDefaultSharedPreferences(this).edit()
-            if (lastVersion < SgApp.RELEASE_VERSION_36_BETA2) {
-                // used account name to determine sign-in state before switch to Google Sign-In
-                if (!HexagonSettings.getAccountName(this).isNullOrEmpty()) {
-                    // tell users to sign in again
-                    editor.putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, true)
-                }
-            }
-            if (lastVersion < SgApp.RELEASE_VERSION_40_BETA4) {
-                ExtensionManager.get(this).setDefaultEnabledExtensions(this)
-            }
-            if (lastVersion < SgApp.RELEASE_VERSION_40_BETA6) {
-                // cancel old widget alarm using implicit intent
-                val am = getSystemService<AlarmManager>()
-                if (am != null) {
-                    val pi = PendingIntent.getBroadcast(
-                        this,
-                        ListWidgetProvider.REQUEST_CODE,
-                        Intent(ListWidgetProvider.ACTION_DATA_CHANGED), 0
-                    )
-                    am.cancel(pi)
-                }
-                // new alarm is set automatically as upgrading causes app widgets to update
-            }
-            if (lastVersion != SgApp.RELEASE_VERSION_50_1
-                && lastVersion < SgApp.RELEASE_VERSION_51_BETA4) {
-                // Movies were not added in all cases when syncing, so ensure they are now.
-                TraktSettings.resetMoviesLastWatchedAt(this)
-                HexagonSettings.resetSyncState(this)
-            }
-
-            // set this as lastVersion
-            editor.putInt(AppSettings.KEY_VERSION, currentVersion)
-            editor.apply()
-        }
-    }
-
-    private fun scheduleAllShowsUpdate() {
-        // force update of all shows
-        val values = ContentValues()
-        values.put(SeriesGuideContract.Shows.LASTUPDATED, 0)
-        contentResolver.update(SeriesGuideContract.Shows.CONTENT_URI, values, null, null)
     }
 
     override fun getSnackbarParentView(): View {
