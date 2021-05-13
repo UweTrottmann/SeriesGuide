@@ -180,10 +180,10 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
 
     private fun updateButtonText() {
         // example: "en-US"
-        val languageCode = DisplaySettings.getMoviesLanguage(context)
+        val languageCode = DisplaySettings.getMoviesLanguage(requireContext())
         binding.buttonLocalizationLanguage.text =
             LanguageToolsK.buildLanguageDisplayName(languageCode)
-        val regionCode = DisplaySettings.getMoviesRegion(context)
+        val regionCode = DisplaySettings.getMoviesRegion(requireContext())
         binding.buttonLocalizationRegion.text = Locale("", regionCode).displayCountry
     }
 
