@@ -1546,8 +1546,12 @@ public class SeriesGuideContract {
             return uri.getPathSegments().get(1);
         }
 
-        public static String generateListItemId(int itemStableId, int type, String listId) {
+        public static String generateListItemId(String itemStableId, int type, String listId) {
             return itemStableId + "-" + type + "-" + listId;
+        }
+
+        public static String generateListItemId(int itemStableId, int type, String listId) {
+            return generateListItemId(itemStableId, type, listId);
         }
 
         public static String generateListItemIdWildcard(int itemStableId, int type) {

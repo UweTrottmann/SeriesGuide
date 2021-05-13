@@ -430,15 +430,17 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
                 continue;
             }
 
-            if (TextUtils.isEmpty(item.listItemId)) continue;
-
             String externalId = null;
             if (item.externalId != null && !item.externalId.isEmpty()) {
                 externalId = item.externalId;
             } else if (item.tvdbId > 0) {
                 externalId = String.valueOf(item.tvdbId);
             }
-            if (externalId == null) continue;
+            if (externalId == null) continue; // No external ID, skip
+
+            // Generate list item ID from values, do not trust given item ID
+            // (e.g. encoded list ID might not match)
+            item.listItemId = ListItems.generateListItemId(externalId, type, list.listId);
 
             ContentValues itemValues = new ContentValues();
             itemValues.put(ListItems.LIST_ITEM_ID, item.listItemId);
