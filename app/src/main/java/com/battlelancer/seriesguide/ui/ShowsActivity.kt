@@ -52,7 +52,8 @@ import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
 /**
- * Provides the apps main screen, displaying a list of shows and their next episodes.
+ * Provides the apps main screen, displays tabs for shows, history, recent and upcoming episodes.
+ * Runs upgrade code and checks billing state.
  */
 class ShowsActivity : BaseTopActivity(), OnAddShowListener {
 
