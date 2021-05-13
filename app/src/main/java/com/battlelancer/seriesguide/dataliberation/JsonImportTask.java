@@ -419,12 +419,17 @@ public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
         // Insert the lists items
         ArrayList<ContentValues> items = new ArrayList<>();
         for (ListItem item : list.items) {
-            // Note: do not import legacy types (seasons and episodes).
+            // Note: DO import legacy types (seasons and episodes),
+            // as e.g. older backups can still contain legacy show data to allow displaying them.
             int type;
             if (ListItemTypesExport.SHOW.equals(item.type)) {
                 type = ListItemTypes.TVDB_SHOW;
             } else if (ListItemTypesExport.TMDB_SHOW.equals(item.type)) {
                 type = ListItemTypes.TMDB_SHOW;
+            } else if (ListItemTypesExport.SEASON.equals(item.type)) {
+                type = ListItemTypes.SEASON;
+            } else if (ListItemTypesExport.EPISODE.equals(item.type)) {
+                type = ListItemTypes.EPISODE;
             } else {
                 // Unknown item type, skip
                 continue;
