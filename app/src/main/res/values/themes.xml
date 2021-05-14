@@ -57,6 +57,8 @@
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
 
+        <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
+
     </style>
 
     <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -111,6 +113,8 @@
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
+
+        <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
 
     </style>
 
