@@ -216,7 +216,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             // Already added, offer to open show instead.
             binding.buttonPositive.setText(R.string.action_open)
             binding.buttonPositive.setOnClickListener {
-                startActivity(OverviewActivity.intentShow(context, result.localShowId))
+                startActivity(OverviewActivity.intentShow(requireContext(), result.localShowId))
                 dismiss()
             }
         } else {

@@ -70,7 +70,7 @@ abstract class BaseAddShowsFragment : Fragment() {
                             SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
                                 .getShowIdByTmdbId(item.tmdbId)
                         }
-                        startActivity(OverviewActivity.intentShow(context, showId))
+                        startActivity(OverviewActivity.intentShow(requireContext(), showId))
                     }
                 } else {
                     // Display more details in a dialog.

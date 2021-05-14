@@ -87,7 +87,7 @@ class ShowSearchFragment : BaseSearchFragment() {
     private val onItemClickListener = object : ShowSearchAdapter.OnItemClickListener {
 
         override fun onItemClick(anchor: View, viewHolder: ShowSearchAdapter.ShowViewHolder) {
-            OverviewActivity.intentShow(context, viewHolder.showId).let {
+            OverviewActivity.intentShow(requireContext(), viewHolder.showId).let {
                 ActivityCompat.startActivity(
                     requireActivity(), it,
                     ActivityOptionsCompat.makeScaleUpAnimation(

@@ -130,7 +130,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             if (item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(OverviewActivity.intentShowByTmdbId(context, item.tmdbId))
+                    startActivity(OverviewActivity.intentShowByTmdbId(requireContext(), item.tmdbId))
                 } else {
                     // display more details in a dialog
                     AddShowDialogFragment.show(parentFragmentManager, item)
