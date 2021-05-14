@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
@@ -35,7 +34,6 @@ class OverviewActivity : BaseMessageActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_overview)
-        ButterKnife.bind(this)
         setupActionBar()
 
         val helper = getInstance(this).sgShow2Helper()
