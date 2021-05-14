@@ -1551,7 +1551,7 @@ public class SeriesGuideContract {
         }
 
         public static String generateListItemId(int itemStableId, int type, String listId) {
-            return generateListItemId(itemStableId, type, listId);
+            return generateListItemId(String.valueOf(itemStableId), type, listId);
         }
 
         public static String generateListItemIdWildcard(int itemStableId, int type) {
