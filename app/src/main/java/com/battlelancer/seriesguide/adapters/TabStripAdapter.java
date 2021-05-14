@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Helper class for easy setup of a {@link SlidingTabLayout}.
@@ -51,7 +50,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
 
         // setup tabs
         this.tabLayout = tabLayout;
-        this.tabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps_transparent, R.id.textViewTabStripItem);
+        this.tabLayout.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);
         this.tabLayout.setSelectedIndicatorColors(ThemeUtils
                 .getColorFromAttribute(tabLayout.getContext(), R.attr.colorPrimary));
         this.tabLayout.setViewPager(viewPager);
@@ -117,7 +116,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         TabInfo tabInfo = tabs.get(position);
         if (tabInfo != null) {
-            return context.getString(tabInfo.titleRes).toUpperCase(Locale.getDefault());
+            return context.getString(tabInfo.titleRes);
         }
         return "";
     }

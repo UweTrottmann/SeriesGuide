@@ -58,7 +58,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
         )
         viewPager.adapter = tabsAdapter
         tabLayout.setCustomTabView(
-            R.layout.tabstrip_item_allcaps_transparent,
+            R.layout.tabstrip_item_transparent,
             R.id.textViewTabStripItem
         )
         tabLayout.setSelectedIndicatorColors(

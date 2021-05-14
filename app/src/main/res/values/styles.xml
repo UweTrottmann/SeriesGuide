@@ -83,6 +83,7 @@
 
     <style name="TextAppearance.SeriesGuide.Tab" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textColor">?attr/colorOnPrimarySurface</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide.Tab.Surface">
