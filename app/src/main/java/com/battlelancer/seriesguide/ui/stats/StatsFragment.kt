@@ -107,7 +107,7 @@ class StatsFragment : Fragment() {
         inflater.inflate(R.menu.stats_menu, menu)
 
         menu.findItem(R.id.menu_action_stats_filter_specials).isChecked =
-            DisplaySettings.isHidingSpecials(activity)
+            DisplaySettings.isHidingSpecials(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -129,7 +129,7 @@ class StatsFragment : Fragment() {
     }
 
     private fun loadStats() {
-        model.hideSpecials.value = DisplaySettings.isHidingSpecials(context)
+        model.hideSpecials.value = DisplaySettings.isHidingSpecials(requireContext())
     }
 
     private fun handleStatsUpdate(event: StatsUpdateEvent) {

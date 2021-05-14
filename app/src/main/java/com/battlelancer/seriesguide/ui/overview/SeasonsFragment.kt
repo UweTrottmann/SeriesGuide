@@ -355,7 +355,7 @@ class SeasonsFragment() : Fragment() {
     }
 
     private fun showSortDialog() {
-        val sortOrder = DisplaySettings.getSeasonSortOrder(activity)
+        val sortOrder = DisplaySettings.getSeasonSortOrder(requireContext())
         SingleChoiceDialogFragment.show(parentFragmentManager,
                 R.array.sesorting,
                 R.array.sesortingData, sortOrder.index,

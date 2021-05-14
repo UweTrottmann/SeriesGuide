@@ -353,8 +353,8 @@ public class NotificationService {
         PendingIntent contentIntent;
         // base intent for task stack
         final Intent showsIntent = new Intent(context, ShowsActivity.class);
-        showsIntent.putExtra(ShowsActivity.InitBundle.SELECTED_TAB,
-                ShowsActivity.InitBundle.INDEX_TAB_UPCOMING);
+        showsIntent.putExtra(ShowsActivity.EXTRA_SELECTED_TAB,
+                ShowsActivity.INDEX_TAB_UPCOMING);
 
         final int count = notifyPositions.size();
         if (count == 1) {

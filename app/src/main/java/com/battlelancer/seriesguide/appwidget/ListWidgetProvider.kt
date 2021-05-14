@@ -193,18 +193,21 @@ class ListWidgetProvider : AppWidgetProvider() {
             when (widgetType) {
                 WidgetSettings.Type.SHOWS -> {
                     // Shows.
-                    showsTabIndex = ShowsActivity.InitBundle.INDEX_TAB_SHOWS
+                    showsTabIndex =
+                        ShowsActivity.INDEX_TAB_SHOWS
                     titleResId = R.string.shows
                     emptyResId = R.string.no_nextepisode
                 }
                 WidgetSettings.Type.RECENT -> {
-                    showsTabIndex = ShowsActivity.InitBundle.INDEX_TAB_RECENT
+                    showsTabIndex =
+                        ShowsActivity.INDEX_TAB_RECENT
                     titleResId = R.string.recent
                     emptyResId = R.string.norecent
                 }
                 else -> {
                     // Upcoming is the default.
-                    showsTabIndex = ShowsActivity.InitBundle.INDEX_TAB_UPCOMING
+                    showsTabIndex =
+                        ShowsActivity.INDEX_TAB_UPCOMING
                     titleResId = R.string.upcoming
                     emptyResId = R.string.noupcoming
                 }
@@ -219,7 +222,7 @@ class ListWidgetProvider : AppWidgetProvider() {
 
             // Set up app launch button.
             val appLaunchIntent = Intent(context, ShowsActivity::class.java)
-                .putExtra(ShowsActivity.InitBundle.SELECTED_TAB, showsTabIndex)
+                .putExtra(ShowsActivity.EXTRA_SELECTED_TAB, showsTabIndex)
             TaskStackBuilder.create(context)
                 .addNextIntent(appLaunchIntent)
                 .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT).let {

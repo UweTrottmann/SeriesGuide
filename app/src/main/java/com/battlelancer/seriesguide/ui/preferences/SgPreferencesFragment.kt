@@ -211,7 +211,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             it.setOnPreferenceClickListener {
                 ShowL10nDialogFragment.show(
                     parentFragmentManager,
-                    DisplaySettings.getShowsLanguageFallback(context),
+                    DisplaySettings.getShowsLanguageFallback(requireContext()),
                     TAG_LANGUAGE_FALLBACK
                 )
                 true
@@ -482,14 +482,14 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     private fun updateTimeOffsetSummary(offsetListPref: Preference) {
         offsetListPref.summary = getString(
             R.string.pref_offsetsummary,
-            DisplaySettings.getShowsTimeOffset(activity)
+            DisplaySettings.getShowsTimeOffset(requireContext())
         )
     }
 
     private fun updateFallbackLanguageSummary(pref: Preference) {
         pref.summary = LanguageTools.getShowLanguageStringFor(
             context,
-            DisplaySettings.getShowsLanguageFallback(context)
+            DisplaySettings.getShowsLanguageFallback(requireContext())
         )
     }
 
