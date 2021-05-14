@@ -11,7 +11,6 @@
     <TextView
         android:id="@+id/textViewTabStripItem"
         style="@style/Widget.SeriesGuide.Tab"
-        android:layout_height="40dp"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Tab.Surface"
         tools:text="Tab Item" />
 
