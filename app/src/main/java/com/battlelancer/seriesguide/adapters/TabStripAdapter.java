@@ -51,9 +51,9 @@ public class TabStripAdapter extends FragmentPagerAdapter {
 
         // setup tabs
         this.tabLayout = tabLayout;
-        this.tabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
+        this.tabLayout.setCustomTabView(R.layout.tabstrip_item_allcaps_transparent, R.id.textViewTabStripItem);
         this.tabLayout.setSelectedIndicatorColors(ThemeUtils
-                .getColorFromAttribute(tabLayout.getContext(), R.attr.colorOnPrimarySurface));
+                .getColorFromAttribute(tabLayout.getContext(), R.attr.colorPrimary));
         this.tabLayout.setViewPager(viewPager);
     }
 

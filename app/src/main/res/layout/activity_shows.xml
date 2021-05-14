@@ -19,7 +19,6 @@
 
             <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
                 android:id="@+id/tabLayoutTabs"
-                style="@style/Widget.SeriesGuide.TabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

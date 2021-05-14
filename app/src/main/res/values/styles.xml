@@ -223,11 +223,6 @@
     </style>
 
     <!-- Tabs -->
-    <style name="Widget.SeriesGuide.TabLayout">
-        <item name="android:background">?attr/colorPrimary</item>
-        <item name="android:elevation">4dp</item>
-    </style>
-
     <style name="Widget.SeriesGuide.Tab">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>

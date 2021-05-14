@@ -15,15 +15,4 @@
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
     </style>
 
-    <!-- Tabs -->
-    <style name="Widget.SeriesGuide.TabLayout">
-        <item name="android:background">@color/sg_background_app_bar_dark</item>
-        <item name="android:elevation">4dp</item>
-        <item name="android:theme">@style/ThemeOverlay.SeriesGuide.TabLayout</item>
-    </style>
-
-    <style name="ThemeOverlay.SeriesGuide.TabLayout" parent="">
-        <item name="colorOnSurface">?attr/colorPrimary</item>
-    </style>
-
 </resources>
