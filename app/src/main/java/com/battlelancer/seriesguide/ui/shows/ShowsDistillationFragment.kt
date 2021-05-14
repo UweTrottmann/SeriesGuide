@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
-import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
@@ -57,16 +57,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             sortOrderListener
         )
         viewPager.adapter = tabsAdapter
-        tabLayout.setCustomTabView(
-            R.layout.tabstrip_item_transparent,
-            R.id.textViewTabStripItem
-        )
-        tabLayout.setSelectedIndicatorColors(
-            ThemeUtils.getColorFromAttribute(
-                tabLayout.context,
-                R.attr.colorPrimary
-            )
-        )
+        tabLayout.setDefaultStyle()
         tabLayout.setViewPager(viewPager)
 
         // ensure size matches children in any case

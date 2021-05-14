@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 import java.util.ArrayList;
@@ -50,9 +49,7 @@ public class TabStripAdapter extends FragmentPagerAdapter {
 
         // setup tabs
         this.tabLayout = tabLayout;
-        this.tabLayout.setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem);
-        this.tabLayout.setSelectedIndicatorColors(ThemeUtils
-                .getColorFromAttribute(tabLayout.getContext(), R.attr.colorPrimary));
+        ThemeUtils.setDefaultStyle(tabLayout);
         this.tabLayout.setViewPager(viewPager);
     }
 

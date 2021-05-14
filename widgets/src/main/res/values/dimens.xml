@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="sg_sliding_tab_strip_underline_size">1dp</dimen>
+    <dimen name="sg_sliding_tab_strip_indicator_size">3dp</dimen>
+
     <!-- Reorder drag grip -->
     <dimen name="drag_grip_ridge_size">4dp</dimen>
     <dimen name="drag_grip_ridge_gap">2dp</dimen>
