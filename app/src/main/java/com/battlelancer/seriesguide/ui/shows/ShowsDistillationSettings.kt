@@ -141,19 +141,17 @@ object ShowsDistillationSettings {
     }
 
     private object SgShow2SortQuery {
-        // by oldest next episode, then continued first
-        const val OLDEST_EPISODE =
-            "${SgShow2Columns.NEXTAIRDATEMS} ASC,${SgShow2Columns.SORT_STATUS},"
+        // by oldest next episode
+        const val OLDEST_EPISODE = "${SgShow2Columns.NEXTAIRDATEMS} ASC,"
 
-        // by latest next episode, then continued first
+        // by latest next episode
         const val LATEST_EPISODE = "${SgShow2Columns.SORT_LATEST_EPISODE},"
 
         // by latest watched first
         const val LAST_WATCHED = "${SgShow2Columns.LASTWATCHED_MS} DESC,"
 
-        // by least episodes remaining to watch, then continued first
-        const val REMAINING_EPISODES =
-            "${SgShow2Columns.UNWATCHED_COUNT} ASC,${SgShow2Columns.SORT_STATUS},"
+        // by least episodes remaining to watch
+        const val REMAINING_EPISODES = "${SgShow2Columns.UNWATCHED_COUNT} ASC,"
 
         // add as prefix to sort favorites first
         const val FAVORITES_FIRST = "${SgShow2Columns.FAVORITE} DESC,"
