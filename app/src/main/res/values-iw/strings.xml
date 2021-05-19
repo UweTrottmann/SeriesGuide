@@ -154,6 +154,7 @@
     <string name="action_shows_sort_oldest_episode">הפרק הכי ישן</string>
     <string name="action_shows_sort_last_watched">האחרון שנצפה</string>
     <string name="action_shows_sort_remaining">פרקים שנותרו</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
     <string name="context_updateshow">עדכן</string>
     <string name="context_marknext">צפה בפרק הבא</string>

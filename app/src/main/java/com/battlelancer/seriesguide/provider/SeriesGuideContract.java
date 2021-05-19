@@ -721,10 +721,14 @@ public class SeriesGuideContract {
                 + " OR " + STATUS + "=" + ShowTools.Status.UNKNOWN
                 + ")";
 
+        String SELECTION_HAS_NEXT_EPISODE =
+                NEXTAIRDATEMS + "!=" + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+        String SELECTION_NO_NEXT_EPISODE =
+                NEXTAIRDATEMS + "=" + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+
         String SORT_TITLE = TITLE + " COLLATE NOCASE ASC";
         String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE NOCASE ASC";
-        String SORT_STATUS = STATUS + " DESC";
-        String SORT_LATEST_EPISODE = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
+        String SORT_LATEST_EPISODE = NEXTAIRDATEMS + " DESC";
 
         static Uri buildIdUri(long rowId) {
             return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();

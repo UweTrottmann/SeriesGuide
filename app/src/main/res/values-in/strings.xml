@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">Episode Terlama</string>
     <string name="action_shows_sort_last_watched">Terakhir ditonton</string>
     <string name="action_shows_sort_remaining">Episode Tersisa</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favorite di awal</string>
     <string name="context_updateshow">Pembaruan</string>
     <string name="context_marknext">Episode selanjutnya ditonton</string>

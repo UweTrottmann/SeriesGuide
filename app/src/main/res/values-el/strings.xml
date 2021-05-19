@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Παλαιότερο επεισόδιο</string>
     <string name="action_shows_sort_last_watched">Είδατε πρόσφατα</string>
     <string name="action_shows_sort_remaining">Επεισόδια που απομένουν</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Αγαπημένα πρώτα</string>
     <string name="context_updateshow">Ενημέρωση</string>
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>

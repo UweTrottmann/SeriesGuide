@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">ตอนเก่าที่สุด</string>
     <string name="action_shows_sort_last_watched">ดูล่าสุด</string>
     <string name="action_shows_sort_remaining">ตอนที่เหลือ</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">รายการโปรดก่อน</string>
     <string name="context_updateshow">อัปเดต</string>
     <string name="context_marknext">ดูตอนถัดไป</string>

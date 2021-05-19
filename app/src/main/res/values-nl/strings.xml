@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Oudste aflevering</string>
     <string name="action_shows_sort_last_watched">Laatst bekeken</string>
     <string name="action_shows_sort_remaining">Resterende afleveringen</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favorieten eerst</string>
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>

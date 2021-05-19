@@ -154,6 +154,7 @@
     <string name="action_shows_sort_oldest_episode">Najstarszy odcinek</string>
     <string name="action_shows_sort_last_watched">Ostatnio obejrzany</string>
     <string name="action_shows_sort_remaining">Pozostałe odcinki</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Najpierw ulubione</string>
     <string name="context_updateshow">Aktualizuj</string>
     <string name="context_marknext">Odcinek obejrzany</string>

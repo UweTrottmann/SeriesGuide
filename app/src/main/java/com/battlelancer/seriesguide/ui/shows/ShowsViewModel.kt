@@ -102,12 +102,12 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         // unwatched (= next episode is released) and upcoming (= next episode upcoming) filters
-        // assumes that no next episode == max next airdate
+        // assumes that no next episode == min next airdate (DBUtils.UNKNOWN_NEXT_RELEASE_DATE)
 
         val timeInAnHour = TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS
         // next episode upcoming within <limit> days + 1 hour
         val upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getApplication())
-        val maxAirtime = timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS
+        val maxTimeUpcoming = timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS
 
         if (filter.isFilterUnwatched != null || filter.isFilterUpcoming != null) {
             if (selection.isNotEmpty()) {
@@ -117,14 +117,18 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         if (filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isTrue()) {
             // unwatched and upcoming
-            selection.append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
-                .append(maxAirtime)
+            selection
+                .append(SgShow2Columns.SELECTION_HAS_NEXT_EPISODE)
+                .append(" AND ")
+                .append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(maxTimeUpcoming)
         } else if (
             filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isNullOrFalse()
         ) {
             // unwatched only
-            selection.append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
-                .append(timeInAnHour)
+            selection
+                .append(SgShow2Columns.SELECTION_HAS_NEXT_EPISODE)
+                .append(" AND ")
+                .append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(timeInAnHour)
         } else if (
             filter.isFilterUpcoming.isTrue() && filter.isFilterUnwatched.isNullOrFalse()
         ) {
@@ -134,29 +138,26 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                 .append(timeInAnHour)
                 .append(" AND ")
                 .append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
-                .append(maxAirtime)
+                .append(maxTimeUpcoming)
         } else if (filter.isFilterUnwatched.isFalse()) {
             if (filter.isFilterUpcoming == null) {
-                // unwatched excluded (== anything in the future or no next episode)
+                // all released episodes watched (== anything in the future or no next episode)
+                // Warning: use parentheses with OR to ensure precedence!
                 selection
+                    .append("(")
                     .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
                     .append(timeInAnHour)
+                    .append(" OR ")
+                    .append(SgShow2Columns.SELECTION_NO_NEXT_EPISODE)
+                    .append(")")
             } else if (!filter.isFilterUpcoming) {
-                // unwatched and upcoming excluded (== further into the future or no next episode)
-                selection
-                    .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
-                    .append(maxAirtime)
+                // all released episodes watched plus exclude any upcoming, ignoring upcoming range
+                // (== no next episode)
+                selection.append(SgShow2Columns.SELECTION_NO_NEXT_EPISODE)
             }
         } else if (filter.isFilterUpcoming.isFalse() && filter.isFilterUnwatched == null) {
-            // upcoming excluded
-            selection
-                .append("(")
-                .append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
-                .append(timeInAnHour)
-                .append(" OR ")
-                .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
-                .append(maxAirtime)
-                .append(")")
+            // exclude any upcoming, ignoring upcoming range
+            selection.append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(timeInAnHour)
         }
 
         queryString.value = if (selection.isNotEmpty()) {

@@ -13,9 +13,12 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.TraktSettings
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * If necessary, runs upgrade code after an update with a higher version code is installed.
@@ -120,6 +123,13 @@ class AppUpgrade(
             // Movies were not added in all cases when syncing, so ensure they are now.
             TraktSettings.resetMoviesLastWatchedAt(context)
             HexagonSettings.resetSyncState(context)
+        }
+
+        if (lastVersion < SgApp.RELEASE_VERSION_59_BETA1) {
+            // Changed ID of Canceled show status for better sorting.
+            SgApp.coroutineScope.launch(Dispatchers.IO) {
+                SgRoomDatabase.getInstance(context).sgShow2Helper().migrateCanceledShowStatus()
+            }
         }
     }
 

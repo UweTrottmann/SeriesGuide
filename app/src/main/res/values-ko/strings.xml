@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">오래된 에피소드</string>
     <string name="action_shows_sort_last_watched">최근 시청</string>
     <string name="action_shows_sort_remaining">남은 에피소드</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">즐겨찾기 먼저 표시</string>
     <string name="context_updateshow">업데이트</string>
     <string name="context_marknext">다음 에피소드 시청 완료</string>
