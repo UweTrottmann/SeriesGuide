@@ -5,8 +5,8 @@
 
         <!-- All customizations that are SPECIFIC to API-level 23 go here. -->
 
-        <!-- Override primary variant color to make status bar match android:windowBackground -->
-        <item name="android:statusBarColor">@color/sg_color_background</item>
+        <!-- Override primary variant color to make status bar match app bar -->
+        <item name="android:statusBarColor">@color/sg_background_app_bar_dark</item>
 
     </style>
 
@@ -14,7 +14,7 @@
 
         <!-- All customizations that are SPECIFIC to API-level 23 go here. -->
 
-        <!-- Override primary variant color to make status bar match android:windowBackground -->
+        <!-- Override primary variant color to make status bar match app bar -->
         <!-- Note: Could color status bar light as of L, but not use light style until M. So only for M+. -->
         <item name="android:statusBarColor">@color/sg_color_background</item>
         <item name="android:windowLightStatusBar">true</item>

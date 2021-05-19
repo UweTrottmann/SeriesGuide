@@ -6,7 +6,7 @@
         <!-- All customizations that are SPECIFIC to API-level 27 go here. -->
 
         <!-- Copy from v23\themes.xml -->
-        <item name="android:statusBarColor">@color/sg_color_background</item>
+        <item name="android:statusBarColor">@color/sg_background_app_bar_dark</item>
 
         <!-- Note: nav bar color needs to be opaque! -->
         <item name="android:navigationBarColor">@color/sg_black_almost</item>

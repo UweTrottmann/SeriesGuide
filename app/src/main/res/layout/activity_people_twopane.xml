@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/sgToolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar_elevated" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelinePeople"

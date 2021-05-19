@@ -188,26 +188,30 @@
     </style>
 
     <!-- AppBar -->
+    <style name="Widget.SeriesGuide.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="android:background">@color/sg_color_background</item>
+    </style>
+
     <!-- Transparent background, disable shadow. -->
-    <style name="Widget.SeriesGuide.AppBarLayout" parent="Widget.Design.AppBarLayout">
+    <style name="Widget.SeriesGuide.AppBarLayout.Transparent" parent="">
         <item name="android:background">@color/transparent</item>
         <item name="elevation">0dp</item>
     </style>
 
     <!-- Toolbar -->
-    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
+        <item name="colorOnSurface">?attr/colorPrimary</item>
+    </style>
+    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:background">@color/sg_color_background</item>
         <!-- Fix popup menu sub-menu indicator colored white on white instead of gray on white. -->
         <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
-    </style>
-
-    <style name="Widget.SeriesGuide.Toolbar.Transparent" parent="Widget.MaterialComponents.Toolbar.Surface">
-        <item name="android:background">@android:color/transparent</item>
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
-        <item name="colorOnSurface">?attr/colorPrimary</item>
+    <style name="Widget.SeriesGuide.Toolbar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="Widget.SeriesGuide.Toolbar.Gradient" parent="Widget.MaterialComponents.Toolbar.Surface">

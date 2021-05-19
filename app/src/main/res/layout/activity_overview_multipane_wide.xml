@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/sgToolbar"
-        layout="@layout/toolbar"
+        layout="@layout/toolbar_elevated"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintLeft_toLeftOf="parent"

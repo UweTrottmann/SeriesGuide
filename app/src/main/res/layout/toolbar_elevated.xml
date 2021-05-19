@@ -7,4 +7,5 @@
     style="@style/Widget.SeriesGuide.Toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+    android:elevation="4dp"
     app:layout_scrollFlags="scroll|enterAlways|snap" />
