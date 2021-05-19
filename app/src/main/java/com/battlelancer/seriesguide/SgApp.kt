@@ -100,6 +100,8 @@ class SgApp : Application() {
         const val RELEASE_VERSION_50_1 = 2105008
         const val RELEASE_VERSION_51_BETA4 = 2105103
 
+        const val RELEASE_VERSION_59_BETA1 = 2105900
+
         /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
          */

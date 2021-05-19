@@ -35,13 +35,10 @@ public class ShowTools {
      * Show status valued as stored in the database in {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows#STATUS}.
      */
     // Compare with https://www.themoviedb.org/bible/tv#59f7403f9251416e7100002b
+    // Note: used to order shows by status, so ensure similar are next to each other.
     public interface Status {
         int IN_PRODUCTION = 5;
         int PILOT = 4;
-        /**
-         * Typically all episodes released, but abruptly ended.
-         */
-        int CANCELED = 3;
         int PLANNED = 2;
         /**
          * Episodes are to be released.
@@ -52,6 +49,10 @@ public class ShowTools {
          */
         int ENDED = 0;
         int UNKNOWN = -1;
+        /**
+         * Typically all episodes released, but abruptly ended.
+         */
+        int CANCELED = -2;
     }
 
     private final Context context;
