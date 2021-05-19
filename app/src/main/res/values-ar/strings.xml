@@ -267,7 +267,7 @@
     <string name="statistics_shows">المسلسلات</string>
     <string name="statistics_episodes">الحلقات</string>
     <string name="statistics_movies">الأفلام</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s انتهى مشاهدة</string>
     <string name="shows_with_next">%s مع الحلقات القادمة</string>
     <string name="shows_continuing">%s مستمرة</string>
     <string name="episodes_watched">%s تمت مشاهدتها</string>
