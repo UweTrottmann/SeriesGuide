@@ -44,6 +44,7 @@ object ShowsDistillationSettings {
             ShowsSortOrder.LATEST_EPISODE_ID -> query.append(SgShow2SortQuery.LATEST_EPISODE)
             ShowsSortOrder.LAST_WATCHED_ID -> query.append(SgShow2SortQuery.LAST_WATCHED)
             ShowsSortOrder.LEAST_REMAINING_EPISODES_ID -> query.append(SgShow2SortQuery.REMAINING_EPISODES)
+            ShowsSortOrder.STATUS -> query.append(SgShow2SortQuery.STATUS)
         }
         // always sort by title at last
         query.append(
@@ -153,6 +154,8 @@ object ShowsDistillationSettings {
         // by least episodes remaining to watch
         const val REMAINING_EPISODES = "${SgShow2Columns.UNWATCHED_COUNT} ASC,"
 
+        const val STATUS = "${SgShow2Columns.STATUS} DESC,"
+
         // add as prefix to sort favorites first
         const val FAVORITES_FIRST = "${SgShow2Columns.FAVORITE} DESC,"
     }
@@ -168,5 +171,6 @@ object ShowsDistillationSettings {
         const val LATEST_EPISODE_ID = 3
         const val LAST_WATCHED_ID = 4
         const val LEAST_REMAINING_EPISODES_ID = 5
+        const val STATUS = 6
     }
 }

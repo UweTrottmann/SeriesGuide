@@ -168,6 +168,7 @@
     <string name="action_shows_sort_oldest_episode">Oldest episode</string>
     <string name="action_shows_sort_last_watched">Last watched</string>
     <string name="action_shows_sort_remaining">Remaining episodes</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favorites first</string>
     <string name="context_updateshow">Update</string>
     <string name="context_marknext">Watched next episode</string>

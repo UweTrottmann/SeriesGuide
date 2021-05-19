@@ -30,6 +30,7 @@ class SortShowsView @JvmOverloads constructor(
         radioSortOldestEpisode.setOnClickListener { updateSortOrderListener() }
         radioSortLastWatched.setOnClickListener { updateSortOrderListener() }
         radioSortRemaining.setOnClickListener { updateSortOrderListener() }
+        radio_shows_sort_status.setOnClickListener { updateSortOrderListener() }
         checkBoxFavoritesFirst.setOnClickListener { updateSortOrderListener() }
         checkBoxIgnoreArticles.setOnClickListener { updateSortOrderListener(true) }
     }
@@ -46,6 +47,8 @@ class SortShowsView @JvmOverloads constructor(
     internal lateinit var radioSortLastWatched: RadioButton
     @BindView(R.id.radio_shows_sort_remaining)
     internal lateinit var radioSortRemaining: RadioButton
+    @BindView(R.id.radio_shows_sort_status)
+    internal lateinit var radio_shows_sort_status: RadioButton
     @BindView(R.id.checkbox_shows_sort_favorites)
     internal lateinit var checkBoxFavoritesFirst: CheckBox
     @BindView(R.id.checkbox_shows_sort_ignore_articles)
@@ -60,6 +63,7 @@ class SortShowsView @JvmOverloads constructor(
             R.id.radio_shows_sort_oldest_episode -> ShowsSortOrder.OLDEST_EPISODE_ID
             R.id.radio_shows_sort_last_watched -> ShowsSortOrder.LAST_WATCHED_ID
             R.id.radio_shows_sort_remaining -> ShowsSortOrder.LEAST_REMAINING_EPISODES_ID
+            R.id.radio_shows_sort_status -> ShowsSortOrder.STATUS
             else -> throw IllegalArgumentException("Unknown radio button id ${radioGroup.checkedRadioButtonId}")
         }
         sortOrderListener?.onSortOrderUpdate(
@@ -79,6 +83,7 @@ class SortShowsView @JvmOverloads constructor(
             ShowsSortOrder.OLDEST_EPISODE_ID -> R.id.radio_shows_sort_oldest_episode
             ShowsSortOrder.LAST_WATCHED_ID -> R.id.radio_shows_sort_last_watched
             ShowsSortOrder.LEAST_REMAINING_EPISODES_ID -> R.id.radio_shows_sort_remaining
+            ShowsSortOrder.STATUS -> R.id.radio_shows_sort_status
             else -> R.id.radio_shows_sort_title // fall back to default
         }
         radioGroup.check(radioButtonId)
