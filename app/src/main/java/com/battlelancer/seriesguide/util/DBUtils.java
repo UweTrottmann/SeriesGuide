@@ -36,10 +36,13 @@ import timber.log.Timber;
 public class DBUtils {
 
     /**
-     * Use for unknown release time/no next episode so they will get sorted last in show list (value
-     * is {@link Long#MAX_VALUE}). See {@link Shows#NEXTAIRDATEMS}.
+     * Used for show next episode time value, see {@link SgShow2Columns#NEXTAIRDATEMS}.
+     * Ensures these shows are sorted first if sorting by oldest episode first,
+     * and last if sorting by latest episode. Also affects filter settings.
+     * See {@link com.battlelancer.seriesguide.ui.shows.ShowsViewModel} and
+     * {@link com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings}.
      */
-    public static final long UNKNOWN_NEXT_RELEASE_DATE = Long.MAX_VALUE;
+    public static final long UNKNOWN_NEXT_RELEASE_DATE = Long.MIN_VALUE;
 
     /**
      * Used if the number of remaining episodes to watch for a show is not (yet) known.
