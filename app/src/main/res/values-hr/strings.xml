@@ -153,6 +153,7 @@
     <string name="action_shows_sort_oldest_episode">Najstarija epizoda</string>
     <string name="action_shows_sort_last_watched">Zadnje pogledano</string>
     <string name="action_shows_sort_remaining">Preostalo epizoda</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Lista favorita</string>
     <string name="context_updateshow">Ažuriraj</string>
     <string name="context_marknext">Pogledana sljedeća epizoda</string>

@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">最舊一集</string>
     <string name="action_shows_sort_last_watched">上一次觀看</string>
     <string name="action_shows_sort_remaining">剩餘的集數</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">喜愛影集優先</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">觀看下一集</string>

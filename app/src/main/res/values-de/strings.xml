@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Älteste Folge</string>
     <string name="action_shows_sort_last_watched">Zuletzt angesehen</string>
     <string name="action_shows_sort_remaining">Verbleibende Folgen</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favoriten zuerst</string>
     <string name="context_updateshow">Aktualisieren</string>
     <string name="context_marknext">Nächste Folge angesehen</string>

@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Legrégebbi epizód</string>
     <string name="action_shows_sort_last_watched">Utoljára megnézett</string>
     <string name="action_shows_sort_remaining">Hátralévő epizódok</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Kedvencek előre</string>
     <string name="context_updateshow">Frissítés</string>
     <string name="context_marknext">Láttam a következő epizódot</string>

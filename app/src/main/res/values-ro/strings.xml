@@ -153,6 +153,7 @@
     <string name="action_shows_sort_oldest_episode">Cel mai vechi episod</string>
     <string name="action_shows_sort_last_watched">Ultimul vizionat</string>
     <string name="action_shows_sort_remaining">Episoade rămase</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favoritele primele</string>
     <string name="context_updateshow">Actualizare</string>
     <string name="context_marknext">Episodul următor a fost vizionat</string>

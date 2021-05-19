@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">En eski bölüme göre</string>
     <string name="action_shows_sort_last_watched">Son izlenenlere göre</string>
     <string name="action_shows_sort_remaining">Kalan bölümlere göre</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Önce favoriler</string>
     <string name="context_updateshow">Güncelle</string>
     <string name="context_marknext">Sıradaki bölüm izlendi</string>

@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Episodio más antiguo</string>
     <string name="action_shows_sort_last_watched">Último visto</string>
     <string name="action_shows_sort_remaining">Episodios faltantes</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favoritos primero</string>
     <string name="context_updateshow">Actualizar</string>
     <string name="context_marknext">Siguiente episodio visto</string>

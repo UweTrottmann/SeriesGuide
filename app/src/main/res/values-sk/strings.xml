@@ -154,6 +154,7 @@
     <string name="action_shows_sort_oldest_episode">Najstaršia epizóda</string>
     <string name="action_shows_sort_last_watched">Naposledy videné</string>
     <string name="action_shows_sort_remaining">Zostávajúce epizódy</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Uprednostniť obľúbené</string>
     <string name="context_updateshow">Aktualizovať</string>
     <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
