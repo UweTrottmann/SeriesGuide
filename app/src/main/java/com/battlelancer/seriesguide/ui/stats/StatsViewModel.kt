@@ -121,12 +121,12 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         val showRuntimes = mutableMapOf<Long, Int>()
         for (show in showStats) {
             // count continuing shows
-            if (show.status == Status.CONTINUING) {
+            if (show.status == Status.RETURNING) {
                 continuing++
             }
             // count shows that are planned to receive new episodes
-            if (show.status == Status.CONTINUING
-                || show.status == Status.UPCOMING
+            if (show.status == Status.RETURNING
+                || show.status == Status.PLANNED
                 || show.status == Status.IN_PRODUCTION) {
                 withnext++
             }

@@ -259,7 +259,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 statusText.append(statusString)
 
                 // If continuing, paint status green.
-                val style = if (status == ShowTools.Status.CONTINUING) {
+                val style = if (status == ShowTools.Status.RETURNING) {
                     R.style.TextAppearance_SeriesGuide_Body2_Accent
                 } else {
                     R.style.TextAppearance_SeriesGuide_Body2_Secondary

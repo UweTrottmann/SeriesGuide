@@ -29,9 +29,9 @@ public class DataLiberationTools {
             case ShowStatusExport.CANCELED:
                 return Status.CANCELED;
             case ShowStatusExport.UPCOMING:
-                return Status.UPCOMING;
+                return Status.PLANNED;
             case ShowStatusExport.CONTINUING:
-                return Status.CONTINUING;
+                return Status.RETURNING;
             case ShowStatusExport.ENDED:
                 return Status.ENDED;
             default:
@@ -54,9 +54,9 @@ public class DataLiberationTools {
                 return ShowStatusExport.PILOT;
             case Status.CANCELED:
                 return ShowStatusExport.CANCELED;
-            case Status.UPCOMING:
+            case Status.PLANNED:
                 return ShowStatusExport.UPCOMING;
-            case Status.CONTINUING:
+            case Status.RETURNING:
                 return ShowStatusExport.CONTINUING;
             case Status.ENDED:
                 return ShowStatusExport.ENDED;
