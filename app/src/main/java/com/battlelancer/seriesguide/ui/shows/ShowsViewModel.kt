@@ -151,24 +151,13 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                     .append(SgShow2Columns.SELECTION_NO_NEXT_EPISODE)
                     .append(")")
             } else if (!filter.isFilterUpcoming) {
-                // unwatched and upcoming excluded (== further into the future or no next episode)
-                selection
-                    .append("(")
-                    .append(SgShow2Columns.NEXTAIRDATEMS).append(">").append(maxTimeUpcoming)
-                    .append(" OR ")
-                    .append(SgShow2Columns.SELECTION_NO_NEXT_EPISODE)
-                    .append(")")
+                // all released episodes watched plus exclude any upcoming, ignoring upcoming range
+                // (== no next episode)
+                selection.append(SgShow2Columns.SELECTION_NO_NEXT_EPISODE)
             }
         } else if (filter.isFilterUpcoming.isFalse() && filter.isFilterUnwatched == null) {
-            // upcoming excluded
-            selection
-                .append("(")
-                .append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
-                .append(timeInAnHour)
-                .append(" OR ")
-                .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
-                .append(maxTimeUpcoming)
-                .append(")")
+            // exclude any upcoming, ignoring upcoming range
+            selection.append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(timeInAnHour)
         }
 
         queryString.value = if (selection.isNotEmpty()) {
