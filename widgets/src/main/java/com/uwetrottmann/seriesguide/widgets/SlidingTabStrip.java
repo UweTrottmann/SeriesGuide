@@ -29,6 +29,7 @@ class SlidingTabStrip extends LinearLayout {
     private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5;
     private static final int DEFAULT_UNDERLINE_COLOR = 0x1A000000;
 
+    private boolean displayUnderline;
     private final int underlineThickness;
     private final Paint underlinePaint;
 
@@ -74,6 +75,11 @@ class SlidingTabStrip extends LinearLayout {
         invalidate();
     }
 
+    void setDisplayUnderline(boolean displayUnderline) {
+        this.displayUnderline = displayUnderline;
+        invalidate();
+    }
+
     void setUnderlineColor(int color) {
         underlinePaint.setColor(color);
         invalidate();
@@ -93,8 +99,10 @@ class SlidingTabStrip extends LinearLayout {
                 ? tabColorizerCustom
                 : tabColorizerDefault;
 
-        // Colored underline below all tabs
-        canvas.drawRect(0, height - underlineThickness, getWidth(), height, underlinePaint);
+        if (displayUnderline) {
+            // Colored underline below all tabs
+            canvas.drawRect(0, height - underlineThickness, getWidth(), height, underlinePaint);
+        }
 
         // Colored underline below the current selection
         if (childCount > 0) {
@@ -119,8 +127,13 @@ class SlidingTabStrip extends LinearLayout {
 
             selectedIndicatorPaint.setColor(color);
 
-            canvas.drawRect(left, height - selectedIndicatorThickness - underlineThickness, right,
-                    height - underlineThickness, selectedIndicatorPaint);
+            if (displayUnderline) {
+                canvas.drawRect(left, height - selectedIndicatorThickness - underlineThickness,
+                        right, height - underlineThickness, selectedIndicatorPaint);
+            } else {
+                canvas.drawRect(left, height - selectedIndicatorThickness,
+                        right, height, selectedIndicatorPaint);
+            }
         }
     }
 

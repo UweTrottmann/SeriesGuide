@@ -165,6 +165,7 @@ class EpisodesActivity : BaseMessageActivity() {
 
         // Tabs setup.
         episodeDetailsTabs.setDefaultStyle()
+        episodeDetailsTabs.setDisplayUnderline(true)
     }
 
     private val onPageChangeListener = object : OnPageChangeListener {
