@@ -36,8 +36,9 @@ jobs:
       - name: Assemble Debug Variant
         run: ./gradlew assembleDebug
 
-      - name: Run Tests
-        run: ./gradlew :app:test
+      # Note: Currently no difference between flavors or debug and release
+      - name: Run Unit Tests
+        run: ./gradlew :app:testPureDebugUnitTest
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
