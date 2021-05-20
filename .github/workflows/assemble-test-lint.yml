@@ -1,0 +1,67 @@
+name: Assemble, Test and Lint
+
+on:
+  push:
+    branches-ignore:
+      - 'gh-pages**'
+  pull_request:
+    branches-ignore:
+      - 'gh-pages**'
+
+jobs:
+  build:
+    name: Gradle Build, Test and Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Gradle Info
+        run: ./gradlew -version
+
+      - name: Assemble Debug Variant
+        run: ./gradlew assembleDebug
+
+      - name: Run Tests
+        run: ./gradlew :app:test
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: ${{ always() }} # also run if build step failed
+        with:
+          files: app/build/test-results/**/*.xml
+
+      # To speed up lint check only run for release variant and only on app module
+      # Note: the app module has lintOptions.checkDependencies true, so submodules will be checked
+      # Source: https://groups.google.com/forum/#!topic/lint-dev/RGTvK_uHQGQ
+      - name: Lint Release Variants
+        run: ./gradlew :app:lintPureRelease :app:lintAmazonRelease
+
+      - uses: actions/upload-artifact@v2
+        if: ${{ always() }} # also upload of lint errors
+        with:
+          name: Lint reports
+          path: |
+            app/build/reports/lint-results-pureRelease.html
+            app/build/reports/lint-results-amazonRelease.html
+
+      - name: Cleanup Gradle Cache
+        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
+        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
