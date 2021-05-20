@@ -59,6 +59,8 @@
 
         <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
 
+        <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
+
     </style>
 
     <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -115,6 +117,8 @@
         <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
 
         <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
+
+        <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
 
     </style>
 
