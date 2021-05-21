@@ -62,9 +62,6 @@ class ShowFragment() : Fragment() {
         arguments = buildArgs(showRowId)
     }
 
-    @BindView(R.id.imageViewShowPosterBackground)
-    internal lateinit var imageViewBackground: ImageView
-
     @BindView(R.id.containerShowPoster)
     internal lateinit var containerPoster: View
     @BindView(R.id.imageViewShowPoster)
@@ -429,13 +426,6 @@ class ShowFragment() : Fragment() {
                     ))
                 Utils.startActivityWithAnimation(activity, intent, v)
             }
-
-            // poster background
-            ImageTools.loadShowPosterAlpha(
-                requireActivity(),
-                imageViewBackground,
-                posterSmall
-            )
         }
     }
 
