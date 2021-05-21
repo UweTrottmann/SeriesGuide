@@ -169,7 +169,7 @@
 
         <Button
             android:id="@+id/buttonCloudRemoveAccount"
-            style="@style/Widget.SeriesGuide.Button.Borderless"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

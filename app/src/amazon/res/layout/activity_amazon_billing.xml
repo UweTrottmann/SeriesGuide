@@ -102,7 +102,7 @@
 
             <Button
                 android:id="@+id/textViewAmazonBillingMoreInfo"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingPricePass"
