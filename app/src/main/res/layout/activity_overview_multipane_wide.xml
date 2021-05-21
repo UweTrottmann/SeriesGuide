@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <include
         android:id="@+id/sgToolbar"
@@ -35,6 +36,18 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVerticalLeft"
         app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+
+    <ImageView
+        android:id="@+id/imageViewOverviewBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVerticalLeft"
+        app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVerticalRight"
+        app:layout_constraintTop_toBottomOf="@+id/sgToolbar"
+        tools:src="#66ff0099" />
 
     <FrameLayout
         android:id="@+id/fragment_overview"
