@@ -19,17 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <View
                 android:id="@+id/imageViewShowPosterBackground"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:contentDescription="@null"
-                android:scaleType="centerCrop"
+                android:background="?attr/sgColorBackgroundDim"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="#66ff0099" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/containerShowPoster"

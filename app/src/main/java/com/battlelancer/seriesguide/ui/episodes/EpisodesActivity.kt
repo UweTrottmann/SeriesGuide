@@ -27,7 +27,7 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.SeasonTools
-import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -47,9 +47,6 @@ class EpisodesActivity : BaseMessageActivity() {
     lateinit var episodeDetailsPager: ViewPager
     @BindView(R.id.tabsEpisodes)
     lateinit var episodeDetailsTabs: SlidingTabLayout
-    @BindView(R.id.dividerEpisodesTabs)
-    @JvmField
-    var dividerEpisodesTabs: View? = null
     @BindView(R.id.imageViewEpisodesBackground)
     lateinit var backgroundImageView: ImageView
 
@@ -156,7 +153,6 @@ class EpisodesActivity : BaseMessageActivity() {
         val visibilityPagerViews = if (makeListVisible) View.GONE else View.VISIBLE
         containerPager!!.visibility = visibilityPagerViews
         episodeDetailsTabs.visibility = visibilityPagerViews
-        dividerEpisodesTabs!!.visibility = visibilityPagerViews
         if (updateOptionsMenu) {
             invalidateOptionsMenu()
         }
@@ -168,13 +164,8 @@ class EpisodesActivity : BaseMessageActivity() {
         }
 
         // Tabs setup.
-        episodeDetailsTabs.setCustomTabView(
-            R.layout.tabstrip_item_transparent,
-            R.id.textViewTabStripItem
-        )
-        episodeDetailsTabs.setSelectedIndicatorColors(
-            ThemeUtils.getColorFromAttribute(episodeDetailsTabs.context, R.attr.colorPrimary)
-        )
+        episodeDetailsTabs.setDefaultStyle()
+        episodeDetailsTabs.setDisplayUnderline(true)
     }
 
     private val onPageChangeListener = object : OnPageChangeListener {

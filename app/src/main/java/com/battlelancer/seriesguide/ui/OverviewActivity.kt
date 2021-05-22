@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.adapters.TabStripAdapter
-import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.overview.OverviewFragment
 import com.battlelancer.seriesguide.ui.overview.SeasonsFragment
@@ -19,6 +21,10 @@ import com.battlelancer.seriesguide.ui.overview.ShowFragment
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment.Companion.show
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.OnRemovingShowEvent
+import com.battlelancer.seriesguide.util.ImageTools
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.lang.ref.WeakReference
@@ -36,7 +42,7 @@ class OverviewActivity : BaseMessageActivity() {
         setContentView(R.layout.activity_overview)
         setupActionBar()
 
-        val helper = getInstance(this).sgShow2Helper()
+        val helper = SgRoomDatabase.getInstance(this).sgShow2Helper()
 
         showId = intent.getLongExtra(EXTRA_LONG_SHOW_ROWID, 0)
         if (showId == 0L) {
@@ -67,6 +73,22 @@ class OverviewActivity : BaseMessageActivity() {
     }
 
     private fun setupViews(savedInstanceState: Bundle?) {
+        // poster background
+        val backgroundImageView = findViewById<ImageView>(R.id.imageViewOverviewBackground)
+        lifecycleScope.launch {
+            val smallPosterUrl = withContext(Dispatchers.IO) {
+                SgRoomDatabase.getInstance(applicationContext).sgShow2Helper()
+                    .getShowMinimal(showId)?.posterSmall
+            }
+            if (smallPosterUrl != null) {
+                ImageTools.loadShowPosterAlpha(
+                    applicationContext,
+                    backgroundImageView,
+                    smallPosterUrl
+                )
+            }
+        }
+
         // look if we are on a multi-pane or single-pane layout...
         val pagerView = findViewById<View>(R.id.pagerOverview)
         if (pagerView != null && pagerView.visibility == View.VISIBLE) {
@@ -207,7 +229,7 @@ class OverviewActivity : BaseMessageActivity() {
 
     private fun launchSearch() {
         // refine search with the show's title
-        val titleOrNull = getInstance(this).sgShow2Helper().getShowTitle(showId)
+        val titleOrNull = SgRoomDatabase.getInstance(this).sgShow2Helper().getShowTitle(showId)
         if (titleOrNull != null) {
             val appSearchData = Bundle()
             appSearchData.putString(EpisodeSearchFragment.ARG_SHOW_TITLE, titleOrNull)

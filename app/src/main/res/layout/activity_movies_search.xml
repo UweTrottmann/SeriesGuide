@@ -6,7 +6,13 @@
     android:orientation="vertical"
     tools:context="com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity">
 
-    <include layout="@layout/toolbar_search" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_search" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/containerMoviesSearchFragment"

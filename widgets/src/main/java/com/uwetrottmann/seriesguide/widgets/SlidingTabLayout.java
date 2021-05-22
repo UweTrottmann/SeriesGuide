@@ -122,6 +122,20 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
+     * Whether to draw an underline below all tabs.
+     */
+    public void setDisplayUnderline(boolean displayUnderline) {
+        tabStrip.setDisplayUnderline(displayUnderline);
+    }
+
+    /**
+     * Sets the color to be used as an underline below all tabs.
+     */
+    public void setUnderlineColor(int color) {
+        tabStrip.setUnderlineColor(color);
+    }
+
+    /**
      * Set the {@link ViewPager.OnPageChangeListener}. When using {@link
      * SlidingTabLayout} you are
      * required to set any {@link ViewPager.OnPageChangeListener} through

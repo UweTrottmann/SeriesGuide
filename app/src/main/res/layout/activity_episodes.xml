@@ -6,12 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Force transparent background, disable shadow (is broken with transparency). -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        app:elevation="0dp">
+        style="@style/Widget.SeriesGuide.AppBarLayout.Transparent">
 
         <include layout="@layout/toolbar_transparent" />
 
@@ -20,12 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_height="48dp" />
-
-        <View
-            android:id="@+id/dividerEpisodesTabs"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="?attr/sgColorDivider" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
