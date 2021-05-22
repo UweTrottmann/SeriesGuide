@@ -19,7 +19,9 @@ Version 59
 * 🔧 Sort shows: add new sort by status option. If by oldest, latest or remaining episode do no longer sort by status.
 * 🔧 Filter shows: if excluding upcoming, exclude any with future next episode (ignoring upcoming range setting).
 * 🔨 If lists Cloud migration fails due to unsaved list, require lists merge.
+* 🌟 Statistics: add shows finished watching (all episodes watched, show is canceled or ended). Thanks to @ippschi!
 * 🔨 Statistics: do not count canceled shows as with next episodes.
+* 🔨 Fix Chinese, French, Spanish language variants.
 
 Version 58
 ----------
