@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.model.SgListItem
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.Errors
+import com.google.api.client.http.HttpResponseException
 import com.uwetrottmann.seriesguide.backend.lists.model.SgListList
 import timber.log.Timber
 import java.io.IOException
@@ -81,7 +82,17 @@ object ListsTools2 {
                 }
             } catch (e: IOException) {
                 Errors.logAndReportHexagon("migrate list items", e)
-                return
+                if (e is HttpResponseException && e.statusCode == 400) {
+                    // Bad Request, do not try again, but require a full lists sync.
+                    // Note: had reports on Cloud where save failed due to not yet saved lists.
+                    if (!HexagonSettings.setListsNotMerged(context)) {
+                        // Failed to save, try again next sync
+                        return
+                    }
+                } else {
+                    // Abort and try again next sync
+                    return
+                }
             }
         }
 
