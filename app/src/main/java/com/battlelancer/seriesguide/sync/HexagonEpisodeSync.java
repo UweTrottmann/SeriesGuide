@@ -145,14 +145,7 @@ public class HexagonEpisodeSync {
         }
 
         if (!showIdsToLastWatched.isEmpty()) {
-            // Temporarily turned off during migration to TMDB phase to avoid incorrect
-            // updates as new episode entities are created (with current timestamp)
-            // during migration.
-            // Accept that this breaks last watched updates when using multiple devices,
-            // which should have less impact.
-            // Will restore in future version.
-            // https://github.com/UweTrottmann/SeriesGuide/issues/780
-            // database.sgShow2Helper().updateLastWatchedMsIfLater(showIdsToLastWatched);
+            database.sgShow2Helper().updateLastWatchedMsIfLater(showIdsToLastWatched);
         }
 
         // store new last sync time
