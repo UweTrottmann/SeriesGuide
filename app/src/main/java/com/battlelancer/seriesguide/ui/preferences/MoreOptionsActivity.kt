@@ -82,7 +82,7 @@ class MoreOptionsActivity : BaseTopActivity() {
                 .build()
             val defaultParams = CustomTabColorSchemeParams.Builder()
                 .setToolbarColor(
-                    ContextCompat.getColor(this, R.color.sg_color_primary_light)
+                    ContextCompat.getColor(this, R.color.sg_color_background_light)
                 )
                 .build()
             val customTabsIntent = CustomTabsIntent.Builder()
