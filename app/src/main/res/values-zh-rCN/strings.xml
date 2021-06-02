@@ -20,7 +20,7 @@
     <string name="specialseason">特别篇</string>
     <string name="ratings">评分</string>
     <!-- Descriptions -->
-    <string name="description_overview">预览</string>
+    <string name="description_overview">概览</string>
     <string name="description_poster">节目海报</string>
     <string name="description_image">剧集图片</string>
     <string name="description_menu_overflow">更多选项</string>
@@ -151,7 +151,7 @@
     <string name="action_shows_sort_oldest_episode">最早一集</string>
     <string name="action_shows_sort_last_watched">最新观看</string>
     <string name="action_shows_sort_remaining">剩余集数</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">状态</string>
     <string name="action_shows_sort_favorites">依据喜爱状态</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">标记本集为已观看</string>

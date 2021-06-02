@@ -152,7 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Vanhin jakso</string>
     <string name="action_shows_sort_last_watched">Viimeksi katsottu</string>
     <string name="action_shows_sort_remaining">Jäljellä olevat jaksot</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">Tila</string>
     <string name="action_shows_sort_favorites">Suosikit ensin</string>
     <string name="context_updateshow">Päivitä</string>
     <string name="context_marknext">Seuraava jakso katsottu</string>

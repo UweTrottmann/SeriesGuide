@@ -156,7 +156,7 @@
     <string name="action_shows_sort_oldest_episode">أقدم حلقة</string>
     <string name="action_shows_sort_last_watched">آخر حلقة شاهدتها</string>
     <string name="action_shows_sort_remaining">الحلقات المتبقية</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">الحالة</string>
     <string name="action_shows_sort_favorites">المفضلة أولاً</string>
     <string name="context_updateshow">تحديث</string>
     <string name="context_marknext">تم مشاهدة الحلقة، الحلقة التالية</string>
