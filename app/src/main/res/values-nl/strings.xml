@@ -398,6 +398,7 @@
     <string name="upcoming_upto_one_week">1 week</string>
     <string name="upcoming_upto_two_weeks">2 weken</string>
     <string name="upcoming_upto_one_month">een maand</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Uiterlijk</string>
     <string name="pref_theme">Thema</string>

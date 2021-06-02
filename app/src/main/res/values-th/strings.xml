@@ -387,6 +387,7 @@
     <string name="upcoming_upto_one_week">1 สัปดาห์</string>
     <string name="upcoming_upto_two_weeks">2 สัปดาห์</string>
     <string name="upcoming_upto_one_month">1 เดือน</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">คุณลักษณะ</string>
     <string name="pref_theme">ธีม</string>

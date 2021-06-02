@@ -387,6 +387,7 @@
     <string name="upcoming_upto_one_week">1주</string>
     <string name="upcoming_upto_two_weeks">2주</string>
     <string name="upcoming_upto_one_month">한달</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">모양</string>
     <string name="pref_theme">테마</string>
