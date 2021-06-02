@@ -21,7 +21,7 @@ class ShowSearchViewModel(application: Application) : AndroidViewModel(applicati
                 "SELECT * FROM ${Tables.SG_SHOW} " +
                         "WHERE ${SgShow2Columns.NEXTEPISODE} != '' AND ${SgShow2Columns.HIDDEN} = 0 " +
                         "AND ${SgShow2Columns.NEXTAIRDATEMS} < ? " +
-                        "ORDER BY ${SgShow2Columns.SORT_LATEST_EPISODE}",
+                        "ORDER BY ${SgShow2Columns.SORT_LATEST_EPISODE_THEN_STATUS}",
                 arrayOf((TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS))
             )
         } else {

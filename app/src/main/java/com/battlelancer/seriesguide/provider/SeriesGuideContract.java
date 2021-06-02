@@ -728,7 +728,8 @@ public class SeriesGuideContract {
 
         String SORT_TITLE = TITLE + " COLLATE NOCASE ASC";
         String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE NOCASE ASC";
-        String SORT_LATEST_EPISODE = NEXTAIRDATEMS + " DESC";
+        String SORT_STATUS = STATUS + " DESC";
+        String SORT_LATEST_EPISODE_THEN_STATUS = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
 
         static Uri buildIdUri(long rowId) {
             return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
