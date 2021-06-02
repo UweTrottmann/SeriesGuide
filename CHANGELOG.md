@@ -12,6 +12,14 @@ Version 59
 ----------
 *in development*
 
+#### 59-beta2
+*2021-06-02*
+
+* 🔧 If sorting by oldest, latest or remaining episode again sort by status.
+* 🔧 Add upcoming range option to include shows with any future episode.
+* 🔧 Widget: when displaying shows, never display shows without next episode.
+* 🔨 Use correct theme on About screen.
+
 #### 59-beta1
 *2021-05-22*
 
