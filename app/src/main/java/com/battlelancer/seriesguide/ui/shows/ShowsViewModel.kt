@@ -102,7 +102,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         // unwatched (= next episode is released) and upcoming (= next episode upcoming) filters
-        // assumes that no next episode == min next airdate (DBUtils.UNKNOWN_NEXT_RELEASE_DATE)
+        // assumes that no next episode == DBUtils.UNKNOWN_NEXT_RELEASE_DATE
 
         val timeInAnHour = TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS
         // next episode upcoming within <limit> days + 1 hour, or all future
