@@ -88,7 +88,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         override fun onConfigureUpcomingRangeClick() {
             // yes, converting back to a string for comparison
-            val upcomingLimit = AdvancedSettings.getUpcomingLimitInDays(activity).toString()
+            val upcomingLimit = AdvancedSettings.getUpcomingLimitInDays(requireContext()).toString()
             val filterRanges = resources.getStringArray(R.array.upcominglimitData)
             var selectedIndex = 0
             var i = 0
