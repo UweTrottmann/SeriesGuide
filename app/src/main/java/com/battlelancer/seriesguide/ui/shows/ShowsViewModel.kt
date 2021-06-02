@@ -105,9 +105,13 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         // assumes that no next episode == min next airdate (DBUtils.UNKNOWN_NEXT_RELEASE_DATE)
 
         val timeInAnHour = TimeTools.getCurrentTime(getApplication()) + DateUtils.HOUR_IN_MILLIS
-        // next episode upcoming within <limit> days + 1 hour
+        // next episode upcoming within <limit> days + 1 hour, or all future
         val upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(getApplication())
-        val maxTimeUpcoming = timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS
+        val maxTimeUpcoming = if (upcomingLimitInDays != -1) {
+            timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS
+        } else {
+            -1 // any future release date
+        }
 
         if (filter.isFilterUnwatched != null || filter.isFilterUpcoming != null) {
             if (selection.isNotEmpty()) {
@@ -117,10 +121,11 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         if (filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isTrue()) {
             // unwatched and upcoming
-            selection
-                .append(SgShow2Columns.SELECTION_HAS_NEXT_EPISODE)
-                .append(" AND ")
-                .append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(maxTimeUpcoming)
+            selection.append(SgShow2Columns.SELECTION_HAS_NEXT_EPISODE)
+            if (maxTimeUpcoming != -1L) {
+                selection.append(" AND ")
+                    .append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(maxTimeUpcoming)
+            }
         } else if (
             filter.isFilterUnwatched.isTrue() && filter.isFilterUpcoming.isNullOrFalse()
         ) {
@@ -136,9 +141,10 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             selection
                 .append(SgShow2Columns.NEXTAIRDATEMS).append(">")
                 .append(timeInAnHour)
-                .append(" AND ")
-                .append(SgShow2Columns.NEXTAIRDATEMS).append("<=")
-                .append(maxTimeUpcoming)
+            if (maxTimeUpcoming != -1L) {
+                selection.append(" AND ")
+                    .append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(maxTimeUpcoming)
+            }
         } else if (filter.isFilterUnwatched.isFalse()) {
             if (filter.isFilterUpcoming == null) {
                 // all released episodes watched (== anything in the future or no next episode)

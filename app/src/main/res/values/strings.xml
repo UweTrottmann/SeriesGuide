@@ -453,6 +453,7 @@
     <string name="upcoming_upto_one_week">1 week</string>
     <string name="upcoming_upto_two_weeks">2 weeks</string>
     <string name="upcoming_upto_one_month">1 month</string>
+    <string name="upcoming_all">all</string>
 
     <!-- Appearance settings -->
     <string name="pref_appearance">Appearance</string>
