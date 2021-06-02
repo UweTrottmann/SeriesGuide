@@ -68,8 +68,9 @@ class ListWidgetRemoteViewsFactory(
 
         when (widgetType) {
             WidgetSettings.Type.SHOWS -> {
-                // Exclude hidden.
+                // Exclude hidden and without next episode.
                 val selection = StringBuilder(SgShow2Columns.SELECTION_NO_HIDDEN)
+                    .append(" AND ").append(SgShow2Columns.SELECTION_HAS_NEXT_EPISODE)
 
                 // Optionally only favorites.
                 if (WidgetSettings.isOnlyFavoriteShows(context, appWidgetId)) {
