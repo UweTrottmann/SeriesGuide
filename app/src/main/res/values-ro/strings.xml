@@ -409,6 +409,7 @@
     <string name="upcoming_upto_one_week">o săptămână</string>
     <string name="upcoming_upto_two_weeks">două săptămâni</string>
     <string name="upcoming_upto_one_month">o lună</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aspect</string>
     <string name="pref_theme">Temă</string>

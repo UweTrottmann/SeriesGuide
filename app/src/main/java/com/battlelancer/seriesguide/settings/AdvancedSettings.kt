@@ -34,7 +34,7 @@ object AdvancedSettings {
 
     /**
      * Returns the maximum number of days from today on an episode can air for its show to be
-     * considered as upcoming.
+     * considered as upcoming. Returns -1 if any future release date is considered upcoming.
      */
     fun getUpcomingLimitInDays(context: Context): Int {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(

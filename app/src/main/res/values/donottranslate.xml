@@ -522,6 +522,7 @@
         <item>@string/upcoming_upto_one_week</item>
         <item>@string/upcoming_upto_two_weeks</item>
         <item>@string/upcoming_upto_one_month</item>
+        <item>@string/upcoming_all</item>
     </string-array>
     <string-array name="upcominglimitData">
         <item>0</item>
@@ -530,6 +531,7 @@
         <item>7</item>
         <item>14</item>
         <item>30</item>
+        <item>-1</item>
     </string-array>
 
     <!-- Theme variants -->

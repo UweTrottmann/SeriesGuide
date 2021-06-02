@@ -420,6 +420,7 @@
     <string name="upcoming_upto_one_week">1 неделя</string>
     <string name="upcoming_upto_two_weeks">2 недели</string>
     <string name="upcoming_upto_one_month">1 месяц</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Оформление</string>
     <string name="pref_theme">Тема</string>

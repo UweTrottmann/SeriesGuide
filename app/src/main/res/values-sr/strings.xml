@@ -409,6 +409,7 @@
     <string name="upcoming_upto_one_week">недељу дана</string>
     <string name="upcoming_upto_two_weeks">2 недеље</string>
     <string name="upcoming_upto_one_month">месец</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Изглед</string>
     <string name="pref_theme">Тема</string>

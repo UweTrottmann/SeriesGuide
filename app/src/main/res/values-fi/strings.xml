@@ -398,6 +398,7 @@
     <string name="upcoming_upto_one_week">1 viikon ajalta</string>
     <string name="upcoming_upto_two_weeks">2 viikon ajalta</string>
     <string name="upcoming_upto_one_month">1 kuukauden ajalta</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Ulkonäkö</string>
     <string name="pref_theme">Teema</string>
