@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
@@ -116,10 +116,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             textViewAddGenres.copyTextToClipboardOnLongClick()
 
             buttonAddLanguage.setOnClickListener {
-                ShowL10nDialogFragment.show(
+                L10nDialogFragment.forShow(
                     parentFragmentManager,
                     languageCode,
-                    ShowL10nDialogFragment.TAG_ADD_DIALOG
+                    L10nDialogFragment.TAG_ADD_DIALOG
                 )
             }
 
@@ -180,8 +180,8 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: ShowL10nDialogFragment.LanguageChangedEvent) {
-        if (ShowL10nDialogFragment.TAG_ADD_DIALOG != event.tag) {
+    fun onEventMainThread(event: L10nDialogFragment.LanguageChangedEvent) {
+        if (L10nDialogFragment.TAG_ADD_DIALOG != event.tag) {
             return
         }
 

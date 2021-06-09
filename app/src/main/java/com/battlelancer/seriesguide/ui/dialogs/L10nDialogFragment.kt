@@ -14,10 +14,10 @@ import java.text.Collator
 
 /**
  * A dialog displaying a list of languages to choose from, posting a
- * [ShowL10nDialogFragment.LanguageChangedEvent] if a
+ * [L10nDialogFragment.LanguageChangedEvent] if a
  * language different from the given one was chosen.
  */
-class ShowL10nDialogFragment : AppCompatDialogFragment() {
+class L10nDialogFragment : AppCompatDialogFragment() {
 
     class LanguageChangedEvent(val selectedLanguageCode: String, val tag: String?)
 
@@ -30,7 +30,8 @@ class ShowL10nDialogFragment : AppCompatDialogFragment() {
     private var currentLanguageIndex: Int = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val languageCodes = resources.getStringArray(R.array.languageCodesShows)
+        val languageCodes =
+            resources.getStringArray(requireArguments().getInt(ARG_RES_ID_LANGUAGE_CODES))
         val localizationItems = languageCodes.mapTo(ArrayList(languageCodes.size)) {
             LocalizationItem(it, LanguageTools.buildLanguageDisplayName(it))
         }
@@ -84,20 +85,22 @@ class ShowL10nDialogFragment : AppCompatDialogFragment() {
         const val TAG_DISCOVER = "languageDialogDiscover"
 
         private const val ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode"
+        private const val ARG_RES_ID_LANGUAGE_CODES = "resIdLanguageCodes"
 
         /**
          * @param selectedLanguageCode two letter ISO 639-1 language code,
          * plus optional ISO-3166-1 region tag. If null selects first language code.
          */
         @JvmStatic
-        fun show(
+        fun forShow(
             fragmentManager: FragmentManager,
             selectedLanguageCode: String?,
             tag: String
         ) {
-            ShowL10nDialogFragment().apply {
+            L10nDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode)
+                    putInt(ARG_RES_ID_LANGUAGE_CODES, R.array.languageCodesShows)
                 }
             }.safeShow(fragmentManager, tag)
         }
