@@ -420,7 +420,7 @@
     <string name="upcoming_upto_one_week">Tygodnia</string>
     <string name="upcoming_upto_two_weeks">Dwóch tygodni</string>
     <string name="upcoming_upto_one_month">Miesiąca</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">Wszystkie</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_theme">Motyw</string>

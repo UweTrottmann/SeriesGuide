@@ -398,7 +398,7 @@
     <string name="upcoming_upto_one_week">1 semana</string>
     <string name="upcoming_upto_two_weeks">2 semanas</string>
     <string name="upcoming_upto_one_month">1 mês</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">todos</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aparência</string>
     <string name="pref_theme">Tema</string>

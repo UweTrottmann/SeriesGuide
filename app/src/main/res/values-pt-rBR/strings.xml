@@ -398,7 +398,7 @@
     <string name="upcoming_upto_one_week">1 semana</string>
     <string name="upcoming_upto_two_weeks">2 semanas</string>
     <string name="upcoming_upto_one_month">Um mês</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">todos</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aparência</string>
     <string name="pref_theme">Tema</string>
@@ -488,7 +488,7 @@
     <string name="billing_price_pass">Compra única</string>
     <string name="upgrade_description">Toda assinatura desbloqueia os recursos e apoia atualizações futuras. Uma assinatura não é necessária para usar o aplicativo.</string>
     <string name="upgrade_success">Obrigado por apoiar o SeriesGuide! Você agora tem acesso a todos os recursos.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">X Pass detectado. Você ainda pode se inscrever para apoiar atualizações futuras.</string>
     <string name="billing_learn_more">Mais informações e ajuda</string>
     <string name="subscription_expired">Assinatura expirada</string>
     <string name="subscription_expired_details">Sua assinatura do SeriesGuide expirou</string>

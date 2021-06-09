@@ -387,7 +387,7 @@
     <string name="upcoming_upto_one_week">1 周</string>
     <string name="upcoming_upto_two_weeks">2 周</string>
     <string name="upcoming_upto_one_month">1 月</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">全部</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">外观</string>
     <string name="pref_theme">主题</string>
