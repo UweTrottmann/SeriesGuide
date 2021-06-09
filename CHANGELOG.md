@@ -12,6 +12,11 @@ Version 59
 ----------
 *in development*
 
+#### next
+*TBD*
+
+* 🔧 Add Esperanto translation for app.
+
 #### 59-beta2
 *2021-06-02*
 
