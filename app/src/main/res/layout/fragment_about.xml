@@ -65,27 +65,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/licence_tvdb"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1" />
-
-            <Button
-                android:id="@+id/buttonAboutTvdbTerms"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvdb_terms" />
-
-            <Button
-                android:id="@+id/buttonAboutCreativeCommons"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/larger_padding"
-                android:text="@string/creative_commons" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/licence_themoviedb"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body1" />
 

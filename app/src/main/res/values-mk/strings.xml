@@ -374,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Овој продукт користи TMDb API но не е одобрена или лиценцирана од TMDb.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide е направен користејќи софтвер со отворен код.</string>

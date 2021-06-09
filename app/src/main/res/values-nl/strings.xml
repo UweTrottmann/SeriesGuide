@@ -374,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacybeleid</string>
-    <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder Creative Commons licentie.</string>
     <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet goedgekeurd of gecertificeerd door TMDb.</string>
     <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van trakt.</string>
     <string name="about_open_source">SeriesGuide is gebouwd met openbronsoftware.</string>

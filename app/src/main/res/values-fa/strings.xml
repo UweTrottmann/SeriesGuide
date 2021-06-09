@@ -374,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">سیاست حریم شخصی</string>
-    <string name="licence_tvdb">‫این برنامه از داده‌ها و تصاویر TheTVDB با مجوز Cc استفاده می‌کند.</string>
     <string name="licence_themoviedb">‫این محصول از رابط برنامه‌نویسی TMDb استفاده می‌کند ولی توسّط TMDb تصدیق نشده است.</string>
     <string name="licence_trakt">‫این برنامه از داده‌ها و تصویرهای trakt استفاده می‌کند.</string>
     <string name="about_open_source">SeriesGuide با استفاده از نرم‌افزارهای متن باز ساخته شده است.</string>

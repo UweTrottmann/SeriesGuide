@@ -374,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de Privacitat</string>
-    <string name="licence_tvdb">Aquesta aplicació utilitza dades i imatges de TheTVDB llicenciades sota una llicència Creative Commons.</string>
     <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDb però no està reconeguda ni certificada per TMDb.</string>
     <string name="licence_trakt">Aquesta app fa servir dades i imatges de Trakt</string>
     <string name="about_open_source">SeriesGuide s\'ha construït utilitzant programari de codi obert.</string>

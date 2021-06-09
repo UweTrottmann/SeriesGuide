@@ -363,7 +363,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">隱私權政策</string>
-    <string name="licence_tvdb">此應用程式使用基於 CC BY-NC 4.0 許可的 TheTVDB 提供的資料和圖像。</string>
     <string name="licence_themoviedb">此應用程式使用 TMDb 的 API ，但未被 TMDb 認可或認證。</string>
     <string name="licence_trakt">本應用程式使用了來自 Trakt 的資料與圖像。</string>
     <string name="about_open_source">SeriesGuide 是採用開放源碼軟體。</string>

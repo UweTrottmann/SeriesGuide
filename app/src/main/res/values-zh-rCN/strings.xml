@@ -363,7 +363,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">隐私策略</string>
-    <string name="licence_tvdb">此应用程序所使用的数据和图像由 TheTVDB 通过知识共享许可证授权提供。</string>
     <string name="licence_themoviedb">此应用程序使用了 TMDb 的接口，但未被 TMDb 认可或认证。</string>
     <string name="licence_trakt">此应用程序使用了 Trakt 的数据和图像。</string>
     <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>

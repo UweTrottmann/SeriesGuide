@@ -396,7 +396,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Политика конфиденциальности</string>
-    <string name="licence_tvdb">Это приложение использует данные и изображения TheTVDB, лицензированные по лицензии Creative Commons.</string>
     <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
     <string name="licence_trakt">Это приложение использует данные и изображения сервиса Trakt.</string>
     <string name="about_open_source">SeriesGuide сделан с использованием открытого программного обеспечения.</string>

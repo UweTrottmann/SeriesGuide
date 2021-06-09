@@ -385,7 +385,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Pravila privatnosti</string>
-    <string name="licence_tvdb">Ova aplikacija koristi podatake i slike sa TheTVDB koje su licencirane pod Creative Commons licencom</string>
     <string name="licence_themoviedb">Ovaj proizvod koristi TMDb API, ali nije odobrenio ili ovjeren od strane TMDb.</string>
     <string name="licence_trakt">Ova aplikacija koristi podatke i slike sa trakt-a.</string>
     <string name="about_open_source">SeriesGuide je izgrađen korištenjem softvera otvorenog koda.</string>

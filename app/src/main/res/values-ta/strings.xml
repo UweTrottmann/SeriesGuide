@@ -374,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">இந்த தயாரிப்பு TMDb API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDb மூலம் சான்றிதழ்.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">திறந்த மூல மென்பொருள் பயன்படுத்தி SeriesGuide இயக்கத்தினர் உள்ளது.</string>

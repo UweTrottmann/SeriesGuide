@@ -39,8 +39,6 @@ class AboutPreferencesFragment : Fragment() {
 
             buttonAboutWebsite.setOnClickListener(urlButtonClickListener)
             buttonAboutPrivacy.setOnClickListener(urlButtonClickListener)
-            buttonAboutTvdbTerms.setOnClickListener(urlButtonClickListener)
-            buttonAboutCreativeCommons.setOnClickListener(urlButtonClickListener)
             buttonAboutTmdbTerms.setOnClickListener(urlButtonClickListener)
             buttonAboutTmdbApiTerms.setOnClickListener(urlButtonClickListener)
             buttonAboutTraktTerms.setOnClickListener(urlButtonClickListener)
@@ -57,8 +55,6 @@ class AboutPreferencesFragment : Fragment() {
         when (viewId) {
             R.id.buttonAboutWebsite -> viewUrl(R.string.url_website)
             R.id.buttonAboutPrivacy -> viewUrl(R.string.url_privacy)
-            R.id.buttonAboutTvdbTerms -> viewUrl(R.string.url_terms_tvdb)
-            R.id.buttonAboutCreativeCommons -> viewUrl(R.string.url_creative_commons)
             R.id.buttonAboutTmdbTerms -> viewUrl(R.string.url_terms_tmdb)
             R.id.buttonAboutTmdbApiTerms -> viewUrl(R.string.url_terms_tmdb_api)
             R.id.buttonAboutTraktTerms -> viewUrl(R.string.url_terms_trakt)

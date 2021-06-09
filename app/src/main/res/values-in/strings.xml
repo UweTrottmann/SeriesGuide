@@ -363,7 +363,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Kebijakan Privasi</string>
-    <string name="licence_tvdb">Aplikasi ini menggunakan data dan gambar dari TheTVDB yang terlisensi atas nama CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Produk ini menggunakan TMDb API Tapi tidak disahkan atau disertifikasi oleh TMDb.</string>
     <string name="licence_trakt">Aplikasi ini menggunakan data dan gambar dari Trakt.</string>
     <string name="about_open_source">SeriesGuide dibuat dengan menggunakan perangkat lunak open source.</string>

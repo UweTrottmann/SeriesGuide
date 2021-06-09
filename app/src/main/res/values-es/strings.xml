@@ -375,7 +375,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de privacidad</string>
-    <string name="licence_tvdb">Esta aplicación utiliza datos e imágenes de TheTVDB bajo una licencia Creative Commons.</string>
     <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
     <string name="licence_trakt">Esta aplicación utiliza información e imágenes de Trakt.</string>
     <string name="about_open_source">SeriesGuide fue desarrollado usando software de código abierto.</string>

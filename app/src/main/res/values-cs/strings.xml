@@ -396,7 +396,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Zásady ochrany osobních údajů</string>
-    <string name="licence_tvdb">Tato aplikace používá data a obrázky z TheTVDB licencované pod licencí Creative Commons.</string>
     <string name="licence_themoviedb">Tento produkt používá TMDb API, ale není schválen nebo certifikován TMDb.</string>
     <string name="licence_trakt">Tato aplikace využívá data a obrázky z webu Trakt.</string>
     <string name="about_open_source">SeriesGuide je vytvořen pomocí otevřeného softwaru.</string>
