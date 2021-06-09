@@ -18,7 +18,7 @@ import com.battlelancer.seriesguide.databinding.DialogLocalizationBinding
 import com.battlelancer.seriesguide.databinding.ItemDropdownBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationAdapter.LocalizationItem
-import com.battlelancer.seriesguide.util.LanguageToolsK
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -82,7 +82,7 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
                     items.add(
                         LocalizationItem(
                             languageCode,
-                            LanguageToolsK.buildLanguageDisplayName(languageCode)
+                            LanguageTools.buildLanguageDisplayName(languageCode)
                         )
                     )
                 }
@@ -182,7 +182,7 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
         // example: "en-US"
         val languageCode = DisplaySettings.getMoviesLanguage(requireContext())
         binding.buttonLocalizationLanguage.text =
-            LanguageToolsK.buildLanguageDisplayName(languageCode)
+            LanguageTools.buildLanguageDisplayName(languageCode)
         val regionCode = DisplaySettings.getMoviesRegion(requireContext())
         binding.buttonLocalizationRegion.text = Locale("", regionCode).displayCountry
     }

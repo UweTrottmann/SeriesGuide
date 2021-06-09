@@ -488,7 +488,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
     private fun updateFallbackLanguageSummary(pref: Preference) {
         pref.summary = LanguageTools.getShowLanguageStringFor(
-            context,
+            requireContext(),
             DisplaySettings.getShowsLanguageFallback(requireContext())
         )
     }

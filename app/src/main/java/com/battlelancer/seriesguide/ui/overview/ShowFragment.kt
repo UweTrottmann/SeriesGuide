@@ -339,7 +339,7 @@ class ShowFragment() : Fragment() {
 
         // language preferred for content
         val languageData = LanguageTools.getShowLanguageDataFor(
-            context, languageCode
+            requireContext(), languageCode
         )
         if (languageData != null) {
             this.languageCode = languageData.languageCode

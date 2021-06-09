@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.util.LanguageToolsK
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
@@ -32,7 +32,7 @@ class ShowL10nDialogFragment : AppCompatDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val languageCodes = resources.getStringArray(R.array.languageCodesShows)
         val localizationItems = languageCodes.mapTo(ArrayList(languageCodes.size)) {
-            LocalizationItem(it, LanguageToolsK.buildLanguageDisplayName(it))
+            LocalizationItem(it, LanguageTools.buildLanguageDisplayName(it))
         }
 
         val collator = Collator.getInstance()

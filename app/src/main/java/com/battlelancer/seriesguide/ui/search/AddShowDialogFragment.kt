@@ -235,7 +235,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         binding.buttonPositive.isGone = false
 
         binding.buttonAddLanguage.text =
-            LanguageTools.getShowLanguageStringFor(context, languageCode)
+            LanguageTools.getShowLanguageStringFor(requireContext(), languageCode)
 
         // Title, overview.
         binding.textViewAddTitle.text = show.title
