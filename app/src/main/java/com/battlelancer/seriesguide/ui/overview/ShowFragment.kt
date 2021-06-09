@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
-import com.battlelancer.seriesguide.ui.dialogs.ShowL10nDialogFragment
+import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.shows.ShowTools
@@ -466,7 +466,7 @@ class ShowFragment() : Fragment() {
     }
 
     private fun displayLanguageSettings() {
-        ShowL10nDialogFragment.show(
+        L10nDialogFragment.forShow(
             parentFragmentManager,
             languageCode, "showLanguageDialog"
         )
@@ -480,7 +480,7 @@ class ShowFragment() : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: ShowL10nDialogFragment.LanguageChangedEvent) {
+    fun onEventMainThread(event: L10nDialogFragment.LanguageChangedEvent) {
         changeShowLanguage(event.selectedLanguageCode)
     }
 
