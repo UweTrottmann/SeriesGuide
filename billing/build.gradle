@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion versions.compileSdk
+    compileSdkVersion sgCompileSdk
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
+        minSdkVersion sgMinSdk
+        targetSdkVersion sgTargetSdk
         versionCode 1
         versionName "1.0"
 
@@ -43,13 +43,13 @@ dependencies {
     implementation 'com.android.billingclient:billing-ktx:3.0.3'
 
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // Room
-    implementation "androidx.room:room-runtime:${versions.room}"
-    kapt "androidx.room:room-compiler:${versions.room}"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
-    implementation "com.jakewharton.timber:timber:${versions.timber}"
+    implementation "com.jakewharton.timber:timber:$timber_version"
 }
 
 def propertyOrEmpty(String name) {

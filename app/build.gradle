@@ -8,7 +8,7 @@ if (project.file('google-services.json').exists()) {
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion versions.compileSdk
+    compileSdkVersion sgCompileSdk
 
     useLibrary 'android.test.base'
 
@@ -18,8 +18,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
+        minSdkVersion sgMinSdk
+        targetSdkVersion sgTargetSdk
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -78,8 +78,8 @@ android {
     productFlavors {
         pure {
             applicationId "com.battlelancer.seriesguide"
-            versionCode versions.code
-            versionName versions.name
+            versionCode sgVersionCode
+            versionName sgVersionName
 
             manifestPlaceholders = [
                     androidBackupKey: rootProject.hasProperty("SG_ANDROID_BACKUP_KEY")
@@ -88,8 +88,8 @@ android {
         }
         amazon {
             applicationId "com.uwetrottmann.seriesguide.amzn"
-            versionCode versions.code
-            versionName versions.name
+            versionCode sgVersionCode
+            versionName sgVersionName
         }
     }
 
@@ -139,8 +139,8 @@ dependencies {
     implementation project(':tmdb-api')
     implementation project(':widgets')
 
-    implementation "androidx.core:core-ktx:${versions.core}"
-    implementation "androidx.annotation:annotation:${versions.annotation}"
+    implementation "androidx.core:core-ktx:$core_version"
+    implementation "androidx.annotation:annotation:$annotation_version"
     // https://developer.android.com/jetpack/androidx/releases/appcompat
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -158,43 +158,48 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // Paging
-    implementation "androidx.paging:paging-runtime-ktx:${versions.paging}"
+    implementation "androidx.paging:paging-runtime-ktx:2.1.2"
 
     // Room
-    implementation "androidx.room:room-runtime:${versions.room}"
-    kapt "androidx.room:room-compiler:${versions.room}"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
-    implementation "com.jakewharton:butterknife:${versions.butterknife}"
-    kapt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
-    implementation "com.google.dagger:dagger:${versions.dagger}"
-    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+    // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
+    def butterknife_version = "10.2.3"
+    implementation "com.jakewharton:butterknife:$butterknife_version"
+    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     def eventbus_version = '3.2.0'
     implementation "org.greenrobot:eventbus:$eventbus_version"
     kapt "org.greenrobot:eventbus-annotation-processor:$eventbus_version"
 
     implementation 'com.google.flatbuffers:flatbuffers-java:1.12.0'
-    implementation "com.google.code.gson:gson:${versions.gson}"
+    // https://github.com/google/gson/blob/master/CHANGELOG.md
+    implementation "com.google.code.gson:gson:2.8.6"
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     implementation 'com.jakewharton.threetenabp:threetenabp:1.3.1'
-    implementation "com.jakewharton.timber:timber:${versions.timber}"
+    implementation "com.jakewharton.timber:timber:$timber_version"
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 
     // Use latest OkHttp.
-    implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     // Use latest retrofit.
-    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
-    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    implementation("com.uwetrottmann.androidutils:androidutils:${versions.androidUtils}") {
+    // https://github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
+    implementation("com.uwetrottmann.androidutils:androidutils:2.4.1") {
         exclude group: 'com.android.support'
     }
     implementation 'com.uwetrottmann.photoview:library:1.2.4'
-    implementation("com.uwetrottmann.trakt5:trakt-java:${versions.trakt}") {
+    // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
+    implementation("com.uwetrottmann.trakt5:trakt-java:6.9.0") {
         exclude group: 'org.threeten', module: 'threetenbp' // using ThreeTenABP instead
     }
 
@@ -207,7 +212,8 @@ dependencies {
     implementation "com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:$debugDrawerVersion"
 
     // Crashlytics
-    implementation "com.google.firebase:firebase-crashlytics:${versions.crashlytics}"
+    // https://firebase.google.com/support/release-notes/android
+    implementation "com.google.firebase:firebase-crashlytics:17.4.0"
 
     // Countly https://github.com/Countly/countly-sdk-android/releases
     implementation "ly.count.android:sdk:20.11.8"
@@ -230,7 +236,7 @@ dependencies {
 
     // Instrumented unit tests
     // https://developer.android.com/jetpack/androidx/releases/test
-    androidTestImplementation "androidx.annotation:annotation:${versions.annotation}"
+    androidTestImplementation "androidx.annotation:annotation:$annotation_version"
     // Core library
     def androidXtestCoreVersion = '1.3.0'
     androidTestImplementation "androidx.test:core:$androidXtestCoreVersion"
@@ -245,19 +251,20 @@ dependencies {
     androidTestImplementation('androidx.test.ext:truth:1.3.0') {
         exclude group: 'com.google.truth' // include manually to control conflicting deps
     }
-    androidTestImplementation("com.google.truth:truth:${versions.truth}") {
+    def truth_version = "1.1.2" // https://github.com/google/truth/releases
+    androidTestImplementation("com.google.truth:truth:$truth_version") {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
     }
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.2'
-    kaptAndroidTest "com.google.dagger:dagger-compiler:${versions.dagger}"
-    androidTestImplementation "androidx.room:room-testing:${versions.room}"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
 
     // Local unit tests
     testImplementation 'junit:junit:4.13.2'
-    testImplementation "androidx.annotation:annotation:${versions.annotation}"
-    testImplementation("com.google.truth:truth:${versions.truth}") {
+    testImplementation "androidx.annotation:annotation:$annotation_version"
+    testImplementation("com.google.truth:truth:$truth_version") {
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
     }

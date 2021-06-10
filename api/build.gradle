@@ -6,11 +6,11 @@ group = "com.uwetrottmann.seriesguide"
 version = "2.2.2-SNAPSHOT"
 
 android {
-    compileSdkVersion versions.compileSdk
+    compileSdkVersion sgCompileSdk
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
+        minSdkVersion sgMinSdk
+        targetSdkVersion sgTargetSdk
     }
 
     compileOptions {
@@ -27,7 +27,7 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core:${versions.core}"
+    implementation "androidx.core:core:$core_version"
 }
 
 // Note: should build web version with JDK 9+ to get no-frames version.
