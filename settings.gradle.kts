@@ -1,5 +1,4 @@
 include(":api")
 include(":billing")
-include(":common")
 include(":widgets")
 include(":app")

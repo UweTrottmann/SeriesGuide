@@ -135,7 +135,6 @@ dependencies {
 
     implementation project(':api')
     implementation project(':billing')
-    implementation project(':common')
     implementation project(':widgets')
 
     implementation "androidx.core:core-ktx:$core_version"
