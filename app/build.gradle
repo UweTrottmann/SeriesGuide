@@ -136,7 +136,6 @@ dependencies {
     implementation project(':api')
     implementation project(':billing')
     implementation project(':common')
-    implementation project(':tmdb-api')
     implementation project(':widgets')
 
     implementation "androidx.core:core-ktx:$core_version"
@@ -198,6 +197,9 @@ dependencies {
         exclude group: 'com.android.support'
     }
     implementation 'com.uwetrottmann.photoview:library:1.2.4'
+
+    // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
+    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.3.1")
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
     implementation("com.uwetrottmann.trakt5:trakt-java:6.9.0") {
         exclude group: 'org.threeten', module: 'threetenbp' // using ThreeTenABP instead
