@@ -1,4 +1,4 @@
-package com.uwetrottmann.seriesguide.tmdbapi
+package com.battlelancer.seriesguide.tmdbapi
 
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.TmdbInterceptor

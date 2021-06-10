@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.StatFs;
 import com.battlelancer.seriesguide.traktapi.SgTraktInterceptor;
 import com.battlelancer.seriesguide.util.AllApisAuthenticator;
-import com.uwetrottmann.seriesguide.tmdbapi.SgTmdbInterceptor;
+import com.battlelancer.seriesguide.tmdbapi.SgTmdbInterceptor;
 import dagger.Module;
 import dagger.Provides;
 import java.io.File;
