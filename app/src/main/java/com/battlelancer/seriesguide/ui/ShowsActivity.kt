@@ -14,6 +14,7 @@ import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.api.Intents
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager
@@ -37,6 +38,7 @@ import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
+import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
 /**
@@ -266,7 +268,9 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
         }
         // Automatically starts checking all access status.
         // Ends connection if activity is finished (and was not ended elsewhere already).
-        billingViewModel = ViewModelProvider(this).get(BillingViewModel::class.java)
+        billingViewModel =
+            ViewModelProvider(this, BillingViewModelFactory(application, SgApp.coroutineScope))
+                .get(BillingViewModel::class.java)
         billingViewModel.entitlementRevokedEvent
             .observe(this, {
                 // TODO Replace notification with less disturbing in-app info.

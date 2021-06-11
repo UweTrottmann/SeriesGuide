@@ -14,6 +14,8 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.queryPurchasesAsync
+import com.android.billingclient.api.querySkuDetails
 import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
 import com.uwetrottmann.seriesguide.billing.localdb.Entitlement
 import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus
@@ -21,7 +23,6 @@ import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb
 import com.uwetrottmann.seriesguide.common.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,7 +30,10 @@ import timber.log.Timber
 import kotlin.math.pow
 import kotlin.math.roundToLong
 
-class BillingRepository(private val applicationContext: Context) {
+class BillingRepository private constructor(
+    private val applicationContext: Context,
+    private val coroutineScope: CoroutineScope
+) {
 
     /**
      * The [BillingClient] is the most reliable and primary source of truth for all purchases
@@ -101,7 +105,9 @@ class BillingRepository(private val applicationContext: Context) {
         localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
         if (!connectToPlayBillingService()) {
             // Already connected, so trigger purchases query directly.
-            queryPurchasesAsync()
+            coroutineScope.launch {
+                queryPurchasesAsync()
+            }
         }
     }
 
@@ -140,22 +146,22 @@ class BillingRepository(private val applicationContext: Context) {
      * owned," which can happen if a user buys the item around the same time
      * on a different device.
      */
-    fun queryPurchasesAsync() {
+    private suspend fun queryPurchasesAsync() {
         Timber.d("queryPurchasesAsync called")
         val purchasesResult = HashSet<Purchase>()
-        var result = playStoreBillingClient.queryPurchases(BillingClient.SkuType.INAPP)
-        Timber.d("queryPurchasesAsync INAPP results: ${result.purchasesList?.size}")
-        result.purchasesList?.apply { purchasesResult.addAll(this) }
+        var result = playStoreBillingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP)
+        Timber.d("queryPurchasesAsync INAPP results: ${result.purchasesList.size}")
+        result.purchasesList.apply { purchasesResult.addAll(this) }
         if (isSubscriptionSupported()) {
-            result = playStoreBillingClient.queryPurchases(BillingClient.SkuType.SUBS)
-            result.purchasesList?.apply { purchasesResult.addAll(this) }
-            Timber.d("queryPurchasesAsync SUBS results: ${result.purchasesList?.size}")
+            result = playStoreBillingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS)
+            result.purchasesList.apply { purchasesResult.addAll(this) }
+            Timber.d("queryPurchasesAsync SUBS results: ${result.purchasesList.size}")
         }
         processPurchases(purchasesResult)
     }
 
-    private fun processPurchases(purchasesResult: Set<Purchase>) =
-        CoroutineScope(Job() + Dispatchers.IO).launch {
+    private suspend fun processPurchases(purchasesResult: Set<Purchase>) =
+        withContext(Dispatchers.IO) {
             Timber.d("processPurchases called")
             val validPurchasesSet = HashSet<Purchase>(purchasesResult.size)
             Timber.d("processPurchases newBatch content $purchasesResult")
@@ -227,8 +233,8 @@ class BillingRepository(private val applicationContext: Context) {
      * This is the final step, where purchases/receipts are converted to premium contents.
      */
     private fun disburseEntitlement(purchase: Purchase) =
-        CoroutineScope(Job() + Dispatchers.IO).launch {
-            when (val purchaseSku = purchase.sku) {
+        coroutineScope.launch(Dispatchers.IO) {
+            when (val purchaseSku = purchase.skus[0]) {
                 SeriesGuideSku.X_PASS_IN_APP,
                 SeriesGuideSku.X_SUB_LEGACY,
                 SeriesGuideSku.X_SUB_2014_02,
@@ -268,7 +274,7 @@ class BillingRepository(private val applicationContext: Context) {
         }
 
     private fun revokeEntitlement() =
-        CoroutineScope(Job() + Dispatchers.IO).launch {
+        coroutineScope.launch(Dispatchers.IO) {
             // Save if existing entitlement is getting revoked.
             val wasEntitled =
                 localCacheBillingClient.entitlementsDao().getGoldStatus()?.entitled ?: false
@@ -297,29 +303,28 @@ class BillingRepository(private val applicationContext: Context) {
     /**
      * Requests SKU details from Google Play and adds or updates the associated [AugmentedSkuDetails].
      */
-    private fun querySkuDetailsAsync() {
+    private suspend fun querySkuDetailsAsync() {
         val skuType = BillingClient.SkuType.SUBS
         val params = SkuDetailsParams.newBuilder()
             .setSkusList(SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE)
             .setType(skuType)
             .build()
         Timber.d("querySkuDetailsAsync for $skuType")
-        playStoreBillingClient.querySkuDetailsAsync(params) { billingResult, skuDetailsList ->
-            when (billingResult.responseCode) {
-                BillingClient.BillingResponseCode.OK -> {
-                    if (skuDetailsList != null && skuDetailsList.isNotEmpty()) {
-                        skuDetailsList.forEach {
-                            CoroutineScope(Job() + Dispatchers.IO).launch {
-                                localCacheBillingClient.skuDetailsDao().insertOrUpdate(it)
-                            }
+        val (billingResult, skuDetailsList) = playStoreBillingClient.querySkuDetails(params)
+        when (billingResult.responseCode) {
+            BillingClient.BillingResponseCode.OK -> {
+                if (skuDetailsList != null && skuDetailsList.isNotEmpty()) {
+                    skuDetailsList.forEach {
+                        coroutineScope.launch(Dispatchers.IO) {
+                            localCacheBillingClient.skuDetailsDao().insertOrUpdate(it)
                         }
                     }
                 }
-                else -> {
-                    "querySkuDetailsAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
-                        Timber.e(it)
-                        errorEvent.postValue(it)
-                    }
+            }
+            else -> {
+                "querySkuDetailsAsync failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
+                    Timber.e(it)
+                    errorEvent.postValue(it)
                 }
             }
         }
@@ -358,8 +363,12 @@ class BillingRepository(private val applicationContext: Context) {
         val purchaseParams = BillingFlowParams.newBuilder().apply {
             setSkuDetails(skuDetails)
             if (oldSku != null && purchaseToken != null) {
-                setOldSku(oldSku, purchaseToken)
-                setReplaceSkusProrationMode(prorationMode)
+                setSubscriptionUpdateParams(
+                    BillingFlowParams.SubscriptionUpdateParams.newBuilder()
+                        .setOldSkuPurchaseToken(purchaseToken)
+                        .setReplaceSkusProrationMode(prorationMode)
+                        .build()
+                )
             }
         }.build()
         playStoreBillingClient.launchBillingFlow(activity, purchaseParams)
@@ -405,12 +414,18 @@ class BillingRepository(private val applicationContext: Context) {
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
                 // will handle server verification, consumables, and updating the local cache
-                purchases?.apply { processPurchases(this.toSet()) }
+                purchases?.also {
+                    coroutineScope.launch {
+                        processPurchases(it.toSet())
+                    }
+                }
             }
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 // item already owned? call queryPurchasesAsync to verify and process all such items
                 Timber.d(billingResult.debugMessage)
-                queryPurchasesAsync()
+                coroutineScope.launch {
+                    queryPurchasesAsync()
+                }
             }
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
                 connectToPlayBillingService()
@@ -437,8 +452,10 @@ class BillingRepository(private val applicationContext: Context) {
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
                     Timber.d("onBillingSetupFinished successfully")
-                    querySkuDetailsAsync()
-                    queryPurchasesAsync()
+                    coroutineScope.launch {
+                        querySkuDetailsAsync()
+                        queryPurchasesAsync()
+                    }
                 }
                 else -> {
                     Timber.d(billingResult.debugMessage)
@@ -466,7 +483,7 @@ class BillingRepository(private val applicationContext: Context) {
                 return // Do not try again. Wait until BillingClient is started again.
             }
             disconnectCount++
-            CoroutineScope(Job() + Dispatchers.Default).launch {
+            coroutineScope.launch {
                 delay((2.toDouble().pow(disconnectCount) * 1000).roundToLong())
                 connectToPlayBillingService()
             }
@@ -478,10 +495,9 @@ class BillingRepository(private val applicationContext: Context) {
         @Volatile
         private var INSTANCE: BillingRepository? = null
 
-        @JvmStatic
-        fun getInstance(context: Context): BillingRepository =
+        fun getInstance(context: Context, coroutineScope: CoroutineScope): BillingRepository =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: BillingRepository(context.applicationContext)
+                INSTANCE ?: BillingRepository(context.applicationContext, coroutineScope)
                     .also { INSTANCE = it }
             }
     }
