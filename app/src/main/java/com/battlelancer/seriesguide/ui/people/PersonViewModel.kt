@@ -22,7 +22,7 @@ class PersonViewModel(
     val languageCode = MutableLiveData<String>()
     val personLiveData = languageCode.switchMap {
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val peopleService = SgApp.getServicesComponent(getApplication()).peopleService()
+            val peopleService = SgApp.getServicesComponent(getApplication()).peopleService()!!
             val response: Response<Person?>
             try {
                 response = peopleService.summary(personTmdbId, it).execute()

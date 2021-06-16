@@ -33,12 +33,12 @@ interface ServicesComponent {
     fun hexagonTools(): HexagonTools
     fun moviesService(): MoviesService
     fun movieTools(): MovieTools
-    fun peopleService(): PeopleService
+    fun peopleService(): PeopleService?
     fun showTools(): ShowTools
     fun tmdb(): Tmdb
     fun trakt(): TraktV2
-    fun traktSync(): Sync
-    fun traktUsers(): Users
+    fun traktSync(): Sync?
+    fun traktUsers(): Users?
 
     fun inject(addShowTask: AddShowTask)
     fun inject(sgSyncAdapter: SgSyncAdapter)

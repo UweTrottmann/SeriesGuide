@@ -57,7 +57,7 @@ object TraktTools2 {
         isCollectionNotWatched: Boolean,
         context: Context
     ): Pair<Map<Int, BaseShow>?, ServiceResult> {
-        val traktSync = getServicesComponent(context).traktSync()
+        val traktSync = getServicesComponent(context).traktSync()!!
         val action = if (isCollectionNotWatched) "get collection" else "get watched"
         try {
             val response: Response<List<BaseShow>> = if (isCollectionNotWatched) {
