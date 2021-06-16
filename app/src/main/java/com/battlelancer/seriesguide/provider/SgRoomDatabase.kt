@@ -123,6 +123,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                     SgRoomDatabase::class.java)
                     .addMigrations(MIGRATION_42_43)
                     .addCallback(CALLBACK)
+                    .allowMainThreadQueries()
                     .build()
         }
 
