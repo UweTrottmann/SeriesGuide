@@ -12,9 +12,10 @@ Version 59
 ----------
 *in development*
 
-#### next
-*TBD*
+#### 59-beta3
+*2021-06-16*
 
+* 🌟 Add language setting for person details.
 * 🔧 Add Esperanto translation for app.
 
 #### 59-beta2
