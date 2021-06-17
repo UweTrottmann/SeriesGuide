@@ -10,7 +10,19 @@ Release notes
 
 Version 59
 ----------
-*in development*
+*2021-06-17*
+
+* 🌟 Add language setting for person details.
+* 🌟 Shows: add sort by status option.
+* 🔧 Small design updates.
+* 🔧 Widget: when displaying shows, exclude shows without next episode.  
+* 🔨 Backup: export episodes even if a show was never opened.
+* 🔨 Statistics: do not count canceled shows as with next episodes.
+
+#### 59
+*2021-06-17*
+
+* 🔨 Backup: export episodes even if a show was never opened.
 
 #### 59-beta3
 *2021-06-16*
