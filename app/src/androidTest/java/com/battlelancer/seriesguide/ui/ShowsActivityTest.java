@@ -21,8 +21,7 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -47,13 +46,10 @@ public class ShowsActivityTest {
             ShowsActivity.class);
 
     @Before
-    public void setUp() throws Exception {
-        // delete the database and close the database helper inside the provider
-        // to ensure a clean state for the add show test
+    public void setUp() {
+        // switch to in-memory database to ensure a clean state for the add show test
         Context context = ApplicationProvider.getApplicationContext();
-        context.deleteDatabase(SeriesGuideDatabase.DATABASE_NAME);
-        context.getContentResolver().query(SeriesGuideContract.Shows.CONTENT_URI_CLOSE,
-                null, null, null, null);
+        SgRoomDatabase.switchToInMemory(context);
     }
 
     @Test

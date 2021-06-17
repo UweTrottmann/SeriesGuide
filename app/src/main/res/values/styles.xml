@@ -42,7 +42,9 @@
         <item name="android:letterSpacing">0</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.Button" parent="TextAppearance.MaterialComponents.Button" />
+    <style name="TextAppearance.SeriesGuide.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+    </style>
 
     <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
     <style name="TextAppearance.SeriesGuide.Caption.Dim">
@@ -83,10 +85,11 @@
 
     <style name="TextAppearance.SeriesGuide.Tab" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textColor">?attr/colorOnPrimarySurface</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide.Tab.Surface">
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/material_on_surface_emphasis_high_type</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.SeriesGuide.Headline6.Dim" />
@@ -186,20 +189,31 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <!-- Toolbar -->
-    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <!-- Fix popup menu sub-menu indicator colored white on white instead of gray on white. -->
-        <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
+    <!-- AppBar -->
+    <style name="Widget.SeriesGuide.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="android:background">@color/sg_color_background</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Toolbar.Transparent" parent="Widget.MaterialComponents.Toolbar.Surface">
-        <item name="android:background">@android:color/transparent</item>
+    <!-- Transparent background, disable shadow. -->
+    <style name="Widget.SeriesGuide.AppBarLayout.Transparent" parent="">
+        <item name="android:background">@color/transparent</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
+        <item name="colorOnSurface">?attr/colorPrimary</item>
+    </style>
+    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:background">@color/sg_color_background</item>
+        <!-- Fix popup menu sub-menu indicator colored white on white instead of gray on white. -->
+        <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
-        <item name="colorOnSurface">?attr/colorPrimary</item>
+    <style name="Widget.SeriesGuide.Toolbar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="Widget.SeriesGuide.Toolbar.Gradient" parent="Widget.MaterialComponents.Toolbar.Surface">
@@ -216,17 +230,17 @@
     </style>
 
     <!-- Tabs -->
-    <style name="Widget.SeriesGuide.TabLayout">
-        <item name="android:background">?attr/colorPrimary</item>
-        <item name="android:elevation">4dp</item>
+    <style name="ThemeOverLay.SeriesGuide.PrimaryAsColorOnSurface" parent="">
+        <item name="colorOnSurface">?attr/colorPrimary</item>
     </style>
-
     <style name="Widget.SeriesGuide.Tab">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingLeft">@dimen/tab_padding_horizontal</item>
         <item name="android:paddingRight">@dimen/tab_padding_horizontal</item>
+        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.Tab.Surface</item>
+        <item name="android:theme">@style/ThemeOverLay.SeriesGuide.PrimaryAsColorOnSurface</item>
     </style>
 
     <!-- Inline snackbar -->

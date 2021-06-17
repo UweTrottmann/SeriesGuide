@@ -44,6 +44,7 @@ object ShowsDistillationSettings {
             ShowsSortOrder.LATEST_EPISODE_ID -> query.append(SgShow2SortQuery.LATEST_EPISODE)
             ShowsSortOrder.LAST_WATCHED_ID -> query.append(SgShow2SortQuery.LAST_WATCHED)
             ShowsSortOrder.LEAST_REMAINING_EPISODES_ID -> query.append(SgShow2SortQuery.REMAINING_EPISODES)
+            ShowsSortOrder.STATUS -> query.append(SgShow2SortQuery.STATUS)
         }
         // always sort by title at last
         query.append(
@@ -141,19 +142,21 @@ object ShowsDistillationSettings {
     }
 
     private object SgShow2SortQuery {
-        // by oldest next episode, then continued first
+        // by oldest next episode, then continued first (for no next episode)
         const val OLDEST_EPISODE =
             "${SgShow2Columns.NEXTAIRDATEMS} ASC,${SgShow2Columns.SORT_STATUS},"
 
-        // by latest next episode, then continued first
-        const val LATEST_EPISODE = "${SgShow2Columns.SORT_LATEST_EPISODE},"
+        // by latest next episode, then continued first (for no next episode)
+        const val LATEST_EPISODE = "${SgShow2Columns.SORT_LATEST_EPISODE_THEN_STATUS},"
 
         // by latest watched first
         const val LAST_WATCHED = "${SgShow2Columns.LASTWATCHED_MS} DESC,"
 
-        // by least episodes remaining to watch, then continued first
+        // by least episodes remaining to watch, then continued first (for no remaining episode)
         const val REMAINING_EPISODES =
             "${SgShow2Columns.UNWATCHED_COUNT} ASC,${SgShow2Columns.SORT_STATUS},"
+
+        const val STATUS = "${SgShow2Columns.STATUS} DESC,"
 
         // add as prefix to sort favorites first
         const val FAVORITES_FIRST = "${SgShow2Columns.FAVORITE} DESC,"
@@ -170,5 +173,6 @@ object ShowsDistillationSettings {
         const val LATEST_EPISODE_ID = 3
         const val LAST_WATCHED_ID = 4
         const val LEAST_REMAINING_EPISODES_ID = 5
+        const val STATUS = 6
     }
 }

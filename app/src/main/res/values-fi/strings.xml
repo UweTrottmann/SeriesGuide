@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Vanhin jakso</string>
     <string name="action_shows_sort_last_watched">Viimeksi katsottu</string>
     <string name="action_shows_sort_remaining">Jäljellä olevat jaksot</string>
+    <string name="action_shows_sort_status">Tila</string>
     <string name="action_shows_sort_favorites">Suosikit ensin</string>
     <string name="context_updateshow">Päivitä</string>
     <string name="context_marknext">Seuraava jakso katsottu</string>
@@ -251,7 +252,8 @@
     <string name="statistics_shows">ohjelmaa</string>
     <string name="statistics_episodes">jaksoa</string>
     <string name="statistics_movies">elokuvaa</string>
-    <string name="shows_with_next">%s, joissa on seuraavia jaksoja</string>
+    <string name="shows_finished">%s katsoi loppuun</string>
+    <string name="shows_with_next">%s ohjelmassa seuraavia jaksoja</string>
     <string name="shows_continuing">%s jatkuu</string>
     <string name="episodes_watched">%s katsottu</string>
     <string name="movies_on_watchlist">%s seurantalistalla</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Tietosuojakäytäntö</string>
-    <string name="licence_tvdb">Tämä sovellus käyttää TheTVDB:n tietoja ja kuvia, jotka on lisensoitu Creative Commons -lisenssin mukaisesti.</string>
     <string name="licence_themoviedb">Tämä tuote käyttää TMDb:n API-rajapintaa, mutta ei ole TMDb:n hyväksymä tai sertifioima.</string>
     <string name="licence_trakt">Tämä sovellus käyttää Traktin tietoja ja kuvia.</string>
     <string name="about_open_source">SeriesGuide on luotu käyttäen avoimen lähdekoodin ohjelmistoja.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">1 viikon ajalta</string>
     <string name="upcoming_upto_two_weeks">2 viikon ajalta</string>
     <string name="upcoming_upto_one_month">1 kuukauden ajalta</string>
+    <string name="upcoming_all">kaikki</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Ulkonäkö</string>
     <string name="pref_theme">Teema</string>
@@ -485,7 +487,7 @@
     <string name="billing_price_pass">kertaluontoinen osto</string>
     <string name="upgrade_description">Jokainen tilaus avaa kaikki ominaisuudet ja tukee tulevia päivityksiä. Tilausta ei tarvita tämän sovelluksen käyttämiseksi.</string>
     <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">X Pass -sovellus havaittu. Voit silti tilata tukeaksesi kehitystä.</string>
     <string name="billing_learn_more">Lisätietoja ja apua</string>
     <string name="subscription_expired">Tilaus vanhentunut</string>
     <string name="subscription_expired_details">SeriesGuide-tilauksesi on vanhentunut.</string>

@@ -27,4 +27,13 @@ object TextToolsK {
         )
     }
 
+    @JvmStatic
+    fun textNoTranslationMovieLanguage(context: Context, languageCode: String?): String {
+        return context.getString(
+            R.string.no_translation,
+            LanguageTools.getMovieLanguageStringFor(context, languageCode),
+            context.getString(R.string.tmdb)
+        )
+    }
+
 }

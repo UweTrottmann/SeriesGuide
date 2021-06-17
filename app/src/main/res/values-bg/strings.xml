@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Най-старият епизод</string>
     <string name="action_shows_sort_last_watched">Последно гледани</string>
     <string name="action_shows_sort_remaining">Оставащи епизоди</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Първо Любими</string>
     <string name="context_updateshow">Актуализирай</string>
     <string name="context_marknext">Гледан следващ епизод</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">ТВ предавания</string>
     <string name="statistics_episodes">Епизоди</string>
     <string name="statistics_movies">Филми</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s със предстоящите епизоди</string>
     <string name="shows_continuing">%s продължаващи</string>
     <string name="episodes_watched">%s гледани</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Този продукт използва TMDb API, но не е сертифицирано от TMDb.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide е построена чрез използване на софтуер с отворен код.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">1 седмица</string>
     <string name="upcoming_upto_two_weeks">2 седмици</string>
     <string name="upcoming_upto_one_month">1 месец</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Външен вид</string>
     <string name="pref_theme">Тема</string>

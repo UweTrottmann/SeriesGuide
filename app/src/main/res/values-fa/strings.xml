@@ -36,8 +36,8 @@
     <string name="sync_and_update">هم‌گام سازی و به‌روز رسانی</string>
     <string name="sync_and_download_all">هم‌گام سازی و بارگیری همه</string>
     <string name="action_stream">پخش یا خرید</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">اطّلاعات پخش یا خرید</string>
+    <string name="action_select_region">گزینش ناحیه</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
     <string name="api_failed">%s انجام نشد</string>
     <string name="copy_to_clipboard">کپی شد</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">در TMDB پیدا نشد و‌در به‌روز رسانی‌ای آتی برداشته خواهد شد. برای جزییات بزنید.</string>
     <!-- Sharing -->
     <string name="share">هم‌رسانی</string>
     <string name="share_show">هم‌رسانی نمایش</string>
@@ -90,9 +90,9 @@
     <string name="show_isalive">در حال پخش</string>
     <string name="show_isnotalive">به پایان رسیده</string>
     <string name="show_isUpcoming">پیش رو</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">در حال تولید</string>
+    <string name="show_status_pilot">پایلوت</string>
+    <string name="show_status_canceled">لغو شده</string>
     <string name="no_translation">هیج توضیحی برای %2$s به %1$s وجود ندارد.</string>
     <string name="no_translation_title">ترجمه نشده</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">قدیمی‌ترین قسمت</string>
     <string name="action_shows_sort_last_watched">آخرین تماشا شده</string>
     <string name="action_shows_sort_remaining">قسمت‌های باقی مانده</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
     <string name="context_updateshow">به‌روز رسانی</string>
     <string name="context_marknext">قسمت بعدی تماشا شد</string>
@@ -199,7 +200,7 @@
     <string name="no_results">هیچ نتیجه ای پیدا نشد، کلمات را بصورت کامل امتحان کنید.</string>
     <string name="empty_show_search">در لیست برنامه‌ها پیدا نشد</string>
     <string name="action_try_again">دوباره امتحان کنید</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">اثر نمایشی (هنوز) در TMDB وجود ندارد. بعداً دوباره سعی کنید.</string>
     <string name="add_all">افزودن همه</string>
     <string name="add_multiple">تمام نمایش‌ها به زودی در فهرست نمایشتان ظاهر خواهند شد.</string>
     <string name="add_started">%s به زودی در فهرست تماشایتان ظاهر خواهد شد.</string>
@@ -220,7 +221,7 @@
     <string name="list_manage">مدیریت فهرست</string>
     <string name="list_item_manage">مدیریت فهرست‌ها</string>
     <string name="list_item_remove">برداشتن از فهرست</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">می‌توانید نمایش‌ها را به این فهرست بیفزایید</string>
     <string name="action_lists_sort">چینش فهرست‌ها</string>
     <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">سریال‌ها</string>
     <string name="statistics_episodes">قسمت</string>
     <string name="statistics_movies">فیلم</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s با قسمت‌های بعدی</string>
     <string name="shows_continuing">%s ادامه دار</string>
     <string name="episodes_watched">%s تماشا شده</string>
@@ -298,7 +300,7 @@
     <string name="traktcheckin_inprogress">شما به تازگی قسمت یا فیلمی دیگر را ثبت کرده‌اید. ثبت پیشین را باطل کنید یا %s منتظر شده و دوباره تلاش کنید.</string>
     <string name="traktcheckin_wait">منتظر میمانم</string>
     <string name="trakt_success">به trakt ارسال شد.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">حساب ترکتتان قفل است. با پشتیبانی ترکت تماس بگیرید.</string>
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">سیاست حریم شخصی</string>
-    <string name="licence_tvdb">‫این برنامه از داده‌ها و تصاویر TheTVDB با مجوز Cc استفاده می‌کند.</string>
     <string name="licence_themoviedb">‫این محصول از رابط برنامه‌نویسی TMDb استفاده می‌کند ولی توسّط TMDb تصدیق نشده است.</string>
     <string name="licence_trakt">‫این برنامه از داده‌ها و تصویرهای trakt استفاده می‌کند.</string>
     <string name="about_open_source">SeriesGuide با استفاده از نرم‌افزارهای متن باز ساخته شده است.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">۱ هفته</string>
     <string name="upcoming_upto_two_weeks">۲ هفته</string>
     <string name="upcoming_upto_one_month">۱ ماه</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">ظاهر</string>
     <string name="pref_theme">زمینه</string>
@@ -519,5 +521,5 @@
     <string name="feedback_action_ok">بله، حتماً</string>
     <string name="feedback_action_nothanks">نه، ممنون</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">حمایت از توسعه‌دهنده؟</string>
 </resources>

@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
@@ -19,7 +18,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.LanguageTools;
+import com.battlelancer.seriesguide.util.TextToolsK;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.AppendToResponse;
 import com.uwetrottmann.tmdb2.entities.Movie;
@@ -495,9 +494,8 @@ public class MovieTools {
         if (movieFallback != null) {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = movieFallback.overview;
-            movieFallback.overview = context.getString(R.string.no_translation,
-                    LanguageTools.getMovieLanguageStringFor(context, languageCode),
-                    context.getString(R.string.tmdb));
+            movieFallback.overview = TextToolsK
+                    .textNoTranslationMovieLanguage(context, languageCode);
             if (!TextUtils.isEmpty(untranslatedOverview)) {
                 movieFallback.overview += "\n\n" + untranslatedOverview;
             }

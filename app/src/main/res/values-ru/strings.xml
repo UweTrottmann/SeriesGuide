@@ -154,6 +154,7 @@
     <string name="action_shows_sort_oldest_episode">Старейший эпизод</string>
     <string name="action_shows_sort_last_watched">Последний просмотренный</string>
     <string name="action_shows_sort_remaining">Оставшиеся эпизоды</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Сначала избранные</string>
     <string name="context_updateshow">Обновить</string>
     <string name="context_marknext">Смотреть следующий эпизод</string>
@@ -259,6 +260,7 @@
     <string name="statistics_shows">Сериалы</string>
     <string name="statistics_episodes">Эпизоды</string>
     <string name="statistics_movies">Фильмы</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s новых эпизодов</string>
     <string name="shows_continuing">%s продолжается</string>
     <string name="episodes_watched">%s просмотрено</string>
@@ -394,7 +396,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Политика конфиденциальности</string>
-    <string name="licence_tvdb">Это приложение использует данные и изображения TheTVDB, лицензированные по лицензии Creative Commons.</string>
     <string name="licence_themoviedb">Это приложение использует TMDb API, но это API не поддерживается и не одобрено самим сервисом TMDb.</string>
     <string name="licence_trakt">Это приложение использует данные и изображения сервиса Trakt.</string>
     <string name="about_open_source">SeriesGuide сделан с использованием открытого программного обеспечения.</string>
@@ -418,6 +419,7 @@
     <string name="upcoming_upto_one_week">1 неделя</string>
     <string name="upcoming_upto_two_weeks">2 недели</string>
     <string name="upcoming_upto_one_month">1 месяц</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Оформление</string>
     <string name="pref_theme">Тема</string>

@@ -1,0 +1,304 @@
+package com.battlelancer.seriesguide.backend
+
+import android.content.Context
+import android.os.SystemClock
+import android.text.format.DateUtils
+import android.util.Pair
+import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
+import com.battlelancer.seriesguide.backend.HexagonAuthError.Companion.build
+import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.modules.ApplicationContext
+import com.battlelancer.seriesguide.sync.NetworkJobProcessor
+import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
+import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Tasks
+import com.google.api.client.extensions.android.json.AndroidJsonFactory
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.http.HttpTransport
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.JsonFactory
+import com.uwetrottmann.seriesguide.backend.account.Account
+import com.uwetrottmann.seriesguide.backend.episodes.Episodes
+import com.uwetrottmann.seriesguide.backend.lists.Lists
+import com.uwetrottmann.seriesguide.backend.movies.Movies
+import com.uwetrottmann.seriesguide.backend.shows.Shows
+import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
+import timber.log.Timber
+import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
+import android.accounts.Account as AndroidAccount
+
+/**
+ * Handles credentials and services for interacting with Hexagon.
+ */
+@Singleton // needs global state for lastSignInCheck + to avoid rebuilding services
+class HexagonTools @Inject constructor(
+    @param:ApplicationContext private val context: Context
+) {
+
+    private val googleSignInClient: GoogleSignInClient by lazy {
+        GoogleSignIn.getClient(context, googleSignInOptions)
+    }
+    private val credential: GoogleAccountCredential by lazy {
+        GoogleAccountCredential.usingAudience(
+            context.applicationContext,
+            HexagonSettings.AUDIENCE
+        )
+    }
+    private var lastSignInCheck: Long = 0
+
+    /**
+     * Returns the instance for this hexagon service or null if not signed in.
+     *
+     * Warning: checks sign-in state, make sure to guard with [HexagonSettings.isEnabled].
+     */
+    @get:Synchronized
+    var showsService: Shows? = null
+        get() {
+            val credential = getAccountCredential(true)
+            if (credential.selectedAccount == null) {
+                return null
+            }
+            if (field == null) {
+                val builder = Shows.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                field = updateBuilder(context, builder).build()
+            }
+            return field
+        }
+        private set
+
+    /**
+     * Returns the instance for this hexagon service or null if not signed in.
+     *
+     * Warning: checks sign-in state, make sure to guard with [HexagonSettings.isEnabled].
+     */
+    @get:Synchronized
+    var episodesService: Episodes? = null
+        get() {
+            val credential = getAccountCredential(true)
+            if (credential.selectedAccount == null) {
+                return null
+            }
+            if (field == null) {
+                val builder = Episodes.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                field = updateBuilder(context, builder).build()
+            }
+            return field
+        }
+        private set
+
+    /**
+     * Returns the instance for this hexagon service or null if not signed in.
+     *
+     * Warning: checks sign-in state, make sure to guard with [HexagonSettings.isEnabled].
+     */
+    @get:Synchronized
+    var moviesService: Movies? = null
+        get() {
+            val credential = getAccountCredential(true)
+            if (credential.selectedAccount == null) {
+                return null
+            }
+            if (field == null) {
+                val builder = Movies.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                field = updateBuilder(context, builder).build()
+            }
+            return field
+        }
+        private set
+
+    /**
+     * Returns the instance for this hexagon service or null if not signed in.
+     */
+    @get:Synchronized
+    var listsService: Lists? = null
+        get() {
+            val credential = getAccountCredential(true)
+            if (credential.selectedAccount == null) {
+                return null
+            }
+            if (field == null) {
+                val builder = Lists.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                field = updateBuilder(context, builder).build()
+            }
+            return field
+        }
+        private set
+
+    /**
+     * Creates and returns a new instance for this hexagon service or null if not signed in.
+     *
+     * Warning: checks sign-in state, make sure to guard with [HexagonSettings.isEnabled].
+     */
+    @Synchronized
+    fun buildAccountService(): Account? {
+        val credential = getAccountCredential(true)
+        if (credential.selectedAccount == null) {
+            return null
+        }
+        val builder = Account.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+        return updateBuilder(context, builder).build()
+    }
+
+    /**
+     * Enables Hexagon, resets sync state and saves account data.
+     *
+     * @return `false` if sync state could not be reset.
+     */
+    fun setEnabled(account: GoogleSignInAccount): Boolean {
+        if (!HexagonSettings.resetSyncState(context)) {
+            return false
+        }
+        // clear jobs before isEnabled may return true
+        NetworkJobProcessor(context).removeObsoleteJobs()
+        if (!PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putBoolean(HexagonSettings.KEY_ENABLED, true)
+                .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
+                .commit()) {
+            return false
+        }
+        storeAccount(account)
+        return true
+    }
+
+    /**
+     * Disables Hexagon and removes any account data.
+     */
+    fun setDisabled() {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+            .putBoolean(HexagonSettings.KEY_ENABLED, false)
+            .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
+            .apply()
+        storeAccount(null)
+    }
+
+    /**
+     * Get the Google account credentials to talk with Hexagon.
+     *
+     * Make sure to check [GoogleAccountCredential.getSelectedAccount] is not null (the
+     * account might have gotten signed out).
+     *
+     * @param checkSignInState If enabled, tries to silently sign in with Google. If it fails, sets
+     * the [HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT] flag. If successful, clears the flag.
+     */
+    @Synchronized
+    private fun getAccountCredential(checkSignInState: Boolean): GoogleAccountCredential {
+        if (checkSignInState) {
+            checkSignInState()
+        }
+        return credential
+    }
+
+    private fun checkSignInState() {
+        if (credential.selectedAccount != null && !isTimeForSignInStateCheck) {
+            return
+        }
+        lastSignInCheck = SystemClock.elapsedRealtime()
+
+        var account: AndroidAccount? = null
+        val signInTask = googleSignInClient.silentSignIn()
+
+        try {
+            val signInAccount = Tasks.await(signInTask)
+            if (signInAccount != null) {
+                Timber.i("%s: successful", ACTION_SILENT_SIGN_IN)
+                account = signInAccount.account
+                credential.selectedAccount = account
+            } else {
+                logAndReport(
+                    ACTION_SILENT_SIGN_IN,
+                    HexagonAuthError(
+                        ACTION_SILENT_SIGN_IN,
+                        "GoogleSignInAccount is null"
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            if (e is InterruptedException) {
+                // Do not report thread interruptions, it's expected.
+                Timber.w(e, "Sign-in check interrupted")
+            } else {
+                logAndReport(
+                    ACTION_SILENT_SIGN_IN,
+                    build(ACTION_SILENT_SIGN_IN, e)
+                )
+            }
+        }
+
+        val shouldFixAccount = account == null
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+            .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, shouldFixAccount)
+            .apply()
+    }
+
+    private val isTimeForSignInStateCheck: Boolean
+        get() = lastSignInCheck + SIGN_IN_CHECK_INTERVAL_MS < SystemClock.elapsedRealtime()
+
+    /**
+     * Sets the account used for calls to Hexagon and saves the email address to display it in UI.
+     */
+    private fun storeAccount(account: GoogleSignInAccount?) {
+        // store or remove account name in settings
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+            .putString(HexagonSettings.KEY_ACCOUNT_NAME, account?.email)
+            .apply()
+
+        // try to set or remove account on credential
+        getAccountCredential(false).selectedAccount = account?.account
+    }
+
+    /**
+     * Gets show by TMDB ID, or if not found and TVDB ID given, gets show by that.
+     * Returns false on service error.
+     */
+    fun getShow(showTmdbId: Int, showTvdbId: Int?): Pair<SgCloudShow?, Boolean> {
+        return try {
+            val showsService = showsService
+                ?: return Pair(null, false)
+
+            var showOrNull = showsService.sgShow
+                .setShowTmdbId(showTmdbId)
+                .execute()
+            if (showOrNull == null && showTvdbId != null && showTvdbId > 0) {
+                // Not found using TMDB ID, try with legacy TVDB ID.
+                val legacyShowOrNull = showsService.show
+                    .setShowTvdbId(showTvdbId)
+                    .execute()
+                if (legacyShowOrNull != null) {
+                    showOrNull = SgCloudShow()
+                    showOrNull.isFavorite = legacyShowOrNull.isFavorite
+                    showOrNull.isHidden = legacyShowOrNull.isHidden
+                    showOrNull.notify = legacyShowOrNull.notify
+                }
+            }
+            Pair(showOrNull, true)
+        } catch (e: IOException) {
+            logAndReportHexagon("h: get show", e)
+            Pair(null, false)
+        } catch (e: IllegalArgumentException) {
+            // Note: JSON parser may throw IllegalArgumentException.
+            logAndReportHexagon("h: get show", e)
+            Pair(null, false)
+        }
+    }
+
+    companion object {
+        private const val ACTION_SILENT_SIGN_IN = "silent sign-in"
+        private val JSON_FACTORY: JsonFactory = AndroidJsonFactory()
+        private val HTTP_TRANSPORT: HttpTransport = NetHttpTransport()
+        private const val SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS
+
+        @JvmStatic
+        val googleSignInOptions: GoogleSignInOptions by lazy {
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        }
+    }
+}

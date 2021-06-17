@@ -27,16 +27,6 @@ The translators on Crowdin.
 
 SeriesGuide uses the following libraries or projects:
 
-TheTVDB.com (https://www.thetvdb.com)
--------------------------------------
-
-This app uses data and images from TheTVDB licensed under a
-Creative Commons license.
-https://creativecommons.org/licenses/by-nc/3.0/
-
-https://www.thetvdb.com/tos
-
-
 TMDb - The Movie Database (https://www.themoviedb.org)
 ------------------------------------------------------
 
@@ -51,7 +41,7 @@ by millions of people every month and with our and powerful API, also
 used by many popular media centers like XBMC, Plex, MythTV and MediaPortal.
 
 
-trakt (https://trakt.tv)
+Trakt (https://trakt.tv)
 ------------------------
 
 This app uses data and images from trakt.tv.

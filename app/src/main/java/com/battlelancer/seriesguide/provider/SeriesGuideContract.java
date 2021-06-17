@@ -721,10 +721,15 @@ public class SeriesGuideContract {
                 + " OR " + STATUS + "=" + ShowTools.Status.UNKNOWN
                 + ")";
 
+        String SELECTION_HAS_NEXT_EPISODE =
+                NEXTAIRDATEMS + "!=" + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+        String SELECTION_NO_NEXT_EPISODE =
+                NEXTAIRDATEMS + "=" + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+
         String SORT_TITLE = TITLE + " COLLATE NOCASE ASC";
         String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE NOCASE ASC";
         String SORT_STATUS = STATUS + " DESC";
-        String SORT_LATEST_EPISODE = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
+        String SORT_LATEST_EPISODE_THEN_STATUS = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
 
         static Uri buildIdUri(long rowId) {
             return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
@@ -1254,19 +1259,6 @@ public class SeriesGuideContract {
                 + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
         public static final String SELECTION_WITH_NEXT_NOT_HIDDEN = Shows.NEXTEPISODE + "!='' AND "
                 + Shows.HIDDEN + "=0 AND " + Shows.NEXTAIRDATEMS + "<?";
-
-        /**
-         * Technically continuing or upcoming shows (as they do continue).
-         */
-        public static final String SELECTION_STATUS_CONTINUING =
-                "(" + Shows.STATUS + "=" + ShowTools.Status.CONTINUING + " OR "
-                        + Shows.STATUS + "=" + ShowTools.Status.UPCOMING + ")";
-        /**
-         * Technically ended or unknown state shows.
-         */
-        public static final String SELECTION_STATUS_NO_CONTINUING =
-                "(" + Shows.STATUS + "=" + ShowTools.Status.ENDED + " OR "
-                        + Shows.STATUS + "=" + ShowTools.Status.UNKNOWN + ")";
 
         public static final String SELECTION_HIDDEN = Shows.HIDDEN + "=1";
         public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";

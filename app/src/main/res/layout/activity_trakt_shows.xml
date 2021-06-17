@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".ui.search.TraktShowsActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar_elevated" />
 
     <FrameLayout
         android:id="@+id/containerTraktShowsFragment"

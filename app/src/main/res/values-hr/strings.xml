@@ -153,6 +153,7 @@
     <string name="action_shows_sort_oldest_episode">Najstarija epizoda</string>
     <string name="action_shows_sort_last_watched">Zadnje pogledano</string>
     <string name="action_shows_sort_remaining">Preostalo epizoda</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Lista favorita</string>
     <string name="context_updateshow">Ažuriraj</string>
     <string name="context_marknext">Pogledana sljedeća epizoda</string>
@@ -255,6 +256,7 @@
     <string name="statistics_shows">Serije</string>
     <string name="statistics_episodes">Epizode</string>
     <string name="statistics_movies">Filmovi</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s sa sljedećim epizodama</string>
     <string name="shows_continuing">%s se nastavlja</string>
     <string name="episodes_watched">%s pogledano</string>
@@ -383,7 +385,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Pravila privatnosti</string>
-    <string name="licence_tvdb">Ova aplikacija koristi podatake i slike sa TheTVDB koje su licencirane pod Creative Commons licencom</string>
     <string name="licence_themoviedb">Ovaj proizvod koristi TMDb API, ali nije odobrenio ili ovjeren od strane TMDb.</string>
     <string name="licence_trakt">Ova aplikacija koristi podatke i slike sa trakt-a.</string>
     <string name="about_open_source">SeriesGuide je izgrađen korištenjem softvera otvorenog koda.</string>
@@ -407,6 +408,7 @@
     <string name="upcoming_upto_one_week">tjedna</string>
     <string name="upcoming_upto_two_weeks">2 tjedna</string>
     <string name="upcoming_upto_one_month">1 mjeseca</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Izgled</string>
     <string name="pref_theme">Tema</string>

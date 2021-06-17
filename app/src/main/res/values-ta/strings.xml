@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Oldest episode</string>
     <string name="action_shows_sort_last_watched">கடைசியாக பார்த்தது</string>
     <string name="action_shows_sort_remaining">மீதமுள்ள காட்சிகள்</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">விருப்பங்களின் முதல்</string>
     <string name="context_updateshow">புதுப்பித்தல்</string>
     <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">காண்பிக்கும்</string>
     <string name="statistics_episodes">episodes</string>
     <string name="statistics_movies">திரைப்படங்கள்</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">அடுத்த episodes உடன் %s</string>
     <string name="shows_continuing">%s தொடரும்</string>
     <string name="episodes_watched">%s பார்த்த</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">இந்த தயாரிப்பு TMDb API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDb மூலம் சான்றிதழ்.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">திறந்த மூல மென்பொருள் பயன்படுத்தி SeriesGuide இயக்கத்தினர் உள்ளது.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">1 வாரம்</string>
     <string name="upcoming_upto_two_weeks">2 வாரங்கள்</string>
     <string name="upcoming_upto_one_month">1 மாதம்</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">தோற்றம்</string>
     <string name="pref_theme">கருப்பொருள்</string>

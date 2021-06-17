@@ -68,23 +68,27 @@ class ListWidgetRemoteViewsFactory(
 
         when (widgetType) {
             WidgetSettings.Type.SHOWS -> {
-                // Exclude hidden.
+                // Exclude hidden and without next episode.
                 val selection = StringBuilder(SgShow2Columns.SELECTION_NO_HIDDEN)
+                    .append(" AND ").append(SgShow2Columns.SELECTION_HAS_NEXT_EPISODE)
 
                 // Optionally only favorites.
                 if (WidgetSettings.isOnlyFavoriteShows(context, appWidgetId)) {
                     selection.append(" AND ").append(SgShow2Columns.SELECTION_FAVORITES)
                 }
 
-                // If next episode is in the future, exclude if too far into the future.
+                // If next episode is in the future and upcoming range is not all,
+                // exclude if too far into the future.
                 val timeInAnHour = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS
                 val upcomingLimitInDays = AdvancedSettings.getUpcomingLimitInDays(context)
-                val latestAirtime = (timeInAnHour
-                        + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS)
-                selection.append(" AND ")
-                    .append(SgShow2Columns.NEXTAIRDATEMS)
-                    .append("<=")
-                    .append(latestAirtime)
+                if (upcomingLimitInDays != -1) {
+                    val maxReleaseDate =
+                        (timeInAnHour + upcomingLimitInDays * DateUtils.DAY_IN_MILLIS)
+                    selection.append(" AND ")
+                        .append(SgShow2Columns.NEXTAIRDATEMS)
+                        .append("<=")
+                        .append(maxReleaseDate)
+                }
 
                 // Sort based on user preference.
                 val orderClause = ShowsDistillationSettings.getSortQuery2(

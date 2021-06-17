@@ -32,8 +32,8 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 import com.battlelancer.seriesguide.util.DBUtils
-import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
@@ -129,11 +129,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         val overview = if (noTranslation || tmdbShow.overview.isNullOrEmpty()) {
             // add note about non-translated or non-existing overview
-            var overview = context.getString(
-                R.string.no_translation,
-                LanguageTools.getShowLanguageStringFor(context, desiredLanguage),
-                context.getString(R.string.tmdb)
-            )
+            var overview = TextToolsK.textNoTranslation(context, desiredLanguage)
             // if there is one, append non-translated overview
             if (!tmdbShow.overview.isNullOrEmpty()) {
                 overview += "\n\n${tmdbShow.overview}"
@@ -158,8 +154,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val imdbId = tmdbShow.external_ids?.imdb_id ?: ""
         val runtime = tmdbShow.episode_run_time?.firstOrNull() ?: 45 // estimate 45 minutes if none.
         val status = when (tmdbShow.status) {
-            "Returning Series" -> Status.CONTINUING
-            "Planned" -> Status.UPCOMING
+            "Returning Series" -> Status.RETURNING
+            "Planned" -> Status.PLANNED
             "Pilot" -> Status.PILOT
             "Ended" -> Status.ENDED
             "Canceled" -> Status.CANCELED
@@ -239,8 +235,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             Status.IN_PRODUCTION -> context.getString(R.string.show_status_in_production)
             Status.PILOT -> context.getString(R.string.show_status_pilot)
             Status.CANCELED -> context.getString(R.string.show_status_canceled)
-            Status.UPCOMING -> context.getString(R.string.show_isUpcoming)
-            Status.CONTINUING -> context.getString(R.string.show_isalive)
+            Status.PLANNED -> context.getString(R.string.show_isUpcoming)
+            Status.RETURNING -> context.getString(R.string.show_isalive)
             Status.ENDED -> context.getString(R.string.show_isnotalive)
             else -> {
                 // status unknown, display nothing

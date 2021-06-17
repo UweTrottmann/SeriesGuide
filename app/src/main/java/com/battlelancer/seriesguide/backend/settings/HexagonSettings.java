@@ -116,6 +116,17 @@ public class HexagonSettings {
     }
 
     /**
+     * Resets the merged state of lists so a data merge is triggered when next syncing with Hexagon.
+     * Returns if the sync settings reset was committed successfully.
+     */
+    public static boolean setListsNotMerged(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(HexagonSettings.KEY_MERGED_LISTS, false)
+                .commit();
+    }
+
+    /**
      * Whether shows in the local database have been merged with those on Hexagon.
      */
     public static boolean hasMergedShows(Context context) {

@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">ตอนเก่าที่สุด</string>
     <string name="action_shows_sort_last_watched">ดูล่าสุด</string>
     <string name="action_shows_sort_remaining">ตอนที่เหลือ</string>
+    <string name="action_shows_sort_status">สถานะ</string>
     <string name="action_shows_sort_favorites">รายการโปรดก่อน</string>
     <string name="context_updateshow">อัปเดต</string>
     <string name="context_marknext">ดูตอนถัดไป</string>
@@ -247,6 +248,7 @@
     <string name="statistics_shows">ซีรีส์</string>
     <string name="statistics_episodes">ตอน</string>
     <string name="statistics_movies">ภาพยนตร์</string>
+    <string name="shows_finished">%s ดูจบแล้ว</string>
     <string name="shows_with_next">%s เรื่องมีตอนถัดไป</string>
     <string name="shows_continuing">%s เรื่องยังไม่จบ</string>
     <string name="episodes_watched">ดูแล้ว %s ตอน</string>
@@ -361,7 +363,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
-    <string name="licence_tvdb">แอปนี้ใช้ข้อมูลและรูปภาพจาก TheTVDB สงวนสิทธิ์ภายใต้สัญญาอนุญาต Creative Commons</string>
     <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDb แต่ไม่ได้รับการรับรองโดย TMDb</string>
     <string name="licence_trakt">แอปนี้ใช้ข้อมูลและรูปภาพจาก Trakt</string>
     <string name="about_open_source">SeriesGuide สร้างด้วยซอฟต์แวร์โอเพนซอร์ส</string>
@@ -385,6 +386,7 @@
     <string name="upcoming_upto_one_week">1 สัปดาห์</string>
     <string name="upcoming_upto_two_weeks">2 สัปดาห์</string>
     <string name="upcoming_upto_one_month">1 เดือน</string>
+    <string name="upcoming_all">ทั้งหมด</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">คุณลักษณะ</string>
     <string name="pref_theme">ธีม</string>

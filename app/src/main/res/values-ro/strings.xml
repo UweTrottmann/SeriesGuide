@@ -153,6 +153,7 @@
     <string name="action_shows_sort_oldest_episode">Cel mai vechi episod</string>
     <string name="action_shows_sort_last_watched">Ultimul vizionat</string>
     <string name="action_shows_sort_remaining">Episoade rămase</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favoritele primele</string>
     <string name="context_updateshow">Actualizare</string>
     <string name="context_marknext">Episodul următor a fost vizionat</string>
@@ -255,6 +256,7 @@
     <string name="statistics_shows">Seriale</string>
     <string name="statistics_episodes">Episoade</string>
     <string name="statistics_movies">Filme</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s cu următoarele episoade</string>
     <string name="shows_continuing">%s continuă</string>
     <string name="episodes_watched">%s urmărit</string>
@@ -383,7 +385,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_tvdb">This app uses data and images by TheTVDB licensed under a Creative Commons license.</string>
     <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide este dezvoltat folosind software open source.</string>
@@ -407,6 +408,7 @@
     <string name="upcoming_upto_one_week">o săptămână</string>
     <string name="upcoming_upto_two_weeks">două săptămâni</string>
     <string name="upcoming_upto_one_month">o lună</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aspect</string>
     <string name="pref_theme">Temă</string>

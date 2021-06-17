@@ -37,7 +37,7 @@
     <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
     <string name="action_stream">Stream ή αγορά</string>
     <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_select_region">Επιλογή περιοχής</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -90,9 +90,9 @@
     <string name="show_isalive">Συνεχίζεται</string>
     <string name="show_isnotalive">Σταμάτησε</string>
     <string name="show_isUpcoming">Επερχόμενα</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">Στην Παραγωγή</string>
+    <string name="show_status_pilot">Πιλότος</string>
+    <string name="show_status_canceled">Ακυρώθηκε</string>
     <string name="no_translation">Δεν υπάρχει περιγραφή μεταφρασμένη στα %1$s διαθέσιμη στο %2$s.</string>
     <string name="no_translation_title">Χωρίς μετάφραση</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Παλαιότερο επεισόδιο</string>
     <string name="action_shows_sort_last_watched">Είδατε πρόσφατα</string>
     <string name="action_shows_sort_remaining">Επεισόδια που απομένουν</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Αγαπημένα πρώτα</string>
     <string name="context_updateshow">Ενημέρωση</string>
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
@@ -220,7 +221,7 @@
     <string name="list_manage">Διαχείριση λίστας</string>
     <string name="list_item_manage">Διαχείριση λιστών</string>
     <string name="list_item_remove">Κατάργηση από τη λίστα</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Μπορείτε να προσθέσετε σειρές σε αυτή τη λίστα</string>
     <string name="action_lists_sort">Ταξινόμημένες λίστες</string>
     <string name="action_lists_reorder">Ταξινομημένες λίστες</string>
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">Σειρές</string>
     <string name="statistics_episodes">Επεισόδια</string>
     <string name="statistics_movies">Ταινίες</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s με τα επόμενα επεισόδια</string>
     <string name="shows_continuing">%s συνεχίζονται</string>
     <string name="episodes_watched">%s παρακολουθήθηκαν</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Πολιτική Απορρήτου</string>
-    <string name="licence_tvdb">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το TheTVDB με άδειες Creative Commons.</string>
     <string name="licence_themoviedb">Αυτό το προϊόν χρησιμοποιεί το API του TMDb, αλλά δεν είναι ούτε εγκεκριμένο, ούτε πιστοποιημένο από το TMDb.</string>
     <string name="licence_trakt">Αυτή η εφαρμογή χρησιμοποιεί δεδομένα και εικόνες από το Trakt.</string>
     <string name="about_open_source">Το SeriesGuide έχει φτιαχτεί με τη χρήση λογισμικού ανοιχτού κώδικα.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">μία εβδομάδα</string>
     <string name="upcoming_upto_two_weeks">δύο εβδομάδες</string>
     <string name="upcoming_upto_one_month">ένας μήνας</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Εμφάνιση</string>
     <string name="pref_theme">Θέμα</string>

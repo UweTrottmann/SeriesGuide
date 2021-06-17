@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Menu -->
+    <string name="shows">Televidaĵoj</string>
+    <string name="lists">Listoj</string>
+    <string name="movies">Filmoj</string>
+    <string name="statistics">Statistikaĵoj</string>
+    <string name="navigation_more">Pli</string>
+    <string name="search">Serĉi</string>
+    <string name="preferences">Agordoj</string>
+    <string name="help">Helpo</string>
+    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <!-- Media items -->
+    <string name="show_details">Detaloj</string>
+    <string name="episode">Epizodo</string>
+    <string name="episode_number">%d-a epizodo</string>
+    <string name="episodes">Epizodoj</string>
+    <string name="season">Sezono</string>
+    <string name="season_number">%d-a sezono</string>
+    <string name="specialseason">Specialaj Epizodoj</string>
+    <string name="ratings">Taksoj</string>
+    <!-- Descriptions -->
+    <string name="description_overview">Priskribo</string>
+    <string name="description_poster">Montri afiŝon</string>
+    <string name="description_image">Epizoda bildo</string>
+    <string name="description_menu_overflow">Pli da opcioj</string>
+    <!-- Actions -->
+    <string name="clear">Viŝi</string>
+    <string name="discard">Forĵeti</string>
+    <string name="save_selection">Konservi elekton</string>
+    <string name="action_display_all">Montri ĉiujn</string>
+    <string name="web_search">Serĉi retume</string>
+    <string name="add_to_homescreen">Aldoni al Hejma ekrano</string>
+    <string name="action_open">Malfermi</string>
+    <string name="sync_manually">Sinkronigi permane</string>
+    <string name="sync_and_update">Sinkronigi kaj ĝisdatigi</string>
+    <string name="sync_and_download_all">Sinkronigi kaj elŝuti ĉiujn</string>
+    <string name="action_stream">Elsendi aŭ aĉeti</string>
+    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_select_region">Elekti regionon</string>
+    <!-- Search -->
+    <string name="clear_search_history">Viŝi serĉhistorion</string>
+    <string name="search_hint">Serĉi epizodojn</string>
+    <!-- Status messages -->
+    <string name="updated">Ĝisdatigita al plej lasta versio</string>
+    <string name="updated_details">Detaloj</string>
+    <string name="norating">sen takso</string>
+    <string name="unknown">nekonata</string>
+    <string name="offline">Konekti al interreto kaj provu denove</string>
+    <string name="app_not_available">Neniu aplikaĵo por pritrakti ĉi tiun</string>
+    <string name="people_empty">Ĉu neniu estas ĉi tie?! Tuŝi por reprovi.</string>
+    <string name="database_error">Ne povis modifi datumon</string>
+    <string name="reinstall_info">Try to backup in Settings, re-install and restore</string>
+    <string name="api_error_generic">Could not talk to %s. Try again later.</string>
+    <string name="api_failed">Malsukcesis: %s</string>
+    <string name="copy_to_clipboard">Kopita al tondejo</string>
+    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <!-- Sharing -->
+    <string name="share">Konigi</string>
+    <string name="share_show">Konigi televidaĵon</string>
+    <string name="share_episode">Konigi epizodon</string>
+    <string name="share_movie">Konigi filmon</string>
+    <string name="addtocalendar">Aldoni al kalendaro</string>
+    <string name="addtocalendar_failed">Ne povas krei kalendaran eventon</string>
+    <string name="links">Ligiloj</string>
+    <!-- Comments -->
+    <string name="comments">Komentoj</string>
+    <string name="shout_hint">Tajpu komenton (la Angla, 5+ vortoj)</string>
+    <string name="shout_invalid">Via komento ne sekvas la regulojn!</string>
+    <string name="action_post">Sendi</string>
+    <string name="isspoiler">Averto pri malkaŝo de intrigo!</string>
+    <string name="no_shouts">Estu la unuan kiu komentos!</string>
+    <string name="refresh">Aktualigi</string>
+    <plurals name="replies_plural">
+        <item quantity="one">%d respondo</item>
+        <item quantity="other">%d respondoj</item>
+    </plurals>
+    <!-- Metadata -->
+    <string name="episode_number_disk">DVD</string>
+    <string name="episode_firstaired">Eldondato</string>
+    <string name="episode_firstaired_unknown">Eldondato nekonata</string>
+    <string name="episode_dvdnumber">DVD -a epizodo</string>
+    <string name="original_release">Originala eldono</string>
+    <string name="show_genres">Ĝenroj</string>
+    <string name="show_contentrating">Enhavotakso</string>
+    <string name="show_release_times">Eldondatoj</string>
+    <string name="episode_directors">Reĝisoroj</string>
+    <string name="episode_gueststars">Gastaj aktoroj</string>
+    <string name="episode_writers">Skribistoj</string>
+    <string name="show_isalive">Daŭranta</string>
+    <string name="show_isnotalive">Finita</string>
+    <string name="show_isUpcoming">Venontaj</string>
+    <string name="show_status_in_production">En farado</string>
+    <string name="show_status_pilot">Piloto</string>
+    <string name="show_status_canceled">Nuligita</string>
+    <string name="no_translation">Ne estas priskribo tradukita al %1$s disponebla je %2$s.</string>
+    <string name="no_translation_title">Ne tradukita</string>
+    <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
+    <string name="format_source">Fonto: %s</string>
+    <string name="format_last_edited">Laste redaktita: %s</string>
+    <!-- Date and Time -->
+    <string name="today">hodiaŭ</string>
+    <string name="now">nun</string>
+    <string name="daily">Tage</string>
+    <string name="runtime_minutes">%s minutoj</string>
+    <!-- Flagging -->
+    <string name="mark_all">Ĉiuj spektitaj</string>
+    <string name="unmark_all">Neniu spektita</string>
+    <string name="action_watched_up_to">Spektis ĝis ĉi tie</string>
+    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="collect_all">Ĉiuj kolektitaj</string>
+    <string name="uncollect_all">Neniu kolektita</string>
+    <string name="action_skip">Preterpasi</string>
+    <string name="action_dont_skip">Malpreterpasi</string>
+    <string name="action_collection_add">Aldoni al kolekto</string>
+    <string name="action_collection_remove">Forigi el kolekto</string>
+    <string name="action_watched">Marki spektitan</string>
+    <string name="action_unwatched">Marki nespektitan</string>
+    <string name="state_watched">Spektita</string>
+    <string name="state_watched_multiple_format">Spektita (%d)</string>
+    <string name="state_skipped">Preterpasita</string>
+    <string name="state_in_collection">En kolekto</string>
+    <string name="state_on_watchlist">Sur spektolisto</string>
+    <string name="state_favorite">Plej ŝatata</string>
+    <!-- Shows -->
+    <string name="confirm_delete">Ĉu forigi %s?</string>
+    <string name="delete_error">Could not remove show. Try again later.</string>
+    <string name="delete_show">Forigi</string>
+    <string name="no_nextepisode">neniu sekva epizodo trovita</string>
+    <string name="context_favorite">Aldoni al plej ŝatataj</string>
+    <string name="context_unfavorite">Forigi el plej ŝatataj</string>
+    <string name="favorited">Aldonita al plej ŝatataj</string>
+    <string name="unfavorited">Forigita el plej ŝatataj</string>
+    <string name="action_episode_notifications_on">Ŝalti sciigojn de epizodoj</string>
+    <string name="action_episode_notifications_off">Malŝalti sciigojn de epizodoj</string>
+    <string name="context_hide">Kaŝi</string>
+    <string name="context_unhide">Ne kaŝi</string>
+    <string name="hidden">Movita al kaŝitaj</string>
+    <string name="unhidden">Televidaĵo estas videbla denove</string>
+    <string name="action_shows_add">Aldoni televidaĵon</string>
+    <string name="action_shows_filter">Filtri televidaĵojn</string>
+    <string name="empty_filter">Forigi ĉiujn filtrilojn</string>
+    <string name="action_shows_filter_favorites">Plej ŝatataj</string>
+    <string name="action_shows_filter_unwatched">Nespektitaj</string>
+    <string name="action_shows_filter_upcoming">Venontaj</string>
+    <string name="action_shows_filter_hidden">Kaŝitaj</string>
+    <string name="action_shows_make_all_visible">Videbligu ĉiujn kaŝitajn</string>
+    <string name="description_make_all_visible_format">Ĉu videbligu ĉiujn kaŝitajn televidaĵojn (%s) denove?</string>
+    <string name="action_shows_sort">Ordigi televidaĵojn</string>
+    <string name="action_shows_sort_title">Titolo</string>
+    <string name="action_shows_sort_latest_episode">Lasta epizodo</string>
+    <string name="action_shows_sort_oldest_episode">Plej maljuna epizodo</string>
+    <string name="action_shows_sort_last_watched">Laste spektitaj</string>
+    <string name="action_shows_sort_remaining">Restantaj epizodoj</string>
+    <string name="action_shows_sort_status">Stato</string>
+    <string name="action_shows_sort_favorites">Plej ŝatataj unue</string>
+    <string name="context_updateshow">Ĝisdatigi</string>
+    <string name="context_marknext">Spektis sekvan epizodon</string>
+    <string name="action_episodes_switch_view">Baskuli vidon</string>
+    <!-- History -->
+    <string name="user_stream">Historio</string>
+    <string name="recently_watched">Laste spektita</string>
+    <string name="friends_recently">Viaj Trakt amikoj</string>
+    <string name="now_empty">Nenio okazas. Spektu iajn televidaĵojn!</string>
+    <string name="now_movies_empty">Nenio okazas. Spektu iajn filmojn!</string>
+    <string name="user_stream_empty">Neniu historio sur Trakt. Spektu kaj marku iun televidaĵon!</string>
+    <string name="user_movie_stream_empty">No history on Trakt. Watch and check into some movies!</string>
+    <!-- Calendar -->
+    <string name="upcoming">Venontaj</string>
+    <string name="recent">Lastatempaj</string>
+    <string name="released_today">Eldonita hodiaŭ</string>
+    <string name="noupcoming">Ne estas venontaj epizodoj</string>
+    <string name="norecent">Ne estas lastaj epizodoj</string>
+    <string name="calendar_settings">Kalendaraj agordoj</string>
+    <string name="only_favorites">Nur plej ŝatataj televidaĵoj</string>
+    <string name="calendar_only_collected">Nur kolektitaj epizodoj</string>
+    <string name="calendar_only_premieres">Nur unuaĵoj</string>
+    <string name="pref_infinite_scrolling">Infinita kalendaro</string>
+    <!-- Updating -->
+    <string name="update_scheduled">Ĝisdatigas&#8230;</string>
+    <string name="update_no_connection">Por ĝisdatigi konekti al la interreto</string>
+    <string name="update_inprogress">An update is in progress, try again later</string>
+    <!-- Seasons -->
+    <string name="season_allwatched">Ĉiuj epizodoj estas spektitaj</string>
+    <plurals name="other_episodes_plural">
+        <item quantity="one">%d alia epizodo</item>
+        <item quantity="other">%d aliaj epizodoj</item>
+    </plurals>
+    <plurals name="not_released_episodes_plural">
+        <item quantity="one">%d eldonota</item>
+        <item quantity="other">%d eldonotaj</item>
+    </plurals>
+    <plurals name="remaining_episodes_plural">
+        <item quantity="one">%d restanta</item>
+        <item quantity="other">%d restantaj</item>
+    </plurals>
+    <!-- Add show -->
+    <string name="checkin_searchhint">Tajpu televidaĵan nomon</string>
+    <string name="add_empty">Estas neniu televidaĵo ĉi tie</string>
+    <string name="no_results">Neniu rezulto, provu tutajn vortojn</string>
+    <string name="empty_show_search">Neniu trovita en via televidaĵa listo</string>
+    <string name="action_try_again">Reprovi</string>
+    <string name="tvdb_error_does_not_exist">La televidaĵo ne ekzistas (ankoraŭ) je TMDB. Reprovu poste.</string>
+    <string name="add_all">Aldoni ĉiujn</string>
+    <string name="add_multiple">All shows will appear in your show list shortly</string>
+    <string name="add_started">%s aperigos en via televidaĵa listo ne longe</string>
+    <string name="add_error">Ne povas aldoni %s</string>
+    <string name="add_already_exists">%s jam estas en via televidaĵa listo</string>
+    <string name="title_new_episodes">Novaj epizodoj</string>
+    <string name="watched_shows">Spektitaj</string>
+    <string name="shows_collection">Kolekto</string>
+    <string name="watchlist">Spektolisto</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">Ne estas rezultoj</string>
+    <string name="title_similar_shows">Similaj televidaĵoj</string>
+    <!-- Lists -->
+    <string name="first_list">Unua listo</string>
+    <string name="list_add">Aldoni liston</string>
+    <string name="list_title_hint">Nomu vian liston</string>
+    <string name="list_remove">Forigi liston</string>
+    <string name="list_manage">Administri liston</string>
+    <string name="list_item_manage">Administri listojn</string>
+    <string name="list_item_remove">Forigi el listo</string>
+    <string name="list_empty">Vi povas aldoni televidaĵojn al ĉi tiu listo</string>
+    <string name="action_lists_sort">Ordigi listojn</string>
+    <string name="action_lists_reorder">Reordigi listojn</string>
+    <string name="error_name_already_exists">Listo kun ĉi tiu nomo jam ekzistas</string>
+    <!-- Movies -->
+    <string name="title_discover">Esplori</string>
+    <string name="title_popular">Popularaj</string>
+    <string name="title_digital_releases">Bitaj eldonoj</string>
+    <string name="title_disc_releases">Diskaj eldonoj</string>
+    <string name="movies_in_theatres">En kinejoj</string>
+    <string name="movies_collection">Kolekto</string>
+    <string name="movies_watchlist">Spektolisto</string>
+    <string name="movies_watched">Spektitaj</string>
+    <string name="watchlist_add">Aldoni al spektolisto</string>
+    <string name="watchlist_remove">Forigi el spektolisto</string>
+    <string name="watchlist_added">Aldonita al spektolisto</string>
+    <string name="watchlist_removed">Forigita el spektolisto</string>
+    <string name="movies_search_hint">Tajpu filmtitolon</string>
+    <string name="movies_collection_empty">Vi ne aldonis filmojn al via kolekto</string>
+    <string name="movies_watchlist_empty">Vi ne aldonis filmojn al via spektolisto</string>
+    <string name="trailer">Antaŭprezentaĵo</string>
+    <string name="movie_cast">Aktoraro</string>
+    <string name="movie_crew">Ekipo</string>
+    <string name="action_movies_sort">Ordigi filmojn</string>
+    <string name="action_movies_sort_title">Titolo</string>
+    <string name="action_movies_sort_release">Eldondato</string>
+    <!-- Statistics -->
+    <string name="statistics_failed">Ne povas kalkuli statistikaĵojn</string>
+    <string name="statistics_shows">televidaĵoj</string>
+    <string name="statistics_episodes">epizodoj</string>
+    <string name="statistics_movies">filmoj</string>
+    <string name="shows_finished">%s finis spektadi</string>
+    <string name="shows_with_next">%s kun sekvaj epizodoj</string>
+    <string name="shows_continuing">%s daŭrantaj</string>
+    <string name="episodes_watched">%s spektitaj</string>
+    <string name="movies_on_watchlist">%s sur spektolisto</string>
+    <string name="stats_in_collection_format">%d en kolekto</string>
+    <string name="movies_watched_format">%s spektitaj</string>
+    <plurals name="days_plural">
+        <item quantity="one">%d tago</item>
+        <item quantity="other">%d tagoj</item>
+    </plurals>
+    <plurals name="hours_plural">
+        <item quantity="one">%d horo</item>
+        <item quantity="other">%d horoj</item>
+    </plurals>
+    <plurals name="minutes_plural">
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d minutoj</item>
+    </plurals>
+    <!-- Features -->
+    <string name="feature_supported">Subtenata</string>
+    <string name="feature_not_supported">Nesubtenata</string>
+    <string name="feature_history">Historio de mi kaj miaj amikoj</string>
+    <string name="feature_comments">Sendi komentoj</string>
+    <string name="feature_sync">Sinkronigi</string>
+    <!-- Hexagon -->
+    <string name="hexagon_warning">Eksperimenta</string>
+    <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
+    <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
+    <string name="hexagon_signin">Ensaluti</string>
+    <string name="hexagon_signout">Elsaluti</string>
+    <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
+    <string name="hexagon_setup_fail_auth">Via Google-konto ne sukcesas konekti</string>
+    <string name="hexagon_remove_account">Forigi konton</string>
+    <string name="hexagon_remove_account_success">Konto elviŝita</string>
+    <string name="hexagon_remove_account_failure">Ne povis forigi konton</string>
+    <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
+    <string name="hexagon_api_queued">Sendas al SeriesGuide Cloud.</string>
+    <string name="hexagon_signed_out">Elsalutis el SeriesGuide Cloud</string>
+    <string name="hexagon_signin_fail_format">Eraro dum ensalutado de Google (%s)</string>
+    <!-- trakt -->
+    <string name="trakt_submitqueued">Sendado al Trakt.</string>
+    <string name="checkin_success_trakt">Markis je %s je Trakt</string>
+    <string name="checkin_canceled_success_trakt">Cancelled check-in on Trakt</string>
+    <string name="traktcheckin_cancel">Anstataŭigi</string>
+    <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
+    <string name="traktcheckin_wait">Mi atendos</string>
+    <string name="trakt_success">Sendita al Trakt.</string>
+    <string name="trakt_error_account_locked">Via Trakta konto estas ŝlosita. Kontaktu Traktan helparon.</string>
+    <string name="trakt_error_credentials">Io misokazis. Kontrolu viajn identigilojn de Trakt kaj reprovu.</string>
+    <string name="trakt_error_not_exists">Ne (ankoraŭ) disponebla je Trakt. Reprovu poste.</string>
+    <string name="trakt_notice_not_exists">Ne povas (jam) sekvi Trakton</string>
+    <!-- Connect trakt -->
+    <string name="connect_trakt">Konekti Trakt -on</string>
+    <string name="trakt_reconnect">Konekti SeriesGuide al Trakt</string>
+    <string name="trakt_reconnect_details">Kontrolu viajn indentigilojn de Trakt</string>
+    <string name="waitplease">Momenton, bonvolu&#8230;</string>
+    <string name="connect">Konekti</string>
+    <string name="disconnect">Malkonekti</string>
+    <string name="use_integrated_browser">Uzi integritan retumilon</string>
+    <string name="show_library">Montri vian Trakt -an bibliotekon</string>
+    <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
+    <!-- trakt ratings -->
+    <string name="action_rate">Taksi</string>
+    <string name="your_rating">Via takso</string>
+    <string name="love">Imponega</string>
+    <string name="hate">Perdis tempon :(</string>
+    <string name="rating2">Terura</string>
+    <string name="rating3">Malbona</string>
+    <string name="rating4">Ne bona</string>
+    <string name="rating5">Ne tute bona</string>
+    <string name="rating6">Mezbona</string>
+    <string name="rating7">Bona</string>
+    <string name="rating8">Bonega</string>
+    <string name="rating9">Mirinda</string>
+    <plurals name="votes">
+        <item quantity="one">%d voĉo</item>
+        <item quantity="other">%d voĉoj</item>
+    </plurals>
+    <!-- Check Ins -->
+    <string name="checkin">Marki</string>
+    <string name="checkin_hint">Tajpu mesaĝon (nedeviga)</string>
+    <string name="paste_title">Algui titolon</string>
+    <string name="pref_quick_checkin">Rapide marki</string>
+    <string name="pref_quick_checkin_summary">Ne demandi por kontrola mesaĝo</string>
+    <!-- Help -->
+    <string name="feedback">Sendi prikomentado</string>
+    <string name="action_open_in_browser">Malfermi en retumilo</string>
+    <!-- Settings -->
+    <string name="action_translate">Traduki tiun aplikaĵon</string>
+    <string name="action_contribute_content">Traduki aŭ plibonigi enhavon</string>
+    <string name="prefs_category_advanced">Altnivela</string>
+    <string name="prefs_category_about">Pri</string>
+    <string name="pref_onlyfuture">Sen dissenditaj epizodoj</string>
+    <string name="pref_onlyfuturesummary">Neniam montri jam dissenditajn epizodojn</string>
+    <string name="pref_onlyseasoneps">Kaŝi specialajn epizodojn</string>
+    <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
+    <string name="pref_exactdates">Montri ekzaktajn datojn</string>
+    <string name="pref_exactdates_summary">\"Oktobro 31\" anstataŭ \"en 3 tagoj\"</string>
+    <string name="pref_nospoilers">Preventi malkaŝaĵojn</string>
+    <string name="pref_nospoilers_summary">Hide details until an episode is watched</string>
+    <string name="pref_seasonsorting">Ordigi sezonojn laŭ&#8230;</string>
+    <string name="pref_episodesorting">Ordigi epizodojn laŭ&#8230;</string>
+    <string name="pref_language">Preferata lingvo de enhavo</string>
+    <string name="pref_language_fallback">Alternativa lingvo</string>
+    <string name="pref_updatewifionly">Bildojn nur per vifio</string>
+    <string name="pref_updatewifionlysummary">To reduce data charges, don\'t download over mobile or metered networks</string>
+    <string name="pref_error_reports">Reporti erarojn al apa programisto</string>
+    <plurals name="days_before_plural">
+        <item quantity="one">Antaŭ %d tago</item>
+        <item quantity="other">Antaŭ %d tagoj</item>
+    </plurals>
+    <plurals name="hours_before_plural">
+        <item quantity="one">Antaŭ %d horo</item>
+        <item quantity="other">Antaŭ %d horoj</item>
+    </plurals>
+    <plurals name="minutes_before_plural">
+        <item quantity="one">Antaŭ %d minuto</item>
+        <item quantity="other">Antaŭ %d minutoj</item>
+    </plurals>
+    <!-- About screen -->
+    <string name="privacy_policy">Privateca politiko</string>
+    <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+    <string name="licence_trakt">Ĉi tiu aplikaĵo uzas datumon kaj bildojn de Trakt.</string>
+    <string name="about_open_source">SeriesGuide is built using open source software.</string>
+    <string name="licences_and_credits">Permesiloj kaj agnosko</string>
+    <!-- Sort -->
+    <string name="sort">Ordigi laŭ</string>
+    <string name="action_sort_ignore_articles">Ignori artikolojn</string>
+    <!-- Sort orders -->
+    <string name="sort_order_latest_first">Plej lastaj unue</string>
+    <string name="sort_order_oldest_first">Malplej lastaj unue</string>
+    <string name="sort_order_unwatched_first">Nespektitaj unue</string>
+    <string name="sort_order_alphabetical">A - Z</string>
+    <string name="sort_order_top_rated_first">Plej bona takso</string>
+    <string name="sort_order_latest_first_dvd">Plej lastaj unue (DVD)</string>
+    <string name="sort_order_oldest_first_dvd">Malplej lastaj unue</string>
+    <!-- Upcoming thresholds -->
+    <string name="pref_upcominglimit">Venonta intervalo</string>
+    <string name="upcoming_upto_now">nun</string>
+    <string name="upcoming_upto_one_day">1 tago</string>
+    <string name="upcoming_upto_three_days">3 tagoj</string>
+    <string name="upcoming_upto_one_week">1 semajno</string>
+    <string name="upcoming_upto_two_weeks">2 semajnoj</string>
+    <string name="upcoming_upto_one_month">1 monato</string>
+    <string name="upcoming_all">ĉiuj</string>
+    <!-- Appearance settings -->
+    <string name="pref_appearance">Apero</string>
+    <string name="pref_theme">Etoso</string>
+    <!-- Themes -->
+    <string name="theme_app_follow_system">Laŭ operaciumo</string>
+    <string name="theme_app_auto_battery">Agordita per energiŝpariga reĝimo</string>
+    <string name="theme_app_dark">Malhela</string>
+    <string name="theme_app_light">Hela</string>
+    <!-- Other advanced settings -->
+    <string name="pref_other">Aliaj</string>
+    <string name="pref_autoupdatesummary">Automatically sync and update content</string>
+    <string name="backup">Savkopii/Restaŭri</string>
+    <string name="backup_summary">Backup or restore your shows</string>
+    <string name="pref_number">Numera formato</string>
+    <string name="pref_offset">Manual time offset</string>
+    <string name="pref_offsetsummary">Offset air times by %d hours</string>
+    <string name="clear_cache">Viŝi tempmemoron</string>
+    <string name="clear_cache_summary">Go to storage settings to remove cached images and network responses</string>
+    <!-- Backup and Restore -->
+    <string name="backup_full_dump">Include descriptions, details, ratings</string>
+    <string name="backup_failed_file_access">Ne povas savkopii. Savkopia dosiero ne trovitas aŭ ne alireblas</string>
+    <string name="backup_success">Savkopio sukcesis</string>
+    <string name="backup_failed">Savkopio fiaskis</string>
+    <string name="import_failed_nosd">Ne povas restaŭri savkopion. La savkopia dosierujo ne disponeblas.</string>
+    <string name="import_failed_nofile">Ne estas legebla dosiero de savkopio</string>
+    <string name="import_success">Savkopio restaŭris sukcese</string>
+    <string name="import_failed">Restaŭrado de la savkopio fiaskis</string>
+    <string name="backup_button">Krei savkopion</string>
+    <string name="import_button">Restaŭri savkopion</string>
+    <string name="import_warning">La savkopio anstataŭigis viajn aktualajn televidaĵojn, listojn aŭ filmojn.</string>
+    <string name="no_file_selected">Neniu dosiero elektita</string>
+    <string name="action_select_file">Elekti dosieron</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Aŭtomata savkopio</string>
+    <string name="pref_autobackupsummary">Weekly backup of your shows, lists and movies to device storage.</string>
+    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="last_auto_backup">Lasta aŭtomata savkopio: %s</string>
+    <string name="restore_auto_backup">Restaŭri aŭtomatan savkopion</string>
+    <string name="autobackup_failed">La lasta aŭtomata savkopio fiaskis</string>
+    <string name="autobackup_files_missing">Por uzi aŭtomatan savkopion, elekti validaj dosierojn de savkopio</string>
+    <string name="autobackup_create_user_copy">Krei kopion poste ĉiu savkopio</string>
+    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <!-- Welcome dialog -->
+    <string name="get_started">Komenci</string>
+    <string name="dismiss">Rezigni</string>
+    <!-- Notifications -->
+    <string name="upcoming_show">%s venas</string>
+    <string name="upcoming_episodes">Novaj epizodoj venas</string>
+    <string name="upcoming_episodes_number">%s novaj epizodoj</string>
+    <string name="more">%d pli</string>
+    <string name="upcoming_display">Elekti por montri venontajn televidaĵojn</string>
+    <string name="pref_notifications">Sciigoj</string>
+    <string name="pref_notificationssummary">Sciigi pri novaj epizodoj</string>
+    <string name="pref_ringtone">Sono</string>
+    <string name="pref_vibrate">Vibri</string>
+    <string name="pref_vibratesummary">Ankaŭ vibri dum montrado de sciigo</string>
+    <string name="pref_notifications_treshold">Kiam sciigi</string>
+    <string name="pref_notifications_select_shows">Elekti televidaĵojn</string>
+    <string name="pref_notifications_select_shows_summary">Televidaĵoj kiuj havas ŝaltitajn sciigojn (%d)</string>
+    <string name="pref_notifications_hidden">Ignori kaŝitajn televidaĵojn</string>
+    <string name="pref_notifications_hidden_summary">Eĉ se sciigoj malŝaltitas, ne sciigu pri kaŝitaj televidaĵoj</string>
+    <string name="pref_notification_channel_errors">Eraroj</string>
+    <string name="pref_notifications_next_episodes_only">Nur por sekve spektotaj epizodoj</string>
+    <string name="pref_notifications_next_episodes_only_summary">Nur sciigi se la nova epizodo estas la sekva por spekti</string>
+    <string name="pref_notifications_battery_settings">Agordoj de baterio</string>
+    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <!-- List Widget -->
+    <string name="hide_watched">Kaŝi spektitajn epizodojn</string>
+    <string name="pref_widget_opacity">Fenestraĵa fono</string>
+    <string name="pref_widget_type">Fenestraĵa speco</string>
+    <string name="pref_large_font">Uzi grandan tiparon</string>
+    <!-- Widget background options -->
+    <string name="widget_background_transparent">Travidebla</string>
+    <string name="widget_background_25">25%</string>
+    <string name="widget_background_50">50%</string>
+    <string name="widget_background_75">75%</string>
+    <string name="widget_background_opaque">Opaka</string>
+    <!-- Google In-App Billing -->
+    <string name="onlyx">Nur por subtenantoj</string>
+    <string name="action_upgrade">Malŝlosi ĉiujn funkciojn</string>
+    <string name="billing_action_subscribe">Aboni</string>
+    <string name="billing_action_manage_subscriptions">Administri abonojn</string>
+    <string name="billing_action_pass">Ekhavu X Pass aplikaĵon</string>
+    <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
+    <string name="billing_duration_format">%1$s/jaro</string>
+    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_price_pass">unu-foja aĉeto</string>
+    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_success">Dankon por subteni SeriesGuide! Vi havas atingon por ĉiuj funkcioj.</string>
+    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_learn_more">Pli da informo kaj helpo</string>
+    <string name="subscription_expired">Abono finiĝis</string>
+    <string name="subscription_expired_details">Via SeriesGuide abono ĵus finiĝis.</string>
+    <!-- Amazon In-App Billing -->
+    <string name="subscription_not_signed_in">Ensaluti al via Amazona konto</string>
+    <string name="subscription_unavailable">La abono nuntempe nedisponeblas</string>
+    <string name="subscription_failed">Aĉeto ne kompleta</string>
+    <string name="pass_unavailable">X Pass nuntempe nedisponeblas</string>
+    <!-- Extensions -->
+    <string name="action_extensions_configure">Adapti aldonaĵoj</string>
+    <string name="action_extensions_add">Aldoni aldonaĵon</string>
+    <string name="action_extensions_search">Akiri pli da aldonaĵoj</string>
+    <string name="action_extension_remove">Forigi</string>
+    <string name="extension_amazon">Serĉi je Amazon</string>
+    <string name="description_extension_amazon">Traserĉi vian lokalan Amazonan retejon.</string>
+    <string name="pref_amazon_domain">Amazon -a retejo</string>
+    <string name="extension_google_play">Serĉi je Google Play</string>
+    <string name="description_extension_google_play">Serĉi je la Google Play Butiko</string>
+    <string name="extension_youtube">Jutuba serĉo</string>
+    <string name="description_extension_youtube">Serĉi Jutubon por filmetoj</string>
+    <string name="description_extension_web_search">Serĉi retejojn kaj bildojn</string>
+    <!-- People -->
+    <string name="person_biography">Biografio</string>
+    <!-- Feedback -->
+    <string name="feedback_question_enjoy">Ĉu vi ĝuas pri SeriesGuide?</string>
+    <string name="feedback_action_yes">Jes!</string>
+    <string name="feedback_action_notreally">Ne vere</string>
+    <string name="feedback_question_rate_google">Ĉu volas taksi ĝin je Google Play?</string>
+    <string name="feedback_question_rate_amazon">Ĉu volas taksi ĝin je Amazon?</string>
+    <string name="feedback_question_feedback">Ĉu volas diri min kiel plibonigi ĝin?</string>
+    <string name="feedback_action_ok">Bone, ja</string>
+    <string name="feedback_action_nothanks">Ne, dankon</string>
+    <!-- Support -->
+    <string name="support_the_dev">Ĉu volas subteni la programiston?</string>
+</resources>

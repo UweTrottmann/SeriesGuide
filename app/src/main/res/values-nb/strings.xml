@@ -5,13 +5,13 @@
     <string name="lists">Lister</string>
     <string name="movies">Filmer</string>
     <string name="statistics">Statistikk</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Mer</string>
     <string name="search">Søk</string>
     <string name="preferences">Innstillinger</string>
     <string name="help">Hjelp</string>
     <string name="no_more_updates">SeriesGuide vil ikke motta flere oppdateringer for denne versjonen av Android.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">Detaljer</string>
     <string name="episode">Episode</string>
     <string name="episode_number">Episode %d</string>
     <string name="episodes">Episoder</string>
@@ -36,14 +36,14 @@
     <string name="sync_and_update">Synkronisering og oppdatering</string>
     <string name="sync_and_download_all">Synkroniser og last ned alle</string>
     <string name="action_stream">Strøm eller kjøp</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Strøm eller kjøp informasjon</string>
+    <string name="action_select_region">Velg region</string>
     <!-- Search -->
     <string name="clear_search_history">Tøm søkelogg</string>
     <string name="search_hint">Søk episoder</string>
     <!-- Status messages -->
     <string name="updated">Oppdatert til nyeste versjon.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Detaljer</string>
     <string name="norating">n/a</string>
     <string name="unknown">ukjent</string>
     <string name="offline">Koble til et nettverk, og prøv på nytt.</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>
     <string name="api_failed">Mislyktes: %s</string>
     <string name="copy_to_clipboard">Kopiert til utklippstavlen</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Ikke funnet på TMDb, fjernes i en fremtidig oppdatering. Trykk for detaljer.</string>
     <!-- Sharing -->
     <string name="share">Del</string>
     <string name="share_show">Del serie</string>
@@ -90,9 +90,9 @@
     <string name="show_isalive">Fortsetter</string>
     <string name="show_isnotalive">Avsluttet</string>
     <string name="show_isUpcoming">Kommer snart</string>
-    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_in_production">I produksjon</string>
     <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_canceled">Kansellert</string>
     <string name="no_translation">Det er ingen beskrivelse oversatt til %1$s på %2$s.</string>
     <string name="no_translation_title">Ikke oversatt</string>
     <string name="no_spoilers">Noen detaljer er skjult for å unngå spoilere. Gå til Innstillinger for å deaktivere dette.</string>
@@ -106,8 +106,8 @@
     <!-- Flagging -->
     <string name="mark_all">Sett alle</string>
     <string name="unmark_all">Ingen sett</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Sett alt før denne</string>
+    <string name="confirmation_watched_up_to">Marker alle episoder før denne til sett?</string>
     <string name="collect_all">Samlet alle</string>
     <string name="uncollect_all">Samlet ingen</string>
     <string name="action_skip">Hopp over</string>
@@ -117,11 +117,11 @@
     <string name="action_watched">Sett</string>
     <string name="action_unwatched">Ikke sett</string>
     <string name="state_watched">Sett</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched_multiple_format">Sett (%d)</string>
+    <string name="state_skipped">Hoppet over</string>
+    <string name="state_in_collection">I samling</string>
+    <string name="state_on_watchlist">I overvåkningslisten</string>
+    <string name="state_favorite">Favoritt</string>
     <!-- Shows -->
     <string name="confirm_delete">Vil du virkelig fjerne %s?</string>
     <string name="delete_error">Kunne ikke fjerne serie. Prøv igjen senere.</string>
@@ -152,10 +152,11 @@
     <string name="action_shows_sort_oldest_episode">Eldste episode</string>
     <string name="action_shows_sort_last_watched">Sist sett</string>
     <string name="action_shows_sort_remaining">Resterende episoder</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favoritter først</string>
     <string name="context_updateshow">Oppdater</string>
     <string name="context_marknext">Sett neste episode</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Bytt visning</string>
     <!-- History -->
     <string name="user_stream">Historikk</string>
     <string name="recently_watched">Nylig sett</string>
@@ -173,7 +174,7 @@
     <string name="calendar_settings">Kalenderinnstillinger</string>
     <string name="only_favorites">Bare favoritter</string>
     <string name="calendar_only_collected">Bare episoder i samling</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Kun premierer</string>
     <string name="pref_infinite_scrolling">Uendelig kalender</string>
     <!-- Updating -->
     <string name="update_scheduled">Oppdaterer&#8230;</string>
@@ -199,7 +200,7 @@
     <string name="no_results">Ingen treff, prøv hele ord.</string>
     <string name="empty_show_search">Ikke funnet i listen over tv-serier</string>
     <string name="action_try_again">Prøv igjen</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">Serien finnes ikke (enda) på TheTVDB. Prøv igjen senere.</string>
     <string name="add_all">Legg til alle</string>
     <string name="add_multiple">Alle serier vil vises i serielisten om kort tid.</string>
     <string name="add_started">%s vil vises i serielisten om kort tid.</string>
@@ -210,8 +211,8 @@
     <string name="shows_collection">Samling</string>
     <string name="watchlist">Overvåkningsliste</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Ingen resultater</string>
+    <string name="title_similar_shows">Lignende serier</string>
     <!-- Lists -->
     <string name="first_list">Første liste</string>
     <string name="list_add">Legg til liste</string>
@@ -220,7 +221,7 @@
     <string name="list_manage">Behandle liste</string>
     <string name="list_item_manage">Behandle lister</string>
     <string name="list_item_remove">Fjern fra liste</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Du kan legge til serier i denne listen</string>
     <string name="action_lists_sort">Sorter lister</string>
     <string name="action_lists_reorder">Omorganiser lister</string>
     <string name="error_name_already_exists">En liste med dette navnet finnes allerede</string>
@@ -251,11 +252,12 @@
     <string name="statistics_shows">Serier</string>
     <string name="statistics_episodes">Episoder</string>
     <string name="statistics_movies">Filmer</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s med neste episoder</string>
     <string name="shows_continuing">%s fortsetter</string>
     <string name="episodes_watched">%s sett</string>
     <string name="movies_on_watchlist">%s i overvåkningslisten</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d i samling</string>
     <string name="movies_watched_format">%s sett</string>
     <plurals name="days_plural">
         <item quantity="one">%d dag</item>
@@ -298,7 +300,7 @@
     <string name="traktcheckin_inprogress">Du er allerede innsjekket i en episode eller film. Du kan enten overstyre tidligere innsjekking eller vente %s og prøve igjen.</string>
     <string name="traktcheckin_wait">Jeg venter</string>
     <string name="trakt_success">Sendt til Trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Din Trakt konto er låst. Kontakt Trakt kundestøtte.</string>
     <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
     <string name="trakt_error_not_exists">Ikke tilgjengelig på trakt. Prøv igjen senere.</string>
     <string name="trakt_notice_not_exists">Kan ikke spores med trakt.</string>
@@ -339,8 +341,8 @@
     <string name="feedback">Gi tilbakemelding</string>
     <string name="action_open_in_browser">Åpne i nettleser</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Oversett denne applikasjonen</string>
+    <string name="action_contribute_content">Oversett eller forbedre innhold</string>
     <string name="prefs_category_advanced">Avansert</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
@@ -357,7 +359,7 @@
     <string name="pref_language_fallback">Alternativt språk</string>
     <string name="pref_updatewifionly">Bilder kun via Wi-Fi</string>
     <string name="pref_updatewifionlysummary">For å redusere datakostnadene, ikke last ned over mobil eller målte nettverk</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Rapporter feil til apputvikler</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d dag tidligere</item>
         <item quantity="other">%d dager tidligere</item>
@@ -372,9 +374,8 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Personvern</string>
-    <string name="licence_tvdb">Denne appen bruker data og bilder av TheTVDB lisensiert under CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Dette produktet bruker API\'en til TMDb men er ikke godkjent eller sertifisert av TMDb.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">Denne appen bruker data og bilder av Trakt.</string>
     <string name="about_open_source">SeriesGuide er laget med åpen kildekode.</string>
     <string name="licences_and_credits">Lisenser og anerkjennelser</string>
     <!-- Sort -->
@@ -396,14 +397,15 @@
     <string name="upcoming_upto_one_week">1 uke</string>
     <string name="upcoming_upto_two_weeks">2 uker</string>
     <string name="upcoming_upto_one_month">1 måned</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Utseende</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Bruk systemstandard</string>
+    <string name="theme_app_auto_battery">Valgt av batterisparing</string>
+    <string name="theme_app_dark">Mørk</string>
+    <string name="theme_app_light">Lys</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Annet</string>
     <string name="pref_autoupdatesummary">Synkroniser automatisk og oppdater SeriesGuide data</string>
@@ -431,13 +433,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk sikkerhetskopiering</string>
     <string name="pref_autobackupsummary">Ukentlig sikkerhetskopiering av dine serier, lister og filmer</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Disse sikkerhetskopiene er utilgjengelige hvis appen blir installert på nytt. Opprett kopier for å bevare dem.</string>
     <string name="last_auto_backup">Siste automatiske sikkerhetskopiering: %s</string>
     <string name="restore_auto_backup">Gjenopprett fra automatisk sikkerhetskopiering</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Den siste automatiske sikkerhetskopieringen mislyktes</string>
     <string name="autobackup_files_missing">Bruke automatisk sikkerhetskopiering, må du velge gyldige sikkerhetskopifiler.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Opprett en kopi etter hver sikkerhetskopi</string>
+    <string name="autobackup_restore_available">En automatisk sikkerhetskopiering kan være tilgjengelig for å gjenopprette fra.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Kom i gang</string>
     <string name="dismiss">Avvis</string>
@@ -458,10 +460,10 @@
     <string name="pref_notifications_hidden">Overse gjemte programmer</string>
     <string name="pref_notifications_hidden_summary">Selv om varsler er slått på, ikke varsle om skjulte programmer</string>
     <string name="pref_notification_channel_errors">Feil</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_next_episodes_only">Kun for episoder å se videre</string>
+    <string name="pref_notifications_next_episodes_only_summary">Bare varsle hvis den nye episoden er den neste jeg skal se</string>
+    <string name="pref_notifications_battery_settings">Innstillinger for batteri</string>
+    <string name="pref_notifications_battery_settings_summary">Gå til Batteriinnstillinger for å deaktivere batterioptimalisering for pålitelige varsler</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sette episoder</string>
     <string name="pref_widget_opacity">Modulbakgrunn</string>
@@ -480,13 +482,13 @@
     <string name="billing_action_manage_subscriptions">Behandle abonnement</string>
     <string name="billing_action_pass">Få X Pass App</string>
     <string name="billing_price_subscribe">%1$s/år, prøv gratis, avbryt når som helst gjennom %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/år</string>
+    <string name="billing_sub_description">Prøv 30 dager gratis, avbryt når som helst.</string>
     <string name="billing_price_pass">engangskjøp</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_learn_more">Mer informasjon og hjelp</string>
     <string name="subscription_expired">Abonnement utløpt</string>
     <string name="subscription_expired_details">X Pass-abonnementet har utløpt.</string>
     <!-- Amazon In-App Billing -->
@@ -519,5 +521,5 @@
     <string name="feedback_action_ok">OK</string>
     <string name="feedback_action_nothanks">Nei takk</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Støtt apputvikleren?</string>
 </resources>

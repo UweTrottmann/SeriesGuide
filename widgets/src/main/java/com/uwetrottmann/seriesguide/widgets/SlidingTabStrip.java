@@ -26,8 +26,12 @@ import android.widget.LinearLayout;
 
 class SlidingTabStrip extends LinearLayout {
 
-    private static final int SELECTED_INDICATOR_THICKNESS_DIPS = 2;
     private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFF33B5E5;
+    private static final int DEFAULT_UNDERLINE_COLOR = 0x1A000000;
+
+    private boolean displayUnderline;
+    private final int underlineThickness;
+    private final Paint underlinePaint;
 
     private final int selectedIndicatorThickness;
     private final Paint selectedIndicatorPaint;
@@ -46,12 +50,16 @@ class SlidingTabStrip extends LinearLayout {
         super(context, attrs);
         setWillNotDraw(false);
 
-        final float density = getResources().getDisplayMetrics().density;
-
         tabColorizerDefault = new SimpleTabColorizer();
         tabColorizerDefault.setIndicatorColors(DEFAULT_SELECTED_INDICATOR_COLOR);
 
-        selectedIndicatorThickness = (int) (SELECTED_INDICATOR_THICKNESS_DIPS * density);
+        underlineThickness = getResources()
+                .getDimensionPixelSize(R.dimen.sg_sliding_tab_strip_underline_size);
+        underlinePaint = new Paint();
+        underlinePaint.setColor(DEFAULT_UNDERLINE_COLOR);
+
+        selectedIndicatorThickness = getResources()
+                .getDimensionPixelSize(R.dimen.sg_sliding_tab_strip_indicator_size);
         selectedIndicatorPaint = new Paint();
     }
 
@@ -64,6 +72,16 @@ class SlidingTabStrip extends LinearLayout {
         // Make sure that the custom colorizer is removed
         tabColorizerCustom = null;
         tabColorizerDefault.setIndicatorColors(colors);
+        invalidate();
+    }
+
+    void setDisplayUnderline(boolean displayUnderline) {
+        this.displayUnderline = displayUnderline;
+        invalidate();
+    }
+
+    void setUnderlineColor(int color) {
+        underlinePaint.setColor(color);
         invalidate();
     }
 
@@ -80,6 +98,11 @@ class SlidingTabStrip extends LinearLayout {
         final SlidingTabLayout.TabColorizer tabColorizer = tabColorizerCustom != null
                 ? tabColorizerCustom
                 : tabColorizerDefault;
+
+        if (displayUnderline) {
+            // Colored underline below all tabs
+            canvas.drawRect(0, height - underlineThickness, getWidth(), height, underlinePaint);
+        }
 
         // Colored underline below the current selection
         if (childCount > 0) {
@@ -104,8 +127,13 @@ class SlidingTabStrip extends LinearLayout {
 
             selectedIndicatorPaint.setColor(color);
 
-            canvas.drawRect(left, height - selectedIndicatorThickness, right,
-                    height, selectedIndicatorPaint);
+            if (displayUnderline) {
+                canvas.drawRect(left, height - selectedIndicatorThickness - underlineThickness,
+                        right, height - underlineThickness, selectedIndicatorPaint);
+            } else {
+                canvas.drawRect(left, height - selectedIndicatorThickness,
+                        right, height, selectedIndicatorPaint);
+            }
         }
     }
 

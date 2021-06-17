@@ -20,7 +20,7 @@
     <string name="specialseason">特别篇</string>
     <string name="ratings">评分</string>
     <!-- Descriptions -->
-    <string name="description_overview">预览</string>
+    <string name="description_overview">概览</string>
     <string name="description_poster">节目海报</string>
     <string name="description_image">剧集图片</string>
     <string name="description_menu_overflow">更多选项</string>
@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">最早一集</string>
     <string name="action_shows_sort_last_watched">最新观看</string>
     <string name="action_shows_sort_remaining">剩余集数</string>
+    <string name="action_shows_sort_status">状态</string>
     <string name="action_shows_sort_favorites">依据喜爱状态</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">标记本集为已观看</string>
@@ -247,6 +248,7 @@
     <string name="statistics_shows">节目总数</string>
     <string name="statistics_episodes">剧集总数</string>
     <string name="statistics_movies">电影总数</string>
+    <string name="shows_finished">%s 观看完成</string>
     <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
     <string name="shows_continuing">%s 部节目仍在连载</string>
     <string name="episodes_watched">%s 集已观看</string>
@@ -361,11 +363,10 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">隐私策略</string>
-    <string name="licence_tvdb">此应用程序所使用的数据和图像由 TheTVDB 通过知识共享许可证授权提供。</string>
     <string name="licence_themoviedb">此应用程序使用了 TMDb 的接口，但未被 TMDb 认可或认证。</string>
     <string name="licence_trakt">此应用程序使用了 Trakt 的数据和图像。</string>
     <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>
-    <string name="licences_and_credits">许可证与信用</string>
+    <string name="licences_and_credits">许可证与致谢</string>
     <!-- Sort -->
     <string name="sort">排序依据</string>
     <string name="action_sort_ignore_articles">忽略起始冠词</string>
@@ -385,6 +386,7 @@
     <string name="upcoming_upto_one_week">1 周</string>
     <string name="upcoming_upto_two_weeks">2 周</string>
     <string name="upcoming_upto_one_month">1 月</string>
+    <string name="upcoming_all">全部</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">外观</string>
     <string name="pref_theme">主题</string>

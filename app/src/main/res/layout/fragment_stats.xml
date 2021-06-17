@@ -52,7 +52,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewShows"
+            app:layout_constraintTop_toBottomOf="@id/textViewShows"
             tools:progress="60" />
 
         <TextView
@@ -90,6 +90,29 @@
             app:layout_constraintTop_toBottomOf="@+id/progressBarShowsContinuing"
             tools:text="10 continuing" />
 
+        <ProgressBar
+            android:id="@+id/progressBarShowsFinished"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewShowsContinuing"
+            tools:progress="60" />
+
+        <TextView
+            android:id="@+id/textViewShowsFinished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBarShowsFinished"
+            tools:text="3 finished watching" />
+
         <TextView
             android:id="@+id/labelStatsEpisodes"
             android:layout_width="wrap_content"
@@ -98,7 +121,7 @@
             android:text="@string/episodes"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewShowsContinuing" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewShowsFinished" />
 
         <TextView
             android:id="@+id/textViewEpisodes"

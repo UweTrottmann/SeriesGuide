@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">最舊一集</string>
     <string name="action_shows_sort_last_watched">上一次觀看</string>
     <string name="action_shows_sort_remaining">剩餘的集數</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">喜愛影集優先</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">觀看下一集</string>
@@ -247,6 +248,7 @@
     <string name="statistics_shows">影集</string>
     <string name="statistics_episodes">集數</string>
     <string name="statistics_movies">電影</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s 影集有新的集數</string>
     <string name="shows_continuing">%s部影集仍在連載</string>
     <string name="episodes_watched">%s 集已看</string>
@@ -361,7 +363,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">隱私權政策</string>
-    <string name="licence_tvdb">此應用程式使用基於 CC BY-NC 4.0 許可的 TheTVDB 提供的資料和圖像。</string>
     <string name="licence_themoviedb">此應用程式使用 TMDb 的 API ，但未被 TMDb 認可或認證。</string>
     <string name="licence_trakt">本應用程式使用了來自 Trakt 的資料與圖像。</string>
     <string name="about_open_source">SeriesGuide 是採用開放源碼軟體。</string>
@@ -385,6 +386,7 @@
     <string name="upcoming_upto_one_week">一星期</string>
     <string name="upcoming_upto_two_weeks">兩星期</string>
     <string name="upcoming_upto_one_month">一個月</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">外觀</string>
     <string name="pref_theme">主題</string>

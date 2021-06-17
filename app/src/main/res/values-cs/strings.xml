@@ -154,6 +154,7 @@
     <string name="action_shows_sort_oldest_episode">Nejstarší díl</string>
     <string name="action_shows_sort_last_watched">Naposledy zhlédnuto</string>
     <string name="action_shows_sort_remaining">Zbývající díly</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Oblíbené jako první</string>
     <string name="context_updateshow">Aktualizovat</string>
     <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
@@ -259,6 +260,7 @@
     <string name="statistics_shows">seriálů</string>
     <string name="statistics_episodes">epizod</string>
     <string name="statistics_movies">filmů</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s s nezhlédnutými epizodami</string>
     <string name="shows_continuing">%s pokračujicích</string>
     <string name="episodes_watched">%s zhlédnutých</string>
@@ -394,7 +396,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Zásady ochrany osobních údajů</string>
-    <string name="licence_tvdb">Tato aplikace používá data a obrázky z TheTVDB licencované pod licencí Creative Commons.</string>
     <string name="licence_themoviedb">Tento produkt používá TMDb API, ale není schválen nebo certifikován TMDb.</string>
     <string name="licence_trakt">Tato aplikace využívá data a obrázky z webu Trakt.</string>
     <string name="about_open_source">SeriesGuide je vytvořen pomocí otevřeného softwaru.</string>
@@ -418,6 +419,7 @@
     <string name="upcoming_upto_one_week">týden</string>
     <string name="upcoming_upto_two_weeks">dvou týdnů</string>
     <string name="upcoming_upto_one_month">měsíce</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Vzhled</string>
     <string name="pref_theme">Téma</string>

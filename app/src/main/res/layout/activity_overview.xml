@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/imageViewOverviewBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -13,7 +20,6 @@
 
         <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
             android:id="@+id/tabsOverview"
-            style="@style/Widget.SeriesGuide.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

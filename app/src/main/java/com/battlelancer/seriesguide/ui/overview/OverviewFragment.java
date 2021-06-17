@@ -85,8 +85,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     private static final String ARG_LONG_SHOW_ROWID = "show_id";
     private static final String ARG_EPISODE_ID = "episode_id";
 
-    @BindView(R.id.background) ImageView imageBackground;
-
     @Nullable
     @BindView(R.id.viewStubOverviewFeedback)
     ViewStub feedbackViewStub;
@@ -672,10 +670,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
                 : R.string.context_favorite));
         CheatSheet.setup(buttonFavorite);
         buttonFavorite.setTag(isFavorite);
-
-        // poster background
-        ImageTools.loadShowPosterAlpha(requireContext(), imageBackground,
-                show.getPosterSmall());
 
         // Regular network, release time and length.
         String network = show.getNetwork();

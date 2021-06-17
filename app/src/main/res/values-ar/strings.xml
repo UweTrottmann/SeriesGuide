@@ -156,6 +156,7 @@
     <string name="action_shows_sort_oldest_episode">أقدم حلقة</string>
     <string name="action_shows_sort_last_watched">آخر حلقة شاهدتها</string>
     <string name="action_shows_sort_remaining">الحلقات المتبقية</string>
+    <string name="action_shows_sort_status">الحالة</string>
     <string name="action_shows_sort_favorites">المفضلة أولاً</string>
     <string name="context_updateshow">تحديث</string>
     <string name="context_marknext">تم مشاهدة الحلقة، الحلقة التالية</string>
@@ -267,6 +268,7 @@
     <string name="statistics_shows">المسلسلات</string>
     <string name="statistics_episodes">الحلقات</string>
     <string name="statistics_movies">الأفلام</string>
+    <string name="shows_finished">%s انتهى مشاهدة</string>
     <string name="shows_with_next">%s مع الحلقات القادمة</string>
     <string name="shows_continuing">%s مستمرة</string>
     <string name="episodes_watched">%s تمت مشاهدتها</string>
@@ -416,7 +418,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">سياسة الخصوصية</string>
-    <string name="licence_tvdb">هذا البرنامج يستخدم صور و بيانات من TheTVDB مرخصة من قبل Creative Commons.</string>
     <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
     <string name="licence_trakt">هذا البرنامج يستخدم البيانات والصور من تطبيق Trakt.</string>
     <string name="about_open_source">برنامج دليل المسلسلات بني باستخدام برمجيات المصدر المفتوح.</string>
@@ -440,6 +441,7 @@
     <string name="upcoming_upto_one_week">أسبوع</string>
     <string name="upcoming_upto_two_weeks">أسبوعين</string>
     <string name="upcoming_upto_one_month">شهر</string>
+    <string name="upcoming_all">الكل</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">المظهر</string>
     <string name="pref_theme">التصميم</string>

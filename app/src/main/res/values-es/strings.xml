@@ -36,8 +36,8 @@
     <string name="sync_and_update">Sincronizar &amp; Actualizar</string>
     <string name="sync_and_download_all">Sincronizar &amp; Descargar todo</string>
     <string name="action_stream">Ver en línea o comprar</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Ver en línea o información sobre compra</string>
+    <string name="action_select_region">Seleccionar región</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Episodio más antiguo</string>
     <string name="action_shows_sort_last_watched">Último visto</string>
     <string name="action_shows_sort_remaining">Episodios faltantes</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favoritos primero</string>
     <string name="context_updateshow">Actualizar</string>
     <string name="context_marknext">Siguiente episodio visto</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">Series</string>
     <string name="statistics_episodes">Episodios</string>
     <string name="statistics_movies">Películas</string>
+    <string name="shows_finished">%s vistos completamente</string>
     <string name="shows_with_next">%s con nuevos episodios</string>
     <string name="shows_continuing">%s continuando</string>
     <string name="episodes_watched">%s vistos</string>
@@ -373,7 +375,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de privacidad</string>
-    <string name="licence_tvdb">Esta aplicación utiliza datos e imágenes de TheTVDB bajo una licencia Creative Commons.</string>
     <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
     <string name="licence_trakt">Esta aplicación utiliza información e imágenes de Trakt.</string>
     <string name="about_open_source">SeriesGuide fue desarrollado usando software de código abierto.</string>
@@ -397,6 +398,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="upcoming_upto_one_week">una semana</string>
     <string name="upcoming_upto_two_weeks">2 semanas</string>
     <string name="upcoming_upto_one_month">un mes</string>
+    <string name="upcoming_all">todo</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Apariencia</string>
     <string name="pref_theme">Tema</string>
@@ -486,7 +488,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_price_pass">Compra por única vez</string>
     <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>
     <string name="upgrade_success">Gracias por apoyar a SeriesGuide! Tienes acceso a todas las funciones.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">Aplicación X Pass detectada. Aún puedes suscribirte para ayudar con futuras actualizaciones.</string>
     <string name="billing_learn_more">Más información y ayuda.</string>
     <string name="subscription_expired">Suscripción caducada</string>
     <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
@@ -520,5 +522,5 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="feedback_action_ok">OK, seguro</string>
     <string name="feedback_action_nothanks">No, gracias</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">¿Ayudar al desarrollador?</string>
 </resources>

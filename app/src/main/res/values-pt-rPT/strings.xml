@@ -88,11 +88,11 @@
     <string name="episode_gueststars">Participações especiais</string>
     <string name="episode_writers">Argumento</string>
     <string name="show_isalive">Em exibição</string>
-    <string name="show_isnotalive">Terminou</string>
+    <string name="show_isnotalive">Terminada</string>
     <string name="show_isUpcoming">Próximos</string>
     <string name="show_status_in_production">Em Produção</string>
     <string name="show_status_pilot">Piloto</string>
-    <string name="show_status_canceled">Cancelado</string>
+    <string name="show_status_canceled">Cancelada</string>
     <string name="no_translation">Não existe nenhuma descrição traduzida para %1$s disponível em %2$s.</string>
     <string name="no_translation_title">Por traduzir</string>
     <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Definições para desactivar esta prevenção.</string>
@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Episódios mais antigos</string>
     <string name="action_shows_sort_last_watched">Últimos vistos</string>
     <string name="action_shows_sort_remaining">Episódios por ver</string>
+    <string name="action_shows_sort_status">Estado</string>
     <string name="action_shows_sort_favorites">Privilegiar favoritos</string>
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Marcar próximo episódio como visto</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">Séries</string>
     <string name="statistics_episodes">Episódios</string>
     <string name="statistics_movies">Filmes</string>
+    <string name="shows_finished">%s vistas completamente</string>
     <string name="shows_with_next">%s com episódios por ver</string>
     <string name="shows_continuing">%s em exibição</string>
     <string name="episodes_watched">%s vistos</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de Privacidade</string>
-    <string name="licence_tvdb">Esta aplicação faz uso de informação e imagens de TheTVDB licenciado sob uma licença Creative Commons.</string>
     <string name="licence_themoviedb">Este produto utiliza a API TMDb mas não foi aprovado ou certificado pelo TMDb.</string>
     <string name="licence_trakt">Esta aplicação utiliza informação e imagens do Trakt.</string>
     <string name="about_open_source">O SeriesGuide foi desenvolvido em software open source.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">1 semana</string>
     <string name="upcoming_upto_two_weeks">2 semanas</string>
     <string name="upcoming_upto_one_month">1 mês</string>
+    <string name="upcoming_all">todos</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aparência</string>
     <string name="pref_theme">Tema</string>

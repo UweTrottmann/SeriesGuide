@@ -49,6 +49,8 @@ class StatsFragment : Fragment() {
         binding.errorView.setButtonClickListener { loadStats() }
 
         // set some views invisible so they can be animated in once stats are computed
+        binding.textViewShowsFinished.visibility = View.INVISIBLE
+        binding.progressBarShowsFinished.visibility = View.INVISIBLE
         binding.textViewShowsWithNextEpisode.visibility = View.INVISIBLE
         binding.progressBarShowsWithNextEpisode.visibility = View.INVISIBLE
         binding.textViewShowsContinuing.visibility = View.INVISIBLE
@@ -71,6 +73,7 @@ class StatsFragment : Fragment() {
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         binding.textViewShows.copyTextToClipboardOnLongClick()
+        binding.textViewShowsFinished.copyTextToClipboardOnLongClick()
         binding.textViewShowsWithNextEpisode.copyTextToClipboardOnLongClick()
         binding.textViewShowsContinuing.copyTextToClipboardOnLongClick()
         binding.textViewEpisodes.copyTextToClipboardOnLongClick()
@@ -104,7 +107,7 @@ class StatsFragment : Fragment() {
         inflater.inflate(R.menu.stats_menu, menu)
 
         menu.findItem(R.id.menu_action_stats_filter_specials).isChecked =
-            DisplaySettings.isHidingSpecials(activity)
+            DisplaySettings.isHidingSpecials(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -126,7 +129,7 @@ class StatsFragment : Fragment() {
     }
 
     private fun loadStats() {
-        model.hideSpecials.value = DisplaySettings.isHidingSpecials(context)
+        model.hideSpecials.value = DisplaySettings.isHidingSpecials(requireContext())
     }
 
     private fun handleStatsUpdate(event: StatsUpdateEvent) {
@@ -151,6 +154,21 @@ class StatsFragment : Fragment() {
 
         // all shows
         binding.textViewShows.text = format.format(stats.shows.toLong())
+
+        // shows finished
+        binding.progressBarShowsFinished.apply {
+            max = stats.shows
+            progress = stats.showsFinished
+            visibility = View.VISIBLE
+        }
+
+        binding.textViewShowsFinished.apply {
+            text = getString(
+                R.string.shows_finished,
+                format.format(stats.showsFinished.toLong())
+            )
+            visibility = View.VISIBLE
+        }
 
         // shows with next episodes
         binding.progressBarShowsWithNextEpisode.apply {
@@ -315,6 +333,10 @@ class StatsFragment : Fragment() {
             R.string.shows_continuing,
             format.format(currentStats.showsContinuing.toLong())
         )
+        val showsFinished = getString(
+            R.string.shows_finished,
+            format.format(currentStats.showsFinished.toLong())
+        )
 
         val episodes = format.format(currentStats.episodes.toLong())
         val episodesWatched = getString(
@@ -326,7 +348,8 @@ class StatsFragment : Fragment() {
             "${getString(R.string.app_name)} ${getString(R.string.statistics)}\n\n" +
                     "$shows ${getString(R.string.statistics_shows)}\n" +
                     "$showsWithNext\n" +
-                    "$showsContinuing\n\n" +
+                    "$showsContinuing\n" +
+                    "$showsFinished\n\n" +
                     "$episodes ${getString(R.string.statistics_episodes)}\n" +
                     "$episodesWatched\n"
 

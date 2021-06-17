@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">最も古いエピソード</string>
     <string name="action_shows_sort_last_watched">最後に視聴</string>
     <string name="action_shows_sort_remaining">残りのエピソード</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">お気に入りを先頭に</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">視聴済次のエピソード</string>
@@ -247,6 +248,7 @@
     <string name="statistics_shows">番組</string>
     <string name="statistics_episodes">エピソード</string>
     <string name="statistics_movies">映画</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">次のエピソードがある番組 %s</string>
     <string name="shows_continuing">継続中 %s</string>
     <string name="episodes_watched">%s 視聴済</string>
@@ -361,7 +363,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">プライバシーポリシー</string>
-    <string name="licence_tvdb">このアプリは、クリエイティブ・コモンズ・ライセンスの下で TheTVDB のデータと画像を使用します。</string>
     <string name="licence_themoviedb">この製品は TMDb API を使用していますが、TMDb による承認または認定はされていません。</string>
     <string name="licence_trakt">このアプリは Trakt の情報や画像を使用します。</string>
     <string name="about_open_source">SeriesGuide は、オープンソース ソフトウェアを使用して構築されています。</string>
@@ -385,6 +386,7 @@
     <string name="upcoming_upto_one_week">1 週間</string>
     <string name="upcoming_upto_two_weeks">2 週間</string>
     <string name="upcoming_upto_one_month">1 ヶ月</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">外観</string>
     <string name="pref_theme">テーマ</string>

@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Episodio più vecchio</string>
     <string name="action_shows_sort_last_watched">Ultimo visto</string>
     <string name="action_shows_sort_remaining">Episodi rimanenti</string>
+    <string name="action_shows_sort_status">Stato</string>
     <string name="action_shows_sort_favorites">Prima i preferiti</string>
     <string name="context_updateshow">Aggiorna</string>
     <string name="context_marknext">Episodio seguente visto</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">Serie TV</string>
     <string name="statistics_episodes">Episodi</string>
     <string name="statistics_movies">Film</string>
+    <string name="shows_finished">%s visti completamente</string>
     <string name="shows_with_next">%s con episodi successivi</string>
     <string name="shows_continuing">%s in produzione</string>
     <string name="episodes_watched">%s guardati</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Informativa sulla privacy</string>
-    <string name="licence_tvdb">Questa applicazione utilizza dati e immagini di TheTVDB sotto licenza Creative Commons.</string>
     <string name="licence_themoviedb">Questo prodotto utilizza l\'API di TMDb ma non è approvato o certificato da TMDb.</string>
     <string name="licence_trakt">Questa applicazione utilizza dati e immagini di trakt.</string>
     <string name="about_open_source">SeriesGuide è compilato con software open source.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">entro 1 settimana</string>
     <string name="upcoming_upto_two_weeks">entro 2 settimane</string>
     <string name="upcoming_upto_one_month">entro 1 mese</string>
+    <string name="upcoming_all">tutti</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Aspetto</string>
     <string name="pref_theme">Tema</string>

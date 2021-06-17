@@ -78,9 +78,7 @@ public class ListsActivity extends BaseTopActivity {
 
         viewPager.setAdapter(listsAdapter);
 
-        tabs.setCustomTabView(R.layout.tabstrip_item_allcaps, R.id.textViewTabStripItem);
-        tabs.setSelectedIndicatorColors(
-                ThemeUtils.getColorFromAttribute(tabs.getContext(), R.attr.colorOnPrimarySurface));
+        ThemeUtils.setDefaultStyle(tabs);
         tabs.setOnTabClickListener(position -> {
             if (viewPager.getCurrentItem() == position) {
                 showListManageDialog(position);

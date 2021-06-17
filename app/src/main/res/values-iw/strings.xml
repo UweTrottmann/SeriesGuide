@@ -154,6 +154,7 @@
     <string name="action_shows_sort_oldest_episode">הפרק הכי ישן</string>
     <string name="action_shows_sort_last_watched">האחרון שנצפה</string>
     <string name="action_shows_sort_remaining">פרקים שנותרו</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
     <string name="context_updateshow">עדכן</string>
     <string name="context_marknext">צפה בפרק הבא</string>
@@ -259,6 +260,7 @@
     <string name="statistics_shows">סדרות</string>
     <string name="statistics_episodes">פרקים</string>
     <string name="statistics_movies">סרטים</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s עם הפרקים הבאים</string>
     <string name="shows_continuing">%s ממשיכים</string>
     <string name="episodes_watched">%s נצפו</string>
@@ -394,7 +396,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">מדיניות פרטיות</string>
-    <string name="licence_tvdb">יישום זה משתמש במידע ובתמונות מ TheTVDB תחת רישיון Creative Commons.</string>
     <string name="licence_themoviedb">מוצר זה עושה שימוש בממשק התכנות של TMDb, אך הוא אינו נתמך או מאושר על ידי TMDb.</string>
     <string name="licence_trakt">יישום זה משתמש בנתונים ותמונות מהאתר Trakt.</string>
     <string name="about_open_source">SeriesGuide בנוי באמצעות תוכנת קוד פתוח.</string>
@@ -418,6 +419,7 @@
     <string name="upcoming_upto_one_week">שבוע אחד</string>
     <string name="upcoming_upto_two_weeks">שבועיים</string>
     <string name="upcoming_upto_one_month">חודש אחד</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">תצוגה</string>
     <string name="pref_theme">ערכת נושא</string>

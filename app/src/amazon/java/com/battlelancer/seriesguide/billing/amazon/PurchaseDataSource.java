@@ -40,17 +40,16 @@ public class PurchaseDataSource {
 
     private PurchaseRecord cursorToPurchaseRecord(final Cursor cursor) {
         final PurchaseRecord purchaseRecord = new PurchaseRecord();
-        purchaseRecord.setAmazonReceiptId(
-                cursor.getString(
-                        cursor.getColumnIndex(AmazonBillingSQLiteHelper.COLUMN_RECEIPT_ID)));
-        purchaseRecord.setAmazonUserId(
-                cursor.getString(cursor.getColumnIndex(AmazonBillingSQLiteHelper.COLUMN_USER_ID)));
-        purchaseRecord.setValidFrom(
-                cursor.getLong(cursor.getColumnIndex(AmazonBillingSQLiteHelper.COLUMN_DATE_FROM)));
-        purchaseRecord.setValidTo(
-                cursor.getLong(cursor.getColumnIndex(AmazonBillingSQLiteHelper.COLUMN_DATE_TO)));
-        purchaseRecord.setSku(
-                cursor.getString(cursor.getColumnIndex(AmazonBillingSQLiteHelper.COLUMN_SKU)));
+        purchaseRecord.setAmazonReceiptId(cursor.getString(
+                cursor.getColumnIndexOrThrow(AmazonBillingSQLiteHelper.COLUMN_RECEIPT_ID)));
+        purchaseRecord.setAmazonUserId(cursor.getString(
+                cursor.getColumnIndexOrThrow(AmazonBillingSQLiteHelper.COLUMN_USER_ID)));
+        purchaseRecord.setValidFrom(cursor.getLong(
+                cursor.getColumnIndexOrThrow(AmazonBillingSQLiteHelper.COLUMN_DATE_FROM)));
+        purchaseRecord.setValidTo(cursor.getLong(
+                cursor.getColumnIndexOrThrow(AmazonBillingSQLiteHelper.COLUMN_DATE_TO)));
+        purchaseRecord.setSku(cursor.getString(
+                cursor.getColumnIndexOrThrow(AmazonBillingSQLiteHelper.COLUMN_SKU)));
         return purchaseRecord;
     }
 

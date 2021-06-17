@@ -35,14 +35,14 @@
 
             <Button
                 android:id="@+id/buttonAboutWebsite"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/website" />
 
             <Button
                 android:id="@+id/buttonAboutPrivacy"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
@@ -56,32 +56,11 @@
 
             <Button
                 android:id="@+id/buttonAboutCredits"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
                 android:text="@string/licences_and_credits" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/licence_tvdb"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body1" />
-
-            <Button
-                android:id="@+id/buttonAboutTvdbTerms"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvdb_terms" />
-
-            <Button
-                android:id="@+id/buttonAboutCreativeCommons"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/larger_padding"
-                android:text="@string/creative_commons" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -91,14 +70,14 @@
 
             <Button
                 android:id="@+id/buttonAboutTmdbTerms"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tmdb_terms" />
 
             <Button
                 android:id="@+id/buttonAboutTmdbApiTerms"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
@@ -112,7 +91,7 @@
 
             <Button
                 android:id="@+id/buttonAboutTraktTerms"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"

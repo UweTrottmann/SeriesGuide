@@ -33,8 +33,6 @@
     <string name="url_privacy">https://seriesgui.de/privacy</string>
     <string name="url_whypay">https://seriesgui.de/whypay</string>
     <string name="url_credits">https://github.com/UweTrottmann/SeriesGuide/blob/master/CREDITS.txt</string>
-    <string name="url_terms_tvdb">https://www.thetvdb.com/tos</string>
-    <string name="url_creative_commons">https://creativecommons.org/licenses/by-nc/3.0/</string>
     <string name="url_terms_tmdb">https://www.themoviedb.org/terms-of-use</string>
     <string name="url_terms_tmdb_api">https://www.themoviedb.org/documentation/api/terms-of-use</string>
     <string name="url_terms_trakt">https://trakt.tv/terms</string>
@@ -47,8 +45,6 @@
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>
-    <string name="creative_commons">Creative Commons BY-NC 3.0</string>
-    <string name="tvdb_terms">TheTVDB terms</string>
     <string name="tmdb_terms">TMDb terms</string>
     <string name="tmdb_api_terms">TMDb API terms</string>
     <string name="trakt_terms">Trakt terms</string>
@@ -293,6 +289,8 @@
         <item>yi</item>
         <item>yo</item>
         <item>za</item>
+        <item>zh-HK</item>
+        <item>zh-TW</item>
         <item>zu</item>
     </string-array>
     <string name="language_code_any">xx</string>
@@ -405,6 +403,7 @@
         <item>ml-ML</item>
         <item>mt-MT</item>
         <item>zh-CN</item>
+        <item>zh-HK</item>
         <item>zh-TW</item>
         <item>gv-GV</item>
         <item>mi-MI</item>
@@ -519,6 +518,7 @@
         <item>@string/upcoming_upto_one_week</item>
         <item>@string/upcoming_upto_two_weeks</item>
         <item>@string/upcoming_upto_one_month</item>
+        <item>@string/upcoming_all</item>
     </string-array>
     <string-array name="upcominglimitData">
         <item>0</item>
@@ -527,6 +527,7 @@
         <item>7</item>
         <item>14</item>
         <item>30</item>
+        <item>-1</item>
     </string-array>
 
     <!-- Theme variants -->

@@ -151,6 +151,7 @@
     <string name="action_shows_sort_oldest_episode">Episode Terlama</string>
     <string name="action_shows_sort_last_watched">Terakhir ditonton</string>
     <string name="action_shows_sort_remaining">Episode Tersisa</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favorite di awal</string>
     <string name="context_updateshow">Pembaruan</string>
     <string name="context_marknext">Episode selanjutnya ditonton</string>
@@ -247,6 +248,7 @@
     <string name="statistics_shows">acara</string>
     <string name="statistics_episodes">episode</string>
     <string name="statistics_movies">film</string>
+    <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s dengan episode berikutnya</string>
     <string name="shows_continuing">%s berlanjut</string>
     <string name="episodes_watched">%s ditonton</string>
@@ -361,7 +363,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Kebijakan Privasi</string>
-    <string name="licence_tvdb">Aplikasi ini menggunakan data dan gambar dari TheTVDB yang terlisensi atas nama CC BY-NC 4.0.</string>
     <string name="licence_themoviedb">Produk ini menggunakan TMDb API Tapi tidak disahkan atau disertifikasi oleh TMDb.</string>
     <string name="licence_trakt">Aplikasi ini menggunakan data dan gambar dari Trakt.</string>
     <string name="about_open_source">SeriesGuide dibuat dengan menggunakan perangkat lunak open source.</string>
@@ -385,6 +386,7 @@
     <string name="upcoming_upto_one_week">1 minggu</string>
     <string name="upcoming_upto_two_weeks">2 minggu</string>
     <string name="upcoming_upto_one_month">1 bulan</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Tampilan</string>
     <string name="pref_theme">Tema</string>

@@ -162,7 +162,9 @@
         <!-- Settings -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.preferences.AboutActivity" />
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.preferences.AboutActivity"
+            android:label="@string/prefs_category_about" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
             android:label="@string/preferences">

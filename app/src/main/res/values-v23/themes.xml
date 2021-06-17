@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Theme.BaseSeriesGuide.Dark" parent="Theme.MaterialComponents.NoActionBar">
+
+        <!-- All customizations that are SPECIFIC to API-level 23 go here. -->
+
+        <!-- Override primary variant color to make status bar match app bar -->
+        <item name="android:statusBarColor">@color/sg_background_app_bar_dark</item>
+
+    </style>
+
+    <style name="Theme.BaseSeriesGuide.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <!-- All customizations that are SPECIFIC to API-level 23 go here. -->
+
+        <!-- Override primary variant color to make status bar match app bar -->
+        <!-- Note: Could color status bar light as of L, but not use light style until M. So only for M+. -->
+        <item name="android:statusBarColor">@color/sg_color_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+
     <!-- note: usage requires setting view.setSystemUiVisibility(
          View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE) -->
 
@@ -15,9 +35,11 @@
         <item name="android:statusBarColor">?attr/sgColorStatusBarOverlay</item>
 
     </style>
+
     <style name="Theme.SeriesGuide.Light.Immersive">
 
         <!-- Transparent (v21+) and light status bar (native, v23+) -->
+        <!-- Note: Could make status bar transparent as of L, but not use light style until M. So only for M+. -->
         <item name="android:statusBarColor">?attr/sgColorStatusBarOverlay</item>
         <item name="android:windowLightStatusBar">true</item>
 

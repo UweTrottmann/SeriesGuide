@@ -407,7 +407,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // language button
         binding.buttonMovieLanguage.also {
-            it.text = LanguageTools.getMovieLanguageStringFor(context, null)
+            it.text = LanguageTools.getMovieLanguageStringFor(requireContext(), null)
             it.isGone = false
         }
 

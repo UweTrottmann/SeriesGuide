@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Äldsta avsnitt</string>
     <string name="action_shows_sort_last_watched">Senast sedda</string>
     <string name="action_shows_sort_remaining">Återstående avsnitt</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favoriter först</string>
     <string name="context_updateshow">Uppdatera</string>
     <string name="context_marknext">Sett nästa avsnitt</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">serier</string>
     <string name="statistics_episodes">avsnitt</string>
     <string name="statistics_movies">filmer</string>
+    <string name="shows_finished">%s färdigtittade</string>
     <string name="shows_with_next">%s med kommande avsnitt</string>
     <string name="shows_continuing">%s fortsätter</string>
     <string name="episodes_watched">%s sedda</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Sekretesspolicy</string>
-    <string name="licence_tvdb">Denna app använder data och avbildningar av TheTVDB licensierat under en Creative Commons-licens.</string>
     <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte stödd eller certifierad av TMDb.</string>
     <string name="licence_trakt">Denna app använder data och bilder från Trakt.</string>
     <string name="about_open_source">SeriesGuide är byggt med öppen källkod.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">1 vecka</string>
     <string name="upcoming_upto_two_weeks">2 veckor</string>
     <string name="upcoming_upto_one_month">1 månad</string>
+    <string name="upcoming_all">all</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Utseende</string>
     <string name="pref_theme">Tema</string>

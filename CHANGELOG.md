@@ -8,6 +8,47 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 59
+----------
+*2021-06-17*
+
+* 🌟 Add language setting for person details.
+* 🌟 Shows: add sort by status option.
+* 🔧 Small design updates.
+* 🔧 Widget: when displaying shows, exclude shows without next episode.  
+* 🔨 Backup: export episodes even if a show was never opened.
+* 🔨 Statistics: do not count canceled shows as with next episodes.
+
+#### 59
+*2021-06-17*
+
+* 🔨 Backup: export episodes even if a show was never opened.
+
+#### 59-beta3
+*2021-06-16*
+
+* 🌟 Add language setting for person details.
+* 🔧 Add Esperanto translation for app.
+
+#### 59-beta2
+*2021-06-02*
+
+* 🔧 If sorting by oldest, latest or remaining episode again sort by status.
+* 🔧 Add upcoming range option to include shows with any future episode.
+* 🔧 Widget: when displaying shows, never display shows without next episode.
+* 🔨 Use correct theme on About screen.
+
+#### 59-beta1
+*2021-05-22*
+
+* 🔧 Small design updates.
+* 🔧 Sort shows: add new sort by status option. If by oldest, latest or remaining episode do no longer sort by status.
+* 🔧 Filter shows: if excluding upcoming, exclude any with future next episode (ignoring upcoming range setting).
+* 🔨 If lists Cloud migration fails due to unsaved list, require lists merge.
+* 🌟 Statistics: add shows finished watching (all episodes watched, show is canceled or ended). Thanks to @ippschi!
+* 🔨 Statistics: do not count canceled shows as with next episodes.
+* 🔨 Fix Chinese, French, Spanish language variants.
+
 Version 58
 ----------
 *2021-04-15*

@@ -52,7 +52,7 @@ class CloudSetupFragment : Fragment() {
 
         hexagonTools = SgApp.getServicesComponent(requireContext()).hexagonTools()
         googleSignInClient = GoogleSignIn
-            .getClient(requireActivity(), HexagonTools.getGoogleSignInOptions())
+            .getClient(requireActivity(), HexagonTools.googleSignInOptions)
     }
 
     override fun onCreateView(
@@ -139,7 +139,7 @@ class CloudSetupFragment : Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: RemoveCloudAccountDialogFragment.AccountRemovedEvent) {
-        event.handle(activity)
+        event.handle(requireContext())
         setProgressVisible(false)
         updateViews()
     }

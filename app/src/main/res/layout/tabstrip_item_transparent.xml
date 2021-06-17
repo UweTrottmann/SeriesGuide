@@ -11,8 +11,6 @@
     <TextView
         android:id="@+id/textViewTabStripItem"
         style="@style/Widget.SeriesGuide.Tab"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Tab.Surface"
         tools:text="Tab Item" />
 
 </LinearLayout>

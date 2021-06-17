@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar_elevated" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -102,7 +102,7 @@
 
             <Button
                 android:id="@+id/textViewAmazonBillingMoreInfo"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Accent"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingPricePass"

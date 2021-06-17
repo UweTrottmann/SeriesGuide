@@ -12,6 +12,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 
 @Dao
 interface SgShow2Helper {
@@ -93,6 +94,12 @@ interface SgShow2Helper {
 
     @Query("SELECT _id, series_status, series_next, series_runtime FROM sg_show")
     fun getStats(): List<SgShow2Stats>
+
+    @Query("SELECT count(series_id) FROM (SELECT series_id, series_status, sum(case when episode_watched = '0' then 1 else 0 end) as episodes_unwatched FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id = sg_show._id GROUP BY series_id) WHERE episodes_unwatched = 0 AND series_status IN (${Status.ENDED}, ${Status.CANCELED})")
+    fun countShowsFinishedWatching(): Int
+
+    @Query("SELECT count(series_id) FROM (SELECT series_id, series_status, sum(case when episode_watched = '0' then 1 else 0 end) as episodes_unwatched FROM sg_episode LEFT OUTER JOIN sg_show ON sg_episode.series_id = sg_show._id WHERE episode_season_number != 0 GROUP BY series_id) WHERE episodes_unwatched = 0 AND series_status IN (${Status.ENDED}, ${Status.CANCELED})")
+    fun countShowsFinishedWatchingWithoutSpecials(): Int
 
     @Update(entity = SgShow2::class)
     fun updateShowNextEpisode(updates: List<SgShow2NextEpisodeUpdate>): Int
@@ -185,6 +192,9 @@ interface SgShow2Helper {
             updateUserRatingByTmdbId(it.key, it.value)
         }
     }
+
+    @Query("UPDATE sg_show SET series_status = ${Status.CANCELED} WHERE series_status = 3")
+    fun migrateCanceledShowStatus()
 }
 
 data class SgShow2Ids(

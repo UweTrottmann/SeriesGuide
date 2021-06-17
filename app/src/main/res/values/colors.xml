@@ -43,7 +43,7 @@
     <color name="sg_background_gradient_start">#aaffffff</color>
     <color name="sg_background_gradient_end">#ffffffff</color>
 
-    <!-- 4dp elevation of night/sg_color_surface -->
+    <!-- 4dp elevation of night/sg_color_background -->
     <color name="sg_background_app_bar_dark">#241f2c</color>
     <!-- emphasis high = 87% -->
     <color name="sg_color_primary_300_emphasis_high">#de927bbc</color>

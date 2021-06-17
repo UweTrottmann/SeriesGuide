@@ -154,6 +154,7 @@
     <string name="action_shows_sort_oldest_episode">Najstarszy odcinek</string>
     <string name="action_shows_sort_last_watched">Ostatnio obejrzany</string>
     <string name="action_shows_sort_remaining">Pozostałe odcinki</string>
+    <string name="action_shows_sort_status">Stan serialu</string>
     <string name="action_shows_sort_favorites">Najpierw ulubione</string>
     <string name="context_updateshow">Aktualizuj</string>
     <string name="context_marknext">Odcinek obejrzany</string>
@@ -259,6 +260,7 @@
     <string name="statistics_shows">Seriale</string>
     <string name="statistics_episodes">Odcinki</string>
     <string name="statistics_movies">Filmy</string>
+    <string name="shows_finished">Zakończono oglądanie %s</string>
     <string name="shows_with_next">%s z kolejnych odcinków</string>
     <string name="shows_continuing">%s w toku</string>
     <string name="episodes_watched">%s obejrzanych</string>
@@ -394,7 +396,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Polityka prywatności</string>
-    <string name="licence_tvdb">Ta aplikacja korzysta z danych i obrazów z serwisu TheTVDB na licencji Creative Commons.</string>
     <string name="licence_themoviedb">Ten produkt używa interfejsu API TMDb, ale nie jest zatwierdzony lub poświadczony przez TMDb.</string>
     <string name="licence_trakt">Ta aplikacja korzysta z danych i zdjęć z trakt.</string>
     <string name="about_open_source">SeriesGuide jest zbudowany przy użyciu oprogramowania open source.</string>
@@ -418,6 +419,7 @@
     <string name="upcoming_upto_one_week">Tygodnia</string>
     <string name="upcoming_upto_two_weeks">Dwóch tygodni</string>
     <string name="upcoming_upto_one_month">Miesiąca</string>
+    <string name="upcoming_all">Wszystkie</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_theme">Motyw</string>

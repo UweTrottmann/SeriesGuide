@@ -152,6 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Oudste aflevering</string>
     <string name="action_shows_sort_last_watched">Laatst bekeken</string>
     <string name="action_shows_sort_remaining">Resterende afleveringen</string>
+    <string name="action_shows_sort_status">Status</string>
     <string name="action_shows_sort_favorites">Favorieten eerst</string>
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>
@@ -251,6 +252,7 @@
     <string name="statistics_shows">series</string>
     <string name="statistics_episodes">afleveringen</string>
     <string name="statistics_movies">films</string>
+    <string name="shows_finished">%s klaar met kijken</string>
     <string name="shows_with_next">%s met de volgende afleveringen</string>
     <string name="shows_continuing">%s lopende</string>
     <string name="episodes_watched">%s bekeken</string>
@@ -372,7 +374,6 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacybeleid</string>
-    <string name="licence_tvdb">Deze app gebruikt data en afbeeldingen van TheTVDB, gelicenseerd onder Creative Commons licentie.</string>
     <string name="licence_themoviedb">Dit product gebruikt de TMDb API maar is niet goedgekeurd of gecertificeerd door TMDb.</string>
     <string name="licence_trakt">Deze app gebruikt data en afbeeldingen van trakt.</string>
     <string name="about_open_source">SeriesGuide is gebouwd met openbronsoftware.</string>
@@ -396,6 +397,7 @@
     <string name="upcoming_upto_one_week">1 week</string>
     <string name="upcoming_upto_two_weeks">2 weken</string>
     <string name="upcoming_upto_one_month">een maand</string>
+    <string name="upcoming_all">alle</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Uiterlijk</string>
     <string name="pref_theme">Thema</string>

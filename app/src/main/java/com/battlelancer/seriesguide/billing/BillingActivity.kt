@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
+import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
 
 class BillingActivity : BaseActivity() {
@@ -55,12 +56,13 @@ class BillingActivity : BaseActivity() {
 
         // Always get subscription SKU info.
         // Users might want to support even if unlock app is installed.
-        billingViewModel = ViewModelProvider(this)
-            .get(BillingViewModel::class.java).also {
-                it.subsSkuDetailsListLiveData.observe(this, { skuDetails ->
-                    adapter.setSkuDetailsList(skuDetails)
-                })
-            }
+        billingViewModel =
+            ViewModelProvider(this, BillingViewModelFactory(application, SgApp.coroutineScope))
+                .get(BillingViewModel::class.java).also {
+                    it.subsSkuDetailsListLiveData.observe(this, { skuDetails ->
+                        adapter.setSkuDetailsList(skuDetails)
+                    })
+                }
         billingViewModel.errorEvent.observe(this, { message ->
             message?.let {
                 textViewBillingError.apply {
