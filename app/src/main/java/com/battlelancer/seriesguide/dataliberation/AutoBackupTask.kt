@@ -2,9 +2,9 @@ package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.net.Uri
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_LISTS
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_MOVIES
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BACKUP_SHOWS
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_LISTS
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_MOVIES
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_SHOWS
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
 import timber.log.Timber
 import java.io.Closeable
