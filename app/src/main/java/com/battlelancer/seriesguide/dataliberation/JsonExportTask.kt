@@ -8,7 +8,6 @@ import androidx.annotation.IntDef
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.dataliberation.model.Episode
-import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
@@ -30,6 +29,7 @@ import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
 import java.util.ArrayList
+import com.battlelancer.seriesguide.dataliberation.model.List as ExportList
 
 /**
  * Export the show database to a human-readable JSON file on external storage. By default meta-data
@@ -251,7 +251,7 @@ class JsonExportTask(
                 show.genres = sgShow.genres
             }
 
-            addSeasons(show, sgShow.id)
+            show.seasons = getSeasons(sgShow.id)
 
             gson.toJson(show, Show::class.java, writer)
 
@@ -262,8 +262,11 @@ class JsonExportTask(
         writer.close()
     }
 
-    private fun addSeasons(show: Show, showId: Long) {
-        show.seasons = ArrayList()
+    /**
+     * Returns possibly empty list of seasons with episodes.
+     */
+    private fun getSeasons(showId: Long): List<Season> {
+        val list = ArrayList<Season>()
 
         val seasons = SgRoomDatabase.getInstance(context)
             .sgSeason2Helper()
@@ -275,14 +278,21 @@ class JsonExportTask(
             season.tvdbId = sgSeason.tvdbId
             season.season = sgSeason.number
 
-            addEpisodes(season, sgSeason.id)
+            season.episodes = getEpisodes(sgSeason.id)
 
-            show.seasons.add(season)
+            // Do not export season to JSON if it has no episodes
+            if (season.episodes.isNotEmpty()) {
+                list.add(season)
+            }
         }
+        return list
     }
 
-    private fun addEpisodes(season: Season, seasonId: Long) {
-        season.episodes = ArrayList()
+    /**
+     * Returns possibly empty list of episodes for season.
+     */
+    private fun getEpisodes(seasonId: Long): List<Episode> {
+        val list = ArrayList<Episode>()
         val episodes = SgRoomDatabase.getInstance(context)
             .sgEpisode2Helper()
             .getEpisodesForExport(seasonId)
@@ -313,8 +323,9 @@ class JsonExportTask(
                 episodeExport.rating_votes = episodeDb.ratingVotes
             }
 
-            season.episodes.add(episodeExport)
+            list.add(episodeExport)
         }
+        return list
     }
 
     @Throws(IOException::class)
@@ -337,14 +348,14 @@ class JsonExportTask(
                 break
             }
 
-            val list = List()
+            val list = ExportList()
             list.listId = sgList.listId
             list.name = sgList.name
             list.order = sgList.orderOrDefault
 
             addListItems(list)
 
-            gson.toJson(list, List::class.java, writer)
+            gson.toJson(list, ExportList::class.java, writer)
 
             publishProgress(numTotal, ++numExported)
         }
@@ -353,7 +364,7 @@ class JsonExportTask(
         writer.close()
     }
 
-    private fun addListItems(list: List) {
+    private fun addListItems(list: ExportList) {
         val listItems = SgRoomDatabase.getInstance(context)
             .sgListHelper().getListItemsForExport(list.listId)
 
