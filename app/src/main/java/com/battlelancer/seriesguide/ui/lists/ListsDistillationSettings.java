@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
 
 /**
- * Provides settings used to sort displayed list items in {@link ListsFragment}.
+ * Provides settings used to sort displayed list items.
  */
 public class ListsDistillationSettings {
 

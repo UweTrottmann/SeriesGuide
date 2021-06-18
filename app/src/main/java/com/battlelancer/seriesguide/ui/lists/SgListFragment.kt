@@ -35,7 +35,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Displays one user created list of shows.
  */
-class ListsFragment : Fragment() {
+class SgListFragment : Fragment() {
 
     private lateinit var adapter: ListItemsAdapter
     private var emptyView: TextView? = null
@@ -185,8 +185,8 @@ class ListsFragment : Fragment() {
         private const val ARG_LIST_POSITION = "LIST_POSITION"
 
         @JvmStatic
-        fun newInstance(listId: String, listPosition: Int): ListsFragment {
-            val f = ListsFragment()
+        fun newInstance(listId: String, listPosition: Int): SgListFragment {
+            val f = SgListFragment()
 
             val args = Bundle()
             args.putString(ARG_LIST_ID, listId)

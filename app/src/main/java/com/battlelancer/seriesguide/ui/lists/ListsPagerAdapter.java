@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 
 /**
- * Returns {@link ListsFragment}s for every list in the database, makes sure there is always at
+ * Returns {@link SgListFragment}s for every list in the database, makes sure there is always at
  * least one.
  */
 public class ListsPagerAdapter extends MultiPagerAdapter {
@@ -49,7 +49,7 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
             return null;
         }
         cursorLists.moveToPosition(position);
-        return ListsFragment.newInstance(cursorLists.getString(0), position);
+        return SgListFragment.newInstance(cursorLists.getString(0), position);
     }
 
     @Override
