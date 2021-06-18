@@ -114,11 +114,11 @@ public class ListsFragment extends Fragment {
         LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArguments(), loaderCallbacks);
     }
 
-    private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks
+    private final LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks
             = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            String listId = args.getString(ARG_LIST_ID);
+            String listId = requireArguments().getString(ARG_LIST_ID);
             return new CursorLoader(requireContext(), ListItems.CONTENT_WITH_DETAILS_URI,
                     ListItemsAdapter.Query.PROJECTION,
                     // items of this list, but exclude any if show was removed from the database
@@ -146,8 +146,8 @@ public class ListsFragment extends Fragment {
         @Override
         public void onItemClick(View anchor, BaseShowsAdapter.ShowViewHolder showViewHolder) {
             ListItemsAdapter.ListItemViewHolder viewHolder = (ListItemsAdapter.ListItemViewHolder) showViewHolder;
-            Utils.startActivityWithAnimation(getActivity(),
-                    OverviewActivity.intentShow(getActivity(), viewHolder.showId), anchor);
+            Utils.startActivityWithAnimation(requireActivity(),
+                    OverviewActivity.intentShow(requireActivity(), viewHolder.showId), anchor);
         }
 
         @Override
