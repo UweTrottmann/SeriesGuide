@@ -42,6 +42,8 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.viewpager:viewpager:1.0.0")
+    // https://developer.android.com/jetpack/androidx/releases/viewpager2
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 
     implementation("com.jakewharton.timber:timber:$timber_version")
 }
