@@ -23,6 +23,7 @@ buildscript {
     val annotation_version by extra("1.2.0")
     val lifecycle_version by extra("2.3.1")
     val room_version by extra("2.3.0") // https://developer.android.com/jetpack/androidx/releases/room
+    val fragmentVersion by extra("1.3.5") // https://developer.android.com/jetpack/androidx/releases/fragment
 
     val dagger_version by extra("2.35.1") // https://github.com/google/dagger/releases
     val okhttp_version by extra("4.9.1") // https://github.com/square/okhttp/blob/master/CHANGELOG.md

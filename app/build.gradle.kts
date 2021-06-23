@@ -27,6 +27,7 @@ val core_version: String by rootProject.extra
 val annotation_version: String by rootProject.extra
 val lifecycle_version: String by rootProject.extra
 val room_version: String by rootProject.extra
+val fragmentVersion: String by rootProject.extra
 
 val dagger_version: String by rootProject.extra
 val okhttp_version: String by rootProject.extra
@@ -168,8 +169,7 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     // https://developer.android.com/jetpack/androidx/releases/browser
     implementation("androidx.browser:browser:1.3.0")
-    // https://developer.android.com/jetpack/androidx/releases/fragment
-    implementation("androidx.fragment:fragment-ktx:1.3.3")
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
     // https://github.com/material-components/material-components-android/releases
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.palette:palette-ktx:1.0.0")
