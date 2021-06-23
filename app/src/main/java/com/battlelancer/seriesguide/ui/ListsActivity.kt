@@ -7,21 +7,18 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import androidx.preference.PreferenceManager
-import androidx.viewpager.widget.ViewPager
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
+import com.battlelancer.seriesguide.databinding.ActivityListsBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.getLastListsTabPosition
 import com.battlelancer.seriesguide.settings.DisplaySettings.isSortOrderIgnoringArticles
-import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.lists.AddListDialogFragment
 import com.battlelancer.seriesguide.ui.lists.ListManageDialogFragment
 import com.battlelancer.seriesguide.ui.lists.ListsActivityViewModel
@@ -34,7 +31,6 @@ import com.battlelancer.seriesguide.ui.lists.ListsTools
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -44,22 +40,16 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class ListsActivity : BaseTopActivity() {
 
-    @BindView(R.id.viewPagerTabs)
-    var viewPager: ViewPager? = null
-
-    @BindView(R.id.tabLayoutTabs)
-    var tabs: SlidingTabLayout? = null
-
+    private lateinit var binding: ActivityListsBinding
     private lateinit var listsAdapter: ListsPagerAdapter
-    private lateinit var viewModel: ListsActivityViewModel
+    private val viewModel by viewModels<ListsActivityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tabs_drawer)
+        binding = ActivityListsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_lists)
-
-        viewModel = ViewModelProvider(this).get(ListsActivityViewModel::class.java)
 
         setupViews(savedInstanceState)
         setupSyncProgressBar(R.id.progressBarTabs)
@@ -69,29 +59,27 @@ class ListsActivity : BaseTopActivity() {
     }
 
     private fun setupViews(savedInstanceState: Bundle?) {
-        ButterKnife.bind(this)
-
         listsAdapter = ListsPagerAdapter(supportFragmentManager)
+        
+        binding.viewPagerLists.adapter = listsAdapter
 
-        viewPager!!.adapter = listsAdapter
-
-        tabs!!.setDefaultStyle()
-        tabs!!.setOnTabClickListener { position: Int ->
-            if (viewPager!!.currentItem == position) {
+        binding.tabLayoutLists.setDefaultStyle()
+        binding.tabLayoutLists.setOnTabClickListener { position: Int ->
+            if (binding.viewPagerLists.currentItem == position) {
                 showListManageDialog(position)
             }
         }
-        tabs!!.setViewPager(viewPager)
+        binding.tabLayoutLists.setViewPager(binding.viewPagerLists)
 
         if (savedInstanceState == null) {
-            viewPager!!.setCurrentItem(getLastListsTabPosition(this), false)
+            binding.viewPagerLists.setCurrentItem(getLastListsTabPosition(this), false)
         }
     }
 
     override fun onPause() {
         super.onPause()
         PreferenceManager.getDefaultSharedPreferences(this).edit()
-            .putInt(DisplaySettings.KEY_LAST_ACTIVE_LISTS_TAB, viewPager!!.currentItem)
+            .putInt(DisplaySettings.KEY_LAST_ACTIVE_LISTS_TAB, binding.viewPagerLists.currentItem)
             .apply()
     }
 
@@ -144,7 +132,7 @@ class ListsActivity : BaseTopActivity() {
             return true
         }
         if (itemId == R.id.menu_action_lists_edit) {
-            val selectedListIndex = viewPager!!.currentItem
+            val selectedListIndex = binding.viewPagerLists.currentItem
             showListManageDialog(selectedListIndex)
             return true
         }
@@ -187,7 +175,7 @@ class ListsActivity : BaseTopActivity() {
     }
 
     override fun onSelectedCurrentNavItem() {
-        viewModel.scrollTabToTop(viewPager!!.currentItem)
+        viewModel.scrollTabToTop(binding.viewPagerLists.currentItem)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -202,7 +190,7 @@ class ListsActivity : BaseTopActivity() {
             .apply()
 
         // refresh icon state
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
 
         // post event, so all active list fragments can react
         EventBus.getDefault().post(ListsSortOrderChangedEvent())
@@ -217,7 +205,7 @@ class ListsActivity : BaseTopActivity() {
             .apply()
 
         // refresh icon state
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
 
         // refresh all list widgets
         ListWidgetProvider.notifyDataChanged(this)
@@ -250,7 +238,7 @@ class ListsActivity : BaseTopActivity() {
                 }
                 listsAdapter.swapCursor(data)
                 // update tabs
-                tabs!!.setViewPager(viewPager)
+                binding.tabLayoutLists.setViewPager(binding.viewPagerLists)
             }
 
             override fun onLoaderReset(loader: Loader<Cursor>) {
