@@ -19,6 +19,11 @@ Version 59
 * 🔨 Backup: export episodes even if a show was never opened.
 * 🔨 Statistics: do not count canceled shows as with next episodes.
 
+#### 59.1
+*2021-06-23*
+
+* 🔨 Person details: do not crash in landscape layout.
+
 #### 59
 *2021-06-17*
 
