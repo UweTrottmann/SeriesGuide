@@ -9,7 +9,6 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.provider.SgShow2Helper;
 import com.battlelancer.seriesguide.provider.SgShow2Ids;
-import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -20,7 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.greenrobot.eventbus.EventBus;
 
 public class HexagonSync {
 
@@ -226,9 +224,6 @@ public class HexagonSync {
                 return false;
             }
         }
-
-        // notify lists activity
-        EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());
 
         if (!hasMergedLists) {
             // set lists as merged

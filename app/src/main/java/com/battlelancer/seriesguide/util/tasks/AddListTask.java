@@ -8,7 +8,6 @@ import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import com.uwetrottmann.seriesguide.backend.lists.model.SgList;
@@ -16,7 +15,6 @@ import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Task to add a new list.
@@ -89,10 +87,6 @@ public class AddListTask extends BaseActionTask {
         // default value
         values.put(SeriesGuideContract.Lists.ORDER, 0);
         contentResolver.insert(SeriesGuideContract.Lists.CONTENT_URI, values);
-
-        // notify lists activity
-        EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());
-
         return true;
     }
 

@@ -6,8 +6,6 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.ui.ListsActivity;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Task to rename a list.
@@ -41,14 +39,7 @@ public class RenameListTask extends AddListTask {
         values.put(SeriesGuideContract.Lists.NAME, listName);
         int updated = contentResolver
                 .update(SeriesGuideContract.Lists.buildListUri(listId), values, null, null);
-        if (updated == 0) {
-            return false;
-        }
-
-        // notify lists activity
-        EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());
-
-        return true;
+        return updated != 0;
     }
 
     @Override

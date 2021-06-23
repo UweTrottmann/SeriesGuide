@@ -22,6 +22,9 @@ import com.battlelancer.seriesguide.ui.shows.ShowTools
 interface SgListHelper {
 
     @Query("SELECT * FROM lists ORDER BY ${Lists.SORT_ORDER_THEN_NAME}")
+    fun getListsForDisplay(): LiveData<List<SgList>>
+
+    @Query("SELECT * FROM lists ORDER BY ${Lists.SORT_ORDER_THEN_NAME}")
     fun getListsForExport(): List<SgList>
 
     @RawQuery(observedEntities = [SgListItem::class, SgShow2::class])

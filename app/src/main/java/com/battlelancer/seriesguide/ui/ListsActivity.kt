@@ -1,23 +1,16 @@
 package com.battlelancer.seriesguide.ui
 
 import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.databinding.ActivityListsBinding
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.settings.DisplaySettings.getLastListsTabPosition
 import com.battlelancer.seriesguide.settings.DisplaySettings.isSortOrderIgnoringArticles
 import com.battlelancer.seriesguide.ui.lists.AddListDialogFragment
 import com.battlelancer.seriesguide.ui.lists.ListManageDialogFragment
@@ -32,8 +25,6 @@ import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Hosts a view pager to display and manage user created lists.
@@ -51,16 +42,33 @@ class ListsActivity : BaseTopActivity() {
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_lists)
 
-        setupViews(savedInstanceState)
+        setupViews()
         setupSyncProgressBar(R.id.progressBarTabs)
 
-        LoaderManager.getInstance(this)
-            .initLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks)
+        viewModel.listsLiveData.observe(this, { items ->
+            // precreate first list
+            if (items != null && items.isEmpty()) {
+                val listName = getString(R.string.first_list)
+                ListsTools.addList(this@ListsActivity, listName)
+            }
+            listsAdapter.updateItems(items)
+            // update tabs
+            binding.tabLayoutLists.setViewPager2(binding.viewPagerLists) { position ->
+                items[position].name
+            }
+            if (!viewModel.hasRestoredLastListsTabPosition) {
+                viewModel.hasRestoredLastListsTabPosition = true
+                binding.viewPagerLists.setCurrentItem(
+                    DisplaySettings.getLastListsTabPosition(this),
+                    false
+                )
+            }
+        })
     }
 
-    private fun setupViews(savedInstanceState: Bundle?) {
-        listsAdapter = ListsPagerAdapter(supportFragmentManager)
-        
+    private fun setupViews() {
+        listsAdapter = ListsPagerAdapter(this)
+
         binding.viewPagerLists.adapter = listsAdapter
 
         binding.tabLayoutLists.setDefaultStyle()
@@ -68,11 +76,6 @@ class ListsActivity : BaseTopActivity() {
             if (binding.viewPagerLists.currentItem == position) {
                 showListManageDialog(position)
             }
-        }
-        binding.tabLayoutLists.setViewPager(binding.viewPagerLists)
-
-        if (savedInstanceState == null) {
-            binding.viewPagerLists.setCurrentItem(getLastListsTabPosition(this), false)
         }
     }
 
@@ -168,20 +171,14 @@ class ListsActivity : BaseTopActivity() {
     }
 
     private fun showListManageDialog(selectedListIndex: Int) {
-        val listId = listsAdapter.getListId(selectedListIndex)
-        if (!TextUtils.isEmpty(listId)) {
+        val listId = listsAdapter.getItemListId(selectedListIndex)
+        if (!listId.isNullOrEmpty()) {
             ListManageDialogFragment.show(listId, supportFragmentManager)
         }
     }
 
     override fun onSelectedCurrentNavItem() {
         viewModel.scrollTabToTop(binding.viewPagerLists.currentItem)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: ListsChangedEvent?) {
-        LoaderManager.getInstance(this)
-            .restartLoader(LISTS_LOADER_ID, null, listsLoaderCallbacks)
     }
 
     private fun changeSortOrder(sortOrderId: Int) {
@@ -218,39 +215,8 @@ class ListsActivity : BaseTopActivity() {
         return findViewById(R.id.rootLayoutTabs)
     }
 
-    private val listsLoaderCallbacks: LoaderManager.LoaderCallbacks<Cursor> =
-        object : LoaderManager.LoaderCallbacks<Cursor> {
-            override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-                // load lists, order by order number, then name
-                return CursorLoader(
-                    this@ListsActivity,
-                    SeriesGuideContract.Lists.CONTENT_URI,
-                    ListsPagerAdapter.ListsQuery.PROJECTION, null, null,
-                    SeriesGuideContract.Lists.SORT_ORDER_THEN_NAME
-                )
-            }
-
-            override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-                // precreate first list
-                if (data != null && data.count == 0) {
-                    val listName = getString(R.string.first_list)
-                    ListsTools.addList(this@ListsActivity, listName)
-                }
-                listsAdapter.swapCursor(data)
-                // update tabs
-                binding.tabLayoutLists.setViewPager(binding.viewPagerLists)
-            }
-
-            override fun onLoaderReset(loader: Loader<Cursor>) {
-                listsAdapter.swapCursor(null)
-            }
-        }
-
     companion object {
-        const val LISTS_LOADER_ID = 1
         const val LISTS_REORDER_LOADER_ID = 2
     }
-
-    class ListsChangedEvent
 
 }

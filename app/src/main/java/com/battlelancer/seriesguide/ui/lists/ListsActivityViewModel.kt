@@ -1,10 +1,16 @@
 package com.battlelancer.seriesguide.ui.lists
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 
-class ListsActivityViewModel : ViewModel() {
+class ListsActivityViewModel(application: Application) : AndroidViewModel(application) {
 
+    var hasRestoredLastListsTabPosition = false
+    val listsLiveData by lazy {
+        SgRoomDatabase.getInstance(application).sgListHelper().getListsForDisplay()
+    }
     val scrollTabToTopLiveData = MutableLiveData<Int?>()
 
     fun scrollTabToTop(tabPosition: Int) {
