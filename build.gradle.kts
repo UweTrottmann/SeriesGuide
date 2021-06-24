@@ -52,8 +52,8 @@ buildscript {
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
-        classpath("com.google.gms:google-services:4.3.5")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.5.1")
+        classpath("com.google.gms:google-services:4.3.8")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
     }
 }
 

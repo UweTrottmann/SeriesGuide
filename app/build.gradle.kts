@@ -6,12 +6,14 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("com.google.cloud.tools.endpoints-framework-client")
-    id("com.google.firebase.crashlytics")
 }
 
 if (project.file("google-services.json").exists()) {
     apply(plugin = "com.google.gms.google-services")
 }
+// Note: need to apply Crashlytics after Google services plugin,
+// above conditional apply doesn't work inside plugins block.
+apply(plugin = "com.google.firebase.crashlytics")
 
 val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
@@ -236,7 +238,7 @@ dependencies {
 
     // Crashlytics
     // https://firebase.google.com/support/release-notes/android
-    implementation("com.google.firebase:firebase-crashlytics:17.4.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.1.0")
 
     // Google Play Services
     // https://developers.google.com/android/guides/releases
