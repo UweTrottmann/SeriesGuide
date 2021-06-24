@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.dataliberation.model.List as ExportList
  * Increases file size about 2-4 times.
  * @param isAutoBackupMode Whether to run an auto backup, also shows no result toasts.
  */
+@Suppress("DEPRECATION")
 class JsonExportTask(
     context: Context,
     private val progressListener: OnTaskProgressListener?,
