@@ -8,6 +8,16 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 60
+----------
+*in development*
+
+#### 60-beta1
+*2021-06-24*
+
+* 🔨 Lists: do not jump to top on database changes.
+* 📝 Errors: drop Countly reporting.
+
 Version 59
 ----------
 *2021-06-17*
