@@ -397,7 +397,7 @@
     <string name="upcoming_upto_one_week">1 vecka</string>
     <string name="upcoming_upto_two_weeks">2 veckor</string>
     <string name="upcoming_upto_one_month">1 månad</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">alla</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Utseende</string>
     <string name="pref_theme">Tema</string>
