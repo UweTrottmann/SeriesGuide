@@ -183,9 +183,6 @@ class SgApp : Application() {
         val isSendErrors = AppSettings.isSendErrorReports(this)
         Timber.d("Turning error reporting %s", if (isSendErrors) "ON" else "OFF")
         Errors.getReporter()?.setCrashlyticsCollectionEnabled(isSendErrors)
-        if (isSendErrors) {
-            Errors.setUpCounter(this)
-        }
 
         if (AppSettings.isUserDebugModeEnabled(this)) {
             // debug drawer logging

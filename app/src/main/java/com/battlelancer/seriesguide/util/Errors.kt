@@ -1,32 +1,22 @@
 package com.battlelancer.seriesguide.util
 
 import android.annotation.SuppressLint
-import android.app.Application
-import android.os.Build
 import android.util.Log
 import androidx.annotation.VisibleForTesting
-import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import ly.count.android.sdk.Countly
-import ly.count.android.sdk.CountlyConfig
-import ly.count.android.sdk.DeviceId
 import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
 import java.net.ConnectException
 import java.net.UnknownHostException
-import java.util.UUID
 import javax.net.ssl.SSLException
 
 
 class Errors {
 
     companion object {
-
-        private lateinit var appVersion: String
-        private var isCounterAvailable = false
 
         /**
          * Returns null instead of crashing when Firebase is not configured, e.g. for vanilla debug
@@ -45,45 +35,6 @@ class Errors {
                 )
                 return null
             }
-        }
-
-        fun setUpCounter(application: Application) {
-            appVersion = Utils.getVersion(application.applicationContext)
-
-            @Suppress("SENSELESS_COMPARISON")
-            if (BuildConfig.COUNT_URL != null) {
-                if (Countly.sharedInstance().isInitialized) return
-
-                val config = CountlyConfig(
-                    application,
-                    BuildConfig.COUNT_SECRET,
-                    BuildConfig.COUNT_URL
-                )
-                    // Use random UUID as Countly OpenUDID might use ANDROID_ID.
-                    .setDeviceId(UUID.randomUUID().toString())
-                    .setIdMode(DeviceId.Type.DEVELOPER_SUPPLIED)
-//                .setLoggingEnabled(BuildConfig.DEBUG) // Spams logs, only enable if needed.
-                    .setRequiresConsent(true)
-                    // Only allow sending of events.
-                    .setConsentEnabled(arrayOf(Countly.CountlyFeatureNames.events))
-                Countly.sharedInstance().init(config)
-                isCounterAvailable = true
-            }
-        }
-
-        private fun getCounter(): Countly? {
-            return if (isCounterAvailable) Countly.sharedInstance() else null
-        }
-
-        @JvmStatic
-        fun onSessionStart() {
-            // Don't need an activity name, sessions not sent, just to ensure events are sent.
-            getCounter()?.onStart(null)
-        }
-
-        @JvmStatic
-        fun onSessionStop() {
-            getCounter()?.onStop()
         }
 
         /**
@@ -141,7 +92,9 @@ class Errors {
          */
         @JvmStatic
         fun logAndReportHexagon(action: String, e: Throwable) {
+            var statusCode: Int? = null
             val throwable = if (e is HttpResponseException) {
+                statusCode  = e.statusCode
                 val requestError = when {
                     e.isClientError() -> ClientError(action, e)
                     e.isServerError() -> ServerError(action, e)
@@ -163,6 +116,7 @@ class Errors {
             }
 
             getReporter()?.setCustomKey("action", action)
+            statusCode?.let { getReporter()?.setCustomKey("code", it) }
             getReporter()?.recordException(throwable)
         }
 
@@ -197,27 +151,9 @@ class Errors {
 
             if (response.code == 404) return // Do not report 404 responses.
 
-//            getReporter()?.setCustomKey("action", action)
-//            getReporter()?.recordException(throwable)
-
-            getCounter()?.also {
-                // Do not add response code to event key to avoid creating multiple events.
-                // Instead add prefix message with it, can use segmentation and time to filter.
-                val messageOrCodeOnly = when {
-                    message != null -> "${response.code} $message"
-                    response.message.isNotEmpty() -> "${response.code} ${response.message}"
-                    else -> response.code
-                }
-                it.events().recordEvent(
-                    action,
-                    mapOf(
-                        "message" to messageOrCodeOnly,
-                        "android" to Build.VERSION.RELEASE,
-                        "version" to appVersion,
-                        "device" to Build.MODEL
-                    )
-                )
-            }
+            getReporter()?.setCustomKey("action", action)
+            getReporter()?.setCustomKey("code", response.code)
+            getReporter()?.recordException(throwable)
         }
 
         /**
