@@ -212,7 +212,7 @@ class ListsActivity : BaseTopActivity() {
     }
 
     override fun getSnackbarParentView(): View {
-        return findViewById(R.id.rootLayoutTabs)
+        return binding.rootLayoutLists
     }
 
     companion object {
