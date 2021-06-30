@@ -25,8 +25,9 @@ object CloudEndpointUtils {
     @Suppress("SimplifyBooleanWithConstants")
     private val USE_LOCAL_VERSION = false && BuildConfig.DEBUG
 
+    // FIXME Revert to stable API before going to production
     @Suppress("SimplifyBooleanWithConstants")
-    private val USE_STAGING_VERSION = false && BuildConfig.DEBUG
+    private val USE_STAGING_VERSION = true && BuildConfig.DEBUG
 
     private const val ROOT_URL_STAGING = "https://staging-dot-optical-hexagon-364.appspot.com"
 
