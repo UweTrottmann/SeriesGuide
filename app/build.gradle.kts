@@ -238,7 +238,7 @@ dependencies {
 
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:27.1.0"))
-    // Firebase Sign-In
+    // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
     implementation("com.firebaseui:firebase-ui-auth:7.1.1")
 
     // Crashlytics
