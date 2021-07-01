@@ -284,14 +284,15 @@
     <string name="hexagon_signin">ورود</string>
     <string name="hexagon_signout">خروج از سیستم</string>
     <string name="hexagon_setup_incomplete">راه اندازی فضای ابری SeriesGuide کامل نشد.</string>
-    <string name="hexagon_setup_fail_auth">مشکل دردسترسی به حساب گوگل.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">حذف حساب</string>
     <string name="hexagon_remove_account_success">حساب حذف شد.</string>
     <string name="hexagon_remove_account_failure">قادر به حذف حساب نیست.</string>
     <string name="hexagon_remove_account_confirmation">حذف حسابتان تمام نمایش‌ها و فیلم‌ها را از فضای ابری SeriesGuide پاک می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز حذف میکنید.</string>
     <string name="hexagon_api_queued">در حال ارسال به فضای ابری SeriesGuide.</string>
     <string name="hexagon_signed_out">از فضای ابری SeriesGuide خارج شدید.</string>
-    <string name="hexagon_signin_fail_format">خطا در ورود با گوگل (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">ارسال به trakt.</string>
     <string name="checkin_success_trakt">%s روی trakt ثبت شد.</string>

@@ -277,14 +277,15 @@
     <string name="hexagon_signin">サインイン</string>
     <string name="hexagon_signout">サインアウト</string>
     <string name="hexagon_setup_incomplete">SeriesGuide クラウドのセットアップは完了しませんでした。</string>
-    <string name="hexagon_setup_fail_auth">Google アカウントを確認できませんでした。</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">アカウントを削除</string>
     <string name="hexagon_remove_account_success">アカウントを抹消しました。</string>
     <string name="hexagon_remove_account_failure">アカウントを削除できませんでした。</string>
     <string name="hexagon_remove_account_confirmation">SeriesGuide Cloud からすべての番組や映画が削除されます</string>
     <string name="hexagon_api_queued">SeriesGuide クラウドに送信しています。</string>
     <string name="hexagon_signed_out">SeriesGuide クラウドからサインアウトします。</string>
-    <string name="hexagon_signin_fail_format">Google サインインでエラー (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trakt に送信しています</string>
     <string name="checkin_success_trakt">Trakt で %s にチェックインしました</string>

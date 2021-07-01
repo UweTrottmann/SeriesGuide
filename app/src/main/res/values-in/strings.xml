@@ -277,14 +277,15 @@
     <string name="hexagon_signin">Masuk</string>
     <string name="hexagon_signout">Keluar</string>
     <string name="hexagon_setup_incomplete">Pengaturan SeriesGuide Cloud Tidak selesai.</string>
-    <string name="hexagon_setup_fail_auth">Akun Google anda tidak melapor.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Hapus Akun</string>
     <string name="hexagon_remove_account_success">Akun dimusnahkan.</string>
     <string name="hexagon_remove_account_failure">Tidak dapat menghapus akun.</string>
     <string name="hexagon_remove_account_confirmation">Menghapus akun anda akan menghapus semua acara dan film dari SeriesGuide Cloud. Pastikan untuk menghapusnya dari perangkat terhubung lainnya juga.</string>
     <string name="hexagon_api_queued">Mengirim ke SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Keluar dari SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Mengirim ke trakt.</string>
     <string name="checkin_success_trakt">Check-in %s pada trakt.</string>

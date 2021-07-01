@@ -291,14 +291,15 @@
     <string name="hexagon_signin">Пријави се</string>
     <string name="hexagon_signout">Одјави се</string>
     <string name="hexagon_setup_incomplete">Подешавање SeriesGuide Cloud-а није обављено.</string>
-    <string name="hexagon_setup_fail_auth">Ваш Google налог није прошао проверу.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Уклони налог</string>
     <string name="hexagon_remove_account_success">Налог обрисан.</string>
     <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
     <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
     <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Izlogovan iz SeriesGuide Cloud-a</string>
-    <string name="hexagon_signin_fail_format">Greška sa Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Послато на тракт.</string>
     <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>

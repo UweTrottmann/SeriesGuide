@@ -284,14 +284,15 @@
     <string name="hexagon_signin">Iniciar sesión</string>
     <string name="hexagon_signout">Pechar sesión</string>
     <string name="hexagon_setup_incomplete">A configuración de SeriesGuide cloud non se completou</string>
-    <string name="hexagon_setup_fail_auth">A túa conta de Google non é válida</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Eliminar conta</string>
     <string name="hexagon_remove_account_success">Conta borrada</string>
     <string name="hexagon_remove_account_failure">Non se puido borrar a conta</string>
     <string name="hexagon_remove_account_confirmation">Isto borrará as túas series, listas e películas de SeriesGuides Cloud</string>
     <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Erro ao facer login con Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando a trakt.</string>
     <string name="checkin_success_trakt">Rexistrado en %s en trakt</string>

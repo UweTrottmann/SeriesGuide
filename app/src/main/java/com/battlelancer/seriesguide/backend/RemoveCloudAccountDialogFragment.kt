@@ -11,13 +11,12 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.backend.HexagonAuthError.Companion.build
-import com.battlelancer.seriesguide.backend.HexagonTools.Companion.googleSignInOptions
 import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.AccountRemovedEvent
 import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.CanceledEvent
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.battlelancer.seriesguide.util.Utils
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.Tasks
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
@@ -71,9 +70,8 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
                 return false
             }
 
-            // de-authorize app so other clients are signed out as well
-            val googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions)
-            val task = googleSignInClient.revokeAccess()
+            // Delete Firebase account so other clients are signed out as well
+            val task = AuthUI.getInstance().delete(context)
             try {
                 Tasks.await(task)
             } catch (e: Exception) {
@@ -82,7 +80,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
             }
 
             // disable Hexagon integration, remove local account data
-            hexagonTools.setDisabled()
+            hexagonTools.removeAccountAndSetDisabled()
             return true
         }
 

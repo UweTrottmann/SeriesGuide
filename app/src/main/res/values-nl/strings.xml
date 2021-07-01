@@ -284,14 +284,15 @@
     <string name="hexagon_signin">Log in</string>
     <string name="hexagon_signout">Uitloggen</string>
     <string name="hexagon_setup_incomplete">SeriesGuide cloud instellen is niet afgerond.</string>
-    <string name="hexagon_setup_fail_auth">Uw Google-account was niet in orde</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Account verwijderen</string>
     <string name="hexagon_remove_account_success">Account vernietigd</string>
     <string name="hexagon_remove_account_failure">Kon account niet verwijderen</string>
     <string name="hexagon_remove_account_confirmation">Dit zal al uw series, lijsten en films van SeriesGuide Cloud verwijderen</string>
     <string name="hexagon_api_queued">Verzonden naar SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Afgemeld bij SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Fout tijdens Google login (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
     <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>

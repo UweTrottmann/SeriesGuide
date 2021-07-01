@@ -284,14 +284,15 @@
     <string name="hexagon_signin">உள்நுழைக</string>
     <string name="hexagon_signout">வெளியில் செல்லவும்</string>
     <string name="hexagon_setup_incomplete">SeriesGuide மேகம் அமைக்கிறது நிறைவடையவில்லை.</string>
-    <string name="hexagon_setup_fail_auth">உங்கள் Google கணக்கு இட்டு சரிபார்க்க.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">கணக்கு அகற்று</string>
     <string name="hexagon_remove_account_success">கணக்கு obliterated.</string>
     <string name="hexagon_remove_account_failure">கணக்கை அகற்ற முடியவில்லை.</string>
     <string name="hexagon_remove_account_confirmation">உங்கள் கணக்கு அகற்றுவது இருக்கும் அனைத்து காட்சிகள் மற்றும் திரைப்படங்கள் இருந்து நீக்க SeriesGuide மேகம். மற்ற இணைக்கப்பட்ட சாதனங்கள் நன்றாக அதை அகற்ற உறுதி.</string>
     <string name="hexagon_api_queued">SeriesGuide மேகம் அனுப்புகிறது.</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trakt அனுப்புகிறது.</string>
     <string name="checkin_success_trakt">%s trakt-ஐ சரிபார்க்கப்பட்டது.</string>

@@ -286,7 +286,7 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
                     // user has dismissed warning, so disable Cloud
                     HexagonTools hexagonTools = SgApp.getServicesComponent(BaseTopActivity.this)
                             .hexagonTools();
-                    hexagonTools.setDisabled();
+                    hexagonTools.removeAccountAndSetDisabled();
                 }
             }
         }).setAction(R.string.hexagon_signin, v -> {

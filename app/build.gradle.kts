@@ -236,13 +236,14 @@ dependencies {
     implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-actions:$debugDrawerVersion")
     implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:$debugDrawerVersion")
 
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:27.1.0"))
+    // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
+    implementation("com.firebaseui:firebase-ui-auth:7.1.1")
+
     // Crashlytics
     // https://firebase.google.com/support/release-notes/android
     implementation("com.google.firebase:firebase-crashlytics:18.1.0")
-
-    // Google Play Services
-    // https://developers.google.com/android/guides/releases
-    implementation("com.google.android.gms:play-services-auth:19.0.0")
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases

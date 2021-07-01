@@ -324,14 +324,15 @@
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signout">Sign Out</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
-    <string name="hexagon_setup_fail_auth">Your Google account did not check out</string>
-    <string name="hexagon_remove_account">Remove account</string>
-    <string name="hexagon_remove_account_success">Account obliterated</string>
-    <string name="hexagon_remove_account_failure">Could not remove account</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_remove_account">Delete account</string>
+    <string name="hexagon_remove_account_success">Account deleted</string>
+    <string name="hexagon_remove_account_failure">Could not delete account</string>
     <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
     <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
 
     <!-- trakt -->
     <string name="trakt_submitqueued">Sending to Trakt.</string>

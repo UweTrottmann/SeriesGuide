@@ -284,14 +284,15 @@
     <string name="hexagon_signin">Σύνδεση</string>
     <string name="hexagon_signout">Αποσύνδεση</string>
     <string name="hexagon_setup_incomplete">Η ρύθμιση του SeriesGuide cloud δεν ολοκληρώθηκε.</string>
-    <string name="hexagon_setup_fail_auth">Ο λογαριασμός σας Google δεν επαληθεύτηκε.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Αφαίρεση λογαριασμού</string>
     <string name="hexagon_remove_account_success">Ο λογαριασμός διαγράφηκε.</string>
     <string name="hexagon_remove_account_failure">Δεν ήταν δυνατή η κατάργηση του λογαριασμού.</string>
     <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
     <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Αποσυνδεθείτε από το SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Σφάλμα με τη σύνδεση Google (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
     <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>

@@ -291,14 +291,15 @@
     <string name="hexagon_signin">Prijava</string>
     <string name="hexagon_signout">Odjava</string>
     <string name="hexagon_setup_incomplete">Postavljanje SeriesGuide oblaka nije dovršena.</string>
-    <string name="hexagon_setup_fail_auth">Vaš Google račun nije uspio.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Ukloni račun</string>
     <string name="hexagon_remove_account_success">Račun je izbrisan.</string>
     <string name="hexagon_remove_account_failure">Nije moguće izbrisati račun.</string>
     <string name="hexagon_remove_account_confirmation">Uklanjanjem svog računa će te izbrisati sve serije i filmove sa SeriesGuide Oblaka. Ne zaboravite ih ukloniti i sa ostalih povezanih uređaja.</string>
     <string name="hexagon_api_queued">Slanje na SeriesGuide oblak.</string>
     <string name="hexagon_signed_out">Odjavljeni ste sa SeriesGuide oblaka.</string>
-    <string name="hexagon_signin_fail_format">Problem s prijavom u Google (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Poslano na trakt.</string>
     <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>

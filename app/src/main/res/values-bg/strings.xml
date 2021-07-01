@@ -284,14 +284,15 @@
     <string name="hexagon_signin">Вписване</string>
     <string name="hexagon_signout">Отписване</string>
     <string name="hexagon_setup_incomplete">Настройването на SeriesGuide облака не беше завършено.</string>
-    <string name="hexagon_setup_fail_auth">Профилът ви в Google е инвалиден.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Премахване на акаунт</string>
     <string name="hexagon_remove_account_success">Акаунт унищожен.</string>
     <string name="hexagon_remove_account_failure">Не може да се премахне акаунта.</string>
     <string name="hexagon_remove_account_confirmation">С премахването на акаунта ви ще се изтрият всички предавания и филми от SeriesGuide облака. Не забраявайте да го премахнете и на други свързани устройства.</string>
     <string name="hexagon_api_queued">Изпращане към SeriesGuide облака.</string>
     <string name="hexagon_signed_out">Излизане от облака SeriesGuide.</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Подаване към trakt.</string>
     <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
