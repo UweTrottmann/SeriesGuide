@@ -224,8 +224,8 @@ public class NetworkJobProcessor {
     /**
      * If neither trakt or Cloud are connected, clears all remaining jobs.
      */
-    public void removeObsoleteJobs() {
-        if (shouldSendToHexagon || shouldSendToTrakt) {
+    public void removeObsoleteJobs(boolean ignoreHexagonState) {
+        if ((!ignoreHexagonState && shouldSendToHexagon) || shouldSendToTrakt) {
             return; // still signed in to either service, do not clear jobs
         }
         context.getContentResolver().delete(Jobs.CONTENT_URI, null, null);

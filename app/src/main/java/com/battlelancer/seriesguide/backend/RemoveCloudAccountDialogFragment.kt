@@ -80,7 +80,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
             }
 
             // disable Hexagon integration, remove local account data
-            hexagonTools.setDisabled()
+            hexagonTools.removeAccountAndSetDisabled()
             return true
         }
 

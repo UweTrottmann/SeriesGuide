@@ -3,12 +3,12 @@ package com.battlelancer.seriesguide.backend
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -35,7 +35,10 @@ import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 /**
- * Helps connecting a device to Hexagon: sign in via Google account, initial uploading of shows.
+ * Manages signing in and out with Cloud and account removal.
+ * Tries to silent sign-in when started. Enables Cloud on sign-in.
+ * If Cloud is still enabled, but the account requires validation
+ * enables to retry sign-in or to sign out (actually just disable Cloud).
  */
 class CloudSetupFragment : Fragment() {
 
@@ -57,27 +60,41 @@ class CloudSetupFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCloudSetupBinding.inflate(inflater, container, false)
+        return FragmentCloudSetupBinding.inflate(inflater, container, false).also {
+            binding = it
+        }.root
+    }
 
-        binding!!.textViewCloudWarnings.setOnClickListener {
-            // link to trakt account activity which has details about disabled features
-            startActivity(Intent(context, ConnectTraktActivity::class.java))
-        }
-
-        binding!!.buttonCloudRemoveAccount.setOnClickListener {
-            if (RemoveCloudAccountDialogFragment().safeShow(
-                    parentFragmentManager,
-                    "remove-cloud-account"
-                )) {
-                setProgressVisible(true)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding!!.apply {
+            buttonCloudSignIn.setOnClickListener {
+                // restrict access to supporters
+                if (Utils.hasAccessToX(activity)) {
+                    startHexagonSetup()
+                } else {
+                    Utils.advertiseSubscription(activity)
+                }
             }
+            buttonCloudSignOut.setOnClickListener { signOut() }
+
+            textViewCloudWarnings.setOnClickListener {
+                // link to trakt account activity which has details about disabled features
+                startActivity(Intent(context, ConnectTraktActivity::class.java))
+            }
+
+            buttonCloudRemoveAccount.setOnClickListener {
+                if (RemoveCloudAccountDialogFragment().safeShow(
+                        parentFragmentManager,
+                        "remove-cloud-account"
+                    )) {
+                    setProgressVisible(true)
+                }
+            }
+
+            updateViews()
+            setProgressVisible(true)
+            syncStatusCloud.visibility = View.GONE
         }
-
-        updateViews()
-        setProgressVisible(true)
-        binding!!.syncStatusCloud.visibility = View.GONE
-
-        return binding!!.root
     }
 
     override fun onStart() {
@@ -160,16 +177,17 @@ class CloudSetupFragment : Fragment() {
 
     /**
      * If the Firebase account is not null, saves it and auto-starts setup if Cloud is not
-     * enabled, yet. On sign-in failure disables Cloud.
+     * enabled or the account needs validation.
+     * On sign-in failure sets should validate account flag.
      */
     private fun changeAccount(account: FirebaseUser?, errorIfNull: String?) {
         val signedIn = account != null
         if (signedIn) {
-            Timber.i("Signed in with Google.")
+            Timber.i("Signed in to Cloud.")
             signInAccount = account
         } else {
             signInAccount = null
-            hexagonTools.setDisabled()
+            HexagonSettings.shouldValidateAccount(requireContext(), true)
             errorIfNull?.let {
                 showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
             }
@@ -178,11 +196,11 @@ class CloudSetupFragment : Fragment() {
         setProgressVisible(false)
         updateViews()
 
-        if (signedIn && Utils.hasAccessToX(context)
-            && !HexagonSettings.isEnabled(context)) {
-            // auto-start setup if sign in succeeded and Cloud can be, but is not enabled, yet
-            Timber.i("Auto-start Cloud setup.")
-            startHexagonSetup()
+        if (signedIn && Utils.hasAccessToX(context)) {
+            if (!HexagonSettings.isEnabled(context) || HexagonSettings.shouldValidateAccount(context)) {
+                Timber.i("Auto-start Cloud setup.")
+                startHexagonSetup()
+            }
         }
     }
 
@@ -249,30 +267,45 @@ class CloudSetupFragment : Fragment() {
     }
 
     private fun signOut() {
-        setProgressVisible(true)
-        AuthUI.getInstance().signOut(requireContext()).addOnCompleteListener {
-            Timber.i("Signed out.")
-            signInAccount = null
-            hexagonTools.setDisabled()
-            if (this@CloudSetupFragment.isAdded) {
-                setProgressVisible(false)
-                updateViews()
+        if (HexagonSettings.shouldValidateAccount(requireContext())) {
+            // Account needs to be repaired, so can't sign out, just disable Cloud
+            hexagonTools.removeAccountAndSetDisabled()
+            updateViews()
+        } else {
+            setProgressVisible(true)
+            AuthUI.getInstance().signOut(requireContext()).addOnCompleteListener {
+                Timber.i("Signed out.")
+                signInAccount = null
+                hexagonTools.removeAccountAndSetDisabled()
+                if (this@CloudSetupFragment.isAdded) {
+                    setProgressVisible(false)
+                    updateViews()
+                }
             }
         }
     }
 
     private fun updateViews() {
-        // hexagon enabled and account looks fine?
-        if (HexagonSettings.isEnabled(context)
-            && !HexagonSettings.shouldValidateAccount(context)) {
+        if (HexagonSettings.isEnabled(context)) {
+            // hexagon enabled...
             binding?.textViewCloudUser?.text = HexagonSettings.getAccountName(activity)
-            binding?.textViewCloudDescription?.setText(R.string.hexagon_description)
-
-            // enable sign-out
-            binding?.buttonCloudAction?.setText(R.string.hexagon_signout)
-            binding?.buttonCloudAction?.setOnClickListener { signOut() }
-            // enable account removal
-            binding?.buttonCloudRemoveAccount?.visibility = View.VISIBLE
+            if (HexagonSettings.shouldValidateAccount(context)) {
+                // ...but account needs to be repaired
+                binding?.textViewCloudDescription?.setText(R.string.hexagon_signed_out)
+                setButtonsVisible(
+                    signInVisible = true,
+                    signOutVisible = true,
+                    removeVisible = false
+                )
+            } else {
+                // ...and account is fine
+                binding?.textViewCloudDescription?.setText(R.string.hexagon_description)
+                setButtonsVisible(
+                    signInVisible = false,
+                    signOutVisible = true,
+                    removeVisible = true
+                )
+            }
         } else {
             // did try to setup, but failed?
             if (!HexagonSettings.hasCompletedSetup(activity)) {
@@ -282,19 +315,23 @@ class CloudSetupFragment : Fragment() {
                 binding?.textViewCloudDescription?.setText(R.string.hexagon_description)
             }
             binding?.textViewCloudUser?.text = null
+            setButtonsVisible(
+                signInVisible = true,
+                signOutVisible = false,
+                removeVisible = false
+            )
+        }
+    }
 
-            // enable sign-in
-            binding?.buttonCloudAction?.setText(R.string.hexagon_signin)
-            binding?.buttonCloudAction?.setOnClickListener {
-                // restrict access to supporters
-                if (Utils.hasAccessToX(activity)) {
-                    startHexagonSetup()
-                } else {
-                    Utils.advertiseSubscription(activity)
-                }
-            }
-            // disable account removal
-            binding?.buttonCloudRemoveAccount?.visibility = View.GONE
+    private fun setButtonsVisible(
+        signInVisible: Boolean,
+        signOutVisible: Boolean,
+        removeVisible: Boolean
+    ) {
+        binding?.apply {
+            buttonCloudSignIn.isGone = !signInVisible
+            buttonCloudSignOut.isGone = !signOutVisible
+            buttonCloudRemoveAccount.isGone = !removeVisible
         }
     }
 
@@ -302,10 +339,13 @@ class CloudSetupFragment : Fragment() {
      * Disables buttons and shows a progress bar.
      */
     private fun setProgressVisible(isVisible: Boolean) {
-        binding?.progressBarCloudAccount?.visibility = if (isVisible) View.VISIBLE else View.GONE
+        binding?.apply {
+            progressBarCloudAccount.visibility = if (isVisible) View.VISIBLE else View.GONE
 
-        binding?.buttonCloudAction?.isEnabled = !isVisible
-        binding?.buttonCloudRemoveAccount?.isEnabled = !isVisible
+            buttonCloudSignIn.isEnabled = !isVisible
+            buttonCloudSignOut.isEnabled = !isVisible
+            buttonCloudRemoveAccount.isEnabled = !isVisible
+        }
     }
 
     private fun showSnackbar(message: CharSequence) {
@@ -328,21 +368,18 @@ class CloudSetupFragment : Fragment() {
             signIn()
         } else {
             Timber.i("Setting up Hexagon...")
-
             // set setup incomplete flag
             HexagonSettings.setSetupIncomplete(context)
 
             // validate account data
-            if (TextUtils.isEmpty(signInAccountOrNull.email)) {
+            if (signInAccountOrNull.email.isNullOrEmpty()) {
                 Timber.d("Setting up Hexagon...FAILURE_AUTH")
                 // show setup incomplete message + error toast
                 view?.let {
                     Snackbar.make(it, R.string.hexagon_setup_fail_auth, Snackbar.LENGTH_LONG)
                         .show()
                 }
-            }
-            // at last reset sync state, store the new credentials and enable hexagon integration
-            else if (hexagonTools.setEnabled(signInAccountOrNull)) {
+            } else if (hexagonTools.setAccountAndEnabled(signInAccountOrNull)) {
                 // schedule full sync
                 Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED")
                 SgSyncAdapter.requestSyncFullImmediate(activity, false)

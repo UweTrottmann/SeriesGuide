@@ -149,16 +149,21 @@ class HexagonTools @Inject constructor(
     }
 
     /**
-     * Enables Hexagon, resets sync state and saves account data.
+     * Enables Hexagon and saves account data. If there was no account or the email address
+     * has changed re-sets sync state.
      *
-     * @return `false` if sync state could not be reset.
+     * @return `false` if sync state could not be reset or enabled state was not saved.
      */
-    fun setEnabled(firebaseUser: FirebaseUser): Boolean {
-        if (!HexagonSettings.resetSyncState(context)) {
-            return false
+    fun setAccountAndEnabled(firebaseUser: FirebaseUser): Boolean {
+        val resetSyncState = HexagonSettings.getAccountName(context) != firebaseUser.email
+        if (resetSyncState) {
+            if (!HexagonSettings.resetSyncState(context)) {
+                return false
+            }
+            // Avoid sending jobs if doing a full sync next.
+            // Note: won't run if Trakt is still signed in.
+            NetworkJobProcessor(context).removeObsoleteJobs(true)
         }
-        // clear jobs before isEnabled may return true
-        NetworkJobProcessor(context).removeObsoleteJobs()
         if (!PreferenceManager.getDefaultSharedPreferences(context).edit()
                 .putBoolean(HexagonSettings.KEY_ENABLED, true)
                 .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
@@ -172,7 +177,7 @@ class HexagonTools @Inject constructor(
     /**
      * Disables Hexagon and removes any account data.
      */
-    fun setDisabled() {
+    fun removeAccountAndSetDisabled() {
         PreferenceManager.getDefaultSharedPreferences(context).edit()
             .putBoolean(HexagonSettings.KEY_ENABLED, false)
             .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, false)
@@ -247,9 +252,7 @@ class HexagonTools @Inject constructor(
         }
 
         val shouldFixAccount = account == null
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
-            .putBoolean(HexagonSettings.KEY_SHOULD_VALIDATE_ACCOUNT, shouldFixAccount)
-            .apply()
+        HexagonSettings.shouldValidateAccount(context, shouldFixAccount)
     }
 
     private val isTimeForSignInStateCheck: Boolean

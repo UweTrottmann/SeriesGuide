@@ -52,6 +52,13 @@ public class HexagonSettings {
                 .getBoolean(KEY_ENABLED, false);
     }
 
+    public static void shouldValidateAccount(Context context, boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(KEY_SHOULD_VALIDATE_ACCOUNT, value)
+                .apply();
+    }
+
     /**
      * Returns true if there is an issue with the current account and the user should be sent to the
      * setup screen.

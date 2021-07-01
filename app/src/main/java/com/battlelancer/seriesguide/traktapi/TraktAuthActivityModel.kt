@@ -93,7 +93,7 @@ class TraktAuthActivityModel(application: Application) : AndroidViewModel(applic
             }
 
             // reset sync state before hasCredentials may return true
-            NetworkJobProcessor(getApplication()).removeObsoleteJobs()
+            NetworkJobProcessor(getApplication()).removeObsoleteJobs(false)
             PreferenceManager.getDefaultSharedPreferences(getApplication()).edit {
                 // make next sync merge local watched and collected episodes with those on trakt
                 putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, false)
