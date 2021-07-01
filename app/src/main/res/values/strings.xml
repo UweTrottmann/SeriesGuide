@@ -324,7 +324,7 @@
     <string name="hexagon_signin">Sign In</string>
     <string name="hexagon_signout">Sign Out</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
-    <string name="hexagon_setup_fail_auth">Your account did not check out</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Delete account</string>
     <string name="hexagon_remove_account_success">Account deleted</string>
     <string name="hexagon_remove_account_failure">Could not delete account</string>
