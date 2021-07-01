@@ -298,14 +298,15 @@
     <string name="hexagon_signin">Войти</string>
     <string name="hexagon_signout">Выйти</string>
     <string name="hexagon_setup_incomplete">Настройка SeriesGuide Cloud не была завершена.</string>
-    <string name="hexagon_setup_fail_auth">Ваш Google аккаунт не проверен.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Удалить аккаунт</string>
     <string name="hexagon_remove_account_success">Аккаунт уничтожен.</string>
     <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
     <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
     <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Ошибка при входе в аккаунт Google (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>

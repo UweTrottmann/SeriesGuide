@@ -277,14 +277,15 @@
     <string name="hexagon_signin">로그인</string>
     <string name="hexagon_signout">로그아웃</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloud 설정이 완료되지 않았습니다.</string>
-    <string name="hexagon_setup_fail_auth">입력한 Google 계정이 확인되지 않습니다.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">계정 삭제</string>
     <string name="hexagon_remove_account_success">계정이 삭제되었습니다</string>
     <string name="hexagon_remove_account_failure">계정을 제거할 수 없습니다</string>
     <string name="hexagon_remove_account_confirmation">계정을 삭제하면 SeriesGuide Cloud에서 모든 프로그램과 영화가 제거됩니다.</string>
     <string name="hexagon_api_queued">SeriesGuide Cloud로 전송합니다.</string>
     <string name="hexagon_signed_out">SeriesGuide Cloud에서 로그아웃함</string>
-    <string name="hexagon_signin_fail_format">Error with Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt에 전송하고 있습니다.</string>
     <string name="checkin_success_trakt">%s을(를) trakt에 체크인하였습니다.</string>

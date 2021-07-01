@@ -284,14 +284,15 @@
     <string name="hexagon_signin">Giriş</string>
     <string name="hexagon_signout">Çıkış</string>
     <string name="hexagon_setup_incomplete">Series Guide Bulut kurulumu tamamlanmadı.</string>
-    <string name="hexagon_setup_fail_auth">Google hesabınız doğrulanamadı.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Hesabı kaldır</string>
     <string name="hexagon_remove_account_success">Hesap silinmiş.</string>
     <string name="hexagon_remove_account_failure">Hesap kaldırılamadı.</string>
     <string name="hexagon_remove_account_confirmation">Hesabınızı kaldırdığınızda SeriesGuide Cloud üzerindeki bütün film ve dizileriniz silinecektir. Hesabınızı diğer bağlı cihazlardan da kaldırdığınızdan emin olun.</string>
     <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
     <string name="hexagon_signed_out">SeriesGuide Bulut servisinden çıkış yapıldı.</string>
-    <string name="hexagon_signin_fail_format">Google ile Giriş hatası (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
     <string name="checkin_success_trakt">%s Trakt üzerinde \"izliyorum\" yapıldı</string>

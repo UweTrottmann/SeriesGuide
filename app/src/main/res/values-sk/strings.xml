@@ -298,14 +298,15 @@
     <string name="hexagon_signin">Prihlásiť sa</string>
     <string name="hexagon_signout">Odhlásiť sa</string>
     <string name="hexagon_setup_incomplete">Nastavenie SeriesGuide Cloud nebolo dokončené.</string>
-    <string name="hexagon_setup_fail_auth">Váš účet Google nebol odhlásený.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Odstrániť účet</string>
     <string name="hexagon_remove_account_success">Účet odstránený.</string>
     <string name="hexagon_remove_account_failure">Účet sa nedá odstrániť.</string>
     <string name="hexagon_remove_account_confirmation">Odstránenie účtu vymaže všetky seriály a filmy zo SeriesGuide Cloudu. Uistite sa, že ste ho odstránili aj z iných pripojených zariadení.</string>
     <string name="hexagon_api_queued">Odosielanie do SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Ste odhlásený zo SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Chyba pri prihlasovaní pomocou Google (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Odosiela sa na trakt.</string>
     <string name="checkin_success_trakt">Práve pozeráte %s na trakt.</string>
