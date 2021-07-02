@@ -163,8 +163,6 @@
     <string name="friends_recently">Uw Trakt-vrienden</string>
     <string name="now_empty">Nog niets, kijk eerst wat series!</string>
     <string name="now_movies_empty">Niks te doen. Kijk een film!</string>
-    <string name="user_stream_empty">Geen recente activiteit op trakt. Kijk en check in bij wat shows!</string>
-    <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Bekijk en check in bij films!</string>
     <!-- Calendar -->
     <string name="upcoming">Eerstvolgende</string>
     <string name="recent">Recente</string>

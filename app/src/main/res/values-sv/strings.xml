@@ -163,8 +163,6 @@
     <string name="friends_recently">Dina trakt-vänner</string>
     <string name="now_empty">Inget att göra. Se några tv-serier!</string>
     <string name="now_movies_empty">Ingenting händer. Titta på några filmer!</string>
-    <string name="user_stream_empty">Inga nya aktiviter på trakt. Bocka av några serier!</string>
-    <string name="user_movie_stream_empty">Inga nya aktiviter på trakt. Bocka av några filmer!</string>
     <!-- Calendar -->
     <string name="upcoming">Kommande</string>
     <string name="recent">Senaste</string>

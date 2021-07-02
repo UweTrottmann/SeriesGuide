@@ -165,8 +165,6 @@
     <string name="friends_recently">Zaznamenáno přítelem</string>
     <string name="now_empty">Nic se neděje. Podívejte se na nějaké seriály!</string>
     <string name="now_movies_empty">Zatím tu nic není. Podívejte se na některé filmy!</string>
-    <string name="user_stream_empty">Žádná poslední aktivita na Traktu. Podívejte se na některé seriály!</string>
-    <string name="user_movie_stream_empty">Žádná poslední aktivita na Traktu. Podívejte se na některé filmy!</string>
     <!-- Calendar -->
     <string name="upcoming">Nadcházející</string>
     <string name="recent">Nedávné</string>

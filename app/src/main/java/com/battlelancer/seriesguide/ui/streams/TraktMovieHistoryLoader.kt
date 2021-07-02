@@ -17,7 +17,7 @@ internal class TraktMovieHistoryLoader(context: Context) : TraktEpisodeHistoryLo
         get() = "get user movie history"
 
     override val emptyText: Int
-        get() = R.string.user_movie_stream_empty
+        get() = R.string.now_movies_empty
 
     override fun buildCall(): Call<List<HistoryEntry?>?> {
         val traktUsers = SgApp.getServicesComponent(context).traktUsers()!!

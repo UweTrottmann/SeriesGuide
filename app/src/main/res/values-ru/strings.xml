@@ -165,8 +165,6 @@
     <string name="friends_recently">Ваши друзья с Trakt</string>
     <string name="now_empty">Ничего нового. Посмотрите другие сериалы!</string>
     <string name="now_movies_empty">Ничего нового. Посмотрите несколько фильмов!</string>
-    <string name="user_stream_empty">Нет информации об активности в trakt. Посмотрите другие сериалы!</string>
-    <string name="user_movie_stream_empty">Нет информации об активности в trakt. Проверьте остальные фильмы!</string>
     <!-- Calendar -->
     <string name="upcoming">Следующие эпизоды</string>
     <string name="recent">Недавние</string>

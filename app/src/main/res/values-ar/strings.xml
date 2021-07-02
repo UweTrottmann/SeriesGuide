@@ -167,8 +167,6 @@
     <string name="friends_recently">أصدقائك على موقع Trakt</string>
     <string name="now_empty">لا يوجد شيء جديد. شاهد بعض المسلسلات!</string>
     <string name="now_movies_empty">لا يوجد شيء جديد. شاهد بعض الأفلام!</string>
-    <string name="user_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض المسلسلات!</string>
-    <string name="user_movie_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض الأفلام!</string>
     <!-- Calendar -->
     <string name="upcoming">القادم</string>
     <string name="recent">مؤخراً</string>

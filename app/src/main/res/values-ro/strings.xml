@@ -164,8 +164,6 @@
     <string name="friends_recently">Prietenii tăi trakt</string>
     <string name="now_empty">Nu se întâmplă nimic. Vizionează câteva emisiuni!</string>
     <string name="now_movies_empty">Nu se întâmplă nimic. Vizionează câteva filme!</string>
-    <string name="user_stream_empty">Nici o activitate recentă pe trakt. Vizionați câteva emisiuni!</string>
-    <string name="user_movie_stream_empty">Nici o activitate recentă pe trakt. Vizionați câteva filme!</string>
     <!-- Calendar -->
     <string name="upcoming">Urmează</string>
     <string name="recent">Recente</string>

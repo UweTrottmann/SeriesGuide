@@ -165,8 +165,6 @@
     <string name="friends_recently">חבריך מ-trakt</string>
     <string name="now_empty">שום דבר לא קורה. צפה בכמה סדרות!</string>
     <string name="now_movies_empty">שום דבר לא קורה. לצפות בכמה סרטים!</string>
-    <string name="user_stream_empty">אין פעולות אחרונות בTrakt. צפה בכמה סדרות!</string>
-    <string name="user_movie_stream_empty">אין פעולות אחרונות בTrakt. צפה בכמה סרטים!</string>
     <!-- Calendar -->
     <string name="upcoming">בקרוב</string>
     <string name="recent">אחרונים</string>

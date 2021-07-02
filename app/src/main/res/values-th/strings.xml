@@ -162,8 +162,6 @@
     <string name="friends_recently">เพื่อน trakt ของคุณ</string>
     <string name="now_empty">ไม่มีอะไรเกิดขึ้น เริ่มดูซีรีส์สักเรื่อง!</string>
     <string name="now_movies_empty">ไม่มีอะไรเกิดขึ้น เริ่มดูภาพยนตร์สักเรื่อง!</string>
-    <string name="user_stream_empty">ไม่มีประวัติบน trakt ดูและเช็กอินซีรีส์สักเรื่องสิ!</string>
-    <string name="user_movie_stream_empty">ไม่มีประวัติบน trakt ดูและเช็กอินภาพยนตร์สักเรื่องสิ!</string>
     <!-- Calendar -->
     <string name="upcoming">เร็วๆ นี้</string>
     <string name="recent">ล่าสุด</string>

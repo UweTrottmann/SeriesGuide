@@ -76,7 +76,7 @@ open class TraktEpisodeHistoryLoader(context: Context) :
 
     @get:StringRes
     open val emptyText: Int
-        get() = R.string.user_stream_empty
+        get() = R.string.now_empty
 
     protected open fun buildCall(): Call<List<HistoryEntry?>?> {
         val traktUsers = SgApp.getServicesComponent(context).traktUsers()!!

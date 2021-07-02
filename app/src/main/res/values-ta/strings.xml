@@ -163,8 +163,6 @@
     <string name="friends_recently">உங்கள் trakt நண்பர்கள்</string>
     <string name="now_empty">எதுவும் இல்லை அன்று செல்லும். சில காட்சிகள் கவனி!</string>
     <string name="now_movies_empty">எதுவும் இல்லை அன்று செல்லும். அதில் சில திரைப்படங்கள்!</string>
-    <string name="user_stream_empty">அன்று trakt வரலாறு இல்லை. கவனி மற்றும் சில காட்சிகள்-ஐ சரிபார்க்க!</string>
-    <string name="user_movie_stream_empty">அன்று trakt வரலாறு இல்லை. கவனி மற்றும் சில திரைப்படங்கள்-ஐ சரிபார்க்க!</string>
     <!-- Calendar -->
     <string name="upcoming">வரவிருக்கும்</string>
     <string name="recent">சமீபத்திய</string>

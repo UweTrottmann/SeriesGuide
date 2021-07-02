@@ -163,8 +163,6 @@
     <string name="friends_recently">Seus amigos do trakt</string>
     <string name="now_empty">Nada acontecendo. Assista algumas séries!</string>
     <string name="now_movies_empty">Nada acontecendo. Assista alguns filmes!</string>
-    <string name="user_stream_empty">Nenhuma atividade recente no trakt. Dê uma olhada em algumas séries!</string>
-    <string name="user_movie_stream_empty">Nenhuma atividade recente no trakt. Dê uma olhada em alguns filmes!</string>
     <!-- Calendar -->
     <string name="upcoming">Em breve</string>
     <string name="recent">Recente</string>
