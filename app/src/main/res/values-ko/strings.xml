@@ -194,7 +194,7 @@
     <string name="no_results">결과가 없습니다. 완전한 단어를 입력하세요.</string>
     <string name="empty_show_search">프로그램 목록에서 찾을 수 없습니다</string>
     <string name="action_try_again">재시도</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">모두 추가</string>
     <string name="add_multiple">모든 프로그램이 곧 목록에 표시됩니다.</string>
     <string name="add_started">%s이(가) 프로그램 리스트에 곧 나타납니다.</string>

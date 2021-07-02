@@ -206,7 +206,7 @@
     <string name="no_results">Результатов нет, попробуйте полное название.</string>
     <string name="empty_show_search">Не найдено в вашем списке</string>
     <string name="action_try_again">Повторить попытку</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">Добавить все</string>
     <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
     <string name="add_started">%s скоро появится в вашем списке.</string>

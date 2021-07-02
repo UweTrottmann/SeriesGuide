@@ -198,7 +198,7 @@
     <string name="no_results">Нема резултати, обидете се со целосни зборови.</string>
     <string name="empty_show_search">Не е пронајдено во твојата прикажи листа</string>
     <string name="action_try_again">Прoбaј пoвтoрнo</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">Додај се</string>
     <string name="add_multiple">Сите серии ќе се прикажат во твојата листа од серии за кратко.</string>
     <string name="add_started">%s ќе се појави во вашата листа од серии за кратко.</string>

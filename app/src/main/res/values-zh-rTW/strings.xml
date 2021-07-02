@@ -194,7 +194,7 @@
     <string name="no_results">查無結果，請嘗試完整單字。</string>
     <string name="empty_show_search">節目單中未找到</string>
     <string name="action_try_again">重試</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">全部加入</string>
     <string name="add_multiple">所有節目將會顯示在你的清單中。</string>
     <string name="add_started">《%s》即將顯示在你的節目清單中</string>

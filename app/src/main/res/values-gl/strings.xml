@@ -198,7 +198,7 @@
     <string name="no_results">Sen resultados, proba con palabras completas</string>
     <string name="empty_show_search">Non atopado na súa lista de series</string>
     <string name="action_try_again">Tentar de novo</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">Engadir todo</string>
     <string name="add_multiple">Todas as series aparecerán na súa lista en breve</string>
     <string name="add_started">%s aparecerá na súa lista de series en breve</string>

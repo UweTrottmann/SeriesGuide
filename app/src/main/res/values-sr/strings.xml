@@ -202,7 +202,7 @@
     <string name="no_results">Нема резултата, покушајте са целим речима.</string>
     <string name="empty_show_search">Nije prenađeno u vašoj show listi</string>
     <string name="action_try_again">Поушајте поново</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">Додај све</string>
     <string name="add_multiple">Све серије ће се ускоро појавити у вашој листи серија.</string>
     <string name="add_started">%s ће се ускоро појавити у вашој листи серија.</string>

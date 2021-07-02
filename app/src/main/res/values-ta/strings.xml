@@ -198,7 +198,7 @@
     <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">மீண்டும் முயற்சி</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">எல்லாம் சேர்</string>
     <string name="add_multiple">அனைத்து காட்சிகள் தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
     <string name="add_started">%s தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>

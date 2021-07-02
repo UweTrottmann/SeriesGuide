@@ -206,7 +206,7 @@
     <string name="no_results">אין תוצאות, נסה ביטויים שלמים.</string>
     <string name="empty_show_search">לא נמצא ברשימת הסדרות</string>
     <string name="action_try_again">נסה שוב</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">הוסף הכל</string>
     <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
     <string name="add_started">%s יופיע ברשימת התכניות שלך בהקדם.</string>
