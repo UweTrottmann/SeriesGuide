@@ -12,6 +12,17 @@ Version 60
 ----------
 *in development*
 
+#### 60-beta2
+*2021-07-07*
+
+* 🌟 Sign into Cloud with only email and password. With this update you are signed out of Cloud.
+  When signing in again choose whether to switch to email and password or continue to use Google sign-in.
+  If you use other devices that do not support Google sign-in, like Amazon Fire devices,
+  you should choose email and password sign in.
+* 🔧 When signed out of Cloud due to an error, will resume syncing without a full sync when signing
+  in again with the same email address.
+* 📝 Latest translations from crowdin.
+
 #### 60-beta1
 *2021-06-24*
 
