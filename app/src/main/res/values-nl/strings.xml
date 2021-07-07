@@ -282,7 +282,7 @@
     <string name="hexagon_signin">Log in</string>
     <string name="hexagon_signout">Uitloggen</string>
     <string name="hexagon_setup_incomplete">SeriesGuide cloud instellen is niet afgerond.</string>
-    <string name="hexagon_setup_fail_auth">Uw account heeft geen e-mailadres</string>
+    <string name="hexagon_setup_fail_auth">Je account bevat geen e-mailadres</string>
     <string name="hexagon_remove_account">Account verwijderen</string>
     <string name="hexagon_remove_account_success">Account vernietigd</string>
     <string name="hexagon_remove_account_failure">Kon account niet verwijderen</string>

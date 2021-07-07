@@ -282,15 +282,15 @@
     <string name="hexagon_signin">Log ind</string>
     <string name="hexagon_signout">Log ud</string>
     <string name="hexagon_setup_incomplete">Opsætning af SeriesGuide Cloud blev ikke fuldført.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Dine kontooplysninger indeholder ikke en e-mail-adresse</string>
     <string name="hexagon_remove_account">Fjern konto</string>
     <string name="hexagon_remove_account_success">Konto slettet.</string>
     <string name="hexagon_remove_account_failure">Kunne ikke fjerne konto.</string>
     <string name="hexagon_remove_account_confirmation">Hvis du sletter din konto, slettes alle film og serier fra SeriesGuide Cloud. Sørg for også at fjerne kontoen på andre tilsluttede enheder.</string>
     <string name="hexagon_api_queued">Sender til SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Logget ud af SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Fejl i login (%s)</string>
+    <string name="hexagon_signin_google_only">E-mail-adresse kræver Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sender til trakt.</string>
     <string name="checkin_success_trakt">%s tjekket ind på trakt.</string>

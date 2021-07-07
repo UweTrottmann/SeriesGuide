@@ -282,15 +282,15 @@
     <string name="hexagon_signin">Bejelentkezés</string>
     <string name="hexagon_signout">Kijelentkezés</string>
     <string name="hexagon_setup_incomplete">A SeriesGuide Cloud beállítása nem fejeződött be.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">A fiókja nem rendelkezik e-mail címmel</string>
     <string name="hexagon_remove_account">Fiók eltávolítása</string>
     <string name="hexagon_remove_account_success">Fiók törölve.</string>
     <string name="hexagon_remove_account_failure">A fiók eltávolítása sikertelen.</string>
     <string name="hexagon_remove_account_confirmation">A fiókod eltávolításával minden sorozat és film törlődni fog a SeriesGuide Cloudról. Gondoskodj minden más eszközről való törléséről is.</string>
     <string name="hexagon_api_queued">Küldés a SeriesGuide felhő tárhelyre.</string>
     <string name="hexagon_signed_out">Kijelentkezett a SeriesGuide felhő tárhelyről.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Hiba történt a Bejelentkezéssel (%s)</string>
+    <string name="hexagon_signin_google_only">E-mail címhez Google bejelentkezés szükséges</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Elküldés a traktnak.</string>
     <string name="checkin_success_trakt">Bejelentkezve trakttal ide: %s.</string>

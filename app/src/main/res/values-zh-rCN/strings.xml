@@ -295,7 +295,7 @@
     <string name="trakt_error_account_locked">您的 Trakt 帐户已被锁定。请联系 Trakt 支持。</string>
     <string name="trakt_error_credentials">嗯～出了点小状况。请检查您的 Trakt 授权信息后重试。</string>
     <string name="trakt_error_not_exists">Trakt 上（尚）无相关信息。请稍后重试。</string>
-    <string name="trakt_notice_not_exists">（目前还）无法在 Trakt 上记录。</string>
+    <string name="trakt_notice_not_exists">（目前还）无法在 Trakt 上记录</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">关联 Trakt 帐户</string>
     <string name="trakt_reconnect">关联 SeriesGuide 与 Trakt</string>
