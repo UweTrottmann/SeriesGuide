@@ -12,6 +12,11 @@ Version 60
 ----------
 *in development*
 
+#### 60-beta3
+*2021-07-08*
+
+* 🔨 Do not crash during Cloud sync or actions due to issues with new sign-in.
+
 #### 60-beta2
 *2021-07-07*
 
