@@ -4,10 +4,9 @@ import com.google.android.gms.tasks.Tasks
 import com.google.api.client.http.HttpExecuteInterceptor
 import com.google.api.client.http.HttpRequest
 import com.google.api.client.http.HttpRequestInitializer
-import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import java.io.IOException
+import java.util.concurrent.ExecutionException
 
 class FirebaseHttpRequestInitializer : HttpRequestInitializer {
 
@@ -17,7 +16,10 @@ class FirebaseHttpRequestInitializer : HttpRequestInitializer {
         request?.interceptor = FirebaseHttpExecuteInterceptor(this)
     }
 
-    @Throws(FirebaseAuthInvalidUserException::class)
+    @Throws(
+        ExecutionException::class, // Tasks.await wraps task exceptions
+        InterruptedException::class // Tasks.await
+    )
     fun getJwtToken(): String? {
         val firebaseUser = firebaseUser ?: return null
 
@@ -33,15 +35,17 @@ private class FirebaseHttpExecuteInterceptor(
 ) : HttpExecuteInterceptor {
 
     override fun intercept(request: HttpRequest?) {
+        // Note: wrap exceptions to not crash calling code that expects IOException.
         try {
             val token = firebaseHttpRequestInitializer.getJwtToken()
             request?.headers?.authorization = "Bearer $token"
-        } catch (e: FirebaseAuthException) {
-            // Wrap in IOException so it is caught.
+        } catch (e: ExecutionException) {
+            throw FirebaseAuthIOException(e.cause ?: e)
+        } catch (e: InterruptedException) {
             throw FirebaseAuthIOException(e)
         }
     }
 
 }
 
-class FirebaseAuthIOException(cause: FirebaseAuthException) : IOException(cause)
+class FirebaseAuthIOException(cause: Throwable) : IOException(cause)
