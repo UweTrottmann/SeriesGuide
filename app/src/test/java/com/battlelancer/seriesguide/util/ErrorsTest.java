@@ -2,8 +2,14 @@ package com.battlelancer.seriesguide.util;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import com.battlelancer.seriesguide.EmptyTestApplication;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
+@RunWith(RobolectricTestRunner.class)
+@Config(application = EmptyTestApplication.class)
 public class ErrorsTest {
 
     @Test
