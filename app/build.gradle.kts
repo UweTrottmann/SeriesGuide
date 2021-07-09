@@ -262,20 +262,20 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/test
     androidTestImplementation("androidx.annotation:annotation:$annotation_version")
     // Core library
-    val androidXtestCoreVersion = "1.3.0"
+    val androidXtestCoreVersion = "1.4.0"
     androidTestImplementation("androidx.test:core:$androidXtestCoreVersion")
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation("androidx.test:runner:1.3.0")
-    androidTestImplementation("androidx.test:rules:1.3.0")
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test:rules:1.4.0")
     // Espresso
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
     // Assertions
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation("androidx.test.ext:truth:1.3.0") {
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.ext:truth:1.4.0") {
         exclude(group = "com.google.truth") // include manually to control conflicting deps
     }
-    val truthVersion = "1.1.2" // https://github.com/google/truth/releases
+    val truthVersion = "1.1.3" // https://github.com/google/truth/releases
     androidTestImplementation("com.google.truth:truth:$truthVersion") {
         exclude(group = "org.checkerframework") // from guava, not needed at runtime
         exclude(group = "com.google.errorprone") // from guava, not needed at runtime
