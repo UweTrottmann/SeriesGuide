@@ -15,7 +15,7 @@ buildscript {
     val sgVersionCode by extra(2106005)
     val sgVersionName by extra("60-beta3")
 
-    val kotlin_version by extra("1.5.10") // https://kotlinlang.org/docs/releases.html#release-details
+    val kotlin_version by extra("1.5.20") // https://kotlinlang.org/docs/releases.html#release-details
     val coroutines_version by extra("1.5.0") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 
     // https://developer.android.com/jetpack/androidx/releases
@@ -47,7 +47,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.1") // libraries, SeriesGuide
+        classpath("com.android.tools.build:gradle:4.2.2") // libraries, SeriesGuide
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics

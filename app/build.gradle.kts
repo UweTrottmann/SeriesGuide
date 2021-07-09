@@ -58,14 +58,6 @@ android {
         buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
         buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["eventBusIndex"] = "com.battlelancer.seriesguide.SgEventBusIndex"
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-                arguments["room.incremental"] = "true"
-            }
-        }
     }
 
     sourceSets {
@@ -150,6 +142,15 @@ android {
             // keep disabled unless needed, slows down build
             isPseudoLocalesEnabled = false
         }
+    }
+}
+
+// Note: android.javaCompileOptions.annotationProcessorOptions does not seem to work with Kotlin 1.5.20
+kapt {
+    arguments {
+        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.incremental", "true")
     }
 }
 
@@ -292,7 +293,11 @@ dependencies {
         exclude(group = "com.google.errorprone") // from guava, not needed at runtime
     }
     // https://github.com/robolectric/robolectric/releases/
-    testImplementation("org.robolectric:robolectric:4.5.1")
+    // Note: 4.6.1 pulls in bcprov-jdk15on code targeting newer Java breaking Jetifier
+    // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
+    // https://github.com/robolectric/robolectric/issues/6521
+    // https://issuetracker.google.com/issues/159151549
+    testImplementation("org.robolectric:robolectric:4.6.1")
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
 
 }
