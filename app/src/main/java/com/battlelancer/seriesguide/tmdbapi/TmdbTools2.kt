@@ -106,7 +106,7 @@ class TmdbTools2 {
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
         try {
             val response = tmdb.searchService()
-                .tv(query, null, language, null)
+                .tv(query, null, language, null, false)
                 .execute()
             if (response.isSuccessful) {
                 val results = response.body()?.results
