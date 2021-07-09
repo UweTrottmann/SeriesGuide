@@ -58,14 +58,6 @@ android {
         buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
         buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["eventBusIndex"] = "com.battlelancer.seriesguide.SgEventBusIndex"
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-                arguments["room.incremental"] = "true"
-            }
-        }
     }
 
     sourceSets {
@@ -150,6 +142,15 @@ android {
             // keep disabled unless needed, slows down build
             isPseudoLocalesEnabled = false
         }
+    }
+}
+
+// Note: android.javaCompileOptions.annotationProcessorOptions does not seem to work with Kotlin 1.5.20
+kapt {
+    arguments {
+        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.incremental", "true")
     }
 }
 
