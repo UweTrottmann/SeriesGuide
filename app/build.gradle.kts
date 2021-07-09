@@ -293,7 +293,11 @@ dependencies {
         exclude(group = "com.google.errorprone") // from guava, not needed at runtime
     }
     // https://github.com/robolectric/robolectric/releases/
-    testImplementation("org.robolectric:robolectric:4.5.1")
+    // Note: 4.6.1 pulls in bcprov-jdk15on code targeting newer Java breaking Jetifier
+    // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
+    // https://github.com/robolectric/robolectric/issues/6521
+    // https://issuetracker.google.com/issues/159151549
+    testImplementation("org.robolectric:robolectric:4.6.1")
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
 
 }
