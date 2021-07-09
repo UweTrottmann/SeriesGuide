@@ -5,15 +5,22 @@ import static com.google.common.truth.Truth.assertThat;
 import android.content.Context;
 import androidx.annotation.Nullable;
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+import com.battlelancer.seriesguide.EmptyTestApplication;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
-@RunWith(AndroidJUnit4.class)
+/**
+ * Tests using Room are recommended to be run on an actual device due to SQLite differences,
+ * but this test does not really rely on the database.
+ */
+@RunWith(RobolectricTestRunner.class)
+@Config(application = EmptyTestApplication.class)
 public class ShowSyncTest {
 
     private ShowTools showTools;
