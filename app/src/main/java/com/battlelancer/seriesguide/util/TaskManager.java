@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.ui.search.AddShowTask;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import java.util.ArrayList;
 import java.util.List;
+import kotlinx.coroutines.Job;
 
 /**
  * Hold some {@link AsyncTask} instances while running to ensure only one is executing at a time.
@@ -20,7 +21,7 @@ public class TaskManager {
     private static TaskManager _instance;
 
     @Nullable private AddShowTask addShowTask;
-    @Nullable private JsonExportTask backupTask;
+    @Nullable private Job backupTask;
     @Nullable private LatestEpisodeUpdateTask nextEpisodeUpdateTask;
 
     private TaskManager() {
@@ -86,9 +87,9 @@ public class TaskManager {
     @MainThread
     public synchronized boolean tryBackupTask(Context context) {
         if (!isAddTaskRunning()
-                && (backupTask == null || backupTask.getStatus() == AsyncTask.Status.FINISHED)) {
-            backupTask = new JsonExportTask(context, null, false, true, null);
-            backupTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                && (backupTask == null || backupTask.isCompleted())) {
+            JsonExportTask exportTask = new JsonExportTask(context, null, false, true, null);
+            backupTask = exportTask.launch();
             return true;
         }
         return false;

@@ -2,10 +2,11 @@ package com.battlelancer.seriesguide.dataliberation
 
 import android.content.Context
 import android.net.Uri
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_LISTS
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_MOVIES
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.Companion.BACKUP_SHOWS
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
+import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File
@@ -29,6 +30,7 @@ class AutoBackupException(message: String) : IOException(message)
  * If the user has specified auto backup files, copies the latest backups to them.
  * If the user specified files do not exist, their URI is purged from prefs.
  */
+@Suppress("BlockingMethodInNonBlockingContext")
 class AutoBackupTask(
     private val jsonExportTask: JsonExportTask,
     private val context: Context
@@ -46,7 +48,7 @@ class AutoBackupTask(
     }
 
     @Throws(AutoBackupException::class)
-    fun run() {
+    suspend fun run(coroutineScope: CoroutineScope) {
         Timber.i("Creating auto backup.")
 
         val backupDirectory = AutoBackupTools.getBackupDirectory(context)
@@ -62,17 +64,17 @@ class AutoBackupTask(
         // Create backup.
         val backupFileShows = Backup.Shows.let { type ->
             getBackupFile(type, timestamp, backupDirectory)
-                .also { backup(type, it) }
+                .also { backup(coroutineScope, type, it) }
         }
 
         val backupFileLists = Backup.Lists.let { type ->
             getBackupFile(type, timestamp, backupDirectory)
-                .also { backup(type, it) }
+                .also { backup(coroutineScope, type, it) }
         }
 
         val backupFileMovies = Backup.Movies.let { type ->
             getBackupFile(type, timestamp, backupDirectory)
-                .also { backup(type, it) }
+                .also { backup(coroutineScope, type, it) }
         }
 
         if (BackupSettings.isCreateCopyOfAutoBackup(context)) {
@@ -88,7 +90,8 @@ class AutoBackupTask(
     }
 
     @Throws(AutoBackupException::class)
-    private fun backup(
+    private suspend fun backup(
+        coroutineScope: CoroutineScope,
         backup: Backup,
         backupFile: File
     ) {
@@ -97,9 +100,9 @@ class AutoBackupTask(
             out = FileOutputStream(backupFile)
 
             when (backup) {
-                Backup.Shows -> jsonExportTask.writeJsonStreamShows(out)
-                Backup.Lists -> jsonExportTask.writeJsonStreamLists(out)
-                Backup.Movies -> jsonExportTask.writeJsonStreamMovies(out)
+                Backup.Shows -> jsonExportTask.writeJsonStreamShows(coroutineScope, out)
+                Backup.Lists -> jsonExportTask.writeJsonStreamLists(coroutineScope, out)
+                Backup.Movies -> jsonExportTask.writeJsonStreamMovies(coroutineScope, out)
             }
         } catch (e: Exception) {
             if (backupFile.delete()) {

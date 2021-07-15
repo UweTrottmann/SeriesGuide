@@ -23,6 +23,7 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.snackbar.Snackbar;
+import kotlinx.coroutines.Job;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -96,7 +97,8 @@ public class DataLiberationFragment extends Fragment implements
     @BindView(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
 
     @Nullable private Integer type;
-    private AsyncTask<Void, Integer, Integer> dataLibTask;
+    @Nullable private AsyncTask<Void, Integer, Integer> dataLibTask;
+    @Nullable private Job dataLibJob;
     private Unbinder unbinder;
 
     @Override
@@ -168,11 +170,9 @@ public class DataLiberationFragment extends Fragment implements
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // restore UI state
-        if (dataLibTask != null && dataLibTask.getStatus() != AsyncTask.Status.FINISHED) {
+        if (isDataLibTaskNotCompleted()) {
             setProgressLock(true);
         }
     }
@@ -200,10 +200,16 @@ public class DataLiberationFragment extends Fragment implements
 
     @Override
     public void onDestroy() {
-        if (dataLibTask != null && dataLibTask.getStatus() != AsyncTask.Status.FINISHED) {
-            dataLibTask.cancel(true);
+        if (isDataLibTaskNotCompleted()) {
+            if (dataLibTask != null) {
+                dataLibTask.cancel(true);
+            }
+            if (dataLibJob != null) {
+                dataLibJob.cancel(null);
+            }
         }
         dataLibTask = null;
+        dataLibJob = null;
 
         super.onDestroy();
     }
@@ -252,9 +258,10 @@ public class DataLiberationFragment extends Fragment implements
         if (requestCode == REQUEST_CODE_EXPORT) {
             setProgressLock(true);
 
-            dataLibTask = new JsonExportTask(requireContext(), DataLiberationFragment.this,
+            JsonExportTask exportTask = new JsonExportTask(requireContext(),
+                    DataLiberationFragment.this,
                     checkBoxFullDump.isChecked(), false, type);
-            dataLibTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            dataLibJob = exportTask.launch();
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 
@@ -263,6 +270,11 @@ public class DataLiberationFragment extends Fragment implements
                     checkBoxMovies.isChecked());
             Utils.executeInOrder(dataLibTask);
         }
+    }
+
+    private boolean isDataLibTaskNotCompleted() {
+        return (dataLibTask != null && dataLibTask.getStatus() != AsyncTask.Status.FINISHED)
+                || (dataLibJob != null && !dataLibJob.isCompleted());
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
