@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader;
 import com.battlelancer.seriesguide.extensions.ExtensionManager;
 import com.battlelancer.seriesguide.model.SgEpisode2;
 import com.battlelancer.seriesguide.model.SgShow2;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.streaming.StreamingSearch;
@@ -147,7 +146,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     private OverviewViewModel model;
 
     private long showId;
-    private int showTvdbId;
     @Nullable private SgShow2 show;
     @Nullable private SgEpisode2 episode;
 
@@ -172,8 +170,6 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         super.onCreate(savedInstanceState);
 
         showId = requireArguments().getLong(ARG_LONG_SHOW_ROWID);
-        showTvdbId = SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
-                .getShowTvdbId(showId);
     }
 
     @Override
@@ -299,9 +295,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (handler != null) {
-            handler.removeCallbacks(episodeActionsRunnable);
-        }
+        handler.removeCallbacks(episodeActionsRunnable);
         // Release reference to any job.
         ratingFetchJob = null;
     }
@@ -473,7 +467,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         int season = episode.getSeason();
         int number = episode.getNumber();
         final String title = TextTools.getEpisodeTitle(getContext(),
-                DisplaySettings.preventSpoilers(getContext()) ? null : episode.getTitle(), number);
+                DisplaySettings.preventSpoilers(requireContext()) ? null : episode.getTitle(), number);
         textEpisodeTitle.setText(title);
 
         // number
@@ -491,10 +485,10 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         // air date
         long releaseTime = episode.getFirstReleasedMs();
         if (releaseTime != -1) {
-            Date actualRelease = TimeTools.applyUserOffset(getContext(), releaseTime);
+            Date actualRelease = TimeTools.applyUserOffset(requireContext(), releaseTime);
             // "Oct 31 (Fri)" or "in 14 mins (Fri)"
             String dateTime;
-            if (DisplaySettings.isDisplayExactDate(getContext())) {
+            if (DisplaySettings.isDisplayExactDate(requireContext())) {
                 dateTime = TimeTools.formatToLocalDateShort(requireContext(), actualRelease);
             } else {
                 dateTime = TimeTools.formatToLocalRelativeTime(getContext(), actualRelease);
@@ -564,7 +558,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             overview = TextToolsK.textNoTranslation(requireContext(), languageCode);
-        } else if (DisplaySettings.preventSpoilers(getContext())) {
+        } else if (DisplaySettings.preventSpoilers(requireContext())) {
             overview = getString(R.string.no_spoilers);
         }
         textDescription.setText(TextTools.textWithTmdbSource(textDescription.getContext(),
@@ -607,7 +601,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             return;
         }
 
-        if (DisplaySettings.preventSpoilers(getContext())) {
+        if (DisplaySettings.preventSpoilers(requireContext())) {
             // show image placeholder
             imageEpisode.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             imageEpisode.setImageResource(R.drawable.ic_photo_gray_24dp);
@@ -713,13 +707,9 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
         }
     }
 
-    private interface EpisodeTvdbIdBlock {
-        void run(@NonNull SgEpisode2 episode, int episodeTvdbId);
-    }
-
     private void maybeAddFeedbackView() {
         if (feedbackView != null || feedbackViewStub == null
-                || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(getContext())) {
+                || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(requireContext())) {
             return; // can or should not add feedback view
         }
         feedbackView = (FeedbackView) feedbackViewStub.inflate();
@@ -754,7 +744,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
             return;
         }
         feedbackView.setVisibility(View.GONE);
-        AppSettings.setAskedForFeedback(getContext());
+        AppSettings.setAskedForFeedback(requireContext());
     }
 
     private final LoaderManager.LoaderCallbacks<List<Action>> episodeActionsLoaderCallbacks =
@@ -762,7 +752,7 @@ public class OverviewFragment extends Fragment implements EpisodeActionsContract
                 @Override
                 public Loader<List<Action>> onCreateLoader(int id, Bundle args) {
                     long episodeId = args.getLong(ARG_EPISODE_ID);
-                    return new EpisodeActionsLoader(getActivity(), episodeId);
+                    return new EpisodeActionsLoader(requireContext(), episodeId);
                 }
 
                 @Override
