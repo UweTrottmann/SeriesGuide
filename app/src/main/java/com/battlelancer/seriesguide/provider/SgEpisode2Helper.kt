@@ -54,6 +54,9 @@ interface SgEpisode2Helper {
         }
     }
 
+    @Query("UPDATE sg_episode SET episode_imdbid = :imdbId WHERE _id = :episodeId")
+    fun updateImdbId(episodeId: Long, imdbId: String)
+
     @Query("DELETE FROM sg_episode")
     fun deleteAllEpisodes()
 
