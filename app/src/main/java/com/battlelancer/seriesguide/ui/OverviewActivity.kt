@@ -121,7 +121,7 @@ class OverviewActivity : BaseMessageActivity() {
         ft1.replace(R.id.fragment_show, showsFragment)
         ft1.commit()
 
-        val overviewFragment: Fragment = OverviewFragment(showId)
+        val overviewFragment: Fragment = OverviewFragment.newInstance(showId)
         val ft2 = supportFragmentManager.beginTransaction()
         ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
         ft2.replace(R.id.fragment_overview, overviewFragment)
