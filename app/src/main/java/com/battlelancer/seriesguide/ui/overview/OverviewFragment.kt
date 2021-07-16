@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import butterknife.BindView
@@ -65,6 +66,7 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewToolsK
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.widgets.FeedbackView
 import com.squareup.picasso.Callback
@@ -601,13 +603,11 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         )
 
         // IMDb button
-        var imdbId = episode.imdbId
-        val show = show
-        if (imdbId.isNullOrEmpty() && show != null) {
-            // fall back to show IMDb id
-            imdbId = show.imdbId
-        }
-        ServiceUtils.setUpImdbButton(imdbId, buttonImdb)
+        ViewToolsK().configureImdbButton(
+            buttonImdb,
+            lifecycleScope, requireContext(),
+            show, episode
+        )
 
         // trakt button
         if (episode.tmdbId != null) {

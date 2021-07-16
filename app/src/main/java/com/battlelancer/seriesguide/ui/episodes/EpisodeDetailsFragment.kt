@@ -12,6 +12,7 @@ import android.widget.PopupMenu
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
@@ -52,6 +53,7 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewToolsK
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.squareup.picasso.Callback
@@ -581,12 +583,11 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         }
 
         // IMDb
-        var imdbId = episode.imdbId
-        if (imdbId.isNullOrEmpty()) {
-            // fall back to show IMDb id
-            imdbId = show.imdbId
-        }
-        ServiceUtils.setUpImdbButton(imdbId, bindingBottom.buttonEpisodeImdb)
+        ViewToolsK().configureImdbButton(
+            bindingBottom.buttonEpisodeImdb,
+            lifecycleScope, requireContext(),
+            show, episode
+        )
 
         // TMDb
         if (show.tmdbId != null) {
