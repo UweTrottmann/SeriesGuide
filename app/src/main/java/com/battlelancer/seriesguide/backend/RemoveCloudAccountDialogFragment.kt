@@ -1,24 +1,27 @@
 package com.battlelancer.seriesguide.backend
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
-import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.backend.HexagonAuthError.Companion.build
 import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.AccountRemovedEvent
 import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.CanceledEvent
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
-import com.battlelancer.seriesguide.util.Utils
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.Tasks
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import java.io.IOException
 
@@ -32,11 +35,9 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
         return MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.hexagon_remove_account_confirmation)
             .setPositiveButton(R.string.hexagon_remove_account) { _: DialogInterface?, _: Int ->
-                Utils.executeInOrder(
-                    RemoveHexagonAccountTask(
-                        requireContext()
-                    )
-                )
+                SgApp.coroutineScope.launch {
+                    RemoveHexagonAccountTask(requireContext()).run()
+                }
             }
             .setNegativeButton(android.R.string.cancel) { _: DialogInterface?, _: Int ->
                 sendCanceledEvent()
@@ -53,13 +54,21 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
         EventBus.getDefault().post(CanceledEvent())
     }
 
-    class RemoveHexagonAccountTask(context: Context) : AsyncTask<Void, Void, Boolean>() {
+    class RemoveHexagonAccountTask(context: Context) {
 
-        @SuppressLint("StaticFieldLeak")
         private val context: Context = context.applicationContext
         private val hexagonTools: HexagonTools = getServicesComponent(context).hexagonTools()
 
-        override fun doInBackground(vararg params: Void): Boolean {
+        suspend fun run() {
+            withContext(Dispatchers.IO) {
+                removeJobSemaphore.withPermit {
+                    val result = doInBackground()
+                    onPostExecute(result)
+                }
+            }
+        }
+
+        private fun doInBackground(): Boolean {
             // remove account from hexagon
             try {
                 val accountService = hexagonTools.buildAccountService()
@@ -84,10 +93,13 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
             return true
         }
 
-        override fun onPostExecute(result: Boolean) {
+        private fun onPostExecute(result: Boolean) {
             EventBus.getDefault().post(AccountRemovedEvent(result))
         }
 
+        companion object {
+            private val removeJobSemaphore = Semaphore(permits = 1)
+        }
     }
 
     class CanceledEvent
