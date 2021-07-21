@@ -12,6 +12,13 @@ Version 60
 ----------
 *in development*
 
+#### 60-beta4
+*2021-07-21*
+
+* 🔧 An episode IMDb link will open the episode page again, if the IMDb ID is available on TMDb.
+* 🔨 Fix duplicate error string when adding a show fails.
+* 📝 Latest translations from Crowdin.
+
 #### 60-beta3
 *2021-07-08*
 
