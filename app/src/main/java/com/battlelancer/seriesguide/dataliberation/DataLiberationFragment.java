@@ -10,17 +10,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.snackbar.Snackbar;
 import kotlinx.coroutines.Job;
@@ -75,31 +70,12 @@ public class DataLiberationFragment extends Fragment implements
     private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 7;
     private static final int REQUEST_CODE_MOVIES_IMPORT_URI = 8;
 
-    @BindView(R.id.textViewDataLibShowsExportFile) TextView textShowsExportFile;
-    @BindView(R.id.buttonDataLibShowsExportFile) Button buttonShowsExportFile;
-    @BindView(R.id.textViewDataLibListsExportFile) TextView textListsExportFile;
-    @BindView(R.id.buttonDataLibListsExportFile) Button buttonListsExportFile;
-    @BindView(R.id.textViewDataLibMoviesExportFile) TextView textMoviesExportFile;
-    @BindView(R.id.buttonDataLibMoviesExportFile) Button buttonMoviesExportFile;
-
-    @BindView(R.id.checkBoxDataLibShows) CheckBox checkBoxShows;
-    @BindView(R.id.checkBoxDataLibLists) CheckBox checkBoxLists;
-    @BindView(R.id.checkBoxDataLibMovies) CheckBox checkBoxMovies;
-    @BindView(R.id.textViewDataLibShowsImportFile) TextView textShowsImportFile;
-    @BindView(R.id.buttonDataLibShowsImportFile) Button buttonShowsImportFile;
-    @BindView(R.id.textViewDataLibListsImportFile) TextView textListsImportFile;
-    @BindView(R.id.buttonDataLibListsImportFile) Button buttonListsImportFile;
-    @BindView(R.id.textViewDataLibMoviesImportFile) TextView textMoviesImportFile;
-    @BindView(R.id.buttonDataLibMoviesImportFile) Button buttonMoviesImportFile;
-
-    @BindView(R.id.buttonDataLibImport) Button buttonImport;
-    @BindView(R.id.progressBarDataLib) ProgressBar progressBar;
-    @BindView(R.id.checkBoxDataLibFullDump) CheckBox checkBoxFullDump;
+    @Nullable
+    private FragmentDataLiberationBinding binding;
 
     @Nullable private Integer type;
     @Nullable private AsyncTask<Void, Integer, Integer> dataLibTask;
     @Nullable private Job dataLibJob;
-    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,66 +91,70 @@ public class DataLiberationFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_data_liberation, container, false);
-        unbinder = ButterKnife.bind(this, view);
-
-        progressBar.setVisibility(View.GONE);
-
-        // setup listeners
-        checkBoxShows.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> updateImportButtonEnabledState());
-        checkBoxLists.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> updateImportButtonEnabledState());
-        checkBoxMovies.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> updateImportButtonEnabledState());
-        buttonImport.setOnClickListener(v -> doDataLiberationAction(REQUEST_CODE_IMPORT));
-
-        // note: selecting custom backup files is only supported on KitKat and up
-        // as we use Storage Access Framework in this case
-        buttonShowsExportFile.setOnClickListener(
-                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
-                        JsonExportTask.EXPORT_JSON_FILE_SHOWS,
-                        REQUEST_CODE_SHOWS_EXPORT_URI));
-        buttonShowsImportFile.setOnClickListener(
-                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
-                        REQUEST_CODE_SHOWS_IMPORT_URI));
-
-        buttonListsExportFile.setOnClickListener(
-                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
-                        JsonExportTask.EXPORT_JSON_FILE_LISTS,
-                        REQUEST_CODE_LISTS_EXPORT_URI));
-        buttonListsImportFile.setOnClickListener(
-                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
-                        REQUEST_CODE_LISTS_IMPORT_URI));
-
-        buttonMoviesExportFile.setOnClickListener(
-                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
-                        JsonExportTask.EXPORT_JSON_FILE_MOVIES,
-                        REQUEST_CODE_MOVIES_EXPORT_URI));
-        buttonMoviesImportFile.setOnClickListener(
-                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
-                        REQUEST_CODE_MOVIES_IMPORT_URI));
-        updateFileViews();
-
-        return view;
-    }
-
-    private void updateImportButtonEnabledState() {
-        if (checkBoxShows.isChecked()
-                || checkBoxLists.isChecked()
-                || checkBoxMovies.isChecked()) {
-            buttonImport.setEnabled(true);
-        } else {
-            buttonImport.setEnabled(false);
-        }
+        FragmentDataLiberationBinding binding = FragmentDataLiberationBinding
+                .inflate(inflater, container, false);
+        this.binding = binding;
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        FragmentDataLiberationBinding binding = this.binding;
+        if (binding == null) return;
+
+        binding.progressBarDataLib.setVisibility(View.GONE);
+
+        // setup listeners
+        binding.checkBoxDataLibShows.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> updateImportButtonEnabledState());
+        binding.checkBoxDataLibLists.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> updateImportButtonEnabledState());
+        binding.checkBoxDataLibMovies.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> updateImportButtonEnabledState());
+        binding.buttonDataLibImport.setOnClickListener(v -> doDataLiberationAction(REQUEST_CODE_IMPORT));
+
+        // note: selecting custom backup files is only supported on KitKat and up
+        // as we use Storage Access Framework in this case
+        binding.buttonDataLibShowsExportFile.setOnClickListener(
+                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_SHOWS,
+                        REQUEST_CODE_SHOWS_EXPORT_URI));
+        binding.buttonDataLibShowsImportFile.setOnClickListener(
+                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                        REQUEST_CODE_SHOWS_IMPORT_URI));
+
+        binding.buttonDataLibListsExportFile.setOnClickListener(
+                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_LISTS,
+                        REQUEST_CODE_LISTS_EXPORT_URI));
+        binding.buttonDataLibListsImportFile.setOnClickListener(
+                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                        REQUEST_CODE_LISTS_IMPORT_URI));
+
+        binding.buttonDataLibMoviesExportFile.setOnClickListener(
+                v -> DataLiberationTools.selectExportFile(DataLiberationFragment.this,
+                        JsonExportTask.EXPORT_JSON_FILE_MOVIES,
+                        REQUEST_CODE_MOVIES_EXPORT_URI));
+        binding.buttonDataLibMoviesImportFile.setOnClickListener(
+                v -> DataLiberationTools.selectImportFile(DataLiberationFragment.this,
+                        REQUEST_CODE_MOVIES_IMPORT_URI));
+        updateFileViews();
+
         // restore UI state
         if (isDataLibTaskNotCompleted()) {
             setProgressLock(true);
         }
+    }
+
+    private void updateImportButtonEnabledState() {
+        FragmentDataLiberationBinding binding = this.binding;
+        if (binding == null) return;
+
+        binding.buttonDataLibImport.setEnabled(
+                binding.checkBoxDataLibShows.isChecked()
+                        || binding.checkBoxDataLibLists.isChecked()
+                        || binding.checkBoxDataLibMovies.isChecked()
+        );
     }
 
     @Override
@@ -194,8 +174,7 @@ public class DataLiberationFragment extends Fragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        binding = null;
     }
 
     @Override
@@ -216,12 +195,11 @@ public class DataLiberationFragment extends Fragment implements
 
     @Override
     public void onProgressUpdate(Integer... values) {
-        if (progressBar == null) {
-            return;
-        }
-        progressBar.setIndeterminate(values[0].equals(values[1]));
-        progressBar.setMax(values[0]);
-        progressBar.setProgress(values[1]);
+        FragmentDataLiberationBinding binding = this.binding;
+        if (binding == null) return;
+        binding.progressBarDataLib.setIndeterminate(values[0].equals(values[1]));
+        binding.progressBarDataLib.setMax(values[0]);
+        binding.progressBarDataLib.setProgress(values[1]);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -236,38 +214,42 @@ public class DataLiberationFragment extends Fragment implements
     }
 
     private void setProgressLock(boolean isLocked) {
+        FragmentDataLiberationBinding binding = this.binding;
+        if (binding == null) return;
         if (isLocked) {
-            buttonImport.setEnabled(false);
+            binding.buttonDataLibImport.setEnabled(false);
         } else {
             updateImportButtonEnabledState();
         }
-        progressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
-        checkBoxFullDump.setEnabled(!isLocked);
-        buttonShowsExportFile.setEnabled(!isLocked);
-        buttonShowsImportFile.setEnabled(!isLocked);
-        buttonListsExportFile.setEnabled(!isLocked);
-        buttonListsImportFile.setEnabled(!isLocked);
-        buttonMoviesExportFile.setEnabled(!isLocked);
-        buttonMoviesImportFile.setEnabled(!isLocked);
-        checkBoxShows.setEnabled(!isLocked);
-        checkBoxLists.setEnabled(!isLocked);
-        checkBoxMovies.setEnabled(!isLocked);
+        binding.progressBarDataLib.setVisibility(isLocked ? View.VISIBLE : View.GONE);
+        binding.checkBoxDataLibFullDump.setEnabled(!isLocked);
+        binding.buttonDataLibShowsExportFile.setEnabled(!isLocked);
+        binding.buttonDataLibShowsImportFile.setEnabled(!isLocked);
+        binding.buttonDataLibListsExportFile.setEnabled(!isLocked);
+        binding.buttonDataLibListsImportFile.setEnabled(!isLocked);
+        binding.buttonDataLibMoviesExportFile.setEnabled(!isLocked);
+        binding.buttonDataLibMoviesImportFile.setEnabled(!isLocked);
+        binding.checkBoxDataLibShows.setEnabled(!isLocked);
+        binding.checkBoxDataLibLists.setEnabled(!isLocked);
+        binding.checkBoxDataLibMovies.setEnabled(!isLocked);
     }
 
     private void doDataLiberationAction(int requestCode) {
+        FragmentDataLiberationBinding binding = this.binding;
+        if (binding == null) return;
         if (requestCode == REQUEST_CODE_EXPORT) {
             setProgressLock(true);
 
             JsonExportTask exportTask = new JsonExportTask(requireContext(),
                     DataLiberationFragment.this,
-                    checkBoxFullDump.isChecked(), false, type);
+                    binding.checkBoxDataLibFullDump.isChecked(), false, type);
             dataLibJob = exportTask.launch();
         } else if (requestCode == REQUEST_CODE_IMPORT) {
             setProgressLock(true);
 
             dataLibTask = new JsonImportTask(requireContext(),
-                    checkBoxShows.isChecked(), checkBoxLists.isChecked(),
-                    checkBoxMovies.isChecked());
+                    binding.checkBoxDataLibShows.isChecked(), binding.checkBoxDataLibLists.isChecked(),
+                    binding.checkBoxDataLibMovies.isChecked());
             Utils.executeInOrder(dataLibTask);
         }
     }
@@ -337,23 +319,26 @@ public class DataLiberationFragment extends Fragment implements
     }
 
     private void updateFileViews() {
-        setUriOrPlaceholder(textShowsExportFile,
+        FragmentDataLiberationBinding binding = this.binding;
+        if (binding == null) return;
+
+        setUriOrPlaceholder(binding.textViewDataLibShowsExportFile,
                 BackupSettings.getExportFileUri(
                         getContext(), JsonExportTask.BACKUP_SHOWS, false));
-        setUriOrPlaceholder(textListsExportFile,
+        setUriOrPlaceholder(binding.textViewDataLibListsExportFile,
                 BackupSettings.getExportFileUri(
                         getContext(), JsonExportTask.BACKUP_LISTS, false));
-        setUriOrPlaceholder(textMoviesExportFile,
+        setUriOrPlaceholder(binding.textViewDataLibMoviesExportFile,
                 BackupSettings.getExportFileUri(
                         getContext(), JsonExportTask.BACKUP_MOVIES, false));
 
-        setUriOrPlaceholder(textShowsImportFile,
+        setUriOrPlaceholder(binding.textViewDataLibShowsImportFile,
                 BackupSettings.getImportFileUriOrExportFileUri(
                         getContext(), JsonExportTask.BACKUP_SHOWS));
-        setUriOrPlaceholder(textListsImportFile,
+        setUriOrPlaceholder(binding.textViewDataLibListsImportFile,
                 BackupSettings.getImportFileUriOrExportFileUri(
                         getContext(), JsonExportTask.BACKUP_LISTS));
-        setUriOrPlaceholder(textMoviesImportFile,
+        setUriOrPlaceholder(binding.textViewDataLibMoviesImportFile,
                 BackupSettings.getImportFileUriOrExportFileUri(
                         getContext(), JsonExportTask.BACKUP_MOVIES));
     }
