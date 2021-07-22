@@ -33,16 +33,27 @@ public class AutoBackupFragment extends Fragment {
     private static final int REQUEST_CODE_LISTS_EXPORT_URI = 4;
     private static final int REQUEST_CODE_MOVIES_EXPORT_URI = 5;
 
+    @Nullable
     private FragmentAutoBackupBinding binding;
 
+    @NonNull
     private AutoBackupViewModel viewModel;
     private boolean isBackupAvailableForImport = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        binding = FragmentAutoBackupBinding
+        FragmentAutoBackupBinding binding = FragmentAutoBackupBinding
                 .inflate(inflater, container, false);
+        this.binding = binding;
+        return binding.getRoot();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        FragmentAutoBackupBinding binding = this.binding;
+        if (binding == null) return;
 
         // setup listeners
         binding.switchAutoBackup.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -56,14 +67,14 @@ public class AutoBackupFragment extends Fragment {
         });
 
         binding.buttonAutoBackupNow.setOnClickListener(
-                view -> {
+                v -> {
                     if (TaskManager.getInstance().tryBackupTask(requireContext())) {
                         setProgressLock(true);
                     }
                 }
         );
         binding.buttonAutoBackupImport.setOnClickListener(
-                view -> runAutoBackupImport()
+                v -> runAutoBackupImport()
         );
 
         binding.checkBoxAutoBackupCreateCopy.setChecked(
@@ -73,13 +84,13 @@ public class AutoBackupFragment extends Fragment {
             updateFileViews();
         });
 
-        binding.buttonAutoBackupShowsExportFile.setOnClickListener(view ->
+        binding.buttonAutoBackupShowsExportFile.setOnClickListener(v ->
                 DataLiberationTools.selectExportFile(AutoBackupFragment.this,
                         JsonExportTask.EXPORT_JSON_FILE_SHOWS, REQUEST_CODE_SHOWS_EXPORT_URI));
-        binding.buttonAutoBackupListsExportFile.setOnClickListener(view ->
+        binding.buttonAutoBackupListsExportFile.setOnClickListener(v ->
                 DataLiberationTools.selectExportFile(AutoBackupFragment.this,
                         JsonExportTask.EXPORT_JSON_FILE_LISTS, REQUEST_CODE_LISTS_EXPORT_URI));
-        binding.buttonAutoBackupMoviesExportFile.setOnClickListener(view ->
+        binding.buttonAutoBackupMoviesExportFile.setOnClickListener(v ->
                 DataLiberationTools.selectExportFile(AutoBackupFragment.this,
                         JsonExportTask.EXPORT_JSON_FILE_MOVIES, REQUEST_CODE_MOVIES_EXPORT_URI));
 
@@ -87,12 +98,6 @@ public class AutoBackupFragment extends Fragment {
         updateFileViews();
         setProgressLock(false); // Also disables import button if backup availability unknown.
 
-        return binding.getRoot();
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this).get(AutoBackupViewModel.class);
 
         // restore UI state
@@ -104,7 +109,7 @@ public class AutoBackupFragment extends Fragment {
                 .observe(getViewLifecycleOwner(), availableBackupTimeString -> {
                     String lastBackupTimeString = availableBackupTimeString != null
                             ? availableBackupTimeString : "n/a";
-                    binding.textViewAutoBackupLastTime
+                    this.binding.textViewAutoBackupLastTime
                             .setText(getString(R.string.last_auto_backup, lastBackupTimeString));
 
                     isBackupAvailableForImport = availableBackupTimeString != null;
@@ -113,21 +118,21 @@ public class AutoBackupFragment extends Fragment {
                     // Also update status of last backup attempt.
                     String errorOrNull = BackupSettings.getAutoBackupErrorOrNull(requireContext());
                     if (errorOrNull != null) {
-                        binding.groupState.setVisibility(View.VISIBLE);
+                        this.binding.groupState.setVisibility(View.VISIBLE);
 
-                        binding.imageViewBackupStatus.setImageResource(
+                        this.binding.imageViewBackupStatus.setImageResource(
                                 R.drawable.ic_cancel_red_24dp);
-                        binding.textViewBackupStatus.setText(
+                        this.binding.textViewBackupStatus.setText(
                                 getString(R.string.backup_failed) + " " + errorOrNull);
                     } else if (isBackupAvailableForImport) {
-                        binding.groupState.setVisibility(View.VISIBLE);
+                        this.binding.groupState.setVisibility(View.VISIBLE);
 
-                        binding.imageViewBackupStatus.setImageResource(
+                        this.binding.imageViewBackupStatus.setImageResource(
                                 R.drawable.ic_check_circle_green_24dp);
-                        binding.textViewBackupStatus.setText(R.string.backup_success);
+                        this.binding.textViewBackupStatus.setText(R.string.backup_success);
                     } else {
                         // No error + no backup files.
-                        binding.groupState.setVisibility(View.GONE);
+                        this.binding.groupState.setVisibility(View.GONE);
                     }
                 });
     }
@@ -139,7 +144,10 @@ public class AutoBackupFragment extends Fragment {
         // update enabled state
         boolean autoBackupEnabled = BackupSettings.isAutoBackupEnabled(getContext());
         setContainerSettingsVisible(autoBackupEnabled);
-        binding.switchAutoBackup.setChecked(autoBackupEnabled);
+        FragmentAutoBackupBinding binding = this.binding;
+        if (binding != null) {
+            binding.switchAutoBackup.setChecked(autoBackupEnabled);
+        }
 
         // Update auto-backup availability.
         viewModel.updateAvailableBackupData();
@@ -225,20 +233,22 @@ public class AutoBackupFragment extends Fragment {
     }
 
     private void setContainerSettingsVisible(boolean visible) {
+        FragmentAutoBackupBinding binding = this.binding;
+        if (binding == null) return;
         binding.containerAutoBackupSettings.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private void updateImportButtonState() {
+        FragmentAutoBackupBinding binding = this.binding;
+        if (binding == null) return;
         binding.buttonAutoBackupImport.setEnabled(isBackupAvailableForImport);
     }
 
     private void setProgressLock(boolean isLocked) {
+        FragmentAutoBackupBinding binding = this.binding;
+        if (binding == null) return;
         binding.buttonAutoBackupNow.setEnabled(!isLocked);
-        if (!isBackupAvailableForImport || isLocked) {
-            binding.buttonAutoBackupImport.setEnabled(false);
-        } else {
-            binding.buttonAutoBackupImport.setEnabled(true);
-        }
+        binding.buttonAutoBackupImport.setEnabled(isBackupAvailableForImport && !isLocked);
         binding.progressBarAutoBackup.setVisibility(isLocked ? View.VISIBLE : View.GONE);
         binding.buttonAutoBackupShowsExportFile.setEnabled(!isLocked);
         binding.buttonAutoBackupListsExportFile.setEnabled(!isLocked);
@@ -246,6 +256,8 @@ public class AutoBackupFragment extends Fragment {
     }
 
     private void updateFileViews() {
+        FragmentAutoBackupBinding binding = this.binding;
+        if (binding == null) return;
         if (BackupSettings.isCreateCopyOfAutoBackup(getContext())) {
             setUriOrPlaceholder(binding.textViewAutoBackupShowsExportFile,
                     BackupSettings.getExportFileUri(
