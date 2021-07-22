@@ -1,15 +1,15 @@
 package com.battlelancer.seriesguide.dataliberation
 
-import android.annotation.TargetApi
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
@@ -54,45 +54,24 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         // note: selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
         binding.buttonDataLibShowsExportFile.setOnClickListener {
-            DataLiberationTools.selectExportFile(
-                this@DataLiberationFragment,
-                JsonExportTask.EXPORT_JSON_FILE_SHOWS,
-                REQUEST_CODE_SHOWS_EXPORT_URI
-            )
+            createShowExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_SHOWS)
         }
         binding.buttonDataLibShowsImportFile.setOnClickListener {
-            DataLiberationTools.selectImportFile(
-                this@DataLiberationFragment,
-                REQUEST_CODE_SHOWS_IMPORT_URI
-            )
+            selectShowsImportFileResult.launch(null)
         }
 
         binding.buttonDataLibListsExportFile.setOnClickListener {
-            DataLiberationTools.selectExportFile(
-                this@DataLiberationFragment,
-                JsonExportTask.EXPORT_JSON_FILE_LISTS,
-                REQUEST_CODE_LISTS_EXPORT_URI
-            )
+            createListsExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_LISTS)
         }
         binding.buttonDataLibListsImportFile.setOnClickListener {
-            DataLiberationTools.selectImportFile(
-                this@DataLiberationFragment,
-                REQUEST_CODE_LISTS_IMPORT_URI
-            )
+            selectListsImportFileResult.launch(null)
         }
 
         binding.buttonDataLibMoviesExportFile.setOnClickListener {
-            DataLiberationTools.selectExportFile(
-                this@DataLiberationFragment,
-                JsonExportTask.EXPORT_JSON_FILE_MOVIES,
-                REQUEST_CODE_MOVIES_EXPORT_URI
-            )
+            createMovieExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_MOVIES)
         }
         binding.buttonDataLibMoviesImportFile.setOnClickListener {
-            DataLiberationTools.selectImportFile(
-                this@DataLiberationFragment,
-                REQUEST_CODE_MOVIES_IMPORT_URI
-            )
+            selectMoviesImportFileResult.launch(null)
         }
         updateFileViews()
 
@@ -175,8 +154,12 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         Utils.executeInOrder(dataLibTask)
     }
 
-    private fun doDataExport(type: Int, uri: Uri) {
+    private fun doDataExport(type: Int, uri: Uri?) {
+        if (uri == null) return
+
+        tryToPersistUri(uri)
         BackupSettings.storeExportFileUri(context, type, uri, false)
+        updateFileViews()
 
         val binding = binding ?: return
         setProgressLock(true)
@@ -189,55 +172,100 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         model.dataLibJob = exportTask.launch()
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode != Activity.RESULT_OK || !isAdded || data == null) {
-            return
+    /**
+     * Try to persist read and write permission for this URI across device reboots.
+     */
+    private fun tryToPersistUri(uri: Uri) {
+        try {
+            requireContext().contentResolver
+                .takePersistableUriPermission(
+                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+        } catch (e: SecurityException) {
+            Timber.e(e, "Could not persist r/w permission for backup file URI.")
         }
-        val uri = data.data
-            ?: return  // required
-        if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI
-            || requestCode == REQUEST_CODE_SHOWS_IMPORT_URI
-            || requestCode == REQUEST_CODE_LISTS_EXPORT_URI
-            || requestCode == REQUEST_CODE_LISTS_IMPORT_URI
-            || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI
-            || requestCode == REQUEST_CODE_MOVIES_IMPORT_URI) {
+    }
 
-            // try to persist read and write permission for this URI across device reboots
-            try {
-                requireContext().contentResolver
-                    .takePersistableUriPermission(
-                        uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-                                or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                    )
-            } catch (e: SecurityException) {
-                Timber.e(e, "Could not persist r/w permission for backup file URI.")
-            }
-            when (requestCode) {
-                REQUEST_CODE_SHOWS_EXPORT_URI -> {
-                    doDataExport(JsonExportTask.BACKUP_SHOWS, uri)
-                }
-                REQUEST_CODE_LISTS_EXPORT_URI -> {
-                    doDataExport(JsonExportTask.BACKUP_LISTS, uri)
-                }
-                REQUEST_CODE_MOVIES_EXPORT_URI -> {
-                    doDataExport(JsonExportTask.BACKUP_MOVIES, uri)
-                }
-                REQUEST_CODE_SHOWS_IMPORT_URI -> BackupSettings.storeImportFileUri(
-                    context,
-                    JsonExportTask.BACKUP_SHOWS, uri
-                )
-                REQUEST_CODE_LISTS_IMPORT_URI -> BackupSettings.storeImportFileUri(
-                    context,
-                    JsonExportTask.BACKUP_LISTS, uri
-                )
-                REQUEST_CODE_MOVIES_IMPORT_URI -> BackupSettings.storeImportFileUri(
-                    context,
-                    JsonExportTask.BACKUP_MOVIES, uri
-                )
-            }
-            updateFileViews()
+    private val createShowExportFileResult =
+        registerForActivityResult(CreateExportFileContract()) { uri ->
+            doDataExport(JsonExportTask.BACKUP_SHOWS, uri)
         }
+
+    private val createListsExportFileResult =
+        registerForActivityResult(CreateExportFileContract()) { uri ->
+            doDataExport(JsonExportTask.BACKUP_LISTS, uri)
+        }
+
+    private val createMovieExportFileResult =
+        registerForActivityResult(CreateExportFileContract()) { uri ->
+            doDataExport(JsonExportTask.BACKUP_MOVIES, uri)
+        }
+
+    class CreateExportFileContract : ActivityResultContract<String, Uri?>() {
+        override fun createIntent(context: Context, suggestedFileName: String?): Intent {
+            return Intent(Intent.ACTION_CREATE_DOCUMENT)
+                // Filter to only show results that can be "opened", such as
+                // a file (as opposed to a list of contacts or timezones).
+                .addCategory(Intent.CATEGORY_OPENABLE)
+                // do NOT use the probably correct application/json as it would prevent selecting existing
+                // backup files on Android, which re-classifies them as application/octet-stream.
+                // also do NOT use application/octet-stream as it prevents selecting backup files from
+                // providers where the correct application/json mime type is used, *sigh*
+                // so, use application/* and let the provider decide
+                .setType("application/*")
+                .putExtra(Intent.EXTRA_TITLE, suggestedFileName)
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            if (resultCode != Activity.RESULT_OK) {
+                return null
+            }
+            return intent?.data
+        }
+    }
+
+    private val selectShowsImportFileResult =
+        registerForActivityResult(SelectImportFileContract()) { uri ->
+            storeImportFileUri(JsonExportTask.BACKUP_SHOWS, uri)
+        }
+
+    private val selectListsImportFileResult =
+        registerForActivityResult(SelectImportFileContract()) { uri ->
+            storeImportFileUri(JsonExportTask.BACKUP_LISTS, uri)
+        }
+
+    private val selectMoviesImportFileResult =
+        registerForActivityResult(SelectImportFileContract()) { uri ->
+            storeImportFileUri(JsonExportTask.BACKUP_MOVIES, uri)
+        }
+
+    private fun storeImportFileUri(type: Int, uri: Uri?) {
+        if (uri == null) return
+        tryToPersistUri(uri)
+        BackupSettings.storeImportFileUri(context, type, uri)
+        updateFileViews()
+    }
+
+    class SelectImportFileContract : ActivityResultContract<Unit, Uri?>() {
+        override fun createIntent(context: Context, input: Unit?): Intent {
+            return Intent(Intent.ACTION_OPEN_DOCUMENT)
+                // Filter to only show results that can be "opened", such as a
+                // file (as opposed to a list of contacts or timezones)
+                .addCategory(Intent.CATEGORY_OPENABLE)
+                // json files might have mime type of "application/octet-stream"
+                // but we are going to store them as "application/json"
+                // so filter to show all application files
+                .setType("application/*")
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            if (resultCode != Activity.RESULT_OK) {
+                return null
+            }
+            return intent?.data
+        }
+
     }
 
     private fun updateFileViews() {
@@ -282,15 +310,6 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private fun setUriOrPlaceholder(textView: TextView, uri: Uri?) {
         textView.text = uri?.toString() ?: getString(R.string.no_file_selected)
-    }
-
-    companion object {
-        private const val REQUEST_CODE_SHOWS_EXPORT_URI = 3
-        private const val REQUEST_CODE_SHOWS_IMPORT_URI = 4
-        private const val REQUEST_CODE_LISTS_EXPORT_URI = 5
-        private const val REQUEST_CODE_LISTS_IMPORT_URI = 6
-        private const val REQUEST_CODE_MOVIES_EXPORT_URI = 7
-        private const val REQUEST_CODE_MOVIES_IMPORT_URI = 8
     }
 
     class LiberationResultEvent {

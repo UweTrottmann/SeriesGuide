@@ -84,18 +84,4 @@ public class DataLiberationTools {
         Utils.tryStartActivityForResult(fragment, intent, requestCode);
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void selectImportFile(Fragment fragment, int requestCode) {
-        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file browser.
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones)
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        // json files might have mime type of "application/octet-stream"
-        // but we are going to store them as "application/json"
-        // so filter to show all application files
-        intent.setType("application/*");
-
-        Utils.tryStartActivityForResult(fragment, intent, requestCode);
-    }
 }
