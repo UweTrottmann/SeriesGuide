@@ -194,12 +194,12 @@ public class DataLiberationFragment extends Fragment implements
     }
 
     @Override
-    public void onProgressUpdate(Integer... values) {
+    public void onProgressUpdate(int total, int completed) {
         FragmentDataLiberationBinding binding = this.binding;
         if (binding == null) return;
-        binding.progressBarDataLib.setIndeterminate(values[0].equals(values[1]));
-        binding.progressBarDataLib.setMax(values[0]);
-        binding.progressBarDataLib.setProgress(values[1]);
+        binding.progressBarDataLib.setIndeterminate(total == completed);
+        binding.progressBarDataLib.setMax(total);
+        binding.progressBarDataLib.setProgress(completed);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

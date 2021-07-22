@@ -165,9 +165,9 @@ class JsonExportTask(
         }
     }
 
-    private suspend fun onProgressUpdate(vararg values: Int?) {
+    private suspend fun onProgressUpdate(total: Int, completed: Int) {
         withContext(Dispatchers.Main) {
-            progressListener?.onProgressUpdate(*values)
+            progressListener?.onProgressUpdate(total, completed)
         }
     }
 
@@ -508,7 +508,7 @@ class JsonExportTask(
     }
 
     interface OnTaskProgressListener {
-        fun onProgressUpdate(vararg values: Int?)
+        fun onProgressUpdate(total: Int, completed: Int)
     }
 
     @Retention(AnnotationRetention.SOURCE)
