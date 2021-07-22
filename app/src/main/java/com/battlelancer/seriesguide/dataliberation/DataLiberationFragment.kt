@@ -4,7 +4,6 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
 import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -30,19 +29,7 @@ import timber.log.Timber
 class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private var binding: FragmentDataLiberationBinding? = null
-    private var type: Int? = null
-    private var dataLibTask: AsyncTask<Void, Int, Int>? = null
-    private var dataLibJob: Job? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        /*
-         * Try to keep the fragment around on config changes so the backup task
-         * does not have to be finished.
-         */
-        retainInstance = true
-    }
+    private val model: DataLiberationViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -61,7 +48,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         binding.checkBoxDataLibLists.setOnCheckedChangeListener { _, _ -> updateImportButtonEnabledState() }
         binding.checkBoxDataLibMovies.setOnCheckedChangeListener { _, _ -> updateImportButtonEnabledState() }
         binding.buttonDataLibImport.setOnClickListener {
-            doDataLiberationAction(REQUEST_CODE_IMPORT)
+            doDataImport()
         }
 
         // note: selecting custom backup files is only supported on KitKat and up
@@ -110,7 +97,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         updateFileViews()
 
         // restore UI state
-        if (isDataLibTaskNotCompleted) {
+        if (model.isDataLibTaskNotCompleted) {
             setProgressLock(true)
         }
     }
@@ -135,16 +122,6 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    override fun onDestroy() {
-        if (isDataLibTaskNotCompleted) {
-            dataLibTask?.cancel(true)
-            dataLibJob?.cancel(null)
-        }
-        dataLibTask = null
-        dataLibJob = null
-        super.onDestroy()
     }
 
     override fun onProgressUpdate(total: Int, completed: Int) {
@@ -185,36 +162,32 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         binding.checkBoxDataLibMovies.isEnabled = !isLocked
     }
 
-    private fun doDataLiberationAction(requestCode: Int) {
+    private fun doDataImport() {
         val binding = binding ?: return
-        if (requestCode == REQUEST_CODE_EXPORT) {
-            setProgressLock(true)
+        setProgressLock(true)
 
-            val exportTask = JsonExportTask(
-                requireContext(),
-                this@DataLiberationFragment,
-                binding.checkBoxDataLibFullDump.isChecked, false, type
-            )
-            dataLibJob = exportTask.launch()
-        } else if (requestCode == REQUEST_CODE_IMPORT) {
-            setProgressLock(true)
-
-            dataLibTask = JsonImportTask(
-                requireContext(),
-                binding.checkBoxDataLibShows.isChecked, binding.checkBoxDataLibLists.isChecked,
-                binding.checkBoxDataLibMovies.isChecked
-            )
-            Utils.executeInOrder(dataLibTask)
-        }
+        val dataLibTask = JsonImportTask(
+            requireContext(),
+            binding.checkBoxDataLibShows.isChecked, binding.checkBoxDataLibLists.isChecked,
+            binding.checkBoxDataLibMovies.isChecked
+        )
+        model.dataLibTask = dataLibTask
+        Utils.executeInOrder(dataLibTask)
     }
 
-    private val isDataLibTaskNotCompleted: Boolean
-        get() {
-            val dataLibTask = dataLibTask
-            val dataLibJob = dataLibJob
-            return (dataLibTask != null && dataLibTask.status != AsyncTask.Status.FINISHED
-                    || dataLibJob != null && !dataLibJob.isCompleted)
-        }
+    private fun doDataExport(type: Int, uri: Uri) {
+        BackupSettings.storeExportFileUri(context, type, uri, false)
+
+        val binding = binding ?: return
+        setProgressLock(true)
+
+        val exportTask = JsonExportTask(
+            requireContext(),
+            this@DataLiberationFragment,
+            binding.checkBoxDataLibFullDump.isChecked, false, type
+        )
+        model.dataLibJob = exportTask.launch()
+    }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -242,19 +215,13 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             }
             when (requestCode) {
                 REQUEST_CODE_SHOWS_EXPORT_URI -> {
-                    type = JsonExportTask.BACKUP_SHOWS
-                    BackupSettings.storeExportFileUri(context, type!!, uri, false)
-                    doDataLiberationAction(REQUEST_CODE_EXPORT)
+                    doDataExport(JsonExportTask.BACKUP_SHOWS, uri)
                 }
                 REQUEST_CODE_LISTS_EXPORT_URI -> {
-                    type = JsonExportTask.BACKUP_LISTS
-                    BackupSettings.storeExportFileUri(context, type!!, uri, false)
-                    doDataLiberationAction(REQUEST_CODE_EXPORT)
+                    doDataExport(JsonExportTask.BACKUP_LISTS, uri)
                 }
                 REQUEST_CODE_MOVIES_EXPORT_URI -> {
-                    type = JsonExportTask.BACKUP_MOVIES
-                    BackupSettings.storeExportFileUri(context, type!!, uri, false)
-                    doDataLiberationAction(REQUEST_CODE_EXPORT)
+                    doDataExport(JsonExportTask.BACKUP_MOVIES, uri)
                 }
                 REQUEST_CODE_SHOWS_IMPORT_URI -> BackupSettings.storeImportFileUri(
                     context,
@@ -264,7 +231,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
                     context,
                     JsonExportTask.BACKUP_LISTS, uri
                 )
-                else -> BackupSettings.storeImportFileUri(
+                REQUEST_CODE_MOVIES_IMPORT_URI -> BackupSettings.storeImportFileUri(
                     context,
                     JsonExportTask.BACKUP_MOVIES, uri
                 )
@@ -318,8 +285,6 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
     }
 
     companion object {
-        private const val REQUEST_CODE_EXPORT = 1
-        private const val REQUEST_CODE_IMPORT = 2
         private const val REQUEST_CODE_SHOWS_EXPORT_URI = 3
         private const val REQUEST_CODE_SHOWS_IMPORT_URI = 4
         private const val REQUEST_CODE_LISTS_EXPORT_URI = 5
