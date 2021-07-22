@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,18 +37,6 @@ public class AutoBackupFragment extends Fragment {
 
     private AutoBackupViewModel viewModel;
     private boolean isBackupAvailableForImport = false;
-    private AsyncTask<Void, Integer, Integer> importTask;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        /*
-         * Try to keep the fragment around on config changes so the backup task
-         * does not have to be finished.
-         */
-        setRetainInstance(true);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -105,15 +92,14 @@ public class AutoBackupFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(this).get(AutoBackupViewModel.class);
 
         // restore UI state
-        if (importTask != null && importTask.getStatus() != AsyncTask.Status.FINISHED) {
+        if (viewModel.isImportTaskNotCompleted()) {
             setProgressLock(true);
         }
 
-        viewModel = new ViewModelProvider(this).get(AutoBackupViewModel.class);
         viewModel.getAvailableBackupLiveData()
                 .observe(getViewLifecycleOwner(), availableBackupTimeString -> {
                     String lastBackupTimeString = availableBackupTimeString != null
@@ -174,16 +160,6 @@ public class AutoBackupFragment extends Fragment {
         binding = null;
     }
 
-    @Override
-    public void onDestroy() {
-        if (importTask != null && importTask.getStatus() != AsyncTask.Status.FINISHED) {
-            importTask.cancel(true);
-        }
-        importTask = null;
-
-        super.onDestroy();
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(DataLiberationFragment.LiberationResultEvent event) {
         event.handle(getView());
@@ -199,7 +175,8 @@ public class AutoBackupFragment extends Fragment {
     private void runAutoBackupImport() {
         setProgressLock(true);
 
-        importTask = new JsonImportTask(getContext());
+        JsonImportTask importTask = new JsonImportTask(getContext());
+        viewModel.setImportTask(importTask);
         Utils.executeInOrder(importTask);
     }
 
