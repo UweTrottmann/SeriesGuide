@@ -1,14 +1,12 @@
 package com.battlelancer.seriesguide.dataliberation
 
-import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import androidx.fragment.app.Fragment
+import androidx.activity.result.contract.ActivityResultContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
-import com.battlelancer.seriesguide.util.Utils
 import timber.log.Timber
 
 object DataLiberationTools {
@@ -52,27 +50,6 @@ object DataLiberationTools {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    fun selectExportFile(
-        fragment: Fragment?, suggestedFileName: String?,
-        requestCode: Int
-    ) {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-        // Filter to only show results that can be "opened", such as
-        // a file (as opposed to a list of contacts or timezones).
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-
-        // do NOT use the probably correct application/json as it would prevent selecting existing
-        // backup files on Android, which re-classifies them as application/octet-stream.
-        // also do NOT use application/octet-stream as it prevents selecting backup files from
-        // providers where the correct application/json mime type is used, *sigh*
-        // so, use application/* and let the provider decide
-        intent.type = "application/*"
-        intent.putExtra(Intent.EXTRA_TITLE, suggestedFileName)
-
-        Utils.tryStartActivityForResult(fragment, intent, requestCode)
-    }
-
     /**
      * Try to persist read and write permission for given URI across device reboots.
      */
@@ -86,5 +63,49 @@ object DataLiberationTools {
         } catch (e: SecurityException) {
             Timber.e(e, "Could not persist r/w permission for backup file URI.")
         }
+    }
+
+    class CreateExportFileContract : ActivityResultContract<String, Uri?>() {
+        override fun createIntent(context: Context, suggestedFileName: String?): Intent {
+            return Intent(Intent.ACTION_CREATE_DOCUMENT)
+                // Filter to only show results that can be "opened", such as
+                // a file (as opposed to a list of contacts or timezones).
+                .addCategory(Intent.CATEGORY_OPENABLE)
+                // do NOT use the probably correct application/json as it would prevent selecting existing
+                // backup files on Android, which re-classifies them as application/octet-stream.
+                // also do NOT use application/octet-stream as it prevents selecting backup files from
+                // providers where the correct application/json mime type is used, *sigh*
+                // so, use application/* and let the provider decide
+                .setType("application/*")
+                .putExtra(Intent.EXTRA_TITLE, suggestedFileName)
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            if (resultCode != Activity.RESULT_OK) {
+                return null
+            }
+            return intent?.data
+        }
+    }
+
+    class SelectImportFileContract : ActivityResultContract<Unit, Uri?>() {
+        override fun createIntent(context: Context, input: Unit?): Intent {
+            return Intent(Intent.ACTION_OPEN_DOCUMENT)
+                // Filter to only show results that can be "opened", such as a
+                // file (as opposed to a list of contacts or timezones)
+                .addCategory(Intent.CATEGORY_OPENABLE)
+                // json files might have mime type of "application/octet-stream"
+                // but we are going to store them as "application/json"
+                // so filter to show all application files
+                .setType("application/*")
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            if (resultCode != Activity.RESULT_OK) {
+                return null
+            }
+            return intent?.data
+        }
+
     }
 }

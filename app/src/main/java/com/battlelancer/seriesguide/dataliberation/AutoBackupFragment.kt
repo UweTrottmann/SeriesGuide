@@ -1,8 +1,6 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -72,22 +70,13 @@ class AutoBackupFragment : Fragment() {
             }
 
         binding.buttonAutoBackupShowsExportFile.setOnClickListener {
-            DataLiberationTools.selectExportFile(
-                this@AutoBackupFragment,
-                JsonExportTask.EXPORT_JSON_FILE_SHOWS, REQUEST_CODE_SHOWS_EXPORT_URI
-            )
+            createShowExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_SHOWS)
         }
         binding.buttonAutoBackupListsExportFile.setOnClickListener {
-            DataLiberationTools.selectExportFile(
-                this@AutoBackupFragment,
-                JsonExportTask.EXPORT_JSON_FILE_LISTS, REQUEST_CODE_LISTS_EXPORT_URI
-            )
+            createListsExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_LISTS)
         }
         binding.buttonAutoBackupMoviesExportFile.setOnClickListener {
-            DataLiberationTools.selectExportFile(
-                this@AutoBackupFragment,
-                JsonExportTask.EXPORT_JSON_FILE_MOVIES, REQUEST_CODE_MOVIES_EXPORT_URI
-            )
+            createMovieExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_MOVIES)
         }
 
         binding.groupState.visibility = View.GONE
@@ -177,31 +166,26 @@ class AutoBackupFragment : Fragment() {
         Utils.executeInOrder(importTask)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode != Activity.RESULT_OK || !isAdded || data == null) {
-            return
+    private val createShowExportFileResult =
+        registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
+            storeBackupFile(JsonExportTask.BACKUP_SHOWS, uri)
         }
 
-        if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI || requestCode == REQUEST_CODE_LISTS_EXPORT_URI || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
-            val uri = data.data ?: return
-
-            DataLiberationTools.tryToPersistUri(requireContext(), uri)
-            when (requestCode) {
-                REQUEST_CODE_SHOWS_EXPORT_URI -> BackupSettings.storeExportFileUri(
-                    context,
-                    JsonExportTask.BACKUP_SHOWS, uri, true
-                )
-                REQUEST_CODE_LISTS_EXPORT_URI -> BackupSettings.storeExportFileUri(
-                    context,
-                    JsonExportTask.BACKUP_LISTS, uri, true
-                )
-                else -> BackupSettings.storeExportFileUri(
-                    context,
-                    JsonExportTask.BACKUP_MOVIES, uri, true
-                )
-            }
-            updateFileViews()
+    private val createListsExportFileResult =
+        registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
+            storeBackupFile(JsonExportTask.BACKUP_LISTS, uri)
         }
+
+    private val createMovieExportFileResult =
+        registerForActivityResult(DataLiberationTools.CreateExportFileContract()) { uri ->
+            storeBackupFile(JsonExportTask.BACKUP_MOVIES, uri)
+        }
+
+    private fun storeBackupFile(type: Int, uri: Uri?) {
+        if (uri == null) return
+        DataLiberationTools.tryToPersistUri(requireContext(), uri)
+        BackupSettings.storeExportFileUri(requireContext(), type, uri, true)
+        updateFileViews()
     }
 
     private fun setContainerSettingsVisible(visible: Boolean) {
@@ -261,9 +245,4 @@ class AutoBackupFragment : Fragment() {
         )
     }
 
-    companion object {
-        private const val REQUEST_CODE_SHOWS_EXPORT_URI = 3
-        private const val REQUEST_CODE_LISTS_EXPORT_URI = 4
-        private const val REQUEST_CODE_MOVIES_EXPORT_URI = 5
-    }
 }

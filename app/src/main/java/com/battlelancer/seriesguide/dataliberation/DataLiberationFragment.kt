@@ -1,19 +1,17 @@
 package com.battlelancer.seriesguide.dataliberation
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
+import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
+import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
 import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.snackbar.Snackbar
@@ -186,29 +184,6 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             doDataExport(JsonExportTask.BACKUP_MOVIES, uri)
         }
 
-    class CreateExportFileContract : ActivityResultContract<String, Uri?>() {
-        override fun createIntent(context: Context, suggestedFileName: String?): Intent {
-            return Intent(Intent.ACTION_CREATE_DOCUMENT)
-                // Filter to only show results that can be "opened", such as
-                // a file (as opposed to a list of contacts or timezones).
-                .addCategory(Intent.CATEGORY_OPENABLE)
-                // do NOT use the probably correct application/json as it would prevent selecting existing
-                // backup files on Android, which re-classifies them as application/octet-stream.
-                // also do NOT use application/octet-stream as it prevents selecting backup files from
-                // providers where the correct application/json mime type is used, *sigh*
-                // so, use application/* and let the provider decide
-                .setType("application/*")
-                .putExtra(Intent.EXTRA_TITLE, suggestedFileName)
-        }
-
-        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
-            if (resultCode != Activity.RESULT_OK) {
-                return null
-            }
-            return intent?.data
-        }
-    }
-
     private val selectShowsImportFileResult =
         registerForActivityResult(SelectImportFileContract()) { uri ->
             storeImportFileUri(JsonExportTask.BACKUP_SHOWS, uri)
@@ -229,27 +204,6 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         DataLiberationTools.tryToPersistUri(requireContext(), uri)
         BackupSettings.storeImportFileUri(context, type, uri)
         updateFileViews()
-    }
-
-    class SelectImportFileContract : ActivityResultContract<Unit, Uri?>() {
-        override fun createIntent(context: Context, input: Unit?): Intent {
-            return Intent(Intent.ACTION_OPEN_DOCUMENT)
-                // Filter to only show results that can be "opened", such as a
-                // file (as opposed to a list of contacts or timezones)
-                .addCategory(Intent.CATEGORY_OPENABLE)
-                // json files might have mime type of "application/octet-stream"
-                // but we are going to store them as "application/json"
-                // so filter to show all application files
-                .setType("application/*")
-        }
-
-        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
-            if (resultCode != Activity.RESULT_OK) {
-                return null
-            }
-            return intent?.data
-        }
-
     }
 
     private fun updateFileViews() {
