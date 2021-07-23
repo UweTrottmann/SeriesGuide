@@ -20,8 +20,6 @@ android {
     defaultConfig {
         minSdk = sgMinSdk
         targetSdk = sgTargetSdk
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

@@ -76,7 +76,7 @@ android {
         jvmTarget = "1.8"
     }
 
-    lintOptions {
+    lint {
         // for CI server: only check this module with dependencies instead of each module separately
         isCheckDependencies = true
         // for CI server: log reports (report files are not public)
