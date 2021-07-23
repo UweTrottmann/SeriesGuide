@@ -1,12 +1,15 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 import com.battlelancer.seriesguide.util.Utils
+import timber.log.Timber
 
 object DataLiberationTools {
 
@@ -68,5 +71,20 @@ object DataLiberationTools {
         intent.putExtra(Intent.EXTRA_TITLE, suggestedFileName)
 
         Utils.tryStartActivityForResult(fragment, intent, requestCode)
+    }
+
+    /**
+     * Try to persist read and write permission for given URI across device reboots.
+     */
+    fun tryToPersistUri(context: Context, uri: Uri) {
+        try {
+            context.contentResolver
+                .takePersistableUriPermission(
+                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+        } catch (e: SecurityException) {
+            Timber.e(e, "Could not persist r/w permission for backup file URI.")
+        }
     }
 }

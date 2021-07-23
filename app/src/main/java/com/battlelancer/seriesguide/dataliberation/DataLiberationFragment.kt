@@ -20,7 +20,6 @@ import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
 
 /**
  * One button export or import of the show database using a JSON file on external storage.
@@ -157,7 +156,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
     private fun doDataExport(type: Int, uri: Uri?) {
         if (uri == null) return
 
-        tryToPersistUri(uri)
+        DataLiberationTools.tryToPersistUri(requireContext(), uri)
         BackupSettings.storeExportFileUri(context, type, uri, false)
         updateFileViews()
 
@@ -170,21 +169,6 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             binding.checkBoxDataLibFullDump.isChecked, false, type
         )
         model.dataLibJob = exportTask.launch()
-    }
-
-    /**
-     * Try to persist read and write permission for this URI across device reboots.
-     */
-    private fun tryToPersistUri(uri: Uri) {
-        try {
-            requireContext().contentResolver
-                .takePersistableUriPermission(
-                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-                            or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                )
-        } catch (e: SecurityException) {
-            Timber.e(e, "Could not persist r/w permission for backup file URI.")
-        }
     }
 
     private val createShowExportFileResult =
@@ -242,7 +226,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     private fun storeImportFileUri(type: Int, uri: Uri?) {
         if (uri == null) return
-        tryToPersistUri(uri)
+        DataLiberationTools.tryToPersistUri(requireContext(), uri)
         BackupSettings.storeImportFileUri(context, type, uri)
         updateFileViews()
     }

@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.util.Utils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
 
 /**
  * Configuration of auto backup, creation of optional copies
@@ -186,15 +185,7 @@ class AutoBackupFragment : Fragment() {
         if (requestCode == REQUEST_CODE_SHOWS_EXPORT_URI || requestCode == REQUEST_CODE_LISTS_EXPORT_URI || requestCode == REQUEST_CODE_MOVIES_EXPORT_URI) {
             val uri = data.data ?: return
 
-            // persist read and write permission for this URI across device reboots
-            try {
-                requireContext().contentResolver.takePersistableUriPermission(
-                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-                            or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                )
-            } catch (e: SecurityException) {
-                Timber.e(e, "Could not persist r/w permission for backup file URI.")
-            }
+            DataLiberationTools.tryToPersistUri(requireContext(), uri)
             when (requestCode) {
                 REQUEST_CODE_SHOWS_EXPORT_URI -> BackupSettings.storeExportFileUri(
                     context,
