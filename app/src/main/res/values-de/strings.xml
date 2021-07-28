@@ -163,8 +163,6 @@
     <string name="friends_recently">Ihre Trakt Freunde</string>
     <string name="now_empty">Nichts los. Sehen Sie sich ein paar Serien an!</string>
     <string name="now_movies_empty">Nichts los. Sehen Sie sich ein paar Filme an!</string>
-    <string name="user_stream_empty">Kein Verlauf auf Trakt. Sehen Sie ein paar Serien an!</string>
-    <string name="user_movie_stream_empty">Kein Verlauf auf Trakt. Sehen Sie ein paar Filme an!</string>
     <!-- Calendar -->
     <string name="upcoming">Demnächst</string>
     <string name="recent">Vor kurzem</string>
@@ -284,14 +282,15 @@
     <string name="hexagon_signin">Anmelden</string>
     <string name="hexagon_signout">Abmelden</string>
     <string name="hexagon_setup_incomplete">Die Einrichtung von SeriesGuide Cloud wurde nicht abgeschlossen</string>
-    <string name="hexagon_setup_fail_auth">Es gab ein Problem mit Ihrem Google Konto</string>
-    <string name="hexagon_remove_account">Konto entfernen</string>
-    <string name="hexagon_remove_account_success">Konto vaporisiert</string>
-    <string name="hexagon_remove_account_failure">Konto konnte nicht entfernt werden</string>
+    <string name="hexagon_setup_fail_auth">Ihr Konto hat keine E-Mail-Adresse</string>
+    <string name="hexagon_remove_account">Konto löschen</string>
+    <string name="hexagon_remove_account_success">Konto gelöscht</string>
+    <string name="hexagon_remove_account_failure">Konto konnte nicht gelöscht werden</string>
     <string name="hexagon_remove_account_confirmation">Dies entfernt Ihre Serien, Listen und Filme aus SeriesGuide Cloud</string>
     <string name="hexagon_api_queued">Sende an SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Von SeriesGuide Cloud abgemeldet</string>
-    <string name="hexagon_signin_fail_format">Fehler bei der Google-Anmeldung (%s)</string>
+    <string name="hexagon_signin_fail_format">Fehler beim Anmelden (%s)</string>
+    <string name="hexagon_signin_google_only">E-Mail-Adresse erfordert Anmeldung mit Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sende an Trakt.</string>
     <string name="checkin_success_trakt">Auf Trakt in %s eingecheckt</string>

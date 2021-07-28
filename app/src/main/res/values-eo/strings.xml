@@ -163,8 +163,6 @@
     <string name="friends_recently">Viaj Trakt amikoj</string>
     <string name="now_empty">Nenio okazas. Spektu iajn televidaĵojn!</string>
     <string name="now_movies_empty">Nenio okazas. Spektu iajn filmojn!</string>
-    <string name="user_stream_empty">Neniu historio sur Trakt. Spektu kaj marku iun televidaĵon!</string>
-    <string name="user_movie_stream_empty">No history on Trakt. Watch and check into some movies!</string>
     <!-- Calendar -->
     <string name="upcoming">Venontaj</string>
     <string name="recent">Lastatempaj</string>
@@ -284,14 +282,15 @@
     <string name="hexagon_signin">Ensaluti</string>
     <string name="hexagon_signout">Elsaluti</string>
     <string name="hexagon_setup_incomplete">Setting up SeriesGuide Cloud was not completed</string>
-    <string name="hexagon_setup_fail_auth">Via Google-konto ne sukcesas konekti</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Forigi konton</string>
     <string name="hexagon_remove_account_success">Konto elviŝita</string>
     <string name="hexagon_remove_account_failure">Ne povis forigi konton</string>
     <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
     <string name="hexagon_api_queued">Sendas al SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Elsalutis el SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Eraro dum ensalutado de Google (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sendado al Trakt.</string>
     <string name="checkin_success_trakt">Markis je %s je Trakt</string>

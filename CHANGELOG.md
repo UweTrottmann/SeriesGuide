@@ -8,6 +8,48 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 60
+----------
+*2021-07-28*
+
+* 🌟 Support signing into Cloud with email and password. With this update you are asked to sign into Cloud again.
+  Choose email if you use other devices that do not support Google sign-in, like Amazon devices.
+* 🔧 An episode IMDb link will open the episode page again, if the IMDb ID is available on TMDb.  
+
+#### 60
+*2021-07-28*
+
+* 🔧 Auto-dismiss support the dev message.
+
+#### 60-beta4
+*2021-07-21*
+
+* 🔧 An episode IMDb link will open the episode page again, if the IMDb ID is available on TMDb.
+* 🔨 Fix duplicate error string when adding a show fails.
+* 📝 Latest translations from Crowdin.
+
+#### 60-beta3
+*2021-07-08*
+
+* 🔨 Do not crash during Cloud sync or actions due to issues with new sign-in.
+
+#### 60-beta2
+*2021-07-07*
+
+* 🌟 Sign into Cloud with only email and password. With this update you are signed out of Cloud.
+  When signing in again choose whether to switch to email and password or continue to use Google sign-in.
+  If you use other devices that do not support Google sign-in, like Amazon Fire devices,
+  you should choose email and password sign in.
+* 🔧 When signed out of Cloud due to an error, will resume syncing without a full sync when signing
+  in again with the same email address.
+* 📝 Latest translations from crowdin.
+
+#### 60-beta1
+*2021-06-24*
+
+* 🔨 Lists: do not jump to top on database changes.
+* 📝 Errors: drop Countly reporting.
+
 Version 59
 ----------
 *2021-06-17*

@@ -5,11 +5,9 @@ import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
 import java.io.IOException;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Task to remove a list.
@@ -66,14 +64,7 @@ public class RemoveListTask extends BaseActionTask {
         // delete the list
         int deleted = getContext().getContentResolver()
                 .delete(SeriesGuideContract.Lists.buildListUri(listId), null, null);
-        if (deleted == 0) {
-            return false;
-        }
-
-        // notify lists activity
-        EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());
-
-        return true;
+        return deleted != 0;
     }
 
     @Override

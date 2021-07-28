@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.ui.ListsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.seriesguide.backend.lists.Lists;
@@ -16,7 +15,6 @@ import com.uwetrottmann.seriesguide.backend.lists.model.SgListList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 /**
@@ -97,10 +95,6 @@ public class ReorderListsTask extends BaseActionTask {
             Timber.e(e, "doDatabaseUpdate: failed to save reordered lists.");
             return false;
         }
-
-        // notify lists activity
-        EventBus.getDefault().post(new ListsActivity.ListsChangedEvent());
-
         return true;
     }
 

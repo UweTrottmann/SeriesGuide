@@ -57,19 +57,14 @@ object SupportTheDev {
 
     @JvmStatic
     fun buildSnackbar(context: Context, parentView: View): Snackbar {
-        return Snackbar.make(parentView, R.string.support_the_dev, Snackbar.LENGTH_INDEFINITE)
+        return Snackbar.make(parentView, R.string.support_the_dev, 10000)
             .addCallback(object : Snackbar.Callback() {
                 override fun onDismissed(snackbar: Snackbar, event: Int) {
-                    if (event == DISMISS_EVENT_SWIPE) {
-                        // Only do not show again if explicitly dismissed.
-                        PreferenceManager.getDefaultSharedPreferences(context)
-                            .saveLastDismissed(System.currentTimeMillis())
-                    }
+                    // Always do not show again after user has seen it once.
+                    PreferenceManager.getDefaultSharedPreferences(context)
+                        .saveLastDismissed(System.currentTimeMillis())
                 }
             }).setAction(R.string.billing_action_subscribe) {
-                // Note: keep showing even if tapping subscribe button in case user
-                // leaves and doesn't know how to return.
-                // If user subscribes will not show again anyhow.
                 context.startActivity(Utils.getBillingActivityIntent(context))
             }
     }

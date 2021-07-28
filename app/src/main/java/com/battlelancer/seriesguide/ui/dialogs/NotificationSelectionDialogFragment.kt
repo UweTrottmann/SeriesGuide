@@ -42,14 +42,16 @@ class NotificationSelectionDialogFragment : AppCompatDialogFragment() {
     ): View {
         val binding = DialogNotificationSelectionBinding.inflate(inflater, container, false)
         this.binding = binding
-        binding.recyclerViewSelection.layoutManager = LinearLayoutManager(context)
-        this.adapter = SelectionAdapter(onItemClickListener)
-        binding.recyclerViewSelection.adapter = adapter
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        adapter = SelectionAdapter(onItemClickListener)
+
+        binding?.apply {
+            recyclerViewSelection.layoutManager = LinearLayoutManager(context)
+            recyclerViewSelection.adapter = adapter
+        }
 
         model.shows.observe(viewLifecycleOwner) { shows ->
             val hasNoData = shows.isEmpty()

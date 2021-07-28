@@ -163,8 +163,6 @@
     <string name="friends_recently">Uw Trakt-vrienden</string>
     <string name="now_empty">Nog niets, kijk eerst wat series!</string>
     <string name="now_movies_empty">Niks te doen. Kijk een film!</string>
-    <string name="user_stream_empty">Geen recente activiteit op trakt. Kijk en check in bij wat shows!</string>
-    <string name="user_movie_stream_empty">Geen recente activiteit op trakt. Bekijk en check in bij films!</string>
     <!-- Calendar -->
     <string name="upcoming">Eerstvolgende</string>
     <string name="recent">Recente</string>
@@ -284,14 +282,15 @@
     <string name="hexagon_signin">Log in</string>
     <string name="hexagon_signout">Uitloggen</string>
     <string name="hexagon_setup_incomplete">SeriesGuide cloud instellen is niet afgerond.</string>
-    <string name="hexagon_setup_fail_auth">Uw Google-account was niet in orde</string>
+    <string name="hexagon_setup_fail_auth">Je account bevat geen e-mailadres</string>
     <string name="hexagon_remove_account">Account verwijderen</string>
     <string name="hexagon_remove_account_success">Account vernietigd</string>
     <string name="hexagon_remove_account_failure">Kon account niet verwijderen</string>
     <string name="hexagon_remove_account_confirmation">Dit zal al uw series, lijsten en films van SeriesGuide Cloud verwijderen</string>
     <string name="hexagon_api_queued">Verzonden naar SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Afgemeld bij SeriesGuide Cloud</string>
-    <string name="hexagon_signin_fail_format">Fout tijdens Google login (%s)</string>
+    <string name="hexagon_signin_fail_format">Fout bij aanmelden (%s)</string>
+    <string name="hexagon_signin_google_only">E-mailadres vereist aanmelding bij Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Toevoegen aan trakt.</string>
     <string name="checkin_success_trakt">Aangemeld bij %s op trakt.</string>

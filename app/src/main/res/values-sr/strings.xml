@@ -164,8 +164,6 @@
     <string name="friends_recently">Твоји trakt пријатељи</string>
     <string name="now_empty">Досадно вам је. Погледајте неке серије!</string>
     <string name="now_movies_empty">Досадно вам је. Погледајте неке филмове!</string>
-    <string name="user_stream_empty">Нема недавних активности на trakt-у. Одаберите неке серије!</string>
-    <string name="user_movie_stream_empty">Нема недавних активности на trakt-у. Одаберите неке филмове!</string>
     <!-- Calendar -->
     <string name="upcoming">Предстојеће</string>
     <string name="recent">Скорашње</string>
@@ -204,7 +202,7 @@
     <string name="no_results">Нема резултата, покушајте са целим речима.</string>
     <string name="empty_show_search">Nije prenađeno u vašoj show listi</string>
     <string name="action_try_again">Поушајте поново</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
     <string name="add_all">Додај све</string>
     <string name="add_multiple">Све серије ће се ускоро појавити у вашој листи серија.</string>
     <string name="add_started">%s ће се ускоро појавити у вашој листи серија.</string>
@@ -291,14 +289,15 @@
     <string name="hexagon_signin">Пријави се</string>
     <string name="hexagon_signout">Одјави се</string>
     <string name="hexagon_setup_incomplete">Подешавање SeriesGuide Cloud-а није обављено.</string>
-    <string name="hexagon_setup_fail_auth">Ваш Google налог није прошао проверу.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Уклони налог</string>
     <string name="hexagon_remove_account_success">Налог обрисан.</string>
     <string name="hexagon_remove_account_failure">Налог није уклоњен.</string>
     <string name="hexagon_remove_account_confirmation">Брисање вашег налога ће обрисати све серије и филмове са SeriesGuide Cloud. Побрините се да га обришете и са осталих повезаних уређаја.</string>
     <string name="hexagon_api_queued">Слање на SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Izlogovan iz SeriesGuide Cloud-a</string>
-    <string name="hexagon_signin_fail_format">Greška sa Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Послато на тракт.</string>
     <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>

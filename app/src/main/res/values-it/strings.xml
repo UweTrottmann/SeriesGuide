@@ -163,8 +163,6 @@
     <string name="friends_recently">I tuoi amici di trakt</string>
     <string name="now_empty">Non succede nulla. Guarda qualche serie!</string>
     <string name="now_movies_empty">Non sta succedendo niente. Guarda qualche film!</string>
-    <string name="user_stream_empty">Nessuna attività su trakt. Guarda e fai il check in di qualche serie!</string>
-    <string name="user_movie_stream_empty">Nessun check in su trakt. Guarda qualche film!</string>
     <!-- Calendar -->
     <string name="upcoming">Prossimamente</string>
     <string name="recent">Recenti</string>
@@ -284,14 +282,15 @@
     <string name="hexagon_signin">Connettiti</string>
     <string name="hexagon_signout">Esci</string>
     <string name="hexagon_setup_incomplete">La configurazione di SeriesGuide Cloud non è stata completata.</string>
-    <string name="hexagon_setup_fail_auth">È stato riscontrato un problema con il tuo account Google.</string>
+    <string name="hexagon_setup_fail_auth">Il tuo account non ha un indirizzo e-mail</string>
     <string name="hexagon_remove_account">Rimuovi l\'account</string>
     <string name="hexagon_remove_account_success">Account rimosso.</string>
     <string name="hexagon_remove_account_failure">Impossibile rimuovere l\'account.</string>
     <string name="hexagon_remove_account_confirmation">Rimuovendo il tuo account verranno eliminati tutti i film e le serie TV dalla SeriesGuide Cloud. Assicurati di rimuoverlo anche su tutti gli altri dispositivi connessi.</string>
     <string name="hexagon_api_queued">Invio a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Disconnesso da SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Errore con l\'accesso a Google (%s)</string>
+    <string name="hexagon_signin_fail_format">Errore di accesso (%s)</string>
+    <string name="hexagon_signin_google_only">L\' indirizzo e-mail richiede l\'accesso a Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Invio a trakt.</string>
     <string name="checkin_success_trakt">Check-in di %s su trakt riuscito.</string>

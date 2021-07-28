@@ -60,6 +60,10 @@ abstract class StreamFragment : Fragment() {
                 )
             )
         }
+        ViewTools.setSwipeRefreshLayoutColors(
+            requireActivity().theme,
+            binding.swipeRefreshLayoutStream
+        )
 
         val layoutManager = AutoGridLayoutManager(
             context,
@@ -76,15 +80,6 @@ abstract class StreamFragment : Fragment() {
 
         // set initial view states
         showProgressBar(true)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        ViewTools.setSwipeRefreshLayoutColors(
-            requireActivity().theme,
-            binding.swipeRefreshLayoutStream
-        )
 
         initializeStream()
 

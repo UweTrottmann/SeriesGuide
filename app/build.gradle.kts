@@ -6,12 +6,14 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("com.google.cloud.tools.endpoints-framework-client")
-    id("com.google.firebase.crashlytics")
 }
 
 if (project.file("google-services.json").exists()) {
     apply(plugin = "com.google.gms.google-services")
 }
+// Note: need to apply Crashlytics after Google services plugin,
+// above conditional apply doesn't work inside plugins block.
+apply(plugin = "com.google.firebase.crashlytics")
 
 val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
@@ -27,6 +29,7 @@ val core_version: String by rootProject.extra
 val annotation_version: String by rootProject.extra
 val lifecycle_version: String by rootProject.extra
 val room_version: String by rootProject.extra
+val fragmentVersion: String by rootProject.extra
 
 val dagger_version: String by rootProject.extra
 val okhttp_version: String by rootProject.extra
@@ -55,16 +58,6 @@ android {
         buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
         buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
-        buildConfigField("String", "COUNT_URL", propertyOrNull("SG_COUNT_URL"))
-        buildConfigField("String", "COUNT_SECRET", propertyOrEmpty("SG_COUNT_SECRET"))
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["eventBusIndex"] = "com.battlelancer.seriesguide.SgEventBusIndex"
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-                arguments["room.incremental"] = "true"
-            }
-        }
     }
 
     sourceSets {
@@ -152,6 +145,15 @@ android {
     }
 }
 
+// Note: android.javaCompileOptions.annotationProcessorOptions does not seem to work with Kotlin 1.5.20
+kapt {
+    arguments {
+        arg("eventBusIndex", "com.battlelancer.seriesguide.SgEventBusIndex")
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.incremental", "true")
+    }
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
@@ -168,8 +170,7 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     // https://developer.android.com/jetpack/androidx/releases/browser
     implementation("androidx.browser:browser:1.3.0")
-    // https://developer.android.com/jetpack/androidx/releases/fragment
-    implementation("androidx.fragment:fragment-ktx:1.3.3")
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
     // https://github.com/material-components/material-components-android/releases
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.palette:palette-ktx:1.0.0")
@@ -201,7 +202,7 @@ dependencies {
 
     implementation("com.google.flatbuffers:flatbuffers-java:1.12.0")
     // https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("com.google.code.gson:gson:2.8.7")
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
     implementation("com.jakewharton.timber:timber:$timber_version")
@@ -222,7 +223,7 @@ dependencies {
     implementation("com.uwetrottmann.photoview:library:1.2.4")
 
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.3.1")
+    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.4.0")
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
     implementation("com.uwetrottmann.trakt5:trakt-java:6.9.0") {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
@@ -236,16 +237,14 @@ dependencies {
     implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-actions:$debugDrawerVersion")
     implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:$debugDrawerVersion")
 
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:27.1.0"))
+    // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
+    implementation("com.firebaseui:firebase-ui-auth:7.1.1")
+
     // Crashlytics
     // https://firebase.google.com/support/release-notes/android
-    implementation("com.google.firebase:firebase-crashlytics:17.4.0")
-
-    // Countly https://github.com/Countly/countly-sdk-android/releases
-    implementation("ly.count.android:sdk:20.11.8")
-
-    // Google Play Services
-    // https://developers.google.com/android/guides/releases
-    implementation("com.google.android.gms:play-services-auth:19.0.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.1.0")
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
@@ -263,20 +262,20 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/test
     androidTestImplementation("androidx.annotation:annotation:$annotation_version")
     // Core library
-    val androidXtestCoreVersion = "1.3.0"
+    val androidXtestCoreVersion = "1.4.0"
     androidTestImplementation("androidx.test:core:$androidXtestCoreVersion")
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation("androidx.test:runner:1.3.0")
-    androidTestImplementation("androidx.test:rules:1.3.0")
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test:rules:1.4.0")
     // Espresso
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
     // Assertions
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation("androidx.test.ext:truth:1.3.0") {
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.ext:truth:1.4.0") {
         exclude(group = "com.google.truth") // include manually to control conflicting deps
     }
-    val truthVersion = "1.1.2" // https://github.com/google/truth/releases
+    val truthVersion = "1.1.3" // https://github.com/google/truth/releases
     androidTestImplementation("com.google.truth:truth:$truthVersion") {
         exclude(group = "org.checkerframework") // from guava, not needed at runtime
         exclude(group = "com.google.errorprone") // from guava, not needed at runtime
@@ -294,9 +293,14 @@ dependencies {
         exclude(group = "com.google.errorprone") // from guava, not needed at runtime
     }
     // https://github.com/robolectric/robolectric/releases/
-    testImplementation("org.robolectric:robolectric:4.5.1")
+    // Note: 4.6.1 pulls in bcprov-jdk15on code targeting newer Java breaking Jetifier
+    // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
+    // https://github.com/robolectric/robolectric/issues/6521
+    // https://issuetracker.google.com/issues/159151549
+    testImplementation("org.robolectric:robolectric:4.6.1")
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
-
+    testImplementation("org.mockito:mockito-core:3.8.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
 }
 
 endpointsClient {

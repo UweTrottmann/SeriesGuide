@@ -17,15 +17,13 @@
         tools:drawableTint="?attr/sgColorIcon"
         tools:drawableTop="@drawable/ic_list_white_24dp" />
 
-    <GridView
-        android:id="@+id/gridViewList"
-        style="@style/Widget.SeriesGuide.Grid"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewListItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="@dimen/showgrid_columnWidth"
-        android:listSelector="@color/transparent"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         tools:listitem="@layout/item_show" />
 
 </FrameLayout>

@@ -162,8 +162,6 @@
     <string name="friends_recently">เพื่อน trakt ของคุณ</string>
     <string name="now_empty">ไม่มีอะไรเกิดขึ้น เริ่มดูซีรีส์สักเรื่อง!</string>
     <string name="now_movies_empty">ไม่มีอะไรเกิดขึ้น เริ่มดูภาพยนตร์สักเรื่อง!</string>
-    <string name="user_stream_empty">ไม่มีประวัติบน trakt ดูและเช็กอินซีรีส์สักเรื่องสิ!</string>
-    <string name="user_movie_stream_empty">ไม่มีประวัติบน trakt ดูและเช็กอินภาพยนตร์สักเรื่องสิ!</string>
     <!-- Calendar -->
     <string name="upcoming">เร็วๆ นี้</string>
     <string name="recent">ล่าสุด</string>
@@ -277,14 +275,15 @@
     <string name="hexagon_signin">เข้าสู่ระบบ</string>
     <string name="hexagon_signout">ออกจากระบบ</string>
     <string name="hexagon_setup_incomplete">การตั้งค่า SeriesGuide Cloud ไม่เสร็จสมบูรณ์</string>
-    <string name="hexagon_setup_fail_auth">ยังไม่ได้ตรวจสอบบัญชี Google ของคุณ</string>
+    <string name="hexagon_setup_fail_auth">บัญชีของคุณไม่มีที่อยู่อีเมล</string>
     <string name="hexagon_remove_account">ลบบัญชี</string>
     <string name="hexagon_remove_account_success">ลบบัญชีแล้ว</string>
     <string name="hexagon_remove_account_failure">ไม่สามารถลบบัญชี</string>
     <string name="hexagon_remove_account_confirmation">การลบบัญชีของคุณจะลบซีรีส์และภาพยนตร์ทั้งหมดออกจาก SeriesGuide Cloud ยืนยันให้แน่ใจว่าคุณต้องการลบข้อมูลออกจากอุปกรณ์ที่เชื่อมต่ออยู่ด้วยเช่นกัน</string>
     <string name="hexagon_api_queued">กำลังส่งไปยัง SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">ออกจากระบบ SeriesGuide Cloud แล้ว</string>
-    <string name="hexagon_signin_fail_format">ข้อผิดพลาดในการเข้าสู่ระบบด้วย Google (%s)</string>
+    <string name="hexagon_signin_fail_format">ข้อผิดพลาดในการเข้าสู่ระบบ (%s)</string>
+    <string name="hexagon_signin_google_only">ที่อยู่อีเมลต้องการการเข้าสู่ระบบด้วย Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">กำลังส่งไปยัง trakt</string>
     <string name="checkin_success_trakt">เช็กอิน %s บน trakt แล้ว</string>

@@ -165,8 +165,6 @@
     <string name="friends_recently">Twoi znajomi z trakt</string>
     <string name="now_empty">Nic się nie dzieje. Obejrzyj coś!</string>
     <string name="now_movies_empty">Nic nie dzieje. Obejrzyj jakiś film!</string>
-    <string name="user_stream_empty">Brak historii na trakt. Obejrzyj jakiś serial i oznacz go jako oglądany!</string>
-    <string name="user_movie_stream_empty">Brak historii na trakt. Obejrzyj jakiś film i oznacz go jako oglądany!</string>
     <!-- Calendar -->
     <string name="upcoming">Nadchodzące</string>
     <string name="recent">Ostatnie</string>
@@ -298,14 +296,15 @@
     <string name="hexagon_signin">Zaloguj się</string>
     <string name="hexagon_signout">Wyloguj</string>
     <string name="hexagon_setup_incomplete">Konfiguracja chmury SeriesGuide nie została zakończona.</string>
-    <string name="hexagon_setup_fail_auth">Nie można potwierdzić Twojego konta Google.</string>
+    <string name="hexagon_setup_fail_auth">Twoje konto nie posiada adresu e-mail</string>
     <string name="hexagon_remove_account">Usuń konto</string>
     <string name="hexagon_remove_account_success">Konto zostało usunięte.</string>
     <string name="hexagon_remove_account_failure">Usuwanie konta nie powiodło się.</string>
     <string name="hexagon_remove_account_confirmation">Usunięcie konta spowoduje usunięcie wszystkich seriali i filmów z chmury SeriesGuide. Upewnij się, że dane te zostały usunięte także z pozostałych podłączonych urządzeń.</string>
     <string name="hexagon_api_queued">Wysłanie do chmury SeriesGuide.</string>
     <string name="hexagon_signed_out">Wylogowano z SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Błąd logowania przez Google (%s)</string>
+    <string name="hexagon_signin_fail_format">Błąd podczas logowania (%s)</string>
+    <string name="hexagon_signin_google_only">Adres e-mail wymaga logowania Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Wysyłanie do trakt.</string>
     <string name="checkin_success_trakt">%s oznaczono jako oglądane na trakt.</string>

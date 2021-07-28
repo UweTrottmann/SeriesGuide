@@ -163,8 +163,6 @@
     <string name="friends_recently">Tus amigos de trakt</string>
     <string name="now_empty">Nada nuevo. ¡Mira algunas series!</string>
     <string name="now_movies_empty">Nada nuevo. ¡Mira alguna película!</string>
-    <string name="user_stream_empty">No hay actividad en trakt. ¡Haz check in en alguna serie!</string>
-    <string name="user_movie_stream_empty">No hay actividad en trakt. ¡Haz check in en alguna película!</string>
     <!-- Calendar -->
     <string name="upcoming">Próximos</string>
     <string name="recent">Recientes</string>
@@ -284,7 +282,7 @@
     <string name="hexagon_signin">Iniciar sesión</string>
     <string name="hexagon_signout">Cerrar sesión</string>
     <string name="hexagon_setup_incomplete">La configuración de SeriesGuide cloud no se completó.</string>
-    <string name="hexagon_setup_fail_auth">Tu cuenta de Google no es válida.</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Eliminar cuenta</string>
     <string name="hexagon_remove_account_success">Cuenta borrada.</string>
     <string name="hexagon_remove_account_failure">No se pudo eliminar la cuenta.</string>
@@ -292,7 +290,8 @@
 Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error con Google Sign-In (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando a trakt.</string>
     <string name="checkin_success_trakt">Registrado en %s en trakt.</string>

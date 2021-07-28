@@ -25,8 +25,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
@@ -62,6 +64,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
         int getIndicatorColor(int position);
     }
 
+    public interface TabTitleSupplier {
+        String getTabTitle(int position);
+    }
+
     private static final int TITLE_OFFSET_DIPS = 24;
     private static final int TAB_VIEW_PADDING_DIPS = 16;
     private static final int TAB_VIEW_TEXT_SIZE_SP = 12;
@@ -73,6 +79,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private ViewPager viewPager;
     private ViewPager.OnPageChangeListener viewPagerPageChangeListener;
+    private ViewPager2 viewPager2;
 
     private OnTabClickListener onTabClickListener;
 
@@ -181,6 +188,20 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
+     * Sets the associated view pager. Note that the assumption here is that the pager content
+     * (number of tabs and tab titles) does not change after this call has been made.
+     */
+    public void setViewPager2(ViewPager2 viewPager, TabTitleSupplier tabTitleSupplier) {
+        tabStrip.removeAllViews();
+
+        this.viewPager2 = viewPager;
+        if (viewPager2 != null) {
+            viewPager2.registerOnPageChangeCallback(new InternalViewPagerListener());
+            populateTabStrip2(tabTitleSupplier);
+        }
+    }
+
+    /**
      * Create a default view to be used for tabs. This is called if a custom tab view is not set
      * via
      * {@link #setCustomTabView(int, int)}.
@@ -209,9 +230,24 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private void populateTabStrip() {
         final PagerAdapter adapter = viewPager.getAdapter();
+        if (adapter == null) return;
+        populateTabStrip(adapter.getCount(), position -> {
+            CharSequence titleOrNull = adapter.getPageTitle(position);
+            return titleOrNull == null ? "" : titleOrNull.toString();
+        });
+    }
+
+    private void populateTabStrip2(TabTitleSupplier tabTitleSupplier) {
+        @SuppressWarnings("rawtypes")
+        final RecyclerView.Adapter adapter = viewPager2.getAdapter();
+        if (adapter == null) return;
+        populateTabStrip(adapter.getItemCount(), tabTitleSupplier);
+    }
+
+    private void populateTabStrip(int itemCount, TabTitleSupplier tabTitleSupplier) {
         final OnClickListener tabClickListener = new TabClickListener();
 
-        for (int i = 0; i < adapter.getCount(); i++) {
+        for (int i = 0; i < itemCount; i++) {
             View tabView = null;
             TextView tabTitleView = null;
 
@@ -233,7 +269,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
             if (tabTitleView == null) {
                 throw new IllegalArgumentException("tabTitleView == null");
             }
-            tabTitleView.setText(adapter.getPageTitle(i));
+            tabTitleView.setText(tabTitleSupplier.getTabTitle(i));
             tabView.setOnClickListener(tabClickListener);
 
             tabStrip.addView(tabView);
@@ -246,6 +282,9 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
         if (viewPager != null) {
             scrollToTab(viewPager.getCurrentItem(), 0);
+        }
+        if (viewPager2 != null) {
+            scrollToTab(viewPager2.getCurrentItem(), 0);
         }
     }
 
@@ -268,7 +307,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
         }
     }
 
-    private class InternalViewPagerListener implements ViewPager.OnPageChangeListener {
+    private class InternalViewPagerListener extends ViewPager2.OnPageChangeCallback
+            implements ViewPager.OnPageChangeListener {
         private int scrollState;
 
         @Override
@@ -322,7 +362,12 @@ public class SlidingTabLayout extends HorizontalScrollView {
                     if (onTabClickListener != null) {
                         onTabClickListener.onTabClick(i);
                     }
-                    viewPager.setCurrentItem(i);
+                    if (viewPager != null) {
+                        viewPager.setCurrentItem(i);
+                    }
+                    if (viewPager2 != null) {
+                        viewPager2.setCurrentItem(i);
+                    }
                     return;
                 }
             }

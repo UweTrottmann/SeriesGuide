@@ -14,6 +14,7 @@ import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
+import com.uwetrottmann.tmdb2.services.TvEpisodesService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.SocketTimeoutException
@@ -106,7 +107,7 @@ class TmdbTools2 {
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
         try {
             val response = tmdb.searchService()
-                .tv(query, null, language, null)
+                .tv(query, null, language, null, false)
                 .execute()
             if (response.isSuccessful) {
                 val results = response.body()?.results
@@ -283,4 +284,26 @@ class TmdbTools2 {
         }
         return null
     }
+
+    fun getImdbIdForEpisode(
+        tvEpisodesService: TvEpisodesService,
+        showTmdbId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): String? {
+        try {
+            val response = tvEpisodesService
+                .externalIds(showTmdbId, seasonNumber, episodeNumber)
+                .execute()
+            if (response.isSuccessful) {
+                return response.body()?.imdb_id
+            } else {
+                Errors.logAndReport("providers movie", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("providers show", e)
+        }
+        return null
+    }
+
 }

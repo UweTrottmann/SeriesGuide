@@ -163,8 +163,6 @@
     <string name="friends_recently">Trakt-ystäväsi</string>
     <string name="now_empty">Mitään ei ole meneillään. Katso joitakin ohjelmia!</string>
     <string name="now_movies_empty">Mitään ei ole meneillään. Katso joitakin elokuvia!</string>
-    <string name="user_stream_empty">Ei historiaa Traktissa. Katso ja kuittaa joihinkin ohjelmiin!</string>
-    <string name="user_movie_stream_empty">Ei historiaa Traktissa. Katso ja kuittaa joihinkin elokuviin!</string>
     <!-- Calendar -->
     <string name="upcoming">Tulevat</string>
     <string name="recent">Viimeisimmät</string>
@@ -284,14 +282,15 @@
     <string name="hexagon_signin">Kirjaudu sisään</string>
     <string name="hexagon_signout">Kirjaudu ulos</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloudin määrittäminen epäonnistui.</string>
-    <string name="hexagon_setup_fail_auth">Google-tilisi kanssa oli ongelmia</string>
+    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
     <string name="hexagon_remove_account">Poista tili</string>
     <string name="hexagon_remove_account_success">Tili poistettu.</string>
     <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
     <string name="hexagon_remove_account_confirmation">Tämä poistaa ohjelmasi, listasi ja elokuvasi SeriesGuide Cloudista</string>
     <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
     <string name="hexagon_signed_out">Kirjauduttu ulos SeriesGuide Cloudista.</string>
-    <string name="hexagon_signin_fail_format">Virhe Google-kirjautumisessa (%s)</string>
+    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
+    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Lähetetään Traktiin.</string>
     <string name="checkin_success_trakt">Kuitattu kohteeseen %s Traktissa</string>

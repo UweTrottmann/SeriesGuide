@@ -1,10 +1,9 @@
 package com.battlelancer.seriesguide.backend
 
-import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
 
 /**
- * Error for tracking Google Sign-In failures.
+ * Error for tracking Cloud Sign-In failures.
  */
 class HexagonAuthError(action: String, failure: String, cause: Throwable?) :
     Throwable("$action: $failure", cause) {
@@ -18,19 +17,14 @@ class HexagonAuthError(action: String, failure: String, cause: Throwable?) :
         }
 
         private fun extractStatusCodeString(throwable: Throwable): String {
-            val cause = throwable.cause
-            return if (throwable is ApiException) {
-                throwable.getStatusCodeString()
-            } else if (cause != null && cause is ApiException) {
-                cause.getStatusCodeString()
+            // Prefer ApiException message if it is the direct cause.
+            val causeMessage = throwable.cause?.message
+            return if (causeMessage != null && throwable.cause is ApiException) {
+                causeMessage
             } else {
                 throwable.message ?: ""
             }
         }
     }
 
-}
-
-private fun ApiException.getStatusCodeString(): String {
-    return GoogleSignInStatusCodes.getStatusCodeString(statusCode)
 }

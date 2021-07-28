@@ -294,8 +294,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                 event = OnShowAddedEvent.exists(context, showTmdbId, showTitle);
                 break;
             case PROGRESS_ERROR:
-                event = OnShowAddedEvent.failed(context, showTmdbId,
-                        context.getString(R.string.add_error, showTitle));
+                event = OnShowAddedEvent.failed(context, showTmdbId, showTitle);
                 break;
             case PROGRESS_ERROR_TVDB:
                 event = OnShowAddedEvent.failedDetails(context, showTmdbId, showTitle,

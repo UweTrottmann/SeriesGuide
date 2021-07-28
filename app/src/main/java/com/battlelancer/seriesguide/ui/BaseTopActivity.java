@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.sync.AccountUtils;
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.ui.stats.StatsActivity;
-import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.SupportTheDev;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -140,9 +139,6 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
         if (SupportTheDev.shouldAsk(this)) {
             askForSupport();
         }
-
-        // Trigger session start only for top activities.
-        Errors.onSessionStart();
     }
 
     @Override
@@ -177,10 +173,6 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
         if (snackbar != null && snackbar.isShown()) {
             snackbar.dismiss();
         }
-
-        // Trigger session stop only for top activities so errors are sent frequently
-        // (when all are stopped).
-        Errors.onSessionStop();
     }
 
     @Override
@@ -294,7 +286,7 @@ public abstract class BaseTopActivity extends BaseMessageActivity {
                     // user has dismissed warning, so disable Cloud
                     HexagonTools hexagonTools = SgApp.getServicesComponent(BaseTopActivity.this)
                             .hexagonTools();
-                    hexagonTools.setDisabled();
+                    hexagonTools.removeAccountAndSetDisabled();
                 }
             }
         }).setAction(R.string.hexagon_signin, v -> {

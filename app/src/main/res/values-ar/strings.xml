@@ -167,8 +167,6 @@
     <string name="friends_recently">أصدقائك على موقع Trakt</string>
     <string name="now_empty">لا يوجد شيء جديد. شاهد بعض المسلسلات!</string>
     <string name="now_movies_empty">لا يوجد شيء جديد. شاهد بعض الأفلام!</string>
-    <string name="user_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض المسلسلات!</string>
-    <string name="user_movie_stream_empty">لا يوجد أي نشاط مؤخرا على موقع Trakt. تحقق من بعض الأفلام!</string>
     <!-- Calendar -->
     <string name="upcoming">القادم</string>
     <string name="recent">مؤخراً</string>
@@ -312,14 +310,15 @@
     <string name="hexagon_signin">تسجيل الدخول</string>
     <string name="hexagon_signout">تسجيل الخروج</string>
     <string name="hexagon_setup_incomplete">لم يتم إكمال إعداد سحابة تخزين دليل المسلسلات.</string>
-    <string name="hexagon_setup_fail_auth">حشاب Google الخاص بك لم يقم بعمل Check Out.</string>
+    <string name="hexagon_setup_fail_auth">حسابك ليس لديه عنوان بريد إلكتروني</string>
     <string name="hexagon_remove_account">إزالة الحساب</string>
     <string name="hexagon_remove_account_success">تم إلغاء الحساب.</string>
     <string name="hexagon_remove_account_failure">لم نستطع إزالة حسابك</string>
     <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك و افلامك من سحابة SeriesGuide. تأكد من إزالته من الأجهزة الأخرى المتصلة أيضا.</string>
     <string name="hexagon_api_queued">جار الإرسال إلى سحابة دليل المسلسلات.</string>
     <string name="hexagon_signed_out">تسجيل الخروج من SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">خطأ في تسجيل الدخول الى Google (%s)</string>
+    <string name="hexagon_signin_fail_format">خطأ في تسجيل الدخول (%s)</string>
+    <string name="hexagon_signin_google_only">يتطلب عنوان البريد الإلكتروني تسجيل دخول Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">تقديم إلى تراكت.</string>
     <string name="checkin_success_trakt">تم فحص %s على التراكت.</string>

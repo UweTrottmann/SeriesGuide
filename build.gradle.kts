@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     // https://github.com/ben-manes/gradle-versions-plugin/releases
-    id("com.github.ben-manes.versions") version "0.38.0"
+    id("com.github.ben-manes.versions") version "0.39.0"
     // https://github.com/Codearte/gradle-nexus-staging-plugin/releases
     id("io.codearte.nexus-staging") version "0.22.0" // api
 }
@@ -12,10 +12,10 @@ buildscript {
     val sgTargetSdk by extra(30) // Android 11 (R)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2105904)
-    val sgVersionName by extra("59.1")
+    val sgVersionCode by extra(2106007)
+    val sgVersionName by extra("60")
 
-    val kotlin_version by extra("1.5.0") // https://kotlinlang.org/docs/releases.html#release-details
+    val kotlin_version by extra("1.5.21") // https://kotlinlang.org/docs/releases.html#release-details
     val coroutines_version by extra("1.5.0") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 
     // https://developer.android.com/jetpack/androidx/releases
@@ -23,8 +23,9 @@ buildscript {
     val annotation_version by extra("1.2.0")
     val lifecycle_version by extra("2.3.1")
     val room_version by extra("2.3.0") // https://developer.android.com/jetpack/androidx/releases/room
+    val fragmentVersion by extra("1.3.5") // https://developer.android.com/jetpack/androidx/releases/fragment
 
-    val dagger_version by extra("2.35.1") // https://github.com/google/dagger/releases
+    val dagger_version by extra("2.37") // https://github.com/google/dagger/releases
     val okhttp_version by extra("4.9.1") // https://github.com/square/okhttp/blob/master/CHANGELOG.md
     val retrofit_version by extra("2.9.0") // https://github.com/square/retrofit/blob/master/CHANGELOG.md
     val timber_version by extra("4.7.1") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
@@ -46,13 +47,13 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.0") // libraries, SeriesGuide
+        classpath("com.android.tools.build:gradle:4.2.2") // libraries, SeriesGuide
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
-        classpath("com.google.gms:google-services:4.3.5")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.5.1")
+        classpath("com.google.gms:google-services:4.3.8")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
     }
 }
 

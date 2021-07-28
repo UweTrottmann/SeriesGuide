@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -78,7 +79,7 @@ public final class ServiceUtils {
     /**
      * Open the IMDb app or web page for the given IMDb id.
      */
-    public static void openImdb(String imdbId, Context context) {
+    public static void openImdb(@Nullable String imdbId, @Nullable Context context) {
         if (context == null || TextUtils.isEmpty(imdbId)) {
             return;
         }

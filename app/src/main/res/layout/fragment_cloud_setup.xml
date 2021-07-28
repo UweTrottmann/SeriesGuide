@@ -54,21 +54,36 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/buttonCloudAction"
-            app:layout_constraintStart_toStartOf="@+id/buttonCloudAction"
-            app:layout_constraintTop_toBottomOf="@+id/buttonCloudAction" />
+            app:layout_constraintEnd_toEndOf="@+id/flowCloudSignInButtons"
+            app:layout_constraintStart_toStartOf="@+id/flowCloudSignInButtons"
+            app:layout_constraintTop_toBottomOf="@+id/flowCloudSignInButtons" />
 
-        <Button
-            android:id="@+id/buttonCloudAction"
-            style="@style/Widget.SeriesGuide.Button"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowCloudSignInButtons"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:text="@string/hexagon_signin"
+            app:constraint_referenced_ids="buttonCloudSignIn,buttonCloudSignOut"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:flow_horizontalGap="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/syncStatusCloud" />
+
+        <Button
+            android:id="@+id/buttonCloudSignIn"
+            style="@style/Widget.SeriesGuide.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hexagon_signin" />
+
+        <Button
+            android:id="@+id/buttonCloudSignOut"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hexagon_signout" />
 
         <com.battlelancer.seriesguide.widgets.SyncStatusView
             android:id="@+id/syncStatusCloud"
