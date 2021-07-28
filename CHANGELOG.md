@@ -10,7 +10,16 @@ Release notes
 
 Version 60
 ----------
-*in development*
+*2021-07-28*
+
+* 🌟 Support signing into Cloud with email and password. With this update you are asked to sign into Cloud again.
+  Choose email if you use other devices that do not support Google sign-in, like Amazon devices.
+* 🔧 An episode IMDb link will open the episode page again, if the IMDb ID is available on TMDb.  
+
+#### 60
+*2021-07-28*
+
+* 🔧 Auto-dismiss support the dev message.
 
 #### 60-beta4
 *2021-07-21*
