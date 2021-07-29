@@ -84,6 +84,7 @@
         <!-- Launch activity -->
         <activity
             android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
+            android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -125,6 +126,7 @@
             android:label="@string/user_stream" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden">
             <!-- Make this activity accessible from global search -->
@@ -172,6 +174,7 @@
             android:label="@string/prefs_category_about" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
+            android:exported="true"
             android:label="@string/preferences">
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
@@ -275,6 +278,7 @@
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtensionReceiver"
             android:description="@string/description_extension_amazon"
+            android:exported="false"
             android:icon="@mipmap/ic_app"
             android:label="@string/extension_amazon"
             tools:ignore="ExportedReceiver">
@@ -293,6 +297,7 @@
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtensionReceiver"
             android:description="@string/description_extension_youtube"
+            android:exported="false"
             android:icon="@mipmap/ic_app"
             android:label="@string/extension_youtube"
             tools:ignore="ExportedReceiver">
@@ -308,6 +313,7 @@
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.VodsterExtensionReceiver"
             android:description="@string/extension_vodster_description"
+            android:exported="false"
             android:icon="@mipmap/ic_app"
             android:label="@string/extension_vodster"
             tools:ignore="ExportedReceiver">
@@ -323,6 +329,7 @@
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.WebSearchExtensionReceiver"
             android:description="@string/description_extension_web_search"
+            android:exported="false"
             android:icon="@mipmap/ic_app"
             android:label="@string/web_search"
             tools:ignore="ExportedReceiver">
