@@ -11,9 +11,15 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Sync adapter -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" android:maxSdkVersion="22" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" android:maxSdkVersion="22" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" android:maxSdkVersion="22" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission
+        android:name="android.permission.MANAGE_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+        android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.READ_SYNC_STATS" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
@@ -160,8 +166,7 @@
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity" />
 
         <!-- Settings -->
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity" />
+        <activity android:name="com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.preferences.AboutActivity"
             android:label="@string/prefs_category_about" />
@@ -282,8 +287,8 @@
         </receiver>
         <service
             android:name="com.battlelancer.seriesguide.extensions.AmazonExtension"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtensionReceiver"
@@ -297,8 +302,8 @@
         </receiver>
         <service
             android:name="com.battlelancer.seriesguide.extensions.YouTubeExtension"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.VodsterExtensionReceiver"
@@ -312,8 +317,8 @@
         </receiver>
         <service
             android:name="com.battlelancer.seriesguide.extensions.VodsterExtension"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.WebSearchExtensionReceiver"
