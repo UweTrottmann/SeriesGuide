@@ -54,9 +54,7 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launchWhenStarted {
             val titleOrNull = withContext(Dispatchers.IO) {
                 SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowTitle(showId)
