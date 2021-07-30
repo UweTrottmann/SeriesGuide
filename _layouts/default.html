@@ -16,16 +16,16 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
+          <li class="nav-item {% if "/whypay.html" == page.url %}active{% endif %}">
             <a class="nav-link" href="/whypay">Support the app</a>
           </li>
-  			  <li class="nav-item">
+  			  <li class="nav-item {% if "/help.html" == page.url %}active{% endif %}">
             <a class="nav-link" href="/help">Help</a>
           </li>
-  			  <li class="nav-item d-sm-none d-lg-block">
+  			  <li class="nav-item d-sm-none d-lg-block {% if "/privacy.html" == page.url %}active{% endif %}">
             <a class="nav-link" href="/privacy">Privacy</a>
           </li>
-  			  <li class="nav-item d-sm-none d-lg-block">
+  			  <li class="nav-item d-sm-none d-lg-block {% if "/api/" == page.url %}active{% endif %}">
             <a class="nav-link" href="/api">Extensions API</a>
   			  <li>
             <a class="nav-link d-sm-none d-lg-block" href="{{ site.data.links.community }}">Community</a>
