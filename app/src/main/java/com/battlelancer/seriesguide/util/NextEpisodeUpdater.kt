@@ -54,6 +54,9 @@ class NextEpisodeUpdater {
             var season = show.seasonNumber
             var number = show.episodeNumber
             var releaseTime = show.episodeReleaseDateMs
+            val plays = if (show.episodePlays == null || show.episodePlays == 0) {
+                1
+            } else show.episodePlays
             // Note: Due to LEFT JOIN query, episode values are null if no matching episode found.
             if (show.lastWatchedEpisodeId == 0L
                 || season == null || number == null || releaseTime == null) {
@@ -68,12 +71,12 @@ class NextEpisodeUpdater {
             val selectionArgs: Array<Any> = if (isNoReleasedEpisodes) {
                 // restrict to episodes with future release date
                 arrayOf(
-                    releaseTime, number, season, releaseTime, currentTime
+                    plays, releaseTime, number, season, releaseTime, currentTime
                 )
             } else {
                 // restrict to episodes with any valid air date
                 arrayOf(
-                    releaseTime, number, season, releaseTime
+                    plays, releaseTime, number, season, releaseTime
                 )
             }
             val episodeOrNull = episodeHelper
@@ -171,9 +174,9 @@ class NextEpisodeUpdater {
         const val UNKNOWN_NEXT_RELEASE_DATE = Long.MAX_VALUE
 
         /**
-         * Unwatched, airing later or has a different number or season if airing the same time.
+         * Less plays, airing later or has a different number or season if airing the same time.
          */
-        var SELECT_NEXT = (SgEpisode2Columns.WATCHED + "=0 AND ("
+        var SELECT_NEXT = (SgEpisode2Columns.PLAYS + "<? AND ("
                 + "(" + SgEpisode2Columns.FIRSTAIREDMS + "=? AND "
                 + "(" + SgEpisode2Columns.NUMBER + "!=? OR " + SgEpisode2Columns.SEASON + "!=?)) "
                 + "OR " + SgEpisode2Columns.FIRSTAIREDMS + ">?)")
