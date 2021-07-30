@@ -61,6 +61,7 @@ import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TextToolsK.textNoTranslation
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
@@ -564,6 +565,23 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         } else {
             textEpisodeTime.text = null
         }
+
+        // watched button
+        val isWatched = EpisodeTools.isWatched(episode.watched)
+        if (isWatched) {
+            ViewTools.setVectorDrawableTop(
+                buttonWatch,
+                R.drawable.ic_watched_24dp
+            )
+        } else {
+            ViewTools.setVectorDrawableTop(
+                buttonWatch,
+                R.drawable.ic_watch_black_24dp
+            )
+        }
+        val plays = episode.plays
+        buttonWatch.text =
+            TextToolsK.getWatchedButtonText(requireContext(), isWatched, plays)
 
         // collected button
         val isCollected = episode.collected
