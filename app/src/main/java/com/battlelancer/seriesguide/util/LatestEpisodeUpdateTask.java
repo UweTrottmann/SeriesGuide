@@ -35,11 +35,11 @@ public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
         if (showId != null) {
             // update single show
             Timber.d("Updating next episode for show %s", showId);
-            DBUtils.updateLatestEpisode(context, showId);
+            new NextEpisodeUpdater().updateForShows(context, showId);
         } else {
             // update all shows
             Timber.d("Updating next episodes for all shows");
-            DBUtils.updateLatestEpisode(context, null);
+            new NextEpisodeUpdater().updateForShows(context, null);
         }
 
         // Show cursors already notified

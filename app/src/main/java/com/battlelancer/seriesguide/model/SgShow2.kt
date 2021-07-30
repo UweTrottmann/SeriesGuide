@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 
 @Entity(
     tableName = "sg_show",
@@ -60,7 +61,7 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.NEXTEPISODE) val nextEpisode: String? = "",
     @ColumnInfo(name = SgShow2Columns.POSTER) val poster: String? = "",
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val posterSmall: String? = "",
-    @ColumnInfo(name = SgShow2Columns.NEXTAIRDATEMS) val nextAirdateMs: Long? = DBUtils.UNKNOWN_NEXT_RELEASE_DATE,
+    @ColumnInfo(name = SgShow2Columns.NEXTAIRDATEMS) val nextAirdateMs: Long? = NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE,
     @ColumnInfo(name = SgShow2Columns.NEXTTEXT) val nextText: String? = "",
     @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long,
     @ColumnInfo(name = SgShow2Columns.LASTEDIT) val lastEditedSec: Long = 0,

@@ -10,7 +10,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.NextEpisodeUpdater;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -215,7 +215,7 @@ public class SeriesGuideContract {
          *
          * <pre>
          * Range:   long
-         * Default: {@link com.battlelancer.seriesguide.util.DBUtils#UNKNOWN_NEXT_RELEASE_DATE}
+         * Default: {@link NextEpisodeUpdater#UNKNOWN_NEXT_RELEASE_DATE}
          * </pre>
          *
          * <p> Added in db version 25 to allow correct sorting by next air date.
@@ -654,7 +654,7 @@ public class SeriesGuideContract {
          *
          * <pre>
          * Range:   long
-         * Default: {@link com.battlelancer.seriesguide.util.DBUtils#UNKNOWN_NEXT_RELEASE_DATE}
+         * Default: {@link NextEpisodeUpdater#UNKNOWN_NEXT_RELEASE_DATE}
          * </pre>
          *
          * <p> Added in db version 25 to allow correct sorting by next air date.
@@ -722,9 +722,9 @@ public class SeriesGuideContract {
                 + ")";
 
         String SELECTION_HAS_NEXT_EPISODE =
-                NEXTAIRDATEMS + "!=" + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+                NEXTAIRDATEMS + "!=" + NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE;
         String SELECTION_NO_NEXT_EPISODE =
-                NEXTAIRDATEMS + "=" + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+                NEXTAIRDATEMS + "=" + NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE;
 
         String SORT_TITLE = TITLE + " COLLATE NOCASE ASC";
         String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE NOCASE ASC";
@@ -1256,7 +1256,7 @@ public class SeriesGuideContract {
         public static final String SELECTION_NOT_FAVORITES = Shows.FAVORITE + "=0";
         public static final String SELECTION_NOTIFY = Shows.NOTIFY + "=1";
         public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
-                + DBUtils.UNKNOWN_NEXT_RELEASE_DATE;
+                + NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE;
         public static final String SELECTION_WITH_NEXT_NOT_HIDDEN = Shows.NEXTEPISODE + "!='' AND "
                 + Shows.HIDDEN + "=0 AND " + Shows.NEXTAIRDATEMS + "<?";
 

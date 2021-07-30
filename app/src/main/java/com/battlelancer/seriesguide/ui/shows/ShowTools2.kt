@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
@@ -362,7 +363,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         }
 
         // Calculate next episode
-        DBUtils.updateLatestEpisode(context, showId)
+        NextEpisodeUpdater().updateForShows(context, showId)
 
         return ShowResult.SUCCESS
     }
