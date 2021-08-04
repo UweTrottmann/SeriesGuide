@@ -8,6 +8,18 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 61
+----------
+*in development*
+
+#### 61-beta1
+*2021-08-04*
+
+* 🌟 When re-watching an episode, correctly choose the next one to rewatch. Display watch count in overview screen.
+* 🔨 Prevent crash when removing show while it was getting updated.
+* 🔧 Drop unused storage permissions, should have no impact on supported devices.
+* 📝 Latest translations from Crowdin.
+
 Version 60
 ----------
 *2021-07-28*
