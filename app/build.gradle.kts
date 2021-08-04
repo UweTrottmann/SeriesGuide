@@ -166,7 +166,7 @@ dependencies {
     implementation("androidx.core:core-ktx:$core_version")
     implementation("androidx.annotation:annotation:$annotation_version")
     // https://developer.android.com/jetpack/androidx/releases/appcompat
-    implementation("androidx.appcompat:appcompat:1.3.0")
+    implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.cardview:cardview:1.0.0")
     // https://developer.android.com/jetpack/androidx/releases/browser
     implementation("androidx.browser:browser:1.3.0")
