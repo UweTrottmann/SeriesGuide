@@ -175,9 +175,9 @@ dependencies {
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.palette:palette-ktx:1.0.0")
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
-    implementation("androidx.recyclerview:recyclerview:1.1.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
     // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation("androidx.preference:preference-ktx:1.1.1")
 
     // ViewModel and LiveData

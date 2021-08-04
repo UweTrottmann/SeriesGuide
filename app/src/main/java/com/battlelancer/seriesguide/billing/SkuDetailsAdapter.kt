@@ -60,7 +60,7 @@ open class SkuDetailsAdapter : RecyclerView.Adapter<SkuDetailsAdapter.SkuDetails
 
         init {
             itemView.setOnClickListener {
-                getItem(adapterPosition)?.let { onSkuDetailsClicked(it) }
+                getItem(bindingAdapterPosition)?.let { onSkuDetailsClicked(it) }
             }
         }
 
