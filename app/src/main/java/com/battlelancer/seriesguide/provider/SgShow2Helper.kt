@@ -12,6 +12,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.sync.ShowLastWatchedInfo
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 
 @Dao
@@ -171,6 +172,27 @@ interface SgShow2Helper {
     fun updateLastWatchedMsIfLater(showIdsToLastWatched: Map<Long, Long>) {
         showIdsToLastWatched.forEach {
             updateLastWatchedMsIfLater(it.key, it.value)
+        }
+    }
+
+    @Query("UPDATE sg_show SET series_lastwatchedid = :episodeId WHERE _id = :id")
+    fun updateLastWatchedEpisodeId(id: Long, episodeId: Long)
+
+    @Transaction
+    fun updateLastWatchedMsIfLaterAndLastWatchedEpisodeId(
+        showIdsToLastWatched: Map<Long, ShowLastWatchedInfo>,
+        episodeHelper: SgEpisode2Helper
+    ) {
+        showIdsToLastWatched.forEach {
+            updateLastWatchedMsIfLater(it.key, it.value.lastWatchedMs)
+            val episodeIdOrZero = episodeHelper.getEpisodeIdByNumber(
+                it.key,
+                it.value.episodeSeason,
+                it.value.episodeNumber
+            )
+            if (episodeIdOrZero != 0L) {
+                updateLastWatchedEpisodeId(it.key, episodeIdOrZero)
+            }
         }
     }
 
