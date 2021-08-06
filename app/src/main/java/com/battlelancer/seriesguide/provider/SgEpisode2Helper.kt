@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.provider
 import android.content.Context
 import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
@@ -132,7 +132,7 @@ interface SgEpisode2Helper {
      * See [SgEpisode2WithShow.buildEpisodesWithShowQuery].
      */
     @RawQuery(observedEntities = [SgEpisode2::class, SgShow2::class])
-    fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): DataSource.Factory<Int, SgEpisode2WithShow>
+    fun getEpisodesWithShowDataSource(query: SupportSQLiteQuery): PagingSource<Int, SgEpisode2WithShow>
 
     @Query("SELECT _id, episode_tmdb_id, episode_number FROM sg_episode WHERE season_id = :seasonId")
     fun getEpisodeIdsOfSeason(seasonId: Long): List<SgEpisode2Ids>

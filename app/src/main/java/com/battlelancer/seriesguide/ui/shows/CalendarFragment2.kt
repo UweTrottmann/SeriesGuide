@@ -31,7 +31,10 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.widgets.SgFastScroller
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class CalendarFragment2 : Fragment() {
 
@@ -116,10 +119,17 @@ class CalendarFragment2 : Fragment() {
                 }
             )
 
-        viewModel.upcomingEpisodesLiveData.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
-            updateEmptyView(it.isEmpty())
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.items.collectLatest {
+                adapter.submitData(it)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.onPagesUpdatedFlow.conflate().collectLatest {
+                Timber.i("onPagesUpdatedFlow")
+                updateEmptyView(adapter.itemCount == 0)
+            }
+        }
         updateCalendarQuery()
     }
 
