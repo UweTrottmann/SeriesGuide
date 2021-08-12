@@ -12,6 +12,14 @@ Version 61
 ----------
 *in development*
 
+#### 61-beta2
+*2021-08-12*
+
+* 🔨 Do not select skipped episode as next to watch.
+* 🔨 Cloud: on sync update last watched episode to correctly determine next to watch on all devices.
+* 🔨 Cloud: do not fail when uploading a lot of movies.
+* 📝 Latest translations from Crowdin.
+
 #### 61-beta1
 *2021-08-04*
 
