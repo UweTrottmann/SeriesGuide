@@ -174,12 +174,14 @@ class NextEpisodeUpdater {
         const val UNKNOWN_NEXT_RELEASE_DATE = Long.MAX_VALUE
 
         /**
-         * Less plays, airing later or has a different number or season if airing the same time.
+         * Less plays, not skipped, airing later
+         * or has a different number or season if airing the same time.
          */
-        var SELECT_NEXT = (SgEpisode2Columns.PLAYS + "<? AND ("
-                + "(" + SgEpisode2Columns.FIRSTAIREDMS + "=? AND "
-                + "(" + SgEpisode2Columns.NUMBER + "!=? OR " + SgEpisode2Columns.SEASON + "!=?)) "
-                + "OR " + SgEpisode2Columns.FIRSTAIREDMS + ">?)")
+        var SELECT_NEXT =
+            (SgEpisode2Columns.PLAYS + "<? AND " + SgEpisode2Columns.SELECTION_NOT_SKIPPED + " AND ("
+                    + "(" + SgEpisode2Columns.FIRSTAIREDMS + "=? AND "
+                    + "(" + SgEpisode2Columns.NUMBER + "!=? OR " + SgEpisode2Columns.SEASON + "!=?)) "
+                    + "OR " + SgEpisode2Columns.FIRSTAIREDMS + ">?)")
 
         var SELECT_WITHAIRDATE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + "!=-1"
 

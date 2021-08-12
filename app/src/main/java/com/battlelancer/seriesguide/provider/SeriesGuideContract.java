@@ -975,6 +975,7 @@ public class SeriesGuideContract {
         String LAST_UPDATED = "episode_lastupdate";
 
         String SELECTION_UNWATCHED = WATCHED + "=" + EpisodeFlags.UNWATCHED;
+        String SELECTION_NOT_SKIPPED = WATCHED + "!=" + EpisodeFlags.SKIPPED;
         String SELECTION_COLLECTED = COLLECTED + "=1";
         String SELECTION_NO_SPECIALS = SEASON + "!=0";
         String SELECTION_HAS_RELEASE_DATE = FIRSTAIREDMS + "!=" + Constants.EPISODE_UNKNOWN_RELEASE;
