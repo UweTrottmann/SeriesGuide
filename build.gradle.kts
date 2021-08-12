@@ -2,8 +2,8 @@
 plugins {
     // https://github.com/ben-manes/gradle-versions-plugin/releases
     id("com.github.ben-manes.versions") version "0.39.0"
-    // https://github.com/Codearte/gradle-nexus-staging-plugin/releases
-    id("io.codearte.nexus-staging") version "0.22.0" // api
+    // https://github.com/gradle-nexus/publish-plugin/releases
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // api
 }
 
 buildscript {
@@ -69,12 +69,16 @@ tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
     }
 }
 
-nexusStaging {
-    packageGroup = "com.uwetrottmann"
-    if (rootProject.hasProperty("SONATYPE_NEXUS_USERNAME")
-            && rootProject.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
-        username = rootProject.property("SONATYPE_NEXUS_USERNAME").toString()
-        password = rootProject.property("SONATYPE_NEXUS_PASSWORD").toString()
+nexusPublishing {
+    packageGroup.set("com.uwetrottmann")
+    repositories {
+        sonatype {
+            if (rootProject.hasProperty("SONATYPE_NEXUS_USERNAME")
+                && rootProject.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
+                username.set(rootProject.property("SONATYPE_NEXUS_USERNAME").toString())
+                password.set(rootProject.property("SONATYPE_NEXUS_PASSWORD").toString())
+            }
+        }
     }
 }
 

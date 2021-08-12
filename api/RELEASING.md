@@ -28,16 +28,10 @@ signing.secretKeyRingFile=C:/Users/Uwe/AppData/Roaming/gnupg/secring.gpg
 3. Build and publish:
 
     ```
-    ./gradlew clean publishCentralPublicationToCentralRepository
+    ./gradlew clean :api:publishCentralPublicationToSonatypeRepository closeAndReleaseSonatypeStagingRepository
     ```
 
-4. Close and release staging repository:
-
-    ```
-    ./gradlew closeAndReleaseRepository
-    ```
-
-5. Commit and tag release. Change version back to snapshot, commit. Push to GitHub.
+4. Commit and tag release. Change version back to snapshot, commit. Push to GitHub.
 
     ```
     git commit -am "Prepare API release 1.2.3."

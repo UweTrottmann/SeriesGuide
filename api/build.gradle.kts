@@ -26,7 +26,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    lintOptions {
+    lint {
         // for CI server (reports are not public)
         textReport = true
         textOutput("stdout")
@@ -120,27 +120,7 @@ afterEvaluate {
             }
         }
 
-        repositories {
-            maven {
-                name = "Central"
-                val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-                val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-                url = uri(
-                    if (version.toString().endsWith("SNAPSHOT")) {
-                        snapshotsRepoUrl
-                    } else {
-                        releasesRepoUrl
-                    }
-                )
-                if (rootProject.hasProperty("SONATYPE_NEXUS_USERNAME")
-                        && rootProject.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
-                    credentials {
-                        username = rootProject.property("SONATYPE_NEXUS_USERNAME").toString()
-                        password = rootProject.property("SONATYPE_NEXUS_PASSWORD").toString()
-                    }
-                }
-            }
-        }
+        // Sonatype Central repository created by gradle-nexus.publish-plugin, see root build.gradle.
     }
 
     signing {
