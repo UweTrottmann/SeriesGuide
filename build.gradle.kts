@@ -28,7 +28,7 @@ buildscript {
     val dagger_version by extra("2.37") // https://github.com/google/dagger/releases
     val okhttp_version by extra("4.9.1") // https://github.com/square/okhttp/blob/master/CHANGELOG.md
     val retrofit_version by extra("2.9.0") // https://github.com/square/retrofit/blob/master/CHANGELOG.md
-    val timber_version by extra("4.7.1") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
+    val timber_version by extra("5.0.0") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 

@@ -3,11 +3,6 @@
     <issue id="ValidFragment" severity="ignore" />
     <!-- Crowdin supplies different quantity strings -->
     <issue id="UnusedQuantity" severity="ignore" />
-    <!-- Detection broken for long -> Date https://github.com/JakeWharton/timber/issues/216 -->
-    <issue id="TimberArgTypes" severity="ignore" />
     <!-- Leaving that to translators and feedback -->
     <issue id="Typos" severity="ignore" />
-
-    <!-- Timber checks are broken, do not break build -->
-    <issue id="LintError" severity="warning" />
 </lint>
