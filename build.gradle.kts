@@ -15,20 +15,17 @@ buildscript {
     val sgVersionCode by extra(2106101)
     val sgVersionName by extra("61-beta2")
 
-    val kotlin_version by extra("1.5.21") // https://kotlinlang.org/docs/releases.html#release-details
-    val coroutines_version by extra("1.5.1") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    val kotlinVersion by extra("1.5.21") // https://kotlinlang.org/docs/releases.html#release-details
+    val coroutinesVersion by extra("1.5.1") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 
     // https://developer.android.com/jetpack/androidx/releases
-    val core_version by extra("1.6.0") // https://developer.android.com/jetpack/androidx/releases/core
-    val annotation_version by extra("1.2.0")
-    val lifecycle_version by extra("2.3.1")
-    val room_version by extra("2.3.0") // https://developer.android.com/jetpack/androidx/releases/room
+    val coreVersion by extra("1.6.0") // https://developer.android.com/jetpack/androidx/releases/core
+    val annotationVersion by extra("1.2.0")
+    val lifecycleVersion by extra("2.3.1")
+    val roomVersion by extra("2.3.0") // https://developer.android.com/jetpack/androidx/releases/room
     val fragmentVersion by extra("1.3.6") // https://developer.android.com/jetpack/androidx/releases/fragment
 
-    val dagger_version by extra("2.37") // https://github.com/google/dagger/releases
-    val okhttp_version by extra("4.9.1") // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    val retrofit_version by extra("2.9.0") // https://github.com/square/retrofit/blob/master/CHANGELOG.md
-    val timber_version by extra("5.0.0") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
+    val timberVersion by extra("5.0.0") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 
@@ -48,7 +45,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.0") // libraries, SeriesGuide
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android

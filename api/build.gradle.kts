@@ -11,7 +11,7 @@ val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
 val sgTargetSdk: Int by rootProject.extra
 
-val core_version: String by rootProject.extra
+val coreVersion: String by rootProject.extra
 
 android {
     compileSdk = sgCompileSdk
@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core:$core_version")
+    implementation("androidx.core:core:$coreVersion")
 }
 
 // Note: should build web version with JDK 9+ to get no-frames version.

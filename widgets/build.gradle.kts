@@ -7,10 +7,10 @@ val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
 val sgTargetSdk: Int by rootProject.extra
 
-val kotlin_version: String by rootProject.extra
-val annotation_version: String by rootProject.extra
+val kotlinVersion: String by rootProject.extra
+val annotationVersion: String by rootProject.extra
 val fragmentVersion: String by rootProject.extra
-val timber_version: String by rootProject.extra
+val timberVersion: String by rootProject.extra
 
 android {
     compileSdk = sgCompileSdk
@@ -35,9 +35,9 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 
-    implementation("androidx.annotation:annotation:$annotation_version")
+    implementation("androidx.annotation:annotation:$annotationVersion")
     // https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.viewpager:viewpager:1.0.0")
@@ -46,5 +46,5 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
-    implementation("com.jakewharton.timber:timber:$timber_version")
+    implementation("com.jakewharton.timber:timber:$timberVersion")
 }

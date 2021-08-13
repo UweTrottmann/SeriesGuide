@@ -22,19 +22,16 @@ val sgTargetSdk: Int by rootProject.extra
 val sgVersionCode: Int by rootProject.extra
 val sgVersionName: String by rootProject.extra
 
-val kotlin_version: String by rootProject.extra
-val coroutines_version: String by rootProject.extra
+val kotlinVersion: String by rootProject.extra
+val coroutinesVersion: String by rootProject.extra
 
-val core_version: String by rootProject.extra
-val annotation_version: String by rootProject.extra
-val lifecycle_version: String by rootProject.extra
-val room_version: String by rootProject.extra
+val coreVersion: String by rootProject.extra
+val annotationVersion: String by rootProject.extra
+val lifecycleVersion: String by rootProject.extra
+val roomVersion: String by rootProject.extra
 val fragmentVersion: String by rootProject.extra
 
-val dagger_version: String by rootProject.extra
-val okhttp_version: String by rootProject.extra
-val retrofit_version: String by rootProject.extra
-val timber_version: String by rootProject.extra
+val timberVersion: String by rootProject.extra
 
 android {
     compileSdk = sgCompileSdk
@@ -155,16 +152,16 @@ kapt {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     implementation(project(":api"))
     implementation(project(":billing"))
     implementation(project(":widgets"))
 
-    implementation("androidx.core:core-ktx:$core_version")
-    implementation("androidx.annotation:annotation:$annotation_version")
+    implementation("androidx.core:core-ktx:$coreVersion")
+    implementation("androidx.annotation:annotation:$annotationVersion")
     // https://developer.android.com/jetpack/androidx/releases/appcompat
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.cardview:cardview:1.0.0")
@@ -181,38 +178,43 @@ dependencies {
     implementation("androidx.preference:preference-ktx:1.1.1")
 
     // ViewModel and LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     // Paging
     implementation("androidx.paging:paging-runtime-ktx:2.1.2")
 
     // Room
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-    val butterknife_version = "10.2.3"
-    implementation("com.jakewharton:butterknife:$butterknife_version")
-    kapt("com.jakewharton:butterknife-compiler:$butterknife_version")
-    implementation("com.google.dagger:dagger:$dagger_version")
-    kapt("com.google.dagger:dagger-compiler:$dagger_version")
-    val eventbus_version = "3.2.0"
-    implementation("org.greenrobot:eventbus:$eventbus_version")
-    kapt("org.greenrobot:eventbus-annotation-processor:$eventbus_version")
+    val butterknifeVersion = "10.2.3"
+    implementation("com.jakewharton:butterknife:$butterknifeVersion")
+    kapt("com.jakewharton:butterknife-compiler:$butterknifeVersion")
+    // https://github.com/google/dagger/releases
+    val daggerVersion  = "2.37"
+    implementation("com.google.dagger:dagger:$daggerVersion")
+    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
+    val eventbusVersion = "3.2.0"
+    implementation("org.greenrobot:eventbus:$eventbusVersion")
+    kapt("org.greenrobot:eventbus-annotation-processor:$eventbusVersion")
 
     implementation("com.google.flatbuffers:flatbuffers-java:1.12.0")
     // https://github.com/google/gson/blob/master/CHANGELOG.md
     implementation("com.google.code.gson:gson:2.8.7")
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
-    implementation("com.jakewharton.timber:timber:$timber_version")
+    implementation("com.jakewharton.timber:timber:$timberVersion")
     implementation("com.readystatesoftware.systembartint:systembartint:1.0.4")
 
     // Use latest OkHttp.
-    implementation("com.squareup.okhttp3:okhttp:$okhttp_version")
+    // https://github.com/square/okhttp/blob/master/CHANGELOG.md
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
     // Use latest retrofit.
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    // https://github.com/square/retrofit/blob/master/CHANGELOG.md
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     implementation("com.squareup.picasso:picasso:2.71828")
 
@@ -260,7 +262,7 @@ dependencies {
 
     // Instrumented unit tests
     // https://developer.android.com/jetpack/androidx/releases/test
-    androidTestImplementation("androidx.annotation:annotation:$annotation_version")
+    androidTestImplementation("androidx.annotation:annotation:$annotationVersion")
     // Core library
     val androidXtestCoreVersion = "1.4.0"
     androidTestImplementation("androidx.test:core:$androidXtestCoreVersion")
@@ -282,12 +284,12 @@ dependencies {
     }
     implementation("com.google.code.findbugs:jsr305:3.0.2")
     androidTestImplementation("com.google.code.findbugs:jsr305:3.0.2")
-    kaptAndroidTest("com.google.dagger:dagger-compiler:$dagger_version")
-    androidTestImplementation("androidx.room:room-testing:$room_version")
+    kaptAndroidTest("com.google.dagger:dagger-compiler:$daggerVersion")
+    androidTestImplementation("androidx.room:room-testing:$roomVersion")
 
     // Local unit tests
     testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.annotation:annotation:$annotation_version")
+    testImplementation("androidx.annotation:annotation:$annotationVersion")
     testImplementation("com.google.truth:truth:$truthVersion") {
         exclude(group = "org.checkerframework") // from guava, not needed at runtime
         exclude(group = "com.google.errorprone") // from guava, not needed at runtime
