@@ -64,7 +64,7 @@ public class TraktRatingsSync {
         List<RatedShow> ratedShows;
         try {
             Response<List<RatedShow>> response = traktSync
-                    .ratingsShows(RatingsFilter.ALL, null)
+                    .ratingsShows(RatingsFilter.ALL, null, null, null)
                     .execute();
             if (response.isSuccessful()) {
                 ratedShows = response.body();
@@ -153,7 +153,7 @@ public class TraktRatingsSync {
         List<RatedEpisode> ratedEpisodes;
         try {
             Response<List<RatedEpisode>> response = traktSync
-                    .ratingsEpisodes(RatingsFilter.ALL, null)
+                    .ratingsEpisodes(RatingsFilter.ALL, null, null, null)
                     .execute();
             if (response.isSuccessful()) {
                 ratedEpisodes = response.body();
@@ -238,7 +238,7 @@ public class TraktRatingsSync {
         List<RatedMovie> ratedMovies;
         try {
             Response<List<RatedMovie>> response = traktSync
-                    .ratingsMovies(RatingsFilter.ALL, null)
+                    .ratingsMovies(RatingsFilter.ALL, null, null, null)
                     .execute();
             if (response.isSuccessful()) {
                 ratedMovies = response.body();
