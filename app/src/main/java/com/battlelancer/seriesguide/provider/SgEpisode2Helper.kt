@@ -392,7 +392,7 @@ interface SgEpisode2Helper {
      */
     @Query(
         """UPDATE sg_episode SET episode_watched = 0, episode_plays = 0
-            WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.UNWATCHED}
+            WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED}
             AND episode_season_number != 0"""
     )
     fun setShowNotWatchedAndRemovePlays(showId: Long): Int
