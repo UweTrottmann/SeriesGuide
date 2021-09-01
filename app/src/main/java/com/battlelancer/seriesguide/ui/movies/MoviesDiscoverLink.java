@@ -8,7 +8,8 @@ public enum MoviesDiscoverLink {
     IN_THEATERS(0, R.string.movies_in_theatres),
     POPULAR(1, R.string.title_popular),
     DIGITAL(2, R.string.title_digital_releases),
-    DISC(3, R.string.title_disc_releases);
+    DISC(3, R.string.title_disc_releases),
+    UPCOMING(4, R.string.upcoming);
 
     final int id;
     final int titleRes;

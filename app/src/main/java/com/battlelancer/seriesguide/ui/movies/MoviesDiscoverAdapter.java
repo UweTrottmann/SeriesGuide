@@ -39,6 +39,7 @@ class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         links.add(MoviesDiscoverLink.POPULAR);
         links.add(MoviesDiscoverLink.DIGITAL);
         links.add(MoviesDiscoverLink.DISC);
+        links.add(MoviesDiscoverLink.UPCOMING);
     }
 
     MoviesDiscoverAdapter(Context context, @Nullable ItemClickListener itemClickListener) {

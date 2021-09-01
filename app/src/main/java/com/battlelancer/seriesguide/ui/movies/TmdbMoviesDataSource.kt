@@ -50,6 +50,13 @@ class TmdbMoviesDataSource(
             return TmdbDate(calendar.time)
         }
 
+    private val dateInOneMonth: TmdbDate
+        get() {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_MONTH, 30)
+            return TmdbDate(calendar.time)
+        }
+
     private fun loadPage(page: Int): Page {
         networkState.postValue(NetworkState.LOADING)
 
@@ -165,6 +172,23 @@ class TmdbMoviesDataSource(
                     )
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
+                    .language(languageCode)
+                    .region(regionCode)
+                    .page(page)
+                    .build()
+            }
+            MoviesDiscoverLink.UPCOMING -> {
+                action = "get upcoming movies"
+                call = tmdb.discoverMovie()
+                    .with_release_type(
+                        DiscoverFilter(
+                            DiscoverFilter.Separator.OR,
+                            ReleaseType.THEATRICAL,
+                            ReleaseType.THEATRICAL_LIMITED
+                        )
+                    )
+                    .release_date_gte(dateNow)
+                    .release_date_lte(dateInOneMonth)
                     .language(languageCode)
                     .region(regionCode)
                     .page(page)
