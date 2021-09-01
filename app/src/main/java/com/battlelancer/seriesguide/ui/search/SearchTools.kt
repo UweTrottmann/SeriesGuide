@@ -36,8 +36,6 @@ object SearchTools {
 
         val localShowsToPoster = SgApp.getServicesComponent(context).showTools().tmdbIdsToPoster
         for (result in results) {
-            result.overview = String.format("(%s) %s", result.language, result.overview)
-
             if (localShowsToPoster.indexOfKey(result.tmdbId) >= 0) {
                 // Is already in local database.
                 result.state = SearchResult.STATE_ADDED
