@@ -127,8 +127,7 @@ class ListWidgetRemoteViewsFactory(
     override fun onDestroy() {
         // In onDestroy() you should tear down anything that was setup for
         // your data source, eg. cursors, connections, etc.
-        shows.clear()
-        episodesWithShow.clear()
+        // Note: Do nothing, not even clearing existing data as it might still be displayed.
     }
 
     override fun getCount(): Int {
