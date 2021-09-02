@@ -110,7 +110,8 @@ class ListWidgetRemoteViewsFactory(
     }
 
     private fun getUpcomingElseRecentEpisodes(isUpcomingElseRecent: Boolean) {
-        val query = SgEpisode2WithShow.buildEpisodesWithShowQuery(context,
+        val query = SgEpisode2WithShow.buildEpisodesWithShowQuery(
+            context,
             isUpcomingElseRecent,
             isInfiniteCalendar = WidgetSettings.isInfinite(context, appWidgetId),
             isOnlyFavorites = WidgetSettings.isOnlyFavoriteShows(context, appWidgetId),
@@ -270,35 +271,25 @@ class ListWidgetRemoteViewsFactory(
         }
     }
 
-    override fun getLoadingView(): RemoteViews {
-        // Create a custom loading view (returning null uses default loading view).
-        return RemoteViews(
-            context.packageName,
-            if (isLightTheme) R.layout.appwidget_row_light else R.layout.appwidget_row
-        )
-    }
+    // Create a custom loading view (returning null uses default loading view).
+    override fun getLoadingView(): RemoteViews = RemoteViews(
+        context.packageName,
+        if (isLightTheme) R.layout.appwidget_row_light else R.layout.appwidget_row
+    )
 
-    override fun getViewTypeCount(): Int {
-        return 2 // Different view layout for dark and light theme.
-    }
+    override fun getViewTypeCount(): Int = 2 // Different view layout for dark and light theme.
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
-    override fun hasStableIds(): Boolean {
-        return true
-    }
+    override fun hasStableIds(): Boolean = true
 
-    override fun onDataSetChanged() {
-        // This is triggered when you call AppWidgetManager.notifyAppWidgetViewDataChanged()
-        // on the collection view corresponding to this factory.
-        // You can do heaving lifting in here, synchronously.
-        // For example, if you need to process an image, fetch something
-        // from the network, etc., it is ok to do it here, synchronously.
-        // The widget will remain in its current state while work is
-        // being done here, so you don't need to worry about locking up the widget.
-        onQueryForData()
-    }
+    // This is triggered when you call AppWidgetManager.notifyAppWidgetViewDataChanged()
+    // on the collection view corresponding to this factory.
+    // You can do heaving lifting in here, synchronously.
+    // For example, if you need to process an image, fetch something
+    // from the network, etc., it is ok to do it here, synchronously.
+    // The widget will remain in its current state while work is
+    // being done here, so you don't need to worry about locking up the widget.
+    override fun onDataSetChanged() = onQueryForData()
 
 }
