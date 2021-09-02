@@ -50,6 +50,13 @@ class TmdbMoviesDataSource(
             return TmdbDate(calendar.time)
         }
 
+    private val dateTomorrow: TmdbDate
+        get() {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            return TmdbDate(calendar.time)
+        }
+
     private val dateInOneMonth: TmdbDate
         get() {
             val calendar = Calendar.getInstance()
@@ -187,7 +194,7 @@ class TmdbMoviesDataSource(
                             ReleaseType.THEATRICAL_LIMITED
                         )
                     )
-                    .release_date_gte(dateNow)
+                    .release_date_gte(dateTomorrow)
                     .release_date_lte(dateInOneMonth)
                     .language(languageCode)
                     .region(regionCode)
