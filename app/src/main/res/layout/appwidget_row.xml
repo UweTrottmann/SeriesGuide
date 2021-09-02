@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:ignore="UnusedAttribute,RtlHardcoded">
+    tools:ignore="UnusedAttribute,RtlHardcoded"
+    tools:showIn="@layout/appwidget_row_dark">
 
     <!-- Text container height is 38dp/44dp(w720dp) or for large theme 42dp/45dp(w720dp) -->
     <!-- Image should extend beyond: 0dp top, 2dp bottom (4dp/6dp on w720dp)-->
@@ -75,5 +76,18 @@
             tools:text="Mon yesterday" />
 
     </RelativeLayout>
+
+    <!-- App widgets are not part of the app, so app tinting is not available. -->
+    <!-- Note: Tinting does not apply to vector drawable, but is same color, so use existing. -->
+    <ImageButton
+        android:id="@+id/widgetWatchedButton"
+        android:layout_width="48dp"
+        android:layout_height="?attr/sgAppWidgetPosterHeight"
+        android:layout_alignParentRight="true"
+        android:background="?attr/sgAppWidgetListSelector"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_watch_black_24dp"
+        android:tint="?android:attr/textColorPrimary"
+        tools:ignore="UseAppTint" />
 
 </merge>

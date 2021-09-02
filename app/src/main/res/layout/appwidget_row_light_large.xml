@@ -5,15 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="false"
+    android:descendantFocusability="blocksDescendants"
     android:minHeight="52dp"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/widget_padding_default"
     android:paddingTop="4dp"
-    android:paddingRight="@dimen/widget_padding_default"
     android:paddingBottom="4dp"
     android:theme="@style/Theme.SeriesGuide.AppWidget.Light.Large"
     tools:background="@android:color/holo_orange_light"
     tools:ignore="UnusedAttribute,RtlHardcoded">
+    <!-- Note: use android:descendantFocusability="blocksDescendants"
+    to prevent check button preventing item clickability. -->
 
     <include layout="@layout/appwidget_row" />
 

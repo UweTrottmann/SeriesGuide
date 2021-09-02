@@ -18,8 +18,8 @@ import com.battlelancer.seriesguide.provider.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.WidgetSettings
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
@@ -163,7 +163,8 @@ class ListWidgetRemoteViewsFactory(
                 actualRelease,
                 show.network,
                 show.title,
-                show.posterSmall
+                show.posterSmall,
+                EpisodeFlags.UNWATCHED // next episode always not watched
             )
         } else {
             val episode = episodesWithShow.getOrNull(position) ?: return rv // No data: empty item.
@@ -186,7 +187,8 @@ class ListWidgetRemoteViewsFactory(
                 actualRelease = TimeTools.applyUserOffset(context, episode.episode_firstairedms),
                 episode.network,
                 episode.seriestitle,
-                episode.series_poster_small
+                episode.series_poster_small,
+                episode.watched
             )
         }
     }
@@ -198,18 +200,46 @@ class ListWidgetRemoteViewsFactory(
         actualRelease: Date?,
         network: String?,
         showTitle: String,
-        posterPath: String?
+        posterPath: String?,
+        episodeFlag: Int
     ): RemoteViews {
-        // Set the fill-in intent for the collection item.
+        // Set the fill-in intents for the collection item.
         if (episodeId != null) {
+            // Display details
             bundleOf(
-                EpisodesActivity.EXTRA_LONG_EPISODE_ID to episodeId
+                ListWidgetProvider.EXTRA_EPISODE_ID to episodeId
             ).let {
                 Intent().putExtras(it)
             }.let {
                 rv.setOnClickFillInIntent(R.id.appwidget_row, it)
             }
+
+            // Change watched flag
+            val newEpisodeFlag = if (episodeFlag == EpisodeFlags.WATCHED) {
+                EpisodeFlags.UNWATCHED
+            } else {
+                EpisodeFlags.WATCHED
+            }
+            bundleOf(
+                ListWidgetProvider.EXTRA_EPISODE_ID to episodeId,
+                ListWidgetProvider.EXTRA_EPISODE_FLAG to newEpisodeFlag
+            ).let {
+                Intent().putExtras(it)
+            }.let {
+                rv.setOnClickFillInIntent(R.id.widgetWatchedButton, it)
+            }
         }
+
+        // Set watched button image based on watched state
+        val isWatched = EpisodeTools.isWatched(episodeFlag)
+        rv.setImageViewResource(
+            R.id.widgetWatchedButton,
+            if (isWatched) R.drawable.ic_watched_24dp else R.drawable.ic_watch_black_24dp
+        )
+        rv.setContentDescription(
+            R.id.widgetWatchedButton,
+            context.getString(if (isWatched) R.string.action_unwatched else R.string.action_watched)
+        )
 
         // Set episode description.
         rv.setTextViewText(R.id.textViewWidgetEpisode, episodeDescription)
