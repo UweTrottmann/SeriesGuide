@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="false"
-    android:minHeight="48dp"
+    android:minHeight="52dp"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/widget_padding_default"
-    android:paddingTop="4dp"
-    android:paddingRight="@dimen/widget_padding_default"
     android:paddingBottom="4dp"
-    android:theme="@style/Theme.SeriesGuide.AppWidget.Light"
-    tools:background="#ffffbb33"
+    android:paddingLeft="@dimen/widget_padding_default"
+    android:paddingRight="@dimen/widget_padding_default"
+    android:paddingTop="4dp"
+    android:theme="@style/Theme.SeriesGuide.AppWidget.Dark.Large"
+    tools:background="@android:color/holo_red_dark"
     tools:ignore="UnusedAttribute,RtlHardcoded">
 
     <include layout="@layout/appwidget_row" />

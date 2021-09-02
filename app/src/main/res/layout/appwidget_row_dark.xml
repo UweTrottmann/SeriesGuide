@@ -11,8 +11,8 @@
     android:paddingTop="4dp"
     android:paddingRight="@dimen/widget_padding_default"
     android:paddingBottom="4dp"
-    android:theme="@style/Theme.SeriesGuide.AppWidget.Light"
-    tools:background="#ffffbb33"
+    android:theme="@style/Theme.SeriesGuide.AppWidget.Dark"
+    tools:background="#ffcc0000"
     tools:ignore="UnusedAttribute,RtlHardcoded">
 
     <include layout="@layout/appwidget_row" />

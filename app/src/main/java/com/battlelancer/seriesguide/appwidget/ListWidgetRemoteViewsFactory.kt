@@ -146,7 +146,7 @@ class ListWidgetRemoteViewsFactory(
         val layoutResId: Int = if (isLightTheme) {
             if (isLargeFont) R.layout.appwidget_row_light_large else R.layout.appwidget_row_light
         } else {
-            if (isLargeFont) R.layout.appwidget_row_large else R.layout.appwidget_row
+            if (isLargeFont) R.layout.appwidget_row_dark_large else R.layout.appwidget_row_dark
         }
         val rv = RemoteViews(context.packageName, layoutResId)
 
@@ -255,8 +255,8 @@ class ListWidgetRemoteViewsFactory(
             )
                 .centerCrop()
                 .resizeDimen(
-                    if (isLargeFont) R.dimen.widget_item_width_large else R.dimen.widget_item_width,
-                    if (isLargeFont) R.dimen.widget_item_height_large else R.dimen.widget_item_height
+                    if (isLargeFont) R.dimen.widget_poster_width_large else R.dimen.widget_poster_width,
+                    if (isLargeFont) R.dimen.widget_poster_height_large else R.dimen.widget_poster_height
                 )
                 .get()
         } catch (e: Exception) {
@@ -273,7 +273,7 @@ class ListWidgetRemoteViewsFactory(
     // Create a custom loading view (returning null uses default loading view).
     override fun getLoadingView(): RemoteViews = RemoteViews(
         context.packageName,
-        if (isLightTheme) R.layout.appwidget_row_light else R.layout.appwidget_row
+        if (isLightTheme) R.layout.appwidget_row_light else R.layout.appwidget_row_dark
     )
 
     override fun getViewTypeCount(): Int = 2 // Different view layout for dark and light theme.

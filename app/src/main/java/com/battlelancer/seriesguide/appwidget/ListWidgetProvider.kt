@@ -166,10 +166,10 @@ class ListWidgetProvider : AppWidgetProvider() {
             val isCompactLayout = isCompactLayout(appWidgetManager, appWidgetId)
             val isLightTheme = WidgetSettings.isLightTheme(context, appWidgetId)
             val layoutResId = when {
-                isLightTheme && isCompactLayout -> R.layout.appwidget_v11_light_compact
-                isLightTheme && !isCompactLayout -> R.layout.appwidget_v11_light
-                !isLightTheme && isCompactLayout -> R.layout.appwidget_v11_compact
-                else -> R.layout.appwidget_v11
+                isLightTheme && isCompactLayout -> R.layout.appwidget_compact_light
+                isLightTheme && !isCompactLayout -> R.layout.appwidget_light
+                !isLightTheme && isCompactLayout -> R.layout.appwidget_compact_dark
+                else -> R.layout.appwidget_dark
             }
 
             // Build widget views.
