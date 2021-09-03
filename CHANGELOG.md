@@ -12,6 +12,14 @@ Version 61
 ----------
 *in development*
 
+#### 61-beta3
+*2021-09-03*
+
+* 🌟 Add watch button to app widget.
+* 🌟 Add upcoming movies screen.
+* 🔨 Set a show not watched actually does something.
+* 📝 Latest translations from Crowdin.
+
 #### 61-beta2
 *2021-08-12*
 
