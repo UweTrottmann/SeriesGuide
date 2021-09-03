@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <!-- Need parent FrameLayout for padding backwards compatibility -->
 
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/widget_default_background"
+        android:background="?attr/sgAppWidgetBackground"
         android:orientation="horizontal"
         tools:ignore="UselessParent">
 
@@ -22,8 +20,7 @@
             android:clipToPadding="@bool/gridClipToPadding"
             android:divider="@null"
             android:paddingTop="@dimen/inline_padding"
-            android:paddingBottom="@dimen/inline_padding"
-            tools:listitem="@layout/appwidget_row" />
+            android:paddingBottom="@dimen/inline_padding" />
 
         <TextView
             android:id="@+id/empty_view"
@@ -33,6 +30,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/no_nextepisode"
+            android:textColor="?android:attr/textColorPrimary"
             tools:ignore="UnusedAttribute" />
 
         <LinearLayout
@@ -45,7 +43,7 @@
                 android:id="@+id/widget_title"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/list_selector_dark"
+                android:background="?attr/sgAppWidgetListSelector"
                 android:focusable="true">
 
                 <ImageView
@@ -62,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/list_selector_dark"
+                android:background="?attr/sgAppWidgetListSelector"
                 android:focusable="true">
 
                 <ImageView
@@ -71,9 +69,9 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/preferences"
-                    android:src="@drawable/ic_settings_dark_24dp" />
+                    android:src="?attr/sgAppWidgetDrawableSettings" />
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 
-</FrameLayout>
+</merge>

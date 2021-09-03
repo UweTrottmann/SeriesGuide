@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/appwidget_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:baselineAligned="false"
-    android:minHeight="48dp"
-    android:orientation="horizontal"
-    android:paddingBottom="4dp"
-    android:paddingLeft="@dimen/widget_padding_default"
-    android:paddingRight="@dimen/widget_padding_default"
-    android:paddingTop="4dp"
-    tools:background="@android:color/holo_red_dark"
-    tools:ignore="UnusedAttribute,RtlHardcoded">
+    tools:ignore="UnusedAttribute,RtlHardcoded"
+    tools:showIn="@layout/appwidget_row_dark">
 
-    <!-- Text container height is 38dp/44dp(w720dp) -->
+    <!-- Text container height is 38dp/44dp(w720dp) or for large theme 42dp/45dp(w720dp) -->
     <!-- Image should extend beyond: 0dp top, 2dp bottom (4dp/6dp on w720dp)-->
 
     <ImageView
         android:id="@+id/widgetPoster"
-        android:layout_width="@dimen/widget_item_width"
-        android:layout_height="@dimen/widget_item_height"
+        android:layout_width="?attr/sgAppWidgetPosterWidth"
+        android:layout_height="?attr/sgAppWidgetPosterHeight"
         android:contentDescription="@null"
         android:scaleType="centerInside"
         android:src="@drawable/ic_photo_gray_24dp"
@@ -44,8 +36,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Bold"
-            android:textColor="@color/sg_white"
-            android:textSize="@dimen/widget_text_size"
             tools:ignore="RtlSymmetry"
             tools:text="Star Trek: Discovery" />
 
@@ -53,15 +43,13 @@
             android:id="@+id/textViewWidgetEpisode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_below="@+id/textViewWidgetShow"
+            android:layout_alignParentLeft="true"
             android:layout_marginRight="1sp"
             android:layout_toLeftOf="@+id/widgetAirtime"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Widget"
-            android:textColor="@color/sg_white"
-            android:textSize="@dimen/widget_text_size"
             tools:ignore="RtlSymmetry"
             tools:text="2x13 If The Time Ever Comes" />
 
@@ -73,24 +61,33 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="1sp"
             android:ellipsize="start"
-            android:fontFamily="sans-serif-condensed"
             android:maxWidth="180dp"
-            android:textColor="@color/sg_white_70"
-            android:textSize="@dimen/widget_text_size"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Secondary"
             tools:text="Showtime Network · 08:00 PM" />
 
         <TextView
             android:id="@+id/widgetAirtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/widgetNetwork"
-            android:fontFamily="sans-serif-condensed"
+            android:layout_alignParentRight="true"
             android:maxLines="1"
-            android:textColor="@color/sg_white_70"
-            android:textSize="@dimen/widget_text_size"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Secondary"
             tools:text="Mon yesterday" />
 
     </RelativeLayout>
 
-</LinearLayout>
+    <!-- App widgets are not part of the app, so app tinting is not available. -->
+    <!-- Note: Tinting does not apply to vector drawable, but is same color, so use existing. -->
+    <ImageButton
+        android:id="@+id/widgetWatchedButton"
+        android:layout_width="48dp"
+        android:layout_height="?attr/sgAppWidgetPosterHeight"
+        android:layout_alignParentRight="true"
+        android:background="?attr/sgAppWidgetListSelector"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_watch_black_24dp"
+        android:tint="?android:attr/textColorPrimary"
+        tools:ignore="UseAppTint" />
+
+</merge>

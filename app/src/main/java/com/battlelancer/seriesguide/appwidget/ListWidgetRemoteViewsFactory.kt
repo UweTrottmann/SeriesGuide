@@ -18,8 +18,8 @@ import com.battlelancer.seriesguide.provider.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.WidgetSettings
+import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
@@ -110,7 +110,8 @@ class ListWidgetRemoteViewsFactory(
     }
 
     private fun getUpcomingElseRecentEpisodes(isUpcomingElseRecent: Boolean) {
-        val query = SgEpisode2WithShow.buildEpisodesWithShowQuery(context,
+        val query = SgEpisode2WithShow.buildEpisodesWithShowQuery(
+            context,
             isUpcomingElseRecent,
             isInfiniteCalendar = WidgetSettings.isInfinite(context, appWidgetId),
             isOnlyFavorites = WidgetSettings.isOnlyFavoriteShows(context, appWidgetId),
@@ -126,8 +127,7 @@ class ListWidgetRemoteViewsFactory(
     override fun onDestroy() {
         // In onDestroy() you should tear down anything that was setup for
         // your data source, eg. cursors, connections, etc.
-        shows.clear()
-        episodesWithShow.clear()
+        // Note: Do nothing, not even clearing existing data as it might still be displayed.
     }
 
     override fun getCount(): Int {
@@ -146,7 +146,7 @@ class ListWidgetRemoteViewsFactory(
         val layoutResId: Int = if (isLightTheme) {
             if (isLargeFont) R.layout.appwidget_row_light_large else R.layout.appwidget_row_light
         } else {
-            if (isLargeFont) R.layout.appwidget_row_large else R.layout.appwidget_row
+            if (isLargeFont) R.layout.appwidget_row_dark_large else R.layout.appwidget_row_dark
         }
         val rv = RemoteViews(context.packageName, layoutResId)
 
@@ -163,7 +163,8 @@ class ListWidgetRemoteViewsFactory(
                 actualRelease,
                 show.network,
                 show.title,
-                show.posterSmall
+                show.posterSmall,
+                EpisodeFlags.UNWATCHED // next episode always not watched
             )
         } else {
             val episode = episodesWithShow.getOrNull(position) ?: return rv // No data: empty item.
@@ -186,7 +187,8 @@ class ListWidgetRemoteViewsFactory(
                 actualRelease = TimeTools.applyUserOffset(context, episode.episode_firstairedms),
                 episode.network,
                 episode.seriestitle,
-                episode.series_poster_small
+                episode.series_poster_small,
+                episode.watched
             )
         }
     }
@@ -198,18 +200,46 @@ class ListWidgetRemoteViewsFactory(
         actualRelease: Date?,
         network: String?,
         showTitle: String,
-        posterPath: String?
+        posterPath: String?,
+        episodeFlag: Int
     ): RemoteViews {
-        // Set the fill-in intent for the collection item.
+        // Set the fill-in intents for the collection item.
         if (episodeId != null) {
+            // Display details
             bundleOf(
-                EpisodesActivity.EXTRA_LONG_EPISODE_ID to episodeId
+                ListWidgetProvider.EXTRA_EPISODE_ID to episodeId
             ).let {
                 Intent().putExtras(it)
             }.let {
                 rv.setOnClickFillInIntent(R.id.appwidget_row, it)
             }
+
+            // Change watched flag
+            val newEpisodeFlag = if (episodeFlag == EpisodeFlags.WATCHED) {
+                EpisodeFlags.UNWATCHED
+            } else {
+                EpisodeFlags.WATCHED
+            }
+            bundleOf(
+                ListWidgetProvider.EXTRA_EPISODE_ID to episodeId,
+                ListWidgetProvider.EXTRA_EPISODE_FLAG to newEpisodeFlag
+            ).let {
+                Intent().putExtras(it)
+            }.let {
+                rv.setOnClickFillInIntent(R.id.widgetWatchedButton, it)
+            }
         }
+
+        // Set watched button image based on watched state
+        val isWatched = EpisodeTools.isWatched(episodeFlag)
+        rv.setImageViewResource(
+            R.id.widgetWatchedButton,
+            if (isWatched) R.drawable.ic_watched_24dp else R.drawable.ic_watch_black_24dp
+        )
+        rv.setContentDescription(
+            R.id.widgetWatchedButton,
+            context.getString(if (isWatched) R.string.action_unwatched else R.string.action_watched)
+        )
 
         // Set episode description.
         rv.setTextViewText(R.id.textViewWidgetEpisode, episodeDescription)
@@ -255,8 +285,8 @@ class ListWidgetRemoteViewsFactory(
             )
                 .centerCrop()
                 .resizeDimen(
-                    if (isLargeFont) R.dimen.widget_item_width_large else R.dimen.widget_item_width,
-                    if (isLargeFont) R.dimen.widget_item_height_large else R.dimen.widget_item_height
+                    if (isLargeFont) R.dimen.widget_poster_width_large else R.dimen.widget_poster_width,
+                    if (isLargeFont) R.dimen.widget_poster_height_large else R.dimen.widget_poster_height
                 )
                 .get()
         } catch (e: Exception) {
@@ -270,35 +300,25 @@ class ListWidgetRemoteViewsFactory(
         }
     }
 
-    override fun getLoadingView(): RemoteViews {
-        // Create a custom loading view (returning null uses default loading view).
-        return RemoteViews(
-            context.packageName,
-            if (isLightTheme) R.layout.appwidget_row_light else R.layout.appwidget_row
-        )
-    }
+    // Create a custom loading view (returning null uses default loading view).
+    override fun getLoadingView(): RemoteViews = RemoteViews(
+        context.packageName,
+        if (isLightTheme) R.layout.appwidget_row_light else R.layout.appwidget_row_dark
+    )
 
-    override fun getViewTypeCount(): Int {
-        return 2 // Different view layout for dark and light theme.
-    }
+    override fun getViewTypeCount(): Int = 2 // Different view layout for dark and light theme.
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
-    override fun hasStableIds(): Boolean {
-        return true
-    }
+    override fun hasStableIds(): Boolean = true
 
-    override fun onDataSetChanged() {
-        // This is triggered when you call AppWidgetManager.notifyAppWidgetViewDataChanged()
-        // on the collection view corresponding to this factory.
-        // You can do heaving lifting in here, synchronously.
-        // For example, if you need to process an image, fetch something
-        // from the network, etc., it is ok to do it here, synchronously.
-        // The widget will remain in its current state while work is
-        // being done here, so you don't need to worry about locking up the widget.
-        onQueryForData()
-    }
+    // This is triggered when you call AppWidgetManager.notifyAppWidgetViewDataChanged()
+    // on the collection view corresponding to this factory.
+    // You can do heaving lifting in here, synchronously.
+    // For example, if you need to process an image, fetch something
+    // from the network, etc., it is ok to do it here, synchronously.
+    // The widget will remain in its current state while work is
+    // being done here, so you don't need to worry about locking up the widget.
+    override fun onDataSetChanged() = onQueryForData()
 
 }

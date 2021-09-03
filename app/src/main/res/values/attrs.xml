@@ -32,4 +32,13 @@
         <attr name="filterBoxDescription" format="string" />
     </declare-styleable>
 
+    <!-- App Widget -->
+    <attr name="sgAppWidgetBackground" format="reference|color" />
+    <attr name="sgAppWidgetColorTitle" format="reference|color" />
+    <attr name="sgAppWidgetPosterWidth" format="reference" />
+    <attr name="sgAppWidgetPosterHeight" format="reference" />
+    <attr name="sgAppWidgetTextSize" format="reference" />
+    <attr name="sgAppWidgetListSelector" format="reference" />
+    <attr name="sgAppWidgetDrawableSettings" format="reference" />
+
 </resources>
