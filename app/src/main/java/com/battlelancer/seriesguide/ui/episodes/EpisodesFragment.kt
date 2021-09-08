@@ -8,17 +8,17 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.widgets.SgFastScroller
 
 /**
  * Displays a list of episodes of a season.
@@ -32,7 +32,7 @@ class EpisodesFragment : Fragment() {
     private var collectedAllEpisodes: Boolean = false
 
     private var binding: FragmentEpisodesBinding? = null
-    private lateinit var adapter: EpisodesAdapter
+    private lateinit var adapter: EpisodesAdapter2
     private val model by viewModels<EpisodesViewModel> {
         EpisodesViewModelFactory(requireActivity().application, seasonId)
     }
@@ -83,16 +83,18 @@ class EpisodesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EpisodesAdapter(requireActivity(), episodesListClickListener)
+        adapter = EpisodesAdapter2(requireActivity(), episodesListClickListener)
 
-        binding?.also {
-            it.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
-            it.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
+        binding?.also { binding ->
+            binding.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
+            binding.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
 
-            it.listViewEpisodes.also { lv ->
-                lv.onItemClickListener = listOnItemClickListener
-                lv.choiceMode = ListView.CHOICE_MODE_SINGLE
-                lv.adapter = adapter
+            // FIXME Checked state not supported by default with RecyclerView
+            // Maybe add with https://developer.android.com/guide/topics/ui/layout/recyclerview-custom#select
+            binding.recyclerViewEpisodes.also {
+                it.layoutManager = LinearLayoutManager(requireContext())
+                it.adapter = adapter
+                SgFastScroller(requireContext(), it)
             }
         }
     }
@@ -112,7 +114,7 @@ class EpisodesFragment : Fragment() {
             setCollectedToggleState(result.uncollectedEpisodes)
         }
         model.episodes.observe(viewLifecycleOwner) { episodes ->
-            adapter.setData(episodes)
+            adapter.submitList(episodes)
             // set an initial checked item
             if (startingPosition != -1) {
                 setItemChecked(startingPosition)
@@ -120,7 +122,7 @@ class EpisodesFragment : Fragment() {
             }
             // correctly restore the last checked item
             else if (lastCheckedItemId != -1L) {
-                setItemChecked(adapter.getItemPosition(lastCheckedItemId))
+//                setItemChecked(adapter.getItemPosition(lastCheckedItemId))
                 lastCheckedItemId = -1
             }
             // update count state every time data changes
@@ -138,9 +140,6 @@ class EpisodesFragment : Fragment() {
         activity.setCurrentPage(position)
         setItemChecked(position)
     }
-
-    private val listOnItemClickListener =
-        AdapterView.OnItemClickListener { _, _, position, _ -> showDetails(position) }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -171,7 +170,12 @@ class EpisodesFragment : Fragment() {
         }
     }
 
-    private val episodesListClickListener = object : EpisodesAdapter.ClickListener {
+    private val episodesListClickListener = object : EpisodesAdapter2.ClickListener {
+
+        override fun onItemClick(position: Int) {
+            showDetails(position)
+        }
+
         override fun onWatchedBoxClick(episodeId: Long, isWatched: Boolean) {
             onFlagEpisodeWatched(episodeId, isWatched)
         }
@@ -271,8 +275,8 @@ class EpisodesFragment : Fragment() {
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
         if (DisplaySettings.KEY_EPISODE_SORT_ORDER == key) {
             // Remember currently checked item, then update order.
-            binding?.listViewEpisodes?.also {
-                lastCheckedItemId = it.getItemIdAtPosition(it.checkedItemPosition)
+            binding?.recyclerViewEpisodes?.also {
+//                lastCheckedItemId = it.getItemIdAtPosition(it.checkedItemPosition)
                 model.updateOrder()
             }
         }
@@ -282,11 +286,13 @@ class EpisodesFragment : Fragment() {
      * Highlight the given episode in the list.
      */
     fun setItemChecked(position: Int) {
-        binding?.listViewEpisodes?.apply {
-            setItemChecked(position, true)
-            if (position <= firstVisiblePosition || position >= lastVisiblePosition) {
-                smoothScrollToPosition(position)
-            }
+        // FIXME Checked state not supported by default with RecyclerView
+        // Maybe add with https://developer.android.com/guide/topics/ui/layout/recyclerview-custom#select
+        binding?.recyclerViewEpisodes?.apply {
+//            setItemChecked(position, true)
+//            if (position <= firstVisiblePosition || position >= lastVisiblePosition) {
+//                smoothScrollToPosition(position)
+//            }
         }
     }
 
