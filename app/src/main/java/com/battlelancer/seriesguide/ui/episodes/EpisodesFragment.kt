@@ -96,10 +96,6 @@ class EpisodesFragment : Fragment() {
                 SgFastScroller(requireContext(), it)
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         // listen to changes to the sorting preference
         PreferenceManager.getDefaultSharedPreferences(requireActivity()).apply {
