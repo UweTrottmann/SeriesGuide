@@ -52,14 +52,15 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutEpisodesToolbar" />
 
     <!-- Enable nested scrolling to work with CoordinatorLayout. -->
-    <ListView
-        android:id="@+id/listViewEpisodes"
-        style="@style/DefaultPadding.List"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEpisodes"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/keyline_minus_16"
+        android:clipToPadding="false"
         android:nestedScrollingEnabled="true"
         android:paddingTop="0dp"
+        android:paddingBottom="@dimen/default_padding"
         android:theme="@style/ThemeOverlay.SeriesGuide.CheckableList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -32,6 +32,7 @@ class EpisodesViewModel(
             .getEpisodeInfoOfSeasonLiveData(SgEpisode2Info.buildQuery(seasonId, it))
     }
     val episodeCounts = MutableLiveData<Counts>()
+    var selectedItemId: Long = -1
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
