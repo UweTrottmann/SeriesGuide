@@ -222,6 +222,8 @@ class EpisodesActivity : BaseMessageActivity() {
         // Refresh pager tab decoration.
         episodeDetailsTabs.setViewPager(episodeDetailsPager)
 
+        // Remove page change listener to avoid changing checked episode on sort order changes.
+        episodeDetailsTabs.setOnPageChangeListener(null)
         episodeDetailsPager.setCurrentItem(info.startPosition, false)
         // Set page listener after current item to avoid null pointer for non-existing content view.
         episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener)

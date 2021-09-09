@@ -12,10 +12,6 @@ import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
@@ -31,7 +27,7 @@ class EpisodesFragment : Fragment() {
 
     private var seasonId: Long = 0
     private var startingPosition: Int = 0
-    private var lastCheckedItemId: Long = 0
+    private var scrollToCheckedItemOnDataRefresh = false
     private var watchedAllEpisodes: Boolean = false
     private var collectedAllEpisodes: Boolean = false
 
@@ -92,26 +88,12 @@ class EpisodesFragment : Fragment() {
             binding.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
 
             adapter = EpisodesAdapter2(requireActivity(), episodesListClickListener)
+            adapter.selectedItemId = model.selectedItemId
 
             binding.recyclerViewEpisodes.also {
                 it.layoutManager = LinearLayoutManager(requireContext())
                 it.adapter = adapter
                 SgFastScroller(requireContext(), it)
-            }
-
-            // Note: selection tracker expects adapter to be set on RecyclerView.
-            // https://developer.android.com/guide/topics/ui/layout/recyclerview-custom#select
-            SelectionTracker.Builder(
-                "episode-selection",
-                binding.recyclerViewEpisodes,
-                StableIdKeyProvider(binding.recyclerViewEpisodes),
-                EpisodeDetailsLookup(binding.recyclerViewEpisodes),
-                StorageStrategy.createLongStorage()
-            ).withSelectionPredicate(
-                SelectionPredicates.createSelectSingleAnything()
-            ).build().also {
-                it.onRestoreInstanceState(savedInstanceState)
-                adapter.selectionTracker = it
             }
         }
     }
@@ -124,23 +106,22 @@ class EpisodesFragment : Fragment() {
             registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
         }
 
-        lastCheckedItemId = -1
-
         model.episodeCounts.observe(viewLifecycleOwner) { result ->
             setWatchedToggleState(result.unwatchedEpisodes)
             setCollectedToggleState(result.uncollectedEpisodes)
         }
         model.episodes.observe(viewLifecycleOwner) { episodes ->
             adapter.submitList(episodes) {
-                // set an initial checked item
-                if (startingPosition != -1) {
+                // set and scroll to an initial checked item
+                if (savedInstanceState == null && startingPosition != -1) {
                     setItemChecked(startingPosition)
                     startingPosition = -1
-                }
-                // correctly restore the last checked item
-                else if (lastCheckedItemId != -1L) {
-//                    setItemChecked(adapter.getItemPosition(lastCheckedItemId))
-                    lastCheckedItemId = -1
+                } else if (scrollToCheckedItemOnDataRefresh) {
+                    val position = adapter.getPositionForId(adapter.selectedItemId)
+                    if (position != -1) {
+                        binding?.recyclerViewEpisodes?.smoothScrollToPosition(position)
+                    }
+                    scrollToCheckedItemOnDataRefresh = false
                 }
             }
             // update count state every time data changes
@@ -156,12 +137,7 @@ class EpisodesFragment : Fragment() {
     private fun showDetails(position: Int) {
         val activity = requireActivity() as EpisodesActivity
         activity.setCurrentPage(position)
-        setItemChecked(position)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        adapter.selectionTracker?.onSaveInstanceState(outState)
+        // Note: page change listener will update checked episode.
     }
 
     override fun onDestroyView() {
@@ -288,21 +264,19 @@ class EpisodesFragment : Fragment() {
     }
 
     private fun showSortDialog() {
-        SingleChoiceDialogFragment.show(parentFragmentManager,
-                R.array.epsorting,
-                R.array.epsortingData, DisplaySettings.getEpisodeSortOrder(requireActivity()).index(),
-                DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
-                "episodeSortOrderDialog")
+        SingleChoiceDialogFragment.show(
+            parentFragmentManager,
+            R.array.epsorting,
+            R.array.epsortingData, DisplaySettings.getEpisodeSortOrder(requireActivity()).index(),
+            DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
+            "episodeSortOrderDialog"
+        )
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
         if (DisplaySettings.KEY_EPISODE_SORT_ORDER == key) {
-            // Remember currently checked item, then update order.
-            binding?.recyclerViewEpisodes?.also {
-                // TODO
-//                lastCheckedItemId = it.getItemIdAtPosition(it.checkedItemPosition)
-                model.updateOrder()
-            }
+            scrollToCheckedItemOnDataRefresh = true
+            model.updateOrder()
         }
     }
 
@@ -311,11 +285,8 @@ class EpisodesFragment : Fragment() {
      */
     fun setItemChecked(position: Int) {
         binding?.recyclerViewEpisodes?.also {
-            adapter.selectItem(position)
-            // TODO Check if smooth scroll scrolls even if position is visible
-//            if (position <= firstVisiblePosition || position >= lastVisiblePosition) {
+            model.selectedItemId = adapter.selectItem(position)
             it.smoothScrollToPosition(position)
-//            }
         }
     }
 

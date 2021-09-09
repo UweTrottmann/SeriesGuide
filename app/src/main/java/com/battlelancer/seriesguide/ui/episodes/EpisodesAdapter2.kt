@@ -2,12 +2,9 @@ package com.battlelancer.seriesguide.ui.episodes
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.TextViewCompat
-import androidx.recyclerview.selection.ItemDetailsLookup
-import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +25,7 @@ class EpisodesAdapter2(
     private val clickListener: ClickListener
 ) : ListAdapter<SgEpisode2Info, EpisodeViewHolder>(SgEpisode2InfoDiffCallback) {
 
-    var selectionTracker: SelectionTracker<Long>? = null
+    var selectedItemId: Long = -1
 
     init {
         setHasStableIds(true)
@@ -42,12 +39,25 @@ class EpisodesAdapter2(
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
         val item: SgEpisode2Info? = getItem(position)
-        val isSelected = item?.let { selectionTracker?.isSelected(it.id) } ?: false
+        val isSelected = item?.id == selectedItemId
         holder.bind(item, isSelected, context)
     }
 
-    fun selectItem(position: Int) {
-        selectionTracker?.select(getItemId(position))
+    /**
+     * Returns -1 if the item ID was not found in the [getCurrentList].
+     */
+    fun getPositionForId(itemId: Long): Int {
+        return currentList.indexOfFirst { it.id == itemId }
+    }
+
+    fun selectItem(position: Int): Long {
+        val previousSelectedPosition = selectedItemId
+            .let { if (it != -1L) getPositionForId(it) else -1 }
+        val selectedItemId = getItemId(position)
+            .also { selectedItemId = it }
+        if (previousSelectedPosition != -1) notifyItemChanged(previousSelectedPosition)
+        notifyItemChanged(position)
+        return selectedItemId
     }
 
     interface ClickListener {
@@ -192,12 +202,6 @@ class EpisodeViewHolder(
         )
     }
 
-    fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
-        object : ItemDetailsLookup.ItemDetails<Long>() {
-            override fun getPosition(): Int = absoluteAdapterPosition
-            override fun getSelectionKey(): Long = itemId
-        }
-
     companion object {
         fun create(
             parent: ViewGroup,
@@ -212,18 +216,5 @@ class EpisodeViewHolder(
                 clickListener
             )
         }
-    }
-}
-
-class EpisodeDetailsLookup(private val recyclerView: RecyclerView) : ItemDetailsLookup<Long>() {
-    override fun getItemDetails(e: MotionEvent): ItemDetails<Long>? {
-        val view = recyclerView.findChildViewUnder(e.x, e.y)
-        if (view != null) {
-            val holder = recyclerView.getChildViewHolder(view)
-            if (holder is EpisodeViewHolder) {
-                return holder.getItemDetails()
-            }
-        }
-        return null
     }
 }
