@@ -32,7 +32,7 @@ class EpisodesFragment : Fragment() {
     private var collectedAllEpisodes: Boolean = false
 
     private var binding: FragmentEpisodesBinding? = null
-    private lateinit var adapter: EpisodesAdapter2
+    private lateinit var adapter: EpisodesAdapter
     private val model by viewModels<EpisodesViewModel> {
         EpisodesViewModelFactory(requireActivity().application, seasonId)
     }
@@ -87,7 +87,7 @@ class EpisodesFragment : Fragment() {
             binding.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
             binding.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
 
-            adapter = EpisodesAdapter2(requireActivity(), episodesListClickListener)
+            adapter = EpisodesAdapter(requireActivity(), episodesListClickListener)
             adapter.selectedItemId = model.selectedItemId
 
             binding.recyclerViewEpisodes.also {
@@ -169,7 +169,7 @@ class EpisodesFragment : Fragment() {
         }
     }
 
-    private val episodesListClickListener = object : EpisodesAdapter2.ClickListener {
+    private val episodesListClickListener = object : EpisodesAdapter.ClickListener {
 
         override fun onItemClick(position: Int) {
             showDetails(position)

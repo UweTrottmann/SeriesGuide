@@ -20,7 +20,7 @@ import com.uwetrottmann.androidutils.CheatSheet
 import java.text.NumberFormat
 
 
-class EpisodesAdapter2(
+class EpisodesAdapter(
     private val context: Context,
     private val clickListener: ClickListener
 ) : ListAdapter<SgEpisode2Info, EpisodeViewHolder>(SgEpisode2InfoDiffCallback) {
@@ -81,7 +81,7 @@ object SgEpisode2InfoDiffCallback : DiffUtil.ItemCallback<SgEpisode2Info>() {
 
 class EpisodeViewHolder(
     private val binding: ItemEpisodeBinding,
-    clickListener: EpisodesAdapter2.ClickListener
+    clickListener: EpisodesAdapter.ClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val integerFormat = NumberFormat.getIntegerInstance()
@@ -205,7 +205,7 @@ class EpisodeViewHolder(
     companion object {
         fun create(
             parent: ViewGroup,
-            clickListener: EpisodesAdapter2.ClickListener
+            clickListener: EpisodesAdapter.ClickListener
         ): EpisodeViewHolder {
             return EpisodeViewHolder(
                 ItemEpisodeBinding.inflate(
