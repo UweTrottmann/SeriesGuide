@@ -12,6 +12,12 @@ Version 61
 ----------
 *in development*
 
+#### 61-beta4
+*2021-09-10*
+
+* 🔧 Finally add fast scroller to episode list.
+* 📝 Latest translations from Crowdin.
+
 #### 61-beta3
 *2021-09-03*
 
