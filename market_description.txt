@@ -12,7 +12,7 @@ With SeriesGuide you can find shows and movies to watch, keep track of your watc
 
 <b>Extensions.</b> Add an extension button provided by a third-party app or build your own: https://seriesgui.de/api
 
-<b>No ads. No tracking. Open source.</b>
+<b>No ads. Open source.</b>
 
 <b>Get the subscription to unlock all features and support SeriesGuide!</b> You will get more list widget options, notifications for new episodes and more. You also support continued fixes and new features.
 
