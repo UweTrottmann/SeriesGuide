@@ -36,7 +36,7 @@
     <string name="sync_and_update">Συγχρονισμός &amp; Ενημέρωση</string>
     <string name="sync_and_download_all">Συγχρονισμός &amp; Λήψη όλων</string>
     <string name="action_stream">Stream ή αγορά</string>
-    <string name="action_stream_info">Stream or purchase info</string>
+    <string name="action_stream_info">Πληροφορίες ροής ή αγοράς</string>
     <string name="action_select_region">Επιλογή περιοχής</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
     <string name="api_failed">Αποτυχία: %s</string>
     <string name="copy_to_clipboard">Αντιγράφηκε στο πρόχειρο</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Δεν βρέθηκε στο TMDb, θα αφαιρεθεί σε μελλοντική ενημέρωση. Πατήστε για λεπτομέρειες.</string>
     <!-- Sharing -->
     <string name="share">Μοίρασε</string>
     <string name="share_show">Κοινοποίηση σειράς</string>
@@ -152,7 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Παλαιότερο επεισόδιο</string>
     <string name="action_shows_sort_last_watched">Είδατε πρόσφατα</string>
     <string name="action_shows_sort_remaining">Επεισόδια που απομένουν</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">Κατάσταση</string>
     <string name="action_shows_sort_favorites">Αγαπημένα πρώτα</string>
     <string name="context_updateshow">Ενημέρωση</string>
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
@@ -198,7 +198,7 @@
     <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
     <string name="empty_show_search">Δεν βρέθηκε στη λίστα σειρών σας</string>
     <string name="action_try_again">Δοκιμάσετε πάλι</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">Η σειρά δεν υπάρχει (ακόμη) στο TMDb. Δοκιμάστε πάλι αργότερα</string>
     <string name="add_all">Προσθήκη όλων</string>
     <string name="add_multiple">Όλες οι σειρές θα εμφανιστούν στη λίστα σύντομα.</string>
     <string name="add_started">%s θα εμφανιστεί στην λίστα με τις σειρές σου σύντομα.</string>
@@ -250,7 +250,7 @@
     <string name="statistics_shows">Σειρές</string>
     <string name="statistics_episodes">Επεισόδια</string>
     <string name="statistics_movies">Ταινίες</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s τελείωσε την προβολή</string>
     <string name="shows_with_next">%s με τα επόμενα επεισόδια</string>
     <string name="shows_continuing">%s συνεχίζονται</string>
     <string name="episodes_watched">%s παρακολουθήθηκαν</string>
@@ -282,15 +282,15 @@
     <string name="hexagon_signin">Σύνδεση</string>
     <string name="hexagon_signout">Αποσύνδεση</string>
     <string name="hexagon_setup_incomplete">Η ρύθμιση του SeriesGuide cloud δεν ολοκληρώθηκε.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Ο λογαριασμός σας δεν έχει διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
     <string name="hexagon_remove_account">Αφαίρεση λογαριασμού</string>
     <string name="hexagon_remove_account_success">Ο λογαριασμός διαγράφηκε.</string>
     <string name="hexagon_remove_account_failure">Δεν ήταν δυνατή η κατάργηση του λογαριασμού.</string>
     <string name="hexagon_remove_account_confirmation">Η αφαίρεση του λογαριασμού σας θα διαγράψει όλες τις σειρές και τις ταινίες από το SeriesGuide cloud. Σιγουρευτείτε ότι θα τον αφαιρέσετε και από τις άλλες συνδεδεμένες συσκευές σας.</string>
     <string name="hexagon_api_queued">Αποστολή στο SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Αποσυνδεθείτε από το SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Σφάλμα με την είσοδο (%s)</string>
+    <string name="hexagon_signin_google_only">Η διεύθυνση ηλεκτρονικού ταχυδρομείου απαιτεί είσοδο στο Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
     <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>
@@ -396,7 +396,7 @@
     <string name="upcoming_upto_one_week">μία εβδομάδα</string>
     <string name="upcoming_upto_two_weeks">δύο εβδομάδες</string>
     <string name="upcoming_upto_one_month">ένας μήνας</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">όλα</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Εμφάνιση</string>
     <string name="pref_theme">Θέμα</string>
@@ -486,7 +486,7 @@
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
     <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">Η εφαρμογή X Pass εντοπίστηκε. Μπορείτε ακόμη να εγγραφείτε για να υποστηρίξετε μελλοντικές ενημερώσεις.</string>
     <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
     <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
@@ -520,5 +520,5 @@
     <string name="feedback_action_ok">Εντάξει</string>
     <string name="feedback_action_nothanks">Όχι, ευχαριστώ</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Υποστήριξη της ανάπτυξης;</string>
 </resources>

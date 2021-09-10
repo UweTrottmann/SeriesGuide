@@ -191,7 +191,7 @@
     <!-- Add show -->
     <string name="checkin_searchhint">输入节目名称</string>
     <string name="add_empty">什么也没有</string>
-    <string name="no_results">无搜索结果。请尝试输入完整名称</string>
+    <string name="no_results">没有与此相关的结果。请尝试输入完整名称</string>
     <string name="empty_show_search">在您的节目单中找不到相关节目</string>
     <string name="action_try_again">重试</string>
     <string name="tvdb_error_does_not_exist">TMDb 上（尚）无此节目。请稍后重试。</string>
