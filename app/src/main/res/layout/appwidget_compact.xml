@@ -8,7 +8,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/sgAppWidgetBackground"
+        android:background="?android:attr/colorBackground"
         android:orientation="horizontal"
         tools:ignore="UselessParent">
 
@@ -43,7 +43,7 @@
                 android:id="@+id/widget_title"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="?attr/sgAppWidgetListSelector"
+                android:background="?android:attr/selectableItemBackground"
                 android:focusable="true">
 
                 <ImageView
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="?attr/sgAppWidgetListSelector"
+                android:background="?android:attr/selectableItemBackground"
                 android:focusable="true">
 
                 <ImageView
@@ -69,7 +69,9 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/preferences"
-                    android:src="?attr/sgAppWidgetDrawableSettings" />
+                    android:src="@drawable/ic_settings_control_24dp"
+                    android:tint="?android:attr/colorAccent"
+                    tools:ignore="UseAppTint" />
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>

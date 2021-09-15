@@ -84,7 +84,7 @@
         android:layout_width="48dp"
         android:layout_height="?attr/sgAppWidgetPosterHeight"
         android:layout_alignParentRight="true"
-        android:background="?attr/sgAppWidgetListSelector"
+        android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@null"
         android:src="@drawable/ic_watch_black_24dp"
         android:tint="?android:attr/textColorPrimary"

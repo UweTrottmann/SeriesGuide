@@ -8,19 +8,17 @@
     </style>
 
     <style name="Theme.SeriesGuide.AppWidget.Dark">
-        <item name="sgAppWidgetBackground">@color/widget_default_background</item>
-        <item name="sgAppWidgetColorTitle">@color/sg_color_primary_300_emphasis_high</item>
-        <item name="sgAppWidgetListSelector">@drawable/list_selector_dark</item>
-        <item name="sgAppWidgetDrawableSettings">@drawable/ic_settings_dark_24dp</item>
+        <item name="android:colorAccent">@color/sg_color_primary_300_emphasis_high</item>
+        <item name="android:colorControlHighlight">@color/sg_ripple_material_dark</item>
+        <item name="android:colorBackground">@color/widget_default_background</item>
         <item name="android:textColorPrimary">@color/sg_white</item>
         <item name="android:textColorSecondary">@color/sg_white_70</item>
     </style>
 
     <style name="Theme.SeriesGuide.AppWidget.Light">
-        <item name="sgAppWidgetBackground">@color/widget_default_background_light</item>
-        <item name="sgAppWidgetColorTitle">@color/sg_color_primary_500</item>
-        <item name="sgAppWidgetListSelector">@drawable/list_selector_light</item>
-        <item name="sgAppWidgetDrawableSettings">@drawable/ic_settings_light_24dp</item>
+        <item name="android:colorAccent">@color/sg_color_primary_500</item>
+        <item name="android:colorControlHighlight">@color/sg_ripple_material_light</item>
+        <item name="android:colorBackground">@color/widget_default_background_light</item>
         <item name="android:textColorPrimary">@color/sg_black_87</item>
         <item name="android:textColorSecondary">@color/sg_black_54</item>
     </style>
@@ -46,7 +44,7 @@
         <item name="android:textSize">18sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">?attr/sgAppWidgetColorTitle</item>
+        <item name="android:textColor">?android:attr/colorAccent</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide.Widget" parent="TextAppearance.SeriesGuide.Body2">
