@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SeriesGuide.AppWidget.DayNight" parent="Theme.SeriesGuide.AppWidget.V31" />
+    <style name="Theme.SeriesGuide.AppWidget.DayNight.Large" parent="Theme.SeriesGuide.AppWidget.V31.Large" />
+
+</resources>
