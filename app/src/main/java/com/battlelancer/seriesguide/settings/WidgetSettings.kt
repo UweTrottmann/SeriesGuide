@@ -1,173 +1,146 @@
-package com.battlelancer.seriesguide.settings;
+package com.battlelancer.seriesguide.settings
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import androidx.core.content.ContextCompat;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
+import android.content.Context
+import androidx.core.content.ContextCompat
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings
 
 /**
  * Access some widget related settings values.
  */
-public class WidgetSettings {
+object WidgetSettings {
 
-    public interface Type {
-        int UPCOMING = 0;
-        int RECENT = 1;
-        int SHOWS = 2;
+    interface Type {
+        companion object {
+            const val UPCOMING = 0
+            const val RECENT = 1
+            const val SHOWS = 2
+        }
     }
 
-    public static final String SETTINGS_FILE = "ListWidgetPreferences";
-
-    public static final String KEY_PREFIX_WIDGET_BACKGROUND_OPACITY = "background_color_";
-
-    public static final String KEY_PREFIX_WIDGET_THEME = "theme_";
-
-    public static final String KEY_PREFIX_WIDGET_LISTTYPE = "type_";
-
-    public static final String KEY_PREFIX_WIDGET_HIDE_WATCHED = "unwatched_";
-
-    public static final String KEY_PREFIX_WIDGET_ONLY_COLLECTED = "only_collected_";
-
-    public static final String KEY_PREFIX_WIDGET_ONLY_FAVORITES = "only_favorites_";
-
-    public static final String KEY_PREFIX_WIDGET_ONLY_PREMIERES = "only_premieres_";
-
-    public static final String KEY_PREFIX_WIDGET_IS_INFINITE = "is_infinite_";
-
-    public static final String KEY_PREFIX_WIDGET_IS_LARGE_FONT = "is_largefont_";
-
-    public static final String KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER = "shows_order_";
-
-    public static final String DEFAULT_WIDGET_BACKGROUND_OPACITY = "100";
-    private static final int DEFAULT_WIDGET_BACKGROUND_OPACITY_INT = 100;
+    const val SETTINGS_FILE = "ListWidgetPreferences"
+    const val KEY_PREFIX_WIDGET_BACKGROUND_OPACITY = "background_color_"
+    const val KEY_PREFIX_WIDGET_THEME = "theme_"
+    const val KEY_PREFIX_WIDGET_LISTTYPE = "type_"
+    const val KEY_PREFIX_WIDGET_HIDE_WATCHED = "unwatched_"
+    const val KEY_PREFIX_WIDGET_ONLY_COLLECTED = "only_collected_"
+    const val KEY_PREFIX_WIDGET_ONLY_FAVORITES = "only_favorites_"
+    const val KEY_PREFIX_WIDGET_ONLY_PREMIERES = "only_premieres_"
+    const val KEY_PREFIX_WIDGET_IS_INFINITE = "is_infinite_"
+    const val KEY_PREFIX_WIDGET_IS_LARGE_FONT = "is_largefont_"
+    const val KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER = "shows_order_"
+    const val DEFAULT_WIDGET_BACKGROUND_OPACITY = "100"
+    private const val DEFAULT_WIDGET_BACKGROUND_OPACITY_INT = 100
 
     /**
      * Returns the type of episodes that the widget should display.
      *
-     * @return One of {@link com.battlelancer.seriesguide.settings.WidgetSettings.Type}.
+     * @return One of [com.battlelancer.seriesguide.settings.WidgetSettings.Type].
      */
-    public static int getWidgetListType(Context context, int appWidgetId) {
-        int type = Type.UPCOMING;
-        try {
-            type = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
-                    .getString(KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId, "0"));
-        } catch (NumberFormatException ignored) {
-        }
-
-        return type;
+    fun getWidgetListType(context: Context, appWidgetId: Int): Int {
+        return context.getSharedPreferences(SETTINGS_FILE, 0)
+            .getString(KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId, null)?.toIntOrNull()
+            ?: Type.UPCOMING
     }
 
     /**
      * Returns the sort order of shows. Should be used when the widget is set to the shows type.
      *
-     * @return A {@link ShowsDistillationSettings.ShowsSortOrder}
+     * @return A [ShowsDistillationSettings.ShowsSortOrder]
      * id.
      */
-    public static int getWidgetShowsSortOrderId(Context context, int appWidgetId) {
-        int sortOrder = 0;
-        try {
-            sortOrder = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
-                    .getString(KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId,
-                            context.getString(R.string.widget_default_show_sort_order)));
-        } catch (NumberFormatException ignored) {
-        }
-
-        switch (sortOrder) {
-            case 1:
-                return ShowsDistillationSettings.ShowsSortOrder.TITLE_ID;
-            case 2:
-                return ShowsDistillationSettings.ShowsSortOrder.OLDEST_EPISODE_ID;
-            case 3:
-                return ShowsDistillationSettings.ShowsSortOrder.LAST_WATCHED_ID;
-            case 4:
-                return ShowsDistillationSettings.ShowsSortOrder.LEAST_REMAINING_EPISODES_ID;
-            default:
-                return ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE_ID;
+    fun getWidgetShowsSortOrderId(context: Context, appWidgetId: Int): Int {
+        val sortOrder = context.getSharedPreferences(SETTINGS_FILE, 0)
+            .getString(KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER + appWidgetId, null)?.toIntOrNull()
+            ?: context.getString(R.string.widget_default_show_sort_order)
+        return when (sortOrder) {
+            1 -> ShowsDistillationSettings.ShowsSortOrder.TITLE_ID
+            2 -> ShowsDistillationSettings.ShowsSortOrder.OLDEST_EPISODE_ID
+            3 -> ShowsDistillationSettings.ShowsSortOrder.LAST_WATCHED_ID
+            4 -> ShowsDistillationSettings.ShowsSortOrder.LEAST_REMAINING_EPISODES_ID
+            else -> ShowsDistillationSettings.ShowsSortOrder.LATEST_EPISODE_ID
         }
     }
 
     /**
      * Returns if this widget should not show watched episodes.
      */
-    public static boolean isHidingWatchedEpisodes(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-        return prefs.getBoolean(KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId, false);
+    fun isHidingWatchedEpisodes(context: Context, appWidgetId: Int): Boolean {
+        val prefs = context.getSharedPreferences(SETTINGS_FILE, 0)
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId, false)
     }
 
     /**
      * Returns if this widget should only show collected episodes.
      */
-    public static boolean isOnlyCollectedEpisodes(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-        return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_COLLECTED + appWidgetId, false);
+    fun isOnlyCollectedEpisodes(context: Context, appWidgetId: Int): Boolean {
+        val prefs = context.getSharedPreferences(SETTINGS_FILE, 0)
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_COLLECTED + appWidgetId, false)
     }
 
     /**
      * Returns if this widget should only show episodes of favorited shows.
      */
-    public static boolean isOnlyFavoriteShows(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-        return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_FAVORITES + appWidgetId, false);
+    fun isOnlyFavoriteShows(context: Context, appWidgetId: Int): Boolean {
+        val prefs = context.getSharedPreferences(SETTINGS_FILE, 0)
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_FAVORITES + appWidgetId, false)
     }
 
     /**
      * Returns if this widget should only display premieres (first episodes).
      */
-    public static boolean isOnlyPremieres(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-        return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_PREMIERES + appWidgetId, false);
+    fun isOnlyPremieres(context: Context, appWidgetId: Int): Boolean {
+        val prefs = context.getSharedPreferences(SETTINGS_FILE, 0)
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_ONLY_PREMIERES + appWidgetId, false)
     }
 
     /**
      * Returns if this widget should display an infinite number of days.
      */
-    public static boolean isInfinite(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-        return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_INFINITE + appWidgetId, false);
+    fun isInfinite(context: Context, appWidgetId: Int): Boolean {
+        val prefs = context.getSharedPreferences(SETTINGS_FILE, 0)
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_INFINITE + appWidgetId, false)
     }
 
     /**
      * Returns if the layouts using larger fonts should be used.
      */
-    public static boolean isLargeFont(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
-        return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_LARGE_FONT + appWidgetId, false);
+    fun isLargeFont(context: Context, appWidgetId: Int): Boolean {
+        val prefs = context.getSharedPreferences(SETTINGS_FILE, 0)
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_LARGE_FONT + appWidgetId, false)
     }
 
     /**
      * Returns if this widget should use a light theme instead of the dark one.
      */
-    public static boolean isLightTheme(Context context, int appWidgetId) {
-        String value = context.getSharedPreferences(SETTINGS_FILE, 0)
-                .getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, null);
-        return context.getString(R.string.widget_theme_light).equals(value);
+    fun isLightTheme(context: Context, appWidgetId: Int): Boolean {
+        val value = context.getSharedPreferences(SETTINGS_FILE, 0)
+            .getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, null)
+        return context.getString(R.string.widget_theme_light) == value
     }
 
     /**
      * Calculates the background color for this widget based on user preference.
      *
      * @param lightBackground If true, will return white with alpha. Otherwise black with alpha. See
-     * {@link #isLightTheme}.
+     * [isLightTheme].
      */
-    public static int getWidgetBackgroundColor(Context context, int appWidgetId,
-            boolean lightBackground) {
-        int opacity = DEFAULT_WIDGET_BACKGROUND_OPACITY_INT;
-        try {
-            opacity = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
-                    .getString(KEY_PREFIX_WIDGET_BACKGROUND_OPACITY + appWidgetId,
-                            DEFAULT_WIDGET_BACKGROUND_OPACITY));
-        } catch (NumberFormatException ignored) {
-        }
+    fun getWidgetBackgroundColor(
+        context: Context, appWidgetId: Int,
+        lightBackground: Boolean
+    ): Int {
+        val opacity = context.getSharedPreferences(SETTINGS_FILE, 0)
+            .getString(KEY_PREFIX_WIDGET_BACKGROUND_OPACITY + appWidgetId, null)?.toIntOrNull()
+            ?: DEFAULT_WIDGET_BACKGROUND_OPACITY_INT
 
-        int baseColor = ContextCompat.getColor(context, lightBackground
-                ? R.color.widget_default_background_light
-                : R.color.widget_default_background
-        );
+        var baseColor = ContextCompat.getColor(
+            context,
+            if (lightBackground) R.color.widget_default_background_light else R.color.widget_default_background
+        )
         // strip alpha from base color
-        baseColor = baseColor & 0xFFFFFF;
+        baseColor = baseColor and 0xFFFFFF
         // add new alpha
-        int alpha = (opacity * 255 / 100) << 24;
-        return alpha | baseColor;
+        val alpha = (opacity * 255 / 100) shl 24
+        return alpha or baseColor
     }
 }
