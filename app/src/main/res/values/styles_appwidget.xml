@@ -37,6 +37,9 @@
         <item name="sgAppWidgetTextSize">@dimen/widget_text_size_large</item>
     </style>
 
+    <style name="Theme.SeriesGuide.AppWidget.DayNight" parent="Theme.SeriesGuide.AppWidget.Light" />
+    <style name="Theme.SeriesGuide.AppWidget.DayNight.Large" parent="Theme.SeriesGuide.AppWidget.Light.Large" />
+
     <style name="TextAppearance.SeriesGuide.Widget.Title" parent="">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textAllCaps">true</item>

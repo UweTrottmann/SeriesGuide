@@ -31,6 +31,8 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
     private lateinit var onlyCollectedPref: CheckBoxPreference
     private lateinit var hideWatchedPreference: CheckBoxPreference
     private lateinit var isInfinitePref: CheckBoxPreference
+    private lateinit var themePref: ListPreference
+    private lateinit var backgroundPref: ListPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,14 +93,14 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         )
 
         // Appearance.
-        val themePref = createListPref(
+        themePref = createListPref(
             WidgetSettings.KEY_PREFIX_WIDGET_THEME + appWidgetId,
             R.string.pref_theme,
             R.array.widget_themes,
             R.array.widget_themes_data,
-            getString(R.string.widget_theme_dark)
+            getString(R.string.widget_theme_system)
         )
-        val backgroundPref = createListPref(
+        backgroundPref = createListPref(
             WidgetSettings.KEY_PREFIX_WIDGET_BACKGROUND_OPACITY + appWidgetId,
             R.string.pref_widget_opacity,
             R.array.widgetOpacity,
@@ -286,6 +288,21 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
                 onlyCollectedPref.isEnabled = !displayingShows
                 hideWatchedPreference.isEnabled = !displayingShows
                 isInfinitePref.isEnabled = !displayingShows
+            }
+
+            // If system theme is used disable unsupported transparency setting.
+            if (themePref.key == preference.key) {
+                val newTypeValue = newValue as String
+                val isSystemTheme = getString(R.string.widget_theme_system) == newTypeValue
+                backgroundPref.isEnabled = !isSystemTheme
+                if (isSystemTheme) {
+                    backgroundPref.value = WidgetSettings.DEFAULT_WIDGET_BACKGROUND_OPACITY
+                    // Need to manually trigger change listener for whatever reason.
+                    backgroundPref.onPreferenceChangeListener.onPreferenceChange(
+                        backgroundPref,
+                        backgroundPref.value
+                    )
+                }
             }
 
             if (preference is ListPreference) {

@@ -110,20 +110,27 @@ object WidgetSettings {
         return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_LARGE_FONT + appWidgetId, false)
     }
 
-    /**
-     * Returns if this widget should use a light theme instead of the dark one.
-     */
-    fun isLightTheme(context: Context, appWidgetId: Int): Boolean {
+    enum class WidgetTheme {
+        DARK,
+        LIGHT,
+        SYSTEM
+    }
+
+    fun getTheme(context: Context, appWidgetId: Int): WidgetTheme {
         val value = context.getSharedPreferences(SETTINGS_FILE, 0)
             .getString(KEY_PREFIX_WIDGET_THEME + appWidgetId, null)
-        return context.getString(R.string.widget_theme_light) == value
+        return when (value) {
+            context.getString(R.string.widget_theme_light) -> WidgetTheme.LIGHT
+            context.getString(R.string.widget_theme_dark) -> WidgetTheme.DARK
+            else -> WidgetTheme.SYSTEM
+        }
     }
 
     /**
      * Calculates the background color for this widget based on user preference.
      *
      * @param lightBackground If true, will return white with alpha. Otherwise black with alpha. See
-     * [isLightTheme].
+     * [getTheme].
      */
     fun getWidgetBackgroundColor(
         context: Context, appWidgetId: Int,
