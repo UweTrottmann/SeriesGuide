@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/list_selector_dark"
+                android:background="?android:attr/selectableItemBackground"
                 android:focusable="true"
                 android:paddingLeft="@dimen/widget_padding_default"
                 android:paddingTop="@dimen/inline_padding"
