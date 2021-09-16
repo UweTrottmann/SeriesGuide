@@ -12,6 +12,14 @@ Version 61
 ----------
 *in development*
 
+#### 61-beta5
+*2021-09-16*
+
+* 🌟 App widget: add system theme that supports dark mode, colors on Android 12.
+* 🔧 App widget: modernize theme, update preview.
+* 🔧 App widget: use system reconfigure button on Android 12.
+* 📝 Latest translations from Crowdin.
+
 #### 61-beta4
 *2021-09-10*
 
