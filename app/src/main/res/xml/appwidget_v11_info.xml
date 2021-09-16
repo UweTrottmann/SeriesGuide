@@ -8,7 +8,7 @@
     android:minHeight="140dp"
     android:minResizeWidth="120dp"
     android:minResizeHeight="48dp"
-    android:previewImage="@drawable/listwidget_ori_portrait"
+    android:previewImage="@drawable/appwidget_preview_image"
     android:previewLayout="@layout/appwidget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
