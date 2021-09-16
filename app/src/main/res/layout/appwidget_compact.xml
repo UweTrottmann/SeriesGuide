@@ -22,7 +22,8 @@
             android:clipToPadding="false"
             android:divider="@null"
             android:paddingTop="12dp"
-            android:paddingBottom="12dp" />
+            android:paddingBottom="12dp"
+            tools:listitem="@layout/appwidget_row_day_night" />
 
         <TextView
             android:id="@+id/empty_view"

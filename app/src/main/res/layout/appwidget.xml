@@ -78,7 +78,8 @@
             android:clipToPadding="false"
             android:divider="@null"
             android:listSelector="?android:attr/selectableItemBackground"
-            android:paddingBottom="12dp" />
+            android:paddingBottom="12dp"
+            tools:listitem="@layout/appwidget_row_day_night" />
 
         <!-- Explicitly set text color as API 25 defaults to black?! -->
         <TextView
