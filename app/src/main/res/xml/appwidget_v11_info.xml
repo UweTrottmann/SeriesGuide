@@ -13,6 +13,7 @@
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
     android:widgetCategory="keyguard|home_screen"
+    android:widgetFeatures="reconfigurable"
     tools:ignore="UnusedAttribute">
 
 </appwidget-provider>

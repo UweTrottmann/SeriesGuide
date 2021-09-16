@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.format.DateUtils
+import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
@@ -197,7 +198,7 @@ class ListWidgetProvider : AppWidgetProvider() {
             // Determine layout (current size) and theme (user pref).
             val isCompactLayout = isCompactLayout(appWidgetManager, appWidgetId)
             val theme = WidgetSettings.getTheme(context, appWidgetId)
-            val layoutResId = when(theme) {
+            val layoutResId = when (theme) {
                 WidgetTheme.DARK -> {
                     if (isCompactLayout) R.layout.appwidget_compact_dark else R.layout.appwidget_dark
                 }
@@ -208,6 +209,10 @@ class ListWidgetProvider : AppWidgetProvider() {
                     if (isCompactLayout) R.layout.appwidget_compact_day_night else R.layout.appwidget_day_night
                 }
             }
+
+            // On Android S (SDK 31) the launcher provides a reconfigure button on long-press
+            // (android:widgetFeatures="reconfigurable"), so hide the one in the widget.
+            val displaySettingsButton = Build.VERSION.SDK_INT < Build.VERSION_CODES.S
 
             // Build widget views.
             val rv = RemoteViews(context.packageName, layoutResId).also {
@@ -224,6 +229,10 @@ class ListWidgetProvider : AppWidgetProvider() {
                         theme == WidgetTheme.LIGHT
                     )
                     it.setInt(R.id.container, "setBackgroundColor", bgColor)
+                }
+
+                if (!displaySettingsButton) {
+                    it.setViewVisibility(R.id.widget_settings, View.GONE)
                 }
             }
 
@@ -285,16 +294,18 @@ class ListWidgetProvider : AppWidgetProvider() {
             }
 
             // Set up settings button.
-            Intent(context, ListWidgetPreferenceActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            }.let {
-                rv.setOnClickPendingIntent(
-                    R.id.widget_settings,
-                    PendingIntent.getActivity(
-                        context, appWidgetId, it, PendingIntent.FLAG_UPDATE_CURRENT
+            if (displaySettingsButton) {
+                Intent(context, ListWidgetPreferenceActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                }.let {
+                    rv.setOnClickPendingIntent(
+                        R.id.widget_settings,
+                        PendingIntent.getActivity(
+                            context, appWidgetId, it, PendingIntent.FLAG_UPDATE_CURRENT
+                        )
                     )
-                )
+                }
             }
 
             return rv
