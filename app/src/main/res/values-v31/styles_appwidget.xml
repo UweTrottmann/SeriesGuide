@@ -2,6 +2,9 @@
 <resources>
 
     <style name="Theme.SeriesGuide.AppWidget.V31" parent="android:Theme.DeviceDefault.DayNight">
+        <item name="sgAppWidgetRadius">16dp</item>
+        <!-- TODO Once compiling with SDK 31 use system property. -->
+<!--        <item name="sgAppWidgetRadius">@android:dimen/system_app_widget_background_radius</item>-->
         <item name="sgAppWidgetPosterWidth">@dimen/widget_poster_width</item>
         <item name="sgAppWidgetPosterHeight">@dimen/widget_poster_height</item>
         <item name="sgAppWidgetTextSize">@dimen/widget_text_size</item>

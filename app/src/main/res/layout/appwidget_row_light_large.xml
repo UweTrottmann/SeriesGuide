@@ -8,7 +8,7 @@
     android:descendantFocusability="blocksDescendants"
     android:minHeight="52dp"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/widget_padding_default"
+    android:paddingLeft="16dp"
     android:paddingTop="4dp"
     android:paddingBottom="4dp"
     android:theme="@style/Theme.SeriesGuide.AppWidget.Light.Large"

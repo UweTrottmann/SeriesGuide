@@ -4,23 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Note: for light and dark theme background is set by code to support custom transparency. -->
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:attr/colorBackground"
+        android:background="@drawable/appwidget_background"
         android:orientation="horizontal"
         tools:ignore="UselessParent">
 
+        <!-- 12dp instead of 16dp top/bottom padding as rows have 4dp top/bottom padding. -->
         <ListView
             android:id="@+id/list_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clipToPadding="@bool/gridClipToPadding"
+            android:clipToPadding="false"
             android:divider="@null"
-            android:paddingTop="@dimen/inline_padding"
-            android:paddingBottom="@dimen/inline_padding" />
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp" />
 
         <TextView
             android:id="@+id/empty_view"

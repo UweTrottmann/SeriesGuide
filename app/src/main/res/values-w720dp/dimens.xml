@@ -14,8 +14,6 @@
     <dimen name="widget_poster_height_large">55dp</dimen>
     <dimen name="widget_text_size">14sp</dimen>
     <dimen name="widget_text_size_large">16sp</dimen>
-    <dimen name="widget_padding_default">16dp</dimen>
-    <dimen name="widget_padding_inline">8dp</dimen>
     <dimen name="widget_padding_text_top">6dp</dimen>
 
 </resources>

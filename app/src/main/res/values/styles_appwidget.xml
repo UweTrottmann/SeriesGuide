@@ -2,6 +2,7 @@
 <resources>
 
     <style name="Theme.SeriesGuide.AppWidget" parent="">
+        <item name="sgAppWidgetRadius">16dp</item>
         <item name="sgAppWidgetPosterWidth">@dimen/widget_poster_width</item>
         <item name="sgAppWidgetPosterHeight">@dimen/widget_poster_height</item>
         <item name="sgAppWidgetTextSize">@dimen/widget_text_size</item>
