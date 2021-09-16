@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.SeriesGuide.AppWidget.DayNight"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/appwidget_background"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:id="@+id/containerWidgetHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <!-- Slightly reduced top padding to compensate for TextView line height. -->
+            <FrameLayout
+                android:id="@+id/widget_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:paddingStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp">
+
+                <TextView
+                    android:id="@+id/widgetTitle"
+                    style="@style/TextAppearance.SeriesGuide.Widget.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upcoming" />
+
+            </FrameLayout>
+
+            <!-- Slightly reduced top padding to compensate for TextView line height. -->
+            <!-- Smaller right padding to align with watch buttons. -->
+            <FrameLayout
+                android:id="@+id/widget_settings"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:paddingTop="12dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry">
+
+                <ImageView
+                    android:id="@+id/imageViewSettings"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:contentDescription="@string/preferences"
+                    android:src="@drawable/ic_settings_control_24dp"
+                    android:tint="?android:attr/colorAccent"
+                    tools:ignore="UseAppTint" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:descendantFocusability="blocksDescendants"
+            android:minHeight="48dp"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            tools:ignore="UnusedAttribute,RtlHardcoded">
+            <!-- Note: use android:descendantFocusability="blocksDescendants"
+            to prevent check button preventing item clickability. -->
+
+            <!-- Text container height is 38dp/44dp(w720dp) or for large theme 42dp/45dp(w720dp) -->
+            <!-- Image should extend beyond: 0dp top, 2dp bottom (4dp/6dp on w720dp)-->
+
+            <ImageView
+                android:layout_width="?attr/sgAppWidgetPosterWidth"
+                android:layout_height="?attr/sgAppWidgetPosterHeight"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@color/sg_black_38" />
+
+            <!-- Wrap in LinearLayout to avoid text overlapping image if small. -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="@dimen/widget_padding_text_top"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textViewWidgetShow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/widgetNetwork1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Show Title"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/textViewWidgetEpisode1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewWidgetShow1"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="1sp"
+                    android:layout_toLeftOf="@+id/widgetAirtime1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="2x13 Episode"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/widgetNetwork1"
+                    style="@style/Widget.SeriesGuide.TextView.SingleLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="1sp"
+                    android:ellipsize="start"
+                    android:maxWidth="180dp"
+                    android:text="Network · 20:00"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Secondary" />
+
+                <TextView
+                    android:id="@+id/widgetAirtime1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/widgetNetwork1"
+                    android:layout_alignParentRight="true"
+                    android:maxLines="1"
+                    android:text="Mon In 2 days"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Secondary" />
+
+            </RelativeLayout>
+
+            <!-- App widgets are not part of the app, so app tinting is not available. -->
+            <!-- Note: Tinting does not apply to vector drawable, but is same color, so use existing. -->
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="?attr/sgAppWidgetPosterHeight"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_watch_black_24dp"
+                android:tint="?android:attr/textColorPrimary"
+                tools:ignore="UseAppTint" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:descendantFocusability="blocksDescendants"
+            android:minHeight="48dp"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            tools:ignore="UnusedAttribute,RtlHardcoded">
+            <!-- Note: use android:descendantFocusability="blocksDescendants"
+            to prevent check button preventing item clickability. -->
+
+            <!-- Text container height is 38dp/44dp(w720dp) or for large theme 42dp/45dp(w720dp) -->
+            <!-- Image should extend beyond: 0dp top, 2dp bottom (4dp/6dp on w720dp)-->
+
+            <ImageView
+                android:layout_width="?attr/sgAppWidgetPosterWidth"
+                android:layout_height="?attr/sgAppWidgetPosterHeight"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@color/sg_black_38" />
+
+            <!-- Wrap in LinearLayout to avoid text overlapping image if small. -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="@dimen/widget_padding_text_top"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textViewWidgetShow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/widgetNetwork2"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Another Show"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/textViewWidgetEpisode2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewWidgetShow2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="1sp"
+                    android:layout_toLeftOf="@+id/widgetAirtime2"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="1x01 Episode"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/widgetNetwork2"
+                    style="@style/Widget.SeriesGuide.TextView.SingleLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="1sp"
+                    android:ellipsize="start"
+                    android:maxWidth="180dp"
+                    android:text="Network · 08:00"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Secondary" />
+
+                <TextView
+                    android:id="@+id/widgetAirtime2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/widgetNetwork2"
+                    android:layout_alignParentRight="true"
+                    android:maxLines="1"
+                    android:text="Wed In 4 days"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Secondary" />
+
+            </RelativeLayout>
+
+            <!-- App widgets are not part of the app, so app tinting is not available. -->
+            <!-- Note: Tinting does not apply to vector drawable, but is same color, so use existing. -->
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="?attr/sgAppWidgetPosterHeight"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_watch_black_24dp"
+                android:tint="?android:attr/textColorPrimary"
+                tools:ignore="UseAppTint" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:descendantFocusability="blocksDescendants"
+            android:minHeight="48dp"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            tools:ignore="UnusedAttribute,RtlHardcoded">
+            <!-- Note: use android:descendantFocusability="blocksDescendants"
+            to prevent check button preventing item clickability. -->
+
+            <!-- Text container height is 38dp/44dp(w720dp) or for large theme 42dp/45dp(w720dp) -->
+            <!-- Image should extend beyond: 0dp top, 2dp bottom (4dp/6dp on w720dp)-->
+
+            <ImageView
+                android:layout_width="?attr/sgAppWidgetPosterWidth"
+                android:layout_height="?attr/sgAppWidgetPosterHeight"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@color/sg_black_38" />
+
+            <!-- Wrap in LinearLayout to avoid text overlapping image if small. -->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="@dimen/widget_padding_text_top"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textViewWidgetShow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/widgetNetwork3"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="More Title"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Bold"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/textViewWidgetEpisode3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewWidgetShow3"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="1sp"
+                    android:layout_toLeftOf="@+id/widgetAirtime3"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="4x04 Episode"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/widgetNetwork3"
+                    style="@style/Widget.SeriesGuide.TextView.SingleLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="1sp"
+                    android:ellipsize="start"
+                    android:maxWidth="180dp"
+                    android:text="Network · 21:00"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Secondary" />
+
+                <TextView
+                    android:id="@+id/widgetAirtime3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/widgetNetwork3"
+                    android:layout_alignParentRight="true"
+                    android:maxLines="1"
+                    android:text="Fri In 6 days"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Widget.Secondary" />
+
+            </RelativeLayout>
+
+            <!-- App widgets are not part of the app, so app tinting is not available. -->
+            <!-- Note: Tinting does not apply to vector drawable, but is same color, so use existing. -->
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="?attr/sgAppWidgetPosterHeight"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_watch_black_24dp"
+                android:tint="?android:attr/textColorPrimary"
+                tools:ignore="UseAppTint" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
