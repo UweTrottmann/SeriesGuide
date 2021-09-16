@@ -120,8 +120,9 @@ class ListWidgetRemoteViewsFactory(
             isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId),
             isOnlyPremieres = WidgetSettings.isOnlyPremieres(context, appWidgetId)
         )
+        // In addition limit results for widget to reduce memory consumption.
         val results = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-            .getEpisodesWithShow(SimpleSQLiteQuery(query))
+            .getEpisodesWithShow(SimpleSQLiteQuery("$query LIMIT 100"))
         episodesWithShow.addAll(results)
     }
 
