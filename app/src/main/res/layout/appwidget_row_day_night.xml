@@ -11,8 +11,8 @@
     android:paddingLeft="16dp"
     android:paddingTop="4dp"
     android:paddingBottom="4dp"
-    android:theme="@style/Theme.SeriesGuide.AppWidget.Light"
-    tools:background="#ffffbb33"
+    android:theme="@style/Theme.SeriesGuide.AppWidget.DayNight"
+    tools:background="#ffcc0000"
     tools:ignore="UnusedAttribute,RtlHardcoded">
     <!-- Note: use android:descendantFocusability="blocksDescendants"
     to prevent check button preventing item clickability. -->

@@ -12,11 +12,13 @@ import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.format.DateUtils
+import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.WidgetSettings
+import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
@@ -195,13 +197,22 @@ class ListWidgetProvider : AppWidgetProvider() {
 
             // Determine layout (current size) and theme (user pref).
             val isCompactLayout = isCompactLayout(appWidgetManager, appWidgetId)
-            val isLightTheme = WidgetSettings.isLightTheme(context, appWidgetId)
-            val layoutResId = when {
-                isLightTheme && isCompactLayout -> R.layout.appwidget_compact_light
-                isLightTheme && !isCompactLayout -> R.layout.appwidget_light
-                !isLightTheme && isCompactLayout -> R.layout.appwidget_compact_dark
-                else -> R.layout.appwidget_dark
+            val theme = WidgetSettings.getTheme(context, appWidgetId)
+            val layoutResId = when (theme) {
+                WidgetTheme.DARK -> {
+                    if (isCompactLayout) R.layout.appwidget_compact_dark else R.layout.appwidget_dark
+                }
+                WidgetTheme.LIGHT -> {
+                    if (isCompactLayout) R.layout.appwidget_compact_light else R.layout.appwidget_light
+                }
+                WidgetTheme.SYSTEM -> {
+                    if (isCompactLayout) R.layout.appwidget_compact_day_night else R.layout.appwidget_day_night
+                }
             }
+
+            // On Android S (SDK 31) the launcher provides a reconfigure button on long-press
+            // (android:widgetFeatures="reconfigurable"), so hide the one in the widget.
+            val displaySettingsButton = Build.VERSION.SDK_INT < Build.VERSION_CODES.S
 
             // Build widget views.
             val rv = RemoteViews(context.packageName, layoutResId).also {
@@ -210,10 +221,19 @@ class ListWidgetProvider : AppWidgetProvider() {
                 // should be a sibling of the collection view.
                 it.setEmptyView(R.id.list_view, R.id.empty_view)
 
-                // Set the background colors of the whole widget.
-                val bgColor =
-                    WidgetSettings.getWidgetBackgroundColor(context, appWidgetId, isLightTheme)
-                it.setInt(R.id.container, "setBackgroundColor", bgColor)
+                if (theme != WidgetTheme.SYSTEM) {
+                    // Set the background colors of the whole widget.
+                    val bgColor = WidgetSettings.getWidgetBackgroundColor(
+                        context,
+                        appWidgetId,
+                        theme == WidgetTheme.LIGHT
+                    )
+                    it.setInt(R.id.container, "setBackgroundColor", bgColor)
+                }
+
+                if (!displaySettingsButton) {
+                    it.setViewVisibility(R.id.widget_settings, View.GONE)
+                }
             }
 
             // Determine type specific values.
@@ -274,16 +294,18 @@ class ListWidgetProvider : AppWidgetProvider() {
             }
 
             // Set up settings button.
-            Intent(context, ListWidgetPreferenceActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            }.let {
-                rv.setOnClickPendingIntent(
-                    R.id.widget_settings,
-                    PendingIntent.getActivity(
-                        context, appWidgetId, it, PendingIntent.FLAG_UPDATE_CURRENT
+            if (displaySettingsButton) {
+                Intent(context, ListWidgetPreferenceActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                }.let {
+                    rv.setOnClickPendingIntent(
+                        R.id.widget_settings,
+                        PendingIntent.getActivity(
+                            context, appWidgetId, it, PendingIntent.FLAG_UPDATE_CURRENT
+                        )
                     )
-                )
+                }
             }
 
             return rv

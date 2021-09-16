@@ -4,23 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Note: for light and dark theme background is set by code to support custom transparency. -->
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/sgAppWidgetBackground"
+        android:background="@drawable/appwidget_background"
         android:orientation="horizontal"
         tools:ignore="UselessParent">
 
+        <!-- 12dp instead of 16dp top/bottom padding as rows have 4dp top/bottom padding. -->
         <ListView
             android:id="@+id/list_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clipToPadding="@bool/gridClipToPadding"
+            android:clipToPadding="false"
             android:divider="@null"
-            android:paddingTop="@dimen/inline_padding"
-            android:paddingBottom="@dimen/inline_padding" />
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            tools:listitem="@layout/appwidget_row_day_night" />
 
         <TextView
             android:id="@+id/empty_view"
@@ -42,8 +45,9 @@
             <FrameLayout
                 android:id="@+id/widget_title"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="?attr/sgAppWidgetListSelector"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
                 android:focusable="true">
 
                 <ImageView
@@ -58,9 +62,8 @@
             <FrameLayout
                 android:id="@+id/widget_settings"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="?attr/sgAppWidgetListSelector"
+                android:layout_height="40dp"
+                android:background="?android:attr/selectableItemBackground"
                 android:focusable="true">
 
                 <ImageView
@@ -69,7 +72,9 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/preferences"
-                    android:src="?attr/sgAppWidgetDrawableSettings" />
+                    android:src="@drawable/ic_settings_control_24dp"
+                    android:tint="?android:attr/colorAccent"
+                    tools:ignore="UseAppTint" />
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>

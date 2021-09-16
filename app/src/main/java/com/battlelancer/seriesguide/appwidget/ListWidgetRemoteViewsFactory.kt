@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.provider.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.WidgetSettings
+import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings
@@ -44,7 +45,7 @@ class ListWidgetRemoteViewsFactory(
     private var shows = mutableListOf<SgShow2ForLists>()
     private var episodesWithShow = mutableListOf<SgEpisode2WithShow>()
     private var widgetType = 0
-    private var isLightTheme = false
+    private var theme = WidgetTheme.SYSTEM
     private var isLargeFont = false
 
     override fun onCreate() {
@@ -63,7 +64,7 @@ class ListWidgetRemoteViewsFactory(
 
         val widgetType = WidgetSettings.getWidgetListType(context, appWidgetId)
         this.widgetType = widgetType
-        this.isLightTheme = WidgetSettings.isLightTheme(context, appWidgetId)
+        this.theme = WidgetSettings.getTheme(context, appWidgetId)
         this.isLargeFont = WidgetSettings.isLargeFont(context, appWidgetId)
 
         when (widgetType) {
@@ -119,8 +120,9 @@ class ListWidgetRemoteViewsFactory(
             isOnlyCollected = WidgetSettings.isOnlyCollectedEpisodes(context, appWidgetId),
             isOnlyPremieres = WidgetSettings.isOnlyPremieres(context, appWidgetId)
         )
+        // In addition limit results for widget to reduce memory consumption.
         val results = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-            .getEpisodesWithShow(SimpleSQLiteQuery(query))
+            .getEpisodesWithShow(SimpleSQLiteQuery("$query LIMIT 100"))
         episodesWithShow.addAll(results)
     }
 
@@ -141,14 +143,17 @@ class ListWidgetRemoteViewsFactory(
         }
     }
 
+    private fun getRowLayoutResId(): Int {
+        return when (theme) {
+            WidgetTheme.DARK -> if (isLargeFont) R.layout.appwidget_row_dark_large else R.layout.appwidget_row_dark
+            WidgetTheme.LIGHT -> if (isLargeFont) R.layout.appwidget_row_light_large else R.layout.appwidget_row_light
+            WidgetTheme.SYSTEM -> if (isLargeFont) R.layout.appwidget_row_day_night_large else R.layout.appwidget_row_day_night
+        }
+    }
+
     override fun getViewAt(position: Int): RemoteViews {
         // Build a remote views collection item.
-        val layoutResId: Int = if (isLightTheme) {
-            if (isLargeFont) R.layout.appwidget_row_light_large else R.layout.appwidget_row_light
-        } else {
-            if (isLargeFont) R.layout.appwidget_row_dark_large else R.layout.appwidget_row_dark
-        }
-        val rv = RemoteViews(context.packageName, layoutResId)
+        val rv = RemoteViews(context.packageName, getRowLayoutResId())
 
         if (widgetType == WidgetSettings.Type.SHOWS) {
             val show = shows.getOrNull(position) ?: return rv // No data: empty item.
@@ -301,10 +306,8 @@ class ListWidgetRemoteViewsFactory(
     }
 
     // Create a custom loading view (returning null uses default loading view).
-    override fun getLoadingView(): RemoteViews = RemoteViews(
-        context.packageName,
-        if (isLightTheme) R.layout.appwidget_row_light else R.layout.appwidget_row_dark
-    )
+    override fun getLoadingView(): RemoteViews =
+        RemoteViews(context.packageName, getRowLayoutResId())
 
     override fun getViewTypeCount(): Int = 2 // Different view layout for dark and light theme.
 
