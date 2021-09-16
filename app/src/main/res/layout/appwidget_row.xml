@@ -83,7 +83,6 @@
         android:id="@+id/widgetWatchedButton"
         android:layout_width="48dp"
         android:layout_height="?attr/sgAppWidgetPosterHeight"
-        android:layout_alignParentRight="true"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@null"
         android:src="@drawable/ic_watch_black_24dp"
