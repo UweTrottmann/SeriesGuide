@@ -31,7 +31,9 @@ class EpisodesAdapter(
         setHasStableIds(true)
     }
 
-    override fun getItemId(position: Int): Long = getItem(position).id
+    // Is called (indirectly) by external code, so do size check.
+    override fun getItemId(position: Int): Long =
+        currentList.getOrNull(position)?.id ?: RecyclerView.NO_ID
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {
         return EpisodeViewHolder.create(parent, clickListener)
