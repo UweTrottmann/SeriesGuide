@@ -8,11 +8,17 @@ Release notes for version 46 and older
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 46.7-k
+--------------
+*2021-09-23*
+
+* 📝 This version for Android 4.4, 4.3 and 4.1 will no longer be available on Play Store as of November 2021!
+* 🔨 Resolve crash when syncing with Cloud.
+
 Version 46.6-k
 --------------
 *2021-09-09*
 
-* 📝 This version for Android 4.4, 4.3 and 4.1 will no longer be available on Play Store as of November 2021!
 * 🔨 Resolve crash when syncing with Cloud.
 
 Version 46.5-k
