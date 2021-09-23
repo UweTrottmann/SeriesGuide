@@ -1,17 +1,17 @@
 package com.battlelancer.seriesguide.util
 
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Shader
-import android.graphics.drawable.Icon
+import android.widget.Toast
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.squareup.picasso.MemoryPolicy
@@ -91,70 +91,52 @@ class ShortcutCreator(
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        if (AndroidUtils.isAtLeastOreo()) {
-            val shortcutManager = context.getSystemService(ShortcutManager::class.java)
-            if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported) {
-                val builder = ShortcutInfo.Builder(
-                    context,
-                    "shortcut-show-tmdb-$showTmdbId"
-                )
-                    .setIntent(shortcutIntent)
-                    .setShortLabel(showTitle)
-                if (posterBitmap == null) {
-                    builder.setIcon(
-                        Icon.createWithResource(context, R.drawable.ic_shortcut_show)
+        if (ShortcutManagerCompat.isRequestPinShortcutSupported(context)) {
+            val builder = ShortcutInfoCompat.Builder(
+                context,
+                "shortcut-show-tmdb-$showTmdbId"
+            )
+                .setIntent(shortcutIntent)
+                .setShortLabel(showTitle)
+            val isAtLeastOreo = AndroidUtils.isAtLeastOreo()
+            if (posterBitmap == null) {
+                // Note: only use adaptive icon on O+, app icon on older SDKs.
+                builder.setIcon(
+                    IconCompat.createWithResource(
+                        context,
+                        if (isAtLeastOreo) R.drawable.ic_shortcut_show else R.mipmap.ic_app
                     )
-                } else {
-                    builder.setIcon(Icon.createWithAdaptiveBitmap(posterBitmap))
-                }
-                val pinShortcutInfo = builder.build()
-
-                // Create the PendingIntent object only if your app needs to be notified
-                // that the user allowed the shortcut to be pinned. Note that, if the
-                // pinning operation fails, your app isn't notified. We assume here that the
-                // app has implemented a method called createShortcutResultIntent() that
-                // returns a broadcast intent.
-                val pinnedShortcutCallbackIntent =
-                    shortcutManager.createShortcutResultIntent(pinShortcutInfo)
-
-                // Configure the intent so that your app's broadcast receiver gets
-                // the callback successfully.
-                val successCallback = PendingIntent.getBroadcast(
-                    context, 0,
-                    pinnedShortcutCallbackIntent, 0
                 )
+            } else {
+                // Note: do not use compat adaptive bitmap API, results in very small circle bitmap.
+                // Use bitmap with rounded corners (see createBitmap()) instead.
+                builder.setIcon(
+                    if (isAtLeastOreo) IconCompat.createWithAdaptiveBitmap(posterBitmap)
+                    else IconCompat.createWithBitmap(posterBitmap)
+                )
+            }
+            val pinShortcutInfo = builder.build()
 
-                shortcutManager.requestPinShortcut(
-                    pinShortcutInfo,
-                    successCallback.intentSender
+            // Note: still requires com.android.launcher.permission.INSTALL_SHORTCUT
+            // in manifest to support API levels before Oreo (26).
+            ShortcutManagerCompat.requestPinShortcut(
+                context,
+                pinShortcutInfo,
+                null
+            )
+
+            // On old SDKs that do not have ShortcutManager,
+            // drop to home screen, launcher should animate to new shortcut.
+            if (!isAtLeastOreo) {
+                context.startActivity(
+                    Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
             }
         } else {
-            // Intent that actually creates the shortcut
-            val intent = Intent()
-            @Suppress("DEPRECATION")
-            intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent)
-            @Suppress("DEPRECATION")
-            intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, showTitle)
-            if (posterBitmap == null) {
-                // Fall back to the app icon
-                @Suppress("DEPRECATION")
-                intent.putExtra(
-                    Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    Intent.ShortcutIconResource.fromContext(context, R.mipmap.ic_app)
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, posterBitmap)
-            }
-            intent.action = ACTION_INSTALL_SHORTCUT
-            context.sendBroadcast(intent)
-
-            // drop to home screen, launcher should animate to new shortcut
-            context.startActivity(
-                Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
+            // Pinning shortcuts is not possible
+            // (neither using new ShortcutManager or old ACTION_INSTALL_SHORTCUT intent).
+            Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -190,11 +172,6 @@ class ShortcutCreator(
         override fun key(): String {
             return key
         }
-    }
-
-    companion object {
-        /** [Intent] action used to create the shortcut  */
-        private const val ACTION_INSTALL_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT"
     }
 
 }
