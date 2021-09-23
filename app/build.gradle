@@ -218,7 +218,9 @@ dependencies {
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    implementation('com.google.api-client:google-api-client-android:1.30.6') {
+    // Note: version 1.30.6 crashes due to ExceptionInInitializerError in Episodes.<clinit>
+    // as version can somehow not be read by GoogleUtils.<clinit>.
+    implementation('com.google.api-client:google-api-client-android:1.30.5') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient' // unused
         exclude group: 'org.checkerframework' // from guava, not needed at runtime
         exclude group: 'com.google.errorprone' // from guava, not needed at runtime
