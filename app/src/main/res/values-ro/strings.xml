@@ -54,7 +54,7 @@
     <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
     <string name="api_failed">Eroare: %s</string>
     <string name="copy_to_clipboard">Copiat în clipboard</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Distribuie</string>
     <string name="share_show">Distribuie emisiunea</string>

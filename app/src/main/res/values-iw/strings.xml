@@ -54,7 +54,7 @@
     <string name="api_error_generic">לא יכולה לדבר עם %s. נסה שוב מאוחר יותר.</string>
     <string name="api_failed">נכשל: %s</string>
     <string name="copy_to_clipboard">הועתק</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">שתף</string>
     <string name="share_show">שתף סדרה</string>
