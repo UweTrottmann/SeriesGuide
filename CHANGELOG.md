@@ -10,7 +10,18 @@ Release notes
 
 Version 61
 ----------
-*in development*
+*2021-09-23*
+
+* 🌟 App widget: add system theme that supports dark mode, colors on Android 12. Modernize existing themes.
+* 🌟 App widget: add watch button.
+* 🌟 Add upcoming movies screen.
+* 🔧 Correctly choose the next episode if episodes are watched multiple times. This may change the next episode for some shows. Just set an episode watched to update.
+
+#### 61
+*2021-09-23*
+
+* 🔨 Do not crash episode list if number of episodes and selection changes.
+* 📝 Latest translations from Crowdin.
 
 #### 61-beta5
 *2021-09-16*
