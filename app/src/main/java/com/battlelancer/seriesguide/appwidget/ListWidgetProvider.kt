@@ -12,12 +12,15 @@ import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.format.DateUtils
+import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.WidgetSettings
+import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
 import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import timber.log.Timber
 import java.util.Random
@@ -58,6 +61,32 @@ class ListWidgetProvider : AppWidgetProvider() {
             }
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view)
             scheduleWidgetUpdate(context)
+        } else if (ACTION_CLICK_ITEM == intent.action) {
+            if (intent.extras?.containsKey(EXTRA_EPISODE_FLAG) == true) {
+                // Change watched flag
+                val episodeId = intent.getLongExtra(EXTRA_EPISODE_ID, -1)
+                val episodeFlag = intent.getIntExtra(EXTRA_EPISODE_FLAG, -1)
+                if (episodeId != -1L && EpisodeTools.isValidEpisodeFlag(episodeFlag)) {
+                    EpisodeTools.episodeWatched(context, episodeId, episodeFlag)
+                }
+            } else {
+                // Display episode details
+                val showsTabIndex = intent.getIntExtra(EXTRA_SHOWS_TAB_INDEX, -1)
+                val episodeId = intent.getLongExtra(EXTRA_EPISODE_ID, -1)
+
+                if (showsTabIndex != -1 && episodeId != -1L) {
+                    val appLaunchIntent = Intent(context, ShowsActivity::class.java)
+                        .putExtra(ShowsActivity.EXTRA_SELECTED_TAB, showsTabIndex)
+                    TaskStackBuilder.create(context).run {
+                        addNextIntent(appLaunchIntent)
+                        addNextIntent(
+                            Intent(context, EpisodesActivity::class.java)
+                                .putExtra(EpisodesActivity.EXTRA_LONG_EPISODE_ID, episodeId)
+                        )
+                        startActivities()
+                    }
+                }
+            }
         } else {
             super.onReceive(context, intent)
         }
@@ -122,6 +151,10 @@ class ListWidgetProvider : AppWidgetProvider() {
 
     companion object {
         const val ACTION_DATA_CHANGED = "com.battlelancer.seriesguide.appwidget.UPDATE"
+        const val ACTION_CLICK_ITEM = "seriesguide.appwidget.ACTION_CLICK_ITEM"
+        const val EXTRA_SHOWS_TAB_INDEX = "SHOWS_TAB_INDEX"
+        const val EXTRA_EPISODE_ID = "EPISODE_ID"
+        const val EXTRA_EPISODE_FLAG = "EPISODE_FLAG"
         const val REQUEST_CODE = 195
 
         private const val REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS
@@ -164,13 +197,22 @@ class ListWidgetProvider : AppWidgetProvider() {
 
             // Determine layout (current size) and theme (user pref).
             val isCompactLayout = isCompactLayout(appWidgetManager, appWidgetId)
-            val isLightTheme = WidgetSettings.isLightTheme(context, appWidgetId)
-            val layoutResId = when {
-                isLightTheme && isCompactLayout -> R.layout.appwidget_v11_light_compact
-                isLightTheme && !isCompactLayout -> R.layout.appwidget_v11_light
-                !isLightTheme && isCompactLayout -> R.layout.appwidget_v11_compact
-                else -> R.layout.appwidget_v11
+            val theme = WidgetSettings.getTheme(context, appWidgetId)
+            val layoutResId = when (theme) {
+                WidgetTheme.DARK -> {
+                    if (isCompactLayout) R.layout.appwidget_compact_dark else R.layout.appwidget_dark
+                }
+                WidgetTheme.LIGHT -> {
+                    if (isCompactLayout) R.layout.appwidget_compact_light else R.layout.appwidget_light
+                }
+                WidgetTheme.SYSTEM -> {
+                    if (isCompactLayout) R.layout.appwidget_compact_day_night else R.layout.appwidget_day_night
+                }
             }
+
+            // On Android S (SDK 31) the launcher provides a reconfigure button on long-press
+            // (android:widgetFeatures="reconfigurable"), so hide the one in the widget.
+            val displaySettingsButton = Build.VERSION.SDK_INT < Build.VERSION_CODES.S
 
             // Build widget views.
             val rv = RemoteViews(context.packageName, layoutResId).also {
@@ -179,10 +221,19 @@ class ListWidgetProvider : AppWidgetProvider() {
                 // should be a sibling of the collection view.
                 it.setEmptyView(R.id.list_view, R.id.empty_view)
 
-                // Set the background colors of the whole widget.
-                val bgColor =
-                    WidgetSettings.getWidgetBackgroundColor(context, appWidgetId, isLightTheme)
-                it.setInt(R.id.container, "setBackgroundColor", bgColor)
+                if (theme != WidgetTheme.SYSTEM) {
+                    // Set the background colors of the whole widget.
+                    val bgColor = WidgetSettings.getWidgetBackgroundColor(
+                        context,
+                        appWidgetId,
+                        theme == WidgetTheme.LIGHT
+                    )
+                    it.setInt(R.id.container, "setBackgroundColor", bgColor)
+                }
+
+                if (!displaySettingsButton) {
+                    it.setViewVisibility(R.id.widget_settings, View.GONE)
+                }
             }
 
             // Determine type specific values.
@@ -229,26 +280,32 @@ class ListWidgetProvider : AppWidgetProvider() {
                     rv.setOnClickPendingIntent(R.id.widget_title, it)
                 }
 
-            // Set up item intent template, launches episode detail view.
-            TaskStackBuilder.create(context).run {
-                addNextIntent(appLaunchIntent)
-                addNextIntent(Intent(context, EpisodesActivity::class.java))
-                getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT)
+            // Set up item intent template.
+            Intent(context, ListWidgetProvider::class.java).apply {
+                action = ACTION_CLICK_ITEM
+                // When intents are compared, the extras are ignored, so embed
+                // the extras into the data so if extras change intents will not be equal.
+                data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
+                putExtra(EXTRA_SHOWS_TAB_INDEX, showsTabIndex)
+            }.let {
+                PendingIntent.getBroadcast(context, 1, it, PendingIntent.FLAG_UPDATE_CURRENT)
             }.let {
                 rv.setPendingIntentTemplate(R.id.list_view, it)
             }
 
             // Set up settings button.
-            Intent(context, ListWidgetPreferenceActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            }.let {
-                rv.setOnClickPendingIntent(
-                    R.id.widget_settings,
-                    PendingIntent.getActivity(
-                        context, appWidgetId, it, PendingIntent.FLAG_UPDATE_CURRENT
+            if (displaySettingsButton) {
+                Intent(context, ListWidgetPreferenceActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                }.let {
+                    rv.setOnClickPendingIntent(
+                        R.id.widget_settings,
+                        PendingIntent.getActivity(
+                            context, appWidgetId, it, PendingIntent.FLAG_UPDATE_CURRENT
+                        )
                     )
-                )
+                }
             }
 
             return rv

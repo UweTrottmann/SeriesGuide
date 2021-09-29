@@ -32,4 +32,10 @@
         <attr name="filterBoxDescription" format="string" />
     </declare-styleable>
 
+    <!-- App Widget -->
+    <attr name="sgAppWidgetRadius" format="dimension" />
+    <attr name="sgAppWidgetPosterWidth" format="reference" />
+    <attr name="sgAppWidgetPosterHeight" format="reference" />
+    <attr name="sgAppWidgetTextSize" format="reference" />
+
 </resources>

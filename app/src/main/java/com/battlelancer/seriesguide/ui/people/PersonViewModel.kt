@@ -9,10 +9,8 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.util.Errors
-import com.uwetrottmann.tmdb2.entities.Person
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import kotlinx.coroutines.Dispatchers
-import retrofit2.Response
 
 class PersonViewModel(
     application: Application,
@@ -23,19 +21,8 @@ class PersonViewModel(
     val personLiveData = languageCode.switchMap {
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             val peopleService = SgApp.getServicesComponent(getApplication()).peopleService()!!
-            val response: Response<Person?>
-            try {
-                response = peopleService.summary(personTmdbId, it).execute()
-                if (response.isSuccessful) {
-                    emit(response.body())
-                    return@liveData
-                } else {
-                    Errors.logAndReport("get person summary", response)
-                }
-            } catch (e: Exception) {
-                Errors.logAndReport("get person summary", e)
-            }
-            emit(null)
+            val personOrNull = TmdbTools2().getPerson(peopleService, personTmdbId, it)
+            emit(personOrNull)
         }
     }
 

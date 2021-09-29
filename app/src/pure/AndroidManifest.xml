@@ -16,6 +16,7 @@
         <receiver
             android:name="com.battlelancer.seriesguide.extensions.GooglePlayExtensionReceiver"
             android:description="@string/description_extension_google_play"
+            android:exported="false"
             android:icon="@mipmap/ic_app"
             android:label="@string/extension_google_play"
             tools:ignore="ExportedReceiver">

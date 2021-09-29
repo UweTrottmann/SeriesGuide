@@ -594,12 +594,15 @@
     <string-array name="widget_themes">
         <item>@string/theme_app_dark</item>
         <item>@string/theme_app_light</item>
+        <item>@string/theme_app_follow_system</item>
     </string-array>
     <string name="widget_theme_dark">0</string>
     <string name="widget_theme_light">1</string>
+    <string name="widget_theme_system">2</string>
     <string-array name="widget_themes_data">
         <item>@string/widget_theme_dark</item>
         <item>@string/widget_theme_light</item>
+        <item>@string/widget_theme_system</item>
     </string-array>
 
     <string-array name="amazonDomainsData">

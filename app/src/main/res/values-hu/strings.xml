@@ -54,7 +54,7 @@
     <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
     <string name="api_failed">Meghiúsult: %s</string>
     <string name="copy_to_clipboard">Vágólapra másolva</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Nem megtalálható a TMDb-nél, egy jövőbeli frissítésben eltávolításra fog kerülni. Kattints a részletekért.</string>
     <!-- Sharing -->
     <string name="share">Megosztás</string>
     <string name="share_show">Műsor megosztása</string>
@@ -299,7 +299,7 @@
     <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik epizódba, vagy filmbe. Bíráld felül a korábbi bejelentkezést, vagy várj %s és próbáld újra.</string>
     <string name="traktcheckin_wait">Várok</string>
     <string name="trakt_success">Továbbítva a trakt felé.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">A Trakt profilod le van zárva. Vedd fel a kapcsolatot a Trakt ügyfélszolgálattal.</string>
     <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
     <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
     <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a trakttal.</string>
@@ -432,13 +432,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatikus biztonsági másolat</string>
     <string name="pref_autobackupsummary">Heti biztonsági másolat készítése a sorozatokról, listákról és filmekről</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Ezek a biztonsági mentések nem elérhetőek ha az app újra telepítve van. Készíts másolatokat hogy biztosan megőrizve legyenek.</string>
     <string name="last_auto_backup">Utolsó automata mentés: %s</string>
     <string name="restore_auto_backup">Automatikus mentés visszaállítása</string>
     <string name="autobackup_failed">A legutóbbi automatikus mentés nem sikerült</string>
     <string name="autobackup_files_missing">Az automatikus biztonsági másolat használatához válassz érvényes biztonsági másolat fájlokat.</string>
     <string name="autobackup_create_user_copy">Másolat létrehozása minden biztonsági mentés után</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_restore_available">Előfordulhat, hogy automatikus biztonsági mentés áll rendelkezésre a visszaállításhoz.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Vágjunk bele!</string>
     <string name="dismiss">Mégsem</string>
@@ -459,10 +459,10 @@
     <string name="pref_notifications_hidden">Elrejtett sorozatok mellőzése</string>
     <string name="pref_notifications_hidden_summary">Még ha be is vannak kapcsolva az értesítések, ne értesítsen a rejtett sorozatokról</string>
     <string name="pref_notification_channel_errors">Hibák</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
+    <string name="pref_notifications_next_episodes_only">Csak a következő epizódok miatt</string>
+    <string name="pref_notifications_next_episodes_only_summary">Csak akkor értesítsen, ha az új epizód a következő, amelyet meg kell nézni</string>
     <string name="pref_notifications_battery_settings">Akkumulátor beállítások</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_battery_settings_summary">Lépjen az Akkumulátorbeállítások elemre, és tiltsa le az akkumulátoroptimalizálást a megbízható értesítésekért</string>
     <!-- List Widget -->
     <string name="hide_watched">Megnézett epizódok elrejtése</string>
     <string name="pref_widget_opacity">Widget háttér</string>
@@ -484,7 +484,7 @@
     <string name="billing_duration_format">%1$s/év</string>
     <string name="billing_sub_description">Próbáld ki 30 napig ingyen, bármikor visszavonható.</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">Minden előfizetés feloldja az összes funkciót és támogatja a jövőbeli frissítéseket. Az alkalmazás használatához előfizetés nem szükséges.</string>
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
     <string name="billing_unlock_detected">X Pass alkalmazás felismerve. Feliratkozás szükséges lehet a jövőbeni frissítések támogatásához.</string>
     <string name="billing_learn_more">Továbi információk és segítség</string>

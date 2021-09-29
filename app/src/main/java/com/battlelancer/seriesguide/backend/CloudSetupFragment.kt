@@ -178,7 +178,7 @@ class CloudSetupFragment : Fragment() {
     /**
      * If the Firebase account is not null, saves it and auto-starts setup if Cloud is not
      * enabled or the account needs validation.
-     * On sign-in failure sets should validate account flag.
+     * On sign-in failure with error message (so was not canceled) sets should validate account flag.
      */
     private fun changeAccount(account: FirebaseUser?, errorIfNull: String?) {
         val signedIn = account != null
@@ -187,8 +187,8 @@ class CloudSetupFragment : Fragment() {
             signInAccount = account
         } else {
             signInAccount = null
-            HexagonSettings.shouldValidateAccount(requireContext(), true)
             errorIfNull?.let {
+                HexagonSettings.shouldValidateAccount(requireContext(), true)
                 showSnackbar(getString(R.string.hexagon_signin_fail_format, it))
             }
         }

@@ -12,6 +12,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.sync.ShowLastWatchedInfo
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 
 @Dao
@@ -86,10 +87,10 @@ interface SgShow2Helper {
     @RawQuery(observedEntities = [SgShow2::class])
     fun getShowsLiveData(query: SupportSQLiteQuery): LiveData<List<SgShow2ForLists>>
 
-    @Query("SELECT sg_show._id, series_lastwatchedid, episode_number, episode_season_number, episode_firstairedms, episode_title FROM sg_show LEFT OUTER JOIN sg_episode ON series_lastwatchedid = sg_episode._id WHERE sg_show._id = :id")
+    @Query("SELECT sg_show._id, series_lastwatchedid, episode_number, episode_season_number, episode_firstairedms, episode_title, episode_plays FROM sg_show LEFT OUTER JOIN sg_episode ON series_lastwatchedid = sg_episode._id WHERE sg_show._id = :id")
     fun getShowWithLastWatchedEpisode(id: Long): SgShow2LastWatchedEpisode?
 
-    @Query("SELECT sg_show._id, series_lastwatchedid, episode_number, episode_season_number, episode_firstairedms, episode_title FROM sg_show LEFT OUTER JOIN sg_episode ON series_lastwatchedid = sg_episode._id")
+    @Query("SELECT sg_show._id, series_lastwatchedid, episode_number, episode_season_number, episode_firstairedms, episode_title, episode_plays FROM sg_show LEFT OUTER JOIN sg_episode ON series_lastwatchedid = sg_episode._id")
     fun getShowsWithLastWatchedEpisode(): List<SgShow2LastWatchedEpisode>
 
     @Query("SELECT _id, series_status, series_next, series_runtime FROM sg_show")
@@ -174,6 +175,27 @@ interface SgShow2Helper {
         }
     }
 
+    @Query("UPDATE sg_show SET series_lastwatchedid = :episodeId WHERE _id = :id")
+    fun updateLastWatchedEpisodeId(id: Long, episodeId: Long)
+
+    @Transaction
+    fun updateLastWatchedMsIfLaterAndLastWatchedEpisodeId(
+        showIdsToLastWatched: Map<Long, ShowLastWatchedInfo>,
+        episodeHelper: SgEpisode2Helper
+    ) {
+        showIdsToLastWatched.forEach {
+            updateLastWatchedMsIfLater(it.key, it.value.lastWatchedMs)
+            val episodeIdOrZero = episodeHelper.getEpisodeIdByNumber(
+                it.key,
+                it.value.episodeSeason,
+                it.value.episodeNumber
+            )
+            if (episodeIdOrZero != 0L) {
+                updateLastWatchedEpisodeId(it.key, episodeIdOrZero)
+            }
+        }
+    }
+
     @Query("UPDATE sg_show SET series_lastupdate = :lastUpdatedMs WHERE _id = :id")
     fun setLastUpdated(id: Long, lastUpdatedMs: Long)
 
@@ -252,7 +274,8 @@ data class SgShow2LastWatchedEpisode(
     @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodeNumber: Int?,
     @ColumnInfo(name = SgEpisode2Columns.SEASON) val seasonNumber: Int?,
     @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val episodeReleaseDateMs: Long?,
-    @ColumnInfo(name = SgEpisode2Columns.TITLE) val episodeTitle: String?
+    @ColumnInfo(name = SgEpisode2Columns.TITLE) val episodeTitle: String?,
+    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val episodePlays: Int?,
 )
 
 data class SgShow2Stats(

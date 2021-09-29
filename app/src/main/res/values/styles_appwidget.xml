@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SeriesGuide.AppWidget" parent="">
+        <item name="sgAppWidgetRadius">16dp</item>
+        <item name="sgAppWidgetPosterWidth">@dimen/widget_poster_width</item>
+        <item name="sgAppWidgetPosterHeight">@dimen/widget_poster_height</item>
+        <item name="sgAppWidgetTextSize">@dimen/widget_text_size</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.AppWidget.Dark">
+        <item name="android:colorAccent">@color/sg_color_primary_300_emphasis_high</item>
+        <item name="android:colorControlHighlight">@color/sg_ripple_material_dark</item>
+        <item name="android:colorBackground">@color/widget_default_background</item>
+        <item name="android:textColorPrimary">@color/sg_white</item>
+        <item name="android:textColorSecondary">@color/sg_white_70</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.AppWidget.Light">
+        <item name="android:colorAccent">@color/sg_color_primary_500</item>
+        <item name="android:colorControlHighlight">@color/sg_ripple_material_light</item>
+        <item name="android:colorBackground">@color/widget_default_background_light</item>
+        <item name="android:textColorPrimary">@color/sg_black_87</item>
+        <item name="android:textColorSecondary">@color/sg_black_54</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.AppWidget.Dark.Large">
+        <item name="sgAppWidgetPosterWidth">@dimen/widget_poster_width_large</item>
+        <item name="sgAppWidgetPosterHeight">@dimen/widget_poster_height_large</item>
+        <item name="sgAppWidgetTextSize">@dimen/widget_text_size_large</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.AppWidget.Light.Large">
+        <item name="sgAppWidgetPosterWidth">@dimen/widget_poster_width_large</item>
+        <item name="sgAppWidgetPosterHeight">@dimen/widget_poster_height_large</item>
+        <item name="sgAppWidgetTextSize">@dimen/widget_text_size_large</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.AppWidget.DayNight" parent="Theme.SeriesGuide.AppWidget.Light" />
+    <style name="Theme.SeriesGuide.AppWidget.DayNight.Large" parent="Theme.SeriesGuide.AppWidget.Light.Large" />
+
+    <style name="TextAppearance.SeriesGuide.Widget.Title" parent="">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">?android:attr/colorAccent</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.Widget" parent="TextAppearance.SeriesGuide.Body2">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">?attr/sgAppWidgetTextSize</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.Widget.Bold" parent="TextAppearance.SeriesGuide.Body2.Bold">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">?attr/sgAppWidgetTextSize</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.Widget.Secondary" parent="">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textSize">?attr/sgAppWidgetTextSize</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+</resources>

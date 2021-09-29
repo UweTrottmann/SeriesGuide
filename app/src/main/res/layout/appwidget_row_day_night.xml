@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appwidget_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:descendantFocusability="blocksDescendants"
+    android:minHeight="48dp"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:theme="@style/Theme.SeriesGuide.AppWidget.DayNight"
+    tools:background="#ffcc0000"
+    tools:ignore="UnusedAttribute,RtlHardcoded">
+    <!-- Note: use android:descendantFocusability="blocksDescendants"
+    to prevent check button preventing item clickability. -->
+
+    <include layout="@layout/appwidget_row" />
+
+</LinearLayout>

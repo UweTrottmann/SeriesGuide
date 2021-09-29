@@ -2,33 +2,30 @@
 plugins {
     // https://github.com/ben-manes/gradle-versions-plugin/releases
     id("com.github.ben-manes.versions") version "0.39.0"
-    // https://github.com/Codearte/gradle-nexus-staging-plugin/releases
-    id("io.codearte.nexus-staging") version "0.22.0" // api
+    // https://github.com/gradle-nexus/publish-plugin/releases
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // api
 }
 
 buildscript {
-    val sgCompileSdk by extra(30) // Android 11 (R)
+    val sgCompileSdk by extra(31) // Android 12 (S)
     val sgMinSdk by extra(21) // Android 5 (L)
     val sgTargetSdk by extra(30) // Android 11 (R)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106007)
-    val sgVersionName by extra("60")
+    val sgVersionCode by extra(2106105)
+    val sgVersionName by extra("61")
 
-    val kotlin_version by extra("1.5.21") // https://kotlinlang.org/docs/releases.html#release-details
-    val coroutines_version by extra("1.5.0") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    val kotlinVersion by extra("1.5.21") // https://kotlinlang.org/docs/releases.html#release-details
+    val coroutinesVersion by extra("1.5.1") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 
     // https://developer.android.com/jetpack/androidx/releases
-    val core_version by extra("1.5.0") // https://developer.android.com/jetpack/androidx/releases/core
-    val annotation_version by extra("1.2.0")
-    val lifecycle_version by extra("2.3.1")
-    val room_version by extra("2.3.0") // https://developer.android.com/jetpack/androidx/releases/room
-    val fragmentVersion by extra("1.3.5") // https://developer.android.com/jetpack/androidx/releases/fragment
+    val coreVersion by extra("1.6.0") // https://developer.android.com/jetpack/androidx/releases/core
+    val annotationVersion by extra("1.2.0")
+    val lifecycleVersion by extra("2.3.1")
+    val roomVersion by extra("2.3.0") // https://developer.android.com/jetpack/androidx/releases/room
+    val fragmentVersion by extra("1.3.6") // https://developer.android.com/jetpack/androidx/releases/fragment
 
-    val dagger_version by extra("2.37") // https://github.com/google/dagger/releases
-    val okhttp_version by extra("4.9.1") // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    val retrofit_version by extra("2.9.0") // https://github.com/square/retrofit/blob/master/CHANGELOG.md
-    val timber_version by extra("4.7.1") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
+    val timberVersion by extra("5.0.1") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 
@@ -47,8 +44,8 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.2") // libraries, SeriesGuide
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("com.android.tools.build:gradle:7.0.2") // libraries, SeriesGuide
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
@@ -69,12 +66,16 @@ tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
     }
 }
 
-nexusStaging {
-    packageGroup = "com.uwetrottmann"
-    if (rootProject.hasProperty("SONATYPE_NEXUS_USERNAME")
-            && rootProject.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
-        username = rootProject.property("SONATYPE_NEXUS_USERNAME").toString()
-        password = rootProject.property("SONATYPE_NEXUS_PASSWORD").toString()
+nexusPublishing {
+    packageGroup.set("com.uwetrottmann")
+    repositories {
+        sonatype {
+            if (rootProject.hasProperty("SONATYPE_NEXUS_USERNAME")
+                && rootProject.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
+                username.set(rootProject.property("SONATYPE_NEXUS_USERNAME").toString())
+                password.set(rootProject.property("SONATYPE_NEXUS_PASSWORD").toString())
+            }
+        }
     }
 }
 

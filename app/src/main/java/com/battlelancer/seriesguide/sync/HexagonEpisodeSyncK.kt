@@ -12,3 +12,9 @@ data class DownloadFlagsResult(
         val NO_DATA = DownloadFlagsResult(success = true, noData = true, lastWatchedMs = null)
     }
 }
+
+data class ShowLastWatchedInfo(
+    val lastWatchedMs: Long,
+    val episodeSeason: Int,
+    val episodeNumber: Int
+)

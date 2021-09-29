@@ -53,7 +53,7 @@ public class HexagonEpisodeSync {
         List<SgCloudEpisode> episodes;
         String cursor = null;
         boolean hasMoreEpisodes = true;
-        Map<Long, Long> showIdsToLastWatched = new HashMap<>();
+        Map<Long, ShowLastWatchedInfo> showIdsToLastWatched = new HashMap<>();
         while (hasMoreEpisodes) {
             try {
                 // get service each time to check if auth was removed
@@ -119,13 +119,16 @@ public class HexagonEpisodeSync {
                         playsOrNull = 0;
                     }
 
-                    // record the latest last watched time for a show
+                    // record the latest last watched time and episode ID for a show
                     if (!EpisodeTools.isUnwatched(watchedFlag)) {
-                        Long lastWatchedMs = showIdsToLastWatched.get(showId);
+                        ShowLastWatchedInfo lastWatchedInfo = showIdsToLastWatched.get(showId);
                         // episodes returned in reverse chrono order, so just get the first time
-                        if (lastWatchedMs == null && episode.getUpdatedAt() != null) {
+                        if (lastWatchedInfo == null && episode.getUpdatedAt() != null) {
                             long updatedAtMs = episode.getUpdatedAt().getValue();
-                            showIdsToLastWatched.put(showId, updatedAtMs);
+                            showIdsToLastWatched.put(showId,
+                                    new ShowLastWatchedInfo(updatedAtMs, episode.getSeasonNumber(),
+                                            episode.getEpisodeNumber()
+                                    ));
                         }
                     }
                 }
@@ -145,7 +148,11 @@ public class HexagonEpisodeSync {
         }
 
         if (!showIdsToLastWatched.isEmpty()) {
-            database.sgShow2Helper().updateLastWatchedMsIfLater(showIdsToLastWatched);
+            // Note: it is possible that this overwrites a more recently watched episode,
+            // however, the next sync should contain this episode and restore it.
+            database.sgShow2Helper()
+                    .updateLastWatchedMsIfLaterAndLastWatchedEpisodeId(showIdsToLastWatched,
+                            database.sgEpisode2Helper());
         }
 
         // store new last sync time

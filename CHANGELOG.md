@@ -8,6 +8,59 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 61
+----------
+*2021-09-23*
+
+* 🌟 App widget: add system theme that supports dark mode, colors on Android 12. Modernize existing themes.
+* 🌟 App widget: add watch button.
+* 🌟 Add upcoming movies screen.
+* 🔧 Correctly choose the next episode if episodes are watched multiple times. This may change the next episode for some shows. Just set an episode watched to update.
+
+#### 61
+*2021-09-23*
+
+* 🔨 Do not crash episode list if number of episodes and selection changes.
+* 📝 Latest translations from Crowdin.
+
+#### 61-beta5
+*2021-09-16*
+
+* 🌟 App widget: add system theme that supports dark mode, colors on Android 12.
+* 🔧 App widget: modernize theme, update preview.
+* 🔧 App widget: use system reconfigure button on Android 12.
+* 📝 Latest translations from Crowdin.
+
+#### 61-beta4
+*2021-09-10*
+
+* 🔧 Finally add fast scroller to episode list.
+* 📝 Latest translations from Crowdin.
+
+#### 61-beta3
+*2021-09-03*
+
+* 🌟 Add watch button to app widget.
+* 🌟 Add upcoming movies screen.
+* 🔨 Set a show not watched actually does something.
+* 📝 Latest translations from Crowdin.
+
+#### 61-beta2
+*2021-08-12*
+
+* 🔨 Do not select skipped episode as next to watch.
+* 🔨 Cloud: on sync update last watched episode to correctly determine next to watch on all devices.
+* 🔨 Cloud: do not fail when uploading a lot of movies.
+* 📝 Latest translations from Crowdin.
+
+#### 61-beta1
+*2021-08-04*
+
+* 🌟 When re-watching an episode, correctly choose the next one to rewatch. Display watch count in overview screen.
+* 🔨 Prevent crash when removing show while it was getting updated.
+* 🔧 Drop unused storage permissions, should have no impact on supported devices.
+* 📝 Latest translations from Crowdin.
+
 Version 60
 ----------
 *2021-07-28*

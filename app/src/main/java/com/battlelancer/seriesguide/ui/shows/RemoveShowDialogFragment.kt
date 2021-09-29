@@ -54,9 +54,7 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launchWhenStarted {
             val titleOrNull = withContext(Dispatchers.IO) {
                 SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowTitle(showId)
@@ -71,8 +69,11 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
                 binding?.also {
                     it.textViewRemove.text = getString(R.string.confirm_delete, titleOrNull)
                     it.buttonPositive.setOnClickListener {
-                        SgApp.getServicesComponent(requireContext()).showTools().removeShow(showId)
-                        dismiss()
+                        if (!SgSyncAdapter.isSyncActive(context, true)) {
+                            SgApp.getServicesComponent(requireContext()).showTools()
+                                .removeShow(showId)
+                            dismiss()
+                        }
                     }
                     showProgressBar(false)
                 }

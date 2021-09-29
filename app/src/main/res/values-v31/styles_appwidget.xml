@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SeriesGuide.AppWidget.V31" parent="android:Theme.DeviceDefault.DayNight">
+        <item name="sgAppWidgetRadius">@android:dimen/system_app_widget_background_radius</item>
+        <item name="sgAppWidgetPosterWidth">@dimen/widget_poster_width</item>
+        <item name="sgAppWidgetPosterHeight">@dimen/widget_poster_height</item>
+        <item name="sgAppWidgetTextSize">@dimen/widget_text_size</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.AppWidget.V31.Large">
+        <item name="sgAppWidgetPosterWidth">@dimen/widget_poster_width_large</item>
+        <item name="sgAppWidgetPosterHeight">@dimen/widget_poster_height_large</item>
+        <item name="sgAppWidgetTextSize">@dimen/widget_text_size_large</item>
+    </style>
+
+    <style name="Theme.SeriesGuide.AppWidget.DayNight" parent="Theme.SeriesGuide.AppWidget.V31" />
+    <style name="Theme.SeriesGuide.AppWidget.DayNight.Large" parent="Theme.SeriesGuide.AppWidget.V31.Large" />
+
+</resources>

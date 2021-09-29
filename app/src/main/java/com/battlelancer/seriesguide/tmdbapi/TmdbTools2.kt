@@ -8,12 +8,14 @@ import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
+import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
+import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.tmdb2.services.TvEpisodesService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -200,6 +202,24 @@ class TmdbTools2 {
             }
         } catch (e: Exception) {
             Errors.logAndReport("get movie credits", e)
+        }
+        return null
+    }
+
+    fun getPerson(
+        peopleService: PeopleService,
+        tmdbId: Int,
+        language: String
+    ): Person? {
+        try {
+            val response = peopleService.summary(tmdbId, language).execute()
+            if (response.isSuccessful) {
+                return response.body()
+            } else {
+                Errors.logAndReport("get person summary", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("get person summary", e)
         }
         return null
     }

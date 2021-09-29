@@ -29,19 +29,15 @@ public class EpisodeTools {
         return episodeFlags == EpisodeFlags.WATCHED;
     }
 
-    public static void validateFlags(int episodeFlags) {
-        if (isUnwatched(episodeFlags)) {
-            return;
-        }
-        if (isSkipped(episodeFlags)) {
-            return;
-        }
-        if (isWatched(episodeFlags)) {
-            return;
-        }
+    public static boolean isValidEpisodeFlag(int episodeFlags) {
+        return isUnwatched(episodeFlags) || isSkipped(episodeFlags) || isWatched(episodeFlags);
+    }
 
-        throw new IllegalArgumentException(
-                "Did not pass a valid episode flag. See EpisodeFlags class for details.");
+    public static void validateFlags(int episodeFlags) {
+        if (!isValidEpisodeFlag(episodeFlags)) {
+            throw new IllegalArgumentException(
+                    "Did not pass a valid episode flag. See EpisodeFlags class for details.");
+        }
     }
 
     public static void episodeWatched(Context context, long episodeId, int episodeFlags) {

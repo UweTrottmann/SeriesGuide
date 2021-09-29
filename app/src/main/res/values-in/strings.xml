@@ -36,8 +36,8 @@
     <string name="sync_and_update">Sync &amp; Perbarui</string>
     <string name="sync_and_download_all">Sync &amp; unduh semua</string>
     <string name="action_stream">Tonton atau beli</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Tonton atau info pembelian</string>
+    <string name="action_select_region">Pilih wilayah</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">Tidak dapat bicara ke %s. Coba lagi nanti.</string>
     <string name="api_failed">Gagal: %s</string>
     <string name="copy_to_clipboard">Disalin ke clipboard</string>
-    <string name="not_migrated">Not found on TMDb, will be removed in a future update. Tap for details.</string>
+    <string name="not_migrated">Tidak ditemukan di TMDB, akan dihilangkan di update selanjutnya, tekan untuk detail.</string>
     <!-- Sharing -->
     <string name="share">Bagikan</string>
     <string name="share_show">Bagikan acara</string>
@@ -89,9 +89,9 @@
     <string name="show_isalive">Berkelanjutan</string>
     <string name="show_isnotalive">Berakhir</string>
     <string name="show_isUpcoming">Mendatang</string>
-    <string name="show_status_in_production">In Production</string>
+    <string name="show_status_in_production">Dalam Produksi</string>
     <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_canceled">Dibatalkan</string>
     <string name="no_translation">Tidak ada deskripsi yang diterjemahkan ke %1$s tersedia di %2$s.</string>
     <string name="no_translation_title">Belum diterjemahkan</string>
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
@@ -116,11 +116,11 @@
     <string name="action_watched">Ubah ditonton</string>
     <string name="action_unwatched">Ubah belum ditonton</string>
     <string name="state_watched">Ditonton</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched_multiple_format">Ditonton (%d)</string>
+    <string name="state_skipped">Dilewati</string>
+    <string name="state_in_collection">Dalam koleksi</string>
+    <string name="state_on_watchlist">Dalam daftar tonton</string>
+    <string name="state_favorite">Favorit</string>
     <!-- Shows -->
     <string name="confirm_delete">Apakah kau benar-benar ingin menghapus %s?</string>
     <string name="delete_error">Tidak dapat menghapus acara. Coba lagi nanti.</string>
@@ -144,7 +144,7 @@
     <string name="action_shows_filter_upcoming">Mendatang</string>
     <string name="action_shows_filter_hidden">Tersembunyi</string>
     <string name="action_shows_make_all_visible">Perlihatkan yang tersembunyi</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="description_make_all_visible_format">Buat semua acara tersembunyi (%s) terlihat lagi ?</string>
     <string name="action_shows_sort">Sortir acara</string>
     <string name="action_shows_sort_title">Judul</string>
     <string name="action_shows_sort_latest_episode">Episode Terbaru</string>
@@ -155,7 +155,7 @@
     <string name="action_shows_sort_favorites">Favorite di awal</string>
     <string name="context_updateshow">Pembaruan</string>
     <string name="context_marknext">Episode selanjutnya ditonton</string>
-    <string name="action_episodes_switch_view">Switch view</string>
+    <string name="action_episodes_switch_view">Ganti tampilan</string>
     <!-- History -->
     <string name="user_stream">Riwayat</string>
     <string name="recently_watched">Baru-baru ini ditonton</string>
@@ -171,7 +171,7 @@
     <string name="calendar_settings">Pengaturan kalender</string>
     <string name="only_favorites">Hanya acara favorit</string>
     <string name="calendar_only_collected">Hanya episode yang terkumpul</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Pemutaran perdana saja</string>
     <string name="pref_infinite_scrolling">Kalender tidak terbatas</string>
     <!-- Updating -->
     <string name="update_scheduled">Memperbarui&#8230;</string>
@@ -194,7 +194,7 @@
     <string name="no_results">Tidak ada hasil, coba kata-kata lengkap.</string>
     <string name="empty_show_search">Tidak ditemukan di daftar acara anda</string>
     <string name="action_try_again">Coba lagi</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">Acara belum ada di TMDB. Coba lagi nanti.</string>
     <string name="add_all">Tambah semua</string>
     <string name="add_multiple">Semua acara akan segera muncul dalam daftar acara anda.</string>
     <string name="add_started">%s akan muncul dalam daftar acara anda.</string>
@@ -215,7 +215,7 @@
     <string name="list_manage">Kelola daftar</string>
     <string name="list_item_manage">Kelola daftar</string>
     <string name="list_item_remove">Hapus dari daftar</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Kau bisa menambahkan acara ke daftar ini</string>
     <string name="action_lists_sort">Urutkan daftar</string>
     <string name="action_lists_reorder">Susun ulang daftar</string>
     <string name="error_name_already_exists">Daftar dengan nama ini sudah ada</string>
@@ -246,12 +246,12 @@
     <string name="statistics_shows">acara</string>
     <string name="statistics_episodes">episode</string>
     <string name="statistics_movies">film</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s selesai ditonton</string>
     <string name="shows_with_next">%s dengan episode berikutnya</string>
     <string name="shows_continuing">%s berlanjut</string>
     <string name="episodes_watched">%s ditonton</string>
     <string name="movies_on_watchlist">%s di daftar tonton</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d dalam koleksi</string>
     <string name="movies_watched_format">%s ditonton</string>
     <plurals name="days_plural">
         <item quantity="other">%d hari</item>
@@ -275,15 +275,15 @@
     <string name="hexagon_signin">Masuk</string>
     <string name="hexagon_signout">Keluar</string>
     <string name="hexagon_setup_incomplete">Pengaturan SeriesGuide Cloud Tidak selesai.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Akun anda tidak memiliki alamat email</string>
     <string name="hexagon_remove_account">Hapus Akun</string>
     <string name="hexagon_remove_account_success">Akun dimusnahkan.</string>
     <string name="hexagon_remove_account_failure">Tidak dapat menghapus akun.</string>
     <string name="hexagon_remove_account_confirmation">Menghapus akun anda akan menghapus semua acara dan film dari SeriesGuide Cloud. Pastikan untuk menghapusnya dari perangkat terhubung lainnya juga.</string>
     <string name="hexagon_api_queued">Mengirim ke SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Keluar dari SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Error dengan masuk (%s)</string>
+    <string name="hexagon_signin_google_only">Alamat email membutuhkan masuk dengan Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Mengirim ke trakt.</string>
     <string name="checkin_success_trakt">Check-in %s pada trakt.</string>
@@ -292,7 +292,7 @@
     <string name="traktcheckin_inprogress">Anda sudah check-in ke episode atau film yang lain. Timpa check-in sebelumnya atau tunggu %s dan coba lagi.</string>
     <string name="traktcheckin_wait">Aku akan menunggu</string>
     <string name="trakt_success">Dikirim ke trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Akun Trakt anda dikunci. Kontak layanan bantuan Trakt.</string>
     <string name="trakt_error_credentials">Sesuatu tidak beres. Periksa kredensial trakt anda dan coba lagi.</string>
     <string name="trakt_error_not_exists">Tidak (belum) tersedia pada trakt. Coba lagi nanti.</string>
     <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
@@ -332,8 +332,8 @@
     <string name="feedback">Kirim tanggapan</string>
     <string name="action_open_in_browser">Buka di browser</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Terjemahkan aplikasi ini</string>
+    <string name="action_contribute_content">Terjemahkan atau tingkatkan konten</string>
     <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>
@@ -350,7 +350,7 @@
     <string name="pref_language_fallback">Alternatif bahasa</string>
     <string name="pref_updatewifionly">Gambar hanya melalui Wi-fi</string>
     <string name="pref_updatewifionlysummary">Untuk mengurangi biaya operator, jangan unduh melalui jaringan seluler</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Laporkan error ke pengembang aplikasi</string>
     <plurals name="days_before_plural">
         <item quantity="other">%d hari sebelum</item>
     </plurals>
@@ -385,13 +385,13 @@
     <string name="upcoming_upto_one_week">1 minggu</string>
     <string name="upcoming_upto_two_weeks">2 minggu</string>
     <string name="upcoming_upto_one_month">1 bulan</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">semua</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Tampilan</string>
     <string name="pref_theme">Tema</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
+    <string name="theme_app_follow_system">gunakan bawaan system</string>
+    <string name="theme_app_auto_battery">Diset oleh penghemat daya</string>
     <string name="theme_app_dark">Gelap</string>
     <string name="theme_app_light">Terang</string>
     <!-- Other advanced settings -->
@@ -421,13 +421,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Cadangkan otomatis</string>
     <string name="pref_autobackupsummary">Cadangkan mingguan acara, daftar dan film anda</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Cadangan ini tidak tersedia jika aplikasi diinstall lagi. Buat salinan jika ingin mengamankannya</string>
     <string name="last_auto_backup">Pencadangan Otomatis Terakhir: %s</string>
     <string name="restore_auto_backup">Pulihkan Cadangan Otomatis</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Cadangan otomatis sebelumnya telah gagal</string>
     <string name="autobackup_files_missing">Untuk menggunakan cadangan otomatis, pilih file cadangan yang benar.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Buat sebuah salinan setelah setiap cadangan</string>
+    <string name="autobackup_restore_available">Cadangan otomatis mungkin tersedia untuk dipulihkan.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Mulai</string>
     <string name="dismiss">Bubar</string>
@@ -445,18 +445,18 @@
     <string name="pref_notifications_treshold">Kapan harus memberitahu</string>
     <string name="pref_notifications_select_shows">Pilih acara</string>
     <string name="pref_notifications_select_shows_summary">Acara yang memiliki Pemberitahuan aktif (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Abaikan acara yang disembunyikan</string>
+    <string name="pref_notifications_hidden_summary">Meskipun notifikasi diaktifkan, jangan beri tahu tentang acara tersembunyi</string>
     <string name="pref_notification_channel_errors">Kesalahan</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_next_episodes_only">Hanya untuk episode untuk ditonton selanjutnya</string>
+    <string name="pref_notifications_next_episodes_only_summary">Hanya beri tahu jika episode baru adalah yang berikutnya untuk ditonton</string>
+    <string name="pref_notifications_battery_settings">Pengaturan baterai</string>
+    <string name="pref_notifications_battery_settings_summary">Buka Pengaturan baterai untuk menonaktifkan pengoptimalan baterai untuk notifikasi yang dapat diandalkan</string>
     <!-- List Widget -->
     <string name="hide_watched">Sembunyikan episode yang telah ditonton</string>
     <string name="pref_widget_opacity">Latar belakang widget</string>
     <string name="pref_widget_type">Jenis widget</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Gunakan font besar</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Tembus pandang</string>
     <string name="widget_background_25">25%</string>
@@ -467,16 +467,16 @@
     <string name="onlyx">Hnaya untuk pendukung</string>
     <string name="action_upgrade">Buka semua fitur</string>
     <string name="billing_action_subscribe">Berlangganan</string>
-    <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
+    <string name="billing_action_manage_subscriptions">Kelola langganan</string>
     <string name="billing_action_pass">Dapatkan X Pass App</string>
     <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try 30 days for free, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/tahun</string>
+    <string name="billing_sub_description">Coba gratis 30 hari, batalkan kapan saja.</string>
     <string name="billing_price_pass">pembelian satu kali</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">Setiap langganan membuka semua fitur dan mendukung pembaruan yang akan datang. tidak perlu langganan untuk menggunakan aplikasi ini.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_unlock_detected">Aplikasi X Pass terdeteksi. Anda masih dapat berlangganan untuk mendukung pembaruan di masa mendatang.</string>
+    <string name="billing_learn_more">Info lebih lanjut dan bantuan</string>
     <string name="subscription_expired">Langganan berakhir</string>
     <string name="subscription_expired_details">Langganan SeriesGuide anda telah berakhir.</string>
     <!-- Amazon In-App Billing -->
@@ -509,5 +509,5 @@
     <string name="feedback_action_ok">Ok, tentu saja</string>
     <string name="feedback_action_nothanks">Tidak, terima kasih</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Dukung pengembang?</string>
 </resources>

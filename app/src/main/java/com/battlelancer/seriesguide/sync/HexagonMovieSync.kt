@@ -213,32 +213,34 @@ internal class HexagonMovieSync(
         Timber.d("uploadAll: uploading all movies")
 
         val movies = buildMovieList()
-        if (movies == null) {
-            Timber.e("uploadAll: movie query was null")
-            return false
-        }
         if (movies.isEmpty()) {
             // nothing to do
             Timber.d("uploadAll: no movies to upload")
             return true
         }
 
-        val movieList = MovieList()
-        movieList.movies = movies
+        // Upload in small batches
+        val wrapper = MovieList()
+        while (movies.isNotEmpty()) {
+            wrapper.movies = ArrayList()
+            while (movies.isNotEmpty() && wrapper.movies.size < MAX_BATCH_SIZE) {
+                wrapper.movies.add(movies.removeFirst())
+            }
 
-        try {
-            // get service each time to check if auth was removed
-            val moviesService = hexagonTools.moviesService ?: return false
-            moviesService.save(movieList).execute()
-        } catch (e: IOException) {
-            Errors.logAndReportHexagon("save movies", e)
-            return false
+            try {
+                // get service each time to check if auth was removed
+                val moviesService = hexagonTools.moviesService ?: return false
+                moviesService.save(wrapper).execute()
+            } catch (e: IOException) {
+                Errors.logAndReportHexagon("save movies", e)
+                return false
+            }
         }
 
         return true
     }
 
-    private fun buildMovieList(): List<Movie>? {
+    private fun buildMovieList(): MutableList<Movie> {
         val movies = ArrayList<Movie>()
 
         // query for movies in lists or that are watched
@@ -257,6 +259,10 @@ internal class HexagonMovieSync(
         }
 
         return movies
+    }
+
+    companion object {
+        private const val MAX_BATCH_SIZE = 500
     }
 
 }

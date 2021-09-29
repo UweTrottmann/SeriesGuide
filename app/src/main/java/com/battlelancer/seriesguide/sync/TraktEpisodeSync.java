@@ -234,8 +234,10 @@ public class TraktEpisodeSync {
             }
         }
 
-        // Update last watched timestamps.
-        database.sgShow2Helper().updateLastWatchedMsIfLater(showIdsToLastWatched);
+        if (!showIdsToLastWatched.isEmpty()) {
+            // Update last watched timestamps.
+            database.sgShow2Helper().updateLastWatchedMsIfLater(showIdsToLastWatched);
+        }
 
         if (uploadedShowsCount > 0) {
             Timber.d("processTraktShows: uploaded %s flags for %s complete shows.", flag.name,

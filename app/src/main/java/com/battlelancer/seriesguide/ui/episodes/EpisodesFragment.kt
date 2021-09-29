@@ -8,17 +8,17 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.widgets.SgFastScroller
 
 /**
  * Displays a list of episodes of a season.
@@ -27,7 +27,7 @@ class EpisodesFragment : Fragment() {
 
     private var seasonId: Long = 0
     private var startingPosition: Int = 0
-    private var lastCheckedItemId: Long = 0
+    private var scrollToCheckedItemOnDataRefresh = false
     private var watchedAllEpisodes: Boolean = false
     private var collectedAllEpisodes: Boolean = false
 
@@ -83,45 +83,42 @@ class EpisodesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EpisodesAdapter(requireActivity(), episodesListClickListener)
+        binding?.also { binding ->
+            binding.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
+            binding.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
 
-        binding?.also {
-            it.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
-            it.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
+            adapter = EpisodesAdapter(requireActivity(), episodesListClickListener)
+            adapter.selectedItemId = model.selectedItemId
 
-            it.listViewEpisodes.also { lv ->
-                lv.onItemClickListener = listOnItemClickListener
-                lv.choiceMode = ListView.CHOICE_MODE_SINGLE
-                lv.adapter = adapter
+            binding.recyclerViewEpisodes.also {
+                it.layoutManager = LinearLayoutManager(requireContext())
+                it.adapter = adapter
+                SgFastScroller(requireContext(), it)
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         // listen to changes to the sorting preference
         PreferenceManager.getDefaultSharedPreferences(requireActivity()).apply {
             registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
         }
 
-        lastCheckedItemId = -1
-
         model.episodeCounts.observe(viewLifecycleOwner) { result ->
             setWatchedToggleState(result.unwatchedEpisodes)
             setCollectedToggleState(result.uncollectedEpisodes)
         }
         model.episodes.observe(viewLifecycleOwner) { episodes ->
-            adapter.setData(episodes)
-            // set an initial checked item
-            if (startingPosition != -1) {
-                setItemChecked(startingPosition)
-                startingPosition = -1
-            }
-            // correctly restore the last checked item
-            else if (lastCheckedItemId != -1L) {
-                setItemChecked(adapter.getItemPosition(lastCheckedItemId))
-                lastCheckedItemId = -1
+            adapter.submitList(episodes) {
+                // set and scroll to an initial checked item
+                if (savedInstanceState == null && startingPosition != -1) {
+                    setItemChecked(startingPosition)
+                    startingPosition = -1
+                } else if (scrollToCheckedItemOnDataRefresh) {
+                    val position = adapter.getPositionForId(adapter.selectedItemId)
+                    if (position != -1) {
+                        binding?.recyclerViewEpisodes?.smoothScrollToPosition(position)
+                    }
+                    scrollToCheckedItemOnDataRefresh = false
+                }
             }
             // update count state every time data changes
             model.updateCounts()
@@ -136,11 +133,8 @@ class EpisodesFragment : Fragment() {
     private fun showDetails(position: Int) {
         val activity = requireActivity() as EpisodesActivity
         activity.setCurrentPage(position)
-        setItemChecked(position)
+        // Note: page change listener will update checked episode.
     }
-
-    private val listOnItemClickListener =
-        AdapterView.OnItemClickListener { _, _, position, _ -> showDetails(position) }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -172,6 +166,11 @@ class EpisodesFragment : Fragment() {
     }
 
     private val episodesListClickListener = object : EpisodesAdapter.ClickListener {
+
+        override fun onItemClick(position: Int) {
+            showDetails(position)
+        }
+
         override fun onWatchedBoxClick(episodeId: Long, isWatched: Boolean) {
             onFlagEpisodeWatched(episodeId, isWatched)
         }
@@ -261,20 +260,19 @@ class EpisodesFragment : Fragment() {
     }
 
     private fun showSortDialog() {
-        SingleChoiceDialogFragment.show(parentFragmentManager,
-                R.array.epsorting,
-                R.array.epsortingData, DisplaySettings.getEpisodeSortOrder(requireActivity()).index(),
-                DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
-                "episodeSortOrderDialog")
+        SingleChoiceDialogFragment.show(
+            parentFragmentManager,
+            R.array.epsorting,
+            R.array.epsortingData, DisplaySettings.getEpisodeSortOrder(requireActivity()).index(),
+            DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
+            "episodeSortOrderDialog"
+        )
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
         if (DisplaySettings.KEY_EPISODE_SORT_ORDER == key) {
-            // Remember currently checked item, then update order.
-            binding?.listViewEpisodes?.also {
-                lastCheckedItemId = it.getItemIdAtPosition(it.checkedItemPosition)
-                model.updateOrder()
-            }
+            scrollToCheckedItemOnDataRefresh = true
+            model.updateOrder()
         }
     }
 
@@ -282,11 +280,9 @@ class EpisodesFragment : Fragment() {
      * Highlight the given episode in the list.
      */
     fun setItemChecked(position: Int) {
-        binding?.listViewEpisodes?.apply {
-            setItemChecked(position, true)
-            if (position <= firstVisiblePosition || position >= lastVisiblePosition) {
-                smoothScrollToPosition(position)
-            }
+        binding?.recyclerViewEpisodes?.also {
+            model.selectedItemId = adapter.selectItem(position)
+            it.smoothScrollToPosition(position)
         }
     }
 

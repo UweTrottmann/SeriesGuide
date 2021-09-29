@@ -33,7 +33,7 @@
     <string name="add_to_homescreen">Lisää aloitusnäytölle</string>
     <string name="action_open">Avaa</string>
     <string name="sync_manually">Synkronoi manuaalisesti</string>
-    <string name="sync_and_update">Synkronoi &amp; päivitä</string>
+    <string name="sync_and_update">Synkronoi ja päivitä</string>
     <string name="sync_and_download_all">Synkronoi ja lataa kaikki</string>
     <string name="action_stream">Suoratoista tai osta</string>
     <string name="action_stream_info">Suoratoisto- tai ostotiedot</string>
@@ -282,15 +282,15 @@
     <string name="hexagon_signin">Kirjaudu sisään</string>
     <string name="hexagon_signout">Kirjaudu ulos</string>
     <string name="hexagon_setup_incomplete">SeriesGuide Cloudin määrittäminen epäonnistui.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Tililläsi ei ole sähköpostiosoitetta</string>
     <string name="hexagon_remove_account">Poista tili</string>
     <string name="hexagon_remove_account_success">Tili poistettu.</string>
     <string name="hexagon_remove_account_failure">Tiliä ei voitu poistaa.</string>
     <string name="hexagon_remove_account_confirmation">Tämä poistaa ohjelmasi, listasi ja elokuvasi SeriesGuide Cloudista</string>
     <string name="hexagon_api_queued">Lähetetään SeriesGuide Cloudiin.</string>
     <string name="hexagon_signed_out">Kirjauduttu ulos SeriesGuide Cloudista.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Virhe sisäänkirjautumisessa (%s)</string>
+    <string name="hexagon_signin_google_only">Sähköpostiosoite vaatii Googlen sisäänkirjautumisen</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Lähetetään Traktiin.</string>
     <string name="checkin_success_trakt">Kuitattu kohteeseen %s Traktissa</string>
@@ -358,7 +358,7 @@
     <string name="pref_language_fallback">Vaihtoehtoinen kieli</string>
     <string name="pref_updatewifionly">Kuvat vain Wi-Fin kautta</string>
     <string name="pref_updatewifionlysummary">Pienentääksesi datamaksuja, älä lataa mobiiliverkon tai käytön mukaan laskutettavan yhteyden kautta</string>
-    <string name="pref_error_reports">Ilmoita virheistä sovelluksen kehittäjälle</string>
+    <string name="pref_error_reports">Ilmoita virheistä sovelluskehittäjälle</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d päivä ennen</item>
         <item quantity="other">%d päivää ennen</item>
@@ -460,7 +460,7 @@
     <string name="pref_notifications_hidden_summary">Älä ilmoita piilotetuista ohjelmista, vaikka ilmoitukset olisivat käytössä</string>
     <string name="pref_notification_channel_errors">Virheet</string>
     <string name="pref_notifications_next_episodes_only">Vain seuraavaksi katsottavat jaksot</string>
-    <string name="pref_notifications_next_episodes_only_summary">Ilmoita vain, jos uusi jakso on seuraavaksi katsottavana</string>
+    <string name="pref_notifications_next_episodes_only_summary">Ilmoita vain, jos uusi jakso on seuraava katsottava</string>
     <string name="pref_notifications_battery_settings">Akkuasetukset</string>
     <string name="pref_notifications_battery_settings_summary">Siirry kohtaan Akku-asetukset poistaaksesi käytöstä akkuoptimoinnit luotettavien ilmoitusten saamiseksi</string>
     <!-- List Widget -->
