@@ -12,8 +12,8 @@ buildscript {
     val sgTargetSdk by extra(30) // Android 11 (R)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106104)
-    val sgVersionName by extra("61-beta5")
+    val sgVersionCode by extra(2106105)
+    val sgVersionName by extra("61")
 
     val kotlinVersion by extra("1.5.21") // https://kotlinlang.org/docs/releases.html#release-details
     val coroutinesVersion by extra("1.5.1") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md

@@ -5,11 +5,11 @@
     <string name="lists">Listeler</string>
     <string name="movies">Filmler</string>
     <string name="statistics">İstatistikler</string>
-    <string name="navigation_more">Daha fazla</string>
+    <string name="navigation_more">Daha Fazla</string>
     <string name="search">Ara</string>
     <string name="preferences">Ayarlar</string>
     <string name="help">Yardım</string>
-    <string name="no_more_updates">SeriesGuide, Androidin bu versiyonu için güncelleme almayacak.</string>
+    <string name="no_more_updates">SeriesGuide, bu Android sürümü için artık güncelleme almayacak.</string>
     <!-- Media items -->
     <string name="show_details">Ayrıntılar</string>
     <string name="episode">Bölüm</string>
@@ -43,7 +43,7 @@
     <string name="search_hint">Bölüm ara</string>
     <!-- Status messages -->
     <string name="updated">En son sürüme güncellendi.</string>
-    <string name="updated_details">Detaylar</string>
+    <string name="updated_details">Ayrıntılar</string>
     <string name="norating">Geçersiz</string>
     <string name="unknown">bilinmiyor</string>
     <string name="offline">Ağa bağlanın ve yeniden deneyin.</string>
@@ -93,7 +93,7 @@
     <string name="show_status_in_production">Yapım Aşamasında</string>
     <string name="show_status_pilot">Pilot Bölüm</string>
     <string name="show_status_canceled">İptal Edildi</string>
-    <string name="no_translation">%2$s\'de %1$s\'ye çevrilmiş herhangi bir açıklama bulunmamaktadır.</string>
+    <string name="no_translation">%2$s\'de, %1$s diline çevrilmiş hiçbir açıklama bulunmuyor.</string>
     <string name="no_translation_title">Çevrilmedi</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
     <string name="format_source">Kaynak: %s</string>
@@ -219,7 +219,7 @@
     <string name="list_manage">Listeyi yönet</string>
     <string name="list_item_manage">Listeleri yönet</string>
     <string name="list_item_remove">Listeden kaldır</string>
-    <string name="list_empty">Bu listeye, dizi ekleyebilirsiniz</string>
+    <string name="list_empty">Bu listeye dizi ekleyebilirsiniz</string>
     <string name="action_lists_sort">Listeyi sırala</string>
     <string name="action_lists_reorder">Listeleri tekrar sırala</string>
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
@@ -278,11 +278,11 @@
     <!-- Hexagon -->
     <string name="hexagon_warning">Deneysel</string>
     <string name="hexagon_description">SeriesGuide Cloud, dizilerinizi, listelerinizi ve filmlerinizi yedeklemenizi ve senkronize etmenizi sağlar.</string>
-    <string name="hexagon_warning_trakt">SeriesGuide Cloud ile oturum açarken bazı trakt özellikleri mevcut değildir.</string>
+    <string name="hexagon_warning_trakt">SeriesGuide Cloud ile oturum açıldığında bazı Trakt özellikleri kullanılamaz.</string>
     <string name="hexagon_signin">Giriş</string>
     <string name="hexagon_signout">Çıkış</string>
     <string name="hexagon_setup_incomplete">Series Guide Bulut kurulumu tamamlanmadı.</string>
-    <string name="hexagon_setup_fail_auth">Hesabınız bir e-posta adresine sahip değil</string>
+    <string name="hexagon_setup_fail_auth">Hesabınızda bir e-posta adresi yok</string>
     <string name="hexagon_remove_account">Hesabı kaldır</string>
     <string name="hexagon_remove_account_success">Hesap silinmiş.</string>
     <string name="hexagon_remove_account_failure">Hesap kaldırılamadı.</string>
@@ -290,9 +290,9 @@
     <string name="hexagon_api_queued">SeriesGuide bulutuna gönder.</string>
     <string name="hexagon_signed_out">SeriesGuide Bulut servisinden çıkış yapıldı.</string>
     <string name="hexagon_signin_fail_format">%s ile girişte hata oluştu</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_google_only">E-posta adresi, Google ile Oturum Açmayı gerektirir</string>
     <!-- trakt -->
-    <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
+    <string name="trakt_submitqueued">Trakt\'a gönderiliyor.</string>
     <string name="checkin_success_trakt">%s Trakt üzerinde \"izliyorum\" yapıldı</string>
     <string name="checkin_canceled_success_trakt">Trakt üzerindeki \"izliyorum\" durumu iptal edildi</string>
     <string name="traktcheckin_cancel">Geçersiz Kıl</string>
@@ -300,19 +300,19 @@
     <string name="traktcheckin_wait">Bekle</string>
     <string name="trakt_success">Trakt\'a gönder.</string>
     <string name="trakt_error_account_locked">Trakt hesabınız kilitlenmiş. Trakt destek ekibi ile iletişime geçin.</string>
-    <string name="trakt_error_credentials">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
-    <string name="trakt_error_not_exists">Trakt (henüz) mevcut değil. Daha sonra yeniden deneyin.</string>
-    <string name="trakt_notice_not_exists">(Şimdilik) trakt ile ilişkilendirilememektedir.</string>
+    <string name="trakt_error_credentials">Bir şeyler yanlış gitti. Trakt giriş bilgilerinizi kontrol edin ve tekrar deneyin.</string>
+    <string name="trakt_error_not_exists">Trakt\'ta (henüz) mevcut değil. Daha sonra tekrar deneyin.</string>
+    <string name="trakt_notice_not_exists">Trakt\'ta (henüz) mevcut değil.</string>
     <!-- Connect trakt -->
-    <string name="connect_trakt">trakt\'e bağlan</string>
-    <string name="trakt_reconnect">SeriesGuide ile trakt\'a bağlan</string>
+    <string name="connect_trakt">Trakt\'a bağlan</string>
+    <string name="trakt_reconnect">SeriesGuide ile Trakt\'a bağlan</string>
     <string name="trakt_reconnect_details">Trakt giriş bilgilerinizi kontrol edin</string>
     <string name="waitplease">Bir dakika lütfen&#8230;</string>
     <string name="connect">Bağlan</string>
     <string name="disconnect">Bağlantıyı Kes</string>
     <string name="use_integrated_browser">Tarayıcı entegrasyonunu kullan</string>
     <string name="show_library">Kütüphaneyi göster</string>
-    <string name="about_trakt">trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.<a href="http://trakt.tv">Daha fazla bilgi</a></string>
+    <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur. <a href="https://trakt.tv">Daha fazla bilgi</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Derecelendir</string>
     <string name="your_rating">Sizin değerlendirmeniz</string>
@@ -373,9 +373,9 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Gizlilik Politikası</string>
-    <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır ama TMDb tarafından onaylı veya sertifikalı değildir.</string>
-    <string name="licence_trakt">Bu uygulama, trakt verilerini ve görsellerini kullanmaktadır.</string>
-    <string name="about_open_source">SeriesGuide açık kaynak bilgisayar yazılımı kullanılarak oluşturulmuştur.</string>
+    <string name="licence_themoviedb">Bu uygulama TMDb API\'si kullanmaktadır ancak TMDb tarafından onaylı veya sertifikalı değildir.</string>
+    <string name="licence_trakt">Bu uygulama, Trakt\'ın verilerini ve görsellerini kullanmaktadır.</string>
+    <string name="about_open_source">SeriesGuide, açık kaynaklı yazılım kullanılarak oluşturulmuştur.</string>
     <string name="licences_and_credits">Lisanslar ve Bilgiler</string>
     <!-- Sort -->
     <string name="sort">Sırala</string>
@@ -486,10 +486,10 @@
     <string name="billing_price_pass">tek seferlik ödeme</string>
     <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
-    <string name="billing_unlock_detected">X Pass uygulaması tespit edildi. Gelecekteki güncellemeri desteklemek için yine de abone olabilirsiniz.</string>
+    <string name="billing_unlock_detected">X Pass uygulaması tespit edildi. Gelecekteki güncellemeleri desteklemek için yine de abone olabilirsiniz.</string>
     <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
     <string name="subscription_expired">Abonelik sona erdi</string>
-    <string name="subscription_expired_details">X özellikleri abonelik süresi doldu.</string>
+    <string name="subscription_expired_details">SeriesGuide aboneliğinizin süresi doldu</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in">Amazon hesabınızda oturum açın!</string>
     <string name="subscription_unavailable">Abonelik şu anda kullanılabilir değil.</string>
