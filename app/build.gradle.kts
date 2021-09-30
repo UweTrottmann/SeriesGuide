@@ -192,7 +192,7 @@ dependencies {
     implementation("com.jakewharton:butterknife:$butterknifeVersion")
     kapt("com.jakewharton:butterknife-compiler:$butterknifeVersion")
     // https://github.com/google/dagger/releases
-    val daggerVersion  = "2.37"
+    val daggerVersion  = "2.39"
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
     val eventbusVersion = "3.2.0"
