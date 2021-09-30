@@ -28,6 +28,7 @@ object WidgetSettings {
     const val KEY_PREFIX_WIDGET_ONLY_PREMIERES = "only_premieres_"
     const val KEY_PREFIX_WIDGET_IS_INFINITE = "is_infinite_"
     const val KEY_PREFIX_WIDGET_IS_LARGE_FONT = "is_largefont_"
+    const val KEY_PREFIX_WIDGET_IS_HIDE_WATCH_BUTTON = "is_hide_watch_button_"
     const val KEY_PREFIX_WIDGET_SHOWS_SORT_ORDER = "shows_order_"
     const val DEFAULT_WIDGET_BACKGROUND_OPACITY = "100"
     private const val DEFAULT_WIDGET_BACKGROUND_OPACITY_INT = 100
@@ -108,6 +109,14 @@ object WidgetSettings {
     fun isLargeFont(context: Context, appWidgetId: Int): Boolean {
         val prefs = context.getSharedPreferences(SETTINGS_FILE, 0)
         return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_LARGE_FONT + appWidgetId, false)
+    }
+
+    /**
+     * Returns if the watch button should be hidden.
+     */
+    fun isHideWatchButton(context: Context, appWidgetId: Int): Boolean {
+        val prefs = context.getSharedPreferences(SETTINGS_FILE, 0)
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_IS_HIDE_WATCH_BUTTON + appWidgetId, false)
     }
 
     enum class WidgetTheme {

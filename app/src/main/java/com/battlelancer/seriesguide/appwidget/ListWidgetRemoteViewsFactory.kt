@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.text.format.DateUtils
+import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.os.bundleOf
@@ -47,6 +48,7 @@ class ListWidgetRemoteViewsFactory(
     private var widgetType = 0
     private var theme = WidgetTheme.SYSTEM
     private var isLargeFont = false
+    private var isHideWatchButton = false
 
     override fun onCreate() {
         // Since onQueryForData() is called in onDataSetChanged()
@@ -66,6 +68,7 @@ class ListWidgetRemoteViewsFactory(
         this.widgetType = widgetType
         this.theme = WidgetSettings.getTheme(context, appWidgetId)
         this.isLargeFont = WidgetSettings.isLargeFont(context, appWidgetId)
+        this.isHideWatchButton = WidgetSettings.isHideWatchButton(context, appWidgetId)
 
         when (widgetType) {
             WidgetSettings.Type.SHOWS -> {
@@ -245,6 +248,19 @@ class ListWidgetRemoteViewsFactory(
             R.id.widgetWatchedButton,
             context.getString(if (isWatched) R.string.action_unwatched else R.string.action_watched)
         )
+        if (isHideWatchButton) {
+            rv.setViewVisibility(R.id.widgetWatchedButton, View.GONE)
+            rv.setViewPadding(
+                R.id.relativeLayoutWidgetText,
+                0,
+                0,
+                context.resources.getDimensionPixelSize(R.dimen.large_padding),
+                0
+            )
+        } else {
+            rv.setViewVisibility(R.id.widgetWatchedButton, View.VISIBLE)
+            rv.setViewPadding(R.id.relativeLayoutWidgetText, 0, 0, 0, 0)
+        }
 
         // Set episode description.
         rv.setTextViewText(R.id.textViewWidgetEpisode, episodeDescription)
