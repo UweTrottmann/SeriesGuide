@@ -8,6 +8,17 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 62
+----------
+*in development*
+
+#### 62-beta1
+*2021-09-30*
+
+* 🔧 App widget: add option to hide watch button.
+* 🔧 Display error message if creating a shortcut fails.
+* 🔨 Only move shows by a day if released in the hour past midnight for the CBS and NBC networks.
+
 Version 61
 ----------
 *2021-09-23*
