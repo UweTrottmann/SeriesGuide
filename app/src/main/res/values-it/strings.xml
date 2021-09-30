@@ -468,6 +468,7 @@
     <string name="pref_widget_opacity">Sfondo widget</string>
     <string name="pref_widget_type">Tipo di widget</string>
     <string name="pref_large_font">Usa caratteri grandi</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Trasparente</string>
     <string name="widget_background_25">25%</string>

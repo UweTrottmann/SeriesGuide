@@ -457,6 +457,7 @@
     <string name="pref_widget_opacity">小工具背景</string>
     <string name="pref_widget_type">小工具類型</string>
     <string name="pref_large_font">使用大的字型</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">透明度</string>
     <string name="widget_background_25">25%</string>

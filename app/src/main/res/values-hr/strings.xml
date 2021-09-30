@@ -479,6 +479,7 @@
     <string name="pref_widget_opacity">Pozadina widgeta</string>
     <string name="pref_widget_type">Tip widgeta</string>
     <string name="pref_large_font">Koristi veliki font</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Prozirno</string>
     <string name="widget_background_25">25%</string>

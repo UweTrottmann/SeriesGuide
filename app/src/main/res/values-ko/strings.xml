@@ -457,6 +457,7 @@
     <string name="pref_widget_opacity">위젯 배경</string>
     <string name="pref_widget_type">위젯 형태</string>
     <string name="pref_large_font">Use large font</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">투명</string>
     <string name="widget_background_25">25%</string>

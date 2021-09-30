@@ -490,6 +490,7 @@
     <string name="pref_widget_opacity">רקע ווידג\'ט</string>
     <string name="pref_widget_type">סוג ווידג\'ט</string>
     <string name="pref_large_font">השתמש בגופן גדול</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">שקוף</string>
     <string name="widget_background_25">25%</string>

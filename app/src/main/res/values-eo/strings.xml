@@ -468,6 +468,7 @@
     <string name="pref_widget_opacity">Fenestraĵa fono</string>
     <string name="pref_widget_type">Fenestraĵa speco</string>
     <string name="pref_large_font">Uzi grandan tiparon</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Travidebla</string>
     <string name="widget_background_25">25%</string>

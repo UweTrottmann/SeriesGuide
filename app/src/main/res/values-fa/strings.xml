@@ -468,6 +468,7 @@
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>
     <string name="pref_widget_type">نوع ابزارک</string>
     <string name="pref_large_font">استفاده از خط درشت</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفّاف</string>
     <string name="widget_background_25">۲۵٪</string>
