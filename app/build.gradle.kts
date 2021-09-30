@@ -302,7 +302,7 @@ dependencies {
     testImplementation("org.robolectric:robolectric:4.6.1")
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
     testImplementation("org.mockito:mockito-core:3.8.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }
 
 endpointsClient {
