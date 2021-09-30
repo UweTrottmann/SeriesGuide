@@ -15,8 +15,8 @@ buildscript {
     val sgVersionCode by extra(2106105)
     val sgVersionName by extra("61")
 
-    val kotlinVersion by extra("1.5.21") // https://kotlinlang.org/docs/releases.html#release-details
-    val coroutinesVersion by extra("1.5.1") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    val kotlinVersion by extra("1.5.31") // https://kotlinlang.org/docs/releases.html#release-details
+    val coroutinesVersion by extra("1.5.2") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 
     // https://developer.android.com/jetpack/androidx/releases
     val coreVersion by extra("1.6.0") // https://developer.android.com/jetpack/androidx/releases/core
@@ -49,7 +49,7 @@ buildscript {
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
-        classpath("com.google.gms:google-services:4.3.8")
+        classpath("com.google.gms:google-services:4.3.10")
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
     }
 }
