@@ -1,462 +1,474 @@
-package com.battlelancer.seriesguide.dataliberation;
+package com.battlelancer.seriesguide.dataliberation
 
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-
-import android.annotation.SuppressLint;
-import android.content.ContentProviderOperation;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.OperationApplicationException;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.ParcelFileDescriptor;
-import android.text.TextUtils;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
-import com.battlelancer.seriesguide.dataliberation.model.Episode;
-import com.battlelancer.seriesguide.dataliberation.model.List;
-import com.battlelancer.seriesguide.dataliberation.model.ListItem;
-import com.battlelancer.seriesguide.dataliberation.model.Movie;
-import com.battlelancer.seriesguide.dataliberation.model.Season;
-import com.battlelancer.seriesguide.dataliberation.model.Show;
-import com.battlelancer.seriesguide.model.SgEpisode2;
-import com.battlelancer.seriesguide.model.SgSeason2;
-import com.battlelancer.seriesguide.model.SgShow2;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.stream.JsonReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import org.greenrobot.eventbus.EventBus;
-import timber.log.Timber;
+import android.annotation.SuppressLint
+import android.content.ContentProviderOperation
+import android.content.ContentValues
+import android.content.Context
+import android.content.OperationApplicationException
+import android.net.Uri
+import android.os.AsyncTask
+import android.os.ParcelFileDescriptor
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgSeasonForImport
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgShowForImport
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.BackupType
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport
+import com.battlelancer.seriesguide.dataliberation.model.List
+import com.battlelancer.seriesguide.dataliberation.model.Movie
+import com.battlelancer.seriesguide.dataliberation.model.Season
+import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.model.SgEpisode2
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
+import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
+import com.battlelancer.seriesguide.util.TaskManager
+import com.google.gson.Gson
+import com.google.gson.JsonParseException
+import com.google.gson.stream.JsonReader
+import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStreamReader
+import java.util.ArrayList
 
 /**
- * Import a show database from a human-readable JSON file on external storage. By default meta-data
- * like descriptions, ratings, actors, etc. will not be included.
+ * Imports shows, lists or movies from a human-readable JSON file replacing existing data.
  */
-public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
+class JsonImportTask(
+    context: Context,
+    importShows: Boolean,
+    importLists: Boolean,
+    importMovies: Boolean
+) : AsyncTask<Void?, Int?, Int>() {
 
-    private static final int SUCCESS = 1;
-    private static final int ERROR_STORAGE_ACCESS = 0;
-    private static final int ERROR = -1;
-    private static final int ERROR_LARGE_DB_OP = -2;
-    private static final int ERROR_FILE_ACCESS = -3;
+    @SuppressLint("StaticFieldLeak")
+    private val context: Context = context.applicationContext
+    private val languageCodes: Array<String> =
+        this.context.resources.getStringArray(R.array.languageCodesShows)
+    private var isImportingAutoBackup: Boolean
+    private val isImportShows: Boolean
+    private val isImportLists: Boolean
+    private val isImportMovies: Boolean
+    private var errorCause: String? = null
 
-    @SuppressLint("StaticFieldLeak") private final Context context;
-    private final String[] languageCodes;
-    private boolean isImportingAutoBackup;
-    private final boolean isImportShows;
-    private final boolean isImportLists;
-    private final boolean isImportMovies;
-    @Nullable private String errorCause;
-
-    public JsonImportTask(Context context, boolean importShows, boolean importLists,
-            boolean importMovies) {
-        this.context = context.getApplicationContext();
-        languageCodes = this.context.getResources().getStringArray(R.array.languageCodesShows);
-        isImportingAutoBackup = false;
-        isImportShows = importShows;
-        isImportLists = importLists;
-        isImportMovies = importMovies;
+    init {
+        isImportingAutoBackup = false
+        isImportShows = importShows
+        isImportLists = importLists
+        isImportMovies = importMovies
     }
 
-    public JsonImportTask(Context context) {
-        this(context, true, true, true);
-        isImportingAutoBackup = true;
+    constructor(context: Context) : this(context, true, true, true) {
+        isImportingAutoBackup = true
     }
 
-    @Override
-    protected Integer doInBackground(Void... params) {
+    override fun doInBackground(vararg params: Void?): Int {
         // Ensure no large database ops are running
-        TaskManager tm = TaskManager.getInstance();
-        if (SgSyncAdapter.isSyncActive(context, false) || tm.isAddTaskRunning()) {
-            return ERROR_LARGE_DB_OP;
+        val tm = TaskManager.getInstance()
+        if (SgSyncAdapter.isSyncActive(context, false) || tm.isAddTaskRunning) {
+            return ERROR_LARGE_DB_OP
         }
 
         // last chance to abort
-        if (isCancelled()) {
-            return ERROR;
+        if (isCancelled) {
+            return ERROR
         }
 
-        int result;
+        var result: Int
         if (isImportShows) {
-            result = importData(JsonExportTask.BACKUP_SHOWS);
+            result = importData(JsonExportTask.BACKUP_SHOWS)
             if (result != SUCCESS) {
-                return result;
+                return result
             }
-            if (isCancelled()) {
-                return ERROR;
+            if (isCancelled) {
+                return ERROR
             }
         }
 
         if (isImportLists) {
-            result = importData(JsonExportTask.BACKUP_LISTS);
+            result = importData(JsonExportTask.BACKUP_LISTS)
             if (result != SUCCESS) {
-                return result;
+                return result
             }
-            if (isCancelled()) {
-                return ERROR;
+            if (isCancelled) {
+                return ERROR
             }
         }
 
         if (isImportMovies) {
-            result = importData(JsonExportTask.BACKUP_MOVIES);
+            result = importData(JsonExportTask.BACKUP_MOVIES)
             if (result != SUCCESS) {
-                return result;
+                return result
             }
-            if (isCancelled()) {
-                return ERROR;
+            if (isCancelled) {
+                return ERROR
             }
         }
 
         // Renew search table
-        SeriesGuideDatabase.rebuildFtsTable(context);
+        SeriesGuideDatabase.rebuildFtsTable(context)
 
-        return SUCCESS;
+        return SUCCESS
     }
 
-    @Override
-    protected void onPostExecute(Integer result) {
-        int messageId;
-        boolean showIndefinite;
-        switch (result) {
-            case SUCCESS:
-                messageId = R.string.import_success;
-                showIndefinite = false;
-                break;
-            case ERROR_STORAGE_ACCESS:
-                messageId = R.string.import_failed_nosd;
-                showIndefinite = true;
-                break;
-            case ERROR_FILE_ACCESS:
-                messageId = R.string.import_failed_nofile;
-                showIndefinite = true;
-                break;
-            case ERROR_LARGE_DB_OP:
-                messageId = R.string.update_inprogress;
-                showIndefinite = false;
-                break;
-            default:
-                messageId = R.string.import_failed;
-                showIndefinite = true;
-                break;
+    override fun onPostExecute(result: Int) {
+        val messageId: Int
+        val showIndefinite: Boolean
+        when (result) {
+            SUCCESS -> {
+                messageId = R.string.import_success
+                showIndefinite = false
+            }
+            ERROR_STORAGE_ACCESS -> {
+                messageId = R.string.import_failed_nosd
+                showIndefinite = true
+            }
+            ERROR_FILE_ACCESS -> {
+                messageId = R.string.import_failed_nofile
+                showIndefinite = true
+            }
+            ERROR_LARGE_DB_OP -> {
+                messageId = R.string.update_inprogress
+                showIndefinite = false
+            }
+            else -> {
+                messageId = R.string.import_failed
+                showIndefinite = true
+            }
         }
-        EventBus.getDefault()
-                .post(new DataLiberationFragment.LiberationResultEvent(
-                        context.getString(messageId), errorCause, showIndefinite));
+        EventBus.getDefault().post(
+            LiberationResultEvent(
+                context.getString(messageId), errorCause, showIndefinite
+            )
+        )
     }
 
-    private int importData(@JsonExportTask.BackupType int type) {
+    private fun importData(@BackupType type: Int): Int {
         if (!isImportingAutoBackup) {
             // make sure we have a file uri...
-            Uri backupFileUri = getDataBackupFile(type);
-            if (backupFileUri == null) {
-                return ERROR_FILE_ACCESS;
-            }
+            val backupFileUri = getDataBackupFile(type) ?: return ERROR_FILE_ACCESS
             // ...and the file actually exists
-            ParcelFileDescriptor pfd;
+            val pfd: ParcelFileDescriptor?
             try {
-                pfd = context.getContentResolver().openFileDescriptor(backupFileUri, "r");
-            } catch (FileNotFoundException | SecurityException e) {
-                Timber.e(e, "Backup file not found.");
-                errorCause = e.getMessage();
-                return ERROR_FILE_ACCESS;
+                pfd = context.contentResolver.openFileDescriptor(backupFileUri, "r")
+            } catch (e: FileNotFoundException) {
+                Timber.e(e, "Backup file not found.")
+                errorCause = e.message
+                return ERROR_FILE_ACCESS
+            } catch (e: SecurityException) {
+                Timber.e(e, "Backup file not found.")
+                errorCause = e.message
+                return ERROR_FILE_ACCESS
             }
             if (pfd == null) {
-                Timber.e("File descriptor is null.");
-                return ERROR_FILE_ACCESS;
+                Timber.e("File descriptor is null.")
+                return ERROR_FILE_ACCESS
             }
 
             if (!clearExistingData(type)) {
-                return ERROR;
+                return ERROR
             }
 
             // Access JSON from backup file and try to import data
-            FileInputStream in = new FileInputStream(pfd.getFileDescriptor());
+            val inputStream = FileInputStream(pfd.fileDescriptor)
             try {
-                importFromJson(type, in);
+                importFromJson(type, inputStream)
 
                 // let the document provider know we're done.
-                pfd.close();
-            } catch (JsonParseException | IOException | IllegalStateException e) {
+                pfd.close()
+            } catch (e: JsonParseException) {
                 // the given Json might not be valid or unreadable
-                Timber.e(e, "Import failed");
-                errorCause = e.getMessage();
-                return ERROR;
-            } catch (Exception e) {
+                Timber.e(e, "Import failed")
+                errorCause = e.message
+                return ERROR
+            } catch (e: IOException) {
+                Timber.e(e, "Import failed")
+                errorCause = e.message
+                return ERROR
+            } catch (e: IllegalStateException) {
+                Timber.e(e, "Import failed")
+                errorCause = e.message
+                return ERROR
+            } catch (e: Exception) {
                 // Only report unexpected errors.
-                Errors.logAndReport("Import failed", e);
-                errorCause = e.getMessage();
-                return ERROR;
+                logAndReport("Import failed", e)
+                errorCause = e.message
+                return ERROR
             }
         } else {
             // Restoring latest auto backup.
-
-            AutoBackupTools.BackupFile backupFileOrNull =
-                    AutoBackupTools.getLatestBackupOrNull(type, context);
-
-            if (backupFileOrNull == null) {
-                // There is no backup file to restore from.
-                return ERROR_FILE_ACCESS;
-            }
-
-            File backupFile = backupFileOrNull.getFile();
-            FileInputStream in; // Closed by reader after importing.
+            val (backupFile) = AutoBackupTools.getLatestBackupOrNull(type, context)
+                ?: // There is no backup file to restore from.
+                return ERROR_FILE_ACCESS
+            val inputStream: FileInputStream // Closed by reader after importing.
             try {
                 if (!backupFile.canRead()) {
-                    return ERROR_FILE_ACCESS;
+                    return ERROR_FILE_ACCESS
                 }
-                in = new FileInputStream(backupFile);
-            } catch (Exception e) {
-                Timber.e(e, "Unable to open backup file.");
-                errorCause = e.getMessage();
-                return ERROR_FILE_ACCESS;
+                inputStream = FileInputStream(backupFile)
+            } catch (e: Exception) {
+                Timber.e(e, "Unable to open backup file.")
+                errorCause = e.message
+                return ERROR_FILE_ACCESS
             }
 
             // Only clear data after backup file could be opened.
             if (!clearExistingData(type)) {
-                return ERROR;
+                return ERROR
             }
 
             // Access JSON from backup file and try to import data
             try {
-                importFromJson(type, in);
-            } catch (JsonParseException | IOException | IllegalStateException e) {
+                importFromJson(type, inputStream)
+            } catch (e: JsonParseException) {
                 // the given Json might not be valid or unreadable
-                Timber.e(e, "Import failed");
-                errorCause = e.getMessage();
-                return ERROR;
-            } catch (Exception e) {
+                Timber.e(e, "Import failed")
+                errorCause = e.message
+                return ERROR
+            } catch (e: IOException) {
+                Timber.e(e, "Import failed")
+                errorCause = e.message
+                return ERROR
+            } catch (e: IllegalStateException) {
+                Timber.e(e, "Import failed")
+                errorCause = e.message
+                return ERROR
+            } catch (e: Exception) {
                 // Only report unexpected errors.
-                Errors.logAndReport("Import failed", e);
-                errorCause = e.getMessage();
-                return ERROR;
+                logAndReport("Import failed", e)
+                errorCause = e.message
+                return ERROR
             }
         }
-
-        return SUCCESS;
+        return SUCCESS
     }
 
-    @Nullable
-    private Uri getDataBackupFile(@JsonExportTask.BackupType int type) {
-        return BackupSettings.getImportFileUriOrExportFileUri(context, type);
+    private fun getDataBackupFile(@BackupType type: Int): Uri? {
+        return BackupSettings.getImportFileUriOrExportFileUri(context, type)
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean clearExistingData(@JsonExportTask.BackupType int type) {
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        if (type == JsonExportTask.BACKUP_SHOWS) {
-            SgRoomDatabase database = SgRoomDatabase.getInstance(context);
-            database.runInTransaction(() -> {
-                // delete episodes and seasons first to prevent violating foreign key constraints
-                database.sgEpisode2Helper().deleteAllEpisodes();
-                database.sgSeason2Helper().deleteAllSeasons();
-                database.sgShow2Helper().deleteAllShows();
-            });
-        } else if (type == JsonExportTask.BACKUP_LISTS) {
-            // delete list items before lists to prevent violating foreign key constraints
-            batch.add(ContentProviderOperation.newDelete(ListItems.CONTENT_URI).build());
-            batch.add(ContentProviderOperation.newDelete(Lists.CONTENT_URI).build());
-        } else if (type == JsonExportTask.BACKUP_MOVIES) {
-            batch.add(ContentProviderOperation.newDelete(Movies.CONTENT_URI).build());
+    private fun clearExistingData(@BackupType type: Int): Boolean {
+        val batch = ArrayList<ContentProviderOperation>()
+        when (type) {
+            JsonExportTask.BACKUP_SHOWS -> {
+                val database = SgRoomDatabase.getInstance(context)
+                database.runInTransaction {
+                    // delete episodes and seasons first to prevent violating foreign key constraints
+                    database.sgEpisode2Helper().deleteAllEpisodes()
+                    database.sgSeason2Helper().deleteAllSeasons()
+                    database.sgShow2Helper().deleteAllShows()
+                }
+            }
+            JsonExportTask.BACKUP_LISTS -> {
+                // delete list items before lists to prevent violating foreign key constraints
+                batch.add(
+                    ContentProviderOperation.newDelete(ListItems.CONTENT_URI).build()
+                )
+                batch.add(
+                    ContentProviderOperation.newDelete(SeriesGuideContract.Lists.CONTENT_URI)
+                        .build()
+                )
+            }
+            JsonExportTask.BACKUP_MOVIES -> {
+                batch.add(
+                    ContentProviderOperation.newDelete(SeriesGuideContract.Movies.CONTENT_URI)
+                        .build()
+                )
+            }
         }
-
         try {
-            DBUtils.applyInSmallBatches(context, batch);
-        } catch (OperationApplicationException e) {
-            errorCause = e.getMessage();
-            Timber.e(e, "clearExistingData");
-            return false;
+            DBUtils.applyInSmallBatches(context, batch)
+        } catch (e: OperationApplicationException) {
+            errorCause = e.message
+            Timber.e(e, "clearExistingData")
+            return false
         }
-
-        return true;
+        return true
     }
 
-    private void importFromJson(@JsonExportTask.BackupType int type, FileInputStream in)
-            throws JsonParseException, IOException, IllegalArgumentException {
-        if (in.getChannel().size() == 0) {
-            Timber.i("Backup file is empty, nothing to import.");
-            in.close();
-            return; // File is empty, nothing to import.
+    @Throws(JsonParseException::class, IOException::class, IllegalArgumentException::class)
+    private fun importFromJson(@BackupType type: Int, inputStream: FileInputStream) {
+        if (inputStream.channel.size() == 0L) {
+            Timber.i("Backup file is empty, nothing to import.")
+            inputStream.close()
+            return  // File is empty, nothing to import.
         }
 
-        Gson gson = new Gson();
-        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-        reader.beginArray();
-
-        if (type == JsonExportTask.BACKUP_SHOWS) {
-            while (reader.hasNext()) {
-                Show show = gson.fromJson(reader, Show.class);
-                addShowToDatabase(show);
+        val gson = Gson()
+        val reader = JsonReader(InputStreamReader(inputStream, "UTF-8"))
+        reader.beginArray()
+        when (type) {
+            JsonExportTask.BACKUP_SHOWS -> {
+                while (reader.hasNext()) {
+                    val show = gson.fromJson<Show>(reader, Show::class.java)
+                    addShowToDatabase(show)
+                }
             }
-        } else if (type == JsonExportTask.BACKUP_LISTS) {
-            while (reader.hasNext()) {
-                List list = gson.fromJson(reader, List.class);
-                addListToDatabase(list);
+            JsonExportTask.BACKUP_LISTS -> {
+                while (reader.hasNext()) {
+                    val list = gson.fromJson<List>(reader, List::class.java)
+                    addListToDatabase(list)
+                }
             }
-        } else if (type == JsonExportTask.BACKUP_MOVIES) {
-            while (reader.hasNext()) {
-                Movie movie = gson.fromJson(reader, Movie.class);
-                context.getContentResolver().insert(Movies.CONTENT_URI, movie.toContentValues());
+            JsonExportTask.BACKUP_MOVIES -> {
+                while (reader.hasNext()) {
+                    val movie = gson.fromJson<Movie>(reader, Movie::class.java)
+                    context.contentResolver.insert(
+                        SeriesGuideContract.Movies.CONTENT_URI,
+                        movie.toContentValues()
+                    )
+                }
             }
         }
-
-        reader.endArray();
-        reader.close();
+        reader.endArray()
+        reader.close()
     }
 
-    private void addShowToDatabase(Show show) {
-        if ((show.tmdb_id == null || show.tmdb_id <= 0)
-                && (show.tvdb_id == null || show.tvdb_id <= 0)) {
+    private fun addShowToDatabase(show: Show) {
+        if ((show.tmdb_id == null || show.tmdb_id!! <= 0)
+            && (show.tvdb_id == null || show.tvdb_id!! <= 0)) {
             // valid id required
-            return;
+            return
         }
 
         // reset language if it is not supported
-        boolean languageSupported = false;
-        for (int i = 0, size = languageCodes.length; i < size; i++) {
-            if (languageCodes[i].equals(show.language)) {
-                languageSupported = true;
-                break;
-            }
-        }
+        val languageSupported = languageCodes.find { it == show.language } != null
         if (!languageSupported) {
-            show.language = null;
+            show.language = null
         }
 
-        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
-
-        SgShow2 sgShow = ImportTools.toSgShowForImport(show);
-        long showId = database.sgShow2Helper().insertShow(sgShow);
-        if (showId == -1) {
-            return; // Insert failed.
+        val sgShow = show.toSgShowForImport()
+        val showId = SgRoomDatabase.getInstance(context).sgShow2Helper().insertShow(sgShow)
+        if (showId == -1L) {
+            return  // Insert failed.
         }
 
         if (show.seasons == null || show.seasons.isEmpty()) {
             // no seasons (or episodes)
-            return;
+            return
         }
 
         // Parse and insert seasons and episodes.
-        insertSeasonsAndEpisodes(show, showId);
+        insertSeasonsAndEpisodes(show, showId)
     }
 
-    private void insertSeasonsAndEpisodes(Show show, long showId) {
-        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
-
-        for (Season season : show.seasons) {
-            if ((season.tmdb_id == null || season.tmdb_id.isEmpty())
-                    && (season.tvdbId == null || season.tvdbId <= 0)) {
+    private fun insertSeasonsAndEpisodes(show: Show, showId: Long) {
+        val database = SgRoomDatabase.getInstance(context)
+        for (season in show.seasons) {
+            if ((season.tmdb_id == null || season.tmdb_id!!.isEmpty())
+                && (season.tvdbId == null || season.tvdbId!! <= 0)) {
                 // valid id is required
-                continue;
+                continue
             }
             if (season.episodes == null || season.episodes.isEmpty()) {
                 // episodes required
-                continue;
+                continue
             }
 
             // Insert season.
-            SgSeason2 sgSeason = ImportTools.toSgSeasonForImport(season, showId);
-            long seasonId = database.sgSeason2Helper().insertSeason(sgSeason);
+            val sgSeason = season.toSgSeasonForImport(showId)
+            val seasonId = database.sgSeason2Helper().insertSeason(sgSeason)
 
             // If inserted, insert episodes.
-            if (seasonId != -1) {
-                ArrayList<SgEpisode2> episodes = buildEpisodeBatch(season, showId, seasonId);
-                database.sgEpisode2Helper().insertEpisodes(episodes);
+            if (seasonId != -1L) {
+                val episodes = buildEpisodeBatch(season, showId, seasonId)
+                database.sgEpisode2Helper().insertEpisodes(episodes)
             }
         }
     }
 
-    private static ArrayList<SgEpisode2> buildEpisodeBatch(Season season, long showId,
-            long seasonId) {
-        ArrayList<SgEpisode2> episodeBatch = new ArrayList<>();
-
-        for (Episode episode : season.episodes) {
-            if ((episode.tmdb_id == null || episode.tmdb_id <= 0)
-                    && (episode.tvdbId == null || episode.tvdbId <= 0)) {
+    private fun buildEpisodeBatch(
+        season: Season,
+        showId: Long,
+        seasonId: Long
+    ): ArrayList<SgEpisode2> {
+        val episodeBatch = ArrayList<SgEpisode2>()
+        for (episode in season.episodes) {
+            if ((episode.tmdb_id == null || episode.tmdb_id!! <= 0)
+                && (episode.tvdbId == null || episode.tvdbId!! <= 0)) {
                 // valid id is required
-                continue;
+                continue
             }
-
-            episodeBatch.add(ImportTools
-                    .toSgEpisodeForImport(episode, showId, seasonId, season.season));
+            episodeBatch.add(episode.toSgEpisodeForImport(showId, seasonId, season.season))
         }
-
-        return episodeBatch;
+        return episodeBatch
     }
 
-    private void addListToDatabase(List list) {
-        if (TextUtils.isEmpty(list.name)) {
-            return; // required
+    private fun addListToDatabase(list: List) {
+        if (list.name.isNullOrEmpty()) {
+            return // required
         }
-        if (TextUtils.isEmpty(list.listId)) {
+        if (list.listId.isNullOrEmpty()) {
             // rebuild from name
-            list.listId = SeriesGuideContract.Lists.generateListId(list.name);
+            list.listId = SeriesGuideContract.Lists.generateListId(list.name)
         }
 
         // Insert the list
-        context.getContentResolver().insert(Lists.CONTENT_URI, list.toContentValues());
+        context.contentResolver.insert(
+            SeriesGuideContract.Lists.CONTENT_URI,
+            list.toContentValues()
+        )
 
         if (list.items == null || list.items.isEmpty()) {
-            return;
+            return
         }
 
         // Insert the lists items
-        ArrayList<ContentValues> items = new ArrayList<>();
-        for (ListItem item : list.items) {
+        val items = ArrayList<ContentValues>()
+        for (item in list.items) {
             // Note: DO import legacy types (seasons and episodes),
             // as e.g. older backups can still contain legacy show data to allow displaying them.
-            int type;
-            if (ListItemTypesExport.SHOW.equals(item.type)) {
-                type = ListItemTypes.TVDB_SHOW;
-            } else if (ListItemTypesExport.TMDB_SHOW.equals(item.type)) {
-                type = ListItemTypes.TMDB_SHOW;
-            } else if (ListItemTypesExport.SEASON.equals(item.type)) {
-                type = ListItemTypes.SEASON;
-            } else if (ListItemTypesExport.EPISODE.equals(item.type)) {
-                type = ListItemTypes.EPISODE;
+            val type: Int = if (ListItemTypesExport.SHOW == item.type) {
+                ListItemTypes.TVDB_SHOW
+            } else if (ListItemTypesExport.TMDB_SHOW == item.type) {
+                ListItemTypes.TMDB_SHOW
+            } else if (ListItemTypesExport.SEASON == item.type) {
+                ListItemTypes.SEASON
+            } else if (ListItemTypesExport.EPISODE == item.type) {
+                ListItemTypes.EPISODE
             } else {
                 // Unknown item type, skip
-                continue;
+                continue
             }
 
-            String externalId = null;
-            if (item.externalId != null && !item.externalId.isEmpty()) {
-                externalId = item.externalId;
+            var externalId: String? = null
+            if (item.externalId != null && item.externalId.isNotEmpty()) {
+                externalId = item.externalId
             } else if (item.tvdbId > 0) {
-                externalId = String.valueOf(item.tvdbId);
+                externalId = item.tvdbId.toString()
             }
-            if (externalId == null) continue; // No external ID, skip
+            if (externalId == null) continue  // No external ID, skip
 
             // Generate list item ID from values, do not trust given item ID
             // (e.g. encoded list ID might not match)
-            item.listItemId = ListItems.generateListItemId(externalId, type, list.listId);
+            item.listItemId = ListItems.generateListItemId(externalId, type, list.listId)
 
-            ContentValues itemValues = new ContentValues();
-            itemValues.put(ListItems.LIST_ITEM_ID, item.listItemId);
-            itemValues.put(Lists.LIST_ID, list.listId);
-            itemValues.put(ListItems.ITEM_REF_ID, externalId);
-            itemValues.put(ListItems.TYPE, type);
+            val itemValues = ContentValues()
+            itemValues.put(ListItems.LIST_ITEM_ID, item.listItemId)
+            itemValues.put(SeriesGuideContract.Lists.LIST_ID, list.listId)
+            itemValues.put(ListItems.ITEM_REF_ID, externalId)
+            itemValues.put(ListItems.TYPE, type)
 
-            items.add(itemValues);
+            items.add(itemValues)
         }
 
-        ContentValues[] itemsArray = new ContentValues[items.size()];
-        context.getContentResolver().bulkInsert(ListItems.CONTENT_URI, items.toArray(itemsArray));
+        context.contentResolver.bulkInsert(ListItems.CONTENT_URI, items.toTypedArray())
+    }
+
+    companion object {
+        private const val SUCCESS = 1
+        private const val ERROR_STORAGE_ACCESS = 0
+        private const val ERROR = -1
+        private const val ERROR_LARGE_DB_OP = -2
+        private const val ERROR_FILE_ACCESS = -3
     }
 }
