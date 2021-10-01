@@ -1,12 +1,10 @@
 package com.battlelancer.seriesguide.dataliberation
 
-import android.annotation.SuppressLint
 import android.content.ContentProviderOperation
 import android.content.ContentValues
 import android.content.Context
 import android.content.OperationApplicationException
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.ParcelFileDescriptor
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
@@ -32,6 +30,10 @@ import com.battlelancer.seriesguide.util.TaskManager
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.stream.JsonReader
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.io.FileInputStream
@@ -48,9 +50,8 @@ class JsonImportTask(
     importShows: Boolean,
     importLists: Boolean,
     importMovies: Boolean
-) : AsyncTask<Void?, Int?, Int>() {
+) {
 
-    @SuppressLint("StaticFieldLeak")
     private val context: Context = context.applicationContext
     private val languageCodes: Array<String> =
         this.context.resources.getStringArray(R.array.languageCodesShows)
@@ -71,7 +72,15 @@ class JsonImportTask(
         isImportingAutoBackup = true
     }
 
-    override fun doInBackground(vararg params: Void?): Int {
+    suspend fun run(): Int {
+        return withContext(Dispatchers.IO) {
+            val result = doInBackground(this)
+            onPostExecute(result)
+            return@withContext result
+        }
+    }
+
+    private fun doInBackground(coroutineScope: CoroutineScope): Int {
         // Ensure no large database ops are running
         val tm = TaskManager.getInstance()
         if (SgSyncAdapter.isSyncActive(context, false) || tm.isAddTaskRunning) {
@@ -79,7 +88,7 @@ class JsonImportTask(
         }
 
         // last chance to abort
-        if (isCancelled) {
+        if (!coroutineScope.isActive) {
             return ERROR
         }
 
@@ -89,7 +98,7 @@ class JsonImportTask(
             if (result != SUCCESS) {
                 return result
             }
-            if (isCancelled) {
+            if (!coroutineScope.isActive) {
                 return ERROR
             }
         }
@@ -99,7 +108,7 @@ class JsonImportTask(
             if (result != SUCCESS) {
                 return result
             }
-            if (isCancelled) {
+            if (!coroutineScope.isActive) {
                 return ERROR
             }
         }
@@ -109,7 +118,7 @@ class JsonImportTask(
             if (result != SUCCESS) {
                 return result
             }
-            if (isCancelled) {
+            if (!coroutineScope.isActive) {
                 return ERROR
             }
         }
@@ -120,7 +129,7 @@ class JsonImportTask(
         return SUCCESS
     }
 
-    override fun onPostExecute(result: Int) {
+    private fun onPostExecute(result: Int) {
         val messageId: Int
         val showIndefinite: Boolean
         when (result) {
