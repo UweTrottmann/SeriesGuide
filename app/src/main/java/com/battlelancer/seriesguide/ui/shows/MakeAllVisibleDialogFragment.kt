@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.shows
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,7 +25,7 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialog = MaterialAlertDialogBuilder(requireContext())
-            .setMessage(getString(R.string.description_make_all_visible_format, "?"))
+            .setMessage(getDialogMessage())
             .setPositiveButton(R.string.action_shows_make_all_visible) { _, _ ->
                 SgApp.getServicesComponent(requireContext()).showTools().storeAllHiddenVisible()
                 dismiss()
@@ -47,14 +46,19 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    @SuppressLint("StringFormatMatches") // Int as format arg is intentional.
     private suspend fun updateHiddenShowCountAsync() {
         val count = withContext(Dispatchers.IO) {
             SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().countHiddenShows()
         }
         withContext(Dispatchers.Main) {
-            dialog.setMessage(getString(R.string.description_make_all_visible_format, count))
+            dialog.setMessage(getDialogMessage(count))
         }
     }
+
+    private fun getDialogMessage(count: Int? = null) =
+        getString(
+            R.string.description_make_all_visible_format,
+            count ?: "?"
+        )
 
 }
