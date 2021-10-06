@@ -53,30 +53,27 @@ class NextEpisodeUpdater {
             // STEP 1: get last watched episode details
             var season = show.seasonNumber
             var number = show.episodeNumber
-            var releaseTime = show.episodeReleaseDateMs
             val plays = if (show.episodePlays == null || show.episodePlays == 0) {
                 1
             } else show.episodePlays
             // Note: Due to LEFT JOIN query, episode values are null if no matching episode found.
-            if (show.lastWatchedEpisodeId == 0L
-                || season == null || number == null || releaseTime == null) {
-                // by default: no watched episodes, include all starting with special 0
+            if (show.lastWatchedEpisodeId == 0L || season == null || number == null) {
+                // by default: no watched episodes, include all starting with specials season 0
                 season = -1
                 number = -1
-                releaseTime = Long.MIN_VALUE
             }
 
-            // STEP 2: get episode released closest afterwards; or at the same time,
-            // but with a higher number
+            // STEP 2: get episode with less plays and closest higher number,
+            // otherwise first of higher season.
             val selectionArgs: Array<Any> = if (isNoReleasedEpisodes) {
                 // restrict to episodes with future release date
                 arrayOf(
-                    plays, releaseTime, number, season, releaseTime, currentTime
+                    plays, season, number, season, currentTime
                 )
             } else {
-                // restrict to episodes with any valid air date
+                // any episodes
                 arrayOf(
-                    plays, releaseTime, number, season, releaseTime
+                    plays, season, number, season
                 )
             }
             val episodeOrNull = episodeHelper
@@ -156,10 +153,10 @@ class NextEpisodeUpdater {
         if (isNoReleasedEpisodes) {
             // restrict to episodes with future release date
             nextEpisodeSelectionBuilder.append(SELECT_ONLYFUTURE)
-        } else {
-            // restrict to episodes with any valid air date
-            nextEpisodeSelectionBuilder.append(SELECT_WITHAIRDATE)
         }
+        // Otherwise include any, even without release date (== UNKNOWN_NEXT_RELEASE_DATE),
+        // sometimes release dates get added rather late or never. However, currently
+        // show list filters for upcoming/unwatched would exclude these.
         return nextEpisodeSelectionBuilder.toString()
     }
 
@@ -174,24 +171,21 @@ class NextEpisodeUpdater {
         const val UNKNOWN_NEXT_RELEASE_DATE = Long.MAX_VALUE
 
         /**
-         * Less plays, not skipped, airing later
-         * or has a different number or season if airing the same time.
+         * Less plays, not skipped, if in the same season has a higher number,
+         * otherwise has a higher season.
          */
-        var SELECT_NEXT =
+        private const val SELECT_NEXT =
             (SgEpisode2Columns.PLAYS + "<? AND " + SgEpisode2Columns.SELECTION_NOT_SKIPPED + " AND ("
-                    + "(" + SgEpisode2Columns.FIRSTAIREDMS + "=? AND "
-                    + "(" + SgEpisode2Columns.NUMBER + "!=? OR " + SgEpisode2Columns.SEASON + "!=?)) "
-                    + "OR " + SgEpisode2Columns.FIRSTAIREDMS + ">?)")
+                    + "(" + SgEpisode2Columns.SEASON + "=? AND " + SgEpisode2Columns.NUMBER + ">?) "
+                    + "OR " + SgEpisode2Columns.SEASON + ">?"
+                    + ")")
 
-        var SELECT_WITHAIRDATE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + "!=-1"
-
-        var SELECT_ONLYFUTURE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + ">=?"
+        private const val SELECT_ONLYFUTURE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + ">=?"
 
         /**
-         * Air time, then lowest season, or if identical lowest episode number.
+         * Lowest season first, or if identical lowest episode number.
          */
-        var SORTORDER = (SgEpisode2Columns.FIRSTAIREDMS + " ASC,"
-                + SgEpisode2Columns.SEASON + " ASC,"
+        private const val SORTORDER = (SgEpisode2Columns.SEASON + " ASC,"
                 + SgEpisode2Columns.NUMBER + " ASC")
     }
 
