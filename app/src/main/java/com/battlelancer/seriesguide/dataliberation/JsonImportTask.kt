@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.OperationApplicationException
 import android.net.Uri
 import android.os.ParcelFileDescriptor
+import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.dataliberation.ImportTools.toSgEpisodeForImport
@@ -22,7 +23,10 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.provider.SgEpisode2Helper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.provider.SgSeason2Helper
+import com.battlelancer.seriesguide.provider.SgShow2Helper
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
@@ -36,6 +40,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
+import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -49,7 +54,11 @@ class JsonImportTask(
     context: Context,
     importShows: Boolean,
     importLists: Boolean,
-    importMovies: Boolean
+    importMovies: Boolean,
+    private val database: SgRoomDatabase,
+    private val sgShow2Helper: SgShow2Helper,
+    private val sgSeason2Helper: SgSeason2Helper,
+    private val sgEpisode2Helper: SgEpisode2Helper
 ) {
 
     private val context: Context = context.applicationContext
@@ -59,7 +68,17 @@ class JsonImportTask(
     private val isImportShows: Boolean
     private val isImportLists: Boolean
     private val isImportMovies: Boolean
-    private var errorCause: String? = null
+
+    @VisibleForTesting
+    var errorCause: String? = null
+        private set
+
+    /**
+     * If set will use this file instead of opening via URI, which seems broken with Robolectric
+     * (openFileDescriptor throws FileNotFoundException).
+     */
+    @VisibleForTesting
+    var testBackupFile: File? = null
 
     init {
         isImportingAutoBackup = false
@@ -67,6 +86,22 @@ class JsonImportTask(
         isImportLists = importLists
         isImportMovies = importMovies
     }
+
+    constructor(
+        context: Context,
+        importShows: Boolean,
+        importLists: Boolean,
+        importMovies: Boolean
+    ) : this(
+        context,
+        importShows,
+        importLists,
+        importMovies,
+        SgRoomDatabase.getInstance(context),
+        SgRoomDatabase.getInstance(context).sgShow2Helper(),
+        SgRoomDatabase.getInstance(context).sgSeason2Helper(),
+        SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+    )
 
     constructor(context: Context) : this(context, true, true, true) {
         isImportingAutoBackup = true
@@ -163,24 +198,27 @@ class JsonImportTask(
 
     private fun importData(@BackupType type: Int): Int {
         if (!isImportingAutoBackup) {
-            // make sure we have a file uri...
-            val backupFileUri = getDataBackupFile(type) ?: return ERROR_FILE_ACCESS
-            // ...and the file actually exists
-            val pfd: ParcelFileDescriptor?
-            try {
-                pfd = context.contentResolver.openFileDescriptor(backupFileUri, "r")
-            } catch (e: FileNotFoundException) {
-                Timber.e(e, "Backup file not found.")
-                errorCause = e.message
-                return ERROR_FILE_ACCESS
-            } catch (e: SecurityException) {
-                Timber.e(e, "Backup file not found.")
-                errorCause = e.message
-                return ERROR_FILE_ACCESS
-            }
-            if (pfd == null) {
-                Timber.e("File descriptor is null.")
-                return ERROR_FILE_ACCESS
+            val testBackupFile = testBackupFile
+            var pfd: ParcelFileDescriptor? = null
+            if (testBackupFile == null) {
+                // make sure we have a file uri...
+                val backupFileUri = getDataBackupFile(type) ?: return ERROR_FILE_ACCESS
+                // ...and the file actually exists
+                try {
+                    pfd = context.contentResolver.openFileDescriptor(backupFileUri, "r")
+                } catch (e: FileNotFoundException) {
+                    Timber.e(e, "Backup file not found.")
+                    errorCause = e.message
+                    return ERROR_FILE_ACCESS
+                } catch (e: SecurityException) {
+                    Timber.e(e, "Backup file not found.")
+                    errorCause = e.message
+                    return ERROR_FILE_ACCESS
+                }
+                if (pfd == null) {
+                    Timber.e("File descriptor is null.")
+                    return ERROR_FILE_ACCESS
+                }
             }
 
             if (!clearExistingData(type)) {
@@ -188,12 +226,14 @@ class JsonImportTask(
             }
 
             // Access JSON from backup file and try to import data
-            val inputStream = FileInputStream(pfd.fileDescriptor)
+            val inputStream = if (testBackupFile == null) {
+                FileInputStream(pfd!!.fileDescriptor)
+            } else FileInputStream(testBackupFile)
             try {
                 importFromJson(type, inputStream)
 
                 // let the document provider know we're done.
-                pfd.close()
+                pfd?.close()
             } catch (e: JsonParseException) {
                 // the given Json might not be valid or unreadable
                 Timber.e(e, "Import failed")
@@ -269,12 +309,11 @@ class JsonImportTask(
         val batch = ArrayList<ContentProviderOperation>()
         when (type) {
             JsonExportTask.BACKUP_SHOWS -> {
-                val database = SgRoomDatabase.getInstance(context)
                 database.runInTransaction {
                     // delete episodes and seasons first to prevent violating foreign key constraints
-                    database.sgEpisode2Helper().deleteAllEpisodes()
-                    database.sgSeason2Helper().deleteAllSeasons()
-                    database.sgShow2Helper().deleteAllShows()
+                    sgEpisode2Helper.deleteAllEpisodes()
+                    sgSeason2Helper.deleteAllSeasons()
+                    sgShow2Helper.deleteAllShows()
                 }
             }
             JsonExportTask.BACKUP_LISTS -> {
@@ -356,7 +395,7 @@ class JsonImportTask(
         }
 
         val sgShow = show.toSgShowForImport()
-        val showId = SgRoomDatabase.getInstance(context).sgShow2Helper().insertShow(sgShow)
+        val showId = sgShow2Helper.insertShow(sgShow)
         if (showId == -1L) {
             return  // Insert failed.
         }
@@ -371,7 +410,6 @@ class JsonImportTask(
     }
 
     private fun insertSeasonsAndEpisodes(show: Show, showId: Long) {
-        val database = SgRoomDatabase.getInstance(context)
         for (season in show.seasons) {
             if ((season.tmdb_id == null || season.tmdb_id!!.isEmpty())
                 && (season.tvdbId == null || season.tvdbId!! <= 0)) {
@@ -385,12 +423,12 @@ class JsonImportTask(
 
             // Insert season.
             val sgSeason = season.toSgSeasonForImport(showId)
-            val seasonId = database.sgSeason2Helper().insertSeason(sgSeason)
+            val seasonId = sgSeason2Helper.insertSeason(sgSeason)
 
             // If inserted, insert episodes.
             if (seasonId != -1L) {
                 val episodes = buildEpisodeBatch(season, showId, seasonId)
-                database.sgEpisode2Helper().insertEpisodes(episodes)
+                sgEpisode2Helper.insertEpisodes(episodes)
             }
         }
     }
@@ -474,7 +512,7 @@ class JsonImportTask(
     }
 
     companion object {
-        private const val SUCCESS = 1
+        const val SUCCESS = 1
         private const val ERROR_STORAGE_ACCESS = 0
         private const val ERROR = -1
         private const val ERROR_LARGE_DB_OP = -2
