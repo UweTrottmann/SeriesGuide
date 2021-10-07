@@ -12,7 +12,6 @@ import android.widget.GridView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -66,7 +65,7 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
             .scrollTabToTopLiveData
             .observe(
                 viewLifecycleOwner,
-                Observer {
+                {
                     if (it != null) {
                         if (it.tabPosition == getTabPosition(it.isShowingNowTab)) {
                             gridView.smoothScrollToPosition(0)
