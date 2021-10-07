@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.SearchActivity
@@ -77,22 +76,18 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
 
         adapter = SimilarShowsAdapter(itemClickListener)
         recyclerView.adapter = adapter
-    }
 
-    private fun loadSimilarShows() {
-        similarShowsViewModel.loadSimilarShows(showTmdbId)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        similarShowsViewModel.resultLiveData.observe(viewLifecycleOwner, Observer {
+        similarShowsViewModel.resultLiveData.observe(viewLifecycleOwner, {
             adapter.submitList(it.results)
             emptyView.setMessage(it.emptyMessage)
             recyclerView.isGone = it.results.isNullOrEmpty()
             emptyView.isGone = !it.results.isNullOrEmpty()
             swipeRefreshLayout.isRefreshing = false
         })
+    }
+
+    private fun loadSimilarShows() {
+        similarShowsViewModel.loadSimilarShows(showTmdbId)
     }
 
     override fun onStart() {

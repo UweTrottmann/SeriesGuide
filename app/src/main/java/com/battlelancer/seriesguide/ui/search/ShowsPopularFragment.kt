@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
@@ -30,7 +29,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     private lateinit var snackbar: Snackbar
 
     private lateinit var unbinder: Unbinder
-    private lateinit var model: ShowsPopularViewModel
+    private val model: ShowsPopularViewModel by viewModels()
     private lateinit var adapter: ShowsPopularAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -56,16 +55,11 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
         adapter = ShowsPopularAdapter(itemClickListener)
         recyclerView.adapter = adapter
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        model = ViewModelProvider(this).get(ShowsPopularViewModel::class.java)
-        model.items.observe(viewLifecycleOwner, Observer {
+        model.items.observe(viewLifecycleOwner, {
             adapter.submitList(it)
         })
-        model.networkState.observe(viewLifecycleOwner, Observer {
+        model.networkState.observe(viewLifecycleOwner, {
             swipeRefreshLayout.isRefreshing = it == NetworkState.LOADING
             if (it?.status == Status.ERROR) {
                 snackbar.setText(it.message!!)

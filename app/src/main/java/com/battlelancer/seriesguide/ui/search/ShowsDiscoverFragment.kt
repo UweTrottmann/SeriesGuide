@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.content.edit
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +55,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     private lateinit var unbinder: Unbinder
     private lateinit var adapter: ShowsDiscoverAdapter
-    private lateinit var model: ShowsDiscoverViewModel
+    private val model: ShowsDiscoverViewModel by viewModels()
 
     /** Two letter ISO 639-1 language code. */
     private lateinit var languageCode: String
@@ -74,6 +73,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     SearchActivity.SearchQuerySubmitEvent::class.java)
             queryEvent?.query ?: ""
         }
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -117,6 +118,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         adapter = ShowsDiscoverAdapter(requireContext(), discoverItemClickListener,
                 TraktCredentials.get(context).hasCredentials(), true)
         recyclerView.adapter = adapter
+
+        languageCode = DisplaySettings.getShowsSearchLanguage(requireContext())
+
+        // observe and load results
+        model.data.observe(viewLifecycleOwner, { handleResultsUpdate(it) })
+        loadResults()
     }
 
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
@@ -153,20 +160,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                         TraktAddFragment.AddItemMenuItemClickListener(context, showTmdbId))
             }.show()
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        // enable menu
-        setHasOptionsMenu(true)
-
-        languageCode = DisplaySettings.getShowsSearchLanguage(requireContext())
-
-        // observe and load results
-        model = ViewModelProvider(this).get(ShowsDiscoverViewModel::class.java)
-        model.data.observe(viewLifecycleOwner, Observer { handleResultsUpdate(it) })
-        loadResults()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

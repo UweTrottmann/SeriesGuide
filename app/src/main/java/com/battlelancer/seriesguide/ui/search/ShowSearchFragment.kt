@@ -44,10 +44,6 @@ class ShowSearchFragment : BaseSearchFragment() {
         adapter = ShowSearchAdapter(requireContext(), onItemClickListener).also {
             gridView.adapter = it
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         if (activity is SearchTriggerListener) {
             searchTriggerListener = activity as SearchTriggerListener

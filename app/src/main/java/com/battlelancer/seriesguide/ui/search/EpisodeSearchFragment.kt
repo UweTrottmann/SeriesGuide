@@ -39,10 +39,6 @@ class EpisodeSearchFragment : BaseSearchFragment() {
         adapter = EpisodeSearchAdapter(requireContext(), onItemClickListener).also {
             gridView.adapter = it
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         model.episodes.observe(viewLifecycleOwner) { episodes ->
             adapter.setData(episodes)
