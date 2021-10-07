@@ -287,10 +287,6 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         textDescription.copyTextToClipboardOnLongClick()
         textGuestStars.copyTextToClipboardOnLongClick()
         textDvdNumber.copyTextToClipboardOnLongClick()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         // Hide show info if show fragment is visible due to multi-pane layout.
         val isDisplayShowInfo = resources.getBoolean(R.bool.isOverviewSinglePane)

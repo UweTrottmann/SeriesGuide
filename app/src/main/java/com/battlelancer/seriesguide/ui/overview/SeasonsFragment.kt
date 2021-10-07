@@ -55,6 +55,8 @@ class SeasonsFragment() : Fragment() {
         arguments?.run {
             showId = getLong(ARG_LONG_SHOW_ROW_ID)
         } ?: throw IllegalArgumentException("Missing arguments")
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -85,10 +87,6 @@ class SeasonsFragment() : Fragment() {
                 it.adapter = adapter
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         model.seasons.observe(viewLifecycleOwner) { seasons ->
             adapter.submitList(seasons)
@@ -101,8 +99,6 @@ class SeasonsFragment() : Fragment() {
         PreferenceManager.getDefaultSharedPreferences(activity).apply {
             registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
         }
-
-        setHasOptionsMenu(true)
     }
 
     override fun onStart() {

@@ -136,6 +136,8 @@ class ShowFragment() : Fragment() {
     private lateinit var showTools: ShowTools
     private var languageCode: String? = null
 
+    val model: ShowViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showTools = SgApp.getServicesComponent(requireContext()).showTools()
@@ -150,7 +152,10 @@ class ShowFragment() : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_show, container, false)
         unbinder = ButterKnife.bind(this, view)
+        return view
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // favorite + notifications + visibility button
         CheatSheet.setup(buttonFavorite)
         CheatSheet.setup(buttonNotify)
@@ -181,13 +186,6 @@ class ShowFragment() : Fragment() {
         textViewReleaseCountry.copyTextToClipboardOnLongClick()
         textViewFirstRelease.copyTextToClipboardOnLongClick()
 
-        return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val model: ShowViewModel by viewModels()
         model.setShowId(showId)
         model.show.observe(viewLifecycleOwner) { sgShow2 ->
             if (sgShow2 != null) {
