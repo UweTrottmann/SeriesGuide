@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding
@@ -55,7 +54,7 @@ class MoviesSearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMoviesSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -78,19 +77,15 @@ class MoviesSearchFragment : Fragment() {
 
         adapter = MoviesSearchAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
         binding.recyclerViewMoviesSearch.adapter = adapter
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        model.pagedMovieList.observe(viewLifecycleOwner, Observer {
+        model.pagedMovieList.observe(viewLifecycleOwner, {
             val hasNoResults = it.size == 0
             binding.emptyViewMoviesSearch.isGone = !hasNoResults
             binding.recyclerViewMoviesSearch.isGone = hasNoResults
 
             adapter.submitList(it)
         })
-        model.networkState.observe(viewLifecycleOwner, Observer {
+        model.networkState.observe(viewLifecycleOwner, {
             binding.swipeRefreshLayoutMoviesSearch.isRefreshing = it == NetworkState.LOADING
             // Note: empty view will not be visible if the previous page successfully loaded.
             if (it.status == Status.ERROR) {
