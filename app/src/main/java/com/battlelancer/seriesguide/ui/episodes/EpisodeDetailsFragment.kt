@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -88,6 +88,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     private var bindingActions: ButtonsServicesBinding? = null
     private var bindingBottom: ButtonsEpisodeMoreBinding? = null
 
+    private val model by viewModels<EpisodeDetailsViewModel> {
+        EpisodeDetailsViewModelFactory(episodeId, requireActivity().application)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         episodeId = arguments?.getLong(ARG_LONG_EPISODE_ID)
@@ -151,14 +155,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         binding.textviewWriters.copyTextToClipboardOnLongClick()
         binding.textviewDvd.copyTextToClipboardOnLongClick()
         binding.textviewReleaseDate.copyTextToClipboardOnLongClick()
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val model = ViewModelProvider(
-            this,
-            EpisodeDetailsViewModelFactory(episodeId, requireActivity().application)
-        ).get(EpisodeDetailsViewModel::class.java)
         // Once episode is loaded, trigger show loading: so set show observer first.
         model.show.observe(viewLifecycleOwner, { show: SgShow2? ->
             if (show != null) {
@@ -172,21 +169,21 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 }
             }
             // no data to display
-            binding?.root?.visibility = View.GONE
+            binding.root.visibility = View.GONE
         })
         model.episode.observe(viewLifecycleOwner, { sgEpisode2: SgEpisode2? ->
             if (sgEpisode2 != null) {
                 model.showId.postValue(sgEpisode2.showId)
             } else {
                 // no data to display
-                binding?.root?.visibility = View.GONE
+                binding.root.visibility = View.GONE
             }
         })
         model.watchProvider.observe(viewLifecycleOwner, { watchInfo: TmdbTools2.WatchInfo? ->
-            val binding = binding
-            if (watchInfo != null && binding != null) {
+            val b = this.binding
+            if (watchInfo != null && b != null) {
                 StreamingSearch.configureButton(
-                    binding.includeButtons.buttonEpisodeStreamingSearch,
+                    b.includeButtons.buttonEpisodeStreamingSearch,
                     watchInfo,
                     true
                 )
