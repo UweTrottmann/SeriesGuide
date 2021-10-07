@@ -9,12 +9,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
-import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -147,8 +148,7 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
             binding.checkBoxDataLibShows.isChecked, binding.checkBoxDataLibLists.isChecked,
             binding.checkBoxDataLibMovies.isChecked
         )
-        model.dataLibTask = dataLibTask
-        Utils.executeInOrder(dataLibTask)
+        model.dataLibJob = SgApp.coroutineScope.launch { dataLibTask.run() }
     }
 
     private fun doDataExport(type: Int, uri: Uri?) {

@@ -12,10 +12,11 @@ import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.util.TaskManager
-import com.battlelancer.seriesguide.util.Utils
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -161,9 +162,8 @@ class AutoBackupFragment : Fragment() {
     private fun runAutoBackupImport() {
         setProgressLock(true)
 
-        val importTask = JsonImportTask(context)
-        viewModel.importTask = importTask
-        Utils.executeInOrder(importTask)
+        val importTask = JsonImportTask(requireContext())
+        viewModel.importTask = SgApp.coroutineScope.launch { importTask.run() }
     }
 
     private val createShowExportFileResult =

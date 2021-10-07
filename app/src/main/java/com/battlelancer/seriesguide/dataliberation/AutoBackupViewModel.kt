@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.dataliberation
 
 import android.app.Application
-import android.os.AsyncTask
 import android.text.format.DateUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
@@ -18,11 +18,11 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
      * Try to keep the import task around on config changes
      * so it does not have to be finished.
      */
-    var importTask: AsyncTask<Void, Int, Int>? = null
+    var importTask: Job? = null
     val isImportTaskNotCompleted: Boolean
         get() {
             val importTask = importTask
-            return importTask != null && importTask.status != AsyncTask.Status.FINISHED
+            return importTask != null && !importTask.isCompleted
         }
 
     /** Time string of the available backup, or null if no backup is available. */
@@ -65,7 +65,7 @@ class AutoBackupViewModel(application: Application) : AndroidViewModel(applicati
 
     override fun onCleared() {
         if (isImportTaskNotCompleted) {
-            importTask?.cancel(true)
+            importTask?.cancel(null)
         }
         importTask = null
     }
