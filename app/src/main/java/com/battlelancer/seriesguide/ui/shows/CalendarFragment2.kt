@@ -56,6 +56,7 @@ class CalendarFragment2 : Fragment() {
             CalendarType.RECENT.id -> CalendarType.RECENT
             else -> throw IllegalArgumentException("Unknown calendar type $argType")
         }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -114,18 +115,12 @@ class CalendarFragment2 : Fragment() {
                     }
                 }
             )
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         viewModel.upcomingEpisodesLiveData.observe(viewLifecycleOwner, {
             adapter.submitList(it)
             updateEmptyView(it.isEmpty())
         })
         updateCalendarQuery()
-
-        setHasOptionsMenu(true)
     }
 
     private fun updateEmptyView(isEmpty: Boolean) {
