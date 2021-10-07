@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.Constants
@@ -27,6 +28,7 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.SeasonTools
+import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import org.greenrobot.eventbus.Subscribe
@@ -44,7 +46,7 @@ class EpisodesActivity : BaseMessageActivity() {
     @JvmField
     var containerPager: ViewGroup? = null
     @BindView(R.id.pagerEpisodes)
-    lateinit var episodeDetailsPager: ViewPager
+    lateinit var episodeDetailsPager: ViewPager2
     @BindView(R.id.tabsEpisodes)
     lateinit var episodeDetailsTabs: SlidingTabLayout
     @BindView(R.id.imageViewEpisodesBackground)
@@ -209,18 +211,17 @@ class EpisodesActivity : BaseMessageActivity() {
         // Episode pager.
         val adapter = episodeDetailsAdapter
         if (adapter == null) {
-            episodeDetailsAdapter = EpisodePagerAdapter(
-                this,
-                supportFragmentManager
-            ).also {
-                it.updateEpisodeList(info.episodes)
-            }
+            episodeDetailsAdapter = EpisodePagerAdapter(this)
+                .also { it.updateItems(info.episodes) }
             episodeDetailsPager.adapter = episodeDetailsAdapter
         } else {
-            adapter.updateEpisodeList(info.episodes)
+            adapter.updateItems(info.episodes)
         }
         // Refresh pager tab decoration.
-        episodeDetailsTabs.setViewPager(episodeDetailsPager)
+        episodeDetailsTabs.setViewPager2(episodeDetailsPager) { position ->
+            val episode = info.episodes[position]
+            TextTools.getEpisodeNumber(this, episode.season, episode.episodenumber)
+        }
 
         // Remove page change listener to avoid changing checked episode on sort order changes.
         episodeDetailsTabs.setOnPageChangeListener(null)
