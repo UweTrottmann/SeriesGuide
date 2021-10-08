@@ -168,6 +168,9 @@ class EpisodesActivity : BaseMessageActivity() {
         // Tabs setup.
         episodeDetailsTabs.setDefaultStyle()
         episodeDetailsTabs.setDisplayUnderline(true)
+
+        // Preload next/previous page so swiping is smoother.
+        episodeDetailsPager.offscreenPageLimit = 1
     }
 
     private val onPageChangeListener = object : OnPageChangeListener {
