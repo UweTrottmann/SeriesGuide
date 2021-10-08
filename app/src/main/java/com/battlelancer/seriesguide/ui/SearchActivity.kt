@@ -13,7 +13,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -61,7 +60,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
 
     private lateinit var searchHistory: SearchHistory
     private lateinit var searchHistoryAdapter: ArrayAdapter<String>
-    private var tvdbSearchVisible: Boolean = false
+    private var remoteSearchVisible: Boolean = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,7 +146,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
         }
     }
 
-    private val pageChangeListener = object : ViewPager.OnPageChangeListener {
+    private val pageChangeListener = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(
             position: Int,
             positionOffset: Float,
@@ -160,10 +159,10 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             val searchVisible = position <= TAB_POSITION_SEARCH
             searchContainer.visibility = if (searchVisible) View.VISIBLE else View.GONE
             if (searchVisible) {
-                tvdbSearchVisible = position == TAB_POSITION_SEARCH
-                searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (tvdbSearchVisible) searchHistoryAdapter else null)
+                remoteSearchVisible = position == TAB_POSITION_SEARCH
+                searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (remoteSearchVisible) searchHistoryAdapter else null)
                 searchInputLayout.hint =
-                    getString(if (tvdbSearchVisible) R.string.checkin_searchhint else R.string.search)
+                    getString(if (remoteSearchVisible) R.string.checkin_searchhint else R.string.search)
             }
         }
 
@@ -267,7 +266,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
     }
 
     private fun triggerTvdbSearch() {
-        if (tvdbSearchVisible) {
+        if (remoteSearchVisible) {
             searchAutoCompleteView.dismissDropDown()
             // extract and post query
             val query = searchAutoCompleteView.text.toString().trim()

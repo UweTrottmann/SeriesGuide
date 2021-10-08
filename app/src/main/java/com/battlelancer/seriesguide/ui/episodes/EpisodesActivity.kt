@@ -14,8 +14,6 @@ import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -35,7 +33,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * Hosts a fragment which displays episodes of a season in a list and in a [ViewPager].
+ * Hosts a fragment which displays episodes of a season in a list and in a view pager.
  * On small screens only one is visible at a time, on larger screens they are shown side-by-side.
  */
 class EpisodesActivity : BaseMessageActivity() {
@@ -173,7 +171,7 @@ class EpisodesActivity : BaseMessageActivity() {
         episodeDetailsPager.offscreenPageLimit = 1
     }
 
-    private val onPageChangeListener = object : OnPageChangeListener {
+    private val onPageChangeListener = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(
             position: Int,
             positionOffset: Float,

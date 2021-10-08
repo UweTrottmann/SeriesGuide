@@ -7,10 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -45,7 +43,7 @@ import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
  */
 class ShowsActivity : BaseTopActivity(), OnAddShowListener {
 
-    private lateinit var tabsAdapter: ShowsTabPageAdapter
+    private lateinit var tabsAdapter: TabStripAdapter
     private lateinit var viewPager: ViewPager2
 
     private val viewModel: ShowsActivityViewModel by viewModels()
@@ -198,12 +196,8 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
                 scrollSelectedTabToTop()
             }
         }
-        tabsAdapter = ShowsTabPageAdapter(
-            this,
-            viewPager,
-            tabs,
-            buttonAddShow
-        )
+        tabsAdapter = TabStripAdapter(this, viewPager, tabs)
+        tabs.setOnPageChangeListener(ShowsPageChangeListener(buttonAddShow))
 
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment::class.java, null)
@@ -359,19 +353,11 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
     }
 
     /**
-     * Special [TabStripAdapter] which hides the floating action button for all but the shows tab.
+     * Page change listener which hides the floating action button for all but the shows tab.
      */
-    class ShowsTabPageAdapter(
-        fragmentActivity: FragmentActivity,
-        viewPager: ViewPager2,
-        tabs: SlidingTabLayout,
+    class ShowsPageChangeListener(
         private val floatingActionButton: FloatingActionButton
-    ) : TabStripAdapter(fragmentActivity, viewPager, tabs), OnPageChangeListener {
-
-        init {
-            tabs.setOnPageChangeListener(this)
-        }
-
+    ) : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrollStateChanged(arg0: Int) {}
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
 
@@ -383,7 +369,6 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
                 floatingActionButton.hide()
             }
         }
-
     }
 
     companion object {
