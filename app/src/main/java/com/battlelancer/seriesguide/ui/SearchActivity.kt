@@ -14,10 +14,10 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.settings.SearchSettings
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
@@ -57,7 +57,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
     @BindView(R.id.tabsSearch)
     internal lateinit var tabs: SlidingTabLayout
     @BindView(R.id.pagerSearch)
-    internal lateinit var viewPager: ViewPager
+    internal lateinit var viewPager: ViewPager2
 
     private lateinit var searchHistory: SearchHistory
     private lateinit var searchHistoryAdapter: ArrayAdapter<String>
@@ -116,7 +116,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             dismissDropDown()
         }
 
-        val tabsAdapter = TabStripAdapter(supportFragmentManager, this, viewPager, tabs)
+        val tabsAdapter = TabStripAdapter(this, viewPager, tabs)
         tabs.setOnPageChangeListener(pageChangeListener)
         tabs.setOnTabClickListener { position ->
             if (viewPager.currentItem == position) {
@@ -134,8 +134,8 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
         // set default tab
         if (intent != null && intent.extras != null) {
             val defaultTab = intent.extras!!.getInt(EXTRA_DEFAULT_TAB)
-            if (defaultTab < tabsAdapter.count) {
-                viewPager.currentItem = defaultTab
+            if (defaultTab < tabsAdapter.itemCount) {
+                viewPager.setCurrentItem(defaultTab, false)
             }
             if (mayShowKeyboard &&
                 (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES)) {
@@ -191,7 +191,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
                 val showTitle = appData.getString(EpisodeSearchFragment.ARG_SHOW_TITLE)
                 if (!TextUtils.isEmpty(showTitle)) {
                     // change title + switch to episodes tab if show restriction was submitted
-                    viewPager.currentItem = TAB_POSITION_EPISODES
+                    viewPager.setCurrentItem(TAB_POSITION_EPISODES, false)
                 }
             }
 
@@ -219,7 +219,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
                 AddShowDialogFragment.show(this@SearchActivity, supportFragmentManager, showTmdbId)
             } else {
                 // no id, populate the search field instead
-                viewPager.currentItem = TAB_POSITION_SEARCH
+                viewPager.setCurrentItem(TAB_POSITION_SEARCH, false)
                 searchAutoCompleteView.setText(sharedText)
                 triggerTvdbSearch()
                 triggerLocalSearch(sharedText)

@@ -7,11 +7,10 @@ import android.view.MenuItem;
 import android.view.View;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.adapters.TabStripAdapter;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.movies.MoviesActivityViewModel;
@@ -44,7 +43,7 @@ public class MoviesActivity extends BaseTopActivity {
     public static final int TAB_POSITION_WATCHED_WITH_NOW = 4;
     private static final int TAB_COUNT_WITH_TRAKT = 5;
 
-    @BindView(R.id.viewPagerTabs) ViewPager viewPager;
+    @BindView(R.id.viewPagerTabs) ViewPager2 viewPager;
     @BindView(R.id.tabLayoutTabs) SlidingTabLayout tabs;
     private TabStripAdapter tabsAdapter;
     private boolean showNowTab;
@@ -81,7 +80,7 @@ public class MoviesActivity extends BaseTopActivity {
                 scrollSelectedTabToTop();
             }
         });
-        tabsAdapter = new TabStripAdapter(getSupportFragmentManager(), this, viewPager, tabs);
+        tabsAdapter = new TabStripAdapter(this, viewPager, tabs);
         // discover
         tabsAdapter.addTab(R.string.title_discover, MoviesDiscoverFragment.class, null);
         // trakt-only tabs should only be visible if connected
@@ -115,9 +114,7 @@ public class MoviesActivity extends BaseTopActivity {
     protected void onStart() {
         super.onStart();
 
-        // Broken: tabs will update, but view pager does not use correct fragments.
-        // add trakt-only tab if user just signed in
-//        maybeAddNowTab();
+        maybeAddNowTab();
     }
 
     @Override
@@ -146,7 +143,7 @@ public class MoviesActivity extends BaseTopActivity {
     }
 
     private void maybeAddNowTab() {
-        int currentTabCount = tabsAdapter.getCount();
+        int currentTabCount = tabsAdapter.getItemCount();
         showNowTab = TraktCredentials.get(this).hasCredentials();
         if (showNowTab && currentTabCount != TAB_COUNT_WITH_TRAKT) {
             tabsAdapter.addTab(

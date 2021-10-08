@@ -10,9 +10,8 @@ import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.overview.OverviewFragment
@@ -135,12 +134,11 @@ class OverviewActivity : BaseMessageActivity() {
     }
 
     private fun setupViewPager(pagerView: View) {
-        val pager = pagerView as ViewPager
+        val pager = pagerView as ViewPager2
 
         // setup tab strip
         val tabsAdapter = TabStripAdapter(
-            supportFragmentManager, this, pager,
-            findViewById(R.id.tabsOverview)
+            this, pager, findViewById(R.id.tabsOverview)
         )
         tabsAdapter.addTab(
             R.string.show_details,
@@ -161,7 +159,7 @@ class OverviewActivity : BaseMessageActivity() {
 
         // select overview to be shown initially
         val displaySeasons = intent.getBooleanExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, false)
-        pager.currentItem = if (displaySeasons) 2 /* seasons */ else 1 /* overview */
+        pager.setCurrentItem(if (displaySeasons) 2 /* seasons */ else 1 /* overview */, false)
     }
 
     private fun findAndRemoveFragment(fragmentId: Int) {
