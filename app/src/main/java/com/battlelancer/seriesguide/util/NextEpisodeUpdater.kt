@@ -65,6 +65,11 @@ class NextEpisodeUpdater {
 
             // STEP 2: get episode with less plays and closest higher number,
             // otherwise first of higher season.
+            // Note: previously this selected the next episode based
+            // on it having a higher release date. This was done to handle special episodes
+            // releasing in between regular episodes. However, when e.g. skipping all special
+            // episodes this may select an unexpected regular episode; it also failed when
+            // the next episode does not have a release date, yet.
             val selectionArgs: Array<Any> = if (isNoReleasedEpisodes) {
                 // restrict to episodes with future release date
                 arrayOf(
