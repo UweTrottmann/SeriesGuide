@@ -391,7 +391,7 @@
     <string name="pref_theme">主题</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">使用系统默认设置</string>
-    <string name="theme_app_auto_battery">由省电模式设置</string>
+    <string name="theme_app_auto_battery">根据省电模式进行设置</string>
     <string name="theme_app_dark">深色</string>
     <string name="theme_app_light">浅色</string>
     <!-- Other advanced settings -->
@@ -451,13 +451,13 @@
     <string name="pref_notifications_next_episodes_only">仅用于下一待看剧集</string>
     <string name="pref_notifications_next_episodes_only_summary">仅当新剧集是下一个待看剧集时通知</string>
     <string name="pref_notifications_battery_settings">电池设置</string>
-    <string name="pref_notifications_battery_settings_summary">转到电池设置，禁用电池优化以获取可靠稳定的通知</string>
+    <string name="pref_notifications_battery_settings_summary">转到电池设置，停用电池优化以获取可靠稳定的通知</string>
     <!-- List Widget -->
     <string name="hide_watched">隐藏看过剧集</string>
     <string name="pref_widget_opacity">微件背景</string>
     <string name="pref_widget_type">微件类型</string>
     <string name="pref_large_font">使用大字体</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_hide_watch_button">隐藏观看按钮</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">100%</string>
     <string name="widget_background_25">25%</string>
