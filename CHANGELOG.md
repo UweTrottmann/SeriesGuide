@@ -12,6 +12,16 @@ Version 62
 ----------
 *in development*
 
+#### 62-beta2
+*2021-10-13*
+
+* 🔧 The next episode is now selected based on number, no longer by release date. This means specials
+  released in between episodes will no longer appear as next, you'll have to look for them in the
+  specials season. Decided to change this based on feedback over the years as many were confused
+  why an apparently random episode was next e.g. after marking all specials watched/skipped.
+* 🔧 Modernize remaining pager components (e.g. episode tabs, movie tabs) for more reliable behavior.
+* 📝 Latest translations from Crowdin.
+
 #### 62-beta1
 *2021-09-30*
 
