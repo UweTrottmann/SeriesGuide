@@ -12,6 +12,13 @@ Version 62
 ----------
 *in development*
 
+#### 62-beta3
+*2021-10-20*
+
+* 🔧 Revert the next episode selection change, because Anime. The next episode is again selected
+  by release date. Note: to never choose specials as next, see More > Settings > Advanced.
+* 📝 Latest translations from Crowdin.
+
 #### 62-beta2
 *2021-10-13*
 
