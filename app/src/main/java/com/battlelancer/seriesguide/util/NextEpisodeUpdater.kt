@@ -68,8 +68,7 @@ class NextEpisodeUpdater {
             // Note: previously this selected the next episode based
             // on it having a higher release date. This was done to handle special episodes
             // releasing in between regular episodes. However, when e.g. skipping all special
-            // episodes this may select an unexpected regular episode; it also failed when
-            // the next episode does not have a release date, yet.
+            // episodes this may select an unexpected regular episode.
             val selectionArgs: Array<Any> = if (isNoReleasedEpisodes) {
                 // restrict to episodes with future release date
                 arrayOf(
@@ -158,10 +157,12 @@ class NextEpisodeUpdater {
         if (isNoReleasedEpisodes) {
             // restrict to episodes with future release date
             nextEpisodeSelectionBuilder.append(SELECT_ONLYFUTURE)
+        } else {
+            // restrict to episodes with any valid air date
+            // currently show list filters and UI expect a
+            // valid release date if there is a next episode
+            nextEpisodeSelectionBuilder.append(SELECT_WITHAIRDATE)
         }
-        // Otherwise include any, even without release date (== UNKNOWN_NEXT_RELEASE_DATE),
-        // sometimes release dates get added rather late or never. However, currently
-        // show list filters for upcoming/unwatched would exclude these.
         return nextEpisodeSelectionBuilder.toString()
     }
 
@@ -184,6 +185,8 @@ class NextEpisodeUpdater {
                     + "(" + SgEpisode2Columns.SEASON + "=? AND " + SgEpisode2Columns.NUMBER + ">?) "
                     + "OR " + SgEpisode2Columns.SEASON + ">?"
                     + ")")
+
+        private const val SELECT_WITHAIRDATE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + "!=-1"
 
         private const val SELECT_ONLYFUTURE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + ">=?"
 
