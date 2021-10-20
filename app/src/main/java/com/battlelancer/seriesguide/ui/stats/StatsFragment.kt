@@ -346,11 +346,13 @@ class StatsFragment : Fragment() {
 
         val showStats =
             "${getString(R.string.app_name)} ${getString(R.string.statistics)}\n\n" +
-                    "$shows ${getString(R.string.statistics_shows)}\n" +
+                    "${getString(R.string.shows)}\n" +
+                    "$shows\n" +
                     "$showsWithNext\n" +
                     "$showsContinuing\n" +
                     "$showsFinished\n\n" +
-                    "$episodes ${getString(R.string.statistics_episodes)}\n" +
+                    "${getString(R.string.episodes)}\n" +
+                    "$episodes\n" +
                     "$episodesWatched\n"
 
         val statsString = StringBuilder(showStats)
@@ -383,7 +385,8 @@ class StatsFragment : Fragment() {
         val moviesWatchedRuntime = getTimeDuration(currentStats.moviesWatchedRuntime)
         val moviesCollectionRuntime = getTimeDuration(currentStats.moviesCollectionRuntime)
 
-        val movieStats = "$movies ${getString(R.string.statistics_movies)}\n" +
+        val movieStats = "${getString(R.string.movies)}\n" +
+                "$movies\n" +
                 "$moviesWatched\n" +
                 "$moviesWatchedRuntime\n" +
                 "$moviesWatchlist\n" +

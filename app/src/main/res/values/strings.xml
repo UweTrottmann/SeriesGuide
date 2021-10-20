@@ -272,9 +272,6 @@
 
     <!-- Statistics -->
     <string name="statistics_failed">Could not calculate statistics</string>
-    <string name="statistics_shows">shows</string>
-    <string name="statistics_episodes">episodes</string>
-    <string name="statistics_movies">movies</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s with next episodes</string>
     <string name="shows_continuing">%s continuing</string>
