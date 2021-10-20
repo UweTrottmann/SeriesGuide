@@ -60,7 +60,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
 
     <!-- Sharing -->
     <string name="share">Share</string>
@@ -219,7 +219,7 @@
     <string name="no_results">No results, try complete words</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">Try again</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Add all</string>
     <string name="add_multiple">All shows will appear in your show list shortly</string>
     <string name="add_started">%s will appear in your show list shortly</string>
@@ -422,7 +422,7 @@
 
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+    <string name="licence_themoviedb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Licences and credits</string>
