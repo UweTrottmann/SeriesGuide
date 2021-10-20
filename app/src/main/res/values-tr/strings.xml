@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Yayın tarihi</string>
     <!-- Statistics -->
     <string name="statistics_failed">İstatistik hesaplanamadı.</string>
-    <string name="statistics_shows">Diziler</string>
-    <string name="statistics_episodes">Bölümler</string>
-    <string name="statistics_movies">Filmler</string>
     <string name="shows_finished">%s izlendi</string>
     <string name="shows_with_next">%s yeni bölümü olan dizi</string>
     <string name="shows_continuing">%s devam ediyor</string>

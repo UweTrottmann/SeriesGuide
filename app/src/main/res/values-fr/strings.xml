@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Date de parution</string>
     <!-- Statistics -->
     <string name="statistics_failed">Impossible de calculer les statistiques.</string>
-    <string name="statistics_shows">Séries</string>
-    <string name="statistics_episodes">Épisodes</string>
-    <string name="statistics_movies">Films</string>
     <string name="shows_finished">%s visionnées en entier</string>
     <string name="shows_with_next">%s avec des épisodes à venir</string>
     <string name="shows_continuing">%s en cours</string>

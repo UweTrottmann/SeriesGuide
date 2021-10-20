@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Udgivelsesdato</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kunne ikke beregne statistik.</string>
-    <string name="statistics_shows">serier</string>
-    <string name="statistics_episodes">episoder</string>
-    <string name="statistics_movies">film</string>
     <string name="shows_finished">%s set færdig</string>
     <string name="shows_with_next">%s med kommende episoder</string>
     <string name="shows_continuing">%s fortsætter</string>
@@ -373,7 +370,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Fortrolighedspolitik</string>
-    <string name="licence_themoviedb">Dette produkt benytter TMDb API\'en, men er ikke godkendt eller certificeret af TMDb.</string>
+    <string name="licence_themoviedb">Dette produkt benytter TMDB API\'en, men er ikke godkendt eller certificeret af TMDB.</string>
     <string name="licence_trakt">Denne app benytter data og billeder fra Trakt.</string>
     <string name="about_open_source">SeriesGuide er udviklet ved hjælp af open source-software.</string>
     <string name="licences_and_credits">Licenser og tilkendegivelser</string>

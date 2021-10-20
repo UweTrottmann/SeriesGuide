@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Fecha de estreno</string>
     <!-- Statistics -->
     <string name="statistics_failed">No se pudieron calcular las estadísticas.</string>
-    <string name="statistics_shows">Series</string>
-    <string name="statistics_episodes">Episodios</string>
-    <string name="statistics_movies">Películas</string>
     <string name="shows_finished">%s vistos completamente</string>
     <string name="shows_with_next">%s con nuevos episodios</string>
     <string name="shows_continuing">%s continuando</string>
@@ -374,7 +371,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de privacidad</string>
-    <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
+    <string name="licence_themoviedb">Este producto utiliza la API de TMDB pero no está patrocinado ni certificado por TMDB.</string>
     <string name="licence_trakt">Esta aplicación utiliza información e imágenes de Trakt.</string>
     <string name="about_open_source">SeriesGuide fue desarrollado usando software de código abierto.</string>
     <string name="licences_and_credits">Licencias y créditos</string>

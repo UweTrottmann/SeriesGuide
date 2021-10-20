@@ -243,9 +243,6 @@
     <string name="action_movies_sort_release">Tanggal rilis</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tidak dapat menghitung statistik.</string>
-    <string name="statistics_shows">acara</string>
-    <string name="statistics_episodes">episode</string>
-    <string name="statistics_movies">film</string>
     <string name="shows_finished">%s selesai ditonton</string>
     <string name="shows_with_next">%s dengan episode berikutnya</string>
     <string name="shows_continuing">%s berlanjut</string>
@@ -362,7 +359,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Kebijakan Privasi</string>
-    <string name="licence_themoviedb">Produk ini menggunakan TMDb API Tapi tidak disahkan atau disertifikasi oleh TMDb.</string>
+    <string name="licence_themoviedb">Produk ini menggunakan TMDB API Tapi tidak disahkan atau disertifikasi oleh TMDB.</string>
     <string name="licence_trakt">Aplikasi ini menggunakan data dan gambar dari Trakt.</string>
     <string name="about_open_source">SeriesGuide dibuat dengan menggunakan perangkat lunak open source.</string>
     <string name="licences_and_credits">Lisensi dan kredit</string>

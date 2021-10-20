@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Első adás</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nem sikerült kiszámítani a statisztikát.</string>
-    <string name="statistics_shows">Sorozat</string>
-    <string name="statistics_episodes">Epizód</string>
-    <string name="statistics_movies">Filmek</string>
     <string name="shows_finished">%s teljesen megnézve</string>
     <string name="shows_with_next">%s új epizóddal</string>
     <string name="shows_continuing">%s folytatódik</string>
@@ -373,7 +370,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Adatvédelmi irányelvek</string>
-    <string name="licence_themoviedb">Ez a termék a TMDb API-t használja, de a TMDb hozzájárulása vagy minősítése nélkül.</string>
+    <string name="licence_themoviedb">Ez a termék a TMDB API-t használja, de a TMDB hozzájárulása vagy minősítése nélkül.</string>
     <string name="licence_trakt">Ez az alkalmazás a Trakt adatait és képeit használja.</string>
     <string name="about_open_source">A SeriesGuide nyílt forráskódú szoftverek használatával készül.</string>
     <string name="licences_and_credits">Engedélyek és készítők listája</string>

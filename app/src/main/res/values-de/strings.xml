@@ -54,7 +54,7 @@
     <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
     <string name="api_failed">Gescheitert: %s</string>
     <string name="copy_to_clipboard">In Zwischenablage kopiert</string>
-    <string name="not_migrated">Noch nicht auf TMDb gefunden. Wird evtl. keine Updates erhalten oder nicht mit Trakt und Cloud funktionieren. Antippen um Details anzuzeigen.</string>
+    <string name="not_migrated">Noch nicht auf TMDB gefunden. Wird evtl. keine Updates erhalten oder nicht mit Trakt und Cloud funktionieren. Antippen um Details anzuzeigen.</string>
     <!-- Sharing -->
     <string name="share">Teilen</string>
     <string name="share_show">Serie teilen</string>
@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Erscheinungsdatum</string>
     <!-- Statistics -->
     <string name="statistics_failed">Statistik konnte nicht berechnet werden</string>
-    <string name="statistics_shows">Serien</string>
-    <string name="statistics_episodes">Folgen</string>
-    <string name="statistics_movies">Filme</string>
     <string name="shows_finished">%s komplett angesehen</string>
     <string name="shows_with_next">%s mit nächsten Folgen</string>
     <string name="shows_continuing">%s werden fortgesetzt</string>
@@ -373,7 +370,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Datenschutzerklärung</string>
-    <string name="licence_themoviedb">Dieses Produkt verwendet die TMDb API ist aber von TMDb nicht unterstützt oder zertifiziert.</string>
+    <string name="licence_themoviedb">Dieses Produkt verwendet die TMDB API ist aber von TMDB nicht unterstützt oder zertifiziert.</string>
     <string name="licence_trakt">Diese App verwendet Daten und Bilder von Trakt.</string>
     <string name="about_open_source">SeriesGuide basiert auf Open-Source Software.</string>
     <string name="licences_and_credits">Lizenzen und Danksagungen</string>
@@ -409,7 +406,7 @@
     <string name="pref_other">Anderes</string>
     <string name="pref_autoupdatesummary">Automatisch synchronisieren und Inhalte aktualisieren</string>
     <string name="backup">Sichern/Wiederherstellen</string>
-    <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
+    <string name="backup_summary">Sicherung aller Serien, Listen und Filme erstellen oder Sicherung wiederherstellen</string>
     <string name="pref_number">Zahlenformat</string>
     <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
     <string name="pref_offsetsummary">Sendezeit um %d Stunden verschieben</string>

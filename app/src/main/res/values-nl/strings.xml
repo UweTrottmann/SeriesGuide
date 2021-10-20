@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Releasedatum</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kon statistieken niet berekenen.</string>
-    <string name="statistics_shows">series</string>
-    <string name="statistics_episodes">afleveringen</string>
-    <string name="statistics_movies">films</string>
     <string name="shows_finished">%s klaar met kijken</string>
     <string name="shows_with_next">%s met de volgende afleveringen</string>
     <string name="shows_continuing">%s lopende</string>

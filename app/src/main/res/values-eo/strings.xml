@@ -54,7 +54,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Malsukcesis: %s</string>
     <string name="copy_to_clipboard">Kopita al tondejo</string>
-    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Konigi</string>
     <string name="share_show">Konigi televidaĵon</string>
@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Eldondato</string>
     <!-- Statistics -->
     <string name="statistics_failed">Ne povas kalkuli statistikaĵojn</string>
-    <string name="statistics_shows">televidaĵoj</string>
-    <string name="statistics_episodes">epizodoj</string>
-    <string name="statistics_movies">filmoj</string>
     <string name="shows_finished">%s finis spektadi</string>
     <string name="shows_with_next">%s kun sekvaj epizodoj</string>
     <string name="shows_continuing">%s daŭrantaj</string>
@@ -373,7 +370,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privateca politiko</string>
-    <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+    <string name="licence_themoviedb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
     <string name="licence_trakt">Ĉi tiu aplikaĵo uzas datumon kaj bildojn de Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Permesiloj kaj agnosko</string>
@@ -409,7 +406,7 @@
     <string name="pref_other">Aliaj</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="backup">Savkopii/Restaŭri</string>
-    <string name="backup_summary">Backup or restore your shows</string>
+    <string name="backup_summary">Backup or restore your shows, lists and movies</string>
     <string name="pref_number">Numera formato</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>

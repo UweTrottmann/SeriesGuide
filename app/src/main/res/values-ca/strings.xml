@@ -247,9 +247,6 @@
     <string name="action_movies_sort_release">Data de llançament</string>
     <!-- Statistics -->
     <string name="statistics_failed">No s\'han pogut calcular les estadístiques.</string>
-    <string name="statistics_shows">Sèries</string>
-    <string name="statistics_episodes">Episodis</string>
-    <string name="statistics_movies">Peŀlícules</string>
     <string name="shows_finished">%s acabat de veure</string>
     <string name="shows_with_next">%s amb episodis següents</string>
     <string name="shows_continuing">%s en progrés</string>
@@ -373,7 +370,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de Privacitat</string>
-    <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDb però no està reconeguda ni certificada per TMDb.</string>
+    <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDB però no està reconeguda ni certificada per TMDB.</string>
     <string name="licence_trakt">Aquesta app fa servir dades i imatges de Trakt</string>
     <string name="about_open_source">SeriesGuide s\'ha construït utilitzant programari de codi obert.</string>
     <string name="licences_and_credits">Llicències i credits</string>

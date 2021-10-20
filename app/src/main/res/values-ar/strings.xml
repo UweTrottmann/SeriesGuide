@@ -263,9 +263,6 @@
     <string name="action_movies_sort_release">تاريخ الإصدار</string>
     <!-- Statistics -->
     <string name="statistics_failed">خطأ في الإحصائيات.</string>
-    <string name="statistics_shows">المسلسلات</string>
-    <string name="statistics_episodes">الحلقات</string>
-    <string name="statistics_movies">الأفلام</string>
     <string name="shows_finished">%s انتهى مشاهدة</string>
     <string name="shows_with_next">%s مع الحلقات القادمة</string>
     <string name="shows_continuing">%s مستمرة</string>
@@ -417,7 +414,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">سياسة الخصوصية</string>
-    <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
+    <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDB ولكنه غير مدعوم ولامعتمد من TMDB.</string>
     <string name="licence_trakt">هذا البرنامج يستخدم البيانات والصور من تطبيق Trakt.</string>
     <string name="about_open_source">برنامج دليل المسلسلات بني باستخدام برمجيات المصدر المفتوح.</string>
     <string name="licences_and_credits">تراخيص مفتوحة المصدر</string>

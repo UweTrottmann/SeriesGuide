@@ -243,9 +243,6 @@
     <string name="action_movies_sort_release">วันที่ออกฉาย</string>
     <!-- Statistics -->
     <string name="statistics_failed">ไม่สามารถคำนวณสถิติ</string>
-    <string name="statistics_shows">ซีรีส์</string>
-    <string name="statistics_episodes">ตอน</string>
-    <string name="statistics_movies">ภาพยนตร์</string>
     <string name="shows_finished">%s ดูจบแล้ว</string>
     <string name="shows_with_next">%s เรื่องมีตอนถัดไป</string>
     <string name="shows_continuing">%s เรื่องยังไม่จบ</string>
@@ -362,7 +359,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
-    <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDb แต่ไม่ได้รับการรับรองโดย TMDb</string>
+    <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDB แต่ไม่ได้รับการรับรองโดย TMDB</string>
     <string name="licence_trakt">แอปนี้ใช้ข้อมูลและรูปภาพจาก Trakt</string>
     <string name="about_open_source">SeriesGuide สร้างด้วยซอฟต์แวร์โอเพนซอร์ส</string>
     <string name="licences_and_credits">สัญญาอนุญาตและเครดิต</string>

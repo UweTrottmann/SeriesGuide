@@ -255,9 +255,6 @@
     <string name="action_movies_sort_release">Dátum premiéry</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nemožno vypočítať štatistiku.</string>
-    <string name="statistics_shows">seriálov</string>
-    <string name="statistics_episodes">epizód</string>
-    <string name="statistics_movies">filmov</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s s ďalšími epizódami</string>
     <string name="shows_continuing">%s pokračuje</string>

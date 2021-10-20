@@ -243,9 +243,6 @@
     <string name="action_movies_sort_release">首播日期</string>
     <!-- Statistics -->
     <string name="statistics_failed">无法计算统计数据</string>
-    <string name="statistics_shows">节目总数</string>
-    <string name="statistics_episodes">剧集总数</string>
-    <string name="statistics_movies">电影总数</string>
     <string name="shows_finished">看完了 %s 部节目</string>
     <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
     <string name="shows_continuing">%s 部节目仍在连载</string>

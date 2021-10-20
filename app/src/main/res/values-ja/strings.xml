@@ -54,7 +54,7 @@
     <string name="api_error_generic">%s と通信出来ませんでした。後でもう一度やり直してください。</string>
     <string name="api_failed">失敗しました： %s</string>
     <string name="copy_to_clipboard">クリップボードにコピーしました</string>
-    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">共有</string>
     <string name="share_show">番組を共有</string>
@@ -243,9 +243,6 @@
     <string name="action_movies_sort_release">発売日</string>
     <!-- Statistics -->
     <string name="statistics_failed">統計情報を計算できませんでした。</string>
-    <string name="statistics_shows">番組</string>
-    <string name="statistics_episodes">エピソード</string>
-    <string name="statistics_movies">映画</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">次のエピソードがある番組 %s</string>
     <string name="shows_continuing">継続中 %s</string>

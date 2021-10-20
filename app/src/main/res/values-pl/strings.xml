@@ -255,9 +255,6 @@
     <string name="action_movies_sort_release">Data premiery</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nie można obliczyć statystyk.</string>
-    <string name="statistics_shows">Seriale</string>
-    <string name="statistics_episodes">Odcinki</string>
-    <string name="statistics_movies">Filmy</string>
     <string name="shows_finished">Zakończono oglądanie %s</string>
     <string name="shows_with_next">%s z kolejnych odcinków</string>
     <string name="shows_continuing">%s w toku</string>
