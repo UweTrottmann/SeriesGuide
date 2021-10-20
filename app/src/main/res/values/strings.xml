@@ -466,7 +466,7 @@
     <string name="pref_other">Other</string>
     <string name="pref_autoupdatesummary">Automatically sync and update content</string>
     <string name="backup">Backup/Restore</string>
-    <string name="backup_summary">Backup or restore your shows</string>
+    <string name="backup_summary">Backup or restore your shows, lists and movies</string>
     <string name="pref_number">Number format</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %d hours</string>
