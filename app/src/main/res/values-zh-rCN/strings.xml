@@ -9,7 +9,7 @@
     <string name="search">搜索</string>
     <string name="preferences">设置</string>
     <string name="help">帮助</string>
-    <string name="no_more_updates">在此版本的 Android 系统上将不会再收到 SeriesGuide 的更新。</string>
+    <string name="no_more_updates">在当前版本的 Android 系统上将不会再收到 SeriesGuide 的更新。</string>
     <!-- Media items -->
     <string name="show_details">详细信息</string>
     <string name="episode">剧集</string>
@@ -34,7 +34,7 @@
     <string name="action_open">打开</string>
     <string name="sync_manually">手动同步</string>
     <string name="sync_and_update">同步并更新</string>
-    <string name="sync_and_download_all">同步并下载全部</string>
+    <string name="sync_and_download_all">同步并全部重新下载</string>
     <string name="action_stream">流媒体播放或购买</string>
     <string name="action_stream_info">流媒体播放或购买信息</string>
     <string name="action_select_region">选择地区</string>
@@ -54,7 +54,7 @@
     <string name="api_error_generic">无法连接到 %s。请稍后重试。</string>
     <string name="api_failed">失败：%s</string>
     <string name="copy_to_clipboard">已复制到剪贴板</string>
-    <string name="not_migrated">在 TMDb 上找不到该条目，将会在未来的更新中删除。点击了解详情。</string>
+    <string name="not_migrated">在 TMDb 上找不到该条目，可能无法收到相关内容更新，或无法与 Trakt 和 SeriesGuide Cloud 配合使用。点按即可查看详情。</string>
     <!-- Sharing -->
     <string name="share">分享</string>
     <string name="share_show">分享此节目</string>
@@ -77,24 +77,24 @@
     <!-- Metadata -->
     <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">首播日期</string>
-    <string name="episode_firstaired_unknown">没有已知播出计划</string>
+    <string name="episode_firstaired_unknown">首播日期未知</string>
     <string name="episode_dvdnumber">DVD 剧集</string>
     <string name="original_release">首播年份</string>
     <string name="show_genres">类型</string>
     <string name="show_contentrating">内容分级</string>
     <string name="show_release_times">首映于</string>
     <string name="episode_directors">导演</string>
-    <string name="episode_gueststars">客串</string>
+    <string name="episode_gueststars">客串演员</string>
     <string name="episode_writers">编剧</string>
     <string name="show_isalive">连载中</string>
     <string name="show_isnotalive">已完结</string>
     <string name="show_isUpcoming">即将播出</string>
-    <string name="show_status_in_production">正在制片</string>
-    <string name="show_status_pilot">试播</string>
+    <string name="show_status_in_production">制作中</string>
+    <string name="show_status_pilot">试播集</string>
     <string name="show_status_canceled">已取消</string>
     <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
     <string name="no_translation_title">未翻译</string>
-    <string name="no_spoilers">隐藏部分详情以防止剧透。可在设置菜单中关闭此功能</string>
+    <string name="no_spoilers">已隐藏部分详细信息来防止剧透。可在设置中关闭此功能。</string>
     <string name="format_source">来源：%s</string>
     <string name="format_last_edited">最后编辑于：%s</string>
     <!-- Date and Time -->
@@ -111,25 +111,25 @@
     <string name="uncollect_all">全部标记为未收藏</string>
     <string name="action_skip">标记为已跳过</string>
     <string name="action_dont_skip">标记为未跳过</string>
-    <string name="action_collection_add">加入收藏列表</string>
-    <string name="action_collection_remove">移出收藏列表</string>
+    <string name="action_collection_add">添加到收藏</string>
+    <string name="action_collection_remove">从收藏中移除</string>
     <string name="action_watched">标记为看过</string>
     <string name="action_unwatched">标记为未观看</string>
     <string name="state_watched">看过</string>
     <string name="state_watched_multiple_format">看过（%d 次）</string>
     <string name="state_skipped">已跳过</string>
     <string name="state_in_collection">已收藏</string>
-    <string name="state_on_watchlist">已加入待看列表</string>
+    <string name="state_on_watchlist">已加入待看清单</string>
     <string name="state_favorite">已标记为喜爱的节目</string>
     <!-- Shows -->
-    <string name="confirm_delete">您要删除《%s》吗？</string>
+    <string name="confirm_delete">要移除《%s》吗？</string>
     <string name="delete_error">无法移除此节目。请稍后重试。</string>
     <string name="delete_show">移除</string>
     <string name="no_nextepisode">没有新剧集信息</string>
     <string name="context_favorite">标记为喜爱的节目</string>
     <string name="context_unfavorite">移除节目的喜爱标记</string>
     <string name="favorited">已标记为喜爱的节目</string>
-    <string name="unfavorited">已移除节目的喜爱标记。</string>
+    <string name="unfavorited">已移除节目的喜爱标记</string>
     <string name="action_episode_notifications_on">开启剧集通知</string>
     <string name="action_episode_notifications_off">关闭剧集通知</string>
     <string name="context_hide">隐藏</string>
@@ -138,44 +138,44 @@
     <string name="unhidden">已取消隐藏选中节目</string>
     <string name="action_shows_add">添加节目</string>
     <string name="action_shows_filter">筛选节目</string>
-    <string name="empty_filter">清除筛选条件</string>
-    <string name="action_shows_filter_favorites">已被标记为喜爱</string>
+    <string name="empty_filter">移除所有筛选条件</string>
+    <string name="action_shows_filter_favorites">喜爱的节目</string>
     <string name="action_shows_filter_unwatched">未观看</string>
     <string name="action_shows_filter_upcoming">即将播出</string>
-    <string name="action_shows_filter_hidden">已被标记为隐藏</string>
+    <string name="action_shows_filter_hidden">已隐藏的节目</string>
     <string name="action_shows_make_all_visible">使所有隐藏的节目可见</string>
     <string name="description_make_all_visible_format">重新显示所有隐藏的节目（%s）吗？</string>
     <string name="action_shows_sort">排序节目</string>
-    <string name="action_shows_sort_title">依据节目名称</string>
-    <string name="action_shows_sort_latest_episode">最新一集</string>
-    <string name="action_shows_sort_oldest_episode">最早一集</string>
-    <string name="action_shows_sort_last_watched">最新观看</string>
-    <string name="action_shows_sort_remaining">剩余集数</string>
-    <string name="action_shows_sort_status">状态</string>
-    <string name="action_shows_sort_favorites">依据喜爱状态</string>
+    <string name="action_shows_sort_title">按片名</string>
+    <string name="action_shows_sort_latest_episode">按最新一集</string>
+    <string name="action_shows_sort_oldest_episode">按最早一集</string>
+    <string name="action_shows_sort_last_watched">按上次观看</string>
+    <string name="action_shows_sort_remaining">按剩余集数</string>
+    <string name="action_shows_sort_status">按状态</string>
+    <string name="action_shows_sort_favorites">喜爱的节目优先</string>
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">标记本集为看过</string>
     <string name="action_episodes_switch_view">切换视图</string>
     <!-- History -->
     <string name="user_stream">历史记录</string>
-    <string name="recently_watched">最近观看</string>
+    <string name="recently_watched">最近看了</string>
     <string name="friends_recently">Trakt 好友动态</string>
     <string name="now_empty">什么也没有。看节目去吧！</string>
     <string name="now_movies_empty">什么也没有。看电影去吧！</string>
     <!-- Calendar -->
     <string name="upcoming">即将播出</string>
-    <string name="recent">近期播出</string>
-    <string name="released_today">今天播出</string>
+    <string name="recent">近期已播剧集</string>
+    <string name="released_today">今天首播</string>
     <string name="noupcoming">没有即将播出的剧集</string>
     <string name="norecent">没有近期已播出的剧集</string>
     <string name="calendar_settings">日历设置</string>
-    <string name="only_favorites">仅显示喜爱节目</string>
-    <string name="calendar_only_collected">仅已收藏剧集</string>
-    <string name="calendar_only_premieres">仅首映</string>
+    <string name="only_favorites">仅显示喜爱的节目</string>
+    <string name="calendar_only_collected">仅显示已收藏剧集</string>
+    <string name="calendar_only_premieres">仅显示首播剧集</string>
     <string name="pref_infinite_scrolling">无限的日历</string>
     <!-- Updating -->
     <string name="update_scheduled">正在更新&#8230;</string>
-    <string name="update_no_connection">如需更新，请连接网络</string>
+    <string name="update_no_connection">如需更新，请连接到互联网</string>
     <string name="update_inprogress">更新正在进行，请稍后重试。</string>
     <!-- Seasons -->
     <string name="season_allwatched">看过全部剧集</string>
@@ -196,57 +196,57 @@
     <string name="action_try_again">重试</string>
     <string name="tvdb_error_does_not_exist">TMDb 上（尚）无此节目。请稍后重试。</string>
     <string name="add_all">全部添加</string>
-    <string name="add_multiple">以下所有节目将很快出现在节目单中</string>
-    <string name="add_started">《%s》将很快出现在节目单中</string>
-    <string name="add_error">无法将 %s 加入节目单。</string>
-    <string name="add_already_exists">《%s》已存在于您的节目单中</string>
+    <string name="add_multiple">以下所有节目很快就会出现在您的节目单中</string>
+    <string name="add_started">《%s》很快就会出现在您的节目单中</string>
+    <string name="add_error">无法添加《%s》。</string>
+    <string name="add_already_exists">《%s》已经在您的节目单中了</string>
     <string name="title_new_episodes">新的剧集</string>
     <string name="watched_shows">看过</string>
     <string name="shows_collection">收藏</string>
-    <string name="watchlist">待看列表</string>
+    <string name="watchlist">待看清单</string>
     <!-- Similar shows -->
     <string name="empty_no_results">无结果</string>
     <string name="title_similar_shows">相似节目</string>
     <!-- Lists -->
     <string name="first_list">我的列表</string>
     <string name="list_add">新建列表</string>
-    <string name="list_title_hint">命名您的列表</string>
+    <string name="list_title_hint">为列表命名</string>
     <string name="list_remove">删除此列表</string>
     <string name="list_manage">管理列表</string>
     <string name="list_item_manage">管理列表</string>
-    <string name="list_item_remove">移出列表</string>
+    <string name="list_item_remove">从列表中移除</string>
     <string name="list_empty">您可以添加节目到此列表</string>
     <string name="action_lists_sort">列表排序</string>
     <string name="action_lists_reorder">重新排序</string>
     <string name="error_name_already_exists">已存在同名列表</string>
     <!-- Movies -->
     <string name="title_discover">发现</string>
-    <string name="title_popular">流行</string>
+    <string name="title_popular">热门</string>
     <string name="title_digital_releases">数字版本</string>
     <string name="title_disc_releases">光盘版本</string>
     <string name="movies_in_theatres">上映中</string>
     <string name="movies_collection">收藏</string>
-    <string name="movies_watchlist">待看列表</string>
+    <string name="movies_watchlist">待看清单</string>
     <string name="movies_watched">看过</string>
-    <string name="watchlist_add">加入待看列表</string>
-    <string name="watchlist_remove">移出待看列表</string>
-    <string name="watchlist_added">已添加到待看列表</string>
-    <string name="watchlist_removed">已从待看列表移除</string>
+    <string name="watchlist_add">添加到待看清单</string>
+    <string name="watchlist_remove">从待看清单中移除</string>
+    <string name="watchlist_added">已添加到待看清单</string>
+    <string name="watchlist_removed">已从待看清单中移除</string>
     <string name="movies_search_hint">输入电影名称</string>
     <string name="movies_collection_empty">您还未收藏过任何电影</string>
-    <string name="movies_watchlist_empty">您还未添加过电影到待看列表</string>
+    <string name="movies_watchlist_empty">您还未添加过电影到待看清单</string>
     <string name="trailer">预告片</string>
     <string name="movie_cast">演员</string>
     <string name="movie_crew">工作人员</string>
     <string name="action_movies_sort">重新排序</string>
-    <string name="action_movies_sort_title">依据节目名称</string>
+    <string name="action_movies_sort_title">按片名</string>
     <string name="action_movies_sort_release">首播日期</string>
     <!-- Statistics -->
     <string name="statistics_failed">无法计算统计数据</string>
     <string name="statistics_shows">节目总数</string>
     <string name="statistics_episodes">剧集总数</string>
     <string name="statistics_movies">电影总数</string>
-    <string name="shows_finished">看过 %s 部节目</string>
+    <string name="shows_finished">看完了 %s 部节目</string>
     <string name="shows_with_next">%s 部节目仍有未观看剧集</string>
     <string name="shows_continuing">%s 部节目仍在连载</string>
     <string name="episodes_watched">看过 %s 集</string>
@@ -270,7 +270,7 @@
     <string name="feature_sync">同步</string>
     <!-- Hexagon -->
     <string name="hexagon_warning">这是一个实验性功能！</string>
-    <string name="hexagon_description">SeriesGuide Cloud 帮助您备份并同步您的节目、列表及电影</string>
+    <string name="hexagon_description">SeriesGuide Cloud 可帮您备份并同步您的节目、列表及电影</string>
     <string name="hexagon_warning_trakt">当登录到 SeriesGuide Cloud 时，Trakt 的某些功能将无法使用</string>
     <string name="hexagon_signin">登录</string>
     <string name="hexagon_signout">注销</string>
@@ -279,8 +279,8 @@
     <string name="hexagon_remove_account">删除帐户</string>
     <string name="hexagon_remove_account_success">用户数据已删除</string>
     <string name="hexagon_remove_account_failure">无法删除帐户</string>
-    <string name="hexagon_remove_account_confirmation">删除帐户会同时删除您储存的所有数据，包括在线备份的节目和电影。一旦您在此设备上完成删除，请记得从其它已同步设备上删除相同的 SeriesGuide Cloud 帐户。</string>
-    <string name="hexagon_api_queued">正在同步 SeriesGuide Cloud…</string>
+    <string name="hexagon_remove_account_confirmation">这将从 SeriesGuide Cloud 中删除您的节目、列表和电影</string>
+    <string name="hexagon_api_queued">正在与 SeriesGuide Cloud 同步…</string>
     <string name="hexagon_signed_out">已登出 SeriesGuide Cloud</string>
     <string name="hexagon_signin_fail_format">登录错误（%s）</string>
     <string name="hexagon_signin_google_only">电子邮件地址需要 Google 登录</string>
@@ -325,11 +325,11 @@
     <!-- Check Ins -->
     <string name="checkin">签到</string>
     <string name="checkin_hint">输入一段文字（可选）</string>
-    <string name="paste_title">粘贴名称</string>
+    <string name="paste_title">粘贴片名</string>
     <string name="pref_quick_checkin">快速签到</string>
     <string name="pref_quick_checkin_summary">不再询问签到内容</string>
     <!-- Help -->
-    <string name="feedback">发送反馈报告</string>
+    <string name="feedback">发送反馈</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
     <!-- Settings -->
     <string name="action_translate">翻译本应用</string>
@@ -344,39 +344,39 @@
     <string name="pref_exactdates_summary">如显示为「10 月 31 日」而不是「3 天后」</string>
     <string name="pref_nospoilers">防止剧透</string>
     <string name="pref_nospoilers_summary">隐藏未观看剧集详细信息</string>
-    <string name="pref_seasonsorting">季排序依据&#8230;&#8230;</string>
-    <string name="pref_episodesorting">集排序依据&#8230;&#8230;</string>
+    <string name="pref_seasonsorting">季排序方式&#8230;</string>
+    <string name="pref_episodesorting">集排序方式&#8230;</string>
     <string name="pref_language">内容首选的语言</string>
     <string name="pref_language_fallback">副语言</string>
     <string name="pref_updatewifionly">仅通过 Wi-Fi 下载图片</string>
-    <string name="pref_updatewifionlysummary">为了减少蜂窝数据流量使用，在移动网络下禁止下载</string>
+    <string name="pref_updatewifionlysummary">为了减少数据流量费用，不要通过移动网络或按流量计费的网络下载</string>
     <string name="pref_error_reports">向应用开发者报告错误</string>
     <plurals name="days_before_plural">
-        <item quantity="other">%d 天前</item>
+        <item quantity="other">提前 %d 天</item>
     </plurals>
     <plurals name="hours_before_plural">
-        <item quantity="other">%d 小时前</item>
+        <item quantity="other">提前 %d 小时</item>
     </plurals>
     <plurals name="minutes_before_plural">
-        <item quantity="other">%d 分钟前</item>
+        <item quantity="other">提前 %d 分钟</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">隐私策略</string>
+    <string name="privacy_policy">隐私权政策</string>
     <string name="licence_themoviedb">本应用使用了 TMDb 的 API，但未被 TMDb 认可或认证。</string>
     <string name="licence_trakt">本应用使用了 Trakt 的数据和图像。</string>
     <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>
     <string name="licences_and_credits">许可证与致谢</string>
     <!-- Sort -->
-    <string name="sort">排序依据</string>
+    <string name="sort">排序方式</string>
     <string name="action_sort_ignore_articles">忽略起始冠词</string>
     <!-- Sort orders -->
-    <string name="sort_order_latest_first">最新在最上</string>
-    <string name="sort_order_oldest_first">最旧在最上</string>
-    <string name="sort_order_unwatched_first">未观看优先</string>
+    <string name="sort_order_latest_first">最新的在最前面</string>
+    <string name="sort_order_oldest_first">最旧的在最前面</string>
+    <string name="sort_order_unwatched_first">未观看的在最前面</string>
     <string name="sort_order_alphabetical">A 到 Z</string>
-    <string name="sort_order_top_rated_first">高评分优先</string>
-    <string name="sort_order_latest_first_dvd">最近发售优先</string>
-    <string name="sort_order_oldest_first_dvd">最早发售优先</string>
+    <string name="sort_order_top_rated_first">高评分的在最前面</string>
+    <string name="sort_order_latest_first_dvd">最新的在最前面（DVD）</string>
+    <string name="sort_order_oldest_first_dvd">最旧的在最前面（DVD）</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">即将播出的时间范围</string>
     <string name="upcoming_upto_now">现在</string>
@@ -401,7 +401,7 @@
     <string name="backup_summary">备份或还原节目单</string>
     <string name="pref_number">序号格式</string>
     <string name="pref_offset">手动偏移播出时间</string>
-    <string name="pref_offsetsummary">显示时间与原播出时间相差 %d 小时</string>
+    <string name="pref_offsetsummary">使显示时间与原播出时间相差 %d 小时</string>
     <string name="clear_cache">清理图片缓存</string>
     <string name="clear_cache_summary">转到应用存储设置清除缓存的图片和网络响应</string>
     <!-- Backup and Restore -->
@@ -415,13 +415,13 @@
     <string name="import_failed">备份还原失败</string>
     <string name="backup_button">备份</string>
     <string name="import_button">还原</string>
-    <string name="import_warning">我已了解当前所有剧集、列表和电影数据将被替换</string>
+    <string name="import_warning">我已了解备份将替换当前所有节目、列表和电影数据</string>
     <string name="no_file_selected">没有选择的文件</string>
     <string name="action_select_file">选择文件</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">自动备份</string>
-    <string name="pref_autobackupsummary">每周定期备份剧集、列表和电影数据</string>
-    <string name="autobackup_details">如果再次安装应用，除非开启此设备的应用数据备份（Android 6+），否则这些备份将不可用。创建副本以便以其他方式保存它们。</string>
+    <string name="pref_autobackupsummary">每周将您的节目、列表和电影数据备份到设备存储空间。</string>
+    <string name="autobackup_details">如果重新安装应用，这些备份将不可用。创建副本以便以其他方式保存它们。</string>
     <string name="last_auto_backup">上次自动备份时间：%s</string>
     <string name="restore_auto_backup">从自动备份恢复</string>
     <string name="autobackup_failed">最后一次自动备份失败</string>
@@ -429,20 +429,20 @@
     <string name="autobackup_create_user_copy">每次备份后创建一个副本</string>
     <string name="autobackup_restore_available">自动备份可能可用来还原。</string>
     <!-- Welcome dialog -->
-    <string name="get_started">入门</string>
+    <string name="get_started">开始</string>
     <string name="dismiss">关闭</string>
     <!-- Notifications -->
     <string name="upcoming_show">%s 即将播出</string>
     <string name="upcoming_episodes">即将播出新的剧集</string>
     <string name="upcoming_episodes_number">%s 个剧集即将播出</string>
-    <string name="more">还有 %d 个项目</string>
-    <string name="upcoming_display">选中来显示即将播出的节目</string>
+    <string name="more">另外 %d 个</string>
+    <string name="upcoming_display">选择要显示的即将播出的节目</string>
     <string name="pref_notifications">通知</string>
     <string name="pref_notificationssummary">新剧集开始播出时显示通知</string>
     <string name="pref_ringtone">铃声</string>
     <string name="pref_vibrate">振动</string>
     <string name="pref_vibratesummary">显示通知时振动</string>
-    <string name="pref_notifications_treshold">通知显示时刻</string>
+    <string name="pref_notifications_treshold">何时通知</string>
     <string name="pref_notifications_select_shows">选择节目</string>
     <string name="pref_notifications_select_shows_summary">已启用通知的节目（%d）</string>
     <string name="pref_notifications_hidden">忽略隐藏的节目</string>
@@ -470,18 +470,18 @@
     <string name="billing_action_subscribe">订阅</string>
     <string name="billing_action_manage_subscriptions">管理订阅</string>
     <string name="billing_action_pass">购买 X Pass App</string>
-    <string name="billing_price_subscribe">%1$s 每年，免费试用，通过 %2$s 随时取消订阅</string>
+    <string name="billing_price_subscribe">每年 %1$s，免费试用，通过 %2$s 随时取消订阅</string>
     <string name="billing_duration_format">%1$s / 年</string>
     <string name="billing_sub_description">免费试用 30 天，随时取消。</string>
     <string name="billing_price_pass">一次性买断</string>
-    <string name="upgrade_description">每种订阅都会解锁所有功能并支持未来的更新。使用本应用无需订阅。</string>
+    <string name="upgrade_description">每种订阅都能解锁所有功能并支持未来的更新。使用本应用无需订阅。</string>
     <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
     <string name="billing_unlock_detected">检测到 X Pass。您仍可以订阅以支持未来的更新。</string>
     <string name="billing_learn_more">更多信息与帮助</string>
     <string name="subscription_expired">订阅已过期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 订阅已过期</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">请登录您的 Amazon 帐户！</string>
+    <string name="subscription_not_signed_in">登录您的亚马逊帐户</string>
     <string name="subscription_unavailable">订阅服务目前不可用</string>
     <string name="subscription_failed">支付过程中断，购买无效</string>
     <string name="pass_unavailable">X Pass 当前不可用</string>
@@ -496,10 +496,10 @@
     <string name="extension_google_play">Google Play 搜索</string>
     <string name="description_extension_google_play">在 Google Play 商店中搜索</string>
     <string name="extension_youtube">YouTube 搜索</string>
-    <string name="description_extension_youtube">搜索 YouTube 相关视频</string>
+    <string name="description_extension_youtube">在 YouTube 上搜索视频</string>
     <string name="description_extension_web_search">搜索相关网站或图片</string>
     <!-- People -->
-    <string name="person_biography">生平</string>
+    <string name="person_biography">个人简介</string>
     <!-- Feedback -->
     <string name="feedback_question_enjoy">您喜欢 SeriesGuide 吗？</string>
     <string name="feedback_action_yes">是的！</string>

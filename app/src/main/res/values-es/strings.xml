@@ -152,7 +152,7 @@
     <string name="action_shows_sort_oldest_episode">Episodio más antiguo</string>
     <string name="action_shows_sort_last_watched">Último visto</string>
     <string name="action_shows_sort_remaining">Episodios faltantes</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">Estado</string>
     <string name="action_shows_sort_favorites">Favoritos primero</string>
     <string name="context_updateshow">Actualizar</string>
     <string name="context_marknext">Siguiente episodio visto</string>
@@ -282,7 +282,7 @@
     <string name="hexagon_signin">Iniciar sesión</string>
     <string name="hexagon_signout">Cerrar sesión</string>
     <string name="hexagon_setup_incomplete">La configuración de SeriesGuide cloud no se completó.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Tu cuenta no tiene una dirección de correo electrónico</string>
     <string name="hexagon_remove_account">Eliminar cuenta</string>
     <string name="hexagon_remove_account_success">Cuenta borrada.</string>
     <string name="hexagon_remove_account_failure">No se pudo eliminar la cuenta.</string>
@@ -290,8 +290,8 @@
 Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Error al iniciar sesión (%s)</string>
+    <string name="hexagon_signin_google_only">La dirección de correo electrónico requiere inicio de sesión de Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando a trakt.</string>
     <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
@@ -469,7 +469,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_widget_opacity">Fondo de widget</string>
     <string name="pref_widget_type">Tipo de widget</string>
     <string name="pref_large_font">Usar tamaño de texto grande</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_hide_watch_button">Ocultar botón de «Visto»</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>
