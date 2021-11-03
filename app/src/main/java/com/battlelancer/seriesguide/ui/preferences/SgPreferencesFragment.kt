@@ -12,6 +12,7 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
@@ -34,9 +35,10 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
-import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -112,6 +114,17 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 true
             }
             setListPreferenceSummary(this)
+        }
+
+        findPreference<SwitchPreferenceCompat>(DisplaySettings.KEY_DISABLE_ANIMATIONS)!!.apply {
+            setOnPreferenceClickListener {
+                // restart to apply animation settings, go back to this settings screen
+                TaskStackBuilder.create(requireActivity())
+                    .addNextIntent(Intent(activity, ShowsActivity::class.java))
+                    .addNextIntent(requireActivity().intent)
+                    .startActivities()
+                true
+            }
         }
 
         // show currently set values for list prefs

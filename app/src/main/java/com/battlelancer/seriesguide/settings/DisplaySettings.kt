@@ -42,6 +42,7 @@ object DisplaySettings {
     const val KEY_LAST_ACTIVE_MOVIES_TAB = "com.battlelancer.seriesguide.moviesActiveTab"
     const val KEY_DISPLAY_EXACT_DATE = "com.battlelancer.seriesguide.shows.exactdate"
     const val KEY_PREVENT_SPOILERS = "com.battlelancer.seriesguide.PREVENT_SPOILERS"
+    const val KEY_DISABLE_ANIMATIONS = "seriesguide.DISABLE_ANIMATIONS"
 
     /**
      * Returns true for all screens with dpi higher than [DisplayMetrics.DENSITY_HIGH].
@@ -230,5 +231,14 @@ object DisplaySettings {
     fun preventSpoilers(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_PREVENT_SPOILERS, false)
+    }
+
+    /**
+     * If the app should disable or reduce animations to avoid sickness
+     * that are not covered by the Remove animations accessibility setting of the system.
+     */
+    fun isDisableAnimations(context: Context): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(KEY_DISABLE_ANIMATIONS, false)
     }
 }

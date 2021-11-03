@@ -5,6 +5,7 @@ import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
@@ -48,5 +49,6 @@ object ThemeUtils {
         setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem)
         setSelectedIndicatorColors(getColorFromAttribute(context, R.attr.colorPrimary))
         setUnderlineColor(getColorFromAttribute(context, R.attr.sgColorDivider))
+        setDisableAnimations(DisplaySettings.isDisableAnimations(context))
     }
 }
