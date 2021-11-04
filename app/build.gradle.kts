@@ -225,7 +225,7 @@ dependencies {
     implementation("com.uwetrottmann.photoview:library:1.2.4")
 
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.4.0")
+    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.6.0")
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
     implementation("com.uwetrottmann.trakt5:trakt-java:6.10.0") {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
