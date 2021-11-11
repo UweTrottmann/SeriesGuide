@@ -189,21 +189,22 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.tvdb_add_menu, menu)
+        inflater.inflate(R.menu.shows_discover_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.menu_action_shows_search_clear_history) {
-            // tell the hosting activity to clear the search view history
-            EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
-            return true
+        return when (item.itemId) {
+            R.id.menu_action_shows_search_clear_history -> {
+                // tell the hosting activity to clear the search view history
+                EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
+                true
+            }
+            R.id.menu_action_shows_search_change_language -> {
+                displayLanguageSettings()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        if (itemId == R.id.menu_action_shows_search_change_language) {
-            displayLanguageSettings()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun displayLanguageSettings() {
