@@ -7,6 +7,7 @@ import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_45_
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_46_47;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_47_48;
 import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_48_49;
+import static com.battlelancer.seriesguide.provider.SgRoomDatabase.MIGRATION_49_50;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
@@ -376,7 +377,8 @@ public class MigrationTest {
                 MIGRATION_45_46,
                 MIGRATION_46_47,
                 MIGRATION_47_48,
-                MIGRATION_48_49
+                MIGRATION_48_49,
+                MIGRATION_49_50 // not tested, just adds a new table
         );
     }
 

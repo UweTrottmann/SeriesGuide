@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.model.SgSeason
 import com.battlelancer.seriesguide.model.SgSeason2
 import com.battlelancer.seriesguide.model.SgShow
 import com.battlelancer.seriesguide.model.SgShow2
+import com.battlelancer.seriesguide.model.SgWatchProvider
 import timber.log.Timber
 
 @Database(
@@ -34,7 +35,8 @@ import timber.log.Timber
         SgListItem::class,
         SgMovie::class,
         SgActivity::class,
-        SgJob::class
+        SgJob::class,
+        SgWatchProvider::class
     ],
     version = SgRoomDatabase.VERSION
 )
@@ -47,6 +49,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
     abstract fun sgListHelper(): SgListHelper
 
     abstract fun movieHelper(): MovieHelper
+
+    abstract fun sgWatchProviderHelper(): SgWatchProviderHelper
 
     companion object {
 
@@ -64,7 +68,12 @@ abstract class SgRoomDatabase : RoomDatabase() {
          * Also adds new activity table column modifies its index.
          */
         const val VERSION_49_AUTO_ID_MIGRATION = 49
-        const val VERSION = VERSION_49_AUTO_ID_MIGRATION
+
+        /**
+         * Added [SgWatchProvider] table.
+         */
+        const val VERSION_50_WATCH_PROVIDERS = 50
+        const val VERSION = VERSION_50_WATCH_PROVIDERS
 
         @Volatile
         private var instance: SgRoomDatabase? = null
@@ -87,6 +96,7 @@ abstract class SgRoomDatabase : RoomDatabase() {
                         SgRoomDatabase::class.java,
                         SeriesGuideDatabase.DATABASE_NAME
                     ).addMigrations(
+                        MIGRATION_49_50,
                         MIGRATION_48_49,
                         MIGRATION_47_48,
                         MIGRATION_46_47,
@@ -140,6 +150,23 @@ abstract class SgRoomDatabase : RoomDatabase() {
             val showId: Int,
             val seasonTvdbId: Int
         )
+
+        @JvmField
+        val MIGRATION_49_50: Migration = object :
+        Migration(VERSION_49_AUTO_ID_MIGRATION, VERSION_50_WATCH_PROVIDERS) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Timber.d("Migrating database from 49 to 50")
+
+                // Create new table
+                @Suppress("LocalVariableName") val TABLE_NAME = "sg_watch_provider"
+                database.execSQL("CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `provider_id` INTEGER NOT NULL, `provider_name` TEXT NOT NULL, `display_priority` INTEGER NOT NULL, `logo_path` TEXT NOT NULL, `enabled` INTEGER NOT NULL)")
+                // Create indices
+                database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_sg_watch_provider_provider_id` ON `${TABLE_NAME}` (`provider_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_provider_name` ON `${TABLE_NAME}` (`provider_name`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_display_priority` ON `${TABLE_NAME}` (`display_priority`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_enabled` ON `${TABLE_NAME}` (`enabled`)")
+            }
+        }
 
         @JvmField
         val MIGRATION_48_49: Migration = object :
