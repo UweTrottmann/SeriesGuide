@@ -10,6 +10,8 @@ import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +29,14 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
             .allWatchProvidersPagingSource()
     }.flow
         .cachedIn(viewModelScope)
+
+    init {
+        val watchRegion = StreamingSearch.getCurrentRegionOrNull(getApplication())
+        val language = DisplaySettings.getShowsSearchLanguage(getApplication())
+        if (watchRegion != null) {
+            updateWatchProviders(language, watchRegion)
+        }
+    }
 
     fun updateWatchProviders(language: String, watchRegion: String) {
         viewModelScope.launch {
