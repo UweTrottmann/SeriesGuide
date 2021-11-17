@@ -426,7 +426,11 @@ public class SeriesGuideDatabase {
             + ");";
 
     static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
-            + Tables.EPISODES_SEARCH + " USING fts4("
+            // Use unicode61 tokenizer which can case fold Unicode characters like German umlauts,
+            // by default only ASCII characters are case folded (so searching 'a' is like 'A').
+            // Using 'remove_diacritics=0' so e.g. 'ö' does not match 'o'.
+            // https://www.sqlite.org/fts3.html#tokenizer
+            + Tables.EPISODES_SEARCH + " USING fts4(tokenize=unicode61 'remove_diacritics=0',"
 
             // set episodes table as external content table
             + "content='" + Tables.SG_EPISODE + "',"
