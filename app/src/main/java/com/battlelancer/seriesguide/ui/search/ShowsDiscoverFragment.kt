@@ -123,7 +123,11 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
         // observe and load results
         model.data.observe(viewLifecycleOwner, { handleResultsUpdate(it) })
-        loadResults()
+
+        // initial load after getting watch providers, reload on watch provider changes
+        model.watchProviderIds.observe(viewLifecycleOwner, {
+            loadResults()
+        })
     }
 
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
@@ -169,7 +173,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private fun loadResults(forceLoad: Boolean = false) {
-        val willLoad = model.data.load(query, languageCode, forceLoad)
+        val watchProviderIds = model.watchProviderIds.value
+        val willLoad = model.data.load(query, languageCode, watchProviderIds, forceLoad)
         if (willLoad) swipeRefreshLayout.isRefreshing = true
     }
 
@@ -197,6 +202,10 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             R.id.menu_action_shows_search_clear_history -> {
                 // tell the hosting activity to clear the search view history
                 EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
+                true
+            }
+            R.id.menu_action_shows_search_filter -> {
+                ShowsDiscoverFilterFragment.show(parentFragmentManager)
                 true
             }
             R.id.menu_action_shows_search_change_language -> {

@@ -9,6 +9,8 @@ import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
+import com.uwetrottmann.tmdb2.entities.DiscoverFilter
+import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.entities.TvSeason
@@ -138,15 +140,24 @@ class TmdbTools2 {
     /**
      * Returns null if network call fails.
      */
-    fun getShowsWithNewEpisodes(language: String, context: Context): List<BaseTvShow>? {
-        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
+    fun getShowsWithNewEpisodes(
+        tmdb: Tmdb,
+        language: String,
+        watchProviderIds: List<Int>?,
+        watchRegion: String?
+    ): List<BaseTvShow>? {
+        val builder = tmdb.discoverTv()
+            .air_date_lte(dateNow)
+            .air_date_gte(dateOneWeekAgo)
+            .language(language)
+        if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
+            builder
+                .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
+                .watch_region(watchRegion)
+        }
+
         try {
-            val response = tmdb.discoverTv()
-                .air_date_lte(dateNow)
-                .air_date_gte(dateOneWeekAgo)
-                .language(language)
-                .build()
-                .execute()
+            val response = builder.build().execute()
             if (response.isSuccessful) {
                 val results = response.body()?.results
                 if (results != null) return results

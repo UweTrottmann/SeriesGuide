@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.provider
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
@@ -40,7 +41,7 @@ interface SgWatchProviderHelper {
     fun allWatchProvidersPagingSource(): PagingSource<Int, SgWatchProvider>
 
     @Query("SELECT provider_id FROM sg_watch_provider WHERE enabled=1")
-    fun getEnabledWatchProviderIds(): List<Int>
+    fun getEnabledWatchProviderIds(): LiveData<List<Int>>
 
     @Query("UPDATE sg_watch_provider SET enabled=:enabled WHERE _id=:id")
     fun setEnabled(id: Int, enabled: Boolean)

@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +32,7 @@ class ShowsDiscoverLiveData(
 
     private var query: String = ""
     private var language: String = context.getString(R.string.show_default_language)
+    private var watchProviderIds: List<Int>? = null
     private var currentJob: Job? = null
 
     /**
@@ -37,14 +40,25 @@ class ShowsDiscoverLiveData(
      * Set [forceLoad] to load new set of results even if language has not changed.
      * Returns if it will load.
      */
-    fun load(query: String, language: String, forceLoad: Boolean): Boolean {
-        return if (forceLoad || this.query != query || this.language != language || currentJob == null) {
+    fun load(
+        query: String,
+        language: String,
+        watchProviderIds: List<Int>?,
+        forceLoad: Boolean
+    ): Boolean {
+        return if (
+            forceLoad
+            || this.query != query
+            || this.language != language
+            || this.watchProviderIds != watchProviderIds
+            || currentJob == null
+        ) {
             this.query = query
             this.language = language
 
             currentJob?.cancel()
             currentJob = scope.launch(Dispatchers.IO) {
-                fetchDiscoverData(query, language)
+                fetchDiscoverData(query, language, watchProviderIds)
             }
             true
         } else {
@@ -54,11 +68,12 @@ class ShowsDiscoverLiveData(
 
     private suspend fun fetchDiscoverData(
         query: String,
-        language: String
+        language: String,
+        watchProviderIds: List<Int>?
     ) = withContext(Dispatchers.IO) {
         val result = if (query.isBlank()) {
             // No query: load a list of shows with new episodes in the last 7 days.
-            getShowsWithNewEpisodes(language)
+            getShowsWithNewEpisodes(language, watchProviderIds)
         } else {
             // Have a query: search.
             searchShows(query, language)
@@ -70,10 +85,14 @@ class ShowsDiscoverLiveData(
     }
 
     private suspend fun getShowsWithNewEpisodes(
-        language: String
+        language: String,
+        watchProviderIds: List<Int>?
     ): Result = withContext(Dispatchers.IO) {
+        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
         val languageActual = language
-        val results = TmdbTools2().getShowsWithNewEpisodes(language, context)
+        val watchRegion = StreamingSearch.getCurrentRegionOrNull(context)
+        val results =
+            TmdbTools2().getShowsWithNewEpisodes(tmdb, language, watchProviderIds, watchRegion)
         return@withContext if (results != null) {
             val searchResults = SearchTools.mapTvShowsToSearchResults(languageActual, results)
             SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)
