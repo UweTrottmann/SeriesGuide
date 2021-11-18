@@ -7,10 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "sg_watch_provider",
     indices = [
-        Index("provider_id", unique = true),
+        Index(value = ["provider_id", "type"], unique = true),
         Index("provider_name"), // ordered by
         Index("display_priority"), // ordered by
-        Index("enabled") // filtered by
+        Index("enabled"), // filtered by
+        Index("type"), // filtered by
     ]
 )
 data class SgWatchProvider(
@@ -20,5 +21,15 @@ data class SgWatchProvider(
     val provider_name: String,
     val display_priority: Int,
     val logo_path: String,
+    /**
+     * Type 1 is shows, type 2 is movies. This splits the providers by type which may lead
+     * to duplicates, but allows a different enabled set for shows than for movies.
+     */
+    val type: Int,
     val enabled: Boolean
-)
+) {
+    companion object {
+        const val TYPE_SHOWS = 1
+        const val TYPE_MOVIES = 2
+    }
+}

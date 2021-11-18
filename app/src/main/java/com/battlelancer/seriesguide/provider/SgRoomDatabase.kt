@@ -159,12 +159,13 @@ abstract class SgRoomDatabase : RoomDatabase() {
 
                 // Create new table
                 @Suppress("LocalVariableName") val TABLE_NAME = "sg_watch_provider"
-                database.execSQL("CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `provider_id` INTEGER NOT NULL, `provider_name` TEXT NOT NULL, `display_priority` INTEGER NOT NULL, `logo_path` TEXT NOT NULL, `enabled` INTEGER NOT NULL)")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `provider_id` INTEGER NOT NULL, `type` INTEGER NOT NULL, `provider_name` TEXT NOT NULL, `display_priority` INTEGER NOT NULL, `logo_path` TEXT NOT NULL, `enabled` INTEGER NOT NULL)")
                 // Create indices
-                database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_sg_watch_provider_provider_id` ON `${TABLE_NAME}` (`provider_id`)")
+                database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_sg_watch_provider_provider_id_type` ON `${TABLE_NAME}` (`provider_id`, `type`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_provider_name` ON `${TABLE_NAME}` (`provider_name`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_display_priority` ON `${TABLE_NAME}` (`display_priority`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_enabled` ON `${TABLE_NAME}` (`enabled`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_type` ON `${TABLE_NAME}` (`type`)")
             }
         }
 

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 50,
-    "identityHash": "cbfbac03244f1621a56501b01eacf6da",
+    "identityHash": "2014283a74737b9a9eeb23e7db8355a8",
     "entities": [
       {
         "tableName": "series",
@@ -1440,7 +1440,7 @@
       },
       {
         "tableName": "sg_watch_provider",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `provider_id` INTEGER NOT NULL, `provider_name` TEXT NOT NULL, `display_priority` INTEGER NOT NULL, `logo_path` TEXT NOT NULL, `enabled` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `provider_id` INTEGER NOT NULL, `type` INTEGER NOT NULL, `provider_name` TEXT NOT NULL, `display_priority` INTEGER NOT NULL, `logo_path` TEXT NOT NULL, `enabled` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "_id",
@@ -1451,6 +1451,12 @@
           {
             "fieldPath": "provider_id",
             "columnName": "provider_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -1487,12 +1493,13 @@
         },
         "indices": [
           {
-            "name": "index_sg_watch_provider_provider_id",
+            "name": "index_sg_watch_provider_provider_id_type",
             "unique": true,
             "columnNames": [
-              "provider_id"
+              "provider_id",
+              "type"
             ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_sg_watch_provider_provider_id` ON `${TABLE_NAME}` (`provider_id`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_sg_watch_provider_provider_id_type` ON `${TABLE_NAME}` (`provider_id`, `type`)"
           },
           {
             "name": "index_sg_watch_provider_provider_name",
@@ -1517,6 +1524,14 @@
               "enabled"
             ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_enabled` ON `${TABLE_NAME}` (`enabled`)"
+          },
+          {
+            "name": "index_sg_watch_provider_type",
+            "unique": false,
+            "columnNames": [
+              "type"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sg_watch_provider_type` ON `${TABLE_NAME}` (`type`)"
           }
         ],
         "foreignKeys": []
@@ -1525,7 +1540,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cbfbac03244f1621a56501b01eacf6da')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2014283a74737b9a9eeb23e7db8355a8')"
     ]
   }
 }

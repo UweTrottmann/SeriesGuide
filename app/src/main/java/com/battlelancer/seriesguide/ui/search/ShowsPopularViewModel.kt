@@ -8,6 +8,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
@@ -20,7 +21,7 @@ class ShowsPopularViewModel(application: Application) : AndroidViewModel(applica
 
     private val watchProviderIds =
         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-            .getEnabledWatchProviderIdsFlow()
+            .getEnabledWatchProviderIdsFlow(SgWatchProvider.TYPE_SHOWS)
 
     val items: Flow<PagingData<SearchResult>>
 

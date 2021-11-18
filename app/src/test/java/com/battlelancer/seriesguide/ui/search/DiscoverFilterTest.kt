@@ -15,14 +15,18 @@ class DiscoverFilterTest {
             tmdbWatchProvider(3, "Update No Change", 1, "Path")
         )
         val oldProviders = listOf(
-            SgWatchProvider(10, 2, "To Update", 1, "Path", true),
-            SgWatchProvider(11, 3, "Update No Change", 1, "Path", true),
-            SgWatchProvider(12, 4, "To Delete", 1, "Path", true)
+            SgWatchProvider(10, 2, "To Update", 1, "Path", SgWatchProvider.TYPE_SHOWS, true),
+            SgWatchProvider(11, 3, "Update No Change", 1, "Path", SgWatchProvider.TYPE_SHOWS, true),
+            SgWatchProvider(12, 4, "To Delete", 1, "Path", SgWatchProvider.TYPE_SHOWS, true)
         )
 
-        val diff = ShowsDiscoverFilterViewModel.calculateProviderDiff(newProviders, oldProviders)
-        assertThat(diff.inserts).containsExactly(SgWatchProvider(0, 1, "Insert", 1, "path", false))
-        assertThat(diff.updates).containsExactly(SgWatchProvider(10, 2, "Updated", 2, "Updated", true))
+        val diff = ShowsDiscoverFilterViewModel.calculateProviderDiff(newProviders, oldProviders, isForShowsNotMovies = true)
+        assertThat(diff.inserts).containsExactly(
+            SgWatchProvider(0, 1, "Insert", 1, "path", SgWatchProvider.TYPE_SHOWS, false)
+        )
+        assertThat(diff.updates).containsExactly(
+            SgWatchProvider(10, 2, "Updated", 2, "Updated", SgWatchProvider.TYPE_SHOWS, true)
+        )
         assertThat(diff.deletes).containsExactly(oldProviders[2])
     }
 

@@ -26,7 +26,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
         PagingConfig(pageSize = 20)
     ) {
         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-            .allWatchProvidersPagingSource()
+            .allWatchProvidersPagingSource(SgWatchProvider.TYPE_SHOWS)
     }.flow
         .cachedIn(viewModelScope)
 
@@ -47,9 +47,10 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
                 if (newProviders != null) {
                     val dbHelper =
                         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-                    val oldProviders = dbHelper.getAllWatchProviders().toMutableList()
+                    val oldProviders =
+                        dbHelper.getAllWatchProviders(SgWatchProvider.TYPE_SHOWS).toMutableList()
 
-                    val diff = calculateProviderDiff(newProviders, oldProviders)
+                    val diff = calculateProviderDiff(newProviders, oldProviders, true)
 
                     dbHelper.updateWatchProviders(
                         diff.inserts,
@@ -65,12 +66,13 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
 
         /**
          * Create inserts, updates and deletes to minimize database writes
-         * at the cost of CPU and memory.
+         * at the cost of CPU and memory. Only pass providers of one type.
          */
         @VisibleForTesting
         fun calculateProviderDiff(
             newProviders: List<WatchProviders.WatchProvider>,
-            oldProviders: List<SgWatchProvider>
+            oldProviders: List<SgWatchProvider>,
+            isForShowsNotMovies: Boolean
         ): ProviderDiff {
             val inserts = mutableListOf<SgWatchProvider>()
             val updates = mutableListOf<SgWatchProvider>()
@@ -89,7 +91,8 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
                         val update = existingProvider.copy(
                             provider_name = providerName,
                             display_priority = newProvider.display_priority ?: 0,
-                            logo_path = newProvider.logo_path ?: ""
+                            logo_path = newProvider.logo_path ?: "",
+                            type = if (isForShowsNotMovies) SgWatchProvider.TYPE_SHOWS else SgWatchProvider.TYPE_MOVIES
                         )
                         if (update != existingProvider) updates.add(update)
                     } else {
@@ -99,6 +102,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
                                 provider_name = providerName,
                                 display_priority = newProvider.display_priority ?: 0,
                                 logo_path = newProvider.logo_path ?: "",
+                                type = if (isForShowsNotMovies) SgWatchProvider.TYPE_SHOWS else SgWatchProvider.TYPE_MOVIES,
                                 enabled = false
                             )
                         )

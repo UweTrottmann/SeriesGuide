@@ -35,23 +35,22 @@ interface SgWatchProviderHelper {
         insertOrReplace(inserts)
     }
 
-    @Query("SELECT * FROM sg_watch_provider")
-    fun getAllWatchProviders(): List<SgWatchProvider>
+    @Query("SELECT * FROM sg_watch_provider WHERE type=:type")
+    fun getAllWatchProviders(type: Int): List<SgWatchProvider>
 
-    @Query("SELECT * FROM sg_watch_provider ORDER BY display_priority ASC, provider_name ASC")
-    fun allWatchProvidersPagingSource(): PagingSource<Int, SgWatchProvider>
+    @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY display_priority ASC, provider_name ASC")
+    fun allWatchProvidersPagingSource(type: Int): PagingSource<Int, SgWatchProvider>
 
-    @Query("SELECT provider_id FROM sg_watch_provider WHERE enabled=1")
-    fun getEnabledWatchProviderIds(): LiveData<List<Int>>
+    @Query("SELECT provider_id FROM sg_watch_provider WHERE type=:type AND enabled=1")
+    fun getEnabledWatchProviderIds(type: Int): LiveData<List<Int>>
 
-    @Query("SELECT provider_id FROM sg_watch_provider WHERE enabled=1")
-    fun getEnabledWatchProviderIdsFlow(): Flow<List<Int>>
+    @Query("SELECT provider_id FROM sg_watch_provider WHERE type=:type AND enabled=1")
+    fun getEnabledWatchProviderIdsFlow(type: Int): Flow<List<Int>>
 
     @Query("UPDATE sg_watch_provider SET enabled=:enabled WHERE _id=:id")
     fun setEnabled(id: Int, enabled: Boolean)
 
-
-    @Query("UPDATE sg_watch_provider SET enabled=0")
-    fun setAllDisabled()
+    @Query("UPDATE sg_watch_provider SET enabled=0 WHERE type=:type")
+    fun setAllDisabled(type: Int)
 
 }
