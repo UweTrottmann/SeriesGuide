@@ -45,6 +45,14 @@ class ShowsDiscoverFilterFragment : AppCompatDialogFragment() {
             if (it != null) model.updateWatchProviders(language, it)
         })
 
+        // disable all button
+        binding.buttonDisableAllProviders.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                SgRoomDatabase.getInstance(requireContext()).sgWatchProviderHelper()
+                    .setAllDisabled()
+            }
+        }
+
         // watch provider list
         val adapter = ShowsDiscoverFilterAdapter(watchProviderClickListener)
         binding.recyclerViewWatchProviders.also {
@@ -70,9 +78,8 @@ class ShowsDiscoverFilterFragment : AppCompatDialogFragment() {
         override fun onClick(watchProvider: SgWatchProvider) {
             // Note: DialogFragment does not have viewLifecycleOwner.
             lifecycleScope.launch(Dispatchers.IO) {
-                val updatedProvider = watchProvider.copy(enabled = !watchProvider.enabled)
                 SgRoomDatabase.getInstance(requireContext()).sgWatchProviderHelper()
-                    .update(updatedProvider)
+                    .setEnabled(watchProvider._id, !watchProvider.enabled)
             }
         }
     }

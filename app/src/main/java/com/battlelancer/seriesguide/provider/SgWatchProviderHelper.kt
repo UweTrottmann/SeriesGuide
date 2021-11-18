@@ -42,7 +42,11 @@ interface SgWatchProviderHelper {
     @Query("SELECT provider_id FROM sg_watch_provider WHERE enabled=1")
     fun getEnabledWatchProviderIds(): List<Int>
 
-    @Update
-    fun update(watchProvider: SgWatchProvider)
+    @Query("UPDATE sg_watch_provider SET enabled=:enabled WHERE _id=:id")
+    fun setEnabled(id: Int, enabled: Boolean)
+
+
+    @Query("UPDATE sg_watch_provider SET enabled=0")
+    fun setAllDisabled()
 
 }

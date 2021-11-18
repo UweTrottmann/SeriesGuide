@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Main Menu -->
     <string name="shows">Shows</string>
@@ -42,6 +42,7 @@
     <string name="action_stream">Stream or purchase</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Select region</string>
+    <string name="action_include_any_watch_provider" tools:ignore="MissingTranslation">Include any</string>
 
     <!-- Search -->
     <string name="clear_search_history">Clear search history</string>

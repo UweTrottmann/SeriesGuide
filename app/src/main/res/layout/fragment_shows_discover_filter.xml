@@ -26,12 +26,23 @@
         app:icon="@drawable/ic_language_white_24dp"
         tools:text="@string/action_select_region" />
 
+    <Button
+        android:id="@+id/buttonDisableAllProviders"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/action_include_any_watch_provider" />
+
     <!-- Using LinearLayout so using wrap_content is possible,
     using ConstraintLayout does not match available space. -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWatchProviders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/item_watch_provider" />
 
 </LinearLayout>
