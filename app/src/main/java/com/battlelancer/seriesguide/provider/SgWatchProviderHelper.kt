@@ -10,6 +10,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.battlelancer.seriesguide.model.SgWatchProvider
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SgWatchProviderHelper {
@@ -42,6 +43,9 @@ interface SgWatchProviderHelper {
 
     @Query("SELECT provider_id FROM sg_watch_provider WHERE enabled=1")
     fun getEnabledWatchProviderIds(): LiveData<List<Int>>
+
+    @Query("SELECT provider_id FROM sg_watch_provider WHERE enabled=1")
+    fun getEnabledWatchProviderIdsFlow(): Flow<List<Int>>
 
     @Query("UPDATE sg_watch_provider SET enabled=:enabled WHERE _id=:id")
     fun setEnabled(id: Int, enabled: Boolean)

@@ -2,6 +2,9 @@ package com.battlelancer.seriesguide.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
@@ -28,6 +31,11 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     private val model: ShowsPopularViewModel by viewModels()
     private lateinit var adapter: ShowsPopularAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,6 +85,21 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
                     if (snackbar.isShownOrQueued) snackbar.dismiss()
                 }
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.shows_popular_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_action_shows_popular_filter -> {
+                ShowsDiscoverFilterFragment.show(parentFragmentManager)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

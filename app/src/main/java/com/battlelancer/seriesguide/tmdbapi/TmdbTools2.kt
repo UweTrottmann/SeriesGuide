@@ -15,9 +15,11 @@ import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.tmdb2.entities.TvShow
+import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
+import com.uwetrottmann.tmdb2.enumerations.SortBy
 import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.tmdb2.services.TvEpisodesService
 import kotlinx.coroutines.Dispatchers
@@ -166,6 +168,36 @@ class TmdbTools2 {
             }
         } catch (e: Exception) {
             Errors.logAndReport("get shows w new episodes", e)
+        }
+        return null
+    }
+
+    fun getPopularShows(
+        tmdb: Tmdb,
+        language: String,
+        page: Int,
+        watchProviderIds: List<Int>?,
+        watchRegion: String?
+    ): TvShowResultsPage? {
+        val builder = tmdb.discoverTv()
+            .language(language)
+            .sort_by(SortBy.POPULARITY_DESC)
+            .page(page)
+        if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
+            builder
+                .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
+                .watch_region(watchRegion)
+        }
+
+        try {
+            val response = builder.build().execute()
+            if (response.isSuccessful) {
+                return response.body()
+            } else {
+                Errors.logAndReport("load popular shows", response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport("load popular shows", e)
         }
         return null
     }
