@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
 import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 import com.uwetrottmann.tmdb2.entities.Credits
@@ -19,6 +20,7 @@ import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.tmdb2.services.TvEpisodesService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.create
 import java.net.SocketTimeoutException
 import java.util.Calendar
 import java.util.Date
@@ -155,6 +157,21 @@ class TmdbTools2 {
             Errors.logAndReport("get shows w new episodes", e)
         }
         return null
+    }
+
+    suspend fun getShowWatchProviders(
+        tmdb: Tmdb,
+        language: String,
+        watchRegion: String
+    ): List<WatchProviders.WatchProvider>? {
+        return try {
+            (tmdb as SgTmdb).retrofit.create<WatchProvidersService>()
+                .tv(language, watchRegion)
+                .results
+        } catch (e: Exception) {
+            Errors.logAndReport("get show watch providers", e)
+            null
+        }
     }
 
     suspend fun loadCreditsForShow(context: Context, showRowId: Long): Credits? =
