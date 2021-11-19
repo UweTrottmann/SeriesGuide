@@ -22,7 +22,7 @@
     <!-- Descriptions -->
     <string name="description_overview">Přehled</string>
     <string name="description_poster">Zobrazit plakát</string>
-    <string name="description_image">Obrázek z epizody</string>
+    <string name="description_image">Obrázek epizody</string>
     <string name="description_menu_overflow">Další možnosti</string>
     <!-- Actions -->
     <string name="clear">Vyčistit</string>
@@ -40,12 +40,12 @@
     <string name="action_select_region">Vyberte region</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
-    <string name="search_hint">Hledat v epizodách</string>
+    <string name="search_hint">Hledat epizody</string>
     <!-- Status messages -->
     <string name="updated">Aktualizováno na nejnovější verzi.</string>
     <string name="updated_details">Detaily</string>
     <string name="norating">n/a</string>
-    <string name="unknown">neznámo</string>
+    <string name="unknown">neznámé</string>
     <string name="offline">Připojte se k síti a zkuste to znovu.</string>
     <string name="app_not_available">Není k dispozici použitelná aplikace</string>
     <string name="people_empty">Nikdo tu není?! Klepnutím to zkuste znovu.</string>
@@ -154,14 +154,14 @@
     <string name="action_shows_sort_oldest_episode">Nejstarší díl</string>
     <string name="action_shows_sort_last_watched">Naposledy zhlédnuto</string>
     <string name="action_shows_sort_remaining">Zbývající díly</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">Stav</string>
     <string name="action_shows_sort_favorites">Oblíbené jako první</string>
     <string name="context_updateshow">Aktualizovat</string>
     <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
     <string name="action_episodes_switch_view">Přepnout zobrazení</string>
     <!-- History -->
     <string name="user_stream">Historie</string>
-    <string name="recently_watched">Nedávno viděno</string>
+    <string name="recently_watched">Nedávno zhlédnuto</string>
     <string name="friends_recently">Zaznamenáno přítelem</string>
     <string name="now_empty">Nic se neděje. Podívejte se na nějaké seriály!</string>
     <string name="now_movies_empty">Zatím tu nic není. Podívejte se na některé filmy!</string>
@@ -255,7 +255,7 @@
     <string name="action_movies_sort_release">Datum vysílání</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nelze přepočítat statistiky.</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s dokončených zhlédnutí</string>
     <string name="shows_with_next">%s s nezhlédnutými epizodami</string>
     <string name="shows_continuing">%s pokračujicích</string>
     <string name="episodes_watched">%s zhlédnutých</string>
@@ -293,15 +293,15 @@
     <string name="hexagon_signin">Přihlásit se</string>
     <string name="hexagon_signout">Odhlásit se</string>
     <string name="hexagon_setup_incomplete">Nastavení SeriesGuide cloudu nebylo dokončeno</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Váš účet nemá e-mailovou adresu</string>
     <string name="hexagon_remove_account">Odebrat účet</string>
     <string name="hexagon_remove_account_success">Účet vymazán.</string>
     <string name="hexagon_remove_account_failure">Nelze odebrat účet.</string>
     <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
     <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Odhlášeno z SeriesGuide Cloudu.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Chyba při přihlášení (%s)</string>
+    <string name="hexagon_signin_google_only">E-mailová adresa vyžaduje přihlášení Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Odesíláno na trakt.</string>
     <string name="checkin_success_trakt">Ohlášen u %s na traktu.</string>
@@ -323,7 +323,7 @@
     <string name="disconnect">Odpojit</string>
     <string name="use_integrated_browser">Použít integrovaný prohlížeč</string>
     <string name="show_library">Ukázat vaši knihovnu</string>
-    <string name="about_trakt">trakt vám pomáhá zaznamenávat které televizní seriály a filmy sledujete. <a href="http://trakt.tv">Zjistit více.</a></string>
+    <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete. <a href="https://trakt.tv">Další informace</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Ohodnotit</string>
     <string name="your_rating">Vaše hodnocení</string>
@@ -364,7 +364,7 @@
     <string name="pref_exactdates">Zobrazovat celá data</string>
     <string name="pref_exactdates_summary">\"31. října\" místo \"za 3 dny\"</string>
     <string name="pref_nospoilers">Zabraň spoilerům</string>
-    <string name="pref_nospoilers_summary">Skrýt podrobnosti, dokud není díl zhlédnut</string>
+    <string name="pref_nospoilers_summary">Skrýt podrobnosti, dokud není epizoda zhlédnuta</string>
     <string name="pref_seasonsorting">Řadit série dle&#8230;</string>
     <string name="pref_episodesorting">Řadit epizody dle&#8230;</string>
     <string name="pref_language">Preferovaný jazyk obsahu</string>
@@ -415,7 +415,7 @@
     <string name="upcoming_upto_one_week">týden</string>
     <string name="upcoming_upto_two_weeks">dvou týdnů</string>
     <string name="upcoming_upto_one_month">měsíce</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">vše</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Vzhled</string>
     <string name="pref_theme">Téma</string>
@@ -487,7 +487,7 @@
     <string name="pref_widget_opacity">Pozadí widgetu</string>
     <string name="pref_widget_type">Typ widgetu</string>
     <string name="pref_large_font">Použít velké písmo</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_hide_watch_button">Skrýt tlačítko \"Zhlédnout\"</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Průhledné</string>
     <string name="widget_background_25">25%</string>

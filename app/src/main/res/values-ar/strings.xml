@@ -509,7 +509,7 @@
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
     <string name="pref_widget_type">نوع القطعة العائمة</string>
     <string name="pref_large_font">استخدام الخط الكبير</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_hide_watch_button">إخفاء زر المشهود</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفافية</string>
     <string name="widget_background_25">25%</string>

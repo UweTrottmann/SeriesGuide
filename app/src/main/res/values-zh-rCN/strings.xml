@@ -54,7 +54,7 @@
     <string name="api_error_generic">无法连接到 %s。请稍后重试。</string>
     <string name="api_failed">失败：%s</string>
     <string name="copy_to_clipboard">已复制到剪贴板</string>
-    <string name="not_migrated">在 TMDb 上找不到该条目，可能无法收到相关内容更新，或无法与 Trakt 和 SeriesGuide Cloud 配合使用。点按即可查看详情。</string>
+    <string name="not_migrated">在 TMDB 上找不到该条目，可能无法收到相关内容更新，或无法与 Trakt 和 SeriesGuide Cloud 配合使用。点按即可查看详情。</string>
     <!-- Sharing -->
     <string name="share">分享</string>
     <string name="share_show">分享此节目</string>
@@ -92,7 +92,7 @@
     <string name="show_status_in_production">制作中</string>
     <string name="show_status_pilot">试播集</string>
     <string name="show_status_canceled">已取消</string>
-    <string name="no_translation">在 %2$s 上找不到 %1$s 语言的剧目信息。</string>
+    <string name="no_translation">%2$s 上没有%1$s的剧情简介。</string>
     <string name="no_translation_title">未翻译</string>
     <string name="no_spoilers">已隐藏部分详细信息来防止剧透。可在设置中关闭此功能。</string>
     <string name="format_source">来源：%s</string>
@@ -134,16 +134,16 @@
     <string name="action_episode_notifications_off">关闭剧集通知</string>
     <string name="context_hide">隐藏</string>
     <string name="context_unhide">取消隐藏</string>
-    <string name="hidden">已隐藏选中的节目</string>
-    <string name="unhidden">已取消隐藏选中节目</string>
+    <string name="hidden">已隐藏该节目</string>
+    <string name="unhidden">已重新显示该节目</string>
     <string name="action_shows_add">添加节目</string>
     <string name="action_shows_filter">筛选节目</string>
     <string name="empty_filter">移除所有筛选条件</string>
-    <string name="action_shows_filter_favorites">喜爱的节目</string>
+    <string name="action_shows_filter_favorites">喜爱标记</string>
     <string name="action_shows_filter_unwatched">未观看</string>
     <string name="action_shows_filter_upcoming">即将播出</string>
-    <string name="action_shows_filter_hidden">已隐藏的节目</string>
-    <string name="action_shows_make_all_visible">使所有隐藏的节目可见</string>
+    <string name="action_shows_filter_hidden">已隐藏</string>
+    <string name="action_shows_make_all_visible">显示所有隐藏的节目</string>
     <string name="description_make_all_visible_format">重新显示所有隐藏的节目（%s）吗？</string>
     <string name="action_shows_sort">排序节目</string>
     <string name="action_shows_sort_title">按片名</string>
@@ -164,7 +164,7 @@
     <string name="now_movies_empty">什么也没有。看电影去吧！</string>
     <!-- Calendar -->
     <string name="upcoming">即将播出</string>
-    <string name="recent">近期已播剧集</string>
+    <string name="recent">已播剧集</string>
     <string name="released_today">今天首播</string>
     <string name="noupcoming">没有即将播出的剧集</string>
     <string name="norecent">没有近期已播出的剧集</string>
@@ -194,7 +194,7 @@
     <string name="no_results">没有与此相关的结果。请尝试输入完整名称</string>
     <string name="empty_show_search">在您的节目单中找不到相关节目</string>
     <string name="action_try_again">重试</string>
-    <string name="tvdb_error_does_not_exist">TMDb 上（尚）无此节目。请稍后重试。</string>
+    <string name="tvdb_error_does_not_exist">TMDB 上（尚）无此节目。请稍后重试。</string>
     <string name="add_all">全部添加</string>
     <string name="add_multiple">以下所有节目很快就会出现在您的节目单中</string>
     <string name="add_started">《%s》很快就会出现在您的节目单中</string>
@@ -208,22 +208,22 @@
     <string name="empty_no_results">无结果</string>
     <string name="title_similar_shows">相似节目</string>
     <!-- Lists -->
-    <string name="first_list">我的列表</string>
+    <string name="first_list">默认列表</string>
     <string name="list_add">新建列表</string>
     <string name="list_title_hint">为列表命名</string>
     <string name="list_remove">删除此列表</string>
     <string name="list_manage">管理列表</string>
     <string name="list_item_manage">管理列表</string>
     <string name="list_item_remove">从列表中移除</string>
-    <string name="list_empty">您可以添加节目到此列表</string>
-    <string name="action_lists_sort">列表排序</string>
-    <string name="action_lists_reorder">重新排序</string>
+    <string name="list_empty">您可以将节目添加到此列表</string>
+    <string name="action_lists_sort">排序列表</string>
+    <string name="action_lists_reorder">对列表重新排序</string>
     <string name="error_name_already_exists">已存在同名列表</string>
     <!-- Movies -->
     <string name="title_discover">发现</string>
     <string name="title_popular">热门</string>
-    <string name="title_digital_releases">数字版本</string>
-    <string name="title_disc_releases">光盘版本</string>
+    <string name="title_digital_releases">数字发行</string>
+    <string name="title_disc_releases">光盘发行</string>
     <string name="movies_in_theatres">上映中</string>
     <string name="movies_collection">收藏</string>
     <string name="movies_watchlist">待看清单</string>
@@ -238,7 +238,7 @@
     <string name="trailer">预告片</string>
     <string name="movie_cast">演员</string>
     <string name="movie_crew">工作人员</string>
-    <string name="action_movies_sort">重新排序</string>
+    <string name="action_movies_sort">排序电影</string>
     <string name="action_movies_sort_title">按片名</string>
     <string name="action_movies_sort_release">首播日期</string>
     <!-- Statistics -->
@@ -267,7 +267,7 @@
     <string name="feature_sync">同步</string>
     <!-- Hexagon -->
     <string name="hexagon_warning">这是一个实验性功能！</string>
-    <string name="hexagon_description">SeriesGuide Cloud 可帮您备份并同步您的节目、列表及电影</string>
+    <string name="hexagon_description">SeriesGuide Cloud 可帮您备份并同步您的节目、列表和电影</string>
     <string name="hexagon_warning_trakt">当登录到 SeriesGuide Cloud 时，Trakt 的某些功能将无法使用</string>
     <string name="hexagon_signin">登录</string>
     <string name="hexagon_signout">注销</string>
@@ -317,7 +317,7 @@
     <string name="rating8">很棒</string>
     <string name="rating9">优秀</string>
     <plurals name="votes">
-        <item quantity="other">%d 次投票</item>
+        <item quantity="other">%d 人评价</item>
     </plurals>
     <!-- Check Ins -->
     <string name="checkin">签到</string>
@@ -359,10 +359,10 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">隐私权政策</string>
-    <string name="licence_themoviedb">本应用使用了 TMDb 的 API，但未被 TMDb 认可或认证。</string>
+    <string name="licence_themoviedb">本应用使用了 TMDB 的 API，但未被 TMDB 认可或认证。</string>
     <string name="licence_trakt">本应用使用了 Trakt 的数据和图像。</string>
     <string name="about_open_source">SeriesGuide 是采用开放源码软件编写的。</string>
-    <string name="licences_and_credits">许可证与致谢</string>
+    <string name="licences_and_credits">许可与致谢</string>
     <!-- Sort -->
     <string name="sort">排序方式</string>
     <string name="action_sort_ignore_articles">忽略起始冠词</string>
@@ -395,14 +395,14 @@
     <string name="pref_other">其它</string>
     <string name="pref_autoupdatesummary">自动同步并更新 SeriesGuide 数据</string>
     <string name="backup">备份与还原</string>
-    <string name="backup_summary">备份或还原节目单</string>
+    <string name="backup_summary">备份或还原您的节目、列表和电影</string>
     <string name="pref_number">序号格式</string>
     <string name="pref_offset">手动偏移播出时间</string>
     <string name="pref_offsetsummary">使显示时间与原播出时间相差 %d 小时</string>
     <string name="clear_cache">清理图片缓存</string>
     <string name="clear_cache_summary">转到应用存储设置清除缓存的图片和网络响应</string>
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">包括说明、详细信息、评分</string>
+    <string name="backup_full_dump">包括剧情简介、详细信息、评分</string>
     <string name="backup_failed_file_access">备份失败：找不到或无法访问备份文件。</string>
     <string name="backup_success">备份成功</string>
     <string name="backup_failed">备份失败</string>
@@ -422,7 +422,7 @@
     <string name="last_auto_backup">上次自动备份时间：%s</string>
     <string name="restore_auto_backup">从自动备份恢复</string>
     <string name="autobackup_failed">最后一次自动备份失败</string>
-    <string name="autobackup_files_missing">选择一个可用的备份文件以使用自动备份</string>
+    <string name="autobackup_files_missing">要使用自动备份，请选择有效的备份文件</string>
     <string name="autobackup_create_user_copy">每次备份后创建一个副本</string>
     <string name="autobackup_restore_available">自动备份可能可用来还原。</string>
     <!-- Welcome dialog -->
@@ -433,7 +433,7 @@
     <string name="upcoming_episodes">即将播出新的剧集</string>
     <string name="upcoming_episodes_number">%s 个剧集即将播出</string>
     <string name="more">另外 %d 个</string>
-    <string name="upcoming_display">选择要显示的即将播出的节目</string>
+    <string name="upcoming_display">点按即可显示即将播出的节目</string>
     <string name="pref_notifications">通知</string>
     <string name="pref_notificationssummary">新剧集开始播出时显示通知</string>
     <string name="pref_ringtone">铃声</string>

@@ -247,7 +247,7 @@
     <string name="action_movies_sort_release">Julkaisupäivä</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tilastojen laskeminen ei onnistunut.</string>
-    <string name="shows_finished">%s katsoi loppuun</string>
+    <string name="shows_finished">%s katsottu loppuun</string>
     <string name="shows_with_next">%s ohjelmassa seuraavia jaksoja</string>
     <string name="shows_continuing">%s jatkuu</string>
     <string name="episodes_watched">%s katsottu</string>
