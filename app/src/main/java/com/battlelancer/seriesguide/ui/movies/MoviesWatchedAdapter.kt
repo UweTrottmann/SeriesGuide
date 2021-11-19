@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.battlelancer.seriesguide.model.SgMovie
 import com.battlelancer.seriesguide.settings.TmdbSettings
@@ -11,7 +11,7 @@ import java.text.DateFormat
 internal class MoviesWatchedAdapter(
     context: Context,
     val itemClickListener: MovieClickListener
-) : PagedListAdapter<SgMovie, MovieViewHolder>(DIFF_CALLBACK) {
+) : PagingDataAdapter<SgMovie, MovieViewHolder>(DIFF_CALLBACK) {
 
     private val dateFormatMovieReleaseDate: DateFormat = MovieTools.getMovieShortDateFormat()
     private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
