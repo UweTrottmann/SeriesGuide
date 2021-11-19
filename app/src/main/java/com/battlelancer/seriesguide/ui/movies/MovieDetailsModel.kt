@@ -46,7 +46,7 @@ class MovieDetailsModelFactory(
     private val application: Application
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MovieDetailsModel(movieTmdbId, application) as T
     }
 }
