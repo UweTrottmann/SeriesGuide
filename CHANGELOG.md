@@ -12,6 +12,12 @@ Version 62
 ----------
 *in development*
 
+#### 62-beta4
+*2021-11-19*
+
+* Episode search: match independent of case for Unicode characters, e.g. German umlauts.
+* 📝 Latest translations from Crowdin.
+
 #### 62-beta3
 *2021-10-20*
 
