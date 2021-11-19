@@ -38,6 +38,7 @@
     <string name="action_stream">Streamen oder Kaufen</string>
     <string name="action_stream_info">Streamen oder Kaufen Info</string>
     <string name="action_select_region">Region auswählen</string>
+    <string name="action_include_any_watch_provider">Alle einbeziehen</string>
     <!-- Search -->
     <string name="clear_search_history">Suchverlauf löschen</string>
     <string name="search_hint">Suche Folgen</string>

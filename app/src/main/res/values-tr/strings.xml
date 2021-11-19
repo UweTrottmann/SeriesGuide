@@ -38,6 +38,7 @@
     <string name="action_stream">Online izle veya satın al</string>
     <string name="action_stream_info">Online izleme veya satın alma bilgisi</string>
     <string name="action_select_region">Bölge seçin</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>

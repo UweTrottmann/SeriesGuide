@@ -38,6 +38,7 @@
     <string name="action_stream">Streamelés vagy vásárlás</string>
     <string name="action_stream_info">Stream vagy vásárlási információk</string>
     <string name="action_select_region">Válassz régiót</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
