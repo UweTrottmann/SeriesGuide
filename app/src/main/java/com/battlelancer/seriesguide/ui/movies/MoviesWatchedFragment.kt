@@ -11,10 +11,14 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesWatchedBinding
 import com.battlelancer.seriesguide.ui.MoviesActivity
 import com.battlelancer.seriesguide.widgets.SgFastScroller
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -78,10 +82,17 @@ class MoviesWatchedFragment : Fragment() {
                 }
             )
 
-        model.movieList.observe(viewLifecycleOwner, {
-            binding?.textViewEmptyMoviesWatched?.isGone = it.size > 0
-            adapter.submitList(it)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.onPagesUpdatedFlow.conflate().collectLatest {
+                binding?.textViewEmptyMoviesWatched?.isGone = adapter.itemCount > 0
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.items.collectLatest {
+                adapter.submitData(it)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
