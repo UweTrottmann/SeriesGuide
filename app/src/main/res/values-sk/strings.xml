@@ -38,6 +38,7 @@
     <string name="action_stream">Streamovanie alebo zakúpenie</string>
     <string name="action_stream_info">Streamovanie alebo info o zakúpení</string>
     <string name="action_select_region">Vybrať región</string>
+    <string name="action_include_any_watch_provider">Zahrňte akékoľvek</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
     <string name="search_hint">Hľadať epizódy</string>

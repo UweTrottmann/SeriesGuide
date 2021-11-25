@@ -123,7 +123,11 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
         // observe and load results
         model.data.observe(viewLifecycleOwner, { handleResultsUpdate(it) })
-        loadResults()
+
+        // initial load after getting watch providers, reload on watch provider changes
+        model.watchProviderIds.observe(viewLifecycleOwner, {
+            loadResults()
+        })
     }
 
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
@@ -169,7 +173,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private fun loadResults(forceLoad: Boolean = false) {
-        val willLoad = model.data.load(query, languageCode, forceLoad)
+        val watchProviderIds = model.watchProviderIds.value
+        val willLoad = model.data.load(query, languageCode, watchProviderIds, forceLoad)
         if (willLoad) swipeRefreshLayout.isRefreshing = true
     }
 
@@ -189,21 +194,26 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.tvdb_add_menu, menu)
+        inflater.inflate(R.menu.shows_discover_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.menu_action_shows_search_clear_history) {
-            // tell the hosting activity to clear the search view history
-            EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
-            return true
+        return when (item.itemId) {
+            R.id.menu_action_shows_search_clear_history -> {
+                // tell the hosting activity to clear the search view history
+                EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
+                true
+            }
+            R.id.menu_action_shows_search_filter -> {
+                ShowsDiscoverFilterFragment.show(parentFragmentManager)
+                true
+            }
+            R.id.menu_action_shows_search_change_language -> {
+                displayLanguageSettings()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        if (itemId == R.id.menu_action_shows_search_change_language) {
-            displayLanguageSettings()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun displayLanguageSettings() {

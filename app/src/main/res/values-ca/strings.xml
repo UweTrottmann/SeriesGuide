@@ -38,6 +38,7 @@
     <string name="action_stream">Veure on-line o comprar</string>
     <string name="action_stream_info">Veure en línia o informació de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
+    <string name="action_include_any_watch_provider">Inclou qualsevol</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>

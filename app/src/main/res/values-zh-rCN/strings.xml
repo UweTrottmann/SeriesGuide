@@ -38,6 +38,7 @@
     <string name="action_stream">流媒体播放或购买</string>
     <string name="action_stream_info">流媒体播放或购买信息</string>
     <string name="action_select_region">选择地区</string>
+    <string name="action_include_any_watch_provider">包括任意一个</string>
     <!-- Search -->
     <string name="clear_search_history">清空搜索历史</string>
     <string name="search_hint">搜索剧集</string>
@@ -160,8 +161,8 @@
     <string name="user_stream">历史记录</string>
     <string name="recently_watched">最近看了</string>
     <string name="friends_recently">Trakt 好友动态</string>
-    <string name="now_empty">什么也没有。看节目去吧！</string>
-    <string name="now_movies_empty">什么也没有。看电影去吧！</string>
+    <string name="now_empty">什么也没有。看会儿节目吧！</string>
+    <string name="now_movies_empty">什么也没有。看会儿电影吧！</string>
     <!-- Calendar -->
     <string name="upcoming">即将播出</string>
     <string name="recent">已播剧集</string>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.search.ShowsDiscoverFilterFragment">
+
+    <Button
+        android:id="@+id/buttonWatchRegion"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        tools:text="@string/action_select_region" />
+
+    <Button
+        android:id="@+id/buttonDisableAllProviders"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/action_include_any_watch_provider" />
+
+    <!-- Using LinearLayout so using wrap_content is possible,
+    using ConstraintLayout does not match available space. -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewWatchProviders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/item_watch_provider" />
+
+</LinearLayout>

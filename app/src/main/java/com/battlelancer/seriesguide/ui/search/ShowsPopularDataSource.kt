@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.Tmdb
@@ -14,23 +14,24 @@ import java.io.IOException
  * Loads popular shows in pages from TMDB.
  */
 class ShowsPopularDataSource(
-        private val context: Context,
-        private val tmdb: Tmdb
+    private val context: Context,
+    private val tmdb: Tmdb,
+    private val languageCode: String,
+    private val watchProviderIds: List<Int>?,
+    private val watchRegion: String?
 ) : PagingSource<Int, SearchResult>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchResult> {
         val pageNumber = params.key ?: 1
-
-        val languageCode = DisplaySettings.getShowsSearchLanguage(context)
         val action = "load popular shows"
-
-        val response = try {
-            tmdb.tvService().popular(
-                pageNumber,
-                languageCode
-            ).execute()
-        } catch (e: Exception) {
-            Errors.logAndReport(action, e)
+        val result = TmdbTools2().getPopularShows(
+            tmdb,
+            languageCode,
+            pageNumber,
+            watchProviderIds,
+            watchRegion
+        )
+        if (result == null) {
             // Not checking for connection until here to allow hitting the response cache.
             return if (AndroidUtils.isNetworkConnected(context)) {
                 buildResultGenericFailure()
@@ -39,18 +40,13 @@ class ShowsPopularDataSource(
             }
         }
 
-        // Check for failures or broken body.
-        if (!response.isSuccessful) {
-            Errors.logAndReport(action, response)
-            return buildResultGenericFailure()
-        }
-        val body = response.body()
-        if (body == null) {
-            Errors.logAndReport(action, IllegalStateException("body is null"))
+        val totalResults = result.total_results
+        if (totalResults == null) {
+            Errors.logAndReport(action, IllegalStateException("total_results is null"))
             return buildResultGenericFailure()
         }
 
-        val shows = body.results?.filterNotNull()
+        val shows = result.results?.filterNotNull()
         return if (shows == null || shows.isEmpty()) {
             // return empty list right away if there are no results
             LoadResult.Page(
