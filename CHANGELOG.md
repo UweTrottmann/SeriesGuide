@@ -15,6 +15,8 @@ Version 62
 #### 62-beta4
 *2021-11-19*
 
+* Discover: filter popular shows and shows with new episodes by streaming service.
+* Discover: filter popular movies and movies with digital release by streaming service.
 * Episode search: match independent of case for Unicode characters, e.g. German umlauts.
 * 📝 Latest translations from Crowdin.
 
