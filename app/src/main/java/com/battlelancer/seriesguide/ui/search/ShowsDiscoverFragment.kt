@@ -205,7 +205,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                 true
             }
             R.id.menu_action_shows_search_filter -> {
-                ShowsDiscoverFilterFragment.show(parentFragmentManager)
+                ShowsDiscoverFilterFragment.showForShows(parentFragmentManager)
                 true
             }
             R.id.menu_action_shows_search_change_language -> {

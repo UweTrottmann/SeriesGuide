@@ -21,7 +21,7 @@ class DiscoverFilterTest {
             SgWatchProvider(12, 4, "To Delete", 1, "Path", Type.SHOWS.id, true)
         )
 
-        val diff = ShowsDiscoverFilterViewModel.calculateProviderDiff(newProviders, oldProviders, isForShowsNotMovies = true)
+        val diff = ShowsDiscoverFilterViewModel.calculateProviderDiff(newProviders, oldProviders, Type.SHOWS)
         assertThat(diff.inserts).containsExactly(
             SgWatchProvider(0, 1, "Insert", 1, "path", Type.SHOWS.id, false)
         )

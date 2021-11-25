@@ -96,7 +96,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_action_shows_popular_filter -> {
-                ShowsDiscoverFilterFragment.show(parentFragmentManager)
+                ShowsDiscoverFilterFragment.showForShows(parentFragmentManager)
                 true
             }
             else -> super.onOptionsItemSelected(item)

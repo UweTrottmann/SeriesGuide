@@ -3,6 +3,8 @@ package com.battlelancer.seriesguide.ui.search
 import android.app.Application
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -19,7 +21,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(application) {
+class ShowsDiscoverFilterViewModel(
+    application: Application,
+    private val type: Type
+) : AndroidViewModel(application) {
 
     val allWatchProvidersFlow = Pager(
         // Configure how data is loaded by passing additional properties to
@@ -27,31 +32,35 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
         PagingConfig(pageSize = 20)
     ) {
         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-            .allWatchProvidersPagingSource(Type.SHOWS.id)
+            .allWatchProvidersPagingSource(type.id)
     }.flow
         .cachedIn(viewModelScope)
 
     init {
         val watchRegion = StreamingSearch.getCurrentRegionOrNull(getApplication())
-        val language = DisplaySettings.getShowsSearchLanguage(getApplication())
         if (watchRegion != null) {
-            updateWatchProviders(language, watchRegion)
+            updateWatchProviders(watchRegion)
         }
     }
 
-    fun updateWatchProviders(language: String, watchRegion: String) {
+    fun updateWatchProviders(watchRegion: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val tmdb = SgApp.getServicesComponent(getApplication()).tmdb()
-                val newProviders =
-                    TmdbTools2().getShowWatchProviders(tmdb, language, watchRegion)
+                val language = when (type) {
+                    Type.SHOWS -> DisplaySettings.getShowsSearchLanguage(getApplication())
+                    Type.MOVIES -> DisplaySettings.getMoviesLanguage(getApplication())
+                }
+                val newProviders = when (type) {
+                    Type.SHOWS -> TmdbTools2().getShowWatchProviders(tmdb, language, watchRegion)
+                    Type.MOVIES -> TmdbTools2().getMovieWatchProviders(tmdb, language, watchRegion)
+                }
                 if (newProviders != null) {
                     val dbHelper =
                         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-                    val oldProviders =
-                        dbHelper.getAllWatchProviders(Type.SHOWS.id).toMutableList()
+                    val oldProviders = dbHelper.getAllWatchProviders(type.id).toMutableList()
 
-                    val diff = calculateProviderDiff(newProviders, oldProviders, true)
+                    val diff = calculateProviderDiff(newProviders, oldProviders, type)
 
                     dbHelper.updateWatchProviders(
                         diff.inserts,
@@ -73,7 +82,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
         fun calculateProviderDiff(
             newProviders: List<WatchProviders.WatchProvider>,
             oldProviders: List<SgWatchProvider>,
-            isForShowsNotMovies: Boolean
+            type: Type
         ): ProviderDiff {
             val inserts = mutableListOf<SgWatchProvider>()
             val updates = mutableListOf<SgWatchProvider>()
@@ -93,7 +102,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
                             provider_name = providerName,
                             display_priority = newProvider.display_priority ?: 0,
                             logo_path = newProvider.logo_path ?: "",
-                            type = if (isForShowsNotMovies) Type.SHOWS.id else Type.MOVIES.id
+                            type = type.id
                         )
                         if (update != existingProvider) updates.add(update)
                     } else {
@@ -103,7 +112,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
                                 provider_name = providerName,
                                 display_priority = newProvider.display_priority ?: 0,
                                 logo_path = newProvider.logo_path ?: "",
-                                type = if (isForShowsNotMovies) Type.SHOWS.id else Type.MOVIES.id,
+                                type = type.id,
                                 enabled = false
                             )
                         )
@@ -122,3 +131,12 @@ data class ProviderDiff(
     val updates: List<SgWatchProvider>,
     val deletes: List<SgWatchProvider>
 )
+
+class ShowsDiscoverFilterViewModelFactory(
+    private val application: Application,
+    private val type: Type
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return ShowsDiscoverFilterViewModel(application, type) as T
+    }
+}

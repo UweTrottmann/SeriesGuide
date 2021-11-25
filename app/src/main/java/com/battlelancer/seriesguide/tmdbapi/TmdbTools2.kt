@@ -217,6 +217,21 @@ class TmdbTools2 {
         }
     }
 
+    suspend fun getMovieWatchProviders(
+        tmdb: Tmdb,
+        language: String,
+        watchRegion: String
+    ): List<WatchProviders.WatchProvider>? {
+        return try {
+            (tmdb as SgTmdb).retrofit.create<WatchProvidersService>()
+                .movie(language, watchRegion)
+                .results
+        } catch (e: Exception) {
+            Errors.logAndReport("get movie watch providers", e)
+            null
+        }
+    }
+
     suspend fun loadCreditsForShow(context: Context, showRowId: Long): Credits? =
         withContext(Dispatchers.IO) {
             // Get TMDB id from database, or look up via legacy TVDB id.
