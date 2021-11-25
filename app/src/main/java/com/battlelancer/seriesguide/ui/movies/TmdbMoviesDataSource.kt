@@ -144,10 +144,13 @@ class TmdbMoviesDataSource(
             .language(languageCode)
             .region(regionCode)
             .page(page)
-        if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
-            builder
-                .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
-                .watch_region(watchRegion)
+        // Only filter by watch provider if release type DIGITAL included.
+        if (isLinkFilterable(link)) {
+            if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
+                builder
+                    .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
+                    .watch_region(watchRegion)
+            }
         }
         val action: String
         when (link) {
@@ -214,6 +217,11 @@ class TmdbMoviesDataSource(
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
+    }
+
+    companion object {
+        fun isLinkFilterable(link: MoviesDiscoverLink): Boolean =
+            link == MoviesDiscoverLink.POPULAR || link == MoviesDiscoverLink.DIGITAL
     }
 
 }
