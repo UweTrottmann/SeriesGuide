@@ -166,7 +166,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("androidx.cardview:cardview:1.0.0")
     // https://developer.android.com/jetpack/androidx/releases/browser
-    implementation("androidx.browser:browser:1.3.0")
+    implementation("androidx.browser:browser:1.4.0")
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
     // https://github.com/material-components/material-components-android/releases
     implementation("com.google.android.material:material:1.4.0")
