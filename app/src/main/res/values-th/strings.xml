@@ -242,6 +242,7 @@
     <string name="action_movies_sort">เรียงภาพยนตร์</string>
     <string name="action_movies_sort_title">ชื่อเรื่อง</string>
     <string name="action_movies_sort_release">วันที่ออกฉาย</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">ไม่สามารถคำนวณสถิติ</string>
     <string name="shows_finished">%s ดูจบแล้ว</string>

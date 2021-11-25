@@ -246,6 +246,7 @@
     <string name="action_movies_sort">அடுக்கு திரைப்படங்கள்</string>
     <string name="action_movies_sort_title">தலைப்பு</string>
     <string name="action_movies_sort_release">வெளியீட்டு தேதி</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">புள்ளிவிவரம் கணக்கிட முடியவில்லை.</string>
     <string name="shows_finished">%s finished watching</string>

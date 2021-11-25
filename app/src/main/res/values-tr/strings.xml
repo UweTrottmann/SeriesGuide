@@ -246,6 +246,7 @@
     <string name="action_movies_sort">Filmleri sırala</string>
     <string name="action_movies_sort_title">Başlık</string>
     <string name="action_movies_sort_release">Yayın tarihi</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">İstatistik hesaplanamadı.</string>
     <string name="shows_finished">%s izlendi</string>

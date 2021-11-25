@@ -246,6 +246,7 @@
     <string name="action_movies_sort">Sortér film</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Udgivelsesdato</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kunne ikke beregne statistik.</string>
     <string name="shows_finished">%s set færdig</string>

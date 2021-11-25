@@ -246,6 +246,7 @@
     <string name="action_movies_sort">Ordigi filmojn</string>
     <string name="action_movies_sort_title">Titolo</string>
     <string name="action_movies_sort_release">Eldondato</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Ne povas kalkuli statistikaĵojn</string>
     <string name="shows_finished">%s finis spektadi</string>

@@ -242,6 +242,7 @@
     <string name="action_movies_sort">영화 정렬</string>
     <string name="action_movies_sort_title">제목</string>
     <string name="action_movies_sort_release">개봉일</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">통계를 계산할 수 없습니다.</string>
     <string name="shows_finished">%s finished watching</string>
