@@ -21,7 +21,7 @@ class ShowsPopularViewModel(application: Application) : AndroidViewModel(applica
 
     private val watchProviderIds =
         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-            .getEnabledWatchProviderIdsFlow(SgWatchProvider.TYPE_SHOWS)
+            .getEnabledWatchProviderIdsFlow(SgWatchProvider.Type.SHOWS.id)
 
     val items: Flow<PagingData<SearchResult>>
 

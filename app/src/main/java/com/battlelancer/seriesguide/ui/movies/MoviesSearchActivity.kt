@@ -13,6 +13,7 @@ import android.widget.TextView.OnEditorActionListener
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesSearchBinding
 import com.battlelancer.seriesguide.settings.SearchSettings
+import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.Companion.show
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationChangedEvent
@@ -34,6 +35,8 @@ class MoviesSearchActivity : BaseMessageActivity(), OnSearchClickListener {
     private lateinit var searchHistoryAdapter: ArrayAdapter<String>
     private var showSearchView = false
 
+    private lateinit var link: MoviesDiscoverLink
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMoviesSearchBinding.inflate(layoutInflater)
@@ -43,7 +46,7 @@ class MoviesSearchActivity : BaseMessageActivity(), OnSearchClickListener {
             EXTRA_ID_LINK,
             MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT.id
         )
-        val link = MoviesDiscoverLink.fromId(linkId)
+        link = MoviesDiscoverLink.fromId(linkId)
         showSearchView = link == MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT
         if (savedInstanceState != null) {
             showSearchView = savedInstanceState.getBoolean(STATE_SEARCH_VISIBLE, showSearchView)
@@ -114,6 +117,12 @@ class MoviesSearchActivity : BaseMessageActivity(), OnSearchClickListener {
         itemSearch.isVisible = !showSearchView
         itemSearch.isEnabled = !showSearchView
 
+        val showFilter = TmdbMoviesDataSource.isLinkFilterable(link)
+        menu.findItem(R.id.menu_action_movies_search_filter).apply {
+            isVisible = showFilter
+            isEnabled = showFilter
+        }
+
         return true
     }
 
@@ -131,6 +140,10 @@ class MoviesSearchActivity : BaseMessageActivity(), OnSearchClickListener {
                 )
                 showSearchView = true
                 invalidateOptionsMenu()
+                return true
+            }
+            R.id.menu_action_movies_search_filter -> {
+                DiscoverFilterFragment.showForMovies(supportFragmentManager)
                 return true
             }
             R.id.menu_action_movies_search_clear_history -> {

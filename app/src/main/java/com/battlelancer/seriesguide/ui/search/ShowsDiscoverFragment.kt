@@ -18,6 +18,7 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
@@ -205,7 +206,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                 true
             }
             R.id.menu_action_shows_search_filter -> {
-                ShowsDiscoverFilterFragment.show(parentFragmentManager)
+                DiscoverFilterFragment.showForShows(parentFragmentManager)
                 true
             }
             R.id.menu_action_shows_search_change_language -> {

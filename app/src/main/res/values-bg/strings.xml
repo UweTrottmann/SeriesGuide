@@ -246,6 +246,7 @@
     <string name="action_movies_sort">Подреждане на филми</string>
     <string name="action_movies_sort_title">Заглавие</string>
     <string name="action_movies_sort_release">Дата на издаване</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не може да се изчисли статистиката.</string>
     <string name="shows_finished">%s finished watching</string>

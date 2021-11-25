@@ -242,6 +242,7 @@
     <string name="action_movies_sort">電影排序</string>
     <string name="action_movies_sort_title">依影集名稱</string>
     <string name="action_movies_sort_release">播出日期</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">無法統計資料。</string>
     <string name="shows_finished">%s finished watching</string>

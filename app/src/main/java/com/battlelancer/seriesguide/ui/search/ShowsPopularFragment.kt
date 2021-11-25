@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
+import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
@@ -96,7 +97,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_action_shows_popular_filter -> {
-                ShowsDiscoverFilterFragment.show(parentFragmentManager)
+                DiscoverFilterFragment.showForShows(parentFragmentManager)
                 true
             }
             else -> super.onOptionsItemSelected(item)
