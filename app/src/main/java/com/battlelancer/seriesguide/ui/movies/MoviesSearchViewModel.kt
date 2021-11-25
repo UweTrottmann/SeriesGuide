@@ -12,9 +12,13 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.model.SgWatchProvider
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 
 class MoviesSearchViewModel(
@@ -22,18 +26,34 @@ class MoviesSearchViewModel(
     link: MoviesDiscoverLink
 ) : AndroidViewModel(application) {
 
+    private val watchProviderIds =
+        SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
+            .getEnabledWatchProviderIdsFlow(SgWatchProvider.TYPE_MOVIES)
     private val queryString = MutableLiveData<String>()
     private val tmdb = SgApp.getServicesComponent(application).tmdb()
-    val items: Flow<PagingData<BaseMovie>> = queryString.asFlow().flatMapLatest {
-        Pager(
-            // Note: currently TMDB page is 20 items, on phones around 9 are displayed at once.
-            PagingConfig(pageSize = 20, enablePlaceholders = true)
-        ) {
-            val languageCode = DisplaySettings.getMoviesLanguage(application)
-            val regionCode = DisplaySettings.getMoviesRegion(application)
-            TmdbMoviesDataSource(application, tmdb, link, it, languageCode, regionCode)
-        }.flow
-    }.cachedIn(viewModelScope)
+
+    val items: Flow<PagingData<BaseMovie>> =
+        watchProviderIds.combine(queryString.asFlow()) { ids, query -> Pair(ids, query) }
+            .flatMapLatest {
+                Pager(
+                    // Note: currently TMDB page is 20 items, on phones around 9 are displayed at once.
+                    PagingConfig(pageSize = 20, enablePlaceholders = true)
+                ) {
+                    val languageCode = DisplaySettings.getMoviesLanguage(application)
+                    val regionCode = DisplaySettings.getMoviesRegion(application)
+                    val watchRegion = StreamingSearch.getCurrentRegionOrNull(application)
+                    TmdbMoviesDataSource(
+                        application,
+                        tmdb,
+                        link,
+                        it.second,
+                        languageCode,
+                        regionCode,
+                        it.first,
+                        watchRegion
+                    )
+                }.flow
+            }.cachedIn(viewModelScope)
 
     init {
         queryString.value = ""

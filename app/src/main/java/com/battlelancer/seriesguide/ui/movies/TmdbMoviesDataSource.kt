@@ -32,7 +32,9 @@ class TmdbMoviesDataSource(
     private val link: MoviesDiscoverLink,
     private val query: String,
     private val languageCode: String,
-    private val regionCode: String
+    private val regionCode: String,
+    private val watchProviderIds: List<Int>?,
+    private val watchRegion: String?
 ) : PagingSource<Int, BaseMovie>() {
 
     data class Page(
@@ -142,6 +144,11 @@ class TmdbMoviesDataSource(
             .language(languageCode)
             .region(regionCode)
             .page(page)
+        if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
+            builder
+                .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
+                .watch_region(watchRegion)
+        }
         val action: String
         when (link) {
             MoviesDiscoverLink.POPULAR -> {
