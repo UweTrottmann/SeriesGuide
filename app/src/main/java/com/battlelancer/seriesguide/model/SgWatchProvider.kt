@@ -28,8 +28,8 @@ data class SgWatchProvider(
     val type: Int,
     val enabled: Boolean
 ) {
-    companion object {
-        const val TYPE_SHOWS = 1
-        const val TYPE_MOVIES = 2
+    enum class Type(val id: Int) {
+        SHOWS(1),
+        MOVIES(2)
     }
 }

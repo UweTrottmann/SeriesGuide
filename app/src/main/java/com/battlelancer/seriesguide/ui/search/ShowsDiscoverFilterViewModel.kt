@@ -9,6 +9,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgWatchProvider
+import com.battlelancer.seriesguide.model.SgWatchProvider.Type
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
@@ -26,7 +27,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
         PagingConfig(pageSize = 20)
     ) {
         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-            .allWatchProvidersPagingSource(SgWatchProvider.TYPE_SHOWS)
+            .allWatchProvidersPagingSource(Type.SHOWS.id)
     }.flow
         .cachedIn(viewModelScope)
 
@@ -48,7 +49,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
                     val dbHelper =
                         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
                     val oldProviders =
-                        dbHelper.getAllWatchProviders(SgWatchProvider.TYPE_SHOWS).toMutableList()
+                        dbHelper.getAllWatchProviders(Type.SHOWS.id).toMutableList()
 
                     val diff = calculateProviderDiff(newProviders, oldProviders, true)
 
@@ -92,7 +93,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
                             provider_name = providerName,
                             display_priority = newProvider.display_priority ?: 0,
                             logo_path = newProvider.logo_path ?: "",
-                            type = if (isForShowsNotMovies) SgWatchProvider.TYPE_SHOWS else SgWatchProvider.TYPE_MOVIES
+                            type = if (isForShowsNotMovies) Type.SHOWS.id else Type.MOVIES.id
                         )
                         if (update != existingProvider) updates.add(update)
                     } else {
@@ -102,7 +103,7 @@ class ShowsDiscoverFilterViewModel(application: Application) : AndroidViewModel(
                                 provider_name = providerName,
                                 display_priority = newProvider.display_priority ?: 0,
                                 logo_path = newProvider.logo_path ?: "",
-                                type = if (isForShowsNotMovies) SgWatchProvider.TYPE_SHOWS else SgWatchProvider.TYPE_MOVIES,
+                                type = if (isForShowsNotMovies) Type.SHOWS.id else Type.MOVIES.id,
                                 enabled = false
                             )
                         )

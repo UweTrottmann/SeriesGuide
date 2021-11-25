@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui.search
 
 import com.battlelancer.seriesguide.model.SgWatchProvider
+import com.battlelancer.seriesguide.model.SgWatchProvider.Type
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import org.junit.Test
@@ -15,17 +16,17 @@ class DiscoverFilterTest {
             tmdbWatchProvider(3, "Update No Change", 1, "Path")
         )
         val oldProviders = listOf(
-            SgWatchProvider(10, 2, "To Update", 1, "Path", SgWatchProvider.TYPE_SHOWS, true),
-            SgWatchProvider(11, 3, "Update No Change", 1, "Path", SgWatchProvider.TYPE_SHOWS, true),
-            SgWatchProvider(12, 4, "To Delete", 1, "Path", SgWatchProvider.TYPE_SHOWS, true)
+            SgWatchProvider(10, 2, "To Update", 1, "Path", Type.SHOWS.id, true),
+            SgWatchProvider(11, 3, "Update No Change", 1, "Path", Type.SHOWS.id, true),
+            SgWatchProvider(12, 4, "To Delete", 1, "Path", Type.SHOWS.id, true)
         )
 
         val diff = ShowsDiscoverFilterViewModel.calculateProviderDiff(newProviders, oldProviders, isForShowsNotMovies = true)
         assertThat(diff.inserts).containsExactly(
-            SgWatchProvider(0, 1, "Insert", 1, "path", SgWatchProvider.TYPE_SHOWS, false)
+            SgWatchProvider(0, 1, "Insert", 1, "path", Type.SHOWS.id, false)
         )
         assertThat(diff.updates).containsExactly(
-            SgWatchProvider(10, 2, "Updated", 2, "Updated", SgWatchProvider.TYPE_SHOWS, true)
+            SgWatchProvider(10, 2, "Updated", 2, "Updated", Type.SHOWS.id, true)
         )
         assertThat(diff.deletes).containsExactly(oldProviders[2])
     }

@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 class ShowsDiscoverViewModel(application: Application) : AndroidViewModel(application) {
 
     val watchProviderIds = SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-        .getEnabledWatchProviderIds(SgWatchProvider.TYPE_SHOWS)
+        .getEnabledWatchProviderIds(SgWatchProvider.Type.SHOWS.id)
     val data = ShowsDiscoverLiveData(application, viewModelScope)
 
 }

@@ -28,7 +28,7 @@ class MoviesSearchViewModel(
 
     private val watchProviderIds =
         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-            .getEnabledWatchProviderIdsFlow(SgWatchProvider.TYPE_MOVIES)
+            .getEnabledWatchProviderIdsFlow(SgWatchProvider.Type.MOVIES.id)
     private val queryString = MutableLiveData<String>()
     private val tmdb = SgApp.getServicesComponent(application).tmdb()
 

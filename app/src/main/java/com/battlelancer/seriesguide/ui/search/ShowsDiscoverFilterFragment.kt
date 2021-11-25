@@ -49,7 +49,7 @@ class ShowsDiscoverFilterFragment : AppCompatDialogFragment() {
         binding.buttonDisableAllProviders.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 SgRoomDatabase.getInstance(requireContext()).sgWatchProviderHelper()
-                    .setAllDisabled(SgWatchProvider.TYPE_SHOWS)
+                    .setAllDisabled(SgWatchProvider.Type.SHOWS.id)
             }
         }
 
