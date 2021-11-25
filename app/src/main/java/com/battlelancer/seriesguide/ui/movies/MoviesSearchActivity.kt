@@ -13,6 +13,7 @@ import android.widget.TextView.OnEditorActionListener
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesSearchBinding
 import com.battlelancer.seriesguide.settings.SearchSettings
+import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.Companion.show
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationChangedEvent
@@ -131,6 +132,10 @@ class MoviesSearchActivity : BaseMessageActivity(), OnSearchClickListener {
                 )
                 showSearchView = true
                 invalidateOptionsMenu()
+                return true
+            }
+            R.id.menu_action_movies_search_filter -> {
+                DiscoverFilterFragment.showForMovies(supportFragmentManager)
                 return true
             }
             R.id.menu_action_movies_search_clear_history -> {
