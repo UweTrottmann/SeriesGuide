@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.streaming
 
 import android.app.Application
 import androidx.annotation.VisibleForTesting
@@ -14,14 +14,13 @@ import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.model.SgWatchProvider.Type
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ShowsDiscoverFilterViewModel(
+class DiscoverFilterViewModel(
     application: Application,
     private val type: Type
 ) : AndroidViewModel(application) {
@@ -132,11 +131,11 @@ data class ProviderDiff(
     val deletes: List<SgWatchProvider>
 )
 
-class ShowsDiscoverFilterViewModelFactory(
+class DiscoverFilterViewModelFactory(
     private val application: Application,
     private val type: Type
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return ShowsDiscoverFilterViewModel(application, type) as T
+        return DiscoverFilterViewModel(application, type) as T
     }
 }

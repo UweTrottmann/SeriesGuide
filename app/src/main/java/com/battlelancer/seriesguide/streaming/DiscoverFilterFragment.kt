@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.streaming
 
 import android.app.Dialog
 import android.os.Bundle
@@ -13,8 +13,7 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverFilterBindi
 import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.model.SgWatchProvider.Type
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
+import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFilterAdapter
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
@@ -25,11 +24,11 @@ import kotlinx.coroutines.launch
  * Dialog to configure watch provider list in a specific region only to filter by,
  * stores different list for shows or movies.
  */
-class ShowsDiscoverFilterFragment : AppCompatDialogFragment() {
+class DiscoverFilterFragment : AppCompatDialogFragment() {
 
     private lateinit var type: Type
-    private val model: ShowsDiscoverFilterViewModel by viewModels {
-        ShowsDiscoverFilterViewModelFactory(requireActivity().application, type)
+    private val model: DiscoverFilterViewModel by viewModels {
+        DiscoverFilterViewModelFactory(requireActivity().application, type)
     }
     private var binding: FragmentShowsDiscoverFilterBinding? = null
 
@@ -101,12 +100,12 @@ class ShowsDiscoverFilterFragment : AppCompatDialogFragment() {
         private const val ARG_TYPE = "type"
 
         fun showForShows(fragmentManager: FragmentManager) =
-            ShowsDiscoverFilterFragment()
+            DiscoverFilterFragment()
                 .apply { arguments = bundleOf(ARG_TYPE to Type.SHOWS.id) }
                 .safeShow(fragmentManager, "shows-discover-filter")
 
         fun showForMovies(fragmentManager: FragmentManager) =
-            ShowsDiscoverFilterFragment()
+            DiscoverFilterFragment()
                 .apply { arguments = bundleOf(ARG_TYPE to Type.MOVIES.id) }
                 .safeShow(fragmentManager, "movies-discover-filter")
     }

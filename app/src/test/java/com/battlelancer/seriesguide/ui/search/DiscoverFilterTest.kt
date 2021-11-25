@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui.search
 
 import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.model.SgWatchProvider.Type
+import com.battlelancer.seriesguide.streaming.DiscoverFilterViewModel
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import org.junit.Test
@@ -21,7 +22,7 @@ class DiscoverFilterTest {
             SgWatchProvider(12, 4, "To Delete", 1, "Path", Type.SHOWS.id, true)
         )
 
-        val diff = ShowsDiscoverFilterViewModel.calculateProviderDiff(newProviders, oldProviders, Type.SHOWS)
+        val diff = DiscoverFilterViewModel.calculateProviderDiff(newProviders, oldProviders, Type.SHOWS)
         assertThat(diff.inserts).containsExactly(
             SgWatchProvider(0, 1, "Insert", 1, "path", Type.SHOWS.id, false)
         )
