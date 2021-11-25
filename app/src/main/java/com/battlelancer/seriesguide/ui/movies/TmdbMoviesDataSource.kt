@@ -9,9 +9,12 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
+import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.AND
+import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.enumerations.ReleaseType
+import com.uwetrottmann.tmdb2.enumerations.SortBy
 import retrofit2.Call
 import java.io.IOException
 import java.util.Calendar
@@ -135,80 +138,50 @@ class TmdbMoviesDataSource(
         regionCode: String?,
         page: Int
     ): Pair<String, Call<MovieResultsPage>> {
+        val builder = tmdb.discoverMovie()
+            .language(languageCode)
+            .region(regionCode)
+            .page(page)
         val action: String
-        val call: Call<MovieResultsPage>
         when (link) {
             MoviesDiscoverLink.POPULAR -> {
                 action = "get popular movies"
-                call = tmdb.moviesService().popular(page, languageCode, regionCode)
+                builder.sort_by(SortBy.POPULARITY_DESC)
             }
             MoviesDiscoverLink.DIGITAL -> {
                 action = "get movie digital releases"
-                call = tmdb.discoverMovie()
-                    .with_release_type(
-                        DiscoverFilter(
-                            DiscoverFilter.Separator.AND,
-                            ReleaseType.DIGITAL
-                        )
-                    )
+                builder
+                    .with_release_type(DiscoverFilter(AND, ReleaseType.DIGITAL))
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
-                    .language(languageCode)
-                    .region(regionCode)
-                    .page(page)
-                    .build()
             }
             MoviesDiscoverLink.DISC -> {
                 action = "get movie disc releases"
-                call = tmdb.discoverMovie()
-                    .with_release_type(
-                        DiscoverFilter(
-                            DiscoverFilter.Separator.AND,
-                            ReleaseType.PHYSICAL
-                        )
-                    )
+                builder
+                    .with_release_type(DiscoverFilter(AND, ReleaseType.PHYSICAL))
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
-                    .language(languageCode)
-                    .region(regionCode)
-                    .page(page)
-                    .build()
             }
             MoviesDiscoverLink.IN_THEATERS -> {
                 action = "get now playing movies"
-                call = tmdb.discoverMovie()
+                builder
                     .with_release_type(
-                        DiscoverFilter(
-                            DiscoverFilter.Separator.OR,
-                            ReleaseType.THEATRICAL, ReleaseType.THEATRICAL_LIMITED
-                        )
+                        DiscoverFilter(OR, ReleaseType.THEATRICAL, ReleaseType.THEATRICAL_LIMITED)
                     )
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
-                    .language(languageCode)
-                    .region(regionCode)
-                    .page(page)
-                    .build()
             }
             MoviesDiscoverLink.UPCOMING -> {
                 action = "get upcoming movies"
-                call = tmdb.discoverMovie()
+                builder
                     .with_release_type(
-                        DiscoverFilter(
-                            DiscoverFilter.Separator.OR,
-                            ReleaseType.THEATRICAL,
-                            ReleaseType.THEATRICAL_LIMITED
-                        )
+                        DiscoverFilter(OR, ReleaseType.THEATRICAL, ReleaseType.THEATRICAL_LIMITED)
                     )
                     .release_date_gte(dateTomorrow)
                     .release_date_lte(dateInOneMonth)
-                    .language(languageCode)
-                    .region(regionCode)
-                    .page(page)
-                    .build()
             }
         }
-        return Pair(action, call)
+        return Pair(action, builder.build())
     }
 
     private fun buildResultGenericFailure(): LoadResult.Error<Int, BaseMovie> {
