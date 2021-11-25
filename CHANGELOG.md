@@ -13,7 +13,7 @@ Version 62
 *in development*
 
 #### 62-beta4
-*2021-11-19*
+*2021-11-25*
 
 * Discover: filter popular shows and shows with new episodes by streaming service.
 * Discover: filter popular movies and movies with digital release by streaming service.
