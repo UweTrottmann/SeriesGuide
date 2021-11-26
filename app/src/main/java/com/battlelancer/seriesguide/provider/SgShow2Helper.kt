@@ -40,7 +40,7 @@ interface SgShow2Helper {
     fun getShowsMinimal(): List<SgShow2Minimal>
 
     @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show WHERE _id=:id")
-    fun getShowIds(id: Long): SgShow2Ids?
+    suspend fun getShowIds(id: Long): SgShow2Ids?
 
     @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show")
     fun getShowIds(): List<SgShow2Ids>

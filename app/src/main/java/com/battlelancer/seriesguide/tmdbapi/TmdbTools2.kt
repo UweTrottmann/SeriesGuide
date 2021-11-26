@@ -112,12 +112,12 @@ class TmdbTools2 {
     /**
      * Returns null if network call fails.
      */
-    fun searchShows(query: String, language: String, context: Context): List<BaseTvShow>? {
+    suspend fun searchShows(query: String, language: String, context: Context): List<BaseTvShow>? {
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
         try {
             val response = tmdb.searchService()
                 .tv(query, null, language, null, false)
-                .execute()
+                .awaitResponse()
             if (response.isSuccessful) {
                 val results = response.body()?.results
                 if (results != null) return results
@@ -143,7 +143,7 @@ class TmdbTools2 {
     /**
      * Returns null if network call fails.
      */
-    fun getShowsWithNewEpisodes(
+    suspend fun getShowsWithNewEpisodes(
         tmdb: Tmdb,
         language: String,
         watchProviderIds: List<Int>?,
@@ -160,7 +160,7 @@ class TmdbTools2 {
         }
 
         try {
-            val response = builder.build().execute()
+            val response = builder.build().awaitResponse()
             if (response.isSuccessful) {
                 val results = response.body()?.results
                 if (results != null) return results
@@ -250,11 +250,11 @@ class TmdbTools2 {
             return@withContext getCreditsForShow(context, tmdbId)
         }
 
-    fun getCreditsForShow(context: Context, tmdbId: Int): Credits? {
+    suspend fun getCreditsForShow(context: Context, tmdbId: Int): Credits? {
         try {
             val response = SgApp.getServicesComponent(context).tmdb().tvService()
                 .credits(tmdbId, null)
-                .execute()
+                .awaitResponse()
             if (response.isSuccessful) {
                 return response.body()
             } else {
@@ -266,11 +266,11 @@ class TmdbTools2 {
         return null
     }
 
-    fun getCreditsForMovie(context: Context, tmdbId: Int): Credits? {
+    suspend fun getCreditsForMovie(context: Context, tmdbId: Int): Credits? {
         try {
             val response = SgApp.getServicesComponent(context).moviesService()
                 .credits(tmdbId)
-                .execute()
+                .awaitResponse()
             if (response.isSuccessful) {
                 return response.body()
             } else {
@@ -282,13 +282,13 @@ class TmdbTools2 {
         return null
     }
 
-    fun getPerson(
+    suspend fun getPerson(
         peopleService: PeopleService,
         tmdbId: Int,
         language: String
     ): Person? {
         try {
-            val response = peopleService.summary(tmdbId, language).execute()
+            val response = peopleService.summary(tmdbId, language).awaitResponse()
             if (response.isSuccessful) {
                 return response.body()
             } else {
@@ -341,7 +341,7 @@ class TmdbTools2 {
         return WatchInfo(providers.link, topProvider, (count - 1).coerceAtLeast(0))
     }
 
-    fun getWatchProvidersForShow(
+    suspend fun getWatchProvidersForShow(
         showTmdbId: Int,
         region: String,
         context: Context
@@ -349,7 +349,7 @@ class TmdbTools2 {
         try {
             val response = SgApp.getServicesComponent(context).tmdb().tvService()
                 .watchProviders(showTmdbId)
-                .execute()
+                .awaitResponse()
             if (response.isSuccessful) {
                 return response.body()?.results?.get(region)
             } else {
@@ -361,7 +361,7 @@ class TmdbTools2 {
         return null
     }
 
-    fun getWatchProvidersForMovie(
+    suspend fun getWatchProvidersForMovie(
         movieTmdbId: Int,
         region: String,
         context: Context
@@ -369,7 +369,7 @@ class TmdbTools2 {
         try {
             val response = SgApp.getServicesComponent(context).tmdb().moviesService()
                 .watchProviders(movieTmdbId)
-                .execute()
+                .awaitResponse()
             if (response.isSuccessful) {
                 return response.body()?.results?.get(region)
             } else {
@@ -381,7 +381,7 @@ class TmdbTools2 {
         return null
     }
 
-    fun getImdbIdForEpisode(
+    suspend fun getImdbIdForEpisode(
         tvEpisodesService: TvEpisodesService,
         showTmdbId: Int,
         seasonNumber: Int,
@@ -390,7 +390,7 @@ class TmdbTools2 {
         try {
             val response = tvEpisodesService
                 .externalIds(showTmdbId, seasonNumber, episodeNumber)
-                .execute()
+                .awaitResponse()
             if (response.isSuccessful) {
                 return response.body()?.imdb_id
             } else {

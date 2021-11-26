@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.awaitResponse
 
 /**
  * Loads similar shows from TMDB and maps the results to standard search results with TheTVDB id.
@@ -36,7 +37,7 @@ class SimilarShowsViewModel(
                 val response = SgApp.getServicesComponent(getApplication()).tmdb()
                     .tvService()
                     .similar(showTmdbId, null, languageCode)
-                    .execute()
+                    .awaitResponse()
                 if (response.isSuccessful) {
                     response.body()
                 } else {
