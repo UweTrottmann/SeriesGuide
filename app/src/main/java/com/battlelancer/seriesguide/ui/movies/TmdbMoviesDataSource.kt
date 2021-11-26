@@ -16,6 +16,7 @@ import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.enumerations.ReleaseType
 import com.uwetrottmann.tmdb2.enumerations.SortBy
 import retrofit2.Call
+import retrofit2.awaitResponse
 import java.io.IOException
 import java.util.Calendar
 import java.util.Date
@@ -90,7 +91,7 @@ class TmdbMoviesDataSource(
         }
 
         val response = try {
-            call.execute()
+            call.awaitResponse()
         } catch (e: Exception) {
             Errors.logAndReport(action, e)
             // Not checking for connection until here to allow hitting the response cache.

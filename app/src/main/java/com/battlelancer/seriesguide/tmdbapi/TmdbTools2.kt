@@ -24,6 +24,7 @@ import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.tmdb2.services.TvEpisodesService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.awaitResponse
 import retrofit2.create
 import java.net.SocketTimeoutException
 import java.util.Calendar
@@ -172,7 +173,7 @@ class TmdbTools2 {
         return null
     }
 
-    fun getPopularShows(
+    suspend fun getPopularShows(
         tmdb: Tmdb,
         language: String,
         page: Int,
@@ -190,7 +191,7 @@ class TmdbTools2 {
         }
 
         try {
-            val response = builder.build().execute()
+            val response = builder.build().awaitResponse()
             if (response.isSuccessful) {
                 return response.body()
             } else {
