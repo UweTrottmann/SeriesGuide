@@ -67,7 +67,7 @@ class ShowsPopularDataSource(
 
     private fun buildResultGenericFailure(): LoadResult.Error<Int, SearchResult> {
         val message =
-            context.getString(R.string.api_error_generic, context.getString(R.string.trakt))
+            context.getString(R.string.api_error_generic, context.getString(R.string.tmdb))
         return LoadResult.Error(IOException(message))
     }
 
