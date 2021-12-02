@@ -285,40 +285,46 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             }
         }
 
-        // Store show to database to get row ID
+        // Run within transaction to avoid show ID foreign key constraint failures.
         val database = SgRoomDatabase.getInstance(context)
-        val showId = database.sgShow2Helper().insertShow(show)
-        if (showId == -1L) return ShowResult.DATABASE_ERROR
+        var showId = -1L
+        val result = database.runInTransaction<ShowResult> {
+            // Store show to database to get row ID
+            showId = database.sgShow2Helper().insertShow(show)
+            if (showId == -1L) return@runInTransaction ShowResult.DATABASE_ERROR
 
-        // Store seasons to database to get row IDs
-        val seasons = mapToSgSeason2(showDetails.seasons, showId)
-        val seasonIds = database.sgSeason2Helper().insertSeasons(seasons)
+            // Store seasons to database to get row IDs
+            val seasons = mapToSgSeason2(showDetails.seasons, showId)
+            val seasonIds = database.sgSeason2Helper().insertSeasons(seasons)
 
-        // Download episodes by season and store to database
-        val episodeHelper = database.sgEpisode2Helper()
-        seasons.forEachIndexed { index, season ->
-            val seasonId = seasonIds[index]
-            if (seasonId == -1L) return@forEachIndexed
+            // Download episodes by season and store to database
+            val episodeHelper = database.sgEpisode2Helper()
+            seasons.forEachIndexed { index, season ->
+                val seasonId = seasonIds[index]
+                if (seasonId == -1L) return@forEachIndexed
 
-            val seasonDetails = getEpisodesOfSeason(
-                ReleaseInfo(
-                    show.releaseTimeZone,
-                    show.releaseTimeOrDefault,
-                    show.releaseCountry,
-                    show.network
-                ),
-                showTmdbId,
-                showId,
-                season.number,
-                seasonId,
-                language,
-                null,
-                null
-            )
-            if (seasonDetails.result != ShowResult.SUCCESS) return seasonDetails.result
-            val episodes = seasonDetails.episodeDetails!!.toInsert
-            episodeHelper.insertEpisodes(episodes)
+                val seasonDetails = getEpisodesOfSeason(
+                    ReleaseInfo(
+                        show.releaseTimeZone,
+                        show.releaseTimeOrDefault,
+                        show.releaseCountry,
+                        show.network
+                    ),
+                    showTmdbId,
+                    showId,
+                    season.number,
+                    seasonId,
+                    language,
+                    null,
+                    null
+                )
+                if (seasonDetails.result != ShowResult.SUCCESS) return@runInTransaction seasonDetails.result
+                val episodes = seasonDetails.episodeDetails!!.toInsert
+                episodeHelper.insertEpisodes(episodes)
+            }
+            return@runInTransaction ShowResult.SUCCESS
         }
+        if (result != ShowResult.SUCCESS) return result
 
         // restore episode flags...
         if (hexagonEnabled) {
