@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
+import com.battlelancer.seriesguide.util.tryLaunch
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -52,24 +53,33 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
         // note: selecting custom backup files is only supported on KitKat and up
         // as we use Storage Access Framework in this case
         binding.buttonDataLibShowsExportFile.setOnClickListener {
-            createShowExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_SHOWS)
+            createShowExportFileResult.tryLaunch(
+                JsonExportTask.EXPORT_JSON_FILE_SHOWS,
+                requireContext()
+            )
         }
         binding.buttonDataLibShowsImportFile.setOnClickListener {
-            selectShowsImportFileResult.launch(null)
+            selectShowsImportFileResult.tryLaunch(null, requireContext())
         }
 
         binding.buttonDataLibListsExportFile.setOnClickListener {
-            createListsExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_LISTS)
+            createListsExportFileResult.tryLaunch(
+                JsonExportTask.EXPORT_JSON_FILE_LISTS,
+                requireContext()
+            )
         }
         binding.buttonDataLibListsImportFile.setOnClickListener {
-            selectListsImportFileResult.launch(null)
+            selectListsImportFileResult.tryLaunch(null, requireContext())
         }
 
         binding.buttonDataLibMoviesExportFile.setOnClickListener {
-            createMovieExportFileResult.launch(JsonExportTask.EXPORT_JSON_FILE_MOVIES)
+            createMovieExportFileResult.tryLaunch(
+                JsonExportTask.EXPORT_JSON_FILE_MOVIES,
+                requireContext()
+            )
         }
         binding.buttonDataLibMoviesImportFile.setOnClickListener {
-            selectMoviesImportFileResult.launch(null)
+            selectMoviesImportFileResult.tryLaunch(null, requireContext())
         }
         updateFileViews()
 
