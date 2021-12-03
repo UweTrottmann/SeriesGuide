@@ -17,6 +17,7 @@ Version 62
 
 * 🔧 Discover: highlight new show and movie filters.
 * 🔨 Do not crash when selecting backup files and no supported file picker is available.
+* 🔨 Do not display options in toolbar not applicable when first opening some screens.
 * 📝 Latest translations from Crowdin.
 
 #### 62-beta4
