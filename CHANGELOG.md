@@ -12,12 +12,19 @@ Version 62
 ----------
 *in development*
 
+#### 62-beta5
+*2021-12-03*
+
+* 🔧 Discover: highlight new show and movie filters.
+* 🔨 Do not crash when selecting backup files and no supported file picker is available.
+* 📝 Latest translations from Crowdin.
+
 #### 62-beta4
 *2021-11-25*
 
-* Discover: filter popular shows and shows with new episodes by streaming service.
-* Discover: filter popular movies and movies with digital release by streaming service.
-* Episode search: match independent of case for Unicode characters, e.g. German umlauts.
+* 🌟 Discover: filter popular shows and shows with new episodes by streaming service.
+* 🌟 Discover: filter popular movies and movies with digital release by streaming service.
+* 🔧 Episode search: match independent of case for Unicode characters, e.g. German umlauts.
 * 📝 Latest translations from Crowdin.
 
 #### 62-beta3
