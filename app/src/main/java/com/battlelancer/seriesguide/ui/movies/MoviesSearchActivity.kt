@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesSearchBinding
 import com.battlelancer.seriesguide.settings.SearchSettings
@@ -19,6 +20,7 @@ import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.Co
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationChangedEvent
 import com.battlelancer.seriesguide.ui.movies.MoviesSearchFragment.Companion.newInstance
 import com.battlelancer.seriesguide.ui.movies.MoviesSearchFragment.OnSearchClickListener
+import com.battlelancer.seriesguide.util.HighlightTools
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.Subscribe
@@ -69,6 +71,17 @@ class MoviesSearchActivity : BaseMessageActivity(), OnSearchClickListener {
             // allow the adapter to repopulate during the next layout pass
             // before starting the transition animation
             binding.containerMoviesSearchFragment.post { startPostponedEnterTransition() }
+        }
+
+        // Highlight new movies filter.
+        HighlightTools.highlightSgToolbarItem(
+            HighlightTools.Feature.MOVIE_FILTER,
+            this,
+            lifecycleScope,
+            R.id.menu_action_movies_search_filter,
+            R.string.action_movies_filter
+        ) {
+            link == MoviesDiscoverLink.POPULAR || link == MoviesDiscoverLink.DIGITAL
         }
     }
 

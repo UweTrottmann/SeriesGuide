@@ -28,6 +28,8 @@ import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.search.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.search.TmdbIdExtractor
+import com.battlelancer.seriesguide.util.HighlightTools
+import com.battlelancer.seriesguide.util.HighlightTools.Feature
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
@@ -49,12 +51,16 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
 
     @BindView(R.id.containerSearchBar)
     internal lateinit var searchContainer: View
+
     @BindView(R.id.text_input_layout_toolbar)
     internal lateinit var searchInputLayout: TextInputLayout
+
     @BindView(R.id.auto_complete_view_toolbar)
     internal lateinit var searchAutoCompleteView: AutoCompleteTextView
+
     @BindView(R.id.tabsSearch)
     internal lateinit var tabs: SlidingTabLayout
+
     @BindView(R.id.pagerSearch)
     internal lateinit var viewPager: ViewPager2
 
@@ -143,6 +149,17 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
         } else if (mayShowKeyboard) {
             // also show keyboard when showing first tab (added tab)
             ViewTools.showSoftKeyboardOnSearchView(this, searchAutoCompleteView)
+        }
+
+        // Highlight new shows filter.
+        HighlightTools.highlightSgToolbarItem(
+            Feature.SHOW_FILTER,
+            this,
+            lifecycleScope,
+            R.id.menu_action_shows_search_filter,
+            R.string.action_shows_filter
+        ) {
+            viewPager.currentItem == TAB_POSITION_SEARCH
         }
     }
 

@@ -224,6 +224,7 @@ dependencies {
         exclude(group = "com.android.support")
     }
     implementation("com.uwetrottmann.photoview:library:1.2.4")
+    implementation("com.getkeepsafe.taptargetview:taptargetview:1.13.3")
 
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
     implementation("com.uwetrottmann.tmdb2:tmdb-java:2.6.0")
