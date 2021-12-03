@@ -254,7 +254,7 @@
     <string name="action_movies_sort">Zoradiť filmy</string>
     <string name="action_movies_sort_title">Názov</string>
     <string name="action_movies_sort_release">Dátum premiéry</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Filtrovať filmy</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nemožno vypočítať štatistiku.</string>
     <string name="shows_finished">%s dopozeraných</string>

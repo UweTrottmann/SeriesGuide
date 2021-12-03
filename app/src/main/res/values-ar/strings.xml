@@ -262,7 +262,7 @@
     <string name="action_movies_sort">فرز الأفلام</string>
     <string name="action_movies_sort_title">العنوان</string>
     <string name="action_movies_sort_release">تاريخ الإصدار</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">تصفية الأفلام</string>
     <!-- Statistics -->
     <string name="statistics_failed">خطأ في الإحصائيات.</string>
     <string name="shows_finished">%s انتهى مشاهدة</string>

@@ -246,7 +246,7 @@
     <string name="action_movies_sort">Ordena les peŀlícules</string>
     <string name="action_movies_sort_title">Títol</string>
     <string name="action_movies_sort_release">Data de llançament</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Filtre de pel·lícules</string>
     <!-- Statistics -->
     <string name="statistics_failed">No s\'han pogut calcular les estadístiques.</string>
     <string name="shows_finished">%s acabat de veure</string>

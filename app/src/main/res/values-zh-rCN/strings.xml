@@ -168,7 +168,7 @@
     <string name="recent">已播剧集</string>
     <string name="released_today">今天首播</string>
     <string name="noupcoming">没有即将播出的剧集</string>
-    <string name="norecent">没有近期已播出的剧集</string>
+    <string name="norecent">没有近期已播剧集</string>
     <string name="calendar_settings">日历设置</string>
     <string name="only_favorites">仅显示喜爱的节目</string>
     <string name="calendar_only_collected">仅显示已收藏剧集</string>
@@ -242,7 +242,7 @@
     <string name="action_movies_sort">排序电影</string>
     <string name="action_movies_sort_title">按片名</string>
     <string name="action_movies_sort_release">首播日期</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">筛选电影</string>
     <!-- Statistics -->
     <string name="statistics_failed">无法计算统计数据</string>
     <string name="shows_finished">看完了 %s 部节目</string>
@@ -319,7 +319,7 @@
     <string name="rating8">很棒</string>
     <string name="rating9">优秀</string>
     <plurals name="votes">
-        <item quantity="other">%d 人评价</item>
+        <item quantity="other">%d 人评分</item>
     </plurals>
     <!-- Check Ins -->
     <string name="checkin">签到</string>
