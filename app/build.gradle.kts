@@ -260,7 +260,8 @@ dependencies {
     }
 
     // Amazon flavor specific
-    "amazonImplementation"(files("libs/amazon/in-app-purchasing-2.0.76.jar"))
+    // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
+    "amazonImplementation"("com.amazon.device:amazon-appstore-sdk:3.0.2")
 
     // Instrumented unit tests
     // https://developer.android.com/jetpack/androidx/releases/test
