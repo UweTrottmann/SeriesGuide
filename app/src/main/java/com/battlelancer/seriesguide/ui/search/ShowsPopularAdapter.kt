@@ -1,12 +1,12 @@
 package com.battlelancer.seriesguide.ui.search
 
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class ShowsPopularAdapter(
     val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener
-) : PagedListAdapter<SearchResult, RecyclerView.ViewHolder>(
+) : PagingDataAdapter<SearchResult, RecyclerView.ViewHolder>(
     SearchResultDiffCallback()
 ) {
 
@@ -20,13 +20,13 @@ class ShowsPopularAdapter(
 
     fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
         // use the current PagedList instead of getItem to avoid loading more items
-        currentList?.let {
+        (snapshot().items as List<SearchResult?>).let {
             val count = it.size
             for (i in 0 until count) {
                 val item = it[i]
                 if (item != null && item.tmdbId == showTmdbId) {
                     item.state = newState
-                    notifyDataSetChanged()
+                    notifyItemChanged(i)
                     break
                 }
             }
@@ -35,7 +35,7 @@ class ShowsPopularAdapter(
 
     fun setAllPendingNotAdded() {
         // use the current PagedList instead of getItem to avoid loading more items
-        currentList?.let {
+        (snapshot().items as List<SearchResult?>).let {
             val count = it.size
             for (i in 0 until count) {
                 val item = it[i]

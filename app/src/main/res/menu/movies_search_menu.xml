@@ -11,6 +11,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_action_movies_search_filter"
+        android:icon="@drawable/ic_filter_white_24dp"
+        android:title="@string/action_movies_filter"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_action_movies_search_change_language"
         android:icon="@drawable/ic_language_white_24dp"
         android:title="@string/pref_language"

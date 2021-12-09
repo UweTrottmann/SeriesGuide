@@ -38,6 +38,7 @@
     <string name="action_stream">Переглянути або замовити</string>
     <string name="action_stream_info">Інформація про трансляцію або покупку</string>
     <string name="action_select_region">Виберіть регіон</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
@@ -253,11 +254,9 @@
     <string name="action_movies_sort">Сортувати фільми</string>
     <string name="action_movies_sort_title">Назвою</string>
     <string name="action_movies_sort_release">Датою виходу</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не вдалося підрахувати статистику</string>
-    <string name="statistics_shows">Серіали (-ів)</string>
-    <string name="statistics_episodes">Серії</string>
-    <string name="statistics_movies">Фільми (-ів)</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s з новою серією</string>
     <string name="shows_continuing">%s продовжуються</string>
@@ -395,7 +394,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Політика приватності</string>
-    <string name="licence_themoviedb">Цей продукт використовує TMDb API, але не підтримуваний та сертифікований TMDb.</string>
+    <string name="licence_themoviedb">Цей продукт використовує TMDB API, але не підтримуваний та сертифікований TMDB.</string>
     <string name="licence_trakt">Ця програма використовує дані та зображення з Trakt.</string>
     <string name="about_open_source">SeriesGuide створена з використанням відкритого вихідного коду.</string>
     <string name="licences_and_credits">Ліцензії та кредити</string>
@@ -490,6 +489,7 @@
     <string name="pref_widget_opacity">Фон віджета</string>
     <string name="pref_widget_type">Тип віджета</string>
     <string name="pref_large_font">Використовувати великий шрифт</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозорий</string>
     <string name="widget_background_25">25%</string>

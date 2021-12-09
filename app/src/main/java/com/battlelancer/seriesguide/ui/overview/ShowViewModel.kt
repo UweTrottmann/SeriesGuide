@@ -5,8 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import kotlinx.coroutines.Dispatchers
 
 class ShowViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -18,7 +20,7 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
     }
     val credits by lazy {
         showId.switchMap {
-            liveData {
+            liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 emit(TmdbTools2().loadCreditsForShow(application, it))
             }
         }

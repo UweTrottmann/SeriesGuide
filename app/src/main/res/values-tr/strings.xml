@@ -38,6 +38,7 @@
     <string name="action_stream">Online izle veya satın al</string>
     <string name="action_stream_info">Online izleme veya satın alma bilgisi</string>
     <string name="action_select_region">Bölge seçin</string>
+    <string name="action_include_any_watch_provider">Herhangi biri</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -120,7 +121,7 @@
     <string name="state_watched_multiple_format">İzlendi (%d)</string>
     <string name="state_skipped">Atlandı</string>
     <string name="state_in_collection">Koleksiyonda</string>
-    <string name="state_on_watchlist">İzleme listesinde</string>
+    <string name="state_on_watchlist">İzlenecekler listesinde</string>
     <string name="state_favorite">Favori</string>
     <!-- Shows -->
     <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
@@ -232,29 +233,27 @@
     <string name="movies_collection">Koleksiyon</string>
     <string name="movies_watchlist">İzleme listesi</string>
     <string name="movies_watched">İzlenmiş</string>
-    <string name="watchlist_add">İzleme Listesine Ekle</string>
-    <string name="watchlist_remove">İzleme Listesinden Kaldır</string>
-    <string name="watchlist_added">İzleme Listesine Eklendi</string>
-    <string name="watchlist_removed">İzleme Listesinden Kaldırıldı</string>
+    <string name="watchlist_add">İzlenecekler listesine ekle</string>
+    <string name="watchlist_remove">İzlenecekler listesinden kaldır</string>
+    <string name="watchlist_added">İzlenecekler listesine eklendi</string>
+    <string name="watchlist_removed">İzlenecekler listesinden kaldırıldı</string>
     <string name="movies_search_hint">Film adı girin</string>
     <string name="movies_collection_empty">Koleksiyona film eklemedin.</string>
-    <string name="movies_watchlist_empty">İzleme listene film eklemedin.</string>
+    <string name="movies_watchlist_empty">İzlenecekler listene film eklemedin.</string>
     <string name="trailer">Fragman</string>
     <string name="movie_cast">Oyuncular</string>
     <string name="movie_crew">Ekip</string>
     <string name="action_movies_sort">Filmleri sırala</string>
     <string name="action_movies_sort_title">Başlık</string>
     <string name="action_movies_sort_release">Yayın tarihi</string>
+    <string name="action_movies_filter">Filmleri filtrele</string>
     <!-- Statistics -->
     <string name="statistics_failed">İstatistik hesaplanamadı.</string>
-    <string name="statistics_shows">Diziler</string>
-    <string name="statistics_episodes">Bölümler</string>
-    <string name="statistics_movies">Filmler</string>
     <string name="shows_finished">%s izlendi</string>
     <string name="shows_with_next">%s yeni bölümü olan dizi</string>
     <string name="shows_continuing">%s devam ediyor</string>
     <string name="episodes_watched">%s izlendi</string>
-    <string name="movies_on_watchlist">%s İzleme listesi</string>
+    <string name="movies_on_watchlist">%s izlenecekler listesinde</string>
     <string name="stats_in_collection_format">%d koleksiyonda</string>
     <string name="movies_watched_format">%s izlendi</string>
     <plurals name="days_plural">
@@ -468,6 +467,7 @@
     <string name="pref_widget_opacity">Widget arka planı</string>
     <string name="pref_widget_type">Widget tipi</string>
     <string name="pref_large_font">Büyük Yazı Tipi Kullan</string>
+    <string name="pref_hide_watch_button">İzlendi düğmesini gizle</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Saydam</string>
     <string name="widget_background_25">25%</string>

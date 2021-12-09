@@ -12,18 +12,18 @@ buildscript {
     val sgTargetSdk by extra(30) // Android 11 (R)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106105)
-    val sgVersionName by extra("61")
+    val sgVersionCode by extra(2106208)
+    val sgVersionName by extra("62")
 
-    val kotlinVersion by extra("1.5.21") // https://kotlinlang.org/docs/releases.html#release-details
-    val coroutinesVersion by extra("1.5.1") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    val kotlinVersion by extra("1.5.31") // https://kotlinlang.org/docs/releases.html#release-details
+    val coroutinesVersion by extra("1.5.2") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 
     // https://developer.android.com/jetpack/androidx/releases
-    val coreVersion by extra("1.6.0") // https://developer.android.com/jetpack/androidx/releases/core
-    val annotationVersion by extra("1.2.0")
-    val lifecycleVersion by extra("2.3.1")
+    val coreVersion by extra("1.7.0") // https://developer.android.com/jetpack/androidx/releases/core
+    val annotationVersion by extra("1.3.0")
+    val lifecycleVersion by extra("2.4.0")
     val roomVersion by extra("2.3.0") // https://developer.android.com/jetpack/androidx/releases/room
-    val fragmentVersion by extra("1.3.6") // https://developer.android.com/jetpack/androidx/releases/fragment
+    val fragmentVersion by extra("1.4.0") // https://developer.android.com/jetpack/androidx/releases/fragment
 
     val timberVersion by extra("5.0.1") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 
@@ -44,13 +44,13 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.2") // libraries, SeriesGuide
+        classpath("com.android.tools.build:gradle:7.0.3") // libraries, SeriesGuide
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
-        classpath("com.google.gms:google-services:4.3.8")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
+        classpath("com.google.gms:google-services:4.3.10")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.8.1")
     }
 }
 

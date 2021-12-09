@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     tools:layout_height="48dp" />
 
-                <androidx.viewpager.widget.ViewPager
+                <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/pagerEpisodes"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

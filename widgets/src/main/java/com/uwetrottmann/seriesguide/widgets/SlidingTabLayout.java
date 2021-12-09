@@ -35,7 +35,7 @@ import androidx.viewpager2.widget.ViewPager2;
  * the user's scroll progress.
  * <p/>
  * To use the component, simply add it to your view hierarchy. Then in your activity or fragment call {@link
- * #setViewPager(ViewPager)} providing it the ViewPager this layout is being
+ * #setViewPager2(ViewPager2, TabTitleSupplier)} providing it the ViewPager this layout is being
  * used for.
  * <p/>
  * The colors can be customized in two ways. The first and simplest is to provide an array of colors
@@ -78,7 +78,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     private int tabViewTextViewId;
 
     private ViewPager viewPager;
-    private ViewPager.OnPageChangeListener viewPagerPageChangeListener;
+    private ViewPager2.OnPageChangeCallback viewPagerPageChangeListener;
     private ViewPager2 viewPager2;
 
     private OnTabClickListener onTabClickListener;
@@ -143,15 +143,11 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the {@link ViewPager.OnPageChangeListener}. When using {@link
-     * SlidingTabLayout} you are
-     * required to set any {@link ViewPager.OnPageChangeListener} through
-     * this method. This is so
-     * that the layout can update it's scroll position correctly.
+     * Set a page change listener to observe page changes.
      *
-     * @see ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)
+     * @see ViewPager2#registerOnPageChangeCallback(ViewPager2.OnPageChangeCallback)
      */
-    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+    public void setOnPageChangeListener(ViewPager2.OnPageChangeCallback listener) {
         viewPagerPageChangeListener = listener;
     }
 

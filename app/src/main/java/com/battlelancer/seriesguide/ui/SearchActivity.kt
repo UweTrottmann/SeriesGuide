@@ -13,11 +13,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.settings.SearchSettings
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
@@ -29,6 +28,8 @@ import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
 import com.battlelancer.seriesguide.ui.search.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.search.TmdbIdExtractor
+import com.battlelancer.seriesguide.util.HighlightTools
+import com.battlelancer.seriesguide.util.HighlightTools.Feature
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
@@ -50,18 +51,22 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
 
     @BindView(R.id.containerSearchBar)
     internal lateinit var searchContainer: View
+
     @BindView(R.id.text_input_layout_toolbar)
     internal lateinit var searchInputLayout: TextInputLayout
+
     @BindView(R.id.auto_complete_view_toolbar)
     internal lateinit var searchAutoCompleteView: AutoCompleteTextView
+
     @BindView(R.id.tabsSearch)
     internal lateinit var tabs: SlidingTabLayout
+
     @BindView(R.id.pagerSearch)
-    internal lateinit var viewPager: ViewPager
+    internal lateinit var viewPager: ViewPager2
 
     private lateinit var searchHistory: SearchHistory
     private lateinit var searchHistoryAdapter: ArrayAdapter<String>
-    private var tvdbSearchVisible: Boolean = false
+    private var remoteSearchVisible: Boolean = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,7 +121,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             dismissDropDown()
         }
 
-        val tabsAdapter = TabStripAdapter(supportFragmentManager, this, viewPager, tabs)
+        val tabsAdapter = TabStripAdapter(this, viewPager, tabs)
         tabs.setOnPageChangeListener(pageChangeListener)
         tabs.setOnTabClickListener { position ->
             if (viewPager.currentItem == position) {
@@ -134,8 +139,8 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
         // set default tab
         if (intent != null && intent.extras != null) {
             val defaultTab = intent.extras!!.getInt(EXTRA_DEFAULT_TAB)
-            if (defaultTab < tabsAdapter.count) {
-                viewPager.currentItem = defaultTab
+            if (defaultTab < tabsAdapter.itemCount) {
+                viewPager.setCurrentItem(defaultTab, false)
             }
             if (mayShowKeyboard &&
                 (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES)) {
@@ -145,9 +150,20 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             // also show keyboard when showing first tab (added tab)
             ViewTools.showSoftKeyboardOnSearchView(this, searchAutoCompleteView)
         }
+
+        // Highlight new shows filter.
+        HighlightTools.highlightSgToolbarItem(
+            Feature.SHOW_FILTER,
+            this,
+            lifecycleScope,
+            R.id.menu_action_shows_search_filter,
+            R.string.action_shows_filter
+        ) {
+            viewPager.currentItem == TAB_POSITION_SEARCH
+        }
     }
 
-    private val pageChangeListener = object : ViewPager.OnPageChangeListener {
+    private val pageChangeListener = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(
             position: Int,
             positionOffset: Float,
@@ -160,10 +176,10 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             val searchVisible = position <= TAB_POSITION_SEARCH
             searchContainer.visibility = if (searchVisible) View.VISIBLE else View.GONE
             if (searchVisible) {
-                tvdbSearchVisible = position == TAB_POSITION_SEARCH
-                searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (tvdbSearchVisible) searchHistoryAdapter else null)
+                remoteSearchVisible = position == TAB_POSITION_SEARCH
+                searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (remoteSearchVisible) searchHistoryAdapter else null)
                 searchInputLayout.hint =
-                    getString(if (tvdbSearchVisible) R.string.checkin_searchhint else R.string.search)
+                    getString(if (remoteSearchVisible) R.string.checkin_searchhint else R.string.search)
             }
         }
 
@@ -191,7 +207,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
                 val showTitle = appData.getString(EpisodeSearchFragment.ARG_SHOW_TITLE)
                 if (!TextUtils.isEmpty(showTitle)) {
                     // change title + switch to episodes tab if show restriction was submitted
-                    viewPager.currentItem = TAB_POSITION_EPISODES
+                    viewPager.setCurrentItem(TAB_POSITION_EPISODES, false)
                 }
             }
 
@@ -219,7 +235,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
                 AddShowDialogFragment.show(this@SearchActivity, supportFragmentManager, showTmdbId)
             } else {
                 // no id, populate the search field instead
-                viewPager.currentItem = TAB_POSITION_SEARCH
+                viewPager.setCurrentItem(TAB_POSITION_SEARCH, false)
                 searchAutoCompleteView.setText(sharedText)
                 triggerTvdbSearch()
                 triggerLocalSearch(sharedText)
@@ -267,7 +283,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
     }
 
     private fun triggerTvdbSearch() {
-        if (tvdbSearchVisible) {
+        if (remoteSearchVisible) {
             searchAutoCompleteView.dismissDropDown()
             // extract and post query
             val query = searchAutoCompleteView.text.toString().trim()

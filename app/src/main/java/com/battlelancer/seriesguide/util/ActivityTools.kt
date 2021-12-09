@@ -1,92 +1,19 @@
 package com.battlelancer.seriesguide.util
 
+import android.content.ActivityNotFoundException
 import android.content.Context
-import android.text.format.DateUtils
-import com.battlelancer.seriesguide.model.ActivityType
-import com.battlelancer.seriesguide.model.SgActivity
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import timber.log.Timber
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import com.battlelancer.seriesguide.R
 
 /**
- * Helper methods for adding or removing local episode watch activity.
+ * Catches [ActivityNotFoundException] from [ActivityResultLauncher.launch]
+ * and displays an error toast.
  */
-object ActivityTools {
-
-    private const val HISTORY_THRESHOLD = 30 * DateUtils.DAY_IN_MILLIS
-
-    /**
-     * Adds an activity entry for the given episode with the current time as timestamp. If an entry
-     * already exists it is replaced.
-     *
-     * Also cleans up old entries.
-     */
-    @JvmStatic
-    fun addActivity(context: Context, episodeId: Long, showId: Long) {
-        // Need to use global IDs (in case a show is removed and added again).
-        val database = SgRoomDatabase.getInstance(context)
-
-        // Try using TMDB ID
-        var type = ActivityType.TMDB_ID
-        var showStableIdOrZero = database.sgShow2Helper().getShowTmdbId(showId)
-        var episodeStableIdOrZero = database.sgEpisode2Helper().getEpisodeTmdbId(episodeId)
-
-        // Fall back to TVDB ID
-        if (showStableIdOrZero == 0 || episodeStableIdOrZero == 0) {
-            type = ActivityType.TVDB_ID
-            showStableIdOrZero = database.sgShow2Helper().getShowTvdbId(showId)
-            episodeStableIdOrZero = database.sgEpisode2Helper().getEpisodeTvdbId(episodeId)
-            if (showStableIdOrZero == 0 || episodeStableIdOrZero == 0) {
-                // Should never happen: have neither TMDB or TVDB ID.
-                Timber.e(
-                    "Failed to add activity, no TMDB or TVDB ID for show %d episode %d",
-                    showId,
-                    episodeId
-                )
-                return
-            }
-        }
-
-        val timeMonthAgo = System.currentTimeMillis() - HISTORY_THRESHOLD
-        val helper = database.sgActivityHelper()
-
-        // delete all entries older than 30 days
-        val deleted = helper.deleteOldActivity(timeMonthAgo)
-        Timber.d("addActivity: removed %d outdated activities", deleted)
-
-        // add new entry
-        val currentTime = System.currentTimeMillis()
-        val activity = SgActivity(
-            null,
-            episodeStableIdOrZero.toString(),
-            showStableIdOrZero.toString(),
-            currentTime,
-            type
-        )
-        helper.insertActivity(activity)
-        Timber.d("addActivity: episode: %d timestamp: %d", episodeId, currentTime)
-    }
-
-    /**
-     * Tries to remove any activity with the given episode id.
-     */
-    @JvmStatic
-    fun removeActivity(context: Context, episodeId: Long) {
-        // Need to use global IDs (in case a show is removed and added again).
-        val database = SgRoomDatabase.getInstance(context)
-
-        // Try removal using TMDB ID.
-        var deleted = 0
-        val episodeTmdbIdOrZero = database.sgEpisode2Helper().getEpisodeTmdbId(episodeId)
-        if (episodeTmdbIdOrZero != 0) {
-            deleted += database.sgActivityHelper()
-                .deleteActivity(episodeTmdbIdOrZero.toString(), ActivityType.TMDB_ID)
-        }
-        // Try removal using TVDB ID.
-        val episodeTvdbIdOrZero = database.sgEpisode2Helper().getEpisodeTvdbId(episodeId)
-        if (episodeTvdbIdOrZero != 0) {
-            deleted += database.sgActivityHelper()
-                .deleteActivity(episodeTvdbIdOrZero.toString(), ActivityType.TVDB_ID)
-        }
-        Timber.d("removeActivity: deleted %d activity entries", deleted)
+fun <I> ActivityResultLauncher<I>.tryLaunch(input: I, context: Context) {
+    try {
+        launch(input)
+    } catch (e: ActivityNotFoundException) {
+        Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show()
     }
 }

@@ -2,31 +2,37 @@ package com.battlelancer.seriesguide.ui.movies
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.paging.PagedList
-import androidx.paging.toLiveData
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.model.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 
 class MoviesWatchedViewModel(application: Application) :
     AndroidViewModel(application) {
-    val movieList: LiveData<PagedList<SgMovie>>
+
     private val queryString = MutableLiveData<String>()
+    val items: Flow<PagingData<SgMovie>> = queryString.asFlow().flatMapLatest {
+        Pager(
+            PagingConfig(pageSize = 50)
+        ) {
+            SgRoomDatabase.getInstance(getApplication())
+                .movieHelper()
+                .getWatchedMovies(SimpleSQLiteQuery(it))
+        }.flow
+    }.cachedIn(viewModelScope)
 
     init {
         updateQueryString()
-
-        movieList = Transformations.switchMap(queryString) { queryString ->
-            SgRoomDatabase.getInstance(getApplication())
-                .movieHelper()
-                .getWatchedMovies(SimpleSQLiteQuery(queryString))
-                .toLiveData(pageSize = 50)
-        }
     }
 
     fun updateQueryString() {

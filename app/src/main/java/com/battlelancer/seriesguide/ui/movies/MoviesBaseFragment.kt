@@ -12,7 +12,6 @@ import android.widget.GridView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -37,6 +36,13 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
      */
     internal abstract val loaderId: Int
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        EventBus.getDefault().register(this)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +65,7 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
             .scrollTabToTopLiveData
             .observe(
                 viewLifecycleOwner,
-                Observer {
+                {
                     if (it != null) {
                         if (it.tabPosition == getTabPosition(it.isShowingNowTab)) {
                             gridView.smoothScrollToPosition(0)
@@ -67,16 +73,6 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
                     }
                 }
             )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         adapter = MoviesCursorAdapter(
             context, MovieClickListenerImpl(requireContext()),
@@ -85,8 +81,6 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
         gridView.adapter = adapter
 
         LoaderManager.getInstance(this).initLoader(loaderId, null, this)
-
-        setHasOptionsMenu(true)
     }
 
     override fun onDestroy() {

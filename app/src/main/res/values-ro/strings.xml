@@ -38,6 +38,7 @@
     <string name="action_stream">Stream sau cumpăra</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Select region</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">Ștergere istoric căutare</string>
     <string name="search_hint">Căutaţi episoade</string>
@@ -54,7 +55,7 @@
     <string name="api_error_generic">Nu s-a putut comunica cu %s. Încercați mai tarziu.</string>
     <string name="api_failed">Eroare: %s</string>
     <string name="copy_to_clipboard">Copiat în clipboard</string>
-    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Distribuie</string>
     <string name="share_show">Distribuie emisiunea</string>
@@ -202,7 +203,7 @@
     <string name="no_results">Nici un rezultat, încercaţi folosind cuvinte întregi.</string>
     <string name="empty_show_search">Nu a fost găsit in lista de dumneavoastră de showuri</string>
     <string name="action_try_again">Încearcă din nou</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Adaugă-le pe toate</string>
     <string name="add_multiple">Toate emisiunile vor apărea în lista de emisiuni în scurt timp.</string>
     <string name="add_started">%s va apărea în lista de emisiuni în scurt timp.</string>
@@ -249,11 +250,9 @@
     <string name="action_movies_sort">Sortare filme</string>
     <string name="action_movies_sort_title">Titlu</string>
     <string name="action_movies_sort_release">Data de lansare</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nu am putut calcula statisticile.</string>
-    <string name="statistics_shows">Seriale</string>
-    <string name="statistics_episodes">Episoade</string>
-    <string name="statistics_movies">Filme</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s cu următoarele episoade</string>
     <string name="shows_continuing">%s continuă</string>
@@ -384,7 +383,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_themoviedb">Acest produs utilizează API-ul TMDb, dar nu este aprobat sau certificată de TMDb.</string>
+    <string name="licence_themoviedb">Acest produs utilizează API-ul TMDB, dar nu este aprobat sau certificată de TMDB.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide este dezvoltat folosind software open source.</string>
     <string name="licences_and_credits">Licențe și credite</string>
@@ -479,6 +478,7 @@
     <string name="pref_widget_opacity">Widget fundal</string>
     <string name="pref_widget_type">Tip de widget</string>
     <string name="pref_large_font">Use large font</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>

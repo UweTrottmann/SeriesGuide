@@ -6,14 +6,14 @@
     <string name="hexagon">SeriesGuide Cloud</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TheTVDB</string>
-    <string name="tmdb">TMDb</string>
+    <string name="tmdb">TMDB</string>
     <string name="trakt">Trakt</string>
     <string name="ontrakt">(Trakt)</string>
     <string name="metacritic">Metacritic</string>
     <string name="amazon">Amazon</string>
     <string name="twitter">Twitter</string>
     <string name="powered_by_trakt">powered by Trakt</string>
-    <string name="powered_by_tmdb">powered by TMDb</string>
+    <string name="powered_by_tmdb">powered by TMDB</string>
     <string name="powered_by_justwatch">powered by JustWatch</string>
     <string name="placeholder_rating">--</string>
     <string name="rating_number_text_format">%1$d - %2$s</string>
@@ -46,8 +46,8 @@
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>
-    <string name="tmdb_terms">TMDb terms</string>
-    <string name="tmdb_api_terms">TMDb API terms</string>
+    <string name="tmdb_terms">TMDB terms</string>
+    <string name="tmdb_api_terms">TMDB API terms</string>
     <string name="trakt_terms">Trakt terms</string>
 
     <!-- Google Play links -->

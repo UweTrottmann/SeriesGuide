@@ -33,7 +33,7 @@ class PersonViewModelFactory(
     private val personTmdbId: Int
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return PersonViewModel(application, personTmdbId) as T
     }
 }

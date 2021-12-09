@@ -8,13 +8,17 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding
-import com.battlelancer.seriesguide.ui.search.NetworkState
-import com.battlelancer.seriesguide.ui.search.Status
 import com.battlelancer.seriesguide.util.ViewTools
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Integrates with a search interface and displays movies based on query results. Can pre-populate
@@ -55,7 +59,7 @@ class MoviesSearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMoviesSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -78,27 +82,35 @@ class MoviesSearchFragment : Fragment() {
 
         adapter = MoviesSearchAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
         binding.recyclerViewMoviesSearch.adapter = adapter
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        model.pagedMovieList.observe(viewLifecycleOwner, Observer {
-            val hasNoResults = it.size == 0
-            binding.emptyViewMoviesSearch.isGone = !hasNoResults
-            binding.recyclerViewMoviesSearch.isGone = hasNoResults
-
-            adapter.submitList(it)
-        })
-        model.networkState.observe(viewLifecycleOwner, Observer {
-            binding.swipeRefreshLayoutMoviesSearch.isRefreshing = it == NetworkState.LOADING
-            // Note: empty view will not be visible if the previous page successfully loaded.
-            if (it.status == Status.ERROR) {
-                binding.emptyViewMoviesSearch.setMessage(it.message)
-            } else {
-                binding.emptyViewMoviesSearch.setMessage(R.string.no_results)
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.onPagesUpdatedFlow.conflate().collectLatest {
+                val hasNoResults = adapter.itemCount == 0
+                binding.emptyViewMoviesSearch.isGone = !hasNoResults
+                binding.recyclerViewMoviesSearch.isGone = hasNoResults
             }
-        })
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
+                .collectLatest { loadStates ->
+                    Timber.d("loadStates=$loadStates")
+                    val refresh = loadStates.refresh
+                    binding.swipeRefreshLayoutMoviesSearch.isRefreshing = refresh is LoadState.Loading
+                    if (refresh is LoadState.Error) {
+                        binding.emptyViewMoviesSearch.setMessage(refresh.error.message)
+                    } else {
+                        binding.emptyViewMoviesSearch.setMessage(R.string.no_results)
+                    }
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.items.collectLatest {
+                adapter.submitData(it)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -106,14 +118,11 @@ class MoviesSearchFragment : Fragment() {
         _binding = null
     }
 
-    fun search(query: String?) {
-        // Data source is a PageKeyedDataSource which does not support in-place refresh,
-        // so clear existing list first.
-        adapter.submitList(null)
+    fun search(query: String) {
         model.updateQuery(query)
     }
 
-    private val onRefreshListener = OnRefreshListener { searchClickListener.onSearchClick() }
+    private val onRefreshListener = OnRefreshListener { adapter.refresh() }
 
     companion object {
 

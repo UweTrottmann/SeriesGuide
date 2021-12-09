@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.ui.shows
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.ui.shows.CalendarFragment2ViewModel.Calendar
 class CalendarAdapter2(
     private val context: Context,
     private val itemClickListener: ItemClickListener
-) : PagedListAdapter<CalendarItem, RecyclerView.ViewHolder>(DIFF_CALLBACK),
+) : PagingDataAdapter<CalendarItem, RecyclerView.ViewHolder>(DIFF_CALLBACK),
     AutoGridLayoutManager.SpanCountListener {
 
     interface ItemClickListener {

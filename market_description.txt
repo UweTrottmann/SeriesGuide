@@ -4,7 +4,7 @@ Keep track of your favorite TV shows and movies.
 
 With SeriesGuide you can find shows and movies to watch, keep track of your watched episodes and movies, get notifications about upcoming episodes and back it up and sync it across devices.
 
-<b>Discover.</b> Find shows with new episodes, which are popular or are similar to those you are watching. Explore movies currently in cinemas, released digitally or on disk.
+<b>Discover.</b> Find shows with new episodes, which are popular or are similar to those you are watching. Explore movies currently in cinemas, released digitally or on disc.
 
 <b>Backup and sync.</b> Sign into SeriesGuide Cloud to backup and sync your shows, lists and movies.
 
@@ -20,7 +20,7 @@ https://seriesgui.de/whypay
 
 NOTE: You can not watch episodes or movies. For episodes only the release date on the original network is listed.
 
-This product uses the TMDb API but is not endorsed or certified by TMDb. https://www.themoviedb.org/terms-of-use https://www.themoviedb.org/documentation/api/terms-of-use
+This product uses the TMDB API but is not endorsed or certified by TMDB. https://www.themoviedb.org/terms-of-use https://www.themoviedb.org/documentation/api/terms-of-use
 This app uses data and images by Trakt. https://trakt.tv/terms
 
 Example shows by Das Erste/ARD (https://www.ard.de) and ZDF (https://www.zdf.de).

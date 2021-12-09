@@ -48,9 +48,8 @@ public class TimeTools {
     public static final String TIMEZONE_ID_US_ARIZONA = "America/Phoenix";
     public static final String TIMEZONE_ID_US_PACIFIC = "America/Los_Angeles";
 
-    private static final String NETWORK_AMAZON = "Amazon";
-    private static final String NETWORK_HULU = "Hulu";
-    private static final String NETWORK_NETFLIX = "Netflix";
+    private static final String NETWORK_CBS = "CBS";
+    private static final String NETWORK_NBC = "NBC";
 
     public static boolean isBeforeMillis(OffsetDateTime dateTime, long millis) {
         return dateTime.toInstant().isBefore(Instant.ofEpochMilli(millis));
@@ -283,22 +282,22 @@ public class TimeTools {
 
     /**
      * If the release time is within the hour past midnight (0:00 until 0:59) moves the date one day
-     * into the future (currently US shows only, excluding Amazon, Hulu and Netflix shows).
+     * into the future (currently US shows on some networks only).
      *
-     * <p> This is based on late night shows being commonly listed as releasing the day before if
+     * <p> This is due to late night shows being commonly listed as releasing the day before if
      * they air past midnight (e.g. "Monday night at 0:35" actually is Tuesday 0:35).
      *
-     * <p>Example: https://thetvdb.com/?tab=series&id=292421
+     * <p> Note: This should never include streaming services like Netflix where midnight is
+     * used correctly.
      *
-     * <p>See also: https://forums.thetvdb.com/viewtopic.php?t=22791
+     * <p>Example: https://www.themoviedb.org/tv/62223-the-late-late-show-with-james-corden
      */
     private static LocalDateTime handleHourPastMidnight(@Nullable String country,
             @Nullable String network, LocalDateTime localDateTime) {
-        if (ISO3166_1_UNITED_STATES.equals(country)
-                && !NETWORK_AMAZON.equals(network)
-                && !NETWORK_HULU.equals(network)
-                && !NETWORK_NETFLIX.equals(network)
-                && localDateTime.getHour() == 0) {
+        if (localDateTime.getHour() == 0 && ISO3166_1_UNITED_STATES.equals(country)
+                && (NETWORK_CBS.equals(network)
+                || NETWORK_NBC.equals(network))
+        ) {
             return localDateTime.plusDays(1);
         }
         return localDateTime;

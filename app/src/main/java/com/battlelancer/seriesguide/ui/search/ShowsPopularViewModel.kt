@@ -2,40 +2,40 @@ package com.battlelancer.seriesguide.ui.search
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.model.SgWatchProvider
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.streaming.StreamingSearch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 
+@ExperimentalCoroutinesApi
 class ShowsPopularViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val dataSourceLiveData: LiveData<ShowsPopularDataSource>
-    val items: LiveData<PagedList<SearchResult>>
-    val networkState: LiveData<NetworkState>
+    private val watchProviderIds =
+        SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
+            .getEnabledWatchProviderIdsFlow(SgWatchProvider.Type.SHOWS.id)
+
+    val items: Flow<PagingData<SearchResult>>
 
     init {
         val tmdb = SgApp.getServicesComponent(application).tmdb()
-        val sourceFactory = ShowsPopularDataSourceFactory(application, tmdb)
-
-        dataSourceLiveData = sourceFactory.dataSourceLiveData
-
-        networkState = Transformations.switchMap(sourceFactory.dataSourceLiveData) {
-            it.networkState
-        }
-
-        items = LivePagedListBuilder(sourceFactory,
-                PagedList.Config.Builder()
-                        .setPageSize(25)
-                        .setEnablePlaceholders(true)
-                        .build())
-                .build()
-    }
-
-    fun refresh() {
-        // TODO: PageKeyedDataSource does not really support in-place refresh,
-        // should probably switch to empty view and submit null list before invalidating.
-        dataSourceLiveData.value?.invalidate()
+        items = watchProviderIds.flatMapLatest {
+            Pager(
+                PagingConfig(pageSize = 25, enablePlaceholders = true)
+            ) {
+                val languageCode = DisplaySettings.getShowsSearchLanguage(application)
+                val watchRegion = StreamingSearch.getCurrentRegionOrNull(application)
+                ShowsPopularDataSource(application, tmdb, languageCode, it, watchRegion)
+            }.flow
+        }.cachedIn(viewModelScope)
     }
 
 }

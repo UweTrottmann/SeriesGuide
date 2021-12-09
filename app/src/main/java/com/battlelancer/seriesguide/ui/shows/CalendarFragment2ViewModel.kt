@@ -3,17 +3,22 @@ package com.battlelancer.seriesguide.ui.shows
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.paging.Config
-import androidx.paging.PagedList
-import androidx.paging.toLiveData
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.Calendar
@@ -21,30 +26,32 @@ import java.util.Calendar
 class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryLiveData = MutableLiveData<String>()
-    val upcomingEpisodesLiveData: LiveData<PagedList<CalendarItem>>
 
-    private val calendarItemPagingConfig = Config(
+    private val calendarItemPagingConfig = PagingConfig(
         pageSize = 50,
         enablePlaceholders = false /* some items may have a header, so their height differs */
     )
+    val items: Flow<PagingData<CalendarItem>> =
+        queryLiveData.asFlow().flatMapLatest {
+            Pager(calendarItemPagingConfig) {
+                SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
+                    .getEpisodesWithShowDataSource(SimpleSQLiteQuery(it, null))
+            }.flow.map { pagingData ->
+                val calendar = Calendar.getInstance()
+                pagingData.map { episode ->
+                    val headerTime = calculateHeaderTime(
+                        getApplication(),
+                        calendar,
+                        episode.episode_firstairedms
+                    )
+                    CalendarItem(
+                        headerTime,
+                        episode
+                    )
+                }
+            }
+        }.cachedIn(viewModelScope)
 
-    init {
-        upcomingEpisodesLiveData = Transformations.switchMap(queryLiveData) { queryString ->
-            SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
-                .getEpisodesWithShowDataSource(SimpleSQLiteQuery(queryString, null))
-                .mapByPage { episodes ->
-                    val calendar = Calendar.getInstance()
-                    episodes.map { episode ->
-                        val headerTime = calculateHeaderTime(
-                            getApplication(),
-                            calendar,
-                            episode.episode_firstairedms
-                        )
-                        CalendarItem(headerTime, episode)
-                    }
-                }.toLiveData(config = calendarItemPagingConfig)
-        }
-    }
 
     /**
      * Builds the calendar query based on given settings, updates the associated LiveData which

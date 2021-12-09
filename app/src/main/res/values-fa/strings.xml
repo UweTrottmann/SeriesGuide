@@ -38,6 +38,7 @@
     <string name="action_stream">پخش یا خرید</string>
     <string name="action_stream_info">اطّلاعات پخش یا خرید</string>
     <string name="action_select_region">گزینش ناحیه</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -245,11 +246,9 @@
     <string name="action_movies_sort">چینش فیلم‌ها</string>
     <string name="action_movies_sort_title">عنوان</string>
     <string name="action_movies_sort_release">تاریخ انتشار</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
-    <string name="statistics_shows">سریال‌ها</string>
-    <string name="statistics_episodes">قسمت</string>
-    <string name="statistics_movies">فیلم</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s با قسمت‌های بعدی</string>
     <string name="shows_continuing">%s ادامه دار</string>
@@ -468,6 +467,7 @@
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>
     <string name="pref_widget_type">نوع ابزارک</string>
     <string name="pref_large_font">استفاده از خط درشت</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفّاف</string>
     <string name="widget_background_25">۲۵٪</string>

@@ -44,7 +44,8 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/viewpager2
     // Note: override fragment version by viewpager2 to avoid Lint error.
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    // 1.1.0-alpha01+ fixes issue with options menus from all fragments showing at once.
+    implementation("androidx.viewpager2:viewpager2:1.1.0-beta01")
 
     implementation("com.jakewharton.timber:timber:$timberVersion")
 }

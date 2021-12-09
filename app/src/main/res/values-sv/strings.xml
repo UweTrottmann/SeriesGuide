@@ -38,6 +38,7 @@
     <string name="action_stream">Streama eller köp</string>
     <string name="action_stream_info">Stream- eller köpinfo</string>
     <string name="action_select_region">Välj region</string>
+    <string name="action_include_any_watch_provider">Inkludera alla</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -245,11 +246,9 @@
     <string name="action_movies_sort">Sortera filmer</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Utgivningsdatum</string>
+    <string name="action_movies_filter">Filtrera filmer</string>
     <!-- Statistics -->
     <string name="statistics_failed">Gick inte att beräkna statistik.</string>
-    <string name="statistics_shows">serier</string>
-    <string name="statistics_episodes">avsnitt</string>
-    <string name="statistics_movies">filmer</string>
     <string name="shows_finished">%s färdigtittade</string>
     <string name="shows_with_next">%s med kommande avsnitt</string>
     <string name="shows_continuing">%s fortsätter</string>
@@ -373,7 +372,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Sekretesspolicy</string>
-    <string name="licence_themoviedb">Denna produkt använder TMDb:s API men är inte stödd eller certifierad av TMDb.</string>
+    <string name="licence_themoviedb">Denna produkt använder TMDB:s API men är inte stödd eller certifierad av TMDB.</string>
     <string name="licence_trakt">Denna app använder data och bilder från Trakt.</string>
     <string name="about_open_source">SeriesGuide är byggt med öppen källkod.</string>
     <string name="licences_and_credits">Licenser och tillkännagivanden</string>
@@ -468,6 +467,7 @@
     <string name="pref_widget_opacity">Widgetbakgrund</string>
     <string name="pref_widget_type">Widgettyp</string>
     <string name="pref_large_font">Använd stort teckensnitt</string>
+    <string name="pref_hide_watch_button">Dölj Titta-knappen</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>

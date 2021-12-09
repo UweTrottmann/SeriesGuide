@@ -38,6 +38,7 @@
     <string name="action_stream">Stream or purchase</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Select region</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
     <string name="search_hint">தேடல் episodes</string>
@@ -54,7 +55,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">பகிர்</string>
     <string name="share_show">பங்கு காண்பி</string>
@@ -198,7 +199,7 @@
     <string name="no_results">முழு சொற்களை முடிவுகள், முயற்சிக்கவும்.</string>
     <string name="empty_show_search">Not found in your show list</string>
     <string name="action_try_again">மீண்டும் முயற்சி</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">எல்லாம் சேர்</string>
     <string name="add_multiple">அனைத்து காட்சிகள் தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
     <string name="add_started">%s தோன்றும் காட்சி பட்டியலில் விரைவில்.</string>
@@ -245,11 +246,9 @@
     <string name="action_movies_sort">அடுக்கு திரைப்படங்கள்</string>
     <string name="action_movies_sort_title">தலைப்பு</string>
     <string name="action_movies_sort_release">வெளியீட்டு தேதி</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">புள்ளிவிவரம் கணக்கிட முடியவில்லை.</string>
-    <string name="statistics_shows">காண்பிக்கும்</string>
-    <string name="statistics_episodes">episodes</string>
-    <string name="statistics_movies">திரைப்படங்கள்</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">அடுத்த episodes உடன் %s</string>
     <string name="shows_continuing">%s தொடரும்</string>
@@ -373,7 +372,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_themoviedb">இந்த தயாரிப்பு TMDb API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDb மூலம் சான்றிதழ்.</string>
+    <string name="licence_themoviedb">இந்த தயாரிப்பு TMDB API பயன்படுத்தும் ஆனால் இல்லை endorsed அல்லது TMDB மூலம் சான்றிதழ்.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">திறந்த மூல மென்பொருள் பயன்படுத்தி SeriesGuide இயக்கத்தினர் உள்ளது.</string>
     <string name="licences_and_credits">உரிமம் மற்றும் கிரெடிட்கள்</string>
@@ -468,6 +467,7 @@
     <string name="pref_widget_opacity">விட்ஜெட் பின்னணி</string>
     <string name="pref_widget_type">விட்ஜெட் வகை</string>
     <string name="pref_large_font">Use large font</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">வெளிப்படை</string>
     <string name="widget_background_25">25%</string>

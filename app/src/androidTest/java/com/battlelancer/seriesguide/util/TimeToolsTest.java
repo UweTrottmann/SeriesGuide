@@ -86,13 +86,14 @@ public class TimeToolsTest {
         // ensure episodes releasing in the hour past midnight are moved to the next day
         // e.g. if 00:35, the episode date is typically (wrongly) that of the previous day
         // this is common for late night shows, e.g. "Monday night" is technically "early Tuesday"
+        // ONLY for specific networks
         ZoneId showTimeZone = ZoneId.of(AMERICA_NEW_YORK);
         long episodeReleaseTime = TimeTools.parseEpisodeReleaseDate(
                 showTimeZone,
                 getDayAsDate(2013, 5, 31),
                 LocalTime.of(0, 35), // 00:35
                 UNITED_STATES,
-                null,
+                "CBS",
                 AMERICA_LOS_ANGELES);
         System.out.println(
                 "Release time: " + episodeReleaseTime + " " + new Date(episodeReleaseTime));

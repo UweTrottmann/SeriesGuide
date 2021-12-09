@@ -91,6 +91,11 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
             R.string.pref_infinite_scrolling,
             false
         )
+        val isHideWatchedButtonPref = createCheckBoxPref(
+            WidgetSettings.KEY_PREFIX_WIDGET_IS_HIDE_WATCH_BUTTON + appWidgetId,
+            R.string.pref_hide_watch_button,
+            false
+        )
 
         // Appearance.
         themePref = createListPref(
@@ -128,6 +133,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
             addPreference(onlyCollectedPref)
             addPreference(hideWatchedPreference)
             addPreference(isInfinitePref)
+            addPreference(isHideWatchedButtonPref)
             val appearanceCategory = PreferenceCategory(activity).apply {
                 setTitle(R.string.pref_appearance)
             }

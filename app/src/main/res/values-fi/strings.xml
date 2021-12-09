@@ -38,6 +38,7 @@
     <string name="action_stream">Suoratoista tai osta</string>
     <string name="action_stream_info">Suoratoisto- tai ostotiedot</string>
     <string name="action_select_region">Valitse alue</string>
+    <string name="action_include_any_watch_provider">Sisällytä kaikki</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -245,12 +246,10 @@
     <string name="action_movies_sort">Lajittele elokuvat</string>
     <string name="action_movies_sort_title">Nimi</string>
     <string name="action_movies_sort_release">Julkaisupäivä</string>
+    <string name="action_movies_filter">Suodata elokuvat</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tilastojen laskeminen ei onnistunut.</string>
-    <string name="statistics_shows">ohjelmaa</string>
-    <string name="statistics_episodes">jaksoa</string>
-    <string name="statistics_movies">elokuvaa</string>
-    <string name="shows_finished">%s katsoi loppuun</string>
+    <string name="shows_finished">%s katsottu loppuun</string>
     <string name="shows_with_next">%s ohjelmassa seuraavia jaksoja</string>
     <string name="shows_continuing">%s jatkuu</string>
     <string name="episodes_watched">%s katsottu</string>
@@ -468,6 +467,7 @@
     <string name="pref_widget_opacity">Widgetin tausta</string>
     <string name="pref_widget_type">Widgetin tyyppi</string>
     <string name="pref_large_font">Käytä suurta kirjasinta</string>
+    <string name="pref_hide_watch_button">Piilota katsottu-painike</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Läpinäkyvä</string>
     <string name="widget_background_25">25 %</string>

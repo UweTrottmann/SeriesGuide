@@ -38,6 +38,7 @@
     <string name="action_stream">Strimuj ili kupi</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Select region</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
@@ -54,7 +55,7 @@
     <string name="api_error_generic">Neuspešna komunikacija sa %s. Pokušajte ponovo kasnije.</string>
     <string name="api_failed">Neuspelo %s</string>
     <string name="copy_to_clipboard">Kopirano u klipbord</string>
-    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Подели</string>
     <string name="share_show">Подели серију</string>
@@ -202,7 +203,7 @@
     <string name="no_results">Нема резултата, покушајте са целим речима.</string>
     <string name="empty_show_search">Nije prenađeno u vašoj show listi</string>
     <string name="action_try_again">Поушајте поново</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">Додај све</string>
     <string name="add_multiple">Све серије ће се ускоро појавити у вашој листи серија.</string>
     <string name="add_started">%s ће се ускоро појавити у вашој листи серија.</string>
@@ -249,11 +250,9 @@
     <string name="action_movies_sort">Сортирај филмове</string>
     <string name="action_movies_sort_title">Наслов</string>
     <string name="action_movies_sort_release">Датум емитовања</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije bilo moguće obraditi statistiku</string>
-    <string name="statistics_shows">Серије</string>
-    <string name="statistics_episodes">Епизоде</string>
-    <string name="statistics_movies">Филмови</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">%s са следећим епизодама</string>
     <string name="shows_continuing">%s се наставља</string>
@@ -384,7 +383,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_themoviedb">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+    <string name="licence_themoviedb">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide is built using open source software.</string>
     <string name="licences_and_credits">Licences and credits</string>
@@ -479,6 +478,7 @@
     <string name="pref_widget_opacity">Позадина виџета</string>
     <string name="pref_widget_type">Тип виџета</string>
     <string name="pref_large_font">Use large font</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Провидно</string>
     <string name="widget_background_25">25%</string>

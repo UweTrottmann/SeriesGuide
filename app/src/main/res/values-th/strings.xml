@@ -38,6 +38,7 @@
     <string name="action_stream">สตรีมหรือซื้อ</string>
     <string name="action_stream_info">ข้อมูลการสตรีมหรือซื้อ</string>
     <string name="action_select_region">เลือกภูมิภาค</string>
+    <string name="action_include_any_watch_provider">รวมอะไรก็ได้</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>
@@ -241,11 +242,9 @@
     <string name="action_movies_sort">เรียงภาพยนตร์</string>
     <string name="action_movies_sort_title">ชื่อเรื่อง</string>
     <string name="action_movies_sort_release">วันที่ออกฉาย</string>
+    <string name="action_movies_filter">กรองภาพยนตร์</string>
     <!-- Statistics -->
     <string name="statistics_failed">ไม่สามารถคำนวณสถิติ</string>
-    <string name="statistics_shows">ซีรีส์</string>
-    <string name="statistics_episodes">ตอน</string>
-    <string name="statistics_movies">ภาพยนตร์</string>
     <string name="shows_finished">%s ดูจบแล้ว</string>
     <string name="shows_with_next">%s เรื่องมีตอนถัดไป</string>
     <string name="shows_continuing">%s เรื่องยังไม่จบ</string>
@@ -362,7 +361,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
-    <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDb แต่ไม่ได้รับการรับรองโดย TMDb</string>
+    <string name="licence_themoviedb">ผลิตภัณฑ์นี้ใช้ API ของ TMDB แต่ไม่ได้รับการรับรองโดย TMDB</string>
     <string name="licence_trakt">แอปนี้ใช้ข้อมูลและรูปภาพจาก Trakt</string>
     <string name="about_open_source">SeriesGuide สร้างด้วยซอฟต์แวร์โอเพนซอร์ส</string>
     <string name="licences_and_credits">สัญญาอนุญาตและเครดิต</string>
@@ -457,6 +456,7 @@
     <string name="pref_widget_opacity">พื้นหลังวิตเจ็ต</string>
     <string name="pref_widget_type">ชนิดวิตเจ็ต</string>
     <string name="pref_large_font">ใช้อักษรขนาดใหญ่ขึ้น</string>
+    <string name="pref_hide_watch_button">ซ่อนปุ่มดู</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">โปร่งใส</string>
     <string name="widget_background_25">25%</string>

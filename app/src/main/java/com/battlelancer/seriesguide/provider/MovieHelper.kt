@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.provider
 
-import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.RawQuery
@@ -41,7 +41,7 @@ interface MovieHelper {
     ): List<SgMovieTmdbId>
 
     @RawQuery(observedEntities = [SgMovie::class])
-    fun getWatchedMovies(query: SupportSQLiteQuery): DataSource.Factory<Int, SgMovie>
+    fun getWatchedMovies(query: SupportSQLiteQuery): PagingSource<Int, SgMovie>
 
     @Query(
         """SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays

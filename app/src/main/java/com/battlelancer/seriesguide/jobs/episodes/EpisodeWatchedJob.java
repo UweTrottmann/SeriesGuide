@@ -4,11 +4,11 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.provider.SgActivityHelper;
 import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.util.ActivityTools;
 import com.battlelancer.seriesguide.util.TextTools;
 
 public class EpisodeWatchedJob extends EpisodeBaseJob {
@@ -64,11 +64,11 @@ public class EpisodeWatchedJob extends EpisodeBaseJob {
 
         if (EpisodeTools.isWatched(getFlagValue())) {
             // create activity entry for watched episode
-            ActivityTools.addActivity(context, episodeId, getShowId());
+            SgActivityHelper.addActivity(context, episodeId, getShowId());
         } else if (unwatched) {
             // remove any previous activity entries for this episode
             // use case: user accidentally toggled watched flag
-            ActivityTools.removeActivity(context, episodeId);
+            SgActivityHelper.removeActivity(context, episodeId);
         }
 
         ListWidgetProvider.notifyDataChanged(context);

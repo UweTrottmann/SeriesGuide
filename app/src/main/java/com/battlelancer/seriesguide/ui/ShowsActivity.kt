@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -8,14 +7,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.adapters.TabStripAdapter
 import com.battlelancer.seriesguide.api.Intents
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
@@ -47,8 +43,8 @@ import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
  */
 class ShowsActivity : BaseTopActivity(), OnAddShowListener {
 
-    private lateinit var tabsAdapter: ShowsTabPageAdapter
-    private lateinit var viewPager: ViewPager
+    private lateinit var tabsAdapter: TabStripAdapter
+    private lateinit var viewPager: ViewPager2
 
     private val viewModel: ShowsActivityViewModel by viewModels()
     private lateinit var billingViewModel: BillingViewModel
@@ -200,13 +196,8 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
                 scrollSelectedTabToTop()
             }
         }
-        tabsAdapter = ShowsTabPageAdapter(
-            supportFragmentManager,
-            this,
-            viewPager,
-            tabs,
-            buttonAddShow
-        )
+        tabsAdapter = TabStripAdapter(this, viewPager, tabs)
+        tabs.setOnPageChangeListener(ShowsPageChangeListener(buttonAddShow))
 
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment::class.java, null)
@@ -255,11 +246,11 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
         ) ?: getLastShowsTabPosition(this) // use last saved selection
 
         // never select a non-existent tab
-        if (selection > tabsAdapter.count - 1) {
+        if (selection > tabsAdapter.itemCount - 1) {
             selection = 0
         }
 
-        viewPager.currentItem = selection
+        viewPager.setCurrentItem(selection, false)
     }
 
     private fun checkGooglePlayPurchase() {
@@ -362,21 +353,11 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
     }
 
     /**
-     * Special [TabStripAdapter] which saves the currently selected page to preferences, so we
-     * can restore it when the user comes back later.
+     * Page change listener which hides the floating action button for all but the shows tab.
      */
-    class ShowsTabPageAdapter(
-        fm: FragmentManager,
-        context: Context,
-        pager: ViewPager,
-        tabs: SlidingTabLayout,
+    class ShowsPageChangeListener(
         private val floatingActionButton: FloatingActionButton
-    ) : TabStripAdapter(fm, context, pager, tabs), OnPageChangeListener {
-
-        init {
-            tabs.setOnPageChangeListener(this)
-        }
-
+    ) : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrollStateChanged(arg0: Int) {}
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
 
@@ -388,7 +369,6 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
                 floatingActionButton.hide()
             }
         }
-
     }
 
     companion object {

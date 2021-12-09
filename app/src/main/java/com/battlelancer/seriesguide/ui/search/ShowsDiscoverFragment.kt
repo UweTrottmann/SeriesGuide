@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.content.edit
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +18,7 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
@@ -56,7 +56,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     private lateinit var unbinder: Unbinder
     private lateinit var adapter: ShowsDiscoverAdapter
-    private lateinit var model: ShowsDiscoverViewModel
+    private val model: ShowsDiscoverViewModel by viewModels()
 
     /** Two letter ISO 639-1 language code. */
     private lateinit var languageCode: String
@@ -74,6 +74,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     SearchActivity.SearchQuerySubmitEvent::class.java)
             queryEvent?.query ?: ""
         }
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -117,6 +119,16 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         adapter = ShowsDiscoverAdapter(requireContext(), discoverItemClickListener,
                 TraktCredentials.get(context).hasCredentials(), true)
         recyclerView.adapter = adapter
+
+        languageCode = DisplaySettings.getShowsSearchLanguage(requireContext())
+
+        // observe and load results
+        model.data.observe(viewLifecycleOwner, { handleResultsUpdate(it) })
+
+        // initial load after getting watch providers, reload on watch provider changes
+        model.watchProviderIds.observe(viewLifecycleOwner, {
+            loadResults()
+        })
     }
 
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
@@ -155,20 +167,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        // enable menu
-        setHasOptionsMenu(true)
-
-        languageCode = DisplaySettings.getShowsSearchLanguage(requireContext())
-
-        // observe and load results
-        model = ViewModelProvider(this).get(ShowsDiscoverViewModel::class.java)
-        model.data.observe(viewLifecycleOwner, Observer { handleResultsUpdate(it) })
-        loadResults()
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: SearchActivity.SearchQuerySubmitEvent) {
         query = event.query
@@ -176,7 +174,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private fun loadResults(forceLoad: Boolean = false) {
-        val willLoad = model.data.load(query, languageCode, forceLoad)
+        val watchProviderIds = model.watchProviderIds.value
+        val willLoad = model.data.load(query, languageCode, watchProviderIds, forceLoad)
         if (willLoad) swipeRefreshLayout.isRefreshing = true
     }
 
@@ -196,21 +195,26 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.tvdb_add_menu, menu)
+        inflater.inflate(R.menu.shows_discover_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.menu_action_shows_search_clear_history) {
-            // tell the hosting activity to clear the search view history
-            EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
-            return true
+        return when (item.itemId) {
+            R.id.menu_action_shows_search_clear_history -> {
+                // tell the hosting activity to clear the search view history
+                EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
+                true
+            }
+            R.id.menu_action_shows_search_filter -> {
+                DiscoverFilterFragment.showForShows(parentFragmentManager)
+                true
+            }
+            R.id.menu_action_shows_search_change_language -> {
+                displayLanguageSettings()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        if (itemId == R.id.menu_action_shows_search_change_language) {
-            displayLanguageSettings()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun displayLanguageSettings() {

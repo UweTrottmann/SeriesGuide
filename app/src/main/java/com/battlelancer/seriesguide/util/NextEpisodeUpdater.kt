@@ -66,8 +66,11 @@ class NextEpisodeUpdater {
                 releaseTime = Long.MIN_VALUE
             }
 
-            // STEP 2: get episode released closest afterwards; or at the same time,
-            // but with a higher number
+            // STEP 2: get episode released closest afterwards
+            // (next episode or special episode - important for Anime, also often special episodes
+            // are not added in the order they are released, see e.g. Daemon Slayer);
+            // or at the same time, but with a different number (if all episodes are released at once).
+            // Note: there is a setting to exclude special episodes.
             val selectionArgs: Array<Any> = if (isNoReleasedEpisodes) {
                 // restrict to episodes with future release date
                 arrayOf(
@@ -158,6 +161,8 @@ class NextEpisodeUpdater {
             nextEpisodeSelectionBuilder.append(SELECT_ONLYFUTURE)
         } else {
             // restrict to episodes with any valid air date
+            // currently show list filters and UI expect a
+            // valid release date if there is a next episode
             nextEpisodeSelectionBuilder.append(SELECT_WITHAIRDATE)
         }
         return nextEpisodeSelectionBuilder.toString()
@@ -174,23 +179,23 @@ class NextEpisodeUpdater {
         const val UNKNOWN_NEXT_RELEASE_DATE = Long.MAX_VALUE
 
         /**
-         * Less plays, not skipped, airing later
-         * or has a different number or season if airing the same time.
+         * Less plays, not skipped, released later
+         * or has a different (to also match specials) number or season if released the same time.
          */
-        var SELECT_NEXT =
+        private const val SELECT_NEXT =
             (SgEpisode2Columns.PLAYS + "<? AND " + SgEpisode2Columns.SELECTION_NOT_SKIPPED + " AND ("
                     + "(" + SgEpisode2Columns.FIRSTAIREDMS + "=? AND "
                     + "(" + SgEpisode2Columns.NUMBER + "!=? OR " + SgEpisode2Columns.SEASON + "!=?)) "
                     + "OR " + SgEpisode2Columns.FIRSTAIREDMS + ">?)")
 
-        var SELECT_WITHAIRDATE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + "!=-1"
+        private const val SELECT_WITHAIRDATE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + "!=-1"
 
-        var SELECT_ONLYFUTURE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + ">=?"
+        private const val SELECT_ONLYFUTURE = " AND " + SgEpisode2Columns.FIRSTAIREDMS + ">=?"
 
         /**
-         * Air time, then lowest season, or if identical lowest episode number.
+         * Oldest release date first, then lowest season, then lowest episode number.
          */
-        var SORTORDER = (SgEpisode2Columns.FIRSTAIREDMS + " ASC,"
+        private const val SORTORDER = (SgEpisode2Columns.FIRSTAIREDMS + " ASC,"
                 + SgEpisode2Columns.SEASON + " ASC,"
                 + SgEpisode2Columns.NUMBER + " ASC")
     }

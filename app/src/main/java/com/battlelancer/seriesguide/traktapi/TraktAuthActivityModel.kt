@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import retrofit2.awaitResponse
 import timber.log.Timber
 import java.io.IOException
 import com.battlelancer.seriesguide.enums.Result as SgResult
@@ -128,7 +129,7 @@ class TraktAuthActivityModel(application: Application) : AndroidViewModel(applic
             var username: String? = null
             var displayname: String? = null
             try {
-                val response: Response<Settings> = trakt.users().settings().execute()
+                val response: Response<Settings> = trakt.users().settings().awaitResponse()
                 val body = response.body()
                 if (response.isSuccessful && body != null) {
                     val user = body.user

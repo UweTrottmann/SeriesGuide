@@ -38,6 +38,7 @@
     <string name="action_stream">Veure on-line o comprar</string>
     <string name="action_stream_info">Veure en línia o informació de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
+    <string name="action_include_any_watch_provider">Inclou qualsevol</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -245,11 +246,9 @@
     <string name="action_movies_sort">Ordena les peŀlícules</string>
     <string name="action_movies_sort_title">Títol</string>
     <string name="action_movies_sort_release">Data de llançament</string>
+    <string name="action_movies_filter">Filtre de pel·lícules</string>
     <!-- Statistics -->
     <string name="statistics_failed">No s\'han pogut calcular les estadístiques.</string>
-    <string name="statistics_shows">Sèries</string>
-    <string name="statistics_episodes">Episodis</string>
-    <string name="statistics_movies">Peŀlícules</string>
     <string name="shows_finished">%s acabat de veure</string>
     <string name="shows_with_next">%s amb episodis següents</string>
     <string name="shows_continuing">%s en progrés</string>
@@ -373,7 +372,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de Privacitat</string>
-    <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDb però no està reconeguda ni certificada per TMDb.</string>
+    <string name="licence_themoviedb">Aquest producte fa servir l\'API de TMDB però no està reconeguda ni certificada per TMDB.</string>
     <string name="licence_trakt">Aquesta app fa servir dades i imatges de Trakt</string>
     <string name="about_open_source">SeriesGuide s\'ha construït utilitzant programari de codi obert.</string>
     <string name="licences_and_credits">Llicències i credits</string>
@@ -468,6 +467,7 @@
     <string name="pref_widget_opacity">Fons del widget</string>
     <string name="pref_widget_type">Tipus de widget</string>
     <string name="pref_large_font">Utilitzar font gran</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25%</string>

@@ -6,6 +6,7 @@ import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.coroutines.CancellationException
 import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
@@ -53,9 +54,13 @@ class Errors {
         /**
          * Logs the exception and if it should be, reports it. Bends the stack trace of the
          * bottom-most exception to the call site of this method. Adds action as key to report.
+         * If [throwable] is a [CancellationException] re-throws it so a coroutine
+         * is cancelled properly.
          */
         @JvmStatic
         fun logAndReport(action: String, throwable: Throwable) {
+            if (throwable is CancellationException) throw throwable
+
             Timber.e(throwable, action)
 
             if (!throwable.shouldReport()) return

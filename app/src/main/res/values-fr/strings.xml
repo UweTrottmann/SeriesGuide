@@ -38,6 +38,7 @@
     <string name="action_stream">Stream or purchase</string>
     <string name="action_stream_info">Informations sur le streaming et l\'achat</string>
     <string name="action_select_region">Sélectionner une région</string>
+    <string name="action_include_any_watch_provider">Tout inclure</string>
     <!-- Search -->
     <string name="clear_search_history">Effacer l\'historique de recherche</string>
     <string name="search_hint">Recherche d\'épisodes</string>
@@ -245,11 +246,9 @@
     <string name="action_movies_sort">Trier les films</string>
     <string name="action_movies_sort_title">Titre</string>
     <string name="action_movies_sort_release">Date de parution</string>
+    <string name="action_movies_filter">Filtrer les films</string>
     <!-- Statistics -->
     <string name="statistics_failed">Impossible de calculer les statistiques.</string>
-    <string name="statistics_shows">Séries</string>
-    <string name="statistics_episodes">Épisodes</string>
-    <string name="statistics_movies">Films</string>
     <string name="shows_finished">%s visionnées en entier</string>
     <string name="shows_with_next">%s avec des épisodes à venir</string>
     <string name="shows_continuing">%s en cours</string>
@@ -467,7 +466,8 @@
     <string name="hide_watched">Masquer les épisodes vus</string>
     <string name="pref_widget_opacity">Arrière-plan du widget</string>
     <string name="pref_widget_type">Type du widget</string>
-    <string name="pref_large_font">Use large font</string>
+    <string name="pref_large_font">Agrandir le texte</string>
+    <string name="pref_hide_watch_button">Masquer le bouton \"Vu\"</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparent</string>
     <string name="widget_background_25">25 %</string>

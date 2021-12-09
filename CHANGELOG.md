@@ -8,6 +8,59 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 62
+----------
+*2021-12-09*
+
+* 🌟 Discover: filter popular shows and shows with new episodes by streaming service.
+* 🌟 Discover: filter popular movies and movies with digital release by streaming service.
+* 🔧 App widget: add option to hide watch button.
+
+#### 62
+*2021-12-09*
+
+* 📝 Add Welsh translation, thanks to NMulholland.
+
+#### 62-beta5
+*2021-12-03*
+
+* 🔧 Discover: highlight new show and movie filters.
+* 🔨 Do not crash when selecting backup files and no supported file picker is available.
+* 🔨 Do not display options in toolbar not applicable when first opening some screens.
+* 📝 Latest translations from Crowdin.
+
+#### 62-beta4
+*2021-11-25*
+
+* 🌟 Discover: filter popular shows and shows with new episodes by streaming service.
+* 🌟 Discover: filter popular movies and movies with digital release by streaming service.
+* 🔧 Episode search: match independent of case for Unicode characters, e.g. German umlauts.
+* 📝 Latest translations from Crowdin.
+
+#### 62-beta3
+*2021-10-20*
+
+* 🔧 Revert the next episode selection change, because Anime. The next episode is again selected
+  by release date. Note: to never choose specials as next, see More > Settings > Advanced.
+* 📝 Latest translations from Crowdin.
+
+#### 62-beta2
+*2021-10-13*
+
+* 🔧 The next episode is now selected based on number, no longer by release date. This means specials
+  released in between episodes will no longer appear as next, you'll have to look for them in the
+  specials season. Decided to change this based on feedback over the years as many were confused
+  why an apparently random episode was next e.g. after marking all specials watched/skipped.
+* 🔧 Modernize remaining pager components (e.g. episode tabs, movie tabs) for more reliable behavior.
+* 📝 Latest translations from Crowdin.
+
+#### 62-beta1
+*2021-09-30*
+
+* 🔧 App widget: add option to hide watch button.
+* 🔧 Display error message if creating a shortcut fails.
+* 🔨 Only move shows by a day if released in the hour past midnight for the CBS and NBC networks.
+
 Version 61
 ----------
 *2021-09-23*

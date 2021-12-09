@@ -1,21 +1,23 @@
 package com.battlelancer.seriesguide.ui.movies
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.ui.search.NetworkState
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter
+import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.AND
+import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage
 import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.enumerations.ReleaseType
+import com.uwetrottmann.tmdb2.enumerations.SortBy
 import retrofit2.Call
+import retrofit2.awaitResponse
+import java.io.IOException
 import java.util.Calendar
 import java.util.Date
 
@@ -27,18 +29,19 @@ import java.util.Date
  */
 class TmdbMoviesDataSource(
     private val context: Context,
+    private val tmdb: Tmdb,
     private val link: MoviesDiscoverLink,
-    private val query: String?
-) : PageKeyedDataSource<Int, BaseMovie>() {
+    private val query: String,
+    private val languageCode: String,
+    private val regionCode: String,
+    private val watchProviderIds: List<Int>?,
+    private val watchRegion: String?
+) : PagingSource<Int, BaseMovie>() {
 
     data class Page(
         val items: List<BaseMovie>?,
         val totalCount: Int = -1
     )
-
-    val networkState = MutableLiveData<NetworkState>()
-
-    private val tmdb: Tmdb = SgApp.getServicesComponent(context).tmdb()
 
     private val dateNow: TmdbDate
         get() = TmdbDate(Date())
@@ -64,16 +67,13 @@ class TmdbMoviesDataSource(
             return TmdbDate(calendar.time)
         }
 
-    private fun loadPage(page: Int): Page {
-        networkState.postValue(NetworkState.LOADING)
-
-        val languageCode = DisplaySettings.getMoviesLanguage(context)
-        val regionCode = DisplaySettings.getMoviesRegion(context)
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BaseMovie> {
+        val pageNumber = params.key ?: 1
 
         val action: String
         val call: Call<MovieResultsPage>
-        if (query.isNullOrEmpty()) {
-            val pair = buildMovieListCall(languageCode, regionCode, page)
+        if (query.isEmpty()) {
+            val pair = buildMovieListCall(languageCode, regionCode, pageNumber)
             action = pair.first
             call = pair.second
         } else {
@@ -81,7 +81,7 @@ class TmdbMoviesDataSource(
             call = tmdb.searchService()
                 .movie(
                     query,
-                    page,
+                    pageNumber,
                     languageCode,
                     regionCode,
                     false,
@@ -91,7 +91,7 @@ class TmdbMoviesDataSource(
         }
 
         val response = try {
-            call.execute()
+            call.awaitResponse()
         } catch (e: Exception) {
             Errors.logAndReport(action, e)
             // Not checking for connection until here to allow hitting the response cache.
@@ -100,8 +100,6 @@ class TmdbMoviesDataSource(
             } else {
                 buildResultOffline()
             }
-        } finally {
-            networkState.postValue(NetworkState.LOADED)
         }
 
         // Check for failures or broken body.
@@ -121,7 +119,21 @@ class TmdbMoviesDataSource(
         }
 
         // Filter null items (a few users affected).
-        return Page(body.results?.filterNotNull(), totalResults)
+        val movies = body.results?.filterNotNull()
+
+        return if (movies == null || movies.isEmpty()) {
+            LoadResult.Page(
+                data = emptyList(),
+                prevKey = null, // Only paging forward.
+                nextKey = null
+            )
+        } else {
+            LoadResult.Page(
+                data = movies,
+                prevKey = null, // Only paging forward.
+                nextKey = pageNumber + 1
+            )
+        }
     }
 
     private fun buildMovieListCall(
@@ -129,126 +141,88 @@ class TmdbMoviesDataSource(
         regionCode: String?,
         page: Int
     ): Pair<String, Call<MovieResultsPage>> {
+        val builder = tmdb.discoverMovie()
+            .language(languageCode)
+            .region(regionCode)
+            .page(page)
+        // Only filter by watch provider if release type DIGITAL included.
+        if (isLinkFilterable(link)) {
+            if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
+                builder
+                    .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
+                    .watch_region(watchRegion)
+            }
+        }
         val action: String
-        val call: Call<MovieResultsPage>
         when (link) {
             MoviesDiscoverLink.POPULAR -> {
                 action = "get popular movies"
-                call = tmdb.moviesService().popular(page, languageCode, regionCode)
+                builder.sort_by(SortBy.POPULARITY_DESC)
             }
             MoviesDiscoverLink.DIGITAL -> {
                 action = "get movie digital releases"
-                call = tmdb.discoverMovie()
-                    .with_release_type(
-                        DiscoverFilter(
-                            DiscoverFilter.Separator.AND,
-                            ReleaseType.DIGITAL
-                        )
-                    )
+                builder
+                    .with_release_type(DiscoverFilter(AND, ReleaseType.DIGITAL))
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
-                    .language(languageCode)
-                    .region(regionCode)
-                    .page(page)
-                    .build()
             }
             MoviesDiscoverLink.DISC -> {
                 action = "get movie disc releases"
-                call = tmdb.discoverMovie()
-                    .with_release_type(
-                        DiscoverFilter(
-                            DiscoverFilter.Separator.AND,
-                            ReleaseType.PHYSICAL
-                        )
-                    )
+                builder
+                    .with_release_type(DiscoverFilter(AND, ReleaseType.PHYSICAL))
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
-                    .language(languageCode)
-                    .region(regionCode)
-                    .page(page)
-                    .build()
             }
             MoviesDiscoverLink.IN_THEATERS -> {
                 action = "get now playing movies"
-                call = tmdb.discoverMovie()
+                builder
                     .with_release_type(
-                        DiscoverFilter(
-                            DiscoverFilter.Separator.OR,
-                            ReleaseType.THEATRICAL, ReleaseType.THEATRICAL_LIMITED
-                        )
+                        DiscoverFilter(OR, ReleaseType.THEATRICAL, ReleaseType.THEATRICAL_LIMITED)
                     )
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
-                    .language(languageCode)
-                    .region(regionCode)
-                    .page(page)
-                    .build()
             }
             MoviesDiscoverLink.UPCOMING -> {
                 action = "get upcoming movies"
-                call = tmdb.discoverMovie()
+                builder
                     .with_release_type(
-                        DiscoverFilter(
-                            DiscoverFilter.Separator.OR,
-                            ReleaseType.THEATRICAL,
-                            ReleaseType.THEATRICAL_LIMITED
-                        )
+                        DiscoverFilter(OR, ReleaseType.THEATRICAL, ReleaseType.THEATRICAL_LIMITED)
                     )
                     .release_date_gte(dateTomorrow)
                     .release_date_lte(dateInOneMonth)
-                    .language(languageCode)
-                    .region(regionCode)
-                    .page(page)
-                    .build()
             }
         }
-        return Pair(action, call)
+        return Pair(action, builder.build())
     }
 
-    private fun buildResultGenericFailure(): Page {
-        networkState.postValue(
-            NetworkState.error(
-                context.getString(R.string.api_error_generic, context.getString(R.string.tmdb))
-            )
-        )
-        return Page(null)
+    private fun buildResultGenericFailure(): LoadResult.Error<Int, BaseMovie> {
+        val message =
+            context.getString(R.string.api_error_generic, context.getString(R.string.tmdb))
+        return LoadResult.Error(IOException(message))
     }
 
-    private fun buildResultOffline(): Page {
-        networkState.postValue(
-            NetworkState.error(
-                context.getString(R.string.offline)
-            )
-        )
-        return Page(null)
+    private fun buildResultOffline(): LoadResult.Error<Int, BaseMovie> {
+        val message = context.getString(R.string.offline)
+        return LoadResult.Error(IOException(message))
     }
 
-    override fun loadInitial(
-        params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, BaseMovie>
-    ) {
-        val page = loadPage(1)
-        if (page.items != null) {
-            val nextPage = if (page.items.isEmpty()) null else 2
-            callback.onResult(page.items, 0, page.totalCount, null, nextPage)
+    override fun getRefreshKey(state: PagingState<Int, BaseMovie>): Int? {
+        // Try to find the page key of the closest page to anchorPosition, from
+        // either the prevKey or the nextKey, but you need to handle nullability
+        // here:
+        //  * prevKey == null -> anchorPage is the first page.
+        //  * nextKey == null -> anchorPage is the last page.
+        //  * both prevKey and nextKey null -> anchorPage is the initial page, so
+        //    just return null.
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, BaseMovie>) {
-        val pageNumber = params.key
-        val page = loadPage(pageNumber)
-        if (page.items != null) {
-            val previousPage = if (pageNumber > 1) pageNumber - 1 else null
-            callback.onResult(page.items, previousPage)
-        }
+    companion object {
+        fun isLinkFilterable(link: MoviesDiscoverLink): Boolean =
+            link == MoviesDiscoverLink.POPULAR || link == MoviesDiscoverLink.DIGITAL
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, BaseMovie>) {
-        val pageNumber = params.key
-        val page = loadPage(pageNumber)
-        if (page.items != null) {
-            val nextPage = if (page.items.isEmpty()) null else pageNumber + 1
-            callback.onResult(page.items, nextPage)
-        }
-    }
 }

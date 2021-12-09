@@ -118,112 +118,115 @@ class JsonExportTaskTest {
         val exportWithData = exportFile.readText()
         println("Export with data")
         println(exportWithData)
-        assertThat(exportWithData).isEqualTo("[{\"tmdb_id\":95479,\"imdb_id\":\"imdbidvalue\",\"trakt_id\":52,\"title\":\"Jujutsu Kaisen\",\"overview\":\"It\\u0027s all about hollow purple.\",\"language\":\"en\",\"first_aired\":\"2021-02-27T05:11:12.345Z\",\"release_time\":1234,\"release_weekday\":1,\"release_timezone\":\"America/New_York\",\"country\":\"JP\",\"poster\":\"someurl/to/a/poster.jpg\",\"content_rating\":\"\",\"status\":\"ended\",\"runtime\":24,\"genres\":\"Animation|Action \\u0026 Adventure|Sci-Fi \\u0026 Fantasy\",\"network\":\"MBS\",\"rating\":10.0,\"rating_votes\":1234,\"rating_user\":0,\"favorite\":false,\"notify\":true,\"hidden\":false,\"last_watched_ms\":1234567890,\"seasons\":[{\"tmdb_id\":\"1\",\"season\":1,\"episodes\":[{\"tmdb_id\":1,\"episode\":1,\"title\":\"First Episode\",\"first_aired\":1234567890,\"watched\":true,\"plays\":1,\"skipped\":false,\"collected\":false,\"imdb_id\":\"\",\"overview\":\"First overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"},{\"tmdb_id\":2,\"episode\":2,\"title\":\"Second Episode\",\"first_aired\":1234567890,\"watched\":false,\"plays\":0,\"skipped\":true,\"collected\":true,\"imdb_id\":\"\",\"overview\":\"Second overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"}]},{\"tmdb_id\":\"2\",\"season\":2,\"episodes\":[{\"tmdb_id\":1,\"episode\":1,\"title\":\"First Episode\",\"first_aired\":1234567890,\"watched\":true,\"plays\":1,\"skipped\":false,\"collected\":false,\"imdb_id\":\"\",\"overview\":\"First overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"},{\"tmdb_id\":2,\"episode\":2,\"title\":\"Second Episode\",\"first_aired\":1234567890,\"watched\":false,\"plays\":0,\"skipped\":true,\"collected\":true,\"imdb_id\":\"\",\"overview\":\"Second overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"}]}]},{\"imdb_id\":\"\",\"title\":\"\",\"overview\":\"\",\"language\":\"\",\"release_time\":-1,\"release_weekday\":-1,\"release_timezone\":\"\",\"poster\":\"\",\"content_rating\":\"\",\"status\":\"unknown\",\"runtime\":0,\"genres\":\"\",\"network\":\"\",\"rating\":0.0,\"rating_votes\":0,\"rating_user\":0,\"favorite\":false,\"notify\":true,\"hidden\":false,\"last_watched_ms\":0,\"seasons\":[]}]")
+        assertThat(exportWithData).isEqualTo(expectedJsonShows)
     }
 
-    private val listOfTestShows = listOf(
-        SgShow2(
-            id = 1,
-            tmdbId = 95479,
-            tvdbId = null,
-            traktId = 52,
-            title = "Jujutsu Kaisen",
-            titleNoArticle = "",
-            overview = "It's all about hollow purple.",
-            releaseTime = 1234,
-            releaseWeekDay = 1,
-            releaseCountry = "JP",
-            releaseTimeZone = "America/New_York",
-            firstRelease = "2021-02-27T05:11:12.345Z",
-            ratingGlobal = 10.0,
-            ratingVotes = 1234,
-            genres = "Animation|Action & Adventure|Sci-Fi & Fantasy",
-            network = "MBS",
-            imdbId = "imdbidvalue",
-            runtime = 24,
-            status = ShowTools.Status.ENDED,
-            poster = "someurl/to/a/poster.jpg",
-            posterSmall = "someurl/to/a/poster.jpg",
-            language = "en",
-            lastUpdatedMs = 0,
-            lastWatchedMs = 1234567890
-        ),
-        SgShow2(
-            id = 2,
-            tmdbId = null,
-            tvdbId = null,
-            traktId = null,
-            titleNoArticle = null,
-            releaseTime = null,
-            releaseWeekDay = null,
-            releaseCountry = null,
-            releaseTimeZone = "",
-            firstRelease = null,
-            ratingGlobal = null,
-            ratingVotes = null,
-            lastUpdatedMs = 0
+    companion object {
+        val listOfTestShows = listOf(
+            SgShow2(
+                id = 1,
+                tmdbId = 95479,
+                tvdbId = null,
+                traktId = 52,
+                title = "Jujutsu Kaisen",
+                titleNoArticle = "",
+                overview = "It's all about hollow purple.",
+                releaseTime = 1234,
+                releaseWeekDay = 1,
+                releaseCountry = "JP",
+                releaseTimeZone = "America/New_York",
+                firstRelease = "2021-02-27T05:11:12.345Z",
+                ratingGlobal = 10.0,
+                ratingVotes = 1234,
+                genres = "Animation|Action & Adventure|Sci-Fi & Fantasy",
+                network = "MBS",
+                imdbId = "imdbidvalue",
+                runtime = 24,
+                status = ShowTools.Status.ENDED,
+                poster = "someurl/to/a/poster.jpg",
+                posterSmall = "someurl/to/a/poster.jpg",
+                language = "en",
+                lastUpdatedMs = 0,
+                lastWatchedMs = 1234567890
+            ),
+            SgShow2(
+                id = 2,
+                tmdbId = null,
+                tvdbId = null,
+                traktId = null,
+                titleNoArticle = null,
+                releaseTime = null,
+                releaseWeekDay = null,
+                releaseCountry = null,
+                releaseTimeZone = "",
+                firstRelease = null,
+                ratingGlobal = null,
+                ratingVotes = null,
+                lastUpdatedMs = 0
+            )
         )
-    )
+        const val expectedJsonShows = "[{\"tmdb_id\":95479,\"imdb_id\":\"imdbidvalue\",\"trakt_id\":52,\"title\":\"Jujutsu Kaisen\",\"overview\":\"It\\u0027s all about hollow purple.\",\"language\":\"en\",\"first_aired\":\"2021-02-27T05:11:12.345Z\",\"release_time\":1234,\"release_weekday\":1,\"release_timezone\":\"America/New_York\",\"country\":\"JP\",\"poster\":\"someurl/to/a/poster.jpg\",\"content_rating\":\"\",\"status\":\"ended\",\"runtime\":24,\"genres\":\"Animation|Action \\u0026 Adventure|Sci-Fi \\u0026 Fantasy\",\"network\":\"MBS\",\"rating\":10.0,\"rating_votes\":1234,\"rating_user\":0,\"favorite\":false,\"notify\":true,\"hidden\":false,\"last_watched_ms\":1234567890,\"seasons\":[{\"tmdb_id\":\"1\",\"season\":1,\"episodes\":[{\"tmdb_id\":1,\"episode\":1,\"title\":\"First Episode\",\"first_aired\":1234567890,\"watched\":true,\"plays\":1,\"skipped\":false,\"collected\":false,\"imdb_id\":\"\",\"overview\":\"First overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"},{\"tmdb_id\":2,\"episode\":2,\"title\":\"Second Episode\",\"first_aired\":1234567890,\"watched\":false,\"plays\":0,\"skipped\":true,\"collected\":true,\"imdb_id\":\"\",\"overview\":\"Second overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"}]},{\"tmdb_id\":\"2\",\"season\":2,\"episodes\":[{\"tmdb_id\":1,\"episode\":1,\"title\":\"First Episode\",\"first_aired\":1234567890,\"watched\":true,\"plays\":1,\"skipped\":false,\"collected\":false,\"imdb_id\":\"\",\"overview\":\"First overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"},{\"tmdb_id\":2,\"episode\":2,\"title\":\"Second Episode\",\"first_aired\":1234567890,\"watched\":false,\"plays\":0,\"skipped\":true,\"collected\":true,\"imdb_id\":\"\",\"overview\":\"Second overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"}]}]},{\"imdb_id\":\"\",\"title\":\"\",\"overview\":\"\",\"language\":\"\",\"release_time\":-1,\"release_weekday\":-1,\"release_timezone\":\"\",\"poster\":\"\",\"content_rating\":\"\",\"status\":\"unknown\",\"runtime\":0,\"genres\":\"\",\"network\":\"\",\"rating\":0.0,\"rating_votes\":0,\"rating_user\":0,\"favorite\":false,\"notify\":true,\"hidden\":false,\"last_watched_ms\":0,\"seasons\":[]}]"
 
-    private val listOfTestSeasons = listOf(
-        SgSeason2(
-            id = 1,
-            showId = 1,
-            tmdbId = "1",
-            numberOrNull = 1,
-            order = 1,
-            name = "Season 1"
-        ),
-        SgSeason2(
-            id = 2,
-            showId = 1,
-            tmdbId = "2",
-            numberOrNull = 2,
-            order = 2,
-            name = "Season 2"
+        val listOfTestSeasons = listOf(
+            SgSeason2(
+                id = 1,
+                showId = 1,
+                tmdbId = "1",
+                numberOrNull = 1,
+                order = 1,
+                name = "Season 1"
+            ),
+            SgSeason2(
+                id = 2,
+                showId = 1,
+                tmdbId = "2",
+                numberOrNull = 2,
+                order = 2,
+                name = "Season 2"
+            )
         )
-    )
 
-    private val listOfTestEpisodes = listOf(
-        SgEpisode2(
-            id = 1,
-            showId = 1,
-            seasonId = 1,
-            tmdbId = 1,
-            title = "First Episode",
-            overview = "First overview",
-            number = 1,
-            order = 1,
-            season = 1,
-            image = "/first/still/path.jpg",
-            firstReleasedMs = 1234567890,
-            directors = "directors string",
-            guestStars = "guest stars string",
-            writers = "writers string",
-            watched = EpisodeFlags.WATCHED,
-            plays = 1,
-            collected = false
-        ),
-        SgEpisode2(
-            id = 2,
-            showId = 1,
-            seasonId = 1,
-            tmdbId = 2,
-            title = "Second Episode",
-            overview = "Second overview",
-            number = 2,
-            order = 2,
-            season = 1,
-            image = "/first/still/path.jpg",
-            firstReleasedMs = 1234567890,
-            directors = "directors string",
-            guestStars = "guest stars string",
-            writers = "writers string",
-            watched = EpisodeFlags.SKIPPED,
-            plays = 0,
-            collected = true
+        val listOfTestEpisodes = listOf(
+            SgEpisode2(
+                id = 1,
+                showId = 1,
+                seasonId = 1,
+                tmdbId = 1,
+                title = "First Episode",
+                overview = "First overview",
+                number = 1,
+                order = 1,
+                season = 1,
+                image = "/first/still/path.jpg",
+                firstReleasedMs = 1234567890,
+                directors = "directors string",
+                guestStars = "guest stars string",
+                writers = "writers string",
+                watched = EpisodeFlags.WATCHED,
+                plays = 1,
+                collected = false
+            ),
+            SgEpisode2(
+                id = 2,
+                showId = 1,
+                seasonId = 1,
+                tmdbId = 2,
+                title = "Second Episode",
+                overview = "Second overview",
+                number = 2,
+                order = 2,
+                season = 1,
+                image = "/first/still/path.jpg",
+                firstReleasedMs = 1234567890,
+                directors = "directors string",
+                guestStars = "guest stars string",
+                writers = "writers string",
+                watched = EpisodeFlags.SKIPPED,
+                plays = 0,
+                collected = true
+            )
         )
-    )
+    }
 
     @Test
     fun exportLists_jsonAsExpected() {

@@ -38,6 +38,7 @@
     <string name="action_stream">Tonton atau beli</string>
     <string name="action_stream_info">Tonton atau info pembelian</string>
     <string name="action_select_region">Pilih wilayah</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
@@ -241,11 +242,9 @@
     <string name="action_movies_sort">Sortir film</string>
     <string name="action_movies_sort_title">Judul</string>
     <string name="action_movies_sort_release">Tanggal rilis</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tidak dapat menghitung statistik.</string>
-    <string name="statistics_shows">acara</string>
-    <string name="statistics_episodes">episode</string>
-    <string name="statistics_movies">film</string>
     <string name="shows_finished">%s selesai ditonton</string>
     <string name="shows_with_next">%s dengan episode berikutnya</string>
     <string name="shows_continuing">%s berlanjut</string>
@@ -362,7 +361,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Kebijakan Privasi</string>
-    <string name="licence_themoviedb">Produk ini menggunakan TMDb API Tapi tidak disahkan atau disertifikasi oleh TMDb.</string>
+    <string name="licence_themoviedb">Produk ini menggunakan TMDB API Tapi tidak disahkan atau disertifikasi oleh TMDB.</string>
     <string name="licence_trakt">Aplikasi ini menggunakan data dan gambar dari Trakt.</string>
     <string name="about_open_source">SeriesGuide dibuat dengan menggunakan perangkat lunak open source.</string>
     <string name="licences_and_credits">Lisensi dan kredit</string>
@@ -457,6 +456,7 @@
     <string name="pref_widget_opacity">Latar belakang widget</string>
     <string name="pref_widget_type">Jenis widget</string>
     <string name="pref_large_font">Gunakan font besar</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Tembus pandang</string>
     <string name="widget_background_25">25%</string>

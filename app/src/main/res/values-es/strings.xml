@@ -38,6 +38,7 @@
     <string name="action_stream">Ver en línea o comprar</string>
     <string name="action_stream_info">Ver en línea o información sobre compra</string>
     <string name="action_select_region">Seleccionar región</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -152,7 +153,7 @@
     <string name="action_shows_sort_oldest_episode">Episodio más antiguo</string>
     <string name="action_shows_sort_last_watched">Último visto</string>
     <string name="action_shows_sort_remaining">Episodios faltantes</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">Estado</string>
     <string name="action_shows_sort_favorites">Favoritos primero</string>
     <string name="context_updateshow">Actualizar</string>
     <string name="context_marknext">Siguiente episodio visto</string>
@@ -245,11 +246,9 @@
     <string name="action_movies_sort">Ordenar películas</string>
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Fecha de estreno</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">No se pudieron calcular las estadísticas.</string>
-    <string name="statistics_shows">Series</string>
-    <string name="statistics_episodes">Episodios</string>
-    <string name="statistics_movies">Películas</string>
     <string name="shows_finished">%s vistos completamente</string>
     <string name="shows_with_next">%s con nuevos episodios</string>
     <string name="shows_continuing">%s continuando</string>
@@ -282,7 +281,7 @@
     <string name="hexagon_signin">Iniciar sesión</string>
     <string name="hexagon_signout">Cerrar sesión</string>
     <string name="hexagon_setup_incomplete">La configuración de SeriesGuide cloud no se completó.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Tu cuenta no tiene una dirección de correo electrónico</string>
     <string name="hexagon_remove_account">Eliminar cuenta</string>
     <string name="hexagon_remove_account_success">Cuenta borrada.</string>
     <string name="hexagon_remove_account_failure">No se pudo eliminar la cuenta.</string>
@@ -290,8 +289,8 @@
 Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="hexagon_api_queued">Enviando a SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Error al iniciar sesión (%s)</string>
+    <string name="hexagon_signin_google_only">La dirección de correo electrónico requiere inicio de sesión de Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando a trakt.</string>
     <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
@@ -374,7 +373,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Política de privacidad</string>
-    <string name="licence_themoviedb">Este producto utiliza la API de TMDb pero no está patrocinado ni certificado por TMDb.</string>
+    <string name="licence_themoviedb">Este producto utiliza la API de TMDB pero no está patrocinado ni certificado por TMDB.</string>
     <string name="licence_trakt">Esta aplicación utiliza información e imágenes de Trakt.</string>
     <string name="about_open_source">SeriesGuide fue desarrollado usando software de código abierto.</string>
     <string name="licences_and_credits">Licencias y créditos</string>
@@ -469,6 +468,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_widget_opacity">Fondo de widget</string>
     <string name="pref_widget_type">Tipo de widget</string>
     <string name="pref_large_font">Usar tamaño de texto grande</string>
+    <string name="pref_hide_watch_button">Ocultar botón de «Visto»</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparente</string>
     <string name="widget_background_25">25%</string>

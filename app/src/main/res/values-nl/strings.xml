@@ -38,6 +38,7 @@
     <string name="action_stream">Streamen of kopen</string>
     <string name="action_stream_info">Streaming- of aankoopinformatie</string>
     <string name="action_select_region">Regio selecteren</string>
+    <string name="action_include_any_watch_provider">Om het even welke</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
@@ -245,11 +246,9 @@
     <string name="action_movies_sort">Sorteer films</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Releasedatum</string>
+    <string name="action_movies_filter">Films filteren</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kon statistieken niet berekenen.</string>
-    <string name="statistics_shows">series</string>
-    <string name="statistics_episodes">afleveringen</string>
-    <string name="statistics_movies">films</string>
     <string name="shows_finished">%s klaar met kijken</string>
     <string name="shows_with_next">%s met de volgende afleveringen</string>
     <string name="shows_continuing">%s lopende</string>
@@ -468,6 +467,7 @@
     <string name="pref_widget_opacity">Widget achtergrond</string>
     <string name="pref_widget_type">Widget type</string>
     <string name="pref_large_font">Groot lettertype gebruiken</string>
+    <string name="pref_hide_watch_button">Bekijkenknop verbergen</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Transparantie</string>
     <string name="widget_background_25">25%</string>

@@ -38,6 +38,7 @@
     <string name="action_stream">بث أو شراء</string>
     <string name="action_stream_info">معلومات البث أو الشراء</string>
     <string name="action_select_region">حدد المنطقة</string>
+    <string name="action_include_any_watch_provider">تضمين أي</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
     <string name="search_hint">البحث عن الحلقات</string>
@@ -261,11 +262,9 @@
     <string name="action_movies_sort">فرز الأفلام</string>
     <string name="action_movies_sort_title">العنوان</string>
     <string name="action_movies_sort_release">تاريخ الإصدار</string>
+    <string name="action_movies_filter">تصفية الأفلام</string>
     <!-- Statistics -->
     <string name="statistics_failed">خطأ في الإحصائيات.</string>
-    <string name="statistics_shows">المسلسلات</string>
-    <string name="statistics_episodes">الحلقات</string>
-    <string name="statistics_movies">الأفلام</string>
     <string name="shows_finished">%s انتهى مشاهدة</string>
     <string name="shows_with_next">%s مع الحلقات القادمة</string>
     <string name="shows_continuing">%s مستمرة</string>
@@ -417,7 +416,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">سياسة الخصوصية</string>
-    <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDb ولكنه غير مدعوم ولامعتمد من TMDb.</string>
+    <string name="licence_themoviedb">هذا البرنامج يستخدم وصلة TMDB ولكنه غير مدعوم ولامعتمد من TMDB.</string>
     <string name="licence_trakt">هذا البرنامج يستخدم البيانات والصور من تطبيق Trakt.</string>
     <string name="about_open_source">برنامج دليل المسلسلات بني باستخدام برمجيات المصدر المفتوح.</string>
     <string name="licences_and_credits">تراخيص مفتوحة المصدر</string>
@@ -512,6 +511,7 @@
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>
     <string name="pref_widget_type">نوع القطعة العائمة</string>
     <string name="pref_large_font">استخدام الخط الكبير</string>
+    <string name="pref_hide_watch_button">إخفاء زر المشهود</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفافية</string>
     <string name="widget_background_25">25%</string>

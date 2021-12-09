@@ -163,10 +163,10 @@ dependencies {
     implementation("androidx.core:core-ktx:$coreVersion")
     implementation("androidx.annotation:annotation:$annotationVersion")
     // https://developer.android.com/jetpack/androidx/releases/appcompat
-    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("androidx.cardview:cardview:1.0.0")
     // https://developer.android.com/jetpack/androidx/releases/browser
-    implementation("androidx.browser:browser:1.3.0")
+    implementation("androidx.browser:browser:1.4.0")
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
     // https://github.com/material-components/material-components-android/releases
     implementation("com.google.android.material:material:1.4.0")
@@ -174,17 +174,18 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
     implementation("androidx.preference:preference-ktx:1.1.1")
 
     // ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     // Paging
-    implementation("androidx.paging:paging-runtime-ktx:2.1.2")
+    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
 
     // Room
     implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
@@ -192,7 +193,7 @@ dependencies {
     implementation("com.jakewharton:butterknife:$butterknifeVersion")
     kapt("com.jakewharton:butterknife-compiler:$butterknifeVersion")
     // https://github.com/google/dagger/releases
-    val daggerVersion  = "2.37"
+    val daggerVersion  = "2.39"
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
     val eventbusVersion = "3.2.0"
@@ -201,7 +202,7 @@ dependencies {
 
     implementation("com.google.flatbuffers:flatbuffers-java:1.12.0")
     // https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation("com.google.code.gson:gson:2.8.7")
+    implementation("com.google.code.gson:gson:2.8.8")
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
     implementation("com.jakewharton.timber:timber:$timberVersion")
@@ -209,7 +210,7 @@ dependencies {
 
     // Use latest OkHttp.
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     // Use latest retrofit.
     // https://github.com/square/retrofit/blob/master/CHANGELOG.md
     val retrofitVersion = "2.9.0"
@@ -223,9 +224,10 @@ dependencies {
         exclude(group = "com.android.support")
     }
     implementation("com.uwetrottmann.photoview:library:1.2.4")
+    implementation("com.getkeepsafe.taptargetview:taptargetview:1.13.3")
 
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.4.0")
+    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.6.0")
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
     implementation("com.uwetrottmann.trakt5:trakt-java:6.10.0") {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
@@ -240,13 +242,13 @@ dependencies {
     implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:$debugDrawerVersion")
 
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:28.3.0"))
+    implementation(platform("com.google.firebase:firebase-bom:29.0.1"))
     // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
     implementation("com.firebaseui:firebase-ui-auth:8.0.0")
 
     // Crashlytics
     // https://firebase.google.com/support/release-notes/android
-    implementation("com.google.firebase:firebase-crashlytics:18.2.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.2.5")
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
@@ -301,8 +303,9 @@ dependencies {
     // https://issuetracker.google.com/issues/159151549
     testImplementation("org.robolectric:robolectric:4.6.1")
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
-    testImplementation("org.mockito:mockito-core:3.8.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
+    // https://github.com/mockito/mockito/releases
+    testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }
 
 endpointsClient {

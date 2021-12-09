@@ -120,6 +120,9 @@ Copyright 2013 Square, Inc.
 SystemBarTint (https://github.com/jgilfelt/SystemBarTint)
 Copyright 2013 readyState Software Limited
 
+TapTargetView (https://github.com/KeepSafe/TapTargetView)
+Copyright 2016 Keepsafe Software Inc.
+
 thetvdb-java (https://github.com/UweTrottmann/thetvdb-java)
 Copyright 2013 Uwe Trottmann
 

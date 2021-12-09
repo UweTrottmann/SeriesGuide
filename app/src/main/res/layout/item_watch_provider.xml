@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.SwitchCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/switchWatchProvider"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:minHeight="48dp"
+    android:paddingLeft="@dimen/larger_padding"
+    android:paddingRight="@dimen/larger_padding"
+    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+    tools:text="Streaming Service" />

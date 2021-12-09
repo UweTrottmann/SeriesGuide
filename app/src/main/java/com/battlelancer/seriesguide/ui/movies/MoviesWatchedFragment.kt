@@ -9,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesWatchedBinding
 import com.battlelancer.seriesguide.ui.MoviesActivity
 import com.battlelancer.seriesguide.widgets.SgFastScroller
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -27,13 +31,20 @@ class MoviesWatchedFragment : Fragment() {
 
     private var binding: FragmentMoviesWatchedBinding? = null
 
-    private lateinit var viewModel: MoviesWatchedViewModel
+    private val model by viewModels<MoviesWatchedViewModel>()
     private lateinit var adapter: MoviesWatchedAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // note: fragment is in static view pager tab so will never be destroyed if swiped away
+        EventBus.getDefault().register(this)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentMoviesWatchedBinding.inflate(inflater, container, false)
         this.binding = binding
         return binding.root
@@ -57,7 +68,7 @@ class MoviesWatchedFragment : Fragment() {
             .scrollTabToTopLiveData
             .observe(
                 viewLifecycleOwner,
-                Observer {
+                {
                     if (it != null) {
                         val positionOfThisTab = if (it.isShowingNowTab) {
                             MoviesActivity.TAB_POSITION_WATCHED_WITH_NOW
@@ -70,24 +81,18 @@ class MoviesWatchedFragment : Fragment() {
                     }
                 }
             )
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // note: fragment is in static view pager tab so will never be destroyed if swiped away
-        EventBus.getDefault().register(this)
-    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.onPagesUpdatedFlow.conflate().collectLatest {
+                binding?.textViewEmptyMoviesWatched?.isGone = adapter.itemCount > 0
+            }
+        }
 
-    // note: can not use onCreate, causes issues with ViewPager this tab is in
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MoviesWatchedViewModel::class.java)
-        viewModel.movieList.observe(viewLifecycleOwner, Observer {
-            binding?.textViewEmptyMoviesWatched?.isGone = it.size > 0
-            adapter.submitList(it)
-        })
-
-        setHasOptionsMenu(true)
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.items.collectLatest {
+                adapter.submitData(it)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -115,7 +120,7 @@ class MoviesWatchedFragment : Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: MoviesDistillationSettings.MoviesSortOrderChangedEvent) {
-        viewModel.updateQueryString()
+        model.updateQueryString()
     }
 
 }

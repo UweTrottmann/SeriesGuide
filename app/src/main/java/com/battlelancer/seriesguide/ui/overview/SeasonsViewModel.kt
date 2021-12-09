@@ -41,7 +41,7 @@ class SeasonsViewModelFactory(
     private val application: Application,
     private val showId: Long
 ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         return SeasonsViewModel(application, showId) as T
     }

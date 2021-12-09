@@ -38,6 +38,7 @@
     <string name="action_stream">ストリーミング・購入</string>
     <string name="action_stream_info">ストリーミング・購入</string>
     <string name="action_select_region">エリアの選択</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
     <string name="search_hint">エピソードを検索</string>
@@ -54,7 +55,7 @@
     <string name="api_error_generic">%s と通信出来ませんでした。後でもう一度やり直してください。</string>
     <string name="api_failed">失敗しました： %s</string>
     <string name="copy_to_clipboard">クリップボードにコピーしました</string>
-    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">共有</string>
     <string name="share_show">番組を共有</string>
@@ -241,11 +242,9 @@
     <string name="action_movies_sort">映画の並べ替え</string>
     <string name="action_movies_sort_title">タイトル</string>
     <string name="action_movies_sort_release">発売日</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">統計情報を計算できませんでした。</string>
-    <string name="statistics_shows">番組</string>
-    <string name="statistics_episodes">エピソード</string>
-    <string name="statistics_movies">映画</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">次のエピソードがある番組 %s</string>
     <string name="shows_continuing">継続中 %s</string>
@@ -457,6 +456,7 @@
     <string name="pref_widget_opacity">ウィジェットの背景</string>
     <string name="pref_widget_type">ウィジェットのタイプ</string>
     <string name="pref_large_font">大きいフォントを使用する</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">透明</string>
     <string name="widget_background_25">25%</string>

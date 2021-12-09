@@ -38,6 +38,7 @@
     <string name="action_stream">스트리밍 or 구매</string>
     <string name="action_stream_info">스트리밍 또 구매</string>
     <string name="action_select_region">Select region</string>
+    <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
@@ -54,7 +55,7 @@
     <string name="api_error_generic">%s와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="api_failed">%s 실패</string>
     <string name="copy_to_clipboard">클립보드에 복사됨</string>
-    <string name="not_migrated">Not yet found on TMDb. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">공유</string>
     <string name="share_show">프로그램 공유</string>
@@ -194,7 +195,7 @@
     <string name="no_results">결과가 없습니다. 완전한 단어를 입력하세요.</string>
     <string name="empty_show_search">프로그램 목록에서 찾을 수 없습니다</string>
     <string name="action_try_again">재시도</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDb. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
     <string name="add_all">모두 추가</string>
     <string name="add_multiple">모든 프로그램이 곧 목록에 표시됩니다.</string>
     <string name="add_started">%s이(가) 프로그램 리스트에 곧 나타납니다.</string>
@@ -241,11 +242,9 @@
     <string name="action_movies_sort">영화 정렬</string>
     <string name="action_movies_sort_title">제목</string>
     <string name="action_movies_sort_release">개봉일</string>
+    <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">통계를 계산할 수 없습니다.</string>
-    <string name="statistics_shows">tV 프로그램</string>
-    <string name="statistics_episodes">에피소드</string>
-    <string name="statistics_movies">영화</string>
     <string name="shows_finished">%s finished watching</string>
     <string name="shows_with_next">다음 에피소드 %s편</string>
     <string name="shows_continuing">%s 방영 중</string>
@@ -362,7 +361,7 @@
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="licence_themoviedb">이 프로그램은 TMDb API 를 사용하지만 TMDb에서 승인하거나 인증한 공식 앱이 아닙니다.</string>
+    <string name="licence_themoviedb">이 프로그램은 TMDB API 를 사용하지만 TMDB에서 승인하거나 인증한 공식 앱이 아닙니다.</string>
     <string name="licence_trakt">This app uses data and images by Trakt.</string>
     <string name="about_open_source">SeriesGuide는 오픈소스 소프트웨어를 활용합니다.</string>
     <string name="licences_and_credits">라이센스 및 크레딧</string>
@@ -457,6 +456,7 @@
     <string name="pref_widget_opacity">위젯 배경</string>
     <string name="pref_widget_type">위젯 형태</string>
     <string name="pref_large_font">Use large font</string>
+    <string name="pref_hide_watch_button">Hide watch button</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">투명</string>
     <string name="widget_background_25">25%</string>
