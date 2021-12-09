@@ -63,3 +63,7 @@ SONATYPE_NEXUS_PASSWORD=<your sonatype password>
 
 To use [Crashlytics](https://firebase.google.com/docs/crashlytics) download and
 add your `app/google-services.json`.
+
+#### Amazon Appstore public key
+
+For in-app purchases need to add `AppstoreAuthenticationKey.pem` into `app/src/amazon/assets`.
