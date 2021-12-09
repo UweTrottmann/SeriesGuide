@@ -74,7 +74,8 @@ public class AmazonIapManager {
         AmazonIapManager iapManager = new AmazonIapManager(context);
         PurchasingService.registerListener(context.getApplicationContext(),
                 new AmazonPurchasingListener(iapManager));
-        Timber.i("IAP sandbox mode is: %s", PurchasingService.IS_SANDBOX_MODE);
+        // Note: Documented getAppstoreSDKMode() API is not available.
+        // Timber.i("IAP sandbox mode is: %s", PurchasingService.IS_SANDBOX_MODE);
         amazonIapManager = iapManager;
     }
 
