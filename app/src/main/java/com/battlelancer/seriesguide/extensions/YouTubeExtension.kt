@@ -1,44 +1,41 @@
-package com.battlelancer.seriesguide.extensions;
+package com.battlelancer.seriesguide.extensions
 
-import android.text.TextUtils;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.api.Action;
-import com.battlelancer.seriesguide.api.Episode;
-import com.battlelancer.seriesguide.api.Movie;
-import com.battlelancer.seriesguide.api.SeriesGuideExtension;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.api.Action
+import com.battlelancer.seriesguide.api.Episode
+import com.battlelancer.seriesguide.api.Movie
+import com.battlelancer.seriesguide.api.SeriesGuideExtension
+import com.battlelancer.seriesguide.util.ServiceUtils
 
 /**
  * Searches YouTube for an episode or movie title. Useful for web shows and trailers!
  */
-public class YouTubeExtension extends SeriesGuideExtension {
+class YouTubeExtension : SeriesGuideExtension("YouTubeExtension") {
 
-    public YouTubeExtension() {
-        super("YouTubeExtension");
-    }
-
-    @Override
-    protected void onRequest(int episodeIdentifier, Episode episode) {
+    override fun onRequest(episodeIdentifier: Int, episode: Episode) {
         // we need at least a show or an episode title
-        if (TextUtils.isEmpty(episode.getShowTitle()) || TextUtils.isEmpty(episode.getTitle())) {
-            return;
+        if (episode.showTitle.isNullOrEmpty() || episode.title.isNullOrEmpty()) {
+            return
         }
-        publishYoutubeAction(episodeIdentifier,
-                String.format("%s %s", episode.getShowTitle(), episode.getTitle()));
+        publishYoutubeAction(
+            episodeIdentifier,
+            String.format("%s %s", episode.showTitle, episode.title)
+        )
     }
 
-    @Override
-    protected void onRequest(int movieIdentifier, Movie movie) {
+    override fun onRequest(movieIdentifier: Int, movie: Movie) {
         // we need a title to search for
-        if (TextUtils.isEmpty(movie.getTitle())) {
-            return;
+        if (movie.title.isNullOrEmpty()) {
+            return
         }
-        publishYoutubeAction(movieIdentifier, movie.getTitle());
+        publishYoutubeAction(movieIdentifier, movie.title)
     }
 
-    private void publishYoutubeAction(int identifier, String searchTerm) {
-        publishAction(new Action.Builder(getString(R.string.extension_youtube), identifier)
-                .viewIntent(ServiceUtils.buildYouTubeIntent(getApplicationContext(), searchTerm))
-                .build());
+    private fun publishYoutubeAction(identifier: Int, searchTerm: String) {
+        publishAction(
+            Action.Builder(getString(R.string.extension_youtube), identifier)
+                .viewIntent(ServiceUtils.buildYouTubeIntent(applicationContext, searchTerm))
+                .build()
+        )
     }
 }

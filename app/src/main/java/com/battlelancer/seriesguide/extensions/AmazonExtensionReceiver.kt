@@ -1,17 +1,12 @@
-package com.battlelancer.seriesguide.extensions;
+package com.battlelancer.seriesguide.extensions
 
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.api.SeriesGuideExtension;
-import com.battlelancer.seriesguide.api.SeriesGuideExtensionReceiver;
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.api.SeriesGuideExtension
+import com.battlelancer.seriesguide.api.SeriesGuideExtensionReceiver
 
-public class AmazonExtensionReceiver extends SeriesGuideExtensionReceiver {
-    @Override
-    protected int getJobId() {
-        return SgApp.JOB_ID_EXTENSION_AMAZON;
-    }
+class AmazonExtensionReceiver : SeriesGuideExtensionReceiver() {
+    override fun getJobId(): Int = SgApp.JOB_ID_EXTENSION_AMAZON
 
-    @Override
-    protected Class<? extends SeriesGuideExtension> getExtensionClass() {
-        return AmazonExtension.class;
-    }
+    override fun getExtensionClass(): Class<out SeriesGuideExtension> =
+        AmazonExtension::class.java
 }
