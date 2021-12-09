@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Menu -->
+    <string name="shows">Sioeau</string>
+    <string name="lists">Rhestrau</string>
+    <string name="movies">Ffilmiau</string>
+    <string name="statistics">Ystadegau</string>
+    <string name="navigation_more">Mwy</string>
+    <string name="search">Chwilio</string>
+    <string name="preferences">Gosodiadau</string>
+    <string name="help">Help</string>
+    <string name="no_more_updates">Ni fydd SeriesGuide yn derbyn mwy o ddiweddariadau ar gyfer y fersiwn hon o Android.</string>
+    <!-- Media items -->
+    <string name="show_details">Manylion</string>
+    <string name="episode">Pennod</string>
+    <string name="episode_number">Pennod %d</string>
+    <string name="episodes">Episodau</string>
+    <string name="season">Tymor</string>
+    <string name="season_number">Tymor %d</string>
+    <string name="specialseason">Episodau Arbennig</string>
+    <string name="ratings">Sgoriau</string>
+    <!-- Descriptions -->
+    <string name="description_overview">Trosolwg</string>
+    <string name="description_poster">Dangos poster</string>
+    <string name="description_image">Delwedd y bennod</string>
+    <string name="description_menu_overflow">Mwy o opsiynau</string>
+    <!-- Actions -->
+    <string name="clear">Clir</string>
+    <string name="discard">Gwared</string>
+    <string name="save_selection">Cadw dewis</string>
+    <string name="action_display_all">Dangos y cyfan</string>
+    <string name="web_search">Chwilio\'r We</string>
+    <string name="add_to_homescreen">Ychwanegu i\'r sgrin gartref</string>
+    <string name="action_open">Agor</string>
+    <string name="sync_manually">Sync â llaw</string>
+    <string name="sync_and_update">Sync &amp; Diweddariad</string>
+    <string name="sync_and_download_all">Sync &amp; Dadlwythwch y cyfan</string>
+    <string name="action_stream">Ffrwd neu brynu</string>
+    <string name="action_stream_info">Ffrydio neu brynu gwybodaeth</string>
+    <string name="action_select_region">Dewis rhanbarth</string>
+    <string name="action_include_any_watch_provider">cynhwyswch unrhyw</string>
+    <!-- Search -->
+    <string name="clear_search_history">Hanes chwilio clir</string>
+    <string name="search_hint">Chwilio penodau</string>
+    <!-- Status messages -->
+    <string name="updated">Wedi\'i ddiweddaru i\'r fersiwn ddiweddaraf</string>
+    <string name="updated_details">Manylion</string>
+    <string name="norating">Ddim yn berthnasol</string>
+    <string name="unknown">anhysbys</string>
+    <string name="offline">Cysylltu â rhwydwaith, yna ceisiwch eto</string>
+    <string name="app_not_available">Nid oes ap ar gael i drin hyn</string>
+    <string name="people_empty">Neb yma?! Cyffyrddwch i roi cynnig arall arni.</string>
+    <string name="database_error">Methu addasu data</string>
+    <string name="reinstall_info">Ceisiwch wneud copi wrth gefn yn Gosodiadau, ail-osod ac adfer</string>
+    <string name="api_error_generic">Methu siarad â %s Rhowch gynnig arall arni yn nes ymlaen.</string>
+    <string name="api_failed">Wedi methu: %s</string>
+    <string name="copy_to_clipboard">Copi i\'r clipfwrdd</string>
+    <string name="not_migrated">Heb ei ddarganfod eto ar TMDB. Oni allai dderbyn diweddariadau na gweithio gyda Trakt a Cloud. Cliciwch i weld y manylion.</string>
+    <!-- Sharing -->
+    <string name="share">Rhannu</string>
+    <string name="share_show">Sioe rhannu</string>
+    <string name="share_episode">Rhannu pennod</string>
+    <string name="share_movie">Rhannu ffilm</string>
+    <string name="addtocalendar">Ychwanegu at y calendr</string>
+    <string name="addtocalendar_failed">Methu creu digwyddiad calendr</string>
+    <string name="links">Dolenni</string>
+    <!-- Comments -->
+    <string name="comments">Sylwadau</string>
+    <string name="shout_hint">Teipiwch sylw (Saesneg, 5+ gair)</string>
+    <string name="shout_invalid">Nid yw eich sylw yn dilyn y rheolau!</string>
+    <string name="action_post">Post</string>
+    <string name="isspoiler">Rhybuddiwr difetha!</string>
+    <string name="no_shouts">Byddwch y cyntaf i wneud sylw!</string>
+    <string name="refresh">Adnewyddu</string>
+    <plurals name="replies_plural">
+        <item quantity="one">%d ateb</item>
+        <item quantity="zero">%d ateb</item>
+        <item quantity="two">%d atebion</item>
+        <item quantity="few">%d atebion</item>
+        <item quantity="many">%d atebion</item>
+        <item quantity="other">%d atebion</item>
+    </plurals>
+    <!-- Metadata -->
+    <string name="episode_number_disk">DVD</string>
+    <string name="episode_firstaired">Dyddiad rhyddhau</string>
+    <string name="episode_firstaired_unknown">Dyddiad rhyddhau anhysbys</string>
+    <string name="episode_dvdnumber">Pennod DVD</string>
+    <string name="original_release">Rhyddhad gwreiddiol</string>
+    <string name="show_genres">Genres</string>
+    <string name="show_contentrating">Sgorio Cynnwys</string>
+    <string name="show_release_times">Amserau rhyddhau</string>
+    <string name="episode_directors">Cyfarwyddwyr</string>
+    <string name="episode_gueststars">Sêr Gwadd</string>
+    <string name="episode_writers">Awduron</string>
+    <string name="show_isalive">Parhau</string>
+    <string name="show_isnotalive">Wedi dod i ben</string>
+    <string name="show_isUpcoming">Ar ddod</string>
+    <string name="show_status_in_production">Mewn Cynhyrchu</string>
+    <string name="show_status_pilot">Peilot Teledu</string>
+    <string name="show_status_canceled">Wedi\'i ganslo</string>
+    <string name="no_translation">Nid oes disgrifiad wedi\'i gyfieithu i%1$s ar gael ar %2$s.</string>
+    <string name="no_translation_title">Heb ei gyfieithu</string>
+    <string name="no_spoilers">Mae rhai manylion wedi\'u cuddio i atal anrheithwyr. I ddiffodd hyn ewch i Gosodiadau.</string>
+    <string name="format_source">Ffynhonnell: %s</string>
+    <string name="format_last_edited">Golygwyd ddiwethaf: %s</string>
+    <!-- Date and Time -->
+    <string name="today">heddiw</string>
+    <string name="now">nawr</string>
+    <string name="daily">Yn ddyddiol</string>
+    <string name="runtime_minutes">%s munud</string>
+    <!-- Flagging -->
+    <string name="mark_all">Wedi gwylio popeth</string>
+    <string name="unmark_all">Gwylio dim</string>
+    <string name="action_watched_up_to">Wedi gwylio hyd yma</string>
+    <string name="confirmation_watched_up_to">Gosod pob pennod hyd yma gwylio?</string>
+    <string name="collect_all">Casglwyd y cyfan</string>
+    <string name="uncollect_all">Casglwyd dim</string>
+    <string name="action_skip">Sgip</string>
+    <string name="action_dont_skip">Peidiwch â hepgor</string>
+    <string name="action_collection_add">Ychwanegu at y casgliad</string>
+    <string name="action_collection_remove">Tynnu o\'r casgliad</string>
+    <string name="action_watched">Gosod fel gwylio</string>
+    <string name="action_unwatched">Gosod fel na wyliwyd</string>
+    <string name="state_watched">Gwylio</string>
+    <string name="state_watched_multiple_format">Gwylio (%d)</string>
+    <string name="state_skipped">Wedi sgipio</string>
+    <string name="state_in_collection">Yn y casgliad</string>
+    <string name="state_on_watchlist">Ar y rhestr wylio</string>
+    <string name="state_favorite">Hoff</string>
+    <!-- Shows -->
+    <string name="confirm_delete">Tynnu %s?</string>
+    <string name="delete_error">Methu cael gwared ar sioe. Rhowch gynnig arall arni yn nes ymlaen.</string>
+    <string name="delete_show">Tynnu</string>
+    <string name="no_nextepisode">ni ddarganfuwyd pennod nesaf</string>
+    <string name="context_favorite">Ychwanegwch at ffefrynnau</string>
+    <string name="context_unfavorite">Tynnwch o\'r ffefrynnau</string>
+    <string name="favorited">Ychwanegwyd at ffefrynnau</string>
+    <string name="unfavorited">Wedi\'i dynnu o ffefrynnau</string>
+    <string name="action_episode_notifications_on">Trowch hysbysiadau pennod ymlaen</string>
+    <string name="action_episode_notifications_off">Diffoddwch hysbysiadau pennod</string>
+    <string name="context_hide">Cuddio</string>
+    <string name="context_unhide">Peidiwch â chuddio</string>
+    <string name="hidden">Wedi\'i symud i gudd</string>
+    <string name="unhidden">Sioe i\'w gweld eto</string>
+    <string name="action_shows_add">Ychwanegu sioe</string>
+    <string name="action_shows_filter">Hidlo sioeau</string>
+    <string name="empty_filter">Tynnwch yr holl hidlwyr</string>
+    <string name="action_shows_filter_favorites">Hoff</string>
+    <string name="action_shows_filter_unwatched">Heb ei wylio</string>
+    <string name="action_shows_filter_upcoming">Ar ddod</string>
+    <string name="action_shows_filter_hidden">Cudd</string>
+    <string name="action_shows_make_all_visible">Gwneud pob cudd yn weladwy</string>
+    <string name="description_make_all_visible_format">Gwneud pob sioe gudd (%s) yn weladwy eto?</string>
+    <string name="action_shows_sort">Trefnu sioeau</string>
+    <string name="action_shows_sort_title">Teitl</string>
+    <string name="action_shows_sort_latest_episode">Y bennod ddiweddaraf</string>
+    <string name="action_shows_sort_oldest_episode">Y bennod hynaf</string>
+    <string name="action_shows_sort_last_watched">Gwyliwyd ddiwethaf</string>
+    <string name="action_shows_sort_remaining">Penodau sy\'n weddill</string>
+    <string name="action_shows_sort_status">Statws</string>
+    <string name="action_shows_sort_favorites">Ffefrynnau yn gyntaf</string>
+    <string name="context_updateshow">Diweddariad</string>
+    <string name="context_marknext">Wedi gwylio\'r bennod nesaf</string>
+    <string name="action_episodes_switch_view">Newid golygfa</string>
+    <!-- History -->
+    <string name="user_stream">Hanes</string>
+    <string name="recently_watched">Gwyliwyd yn ddiweddar</string>
+    <string name="friends_recently">Eich ffrindiau Trakt</string>
+    <string name="now_empty">Dim byd yn digwydd. Gwyliwch rai sioeau!</string>
+    <string name="now_movies_empty">Dim byd yn digwydd. Gwyliwch rai ffilmiau!</string>
+    <!-- Calendar -->
+    <string name="upcoming">Ar ddod</string>
+    <string name="recent">Yn ddiweddar</string>
+    <string name="released_today">Rhyddhawyd heddiw</string>
+    <string name="noupcoming">Nid oes unrhyw benodau ar ddod</string>
+    <string name="norecent">Nid oes unrhyw benodau diweddar</string>
+    <string name="calendar_settings">Gosodiadau calendr</string>
+    <string name="only_favorites">Dim ond hoff sioeau</string>
+    <string name="calendar_only_collected">Dim ond penodau a gasglwyd</string>
+    <string name="calendar_only_premieres">Dim ond premieres</string>
+    <string name="pref_infinite_scrolling">Calendr anfeidrol</string>
+    <!-- Updating -->
+    <string name="update_scheduled">Diweddaru&#8230;</string>
+    <string name="update_no_connection">I ddiweddaru, cysylltu â\'r rhyngrwyd</string>
+    <string name="update_inprogress">Mae diweddariad ar y gweill, ceisiwch eto yn nes ymlaen</string>
+    <!-- Seasons -->
+    <string name="season_allwatched">Gwyliwyd pob pennod</string>
+    <plurals name="other_episodes_plural">
+        <item quantity="zero">%d penodau eraill</item>
+        <item quantity="one">%d bennod arall</item>
+        <item quantity="two">%d bennod arall</item>
+        <item quantity="few">%d bennod arall</item>
+        <item quantity="many">%d bennod arall</item>
+        <item quantity="other">%d bennod arall</item>
+    </plurals>
+    <plurals name="not_released_episodes_plural">
+        <item quantity="zero">%d i\'w ryddhau</item>
+        <item quantity="one">%d i\'w ryddhau</item>
+        <item quantity="two">%d i\'w rhyddhau</item>
+        <item quantity="few">%d i\'w rhyddhau</item>
+        <item quantity="many">%d i\'w rhyddhau</item>
+        <item quantity="other">%d i\'w rhyddhau</item>
+    </plurals>
+    <plurals name="remaining_episodes_plural">
+        <item quantity="zero">%d ar ôl</item>
+        <item quantity="one">%d ar ôl</item>
+        <item quantity="two">%d ar ôl</item>
+        <item quantity="few">%d ar ôl</item>
+        <item quantity="many">%d ar ôl</item>
+        <item quantity="other">%d ar ôl</item>
+    </plurals>
+    <!-- Add show -->
+    <string name="checkin_searchhint">Teipiwch enw sioe</string>
+    <string name="add_empty">Nid oes unrhyw sioeau yma</string>
+    <string name="no_results">Dim canlyniadau, rhowch gynnig ar eiriau cyflawn</string>
+    <string name="empty_show_search">Heb ei ddarganfod yn eich rhestr sioeau</string>
+    <string name="action_try_again">Ceisio eto</string>
+    <string name="tvdb_error_does_not_exist">Nid yw\'r sioe yn bodoli (eto) ar TMDB. Rhowch gynnig arall arni yn nes ymlaen.</string>
+    <string name="add_all">Ychwanegwch y cyfan</string>
+    <string name="add_multiple">Bydd pob sioe yn ymddangos yn eich rhestr sioeau cyn bo hir</string>
+    <string name="add_started">Bydd %s yn ymddangos yn eich rhestr sioeau cyn bo hir</string>
+    <string name="add_error">Methu ychwanegu %s</string>
+    <string name="add_already_exists">Mae %s eisoes yn eich rhestr sioeau</string>
+    <string name="title_new_episodes">Penodau newydd</string>
+    <string name="watched_shows">Gwylio</string>
+    <string name="shows_collection">Casgliad</string>
+    <string name="watchlist">Rhestr wylio</string>
+    <!-- Similar shows -->
+    <string name="empty_no_results">Dim canlyniadau</string>
+    <string name="title_similar_shows">Sioeau tebyg</string>
+    <!-- Lists -->
+    <string name="first_list">Rhestr gyntaf</string>
+    <string name="list_add">Ychwanegu rhestr</string>
+    <string name="list_title_hint">Enwch eich rhestr</string>
+    <string name="list_remove">Dileu\'r rhestr</string>
+    <string name="list_manage">Rheoli rhestr</string>
+    <string name="list_item_manage">Rheoli rhestrau</string>
+    <string name="list_item_remove">Tynnu o\'r rhestr</string>
+    <string name="list_empty">Gallwch ychwanegu sioeau at y rhestr hon</string>
+    <string name="action_lists_sort">Trefnu rhestrau</string>
+    <string name="action_lists_reorder">Rhestrau ail-archebu</string>
+    <string name="error_name_already_exists">Mae rhestr gyda\'r enw hwn eisoes yn bodoli</string>
+    <!-- Movies -->
+    <string name="title_discover">Darganfod</string>
+    <string name="title_popular">Poblogaidd</string>
+    <string name="title_digital_releases">Datganiadau digidol</string>
+    <string name="title_disc_releases">Datganiadau disg</string>
+    <string name="movies_in_theatres">Mewn sinemâu</string>
+    <string name="movies_collection">Casgliad</string>
+    <string name="movies_watchlist">Rhestr wylio</string>
+    <string name="movies_watched">Gwylio</string>
+    <string name="watchlist_add">Ychwanegu at y rhestr wylio</string>
+    <string name="watchlist_remove">Tynnwch o\'r rhestr wylio</string>
+    <string name="watchlist_added">Ychwanegwyd at y rhestr wylio</string>
+    <string name="watchlist_removed">Wedi\'i dynnu o\'r rhestr wylio</string>
+    <string name="movies_search_hint">Teipiwch deitl ffilm</string>
+    <string name="movies_collection_empty">Nid ydych wedi ychwanegu ffilmiau at eich casgliad</string>
+    <string name="movies_watchlist_empty">Nid ydych wedi ychwanegu ffilmiau at eich rhestr wylio</string>
+    <string name="trailer">Trelar Ffilm</string>
+    <string name="movie_cast">Cast Ffilm</string>
+    <string name="movie_crew">Criw Ffilm</string>
+    <string name="action_movies_sort">Trefnu ffilmiau</string>
+    <string name="action_movies_sort_title">Teitl</string>
+    <string name="action_movies_sort_release">Dyddiad rhyddhau</string>
+    <string name="action_movies_filter">hidlo ffilmiau</string>
+    <!-- Statistics -->
+    <string name="statistics_failed">Methu cyfrifo ystadegau</string>
+    <string name="shows_finished">%s gorffen gwylio</string>
+    <string name="shows_with_next">%s gyda\'r penodau nesaf</string>
+    <string name="shows_continuing">%s yn parhau</string>
+    <string name="episodes_watched">%s gwylio</string>
+    <string name="movies_on_watchlist">%s ar y rhestr wylio</string>
+    <string name="stats_in_collection_format">%d mewn casgliad</string>
+    <string name="movies_watched_format">%s gwylio</string>
+    <plurals name="days_plural">
+        <item quantity="one">%d diwrnod</item>
+        <item quantity="zero">%d diwrnod</item>
+        <item quantity="two">%d diwrnod</item>
+        <item quantity="few">%d diwrnod</item>
+        <item quantity="many">%d diwrnod</item>
+        <item quantity="other">%d diwrnod</item>
+    </plurals>
+    <plurals name="hours_plural">
+        <item quantity="zero">%d awr</item>
+        <item quantity="one">%d awr</item>
+        <item quantity="two">%d awr</item>
+        <item quantity="few">%d awr</item>
+        <item quantity="many">%d awr</item>
+        <item quantity="other">%d awr</item>
+    </plurals>
+    <plurals name="minutes_plural">
+        <item quantity="zero">%d munud</item>
+        <item quantity="one">%d munud</item>
+        <item quantity="two">%d munud</item>
+        <item quantity="few">%d munud</item>
+        <item quantity="many">%d munud</item>
+        <item quantity="other">%d munud</item>
+    </plurals>
+    <!-- Features -->
+    <string name="feature_supported">Cefnogwyd</string>
+    <string name="feature_not_supported">Heb gefnogaeth</string>
+    <string name="feature_history">Hanes personol a ffrind</string>
+    <string name="feature_comments">Postiwch sylwadau</string>
+    <string name="feature_sync">Cydamseru</string>
+    <!-- Hexagon -->
+    <string name="hexagon_warning">Arbrofol</string>
+    <string name="hexagon_description">Mae SeriesGuide Cloud yn helpu i wneud copi wrth gefn a sync eich sioeau, rhestrau a ffilmiau</string>
+    <string name="hexagon_warning_trakt">Er eu bod wedi mewngofnodi gyda SeriesGuide Cloud nid yw rhai o nodweddion Trakt ar gael</string>
+    <string name="hexagon_signin">Mewngofnodi</string>
+    <string name="hexagon_signout">Llofnodi</string>
+    <string name="hexagon_setup_incomplete">Ni chwblhawyd sefydlu SeriesGuide Cloud</string>
+    <string name="hexagon_setup_fail_auth">Nid oes gan eich cyfrif gyfeiriad e-bost</string>
+    <string name="hexagon_remove_account">Dileu cyfrif</string>
+    <string name="hexagon_remove_account_success">Dileu\'r cyfrif</string>
+    <string name="hexagon_remove_account_failure">Methu dileu cyfrif</string>
+    <string name="hexagon_remove_account_confirmation">Bydd hyn yn dileu eich sioeau, rhestrau a ffilmiau o SeriesGuide Cloud</string>
+    <string name="hexagon_api_queued">Anfon i SeriesGuide Cloud.</string>
+    <string name="hexagon_signed_out">Llofnodwyd allan o SeriesGuide Cloud</string>
+    <string name="hexagon_signin_fail_format">Gwall wrth fewngofnodi (%s)</string>
+    <string name="hexagon_signin_google_only">Mae cyfeiriad Google yn gofyn am Google Sign-In</string>
+    <!-- trakt -->
+    <string name="trakt_submitqueued">Anfon at Trakt.</string>
+    <string name="checkin_success_trakt">Wedi\'i wirio i mewn i %s ar Trakt</string>
+    <string name="checkin_canceled_success_trakt">Canslo mewngofnodi ar Trakt</string>
+    <string name="traktcheckin_cancel">Diystyru</string>
+    <string name="traktcheckin_inprogress">Rydych chi eisoes wedi gwirio i mewn. Diystyru\'r mewngofnodi neu aros %s a rhoi cynnig arall arni.</string>
+    <string name="traktcheckin_wait">Arhosaf</string>
+    <string name="trakt_success">Anfonwyd at Trakt</string>
+    <string name="trakt_error_account_locked">Mae eich cyfrif Trakt wedi\'i gloi. Cysylltwch â chefnogaeth Trakt.</string>
+    <string name="trakt_error_credentials">Aeth rhywbeth o\'i le. Gwiriwch eich cymwysterau Trakt a rhoi cynnig arall arni.</string>
+    <string name="trakt_error_not_exists">Ddim (eto) ar gael ar Trakt. Rhowch gynnig arall arni yn nes ymlaen.</string>
+    <string name="trakt_notice_not_exists">Ni ellir (eto) olrhain gyda Trakt</string>
+    <!-- Connect trakt -->
+    <string name="connect_trakt">Cysylltu Trakt</string>
+    <string name="trakt_reconnect">Cysylltu SeriesGuide â Trakt</string>
+    <string name="trakt_reconnect_details">Gwiriwch eich cymwysterau Trakt</string>
+    <string name="waitplease">Munud, os gwelwch yn dda…</string>
+    <string name="connect">Cysylltu</string>
+    <string name="disconnect">Datgysylltwch</string>
+    <string name="use_integrated_browser">Defnyddiwch borwr integredig</string>
+    <string name="show_library">Dangoswch eich llyfrgell Trakt</string>
+    <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio. <a href="https://trakt.tv"> Dysgu mwy</a></string>
+    <!-- trakt ratings -->
+    <string name="action_rate">Cyfradd</string>
+    <string name="your_rating">Eich sgôr</string>
+    <string name="love">Hollol ninja!</string>
+    <string name="hate">Saws Gwan :(</string>
+    <string name="rating2">Ofnadwy</string>
+    <string name="rating3">Drwg</string>
+    <string name="rating4">Gwael</string>
+    <string name="rating5">Meh</string>
+    <string name="rating6">Teg</string>
+    <string name="rating7">Da</string>
+    <string name="rating8">Gwych</string>
+    <string name="rating9">Gwych Iawn</string>
+    <plurals name="votes">
+        <item quantity="zero">%d pleidleisiau</item>
+        <item quantity="one">%d pleidlais</item>
+        <item quantity="two">%d bleidlais</item>
+        <item quantity="few">%d pleidlais</item>
+        <item quantity="many">%d pleidlais</item>
+        <item quantity="other">%d bleidlais</item>
+    </plurals>
+    <!-- Check Ins -->
+    <string name="checkin">Gwiriwch i mewn</string>
+    <string name="checkin_hint">Teipiwch neges (dewisol)</string>
+    <string name="paste_title">Gludo teitl</string>
+    <string name="pref_quick_checkin">Gwiriwch yn gyflym</string>
+    <string name="pref_quick_checkin_summary">Peidiwch â gofyn am wiriad mewn neges</string>
+    <!-- Help -->
+    <string name="feedback">Anfon adborth</string>
+    <string name="action_open_in_browser">Ar agor yn y porwr</string>
+    <!-- Settings -->
+    <string name="action_translate">Cyfieithwch yr app hon</string>
+    <string name="action_contribute_content">Cyfieithu neu wella cynnwys</string>
+    <string name="prefs_category_advanced">Uwch</string>
+    <string name="prefs_category_about">Am</string>
+    <string name="pref_onlyfuture">Dim penodau wedi\'u darlledu</string>
+    <string name="pref_onlyfuturesummary">Peidiwch byth ag arddangos penodau a ddarlledwyd eisoes</string>
+    <string name="pref_onlyseasoneps">Cuddio penodau arbennig</string>
+    <string name="pref_onlyseasonepssummary">Mae penodau arbennig yn diflannu o bobman ac eithrio\'r rhestr tymor</string>
+    <string name="pref_exactdates">Arddangos union ddyddiadau</string>
+    <string name="pref_exactdates_summary">\"Hydref 31\" yn lle \"mewn 3 diwrnod\"</string>
+    <string name="pref_nospoilers">Atal anrheithwyr</string>
+    <string name="pref_nospoilers_summary">Cuddiwch fanylion nes bod pennod yn cael ei gwylio</string>
+    <string name="pref_seasonsorting">Trefnu tymhorau yn ôl…</string>
+    <string name="pref_episodesorting">Trefnu penodau yn ôl…</string>
+    <string name="pref_language">Yr iaith cynnwys a ffefrir</string>
+    <string name="pref_language_fallback">Iaith amgen</string>
+    <string name="pref_updatewifionly">Delweddau trwy Wi-Fi yn unig</string>
+    <string name="pref_updatewifionlysummary">Er mwyn lleihau taliadau data, peidiwch â lawrlwytho dros rwydweithiau symudol neu fesuryddion</string>
+    <string name="pref_error_reports">Riportiwch wallau i ddatblygwr y cais</string>
+    <plurals name="days_before_plural">
+        <item quantity="zero">%d awr o\'r blaen</item>
+        <item quantity="one">% diwrnod o\'r blaen</item>
+        <item quantity="two">%d ddiwrnod o\'r blaen</item>
+        <item quantity="few">%d diwrnod o\'r blaen</item>
+        <item quantity="many">%d diwrnod o\'r blaen</item>
+        <item quantity="other">%d diwrnod o\'r blaen</item>
+    </plurals>
+    <plurals name="hours_before_plural">
+        <item quantity="zero">%d awr o\'r blaen</item>
+        <item quantity="one">%d awr o\'r blaen</item>
+        <item quantity="two">%d awr o\'r blaen</item>
+        <item quantity="few">%d awr o\'r blaen</item>
+        <item quantity="many">%d awr o\'r blaen</item>
+        <item quantity="other">%d awr o\'r blaen</item>
+    </plurals>
+    <plurals name="minutes_before_plural">
+        <item quantity="zero">%d muned o\'r blaen</item>
+        <item quantity="one">%d muned o\'r blaen</item>
+        <item quantity="two">%d muned o\'r blaen</item>
+        <item quantity="few">%d muned o\'r blaen</item>
+        <item quantity="many">%d muned o\'r blaen</item>
+        <item quantity="other">%d muned o\'r blaen</item>
+    </plurals>
+    <!-- About screen -->
+    <string name="privacy_policy">Polisi Preifatrwydd</string>
+    <string name="licence_themoviedb">Mae\'r cynnyrch hwn yn defnyddio\'r API TMDB ond nid yw\'n cael ei ardystio na\'i ardystio gan TMDB.</string>
+    <string name="licence_trakt">Mae\'r cymhwysiad hwn yn defnyddio data a delweddau gan Trakt.</string>
+    <string name="about_open_source">Mae SeriesGuide wedi\'i adeiladu gan ddefnyddio meddalwedd ffynhonnell agored.</string>
+    <string name="licences_and_credits">Trwyddedau a chredydau</string>
+    <!-- Sort -->
+    <string name="sort">Trefnu yn ôl</string>
+    <string name="action_sort_ignore_articles">Anwybyddu erthyglau</string>
+    <!-- Sort orders -->
+    <string name="sort_order_latest_first">Diweddaraf yn gyntaf</string>
+    <string name="sort_order_oldest_first">Yr hynaf yn gyntaf</string>
+    <string name="sort_order_unwatched_first">Heb ei wylio gyntaf</string>
+    <string name="sort_order_alphabetical">A - Z</string>
+    <string name="sort_order_top_rated_first">Gradd uchaf</string>
+    <string name="sort_order_latest_first_dvd">Diweddaraf yn gyntaf (DVD)</string>
+    <string name="sort_order_oldest_first_dvd">Yr hynaf yn gyntaf (DVD)</string>
+    <!-- Upcoming thresholds -->
+    <string name="pref_upcominglimit">Amrediad i ddod</string>
+    <string name="upcoming_upto_now">nawr</string>
+    <string name="upcoming_upto_one_day">1 diwrnod</string>
+    <string name="upcoming_upto_three_days">3 diwrnod</string>
+    <string name="upcoming_upto_one_week">1 wythnos</string>
+    <string name="upcoming_upto_two_weeks">2 wythnos</string>
+    <string name="upcoming_upto_one_month">1 mis</string>
+    <string name="upcoming_all">I gyd</string>
+    <!-- Appearance settings -->
+    <string name="pref_appearance">Ymddangosiad</string>
+    <string name="pref_theme">Thema</string>
+    <!-- Themes -->
+    <string name="theme_app_follow_system">Defnyddiwch system ddiofyn</string>
+    <string name="theme_app_auto_battery">Wedi\'i osod gan Batri Saver</string>
+    <string name="theme_app_dark">Tywyll</string>
+    <string name="theme_app_light">Golau</string>
+    <!-- Other advanced settings -->
+    <string name="pref_other">Arall</string>
+    <string name="pref_autoupdatesummary">Cysoni a diweddaru cynnwys yn awtomatig</string>
+    <string name="backup">Gwneud copi wrth gefn / Adfer</string>
+    <string name="backup_summary">Gwneud copi wrth gefn neu adfer eich sioeau, rhestrau a ffilmiau</string>
+    <string name="pref_number">Fformat rhif</string>
+    <string name="pref_offset">Gwrthbwyso amser â llaw</string>
+    <string name="pref_offsetsummary">Gwrthbwyso amseroedd aer %d awr</string>
+    <string name="clear_cache">Cache clir</string>
+    <string name="clear_cache_summary">Ewch i leoliadau storio i gael gwared ar ddelweddau wedi\'u storio ac ymatebion rhwydwaith</string>
+    <!-- Backup and Restore -->
+    <string name="backup_full_dump">Cynhwyswch ddisgrifiadau, manylion, graddfeydd</string>
+    <string name="backup_failed_file_access">Methu gwneud copi wrth gefn. Ni ellir dod o hyd i ffeil wrth gefn na\'i chyrchu.</string>
+    <string name="backup_success">Gwneud copi wrth gefn yn llwyddiannus</string>
+    <string name="backup_failed">Methodd y copi wrth gefn</string>
+    <string name="import_failed_nosd">Methu adfer copi wrth gefn. Nid yw\'r ffolder wrth gefn ar gael.</string>
+    <string name="import_failed_nofile">Nid oes ffeil wrth gefn ddarllenadwy</string>
+    <string name="import_success">Adfer y copi wrth gefn yn llwyddiannus</string>
+    <string name="import_failed">Methodd adfer y copi wrth gefn</string>
+    <string name="backup_button">Creu copi wrth gefn</string>
+    <string name="import_button">Adfer copi wrth gefn</string>
+    <string name="import_warning">Bydd y copi wrth gefn yn disodli\'ch sioeau, rhestrau neu ffilmiau cyfredol</string>
+    <string name="no_file_selected">Dim ffeil wedi\'i dewis</string>
+    <string name="action_select_file">Dewiswch ffeil</string>
+    <!-- Auto backup -->
+    <string name="pref_autobackup">Gwneud copi wrth gefn awtomatig</string>
+    <string name="pref_autobackupsummary">Gwneud copi wrth gefn wythnosol o\'ch sioeau, rhestrau a ffilmiau i storio dyfeisiau.</string>
+    <string name="autobackup_details">Nid yw\'r copïau wrth gefn hyn ar gael os yw\'r app wedi\'i osod eto. Creu copïau i\'w cadw fel arall.</string>
+    <string name="last_auto_backup">Gwneud copi wrth gefn awtomatig diwethaf:%s</string>
+    <string name="restore_auto_backup">Adfer copi wrth gefn awtomatig</string>
+    <string name="autobackup_failed">Mae\'r copi wrth gefn awtomatig olaf wedi methu</string>
+    <string name="autobackup_files_missing">I ddefnyddio copi wrth gefn awtomatig, dewiswch ffeiliau wrth gefn dilys</string>
+    <string name="autobackup_create_user_copy">Creu copi ar ôl pob copi wrth gefn</string>
+    <string name="autobackup_restore_available">Efallai y bydd copi wrth gefn awtomatig ar gael i adfer ohono.</string>
+    <!-- Welcome dialog -->
+    <string name="get_started">Dechrau</string>
+    <string name="dismiss">Diswyddo</string>
+    <!-- Notifications -->
+    <string name="upcoming_show">Mae %s yn dod i fyny</string>
+    <string name="upcoming_episodes">Mae penodau newydd yn dod i fyny</string>
+    <string name="upcoming_episodes_number">%s pennod newydd</string>
+    <string name="more">%d arall</string>
+    <string name="upcoming_display">Dewiswch i arddangos sioeau sydd ar ddod</string>
+    <string name="pref_notifications">Hysbysiadau</string>
+    <string name="pref_notificationssummary">Hysbysu am benodau newydd</string>
+    <string name="pref_ringtone">Sain</string>
+    <string name="pref_vibrate">Dirgrynu</string>
+    <string name="pref_vibratesummary">Dirgrynu hefyd wrth arddangos hysbysiad</string>
+    <string name="pref_notifications_treshold">Pryd i hysbysu</string>
+    <string name="pref_notifications_select_shows">Dewiswch sioeau</string>
+    <string name="pref_notifications_select_shows_summary">Sioeau sydd â hysbysiadau wedi\'u galluogi (%d)</string>
+    <string name="pref_notifications_hidden">Anwybyddu sioeau cudd</string>
+    <string name="pref_notifications_hidden_summary">Hyd yn oed os yw hysbysiadau wedi\'u galluogi, peidiwch â hysbysu am sioeau cudd</string>
+    <string name="pref_notification_channel_errors">Gwallau</string>
+    <string name="pref_notifications_next_episodes_only">Dim ond i benodau wylio nesaf</string>
+    <string name="pref_notifications_next_episodes_only_summary">Peidiwch â hysbysu os mai\'r bennod newydd yw\'r un nesaf i\'w gwylio</string>
+    <string name="pref_notifications_battery_settings">Gosodiadau batri</string>
+    <string name="pref_notifications_battery_settings_summary">Ewch i leoliadau Batri i analluogi optimeiddiadau batri ar gyfer hysbysiadau dibynadwy</string>
+    <!-- List Widget -->
+    <string name="hide_watched">Cuddio penodau gwylio</string>
+    <string name="pref_widget_opacity">Cefndir Widget</string>
+    <string name="pref_widget_type">Math o widget</string>
+    <string name="pref_large_font">Defnyddiwch ffont mawr</string>
+    <string name="pref_hide_watch_button">Cuddio botwm gwylio</string>
+    <!-- Widget background options -->
+    <string name="widget_background_transparent">Tryloyw</string>
+    <string name="widget_background_25">25%</string>
+    <string name="widget_background_50">50%</string>
+    <string name="widget_background_75">75%</string>
+    <string name="widget_background_opaque">Afloyw</string>
+    <!-- Google In-App Billing -->
+    <string name="onlyx">Dim ond i gefnogwyr</string>
+    <string name="action_upgrade">Datgloi pob nodwedd</string>
+    <string name="billing_action_subscribe">Tanysgrifiwch</string>
+    <string name="billing_action_manage_subscriptions">Rheoli tanysgrifiadau</string>
+    <string name="billing_action_pass">Cael X Pass App</string>
+    <string name="billing_price_subscribe">%1$s/y flwyddyn, ceisiwch am ddim, canslo unrhyw amser trwy %2$s</string>
+    <string name="billing_duration_format">%1$s/y flwyddyn</string>
+    <string name="billing_sub_description">Rhowch gynnig ar 30 diwrnod am ddim, canslo unrhyw amser.</string>
+    <string name="billing_price_pass">pryniant un-amser</string>
+    <string name="upgrade_description">Mae pob tanysgrifiad yn datgloi pob nodwedd ac yn cefnogi diweddariadau yn y dyfodol. Nid oes angen tanysgrifiad i ddefnyddio\'r app hon.</string>
+    <string name="upgrade_success">Diolch am gefnogi SeriesGuide! Mae gennych fynediad i\'r holl nodweddion.</string>
+    <string name="billing_unlock_detected">Canfod ap X Pass. Efallai y byddwch chi\'n dal i danysgrifio i gefnogi diweddariadau yn y dyfodol.</string>
+    <string name="billing_learn_more">Mwy o wybodaeth a help</string>
+    <string name="subscription_expired">Daeth y tanysgrifiad i ben</string>
+    <string name="subscription_expired_details">Mae eich tanysgrifiad SeriesGuide wedi dod i ben</string>
+    <!-- Amazon In-App Billing -->
+    <string name="subscription_not_signed_in">Mewngofnodi i\'ch cyfrif Amazon</string>
+    <string name="subscription_unavailable">Nid yw\'r tanysgrifiad ar gael ar hyn o bryd</string>
+    <string name="subscription_failed">Prynu heb ei gwblhau</string>
+    <string name="pass_unavailable">Nid yw X Pass ar gael ar hyn o bryd</string>
+    <!-- Extensions -->
+    <string name="action_extensions_configure">Addasu estyniadau</string>
+    <string name="action_extensions_add">Ychwanegu estyniad</string>
+    <string name="action_extensions_search">Cael mwy o estyniadau</string>
+    <string name="action_extension_remove">Tynnu</string>
+    <string name="extension_amazon">Chwiliad Amazon</string>
+    <string name="description_extension_amazon">Chwiliwch eich gwefan Amazon leol</string>
+    <string name="pref_amazon_domain">Gwefan Amazon</string>
+    <string name="extension_google_play">Chwiliad Google Play</string>
+    <string name="description_extension_google_play">Chwiliwch Google Play Store</string>
+    <string name="extension_youtube">Chwiliad YouTube</string>
+    <string name="description_extension_youtube">Chwilio YouTube am fideos</string>
+    <string name="description_extension_web_search">Chwilio am wefannau a delweddau</string>
+    <!-- People -->
+    <string name="person_biography">Bywgraffiad</string>
+    <!-- Feedback -->
+    <string name="feedback_question_enjoy">Ydych chi\'n mwynhau SeriesGuide?</string>
+    <string name="feedback_action_yes">Ie!</string>
+    <string name="feedback_action_notreally">Ddim mewn gwirionedd</string>
+    <string name="feedback_question_rate_google">Ei raddio ar Google Play?</string>
+    <string name="feedback_question_rate_amazon">Ei raddio ar Amazon?</string>
+    <string name="feedback_question_feedback">Dywedwch wrthyf sut i\'w wella?</string>
+    <string name="feedback_action_ok">Iawn, yn sicr</string>
+    <string name="feedback_action_nothanks">Dim diolch</string>
+    <!-- Support -->
+    <string name="support_the_dev">Cefnogi\'r datblygwr?</string>
+</resources>
