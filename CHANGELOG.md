@@ -10,7 +10,16 @@ Release notes
 
 Version 62
 ----------
-*in development*
+*2021-12-09*
+
+* 🌟 Discover: filter popular shows and shows with new episodes by streaming service.
+* 🌟 Discover: filter popular movies and movies with digital release by streaming service.
+* 🔧 App widget: add option to hide watch button.
+
+#### 62
+*2021-12-09*
+
+* 📝 Add Welsh translation, thanks to NMulholland.
 
 #### 62-beta5
 *2021-12-03*
