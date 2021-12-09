@@ -34,6 +34,6 @@ class VodsterExtension : SeriesGuideExtension("VodsterExtension") {
     }
 
     companion object {
-        private const val VODSTER_SEARCH_URL = "http://www.vodster.de?"
+        private const val VODSTER_SEARCH_URL = "https://www.vodster.de?"
     }
 }

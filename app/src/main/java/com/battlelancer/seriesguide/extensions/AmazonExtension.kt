@@ -32,9 +32,7 @@ class AmazonExtension : SeriesGuideExtension("AmazonExtension") {
 
     private fun publishAmazonAction(identifier: Int, searchTerm: String) {
         val domain = AmazonSettings.getAmazonCountryDomain(applicationContext)
-        val uri = String.format(
-            "%s%s%s%s", SEARCH_URI_PROTOCOL, domain, SEARCH_URI_PATH, searchTerm
-        )
+        val uri = "https://$domain/s?k=$searchTerm"
         publishAction(
             Action.Builder(getString(R.string.extension_amazon), identifier)
                 .viewIntent(Intent(Intent.ACTION_VIEW).setData(Uri.parse(uri)))
@@ -42,8 +40,4 @@ class AmazonExtension : SeriesGuideExtension("AmazonExtension") {
         )
     }
 
-    companion object {
-        private const val SEARCH_URI_PROTOCOL = "http://"
-        private const val SEARCH_URI_PATH = "/s/field-keywords="
-    }
 }
