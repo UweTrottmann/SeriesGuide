@@ -1,23 +1,17 @@
-package com.battlelancer.seriesguide.extensions;
+package com.battlelancer.seriesguide.extensions
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import java.util.List;
+import android.content.Context
+import com.uwetrottmann.androidutils.GenericSimpleLoader
 
 /**
- * Queries for any installed {@link com.battlelancer.seriesguide.api.SeriesGuideExtension}
+ * Queries for any installed [com.battlelancer.seriesguide.api.SeriesGuideExtension]
  * extensions.
  */
-class AvailableExtensionsLoader extends GenericSimpleLoader<List<Extension>> {
+class AvailableExtensionsLoader(context: Context) :
+    GenericSimpleLoader<MutableList<Extension>>(context) {
 
-    AvailableExtensionsLoader(Context context) {
-        super(context);
+    override fun loadInBackground(): MutableList<Extension> {
+        return ExtensionManager.get(context).queryAllAvailableExtensions(context)
     }
 
-    @NonNull
-    @Override
-    public List<Extension> loadInBackground() {
-        return ExtensionManager.get(getContext()).queryAllAvailableExtensions(getContext());
-    }
 }
