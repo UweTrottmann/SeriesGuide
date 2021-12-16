@@ -67,20 +67,23 @@ public class AmazonIapManager {
      * <p> Ensure to call this in {@code onCreate} of any activity before making calls to the
      * instance retrieved by {@link #get()}.
      */
-    public static synchronized void setup(Context context) {
-        if (amazonIapManager != null) {
-            return;
+    public static synchronized void register(Context context) {
+        AmazonIapManager iapManager = amazonIapManager;
+        if (iapManager == null) {
+            iapManager = new AmazonIapManager(context);
+            amazonIapManager = iapManager;
         }
-        AmazonIapManager iapManager = new AmazonIapManager(context);
+        // Internally registers ActivityLifecycleCallbacks on application context
+        // if no instance exists, so safe to call multiple times.
+        // Purchase listener is always updated.
         PurchasingService.registerListener(context.getApplicationContext(),
-                new AmazonPurchasingListener(iapManager));
+                iapManager.getPurchasingListener());
         // Note: Documented getAppstoreSDKMode() API is not available.
         // Timber.i("IAP sandbox mode is: %s", PurchasingService.IS_SANDBOX_MODE);
-        amazonIapManager = iapManager;
     }
 
     /**
-     * Ensure you have called {@link #setup} once in the main activity of the app or this will
+     * Ensure you have called {@link #register} once in the main activity of the app or this will
      * return {@code null}.
      */
     public static AmazonIapManager get() {
@@ -89,6 +92,7 @@ public class AmazonIapManager {
 
     private final Context context;
     private final PurchaseDataSource dataSource;
+    private final AmazonPurchasingListener purchasingListener;
 
     private boolean userDataAvailable;
     private boolean subscriptionAvailable;
@@ -98,9 +102,14 @@ public class AmazonIapManager {
     public AmazonIapManager(Context context) {
         this.context = context.getApplicationContext();
         this.dataSource = new PurchaseDataSource(context);
+        this.purchasingListener = new AmazonPurchasingListener(this);
         this.userDataAvailable = false;
         this.subscriptionAvailable = false;
         this.userIapData = null;
+    }
+
+    public AmazonPurchasingListener getPurchasingListener() {
+        return purchasingListener;
     }
 
     /**

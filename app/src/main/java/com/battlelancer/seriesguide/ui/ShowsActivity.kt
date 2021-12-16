@@ -96,7 +96,7 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
         // query for in-app purchases
         if (Utils.isAmazonVersion()) {
             // setup Amazon IAP
-            AmazonIapManager.setup(this)
+            AmazonIapManager.register(this)
         } else {
             // setup Google IAP
             checkGooglePlayPurchase()

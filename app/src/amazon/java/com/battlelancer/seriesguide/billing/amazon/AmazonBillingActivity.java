@@ -29,7 +29,7 @@ public class AmazonBillingActivity extends BaseActivity {
 
         setupViews();
 
-        AmazonIapManager.setup(this);
+        AmazonIapManager.register(this);
     }
 
     @Override
