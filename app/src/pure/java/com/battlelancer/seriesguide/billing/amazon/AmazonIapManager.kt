@@ -1,34 +1,35 @@
-package com.battlelancer.seriesguide.billing.amazon;
+package com.battlelancer.seriesguide.billing.amazon
 
-import android.app.Activity;
-import android.content.Context;
+import android.app.Activity
+import android.content.Context
 
 /**
  * No-op dummy of Amazon IAP manager.
  */
-public class AmazonIapManager {
+class AmazonIapManager(@Suppress("UNUSED_PARAMETER") context: Context) : AmazonIapManagerInterface {
 
-    public static void setup(@SuppressWarnings("UnusedParameters") Context context) {
+    override fun register() {
         // no op
     }
 
-    public static AmazonIapManager get() {
-        return new AmazonIapManager();
-    }
-
-    public void requestUserDataAndPurchaseUpdates() {
+    override fun requestProductData() {
         // no op
     }
 
-    public void activate() {
+    override fun requestUserDataAndPurchaseUpdates() {
         // no op
     }
 
-    public void deactivate() {
+    override fun activate() {
         // no op
     }
 
-    public void validateSupporterState(@SuppressWarnings("UnusedParameters") Activity activity) {
+    override fun deactivate() {
         // no op
     }
+
+    override fun validateSupporterState(activity: Activity) {
+        // no op
+    }
+
 }

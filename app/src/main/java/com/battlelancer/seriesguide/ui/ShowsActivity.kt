@@ -13,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
-import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager
+import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -96,7 +96,8 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
         // query for in-app purchases
         if (Utils.isAmazonVersion()) {
             // setup Amazon IAP
-            AmazonIapManager.register(this)
+            AmazonHelper.create(this)
+            AmazonHelper.iapManager.register()
         } else {
             // setup Google IAP
             checkGooglePlayPurchase()
@@ -288,9 +289,9 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
 
         if (Utils.isAmazonVersion()) {
             // update Amazon IAP
-            AmazonIapManager.get().activate()
-            AmazonIapManager.get().requestUserDataAndPurchaseUpdates()
-            AmazonIapManager.get().validateSupporterState(this)
+            AmazonHelper.iapManager.activate()
+            AmazonHelper.iapManager.requestUserDataAndPurchaseUpdates()
+            AmazonHelper.iapManager.validateSupporterState(this)
         }
 
         // update next episodes
@@ -302,7 +303,7 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
 
         if (Utils.isAmazonVersion()) {
             // pause Amazon IAP
-            AmazonIapManager.get().deactivate()
+            AmazonHelper.iapManager.deactivate()
         }
 
         // save selected tab index

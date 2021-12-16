@@ -29,7 +29,8 @@ public class AmazonBillingActivity extends BaseActivity {
 
         setupViews();
 
-        AmazonIapManager.register(this);
+        AmazonHelper.create(this);
+        AmazonHelper.getIapManager().register();
     }
 
     @Override
@@ -60,22 +61,22 @@ public class AmazonBillingActivity extends BaseActivity {
         super.onStart();
 
         // no need to get product data every time we were hidden, so do it in onStart
-        AmazonIapManager.get().requestProductData();
+        AmazonHelper.getIapManager().requestProductData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        AmazonIapManager.get().activate();
-        AmazonIapManager.get().requestUserDataAndPurchaseUpdates();
+        AmazonHelper.getIapManager().activate();
+        AmazonHelper.getIapManager().requestUserDataAndPurchaseUpdates();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        AmazonIapManager.get().deactivate();
+        AmazonHelper.getIapManager().deactivate();
     }
 
     @Override
