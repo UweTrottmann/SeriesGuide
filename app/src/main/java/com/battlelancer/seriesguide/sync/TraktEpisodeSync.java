@@ -1,11 +1,9 @@
 package com.battlelancer.seriesguide.sync;
 
 import android.content.Context;
-import android.database.Cursor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SgEpisode2CollectedUpdate;
 import com.battlelancer.seriesguide.provider.SgEpisode2ForSync;
 import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
@@ -33,7 +31,6 @@ import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.threeten.bp.OffsetDateTime;
@@ -561,75 +558,14 @@ public class TraktEpisodeSync {
         return new SyncSeason().number(seasonNumber).episodes(syncEpisodes);
     }
 
-    /**
-     * @param episodesCursor Cursor of episodes sorted by season (ascending).
-     */
-    private static List<SyncSeason> buildSyncSeasons(Cursor episodesCursor) {
-        List<SyncSeason> seasons = new LinkedList<>();
-
-        SyncSeason currentSeason = null;
-        while (episodesCursor.moveToNext()) {
-            int season = episodesCursor.getInt(EpisodesQuery.SEASON);
-            int episode = episodesCursor.getInt(EpisodesQuery.EPISODE);
-            int plays = episodesCursor.getInt(EpisodesQuery.PLAYS);
-
-            // create new season if none exists or number has changed
-            if (currentSeason == null || currentSeason.number != season) {
-                currentSeason = new SyncSeason().number(season);
-                currentSeason.episodes = new LinkedList<>();
-                seasons.add(currentSeason);
-            }
-
-            // Add an episode for each play, Trakt will create a separate play for each.
-            SyncEpisode syncEpisode = new SyncEpisode().number(episode);
-            for (int i = 0; i < plays; i++) {
-                currentSeason.episodes.add(syncEpisode);
-            }
-        }
-
-        return seasons;
-    }
-
-    private interface EpisodesQuery {
-
-        String[] PROJECTION = new String[]{
-                Episodes.SEASON, Episodes.NUMBER, Episodes.PLAYS
-        };
-
-        int SEASON = 0;
-        int EPISODE = 1;
-        int PLAYS = 2;
-    }
-
     public enum Flag {
-        COLLECTED("collected",
-                Episodes.COLLECTED,
-                // only remove flags for already collected episodes
-                Episodes.COLLECTED + "=1",
-                Episodes.SELECTION_COLLECTED,
-                1, 0),
-        WATCHED("watched",
-                Episodes.WATCHED,
-                // do not remove flags of skipped episodes, only of watched ones
-                Episodes.WATCHED + "=" + EpisodeFlags.WATCHED,
-                Episodes.SELECTION_WATCHED,
-                EpisodeFlags.WATCHED, EpisodeFlags.UNWATCHED);
+        COLLECTED("collected"),
+        WATCHED("watched");
 
         final String name;
-        final String databaseColumn;
-        final String clearFlagSelection;
-        final String flagSelection;
-        final int flaggedValue;
-        final int notFlaggedValue;
 
-        Flag(String name, String databaseColumn, String clearFlagSelection, String flagSelection,
-                int flaggedValue, int notFlaggedValue) {
+        Flag(String name) {
             this.name = name;
-            this.databaseColumn = databaseColumn;
-            this.clearFlagSelection = clearFlagSelection;
-            this.flagSelection = flagSelection;
-            this.flaggedValue = flaggedValue;
-            this.notFlaggedValue = notFlaggedValue;
         }
     }
 }
