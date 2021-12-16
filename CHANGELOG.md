@@ -16,6 +16,13 @@ Version 62
 * 🌟 Discover: filter popular movies and movies with digital release by streaming service.
 * 🔧 App widget: add option to hide watch button.
 
+#### 62.1
+*2021-12-16*
+
+* 🔨 Potential fix for crash when updating next episode on Android 5.1 devices.
+* 🔨 Amazon version: do not crash when re-launching the app.
+* 📝 Latest translations from Crowdin.
+
 #### 62
 *2021-12-09*
 
