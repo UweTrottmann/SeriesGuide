@@ -726,8 +726,11 @@ public class SeriesGuideContract {
         String SELECTION_NO_NEXT_EPISODE =
                 NEXTAIRDATEMS + "=" + NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE;
 
-        String SORT_TITLE = TITLE + " COLLATE NOCASE ASC";
-        String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE NOCASE ASC";
+        // Android provides the UNICODE collator,
+        // use to correctly order characters with e.g. accents.
+        // https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
+        String SORT_TITLE = TITLE + " COLLATE UNICODE ASC";
+        String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE UNICODE ASC";
         String SORT_STATUS = STATUS + " DESC";
         String SORT_LATEST_EPISODE_THEN_STATUS = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
 
@@ -1469,7 +1472,7 @@ public class SeriesGuideContract {
                 = "vnd.android.cursor.item/vnd.seriesguide.list";
 
         public static final String SORT_ORDER_THEN_NAME = Lists.ORDER + " ASC," + Lists.NAME
-                + " COLLATE NOCASE ASC";
+                + " COLLATE UNICODE ASC";
 
         public static Uri buildListUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
@@ -1600,17 +1603,20 @@ public class SeriesGuideContract {
         public static final String SELECTION_WATCHED = Movies.WATCHED + "=1";
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
+        // Android provides the UNICODE collator,
+        // use to correctly order characters with e.g. accents.
+        // https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
         /** Default sort order. */
-        public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE NOCASE ASC";
+        public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE UNICODE ASC";
 
         public static final String SORT_TITLE_ALPHABETICAL_NO_ARTICLE = Movies.TITLE_NOARTICLE
-                + " COLLATE NOCASE ASC";
+                + " COLLATE UNICODE ASC";
 
         public static final String SORT_TITLE_REVERSE_ALPHACETICAL = Movies.TITLE
-                + " COLLATE NOCASE DESC";
+                + " COLLATE UNICODE DESC";
 
         public static final String SORT_TITLE_REVERSE_ALPHACETICAL_NO_ARTICLE =
-                Movies.TITLE_NOARTICLE + " COLLATE NOCASE DESC";
+                Movies.TITLE_NOARTICLE + " COLLATE UNICODE DESC";
 
         public static final String SORT_RELEASE_DATE_NEWEST_FIRST = Movies.RELEASED_UTC_MS
                 + " DESC," + SORT_TITLE_ALPHABETICAL;
