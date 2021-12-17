@@ -49,7 +49,10 @@ class NextEpisodeUpdater {
         val episodeHelper = database.sgEpisode2Helper()
         val currentTime = TimeTools.getCurrentTime(context)
         val preventSpoilers = DisplaySettings.preventSpoilers(context)
-        for (show in shows) {
+        // Note: use .iterator() to potentially avoid .hasNext() NPE on Android 5.1.
+        // Crash can't be reproduced using emulator.
+        // https://stackoverflow.com/a/67737948/1000543
+        for (show in shows.iterator()) {
             // STEP 1: get last watched episode details
             var season = show.seasonNumber
             var number = show.episodeNumber
@@ -99,7 +102,7 @@ class NextEpisodeUpdater {
                 .countNotWatchedEpisodesOfShow(show.id, currentTime)
 
             // STEP 4: build updated next episode values
-            var update: SgShow2NextEpisodeUpdate
+            val update: SgShow2NextEpisodeUpdate
             if (episodeOrNull != null) {
                 val nextEpisodeString: String = TextTools.getNextEpisodeString(
                     context,

@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.billing.amazon;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import androidx.annotation.NonNull;
 import com.amazon.device.iap.PurchasingService;
 import com.amazon.device.iap.model.FulfillmentResult;
 import com.amazon.device.iap.model.Product;
@@ -12,14 +12,14 @@ import com.amazon.device.iap.model.Receipt;
 import com.amazon.device.iap.model.UserData;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import org.greenrobot.eventbus.EventBus;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
-public class AmazonIapManager {
+public class AmazonIapManager implements AmazonIapManagerInterface {
 
     public static class AmazonIapMessageEvent {
         public final int messageResId;
@@ -59,36 +59,9 @@ public class AmazonIapManager {
         }
     }
 
-    @SuppressLint("StaticFieldLeak") private static AmazonIapManager amazonIapManager;
-
-    /**
-     * Sets up Amazon IAP.
-     *
-     * <p> Ensure to call this in {@code onCreate} of any activity before making calls to the
-     * instance retrieved by {@link #get()}.
-     */
-    public static synchronized void setup(Context context) {
-        if (amazonIapManager != null) {
-            return;
-        }
-        AmazonIapManager iapManager = new AmazonIapManager(context);
-        PurchasingService.registerListener(context.getApplicationContext(),
-                new AmazonPurchasingListener(iapManager));
-        // Note: Documented getAppstoreSDKMode() API is not available.
-        // Timber.i("IAP sandbox mode is: %s", PurchasingService.IS_SANDBOX_MODE);
-        amazonIapManager = iapManager;
-    }
-
-    /**
-     * Ensure you have called {@link #setup} once in the main activity of the app or this will
-     * return {@code null}.
-     */
-    public static AmazonIapManager get() {
-        return amazonIapManager;
-    }
-
     private final Context context;
     private final PurchaseDataSource dataSource;
+    private final AmazonPurchasingListener purchasingListener;
 
     private boolean userDataAvailable;
     private boolean subscriptionAvailable;
@@ -98,9 +71,29 @@ public class AmazonIapManager {
     public AmazonIapManager(Context context) {
         this.context = context.getApplicationContext();
         this.dataSource = new PurchaseDataSource(context);
+        this.purchasingListener = new AmazonPurchasingListener(this);
         this.userDataAvailable = false;
         this.subscriptionAvailable = false;
         this.userIapData = null;
+    }
+
+    /**
+     * Sets up Amazon IAP.
+     *
+     * Ensure to call this in `onCreate` of any activity before making calls to any other methods.
+     */
+    @Override
+    public void register() {
+        // Internally registers ActivityLifecycleCallbacks on application context
+        // if no instance exists, so safe to call multiple times.
+        // Purchase listener is always updated.
+        PurchasingService.registerListener(context, getPurchasingListener());
+        // Note: Documented getAppstoreSDKMode() API is not available.
+        // Timber.i("IAP sandbox mode is: %s", PurchasingService.IS_SANDBOX_MODE);
+    }
+
+    private AmazonPurchasingListener getPurchasingListener() {
+        return purchasingListener;
     }
 
     /**
@@ -108,6 +101,7 @@ public class AmazonIapManager {
      *
      * <p> If successful, a {@link AmazonIapProductEvent} will be posted.
      */
+    @Override
     public void requestProductData() {
         // get product availability
         Timber.d("getProductData");
@@ -128,6 +122,7 @@ public class AmazonIapManager {
      * <p> In addition on failure, a {@link com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapMessageEvent}
      * with an error message will be posted.
      */
+    @Override
     public void requestUserDataAndPurchaseUpdates() {
         Timber.d("getUserData");
         PurchasingService.getUserData();
@@ -139,6 +134,7 @@ public class AmazonIapManager {
      * Connect to the database when main activity's {@code onResume} before calling {@link
      * #requestUserDataAndPurchaseUpdates()}.
      */
+    @Override
     public void activate() {
         dataSource.open();
     }
@@ -146,6 +142,7 @@ public class AmazonIapManager {
     /**
      * Gracefully close the database in the activity's {@code onPause}.
      */
+    @Override
     public void deactivate() {
         dataSource.close();
     }
@@ -157,7 +154,8 @@ public class AmazonIapManager {
      *
      * <p>If user or purchase data could not be fetched, keeps the last subscription state.
      */
-    public void validateSupporterState(Activity activity) {
+    @Override
+    public void validateSupporterState(@NonNull Activity activity) {
         Timber.d("validateSubscription");
         boolean isSupporter;
         if (userIapData != null) {
