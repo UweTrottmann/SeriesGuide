@@ -63,14 +63,27 @@
 
                     </FrameLayout>
 
+                    <Button
+                        android:id="@+id/buttonMovieTrailer"
+                        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/padding_button"
+                        android:text="@string/trailer"
+                        app:icon="@drawable/ic_movie_white_24dp"
+                        app:iconGravity="start" />
+
                     <TextView
                         android:id="@+id/textViewMovieTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/large_padding"
                         android:layout_marginTop="@dimen/inline_padding"
+                        android:layout_marginRight="@dimen/inline_padding"
                         android:layout_toRightOf="@id/frameLayoutMoviePoster"
+                        android:layout_toLeftOf="@id/buttonMovieTrailer"
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
@@ -81,7 +94,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textViewMovieTitle"
-                        android:layout_marginBottom="@dimen/large_padding"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/large_padding"
                         android:layout_toRightOf="@id/frameLayoutMoviePoster"

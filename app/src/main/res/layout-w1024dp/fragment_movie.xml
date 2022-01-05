@@ -88,7 +88,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/textViewMovieTitle"
-                            android:layout_marginBottom="@dimen/large_padding"
                             android:layout_marginLeft="@dimen/default_padding"
                             android:layout_marginRight="@dimen/large_padding"
                             android:layout_toRightOf="@id/frameLayoutMoviePoster"
@@ -96,6 +95,19 @@
                             android:focusable="true"
                             android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
                             tools:text="20 Oct 2013" />
+
+                        <Button
+                            android:id="@+id/buttonMovieTrailer"
+                            style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textViewMovieDate"
+                            android:layout_marginRight="@dimen/large_padding"
+                            android:layout_marginBottom="@dimen/large_padding"
+                            android:layout_toRightOf="@id/frameLayoutMoviePoster"
+                            android:text="@string/trailer"
+                            app:icon="@drawable/ic_movie_white_24dp"
+                            app:iconGravity="start" />
 
                     </RelativeLayout>
 
