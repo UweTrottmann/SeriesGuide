@@ -250,12 +250,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 isEnabled = isEnableImdb
                 isVisible = isEnableImdb
             }
-
-            val isEnableYoutube = trailer != null
-            menu.findItem(R.id.menu_open_youtube).apply {
-                isEnabled = isEnableYoutube
-                isVisible = isEnableYoutube
-            }
         }
     }
 
@@ -265,10 +259,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 movieDetails?.tmdbMovie()
                     ?.title
                     ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
-                true
-            }
-            R.id.menu_open_youtube -> {
-                trailer?.let { ServiceUtils.openYoutube(it.key, activity) }
                 true
             }
             R.id.menu_open_imdb -> {
