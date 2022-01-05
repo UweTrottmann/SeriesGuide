@@ -95,6 +95,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.progressBar.isGone = true
         binding.textViewMovieGenresLabel.isGone = true
 
+        // trailer button
+        binding.buttonMovieTrailer.setOnClickListener {
+            trailer?.let { ServiceUtils.openYoutube(it.key, activity) }
+        }
+        binding.buttonMovieTrailer.isGone = true
+        binding.buttonMovieTrailer.isEnabled = false
+
         // important action buttons
         binding.containerMovieButtons.root.isGone = true
         binding.containerMovieButtons.buttonMovieCheckIn.setOnClickListener { onButtonCheckInClick() }
@@ -319,6 +326,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             releaseAndRuntime.append(getString(R.string.runtime_minutes, it.toString()))
         }
         binding.textViewMovieDate.text = releaseAndRuntime.toString()
+
+        // show trailer button (but trailer is loaded separately, just for animation)
+        binding.buttonMovieTrailer.isGone = false
 
         // hide check-in if not connected to trakt or hexagon is enabled
         val isConnectedToTrakt = TraktCredentials.get(activity).hasCredentials()
@@ -723,7 +733,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             }
             if (trailer != null) {
                 this@MovieDetailsFragment.trailer = trailer
-                activity!!.invalidateOptionsMenu()
+                binding.buttonMovieTrailer.isEnabled = true
             }
         }
 
