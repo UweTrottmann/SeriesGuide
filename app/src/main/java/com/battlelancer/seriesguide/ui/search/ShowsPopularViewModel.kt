@@ -12,11 +12,9 @@ import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-@ExperimentalCoroutinesApi
 class ShowsPopularViewModel(application: Application) : AndroidViewModel(application) {
 
     private val watchProviderIds =

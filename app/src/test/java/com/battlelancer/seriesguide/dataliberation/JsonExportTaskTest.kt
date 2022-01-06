@@ -19,7 +19,6 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
@@ -45,13 +44,11 @@ class JsonExportTaskTest {
     // JsonExportTask.onProgressUpdate uses Dispatcher.Main
     private val mainThreadSurrogate = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-    @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
     }
 
-    @ExperimentalCoroutinesApi
     @After
     fun tearDown() {
         Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
