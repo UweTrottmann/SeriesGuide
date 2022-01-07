@@ -93,10 +93,10 @@
     <style name="Widget.SeriesGuide" parent="Widget" />
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Button" parent="Widget.MaterialComponents.Button" />
-    <style name="Widget.SeriesGuide.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton" />
+    <style name="Widget.SeriesGuide.Button" parent="Widget.Material3.Button" />
+    <style name="Widget.SeriesGuide.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton" />
 
-    <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.Material3.Button.TextButton">
         <item name="android:maxLines">2</item>
     </style>
 
