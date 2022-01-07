@@ -55,7 +55,7 @@
         <item name="sgColorStatusBarOverlay">@color/sg_black_87</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
-        <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
+        <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
 
         <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
 
@@ -114,7 +114,7 @@
         <item name="sgColorStatusBarOverlay">@color/sg_white_87</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
-        <item name="dialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
+        <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
 
         <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
 
@@ -155,12 +155,12 @@
     <!-- Theme overlays -->
     <!-- ####################################### -->
 
-    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.MaterialComponents.Dialog">
+    <style name="Theme.SeriesGuide.Dialog.Distillation" parent="ThemeOverlay.Material3.Dialog">
         <item name="android:windowBackground">@drawable/sg_distillation_dialog_background</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.MaterialComponents.Dialog">
+    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.Material3.Dialog">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
