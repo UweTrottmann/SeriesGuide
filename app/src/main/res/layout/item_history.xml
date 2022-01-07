@@ -25,17 +25,15 @@
         android:background="?attr/selectableItemBackground"
         android:focusable="true">
 
-        <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardViewHistory"
+            style="?attr/materialCardViewElevatedStyle"
             android:layout_width="@dimen/show_poster_width_default"
             android:layout_height="@dimen/show_poster_height_default"
             android:layout_marginStart="@dimen/grid_leftright_padding"
             android:layout_marginLeft="@dimen/grid_leftright_padding"
             android:layout_marginTop="@dimen/grid_topbottom_padding"
             android:layout_marginBottom="@dimen/grid_topbottom_padding"
-            app:cardBackgroundColor="?attr/sgColorBackgroundCard"
-            app:cardPreventCornerOverlap="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -48,7 +46,7 @@
                 android:scaleType="centerInside"
                 tools:src="?attr/sgColorShadow" />
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <ImageView
             android:id="@+id/imageViewHistoryAvatar"
