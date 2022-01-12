@@ -9,7 +9,6 @@
     <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
     <!-- Other colors -->
-    <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorIcon" format="reference|color" />
     <attr name="sgColorIconInactive" format="reference|color" />

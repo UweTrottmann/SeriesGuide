@@ -46,7 +46,6 @@
         <!-- Custom color attributes -->
         <item name="sgTextColorGreen">@color/sg_color_secondary_dark</item>
         <item name="sgTextColorSecondaryDim">@color/sg_white_40</item>
-        <item name="sgColorBackgroundCard">#2a2a2a</item>
         <item name="sgColorBackgroundDim">@color/sg_black_38</item>
         <item name="sgColorIcon">@color/sg_white</item>
         <item name="sgColorIconInactive">@color/sg_white_50</item>
@@ -105,7 +104,6 @@
         <!-- Custom color attributes -->
         <item name="sgTextColorGreen">@color/sg_color_secondary_light</item>
         <item name="sgTextColorSecondaryDim">@color/sg_black_40</item>
-        <item name="sgColorBackgroundCard">@color/sg_white</item>
         <item name="sgColorBackgroundDim">@color/sg_white_50</item>
         <item name="sgColorIcon">@color/sg_black_54</item>
         <item name="sgColorIconInactive">@color/sg_black_38</item>
