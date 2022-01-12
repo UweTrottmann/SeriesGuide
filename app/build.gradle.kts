@@ -166,7 +166,6 @@ dependencies {
     implementation("androidx.annotation:annotation:$annotationVersion")
     // https://developer.android.com/jetpack/androidx/releases/appcompat
     implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("androidx.cardview:cardview:1.0.0")
     // https://developer.android.com/jetpack/androidx/releases/browser
     implementation("androidx.browser:browser:1.4.0")
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
