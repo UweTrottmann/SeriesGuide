@@ -1,10 +1,8 @@
 package com.battlelancer.seriesguide.ui.shows
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
@@ -17,6 +15,7 @@ import com.battlelancer.seriesguide.databinding.DialogRemoveBinding
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -33,17 +32,10 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
 
         showId = requireArguments().getLong(ARG_LONG_SHOW_ID)
         if (showId == 0L) dismiss()
-
-        // hide title, use custom theme
-        setStyle(STYLE_NO_TITLE, 0)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = DialogRemoveBinding.inflate(inflater, container, false)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogRemoveBinding.inflate(layoutInflater)
         this.binding = binding
 
         showProgressBar(true)
@@ -51,10 +43,6 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
         binding.buttonNegative.setOnClickListener { dismiss() }
         binding.buttonPositive.setText(R.string.delete_show)
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launchWhenStarted {
             val titleOrNull = withContext(Dispatchers.IO) {
                 SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowTitle(showId)
@@ -66,7 +54,7 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
                     dismiss()
                     return@withContext
                 }
-                binding?.also {
+                binding.also {
                     it.textViewRemove.text = getString(R.string.confirm_delete, titleOrNull)
                     it.buttonPositive.setOnClickListener {
                         if (!SgSyncAdapter.isSyncActive(context, true)) {
@@ -79,6 +67,10 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
                 }
             }
         }
+
+        return MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.root)
+            .create()
     }
 
     override fun onDestroyView() {

@@ -61,8 +61,6 @@
 
         </RadioGroup>
 
-        <include layout="@layout/dialog_buttons_divided" />
-
     </LinearLayout>
 
 </ScrollView>

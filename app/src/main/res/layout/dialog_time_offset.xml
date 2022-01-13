@@ -52,8 +52,6 @@
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
             tools:text="20:00 -> 22:00" />
 
-        <include layout="@layout/dialog_buttons_divided" />
-
     </LinearLayout>
 
 </ScrollView>
