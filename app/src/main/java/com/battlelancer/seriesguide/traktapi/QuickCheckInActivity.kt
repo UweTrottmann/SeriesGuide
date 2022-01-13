@@ -1,11 +1,11 @@
 package com.battlelancer.seriesguide.traktapi
 
-import android.R
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.FragmentActivity
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.traktapi.GenericCheckInDialogFragment.CheckInDialogDismissedEvent
@@ -16,11 +16,11 @@ import org.greenrobot.eventbus.Subscribe
 /**
  * Blank activity, just used to quickly check into a show/episode.
  */
-class QuickCheckInActivity : FragmentActivity() {
+class QuickCheckInActivity : AppCompatActivity() {
 
     override fun onCreate(arg0: Bundle?) {
         // make the activity show the wallpaper, nothing else
-        setTheme(R.style.Theme_Holo_Wallpaper_NoTitleBar)
+        setTheme(R.style.Theme_SeriesGuide_Wallpaper)
         super.onCreate(arg0)
 
         val episodeId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
@@ -46,7 +46,7 @@ class QuickCheckInActivity : FragmentActivity() {
     }
 
     @Subscribe
-    fun onEvent(event: CheckInDialogDismissedEvent?) {
+    fun onEvent(@Suppress("UNUSED_PARAMETER") event: CheckInDialogDismissedEvent?) {
         // if check-in dialog is dismissed, finish ourselves as well
         finish()
     }
