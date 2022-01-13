@@ -1,84 +1,84 @@
-package com.battlelancer.seriesguide.traktapi;
+package com.battlelancer.seriesguide.traktapi
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.fragment.app.FragmentActivity;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.service.NotificationService;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import android.R
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import androidx.core.app.NotificationManagerCompat
+import androidx.fragment.app.FragmentActivity
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.traktapi.GenericCheckInDialogFragment.CheckInDialogDismissedEvent
+import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * Blank activity, just used to quickly check into a show/episode.
  */
-public class QuickCheckInActivity extends FragmentActivity {
+class QuickCheckInActivity : FragmentActivity() {
 
-    private static final String EXTRA_LONG_EPISODE_ID = "episode_id";
-
-    public static Intent intent(long episodeId, Context context) {
-        return new Intent(context, QuickCheckInActivity.class)
-                .putExtra(EXTRA_LONG_EPISODE_ID, episodeId)
-                .addFlags(
-                        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-    }
-
-    @Override
-    protected void onCreate(Bundle arg0) {
+    override fun onCreate(arg0: Bundle?) {
         // make the activity show the wallpaper, nothing else
-        setTheme(android.R.style.Theme_Holo_Wallpaper_NoTitleBar);
-        super.onCreate(arg0);
+        setTheme(R.style.Theme_Holo_Wallpaper_NoTitleBar)
+        super.onCreate(arg0)
 
-        long episodeId = getIntent().getLongExtra(EXTRA_LONG_EPISODE_ID, 0);
-        if (episodeId == 0) {
-            finish();
-            return;
+        val episodeId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
+        if (episodeId == 0L) {
+            finish()
+            return
         }
 
         // show check-in dialog
-        if (!CheckInDialogFragment.show(this, getSupportFragmentManager(), episodeId)) {
-            finish();
+        if (!CheckInDialogFragment.show(this, supportFragmentManager, episodeId)) {
+            finish()
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        EventBus.getDefault().register(this);
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        EventBus.getDefault().unregister(this);
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
-    @SuppressWarnings("unused")
     @Subscribe
-    public void onEvent(GenericCheckInDialogFragment.CheckInDialogDismissedEvent event) {
+    fun onEvent(event: CheckInDialogDismissedEvent?) {
         // if check-in dialog is dismissed, finish ourselves as well
-        finish();
+        finish()
     }
 
-    @SuppressWarnings("unused")
     @Subscribe
-    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+    fun onEvent(event: TraktActionCompleteEvent) {
         if (event.traktAction != TraktAction.CHECKIN_EPISODE) {
-            return;
+            return
         }
         // display status toast about trakt action
-        event.handle(this);
+        event.handle(this)
 
         // dismiss notification on successful check-in
         if (event.wasSuccessful) {
-            NotificationManagerCompat manager = NotificationManagerCompat.from(
-                    getApplicationContext());
-            manager.cancel(SgApp.NOTIFICATION_EPISODE_ID);
+            val manager = NotificationManagerCompat.from(applicationContext)
+            manager.cancel(SgApp.NOTIFICATION_EPISODE_ID)
             // replicate delete intent
-            NotificationService.handleDeleteIntent(this, getIntent());
+            NotificationService.handleDeleteIntent(this, intent)
+        }
+    }
+
+    companion object {
+
+        private const val EXTRA_LONG_EPISODE_ID = "episode_id"
+
+        @JvmStatic
+        fun intent(episodeId: Long, context: Context): Intent {
+            return Intent(context, QuickCheckInActivity::class.java)
+                .putExtra(EXTRA_LONG_EPISODE_ID, episodeId)
+                .addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+                )
         }
     }
 }
