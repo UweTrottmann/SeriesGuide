@@ -32,8 +32,7 @@ import java.util.ArrayList
  * Displays a dialog displaying all user created lists,
  * allowing to add or remove the given show for any.
  */
-class ManageListsDialogFragment : AppCompatDialogFragment(), LoaderManager.LoaderCallbacks<Cursor>,
-    AdapterView.OnItemClickListener {
+class ManageListsDialogFragment : AppCompatDialogFragment() {
 
     private var listView: ListView? = null
     private lateinit var adapter: ListsAdapter
@@ -97,7 +96,7 @@ class ManageListsDialogFragment : AppCompatDialogFragment(), LoaderManager.Loade
          * As using CHOICE_MODE_MULTIPLE does not seem to work before Jelly
          * Bean, do everything ourselves.
          */
-        listView!!.onItemClickListener = this
+        listView!!.onItemClickListener = onItemClickListener
         return layout
     }
 
@@ -118,32 +117,34 @@ class ManageListsDialogFragment : AppCompatDialogFragment(), LoaderManager.Loade
         itemTitle.text = showDetails.title
 
         // load data
-        LoaderManager.getInstance(this).initLoader(0, null, this)
+        LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks)
     }
 
-    override fun onItemClick(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+    private val onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
         val checkable = view as Checkable
         checkable.toggle()
         adapter.setItemChecked(position, checkable.isChecked)
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-        // filter for this item, but keep other lists
-        val uri = Lists.buildListsWithListItemUri(
-            ListItems.generateListItemIdWildcard(showTmdbId, ListItemTypes.TMDB_SHOW)
-        )
-        return CursorLoader(
-            requireContext(), uri, ListsQuery.PROJECTION,
-            null, null, Lists.SORT_ORDER_THEN_NAME
-        )
-    }
+    private val loaderCallbacks = object : LoaderManager.LoaderCallbacks<Cursor> {
+        override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
+            // filter for this item, but keep other lists
+            val uri = Lists.buildListsWithListItemUri(
+                ListItems.generateListItemIdWildcard(showTmdbId, ListItemTypes.TMDB_SHOW)
+            )
+            return CursorLoader(
+                requireContext(), uri, ListsQuery.PROJECTION,
+                null, null, Lists.SORT_ORDER_THEN_NAME
+            )
+        }
 
-    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
-        adapter.swapCursor(data)
-    }
+        override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor) {
+            adapter.swapCursor(data)
+        }
 
-    override fun onLoaderReset(loader: Loader<Cursor>) {
-        adapter.swapCursor(null)
+        override fun onLoaderReset(loader: Loader<Cursor>) {
+            adapter.swapCursor(null)
+        }
     }
 
     private class ListsAdapter(context: Context) : CursorAdapter(context, null, 0) {
