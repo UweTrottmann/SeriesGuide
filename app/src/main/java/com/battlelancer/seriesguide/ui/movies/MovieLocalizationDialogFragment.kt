@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.ui.movies
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.battlelancer.seriesguide.databinding.DialogLocalizationBinding
 import com.battlelancer.seriesguide.databinding.ItemDropdownBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationAdapter.LocalizationItem
+import com.battlelancer.seriesguide.ui.movies.MovieLocalizationDialogFragment.LocalizationChangedEvent
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.launch
@@ -29,7 +31,8 @@ import java.util.ArrayList
 import java.util.Locale
 
 /**
- * A dialog displaying a list of languages and regions to choose from, posting a [ ] once the dialog is dismissed (even if language or region
+ * A dialog displaying a list of languages and regions to choose from, posting a
+ * [LocalizationChangedEvent] once the dialog is dismissed (even if language or region
  * have not changed).
  */
 class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
@@ -56,7 +59,7 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DialogLocalizationBinding.inflate(inflater, container, false)
 
         binding.buttonDismiss.apply {
@@ -88,9 +91,9 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
                 }
 
                 val collator = Collator.getInstance()
-                items.sortWith(Comparator { left: LocalizationItem, right: LocalizationItem ->
+                items.sortWith { left: LocalizationItem, right: LocalizationItem ->
                     collator.compare(left.displayText, right.displayText)
-                })
+                }
 
                 EventBus.getDefault().postSticky(ItemsLoadedEvent(items, CodeType.Language))
             }
@@ -113,9 +116,9 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
                 }
 
                 val collator = Collator.getInstance()
-                items.sortWith(Comparator { left: LocalizationItem, right: LocalizationItem ->
+                items.sortWith { left: LocalizationItem, right: LocalizationItem ->
                     collator.compare(left.displayText, right.displayText)
-                })
+                }
 
                 EventBus.getDefault().postSticky(ItemsLoadedEvent(items, CodeType.Region))
             }
@@ -230,6 +233,7 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
 
         private val items = ArrayList<LocalizationItem>()
 
+        @SuppressLint("NotifyDataSetChanged")
         fun updateItems(items: List<LocalizationItem>) {
             this.items.clear()
             this.items.addAll(items)
