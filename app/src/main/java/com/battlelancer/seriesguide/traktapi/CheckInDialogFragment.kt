@@ -16,8 +16,8 @@ class CheckInDialogFragment : GenericCheckInDialogFragment() {
 
     override fun checkInTrakt(message: String) {
         TraktTask(requireContext()).checkInEpisode(
-            requireArguments().getLong(InitBundle.EPISODE_ID),
-            requireArguments().getString(InitBundle.ITEM_TITLE),
+            requireArguments().getLong(ARG_EPISODE_ID),
+            requireArguments().getString(ARG_ITEM_TITLE),
             message
         ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
@@ -36,7 +36,7 @@ class CheckInDialogFragment : GenericCheckInDialogFragment() {
             val f = CheckInDialogFragment()
 
             val args = Bundle()
-            args.putLong(InitBundle.EPISODE_ID, episodeId)
+            args.putLong(ARG_EPISODE_ID, episodeId)
             val episodeTitleWithNumbers = (episode.seriestitle
                     + " "
                     + TextTools.getNextEpisodeString(
@@ -45,7 +45,7 @@ class CheckInDialogFragment : GenericCheckInDialogFragment() {
                 episode.episodenumber,
                 episode.episodetitle
             ))
-            args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers)
+            args.putString(ARG_ITEM_TITLE, episodeTitleWithNumbers)
             f.arguments = args
             return f.safeShow(fragmentManager, "checkInDialog")
         }

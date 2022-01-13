@@ -13,8 +13,8 @@ class MovieCheckInDialogFragment : GenericCheckInDialogFragment() {
 
     override fun checkInTrakt(message: String) {
         TraktTask(context).checkInMovie(
-            requireArguments().getInt(InitBundle.MOVIE_TMDB_ID),
-            requireArguments().getString(InitBundle.ITEM_TITLE),
+            requireArguments().getInt(ARG_MOVIE_TMDB_ID),
+            requireArguments().getString(ARG_ITEM_TITLE),
             message
         ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
@@ -23,8 +23,8 @@ class MovieCheckInDialogFragment : GenericCheckInDialogFragment() {
         fun show(fragmentManager: FragmentManager, movieTmdbId: Int, movieTitle: String): Boolean {
             val f = MovieCheckInDialogFragment()
             val args = Bundle()
-            args.putString(InitBundle.ITEM_TITLE, movieTitle)
-            args.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId)
+            args.putString(ARG_ITEM_TITLE, movieTitle)
+            args.putInt(ARG_MOVIE_TMDB_ID, movieTmdbId)
             f.arguments = args
             return f.safeShow(fragmentManager, "movieCheckInDialog")
         }
