@@ -1,192 +1,189 @@
-package com.battlelancer.seriesguide.traktapi;
+package com.battlelancer.seriesguide.traktapi
 
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.android.material.textfield.TextInputLayout;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import android.content.DialogInterface
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDialogFragment
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.Unbinder
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.traktapi.TraktTask.TraktCheckInBlockedEvent
+import com.battlelancer.seriesguide.util.Utils
+import com.google.android.material.textfield.TextInputLayout
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import kotlin.math.max
+import kotlin.math.min
 
-public abstract class GenericCheckInDialogFragment extends AppCompatDialogFragment {
+abstract class GenericCheckInDialogFragment : AppCompatDialogFragment() {
 
-    public interface InitBundle {
+    interface InitBundle {
+        companion object {
+            /**
+             * Title of episode or movie. **Required.**
+             */
+            const val ITEM_TITLE = "itemtitle"
 
-        /**
-         * Title of episode or movie. <b>Required.</b>
-         */
-        String ITEM_TITLE = "itemtitle";
-
-        /**
-         * Movie TMDb id. <b>Required for movies.</b>
-         */
-        String MOVIE_TMDB_ID = "movietmdbid";
-
-        String EPISODE_ID = "episodeid";
+            /**
+             * Movie TMDb id. **Required for movies.**
+             */
+            const val MOVIE_TMDB_ID = "movietmdbid"
+            const val EPISODE_ID = "episodeid"
+        }
     }
 
-    public class CheckInDialogDismissedEvent {
-    }
+    class CheckInDialogDismissedEvent
 
-    @BindView(R.id.textInputLayoutCheckIn) TextInputLayout textInputLayout;
-    @BindView(R.id.buttonCheckIn) View buttonCheckIn;
-    @BindView(R.id.buttonCheckInPasteTitle) View buttonPasteTitle;
-    @BindView(R.id.buttonCheckInClear) View buttonClear;
-    @BindView(R.id.progressBarCheckIn) View progressBar;
+    @BindView(R.id.textInputLayoutCheckIn)
+    var textInputLayout: TextInputLayout? = null
 
-    private Unbinder unbinder;
+    @BindView(R.id.buttonCheckIn)
+    var buttonCheckIn: View? = null
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @BindView(R.id.buttonCheckInPasteTitle)
+    var buttonPasteTitle: View? = null
+
+    @BindView(R.id.buttonCheckInClear)
+    var buttonClear: View? = null
+
+    @BindView(R.id.progressBarCheckIn)
+    var progressBar: View? = null
+    private var unbinder: Unbinder? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // hide title, use special theme with exit animation
-        setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog_CheckIn);
+        setStyle(STYLE_NO_TITLE, R.style.Theme_SeriesGuide_Dialog_CheckIn)
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.dialog_checkin, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.dialog_checkin, container, false)
+        unbinder = ButterKnife.bind(this, view)
 
         // Paste episode button
-        final String itemTitle = requireArguments().getString(InitBundle.ITEM_TITLE);
-        final EditText editTextMessage = textInputLayout.getEditText();
-        if (!TextUtils.isEmpty(itemTitle)) {
-            buttonPasteTitle.setOnClickListener(v -> {
+        val itemTitle = requireArguments().getString(InitBundle.ITEM_TITLE)
+        val editTextMessage = textInputLayout!!.editText
+        if (!itemTitle.isNullOrEmpty()) {
+            buttonPasteTitle!!.setOnClickListener {
                 if (editTextMessage == null) {
-                    return;
+                    return@setOnClickListener
                 }
-                int start = editTextMessage.getSelectionStart();
-                int end = editTextMessage.getSelectionEnd();
-                editTextMessage.getText().replace(Math.min(start, end), Math.max(start, end),
-                        itemTitle, 0, itemTitle.length());
-            });
+                val start = editTextMessage.selectionStart
+                val end = editTextMessage.selectionEnd
+                editTextMessage.text.replace(
+                    min(start, end), max(start, end),
+                    itemTitle, 0, itemTitle.length
+                )
+            }
         }
 
         // Clear button
-        buttonClear.setOnClickListener(v -> {
+        buttonClear!!.setOnClickListener {
             if (editTextMessage == null) {
-                return;
+                return@setOnClickListener
             }
-            editTextMessage.setText(null);
-        });
+            editTextMessage.text = null
+        }
 
         // Checkin Button
-        buttonCheckIn.setOnClickListener(v -> checkIn());
+        buttonCheckIn!!.setOnClickListener { checkIn() }
 
-        setProgressLock(false);
-
-        return view;
+        setProgressLock(false)
+        return view
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         // immediately start to check-in if the user has opted to skip entering a check-in message
-        if (TraktSettings.useQuickCheckin(getContext())) {
-            checkIn();
+        if (TraktSettings.useQuickCheckin(context)) {
+            checkIn()
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        EventBus.getDefault().register(this);
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        EventBus.getDefault().unregister(this);
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
-    @Override
-    public void onDismiss(@NonNull DialogInterface dialog) {
-        super.onDismiss(dialog);
-
-        EventBus.getDefault().post(new CheckInDialogDismissedEvent());
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        EventBus.getDefault().post(CheckInDialogDismissedEvent())
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        unbinder.unbind();
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unbinder!!.unbind()
     }
 
-    @SuppressWarnings("unused")
     @Subscribe
-    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+    fun onEvent(event: TraktActionCompleteEvent) {
         // done with checking in, unlock UI
-        setProgressLock(false);
-
+        setProgressLock(false)
         if (event.wasSuccessful) {
             // all went well, dismiss ourselves
-            dismissAllowingStateLoss();
+            dismissAllowingStateLoss()
         }
     }
 
-    @SuppressWarnings("unused")
     @Subscribe
-    public void onEvent(TraktTask.TraktCheckInBlockedEvent event) {
+    fun onEvent(event: TraktCheckInBlockedEvent) {
         // launch a check-in override dialog
         TraktCancelCheckinDialogFragment
-                .show(getParentFragmentManager(), event.traktTaskArgs, event.waitMinutes);
+            .show(parentFragmentManager, event.traktTaskArgs, event.waitMinutes)
     }
 
-    private void checkIn() {
+    private fun checkIn() {
         // lock down UI
-        setProgressLock(true);
+        setProgressLock(true)
 
         // connected?
-        if (Utils.isNotConnected(getActivity())) {
+        if (Utils.isNotConnected(requireContext())) {
             // no? abort
-            setProgressLock(false);
-            return;
+            setProgressLock(false)
+            return
         }
 
         // launch connect flow if trakt is not connected
-        if (!TraktCredentials.ensureCredentials(getActivity())) {
+        if (!TraktCredentials.ensureCredentials(requireContext())) {
             // not connected? abort
-            setProgressLock(false);
-            return;
+            setProgressLock(false)
+            return
         }
 
         // try to check in
-        EditText editText = textInputLayout.getEditText();
+        val editText = textInputLayout!!.editText
         if (editText != null) {
-            checkInTrakt(editText.getText().toString());
+            checkInTrakt(editText.text.toString())
         }
     }
 
     /**
-     * Start the trakt check-in task.
+     * Start the Trakt check-in task.
      */
-    protected abstract void checkInTrakt(String message);
+    protected abstract fun checkInTrakt(message: String)
 
     /**
      * Disables all interactive UI elements and shows a progress indicator.
      */
-    private void setProgressLock(boolean lock) {
-        progressBar.setVisibility(lock ? View.VISIBLE : View.GONE);
-        textInputLayout.setEnabled(!lock);
-        buttonPasteTitle.setEnabled(!lock);
-        buttonClear.setEnabled(!lock);
-        buttonCheckIn.setEnabled(!lock);
+    private fun setProgressLock(lock: Boolean) {
+        progressBar!!.visibility = if (lock) View.VISIBLE else View.GONE
+        textInputLayout!!.isEnabled = !lock
+        buttonPasteTitle!!.isEnabled = !lock
+        buttonClear!!.isEnabled = !lock
+        buttonCheckIn!!.isEnabled = !lock
     }
 }

@@ -1,55 +1,53 @@
-package com.battlelancer.seriesguide.traktapi;
+package com.battlelancer.seriesguide.traktapi
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import androidx.fragment.app.FragmentManager;
-import com.battlelancer.seriesguide.provider.SgEpisode2WithShow;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.util.DialogTools;
-import com.battlelancer.seriesguide.util.TextTools;
+import android.content.Context
+import android.os.AsyncTask
+import android.os.Bundle
+import androidx.fragment.app.FragmentManager
+import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
+import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.safeShow
 
 /**
  * Allows to check into an episode. Launching activities should subscribe to
- * {@link TraktTask.TraktActionCompleteEvent} to display status toasts.
+ * [TraktTask.TraktActionCompleteEvent] to display status toasts.
  */
-public class CheckInDialogFragment extends GenericCheckInDialogFragment {
+class CheckInDialogFragment : GenericCheckInDialogFragment() {
 
-    /**
-     * Builds and shows a new {@link CheckInDialogFragment} setting all values based on the given
-     * episode row ID.
-     *
-     * @return {@code false} if the fragment was not shown.
-     */
-    public static boolean show(Context context, FragmentManager fragmentManager, long episodeId) {
-        SgEpisode2WithShow episode = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
-                .getEpisodeWithShow(episodeId);
-        if (episode == null) {
-            return false;
-        }
-
-        CheckInDialogFragment f = new CheckInDialogFragment();
-
-        Bundle args = new Bundle();
-        args.putLong(InitBundle.EPISODE_ID, episodeId);
-        String episodeTitleWithNumbers = episode.getSeriestitle()
-                + " "
-                + TextTools.getNextEpisodeString(context,
-                episode.getSeason(),
-                episode.getEpisodenumber(),
-                episode.getEpisodetitle());
-        args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
-
-        f.setArguments(args);
-
-        return DialogTools.safeShow(f, fragmentManager, "checkInDialog");
+    override fun checkInTrakt(message: String) {
+        TraktTask(requireContext()).checkInEpisode(
+            requireArguments().getLong(InitBundle.EPISODE_ID),
+            requireArguments().getString(InitBundle.ITEM_TITLE),
+            message
+        ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    @Override
-    protected void checkInTrakt(String message) {
-        new TraktTask(getContext()).checkInEpisode(
-                requireArguments().getLong(InitBundle.EPISODE_ID),
-                requireArguments().getString(InitBundle.ITEM_TITLE),
-                message).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    companion object {
+        /**
+         * Builds and shows a new [CheckInDialogFragment] setting all values based on the given
+         * episode row ID.
+         *
+         * @return `false` if the fragment was not shown.
+         */
+        fun show(context: Context, fragmentManager: FragmentManager, episodeId: Long): Boolean {
+            val episode = getInstance(context).sgEpisode2Helper().getEpisodeWithShow(episodeId)
+                ?: return false
+
+            val f = CheckInDialogFragment()
+
+            val args = Bundle()
+            args.putLong(InitBundle.EPISODE_ID, episodeId)
+            val episodeTitleWithNumbers = (episode.seriestitle
+                    + " "
+                    + TextTools.getNextEpisodeString(
+                context,
+                episode.season,
+                episode.episodenumber,
+                episode.episodetitle
+            ))
+            args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers)
+            f.arguments = args
+            return f.safeShow(fragmentManager, "checkInDialog")
+        }
     }
 }

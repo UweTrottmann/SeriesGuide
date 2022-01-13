@@ -1,35 +1,32 @@
-package com.battlelancer.seriesguide.traktapi;
+package com.battlelancer.seriesguide.traktapi
 
-import android.os.AsyncTask;
-import android.os.Bundle;
-import androidx.fragment.app.FragmentManager;
-import com.battlelancer.seriesguide.util.DialogTools;
+import android.os.AsyncTask
+import android.os.Bundle
+import androidx.fragment.app.FragmentManager
+import com.battlelancer.seriesguide.util.safeShow
 
 /**
- * Allows to check into a movie. Launching activities should subscribe to {@link
- * TraktTask.TraktActionCompleteEvent} to display status toasts.
+ * Allows to check into a movie. Launching activities should subscribe
+ * to [TraktTask.TraktActionCompleteEvent] to display status toasts.
  */
-public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
+class MovieCheckInDialogFragment : GenericCheckInDialogFragment() {
 
-    public static boolean show(FragmentManager fragmentManager, int movieTmdbId,
-            String movieTitle) {
-        MovieCheckInDialogFragment f = new MovieCheckInDialogFragment();
-
-        Bundle args = new Bundle();
-        args.putString(InitBundle.ITEM_TITLE, movieTitle);
-        args.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId);
-        f.setArguments(args);
-
-        return DialogTools.safeShow(f, fragmentManager, "movieCheckInDialog");
+    override fun checkInTrakt(message: String) {
+        TraktTask(context).checkInMovie(
+            requireArguments().getInt(InitBundle.MOVIE_TMDB_ID),
+            requireArguments().getString(InitBundle.ITEM_TITLE),
+            message
+        ).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    /**
-     * Start the trakt check in task.
-     */
-    protected void checkInTrakt(String message) {
-        new TraktTask(getContext()).checkInMovie(
-                requireArguments().getInt(InitBundle.MOVIE_TMDB_ID),
-                requireArguments().getString(InitBundle.ITEM_TITLE),
-                message).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    companion object {
+        fun show(fragmentManager: FragmentManager, movieTmdbId: Int, movieTitle: String): Boolean {
+            val f = MovieCheckInDialogFragment()
+            val args = Bundle()
+            args.putString(InitBundle.ITEM_TITLE, movieTitle)
+            args.putInt(InitBundle.MOVIE_TMDB_ID, movieTmdbId)
+            f.arguments = args
+            return f.safeShow(fragmentManager, "movieCheckInDialog")
+        }
     }
 }
