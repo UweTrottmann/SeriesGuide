@@ -1,21 +1,17 @@
 package com.battlelancer.seriesguide.ui.lists
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.DialogListsReorderBinding
 import com.battlelancer.seriesguide.ui.ListsActivity
 import com.battlelancer.seriesguide.ui.lists.OrderedListsLoader.OrderedList
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController
-import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
 import java.util.ArrayList
 
 /**
@@ -24,61 +20,43 @@ import java.util.ArrayList
  */
 class ListsReorderDialogFragment : AppCompatDialogFragment() {
 
-    @BindView(R.id.listViewListsReorder)
-    var dragSortListView: DragSortListView? = null
-
-    @BindView(R.id.buttonNegative)
-    var buttonNegative: Button? = null
-
-    @BindView(R.id.buttonPositive)
-    var buttonPositive: Button? = null
-
-    private var unbinder: Unbinder? = null
+    private var binding: DialogListsReorderBinding? = null
     private lateinit var adapter: ListsAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.dialog_lists_reorder, container, false)
-        unbinder = ButterKnife.bind(this, view)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogListsReorderBinding.inflate(layoutInflater)
+        this.binding = binding
 
         val controller = DragSortController(
-            dragSortListView,
+            binding.listViewListsReorder,
             R.id.dragGripViewItemList, DragSortController.ON_DOWN,
             DragSortController.CLICK_REMOVE
         )
         controller.isRemoveEnabled = false
-        dragSortListView!!.setFloatViewManager(controller)
-        dragSortListView!!.setOnTouchListener(controller)
-        dragSortListView!!.setDropListener { from: Int, to: Int -> reorderList(from, to) }
-
-        buttonNegative!!.setText(R.string.discard)
-        buttonNegative!!.setOnClickListener { v: View? -> dismiss() }
-
-        buttonPositive!!.setText(android.R.string.ok)
-        buttonPositive!!.setOnClickListener { v: View? ->
-            saveListsOrder()
-            dismiss()
-        }
-
-        return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+        binding.listViewListsReorder.setFloatViewManager(controller)
+        binding.listViewListsReorder.setOnTouchListener(controller)
+        binding.listViewListsReorder.setDropListener { from: Int, to: Int -> reorderList(from, to) }
 
         adapter = ListsAdapter(activity)
-        dragSortListView!!.adapter = adapter
+        binding.listViewListsReorder.adapter = adapter
 
         LoaderManager.getInstance(this)
             .initLoader(ListsActivity.LISTS_REORDER_LOADER_ID, null, listsLoaderCallbacks)
+
+        return MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.root)
+            .setTitle(R.string.action_lists_reorder)
+            .setNegativeButton(R.string.discard, null)
+            .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
+                saveListsOrder()
+                dismiss()
+            }
+            .create()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder!!.unbind()
+        this.binding = null
     }
 
     private fun reorderList(from: Int, to: Int) {

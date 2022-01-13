@@ -1,44 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/large_padding">
 
-    <LinearLayout
+    <include layout="@layout/divider_horizontal" />
+
+    <com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
+        android:id="@+id/listViewListsReorder"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:minWidth="@dimen/dialog_min_width"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/large_padding">
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:drawSelectorOnTop="true"
+        app:drag_start_mode="onDown"
+        app:float_alpha="0.8"
+        app:remove_enabled="false"
+        app:sort_enabled="true"
+        app:use_default_controller="false" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/large_padding"
-            android:paddingLeft="@dimen/larger_padding"
-            android:paddingRight="@dimen/larger_padding"
-            android:text="@string/action_lists_reorder"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6" />
-
-        <include layout="@layout/divider_horizontal" />
-
-        <com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
-            android:id="@+id/listViewListsReorder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"
-            android:drawSelectorOnTop="true"
-            app:drag_start_mode="onDown"
-            app:float_alpha="0.8"
-            app:remove_enabled="false"
-            app:sort_enabled="true"
-            app:use_default_controller="false" />
-    </LinearLayout>
-
-    <include layout="@layout/dialog_buttons_divided" />
+    <include layout="@layout/divider_horizontal" />
 
 </LinearLayout>
