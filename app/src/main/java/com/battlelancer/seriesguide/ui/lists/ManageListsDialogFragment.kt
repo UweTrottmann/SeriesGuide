@@ -1,6 +1,8 @@
 package com.battlelancer.seriesguide.ui.lists
 
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.database.Cursor
 import android.os.Bundle
 import android.util.SparseBooleanArray
@@ -8,24 +10,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Button
 import android.widget.Checkable
 import android.widget.CheckedTextView
-import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.cursoradapter.widget.CursorAdapter
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.DialogManageListsBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
-import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
 /**
@@ -34,7 +38,7 @@ import java.util.ArrayList
  */
 class ManageListsDialogFragment : AppCompatDialogFragment() {
 
-    private var listView: ListView? = null
+    private var binding: DialogManageListsBinding? = null
     private lateinit var adapter: ListsAdapter
     private var showId: Long = 0
     private var showTmdbId = 0
@@ -42,70 +46,64 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showId = requireArguments().getLong(ARG_LONG_SHOW_ID)
-
-        // hide title, use custom theme
-        setStyle(STYLE_NO_TITLE, 0)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val layout = inflater.inflate(R.layout.dialog_manage_lists, container, false)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogManageListsBinding.inflate(layoutInflater)
+        this.binding = binding
 
-        // buttons
-        val dontAddButton = layout.findViewById<Button>(R.id.buttonNegative)
-        dontAddButton.setText(android.R.string.cancel)
-        dontAddButton.setOnClickListener { dismiss() }
-        val addButton = layout.findViewById<Button>(R.id.buttonPositive)
-        addButton.setText(android.R.string.ok)
-        addButton.setOnClickListener {
-            // add item to selected lists, remove from previously selected lists
-            val checkedLists = adapter.checkedPositions
-            val addToTheseLists: MutableList<String> = ArrayList()
-            val removeFromTheseLists: MutableList<String> = ArrayList()
-            for (position in 0 until adapter.count) {
-                val listEntry = adapter.getItem(position) as Cursor
-
-                val wasListChecked = !listEntry.getString(ListsQuery.LIST_ITEM_ID).isNullOrEmpty()
-                val isListChecked = checkedLists[position]
-
-                val listId = listEntry.getString(ListsQuery.LIST_ID)
-                if (listId.isNullOrEmpty()) {
-                    continue  // skip, no id
-                }
-                if (wasListChecked && !isListChecked) {
-                    // remove from list
-                    removeFromTheseLists.add(listId)
-                } else if (!wasListChecked && isListChecked) {
-                    // add to list
-                    addToTheseLists.add(listId)
-                }
-            }
-            ListsTools.changeListsOfItem(
-                requireContext(), showTmdbId,
-                ListItemTypes.TMDB_SHOW, addToTheseLists, removeFromTheseLists
-            )
-            dismiss()
-        }
-
-        // lists list
-        listView = layout.findViewById(R.id.list)
         /*
          * As using CHOICE_MODE_MULTIPLE does not seem to work before Jelly
          * Bean, do everything ourselves.
          */
-        listView!!.onItemClickListener = onItemClickListener
-        return layout
+        binding.list.onItemClickListener = onItemClickListener
+        adapter = ListsAdapter(requireContext())
+        binding.list.adapter = adapter
+
+        lifecycleScope.launchWhenCreated {
+            loadListDetails()
+        }
+
+        return MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.root)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
+                // add item to selected lists, remove from previously selected lists
+                val checkedLists = adapter.checkedPositions
+                val addToTheseLists: MutableList<String> = ArrayList()
+                val removeFromTheseLists: MutableList<String> = ArrayList()
+                for (position in 0 until adapter.count) {
+                    val listEntry = adapter.getItem(position) as Cursor
+
+                    val wasListChecked =
+                        !listEntry.getString(ListsQuery.LIST_ITEM_ID).isNullOrEmpty()
+                    val isListChecked = checkedLists[position]
+
+                    val listId = listEntry.getString(ListsQuery.LIST_ID)
+                    if (listId.isNullOrEmpty()) {
+                        continue  // skip, no id
+                    }
+                    if (wasListChecked && !isListChecked) {
+                        // remove from list
+                        removeFromTheseLists.add(listId)
+                    } else if (!wasListChecked && isListChecked) {
+                        // add to list
+                        addToTheseLists.add(listId)
+                    }
+                }
+                ListsTools.changeListsOfItem(
+                    requireContext(), showTmdbId,
+                    ListItemTypes.TMDB_SHOW, addToTheseLists, removeFromTheseLists
+                )
+                dismiss()
+            }
+            .create()
     }
 
-    override fun onActivityCreated(args: Bundle?) {
-        super.onActivityCreated(args)
-        adapter = ListsAdapter(requireContext())
-        listView!!.adapter = adapter
-
-        val showDetails = getInstance(requireContext()).sgShow2Helper().getShowMinimal(showId)
+    private suspend fun loadListDetails() {
+        val showDetails = withContext(Dispatchers.IO) {
+            SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowMinimal(showId)
+        }
         if (showDetails?.tmdbId == null || showDetails.tmdbId == 0) {
             dismiss()
             return
@@ -113,8 +111,7 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
         showTmdbId = showDetails.tmdbId
 
         // display item title
-        val itemTitle = requireView().findViewById<TextView>(R.id.item)
-        itemTitle.text = showDetails.title
+        binding?.item?.text = showDetails.title
 
         // load data
         LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks)
