@@ -1,24 +1,19 @@
 package com.battlelancer.seriesguide.ui.dialogs
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.annotation.PluralsRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.preference.PreferenceManager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.DialogNotificationThresholdBinding
 import com.battlelancer.seriesguide.settings.NotificationSettings
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber
 import java.util.regex.Pattern
 
@@ -28,73 +23,55 @@ import java.util.regex.Pattern
  */
 class NotificationThresholdDialogFragment : AppCompatDialogFragment() {
 
-    @BindView(R.id.buttonNegative)
-    var buttonNegative: View? = null
-
-    @BindView(R.id.buttonPositive)
-    var buttonPositive: Button? = null
-
-    @BindView(R.id.editTextThresholdValue)
-    var editTextValue: EditText? = null
-
-    @BindView(R.id.radioGroupThreshold)
-    var radioGroup: RadioGroup? = null
-
-    @BindView(R.id.radioButtonThresholdMinutes)
-    var radioButtonMinutes: RadioButton? = null
-
-    @BindView(R.id.radioButtonThresholdHours)
-    var radioButtonHours: RadioButton? = null
-
-    @BindView(R.id.radioButtonThresholdDays)
-    var radioButtonDays: RadioButton? = null
-    private var unbinder: Unbinder? = null
+    private var binding: DialogNotificationThresholdBinding? = null
     private var value = 0
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.dialog_notification_threshold, container, false)
-        unbinder = ButterKnife.bind(this, view)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogNotificationThresholdBinding.inflate(layoutInflater)
+        this.binding = binding
 
-        buttonNegative!!.visibility = View.GONE
-        buttonPositive!!.setText(android.R.string.ok)
-        buttonPositive!!.setOnClickListener { saveAndDismiss() }
+        binding.editTextThresholdValue.addTextChangedListener(textWatcher)
 
-        editTextValue!!.addTextChangedListener(textWatcher)
-
-        radioGroup!!.setOnCheckedChangeListener { _: RadioGroup?, _: Int ->
+        binding.radioGroupThreshold.setOnCheckedChangeListener { _: RadioGroup?, _: Int ->
             // trigger text watcher, takes care of validating the value based on the new unit
-            editTextValue!!.text = editTextValue!!.text
+            this.binding?.editTextThresholdValue?.let { it.text = it.text }
         }
 
-        bindViews()
-
-        return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        unbinder!!.unbind()
-    }
-
-    private fun bindViews() {
         val minutes = NotificationSettings.getLatestToIncludeTreshold(requireContext())
         val value: Int
         if (minutes != 0 && minutes % (24 * 60) == 0) {
             value = minutes / (24 * 60)
-            radioGroup!!.check(R.id.radioButtonThresholdDays)
+            binding.radioGroupThreshold.check(R.id.radioButtonThresholdDays)
         } else if (minutes != 0 && minutes % 60 == 0) {
             value = minutes / 60
-            radioGroup!!.check(R.id.radioButtonThresholdHours)
+            binding.radioGroupThreshold.check(R.id.radioButtonThresholdHours)
         } else {
             value = minutes
-            radioGroup!!.check(R.id.radioButtonThresholdMinutes)
+            binding.radioGroupThreshold.check(R.id.radioButtonThresholdMinutes)
         }
-        editTextValue!!.setText(value.toString())
+        binding.editTextThresholdValue.setText(value.toString())
         // radio buttons are updated by text watcher
+
+        return MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.pref_notifications_treshold)
+            .setView(binding.root)
+            .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
+                saveAndDismiss()
+            }
+            .create()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+    private val textWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable) {
+            parseAndUpdateValue(s)
+        }
     }
 
     private fun parseAndUpdateValue(s: Editable) {
@@ -104,17 +81,19 @@ class NotificationThresholdDialogFragment : AppCompatDialogFragment() {
         } catch (ignored: NumberFormatException) {
         }
 
+        val binding = binding ?: return
+
         // do not allow values bigger than a threshold, based on the selected unit
         var resetValue = false
-        if (radioGroup!!.checkedRadioButtonId == radioButtonMinutes!!.id
+        if (binding.radioGroupThreshold.checkedRadioButtonId == binding.radioButtonThresholdMinutes.id
             && value > 600) {
             resetValue = true
             value = 600
-        } else if (radioGroup!!.checkedRadioButtonId == radioButtonHours!!.id
+        } else if (binding.radioGroupThreshold.checkedRadioButtonId == binding.radioButtonThresholdHours.id
             && value > 120) {
             resetValue = true
             value = 120
-        } else if (radioGroup!!.checkedRadioButtonId == radioButtonDays!!.id
+        } else if (binding.radioGroupThreshold.checkedRadioButtonId == binding.radioButtonThresholdDays.id
             && value > 7) {
             resetValue = true
             value = 7
@@ -133,15 +112,16 @@ class NotificationThresholdDialogFragment : AppCompatDialogFragment() {
     }
 
     private fun updateRadioButtons(value: Int) {
+        val binding = binding ?: return
         val placeholderPattern = Pattern.compile("%d\\s*")
         val res = resources
-        radioButtonMinutes!!.text = getQuantityStringWithoutPlaceholder(
+        binding.radioButtonThresholdMinutes.text = getQuantityStringWithoutPlaceholder(
             placeholderPattern, res, R.plurals.minutes_before_plural, value
         )
-        radioButtonHours!!.text = getQuantityStringWithoutPlaceholder(
+        binding.radioButtonThresholdHours.text = getQuantityStringWithoutPlaceholder(
             placeholderPattern, res, R.plurals.hours_before_plural, value
         )
-        radioButtonDays!!.text = getQuantityStringWithoutPlaceholder(
+        binding.radioButtonThresholdDays.text = getQuantityStringWithoutPlaceholder(
             placeholderPattern, res, R.plurals.days_before_plural, value
         )
     }
@@ -156,12 +136,14 @@ class NotificationThresholdDialogFragment : AppCompatDialogFragment() {
     }
 
     private fun saveAndDismiss() {
+        val binding = binding ?: return
+
         var minutes = value
 
         // if not already, convert to minutes
-        if (radioGroup!!.checkedRadioButtonId == radioButtonHours!!.id) {
+        if (binding.radioGroupThreshold.checkedRadioButtonId == binding.radioButtonThresholdHours.id) {
             minutes *= 60
-        } else if (radioGroup!!.checkedRadioButtonId == radioButtonDays!!.id) {
+        } else if (binding.radioGroupThreshold.checkedRadioButtonId == binding.radioButtonThresholdDays.id) {
             minutes *= 60 * 24
         }
 
@@ -171,13 +153,5 @@ class NotificationThresholdDialogFragment : AppCompatDialogFragment() {
         Timber.i("Notification threshold set to %d minutes", minutes)
 
         dismiss()
-    }
-
-    private val textWatcher: TextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-        override fun afterTextChanged(s: Editable) {
-            parseAndUpdateValue(s)
-        }
     }
 }
