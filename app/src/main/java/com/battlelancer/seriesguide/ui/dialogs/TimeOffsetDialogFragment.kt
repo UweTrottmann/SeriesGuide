@@ -1,24 +1,19 @@
 package com.battlelancer.seriesguide.ui.dialogs
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.preference.PreferenceManager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.DialogTimeOffsetBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.getShowsTimeOffset
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
@@ -31,58 +26,42 @@ import timber.log.Timber
  */
 class TimeOffsetDialogFragment : AppCompatDialogFragment() {
 
-    @BindView(R.id.buttonNegative)
-    var buttonNegative: View? = null
-
-    @BindView(R.id.buttonPositive)
-    var buttonPositive: Button? = null
-
-    @BindView(R.id.editTextOffsetValue)
-    var editTextValue: EditText? = null
-
-    @BindView(R.id.textViewOffsetRange)
-    var textViewRange: TextView? = null
-
-    @BindView(R.id.textViewOffsetSummary)
-    var textViewSummary: TextView? = null
-
-    @BindView(R.id.textViewOffsetExample)
-    var textViewExample: TextView? = null
-    private var unbinder: Unbinder? = null
+    private var binding: DialogTimeOffsetBinding? = null
 
     private var hours = 0
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.dialog_time_offset, container, false)
-        unbinder = ButterKnife.bind(this, view)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogTimeOffsetBinding.inflate(layoutInflater)
+        this.binding = binding
 
-        buttonNegative!!.visibility = View.GONE
-        buttonPositive!!.setText(android.R.string.ok)
-        buttonPositive!!.setOnClickListener { v: View? -> saveAndDismiss() }
+        binding.textViewOffsetRange.text = getString(R.string.format_time_offset_range, -24, 24)
+        binding.editTextOffsetValue.hint = getString(R.string.format_time_offset_range, -24, 24)
+        binding.editTextOffsetValue.addTextChangedListener(textWatcher)
 
-        textViewRange!!.text = getString(R.string.format_time_offset_range, -24, 24)
-        editTextValue!!.hint = getString(R.string.format_time_offset_range, -24, 24)
+        val hours = getShowsTimeOffset(requireContext())
+        binding.editTextOffsetValue.setText(hours.toString())
+        // text views are updated by text watcher
 
-        editTextValue!!.addTextChangedListener(textWatcher)
-
-        bindViews()
-
-        return view
+        return MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.pref_offset)
+            .setView(binding.root)
+            .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
+                saveAndDismiss()
+            }
+            .create()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder!!.unbind()
+        binding = null
     }
 
-    private fun bindViews() {
-        val hours = getShowsTimeOffset(requireContext())
-        editTextValue!!.setText(hours.toString())
-        // text views are updated by text watcher
+    private val textWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable) {
+            parseAndUpdateValue(s)
+        }
     }
 
     private fun parseAndUpdateValue(s: Editable) {
@@ -112,10 +91,12 @@ class TimeOffsetDialogFragment : AppCompatDialogFragment() {
 
     @SuppressLint("SetTextI18n")
     private fun updateSummaryAndExample(value: Int) {
-        textViewSummary!!.text = getString(R.string.pref_offsetsummary, value)
+        val binding = binding ?: return
+
+        binding.textViewOffsetSummary.text = getString(R.string.pref_offsetsummary, value)
         val original = LocalDateTime.of(LocalDate.now(), LocalTime.of(20, 0))
         val offset = original.plusHours(value.toLong())
-        textViewExample!!.text =
+        binding.textViewOffsetSummary.text =
             formatToTimeString(original).toString() + " -> " + formatToTimeString(offset)
     }
 
@@ -134,13 +115,5 @@ class TimeOffsetDialogFragment : AppCompatDialogFragment() {
             .apply()
         Timber.i("Time offset set to %d hours", hours)
         dismiss()
-    }
-
-    private val textWatcher: TextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-        override fun afterTextChanged(s: Editable) {
-            parseAndUpdateValue(s)
-        }
     }
 }
