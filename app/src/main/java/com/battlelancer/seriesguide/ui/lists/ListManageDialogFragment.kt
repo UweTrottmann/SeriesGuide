@@ -1,151 +1,155 @@
+package com.battlelancer.seriesguide.ui.lists
 
-package com.battlelancer.seriesguide.ui.lists;
-
-import android.database.Cursor;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.util.DialogTools;
-import com.google.android.material.textfield.TextInputLayout;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.FragmentManager
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.Unbinder
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.ui.lists.AddListDialogFragment.ListNameTextWatcher
+import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.textfield.TextInputLayout
 
 /**
  * Dialog to rename or remove a list.
  */
-public class ListManageDialogFragment extends AppCompatDialogFragment {
+class ListManageDialogFragment : AppCompatDialogFragment() {
 
-    private static final String TAG = "listmanagedialog";
-    private static final String ARG_LIST_ID = "listId";
+    @BindView(R.id.textInputLayoutListManageListName)
+    var textInputLayoutName: TextInputLayout? = null
+    private var editTextName: EditText? = null
 
-    private static ListManageDialogFragment newInstance(String listId) {
-        ListManageDialogFragment f = new ListManageDialogFragment();
+    @BindView(R.id.buttonNegative)
+    var buttonNegative: Button? = null
 
-        Bundle args = new Bundle();
-        args.putString(ARG_LIST_ID, listId);
-        f.setArguments(args);
+    @BindView(R.id.buttonPositive)
+    var buttonPositive: Button? = null
+    private var unbinder: Unbinder? = null
+    private lateinit var listId: String
 
-        return f;
-    }
-
-    /**
-     * Display a dialog which allows to edit the title of this list or remove it.
-     */
-    public static void show(String listId, FragmentManager fm) {
-        // replace any currently showing list dialog (do not add it to the back stack)
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment prev = fm.findFragmentByTag(TAG);
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        DialogTools.safeShow(ListManageDialogFragment.newInstance(listId), fm, ft, TAG);
-    }
-
-    @BindView(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
-    private EditText editTextName;
-    @BindView(R.id.buttonNegative) Button buttonNegative;
-    @BindView(R.id.buttonPositive) Button buttonPositive;
-
-    private Unbinder unbinder;
-    private String listId;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // hide title, use custom theme
-        setStyle(STYLE_NO_TITLE, 0);
+        setStyle(STYLE_NO_TITLE, 0)
 
-        listId = requireArguments().getString(ARG_LIST_ID);
+        listId = requireArguments().getString(ARG_LIST_ID)!!
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
-        unbinder = ButterKnife.bind(this, layout);
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val layout = inflater.inflate(R.layout.dialog_list_manage, container, false)
+        unbinder = ButterKnife.bind(this, layout)
 
-        editTextName = textInputLayoutName.getEditText();
+        editTextName = textInputLayoutName!!.editText
 
         // buttons
-        buttonNegative.setEnabled(false);
-        buttonNegative.setText(R.string.list_remove);
-        buttonNegative.setOnClickListener(v -> {
+        buttonNegative!!.isEnabled = false
+        buttonNegative!!.setText(R.string.list_remove)
+        buttonNegative!!.setOnClickListener {
             // remove list and items
-            ListsTools.removeList(requireContext(), listId);
-
-            dismiss();
-        });
-        buttonPositive.setText(android.R.string.ok);
-        buttonPositive.setOnClickListener(v -> {
+            ListsTools.removeList(requireContext(), listId)
+            dismiss()
+        }
+        buttonPositive!!.setText(android.R.string.ok)
+        buttonPositive!!.setOnClickListener {
             if (editTextName == null) {
-                return;
+                return@setOnClickListener
             }
 
             // update title
-            String listName = editTextName.getText().toString().trim();
-            ListsTools.renameList(requireContext(), listId, listName);
+            val listName = editTextName!!.text.toString().trim()
+            ListsTools.renameList(requireContext(), listId, listName)
 
-            dismiss();
-        });
-
-        return layout;
+            dismiss()
+        }
+        return layout
     }
 
-    @Override
-    public void onActivityCreated(Bundle arg0) {
-        super.onActivityCreated(arg0);
+    override fun onActivityCreated(arg0: Bundle?) {
+        super.onActivityCreated(arg0)
 
         // pre-populate list title
-        final Cursor list = requireContext().getContentResolver()
-                .query(Lists.buildListUri(listId), new String[] {
-                        Lists.NAME
-                }, null, null, null);
+        val list = requireContext().contentResolver
+            .query(
+                SeriesGuideContract.Lists.buildListUri(listId), arrayOf(
+                    SeriesGuideContract.Lists.NAME
+                ), null, null, null
+            )
         if (list == null) {
             // list might have been removed, or query failed
-            dismiss();
-            return;
+            dismiss()
+            return
         }
         if (!list.moveToFirst()) {
             // list not found
-            list.close();
-            dismiss();
-            return;
+            list.close()
+            dismiss()
+            return
         }
-        String listName = list.getString(0);
-        list.close();
-        editTextName.setText(listName);
-        editTextName.addTextChangedListener(
-                new AddListDialogFragment.ListNameTextWatcher(requireContext(), textInputLayoutName,
-                        buttonPositive, listName));
+        val listName = list.getString(0)
+        list.close()
+        editTextName!!.setText(listName)
+        editTextName!!.addTextChangedListener(
+            ListNameTextWatcher(
+                requireContext(), textInputLayoutName!!,
+                buttonPositive!!, listName
+            )
+        )
 
         // do only allow removing if this is NOT the last list
-        Cursor lists = requireContext().getContentResolver().query(Lists.CONTENT_URI,
-                new String[] {
-                        Lists._ID
-                }, null, null, null);
+        val lists = requireContext().contentResolver.query(
+            SeriesGuideContract.Lists.CONTENT_URI, arrayOf(
+                SeriesGuideContract.Lists._ID
+            ), null, null, null
+        )
         if (lists != null) {
-            if (lists.getCount() > 1) {
-                buttonNegative.setEnabled(true);
+            if (lists.count > 1) {
+                buttonNegative!!.isEnabled = true
             }
-            lists.close();
+            lists.close()
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unbinder!!.unbind()
+    }
 
-        unbinder.unbind();
+    companion object {
+
+        private const val TAG = "listmanagedialog"
+        private const val ARG_LIST_ID = "listId"
+
+        private fun newInstance(listId: String): ListManageDialogFragment {
+            val f = ListManageDialogFragment()
+            val args = Bundle()
+            args.putString(ARG_LIST_ID, listId)
+            f.arguments = args
+            return f
+        }
+
+        /**
+         * Display a dialog which allows to edit the title of this list or remove it.
+         */
+        fun show(listId: String, fm: FragmentManager) {
+            // replace any currently showing list dialog (do not add it to the back stack)
+            val ft = fm.beginTransaction()
+            val prev = fm.findFragmentByTag(TAG)
+            if (prev != null) {
+                ft.remove(prev)
+            }
+            newInstance(listId).safeShow(fm, ft, TAG)
+        }
     }
 }
