@@ -1,28 +1,25 @@
 
 package com.battlelancer.seriesguide.ui.lists;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.DialogListManageBinding;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.util.DialogTools;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.HashSet;
 
@@ -46,39 +43,27 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
         DialogTools.safeShow(new AddListDialogFragment(), fm, ft, TAG);
     }
 
-    @BindView(R.id.textInputLayoutListManageListName) TextInputLayout textInputLayoutName;
-    @BindView(R.id.buttonNegative) Button buttonNegative;
-    @BindView(R.id.buttonPositive) Button buttonPositive;
+    private DialogListManageBinding binding;
 
-    private Unbinder unbinder;
-
+    @NonNull
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // hide title, use custom theme
-        setStyle(STYLE_NO_TITLE, 0);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.dialog_list_manage, container, false);
-        unbinder = ButterKnife.bind(this, layout);
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        DialogListManageBinding binding = DialogListManageBinding.inflate(getLayoutInflater());
+        this.binding = binding;
 
         // title
-        final EditText editTextName = textInputLayoutName.getEditText();
+        final EditText editTextName = binding.textInputLayoutListManageListName.getEditText();
         if (editTextName != null) {
             editTextName.addTextChangedListener(
                     new ListNameTextWatcher(requireContext(),
-                            textInputLayoutName, buttonPositive, null));
+                            binding.textInputLayoutListManageListName, binding.buttonPositive, null));
         }
 
         // buttons
-        buttonNegative.setText(android.R.string.cancel);
-        buttonNegative.setOnClickListener(v -> dismiss());
-        buttonPositive.setText(R.string.list_add);
-        buttonPositive.setOnClickListener(v -> {
+        binding.buttonNegative.setText(android.R.string.cancel);
+        binding.buttonNegative.setOnClickListener(v -> dismiss());
+        binding.buttonPositive.setText(R.string.list_add);
+        binding.buttonPositive.setOnClickListener(v -> {
             if (editTextName == null) {
                 return;
             }
@@ -89,16 +74,17 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
 
             dismiss();
         });
-        buttonPositive.setEnabled(false);
+        binding.buttonPositive.setEnabled(false);
 
-        return layout;
+        return new MaterialAlertDialogBuilder(requireContext())
+                .setView(binding.getRoot())
+                .create();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        this.binding = null;
     }
 
     /**
@@ -107,12 +93,12 @@ public class AddListDialogFragment extends AppCompatDialogFragment {
      * inserted just resets the properties of the existing list).
      */
     public static class ListNameTextWatcher implements TextWatcher {
-        private Context context;
-        private TextInputLayout textInputLayoutName;
-        private TextView buttonPositive;
+        private final Context context;
+        private final TextInputLayout textInputLayoutName;
+        private final TextView buttonPositive;
         private final HashSet<String> listNames;
         @Nullable
-        private String currentName;
+        private final String currentName;
 
         public ListNameTextWatcher(Context context, TextInputLayout textInputLayoutName,
                 TextView buttonPositive, @Nullable String currentName) {
