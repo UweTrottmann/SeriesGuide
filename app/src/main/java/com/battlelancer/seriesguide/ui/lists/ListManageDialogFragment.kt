@@ -1,37 +1,22 @@
 package com.battlelancer.seriesguide.ui.lists
 
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.DialogListManageBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.ui.lists.AddListDialogFragment.ListNameTextWatcher
 import com.battlelancer.seriesguide.util.safeShow
-import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Dialog to rename or remove a list.
  */
 class ListManageDialogFragment : AppCompatDialogFragment() {
 
-    @BindView(R.id.textInputLayoutListManageListName)
-    var textInputLayoutName: TextInputLayout? = null
-    private var editTextName: EditText? = null
-
-    @BindView(R.id.buttonNegative)
-    var buttonNegative: Button? = null
-
-    @BindView(R.id.buttonPositive)
-    var buttonPositive: Button? = null
-    private var unbinder: Unbinder? = null
+    private var binding: DialogListManageBinding? = null
     private lateinit var listId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,42 +28,40 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         listId = requireArguments().getString(ARG_LIST_ID)!!
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val layout = inflater.inflate(R.layout.dialog_list_manage, container, false)
-        unbinder = ButterKnife.bind(this, layout)
-
-        editTextName = textInputLayoutName!!.editText
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogListManageBinding.inflate(layoutInflater)
+        this.binding = binding
 
         // buttons
-        buttonNegative!!.isEnabled = false
-        buttonNegative!!.setText(R.string.list_remove)
-        buttonNegative!!.setOnClickListener {
+        binding.buttonNegative.isEnabled = false
+        binding.buttonNegative.setText(R.string.list_remove)
+        binding.buttonNegative.setOnClickListener {
             // remove list and items
             ListsTools.removeList(requireContext(), listId)
             dismiss()
         }
-        buttonPositive!!.setText(android.R.string.ok)
-        buttonPositive!!.setOnClickListener {
-            if (editTextName == null) {
-                return@setOnClickListener
-            }
+        binding.buttonPositive.setText(android.R.string.ok)
+        binding.buttonPositive.setOnClickListener {
+            val editText = this.binding?.textInputLayoutListManageListName?.editText
+                ?: return@setOnClickListener
 
             // update title
-            val listName = editTextName!!.text.toString().trim()
+            val listName = editText.text.toString().trim()
             ListsTools.renameList(requireContext(), listId, listName)
 
             dismiss()
         }
-        return layout
+
+        lifecycleScope.launchWhenCreated {
+            configureViews()
+        }
+
+        return MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.getRoot())
+            .create()
     }
 
-    override fun onActivityCreated(arg0: Bundle?) {
-        super.onActivityCreated(arg0)
-
+    private fun configureViews() {
         // pre-populate list title
         val list = requireContext().contentResolver
             .query(
@@ -99,11 +82,20 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         }
         val listName = list.getString(0)
         list.close()
-        editTextName!!.setText(listName)
-        editTextName!!.addTextChangedListener(
-            ListNameTextWatcher(
-                requireContext(), textInputLayoutName!!,
-                buttonPositive!!, listName
+
+        val binding = this@ListManageDialogFragment.binding
+        if (binding == null) {
+            dismiss()
+            return
+        }
+
+        val textInputLayoutName = binding.textInputLayoutListManageListName
+        val editTextName = textInputLayoutName.editText!!
+        editTextName.setText(listName)
+        editTextName.addTextChangedListener(
+            AddListDialogFragment.ListNameTextWatcher(
+                requireContext(), textInputLayoutName,
+                binding.buttonPositive, listName
             )
         )
 
@@ -115,7 +107,7 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
         )
         if (lists != null) {
             if (lists.count > 1) {
-                buttonNegative!!.isEnabled = true
+                binding.buttonNegative.isEnabled = true
             }
             lists.close()
         }
@@ -123,7 +115,7 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder!!.unbind()
+        binding = null
     }
 
     companion object {
