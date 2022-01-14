@@ -232,7 +232,7 @@ class SearchActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowLis
             val showTmdbId = TmdbIdExtractor(applicationContext, sharedText).tryToExtract()
             if (showTmdbId > 0) {
                 // found an id, display the add dialog
-                AddShowDialogFragment.show(this@SearchActivity, supportFragmentManager, showTmdbId)
+                AddShowDialogFragment.show(supportFragmentManager, showTmdbId)
             } else {
                 // no id, populate the search field instead
                 viewPager.setCurrentItem(TAB_POSITION_SEARCH, false)

@@ -78,11 +78,7 @@ class UserEpisodeStreamFragment : StreamFragment() {
                         )
                     } else {
                         // Offer to add the show if not in database.
-                        AddShowDialogFragment.show(
-                            requireContext(),
-                            this@UserEpisodeStreamFragment.parentFragmentManager,
-                            showTmdbId
-                        )
+                        AddShowDialogFragment.show(parentFragmentManager, showTmdbId)
                     }
                 }
             }
