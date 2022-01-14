@@ -290,12 +290,12 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(event: ServiceActiveEvent?) {
+    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: ServiceActiveEvent?) {
         setEpisodeButtonsEnabled(false)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventEpisodeTask(event: ServiceCompletedEvent?) {
+    fun onEventEpisodeTask(@Suppress("UNUSED_PARAMETER") event: ServiceCompletedEvent?) {
         setEpisodeButtonsEnabled(true)
     }
 

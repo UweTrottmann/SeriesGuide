@@ -176,7 +176,7 @@ class MoviesSearchActivity : BaseMessageActivity(), OnSearchClickListener {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventLanguageChanged(event: LocalizationChangedEvent?) {
+    fun onEventLanguageChanged(@Suppress("UNUSED_PARAMETER") event: LocalizationChangedEvent?) {
         // just run the current search again
         search()
     }
