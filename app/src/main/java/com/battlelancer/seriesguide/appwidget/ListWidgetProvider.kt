@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.util.PendingIntentCompat
 import timber.log.Timber
 import java.util.Random
 
@@ -145,7 +146,8 @@ class ListWidgetProvider : AppWidgetProvider() {
             context,
             REQUEST_CODE,
             buildDataChangedIntent(context),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            // Mutable because used to schedule alarm.
+            PendingIntentCompat.flagMutable or PendingIntent.FLAG_UPDATE_CURRENT
         )
     }
 
@@ -276,7 +278,10 @@ class ListWidgetProvider : AppWidgetProvider() {
                 .putExtra(ShowsActivity.EXTRA_SELECTED_TAB, showsTabIndex)
             TaskStackBuilder.create(context)
                 .addNextIntent(appLaunchIntent)
-                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT).let {
+                .getPendingIntent(
+                    appWidgetId,
+                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+                ).let {
                     rv.setOnClickPendingIntent(R.id.widget_title, it)
                 }
 
@@ -288,7 +293,13 @@ class ListWidgetProvider : AppWidgetProvider() {
                 data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
                 putExtra(EXTRA_SHOWS_TAB_INDEX, showsTabIndex)
             }.let {
-                PendingIntent.getBroadcast(context, 1, it, PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getBroadcast(
+                    context,
+                    1,
+                    it,
+                    // The system fills in the template, so must be mutable.
+                    PendingIntentCompat.flagMutable or PendingIntent.FLAG_UPDATE_CURRENT
+                )
             }.let {
                 rv.setPendingIntentTemplate(R.id.list_view, it)
             }
@@ -302,7 +313,10 @@ class ListWidgetProvider : AppWidgetProvider() {
                     rv.setOnClickPendingIntent(
                         R.id.widget_settings,
                         PendingIntent.getActivity(
-                            context, appWidgetId, it, PendingIntent.FLAG_UPDATE_CURRENT
+                            context,
+                            appWidgetId,
+                            it,
+                            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
                         )
                     )
                 }
