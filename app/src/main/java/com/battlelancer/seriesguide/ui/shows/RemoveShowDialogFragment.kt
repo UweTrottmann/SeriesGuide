@@ -57,7 +57,7 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
                 binding.also {
                     it.textViewRemove.text = getString(R.string.confirm_delete, titleOrNull)
                     it.buttonPositive.setOnClickListener {
-                        if (!SgSyncAdapter.isSyncActive(context, true)) {
+                        if (!SgSyncAdapter.isSyncActive(requireContext(), true)) {
                             SgApp.getServicesComponent(requireContext()).showTools()
                                 .removeShow(showId)
                             dismiss()

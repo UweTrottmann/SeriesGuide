@@ -52,7 +52,7 @@ class DebugViewFragment : AppCompatDialogFragment() {
         }
 
         val buttonTriggerJobProcessor = ButtonAction("Schedule job processing") {
-            SgSyncAdapter.requestSyncJobsImmediate(context)
+            SgSyncAdapter.requestSyncJobsImmediate(requireContext())
         }
 
         debugView.modules(

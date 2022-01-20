@@ -119,7 +119,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // set current value of auto-update pref
         findPreference<SwitchPreferenceCompat>(UpdateSettings.KEY_AUTOUPDATE)!!.isChecked =
-            SgSyncAdapter.isSyncAutomatically(activity)
+            SgSyncAdapter.isSyncAutomatically(requireContext())
     }
 
     private fun setupNotificationSettings() {
@@ -418,7 +418,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         if (UpdateSettings.KEY_AUTOUPDATE == key) {
             if (pref != null) {
                 val autoUpdatePref = pref as SwitchPreferenceCompat
-                SgSyncAdapter.setSyncAutomatically(activity, autoUpdatePref.isChecked)
+                SgSyncAdapter.setSyncAutomatically(requireContext(), autoUpdatePref.isChecked)
             }
         }
 

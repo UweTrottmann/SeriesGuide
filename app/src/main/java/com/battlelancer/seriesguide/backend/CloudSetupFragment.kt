@@ -382,7 +382,7 @@ class CloudSetupFragment : Fragment() {
             } else if (hexagonTools.setAccountAndEnabled(signInAccountOrNull)) {
                 // schedule full sync
                 Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED")
-                SgSyncAdapter.requestSyncFullImmediate(activity, false)
+                SgSyncAdapter.requestSyncFullImmediate(requireContext(), false)
                 HexagonSettings.setSetupCompleted(activity)
             } else {
                 // Do not set completed, will show setup incomplete message.
