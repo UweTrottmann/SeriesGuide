@@ -477,9 +477,9 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     private fun updateEpisodeViews(episode: SgEpisode2?) {
         if (episode != null) {
             // hide check-in if not connected to trakt or hexagon is enabled
-            val isConnectedToTrakt = TraktCredentials.get(activity).hasCredentials()
+            val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
             val displayCheckIn = (isConnectedToTrakt
-                    && !HexagonSettings.isEnabled(activity))
+                    && !HexagonSettings.isEnabled(requireContext()))
             buttonCheckin.visibility = if (displayCheckIn) View.VISIBLE else View.GONE
             buttonStreamingSearch.nextFocusUpId =
                 if (displayCheckIn) R.id.buttonCheckIn else R.id.buttonEpisodeWatched

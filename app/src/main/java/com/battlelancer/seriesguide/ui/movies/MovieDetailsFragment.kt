@@ -321,8 +321,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.buttonMovieTrailer.isGone = false
 
         // hide check-in if not connected to trakt or hexagon is enabled
-        val isConnectedToTrakt = TraktCredentials.get(activity).hasCredentials()
-        val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(activity)
+        val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
+        val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(requireContext())
         binding.containerMovieButtons.buttonMovieCheckIn.isGone = hideCheckIn
 
         // watched button
