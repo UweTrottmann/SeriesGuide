@@ -1,145 +1,128 @@
-package com.battlelancer.seriesguide.jobs;
+package com.battlelancer.seriesguide.jobs
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.jobs.episodes.JobAction;
-import com.battlelancer.seriesguide.modules.ServicesComponent;
-import com.battlelancer.seriesguide.sync.NetworkJobProcessor;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.trakt5.TraktV2;
-import com.uwetrottmann.trakt5.entities.MovieIds;
-import com.uwetrottmann.trakt5.entities.SyncErrors;
-import com.uwetrottmann.trakt5.entities.SyncItems;
-import com.uwetrottmann.trakt5.entities.SyncMovie;
-import com.uwetrottmann.trakt5.entities.SyncResponse;
-import com.uwetrottmann.trakt5.services.Sync;
-import org.threeten.bp.Instant;
-import org.threeten.bp.OffsetDateTime;
-import org.threeten.bp.ZoneOffset;
-import retrofit2.Call;
-import retrofit2.Response;
+import android.content.Context
+import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.jobs.episodes.JobAction
+import com.battlelancer.seriesguide.sync.NetworkJobProcessor.JobResult
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.trakt5.entities.MovieIds
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncMovie
+import com.uwetrottmann.trakt5.entities.SyncResponse
+import org.threeten.bp.Instant
+import org.threeten.bp.ZoneOffset
+import retrofit2.Call
 
-public class TraktMovieJob extends BaseNetworkMovieJob {
+class TraktMovieJob(
+    action: JobAction,
+    jobInfo: SgJobInfo,
+    private val actionAtMs: Long
+) : BaseNetworkMovieJob(action, jobInfo) {
 
-    private final long actionAtMs;
-
-    public TraktMovieJob(JobAction action, SgJobInfo jobInfo, long actionAtMs) {
-        super(action, jobInfo);
-        this.actionAtMs = actionAtMs;
+    override fun execute(context: Context): JobResult {
+        return buildResult(context, upload(context))
     }
 
-    @NonNull
-    @Override
-    public NetworkJobProcessor.JobResult execute(Context context) {
-        return buildResult(context, upload(context));
-    }
-
-    private int upload(Context context) {
+    private fun upload(context: Context): Int {
         if (!TraktCredentials.get(context).hasCredentials()) {
-            return NetworkJob.ERROR_TRAKT_AUTH;
+            return NetworkJob.ERROR_TRAKT_AUTH
         }
 
-        SyncMovie movie = new SyncMovie().id(MovieIds.tmdb(jobInfo.movieTmdbId()));
+        val movie = SyncMovie().id(MovieIds.tmdb(jobInfo.movieTmdbId()))
 
         // send time of action to avoid adding duplicate plays/collection events at trakt
         // if this job re-runs due to failure, but trakt already applied changes (it happens)
         // also if execution is delayed to due being offline this will ensure
         // the actual action time is stored at trakt
-        Instant instant = Instant.ofEpochMilli(actionAtMs);
-        OffsetDateTime actionAtDateTime = instant.atOffset(ZoneOffset.UTC);
+        val instant = Instant.ofEpochMilli(actionAtMs)
+        val actionAtDateTime = instant.atOffset(ZoneOffset.UTC)
         // only send timestamp if adding, not if removing to save data
         // note: timestamp currently not supported for watchlist action
         if (action == JobAction.MOVIE_COLLECTION_ADD) {
-            movie.collectedAt(actionAtDateTime);
+            movie.collectedAt(actionAtDateTime)
         } else if (action == JobAction.MOVIE_WATCHED_SET) {
-            movie.watchedAt(actionAtDateTime);
+            movie.watchedAt(actionAtDateTime)
         }
 
-        SyncItems items = new SyncItems().movies(movie);
+        val items = SyncItems().movies(movie)
 
         // determine network call
-        String errorLabel;
-        Call<SyncResponse> call;
-        ServicesComponent component = SgApp.getServicesComponent(context);
-        TraktV2 trakt = component.trakt();
-        Sync traktSync = component.traktSync();
-        switch (action) {
-            case MOVIE_COLLECTION_ADD:
-                errorLabel = "add movie to collection";
-                call = traktSync.addItemsToCollection(items);
-                break;
-            case MOVIE_COLLECTION_REMOVE:
-                errorLabel = "remove movie from collection";
-                call = traktSync.deleteItemsFromCollection(items);
-                break;
-            case MOVIE_WATCHLIST_ADD:
-                errorLabel = "add movie to watchlist";
-                call = traktSync.addItemsToWatchlist(items);
-                break;
-            case MOVIE_WATCHLIST_REMOVE:
-                errorLabel = "remove movie from watchlist";
-                call = traktSync.deleteItemsFromWatchlist(items);
-                break;
-            case MOVIE_WATCHED_SET:
-                errorLabel = "set movie watched";
-                call = traktSync.addItemsToWatchedHistory(items);
-                break;
-            case MOVIE_WATCHED_REMOVE:
-                errorLabel = "set movie not watched";
-                call = traktSync.deleteItemsFromWatchedHistory(items);
-                break;
-            default:
-                throw new IllegalArgumentException("Action " + action + " not supported.");
+        val errorLabel: String
+        val call: Call<SyncResponse>
+        val component = getServicesComponent(context)
+        val trakt = component.trakt()
+        val traktSync = component.traktSync()!!
+        when (action) {
+            JobAction.MOVIE_COLLECTION_ADD -> {
+                errorLabel = "add movie to collection"
+                call = traktSync.addItemsToCollection(items)
+            }
+            JobAction.MOVIE_COLLECTION_REMOVE -> {
+                errorLabel = "remove movie from collection"
+                call = traktSync.deleteItemsFromCollection(items)
+            }
+            JobAction.MOVIE_WATCHLIST_ADD -> {
+                errorLabel = "add movie to watchlist"
+                call = traktSync.addItemsToWatchlist(items)
+            }
+            JobAction.MOVIE_WATCHLIST_REMOVE -> {
+                errorLabel = "remove movie from watchlist"
+                call = traktSync.deleteItemsFromWatchlist(items)
+            }
+            JobAction.MOVIE_WATCHED_SET -> {
+                errorLabel = "set movie watched"
+                call = traktSync.addItemsToWatchedHistory(items)
+            }
+            JobAction.MOVIE_WATCHED_REMOVE -> {
+                errorLabel = "set movie not watched"
+                call = traktSync.deleteItemsFromWatchedHistory(items)
+            }
+            else -> throw IllegalArgumentException("Action $action not supported.")
         }
 
         // execute call
         try {
-            Response<SyncResponse> response = call.execute();
-            if (response.isSuccessful()) {
+            val response = call.execute()
+            if (response.isSuccessful) {
                 // check if any items were not found
                 if (!isSyncSuccessful(response.body())) {
-                    return NetworkJob.ERROR_TRAKT_NOT_FOUND;
+                    return NetworkJob.ERROR_TRAKT_NOT_FOUND
                 }
             } else {
                 if (SgTrakt.isUnauthorized(context, response)) {
-                    return NetworkJob.ERROR_TRAKT_AUTH;
+                    return NetworkJob.ERROR_TRAKT_AUTH
                 }
-                Errors.logAndReport(errorLabel, response,
-                        SgTrakt.checkForTraktError(trakt, response));
-
-                int code = response.code();
-                if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
-                    return NetworkJob.ERROR_TRAKT_SERVER;
+                Errors.logAndReport(
+                    errorLabel, response,
+                    SgTrakt.checkForTraktError(trakt, response)
+                )
+                val code = response.code()
+                return if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
+                    NetworkJob.ERROR_TRAKT_SERVER
                 } else {
-                    return NetworkJob.ERROR_TRAKT_CLIENT;
+                    NetworkJob.ERROR_TRAKT_CLIENT
                 }
             }
-        } catch (Exception e) {
-            Errors.logAndReport(errorLabel, e);
-            return NetworkJob.ERROR_CONNECTION;
+        } catch (e: Exception) {
+            Errors.logAndReport(errorLabel, e)
+            return NetworkJob.ERROR_CONNECTION
         }
-
-        return NetworkJob.SUCCESS;
+        return NetworkJob.SUCCESS
     }
 
-    /**
-     * If the {@link SyncErrors} indicates any show, season or episode was not found returns {@code
-     * false}.
-     */
-    private static boolean isSyncSuccessful(@Nullable SyncResponse response) {
-        if (response == null || response.not_found == null) {
-            return true;
+    companion object {
+        /**
+         * If [SyncResponse.not_found] indicates any show,
+         * season or episode was not found returns `false`.
+         */
+        private fun isSyncSuccessful(response: SyncResponse?): Boolean {
+            val notFound = response?.not_found ?: return true
+            if (notFound.movies?.isNotEmpty() == true) {
+                return false // movie not found
+            }
+            return true
         }
-
-        //noinspection RedundantIfStatement
-        if (response.not_found.movies != null && !response.not_found.movies.isEmpty()) {
-            return false; // movie not found
-        }
-
-        return true;
     }
 }

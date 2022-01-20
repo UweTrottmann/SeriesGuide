@@ -1,13 +1,12 @@
-package com.battlelancer.seriesguide.jobs;
+package com.battlelancer.seriesguide.jobs
 
-import android.content.Context;
-import androidx.annotation.NonNull;
+import android.content.Context
 
-public interface FlagJob {
+interface FlagJob {
 
-    boolean supportsHexagon();
+    fun supportsHexagon(): Boolean
 
-    boolean supportsTrakt();
+    fun supportsTrakt(): Boolean
 
     /**
      * If requested, prepares a network job. Applies local changes, then persists the network job.
@@ -15,11 +14,10 @@ public interface FlagJob {
      * @return If local changes were applied successfully and if requested the network op was
      * persisted.
      */
-    boolean applyLocalChanges(Context context, boolean requiresNetworkJob);
+    fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean
 
     /**
      * A message to be shown to the user that an action has completed (locally).
      */
-    @NonNull
-    String getConfirmationText(Context context);
+    fun getConfirmationText(context: Context): String
 }

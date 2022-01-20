@@ -1,28 +1,21 @@
-package com.battlelancer.seriesguide.jobs;
+package com.battlelancer.seriesguide.jobs
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.net.Uri;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.jobs.episodes.JobAction;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import android.content.ContentValues
+import android.content.Context
+import com.battlelancer.seriesguide.jobs.episodes.JobAction
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
 
-public abstract class BaseJob {
+abstract class BaseJob(private val action: JobAction) {
 
-    private final JobAction action;
+    protected fun persistNetworkJob(context: Context, jobInfo: ByteArray): Boolean {
+        val values = ContentValues()
+        values.put(SeriesGuideContract.Jobs.TYPE, action.id)
+        values.put(SeriesGuideContract.Jobs.CREATED_MS, System.currentTimeMillis())
+        values.put(SeriesGuideContract.Jobs.EXTRAS, jobInfo)
 
-    public BaseJob(JobAction action) {
-        this.action = action;
+        val insert = context.contentResolver.insert(SeriesGuideContract.Jobs.CONTENT_URI, values)
+
+        return insert != null
     }
 
-    protected boolean persistNetworkJob(Context context, @NonNull byte[] jobInfo) {
-        ContentValues values = new ContentValues();
-        values.put(SeriesGuideContract.Jobs.TYPE, action.id);
-        values.put(SeriesGuideContract.Jobs.CREATED_MS, System.currentTimeMillis());
-        values.put(SeriesGuideContract.Jobs.EXTRAS, jobInfo);
-
-        Uri insert = context.getContentResolver().insert(SeriesGuideContract.Jobs.CONTENT_URI, values);
-
-        return insert != null;
-    }
 }
