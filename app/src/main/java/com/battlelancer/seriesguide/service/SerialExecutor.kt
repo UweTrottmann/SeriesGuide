@@ -1,36 +1,37 @@
-package com.battlelancer.seriesguide.service;
+package com.battlelancer.seriesguide.service
 
-import android.os.AsyncTask;
-import androidx.annotation.NonNull;
-import java.util.ArrayDeque;
-import java.util.concurrent.Executor;
+import android.os.AsyncTask
+import java.util.ArrayDeque
+import java.util.concurrent.Executor
 
 /**
- * A serial executor that uses the {@link AsyncTask#THREAD_POOL_EXECUTOR} to execute tasks on.
+ * A serial executor that uses the [AsyncTask.THREAD_POOL_EXECUTOR] to execute tasks on.
  *
- * <p>Adapted from {@link AsyncTask#SERIAL_EXECUTOR}, Copyright (C) 2008 The Android Open Source
+ * Adapted from [AsyncTask.SERIAL_EXECUTOR], Copyright (C) 2008 The Android Open Source
  * Project, Licensed under the Apache License, Version 2.0.
  */
-class SerialExecutor implements Executor {
-    private final ArrayDeque<Runnable> tasks = new ArrayDeque<>();
-    private Runnable active;
+class SerialExecutor : Executor {
+    private val tasks = ArrayDeque<Runnable>()
+    private var active: Runnable? = null
 
-    public synchronized void execute(@NonNull final Runnable r) {
-        tasks.offer(() -> {
+    @Synchronized
+    override fun execute(r: Runnable) {
+        tasks.offer(Runnable {
             try {
-                r.run();
+                r.run()
             } finally {
-                scheduleNext();
+                scheduleNext()
             }
-        });
+        })
         if (active == null) {
-            scheduleNext();
+            scheduleNext()
         }
     }
 
-    private synchronized void scheduleNext() {
-        if ((active = tasks.poll()) != null) {
-            AsyncTask.THREAD_POOL_EXECUTOR.execute(active);
+    @Synchronized
+    private fun scheduleNext() {
+        if (tasks.poll().also { active = it } != null) {
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(active)
         }
     }
 }

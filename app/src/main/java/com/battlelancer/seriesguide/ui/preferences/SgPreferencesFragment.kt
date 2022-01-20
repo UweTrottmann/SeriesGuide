@@ -148,7 +148,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                     ringtonePref?.isEnabled = isChecked
                 }
 
-                NotificationService.trigger(activity)
+                NotificationService.trigger(requireContext())
                 true
             }
             // disable advanced notification settings if notifications are disabled
