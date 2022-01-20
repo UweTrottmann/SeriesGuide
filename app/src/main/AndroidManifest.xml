@@ -202,7 +202,8 @@
         <activity
             android:name="com.battlelancer.seriesguide.traktapi.TraktAuthActivity"
             android:label="@string/connect_trakt"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:exported="true">
             <!-- Support callback for external browser OAuth flow. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -234,7 +235,8 @@
 
         <!-- Notification service -->
         <receiver android:name="com.battlelancer.seriesguide.service.NotificationActionReceiver" />
-        <receiver android:name="com.battlelancer.seriesguide.service.NotificationAlarmReceiver">
+        <receiver android:name="com.battlelancer.seriesguide.service.NotificationAlarmReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -243,7 +245,8 @@
         <!-- List widget configuration -->
         <activity
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetPreferenceActivity"
-            android:taskAffinity="com.battlelancer.seriesguide.task.configuration">
+            android:taskAffinity="com.battlelancer.seriesguide.task.configuration"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -252,7 +255,8 @@
         <!-- Widgets -->
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
