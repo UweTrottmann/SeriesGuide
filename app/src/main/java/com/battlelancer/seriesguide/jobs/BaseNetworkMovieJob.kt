@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstanc
 import com.battlelancer.seriesguide.ui.MoviesActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity
+import com.battlelancer.seriesguide.util.PendingIntentCompat
 
 abstract class BaseNetworkMovieJob(
     action: JobAction,
@@ -40,6 +41,9 @@ abstract class BaseNetworkMovieJob(
             .addNextIntent(Intent(context, ShowsActivity::class.java))
             .addNextIntent(Intent(context, MoviesActivity::class.java))
             .addNextIntent(MovieDetailsActivity.intentMovie(context, jobInfo.movieTmdbId()))
-            .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)!!
+            .getPendingIntent(
+                0,
+                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+            )!!
     }
 }

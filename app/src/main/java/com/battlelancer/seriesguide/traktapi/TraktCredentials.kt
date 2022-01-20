@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.uwetrottmann.trakt5.TraktV2
 import timber.log.Timber
 import java.io.IOException
@@ -73,7 +74,10 @@ class TraktCredentials private constructor(context: Context) {
         val intent = TaskStackBuilder.create(context)
             .addNextIntent(Intent(context, ShowsActivity::class.java))
             .addNextIntent(Intent(context, ConnectTraktActivity::class.java))
-            .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+            .getPendingIntent(
+                0,
+                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+            )
         nb.setContentIntent(intent)
         nb.setAutoCancel(true)
 
