@@ -23,6 +23,8 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <!-- Show shortcuts -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <!-- To schedule episode release notifications -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
 
     <uses-feature
         android:name="android.hardware.touchscreen"
