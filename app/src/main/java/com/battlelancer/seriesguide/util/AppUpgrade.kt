@@ -111,7 +111,9 @@ class AppUpgrade(
                 val pi = PendingIntent.getBroadcast(
                     context,
                     ListWidgetProvider.REQUEST_CODE,
-                    Intent(ListWidgetProvider.ACTION_DATA_CHANGED), 0
+                    Intent(ListWidgetProvider.ACTION_DATA_CHANGED),
+                    // Mutable because it was created without flags which defaulted to mutable.
+                    PendingIntentCompat.flagMutable
                 )
                 am.cancel(pi)
             }

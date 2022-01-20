@@ -10,6 +10,7 @@ import android.os.AsyncTask
 import android.os.SystemClock
 import android.text.format.DateUtils
 import androidx.core.content.getSystemService
+import com.battlelancer.seriesguide.util.PendingIntentCompat
 import timber.log.Timber
 
 class NotificationAlarmReceiver : BroadcastReceiver() {
@@ -21,7 +22,8 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
             Timber.d("Postponing notifications service launch")
 
             val i = Intent(context, NotificationAlarmReceiver::class.java)
-            val pi = PendingIntent.getBroadcast(context, 0, i, 0)
+            // Mutable intent because used to schedule alarm.
+            val pi = PendingIntent.getBroadcast(context, 0, i, PendingIntentCompat.flagMutable)
             val am = context.getSystemService<AlarmManager>()
             am?.set(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,

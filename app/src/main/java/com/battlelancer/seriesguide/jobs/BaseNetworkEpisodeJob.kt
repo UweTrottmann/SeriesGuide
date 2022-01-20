@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.util.PendingIntentCompat
 
 abstract class BaseNetworkEpisodeJob(
     action: JobAction,
@@ -52,6 +53,9 @@ abstract class BaseNetworkEpisodeJob(
         return TaskStackBuilder.create(context)
             .addNextIntent(Intent(context, ShowsActivity::class.java))
             .addNextIntent(intentShow(context, jobInfo.showId()))
-            .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)!!
+            .getPendingIntent(
+                0,
+                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+            )!!
     }
 }
