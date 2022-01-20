@@ -29,10 +29,11 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstanc
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isHidingSpecials
 import com.battlelancer.seriesguide.settings.NotificationSettings
-import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity.Companion.intent
+import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
+import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -82,7 +83,8 @@ class NotificationService(context: Context) {
             context,
             0,
             NotificationAlarmReceiver.intent(context),
-            0
+            // Mutable because used to schedule alarm.
+            PendingIntentCompat.flagMutable
         )
 
     fun run() {
@@ -321,7 +323,7 @@ class NotificationService(context: Context) {
                 .addNextIntent(episodeDetailsIntent)
                 .getPendingIntent(
                     REQUEST_CODE_SINGLE_EPISODE,
-                    PendingIntent.FLAG_CANCEL_CURRENT
+                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
                 )!!
         } else {
             // notify about multiple episodes
@@ -336,7 +338,7 @@ class NotificationService(context: Context) {
                 .addNextIntent(showsIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime))
                 .getPendingIntent(
                     REQUEST_CODE_MULTIPLE_EPISODES,
-                    PendingIntent.FLAG_CANCEL_CURRENT
+                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
                 )!!
         }
 
@@ -369,12 +371,13 @@ class NotificationService(context: Context) {
             }
 
             // Action button to check in
-            val checkInActionIntent = intent(id, context)
+            val checkInActionIntent = QuickCheckInActivity.intent(id, context)
             checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
             val checkInIntent = PendingIntent.getActivity(
                 context,
                 REQUEST_CODE_ACTION_CHECKIN,
-                checkInActionIntent, PendingIntent.FLAG_CANCEL_CURRENT
+                checkInActionIntent,
+                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
             )
             // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
             // note: Wear and Galaxy Watch devices do typically not support vector icons
@@ -390,7 +393,8 @@ class NotificationService(context: Context) {
             val setWatchedPendingIntent = PendingIntent.getBroadcast(
                 context,
                 REQUEST_CODE_ACTION_SET_WATCHED,
-                setWatchedIntent, PendingIntent.FLAG_CANCEL_CURRENT
+                setWatchedIntent,
+                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
             )
             // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
             // note: Wear and Galaxy Watch devices do typically not support vector icons
@@ -469,7 +473,7 @@ class NotificationService(context: Context) {
         val deleteIntent = PendingIntent.getBroadcast(
             context, REQUEST_CODE_DELETE_INTENT,
             i,
-            PendingIntent.FLAG_CANCEL_CURRENT
+            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
         )
         nb.setDeleteIntent(deleteIntent)
 
