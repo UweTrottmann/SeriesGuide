@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.ImageTools
-import com.uwetrottmann.androidutils.CheatSheet
 
 class ShowsViewHolder(
     itemView: View,
@@ -36,7 +36,7 @@ class ShowsViewHolder(
             }
         }
         // set watched button
-        CheatSheet.setup(setWatchedButton)
+        TooltipCompat.setTooltipText(setWatchedButton, setWatchedButton.contentDescription)
         @Suppress("UNUSED_ANONYMOUS_PARAMETER")
         setWatchedButton.setOnClickListener { v ->
             showItem?.let {
@@ -44,7 +44,7 @@ class ShowsViewHolder(
             }
         }
         // context menu
-        CheatSheet.setup(contextMenu)
+        TooltipCompat.setTooltipText(contextMenu, contextMenu.contentDescription)
         contextMenu.setOnClickListener { v ->
             showItem?.let {
                 onItemClickListener.onItemMenuClick(v, it)

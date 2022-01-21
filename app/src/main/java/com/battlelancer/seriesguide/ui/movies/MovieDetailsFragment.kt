@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.TooltipCompat
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -54,7 +55,6 @@ import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
 import com.uwetrottmann.tmdb2.entities.Videos
 import kotlinx.coroutines.Dispatchers
@@ -111,11 +111,17 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             parentFragmentManager
         )
         binding.containerRatings.root.isGone = true
-        CheatSheet.setup(binding.containerMovieButtons.buttonMovieCheckIn)
+        TooltipCompat.setTooltipText(
+            binding.containerMovieButtons.buttonMovieCheckIn,
+            binding.containerMovieButtons.buttonMovieCheckIn.contentDescription
+        )
 
         // language button
         binding.buttonMovieLanguage.isGone = true
-        CheatSheet.setup(binding.buttonMovieLanguage, R.string.pref_language)
+        TooltipCompat.setTooltipText(
+            binding.buttonMovieLanguage,
+            binding.buttonMovieLanguage.context.getString(R.string.pref_language)
+        )
         binding.buttonMovieLanguage.setOnClickListener {
             MovieLocalizationDialogFragment.show(parentFragmentManager)
         }
@@ -328,8 +334,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {
             it.text = TextToolsK.getWatchedButtonText(requireContext(), isWatched, plays)
-            CheatSheet.setup(
-                it, if (isWatched) R.string.action_unwatched else R.string.action_watched
+            TooltipCompat.setTooltipText(
+                it, it.context.getString(
+                    if (isWatched) R.string.action_unwatched else R.string.action_watched
+                )
             )
             if (isWatched) {
                 ViewTools.setVectorDrawableTop(it, R.drawable.ic_watched_24dp)
@@ -367,9 +375,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             it.setText(
                 if (inCollection) R.string.state_in_collection else R.string.action_collection_add
             )
-            CheatSheet.setup(
+            TooltipCompat.setTooltipText(
                 it,
-                if (inCollection) R.string.action_collection_remove else R.string.action_collection_add
+                it.context.getString(
+                    if (inCollection) R.string.action_collection_remove else R.string.action_collection_add
+                )
             )
             it.setOnClickListener {
                 if (inCollection) {
@@ -390,8 +400,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             it.setText(
                 if (inWatchlist) R.string.state_on_watchlist else R.string.watchlist_add
             )
-            CheatSheet.setup(
-                it, if (inWatchlist) R.string.watchlist_remove else R.string.watchlist_add
+            TooltipCompat.setTooltipText(
+                it, it.context.getString(
+                    if (inWatchlist) R.string.watchlist_remove else R.string.watchlist_add
+                )
             )
             it.setOnClickListener {
                 if (inWatchlist) {
@@ -433,12 +445,16 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         } else {
             binding.containerRatings.textViewRatingsTraktUserLabel.isGone = false
             binding.containerRatings.textViewRatingsTraktUser.isGone = false
-            binding.containerRatings.textViewRatingsTraktUser.text = TraktTools.buildUserRatingString(
-                activity,
-                rating
-            )
+            binding.containerRatings.textViewRatingsTraktUser.text =
+                TraktTools.buildUserRatingString(
+                    activity,
+                    rating
+                )
             binding.containerRatings.root.setOnClickListener { rateMovie() }
-            CheatSheet.setup(binding.containerRatings.root, R.string.action_rate)
+            TooltipCompat.setTooltipText(
+                binding.containerRatings.root,
+                binding.containerRatings.root.context.getString(R.string.action_rate)
+            )
         }
         binding.containerRatings.root.isGone = false
 
