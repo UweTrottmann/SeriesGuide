@@ -33,7 +33,7 @@ class SeasonsAdapter(
         itemClickListener: ItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val isRtlLayout = AndroidUtils.isRtlLayout()
+        private val isRtlLayout = AndroidUtils.isRtlLayout
         private var season: SgSeason2? = null
 
         init {
@@ -65,7 +65,7 @@ class SeasonsAdapter(
             val progress = max - released - toBeReleased - noRelease
             binding.progressBarSeason.apply {
                 this.max = max
-                if (AndroidUtils.isNougatOrHigher()) {
+                if (AndroidUtils.isNougatOrHigher) {
                     setProgress(progress, true)
                 } else {
                     setProgress(progress)

@@ -25,7 +25,7 @@ object ThemeUtils {
             2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             else ->
                 // Defaults as recommended by https://medium.com/androiddevelopers/appcompat-v23-2-daynight-d10f90c83e94
-                if (AndroidUtils.isAtLeastQ()) {
+                if (AndroidUtils.isAtLeastQ) {
                     AppCompatDelegate
                         .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 } else {

@@ -173,7 +173,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // warning: pre-M status bar not always translucent (e.g. Nexus 10)
         // (using fitsSystemWindows would not work correctly with multiple views)
         val config = (activity as MovieDetailsActivity).systemBarTintManager.config
-        val pixelInsetTop = if (AndroidUtils.isMarshmallowOrHigher()) {
+        val pixelInsetTop = if (AndroidUtils.isMarshmallowOrHigher) {
             config.statusBarHeight // full screen, status bar transparent
         } else {
             config.getPixelInsetTop(false) // status bar translucent

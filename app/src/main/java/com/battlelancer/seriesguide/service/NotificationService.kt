@@ -194,7 +194,7 @@ class NotificationService(context: Context) {
             Instant.ofEpochMilli(nextWakeUpTime)
         )
         if (am != null) {
-            if (AndroidUtils.isMarshmallowOrHigher()) {
+            if (AndroidUtils.isMarshmallowOrHigher) {
                 am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
             } else {
                 am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
