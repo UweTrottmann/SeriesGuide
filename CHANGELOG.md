@@ -8,6 +8,19 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 63
+----------
+*in development*
+
+#### 63-beta1
+*2022-01-21*
+
+* 🔧 Move movie trailer button right below title to make it easier to discover.
+* 🔨 Sort by title properly handles characters with accents.
+* 🔨 Display correct colors if check-in dialog is launched from notification.
+* 📝 Optimization for Android 12. 
+* 📝 Latest translations from Crowdin.
+
 Version 62
 ----------
 *2021-12-09*
