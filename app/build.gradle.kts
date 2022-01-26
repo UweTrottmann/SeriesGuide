@@ -221,10 +221,8 @@ dependencies {
 
     implementation("com.squareup.picasso:picasso:2.71828")
 
-    // https://github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
-    implementation("com.uwetrottmann.androidutils:androidutils:2.4.1") {
-        exclude(group = "com.android.support")
-    }
+    // https://github.com/UweTrottmann/AndroidUtils/releases
+    implementation("com.uwetrottmann.androidutils:androidutils:3.0.0")
     implementation("com.uwetrottmann.photoview:library:1.2.4")
     implementation("com.getkeepsafe.taptargetview:taptargetview:1.13.3")
 
