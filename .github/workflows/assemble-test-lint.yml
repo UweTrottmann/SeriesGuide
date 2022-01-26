@@ -1,12 +1,11 @@
-name: Assemble, Test and Lint
+name: Android CI
 
 on:
   push:
-    branches-ignore:
-      - 'gh-pages**'
+    branches: [ main, dev ]
   pull_request:
-    branches-ignore:
-      - 'gh-pages**'
+    branches: [ main, dev ]
+  workflow_dispatch:
 
 jobs:
   build:
