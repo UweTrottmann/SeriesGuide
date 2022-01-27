@@ -168,8 +168,10 @@
     </style>
 
     <!-- AppBar -->
+    <!-- Material3: for now keeping old style with elevation to avoid having to color status bar,
+         also new liftOnScroll flickers on scrolling. -->
     <style name="Widget.SeriesGuide.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
-        <item name="android:background">@color/sg_color_background</item>
+        <item name="android:background">?attr/sgColorTopAppBar</item>
     </style>
 
     <!-- Transparent background, disable shadow. -->
@@ -183,17 +185,17 @@
         <item name="colorOnSurface">?attr/colorPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorPrimary</item>
     </style>
-    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.Material3.Toolbar.Surface">
-        <item name="android:background">@color/sg_color_background</item>
+    <!-- Using OnSurface as toolbar typically used within AppBar which handles the background color. -->
+    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.Material3.Toolbar.OnSurface">
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
     </style>
-
-    <style name="Widget.SeriesGuide.Toolbar.Transparent">
-        <item name="android:background">@android:color/transparent</item>
+    <!-- Toolbar which draws its own background. -->
+    <style name="Widget.SeriesGuide.Toolbar.Surface">
+        <item name="android:background">?attr/sgColorTopAppBar</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Toolbar.Gradient" parent="Widget.Material3.Toolbar.Surface">
+    <style name="Widget.SeriesGuide.Toolbar.Gradient">
         <item name="android:background">@drawable/background_actionbar_gradient</item>
         <!-- Note: not overriding titleTextColor and subtitleTextColor as currently unused. -->
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
