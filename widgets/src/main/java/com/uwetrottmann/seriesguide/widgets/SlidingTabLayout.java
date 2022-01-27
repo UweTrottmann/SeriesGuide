@@ -301,6 +301,15 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
             scrollTo(targetScrollX, 0);
         }
+
+        // Update selected tab view once scrolling has stopped.
+        if (positionOffset == 0) {
+            for (int i = 0; i < tabStripChildCount; i++) {
+                View child = tabStrip.getChildAt(i);
+                child.setSelected(i == tabIndex);
+                child.setActivated(i == tabIndex);
+            }
+        }
     }
 
     private class InternalViewPagerListener extends ViewPager2.OnPageChangeCallback
