@@ -84,6 +84,7 @@
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
 
         <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
+        <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
 
         <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
 
@@ -169,6 +170,7 @@
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
 
         <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
+        <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
 
         <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
 

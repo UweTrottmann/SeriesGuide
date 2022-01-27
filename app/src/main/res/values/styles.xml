@@ -220,6 +220,18 @@
         <item name="android:theme">@style/ThemeOverLay.SeriesGuide.PrimaryAsColorOnSurface</item>
     </style>
 
+    <!-- BottomNavigationView -->
+    <style name="Widget.SeriesGuide.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.SeriesGuide.BottomNavigationView" parent="">
+        <!-- Used for Widget.Material3.BottomNavigationView.ActiveIndicator color -->
+        <item name="colorSecondaryContainer" tools:ignore="PrivateResource">?attr/colorPrimaryContainer</item>
+        <!-- Used for Widget.Material3.BottomNavigationView itemIconTint -->
+        <item name="colorOnSecondaryContainer" tools:ignore="PrivateResource">?attr/colorOnPrimaryContainer</item>
+    </style>
+
     <!-- Inline snackbar -->
     <!-- Use of CoordinatorLayout shifts layouts down, counter by moving inline snackbar up. -->
     <style name="Widget.SeriesGuide.InlineSnackbar">
