@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -72,7 +73,6 @@ import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.widgets.FeedbackView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.uwetrottmann.androidutils.CheatSheet
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -269,16 +269,19 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
 
         // episode buttons
         buttonWatchedUpTo.visibility = View.GONE // Unused.
-        CheatSheet.setup(buttonCheckin)
-        CheatSheet.setup(buttonWatch)
-        CheatSheet.setup(buttonSkip)
+        TooltipCompat.setTooltipText(buttonCheckin, buttonCheckin.contentDescription)
+        TooltipCompat.setTooltipText(buttonWatch, buttonWatch.contentDescription)
+        TooltipCompat.setTooltipText(buttonSkip, buttonSkip.contentDescription)
         initButtons(
             buttonStreamingSearch, buttonEpisodeStreamingSearchInfo,
             parentFragmentManager
         )
 
         // ratings
-        CheatSheet.setup(containerRatings, R.string.action_rate)
+        TooltipCompat.setTooltipText(
+            containerRatings,
+            containerRatings.context.getString(R.string.action_rate)
+        )
         textRatingRange.text = getString(R.string.format_rating_range, 10)
         buttonShare.setOnClickListener { shareEpisode() }
         buttonAddToCalendar.setOnClickListener { createCalendarEvent() }
@@ -589,9 +592,11 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         buttonCollect.setText(
             if (isCollected) R.string.state_in_collection else R.string.action_collection_add
         )
-        CheatSheet.setup(
+        TooltipCompat.setTooltipText(
             buttonCollect,
-            if (isCollected) R.string.action_collection_remove else R.string.action_collection_add
+            buttonCollect.context.getString(
+                if (isCollected) R.string.action_collection_remove else R.string.action_collection_add
+            )
         )
 
         // dvd number
@@ -752,7 +757,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         buttonFavorite.contentDescription = getString(
             if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
         )
-        CheatSheet.setup(buttonFavorite)
+        TooltipCompat.setTooltipText(buttonFavorite, buttonFavorite.contentDescription)
         buttonFavorite.tag = isFavorite
 
         // Regular network, release time and length.

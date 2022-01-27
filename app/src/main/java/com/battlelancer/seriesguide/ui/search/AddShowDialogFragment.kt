@@ -8,6 +8,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.TextAppearanceSpan
 import android.view.View
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
@@ -32,7 +33,6 @@ import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.androidutils.AndroidUtils
-import com.uwetrottmann.androidutils.CheatSheet
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -88,7 +88,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         }
         binding.apply {
             // Long press hint.
-            CheatSheet.setup(buttonAddLanguage, R.string.pref_language)
+            TooltipCompat.setTooltipText(
+                buttonAddLanguage,
+                buttonAddLanguage.context.getString(R.string.pref_language)
+            )
             // Buttons.
             StreamingSearch.initButtons(
                 buttonAddStreamingSearch, buttonAddStreamingSearchInfo, parentFragmentManager

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,6 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
-import com.uwetrottmann.androidutils.CheatSheet
 import java.util.Date
 
 class CalendarItemViewHolder(
@@ -63,7 +63,7 @@ class CalendarItemViewHolder(
             }
         }
 
-        CheatSheet.setup(watchedBox)
+        TooltipCompat.setTooltipText(watchedBox, watchedBox.contentDescription)
     }
 
     fun bind(

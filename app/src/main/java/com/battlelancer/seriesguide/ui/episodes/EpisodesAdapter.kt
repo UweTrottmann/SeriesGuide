@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -16,7 +17,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.widgets.WatchedBox
-import com.uwetrottmann.androidutils.CheatSheet
 import java.text.NumberFormat
 
 
@@ -149,9 +149,11 @@ class EpisodeViewHolder(
         val watched = EpisodeTools.isWatched(watchedFlag)
         binding.watchedBoxEpisode.contentDescription =
             context.getString(if (watched) R.string.action_unwatched else R.string.action_watched)
-        CheatSheet.setup(
+        TooltipCompat.setTooltipText(
             binding.watchedBoxEpisode,
-            if (watched) R.string.action_unwatched else R.string.action_watched
+            binding.watchedBoxEpisode.context.getString(
+                if (watched) R.string.action_unwatched else R.string.action_watched
+            )
         )
 
         // collected tag

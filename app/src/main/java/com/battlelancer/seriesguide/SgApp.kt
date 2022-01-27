@@ -146,7 +146,7 @@ class SgApp : Application() {
 
         AndroidThreeTen.init(this)
         initializeEventBus()
-        if (AndroidUtils.isAtLeastOreo()) {
+        if (AndroidUtils.isAtLeastOreo) {
             initializeNotificationChannels()
         }
 
@@ -262,10 +262,10 @@ class SgApp : Application() {
             detectDiskWrites()
             detectNetwork()
             detectCustomSlowCalls()
-            if (AndroidUtils.isMarshmallowOrHigher()) {
+            if (AndroidUtils.isMarshmallowOrHigher) {
                 detectResourceMismatches()
             }
-            if (AndroidUtils.isAtLeastOreo()) {
+            if (AndroidUtils.isAtLeastOreo) {
                 detectUnbufferedIo()
             }
             StrictMode.setThreadPolicy(build())
@@ -280,7 +280,7 @@ class SgApp : Application() {
             detectLeakedClosableObjects()
             detectLeakedRegistrationObjects()
             detectFileUriExposure()
-            if (AndroidUtils.isAtLeastOreo()) {
+            if (AndroidUtils.isAtLeastOreo) {
                 detectContentUriWithoutPermission()
             }
             // Policy applied to all threads in the virtual machine's process

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -58,7 +59,6 @@ import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.uwetrottmann.androidutils.CheatSheet
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -419,7 +419,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         // ratings
         bindingRatings.root.setOnClickListener { rateEpisode() }
-        CheatSheet.setup(bindingRatings.root, R.string.action_rate)
+        TooltipCompat.setTooltipText(
+            bindingRatings.root,
+            bindingRatings.root.context.getString(R.string.action_rate)
+        )
 
         // trakt rating
         bindingRatings.textViewRatingsValue.text =
@@ -467,7 +470,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 episodeId
             )
         }
-        CheatSheet.setup(bindingButtons.buttonEpisodeCheckin)
+        TooltipCompat.setTooltipText(
+            bindingButtons.buttonEpisodeCheckin,
+            bindingButtons.buttonEpisodeCheckin.contentDescription
+        )
         // hide check-in if not connected to trakt or hexagon is enabled
         val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
         val displayCheckIn = isConnectedToTrakt && !HexagonSettings.isEnabled(requireContext())
@@ -512,9 +518,11 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         val plays = episode.plays
         bindingButtons.buttonEpisodeWatched.text =
             getWatchedButtonText(requireContext(), isWatched, plays)
-        CheatSheet.setup(
+        TooltipCompat.setTooltipText(
             bindingButtons.buttonEpisodeWatched,
-            if (isWatched) R.string.action_unwatched else R.string.action_watched
+            bindingButtons.buttonEpisodeWatched.context.getString(
+                if (isWatched) R.string.action_unwatched else R.string.action_watched
+            )
         )
 
         // collected button
@@ -534,9 +542,11 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         bindingButtons.buttonEpisodeCollected.setText(
             if (collected) R.string.state_in_collection else R.string.action_collection_add
         )
-        CheatSheet.setup(
+        TooltipCompat.setTooltipText(
             bindingButtons.buttonEpisodeCollected,
-            if (collected) R.string.action_collection_remove else R.string.action_collection_add
+            bindingButtons.buttonEpisodeCollected.context.getString(
+                if (collected) R.string.action_collection_remove else R.string.action_collection_add
+            )
         )
 
         // skip button
@@ -562,9 +572,11 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             bindingButtons.buttonEpisodeSkip.setText(
                 if (isSkipped) R.string.state_skipped else R.string.action_skip
             )
-            CheatSheet.setup(
+            TooltipCompat.setTooltipText(
                 bindingButtons.buttonEpisodeSkip,
-                if (isSkipped) R.string.action_dont_skip else R.string.action_skip
+                bindingButtons.buttonEpisodeSkip.context.getString(
+                    if (isSkipped) R.string.action_dont_skip else R.string.action_skip
+                )
             )
         }
     }

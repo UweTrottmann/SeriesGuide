@@ -34,9 +34,9 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
-import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -141,7 +141,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
                 thresholdPref.isEnabled = isChecked
                 selectionPref.isEnabled = isChecked
-                if (AndroidUtils.isAtLeastOreo()) {
+                if (AndroidUtils.isAtLeastOreo) {
                     channelsPref?.isEnabled = isChecked
                 } else {
                     vibratePref?.isEnabled = isChecked
@@ -159,7 +159,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = isNotificationsEnabled
             hiddenPref.isEnabled = isNotificationsEnabled
             onlyNextPref.isEnabled = isNotificationsEnabled
-            if (AndroidUtils.isAtLeastOreo()) {
+            if (AndroidUtils.isAtLeastOreo) {
                 channelsPref?.isEnabled = isNotificationsEnabled
             } else {
                 vibratePref?.isEnabled = isNotificationsEnabled
@@ -173,7 +173,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = false
             hiddenPref.isEnabled = false
             onlyNextPref.isEnabled = false
-            if (AndroidUtils.isAtLeastOreo()) {
+            if (AndroidUtils.isAtLeastOreo) {
                 channelsPref?.isEnabled = false
             } else {
                 vibratePref?.isEnabled = false
@@ -317,7 +317,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
         if (NotificationSettings.KEY_CHANNELS == key) {
             // launch system settings app at settings for episodes channel
-            if (AndroidUtils.isAtLeastOreo()) {
+            if (AndroidUtils.isAtLeastOreo) {
                 val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
@@ -341,7 +341,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 var ringtoneUri: Uri? = data.getParcelableExtra(
                     RingtoneManager.EXTRA_RINGTONE_PICKED_URI
                 )
-                if (AndroidUtils.isNougatOrHigher()) {
+                if (AndroidUtils.isNougatOrHigher) {
                     // Xiaomi devices incorrectly return file:// uris on N
                     // protect against FileUriExposedException
                     if (ringtoneUri != null /* not silent */ && "content" != ringtoneUri.scheme) {
