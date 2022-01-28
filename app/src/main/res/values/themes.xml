@@ -47,12 +47,6 @@
         <item name="colorSurfaceInverse">@color/md_theme_dark_onSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
 
-        <!-- The color displayed most frequently across your app’s screens and components. -->
-<!--        <item name="colorPrimaryDark">#121212</item>-->
-<!--        <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>-->
-<!--        <item name="colorSecondary">@color/sg_color_secondary_dark</item>-->
-<!--        <item name="colorSecondaryVariant">@color/sg_color_secondary_500</item>-->
-
         <!-- Windows -->
         <item name="android:windowBackground">@color/sg_color_background</item>
         <item name="android:windowContentTransitions">true</item>
@@ -125,12 +119,6 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
-
-        <!-- The color displayed most frequently across your app’s screens and components. -->
-<!--        <item name="colorPrimaryDark">@color/sg_color_primary_700</item>-->
-<!--        <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>-->
-<!--        <item name="colorSecondary">@color/sg_color_secondary_light</item>-->
-<!--        <item name="colorSecondaryVariant">@color/sg_color_secondary_900</item>-->
 
         <!-- Windows -->
         <item name="android:windowBackground">@color/sg_color_background</item>
