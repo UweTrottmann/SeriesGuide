@@ -188,7 +188,7 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.Material3.Dialog">
+    <style name="Theme.SeriesGuide.Dialog.CheckIn" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
