@@ -22,8 +22,8 @@
         <item name="android:windowLightStatusBar">true</item>
 
         <!-- Note: nav bar color needs to be opaque! -->
-        <!-- Use white to reduce burn-in on OLED displays -->
-        <item name="android:navigationBarColor">@color/sg_white</item>
+        <!-- Use white-ish to reduce burn-in on OLED displays -->
+        <item name="android:navigationBarColor">?attr/sgColorTopAppBar</item>
         <item name="android:windowLightNavigationBar">true</item>
 
     </style>
