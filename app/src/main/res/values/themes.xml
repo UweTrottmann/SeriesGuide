@@ -20,7 +20,7 @@
         <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
         <item name="windowActionBar">false</item>
 
-        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="colorPrimary">@color/sg_color_primary_dark</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
@@ -36,31 +36,22 @@
         <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
         <item name="colorOnError">@color/md_theme_dark_onError</item>
         <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
-        <item name="android:colorBackground">@color/md_theme_dark_background</item>
-        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
-        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="android:colorBackground">@color/sg_color_background_dark</item>
+        <item name="colorOnBackground">@color/md_theme_dark_onSurface</item>
+        <item name="colorSurface">@color/sg_color_background_dark</item>
         <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
         <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
         <item name="colorOutline">@color/md_theme_dark_outline</item>
-        <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
-        <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/sg_color_background_dark</item>
+        <item name="colorSurfaceInverse">@color/md_theme_dark_onSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
 
         <!-- The color displayed most frequently across your app’s screens and components. -->
-<!--        <item name="colorPrimary">@color/sg_color_primary_dark</item>-->
 <!--        <item name="colorPrimaryDark">#121212</item>-->
 <!--        <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>-->
 <!--        <item name="colorSecondary">@color/sg_color_secondary_dark</item>-->
 <!--        <item name="colorSecondaryVariant">@color/sg_color_secondary_500</item>-->
-<!--        <item name="colorSurface">@color/sg_color_background_dark</item>-->
-<!--        <item name="android:colorBackground">@color/sg_color_background_dark</item>-->
-
-        <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
-<!--        <item name="colorOnPrimary">@color/sg_black</item>-->
-<!--        <item name="colorOnSecondary">@color/sg_black</item>-->
-<!--        <item name="colorOnSurface">@color/sg_white</item>-->
-<!--        <item name="colorOnBackground">@color/sg_white</item>-->
 
         <!-- Windows -->
         <item name="android:windowBackground">@color/sg_color_background</item>
@@ -107,26 +98,27 @@
         <!-- Explicitly add windowActionBar as some devices crash due to it missing -->
         <item name="windowActionBar">false</item>
 
-        <item name="colorPrimary">@color/md_theme_light_primary</item>
-        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimary">@color/sg_color_primary_light</item>
+        <item name="colorOnPrimary">@color/sg_white</item>
         <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
         <item name="colorSecondary">@color/md_theme_light_secondary</item>
-        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorOnSecondary">@color/sg_white</item>
         <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
         <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
         <item name="colorTertiary">@color/md_theme_light_tertiary</item>
-        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorOnTertiary">@color/sg_white</item>
         <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
         <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
         <item name="colorError">@color/md_theme_light_error</item>
         <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
         <item name="colorOnError">@color/md_theme_light_onError</item>
         <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
-        <item name="android:colorBackground">@color/md_theme_light_background</item>
-        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
-        <item name="colorSurface">@color/md_theme_light_surface</item>
-        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="android:colorBackground">@color/sg_color_background_light</item>
+        <item name="colorOnBackground">@color/sg_color_background_dark</item>
+        <!-- This must not match sgColorTopAppBar or AppBarLayout uses color to elevate itself. -->
+        <item name="colorSurface">@color/sg_white</item>
+        <item name="colorOnSurface">@color/sg_color_background_dark</item>
         <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
         <item name="colorOutline">@color/md_theme_light_outline</item>
@@ -135,19 +127,10 @@
         <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
 
         <!-- The color displayed most frequently across your app’s screens and components. -->
-<!--        <item name="colorPrimary">@color/sg_color_primary_light</item>-->
 <!--        <item name="colorPrimaryDark">@color/sg_color_primary_700</item>-->
 <!--        <item name="colorPrimaryVariant">@color/sg_color_primary_700</item>-->
 <!--        <item name="colorSecondary">@color/sg_color_secondary_light</item>-->
 <!--        <item name="colorSecondaryVariant">@color/sg_color_secondary_900</item>-->
-<!--        <item name="colorSurface">@color/sg_white</item>-->
-<!--        <item name="android:colorBackground">@color/sg_color_background_light</item>-->
-
-        <!-- Colors that pass accessibility guidelines for text/iconography when drawn on top of a color. -->
-<!--        <item name="colorOnPrimary">@color/sg_white</item>-->
-<!--        <item name="colorOnSecondary">@color/sg_white</item>-->
-<!--        <item name="colorOnSurface">@color/sg_black</item>-->
-<!--        <item name="colorOnBackground">@color/sg_black</item>-->
 
         <!-- Windows -->
         <item name="android:windowBackground">@color/sg_color_background</item>
@@ -166,6 +149,7 @@
         <item name="sgColorDivider">@color/sg_black_10</item>
         <item name="sgColorShadow">@color/sg_black_7</item>
         <item name="sgColorStatusBarOverlay">@color/sg_white_87</item>
+        <!-- This must not match colorSurface or AppBarLayout uses color to elevate itself. -->
         <item name="sgColorTopAppBar">@color/sg_color_background</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
