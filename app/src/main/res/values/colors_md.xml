@@ -5,7 +5,7 @@
     <!-- https://m3.material.io/styles/color/the-color-system/color-roles -->
     <color name="md_theme_light_primaryContainer">#ECDCFF</color>
     <color name="md_theme_light_onPrimaryContainer">#25005A</color>
-    <color name="md_theme_light_secondary">#006A5F</color>
+    <color name="md_theme_light_secondary">@color/sg_color_secondary_700</color>
     <color name="md_theme_light_secondaryContainer">#B3E6DE</color>
     <color name="md_theme_light_onSecondaryContainer">#092A26</color>
     <color name="md_theme_light_tertiary">#7E525D</color>
@@ -24,7 +24,7 @@
     <color name="md_theme_dark_onPrimary">#3D1976</color>
     <color name="md_theme_dark_primaryContainer">#54348E</color>
     <color name="md_theme_dark_onPrimaryContainer">#ECDCFF</color>
-    <color name="md_theme_dark_secondary">#53DBC9</color>
+    <color name="md_theme_dark_secondary">@color/sg_color_secondary_500</color>
     <color name="md_theme_dark_onSecondary">#003730</color>
     <color name="md_theme_dark_secondaryContainer">#005047</color>
     <color name="md_theme_dark_onSecondaryContainer">#7befe0</color>
