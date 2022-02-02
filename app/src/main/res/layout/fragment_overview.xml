@@ -150,8 +150,9 @@
                         android:text="@string/not_migrated"
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error" />
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/episode_primary_container"
+                        style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/large_padding"
@@ -160,15 +161,12 @@
                         android:layout_marginBottom="@dimen/inline_padding"
                         android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
-                        android:nextFocusDown="@+id/buttonEpisodeWatched"
-                        app:cardBackgroundColor="?attr/sgColorBackgroundCard"
-                        app:cardPreventCornerOverlap="false">
+                        android:nextFocusDown="@+id/buttonEpisodeWatched">
 
                         <!-- Fake card fade: ensure that bottom of image and text box match -->
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp">
+                            android:layout_height="wrap_content">
 
                             <ImageView
                                 android:id="@+id/imageViewOverviewEpisode"
@@ -188,9 +186,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
-                            android:layout_marginBottom="4dp"
                             android:background="@drawable/background_gradient"
-                            android:paddingBottom="4dp"
+                            android:paddingBottom="8dp"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingRight="@dimen/default_padding"
                             android:paddingTop="@dimen/inline_padding">
@@ -229,7 +226,7 @@
 
                         </RelativeLayout>
 
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
                         android:id="@+id/episode_meta_container"

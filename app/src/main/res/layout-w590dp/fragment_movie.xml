@@ -44,8 +44,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <FrameLayout
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/frameLayoutMoviePoster"
+                        style="?attr/materialCardViewFilledStyle"
                         android:layout_width="@dimen/movie_poster_width_large"
                         android:layout_height="@dimen/movie_poster_height_large"
                         android:layout_marginLeft="@dimen/large_padding"
@@ -61,7 +62,7 @@
                             tools:src="#F44336"
                             tools:targetApi="lollipop" />
 
-                    </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <Button
                         android:id="@+id/buttonMovieTrailer"

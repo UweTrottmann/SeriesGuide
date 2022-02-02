@@ -2,9 +2,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Text styles -->
-    <style name="TextAppearance.SeriesGuide.Body1" parent="TextAppearance.MaterialComponents.Body1" />
+    <style name="TextAppearance.SeriesGuide.Body1" parent="TextAppearance.Material3.BodyLarge" />
 
-    <style name="TextAppearance.SeriesGuide.Body2" parent="TextAppearance.MaterialComponents.Body2" />
+    <style name="TextAppearance.SeriesGuide.Body2" parent="TextAppearance.Material3.BodyMedium" />
     <style name="TextAppearance.SeriesGuide.Body2.Accent">
         <item name="android:textColor">@color/sg_text_color_accent</item>
     </style>
@@ -35,11 +35,11 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.Button" parent="TextAppearance.MaterialComponents.Button">
+    <style name="TextAppearance.SeriesGuide.Button" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.MaterialComponents.Caption" />
+    <style name="TextAppearance.SeriesGuide.Caption" parent="TextAppearance.Material3.BodySmall" />
     <style name="TextAppearance.SeriesGuide.Caption.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
@@ -51,18 +51,21 @@
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.Headline4" parent="TextAppearance.MaterialComponents.Headline4" />
+    <style name="TextAppearance.SeriesGuide.Headline4" parent="TextAppearance.Material3.HeadlineLarge" />
     <style name="TextAppearance.SeriesGuide.Headline4.White">
         <item name="android:textColor">@color/sg_white</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.MaterialComponents.Headline5" />
-    <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
+    <style name="TextAppearance.SeriesGuide.Headline5" parent="TextAppearance.Material3.HeadlineSmall" />
+    <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.Material3.TitleMedium" />
     <style name="TextAppearance.SeriesGuide.Headline6.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1" />
+    <style name="TextAppearance.SeriesGuide.Subtitle1" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
     <style name="TextAppearance.SeriesGuide.Subtitle1.Bold">
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -74,15 +77,11 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2" />
+    <style name="TextAppearance.SeriesGuide.Subtitle2" parent="TextAppearance.Material3.TitleSmall" />
 
-    <style name="TextAppearance.SeriesGuide.Tab" parent="TextAppearance.MaterialComponents.Button">
-        <item name="android:textColor">?attr/colorOnPrimarySurface</item>
+    <style name="TextAppearance.SeriesGuide.Tab" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">@color/sg_tab_color</item>
         <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="TextAppearance.SeriesGuide.Tab.Surface">
-        <item name="android:textColor">@color/material_on_surface_emphasis_high_type</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.SeriesGuide.Headline6.Dim" />
@@ -93,10 +92,10 @@
     <style name="Widget.SeriesGuide" parent="Widget" />
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Button" parent="Widget.MaterialComponents.Button" />
-    <style name="Widget.SeriesGuide.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton" />
+    <style name="Widget.SeriesGuide.Button" parent="Widget.Material3.Button" />
+    <style name="Widget.SeriesGuide.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton" />
 
-    <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.Material3.Button.TextButton">
         <item name="android:maxLines">2</item>
     </style>
 
@@ -168,8 +167,10 @@
     </style>
 
     <!-- AppBar -->
+    <!-- Material3: for now keeping old style with elevation to avoid having to color status bar,
+         also new liftOnScroll flickers on scrolling. -->
     <style name="Widget.SeriesGuide.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
-        <item name="android:background">@color/sg_color_background</item>
+        <item name="android:background">?attr/sgColorTopAppBar</item>
     </style>
 
     <!-- Transparent background, disable shadow. -->
@@ -179,29 +180,28 @@
     </style>
 
     <!-- Toolbar -->
-    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.Material3.Toolbar.Surface">
         <item name="colorOnSurface">?attr/colorPrimary</item>
+        <item name="colorOnSurfaceVariant">?attr/colorPrimary</item>
     </style>
-    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
-        <item name="android:background">@color/sg_color_background</item>
-        <!-- Fix popup menu sub-menu indicator colored white on white instead of gray on white. -->
-        <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
+    <!-- Using OnSurface as toolbar typically used within AppBar which handles the background color. -->
+    <style name="Widget.SeriesGuide.Toolbar" parent="Widget.Material3.Toolbar.OnSurface">
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
     </style>
-
-    <style name="Widget.SeriesGuide.Toolbar.Transparent">
-        <item name="android:background">@android:color/transparent</item>
+    <!-- Toolbar which draws its own background. -->
+    <style name="Widget.SeriesGuide.Toolbar.Surface">
+        <item name="android:background">?attr/sgColorTopAppBar</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Toolbar.Gradient" parent="Widget.MaterialComponents.Toolbar.Surface">
+    <style name="Widget.SeriesGuide.Toolbar.Gradient">
         <item name="android:background">@drawable/background_actionbar_gradient</item>
         <!-- Note: not overriding titleTextColor and subtitleTextColor as currently unused. -->
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Gradient</item>
     </style>
 
-    <style name="ThemeOverlay.SeriesGuide.Toolbar.Gradient" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Gradient" parent="ThemeOverlay.Material3.Toolbar.Surface">
         <item name="colorControlNormal">@color/sg_on_dark_emphasis_medium</item>
         <item name="colorControlHighlight">@color/sg_ripple_material_dark</item>
         <item name="actionMenuTextColor">@color/sg_on_dark_emphasis_medium</item>
@@ -217,8 +217,22 @@
         <item name="android:gravity">center</item>
         <item name="android:paddingLeft">@dimen/tab_padding_horizontal</item>
         <item name="android:paddingRight">@dimen/tab_padding_horizontal</item>
-        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.Tab.Surface</item>
+        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.Tab</item>
         <item name="android:theme">@style/ThemeOverLay.SeriesGuide.PrimaryAsColorOnSurface</item>
+    </style>
+
+    <!-- BottomNavigationView -->
+    <style name="Widget.SeriesGuide.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <!-- Set different from colorSurface to prevent BottomNavigationView from using color to elevate. -->
+        <item name="android:background">?attr/sgColorTopAppBar</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.SeriesGuide.BottomNavigationView" parent="">
+        <!-- Used for Widget.Material3.BottomNavigationView.ActiveIndicator color -->
+        <item name="colorSecondaryContainer" tools:ignore="PrivateResource">?attr/colorPrimaryContainer</item>
+        <!-- Used for Widget.Material3.BottomNavigationView itemIconTint -->
+        <item name="colorOnSecondaryContainer" tools:ignore="PrivateResource">?attr/colorOnPrimaryContainer</item>
     </style>
 
     <!-- Inline snackbar -->
@@ -243,7 +257,6 @@
     </style>
 
     <!-- Grid views with cards, with space between items.  -->
-    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
     <!-- Note: Ripple breaks when setting selector on item instead of the List/GridView. -->
     <style name="Widget.SeriesGuide.Grid.Cards">
         <item name="android:paddingTop">@dimen/grid_topbottom_padding</item>

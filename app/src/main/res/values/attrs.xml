@@ -9,13 +9,13 @@
     <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
     <!-- Other colors -->
-    <attr name="sgColorBackgroundCard" format="reference|color" />
     <attr name="sgColorBackgroundDim" format="reference|color" />
     <attr name="sgColorIcon" format="reference|color" />
     <attr name="sgColorIconInactive" format="reference|color" />
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorShadow" format="reference|color" />
     <attr name="sgColorStatusBarOverlay" format="reference|color" />
+    <attr name="sgColorTopAppBar" format="reference|color" />
 
     <!-- Custom view attributes -->
     <declare-styleable name="EmptyView">
