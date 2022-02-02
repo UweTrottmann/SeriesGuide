@@ -180,7 +180,7 @@ public class ShowTools {
         if (encodedStatus == Status.RETURNING) {
             view.setTextColor(
                     ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(
-                            view.getContext().getTheme(), R.attr.sgTextColorGreen)));
+                            view.getContext().getTheme(), R.attr.colorSecondary)));
         } else {
             view.setTextColor(
                     ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(

@@ -5,7 +5,6 @@
     <attr name="sgBorderlessButtonBackground" format="reference" />
 
     <!-- Text colors -->
-    <attr name="sgTextColorGreen" format="reference|color" />
     <attr name="sgTextColorSecondaryDim" format="reference|color" />
 
     <!-- Other colors -->
