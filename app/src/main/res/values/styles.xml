@@ -257,7 +257,6 @@
     </style>
 
     <!-- Grid views with cards, with space between items.  -->
-    <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
     <!-- Note: Ripple breaks when setting selector on item instead of the List/GridView. -->
     <style name="Widget.SeriesGuide.Grid.Cards">
         <item name="android:paddingTop">@dimen/grid_topbottom_padding</item>

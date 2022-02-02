@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         tools:ignore="UselessParent">
 
-        <!-- The support CardView adds padding for compat shadows on pre-v21, adjust accordingly. -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardViewAddPoster"
             style="?attr/materialCardViewElevatedStyle"
