@@ -2,11 +2,12 @@
 <resources>
 
     <!-- Exported using https://material-foundation.github.io/material-theme-builder/ and base color #6545a0 -->
+    <!-- https://m3.material.io/styles/color/the-color-system/color-roles -->
     <color name="md_theme_light_primaryContainer">#ECDCFF</color>
     <color name="md_theme_light_onPrimaryContainer">#25005A</color>
     <color name="md_theme_light_secondary">#006A5F</color>
-    <color name="md_theme_light_secondaryContainer">#74F7E5</color>
-    <color name="md_theme_light_onSecondaryContainer">#00201C</color>
+    <color name="md_theme_light_secondaryContainer">#B3E6DE</color>
+    <color name="md_theme_light_onSecondaryContainer">#092A26</color>
     <color name="md_theme_light_tertiary">#7E525D</color>
     <color name="md_theme_light_tertiaryContainer">#FFD9E2</color>
     <color name="md_theme_light_onTertiaryContainer">#32101B</color>
@@ -26,7 +27,7 @@
     <color name="md_theme_dark_secondary">#53DBC9</color>
     <color name="md_theme_dark_onSecondary">#003730</color>
     <color name="md_theme_dark_secondaryContainer">#005047</color>
-    <color name="md_theme_dark_onSecondaryContainer">#74F7E5</color>
+    <color name="md_theme_dark_onSecondaryContainer">#7befe0</color>
     <color name="md_theme_dark_tertiary">#F1B8C5</color>
     <color name="md_theme_dark_onTertiary">#4B2530</color>
     <color name="md_theme_dark_tertiaryContainer">#643B46</color>
