@@ -75,13 +75,13 @@ class FilterBox @JvmOverloads constructor(
         if (AndroidUtils.isAtLeastR) {
             binding.textViewFilterBox.stateDescription = stateDescription
         } else {
-            if (binding.textViewFilterBox.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
-                binding.textViewFilterBox.contentDescription =
-                    "$stateDescription ,$filterDescription"
-            } else {
-                binding.textViewFilterBox.contentDescription =
-                    "$filterDescription, $stateDescription"
-            }
+            // Android 11+ (above) read state, then description.
+            binding.textViewFilterBox.contentDescription =
+                if (binding.textViewFilterBox.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+                    "$filterDescription ,$stateDescription"
+                } else {
+                    "$stateDescription, $filterDescription"
+                }
         }
     }
 
