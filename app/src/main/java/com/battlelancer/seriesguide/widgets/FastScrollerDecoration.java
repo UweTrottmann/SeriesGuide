@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -124,12 +125,7 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
     final ValueAnimator mShowHideAnimator = ValueAnimator.ofFloat(0, 1);
     @SuppressWarnings("WeakerAccess") /* synthetic access */
     @AnimationState int mAnimationState = ANIMATION_STATE_OUT;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide(HIDE_DURATION_MS);
-        }
-    };
+    private final Runnable mHideRunnable = this::hide;
     private final RecyclerView.OnScrollListener
             mOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -225,10 +221,7 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
         return mState == STATE_DRAGGING;
     }
 
-    @VisibleForTesting boolean isVisible() {
-        return mState == STATE_VISIBLE;
-    }
-
+    @SuppressLint("SwitchIntDef")
     public void show() {
         switch (mAnimationState) {
             case ANIMATION_STATE_FADING_OUT:
@@ -244,8 +237,8 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
         }
     }
 
-    @VisibleForTesting
-    void hide(int duration) {
+    @SuppressLint("SwitchIntDef")
+    private void hide() {
         switch (mAnimationState) {
             case ANIMATION_STATE_FADING_IN:
                 mShowHideAnimator.cancel();
@@ -253,7 +246,7 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
             case ANIMATION_STATE_IN:
                 mAnimationState = ANIMATION_STATE_FADING_OUT;
                 mShowHideAnimator.setFloatValues((float) mShowHideAnimator.getAnimatedValue(), 0);
-                mShowHideAnimator.setDuration(duration);
+                mShowHideAnimator.setDuration(FastScrollerDecoration.HIDE_DURATION_MS);
                 mShowHideAnimator.start();
                 break;
         }
@@ -269,7 +262,8 @@ public class FastScrollerDecoration extends RecyclerView.ItemDecoration implemen
     }
 
     @Override
-    public void onDrawOver(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent,
+            @NonNull RecyclerView.State state) {
         if (mRecyclerViewWidth != mRecyclerView.getWidth()
                 || mRecyclerViewHeight != mRecyclerView.getHeight()) {
             mRecyclerViewWidth = mRecyclerView.getWidth();
