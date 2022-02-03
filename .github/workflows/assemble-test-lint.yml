@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Gradle Build, Test and Lint
+    name: Build, Test and Lint
     runs-on: ubuntu-latest
 
     steps:
