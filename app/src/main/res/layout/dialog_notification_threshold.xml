@@ -16,9 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/larger_padding"
-            android:layout_marginRight="@dimen/larger_padding"
             android:layout_marginTop="@dimen/larger_padding"
+            android:layout_marginRight="@dimen/larger_padding"
             android:hint="@string/pref_notifications_treshold"
+            android:importantForAutofill="no"
             android:inputType="number"
             tools:text="30" />
 
