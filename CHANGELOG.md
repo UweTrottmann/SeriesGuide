@@ -12,6 +12,12 @@ Version 63
 ----------
 *in development*
 
+#### 63-beta2
+*2022-02-03*
+
+* 🌟 Some design updates to fit with latest Material style.
+* 📝 Latest user interface translations from Crowdin.
+
 #### 63-beta1
 *2022-01-21*
 
