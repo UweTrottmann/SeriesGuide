@@ -129,6 +129,14 @@
         <item name="iconTint">?android:textColorSecondary</item>
     </style>
 
+    <style name="Widget.SeriesGuide.Button.Borderless.Error">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Error</item>
+    </style>
+    
+    <style name="ThemeOverlay.SeriesGuide.Button.Error" parent="ThemeOverlay.Material3.Button.TextButton">
+        <item name="colorPrimary">?attr/colorError</item>
+    </style>
+
     <style name="Widget.SeriesGuide.Button.MediaItem" parent="Widget.SeriesGuide.Button.Borderless.Caption">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">3</item>
