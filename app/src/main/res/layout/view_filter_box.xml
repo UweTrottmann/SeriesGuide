@@ -9,7 +9,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/inline_padding"
         android:layout_marginEnd="@dimen/inline_padding"
-        android:scaleType="centerInside" />
+        android:scaleType="centerInside"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textViewFilterBox"
