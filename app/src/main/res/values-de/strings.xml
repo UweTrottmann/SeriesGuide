@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Nicht angesehen</string>
     <string name="action_shows_filter_upcoming">Demnächst</string>
     <string name="action_shows_filter_hidden">Ausgeblendet</string>
+    <string name="state_shows_filter_disabled">Deaktiviert</string>
+    <string name="state_shows_filter_included">Inbegriffen</string>
+    <string name="state_shows_filter_excluded">Ausgeschlossen</string>
     <string name="action_shows_make_all_visible">Alle ausgebl. sichtbar machen</string>
     <string name="description_make_all_visible_format">Alle ausgeblendeten Serien (%s) wieder sichtbar machen?</string>
     <string name="action_shows_sort">Serien sortieren</string>

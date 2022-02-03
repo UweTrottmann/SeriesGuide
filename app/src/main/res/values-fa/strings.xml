@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">تماشا نشده</string>
     <string name="action_shows_filter_upcoming">بزودی</string>
     <string name="action_shows_filter_hidden">پنهان شده</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">آشکارسازی همه‌ی پنهان‌شده‌ها</string>
     <string name="description_make_all_visible_format">آشکارسازی مجدد همه‌ی (%s) برنامه‌ی تلویزیونی?</string>
     <string name="action_shows_sort">چینش آثار نمایشی</string>

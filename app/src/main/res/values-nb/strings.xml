@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Ikke sett</string>
     <string name="action_shows_filter_upcoming">Kommer snart</string>
     <string name="action_shows_filter_hidden">Skjult</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Vis alle skjulte</string>
     <string name="description_make_all_visible_format">Gjøre alle skjulte programmer (%s) synlige igjen?</string>
     <string name="action_shows_sort">Sorter serier</string>

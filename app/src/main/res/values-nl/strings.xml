@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Onbekeken</string>
     <string name="action_shows_filter_upcoming">Eerstvolgende</string>
     <string name="action_shows_filter_hidden">Verborgen</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Alle verborgen tonen</string>
     <string name="description_make_all_visible_format">Alle verborgen series (%s) opnieuw zichtbaar maken?</string>
     <string name="action_shows_sort">Series sorteren</string>

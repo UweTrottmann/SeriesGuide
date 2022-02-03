@@ -147,6 +147,9 @@
     <string name="action_shows_filter_unwatched">טרם נצפה</string>
     <string name="action_shows_filter_upcoming">בקרוב</string>
     <string name="action_shows_filter_hidden">מוסתר</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">הצג את כל המוסתרים</string>
     <string name="description_make_all_visible_format">הצג שוב את כל הסדרות המוסתרות (%s)?</string>
     <string name="action_shows_sort">מיון סדרות</string>

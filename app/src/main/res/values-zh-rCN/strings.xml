@@ -144,6 +144,9 @@
     <string name="action_shows_filter_unwatched">未观看</string>
     <string name="action_shows_filter_upcoming">即将播出</string>
     <string name="action_shows_filter_hidden">已隐藏</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">显示所有隐藏的节目</string>
     <string name="description_make_all_visible_format">重新显示所有隐藏的节目（%s）吗？</string>
     <string name="action_shows_sort">排序节目</string>

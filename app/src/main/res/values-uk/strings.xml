@@ -147,6 +147,9 @@
     <string name="action_shows_filter_unwatched">Непереглянуті</string>
     <string name="action_shows_filter_upcoming">Незабаром</string>
     <string name="action_shows_filter_hidden">Приховані</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Зробити все приховане видимим</string>
     <string name="description_make_all_visible_format">Зробити всі приховані серіали (%s) видимими знову?</string>
     <string name="action_shows_sort">Сортувати серіали за</string>

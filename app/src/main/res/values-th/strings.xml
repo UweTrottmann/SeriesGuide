@@ -144,6 +144,9 @@
     <string name="action_shows_filter_unwatched">ยังไม่ได้ดู</string>
     <string name="action_shows_filter_upcoming">เร็วๆ นี้</string>
     <string name="action_shows_filter_hidden">ซ่อน</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">เลิกซ่อนรายการทั้งหมด</string>
     <string name="description_make_all_visible_format">ทำให้รายการที่ซ่อนไว้ทั้งหมด (%s) กลับมาแสดงอีกครั้ง?</string>
     <string name="action_shows_sort">แสดงซีรีส์</string>
