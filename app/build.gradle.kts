@@ -244,6 +244,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:29.0.1"))
     // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
     implementation("com.firebaseui:firebase-ui-auth:8.0.0")
+    // Update play-services-auth which adds Android 12 mutable Intent flags.
+    implementation("com.google.android.gms:play-services-auth:20.0.1")
+
 
     // Crashlytics
     // https://firebase.google.com/support/release-notes/android
