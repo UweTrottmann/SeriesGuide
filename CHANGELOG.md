@@ -12,6 +12,13 @@ Version 63
 ----------
 *in development*
 
+#### 63-beta3
+*2022-02-04*
+
+* 🔨 Fix crash when using email sign-in on Android 12.
+* 🔨 Fix missing state description for show filters (accessibility).
+* 📝 Latest user interface translations from Crowdin.
+
 #### 63-beta2
 *2022-02-03*
 
