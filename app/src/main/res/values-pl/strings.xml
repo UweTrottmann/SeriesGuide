@@ -147,9 +147,9 @@
     <string name="action_shows_filter_unwatched">Nieobejrzane</string>
     <string name="action_shows_filter_upcoming">Nadchodzące</string>
     <string name="action_shows_filter_hidden">Ukryty</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_disabled">Wyłączony</string>
+    <string name="state_shows_filter_included">Zawarte</string>
+    <string name="state_shows_filter_excluded">Wykluczone</string>
     <string name="action_shows_make_all_visible">Przywróć ukryte seriale</string>
     <string name="description_make_all_visible_format">Przywrócić wszystkie ukryte seriale (%s)?</string>
     <string name="action_shows_sort">Sortuj seriale</string>
