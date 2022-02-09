@@ -29,7 +29,7 @@ android {
     lint {
         // for CI server (reports are not public)
         textReport = true
-        textOutput("stdout")
+        textOutput = file("stdout")
     }
 }
 

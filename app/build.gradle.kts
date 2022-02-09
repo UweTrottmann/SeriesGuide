@@ -77,10 +77,10 @@ android {
 
     lint {
         // for CI server: only check this module with dependencies instead of each module separately
-        isCheckDependencies = true
+        checkDependencies = true
         // for CI server: log reports (report files are not public)
         textReport = true
-        textOutput("stdout")
+        textOutput = file("stdout")
     }
 
     testOptions {
@@ -89,7 +89,7 @@ android {
         }
     }
 
-    flavorDimensions("flavor")
+    flavorDimensions += listOf("flavor")
 
     productFlavors {
         create("pure") {
