@@ -7,18 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.preferences.SgPreferencesFragment
+import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Allows tweaking of various SeriesGuide settings. Does NOT inherit
  * from [com.battlelancer.seriesguide.ui.BaseActivity] to avoid
- * handling actions which might be confusing nwhile adjusting settings.
+ * handling actions which might be confusing while adjusting settings.
  */
 class SeriesGuidePreferences : AppCompatActivity() {
 
     class UpdateSummariesEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(SeriesGuidePreferences.THEME)
+        ThemeUtils.setTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         setupActionBar()

@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.traktapi.GenericCheckInDialogFragment.CheckInDialogDismissedEvent
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.util.ThemeUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -20,7 +21,7 @@ class QuickCheckInActivity : AppCompatActivity() {
 
     override fun onCreate(arg0: Bundle?) {
         // make the activity show the wallpaper, nothing else
-        setTheme(R.style.Theme_SeriesGuide_Wallpaper)
+        ThemeUtils.setTheme(this, R.style.Theme_SeriesGuide_Wallpaper)
         super.onCreate(arg0)
 
         val episodeId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)

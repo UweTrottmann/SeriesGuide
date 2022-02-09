@@ -12,6 +12,7 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
@@ -34,6 +35,7 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
@@ -42,6 +44,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.color.DynamicColors
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -83,12 +86,35 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             true
         }
 
+        findPreference<SwitchPreferenceCompat>(DisplaySettings.KEY_DYNAMIC_COLOR)!!.apply {
+            if (DynamicColors.isDynamicColorAvailable()) {
+                setOnPreferenceChangeListener { _, _ ->
+                    restartApp()
+                    true
+                }
+            } else {
+                isVisible = false
+            }
+        }
+
         if (BuildConfig.DEBUG) {
             findPreference<SwitchPreferenceCompat>(AppSettings.KEY_USER_DEBUG_MODE_ENBALED)!!.apply {
                 isEnabled = false
                 isChecked = true
             }
         }
+    }
+
+    /**
+     *  Restart to apply new theme, go back to this settings screen.
+     *  This will lose the existing task stack, but that's fine.
+     */
+    private fun restartApp() {
+        TaskStackBuilder.create(requireContext())
+            .addNextIntent(Intent(activity, ShowsActivity::class.java))
+            .addNextIntent(Intent(activity, MoreOptionsActivity::class.java))
+            .addNextIntent(requireActivity().intent)
+            .startActivities()
     }
 
     private fun updateRootSettings() {

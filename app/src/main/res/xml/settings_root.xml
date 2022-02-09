@@ -57,6 +57,12 @@
             app:key="com.uwetrottmann.seriesguide.theme"
             app:title="@string/pref_theme" />
 
+        <SwitchPreferenceCompat
+            app:defaultValue="False"
+            app:iconSpaceReserved="false"
+            app:key="com.uwetrottmann.seriesguide.dynamiccolor"
+            app:title="@string/pref_dynamic_colors" />
+
         <ListPreference
             app:defaultValue="default"
             app:entries="@array/numbers"
