@@ -413,6 +413,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Изглед</string>
     <string name="pref_theme">Тема</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Use system default</string>
     <string name="theme_app_auto_battery">Set by Battery Saver</string>

@@ -391,6 +391,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">外観</string>
     <string name="pref_theme">テーマ</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">システムのデフォルトを使用する</string>
     <string name="theme_app_auto_battery">バッテリーセーバーで設定</string>

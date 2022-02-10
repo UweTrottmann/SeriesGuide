@@ -424,6 +424,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Vzhľad</string>
     <string name="pref_theme">Téma</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Použiť systémom predvolené</string>
     <string name="theme_app_auto_battery">Podľa šetriča batérie</string>

@@ -403,6 +403,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Apariencia</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Usar el predeterminado del sistema</string>
     <string name="theme_app_auto_battery">Establecido por Ahorro de Batería</string>

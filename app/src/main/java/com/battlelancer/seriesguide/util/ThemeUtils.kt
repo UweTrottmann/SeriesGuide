@@ -1,11 +1,14 @@
 package com.battlelancer.seriesguide.util
 
+import android.app.Activity
 import android.content.Context
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.google.android.material.color.DynamicColors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
@@ -48,5 +51,17 @@ object ThemeUtils {
         setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem)
         setSelectedIndicatorColors(getColorFromAttribute(context, R.attr.colorPrimary))
         setUnderlineColor(getColorFromAttribute(context, R.attr.sgColorDivider))
+    }
+
+    /**
+     * If [DisplaySettings.isDynamicColorsEnabled] applies Material 3 Dynamic Colors theme overlay
+     * if available on the device.
+     * https://m3.material.io/libraries/mdc-android/color-theming
+     */
+    fun setTheme(activity: Activity, themeResId: Int = SeriesGuidePreferences.THEME) {
+        activity.setTheme(themeResId)
+        if (DisplaySettings.isDynamicColorsEnabled(activity)) {
+            DynamicColors.applyIfAvailable(activity)
+        }
     }
 }

@@ -1,15 +1,8 @@
 package com.battlelancer.seriesguide.ui
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.format.DateUtils
-import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.app.NavUtils
-import androidx.core.app.TaskStackBuilder
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.Companion.requestSyncIfTime
@@ -22,38 +15,15 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * Provides some common functionality across all activities like setting the theme, navigation
- * shortcuts and triggering AutoUpdates and AutoBackups.
+ * Provides some common functionality for triggering sync and auto backup and handling some events.
  *
- * Also registers with [EventBus.getDefault] by default to handle various common events,
+ * Registers with [EventBus.getDefault] by default to handle various common events,
  * see [registerEventBus] and [unregisterEventBus] to prevent that.
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : BaseThemeActivity() {
 
     private var handler: Handler? = null
     private var updateShowRunnable: Runnable? = null
-
-    override fun onCreate(arg0: Bundle?) {
-        setCustomTheme()
-        super.onCreate(arg0)
-    }
-
-    protected open fun setCustomTheme() {
-        // set a theme based on user preference
-        setTheme(SeriesGuidePreferences.THEME)
-    }
-
-    /**
-     * Implementers must call this in [onCreate] after [setContentView] if they want
-     * to use the action bar.
-     *
-     * If setting a title, might also want to supply a title to the
-     * activity with [setTitle] for better accessibility.
-     */
-    protected open fun setupActionBar() {
-        val toolbar = findViewById<Toolbar>(R.id.sgToolbar)
-        setSupportActionBar(toolbar)
-    }
 
     override fun onStart() {
         super.onStart()
@@ -90,29 +60,6 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     open fun unregisterEventBus() {
         EventBus.getDefault().unregister(this)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                val upIntent = NavUtils.getParentActivityIntent(this)!!
-                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    // This activity is NOT part of this app's task, so create a new task
-                    // when navigating up, with a synthesized back stack.
-                    TaskStackBuilder.create(this)
-                        // Add all of this activity's parents to the back stack
-                        .addNextIntentWithParentStack(upIntent)
-                        // Navigate up to the closest parent
-                        .startActivities()
-                } else {
-                    // This activity is part of this app's task, so simply
-                    // navigate up to the logical parent activity.
-                    NavUtils.navigateUpTo(this, upIntent)
-                }
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     @Subscribe

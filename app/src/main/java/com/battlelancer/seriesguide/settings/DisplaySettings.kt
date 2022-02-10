@@ -18,6 +18,7 @@ object DisplaySettings {
     const val LANGUAGE_EN = "en"
 
     const val KEY_THEME = "com.uwetrottmann.seriesguide.theme"
+    const val KEY_DYNAMIC_COLOR = "com.uwetrottmann.seriesguide.dynamiccolor"
 
     @Deprecated("") // language is stored per show or defined by place of usage
     const val KEY_LANGUAGE_PREFERRED = "language"
@@ -54,6 +55,12 @@ object DisplaySettings {
     fun getThemeIndex(context: Context): String {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_THEME, null) ?: "0"
+    }
+
+    fun isDynamicColorsEnabled(context: Context): Boolean {
+        // Default to false to keep our own brand colors.
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(KEY_DYNAMIC_COLOR, false)
     }
 
     /**

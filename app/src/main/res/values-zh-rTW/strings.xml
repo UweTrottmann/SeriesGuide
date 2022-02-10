@@ -391,6 +391,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">外觀</string>
     <string name="pref_theme">主題</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">系統預設</string>
     <string name="theme_app_auto_battery">由省電模式控制</string>

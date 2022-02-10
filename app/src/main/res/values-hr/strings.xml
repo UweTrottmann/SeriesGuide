@@ -413,6 +413,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Izgled</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Koristi sustavski zadano</string>
     <string name="theme_app_auto_battery">Postavi s Štednjom Baterije</string>

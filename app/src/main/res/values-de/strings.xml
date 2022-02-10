@@ -402,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Erscheinungsbild</string>
     <string name="pref_theme">Design</string>
+    <string name="pref_dynamic_colors">Systemfarben verwenden</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Systemstandard verwenden</string>
     <string name="theme_app_auto_battery">Durch Energiesparmodus bestimmt</string>

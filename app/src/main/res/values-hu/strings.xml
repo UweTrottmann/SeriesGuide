@@ -402,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Megjelenés</string>
     <string name="pref_theme">Téma</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Alapbeállítás használata</string>
     <string name="theme_app_auto_battery">Beállítás Akkumlátorkímélő mód alapján</string>

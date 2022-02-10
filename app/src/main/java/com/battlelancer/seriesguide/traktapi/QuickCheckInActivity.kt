@@ -3,25 +3,28 @@ package com.battlelancer.seriesguide.traktapi
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.traktapi.GenericCheckInDialogFragment.CheckInDialogDismissedEvent
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 /**
  * Blank activity, just used to quickly check into a show/episode.
  */
-class QuickCheckInActivity : AppCompatActivity() {
+class QuickCheckInActivity : BaseThemeActivity() {
 
-    override fun onCreate(arg0: Bundle?) {
+    override fun getCustomTheme(): Int {
         // make the activity show the wallpaper, nothing else
-        setTheme(R.style.Theme_SeriesGuide_Wallpaper)
-        super.onCreate(arg0)
+        return R.style.Theme_SeriesGuide_Wallpaper
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         val episodeId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
         if (episodeId == 0L) {
