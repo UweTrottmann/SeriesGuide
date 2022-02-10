@@ -1,170 +1,166 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.format.DateUtils;
-import android.view.MenuItem;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NavUtils;
-import androidx.core.app.TaskStackBuilder;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.dataliberation.BackupSettings;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.traktapi.TraktTask;
-import com.battlelancer.seriesguide.ui.search.AddShowTask;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.TaskManager;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.format.DateUtils
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.app.NavUtils
+import androidx.core.app.TaskStackBuilder
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.dataliberation.BackupSettings
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
+import com.battlelancer.seriesguide.sync.SgSyncAdapter.Companion.requestSyncIfTime
+import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.ui.search.AddShowTask.OnShowAddedEvent
+import com.battlelancer.seriesguide.util.DBUtils.DatabaseErrorEvent
+import com.battlelancer.seriesguide.util.TaskManager
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Provides some common functionality across all activities like setting the theme, navigation
- * shortcuts and triggering AutoUpdates and AutoBackups. <p> Also registers with {@link
- * EventBus#getDefault()} by default to handle various common events, see {@link
- * #registerEventBus()} and {@link #unregisterEventBus()} to prevent that.
+ * shortcuts and triggering AutoUpdates and AutoBackups.
+ *
+ * Also registers with [EventBus.getDefault] by default to handle various common events,
+ * see [registerEventBus] and [unregisterEventBus] to prevent that.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+abstract class BaseActivity : AppCompatActivity() {
 
-    private Handler handler;
-    private Runnable updateShowRunnable;
+    private var handler: Handler? = null
+    private var updateShowRunnable: Runnable? = null
 
-    @Override
-    protected void onCreate(Bundle arg0) {
-        setCustomTheme();
-        super.onCreate(arg0);
+    override fun onCreate(arg0: Bundle?) {
+        setCustomTheme()
+        super.onCreate(arg0)
     }
 
-    protected void setCustomTheme() {
+    protected open fun setCustomTheme() {
         // set a theme based on user preference
-        setTheme(SeriesGuidePreferences.THEME);
+        setTheme(SeriesGuidePreferences.THEME)
     }
 
     /**
-     * Implementers must call this in {@link #onCreate} after {@link #setContentView} if they want
-     * to use the action bar. <p>If setting a title, might also want to supply a title to the
-     * activity ({@link #setTitle(CharSequence)}) for better accessibility.
+     * Implementers must call this in [onCreate] after [setContentView] if they want
+     * to use the action bar.
+     *
+     * If setting a title, might also want to supply a title to the
+     * activity with [setTitle] for better accessibility.
      */
-    protected void setupActionBar() {
-        Toolbar toolbar = findViewById(R.id.sgToolbar);
-        setSupportActionBar(toolbar);
+    protected open fun setupActionBar() {
+        val toolbar = findViewById<Toolbar>(R.id.sgToolbar)
+        setSupportActionBar(toolbar)
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    override fun onStart() {
+        super.onStart()
         // make sync interfering with backup task less likely
         if (!onAutoBackup()) {
-            SgSyncAdapter.requestSyncIfTime(this);
+            requestSyncIfTime(this)
         }
-        registerEventBus();
+        registerEventBus()
     }
 
     /**
-     * Override this to avoid registering with {@link EventBus#getDefault()} in {@link #onStart()}.
+     * Override this to avoid registering with [EventBus.getDefault] in [onStart].
      *
-     * <p> See {@link #unregisterEventBus()} as well.
+     * See [unregisterEventBus] as well.
      */
-    public void registerEventBus() {
-        EventBus.getDefault().register(this);
+    open fun registerEventBus() {
+        EventBus.getDefault().register(this)
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
+    override fun onStop() {
+        super.onStop()
+        val handler = handler
+        val updateShowRunnable = updateShowRunnable
         if (handler != null && updateShowRunnable != null) {
-            handler.removeCallbacks(updateShowRunnable);
+            handler.removeCallbacks(updateShowRunnable)
         }
-
-        unregisterEventBus();
+        unregisterEventBus()
     }
 
     /**
-     * Override this to avoid unregistering from {@link EventBus#getDefault()} in {@link
-     * #onStop()}.
+     * Override this to avoid unregistering from [EventBus.getDefault] in [onStop].
      *
-     * <p> See {@link #registerEventBus()} as well.
+     * See [registerEventBus] as well.
      */
-    public void unregisterEventBus() {
-        EventBus.getDefault().unregister(this);
+    open fun unregisterEventBus() {
+        EventBus.getDefault().unregister(this)
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                val upIntent = NavUtils.getParentActivityIntent(this)!!
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                     // This activity is NOT part of this app's task, so create a new task
                     // when navigating up, with a synthesized back stack.
                     TaskStackBuilder.create(this)
-                            // Add all of this activity's parents to the back stack
-                            .addNextIntentWithParentStack(upIntent)
-                            // Navigate up to the closest parent
-                            .startActivities();
+                        // Add all of this activity's parents to the back stack
+                        .addNextIntentWithParentStack(upIntent)
+                        // Navigate up to the closest parent
+                        .startActivities()
                 } else {
                     // This activity is part of this app's task, so simply
                     // navigate up to the logical parent activity.
-                    NavUtils.navigateUpTo(this, upIntent);
+                    NavUtils.navigateUpTo(this, upIntent)
                 }
-                return true;
+                return true
+            }
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
     @Subscribe
-    public void onEvent(AddShowTask.OnShowAddedEvent event) {
+    fun onEvent(event: OnShowAddedEvent) {
         // display status toast about adding shows
-        event.handle(this);
+        event.handle(this)
     }
 
     @Subscribe
-    public void onEvent(TraktTask.TraktActionCompleteEvent event) {
+    fun onEvent(event: TraktActionCompleteEvent) {
         // display status toast about trakt action
-        event.handle(this);
+        event.handle(this)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(DBUtils.DatabaseErrorEvent event) {
-        event.handle(this);
+    fun onEventMainThread(event: DatabaseErrorEvent) {
+        event.handle(this)
     }
 
     /**
      * Periodically do an automatic backup of the show database.
      */
-    private boolean onAutoBackup() {
+    private fun onAutoBackup(): Boolean {
         if (!BackupSettings.isAutoBackupEnabled(this)) {
-            return false;
+            return false
         }
 
         // If last auto backup failed, show a warning, but run it (if it's time) anyhow.
         if (BackupSettings.isWarnLastAutoBackupFailed(this)) {
-            onLastAutoBackupFailed();
+            onLastAutoBackupFailed()
         }
         // If copies should be made, but the specified files are invalid,
         // show a warning but run auto backup (if it's time) anyhow.
         else if (BackupSettings.isCreateCopyOfAutoBackup(this)
-                && BackupSettings.isMissingAutoBackupFile(this)) {
-            onAutoBackupMissingFiles();
+            && BackupSettings.isMissingAutoBackupFile(this)) {
+            onAutoBackupMissingFiles()
         }
-
         if (!BackupSettings.isTimeForAutoBackup(this)) {
-            return false;
+            return false
         }
-
-        TaskManager.getInstance().tryBackupTask(this);
-        return true;
+        TaskManager.getInstance().tryBackupTask(this)
+        return true
     }
 
     /**
      * Implementers may choose to show a warning that the last auto backup has failed.
      */
-    protected void onLastAutoBackupFailed() {
+    protected open fun onLastAutoBackupFailed() {
         // Do nothing.
     }
 
@@ -172,25 +168,24 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Implementers may choose to show a warning that auto backup can not complete because not all
      * custom backup files are configured.
      */
-    protected void onAutoBackupMissingFiles() {
+    protected open fun onAutoBackupMissingFiles() {
         // Do nothing.
     }
 
     /**
      * Schedule an update for the given show. Might not run if this show was just updated. Execution
-     * is also delayed so it won't reduce UI setup performance (= you can run this in {@link
-     * #onCreate(android.os.Bundle)}).
+     * is also delayed so it won't reduce UI setup performance (may call this in [onCreate]).
      *
-     * <p> See {@link SgSyncAdapter#requestSyncIfTime(Context, long)}.
+     * See [SgSyncAdapter.requestSyncIfTime].
      */
-    protected void updateShowDelayed(final long showId) {
-        if (handler == null) {
-            handler = new Handler(Looper.getMainLooper());
-        }
+    protected fun updateShowDelayed(showId: Long) {
+        val handler = handler ?: Handler(Looper.getMainLooper())
+            .also { handler = it }
 
         // delay sync request to avoid slowing down UI
-        final Context context = getApplicationContext();
-        updateShowRunnable = () -> SgSyncAdapter.requestSyncIfTime(context, showId);
-        handler.postDelayed(updateShowRunnable, DateUtils.SECOND_IN_MILLIS);
+        val context = applicationContext
+        val updateShowRunnable = Runnable { requestSyncIfTime(context, showId) }
+            .also { updateShowRunnable = it }
+        handler.postDelayed(updateShowRunnable, DateUtils.SECOND_IN_MILLIS)
     }
 }
