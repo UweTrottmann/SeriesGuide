@@ -12,6 +12,12 @@ Version 63
 ----------
 *in development*
 
+#### 63-beta4
+*2022-02-10*
+
+* 🌟 Appearance setting to use system colors on Android 12.
+* 📝 Latest user interface translations from Crowdin.
+
 #### 63-beta3
 *2022-02-04*
 
