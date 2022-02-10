@@ -21,7 +21,7 @@
     <string name="ratings">Puanlar</string>
     <!-- Descriptions -->
     <string name="description_overview">Genel Bakış</string>
-    <string name="description_poster">Posteri göster</string>
+    <string name="description_poster">Afişi göster</string>
     <string name="description_image">Bölüm resmi</string>
     <string name="description_menu_overflow">Daha fazla seçenek</string>
     <!-- Actions -->

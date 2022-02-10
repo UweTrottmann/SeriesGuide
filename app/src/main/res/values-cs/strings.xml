@@ -426,7 +426,7 @@
     <string name="pref_theme">Téma</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Použít výchozí nastavení systému</string>
-    <string name="theme_app_auto_battery">Podle spořiče baterie</string>
+    <string name="theme_app_auto_battery">Podle spořiče baterie</string>
     <string name="theme_app_dark">Tmavý</string>
     <string name="theme_app_light">Světlý</string>
     <!-- Other advanced settings -->
