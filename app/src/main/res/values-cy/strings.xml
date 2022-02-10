@@ -446,6 +446,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Ymddangosiad</string>
     <string name="pref_theme">Thema</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Defnyddiwch system ddiofyn</string>
     <string name="theme_app_auto_battery">Wedi\'i osod gan Batri Saver</string>

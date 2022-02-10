@@ -402,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Ulkonäkö</string>
     <string name="pref_theme">Teema</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Käytä järjestelmän oletusta</string>
     <string name="theme_app_auto_battery">Aseta virransäästön perusteella</string>

@@ -402,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Apero</string>
     <string name="pref_theme">Etoso</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Laŭ operaciumo</string>
     <string name="theme_app_auto_battery">Agordita per energiŝpariga reĝimo</string>
