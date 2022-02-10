@@ -29,6 +29,11 @@ public class MovieDetailsActivity extends BaseMessageActivity {
     }
 
     @Override
+    protected int getCustomTheme() {
+        return R.style.Theme_SeriesGuide_DayNight_Immersive;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -74,11 +79,6 @@ public class MovieDetailsActivity extends BaseMessageActivity {
                 = (ViewGroup.MarginLayoutParams) actionBarToolbar.getLayoutParams();
         layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + insetTop,
                 layoutParams.rightMargin, layoutParams.bottomMargin);
-    }
-
-    @Override
-    protected void setCustomTheme() {
-        setTheme(R.style.Theme_SeriesGuide_DayNight_Immersive);
     }
 
     @Override
