@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="ValidFragment" severity="ignore" />
-    <!-- Crowdin supplies different quantity strings -->
-    <issue id="UnusedQuantity" severity="ignore" />
+    <!-- Lint (incorrectly?) requires many quantity for French, since Android Plugin 7.1.0 -->
+    <issue id="MissingQuantity">
+        <ignore path="src/main/res/values-fr/strings.xml" />
+    </issue>
     <!-- Leaving that to translators and feedback -->
     <issue id="Typos" severity="ignore" />
     <!-- Mostly due to adding selectableItemBackground -->
