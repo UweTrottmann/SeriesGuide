@@ -187,6 +187,8 @@ dependencies {
     // Room
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
+    // Paging 3 Integration
+    implementation("androidx.room:room-paging:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
