@@ -80,7 +80,7 @@ android {
         checkDependencies = true
         // for CI server: log reports (report files are not public)
         textReport = true
-        textOutput = file("stdout")
+        // Note: do not use textOutput = file("stdout"), just set no file.
     }
 
     testOptions {
