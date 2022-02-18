@@ -402,7 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Udseende</string>
     <string name="pref_theme">Tema</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Brug systemfarver</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Brug systemstandard</string>
     <string name="theme_app_auto_battery">Indstillet af batterisparefunktion</string>

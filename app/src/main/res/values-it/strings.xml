@@ -402,7 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Aspetto</string>
     <string name="pref_theme">Tema</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Usa colori di sistema</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Usa impostazione predefinita di sistema</string>
     <string name="theme_app_auto_battery">Imposta in base al Risparmio di Batteria</string>
