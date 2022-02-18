@@ -2,8 +2,8 @@
 
 - If stable, create `release-<nr>` branch. If beta, stay on `dev`.
 - Optional: Update translations.
-- Change version code and name in `build.gradle`.
-- Amend `CHANGELOG.md`.
+- Change version code and name in [`build.gradle.kts`](/build.gradle.kts).
+- Amend [`CHANGELOG.md`](/CHANGELOG.md).
 - Deploy to test device.
 - Push to GitHub and check build succeeds, tests are green and Lint file is OK.
 
@@ -22,5 +22,5 @@ Published to production:
 
 ## Amazon App Store (stable only)
 
-- `bundleAmazonRelease`
+- `assembleAmazonRelease`
 - Test update on test device.

@@ -10,7 +10,11 @@ Release notes
 
 Version 63
 ----------
-*in development*
+*2022-02-18*
+
+* 🌟 Some design updates to fit with latest Material style.
+* 🌟 Add setting to use system colors on Android 12.
+* 🔨 Sort by title properly handles characters with accents.
 
 #### 63-beta4
 *2022-02-10*
