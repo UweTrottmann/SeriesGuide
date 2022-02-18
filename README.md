@@ -2,7 +2,7 @@
 
 Android app to help you keep track of your favorite TV shows and movies.
 
-[Download at seriesgui.de](https://seriesgui.de).
+[Download at seriesgui.de](https://seriesgui.de)
 
 <img src="screenshots/phone.png" height="375"/>
 
