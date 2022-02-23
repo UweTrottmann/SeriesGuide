@@ -40,19 +40,19 @@ class DebugViewFragment : AppCompatDialogFragment() {
         debugView.background = null // for whatever reason uses windowBackground by default
 
         val buttonClearTraktRefreshToken = ButtonAction("Clear trakt refresh token") {
-            TraktOAuthSettings.storeRefreshData(context, "", 3600 /* 1 hour */)
+            TraktOAuthSettings.storeRefreshData(requireContext(), "", 3600 /* 1 hour */)
         }
 
         val buttonInvalidateTraktAccessToken = ButtonAction("Invalidate trakt access token") {
-            TraktCredentials.get(context).storeAccessToken("invalid-token")
+            TraktCredentials.get(requireContext()).storeAccessToken("invalid-token")
         }
 
         val buttonInvalidateTraktRefreshToken = ButtonAction("Invalidate trakt refresh token") {
-            TraktOAuthSettings.storeRefreshData(context, "invalid-token", 3600 /* 1 hour */)
+            TraktOAuthSettings.storeRefreshData(requireContext(), "invalid-token", 3600 /* 1 hour */)
         }
 
         val buttonTriggerJobProcessor = ButtonAction("Schedule job processing") {
-            SgSyncAdapter.requestSyncJobsImmediate(context)
+            SgSyncAdapter.requestSyncJobsImmediate(requireContext())
         }
 
         debugView.modules(

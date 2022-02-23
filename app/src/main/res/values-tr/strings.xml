@@ -21,7 +21,7 @@
     <string name="ratings">Puanlar</string>
     <!-- Descriptions -->
     <string name="description_overview">Genel Bakış</string>
-    <string name="description_poster">Posteri göster</string>
+    <string name="description_poster">Afişi göster</string>
     <string name="description_image">Bölüm resmi</string>
     <string name="description_menu_overflow">Daha fazla seçenek</string>
     <!-- Actions -->
@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">İzlenmemiş</string>
     <string name="action_shows_filter_upcoming">Yaklaşan</string>
     <string name="action_shows_filter_hidden">Gizli</string>
+    <string name="state_shows_filter_disabled">Devre dışı</string>
+    <string name="state_shows_filter_included">İçerir</string>
+    <string name="state_shows_filter_excluded">Hariç tutulan</string>
     <string name="action_shows_make_all_visible">Tüm gizli öğeleri görünür yap</string>
     <string name="description_make_all_visible_format">Tüm (%s) gizli program tekrar görünür hale gelsin mi?</string>
     <string name="action_shows_sort">Dizileri sırala</string>
@@ -208,7 +211,7 @@
     <string name="title_new_episodes">Yeni bölümler</string>
     <string name="watched_shows">İzlenmiş</string>
     <string name="shows_collection">Koleksiyon</string>
-    <string name="watchlist">İzleme listesi</string>
+    <string name="watchlist">İzlenecekler listesi</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Sonuç bulunamadı</string>
     <string name="title_similar_shows">Benzer diziler</string>
@@ -231,7 +234,7 @@
     <string name="title_disc_releases">Disk\'i Yayınlanan</string>
     <string name="movies_in_theatres">Vizyonda</string>
     <string name="movies_collection">Koleksiyon</string>
-    <string name="movies_watchlist">İzleme listesi</string>
+    <string name="movies_watchlist">İzlenecekler listesi</string>
     <string name="movies_watched">İzlenmiş</string>
     <string name="watchlist_add">İzlenecekler listesine ekle</string>
     <string name="watchlist_remove">İzlenecekler listesinden kaldır</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Görünüm</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Sistem renklerini kullan</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Sistem varsayılanını kullan</string>
     <string name="theme_app_auto_battery">Pil Tasarrufu ile ayarla</string>

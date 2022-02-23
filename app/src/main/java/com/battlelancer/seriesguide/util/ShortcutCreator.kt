@@ -68,7 +68,7 @@ class ShortcutCreator(
                 R.dimen.show_poster_width_shortcut,
                 R.dimen.show_poster_height_shortcut
             )
-        if (!AndroidUtils.isAtLeastOreo()) {
+        if (!AndroidUtils.isAtLeastOreo) {
             // on O+ we use 108x108dp adaptive icon, no need to cut its corners
             // pre-O full bitmap is displayed, so cut corners for nicer icon shape
             requestCreator.transform(
@@ -98,7 +98,7 @@ class ShortcutCreator(
             )
                 .setIntent(shortcutIntent)
                 .setShortLabel(showTitle)
-            val isAtLeastOreo = AndroidUtils.isAtLeastOreo()
+            val isAtLeastOreo = AndroidUtils.isAtLeastOreo
             if (posterBitmap == null) {
                 // Note: only use adaptive icon on O+, app icon on older SDKs.
                 builder.setIcon(

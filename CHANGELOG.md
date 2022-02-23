@@ -8,6 +8,42 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+Version 63
+----------
+*2022-02-18*
+
+* 🌟 Some design updates to fit with latest Material style.
+* 🌟 Add setting to use system colors on Android 12.
+* 🔨 Sort by title properly handles characters with accents.
+
+#### 63-beta4
+*2022-02-10*
+
+* 🌟 Appearance setting to use system colors on Android 12.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 63-beta3
+*2022-02-04*
+
+* 🔨 Fix crash when using email sign-in on Android 12.
+* 🔨 Fix missing state description for show filters (accessibility).
+* 📝 Latest user interface translations from Crowdin.
+
+#### 63-beta2
+*2022-02-03*
+
+* 🌟 Some design updates to fit with latest Material style.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 63-beta1
+*2022-01-21*
+
+* 🔧 Move movie trailer button right below title to make it easier to discover.
+* 🔨 Sort by title properly handles characters with accents.
+* 🔨 Display correct colors if check-in dialog is launched from notification.
+* 📝 Optimization for Android 12. 
+* 📝 Latest translations from Crowdin.
+
 Version 62
 ----------
 *2021-12-09*

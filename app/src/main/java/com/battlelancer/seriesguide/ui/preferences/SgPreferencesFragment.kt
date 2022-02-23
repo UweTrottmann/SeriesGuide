@@ -12,6 +12,7 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
@@ -34,14 +35,16 @@ import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
-import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.color.DynamicColors
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -83,12 +86,35 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             true
         }
 
+        findPreference<SwitchPreferenceCompat>(DisplaySettings.KEY_DYNAMIC_COLOR)!!.apply {
+            if (DynamicColors.isDynamicColorAvailable()) {
+                setOnPreferenceChangeListener { _, _ ->
+                    restartApp()
+                    true
+                }
+            } else {
+                isVisible = false
+            }
+        }
+
         if (BuildConfig.DEBUG) {
             findPreference<SwitchPreferenceCompat>(AppSettings.KEY_USER_DEBUG_MODE_ENBALED)!!.apply {
                 isEnabled = false
                 isChecked = true
             }
         }
+    }
+
+    /**
+     *  Restart to apply new theme, go back to this settings screen.
+     *  This will lose the existing task stack, but that's fine.
+     */
+    private fun restartApp() {
+        TaskStackBuilder.create(requireContext())
+            .addNextIntent(Intent(activity, ShowsActivity::class.java))
+            .addNextIntent(Intent(activity, MoreOptionsActivity::class.java))
+            .addNextIntent(requireActivity().intent)
+            .startActivities()
     }
 
     private fun updateRootSettings() {
@@ -119,7 +145,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // set current value of auto-update pref
         findPreference<SwitchPreferenceCompat>(UpdateSettings.KEY_AUTOUPDATE)!!.isChecked =
-            SgSyncAdapter.isSyncAutomatically(activity)
+            SgSyncAdapter.isSyncAutomatically(requireContext())
     }
 
     private fun setupNotificationSettings() {
@@ -141,14 +167,14 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
                 thresholdPref.isEnabled = isChecked
                 selectionPref.isEnabled = isChecked
-                if (AndroidUtils.isAtLeastOreo()) {
+                if (AndroidUtils.isAtLeastOreo) {
                     channelsPref?.isEnabled = isChecked
                 } else {
                     vibratePref?.isEnabled = isChecked
                     ringtonePref?.isEnabled = isChecked
                 }
 
-                NotificationService.trigger(activity)
+                NotificationService.trigger(requireContext())
                 true
             }
             // disable advanced notification settings if notifications are disabled
@@ -159,7 +185,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = isNotificationsEnabled
             hiddenPref.isEnabled = isNotificationsEnabled
             onlyNextPref.isEnabled = isNotificationsEnabled
-            if (AndroidUtils.isAtLeastOreo()) {
+            if (AndroidUtils.isAtLeastOreo) {
                 channelsPref?.isEnabled = isNotificationsEnabled
             } else {
                 vibratePref?.isEnabled = isNotificationsEnabled
@@ -173,7 +199,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             selectionPref.isEnabled = false
             hiddenPref.isEnabled = false
             onlyNextPref.isEnabled = false
-            if (AndroidUtils.isAtLeastOreo()) {
+            if (AndroidUtils.isAtLeastOreo) {
                 channelsPref?.isEnabled = false
             } else {
                 vibratePref?.isEnabled = false
@@ -317,7 +343,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         }
         if (NotificationSettings.KEY_CHANNELS == key) {
             // launch system settings app at settings for episodes channel
-            if (AndroidUtils.isAtLeastOreo()) {
+            if (AndroidUtils.isAtLeastOreo) {
                 val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
@@ -341,7 +367,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 var ringtoneUri: Uri? = data.getParcelableExtra(
                     RingtoneManager.EXTRA_RINGTONE_PICKED_URI
                 )
-                if (AndroidUtils.isNougatOrHigher()) {
+                if (AndroidUtils.isNougatOrHigher) {
                     // Xiaomi devices incorrectly return file:// uris on N
                     // protect against FileUriExposedException
                     if (ringtoneUri != null /* not silent */ && "content" != ringtoneUri.scheme) {
@@ -418,7 +444,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         if (UpdateSettings.KEY_AUTOUPDATE == key) {
             if (pref != null) {
                 val autoUpdatePref = pref as SwitchPreferenceCompat
-                SgSyncAdapter.setSyncAutomatically(activity, autoUpdatePref.isChecked)
+                SgSyncAdapter.setSyncAutomatically(requireContext(), autoUpdatePref.isChecked)
             }
         }
 

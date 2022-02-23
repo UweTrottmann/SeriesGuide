@@ -144,6 +144,9 @@
     <string name="action_shows_filter_unwatched">Belum ditonton</string>
     <string name="action_shows_filter_upcoming">Mendatang</string>
     <string name="action_shows_filter_hidden">Tersembunyi</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Perlihatkan yang tersembunyi</string>
     <string name="description_make_all_visible_format">Buat semua acara tersembunyi (%s) terlihat lagi ?</string>
     <string name="action_shows_sort">Sortir acara</string>
@@ -388,6 +391,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Tampilan</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">gunakan bawaan system</string>
     <string name="theme_app_auto_battery">Diset oleh penghemat daya</string>

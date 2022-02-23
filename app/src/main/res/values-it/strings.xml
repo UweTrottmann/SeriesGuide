@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Non visti</string>
     <string name="action_shows_filter_upcoming">Prossimi</string>
     <string name="action_shows_filter_hidden">Nascosti</string>
+    <string name="state_shows_filter_disabled">Disabilitato</string>
+    <string name="state_shows_filter_included">Inclusi</string>
+    <string name="state_shows_filter_excluded">Esclusi</string>
     <string name="action_shows_make_all_visible">Rendi visibili tutti i nascosti</string>
     <string name="description_make_all_visible_format">Rendere tutte le serie TV nascoste (%s) di nuovo visibili?</string>
     <string name="action_shows_sort">Ordina le serie</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Aspetto</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Usa colori di sistema</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Usa impostazione predefinita di sistema</string>
     <string name="theme_app_auto_battery">Imposta in base al Risparmio di Batteria</string>

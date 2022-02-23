@@ -144,6 +144,9 @@
     <string name="action_shows_filter_unwatched">尚未觀看</string>
     <string name="action_shows_filter_upcoming">即將播出</string>
     <string name="action_shows_filter_hidden">隱藏</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Make all hidden visible</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">排序影集</string>
@@ -388,6 +391,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">外觀</string>
     <string name="pref_theme">主題</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">系統預設</string>
     <string name="theme_app_auto_battery">由省電模式控制</string>

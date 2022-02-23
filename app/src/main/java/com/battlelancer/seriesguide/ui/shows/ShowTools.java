@@ -1,9 +1,6 @@
 package com.battlelancer.seriesguide.ui.shows;
 
-import android.content.ContentProviderOperation;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -12,7 +9,6 @@ import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowDetails;
@@ -21,10 +17,8 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.uwetrottmann.trakt5.entities.BaseShow;
-import java.util.ArrayList;
 import java.util.Map;
 import javax.inject.Inject;
-import timber.log.Timber;
 
 /**
  * Common activities and tools useful when interacting with shows.
@@ -140,59 +134,6 @@ public class ShowTools {
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static boolean addLastWatchedUpdateOpIfNewer(Context context,
-            ArrayList<ContentProviderOperation> batch, int showTvdbId, long lastWatchedMsNew) {
-        Uri uri = SeriesGuideContract.Shows.buildShowUri(showTvdbId);
-        Cursor query = context.getContentResolver().query(uri, new String[]{
-                SeriesGuideContract.Shows.LASTWATCHED_MS}, null, null, null);
-        if (query == null) {
-            Timber.e("addLastWatchedTimeUpdateOpIfNewer: query was null.");
-            return false;
-        }
-        if (!query.moveToFirst()) {
-            Timber.e("addLastWatchedTimeUpdateOpIfNewer: query has no results.");
-            query.close();
-            return false;
-        }
-        long lastWatchedMs = query.getLong(0);
-        query.close();
-
-        if (lastWatchedMs < lastWatchedMsNew) {
-            batch.add(ContentProviderOperation.newUpdate(uri)
-                    .withValue(SeriesGuideContract.Shows.LASTWATCHED_MS, lastWatchedMsNew)
-                    .build());
-        }
-        return true;
-    }
-
-    /**
-     * Returns the trakt id of a show. Returns {@code null} if the query failed, there is no trakt
-     * id or if it is invalid.
-     *
-     * @deprecated Use {@link #getShowTraktId(Context, long)} and show row ID instead.
-     */
-    @Nullable
-    public static Integer getShowTraktId(@NonNull Context context, int showTvdbId) {
-        Cursor traktIdQuery = context.getContentResolver()
-                .query(SeriesGuideContract.Shows.buildShowUri(showTvdbId),
-                        new String[]{SeriesGuideContract.Shows.TRAKT_ID}, null, null, null);
-        if (traktIdQuery == null) {
-            return null;
-        }
-
-        Integer traktId = null;
-        if (traktIdQuery.moveToFirst()) {
-            traktId = traktIdQuery.getInt(0);
-            if (traktId <= 0) {
-                traktId = null;
-            }
-        }
-
-        traktIdQuery.close();
-
-        return traktId;
-    }
-
     /**
      * Returns the Trakt id of a show, or {@code null} if it is invalid or there is none.
      */
@@ -239,7 +180,7 @@ public class ShowTools {
         if (encodedStatus == Status.RETURNING) {
             view.setTextColor(
                     ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(
-                            view.getContext().getTheme(), R.attr.sgTextColorGreen)));
+                            view.getContext().getTheme(), R.attr.colorSecondary)));
         } else {
             view.setTextColor(
                     ContextCompat.getColor(view.getContext(), Utils.resolveAttributeToResourceId(

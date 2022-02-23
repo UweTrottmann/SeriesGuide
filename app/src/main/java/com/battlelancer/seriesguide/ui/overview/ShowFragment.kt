@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,7 +44,6 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.google.android.material.button.MaterialButton
-import com.uwetrottmann.androidutils.CheatSheet
 import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -64,68 +64,96 @@ class ShowFragment() : Fragment() {
 
     @BindView(R.id.containerShowPoster)
     internal lateinit var containerPoster: View
+
     @BindView(R.id.imageViewShowPoster)
     internal lateinit var imageViewPoster: ImageView
+
     @BindView(R.id.textViewShowStatus)
     @JvmField
     internal var textViewStatus: TextView? = null
+
     @BindView(R.id.textViewShowReleaseTime)
     @JvmField
     internal var textViewReleaseTime: TextView? = null
+
     @BindView(R.id.textViewShowOverview)
     internal lateinit var textViewOverview: TextView
+
     @BindView(R.id.textViewShowReleaseCountry)
     internal lateinit var textViewReleaseCountry: TextView
+
     @BindView(R.id.textViewShowFirstAirdate)
     internal lateinit var textViewFirstRelease: TextView
+
     @BindView(R.id.textViewShowContentRating)
     internal lateinit var textViewContentRating: TextView
+
     @BindView(R.id.textViewShowGenres)
     internal lateinit var textViewGenres: TextView
+
     @BindView(R.id.textViewRatingsValue)
     internal lateinit var textViewRating: TextView
+
     @BindView(R.id.textViewRatingsRange)
     internal lateinit var textViewRatingRange: TextView
+
     @BindView(R.id.textViewRatingsVotes)
     internal lateinit var textViewRatingVotes: TextView
+
     @BindView(R.id.textViewRatingsUser)
     internal lateinit var textViewRatingUser: TextView
 
     @BindView(R.id.buttonShowFavorite)
     internal lateinit var buttonFavorite: MaterialButton
+
     @BindView(R.id.buttonShowNotify)
     internal lateinit var buttonNotify: MaterialButton
+
     @BindView(R.id.buttonShowHidden)
     internal lateinit var buttonHidden: MaterialButton
+
     @BindView(R.id.buttonShowShortcut)
     internal lateinit var buttonShortcut: Button
+
     @BindView(R.id.buttonShowLanguage)
     internal lateinit var buttonLanguage: Button
+
     @BindView(R.id.containerRatings)
     internal lateinit var buttonRate: View
+
     @BindView(R.id.buttonShowSimilar)
     internal lateinit var buttonSimilar: Button
+
     @BindView(R.id.buttonShowImdb)
     internal lateinit var buttonImdb: Button
+
     @BindView(R.id.buttonShowMetacritic)
     internal lateinit var buttonShowMetacritic: Button
+
     @BindView(R.id.buttonShowTmdb)
     internal lateinit var buttonTmdb: Button
+
     @BindView(R.id.buttonShowTrakt)
     internal lateinit var buttonTrakt: Button
+
     @BindView(R.id.buttonShowWebSearch)
     internal lateinit var buttonWebSearch: Button
+
     @BindView(R.id.buttonShowComments)
     internal lateinit var buttonComments: Button
+
     @BindView(R.id.buttonShowShare)
     internal lateinit var buttonShare: Button
 
     @BindView(R.id.labelCast)
     internal lateinit var castLabel: TextView
+
     @BindView(R.id.containerCast)
     internal lateinit var castContainer: LinearLayout
+
     @BindView(R.id.labelCrew)
     internal lateinit var crewLabel: TextView
+
     @BindView(R.id.containerCrew)
     internal lateinit var crewContainer: LinearLayout
 
@@ -157,17 +185,20 @@ class ShowFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // favorite + notifications + visibility button
-        CheatSheet.setup(buttonFavorite)
-        CheatSheet.setup(buttonNotify)
-        CheatSheet.setup(buttonHidden)
+        TooltipCompat.setTooltipText(buttonFavorite, buttonFavorite.contentDescription)
+        TooltipCompat.setTooltipText(buttonNotify, buttonNotify.contentDescription)
+        TooltipCompat.setTooltipText(buttonHidden, buttonHidden.contentDescription)
 
         // language button
         buttonLanguage.setOnClickListener { displayLanguageSettings() }
-        CheatSheet.setup(buttonLanguage, R.string.pref_language)
+        TooltipCompat.setTooltipText(
+            buttonLanguage,
+            buttonLanguage.context.getString(R.string.pref_language)
+        )
 
         // rate button
         buttonRate.setOnClickListener { rateShow() }
-        CheatSheet.setup(buttonRate, R.string.action_rate)
+        TooltipCompat.setTooltipText(buttonRate, buttonRate.context.getString(R.string.action_rate))
         textViewRatingRange.text = getString(R.string.format_rating_range, 10)
 
         // share button
@@ -400,8 +431,8 @@ class ShowFragment() : Fragment() {
 
         // shout button
         buttonComments.setOnClickListener { v ->
-                val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
-                Utils.startActivityWithAnimation(activity, i, v)
+            val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
+            Utils.startActivityWithAnimation(activity, i, v)
         }
 
         // poster, full screen poster button
@@ -415,13 +446,15 @@ class ShowFragment() : Fragment() {
             ImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterSmall)
             containerPoster.isFocusable = true
             containerPoster.setOnClickListener { v ->
-                val intent = FullscreenImageActivity.intent(requireContext(),
+                val intent = FullscreenImageActivity.intent(
+                    requireContext(),
                     ImageTools.tmdbOrTvdbPosterUrl(posterSmall, requireContext()),
                     ImageTools.tmdbOrTvdbPosterUrl(
                         show.poster,
                         requireContext(),
                         originalSize = true
-                    ))
+                    )
+                )
                 Utils.startActivityWithAnimation(activity, intent, v)
             }
         }

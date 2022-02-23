@@ -34,7 +34,6 @@ import com.battlelancer.seriesguide.widgets.SgFastScroller
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class CalendarFragment2 : Fragment() {
 
@@ -126,7 +125,6 @@ class CalendarFragment2 : Fragment() {
         }
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.onPagesUpdatedFlow.conflate().collectLatest {
-                Timber.i("onPagesUpdatedFlow")
                 updateEmptyView(adapter.itemCount == 0)
             }
         }

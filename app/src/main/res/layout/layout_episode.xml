@@ -50,33 +50,39 @@
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
         tools:text="OCT 15, 2013 (TUE) · 52" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_image"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/containerImage"
+        style="?attr/materialCardViewFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/inline_padding"
         android:layout_marginLeft="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
-        android:background="?attr/sgColorBackgroundDim"
+        android:layout_marginBottom="@dimen/inline_padding"
         android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        android:nextFocusDown="@+id/buttonEpisodeWatched"
         android:nextFocusUp="@+id/textViewEpisodeReleaseTime"
+        android:nextFocusDown="@+id/buttonEpisodeWatched"
         tools:ignore="Overdraw">
 
-        <ImageView
-            android:id="@+id/imageview_screenshot"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/description_image"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="w,16:9"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutEpisodeImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/imageview_screenshot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/description_image"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="w,16:9"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <include
         android:id="@+id/include_buttons"

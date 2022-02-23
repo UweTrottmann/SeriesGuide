@@ -71,14 +71,16 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+        // Using experimental flatMapLatest for Paging 3
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
     }
 
     lint {
         // for CI server: only check this module with dependencies instead of each module separately
-        isCheckDependencies = true
+        checkDependencies = true
         // for CI server: log reports (report files are not public)
         textReport = true
-        textOutput("stdout")
+        // Note: do not use textOutput = file("stdout"), just set no file.
     }
 
     testOptions {
@@ -87,7 +89,7 @@ android {
         }
     }
 
-    flavorDimensions("flavor")
+    flavorDimensions += listOf("flavor")
 
     productFlavors {
         create("pure") {
@@ -163,18 +165,17 @@ dependencies {
     implementation("androidx.core:core-ktx:$coreVersion")
     implementation("androidx.annotation:annotation:$annotationVersion")
     // https://developer.android.com/jetpack/androidx/releases/appcompat
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
     // https://developer.android.com/jetpack/androidx/releases/browser
     implementation("androidx.browser:browser:1.4.0")
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
     // https://github.com/material-components/material-components-android/releases
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.palette:palette-ktx:1.0.0")
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
     implementation("androidx.preference:preference-ktx:1.1.1")
 
     // ViewModel and LiveData
@@ -186,6 +187,8 @@ dependencies {
     // Room
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
+    // Paging 3 Integration
+    implementation("androidx.room:room-paging:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
@@ -193,16 +196,16 @@ dependencies {
     implementation("com.jakewharton:butterknife:$butterknifeVersion")
     kapt("com.jakewharton:butterknife-compiler:$butterknifeVersion")
     // https://github.com/google/dagger/releases
-    val daggerVersion  = "2.39"
+    val daggerVersion  = "2.40.5"
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
-    val eventbusVersion = "3.2.0"
+    val eventbusVersion = "3.3.1"
     implementation("org.greenrobot:eventbus:$eventbusVersion")
     kapt("org.greenrobot:eventbus-annotation-processor:$eventbusVersion")
 
     implementation("com.google.flatbuffers:flatbuffers-java:1.12.0")
     // https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation("com.google.code.gson:gson:2.8.8")
+    implementation("com.google.code.gson:gson:2.8.9")
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
     implementation("com.jakewharton.timber:timber:$timberVersion")
@@ -219,10 +222,8 @@ dependencies {
 
     implementation("com.squareup.picasso:picasso:2.71828")
 
-    // https://github.com/UweTrottmann/AndroidUtils/blob/master/RELEASE_NOTES.md
-    implementation("com.uwetrottmann.androidutils:androidutils:2.4.1") {
-        exclude(group = "com.android.support")
-    }
+    // https://github.com/UweTrottmann/AndroidUtils/releases
+    implementation("com.uwetrottmann.androidutils:androidutils:3.0.0")
     implementation("com.uwetrottmann.photoview:library:1.2.4")
     implementation("com.getkeepsafe.taptargetview:taptargetview:1.13.3")
 
@@ -245,6 +246,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:29.0.1"))
     // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
     implementation("com.firebaseui:firebase-ui-auth:8.0.0")
+    // Update play-services-auth which adds Android 12 mutable Intent flags.
+    implementation("com.google.android.gms:play-services-auth:20.0.1")
+
 
     // Crashlytics
     // https://firebase.google.com/support/release-notes/android
@@ -302,10 +306,10 @@ dependencies {
     // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
     // https://github.com/robolectric/robolectric/issues/6521
     // https://issuetracker.google.com/issues/159151549
-    testImplementation("org.robolectric:robolectric:4.6.1")
+    testImplementation("org.robolectric:robolectric:4.7.3")
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
     // https://github.com/mockito/mockito/releases
-    testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("org.mockito:mockito-core:4.2.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }
 

@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui.dialogs
 
 import android.app.Application
+import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgShow2Notify
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences.UpdateSummariesEvent
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -36,29 +38,27 @@ class NotificationSelectionDialogFragment : AppCompatDialogFragment() {
     private lateinit var adapter: SelectionAdapter
     private val model by viewModels<NotificationSelectionModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = DialogNotificationSelectionBinding.inflate(inflater, container, false)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogNotificationSelectionBinding.inflate(layoutInflater)
         this.binding = binding
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = SelectionAdapter(onItemClickListener)
 
-        binding?.apply {
+        binding.apply {
             recyclerViewSelection.layoutManager = LinearLayoutManager(context)
             recyclerViewSelection.adapter = adapter
         }
 
-        model.shows.observe(viewLifecycleOwner) { shows ->
+        model.shows.observe(this) { shows ->
             val hasNoData = shows.isEmpty()
-            binding?.textViewSelectionEmpty?.isGone = !hasNoData
-            binding?.recyclerViewSelection?.isGone = hasNoData
+            this.binding?.textViewSelectionEmpty?.isGone = !hasNoData
+            this.binding?.recyclerViewSelection?.isGone = hasNoData
             adapter.submitList(shows)
         }
+
+        return MaterialAlertDialogBuilder(requireContext())
+            .setView(binding.root)
+            .create()
     }
 
     override fun onDestroyView() {

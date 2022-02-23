@@ -3,22 +3,19 @@ package com.battlelancer.seriesguide.ui
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.StyleRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.preferences.SgPreferencesFragment
 
 /**
  * Allows tweaking of various SeriesGuide settings. Does NOT inherit
  * from [com.battlelancer.seriesguide.ui.BaseActivity] to avoid
- * handling actions which might be confusing nwhile adjusting settings.
+ * handling actions which might be confusing while adjusting settings.
  */
-class SeriesGuidePreferences : AppCompatActivity() {
+class SeriesGuidePreferences : BaseThemeActivity() {
 
     class UpdateSummariesEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(SeriesGuidePreferences.THEME)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         setupActionBar()
@@ -36,9 +33,8 @@ class SeriesGuidePreferences : AppCompatActivity() {
         }
     }
 
-    private fun setupActionBar() {
-        val toolbar = findViewById<Toolbar>(R.id.sgToolbar)
-        setSupportActionBar(toolbar)
+    override fun setupActionBar() {
+        super.setupActionBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

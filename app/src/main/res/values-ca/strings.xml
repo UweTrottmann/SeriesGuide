@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">No vist</string>
     <string name="action_shows_filter_upcoming">Propers</string>
     <string name="action_shows_filter_hidden">Ocults</string>
+    <string name="state_shows_filter_disabled">Deshabilitat</string>
+    <string name="state_shows_filter_included">Inclosos</string>
+    <string name="state_shows_filter_excluded">exclosos</string>
     <string name="action_shows_make_all_visible">Fes tot els ocults visibles</string>
     <string name="description_make_all_visible_format">Fer de tots les sèries amagades (%s) visibles un altre cop?</string>
     <string name="action_shows_sort">Ordena sèries</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Aparença</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Utilitza els colors del sistema</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Utilitza el valor per defecte del sistema</string>
     <string name="theme_app_auto_battery">Activa l\'estalvi de bateria</string>

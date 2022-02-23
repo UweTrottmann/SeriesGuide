@@ -42,6 +42,6 @@
             android:clipToPadding="false" />
     </LinearLayout>
 
-    <include layout="@layout/dialog_buttons_divided" />
+    <include layout="@layout/divider_horizontal" />
 
 </LinearLayout>

@@ -3,13 +3,12 @@ package com.battlelancer.seriesguide.widgets
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.ImageView
+import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ViewFilterBoxBinding
+import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
  * Three state check box for filter being disabled, included or excluded.
@@ -20,14 +19,10 @@ class FilterBox @JvmOverloads constructor(
 
     private val filterDescription: String
 
-    @BindView(R.id.textViewFilterBox)
-    lateinit var textView: TextView
-    @BindView(R.id.imageViewFilterBox)
-    lateinit var imageView: ImageView
+    private val binding = ViewFilterBoxBinding.inflate(LayoutInflater.from(context), this)
 
     init {
         orientation = HORIZONTAL
-        LayoutInflater.from(context).inflate(R.layout.view_filter_box, this)
 
         val a = context.theme
             .obtainStyledAttributes(attrs, R.styleable.FilterBox, 0, 0)
@@ -36,9 +31,12 @@ class FilterBox @JvmOverloads constructor(
         } finally {
             a.recycle()
         }
+    }
 
-        ButterKnife.bind(this)
-        textView.text = filterDescription
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+
+        binding.textViewFilterBox.text = filterDescription
     }
 
     /**
@@ -47,16 +45,44 @@ class FilterBox @JvmOverloads constructor(
     var state: Boolean? = null
         set(value) {
             field = value
-            updateImage()
+            updateState()
         }
 
-    private fun updateImage() {
+    private fun updateState() {
         val vectorDrawable = when (state) {
-            null -> VectorDrawableCompat.create(context.resources, R.drawable.ic_box_blank_white_24dp, context.theme)
-            true -> VectorDrawableCompat.create(context.resources, R.drawable.ic_box_plus_green_24dp, context.theme)
-            false -> VectorDrawableCompat.create(context.resources, R.drawable.ic_box_minus_red_24dp, context.theme)
+            null -> VectorDrawableCompat.create(
+                context.resources,
+                R.drawable.ic_box_blank_white_24dp,
+                context.theme
+            )
+            true -> VectorDrawableCompat.create(
+                context.resources,
+                R.drawable.ic_box_plus_green_24dp,
+                context.theme
+            )
+            false -> VectorDrawableCompat.create(
+                context.resources,
+                R.drawable.ic_box_minus_red_24dp,
+                context.theme
+            )
         }
-        imageView.setImageDrawable(vectorDrawable)
+        val stateDescription = when (state) {
+            null -> context.getString(R.string.state_shows_filter_disabled)
+            true -> context.getString(R.string.state_shows_filter_included)
+            false -> context.getString(R.string.state_shows_filter_excluded)
+        }
+        binding.imageViewFilterBox.setImageDrawable(vectorDrawable)
+        if (AndroidUtils.isAtLeastR) {
+            binding.textViewFilterBox.stateDescription = stateDescription
+        } else {
+            // Android 11+ (above) read state, then description.
+            binding.textViewFilterBox.contentDescription =
+                if (binding.textViewFilterBox.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+                    "$filterDescription ,$stateDescription"
+                } else {
+                    "$stateDescription, $filterDescription"
+                }
+        }
     }
 
     override fun performClick(): Boolean {

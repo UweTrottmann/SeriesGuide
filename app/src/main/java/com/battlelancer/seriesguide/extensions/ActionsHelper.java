@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.TooltipCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.Action;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.CheatSheet;
 import java.util.List;
 import timber.log.Timber;
 
@@ -40,7 +40,7 @@ public class ActionsHelper {
                         actionsContainer, false);
                 actionView.setText(action.getTitle());
 
-                CheatSheet.setup(actionView, action.getTitle());
+                TooltipCompat.setTooltipText(actionView, action.getTitle());
 
                 final Intent viewIntent = action.getViewIntent();
                 if (viewIntent != null) {

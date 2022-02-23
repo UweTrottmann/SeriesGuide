@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Por ver</string>
     <string name="action_shows_filter_upcoming">Próximos</string>
     <string name="action_shows_filter_hidden">Agochados</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Amosar todos os ocultos</string>
     <string name="description_make_all_visible_format">Amosar todas as series ocultas (%s) de novo?</string>
     <string name="action_shows_sort">Ordenar series</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Aparencia</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Use system default</string>
     <string name="theme_app_auto_battery">Set by Battery Saver</string>

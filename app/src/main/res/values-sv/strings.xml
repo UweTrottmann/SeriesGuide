@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Osedda</string>
     <string name="action_shows_filter_upcoming">Kommande</string>
     <string name="action_shows_filter_hidden">Dolda</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Gör alla gömda synliga</string>
     <string name="description_make_all_visible_format">Göra alla gömda serier (%s) synliga igen?</string>
     <string name="action_shows_sort">Sortera serier</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Utseende</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Använd systemstandard</string>
     <string name="theme_app_auto_battery">Ställ in efter batterisparläge</string>

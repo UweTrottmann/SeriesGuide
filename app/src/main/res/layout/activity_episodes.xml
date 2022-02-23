@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         style="@style/Widget.SeriesGuide.AppBarLayout.Transparent">
 
-        <include layout="@layout/toolbar_transparent" />
+        <include layout="@layout/toolbar" />
 
         <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
             android:id="@+id/tabsEpisodes"

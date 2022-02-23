@@ -726,8 +726,11 @@ public class SeriesGuideContract {
         String SELECTION_NO_NEXT_EPISODE =
                 NEXTAIRDATEMS + "=" + NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE;
 
-        String SORT_TITLE = TITLE + " COLLATE NOCASE ASC";
-        String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE NOCASE ASC";
+        // Android provides the UNICODE collator,
+        // use to correctly order characters with e.g. accents.
+        // https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
+        String SORT_TITLE = TITLE + " COLLATE UNICODE ASC";
+        String SORT_TITLE_NOARTICLE = TITLE_NOARTICLE + " COLLATE UNICODE ASC";
         String SORT_STATUS = STATUS + " DESC";
         String SORT_LATEST_EPISODE_THEN_STATUS = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
 
@@ -819,10 +822,6 @@ public class SeriesGuideContract {
          * Integer to order seasons by, typically equal to the season number.
          */
         String ORDER = "season_order";
-
-        static Uri buildIdUri(long rowId) {
-            return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
-        }
 
         static long getId(Uri uri) {
             String lastPathSegment = uri.getLastPathSegment();
@@ -984,9 +983,6 @@ public class SeriesGuideContract {
         String SORT_UPCOMING = FIRSTAIREDMS + " ASC," + SgShow2Columns.SORT_TITLE + "," + NUMBER + " ASC";
         String SORT_RECENT = FIRSTAIREDMS + " DESC," + SgShow2Columns.SORT_TITLE + "," + NUMBER + " DESC";
 
-        static Uri buildIdUri(long rowId) {
-            return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
-        }
     }
 
     interface EpisodeSearchColumns {
@@ -1203,37 +1199,6 @@ public class SeriesGuideContract {
                 .build();
 
         /**
-         * Shows joined with episodes table.
-         * See {@link SeriesGuideProvider#SHOWS_WITH_NEXT_EPISODE}.
-         */
-        public static final Uri CONTENT_URI_WITH_NEXT_EPISODE = CONTENT_URI.buildUpon()
-                .appendPath(PATH_WITH_NEXT_EPISODE)
-                .build();
-
-        /**
-         * Shows joined with episodes table.
-         * See {@link SeriesGuideProvider#SHOWS_WITH_LAST_EPISODE}.
-         */
-        public static final Uri CONTENT_URI_WITH_LAST_EPISODE = CONTENT_URI.buildUpon()
-                .appendPath(PATH_WITH_LAST_EPISODE)
-                .build();
-
-        /**
-         * Shows table with a LIKE %filter% where statement.
-         * See {@link SeriesGuideProvider#SHOWS_FILTERED}.
-         */
-        public static final Uri CONTENT_URI_FILTER = CONTENT_URI.buildUpon()
-                .appendPath(PATH_FILTER)
-                .build();
-
-        /**
-         * If "queried" closes and re-opens the database.
-         * See {@link SeriesGuideProvider#CLOSE}.
-         */
-        public static final Uri CONTENT_URI_CLOSE = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_CLOSE).build();
-
-        /**
          * Use if multiple items get returned
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.show";
@@ -1244,32 +1209,8 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.show";
 
-        public static final String[] PROJECTION_TITLE = { Shows.TITLE };
-
-        public static final String SORT_TITLE = Shows.TITLE + " COLLATE NOCASE ASC";
-        public static final String SORT_TITLE_NOARTICLE = Shows.TITLE_NOARTICLE
-                + " COLLATE NOCASE ASC";
-        public static final String SORT_STATUS = Shows.STATUS + " DESC";
-        public static final String SORT_LATEST_EPISODE = Shows.NEXTAIRDATEMS + " DESC,"
-                + Shows.SORT_STATUS;
-
-        public static final String SELECTION_FAVORITES = Shows.FAVORITE + "=1";
-        public static final String SELECTION_NOT_FAVORITES = Shows.FAVORITE + "=0";
-        public static final String SELECTION_NOTIFY = Shows.NOTIFY + "=1";
-        public static final String SELECTION_WITH_NEXT_EPISODE = Shows.NEXTAIRDATEMS + "!="
-                + NextEpisodeUpdater.UNKNOWN_NEXT_RELEASE_DATE;
-        public static final String SELECTION_WITH_NEXT_NOT_HIDDEN = Shows.NEXTEPISODE + "!='' AND "
-                + Shows.HIDDEN + "=0 AND " + Shows.NEXTAIRDATEMS + "<?";
-
-        public static final String SELECTION_HIDDEN = Shows.HIDDEN + "=1";
-        public static final String SELECTION_NO_HIDDEN = Shows.HIDDEN + "=0";
-
         public static Uri buildShowUri(String showId) {
             return CONTENT_URI.buildUpon().appendPath(showId).build();
-        }
-
-        public static Uri buildShowUri(int showTvdbId) {
-            return buildShowUri(String.valueOf(showTvdbId));
         }
 
         public static String getShowId(Uri uri) {
@@ -1287,14 +1228,6 @@ public class SeriesGuideContract {
                 .appendPath(PATH_EPISODES).build();
 
         /**
-         * Episodes joined with shows table.
-         * See {@link SeriesGuideProvider#EPISODES_WITHSHOW}
-         * and {@link SeriesGuideProvider#EPISODES_ID_WITHSHOW}.
-         */
-        public static final Uri CONTENT_URI_WITHSHOW = CONTENT_URI.buildUpon()
-                .appendPath(PATH_WITHSHOW).build();
-
-        /**
          * Use if multiple items get returned
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.episode";
@@ -1305,93 +1238,12 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.episode";
 
-        public static final String SELECTION_UNWATCHED = Episodes.WATCHED + "="
-                + EpisodeFlags.UNWATCHED;
-
-        public static final String SELECTION_UNWATCHED_OR_SKIPPED = Episodes.WATCHED + "!="
-                + EpisodeFlags.WATCHED;
-
-        public static final String SELECTION_WATCHED = Episodes.WATCHED + "="
-                + EpisodeFlags.WATCHED;
-
-        public static final String SELECTION_WATCHED_OR_SKIPPED = Episodes.WATCHED + "!="
-                + EpisodeFlags.UNWATCHED;
-
-        public static final String SELECTION_COLLECTED = Episodes.COLLECTED + "=1";
-
-        public static final String SELECTION_NOT_COLLECTED = Episodes.COLLECTED + "=0";
-
-        public static final String SELECTION_NO_SPECIALS = Episodes.SEASON + "!=0";
-
-        public static final String SELECTION_HAS_RELEASE_DATE = Episodes.FIRSTAIREDMS + "!="
-                + Constants.EPISODE_UNKNOWN_RELEASE;
-
-        public static final String SELECTION_RELEASED_BEFORE_X = Episodes.FIRSTAIREDMS + "<=?";
-
-        public static final String SELECTION_ONLY_PREMIERES = Episodes.NUMBER + "=1";
-
-        /**
-         * Lower season or if season is equal has to have a lower episode number. Must be watched or
-         * skipped, excludes special episodes (because their release times are spread over all
-         * seasons).
-         */
-        public static final String SELECTION_PREVIOUS_WATCHED =
-                SEASON + ">0"
-                        + " AND " + SELECTION_WATCHED_OR_SKIPPED
-                        + " AND (" + SEASON + "<? OR "
-                        + "(" + SEASON + "=? AND "
-                        + NUMBER + "<?)"
-                        + ")";
-
-        public static final String SORT_SEASON_ASC = Episodes.SEASON + " ASC";
-        public static final String SORT_NUMBER_ASC = Episodes.NUMBER + " ASC";
-        /**
-         * Order by season, then by number, then by release time.
-         */
-        public static final String SORT_PREVIOUS_WATCHED =
-                SEASON + " DESC" + ","
-                        + NUMBER + " DESC" + ","
-                        + FIRSTAIREDMS + " DESC";
-
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();
         }
 
-        public static Uri buildEpisodeUri(int episodeId) {
-            return buildEpisodeUri(String.valueOf(episodeId));
-        }
-
         public static String getEpisodeId(Uri uri) {
             return uri.getLastPathSegment();
-        }
-
-        public static Uri buildEpisodesOfSeasonUri(String seasonId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSEASON).appendPath(seasonId).build();
-        }
-
-        public static Uri buildEpisodesOfSeasonUri(int seasonTvdbId) {
-            return buildEpisodesOfSeasonUri(String.valueOf(seasonTvdbId));
-        }
-
-        public static Uri buildEpisodesOfSeasonWithShowUri(String seasonId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSEASON).appendPath(PATH_WITHSHOW)
-                    .appendPath(seasonId).build();
-        }
-
-        public static Uri buildEpisodesOfShowUri(String showTvdbId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showTvdbId).build();
-        }
-
-        public static Uri buildEpisodesOfShowUri(int showTvdbId) {
-            return buildEpisodesOfShowUri(String.valueOf(showTvdbId));
-        }
-
-        public static Uri buildEpisodeWithShowUri(String episodeId) {
-            return CONTENT_URI_WITHSHOW.buildUpon().appendPath(episodeId).build();
-        }
-
-        public static Uri buildEpisodeWithShowUri(int episodeTvdbId) {
-            return buildEpisodeWithShowUri(String.valueOf(episodeTvdbId));
         }
     }
 
@@ -1415,28 +1267,14 @@ public class SeriesGuideContract {
         public static final String CONTENT_ITEM_TYPE
                 = "vnd.android.cursor.item/vnd.seriesguide.season";
 
-        /** Warning: total count may not be up to date. */
-        public static final String SELECTION_WITH_EPISODES = Seasons.TOTALCOUNT + ">0";
-
         public static Uri buildSeasonUri(String seasonTvdbId) {
             return CONTENT_URI.buildUpon().appendPath(seasonTvdbId).build();
-        }
-
-        public static Uri buildSeasonUri(int seasonTvdbId) {
-            return buildSeasonUri(String.valueOf(seasonTvdbId));
         }
 
         public static String getSeasonId(Uri uri) {
             return uri.getLastPathSegment();
         }
 
-        public static Uri buildSeasonsOfShowUri(String showTvdbId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showTvdbId).build();
-        }
-
-        public static Uri buildSeasonsOfShowUri(int showTvdbId) {
-            return buildSeasonsOfShowUri(String.valueOf(showTvdbId));
-        }
     }
 
     public static class Lists implements ListsColumns, BaseColumns {
@@ -1469,7 +1307,7 @@ public class SeriesGuideContract {
                 = "vnd.android.cursor.item/vnd.seriesguide.list";
 
         public static final String SORT_ORDER_THEN_NAME = Lists.ORDER + " ASC," + Lists.NAME
-                + " COLLATE NOCASE ASC";
+                + " COLLATE UNICODE ASC";
 
         public static Uri buildListUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
@@ -1587,8 +1425,6 @@ public class SeriesGuideContract {
                 .appendPath(PATH_MOVIES)
                 .build();
 
-        public static final String[] PROJECTION_TITLE = { Movies.TITLE };
-
         public static final String SELECTION_COLLECTION = Movies.IN_COLLECTION + "=1";
 
         public static final String SELECTION_NOT_COLLECTION = Movies.IN_COLLECTION + "=0";
@@ -1600,17 +1436,20 @@ public class SeriesGuideContract {
         public static final String SELECTION_WATCHED = Movies.WATCHED + "=1";
         public static final String SELECTION_UNWATCHED = Movies.WATCHED + "=0";
 
+        // Android provides the UNICODE collator,
+        // use to correctly order characters with e.g. accents.
+        // https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
         /** Default sort order. */
-        public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE NOCASE ASC";
+        public static final String SORT_TITLE_ALPHABETICAL = Movies.TITLE + " COLLATE UNICODE ASC";
 
         public static final String SORT_TITLE_ALPHABETICAL_NO_ARTICLE = Movies.TITLE_NOARTICLE
-                + " COLLATE NOCASE ASC";
+                + " COLLATE UNICODE ASC";
 
         public static final String SORT_TITLE_REVERSE_ALPHACETICAL = Movies.TITLE
-                + " COLLATE NOCASE DESC";
+                + " COLLATE UNICODE DESC";
 
         public static final String SORT_TITLE_REVERSE_ALPHACETICAL_NO_ARTICLE =
-                Movies.TITLE_NOARTICLE + " COLLATE NOCASE DESC";
+                Movies.TITLE_NOARTICLE + " COLLATE UNICODE DESC";
 
         public static final String SORT_RELEASE_DATE_NEWEST_FIRST = Movies.RELEASED_UTC_MS
                 + " DESC," + SORT_TITLE_ALPHABETICAL;

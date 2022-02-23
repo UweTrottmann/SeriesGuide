@@ -147,6 +147,9 @@
     <string name="action_shows_filter_unwatched">Nieobejrzane</string>
     <string name="action_shows_filter_upcoming">Nadchodzące</string>
     <string name="action_shows_filter_hidden">Ukryty</string>
+    <string name="state_shows_filter_disabled">Wyłączony</string>
+    <string name="state_shows_filter_included">Zawarte</string>
+    <string name="state_shows_filter_excluded">Wykluczone</string>
     <string name="action_shows_make_all_visible">Przywróć ukryte seriale</string>
     <string name="description_make_all_visible_format">Przywrócić wszystkie ukryte seriale (%s)?</string>
     <string name="action_shows_sort">Sortuj seriale</string>
@@ -421,6 +424,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Wygląd</string>
     <string name="pref_theme">Motyw</string>
+    <string name="pref_dynamic_colors">Użyj kolorów systemowych</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Użyj ustawień systemowych</string>
     <string name="theme_app_auto_battery">Ustawione przez Oszczędzanie baterii</string>

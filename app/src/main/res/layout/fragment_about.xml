@@ -35,14 +35,14 @@
 
             <Button
                 android:id="@+id/buttonAboutWebsite"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/website" />
 
             <Button
                 android:id="@+id/buttonAboutPrivacy"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
@@ -56,7 +56,7 @@
 
             <Button
                 android:id="@+id/buttonAboutCredits"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
@@ -70,14 +70,14 @@
 
             <Button
                 android:id="@+id/buttonAboutTmdbTerms"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tmdb_terms" />
 
             <Button
                 android:id="@+id/buttonAboutTmdbApiTerms"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"
@@ -91,7 +91,7 @@
 
             <Button
                 android:id="@+id/buttonAboutTraktTerms"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/larger_padding"

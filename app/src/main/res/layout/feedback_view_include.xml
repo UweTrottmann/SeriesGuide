@@ -21,25 +21,32 @@
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
             tools:text="Are you enjoying SeriesGuide?" />
 
-        <androidx.appcompat.widget.ButtonBarLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"
-            android:paddingBottom="@dimen/inline_padding"
-            app:allowStacking="true">
+            android:paddingBottom="@dimen/inline_padding">
 
-            <Space
+            <androidx.constraintlayout.helper.widget.Flow
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="buttonFeedbackNegative,buttonFeedbackPositive"
+                app:flow_horizontalBias="1"
+                app:flow_horizontalGap="8dp"
+                app:flow_horizontalStyle="packed"
+                app:flow_wrapMode="chain"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/buttonFeedbackNegative"
                 style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
                 tools:text="Not really" />
 
             <Button
@@ -49,7 +56,7 @@
                 android:layout_height="wrap_content"
                 tools:text="Yes!" />
 
-        </androidx.appcompat.widget.ButtonBarLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

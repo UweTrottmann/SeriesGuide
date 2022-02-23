@@ -117,7 +117,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
 
         adapter = ShowsDiscoverAdapter(requireContext(), discoverItemClickListener,
-                TraktCredentials.get(context).hasCredentials(), true)
+                TraktCredentials.get(requireContext()).hasCredentials(), true)
         recyclerView.adapter = adapter
 
         languageCode = DisplaySettings.getShowsSearchLanguage(requireContext())

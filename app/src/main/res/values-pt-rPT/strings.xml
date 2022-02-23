@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Por ver</string>
     <string name="action_shows_filter_upcoming">Próximos</string>
     <string name="action_shows_filter_hidden">Ocultados</string>
+    <string name="state_shows_filter_disabled">Desativado</string>
+    <string name="state_shows_filter_included">Incluído</string>
+    <string name="state_shows_filter_excluded">Excluído</string>
     <string name="action_shows_make_all_visible">Tornar os ocultos visíveis</string>
     <string name="description_make_all_visible_format">Tornar todas as séries ocultas (%s) visíveis novamente?</string>
     <string name="action_shows_sort">Ordenar séries</string>
@@ -246,7 +249,7 @@
     <string name="action_movies_sort">Ordenar filmes</string>
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Data de estreia</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Filtrar filmes</string>
     <!-- Statistics -->
     <string name="statistics_failed">Não foi possível calcular as estatísticas.</string>
     <string name="shows_finished">%s vistas completamente</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Aparência</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Usar cores do sistema</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Usar predefinição do sistema</string>
     <string name="theme_app_auto_battery">Definido pela Poupança de Bateria</string>

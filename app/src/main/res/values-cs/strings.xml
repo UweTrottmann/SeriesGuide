@@ -38,7 +38,7 @@
     <string name="action_stream">Streamování nebo nákup</string>
     <string name="action_stream_info">Informace o streamování nebo nákupu</string>
     <string name="action_select_region">Vyberte region</string>
-    <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_include_any_watch_provider">Zahrnout vše</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
     <string name="search_hint">Hledat epizody</string>
@@ -147,6 +147,9 @@
     <string name="action_shows_filter_unwatched">Nezhlédnuté</string>
     <string name="action_shows_filter_upcoming">Nadcházející</string>
     <string name="action_shows_filter_hidden">Skryté</string>
+    <string name="state_shows_filter_disabled">Vypnuto</string>
+    <string name="state_shows_filter_included">Zahrnuté</string>
+    <string name="state_shows_filter_excluded">Vyloučené</string>
     <string name="action_shows_make_all_visible">Zviditelnit všechny skryté</string>
     <string name="description_make_all_visible_format">Znovu zviditelnit všechny skryté seriály (%s)?</string>
     <string name="action_shows_sort">Seřadit seriály</string>
@@ -254,7 +257,7 @@
     <string name="action_movies_sort">Seřadit filmy</string>
     <string name="action_movies_sort_title">Název</string>
     <string name="action_movies_sort_release">Datum vysílání</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Filtrovat filmy</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nelze přepočítat statistiky.</string>
     <string name="shows_finished">%s dokončených zhlédnutí</string>
@@ -286,7 +289,7 @@
     <string name="feature_supported">Podporováno</string>
     <string name="feature_not_supported">Není podporováno</string>
     <string name="feature_history">Osobní historie a historie přátel</string>
-    <string name="feature_comments">Odeslat komentář</string>
+    <string name="feature_comments">Přidání komentářů</string>
     <string name="feature_sync">Synchronizace</string>
     <!-- Hexagon -->
     <string name="hexagon_warning">Experimentální!</string>
@@ -297,15 +300,15 @@
     <string name="hexagon_setup_incomplete">Nastavení SeriesGuide cloudu nebylo dokončeno</string>
     <string name="hexagon_setup_fail_auth">Váš účet nemá e-mailovou adresu</string>
     <string name="hexagon_remove_account">Odebrat účet</string>
-    <string name="hexagon_remove_account_success">Účet vymazán.</string>
-    <string name="hexagon_remove_account_failure">Nelze odebrat účet.</string>
+    <string name="hexagon_remove_account_success">Účet odstraněn</string>
+    <string name="hexagon_remove_account_failure">Účet nelze odstranit</string>
     <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
     <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Odhlášeno z SeriesGuide Cloudu.</string>
     <string name="hexagon_signin_fail_format">Chyba při přihlášení (%s)</string>
     <string name="hexagon_signin_google_only">E-mailová adresa vyžaduje přihlášení Google</string>
     <!-- trakt -->
-    <string name="trakt_submitqueued">Odesíláno na trakt.</string>
+    <string name="trakt_submitqueued">Odesílání na Trakt.</string>
     <string name="checkin_success_trakt">Ohlášen u %s na traktu.</string>
     <string name="checkin_canceled_success_trakt">Ohlášení na traktu zrušeno.</string>
     <string name="traktcheckin_cancel">Přepsat</string>
@@ -352,8 +355,8 @@
     <string name="pref_quick_checkin">Rychle se ohlásit</string>
     <string name="pref_quick_checkin_summary">Bez možnosti přidání zprávy k ohlášení</string>
     <!-- Help -->
-    <string name="feedback">Poslat reakci</string>
-    <string name="action_open_in_browser">Otevřít v prohlížečí</string>
+    <string name="feedback">Odeslat zpětnou vazbu</string>
+    <string name="action_open_in_browser">Otevřít v prohlížeči</string>
     <!-- Settings -->
     <string name="action_translate">Přeložit tuto aplikaci</string>
     <string name="action_contribute_content">Přeložit nebo vylepšit obsah</string>
@@ -372,7 +375,7 @@
     <string name="pref_language">Preferovaný jazyk obsahu</string>
     <string name="pref_language_fallback">Alternativní jazyk</string>
     <string name="pref_updatewifionly">Obrázky pouze přes Wi-Fi</string>
-    <string name="pref_updatewifionlysummary">Omezí přenos dat, nebude se stahovat před mobilní data nebo omezená připojení</string>
+    <string name="pref_updatewifionlysummary">Pro snížení plateb za data nestahovat obrázky přes mobilní či měřené sítě</string>
     <string name="pref_error_reports">Nahlásit chyby vývojáři aplikace</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d den předem</item>
@@ -420,10 +423,11 @@
     <string name="upcoming_all">vše</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Vzhled</string>
-    <string name="pref_theme">Téma</string>
+    <string name="pref_theme">Motiv</string>
+    <string name="pref_dynamic_colors">Zvolte barvy systému</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Použít výchozí nastavení systému</string>
-    <string name="theme_app_auto_battery">Podle spořiče baterie</string>
+    <string name="theme_app_auto_battery">Podle spořiče baterie</string>
     <string name="theme_app_dark">Tmavý</string>
     <string name="theme_app_light">Světlý</string>
     <!-- Other advanced settings -->
@@ -441,23 +445,23 @@
     <string name="backup_failed_file_access">Nelze zálohovat. Záložní soubor nebyl nalezen nebo není přístupný.</string>
     <string name="backup_success">Zálohování bylo úspěšné.</string>
     <string name="backup_failed">Zálohování selhalo.</string>
-    <string name="import_failed_nosd">Nelze obnovit zálohu. Záložní složka není k dispozici.</string>
+    <string name="import_failed_nosd">Zálohu nelze obnovit. Složka zálohy není k dispozici.</string>
     <string name="import_failed_nofile">Žádný čitelný soubor se zálohou nenalezen.</string>
     <string name="import_success">Obnovení ze zálohy bylo úspěšné.</string>
     <string name="import_failed">Obnovení ze zálohy selhalo.</string>
     <string name="backup_button">Zálohovat</string>
     <string name="import_button">Obnovit</string>
-    <string name="import_warning">Beru na vědomí, že mé aktuální seriály, seznamy a filmy budou přemazány!</string>
+    <string name="import_warning">Vaše aktuální seriály, seznamy nebo filmy budou nahrazeny zálohou</string>
     <string name="no_file_selected">Nebyl vybrán žádný soubor</string>
     <string name="action_select_file">Vybrat soubor</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatická záloha</string>
-    <string name="pref_autobackupsummary">Týdenní záloha vašich seriálů, seznamů a filmů</string>
+    <string name="pref_autobackupsummary">Týdenní zálohování seriálů, seznamů a filmů do úložiště zařízení.</string>
     <string name="autobackup_details">Tyto zálohy nebudou dostupné v případě, že bude aplikace znovu nainstalována, pokud nebude zapnuto zálohování dat na tomto zařízení (Android 6+). Vytvořte kopie, abyste je uchovali jiným způsobem.</string>
     <string name="last_auto_backup">Poslední automatická záloha: %s</string>
     <string name="restore_auto_backup">Obnovení automatické zálohy</string>
     <string name="autobackup_failed">Poslední automatická záloha selhala</string>
-    <string name="autobackup_files_missing">Pro použití automatického zálohování vyberte platné záložní soubory.</string>
+    <string name="autobackup_files_missing">Pro použití automatického zálohování vyberte platné soubory zálohy</string>
     <string name="autobackup_create_user_copy">Vytvořit kopii po každé záloze</string>
     <string name="autobackup_restore_available">Automatická záloha může být k dispozici pro obnovení.</string>
     <!-- Welcome dialog -->

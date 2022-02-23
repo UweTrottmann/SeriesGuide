@@ -38,7 +38,7 @@
     <string name="action_stream">Stream eller køb</string>
     <string name="action_stream_info">Streaming- eller købsinformation</string>
     <string name="action_select_region">Vælg region</string>
-    <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_include_any_watch_provider">Inkludér alle</string>
     <!-- Search -->
     <string name="clear_search_history">Ryd søgehistorik</string>
     <string name="search_hint">Søg episoder</string>
@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Ikke set</string>
     <string name="action_shows_filter_upcoming">Kommende</string>
     <string name="action_shows_filter_hidden">Skjult</string>
+    <string name="state_shows_filter_disabled">Slået fra</string>
+    <string name="state_shows_filter_included">Inkluderet</string>
+    <string name="state_shows_filter_excluded">Ekskluderet</string>
     <string name="action_shows_make_all_visible">Gør alle skjulte synlige</string>
     <string name="description_make_all_visible_format">Gør alle skjulte serier (%s) synlige igen?</string>
     <string name="action_shows_sort">Sortér serier</string>
@@ -246,7 +249,7 @@
     <string name="action_movies_sort">Sortér film</string>
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Udgivelsesdato</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Filtrer film</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kunne ikke beregne statistik.</string>
     <string name="shows_finished">%s set færdig</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Udseende</string>
     <string name="pref_theme">Tema</string>
+    <string name="pref_dynamic_colors">Brug systemfarver</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Brug systemstandard</string>
     <string name="theme_app_auto_battery">Indstillet af batterisparefunktion</string>
@@ -456,7 +460,7 @@
     <string name="pref_notifications_select_shows">Vælg serier</string>
     <string name="pref_notifications_select_shows_summary">Serier med episodemeddelelser slået til (%d)</string>
     <string name="pref_notifications_hidden">Ignorér skjulte serier</string>
-    <string name="pref_notifications_hidden_summary">Selv hvis beskeder er aktiveret, giv ikke besked om skjulte serier</string>
+    <string name="pref_notifications_hidden_summary">Underret ikke om skjulte serier, heller ikke hvis meddelelser er slået til.</string>
     <string name="pref_notification_channel_errors">Fejl</string>
     <string name="pref_notifications_next_episodes_only">Kun for efterfølgende episoder på afspilningslisten</string>
     <string name="pref_notifications_next_episodes_only_summary">Underret mig kun, hvis den nye episode er den næste på afspilningslisten</string>
@@ -467,7 +471,7 @@
     <string name="pref_widget_opacity">Widget-baggrund</string>
     <string name="pref_widget_type">Widget-type</string>
     <string name="pref_large_font">Brug stor skrifttype</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_hide_watch_button">Skjul se-knap</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Gennemsigtig</string>
     <string name="widget_background_25">25 %</string>

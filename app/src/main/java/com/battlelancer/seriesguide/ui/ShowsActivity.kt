@@ -143,7 +143,7 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
                     }
                 } else {
                     // Show not added, offer to.
-                    AddShowDialogFragment.show(this, supportFragmentManager, showTmdbId)
+                    AddShowDialogFragment.show(supportFragmentManager, showTmdbId)
                 }
             }
         } else if (Intents.ACTION_VIEW_SHOW == action) {
@@ -159,7 +159,7 @@ class ShowsActivity : BaseTopActivity(), OnAddShowListener {
                 viewIntent = OverviewActivity.intentShow(this, showId)
             } else {
                 // no such show, offer to add it
-                AddShowDialogFragment.show(this, supportFragmentManager, showTmdbId)
+                AddShowDialogFragment.show(supportFragmentManager, showTmdbId)
             }
         }
 

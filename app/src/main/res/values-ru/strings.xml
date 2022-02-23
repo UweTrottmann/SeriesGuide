@@ -147,6 +147,9 @@
     <string name="action_shows_filter_unwatched">Непросмотренные</string>
     <string name="action_shows_filter_upcoming">Следующие эпизоды</string>
     <string name="action_shows_filter_hidden">Скрытые</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Сделать всё скрытое видимым</string>
     <string name="description_make_all_visible_format">Сделать все скрытые сериалы (%s) снова видимыми?</string>
     <string name="action_shows_sort">Сортировать сериалы</string>
@@ -421,6 +424,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Оформление</string>
     <string name="pref_theme">Тема</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Использовать системные настройки</string>
     <string name="theme_app_auto_battery">Настроить режим энергосбережения</string>

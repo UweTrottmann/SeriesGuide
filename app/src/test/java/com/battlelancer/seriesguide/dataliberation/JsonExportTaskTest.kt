@@ -19,10 +19,9 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
@@ -45,13 +44,11 @@ class JsonExportTaskTest {
     // JsonExportTask.onProgressUpdate uses Dispatcher.Main
     private val mainThreadSurrogate = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
-    @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
     }
 
-    @ExperimentalCoroutinesApi
     @After
     fun tearDown() {
         Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
@@ -74,7 +71,7 @@ class JsonExportTaskTest {
     }
 
     @Test
-    fun exportShows_jsonAsExpected() {
+    fun exportShows_jsonAsExpected() = runTest {
         val sgShow2Helper = mock(SgShow2Helper::class.java)
         val sgSeason2Helper = mock(SgSeason2Helper::class.java)
         val sgEpisode2Helper = mock(SgEpisode2Helper::class.java)
@@ -95,11 +92,10 @@ class JsonExportTaskTest {
         val exportFile = configureTestExportFile(exportTask)
 
         // No data
-        runBlocking {
-            val result = exportTask.run()
-            assertThat(exportTask.errorCause).isNull()
-            assertThat(result).isEqualTo(JsonExportTask.SUCCESS)
-        }
+        val noDataResult = exportTask.run()
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
         val exportWithNoData = exportFile.readText()
         println("Export with no data")
         println(exportWithNoData)
@@ -110,11 +106,11 @@ class JsonExportTaskTest {
         `when`(sgSeason2Helper.getSeasonsForExport(1)).thenReturn(listOfTestSeasons)
         `when`(sgEpisode2Helper.getEpisodesForExport(1)).thenReturn(listOfTestEpisodes)
         `when`(sgEpisode2Helper.getEpisodesForExport(2)).thenReturn(listOfTestEpisodes)
-        runBlocking {
-            val result = exportTask.run()
-            assertThat(exportTask.errorCause).isNull()
-            assertThat(result).isEqualTo(JsonExportTask.SUCCESS)
-        }
+
+        val withDataResult = exportTask.run()
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
         val exportWithData = exportFile.readText()
         println("Export with data")
         println(exportWithData)
@@ -165,7 +161,8 @@ class JsonExportTaskTest {
                 lastUpdatedMs = 0
             )
         )
-        const val expectedJsonShows = "[{\"tmdb_id\":95479,\"imdb_id\":\"imdbidvalue\",\"trakt_id\":52,\"title\":\"Jujutsu Kaisen\",\"overview\":\"It\\u0027s all about hollow purple.\",\"language\":\"en\",\"first_aired\":\"2021-02-27T05:11:12.345Z\",\"release_time\":1234,\"release_weekday\":1,\"release_timezone\":\"America/New_York\",\"country\":\"JP\",\"poster\":\"someurl/to/a/poster.jpg\",\"content_rating\":\"\",\"status\":\"ended\",\"runtime\":24,\"genres\":\"Animation|Action \\u0026 Adventure|Sci-Fi \\u0026 Fantasy\",\"network\":\"MBS\",\"rating\":10.0,\"rating_votes\":1234,\"rating_user\":0,\"favorite\":false,\"notify\":true,\"hidden\":false,\"last_watched_ms\":1234567890,\"seasons\":[{\"tmdb_id\":\"1\",\"season\":1,\"episodes\":[{\"tmdb_id\":1,\"episode\":1,\"title\":\"First Episode\",\"first_aired\":1234567890,\"watched\":true,\"plays\":1,\"skipped\":false,\"collected\":false,\"imdb_id\":\"\",\"overview\":\"First overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"},{\"tmdb_id\":2,\"episode\":2,\"title\":\"Second Episode\",\"first_aired\":1234567890,\"watched\":false,\"plays\":0,\"skipped\":true,\"collected\":true,\"imdb_id\":\"\",\"overview\":\"Second overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"}]},{\"tmdb_id\":\"2\",\"season\":2,\"episodes\":[{\"tmdb_id\":1,\"episode\":1,\"title\":\"First Episode\",\"first_aired\":1234567890,\"watched\":true,\"plays\":1,\"skipped\":false,\"collected\":false,\"imdb_id\":\"\",\"overview\":\"First overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"},{\"tmdb_id\":2,\"episode\":2,\"title\":\"Second Episode\",\"first_aired\":1234567890,\"watched\":false,\"plays\":0,\"skipped\":true,\"collected\":true,\"imdb_id\":\"\",\"overview\":\"Second overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"}]}]},{\"imdb_id\":\"\",\"title\":\"\",\"overview\":\"\",\"language\":\"\",\"release_time\":-1,\"release_weekday\":-1,\"release_timezone\":\"\",\"poster\":\"\",\"content_rating\":\"\",\"status\":\"unknown\",\"runtime\":0,\"genres\":\"\",\"network\":\"\",\"rating\":0.0,\"rating_votes\":0,\"rating_user\":0,\"favorite\":false,\"notify\":true,\"hidden\":false,\"last_watched_ms\":0,\"seasons\":[]}]"
+        const val expectedJsonShows =
+            "[{\"tmdb_id\":95479,\"imdb_id\":\"imdbidvalue\",\"trakt_id\":52,\"title\":\"Jujutsu Kaisen\",\"overview\":\"It\\u0027s all about hollow purple.\",\"language\":\"en\",\"first_aired\":\"2021-02-27T05:11:12.345Z\",\"release_time\":1234,\"release_weekday\":1,\"release_timezone\":\"America/New_York\",\"country\":\"JP\",\"poster\":\"someurl/to/a/poster.jpg\",\"content_rating\":\"\",\"status\":\"ended\",\"runtime\":24,\"genres\":\"Animation|Action \\u0026 Adventure|Sci-Fi \\u0026 Fantasy\",\"network\":\"MBS\",\"rating\":10.0,\"rating_votes\":1234,\"rating_user\":0,\"favorite\":false,\"notify\":true,\"hidden\":false,\"last_watched_ms\":1234567890,\"seasons\":[{\"tmdb_id\":\"1\",\"season\":1,\"episodes\":[{\"tmdb_id\":1,\"episode\":1,\"title\":\"First Episode\",\"first_aired\":1234567890,\"watched\":true,\"plays\":1,\"skipped\":false,\"collected\":false,\"imdb_id\":\"\",\"overview\":\"First overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"},{\"tmdb_id\":2,\"episode\":2,\"title\":\"Second Episode\",\"first_aired\":1234567890,\"watched\":false,\"plays\":0,\"skipped\":true,\"collected\":true,\"imdb_id\":\"\",\"overview\":\"Second overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"}]},{\"tmdb_id\":\"2\",\"season\":2,\"episodes\":[{\"tmdb_id\":1,\"episode\":1,\"title\":\"First Episode\",\"first_aired\":1234567890,\"watched\":true,\"plays\":1,\"skipped\":false,\"collected\":false,\"imdb_id\":\"\",\"overview\":\"First overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"},{\"tmdb_id\":2,\"episode\":2,\"title\":\"Second Episode\",\"first_aired\":1234567890,\"watched\":false,\"plays\":0,\"skipped\":true,\"collected\":true,\"imdb_id\":\"\",\"overview\":\"Second overview\",\"image\":\"/first/still/path.jpg\",\"writers\":\"writers string\",\"gueststars\":\"guest stars string\",\"directors\":\"directors string\"}]}]},{\"imdb_id\":\"\",\"title\":\"\",\"overview\":\"\",\"language\":\"\",\"release_time\":-1,\"release_weekday\":-1,\"release_timezone\":\"\",\"poster\":\"\",\"content_rating\":\"\",\"status\":\"unknown\",\"runtime\":0,\"genres\":\"\",\"network\":\"\",\"rating\":0.0,\"rating_votes\":0,\"rating_user\":0,\"favorite\":false,\"notify\":true,\"hidden\":false,\"last_watched_ms\":0,\"seasons\":[]}]"
 
         val listOfTestSeasons = listOf(
             SgSeason2(
@@ -229,7 +226,7 @@ class JsonExportTaskTest {
     }
 
     @Test
-    fun exportLists_jsonAsExpected() {
+    fun exportLists_jsonAsExpected() = runTest {
         val sgListHelper = mock(SgListHelper::class.java)
 
         val exportTask = JsonExportTask(
@@ -248,11 +245,10 @@ class JsonExportTaskTest {
         val exportFile = configureTestExportFile(exportTask)
 
         // No data
-        runBlocking {
-            val result = exportTask.run()
-            assertThat(exportTask.errorCause).isNull()
-            assertThat(result).isEqualTo(JsonExportTask.SUCCESS)
-        }
+        val noDataResult = exportTask.run()
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
         val exportWithNoData = exportFile.readText()
         println("Export with no data")
         println(exportWithNoData)
@@ -261,11 +257,11 @@ class JsonExportTaskTest {
         // With data
         `when`(sgListHelper.getListsForExport()).thenReturn(listOfTestLists)
         `when`(sgListHelper.getListItemsForExport("list-1")).thenReturn(listOfTestListItems)
-        runBlocking {
-            val result = exportTask.run()
-            assertThat(exportTask.errorCause).isNull()
-            assertThat(result).isEqualTo(JsonExportTask.SUCCESS)
-        }
+
+        val withDataResult = exportTask.run()
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
         val exportWithData = exportFile.readText()
         println("Export with data")
         println(exportWithData)
@@ -313,7 +309,7 @@ class JsonExportTaskTest {
     )
 
     @Test
-    fun exportMovies_jsonAsExpected() {
+    fun exportMovies_jsonAsExpected() = runTest {
         val movieHelper = mock(MovieHelper::class.java)
 
         val exportTask = JsonExportTask(
@@ -332,11 +328,10 @@ class JsonExportTaskTest {
         val exportFile = configureTestExportFile(exportTask)
 
         // No data
-        runBlocking {
-            val result = exportTask.run()
-            assertThat(exportTask.errorCause).isNull()
-            assertThat(result).isEqualTo(JsonExportTask.SUCCESS)
-        }
+        val noDataResult = exportTask.run()
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(noDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
         val exportWithNoData = exportFile.readText()
         println("Export with no data")
         println(exportWithNoData)
@@ -344,11 +339,10 @@ class JsonExportTaskTest {
 
         // With data
         `when`(movieHelper.getMoviesForExport()).thenReturn(listOfTestMovies)
-        runBlocking {
-            val result = exportTask.run()
-            assertThat(exportTask.errorCause).isNull()
-            assertThat(result).isEqualTo(JsonExportTask.SUCCESS)
-        }
+        val withDataResult = exportTask.run()
+        assertThat(exportTask.errorCause).isNull()
+        assertThat(withDataResult).isEqualTo(JsonExportTask.SUCCESS)
+
         val exportWithData = exportFile.readText()
         println("Export with data")
         println(exportWithData)

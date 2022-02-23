@@ -43,8 +43,8 @@
                 android:divider="@color/transparent"
                 android:dividerHeight="0dp"
                 android:nextFocusDown="@+id/editTextShouts"
-                android:paddingBottom="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
+                android:paddingBottom="@dimen/default_padding"
                 tools:listitem="@layout/item_comment" />
 
             <TextView
@@ -65,10 +65,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/large_padding"
+        android:paddingTop="@dimen/default_padding"
         android:paddingRight="@dimen/large_padding"
-        android:paddingTop="@dimen/default_padding">
+        android:paddingBottom="@dimen/default_padding">
 
         <EditText
             android:id="@+id/editTextShouts"
@@ -76,6 +76,7 @@
             android:layout_height="wrap_content"
             android:gravity="top"
             android:hint="@string/shout_hint"
+            android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:maxLength="2000"
             android:maxLines="9"
@@ -86,8 +87,8 @@
             android:id="@+id/buttonShouts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/editTextShouts"
+            android:layout_alignParentRight="true"
             android:text="@string/action_post" />
 
         <CheckBox

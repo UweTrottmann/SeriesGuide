@@ -341,8 +341,7 @@ public class ShowsNowFragment extends Fragment {
                 showDetails(view, item.episodeRowId);
             } else if (item.showTmdbId != null && item.showTmdbId > 0) {
                 // episode missing: show likely not in database, suggest adding it
-                AddShowDialogFragment
-                        .show(requireContext(), getParentFragmentManager(), item.showTmdbId);
+                AddShowDialogFragment.show(getParentFragmentManager(), item.showTmdbId);
             }
         }
     };

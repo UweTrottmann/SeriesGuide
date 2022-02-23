@@ -144,6 +144,9 @@
     <string name="action_shows_filter_unwatched">未視聴</string>
     <string name="action_shows_filter_upcoming">次回</string>
     <string name="action_shows_filter_hidden">非表示</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">非表示をすべて表示する</string>
     <string name="description_make_all_visible_format">非表示の番組 (%s) をもう一度すべて表示しますか?</string>
     <string name="action_shows_sort">番組を並び替え</string>
@@ -388,6 +391,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">外観</string>
     <string name="pref_theme">テーマ</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">システムのデフォルトを使用する</string>
     <string name="theme_app_auto_battery">バッテリーセーバーで設定</string>

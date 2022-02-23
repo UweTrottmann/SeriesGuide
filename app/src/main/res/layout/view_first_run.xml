@@ -166,31 +166,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/containerDataSaver" />
 
-        <Button
-            android:id="@+id/buttonSignIn"
-            style="@style/Widget.SeriesGuide.Button"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowGetStartedButtons"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/hexagon_signin"
+            app:constraint_referenced_ids="buttonSignIn,buttonRestoreBackup"
+            app:flow_horizontalBias="1"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:flow_horizontalGap="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonAddShow" />
 
         <Button
-            android:id="@+id/buttonRestoreBackup"
-            style="@style/Widget.SeriesGuide.Button"
+            android:id="@+id/buttonSignIn"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/import_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonSignIn" />
+            android:text="@string/hexagon_signin" />
+
+        <Button
+            android:id="@+id/buttonRestoreBackup"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/import_button" />
 
         <include
             android:id="@+id/dividerBottom"
@@ -199,7 +202,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonRestoreBackup" />
+            app:layout_constraintTop_toBottomOf="@id/flowGetStartedButtons" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/containerErrorReports"

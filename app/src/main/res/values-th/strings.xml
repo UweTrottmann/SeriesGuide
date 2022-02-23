@@ -144,6 +144,9 @@
     <string name="action_shows_filter_unwatched">ยังไม่ได้ดู</string>
     <string name="action_shows_filter_upcoming">เร็วๆ นี้</string>
     <string name="action_shows_filter_hidden">ซ่อน</string>
+    <string name="state_shows_filter_disabled">ปิดใช้งาน</string>
+    <string name="state_shows_filter_included">รวม</string>
+    <string name="state_shows_filter_excluded">ไม่รวม</string>
     <string name="action_shows_make_all_visible">เลิกซ่อนรายการทั้งหมด</string>
     <string name="description_make_all_visible_format">ทำให้รายการที่ซ่อนไว้ทั้งหมด (%s) กลับมาแสดงอีกครั้ง?</string>
     <string name="action_shows_sort">แสดงซีรีส์</string>
@@ -388,6 +391,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">คุณลักษณะ</string>
     <string name="pref_theme">ธีม</string>
+    <string name="pref_dynamic_colors">ใช้สีระบบ</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">ใช้ค่าเริ่มต้นของระบบ</string>
     <string name="theme_app_auto_battery">กำหนดโดยตัวประหยัดแบตเตอรี่</string>

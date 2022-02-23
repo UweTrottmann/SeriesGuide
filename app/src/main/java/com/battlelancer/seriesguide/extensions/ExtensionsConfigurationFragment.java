@@ -134,11 +134,11 @@ public class ExtensionsConfigurationFragment extends Fragment {
         unbinder.unbind();
     }
 
-    private LoaderManager.LoaderCallbacks<List<Extension>> loaderCallbacks
+    private final LoaderManager.LoaderCallbacks<List<Extension>> loaderCallbacks
             = new LoaderManager.LoaderCallbacks<List<Extension>>() {
         @Override
         public Loader<List<Extension>> onCreateLoader(int id, Bundle args) {
-            return new AvailableExtensionsLoader(getActivity());
+            return new AvailableExtensionsLoader(requireContext());
         }
 
         @Override

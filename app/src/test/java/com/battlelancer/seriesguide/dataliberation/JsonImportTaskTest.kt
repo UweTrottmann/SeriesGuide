@@ -10,7 +10,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgSeason2Helper
 import com.battlelancer.seriesguide.provider.SgShow2Helper
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
@@ -34,8 +34,9 @@ class JsonImportTaskTest {
      */
     private fun <T> anyNotNull(type: Class<T>): T = Mockito.any(type)
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     @Test
-    fun importShow_modelAsExpected() {
+    fun importShow_modelAsExpected() = runTest {
         val sgShow2Helper = mock(SgShow2Helper::class.java)
         val sgSeason2Helper = mock(SgSeason2Helper::class.java)
         val sgEpisode2Helper = mock(SgEpisode2Helper::class.java)
@@ -63,11 +64,11 @@ class JsonImportTaskTest {
             seasonRowId++
             return@then seasonRowId
         }
-        runBlocking {
-            val result = importTask.run()
-            assertThat(importTask.errorCause).isNull()
-            assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
-        }
+
+        val result = importTask.run()
+        assertThat(importTask.errorCause).isNull()
+        assertThat(result).isEqualTo(JsonImportTask.SUCCESS)
+
         val expectedShow = JsonExportTaskTest.listOfTestShows[0].copy(
             id = 0, // insert
             titleNoArticle = "Jujutsu Kaisen" // set from title

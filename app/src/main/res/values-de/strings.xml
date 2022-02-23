@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Nicht angesehen</string>
     <string name="action_shows_filter_upcoming">Demnächst</string>
     <string name="action_shows_filter_hidden">Ausgeblendet</string>
+    <string name="state_shows_filter_disabled">Deaktiviert</string>
+    <string name="state_shows_filter_included">Inbegriffen</string>
+    <string name="state_shows_filter_excluded">Ausgeschlossen</string>
     <string name="action_shows_make_all_visible">Alle ausgebl. sichtbar machen</string>
     <string name="description_make_all_visible_format">Alle ausgeblendeten Serien (%s) wieder sichtbar machen?</string>
     <string name="action_shows_sort">Serien sortieren</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Erscheinungsbild</string>
     <string name="pref_theme">Design</string>
+    <string name="pref_dynamic_colors">Systemfarben verwenden</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Systemstandard verwenden</string>
     <string name="theme_app_auto_battery">Durch Energiesparmodus bestimmt</string>

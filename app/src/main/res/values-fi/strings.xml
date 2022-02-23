@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Katsomattomat</string>
     <string name="action_shows_filter_upcoming">Tulevat</string>
     <string name="action_shows_filter_hidden">Piilotetut</string>
+    <string name="state_shows_filter_disabled">Poistettu käytöstä</string>
+    <string name="state_shows_filter_included">Sisältää</string>
+    <string name="state_shows_filter_excluded">Poissuljettu</string>
     <string name="action_shows_make_all_visible">Paljasta kaikki piilotetut</string>
     <string name="description_make_all_visible_format">Paljastetaanko kaikki piilotetut ohjelmat (%s)?</string>
     <string name="action_shows_sort">Lajittele ohjelmat</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Ulkonäkö</string>
     <string name="pref_theme">Teema</string>
+    <string name="pref_dynamic_colors">Käytä järjestelmän värejä</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Käytä järjestelmän oletusta</string>
     <string name="theme_app_auto_battery">Aseta virransäästön perusteella</string>

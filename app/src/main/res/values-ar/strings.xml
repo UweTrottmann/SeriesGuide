@@ -149,6 +149,9 @@
     <string name="action_shows_filter_unwatched">الغير مشاهدة</string>
     <string name="action_shows_filter_upcoming">القادم</string>
     <string name="action_shows_filter_hidden">المخفي</string>
+    <string name="state_shows_filter_disabled">معطَّل</string>
+    <string name="state_shows_filter_included">متضمن</string>
+    <string name="state_shows_filter_excluded">مستبعدة</string>
     <string name="action_shows_make_all_visible">اظهار الجميع</string>
     <string name="description_make_all_visible_format">هل تريد إظهار كل المسلسلات المخفية %s مرة أخرى؟</string>
     <string name="action_shows_sort">ترتيب المسلسلات</string>
@@ -443,6 +446,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">المظهر</string>
     <string name="pref_theme">التصميم</string>
+    <string name="pref_dynamic_colors">استخدام ألوان النظام</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">استخدام الإعداد التلقائي للنظام</string>
     <string name="theme_app_auto_battery">تفعيل ميزة \"توفير شحن البطارية\"</string>

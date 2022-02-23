@@ -145,6 +145,9 @@
     <string name="action_shows_filter_unwatched">Non visionnés</string>
     <string name="action_shows_filter_upcoming">À venir</string>
     <string name="action_shows_filter_hidden">Cachés</string>
+    <string name="state_shows_filter_disabled">Désactivé</string>
+    <string name="state_shows_filter_included">Inclus</string>
+    <string name="state_shows_filter_excluded">Exclus</string>
     <string name="action_shows_make_all_visible">Rendre visible tous les cachés</string>
     <string name="description_make_all_visible_format">Rendre les séries cachées (%s) visibles à nouveau ?</string>
     <string name="action_shows_sort">Trier les séries</string>
@@ -399,6 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Apparence</string>
     <string name="pref_theme">Thème</string>
+    <string name="pref_dynamic_colors">Utiliser les couleurs du système</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Utiliser la valeur système par défaut</string>
     <string name="theme_app_auto_battery">Définir par l\'économiseur de batterie</string>

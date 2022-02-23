@@ -161,6 +161,9 @@
     <string name="action_shows_filter_unwatched">Unwatched</string>
     <string name="action_shows_filter_upcoming">Upcoming</string>
     <string name="action_shows_filter_hidden">Hidden</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Make all hidden visible</string>
     <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
     <string name="action_shows_sort">Sort shows</string>
@@ -455,6 +458,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Appearance</string>
     <string name="pref_theme">Theme</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Use system default</string>
     <string name="theme_app_auto_battery">Set by Battery Saver</string>

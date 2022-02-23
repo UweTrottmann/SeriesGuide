@@ -27,11 +27,11 @@ object Constants {
         ),
         ALPHABETICAL_ASC(
             3, "atoz",
-            "${SgEpisode2Columns.TITLE} COLLATE NOCASE ASC"
+            "${SgEpisode2Columns.TITLE} COLLATE UNICODE ASC"
         ),
         TOP_RATED(
             4, "toprated",
-            "${SgEpisode2Columns.RATING_GLOBAL} COLLATE NOCASE DESC"
+            "${SgEpisode2Columns.RATING_GLOBAL} COLLATE UNICODE DESC"
         ),
         DVDLATEST_FIRST(
             5, "dvdlatestfirst",

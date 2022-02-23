@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
@@ -194,7 +195,10 @@ class BillingActivity : BaseActivity() {
                 .addNextIntent(Intent(context, ShowsActivity::class.java))
                 .addNextIntent(Intent(context, SeriesGuidePreferences::class.java))
                 .addNextIntent(notificationIntent)
-                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+                .getPendingIntent(
+                    0,
+                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+                )
             nb.setContentIntent(contentIntent)
 
             // build the notification

@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/larger_padding"
-            android:layout_marginRight="@dimen/larger_padding"
             android:layout_marginTop="@dimen/larger_padding"
+            android:layout_marginRight="@dimen/larger_padding"
             android:text="@string/format_time_offset_range"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
 
@@ -28,6 +28,7 @@
             android:layout_marginLeft="@dimen/larger_padding"
             android:layout_marginRight="@dimen/larger_padding"
             android:hint="@string/format_time_offset_range"
+            android:importantForAutofill="no"
             android:inputType="numberSigned"
             tools:text="+2" />
 
@@ -35,10 +36,10 @@
             android:id="@+id/textViewOffsetSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
             android:layout_marginLeft="@dimen/larger_padding"
-            android:layout_marginRight="@dimen/larger_padding"
             android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginRight="@dimen/larger_padding"
+            android:layout_marginBottom="@dimen/default_padding"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
             tools:text="@string/pref_offsetsummary" />
 
@@ -46,13 +47,11 @@
             android:id="@+id/textViewOffsetExample"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/large_padding"
             android:layout_marginLeft="@dimen/larger_padding"
             android:layout_marginRight="@dimen/larger_padding"
+            android:layout_marginBottom="@dimen/large_padding"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
             tools:text="20:00 -> 22:00" />
-
-        <include layout="@layout/dialog_buttons_divided" />
 
     </LinearLayout>
 

@@ -149,6 +149,9 @@
     <string name="action_shows_filter_unwatched">Heb ei wylio</string>
     <string name="action_shows_filter_upcoming">Ar ddod</string>
     <string name="action_shows_filter_hidden">Cudd</string>
+    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">Gwneud pob cudd yn weladwy</string>
     <string name="description_make_all_visible_format">Gwneud pob sioe gudd (%s) yn weladwy eto?</string>
     <string name="action_shows_sort">Trefnu sioeau</string>
@@ -334,7 +337,7 @@
     <string name="connect_trakt">Cysylltu Trakt</string>
     <string name="trakt_reconnect">Cysylltu SeriesGuide â Trakt</string>
     <string name="trakt_reconnect_details">Gwiriwch eich cymwysterau Trakt</string>
-    <string name="waitplease">Munud, os gwelwch yn dda…</string>
+    <string name="waitplease">Munud, os gwelwch yn dda&#8230;</string>
     <string name="connect">Cysylltu</string>
     <string name="disconnect">Datgysylltwch</string>
     <string name="use_integrated_browser">Defnyddiwch borwr integredig</string>
@@ -383,8 +386,8 @@
     <string name="pref_exactdates_summary">\"Hydref 31\" yn lle \"mewn 3 diwrnod\"</string>
     <string name="pref_nospoilers">Atal anrheithwyr</string>
     <string name="pref_nospoilers_summary">Cuddiwch fanylion nes bod pennod yn cael ei gwylio</string>
-    <string name="pref_seasonsorting">Trefnu tymhorau yn ôl…</string>
-    <string name="pref_episodesorting">Trefnu penodau yn ôl…</string>
+    <string name="pref_seasonsorting">Trefnu tymhorau yn ôl&#8230;</string>
+    <string name="pref_episodesorting">Trefnu penodau yn ôl&#8230;</string>
     <string name="pref_language">Yr iaith cynnwys a ffefrir</string>
     <string name="pref_language_fallback">Iaith amgen</string>
     <string name="pref_updatewifionly">Delweddau trwy Wi-Fi yn unig</string>
@@ -443,6 +446,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Ymddangosiad</string>
     <string name="pref_theme">Thema</string>
+    <string name="pref_dynamic_colors">Use system colors</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Defnyddiwch system ddiofyn</string>
     <string name="theme_app_auto_battery">Wedi\'i osod gan Batri Saver</string>
