@@ -34,13 +34,6 @@
         <CheckBoxPreference
             app:defaultValue="False"
             app:iconSpaceReserved="false"
-            app:key="onlyFutureEpisodes"
-            app:summary="@string/pref_onlyfuturesummary"
-            app:title="@string/pref_onlyfuture" />
-
-        <CheckBoxPreference
-            app:defaultValue="False"
-            app:iconSpaceReserved="false"
             app:key="onlySeasonEpisodes"
             app:summary="@string/pref_onlyseasonepssummary"
             app:title="@string/pref_onlyseasoneps" />
