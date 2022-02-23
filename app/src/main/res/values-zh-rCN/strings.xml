@@ -164,8 +164,8 @@
     <string name="user_stream">历史记录</string>
     <string name="recently_watched">最近看了</string>
     <string name="friends_recently">Trakt 好友动态</string>
-    <string name="now_empty">什么也没有。看会儿节目吧！</string>
-    <string name="now_movies_empty">什么也没有。看会儿电影吧！</string>
+    <string name="now_empty">什么都没有。看会儿节目吧！</string>
+    <string name="now_movies_empty">什么都没有。看会儿电影吧！</string>
     <!-- Calendar -->
     <string name="upcoming">即将播出</string>
     <string name="recent">已播剧集</string>
@@ -194,7 +194,7 @@
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">输入节目名称</string>
-    <string name="add_empty">什么也没有</string>
+    <string name="add_empty">什么都没有</string>
     <string name="no_results">没有与此相关的结果。请尝试输入完整名称</string>
     <string name="empty_show_search">在您的节目单中找不到相关节目</string>
     <string name="action_try_again">重试</string>
@@ -279,7 +279,7 @@
     <string name="hexagon_setup_incomplete">未完成对 SeriesGuide Cloud 的设置。</string>
     <string name="hexagon_setup_fail_auth">您的帐户没有电子邮件地址</string>
     <string name="hexagon_remove_account">删除帐户</string>
-    <string name="hexagon_remove_account_success">用户数据已删除</string>
+    <string name="hexagon_remove_account_success">帐户已删除</string>
     <string name="hexagon_remove_account_failure">无法删除帐户</string>
     <string name="hexagon_remove_account_confirmation">这将从 SeriesGuide Cloud 中删除您的节目、列表和电影</string>
     <string name="hexagon_api_queued">正在与 SeriesGuide Cloud 同步…</string>
@@ -391,7 +391,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">外观</string>
     <string name="pref_theme">主题</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">使用系统配色方案</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">使用系统默认设置</string>
     <string name="theme_app_auto_battery">根据省电模式进行设置</string>
@@ -479,7 +479,7 @@
     <string name="billing_price_pass">一次性买断</string>
     <string name="upgrade_description">每种订阅都能解锁所有功能并支持未来的更新。使用本应用无需订阅。</string>
     <string name="upgrade_success">恭喜，您已解锁全部高级功能！感谢您的支持！</string>
-    <string name="billing_unlock_detected">检测到 X Pass。您仍可以订阅以支持未来的更新。</string>
+    <string name="billing_unlock_detected">已检测到 X Pass App。您仍可以通过订阅来支持未来的更新。</string>
     <string name="billing_learn_more">更多信息与帮助</string>
     <string name="subscription_expired">订阅已过期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 订阅已过期</string>

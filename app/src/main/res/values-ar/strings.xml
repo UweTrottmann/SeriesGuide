@@ -446,7 +446,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">المظهر</string>
     <string name="pref_theme">التصميم</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">استخدام ألوان النظام</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">استخدام الإعداد التلقائي للنظام</string>
     <string name="theme_app_auto_battery">تفعيل ميزة \"توفير شحن البطارية\"</string>
