@@ -34,6 +34,7 @@ class FilterShowsView @JvmOverloads constructor(
         }
         binding.buttonShowsFilterAllVisible.setOnClickListener { filterListener?.onMakeAllHiddenVisibleClick() }
         binding.buttonShowsFilterUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
+        binding.checkboxShowsFilterNoReleased.setOnClickListener { filterListener?.onNoReleasedChanged(binding.checkboxShowsFilterNoReleased.isChecked) }
     }
 
     private var filterListener: FilterListener? = null
@@ -50,12 +51,13 @@ class FilterShowsView @JvmOverloads constructor(
         )
     }
 
-    fun setInitialFilter(showFilter: ShowFilter) {
+    fun setInitialFilter(showFilter: ShowFilter, noReleased: Boolean) {
         binding.checkboxShowsFilterFavorites.state = showFilter.isFilterFavorites
         binding.checkboxShowsFilterUnwatched.state = showFilter.isFilterUnwatched
         binding.checkboxShowsFilterUpcoming.state = showFilter.isFilterUpcoming
         binding.checkboxShowsFilterHidden.state = showFilter.isFilterHidden
         binding.checkboxShowsFilterContinuing.state = showFilter.isFilterContinuing
+        binding.checkboxShowsFilterNoReleased.isChecked = noReleased
     }
 
     fun setFilterListener(filterListener: FilterListener) {
@@ -98,6 +100,7 @@ class FilterShowsView @JvmOverloads constructor(
         fun onFilterUpdate(filter: ShowFilter)
         fun onConfigureUpcomingRangeClick()
         fun onMakeAllHiddenVisibleClick()
+        fun onNoReleasedChanged(value: Boolean)
     }
 
 }

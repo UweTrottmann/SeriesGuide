@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
+import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
@@ -116,6 +117,11 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
         override fun onMakeAllHiddenVisibleClick() {
             dismiss()
             MakeAllVisibleDialogFragment().safeShow(parentFragmentManager, "makeAllVisibleDialog")
+        }
+
+        override fun onNoReleasedChanged(value: Boolean) {
+            DisplaySettings.setNoReleasedEpisodes(requireContext(), value)
+            TaskManager.getInstance().tryNextEpisodeUpdateTask(requireContext())
         }
 
     }

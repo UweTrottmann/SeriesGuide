@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.viewpager.widget.PagerAdapter
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.settings.DisplaySettings
 
 class ShowsDistillationPageAdapter(
     private val context: Context,
@@ -26,7 +27,10 @@ class ShowsDistillationPageAdapter(
             DistillationPages.FILTER -> {
                 FilterShowsView(context).apply {
                     this.layoutParams = layoutParams
-                    setInitialFilter(initialShowFilter)
+                    setInitialFilter(
+                        initialShowFilter,
+                        DisplaySettings.isNoReleasedEpisodes(context)
+                    )
                     setFilterListener(filterListener)
                 }
             }
@@ -54,7 +58,7 @@ class ShowsDistillationPageAdapter(
         return DistillationPages.values().size
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         val page = DistillationPages.values()[position]
         return context.getString(page.titleRes)
     }
