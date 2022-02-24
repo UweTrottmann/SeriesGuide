@@ -23,23 +23,22 @@ import kotlinx.coroutines.sync.withPermit
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
-    private val sgShowsLiveData: LiveData<List<SgShow2ForLists>>
-    val showItemsLiveData = MediatorLiveData<List<ShowsAdapter.ShowItem>?>()
-    private val showItemsLiveDataSemaphore = Semaphore(1)
-
-    init {
-        sgShowsLiveData = Transformations.switchMap(queryString) { queryString ->
+    private val sgShowsLiveData: LiveData<MutableList<SgShow2ForLists>> =
+        Transformations.switchMap(queryString) { queryString ->
             SgRoomDatabase.getInstance(getApplication()).sgShow2Helper()
                 .getShowsLiveData(SimpleSQLiteQuery(queryString, null))
         }
+    val showItemsLiveData = MediatorLiveData<MutableList<ShowsAdapter.ShowItem>?>()
+    private val showItemsLiveDataSemaphore = Semaphore(1)
 
+    init {
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
             // calculate actually displayed values on a background thread
             viewModelScope.launch(Dispatchers.IO) {
                 // Use Semaphore with 1 permit to ensure results are delivered in order and never
                 // processed in parallel.
                 showItemsLiveDataSemaphore.withPermit {
-                    val mapped = sgShows?.map {
+                    val mapped = sgShows?.mapTo(ArrayList(sgShows.size)) {
                         ShowsAdapter.ShowItem.map(it, getApplication())
                     }
                     showItemsLiveData.postValue(mapped)

@@ -1,359 +1,366 @@
-package com.battlelancer.seriesguide.ui.shows;
+package com.battlelancer.seriesguide.ui.shows
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.format.DateUtils;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.PopupMenu;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
-import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
-import com.battlelancer.seriesguide.settings.AdvancedSettings;
-import com.battlelancer.seriesguide.ui.OverviewActivity;
-import com.battlelancer.seriesguide.ui.SearchActivity;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager;
-import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
-import com.battlelancer.seriesguide.util.ViewTools;
-import com.battlelancer.seriesguide.widgets.SgFastScroller;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
-import timber.log.Timber;
+import android.content.Intent
+import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.format.DateUtils
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.PopupMenu
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.appwidget.ListWidgetProvider.Companion.notifyDataChanged
+import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
+import com.battlelancer.seriesguide.settings.AdvancedSettings
+import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
+import com.battlelancer.seriesguide.ui.SearchActivity
+import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity
+import com.battlelancer.seriesguide.ui.shows.FilterShowsView.ShowFilter
+import com.battlelancer.seriesguide.ui.shows.FilterShowsView.ShowFilter.Companion.allDisabled
+import com.battlelancer.seriesguide.ui.shows.FirstRunView.ButtonEvent
+import com.battlelancer.seriesguide.ui.shows.FirstRunView.ButtonType
+import com.battlelancer.seriesguide.ui.shows.ShowsAdapter.ShowItem
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationFragment.Companion.show
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.getSortQuery2
+import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.saveFilter
+import com.battlelancer.seriesguide.ui.shows.SortShowsView.ShowSortOrder
+import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.widgets.SgFastScroller
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
  * main view of the app.
  */
-public class ShowsFragment extends Fragment {
+class ShowsFragment : Fragment() {
 
-    private SortShowsView.ShowSortOrder showSortOrder;
-    private FilterShowsView.ShowFilter showFilter;
+    private lateinit var showSortOrder: ShowSortOrder
+    private lateinit var showFilter: ShowFilter
 
-    private ShowsAdapter adapter;
-    private RecyclerView recyclerView;
-    private Button emptyView;
-    private Button emptyViewFilter;
+    private lateinit var adapter: ShowsAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var emptyView: Button
+    private lateinit var emptyViewFilter: Button
 
-    private Handler handler;
-    private ShowsViewModel model;
+    private var handler: Handler? = null
+    private val activityModel by viewModels<ShowsActivityViewModel>({ requireActivity() })
+    private val model by viewModels<ShowsViewModel>()
 
-    public static ShowsFragment newInstance() {
-        return new ShowsFragment();
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val v = inflater.inflate(R.layout.fragment_shows, container, false)
+        recyclerView = v.findViewById(R.id.recyclerViewShows)
+        SgFastScroller(requireContext(), recyclerView)
+        emptyView = v.findViewById(R.id.emptyViewShows)
+        ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_add_white_24dp)
+        emptyView.setOnClickListener { startActivityAddShows() }
+        emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter)
+        ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
+        emptyViewFilter.setOnClickListener {
+            ShowsDistillationSettings.filterLiveData.setValue(allDisabled())
+            saveFilter(
+                requireContext(),
+                null,
+                null,
+                null,
+                null,
+                null
+            )
+        }
+        return v
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_shows, container, false);
-
-        recyclerView = v.findViewById(R.id.recyclerViewShows);
-        new SgFastScroller(requireContext(), recyclerView);
-
-        emptyView = v.findViewById(R.id.emptyViewShows);
-        ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_add_white_24dp);
-        emptyView.setOnClickListener(view -> startActivityAddShows());
-        emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter);
-        ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp);
-        emptyViewFilter.setOnClickListener(view -> {
-            ShowsDistillationSettings.filterLiveData
-                    .setValue(FilterShowsView.ShowFilter.allDisabled());
-
-            ShowsDistillationSettings.saveFilter(requireContext(), null, null, null, null, null);
-        });
-
-        return v;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        recyclerView.setHasFixedSize(true);
-        AutoGridLayoutManager layoutManager = new AutoGridLayoutManager(getContext(),
-                R.dimen.showgrid_columnWidth, 1, 1);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (adapter.getItemViewType(position) == ShowsAdapter.VIEW_TYPE_FIRST_RUN) {
-                    return layoutManager.getSpanCount();
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        recyclerView.setHasFixedSize(true)
+        val layoutManager = AutoGridLayoutManager(
+            context,
+            R.dimen.showgrid_columnWidth, 1, 1
+        )
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (adapter.getItemViewType(position) == ShowsAdapter.VIEW_TYPE_FIRST_RUN) {
+                    layoutManager.spanCount
                 } else {
-                    return 1;
+                    1
                 }
             }
-        });
-        recyclerView.setLayoutManager(layoutManager);
+        }
+        recyclerView.layoutManager = layoutManager
 
-        new ViewModelProvider(requireActivity()).get(ShowsActivityViewModel.class)
-                .getScrollTabToTopLiveData()
-                .observe(getViewLifecycleOwner(), tabPosition -> {
-                    if (tabPosition != null
-                            && tabPosition == ShowsActivity.INDEX_TAB_SHOWS) {
-                        recyclerView.smoothScrollToPosition(0);
-                    }
-                });
+        activityModel.scrollTabToTopLiveData.observe(viewLifecycleOwner) { tabPosition: Int? ->
+            if (tabPosition != null
+                && tabPosition == ShowsActivity.INDEX_TAB_SHOWS) {
+                recyclerView.smoothScrollToPosition(0)
+            }
+        }
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         // get settings
-        showFilter = FilterShowsView.ShowFilter.fromSettings(requireContext());
-        showSortOrder = SortShowsView.ShowSortOrder.fromSettings(requireContext());
+        showFilter = ShowFilter.fromSettings(requireContext())
+        showSortOrder = ShowSortOrder.fromSettings(requireContext())
 
         // prepare view adapter
-        adapter = new ShowsAdapter(requireContext(), onItemClickListener);
+        adapter = ShowsAdapter(requireContext(), onItemClickListener)
         if (!FirstRunView.hasSeenFirstRunFragment(requireContext())) {
-            adapter.setDisplayFirstRunHeader(true);
+            adapter.displayFirstRunHeader = true
         }
-        recyclerView.setAdapter(adapter);
+        recyclerView.adapter = adapter
 
-        model = new ViewModelProvider(this).get(ShowsViewModel.class);
-        model.getShowItemsLiveData().observe(getViewLifecycleOwner(), showItems -> {
-            adapter.submitList(showItems);
+        model.showItemsLiveData.observe(viewLifecycleOwner) { showItems: MutableList<ShowItem>? ->
+            adapter.submitList(showItems)
             // note: header is added later, but if it is shown should not treat as empty
-            boolean isEmpty = !adapter.getDisplayFirstRunHeader()
-                    && (showItems == null || showItems.isEmpty());
-            updateEmptyView(isEmpty);
+            val isEmpty = (!adapter.displayFirstRunHeader
+                    && (showItems == null || showItems.isEmpty()))
+            updateEmptyView(isEmpty)
 
             // Once latest data loaded, schedule next refresh.
             // Only while resumed (onResume/onPause also schedule/un-schedule refresh).
-            scheduleQueryUpdate(true);
-        });
+            scheduleQueryUpdate(true)
+        }
 
         // watch for sort order changes
         ShowsDistillationSettings.sortOrderLiveData
-                .observe(getViewLifecycleOwner(), showSortOrder -> {
-                    this.showSortOrder = showSortOrder;
-                    // re-run query
-                    updateShowsQuery();
-                });
+            .observe(viewLifecycleOwner) { showSortOrder: ShowSortOrder ->
+                this.showSortOrder = showSortOrder
+                // re-run query
+                updateShowsQuery()
+            }
 
         // watch for filter changes
-        ShowsDistillationSettings.filterLiveData.observe(getViewLifecycleOwner(), showFilter -> {
-            this.showFilter = showFilter;
-            // re-run query
-            updateShowsQuery();
-            // refresh filter menu icon state
-            requireActivity().invalidateOptionsMenu();
-        });
+        ShowsDistillationSettings.filterLiveData
+            .observe(viewLifecycleOwner) { showFilter: ShowFilter ->
+                this.showFilter = showFilter
+                // re-run query
+                updateShowsQuery()
+                // refresh filter menu icon state
+                requireActivity().invalidateOptionsMenu()
+            }
 
         // hide floating action button when scrolling shows
-        FloatingActionButton buttonAddShow = requireActivity().findViewById(R.id.buttonShowsAdd);
-        recyclerView.addOnScrollListener(new FabRecyclerViewScrollDetector(buttonAddShow));
+        val buttonAddShow: FloatingActionButton =
+            requireActivity().findViewById(R.id.buttonShowsAdd)
+        recyclerView.addOnScrollListener(FabRecyclerViewScrollDetector(buttonAddShow))
 
         // listen for some settings changes
         PreferenceManager
-                .getDefaultSharedPreferences(requireActivity())
-                .registerOnSharedPreferenceChangeListener(onPreferenceChangeListener);
+            .getDefaultSharedPreferences(requireActivity())
+            .registerOnSharedPreferenceChangeListener(onPreferenceChangeListener)
 
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true)
     }
 
-    private void updateShowsQuery() {
-        Timber.d("Running query update.");
-        model.updateQuery(showFilter, ShowsDistillationSettings
-                .getSortQuery2(showSortOrder.getSortOrderId(), showSortOrder.isSortFavoritesFirst(),
-                        showSortOrder.isSortIgnoreArticles()));
+    private fun updateShowsQuery() {
+        Timber.d("Running query update.")
+        model.updateQuery(
+            showFilter, getSortQuery2(
+                showSortOrder.sortOrderId, showSortOrder.isSortFavoritesFirst,
+                showSortOrder.isSortIgnoreArticles
+            )
+        )
     }
 
-    private void updateEmptyView(boolean isEmpty) {
-        recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+    private fun updateEmptyView(isEmpty: Boolean) {
+        recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
         if (isEmpty) {
             if (showFilter.isAnyFilterEnabled()) {
-                emptyViewFilter.setVisibility(View.VISIBLE);
-                emptyView.setVisibility(View.GONE);
+                emptyViewFilter.visibility = View.VISIBLE
+                emptyView.visibility = View.GONE
             } else {
-                emptyView.setVisibility(View.VISIBLE);
-                emptyViewFilter.setVisibility(View.GONE);
+                emptyView.visibility = View.VISIBLE
+                emptyViewFilter.visibility = View.GONE
             }
         } else {
-            emptyView.setVisibility(View.GONE);
-            emptyViewFilter.setVisibility(View.GONE);
+            emptyView.visibility = View.GONE
+            emptyViewFilter.visibility = View.GONE
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        EventBus.getDefault().register(this);
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    override fun onResume() {
+        super.onResume()
 
         // Run query every time resuming to get latest data
         // (e.g. displaying unwatched/upcoming shows depends on current time).
-        updateShowsQuery();
+        updateShowsQuery()
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
+    override fun onStop() {
+        super.onStop()
 
         // avoid CPU activity
-        scheduleQueryUpdate(false);
-        EventBus.getDefault().unregister(this);
+        scheduleQueryUpdate(false)
+        EventBus.getDefault().unregister(this)
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        prefs.unregisterOnSharedPreferenceChangeListener(onPreferenceChangeListener);
+    override fun onDestroy() {
+        super.onDestroy()
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        prefs.unregisterOnSharedPreferenceChangeListener(onPreferenceChangeListener)
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.shows_menu, menu);
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.shows_menu, menu)
 
         // set filter icon state
-        menu.findItem(R.id.menu_action_shows_filter)
-                .setIcon(showFilter.isAnyFilterEnabled() ?
-                        R.drawable.ic_filter_selected_white_24dp : R.drawable.ic_filter_white_24dp);
+        menu.findItem(R.id.menu_action_shows_filter).setIcon(
+            if (showFilter.isAnyFilterEnabled()) {
+                R.drawable.ic_filter_selected_white_24dp
+            } else {
+                R.drawable.ic_filter_white_24dp
+            }
+        )
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_shows_add) {
-            startActivityAddShows();
-            return true;
-        } else if (itemId == R.id.menu_action_shows_filter) {
-            ShowsDistillationFragment.show(getParentFragmentManager());
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_action_shows_add -> {
+                startActivityAddShows()
+                true
+            }
+            R.id.menu_action_shows_filter -> {
+                show(parentFragmentManager)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventFirstRunButton(FirstRunView.ButtonEvent event) {
-        switch (event.getType()) {
-            case ADD_SHOW: {
-                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
-                break;
+    fun onEventFirstRunButton(event: ButtonEvent) {
+        when (event.type) {
+            ButtonType.ADD_SHOW -> {
+                startActivity(
+                    Intent(activity, SearchActivity::class.java).putExtra(
+                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH
+                    )
+                )
             }
-            case SIGN_IN: {
-                startActivity(new Intent(getActivity(), MoreOptionsActivity.class));
+            ButtonType.SIGN_IN -> {
+                startActivity(Intent(activity, MoreOptionsActivity::class.java))
                 // Launching a top activity, adjust animation to match.
                 requireActivity().overridePendingTransition(
-                        R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg);
-                break;
+                    R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg
+                )
             }
-            case RESTORE_BACKUP: {
-                startActivity(new Intent(getActivity(), DataLiberationActivity.class));
-                break;
+            ButtonType.RESTORE_BACKUP -> {
+                startActivity(Intent(activity, DataLiberationActivity::class.java))
             }
-            case DISMISS: {
-                adapter.setDisplayFirstRunHeader(false);
-                updateShowsQuery();
-                break;
+            ButtonType.DISMISS -> {
+                adapter.displayFirstRunHeader = false
+                updateShowsQuery()
             }
         }
     }
 
     /**
-     * Periodically restart the shows loader.
+     * Periodically refresh shows list.
      *
-     * <p>Some changes to the displayed data are not based on actual (detectable) changes to the
+     * Some changes to the displayed data are not based on actual (detectable) changes to the
      * underlying data, but because time has passed (e.g. relative time displays, release time has
      * passed).
      */
-    private void scheduleQueryUpdate(boolean isPostNotRemove) {
-        Timber.d(isPostNotRemove ? "Scheduling query update." : "Removing planned query update.");
-        if (handler == null) {
-            handler = new Handler(Looper.getMainLooper());
-        }
-        handler.removeCallbacks(dataRefreshRunnable);
+    private fun scheduleQueryUpdate(isPostNotRemove: Boolean) {
+        Timber.d(if (isPostNotRemove) "Scheduling query update." else "Removing planned query update.")
+        val handler = handler ?: Handler(Looper.getMainLooper())
+            .also { handler = it }
+        handler.removeCallbacks(dataRefreshRunnable)
         if (isPostNotRemove) {
-            handler.postDelayed(dataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS);
+            handler.postDelayed(dataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS)
         }
     }
 
     // Note: do not just re-run existing query, make sure timestamps in query are updated.
-    private final Runnable dataRefreshRunnable = this::updateShowsQuery;
+    private val dataRefreshRunnable = Runnable { updateShowsQuery() }
 
-    private void startActivityAddShows() {
-        startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
+    private fun startActivityAddShows() {
+        startActivity(
+            Intent(activity, SearchActivity::class.java).putExtra(
+                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH
+            )
+        )
     }
 
-    private final ShowsAdapter.OnItemClickListener onItemClickListener
-            = new ShowsAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(@NotNull View anchor, long showRowId) {
-            // display overview for this show
-            Intent intent = OverviewActivity.intentShow(requireContext(), showRowId);
-            ActivityCompat.startActivity(requireContext(), intent,
-                    ActivityOptionsCompat
-                            .makeScaleUpAnimation(anchor, 0, 0, anchor.getWidth(),
-                                    anchor.getHeight())
-                            .toBundle()
-            );
+    private val onItemClickListener: ShowsAdapter.OnItemClickListener =
+        object : ShowsAdapter.OnItemClickListener {
+            override fun onItemClick(anchor: View, showRowId: Long) {
+                // display overview for this show
+                val intent = intentShow(requireContext(), showRowId)
+                ActivityCompat.startActivity(
+                    requireContext(), intent,
+                    ActivityOptionsCompat.makeScaleUpAnimation(
+                        anchor, 0, 0, anchor.width,
+                        anchor.height
+                    ).toBundle()
+                )
+            }
+
+            override fun onItemMenuClick(anchor: View, show: ShowItem) {
+                val popupMenu = PopupMenu(anchor.context, anchor)
+                popupMenu.inflate(R.menu.shows_popup_menu)
+
+                // show/hide some menu items depending on show properties
+                val menu = popupMenu.menu
+                menu.findItem(R.id.menu_action_shows_favorites_add).isVisible = !show.isFavorite
+                menu.findItem(R.id.menu_action_shows_favorites_remove).isVisible = show.isFavorite
+                menu.findItem(R.id.menu_action_shows_hide).isVisible = !show.isHidden
+                menu.findItem(R.id.menu_action_shows_unhide).isVisible = show.isHidden
+                popupMenu.setOnMenuItemClickListener(
+                    ShowMenuItemClickListener(
+                        context, parentFragmentManager,
+                        show.rowId, show.nextEpisodeId
+                    )
+                )
+                popupMenu.show()
+            }
+
+            override fun onItemSetWatchedClick(show: ShowItem) {
+                EpisodeTools.episodeWatchedIfNotZero(context, show.nextEpisodeId)
+            }
         }
 
-        @Override
-        public void onItemMenuClick(@NotNull View view, @NotNull ShowsAdapter.ShowItem show) {
-            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
-            popupMenu.inflate(R.menu.shows_popup_menu);
-
-            // show/hide some menu items depending on show properties
-            Menu menu = popupMenu.getMenu();
-            menu.findItem(R.id.menu_action_shows_favorites_add).setVisible(!show.isFavorite());
-            menu.findItem(R.id.menu_action_shows_favorites_remove).setVisible(show.isFavorite());
-            menu.findItem(R.id.menu_action_shows_hide).setVisible(!show.isHidden());
-            menu.findItem(R.id.menu_action_shows_unhide).setVisible(show.isHidden());
-
-            popupMenu.setOnMenuItemClickListener(
-                    new ShowMenuItemClickListener(getContext(), getParentFragmentManager(),
-                            show.getRowId(), show.getNextEpisodeId()));
-            popupMenu.show();
+    private val onPreferenceChangeListener =
+        OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String ->
+            if (key == AdvancedSettings.KEY_UPCOMING_LIMIT) {
+                updateShowsQuery()
+                // refresh all list widgets
+                notifyDataChanged(requireContext())
+            }
         }
 
-        @Override
-        public void onItemSetWatchedClick(@NotNull ShowsAdapter.ShowItem show) {
-            EpisodeTools.episodeWatchedIfNotZero(getContext(), show.getNextEpisodeId());
+    companion object {
+        fun newInstance(): ShowsFragment {
+            return ShowsFragment()
         }
-    };
-
-    private final OnSharedPreferenceChangeListener onPreferenceChangeListener
-            = (sharedPreferences, key) -> {
-        if (key.equals(AdvancedSettings.KEY_UPCOMING_LIMIT)) {
-            updateShowsQuery();
-            // refresh all list widgets
-            ListWidgetProvider.notifyDataChanged(requireContext());
-        }
-    };
+    }
 }

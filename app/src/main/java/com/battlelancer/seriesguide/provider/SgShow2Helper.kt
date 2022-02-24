@@ -85,7 +85,7 @@ interface SgShow2Helper {
     fun getShows(query: SupportSQLiteQuery): List<SgShow2ForLists>
 
     @RawQuery(observedEntities = [SgShow2::class])
-    fun getShowsLiveData(query: SupportSQLiteQuery): LiveData<List<SgShow2ForLists>>
+    fun getShowsLiveData(query: SupportSQLiteQuery): LiveData<MutableList<SgShow2ForLists>>
 
     @Query("SELECT sg_show._id, series_lastwatchedid, episode_number, episode_season_number, episode_firstairedms, episode_title, episode_plays FROM sg_show LEFT OUTER JOIN sg_episode ON series_lastwatchedid = sg_episode._id WHERE sg_show._id = :id")
     fun getShowWithLastWatchedEpisode(id: Long): SgShow2LastWatchedEpisode?
