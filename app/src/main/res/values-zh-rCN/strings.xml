@@ -416,8 +416,8 @@
     <string name="import_failed_nofile">找不到有效备份文件</string>
     <string name="import_success">备份已成功还原</string>
     <string name="import_failed">备份还原失败</string>
-    <string name="backup_button">备份</string>
-    <string name="import_button">还原</string>
+    <string name="backup_button">创建备份</string>
+    <string name="import_button">还原备份</string>
     <string name="import_warning">我已了解备份将替换当前所有节目、列表和电影数据</string>
     <string name="no_file_selected">没有选择的文件</string>
     <string name="action_select_file">选择文件</string>
@@ -485,9 +485,9 @@
     <string name="subscription_expired_details">您的 SeriesGuide 订阅已过期</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in">登录您的亚马逊帐户</string>
-    <string name="subscription_unavailable">订阅服务目前不可用</string>
+    <string name="subscription_unavailable">目前无法获取订阅</string>
     <string name="subscription_failed">支付过程中断，购买无效</string>
-    <string name="pass_unavailable">X Pass 当前不可用</string>
+    <string name="pass_unavailable">目前无法获取 X Pass</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">自定义扩展</string>
     <string name="action_extensions_add">添加扩展组件</string>

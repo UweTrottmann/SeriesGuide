@@ -55,7 +55,7 @@
     <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
     <string name="api_failed">Gescheitert: %s</string>
     <string name="copy_to_clipboard">In Zwischenablage kopiert</string>
-    <string name="not_migrated">Noch nicht auf TMDB gefunden. Wird evtl. keine Updates erhalten oder nicht mit Trakt und Cloud funktionieren. Antippen um Details anzuzeigen.</string>
+    <string name="not_migrated">Serie nicht zu TMDB-Daten migriert. Einige Funktionen inkl. Trakt- und Cloud-Sync funktionieren wsl. nicht. Evtl. nach einem Ersatz suchen und diese Serie entfernen. Tippen um Details anzuzeigen.</string>
     <!-- Sharing -->
     <string name="share">Teilen</string>
     <string name="share_show">Serie teilen</string>
