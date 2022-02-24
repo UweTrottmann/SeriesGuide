@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings.ListsSort
 import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings.ListsSortOrderChangedEvent
 import com.battlelancer.seriesguide.ui.lists.ListsPagerAdapter
 import com.battlelancer.seriesguide.ui.lists.ListsReorderDialogFragment
-import com.battlelancer.seriesguide.ui.lists.ListsTools
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
@@ -45,12 +44,7 @@ class ListsActivity : BaseTopActivity() {
         setupViews()
         setupSyncProgressBar(R.id.progressBarTabs)
 
-        viewModel.listsLiveData.observe(this, { items ->
-            // precreate first list
-            if (items != null && items.isEmpty()) {
-                val listName = getString(R.string.first_list)
-                ListsTools.addList(this@ListsActivity, listName)
-            }
+        viewModel.listsLiveData.observe(this) { items ->
             listsAdapter.updateItems(items)
             // update tabs
             binding.tabLayoutLists.setViewPager2(binding.viewPagerLists) { position ->
@@ -63,7 +57,7 @@ class ListsActivity : BaseTopActivity() {
                     false
                 )
             }
-        })
+        }
     }
 
     private fun setupViews() {
