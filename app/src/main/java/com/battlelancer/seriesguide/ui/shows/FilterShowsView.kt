@@ -3,13 +3,8 @@ package com.battlelancer.seriesguide.ui.shows
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.LinearLayout
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.widgets.FilterBox
+import com.battlelancer.seriesguide.databinding.ViewFilterShowsBinding
 
 class FilterShowsView @JvmOverloads constructor(
     context: Context,
@@ -17,67 +12,52 @@ class FilterShowsView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
+    val binding: ViewFilterShowsBinding
+
     init {
         orientation = VERTICAL
-        LayoutInflater.from(context).inflate(R.layout.view_filter_shows, this)
-
         // can't do in onFinishInflate as that is only called when inflating from XML
-        ButterKnife.bind(this)
+        binding = ViewFilterShowsBinding.inflate(LayoutInflater.from(context), this)
 
-        checkBoxFavorites.setOnClickListener { updateFilterListener() }
-        checkBoxUnwatched.setOnClickListener { updateFilterListener() }
-        checkBoxUpcoming.setOnClickListener { updateFilterListener() }
-        checkBoxHidden.setOnClickListener { updateFilterListener() }
-        checkBoxContinuing.setOnClickListener { updateFilterListener() }
-        buttonClearFilters.setOnClickListener {
-            checkBoxFavorites.state = null
-            checkBoxUnwatched.state = null
-            checkBoxUpcoming.state = null
-            checkBoxHidden.state = null
-            checkBoxContinuing.state = null
+        binding.checkboxShowsFilterFavorites.setOnClickListener { updateFilterListener() }
+        binding.checkboxShowsFilterUnwatched.setOnClickListener { updateFilterListener() }
+        binding.checkboxShowsFilterUpcoming.setOnClickListener { updateFilterListener() }
+        binding.checkboxShowsFilterHidden.setOnClickListener { updateFilterListener() }
+        binding.checkboxShowsFilterContinuing.setOnClickListener { updateFilterListener() }
+        binding.buttonShowsFilterRemove.setOnClickListener {
+            binding.checkboxShowsFilterFavorites.state = null
+            binding.checkboxShowsFilterUnwatched.state = null
+            binding.checkboxShowsFilterUpcoming.state = null
+            binding.checkboxShowsFilterHidden.state = null
+            binding.checkboxShowsFilterContinuing.state = null
             filterListener?.onFilterUpdate(ShowFilter.allDisabled())
         }
-        buttonMakeAllVisible.setOnClickListener { filterListener?.onMakeAllHiddenVisibleClick() }
-        buttonUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
+        binding.buttonShowsFilterAllVisible.setOnClickListener { filterListener?.onMakeAllHiddenVisibleClick() }
+        binding.buttonShowsFilterUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
+        binding.checkboxShowsFilterNoReleased.setOnClickListener { filterListener?.onNoReleasedChanged(binding.checkboxShowsFilterNoReleased.isChecked) }
     }
-
-    @BindView(R.id.checkbox_shows_filter_favorites)
-    internal lateinit var checkBoxFavorites: FilterBox
-    @BindView(R.id.checkbox_shows_filter_unwatched)
-    internal lateinit var checkBoxUnwatched: FilterBox
-    @BindView(R.id.checkbox_shows_filter_upcoming)
-    internal lateinit var checkBoxUpcoming: FilterBox
-    @BindView(R.id.checkbox_shows_filter_hidden)
-    internal lateinit var checkBoxHidden: FilterBox
-    @BindView(R.id.checkbox_shows_filter_continuing)
-    internal lateinit var checkBoxContinuing: FilterBox
-    @BindView(R.id.button_shows_filter_remove)
-    internal lateinit var buttonClearFilters: Button
-    @BindView(R.id.button_shows_filter_upcoming_range)
-    internal lateinit var buttonUpcomingRange: ImageButton
-    @BindView(R.id.button_shows_filter_all_visible)
-    internal lateinit var buttonMakeAllVisible: Button
 
     private var filterListener: FilterListener? = null
 
     private fun updateFilterListener() {
         filterListener?.onFilterUpdate(
             ShowFilter(
-                checkBoxFavorites.state,
-                checkBoxUnwatched.state,
-                checkBoxUpcoming.state,
-                checkBoxHidden.state,
-                checkBoxContinuing.state
+                binding.checkboxShowsFilterFavorites.state,
+                binding.checkboxShowsFilterUnwatched.state,
+                binding.checkboxShowsFilterUpcoming.state,
+                binding.checkboxShowsFilterHidden.state,
+                binding.checkboxShowsFilterContinuing.state
             )
         )
     }
 
-    fun setInitialFilter(showFilter: ShowFilter) {
-        checkBoxFavorites.state = showFilter.isFilterFavorites
-        checkBoxUnwatched.state = showFilter.isFilterUnwatched
-        checkBoxUpcoming.state = showFilter.isFilterUpcoming
-        checkBoxHidden.state = showFilter.isFilterHidden
-        checkBoxContinuing.state = showFilter.isFilterContinuing
+    fun setInitialFilter(showFilter: ShowFilter, noReleased: Boolean) {
+        binding.checkboxShowsFilterFavorites.state = showFilter.isFilterFavorites
+        binding.checkboxShowsFilterUnwatched.state = showFilter.isFilterUnwatched
+        binding.checkboxShowsFilterUpcoming.state = showFilter.isFilterUpcoming
+        binding.checkboxShowsFilterHidden.state = showFilter.isFilterHidden
+        binding.checkboxShowsFilterContinuing.state = showFilter.isFilterContinuing
+        binding.checkboxShowsFilterNoReleased.isChecked = noReleased
     }
 
     fun setFilterListener(filterListener: FilterListener) {
@@ -120,6 +100,7 @@ class FilterShowsView @JvmOverloads constructor(
         fun onFilterUpdate(filter: ShowFilter)
         fun onConfigureUpcomingRangeClick()
         fun onMakeAllHiddenVisibleClick()
+        fun onNoReleasedChanged(value: Boolean)
     }
 
 }

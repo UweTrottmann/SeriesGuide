@@ -172,6 +172,12 @@ object DisplaySettings {
             .getBoolean(KEY_NO_RELEASED_EPISODES, false)
     }
 
+    fun setNoReleasedEpisodes(context: Context, value: Boolean) {
+        return PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_NO_RELEASED_EPISODES, value)
+        }
+    }
+
     /**
      * Whether to exclude special episodes wherever possible (except in the actual seasons and
      * episode lists of a show).
@@ -197,7 +203,8 @@ object DisplaySettings {
     @JvmStatic
     fun getLastShowsTabPosition(context: Context): Int {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getInt(KEY_LAST_ACTIVE_SHOWS_TAB,
+            .getInt(
+                KEY_LAST_ACTIVE_SHOWS_TAB,
                 ShowsActivity.INDEX_TAB_SHOWS
             )
     }

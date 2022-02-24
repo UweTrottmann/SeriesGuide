@@ -68,4 +68,22 @@
         android:layout_height="wrap_content"
         android:text="@string/action_shows_make_all_visible" />
 
+    <CheckBox
+        android:id="@+id/checkbox_shows_filter_no_released"
+        style="@style/Widget.SeriesGuide.DistillationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pref_onlyfuture" />
+
+    <TextView
+        android:id="@+id/textview_shows_filter_no_released_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="-8dp"
+        android:layout_marginEnd="@dimen/large_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:text="@string/pref_onlyfuturesummary"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
+
 </merge>
