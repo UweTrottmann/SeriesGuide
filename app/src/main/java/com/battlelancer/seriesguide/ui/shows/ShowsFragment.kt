@@ -116,10 +116,6 @@ class ShowsFragment : Fragment() {
                 recyclerView.smoothScrollToPosition(0)
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         // get settings
         showFilter = ShowFilter.fromSettings(requireContext())
@@ -357,10 +353,4 @@ class ShowsFragment : Fragment() {
                 notifyDataChanged(requireContext())
             }
         }
-
-    companion object {
-        fun newInstance(): ShowsFragment {
-            return ShowsFragment()
-        }
-    }
 }
