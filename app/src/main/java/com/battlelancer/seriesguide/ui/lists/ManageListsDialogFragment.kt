@@ -12,7 +12,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Checkable
 import android.widget.CheckedTextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.core.view.isGone
 import androidx.cursoradapter.widget.CursorAdapter
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
@@ -26,11 +28,11 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.ArrayList
 
 /**
  * Displays a dialog displaying all user created lists,
@@ -41,6 +43,10 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
     private var binding: DialogManageListsBinding? = null
     private lateinit var adapter: ListsAdapter
     private var showId: Long = 0
+
+    /**
+     * Remains 0 if TMDB id for show not found (show is not migrated to TMDB data).
+     */
     private var showTmdbId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +58,7 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
         val binding = DialogManageListsBinding.inflate(layoutInflater)
         this.binding = binding
 
+        binding.textViewManageListsError.isGone = true
         /*
          * As using CHOICE_MODE_MULTIPLE does not seem to work before Jelly
          * Bean, do everything ourselves.
@@ -61,13 +68,15 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
         binding.list.adapter = adapter
 
         lifecycleScope.launchWhenCreated {
-            loadListDetails()
+            loadShowAndListDetails()
         }
 
         return MaterialAlertDialogBuilder(requireContext())
             .setView(binding.root)
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
+                // Note: see show details loader that prevents loading list data if not migrated.
+                if (showTmdbId <= 0) dismiss()
                 // add item to selected lists, remove from previously selected lists
                 val checkedLists = adapter.checkedPositions
                 val addToTheseLists: MutableList<String> = ArrayList()
@@ -100,21 +109,27 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
             .create()
     }
 
-    private suspend fun loadListDetails() {
+    private suspend fun loadShowAndListDetails() {
         val showDetails = withContext(Dispatchers.IO) {
             SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowMinimal(showId)
         }
-        if (showDetails?.tmdbId == null || showDetails.tmdbId == 0) {
+        if (showDetails == null) {
+            Toast.makeText(requireContext(), R.string.database_error, Toast.LENGTH_LONG).show()
             dismiss()
             return
         }
-        showTmdbId = showDetails.tmdbId
+        showTmdbId = showDetails.tmdbId ?: 0
 
-        // display item title
-        binding?.item?.text = showDetails.title
+        val binding = binding ?: return
+        binding.item.text = showDetails.title
 
-        // load data
-        LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks)
+        if (showTmdbId > 0) {
+            // Load lists status for this show.
+            LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks)
+        } else {
+            // Note: see OK button handler that prevents changing lists if not migrated.
+            ViewTools.configureNotMigratedWarning(binding.textViewManageListsError, true)
+        }
     }
 
     private val onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->

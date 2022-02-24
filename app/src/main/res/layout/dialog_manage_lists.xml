@@ -35,6 +35,19 @@
 
         <include layout="@layout/divider_horizontal" />
 
+        <TextView
+            android:id="@+id/textViewManageListsError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/larger_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/larger_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:background="?attr/selectableItemBackground"
+            android:focusable="true"
+            android:text="@string/not_migrated"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error" />
+
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
