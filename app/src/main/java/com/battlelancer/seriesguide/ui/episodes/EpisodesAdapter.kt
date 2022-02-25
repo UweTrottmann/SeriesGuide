@@ -195,8 +195,8 @@ class EpisodeViewHolder(
         TextViewCompat.setTextAppearance(
             binding.textViewEpisodeTitle,
             if (isReleased) {
-                R.style.TextAppearance_SeriesGuide_Subtitle1
-            } else R.style.TextAppearance_SeriesGuide_Subtitle1_Dim
+                R.style.TextAppearance_SeriesGuide_Subtitle1_Bold
+            } else R.style.TextAppearance_SeriesGuide_Subtitle1_Bold_Dim
         )
         TextViewCompat.setTextAppearance(
             binding.textViewEpisodeAirdate,

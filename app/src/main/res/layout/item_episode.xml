@@ -33,7 +33,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:ellipsize="end"
             android:paddingTop="16dp"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
             tools:text="Episode Title" />
 
         <TextView
