@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.battlelancer.seriesguide.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_unwatched"
@@ -73,17 +74,7 @@
         style="@style/Widget.SeriesGuide.DistillationItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/pref_onlyfuture" />
-
-    <TextView
-        android:id="@+id/textview_shows_filter_no_released_summary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="-8dp"
-        android:layout_marginEnd="@dimen/large_padding"
         android:layout_marginBottom="@dimen/default_padding"
-        android:text="@string/pref_onlyfuturesummary"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
+        tools:text="@string/pref_onlyfuture" />
 
 </merge>
