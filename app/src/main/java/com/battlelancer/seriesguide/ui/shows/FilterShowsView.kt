@@ -1,14 +1,12 @@
 package com.battlelancer.seriesguide.ui.shows
 
 import android.content.Context
-import android.text.style.TextAppearanceSpan
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import androidx.core.text.set
-import androidx.core.text.toSpannable
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFilterShowsBinding
+import com.battlelancer.seriesguide.util.TextToolsK
 
 class FilterShowsView @JvmOverloads constructor(
     context: Context,
@@ -40,14 +38,11 @@ class FilterShowsView @JvmOverloads constructor(
         binding.buttonShowsFilterUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
         binding.checkboxShowsFilterNoReleased.apply {
             setOnClickListener { filterListener?.onNoReleasedChanged(binding.checkboxShowsFilterNoReleased.isChecked) }
-            val title = context.getString(R.string.pref_onlyfuture)
-            val summary = context.getString(R.string.pref_onlyfuturesummary)
-            val titleAndSummary = "$title\n$summary".toSpannable()
-            titleAndSummary[0, title.length] =
-                TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Subtitle1)
-            titleAndSummary[title.length, titleAndSummary.length] =
-                TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Body2_Secondary)
-            text = titleAndSummary
+            text = TextToolsK.buildTitleAndSummary(
+                context,
+                R.string.pref_onlyfuture,
+                R.string.pref_onlyfuturesummary
+            )
         }
     }
 

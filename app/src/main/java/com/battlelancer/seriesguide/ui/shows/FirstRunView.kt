@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.Utils
 import org.greenrobot.eventbus.EventBus
 
@@ -55,6 +56,11 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             binding.checkboxNoSpoilers.isChecked = noSpoilers
         }
         binding.checkboxNoSpoilers.isChecked = DisplaySettings.preventSpoilers(context)
+        binding.checkboxNoSpoilers.text = TextToolsK.buildTitleAndSummary(
+            context,
+            R.string.pref_nospoilers,
+            R.string.pref_nospoilers_summary
+        )
 
         binding.containerDataSaver.setOnClickListener {
             val isSaveData = !binding.checkboxDataSaver.isChecked
@@ -64,6 +70,11 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             binding.checkboxDataSaver.isChecked = isSaveData
         }
         binding.checkboxDataSaver.isChecked = UpdateSettings.isLargeDataOverWifiOnly(context)
+        binding.checkboxDataSaver.text = TextToolsK.buildTitleAndSummary(
+            context,
+            R.string.pref_updatewifionly,
+            R.string.pref_updatewifionlysummary
+        )
 
         binding.buttonAddShow.setOnClickListener {
             EventBus.getDefault().post(ButtonEvent(ButtonType.ADD_SHOW))
@@ -86,6 +97,11 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             binding.checkboxErrorReports.isChecked = isSendErrorReports
         }
         binding.checkboxErrorReports.isChecked = AppSettings.isSendErrorReports(context)
+        binding.checkboxErrorReports.text = TextToolsK.buildTextAppearanceSpan(
+            context,
+            R.string.pref_error_reports,
+            R.style.TextAppearance_SeriesGuide_Subtitle1_Secondary
+        )
 
         binding.textViewPolicyLink.setOnClickListener { v ->
             val context = v.context
