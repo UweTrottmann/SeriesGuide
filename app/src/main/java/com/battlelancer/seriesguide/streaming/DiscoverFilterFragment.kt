@@ -51,11 +51,11 @@ class DiscoverFilterFragment : AppCompatDialogFragment() {
             text = StreamingSearch.getCurrentRegionOrSelectString(requireContext())
             setOnClickListener { StreamingSearchConfigureDialog.show(parentFragmentManager) }
         }
-        StreamingSearch.regionLiveData.observe(this, {
+        StreamingSearch.regionLiveData.observe(this) {
             this.binding?.buttonWatchRegion?.text =
                 StreamingSearch.getCurrentRegionOrSelectString(requireContext())
             if (it != null) model.updateWatchProviders(it)
-        })
+        }
 
         // disable all button
         binding.buttonDisableAllProviders.setOnClickListener {
@@ -79,8 +79,12 @@ class DiscoverFilterFragment : AppCompatDialogFragment() {
             }
         }
 
+        val titleRes = when (type) {
+            Type.SHOWS -> R.string.action_shows_filter
+            Type.MOVIES -> R.string.action_movies_filter
+        }
         return MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.action_stream)
+            .setTitle(titleRes)
             .setView(binding.root)
             .setPositiveButton(R.string.dismiss, null)
             .create()
