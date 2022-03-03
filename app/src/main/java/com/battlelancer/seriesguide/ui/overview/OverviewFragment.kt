@@ -62,8 +62,6 @@ import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TextToolsK
-import com.battlelancer.seriesguide.util.TextToolsK.textNoTranslation
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
@@ -367,7 +365,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             activity,
             currentShow.title,
             TextTools.getNextEpisodeString(
-                activity, currentEpisode.season,
+                requireContext(), currentEpisode.season,
                 currentEpisode.number, currentEpisode.title
             ),
             currentEpisode.firstReleasedMs,
@@ -530,7 +528,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         val season = episode.season
         val number = episode.number
         val title = TextTools.getEpisodeTitle(
-            context,
+            requireContext(),
             if (preventSpoilers(requireContext())) null else episode.title, number
         )
         textEpisodeTitle.text = title
@@ -580,7 +578,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         }
         val plays = episode.plays
         buttonWatch.text =
-            TextToolsK.getWatchedButtonText(requireContext(), isWatched, plays)
+            TextTools.getWatchedButtonText(requireContext(), isWatched, plays)
 
         // collected button
         val isCollected = episode.collected
@@ -650,7 +648,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         val languageCode = show.language
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            overview = textNoTranslation(requireContext(), languageCode)
+            overview = TextTools.textNoTranslation(requireContext(), languageCode)
         } else if (preventSpoilers(requireContext())) {
             overview = getString(R.string.no_spoilers)
         }

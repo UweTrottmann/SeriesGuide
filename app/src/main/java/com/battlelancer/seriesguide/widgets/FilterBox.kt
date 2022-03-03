@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFilterBoxBinding
-import com.battlelancer.seriesguide.util.TextToolsK
+import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
@@ -85,7 +85,7 @@ class FilterBox @JvmOverloads constructor(
                 }
         }
         binding.textViewFilterBox.text =
-            TextToolsK.buildTitleAndSummary(context, filterDescription, stateDescription)
+            TextTools.buildTitleAndSummary(context, filterDescription, stateDescription)
     }
 
     override fun performClick(): Boolean {

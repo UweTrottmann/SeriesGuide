@@ -34,7 +34,6 @@ import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
@@ -130,7 +129,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         val overview = if (noTranslation || tmdbShow.overview.isNullOrEmpty()) {
             // add note about non-translated or non-existing overview
-            var overview = TextToolsK.textNoTranslation(context, desiredLanguage)
+            var overview = TextTools.textNoTranslation(context, desiredLanguage)
             // if there is one, append non-translated overview
             if (!tmdbShow.overview.isNullOrEmpty()) {
                 overview += "\n\n${tmdbShow.overview}"

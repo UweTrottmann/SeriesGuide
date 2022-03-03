@@ -20,7 +20,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -144,7 +143,7 @@ class PersonFragment : Fragment() {
 
             textViewPersonName.text = person.name
             val biography = if (TextUtils.isEmpty(person.biography)) {
-                TextToolsK.textNoTranslationMovieLanguage(
+                TextTools.textNoTranslationMovieLanguage(
                     requireContext(),
                     model.languageCode.value
                 )

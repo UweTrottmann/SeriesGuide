@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
@@ -362,7 +361,7 @@ class ShowFragment() : Fragment() {
         val languageCode = show.language
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
-            overview = TextToolsK.textNoTranslation(requireContext(), languageCode)
+            overview = TextTools.textNoTranslation(requireContext(), languageCode)
         }
         textViewOverview.text = TextTools.textWithTmdbSource(textViewOverview.context, overview)
 

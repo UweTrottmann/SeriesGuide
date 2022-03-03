@@ -46,7 +46,6 @@ import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TextToolsK
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
@@ -333,7 +332,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // watched button
         binding.containerMovieButtons.buttonMovieWatched.also {
-            it.text = TextToolsK.getWatchedButtonText(requireContext(), isWatched, plays)
+            it.text = TextTools.getWatchedButtonText(requireContext(), isWatched, plays)
             TooltipCompat.setTooltipText(
                 it, it.context.getString(
                     if (isWatched) R.string.action_unwatched else R.string.action_watched

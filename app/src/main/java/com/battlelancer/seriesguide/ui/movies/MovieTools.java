@@ -18,7 +18,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.TextToolsK;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.tmdb2.entities.AppendToResponse;
 import com.uwetrottmann.tmdb2.entities.Movie;
@@ -494,7 +494,7 @@ public class MovieTools {
         if (movieFallback != null) {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = movieFallback.overview;
-            movieFallback.overview = TextToolsK
+            movieFallback.overview = TextTools
                     .textNoTranslationMovieLanguage(context, languageCode);
             if (!TextUtils.isEmpty(untranslatedOverview)) {
                 movieFallback.overview += "\n\n" + untranslatedOverview;

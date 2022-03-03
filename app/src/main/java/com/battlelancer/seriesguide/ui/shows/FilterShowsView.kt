@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFilterShowsBinding
-import com.battlelancer.seriesguide.util.TextToolsK
+import com.battlelancer.seriesguide.util.TextTools
 
 class FilterShowsView @JvmOverloads constructor(
     context: Context,
@@ -38,7 +38,7 @@ class FilterShowsView @JvmOverloads constructor(
         binding.buttonShowsFilterUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
         binding.checkboxShowsFilterNoReleased.apply {
             setOnClickListener { filterListener?.onNoReleasedChanged(binding.checkboxShowsFilterNoReleased.isChecked) }
-            text = TextToolsK.buildTitleAndSummary(
+            text = TextTools.buildTitleAndSummary(
                 context,
                 R.string.pref_onlyfuture,
                 R.string.pref_onlyfuturesummary

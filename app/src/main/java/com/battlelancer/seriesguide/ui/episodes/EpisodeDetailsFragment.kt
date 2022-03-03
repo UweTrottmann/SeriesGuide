@@ -48,8 +48,6 @@ import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TextToolsK.getWatchedButtonText
-import com.battlelancer.seriesguide.util.TextToolsK.textNoTranslation
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
@@ -338,7 +336,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         var overview = episode.overview
         if (overview.isNullOrEmpty()) {
             // no description available, show no translation available message
-            overview = textNoTranslation(requireContext(), show.language)
+            overview = TextTools.textNoTranslation(requireContext(), show.language)
         } else if (hideDetails) {
             overview = getString(R.string.no_spoilers)
         }
@@ -517,7 +515,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         bindingButtons.buttonEpisodeWatched.setOnClickListener { onToggleWatched() }
         val plays = episode.plays
         bindingButtons.buttonEpisodeWatched.text =
-            getWatchedButtonText(requireContext(), isWatched, plays)
+            TextTools.getWatchedButtonText(requireContext(), isWatched, plays)
         TooltipCompat.setTooltipText(
             bindingButtons.buttonEpisodeWatched,
             bindingButtons.buttonEpisodeWatched.context.getString(
