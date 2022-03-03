@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFilterBoxBinding
+import com.battlelancer.seriesguide.util.TextToolsK
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
@@ -36,7 +37,7 @@ class FilterBox @JvmOverloads constructor(
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        binding.textViewFilterBox.text = filterDescription
+        updateState()
     }
 
     /**
@@ -83,6 +84,8 @@ class FilterBox @JvmOverloads constructor(
                     "$stateDescription, $filterDescription"
                 }
         }
+        binding.textViewFilterBox.text =
+            TextToolsK.buildTitleAndSummary(context, filterDescription, stateDescription)
     }
 
     override fun performClick(): Boolean {

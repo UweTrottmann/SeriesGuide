@@ -47,17 +47,28 @@ object TextToolsK {
      */
     fun buildTitleAndSummary(
         context: Context,
-        @StringRes titleRes: Int,
-        @StringRes summaryRes: Int
+        title: String,
+        summary: String
     ): Spannable {
-        val title = context.getString(titleRes)
-        val summary = context.getString(summaryRes)
         val titleAndSummary = "$title\n$summary".toSpannable()
         titleAndSummary[0, title.length] =
             TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Subtitle1_Bold)
         titleAndSummary[title.length, titleAndSummary.length] =
             TextAppearanceSpan(context, R.style.TextAppearance_SeriesGuide_Body2_Secondary)
         return titleAndSummary
+    }
+
+    /**
+     * Useful for check boxes to add a summary without an additional TextView.
+     */
+    fun buildTitleAndSummary(
+        context: Context,
+        @StringRes titleRes: Int,
+        @StringRes summaryRes: Int
+    ): Spannable {
+        val title = context.getString(titleRes)
+        val summary = context.getString(summaryRes)
+        return buildTitleAndSummary(context, title, summary)
     }
 
     /**
