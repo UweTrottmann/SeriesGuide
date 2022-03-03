@@ -389,7 +389,7 @@ class ShowFragment() : Fragment() {
         // genres
         ViewTools.setValueOrPlaceholder(
             textViewGenres,
-            TextTools.splitAndKitTVDBStrings(show.genres)
+            TextTools.splitPipeSeparatedStrings(show.genres)
         )
 
         // trakt rating

@@ -31,7 +31,6 @@ import com.battlelancer.seriesguide.sync.TraktEpisodeSync
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
-import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -149,7 +148,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val firstRelease = TimeTools.parseShowFirstRelease(traktShow?.first_aired)
         val rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 } ?: 0.0
         val votes = traktShow?.votes?.let { if (it >= 0) it else 0 } ?: 0
-        val genres = TextTools.mendTvdbStrings(tmdbShow.genres?.map { genre -> genre.name })
+        val genres = TextTools.buildPipeSeparatedString(tmdbShow.genres?.map { genre -> genre.name })
         val network = tmdbShow.networks?.firstOrNull()?.name ?: ""
         val imdbId = tmdbShow.external_ids?.imdb_id ?: ""
         val runtime = tmdbShow.episode_run_time?.firstOrNull() ?: 45 // estimate 45 minutes if none.
@@ -534,9 +533,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                         season = seasonNumber,
                         image = tmdbEpisode.still_path,
                         firstReleasedMs = releaseDateTime,
-                        directors = TextTools.mendTvdbStrings(directors),
-                        guestStars = TextTools.mendTvdbStrings(guestStars),
-                        writers = TextTools.mendTvdbStrings(writers)
+                        directors = TextTools.buildPipeSeparatedString(directors),
+                        guestStars = TextTools.buildPipeSeparatedString(guestStars),
+                        writers = TextTools.buildPipeSeparatedString(writers)
                     )
                 )
             } else {
@@ -550,9 +549,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                         overview = overviewOrNull,
                         number = tmdbEpisode.episode_number ?: 0,
                         order = tmdbEpisode.episode_number ?: 0,
-                        directors = TextTools.mendTvdbStrings(directors),
-                        guestStars = TextTools.mendTvdbStrings(guestStars),
-                        writers = TextTools.mendTvdbStrings(writers),
+                        directors = TextTools.buildPipeSeparatedString(directors),
+                        guestStars = TextTools.buildPipeSeparatedString(guestStars),
+                        writers = TextTools.buildPipeSeparatedString(writers),
                         image = tmdbEpisode.still_path,
                         firstReleasedMs = releaseDateTime
                     )

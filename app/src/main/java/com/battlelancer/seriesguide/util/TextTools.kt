@@ -112,13 +112,13 @@ object TextTools {
      * Splits the string on the pipe character `"|"` and reassembles it, separating the items
      * with commas. The given object is returned with the new string.
      *
-     * @see mendTvdbStrings
+     * @see buildPipeSeparatedString
      */
-    fun splitAndKitTVDBStrings(tvdbstring: String?): String {
-        if (tvdbstring == null) {
+    fun splitPipeSeparatedStrings(pipeSeparatedStrings: String?): String {
+        if (pipeSeparatedStrings == null) {
             return ""
         }
-        val split = tvdbstring.split("\\|")
+        val split = pipeSeparatedStrings.split("\\|")
         val builder = StringBuilder()
         for (item in split) {
             if (builder.isNotEmpty()) {
@@ -132,9 +132,9 @@ object TextTools {
     /**
      * Combines the strings into a single string, separated by the pipe character `"|"`.
      *
-     * @see splitAndKitTVDBStrings
+     * @see splitPipeSeparatedStrings
      */
-    fun mendTvdbStrings(strings: List<String?>?): String {
+    fun buildPipeSeparatedString(strings: List<String?>?): String {
         if (strings == null || strings.isEmpty()) {
             return ""
         }

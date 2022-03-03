@@ -602,7 +602,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         )
         // guest stars
         isShowingMeta = isShowingMeta or ViewTools.setLabelValueOrHide(
-            labelGuestStars, textGuestStars, TextTools.splitAndKitTVDBStrings(episode.guestStars)
+            labelGuestStars, textGuestStars, TextTools.splitPipeSeparatedStrings(episode.guestStars)
         )
         // hide divider if no meta is visible
         dividerEpisodeMeta.visibility = if (isShowingMeta) View.VISIBLE else View.GONE

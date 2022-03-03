@@ -311,7 +311,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         // Genres.
         ViewTools.setValueOrPlaceholder(
             binding.textViewAddGenres,
-            TextTools.splitAndKitTVDBStrings(show.genres)
+            TextTools.splitPipeSeparatedStrings(show.genres)
         )
 
         // Poster.

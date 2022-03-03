@@ -396,7 +396,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         // guest stars
         ViewTools.setLabelValueOrHide(
             binding.textviewGuestStarsLabel, binding.textviewGuestStars,
-            TextTools.splitAndKitTVDBStrings(episode.guestStars)
+            TextTools.splitPipeSeparatedStrings(episode.guestStars)
         )
         // DVD episode number
         ViewTools.setLabelValueOrHide(
@@ -406,12 +406,12 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         // directors
         ViewTools.setValueOrPlaceholder(
             binding.textviewDirectors,
-            TextTools.splitAndKitTVDBStrings(episode.directors)
+            TextTools.splitPipeSeparatedStrings(episode.directors)
         )
         // writers
         ViewTools.setValueOrPlaceholder(
             binding.textviewWriters,
-            TextTools.splitAndKitTVDBStrings(episode.writers)
+            TextTools.splitPipeSeparatedStrings(episode.writers)
         )
 
         // ratings
