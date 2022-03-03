@@ -66,7 +66,6 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.util.ViewToolsK
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.widgets.FeedbackView
 import com.squareup.picasso.Callback
@@ -620,7 +619,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         )
 
         // IMDb button
-        ViewToolsK().configureImdbButton(
+        ViewTools.configureImdbButton(
             buttonImdb,
             lifecycleScope, requireContext(),
             show, episode

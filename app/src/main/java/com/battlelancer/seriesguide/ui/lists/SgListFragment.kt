@@ -45,7 +45,7 @@ class SgListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
-        emptyView = view.findViewById(R.id.emptyViewList)
+        val emptyView: TextView = view.findViewById(R.id.emptyViewList)
         ViewTools.setVectorDrawableTop(emptyView, R.drawable.ic_list_white_24dp)
         return view
     }
