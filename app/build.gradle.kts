@@ -205,7 +205,7 @@ dependencies {
 
     implementation("com.google.flatbuffers:flatbuffers-java:1.12.0")
     // https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.code.gson:gson:2.9.0")
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
     implementation("com.jakewharton.timber:timber:$timberVersion")
@@ -247,6 +247,7 @@ dependencies {
     // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
     implementation("com.firebaseui:firebase-ui-auth:8.0.0")
     // Update play-services-auth which adds Android 12 mutable Intent flags.
+    // https://developers.google.com/android/guides/releases
     implementation("com.google.android.gms:play-services-auth:20.0.1")
 
 
