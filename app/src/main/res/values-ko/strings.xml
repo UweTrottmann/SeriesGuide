@@ -55,7 +55,7 @@
     <string name="api_error_generic">%s와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="api_failed">%s 실패</string>
     <string name="copy_to_clipboard">클립보드에 복사됨</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">공유</string>
     <string name="share_show">프로그램 공유</string>

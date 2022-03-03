@@ -55,7 +55,7 @@
     <string name="api_error_generic">Non è possibile contattare %s. Riprova più tardi.</string>
     <string name="api_failed">Fallito: %s</string>
     <string name="copy_to_clipboard">Copiato negli appunti</string>
-    <string name="not_migrated">Non trovato su TMDb, sarà rimosso in un aggiornamento futuro. Tocca per dettagli.</string>
+    <string name="not_migrated">Serie non migrata a TMDB. Alcune azioni, come la sincronizzazione Trakt e Cloud, potrebbero non funzionare. Si consiglia di effettuare una nuova ricerca ed eliminare questa serie. Tocca per vedere i dettagli.</string>
     <!-- Sharing -->
     <string name="share">Condividi</string>
     <string name="share_show">Condividi la serie</string>

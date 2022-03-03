@@ -55,7 +55,7 @@
     <string name="api_error_generic">Klarte ikke å koble til %s. Prøv igjen senere.</string>
     <string name="api_failed">Mislyktes: %s</string>
     <string name="copy_to_clipboard">Kopiert til utklippstavlen</string>
-    <string name="not_migrated">Ikke funnet på TMDb, fjernes i en fremtidig oppdatering. Trykk for detaljer.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Del</string>
     <string name="share_show">Del serie</string>

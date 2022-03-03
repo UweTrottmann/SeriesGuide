@@ -55,7 +55,7 @@
     <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
     <string name="api_failed">Misslyckades: %s</string>
     <string name="copy_to_clipboard">Kopierat till urklipp</string>
-    <string name="not_migrated">Hittades inte på TMDb, kommer att tas bort i en framtida uppdatering. Tryck för detaljer.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Dela</string>
     <string name="share_show">Dela serie</string>

@@ -55,7 +55,7 @@
     <string name="api_error_generic">Kommunikointi palvelun %s kanssa ei onnistunut. Yritä myöhemmin uudelleen.</string>
     <string name="api_failed">Epäonnistui: %s</string>
     <string name="copy_to_clipboard">Kopioitu leikepöydälle</string>
-    <string name="not_migrated">Ei löydy TMDb:stä, poistetaan tulevassa päivityksessä. Napauta saadaksesi lisätietoja.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Jaa</string>
     <string name="share_show">Jaa ohjelma</string>

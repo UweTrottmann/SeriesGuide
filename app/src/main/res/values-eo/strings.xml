@@ -55,7 +55,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Malsukcesis: %s</string>
     <string name="copy_to_clipboard">Kopita al tondejo</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Konigi</string>
     <string name="share_show">Konigi televidaĵon</string>

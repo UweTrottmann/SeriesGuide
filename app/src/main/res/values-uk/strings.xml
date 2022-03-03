@@ -55,7 +55,7 @@
     <string name="api_error_generic">Не вдалося зв\'язатися з %s. Спробуйте пізніше.</string>
     <string name="api_failed">Не вдалося: %s</string>
     <string name="copy_to_clipboard">Скопійовано до буфера обміну</string>
-    <string name="not_migrated">Не знайдено в TMDb, буде видалено в майбутньому оновлення. Натисніть для деталей.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Поділитись</string>
     <string name="share_show">Поділитись серіалом</string>

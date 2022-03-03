@@ -55,7 +55,7 @@
     <string name="api_error_generic">Kon niet praten met %s. Probeer later opnieuw.</string>
     <string name="api_failed">Mislukt: %s</string>
     <string name="copy_to_clipboard">Gekopieerd naar klembord</string>
-    <string name="not_migrated">Niet gevonden op TMDb, zal verwijderd worden in een toekomstige update. Tik voor details.</string>
+    <string name="not_migrated">Naar TMDB-gegevens gemigreerde niet weergeven. Enkele acties incl. Trakt- en Cloud-synchronisatie werken mogelijk niet. Misschien een vervanger zoeken en deze show verwijderen. Tik om details te bekijken.</string>
     <!-- Sharing -->
     <string name="share">Delen</string>
     <string name="share_show">Serie delen</string>

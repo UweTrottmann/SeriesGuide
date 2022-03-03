@@ -55,7 +55,7 @@
     <string name="api_error_generic">Няма връзка с %s. trakt. Опитайте отново по-късно.</string>
     <string name="api_failed">Грешно: %s</string>
     <string name="copy_to_clipboard">Копирано в клипборда</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
     <string name="share_show">Сподели ТВ предаване</string>

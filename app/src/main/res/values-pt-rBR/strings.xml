@@ -55,7 +55,7 @@
     <string name="api_error_generic">Não foi possível conectar-se com %s. Tente mais tarde.</string>
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
-    <string name="not_migrated">Não encontrado no TMDb, será removido em uma atualização futura. Toque para mais detalhes.</string>
+    <string name="not_migrated">Os dados TMDB sobre a série não foram migrados. Algumas ações tais como sincronização do Trakt e da Cloud podem não estar a funcionar. Procure se existe uma entrada alternativa para esta série e remova a entrada atual. Toque para ver mais detalhes.</string>
     <!-- Sharing -->
     <string name="share">Compartilhar</string>
     <string name="share_show">Compartilhar série</string>

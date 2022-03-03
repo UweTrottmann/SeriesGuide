@@ -55,7 +55,7 @@
     <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
     <string name="api_failed">Błąd: %s</string>
     <string name="copy_to_clipboard">Skopiowano do schowka</string>
-    <string name="not_migrated">Nie znaleziono na TMDb. Pozycja zostanie usunięta w przyszłej aktualizacji. Kliknij, aby zobaczyć szczegóły</string>
+    <string name="not_migrated">Serial nie został zmigrowany na dane TMDB. Niektóre akcje, takie jak Trakt i synchronizacja z chmurą mogą nie działać. Zalecamy wyszukanie serialu z bazy TMDB i usunięcie tego serialu. Naciśnij, aby wyświetlić szczegóły.</string>
     <!-- Sharing -->
     <string name="share">Udostępnij</string>
     <string name="share_show">Współdziel serial</string>

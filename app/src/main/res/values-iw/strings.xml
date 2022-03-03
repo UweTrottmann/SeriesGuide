@@ -55,7 +55,7 @@
     <string name="api_error_generic">לא יכולה לדבר עם %s. נסה שוב מאוחר יותר.</string>
     <string name="api_failed">נכשל: %s</string>
     <string name="copy_to_clipboard">הועתק</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">שתף</string>
     <string name="share_show">שתף סדרה</string>
@@ -95,7 +95,7 @@
     <string name="show_isUpcoming">בקרוב</string>
     <string name="show_status_in_production">In Production</string>
     <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_canceled">בוטל</string>
     <string name="no_translation">אין תיאור זמין המתורגם ל%1$s ב-%2$s.</string>
     <string name="no_translation_title">לא תורגם</string>
     <string name="no_spoilers">פרטים מסוימים מוסתרים כדי למנוע ספוילרים. כדי לבטל את זה עבור להגדרות.</string>
@@ -120,7 +120,7 @@
     <string name="action_watched">נצפה</string>
     <string name="action_unwatched">לא נצפה</string>
     <string name="state_watched">נצפה</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
+    <string name="state_watched_multiple_format">נצפה</string>
     <string name="state_skipped">דילוג</string>
     <string name="state_in_collection">באוסף</string>
     <string name="state_on_watchlist">ברשימת הצפייה</string>
@@ -148,8 +148,8 @@
     <string name="action_shows_filter_upcoming">בקרוב</string>
     <string name="action_shows_filter_hidden">מוסתר</string>
     <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_included">כולל</string>
+    <string name="state_shows_filter_excluded">לא כולל</string>
     <string name="action_shows_make_all_visible">הצג את כל המוסתרים</string>
     <string name="description_make_all_visible_format">הצג שוב את כל הסדרות המוסתרות (%s)?</string>
     <string name="action_shows_sort">מיון סדרות</string>
@@ -158,7 +158,7 @@
     <string name="action_shows_sort_oldest_episode">הפרק הכי ישן</string>
     <string name="action_shows_sort_last_watched">האחרון שנצפה</string>
     <string name="action_shows_sort_remaining">פרקים שנותרו</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">מצב</string>
     <string name="action_shows_sort_favorites">מועדפים בהתחלה</string>
     <string name="context_updateshow">עדכן</string>
     <string name="context_marknext">צפה בפרק הבא</string>
@@ -420,7 +420,7 @@
     <string name="upcoming_upto_one_week">שבוע אחד</string>
     <string name="upcoming_upto_two_weeks">שבועיים</string>
     <string name="upcoming_upto_one_month">חודש אחד</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">הכול</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">תצוגה</string>
     <string name="pref_theme">ערכת נושא</string>

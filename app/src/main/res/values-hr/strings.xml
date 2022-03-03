@@ -55,7 +55,7 @@
     <string name="api_error_generic">%s nedostupan. Pokušajte kasnije.</string>
     <string name="api_failed">Nije uspjelo: %s</string>
     <string name="copy_to_clipboard">Kopirano u međuspremnik</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Podijeli</string>
     <string name="share_show">Podijeli seriju</string>

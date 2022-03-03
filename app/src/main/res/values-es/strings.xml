@@ -55,7 +55,7 @@
     <string name="api_error_generic">No se pudo hablar con %s. Intenta nuevamente.</string>
     <string name="api_failed">Error: %s</string>
     <string name="copy_to_clipboard">Copiado al portapapeles</string>
-    <string name="not_migrated">No encontrado en TMDb, se eliminará en una actualización futura. Pulse para más detalles.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Compartir</string>
     <string name="share_show">Compartir serie</string>

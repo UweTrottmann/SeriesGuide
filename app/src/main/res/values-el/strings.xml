@@ -55,7 +55,7 @@
     <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
     <string name="api_failed">Αποτυχία: %s</string>
     <string name="copy_to_clipboard">Αντιγράφηκε στο πρόχειρο</string>
-    <string name="not_migrated">Δεν βρέθηκε στο TMDb, θα αφαιρεθεί σε μελλοντική ενημέρωση. Πατήστε για λεπτομέρειες.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Μοίρασε</string>
     <string name="share_show">Κοινοποίηση σειράς</string>

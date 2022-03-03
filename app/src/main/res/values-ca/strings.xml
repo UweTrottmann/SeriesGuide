@@ -55,7 +55,7 @@
     <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">Copiat al portapapers</string>
-    <string name="not_migrated">No es troba a TMDb, serà esborrat en una futura actualització. Toca per més detalls.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
     <string name="share_show">Comparteix la serie</string>

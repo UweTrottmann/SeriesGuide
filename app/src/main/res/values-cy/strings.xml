@@ -55,7 +55,7 @@
     <string name="api_error_generic">Methu siarad â %s Rhowch gynnig arall arni yn nes ymlaen.</string>
     <string name="api_failed">Wedi methu: %s</string>
     <string name="copy_to_clipboard">Copi i\'r clipfwrdd</string>
-    <string name="not_migrated">Heb ei ddarganfod eto ar TMDB. Oni allai dderbyn diweddariadau na gweithio gyda Trakt a Cloud. Cliciwch i weld y manylion.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Rhannu</string>
     <string name="share_show">Sioe rhannu</string>

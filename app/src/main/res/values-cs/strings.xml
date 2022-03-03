@@ -55,7 +55,7 @@
     <string name="api_error_generic">Nelze komunikovat s %s. Zkuste to prosím později.</string>
     <string name="api_failed">Chyba během: %s</string>
     <string name="copy_to_clipboard">Zkopírováno do schránky</string>
-    <string name="not_migrated">Nenalezeno v TMDb, bude odstraněno v budoucí aktualizaci. Klepněte pro podrobnosti.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Sdílet</string>
     <string name="share_show">Sdílet seriál</string>

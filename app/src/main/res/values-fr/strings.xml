@@ -55,7 +55,7 @@
     <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
     <string name="api_failed">Échec : %s</string>
     <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
-    <string name="not_migrated">Introuvable sur TMDb, sera supprimé dans une prochaine mise à jour. Appuyez pour plus de détails.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Partager</string>
     <string name="share_show">Partager la série</string>

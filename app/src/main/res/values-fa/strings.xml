@@ -55,7 +55,7 @@
     <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
     <string name="api_failed">%s انجام نشد</string>
     <string name="copy_to_clipboard">کپی شد</string>
-    <string name="not_migrated">در TMDB پیدا نشد و‌در به‌روز رسانی‌ای آتی برداشته خواهد شد. برای جزییات بزنید.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">هم‌رسانی</string>
     <string name="share_show">هم‌رسانی نمایش</string>

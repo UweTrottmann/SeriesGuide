@@ -55,7 +55,7 @@
     <string name="api_error_generic">%s ile iletişim kurulamadı. Daha sonra tekrar deneyin.</string>
     <string name="api_failed">%s başarısız oldu</string>
     <string name="copy_to_clipboard">Panoya kopyalandı</string>
-    <string name="not_migrated">TMDb\'de bulunamadı, sonraki güncellemede kaldırılacak. Detaylar için dokunun.</string>
+    <string name="not_migrated">Bu dizi TMDB datasına geçirilmedi. Trakt ve Bulut senkronu dahil bazı işlevler çalışmayabilir. Bu dizinin yerine ya başka dizi koyun yada kaldırın. Detaylar için dokunun.</string>
     <!-- Sharing -->
     <string name="share">Paylaş</string>
     <string name="share_show">Diziyi paylaş</string>

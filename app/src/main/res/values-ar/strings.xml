@@ -55,7 +55,7 @@
     <string name="api_error_generic">لا يمكن الاتصال بـ %s. الرجاء المحاولة لاحقا.</string>
     <string name="api_failed">فشل: %s</string>
     <string name="copy_to_clipboard">تم النسخ إلى الحافظة</string>
-    <string name="not_migrated">غير موجود على TMDb، ستتم إزالته في تحديث مستقبلي. اضغط لاحصال التفاصيل.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">مشاركة</string>
     <string name="share_show">مشاركة المسلسل</string>

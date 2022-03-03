@@ -55,7 +55,7 @@
     <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
     <string name="api_failed">Meghiúsult: %s</string>
     <string name="copy_to_clipboard">Vágólapra másolva</string>
-    <string name="not_migrated">Nem megtalálható a TMDb-nél, egy jövőbeli frissítésben eltávolításra fog kerülni. Kattints a részletekért.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Megosztás</string>
     <string name="share_show">Műsor megosztása</string>

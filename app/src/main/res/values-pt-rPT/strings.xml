@@ -55,7 +55,7 @@
     <string name="api_error_generic">Houve uma falha ao comunicar com o %s. Tenta mais tarde.</string>
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
-    <string name="not_migrated">Não foi encontrado no TMDb, será removido numa futura atualização. Toque para mais detalhes.</string>
+    <string name="not_migrated">Os dados TMDB sobre a série não foram migrados. Algumas ações tais como sincronização do Trakt e da Cloud podem não estar a funcionar. Procura se existe uma entrada alternativa para esta série e remove a entrada atual. Toca para ver mais detalhes.</string>
     <!-- Sharing -->
     <string name="share">Partilhar</string>
     <string name="share_show">Partilhar série</string>
