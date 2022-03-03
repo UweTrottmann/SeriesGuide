@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.model.SgSeason2
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
-import com.battlelancer.seriesguide.util.DBUtils
+import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 
 object ImportTools {
@@ -20,7 +20,7 @@ object ImportTools {
             tvdbId = tvdb_id,
             traktId = trakt_id ?: 0,
             title = title ?: "",
-            titleNoArticle = DBUtils.trimLeadingArticle(title),
+            titleNoArticle = TextTools.trimLeadingArticle(title),
             overview = overview ?: "",
             releaseTime = release_time,
             releaseWeekDay = if (release_weekday >= -1 && release_weekday <= 7) release_weekday else TimeTools.RELEASE_WEEKDAY_UNKNOWN,

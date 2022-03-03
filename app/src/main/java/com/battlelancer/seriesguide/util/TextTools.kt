@@ -150,6 +150,32 @@ object TextTools {
     }
 
     /**
+     * Removes a leading article from the given string (including the first whitespace that
+     * follows).
+     *
+     * *Currently only supports English articles (the, a and an).*
+     */
+    @JvmStatic
+    fun trimLeadingArticle(title: String?): String? {
+        if (title.isNullOrEmpty()) {
+            return title
+        }
+        if (title.length > 4 &&
+            (title.startsWith("The ") || title.startsWith("the "))) {
+            return title.substring(4)
+        }
+        if (title.length > 2 &&
+            (title.startsWith("A ") || title.startsWith("a "))) {
+            return title.substring(2)
+        }
+        if (title.length > 3 &&
+            (title.startsWith("An ") || title.startsWith("an "))) {
+            return title.substring(3)
+        }
+        return title
+    }
+
+    /**
      * Dot separates the two given strings. If one is empty, just returns the other string (no dot).
      */
     @JvmStatic

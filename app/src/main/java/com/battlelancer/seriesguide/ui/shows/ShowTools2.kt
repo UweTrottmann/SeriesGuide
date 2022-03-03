@@ -141,7 +141,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         val tvdbIdOrNull = tmdbShow.external_ids?.tvdb_id
         val traktIdOrNull = traktShow?.ids?.trakt
-        val titleNoArticle = DBUtils.trimLeadingArticle(tmdbShow.name)
+        val titleNoArticle = TextTools.trimLeadingArticle(tmdbShow.name)
         val releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time)
         val releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day)
         val releaseCountry = traktShow?.country

@@ -749,7 +749,7 @@ public class SeriesGuideDatabase {
 //                while (shows.moveToNext()) {
 //                    // put overwrites previous value
 //                    newTitleValues.put(Shows.TITLE_NOARTICLE,
-//                            DBUtils.trimLeadingArticle(shows.getString(1)));
+//                            TextTools.trimLeadingArticle(shows.getString(1)));
 //                    db.update(Tables.SHOWS, newTitleValues, Shows._ID + "=" + shows.getInt(0),
 //                            null);
 //                }
@@ -772,7 +772,7 @@ public class SeriesGuideDatabase {
 //                while (movies.moveToNext()) {
 //                    // put overwrites previous value
 //                    newTitleValues.put(Movies.TITLE_NOARTICLE,
-//                            DBUtils.trimLeadingArticle(movies.getString(1)));
+//                            TextTools.trimLeadingArticle(movies.getString(1)));
 //                    db.update(Tables.MOVIES, newTitleValues, Movies._ID + "=" + movies.getInt(0),
 //                            null);
 //                }

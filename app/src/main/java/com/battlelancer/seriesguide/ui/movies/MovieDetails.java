@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import java.util.Date;
@@ -103,7 +104,7 @@ public class MovieDetails {
             values.put(Movies.IMDB_ID, tmdbMovie.imdb_id);
             values.put(Movies.TITLE, tmdbMovie.title);
             values.put(Movies.TITLE_NOARTICLE,
-                    DBUtils.trimLeadingArticle(tmdbMovie.title));
+                    TextTools.trimLeadingArticle(tmdbMovie.title));
             values.put(Movies.OVERVIEW, tmdbMovie.overview);
             values.put(Movies.POSTER, tmdbMovie.poster_path);
             values.put(Movies.RUNTIME_MIN, tmdbMovie.runtime != null ? tmdbMovie.runtime : 0);
