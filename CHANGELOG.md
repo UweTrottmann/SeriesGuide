@@ -8,6 +8,23 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+\* Releases marked with an asterisk (*) are/were available on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
+
+Version 64
+----------
+*in development*
+
+#### 64.0.1*
+*2022-03-03*
+
+* 🔧 Move no aired episodes option to shows filter view.
+* 🔧 Display state of show filters also as text.
+* 🔧 Rephrase TMDB migration info and suggest action (search for a replacement).
+* 🔧 Create first list when installing app instead of when visiting lists screen.
+* 🔧 Various small design tweaks.
+* 🔨 Display error if managing lists of a show is not possible.
+* 📝 Latest user interface translations from Crowdin.
+
 Version 63
 ----------
 *2022-02-18*
