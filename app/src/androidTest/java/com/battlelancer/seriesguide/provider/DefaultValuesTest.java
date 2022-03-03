@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.movies.MovieDetails;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.util.ArrayList;
@@ -119,7 +118,7 @@ public class DefaultValuesTest {
         assertThat(show.getLastWatchedEpisodeId()).isEqualTo(0);
         assertThat(show.getLastWatchedMs()).isEqualTo(0);
         assertThat(show.getLanguage()).isNotNull();
-        assertThat(show.getUnwatchedCount()).isEqualTo(DBUtils.UNKNOWN_UNWATCHED_COUNT);
+        assertThat(show.getUnwatchedCount()).isEqualTo(SgShow2.UNKNOWN_UNWATCHED_COUNT);
         assertThat(show.getNotify()).isTrue();
     }
 

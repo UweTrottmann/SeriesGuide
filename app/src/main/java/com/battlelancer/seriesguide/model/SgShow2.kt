@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.ui.shows.ShowTools
-import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 
 @Entity(
@@ -68,7 +68,7 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.LASTWATCHEDID) val lastWatchedEpisodeId: Long = 0,
     @ColumnInfo(name = SgShow2Columns.LASTWATCHED_MS) val lastWatchedMs: Long = 0,
     @ColumnInfo(name = SgShow2Columns.LANGUAGE) val language: String? = "",
-    @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int = DBUtils.UNKNOWN_UNWATCHED_COUNT,
+    @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int = UNKNOWN_UNWATCHED_COUNT,
     @ColumnInfo(name = SgShow2Columns.FAVORITE) var favorite: Boolean = false,
     @ColumnInfo(name = SgShow2Columns.HIDDEN) var hidden: Boolean = false,
     @ColumnInfo(name = SgShow2Columns.NOTIFY) var notify: Boolean = true,
@@ -84,4 +84,13 @@ data class SgShow2(
         get() = ratingGlobal ?: 0.0
     val ratingVotesOrZero: Int
         get() = ratingVotes ?: 0
+
+    companion object {
+        /**
+         * Used if the number of remaining episodes to watch for a show is not (yet) known.
+         *
+         * @see Shows.UNWATCHED_COUNT
+         */
+        const val UNKNOWN_UNWATCHED_COUNT = -1
+    }
 }

@@ -14,6 +14,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns;
@@ -348,7 +349,7 @@ public class SeriesGuideDatabase {
 
             + ShowsColumns.LANGUAGE + " TEXT DEFAULT '',"
 
-            + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
+            + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + SgShow2.UNKNOWN_UNWATCHED_COUNT
             + ","
 
             + ShowsColumns.NOTIFY + " INTEGER DEFAULT 1"
@@ -597,7 +598,7 @@ public class SeriesGuideDatabase {
         }
         if (isTableColumnMissing(db, Tables.SHOWS, Shows.UNWATCHED_COUNT)) {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-                    + Shows.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
+                    + Shows.UNWATCHED_COUNT + " INTEGER DEFAULT " + SgShow2.UNKNOWN_UNWATCHED_COUNT
                     + ";");
         }
     }

@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.provider.SgShow2LastWatchedEpisode
 import com.battlelancer.seriesguide.provider.SgShow2NextEpisodeUpdate
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import timber.log.Timber
-import java.util.ArrayList
 
 class NextEpisodeUpdater {
 

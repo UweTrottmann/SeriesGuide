@@ -9,19 +9,11 @@ import android.os.RemoteException;
 import android.widget.Toast;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import java.util.ArrayList;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 public class DBUtils {
-
-    /**
-     * Used if the number of remaining episodes to watch for a show is not (yet) known.
-     *
-     * @see Shows#UNWATCHED_COUNT
-     */
-    public static final int UNKNOWN_UNWATCHED_COUNT = -1;
 
     private static final int SMALL_BATCH_SIZE = 50;
 

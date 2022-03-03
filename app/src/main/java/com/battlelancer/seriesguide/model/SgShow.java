@@ -6,7 +6,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.util.DBUtils;
 
 @Entity(tableName = Tables.SHOWS)
 public class SgShow {
@@ -123,7 +122,7 @@ public class SgShow {
     public String language = "";
 
     @ColumnInfo(name = Shows.UNWATCHED_COUNT)
-    public int unwatchedCount = DBUtils.UNKNOWN_UNWATCHED_COUNT;
+    public int unwatchedCount = SgShow2.UNKNOWN_UNWATCHED_COUNT;
 
     @ColumnInfo(name = Shows.NOTIFY)
     public boolean notify = true;
