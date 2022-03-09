@@ -1,14 +1,31 @@
-# SeriesGuide Show Manager
+<h1 align="center">SeriesGuide</h1>
 
+<p align="center">
 Android app to help you keep track of your favorite TV shows and movies.
+</p>
 
-[Download at seriesgui.de](https://seriesgui.de)
+<p align="center">
+  <a href="https://seriesgui.de">Download</a> •
+  <a href="https://seriesgui.de/whypay">Support the dev</a> •
+  <a href="CONTRIBUTING.md">Contributing</a> •
+  <a href="https://discuss.seriesgui.de/">Help & Ideas</a>
+</p>
 
-<img src="screenshots/phone.png" height="375"/>
+<p align="center">
+  <a href="https://seriesgui.de">
+    <img src="https://img.shields.io/github/v/release/UweTrottmann/SeriesGuide?style=flat-square">
+  </a>
+  <a href="https://github.com/UweTrottmann/SeriesGuide/actions/workflows/assemble-test-lint.yml">
+    <img src="https://img.shields.io/github/workflow/status/UweTrottmann/SeriesGuide/Android%20CI?style=flat-square">
+  </a>
+  <a href="https://twitter.com/SeriesGuide">
+    <img src="https://img.shields.io/twitter/follow/SeriesGuide?label=Follow%20%40SeriesGuide&style=flat-square">
+  </a>
+</p>
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+<p align="center">
+  <img src="screenshots/phone.png" height="375"/>
+</p>
 
 ## License
 
