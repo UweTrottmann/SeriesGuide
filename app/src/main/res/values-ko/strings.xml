@@ -435,8 +435,6 @@
     <string name="get_started">시작하기</string>
     <string name="dismiss">취소</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s가 방영 예정입니다</string>
-    <string name="upcoming_episodes">새 에피소드 방영예정</string>
     <string name="upcoming_episodes_number">%s 개의 새로운 에피소드</string>
     <string name="more">%d개의 에피소드 정보 더 있음</string>
     <string name="upcoming_display">방영 예정인 프로그램을 표시하려면 선택하세요</string>

@@ -490,8 +490,6 @@
     <string name="get_started">Dechrau</string>
     <string name="dismiss">Diswyddo</string>
     <!-- Notifications -->
-    <string name="upcoming_show">Mae %s yn dod i fyny</string>
-    <string name="upcoming_episodes">Mae penodau newydd yn dod i fyny</string>
     <string name="upcoming_episodes_number">%s pennod newydd</string>
     <string name="more">%d arall</string>
     <string name="upcoming_display">Dewiswch i arddangos sioeau sydd ar ddod</string>

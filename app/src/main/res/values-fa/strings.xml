@@ -446,8 +446,6 @@
     <string name="get_started">شروع به کار</string>
     <string name="dismiss">رد کردن</string>
     <!-- Notifications -->
-    <string name="upcoming_show">‫%s پیش رو است</string>
-    <string name="upcoming_episodes">قسمت‌های جدید پیش رو هستند</string>
     <string name="upcoming_episodes_number">‫%s قسمت جدید</string>
     <string name="more">%d بیشتر</string>
     <string name="upcoming_display">گزینش برای نشان دادن نمایش‌های پیش رو</string>

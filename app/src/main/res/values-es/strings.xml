@@ -447,8 +447,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="get_started">Empezar</string>
     <string name="dismiss">Descartar</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s está llegando</string>
-    <string name="upcoming_episodes">Vienen nuevos episodios</string>
     <string name="upcoming_episodes_number">%s nuevos episodios</string>
     <string name="more">%d más</string>
     <string name="upcoming_display">Seleccione esta opción para mostrar las series que vienen</string>

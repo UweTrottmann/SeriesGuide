@@ -468,8 +468,6 @@
     <string name="get_started">Začíname</string>
     <string name="dismiss">Zatvoriť</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s práve vychádzajú</string>
-    <string name="upcoming_episodes">Práve vychádzajú nové epizódy</string>
     <string name="upcoming_episodes_number">%s nových epizód</string>
     <string name="more">%d ďalších</string>
     <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>

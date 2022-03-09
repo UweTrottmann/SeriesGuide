@@ -446,8 +446,6 @@
     <string name="get_started">Começar</string>
     <string name="dismiss">Dispensar</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s está chegando</string>
-    <string name="upcoming_episodes">Novos episódios estão chegando</string>
     <string name="upcoming_episodes_number">%s novos episódios</string>
     <string name="more">e outros %d</string>
     <string name="upcoming_display">Selecione para mostrar próximas séries</string>

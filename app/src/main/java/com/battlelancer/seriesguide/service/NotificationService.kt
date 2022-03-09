@@ -43,7 +43,6 @@ import org.threeten.bp.Instant
 import timber.log.Timber
 import java.io.IOException
 import java.text.NumberFormat
-import java.util.ArrayList
 import java.util.concurrent.Executor
 
 /**
@@ -283,7 +282,6 @@ class NotificationService(context: Context) {
         notifyPositions: List<Int>,
         latestAirtime: Long
     ) {
-        val tickerText: CharSequence
         val contentTitle: CharSequence
         val contentText: CharSequence
         val contentIntent: PendingIntent
@@ -306,7 +304,6 @@ class NotificationService(context: Context) {
                 season,
                 episodenumber
             )
-            tickerText = context.getString(R.string.upcoming_show, contentTitle)
 
             // "8:00 PM Network"
             val time = TimeTools.formatToLocalTime(
@@ -327,7 +324,6 @@ class NotificationService(context: Context) {
                 )!!
         } else {
             // notify about multiple episodes
-            tickerText = context.getString(R.string.upcoming_episodes)
             contentTitle = context.getString(
                 R.string.upcoming_episodes_number,
                 NumberFormat.getIntegerInstance().format(count.toLong())
@@ -459,7 +455,6 @@ class NotificationService(context: Context) {
         nb.setDefaults(Notification.DEFAULT_LIGHTS)
         nb.setWhen(System.currentTimeMillis())
         nb.setAutoCancel(true)
-        nb.setTicker(tickerText)
         nb.setContentTitle(contentTitle)
         nb.setContentText(contentText)
         nb.setContentIntent(contentIntent)

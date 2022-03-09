@@ -490,8 +490,6 @@
     <string name="get_started">بدء</string>
     <string name="dismiss">إبعاد</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s قادم</string>
-    <string name="upcoming_episodes">الحلقات الجديدة القادمة</string>
     <string name="upcoming_episodes_number">%s حلقات جديدة</string>
     <string name="more">%d أكثر</string>
     <string name="upcoming_display">حدد هذا الخيار لعرض المسلسلات القادمة</string>

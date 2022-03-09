@@ -468,8 +468,6 @@
     <string name="get_started">Wprowadzenie</string>
     <string name="dismiss">Zamknij</string>
     <!-- Notifications -->
-    <string name="upcoming_show">Nadchodzi odcinek %s</string>
-    <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
     <string name="upcoming_episodes_number">%s nowych odcinków</string>
     <string name="more">%d więcej</string>
     <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>

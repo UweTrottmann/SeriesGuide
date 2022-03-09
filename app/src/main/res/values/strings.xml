@@ -507,8 +507,6 @@
     <string name="dismiss">Dismiss</string>
 
     <!-- Notifications -->
-    <string name="upcoming_show">%s is coming up</string>
-    <string name="upcoming_episodes">New episodes are coming up</string>
     <string name="upcoming_episodes_number">%s new episodes</string>
     <string name="more">%d more</string>
     <string name="upcoming_display">Select to display upcoming shows</string>

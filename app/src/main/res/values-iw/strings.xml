@@ -468,8 +468,6 @@
     <string name="get_started">התחל</string>
     <string name="dismiss">סגור</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s מתקרב</string>
-    <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
     <string name="upcoming_episodes_number">פרקים חדשים %s</string>
     <string name="more">עוד %d</string>
     <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>

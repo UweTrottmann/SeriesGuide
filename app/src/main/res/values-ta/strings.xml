@@ -446,8 +446,6 @@
     <string name="get_started">தொடங்குதல்</string>
     <string name="dismiss">நீக்கு</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s வந்து</string>
-    <string name="upcoming_episodes">புதிய episodes உள்ளன வருவன</string>
     <string name="upcoming_episodes_number">%s புதிய episodes</string>
     <string name="more">%d மேலும்</string>
     <string name="upcoming_display">வரவிருக்கும் காட்சிகள் காண்பிக்க தேர்ந்தெடு</string>

@@ -435,8 +435,6 @@
     <string name="get_started">始めましょう</string>
     <string name="dismiss">中止</string>
     <!-- Notifications -->
-    <string name="upcoming_show">もうすぐ %s が始まります</string>
-    <string name="upcoming_episodes">新しいエピソードが始まります</string>
     <string name="upcoming_episodes_number">%s 新しいエピソード</string>
     <string name="more">%d さらに</string>
     <string name="upcoming_display">表示する今後の番組を選択</string>
