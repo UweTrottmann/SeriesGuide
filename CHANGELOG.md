@@ -14,12 +14,14 @@ Version 64
 ----------
 *in development*
 
-#### Next
+#### 64.0.2*
+*2022-03-10*
 
 * 🔨 Cloud: when signing in do not add shows that were removed after the TMDB migration.
 * 🔨 Fixed: when first tapping any episode in a season always displays the first episode.
 * 🔨 Fixed: upcoming/recent does not update over time.
 * 🔨 Fixed: guest stars, writers, etc. not separated by comma.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 64.0.1*
 *2022-03-03*
