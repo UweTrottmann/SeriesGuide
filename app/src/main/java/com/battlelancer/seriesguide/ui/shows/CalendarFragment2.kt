@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui.shows
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -33,8 +34,10 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.widgets.SgFastScroller
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 class CalendarFragment2 : Fragment() {
@@ -131,7 +134,16 @@ class CalendarFragment2 : Fragment() {
                 }
             }
         }
-        updateCalendarQuery()
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Re-build the query each time when resumed (== tab is visible)
+            // and again every minute as query conditions change based on time.
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                while (isActive) {
+                    updateCalendarQuery()
+                    delay(DateUtils.MINUTE_IN_MILLIS)
+                }
+            }
+        }
     }
 
     private fun updateEmptyView(isEmpty: Boolean) {
@@ -139,10 +151,8 @@ class CalendarFragment2 : Fragment() {
         textViewEmpty.isGone = !isEmpty
     }
 
-    private fun updateCalendarQuery() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.updateCalendarQuery(type == CalendarType.UPCOMING)
-        }
+    private suspend fun updateCalendarQuery() {
+        viewModel.updateCalendarQuery(type == CalendarType.UPCOMING)
     }
 
     override fun onDestroyView() {
@@ -218,7 +228,9 @@ class CalendarFragment2 : Fragment() {
             DisplaySettings.KEY_HIDE_SPECIALS,
             CalendarSettings.KEY_HIDE_WATCHED_EPISODES,
             CalendarSettings.KEY_INFINITE_SCROLLING_2 -> {
-                updateCalendarQuery()
+                viewLifecycleOwner.lifecycleScope.launch {
+                    updateCalendarQuery()
+                }
             }
         }
     }
