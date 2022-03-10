@@ -16,7 +16,7 @@ Version 64
 
 #### Next
 
-
+* 🔨 Cloud: when signing in do not add shows that were removed after the TMDB migration.
 
 #### 64.0.1*
 *2022-03-03*
