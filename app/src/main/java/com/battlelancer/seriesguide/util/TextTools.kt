@@ -19,13 +19,23 @@ import java.util.Date
 object TextTools {
 
     /**
+     * Must match numberData string-array in resources.
+     */
+    enum class EpisodeFormat(val value: String) {
+        DEFAULT("default"),
+        PREFIX_ENGLISH("english"),
+        PREFIX_ENGLISH_LOWER("englishlower"),
+        SUFFIX_LONG("-long"),
+    }
+
+    /**
      * Returns the [episode] number formatted according to the users preference (e.g. '1x1',
      * 'S1:E1', ...). If `episode` is -1 only the [season] number is returned.
      */
     @JvmStatic
     fun getEpisodeNumber(context: Context, season: Int, episode: Int): String {
         val format = DisplaySettings.getNumberFormat(context)
-        val useLongNumbers = format.endsWith("-long")
+        val useLongNumbers = format.endsWith(EpisodeFormat.SUFFIX_LONG.value)
 
         val numberFormat = NumberFormat.getIntegerInstance()
             .apply { isGroupingUsed = false }
@@ -41,7 +51,7 @@ object TextTools {
         var episodeStr: String? = null
         if (includeEpisode) {
             episodeStr = if (episode < 10
-                && (useLongNumbers || DisplaySettings.NUMBERFORMAT_DEFAULT == format)) {
+                && (useLongNumbers || EpisodeFormat.DEFAULT.value == format)) {
                 // Make episode number at least two chars long.
                 numberFormat.format(0) + numberFormat.format(episode.toLong())
             } else {
@@ -49,14 +59,14 @@ object TextTools {
             }
         }
 
-        return if (format.startsWith("englishlower")) {
+        return if (format.startsWith(EpisodeFormat.PREFIX_ENGLISH_LOWER.value)) {
             // s1:e1 or s01e01 format
             if (includeEpisode) {
                 "s" + seasonStr + (if (useLongNumbers) "" else ":") + "e" + episodeStr
             } else {
                 "s$seasonStr"
             }
-        } else if (format.startsWith("english")) {
+        } else if (format.startsWith(EpisodeFormat.PREFIX_ENGLISH.value)) {
             // S1:E1 or S01E01 format
             if (includeEpisode) {
                 "S" + seasonStr + (if (useLongNumbers) "" else ":") + "E" + episodeStr

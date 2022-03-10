@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.Constants.EpisodeSorting
 import com.battlelancer.seriesguide.Constants.SeasonSorting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.util.TextTools
 import java.util.Locale
 
 /**
@@ -31,7 +32,6 @@ object DisplaySettings {
     private const val KEY_PERSON_LANGUAGE = "com.uwetrottmann.seriesguide.languageperson"
 
     const val KEY_NUMBERFORMAT = "numberformat"
-    const val NUMBERFORMAT_DEFAULT = "default"
     const val KEY_SHOWS_TIME_OFFSET = "com.battlelancer.seriesguide.timeoffset"
     const val KEY_NO_RELEASED_EPISODES = "onlyFutureEpisodes"
     const val KEY_SEASON_SORT_ORDER = "seasonSorting"
@@ -139,8 +139,8 @@ object DisplaySettings {
     @JvmStatic
     fun getNumberFormat(context: Context): String {
         val formatOrNull = PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_NUMBERFORMAT, NUMBERFORMAT_DEFAULT)
-        return formatOrNull ?: NUMBERFORMAT_DEFAULT
+            .getString(KEY_NUMBERFORMAT, TextTools.EpisodeFormat.DEFAULT.value)
+        return formatOrNull ?: TextTools.EpisodeFormat.DEFAULT.value
     }
 
     /**
