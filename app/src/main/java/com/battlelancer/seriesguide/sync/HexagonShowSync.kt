@@ -36,7 +36,8 @@ class HexagonShowSync(
         hasMergedShows: Boolean
     ): Boolean {
         val updates: MutableList<SgShow2CloudUpdate> = ArrayList()
-        val toUpdate: MutableSet<Long> = HashSet()
+        val toUpdate = mutableSetOf<Long>()
+        val removed = mutableSetOf<Int>()
         val currentTime = System.currentTimeMillis()
         val lastSyncTime = DateTime(HexagonSettings.getLastShowsSyncTime(context))
 
@@ -47,14 +48,15 @@ class HexagonShowSync(
         }
 
         val success = downloadShows(
-            updates, toUpdate, toAdd, tmdbIdsToShowIds,
+            updates, toUpdate, removed, toAdd, tmdbIdsToShowIds,
             hasMergedShows, lastSyncTime
         )
         if (!success) return false
         // When just signed in, try to get legacy cloud shows. Get changed shows only via TMDB ID
         // to encourage users to update the app.
         if (!hasMergedShows) {
-            val successLegacy = downloadLegacyShows(updates, toUpdate, toAdd, tmdbIdsToShowIds)
+            val successLegacy =
+                downloadLegacyShows(updates, toUpdate, removed, toAdd, tmdbIdsToShowIds)
             if (!successLegacy) return false
         }
 
@@ -73,6 +75,7 @@ class HexagonShowSync(
     private fun downloadShows(
         updates: MutableList<SgShow2CloudUpdate>,
         toUpdate: MutableSet<Long>,
+        removed: MutableSet<Int>,
         toAdd: HashMap<Int, SearchResult>,
         tmdbIdsToShowIds: Map<Int, Long>,
         hasMergedShows: Boolean,
@@ -87,7 +90,7 @@ class HexagonShowSync(
                 return false
             }
 
-            var shows: List<SgCloudShow>
+            var shows: List<SgCloudShow>?
             try {
                 // get service each time to check if auth was removed
                 val showsService = hexagonTools.showsService ?: return false
@@ -128,7 +131,15 @@ class HexagonShowSync(
 
             // append updates for received shows if there isn't one,
             // or appends shows not added locally
-            appendShowUpdates(updates, toUpdate, toAdd, shows, tmdbIdsToShowIds, !hasMergedShows)
+            appendShowUpdates(
+                updates,
+                toUpdate,
+                removed,
+                toAdd,
+                shows,
+                tmdbIdsToShowIds,
+                !hasMergedShows
+            )
         }
         return true
     }
@@ -136,6 +147,7 @@ class HexagonShowSync(
     private fun downloadLegacyShows(
         updates: MutableList<SgShow2CloudUpdate>,
         toUpdate: MutableSet<Long>,
+        removed: MutableSet<Int>,
         toAdd: HashMap<Int, SearchResult>,
         tmdbIdsToShowIds: Map<Int, Long>
     ): Boolean {
@@ -148,7 +160,7 @@ class HexagonShowSync(
                 return false
             }
 
-            var legacyShows: List<Show>
+            var legacyShows: List<Show>?
             try {
                 // get service each time to check if auth was removed
                 val showsService = hexagonTools.showsService ?: return false
@@ -186,7 +198,15 @@ class HexagonShowSync(
 
             // append updates for received shows if there isn't one,
             // or appends shows not added locally
-            appendShowUpdates(updates, toUpdate, toAdd, shows, tmdbIdsToShowIds, true)
+            appendShowUpdates(
+                updates,
+                toUpdate,
+                removed,
+                toAdd,
+                shows,
+                tmdbIdsToShowIds,
+                true
+            )
         }
         return true
     }
@@ -221,6 +241,7 @@ class HexagonShowSync(
     private fun appendShowUpdates(
         updates: MutableList<SgShow2CloudUpdate>,
         toUpdate: MutableSet<Long>,
+        removed: MutableSet<Int>,
         toAdd: MutableMap<Int, SearchResult>,
         shows: List<SgCloudShow>,
         tmdbIdsToShowIds: Map<Int, Long>,
@@ -233,7 +254,11 @@ class HexagonShowSync(
             val showIdOrNull = tmdbIdsToShowIds[showTmdbId]
             if (showIdOrNull == null) {
                 // ...but do NOT add shows marked as removed
+                if (removed.contains(showTmdbId)) {
+                    continue
+                }
                 if (show.isRemoved != null && show.isRemoved) {
+                    removed.add(showTmdbId)
                     continue
                 }
                 if (!toAdd.containsKey(showTmdbId)) {
