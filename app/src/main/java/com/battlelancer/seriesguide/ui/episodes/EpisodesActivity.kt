@@ -312,10 +312,14 @@ class EpisodesActivity : BaseMessageActivity() {
      * Switch to the episode at the given position.
      */
     fun setCurrentPage(position: Int) {
-        episodeDetailsPager.setCurrentItem(position, true)
         if (isSinglePaneView) {
             hasTappedItemInSinglePaneView = true
             switchView(makeListVisible = false, updateOptionsMenu = true)
+        }
+        // Add setting item position to the event queue as the pager might not have been drawn,
+        // yet, e.g. when in single pane view.
+        episodeDetailsPager.post {
+            episodeDetailsPager.setCurrentItem(position, true)
         }
     }
 

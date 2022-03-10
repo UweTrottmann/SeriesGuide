@@ -20,6 +20,7 @@ Version 63
 *2022-03-11*
 
 * 🔨 Cloud: when signing in do not add shows that were removed after the TMDB migration.
+* 🔨 Fixed: when first tapping any episode in a season always displays the first episode.
 
 #### 63-beta4
 *2022-02-10*
