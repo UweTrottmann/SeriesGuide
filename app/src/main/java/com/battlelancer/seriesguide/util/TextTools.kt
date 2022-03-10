@@ -118,7 +118,7 @@ object TextTools {
         if (pipeSeparatedStrings == null) {
             return ""
         }
-        val split = pipeSeparatedStrings.split("\\|")
+        val split = pipeSeparatedStrings.split("|")
         val builder = StringBuilder()
         for (item in split) {
             if (builder.isNotEmpty()) {
@@ -131,6 +131,7 @@ object TextTools {
 
     /**
      * Combines the strings into a single string, separated by the pipe character `"|"`.
+     * Skips null or empty strings.
      *
      * @see splitPipeSeparatedStrings
      */
@@ -138,9 +139,12 @@ object TextTools {
         if (strings == null || strings.isEmpty()) {
             return ""
         }
-        // pre-size builder based on reasonable average length of a string
+        // Pre-size builder based on reasonable average length of a string.
         val result = StringBuilder(strings.size * 10)
         for (string in strings) {
+            if (string.isNullOrEmpty()) {
+                continue // Skip.
+            }
             if (result.isNotEmpty()) {
                 result.append("|")
             }
