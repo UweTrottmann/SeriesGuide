@@ -14,8 +14,10 @@ import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
@@ -104,28 +106,29 @@ class CalendarFragment2 : Fragment() {
 
         ViewModelProvider(requireActivity()).get(ShowsActivityViewModel::class.java)
             .scrollTabToTopLiveData
-            .observe(
-                viewLifecycleOwner,
-                { tabPosition: Int? ->
-                    if (tabPosition != null) {
-                        if (CalendarType.UPCOMING == type
-                            && tabPosition == ShowsActivity.INDEX_TAB_UPCOMING
-                            || CalendarType.RECENT == type
-                            && tabPosition == ShowsActivity.INDEX_TAB_RECENT) {
-                            recyclerView.smoothScrollToPosition(0)
-                        }
+            .observe(viewLifecycleOwner) { tabPosition: Int? ->
+                if (tabPosition != null) {
+                    if (CalendarType.UPCOMING == type
+                        && tabPosition == ShowsActivity.INDEX_TAB_UPCOMING
+                        || CalendarType.RECENT == type
+                        && tabPosition == ShowsActivity.INDEX_TAB_RECENT) {
+                        recyclerView.smoothScrollToPosition(0)
                     }
                 }
-            )
+            }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.items.collectLatest {
-                adapter.submitData(it)
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.items.collectLatest {
+                    adapter.submitData(it)
+                }
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            adapter.onPagesUpdatedFlow.conflate().collectLatest {
-                updateEmptyView(adapter.itemCount == 0)
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.onPagesUpdatedFlow.conflate().collectLatest {
+                    updateEmptyView(adapter.itemCount == 0)
+                }
             }
         }
         updateCalendarQuery()

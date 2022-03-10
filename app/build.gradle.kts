@@ -181,6 +181,8 @@ dependencies {
     // ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+
     // Paging
     implementation("androidx.paging:paging-runtime-ktx:3.1.0")
 
