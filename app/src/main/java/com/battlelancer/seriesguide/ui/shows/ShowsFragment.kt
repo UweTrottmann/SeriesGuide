@@ -4,8 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.Menu
@@ -19,6 +17,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.whenStateAtLeast
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,10 +46,14 @@ import com.battlelancer.seriesguide.ui.shows.SortShowsView.ShowSortOrder
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SgFastScroller
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
+import kotlin.random.Random
 
 /**
  * Displays the list of shows in a users local library with sorting and filtering abilities. The
@@ -63,7 +69,7 @@ class ShowsFragment : Fragment() {
     private lateinit var emptyView: Button
     private lateinit var emptyViewFilter: Button
 
-    private var handler: Handler? = null
+    private var scheduledUpdateJob: Job? = null
     private val activityModel by viewModels<ShowsActivityViewModel>({ requireActivity() })
     private val model by viewModels<ShowsViewModel>()
 
@@ -135,9 +141,27 @@ class ShowsFragment : Fragment() {
                     && (showItems == null || showItems.isEmpty()))
             updateEmptyView(isEmpty)
 
-            // Once latest data loaded, schedule next refresh.
-            // Only while resumed (onResume/onPause also schedule/un-schedule refresh).
-            scheduleQueryUpdate(true)
+            // Once latest data loaded, schedule next query refresh.
+            // Some changes to the displayed data are not based on actual (detectable) changes to
+            // the underlying data, but because time has passed (e.g. relative time displays,
+            // release time has passed).
+            scheduledUpdateJob?.cancel()
+            scheduledUpdateJob = viewLifecycleOwner.lifecycleScope.launch {
+                // Use STARTED as in multi-window this might be visible, but not RESUMED.
+                // On the downside this runs even if the tab is not visible (tied to RESUMED).
+                viewLifecycleOwner.lifecycle.whenStateAtLeast(Lifecycle.State.STARTED) {
+                    Timber.d("Scheduled query update")
+                    delay(DateUtils.MINUTE_IN_MILLIS + Random.nextLong(DateUtils.SECOND_IN_MILLIS))
+                    updateShowsQuery()
+                }
+            }
+        }
+
+        // Run initial query and refresh query immediately each time when STARTED.
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                updateShowsQuery()
+            }
         }
 
         // watch for sort order changes
@@ -202,19 +226,10 @@ class ShowsFragment : Fragment() {
         EventBus.getDefault().register(this)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        // Run query every time resuming to get latest data
-        // (e.g. displaying unwatched/upcoming shows depends on current time).
-        updateShowsQuery()
-    }
-
     override fun onStop() {
         super.onStop()
-
-        // avoid CPU activity
-        scheduleQueryUpdate(false)
+        // Query update already repeated when STARTED, prevent scheduled update from also running.
+        scheduledUpdateJob?.cancel()
         EventBus.getDefault().unregister(this)
     }
 
@@ -278,26 +293,6 @@ class ShowsFragment : Fragment() {
             }
         }
     }
-
-    /**
-     * Periodically refresh shows list.
-     *
-     * Some changes to the displayed data are not based on actual (detectable) changes to the
-     * underlying data, but because time has passed (e.g. relative time displays, release time has
-     * passed).
-     */
-    private fun scheduleQueryUpdate(isPostNotRemove: Boolean) {
-        Timber.d(if (isPostNotRemove) "Scheduling query update." else "Removing planned query update.")
-        val handler = handler ?: Handler(Looper.getMainLooper())
-            .also { handler = it }
-        handler.removeCallbacks(dataRefreshRunnable)
-        if (isPostNotRemove) {
-            handler.postDelayed(dataRefreshRunnable, 5 * DateUtils.MINUTE_IN_MILLIS)
-        }
-    }
-
-    // Note: do not just re-run existing query, make sure timestamps in query are updated.
-    private val dataRefreshRunnable = Runnable { updateShowsQuery() }
 
     private fun startActivityAddShows() {
         startActivity(
