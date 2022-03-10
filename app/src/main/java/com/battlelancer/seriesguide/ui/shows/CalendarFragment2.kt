@@ -39,6 +39,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class CalendarFragment2 : Fragment() {
 
@@ -135,12 +136,13 @@ class CalendarFragment2 : Fragment() {
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            // Re-build the query each time when resumed (== tab is visible)
-            // and again every minute as query conditions change based on time.
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            // Re-build the query each time when STARTED (e.g. in multi-window this might be
+            // visible, but not RESUMED) and again every minute as query conditions change based
+            // on time. On the downside this runs even if the tab is not visible (tied to RESUMED).
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 while (isActive) {
                     updateCalendarQuery()
-                    delay(DateUtils.MINUTE_IN_MILLIS)
+                    delay(DateUtils.MINUTE_IN_MILLIS + Random.nextLong(DateUtils.SECOND_IN_MILLIS))
                 }
             }
         }
