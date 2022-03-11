@@ -16,6 +16,11 @@ Version 63
 * 🌟 Add setting to use system colors on Android 12.
 * 🔨 Sort by title properly handles characters with accents.
 
+#### 63.1.0
+*2022-03-11*
+
+
+
 #### 63-beta4
 *2022-02-10*
 
