@@ -31,6 +31,7 @@ import dagger.Lazy
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.pow
+import kotlin.random.Random
 
 /**
  * [AbstractThreadedSyncAdapter] which updates show and movie data and sends data to
@@ -199,7 +200,8 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             var failed = UpdateSettings.getFailedNumberOfUpdates(context)
 
             /*
-             * Back off by 2**(failure + 2) * minutes. Purposely set a fake
+             * Back off by 2**(failure + 2) * minutes + random milliseconds
+             * (random to have more spread across all installs). Purposely set a fake
              * last update time, because the next update will be triggered
              * SYNC_INTERVAL_MINIMUM_MINUTES minutes after the last update time.
              * This will trigger sync earlier/later than the default (5min) interval
@@ -209,7 +211,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                 // 1, -3, -9, -27
                 val posOrNegInterval = (SYNC_INTERVAL_MINIMUM_MINUTES
                         - 2.0.pow(failed + 2).toInt())
-                currentTime - (posOrNegInterval * DateUtils.MINUTE_IN_MILLIS)
+                currentTime - (posOrNegInterval * DateUtils.MINUTE_IN_MILLIS) - Random.nextLong(1000)
             } else {
                 currentTime
             }
