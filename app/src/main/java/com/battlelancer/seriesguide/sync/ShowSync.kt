@@ -7,7 +7,10 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.ui.shows.ShowTools
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
+import com.battlelancer.seriesguide.ui.shows.ShowTools2
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.ApiErrorRetry
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.DoesNotExist
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.Success
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
@@ -51,7 +54,7 @@ class ShowSync(
         var networkErrors = 0
         for (showId in showsToUpdate) {
             // Try to update this show.
-            var result: ShowResult
+            var result: ShowTools2.UpdateResult
             do {
                 // Shortcut to stop updating if connectivity is lost.
                 if (!AndroidUtils.isNetworkConnected(context)) {
@@ -65,7 +68,7 @@ class ShowSync(
                 // - database error => abort, report and try again later
                 result = showTools.updateShow(showId)
 
-                if (result == ShowResult.API_ERROR_RETRY) {
+                if (result == ApiErrorRetry) {
                     networkErrors++
                     if (networkErrors == 3) {
                         // Stop updating after multiple network errors
@@ -91,12 +94,12 @@ class ShowSync(
                     // Reduce counter on each successful update.
                     networkErrors--
                 }
-            } while (result == ShowResult.API_ERROR_RETRY)
+            } while (result == ApiErrorRetry)
 
             // Handle update result.
             when (result) {
-                ShowResult.SUCCESS -> hasUpdatedShows = true
-                ShowResult.DOES_NOT_EXIST -> {
+                Success -> hasUpdatedShows = true
+                DoesNotExist -> {
                     // Continue with other shows, assume existing data is latest.
                     // TODO Add permanent hint to user the show can no longer be updated.
                     recordError(

@@ -77,7 +77,7 @@ public class ShowTools {
                 hexagonEpisodeSync);
     }
 
-    public ShowResult updateShow(long showId) {
+    public ShowTools2.UpdateResult updateShow(long showId) {
         return showTools2.updateShow(showId);
     }
 
