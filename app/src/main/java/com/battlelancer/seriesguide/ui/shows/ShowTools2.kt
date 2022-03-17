@@ -6,6 +6,9 @@ import android.widget.Toast
 import androidx.collection.SparseArrayCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.backend.HexagonError
+import com.battlelancer.seriesguide.backend.HexagonRetry
+import com.battlelancer.seriesguide.backend.HexagonStop
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.enums.Result
@@ -273,10 +276,10 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // Restore properties from Hexagon
         val hexagonEnabled = HexagonSettings.isEnabled(context)
         if (hexagonEnabled) {
-            val hexagonResult = SgApp.getServicesComponent(context).hexagonTools()
+            val hexagonShow = SgApp.getServicesComponent(context).hexagonTools()
                 .getShow(showTmdbId, show.tvdbId)
-            if (!hexagonResult.second) return ShowResult.HEXAGON_ERROR
-            val hexagonShow = hexagonResult.first
+                .onFailure { return ShowResult.HEXAGON_ERROR }
+                .get()
             if (hexagonShow != null) {
                 if (hexagonShow.isFavorite != null) {
                     show.favorite = hexagonShow.isFavorite
@@ -753,10 +756,10 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         // If Hexagon does not have this show by TMDB ID,
         // send current show info and schedule re-upload of episodes using TMDB IDs.
         if (HexagonSettings.isEnabled(context)) {
-            val hexagonResult = SgApp.getServicesComponent(context).hexagonTools()
+            val hexagonShow = SgApp.getServicesComponent(context).hexagonTools()
                 .getShow(showTmdbId, null)
-            if (!hexagonResult.second) return ShowResult.HEXAGON_ERROR
-            val hexagonShow = hexagonResult.first
+                .onFailure { return it.toShowResult() }
+                .get()
             if (hexagonShow == null) {
                 // Hexagon does not have show via TMDB ID
                 // Upload local show info
@@ -1268,6 +1271,13 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val lastUpdatedMs = SgRoomDatabase.getInstance(context).sgShow2Helper()
             .getLastUpdated(showId) ?: return false
         return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12
+    }
+
+    private fun HexagonError.toShowResult(): ShowResult {
+        return when (this) {
+            HexagonRetry -> ShowResult.API_ERROR_RETRY
+            HexagonStop -> ShowResult.API_ERROR_STOP
+        }
     }
 
     private fun TmdbError.toShowResult(): ShowResult {
