@@ -107,15 +107,19 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             progress.recordError()
         }
 
+        // Update show data.
+        // If failed for at least one show, do not proceed with other sync steps to avoid
+        // syncing with outdated show data.
         val showTools = SgApp.getServicesComponent(context).showTools()
         var resultCode = showSync.sync(context, showTools, currentTime, progress)
+        Timber.d("Syncing: TMDB shows...DONE")
         if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
             progress.recordError()
-        }
-        Timber.d("Syncing: TMDB shows...DONE")
-        if (resultCode == null) {
             progress.publishFinished()
-            return  // invalid show(s), abort
+            if (showSync.isSyncMultiple) {
+                updateTimeAndFailedCounter(prefs, currentTime, resultCode)
+            }
+            return // Try again later.
         }
 
         // do some more things if this is not a quick update
