@@ -77,6 +77,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
         // JOBS
         if (options.syncType == SyncType.JOBS || options.syncType == SyncType.DELTA) {
+            // Note: will not process further jobs if one fails, safe to call again to retry.
             NetworkJobProcessor(context).process()
             if (options.syncType == SyncType.JOBS) {
                 return  // do nothing else
@@ -84,9 +85,8 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         // SYNC
-        val showSync = ShowSync(options.syncType, options.singleShowId)
-
         // should we sync?
+        val showSync = ShowSync(options.syncType, options.singleShowId)
         val currentTime = System.currentTimeMillis()
         if (!options.syncImmediately && showSync.isSyncMultiple) {
             if (!isTimeForSync(context, currentTime)) {
@@ -99,8 +99,9 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         val progress = SyncProgress()
         progress.publish(SyncProgress.Step.TMDB)
 
+        // Get latest TMDb configuration.
+        // No need to abort on failure, can use default or last fetched config.
         val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
-        // get latest TMDb configuration
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         if (!tmdbSync.updateConfiguration(prefs)) {
             progress.recordError()
