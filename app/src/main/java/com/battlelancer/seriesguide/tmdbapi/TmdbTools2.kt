@@ -33,7 +33,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 import retrofit2.create
-import java.net.SocketTimeoutException
 import java.util.Calendar
 import java.util.Date
 
@@ -95,33 +94,37 @@ class TmdbTools2 {
     }
 
     /**
-     * Returns true if the show is null because it no longer exists (TMDB returned HTTP 404).
+     * Returns null value if the show no longer exists (TMDB returned HTTP 404).
      */
     fun getShowAndExternalIds(
         showTmdbId: Int,
         language: String,
         context: Context
-    ): Pair<TvShow?, ShowResult> {
+    ): Result<TvShow?, TmdbError> {
+        val action = "show n ids"
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
-        try {
-            val response = tmdb.tvService()
+        return runCatching {
+            tmdb.tvService()
                 .tv(showTmdbId, language, AppendToResponse(AppendToResponseItem.EXTERNAL_IDS))
                 .execute()
-            if (response.isSuccessful) {
-                val results = response.body()
-                if (results != null) return Pair(results, ShowResult.SUCCESS)
+        }.mapError {
+            Errors.logAndReport(action, it)
+            if (it.isRetryError()) TmdbRetry else TmdbStop
+        }.andThen {
+            if (it.isSuccessful) {
+                val tvShow = it.body()
+                if (tvShow != null) {
+                    return@andThen Ok(tvShow)
+                } else {
+                    Errors.logAndReport(action, it, "show is null")
+                }
             } else {
                 // Explicitly indicate if result is null because show no longer exists.
-                if (response.code() == 404) {
-                    return Pair(null, ShowResult.DOES_NOT_EXIST)
-                }
-                Errors.logAndReport("show n ids", response)
+                if (it.code() == 404) return@andThen Ok(null)
+                Errors.logAndReport(action, it)
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("show n ids", e)
-            if (e is SocketTimeoutException) return Pair(null, ShowResult.TIMEOUT_ERROR)
+            return@andThen Err(TmdbStop)
         }
-        return Pair(null, ShowResult.TMDB_ERROR)
     }
 
     /**

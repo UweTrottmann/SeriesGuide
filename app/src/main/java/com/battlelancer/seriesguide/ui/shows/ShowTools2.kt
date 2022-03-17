@@ -108,18 +108,19 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         desiredLanguage: String,
         updateOnly: Boolean = false
     ): ShowDetails {
-        val tmdbResult = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
-        var tmdbShow = tmdbResult.first ?: return ShowDetails(tmdbResult.second)
+        var tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
+            .onFailure { return ShowDetails(it.toShowResult()) }
+            .get() ?: return ShowDetails(ShowResult.DOES_NOT_EXIST)
         val tmdbSeasons = tmdbShow.seasons
 
         val noTranslation = tmdbShow.overview.isNullOrEmpty()
         if (noTranslation) {
-            val tmdbResultFallback = TmdbTools2().getShowAndExternalIds(
+            tmdbShow = TmdbTools2().getShowAndExternalIds(
                 showTmdbId,
                 DisplaySettings.getShowsLanguageFallback(context),
                 context
-            )
-            tmdbShow = tmdbResultFallback.first ?: return ShowDetails(tmdbResultFallback.second)
+            ).onFailure { return ShowDetails(it.toShowResult()) }
+                .get() ?: return ShowDetails(ShowResult.DOES_NOT_EXIST)
         }
 
         val traktResult = TraktTools2.getShowByTmdbId(showTmdbId, context)
@@ -158,7 +159,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val firstRelease = TimeTools.parseShowFirstRelease(traktShow?.first_aired)
         val rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 } ?: 0.0
         val votes = traktShow?.votes?.let { if (it >= 0) it else 0 } ?: 0
-        val genres = TextTools.buildPipeSeparatedString(tmdbShow.genres?.map { genre -> genre.name })
+        val genres =
+            TextTools.buildPipeSeparatedString(tmdbShow.genres?.map { genre -> genre.name })
         val network = tmdbShow.networks?.firstOrNull()?.name ?: ""
         val imdbId = tmdbShow.external_ids?.imdb_id ?: ""
         val runtime = tmdbShow.episode_run_time?.firstOrNull() ?: 45 // estimate 45 minutes if none.
@@ -792,8 +794,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     ): ShowResult {
         val database = SgRoomDatabase.getInstance(context)
         val seasonNumbers = database.sgSeason2Helper().getSeasonNumbersOfShow(showId)
-        val tmdbResult = TmdbTools2().getShowAndExternalIds(showTmdbId, language, context)
-        val tmdbShow = tmdbResult.first ?: return tmdbResult.second
+        val tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, language, context)
+            .onFailure { return it.toShowResult() }
+            .get() ?: return ShowResult.DOES_NOT_EXIST
         val tmdbSeasons = tmdbShow.seasons
 
         if (tmdbSeasons.isNullOrEmpty()) {
