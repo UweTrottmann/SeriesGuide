@@ -28,12 +28,17 @@ import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync
+import com.battlelancer.seriesguide.tmdbapi.TmdbError
+import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
+import com.battlelancer.seriesguide.tmdbapi.TmdbStop
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.onFailure
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import com.uwetrottmann.tmdb2.entities.TvEpisode
@@ -59,6 +64,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         TMDB_ERROR,
         TRAKT_ERROR,
         HEXAGON_ERROR,
+        API_ERROR_STOP,
+        API_ERROR_RETRY,
         DATABASE_ERROR
     }
 
@@ -737,11 +744,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 
         // Find TMDB ID
         val showTmdbId = TmdbTools2().findShowTmdbId(context, showTvdbId)
-        if (showTmdbId == null) {
-            return ShowResult.TMDB_ERROR
-        } else if (showTmdbId == -1) {
-            return ShowResult.DOES_NOT_EXIST
-        }
+            .onFailure { return it.toShowResult() }
+            .get() ?: return ShowResult.DOES_NOT_EXIST
 
         val result = migrateSeasonsToTmdbIds(showId, showTmdbId, language)
         if (result != ShowResult.SUCCESS) return result
@@ -1264,5 +1268,12 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val lastUpdatedMs = SgRoomDatabase.getInstance(context).sgShow2Helper()
             .getLastUpdated(showId) ?: return false
         return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12
+    }
+
+    private fun TmdbError.toShowResult(): ShowResult {
+        return when (this) {
+            TmdbRetry -> ShowResult.API_ERROR_RETRY
+            TmdbStop -> ShowResult.API_ERROR_STOP
+        }
     }
 }

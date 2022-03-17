@@ -11,6 +11,7 @@ import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
 import java.net.ConnectException
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLException
 
@@ -240,6 +241,21 @@ private fun Throwable.shouldReport(): Boolean {
                     && message?.contains("Software caused connection abort") == false
         }
         else -> true
+    }
+}
+
+/**
+ * Returns true if the throwable is a network exception that might be
+ * recovered from by retrying the network request.
+ */
+fun Throwable.isRetryError(): Boolean {
+    return when (this) {
+        is ConnectException -> true
+        is UnknownHostException -> true
+        // Not super type InterruptedIOException as possibly not caused by network issues?
+        is SocketTimeoutException -> true
+        // Not SSLException as likely not temporary or a network issue.
+        else -> false
     }
 }
 
