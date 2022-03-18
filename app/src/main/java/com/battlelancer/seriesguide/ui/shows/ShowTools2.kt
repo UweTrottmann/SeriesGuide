@@ -325,7 +325,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 val seasonId = seasonIds[index]
                 if (seasonId == -1L) return@forEachIndexed
 
-                val seasonDetails = getEpisodesOfSeason(
+                val episodeDetails = getEpisodesOfSeason(
                     ReleaseInfo(
                         show.releaseTimeZone,
                         show.releaseTimeOrDefault,
@@ -339,9 +339,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                     language,
                     null,
                     null
-                )
-                if (seasonDetails.result != ShowResult.SUCCESS) return@runInTransaction seasonDetails.result
-                val episodes = seasonDetails.episodeDetails!!.toInsert
+                ).getOrElse { return@runInTransaction it.toShowResult() }
+                val episodes = episodeDetails.toInsert
                 episodeHelper.insertEpisodes(episodes)
             }
             return@runInTransaction ShowResult.SUCCESS
@@ -416,11 +415,6 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         )
     }
 
-    data class SeasonDetails(
-        val result: ShowResult,
-        val episodeDetails: EpisodeDetails? = null
-    )
-
     private fun getEpisodesOfSeason(
         releaseInfo: ReleaseInfo,
         showTmdbId: Int,
@@ -430,20 +424,18 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         language: String,
         localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?,
         localEpisodesWithoutTmdbIdByNumber: MutableMap<Int, SgEpisode2Ids>?
-    ): SeasonDetails {
+    ): Result<EpisodeDetails, TmdbError> {
         val fallbackLanguage: String? = DisplaySettings.getShowsLanguageFallback(context)
             .let { if (it != language) it else null }
 
         val tmdbEpisodes = TmdbTools2().getSeason(showTmdbId, seasonNumber, language, context)
-            ?.episodes
-            ?: return SeasonDetails(ShowResult.TMDB_ERROR)
+            .getOrElse { return Err(it) }
 
         val tmdbEpisodesFallback = if (fallbackLanguage != null
             && tmdbEpisodes.find { it.name.isNullOrEmpty() || it.overview.isNullOrEmpty() } != null) {
             // Also fetch in fallback language if some episodes have no name or overview.
             TmdbTools2().getSeason(showTmdbId, seasonNumber, fallbackLanguage, context)
-                ?.episodes
-                ?: return SeasonDetails(ShowResult.TMDB_ERROR)
+                .getOrElse { return Err(it) }
         } else {
             null
         }
@@ -459,10 +451,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             localEpisodesWithoutTmdbIdByNumber
         )
 
-        return SeasonDetails(
-            ShowResult.SUCCESS,
-            episodeDetails
-        )
+        return Ok(episodeDetails)
     }
 
     data class EpisodeDetails(
@@ -647,7 +636,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 }
             }
 
-            val seasonDetails = getEpisodesOfSeason(
+            val episodeDetails = getEpisodesOfSeason(
                 ReleaseInfo(
                     show.releaseTimeZone,
                     show.releaseTime,
@@ -661,9 +650,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 language,
                 episodesByTmdbId,
                 episodesWithoutTmdbIdByNumber
-            )
-            if (seasonDetails.result != ShowResult.SUCCESS) return seasonDetails.result.toUpdateResult()
-            val episodeDetails = seasonDetails.episodeDetails!!
+            ).getOrElse { return it.toUpdateResult() }
             episodeHelper.insertEpisodes(episodeDetails.toInsert)
             episodeHelper.updateEpisodes(episodeDetails.toUpdate)
             episodeHelper.deleteEpisodes(episodeDetails.toRemove)
@@ -840,8 +827,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 database.sgEpisode2Helper().getEpisodeNumbersOfSeason(localSeason.id)
             val tmdbEpisodes =
                 TmdbTools2().getSeason(showTmdbId, localSeason.number, language, context)
-                    ?.episodes
-                    ?: return UpdateResult.ApiErrorStop
+                    .getOrElse { return it.toUpdateResult() }
 
             if (tmdbEpisodes.isEmpty()) {
                 if (episodeNumbers.isEmpty()) {

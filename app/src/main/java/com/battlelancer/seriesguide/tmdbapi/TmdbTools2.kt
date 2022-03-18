@@ -20,7 +20,7 @@ import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
-import com.uwetrottmann.tmdb2.entities.TvSeason
+import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 import com.uwetrottmann.tmdb2.entities.WatchProviders
@@ -323,21 +323,29 @@ class TmdbTools2 {
         seasonNumber: Int,
         language: String,
         context: Context
-    ): TvSeason? {
+    ): Result<List<TvEpisode>, TmdbError> {
+        val action = "get season"
         val tmdb = SgApp.getServicesComponent(context).tmdb()
-        try {
-            val response = tmdb.tvSeasonsService()
+        return runCatching {
+            tmdb.tvSeasonsService()
                 .season(showTmdbId, seasonNumber, language)
                 .execute()
-            if (response.isSuccessful) {
-                return response.body()
+        }.mapError {
+            Errors.logAndReport(action, it)
+            if (it.isRetryError()) TmdbRetry else TmdbStop
+        }.andThen {
+            if (it.isSuccessful) {
+                val tvSeason = it.body()?.episodes
+                if (tvSeason != null) {
+                    return@andThen Ok(tvSeason)
+                } else {
+                    Errors.logAndReport(action, it, "episodes is null")
+                }
             } else {
-                Errors.logAndReport("get shows w new episodes", response)
+                Errors.logAndReport(action, it)
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("get shows w new episodes", e)
+            return@andThen Err(TmdbStop)
         }
-        return null
     }
 
     data class WatchInfo(
