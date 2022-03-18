@@ -614,14 +614,10 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val show = showDetails.showUpdate!!
         show.id = showId
 
-        // Store show to database
-        val database = SgRoomDatabase.getInstance(context)
-        val updated = database.sgShow2Helper().updateShow(show)
-        if (updated != 1) return UpdateResult.DatabaseError
-
         // Insert, update and remove seasons.
         val seasons = updateSeasons(showDetails.seasons, showId)
         // Insert, update and remove episodes of inserted or updated seasons.
+        val database = SgRoomDatabase.getInstance(context)
         val episodeHelper = database.sgEpisode2Helper()
         seasons.forEach { season ->
             val episodes = episodeHelper.getEpisodeIdsOfSeason(season.id)
@@ -663,7 +659,13 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
 //        episodeHelper.deleteEpisodesWithoutTmdbId(showId)
 //        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
 
-        return UpdateResult.Success
+        // At last store shows update (sets last updated timestamp).
+        val updated = database.sgShow2Helper().updateShow(show)
+        return if (updated == 1) {
+            UpdateResult.Success
+        } else {
+            UpdateResult.DatabaseError
+        }
     }
 
     data class SeasonInfo(val id: Long, val number: Int)
