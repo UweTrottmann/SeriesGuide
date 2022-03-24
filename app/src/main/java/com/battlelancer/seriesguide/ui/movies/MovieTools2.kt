@@ -30,12 +30,12 @@ class MovieTools2 {
                 return
             }
 
-            // Pick the theatrical release, if available.
-            val theatricalRelease = releaseDates.find { date ->
-                date.type == ReleaseDate.TYPE_THEATRICAL
-            }
-            if (theatricalRelease?.release_date != null) {
-                movie.release_date = theatricalRelease.release_date
+            // Pick the oldest theatrical release, if available.
+            val theatricalRelease = releaseDates.filter { it.type == ReleaseDate.TYPE_THEATRICAL }
+                .map { it.release_date }
+                .reduceOrNull { acc, date -> minOf(acc, date) }
+            if (theatricalRelease != null) {
+                movie.release_date = theatricalRelease
             } else {
                 // Otherwise just get the first one, if available.
                 releaseDates[0]?.release_date?.let { date ->
