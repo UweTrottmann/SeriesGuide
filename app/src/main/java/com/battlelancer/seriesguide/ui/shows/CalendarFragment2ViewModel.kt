@@ -52,14 +52,13 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
             }
         }.cachedIn(viewModelScope)
 
-
     /**
      * Builds the calendar query based on given settings, updates the associated LiveData which
      * will update the query results.
      */
     suspend fun updateCalendarQuery(isUpcomingElseRecent: Boolean) =
         withContext(Dispatchers.Default) {
-            Timber.i("updateCalendarQuery")
+            Timber.d("updateCalendarQuery")
             // Post value because not on main thread + also avoids race condition if data is
             // delivered too early causing RecyclerView to jump to next page.
             // However, could not narrow down why that is an issue (it should not be?).
