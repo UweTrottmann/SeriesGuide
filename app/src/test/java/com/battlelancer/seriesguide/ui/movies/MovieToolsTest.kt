@@ -14,10 +14,10 @@ class MovieToolsTest {
     fun updateReleaseDateForRegion() {
         val movieTools = MovieTools2()
         val movie = Movie()
-        assertThat(movie.release_date).isNull()
+            .apply { release_date = Date(1) }
 
         movieTools.updateReleaseDateForRegion(movie, null, "DE")
-        assertThat(movie.release_date).isNull()
+        assertThat(movie.release_date).isEqualTo(Date(1)) // not updated.
 
         val releaseDates = ReleaseDatesResults().apply {
             results = listOf(
