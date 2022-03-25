@@ -86,7 +86,9 @@ class ShowSync(
                                         + Random.nextInt(0, 1000)
                             )
                         } catch (e: InterruptedException) {
-                            Timber.e("Failed to wait for retry, trying again later.")
+                            // This can happen if the system has decided to interrupt the sync
+                            // thread, just try again later.
+                            Timber.v("Failed to wait for retry, trying again later.")
                             return UpdateResult.INCOMPLETE
                         }
                     }
