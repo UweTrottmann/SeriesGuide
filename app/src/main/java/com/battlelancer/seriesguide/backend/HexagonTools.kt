@@ -16,11 +16,11 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.Tasks
-import com.google.api.client.extensions.android.json.AndroidJsonFactory
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.JsonFactory
+import com.google.api.client.json.gson.GsonFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.uwetrottmann.seriesguide.backend.account.Account
@@ -308,7 +308,7 @@ class HexagonTools @Inject constructor(
 
     companion object {
         private const val ACTION_SILENT_SIGN_IN = "silent sign-in"
-        private val JSON_FACTORY: JsonFactory = AndroidJsonFactory()
+        private val JSON_FACTORY: JsonFactory = GsonFactory()
         private val HTTP_TRANSPORT: HttpTransport = NetHttpTransport()
         private const val SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS
     }

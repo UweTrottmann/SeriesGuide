@@ -259,8 +259,19 @@ dependencies {
 
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    // Note: 1.31.5 has broken dependencies.
-    implementation("com.google.api-client:google-api-client-android:1.31.2") {
+    val googleApiClientVersion = "1.33.4"
+    implementation("com.google.api-client:google-api-client-android:$googleApiClientVersion") {
+        exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
+        exclude(group = "org.checkerframework") // from guava, not needed at runtime
+        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
+    }
+    implementation("com.google.api-client:google-api-client:$googleApiClientVersion") {
+        exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
+        exclude(group = "org.checkerframework") // from guava, not needed at runtime
+        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
+    }
+    // https://github.com/googleapis/google-http-java-client/releases
+    implementation("com.google.http-client:google-http-client-gson:1.41.5") {
         exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
         exclude(group = "org.checkerframework") // from guava, not needed at runtime
         exclude(group = "com.google.errorprone") // from guava, not needed at runtime
