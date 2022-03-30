@@ -38,11 +38,6 @@ buildscript {
         }
     }
 
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
     dependencies {
         classpath("com.android.tools.build:gradle:7.1.1") // libraries, SeriesGuide
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
@@ -76,14 +71,6 @@ nexusPublishing {
                 password.set(rootProject.property("SONATYPE_NEXUS_PASSWORD").toString())
             }
         }
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
     }
 }
 
