@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
+import com.github.michaelbull.result.Result;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.util.Map;
 import javax.inject.Inject;
@@ -59,7 +60,7 @@ public class ShowTools {
     }
 
     @NonNull
-    public ShowDetails getShowDetails(int showTmdbId, String desiredLanguage) {
+    public Result<ShowDetails, ShowTools2.GetShowError> getShowDetails(int showTmdbId, String desiredLanguage) {
         return showTools2.getShowDetails(showTmdbId, desiredLanguage, false);
     }
 

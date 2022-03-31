@@ -34,6 +34,9 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
 import com.battlelancer.seriesguide.tmdbapi.TmdbStop
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.traktapi.TraktError
+import com.battlelancer.seriesguide.traktapi.TraktRetry
+import com.battlelancer.seriesguide.traktapi.TraktStop
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater
@@ -106,11 +109,27 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     }
 
     data class ShowDetails(
-        val result: ShowResult,
         val show: SgShow2? = null,
         val showUpdate: SgShow2Update? = null,
         val seasons: List<TvSeason>? = null
     )
+
+    enum class GetShowService { TMDB, TRAKT }
+
+    sealed class GetShowError(val service: GetShowService)
+
+    /**
+     * The API request might succeed if tried again after a brief delay
+     * (e.g. time outs or other temporary network issues).
+     */
+    class GetShowRetry(service: GetShowService) : GetShowError(service)
+
+    /**
+     * The API request is unlikely to succeed if retried, at least right now
+     * (e.g. API bugs or changes).
+     */
+    class GetShowStop(service: GetShowService) : GetShowError(service)
+    object GetShowDoesNotExist : GetShowError(GetShowService.TMDB)
 
     /**
      * If [updateOnly] returns a show for updating, but without its ID set!
@@ -119,10 +138,10 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         showTmdbId: Int,
         desiredLanguage: String,
         updateOnly: Boolean = false
-    ): ShowDetails {
+    ): Result<ShowDetails, GetShowError> {
         var tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
-            .onFailure { return ShowDetails(it.toShowResult()) }
-            .get() ?: return ShowDetails(ShowResult.DOES_NOT_EXIST)
+            .getOrElse { return Err(it.toGetShowError()) }
+            ?: return Err(GetShowDoesNotExist)
         val tmdbSeasons = tmdbShow.seasons
 
         val noTranslation = tmdbShow.overview.isNullOrEmpty()
@@ -131,14 +150,14 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 showTmdbId,
                 DisplaySettings.getShowsLanguageFallback(context),
                 context
-            ).onFailure { return ShowDetails(it.toShowResult()) }
-                .get() ?: return ShowDetails(ShowResult.DOES_NOT_EXIST)
+            ).getOrElse { return Err(it.toGetShowError()) }
+                ?: return Err(GetShowDoesNotExist)
         }
 
         val traktShow = TraktTools2.getShowByTmdbId(showTmdbId, context)
             .getOrElse {
                 // Fail if looking up Trakt details failed to avoid removing them for existing shows.
-                return ShowDetails(ShowResult.TRAKT_ERROR)
+                return Err(it.toGetShowError())
             }
         if (traktShow == null) {
             Timber.w("getShowDetails: no Trakt show found, using default values.")
@@ -188,10 +207,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         }
         val poster = tmdbShow.poster_path ?: ""
 
-        if (updateOnly) {
+        val showDetails = if (updateOnly) {
             // For updating existing show.
-            return ShowDetails(
-                ShowResult.SUCCESS,
+            ShowDetails(
                 showUpdate = SgShow2Update(
                     tvdbId = tvdbIdOrNull,
                     traktId = traktIdOrNull,
@@ -218,8 +236,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
             )
         } else {
             // For inserting new show.
-            return ShowDetails(
-                ShowResult.SUCCESS,
+            ShowDetails(
                 show = SgShow2(
                     tmdbId = tmdbShow.id,
                     tvdbId = tvdbIdOrNull,
@@ -248,6 +265,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 seasons = tmdbSeasons
             )
         }
+        return Ok(showDetails)
     }
 
     /**
@@ -282,7 +300,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val language = desiredLanguage ?: DisplaySettings.LANGUAGE_EN
 
         val showDetails = getShowDetails(showTmdbId, language)
-        if (showDetails.result != ShowResult.SUCCESS) return showDetails.result
+            .getOrElse { return it.toShowResult() }
         val show = showDetails.show!!
 
         // Check again if in database using TVDB id, show might not have TMDB id, yet.
@@ -611,7 +629,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         }
 
         val showDetails = getShowDetails(showTmdbId, language, true)
-        if (showDetails.result != ShowResult.SUCCESS) return showDetails.result.toUpdateResult()
+            .getOrElse { return it.toUpdateResult() }
         val show = showDetails.showUpdate!!
         show.id = showId
 
@@ -1280,16 +1298,17 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12
     }
 
-    // FIXME Temporary bridge to old status values.
-    private fun ShowResult.toUpdateResult(): UpdateResult {
+    private fun GetShowError.toShowResult(): ShowResult {
         return when (this) {
-            ShowResult.DOES_NOT_EXIST -> UpdateResult.DoesNotExist
-            ShowResult.TIMEOUT_ERROR -> UpdateResult.ApiErrorRetry
-            ShowResult.TMDB_ERROR -> UpdateResult.ApiErrorStop
-            ShowResult.TRAKT_ERROR -> UpdateResult.ApiErrorStop
-            ShowResult.HEXAGON_ERROR -> UpdateResult.ApiErrorStop
-            ShowResult.DATABASE_ERROR -> UpdateResult.DatabaseError
-            else -> UpdateResult.Success
+            GetShowDoesNotExist -> ShowResult.DOES_NOT_EXIST
+            is GetShowRetry -> when (this.service) {
+                GetShowService.TMDB -> ShowResult.TMDB_ERROR
+                GetShowService.TRAKT -> ShowResult.TRAKT_ERROR
+            }
+            is GetShowStop -> when (this.service) {
+                GetShowService.TMDB -> ShowResult.TMDB_ERROR
+                GetShowService.TRAKT -> ShowResult.TRAKT_ERROR
+            }
         }
     }
 
@@ -1297,6 +1316,14 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return when (this) {
             TmdbRetry -> ShowResult.TIMEOUT_ERROR
             TmdbStop -> ShowResult.TMDB_ERROR
+        }
+    }
+
+    private fun GetShowError.toUpdateResult(): UpdateResult {
+        return when (this) {
+            GetShowDoesNotExist -> UpdateResult.DoesNotExist
+            is GetShowRetry -> UpdateResult.ApiErrorRetry
+            is GetShowStop -> UpdateResult.ApiErrorStop
         }
     }
 
@@ -1311,6 +1338,20 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return when (this) {
             TmdbRetry -> UpdateResult.ApiErrorRetry
             TmdbStop -> UpdateResult.ApiErrorStop
+        }
+    }
+
+    private fun TmdbError.toGetShowError(): GetShowError {
+        return when (this) {
+            TmdbRetry -> GetShowRetry(GetShowService.TMDB)
+            TmdbStop -> GetShowStop(GetShowService.TMDB)
+        }
+    }
+
+    private fun TraktError.toGetShowError(): GetShowError {
+        return when (this) {
+            TraktRetry -> GetShowRetry(GetShowService.TRAKT)
+            TraktStop -> GetShowStop(GetShowService.TRAKT)
         }
     }
 
