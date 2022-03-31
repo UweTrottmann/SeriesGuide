@@ -119,7 +119,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             progress.recordError()
             progress.publishFinished()
             if (showSync.isSyncMultiple) {
-                updateTimeAndFailedCounter(prefs, currentTime, resultCode)
+                updateTimeAndFailedCounter(prefs, resultCode)
             }
             return // Try again later.
         }
@@ -181,7 +181,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             // update next episodes for all shows
             TaskManager.getInstance().tryNextEpisodeUpdateTask(context)
 
-            updateTimeAndFailedCounter(prefs, currentTime, resultCode)
+            updateTimeAndFailedCounter(prefs, resultCode)
         }
 
         // There could have been new episodes added after an update
@@ -193,10 +193,10 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
     private fun updateTimeAndFailedCounter(
         prefs: SharedPreferences,
-        currentTime: Long,
         resultCode: UpdateResult?
     ) {
         // store time of update, set retry counter on failure
+        val currentTime = System.currentTimeMillis()
         if (resultCode == UpdateResult.SUCCESS) {
             // we were successful, reset failed counter
             prefs.edit()
