@@ -204,26 +204,24 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                 .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0)
                 .apply()
         } else {
-            var failed = UpdateSettings.getFailedNumberOfUpdates(context)
+            val failed = UpdateSettings.getFailedNumberOfUpdates(context) + 1
+
+            val backOffExponent = failed.coerceAtMost(5)
+            // Back off by 2**(failures) minutes + random milliseconds
+            // (random to have more spread across all installs).
+            // Currently: 2min, 4min, 8min, 16min and max. 32min + random ms
+            val backOffMinutes = 2.0.pow(backOffExponent).toLong()
+            Timber.d("Syncing: backing off for %d minutes", backOffMinutes)
+            val backOffMs = backOffMinutes * DateUtils.MINUTE_IN_MILLIS +
+                    Random.nextLong(1000)
 
             /*
-             * Back off by 2**(failure + 2) * minutes + random milliseconds
-             * (random to have more spread across all installs). Purposely set a fake
-             * last update time, because the next update will be triggered
+             * Purposely set a fake last update time, because the next update will be triggered
              * SYNC_INTERVAL_MINIMUM_MINUTES minutes after the last update time.
-             * This will trigger sync earlier/later than the default (5min) interval
-              * (4min, 8min, 16min and 32min).
+             * This will trigger sync earlier/later than the default (5min) interval.
              */
-            val fakeLastUpdateTime: Long = if (failed < 4) {
-                // 1, -3, -9, -27
-                val posOrNegInterval = (SYNC_INTERVAL_MINIMUM_MINUTES
-                        - 2.0.pow(failed + 2).toInt())
-                currentTime - (posOrNegInterval * DateUtils.MINUTE_IN_MILLIS) - Random.nextLong(1000)
-            } else {
-                currentTime
-            }
+            val fakeLastUpdateTime = currentTime - SYNC_INTERVAL_MINIMUM_MINUTES + backOffMs
 
-            failed += 1
             prefs.edit()
                 .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
                 .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed)
