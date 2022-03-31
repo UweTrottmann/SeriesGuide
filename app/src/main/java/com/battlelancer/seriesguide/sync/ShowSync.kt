@@ -9,6 +9,8 @@ import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.ui.shows.ShowTools2
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.ApiErrorRetry
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.ApiErrorStop
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.DatabaseError
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.DoesNotExist
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.Success
 import com.battlelancer.seriesguide.util.TimeTools
@@ -68,12 +70,14 @@ class ShowSync(
                 // - database error => abort, report and try again later
                 result = showTools.updateShow(showId)
 
-                if (result == ApiErrorRetry) {
+                if (result is ApiErrorRetry) {
                     networkErrors++
                     if (networkErrors == 3) {
                         // Stop updating after multiple network errors
                         // (for timeouts around 3 * 15/20 seconds)
-                        Timber.e("Too many network errors, trying again later.")
+                        val service = context.getString(result.service.nameResId)
+                        Timber.e("Too many network errors, last one with $service, trying again later.")
+                        progress.setImportantErrorIfNone("Failed to talk to $service, trying again later.")
                         return UpdateResult.INCOMPLETE
                     } else {
                         // Back off, then try again.
@@ -88,7 +92,8 @@ class ShowSync(
                         } catch (e: InterruptedException) {
                             // This can happen if the system has decided to interrupt the sync
                             // thread, just try again later.
-                            Timber.v("Failed to wait for retry, trying again later.")
+                            Timber.v("Wait for retry interrupted by system, trying again later.")
+                            progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
                             return UpdateResult.INCOMPLETE
                         }
                     }
@@ -96,7 +101,7 @@ class ShowSync(
                     // Reduce counter on each successful update.
                     networkErrors--
                 }
-            } while (result == ApiErrorRetry)
+            } while (result is ApiErrorRetry)
 
             // Handle update result.
             when (result) {
@@ -104,21 +109,35 @@ class ShowSync(
                 DoesNotExist -> {
                     // Continue with other shows, assume existing data is latest.
                     // TODO Add permanent hint to user the show can no longer be updated.
-                    recordError(
+                    //  Currently, if multiple shows do not exist only the first to be tried
+                    //  is displayed to the user.
+                    setImportantMessageIfNone(
                         context,
                         progress,
                         showId,
                         "Did not find show '%s' (TMDB id %s) at TMDB, maybe remove it."
                     )
                 }
-                else -> {
-                    // TODO Display different suggestions for database errors?
-                    // API or database error, do not continue and try again later.
-                    recordError(
+                is ApiErrorRetry -> throw IllegalStateException("Should retry and not handle result.")
+                is ApiErrorStop -> {
+                    // API error, do not continue and try again later.
+                    setImportantMessageIfNone(
                         context,
                         progress,
                         showId,
-                        "Could not update show '%s' (TMDB id %s), trying again later."
+                        "Could not update show '%s' (TMDB id %s) due to issue with ${
+                            context.getString(result.service.nameResId)
+                        }, trying again later."
+                    )
+                    return UpdateResult.INCOMPLETE
+                }
+                DatabaseError -> {
+                    // Database error, do not continue and try again later.
+                    setImportantMessageIfNone(
+                        context,
+                        progress,
+                        showId,
+                        "Could not update show '%s' (TMDB id %s) due to a database error, trying again later."
                     )
                     return UpdateResult.INCOMPLETE
                 }
@@ -127,7 +146,7 @@ class ShowSync(
         return UpdateResult.SUCCESS
     }
 
-    private fun recordError(
+    private fun setImportantMessageIfNone(
         context: Context,
         progress: SyncProgress,
         showId: Long,

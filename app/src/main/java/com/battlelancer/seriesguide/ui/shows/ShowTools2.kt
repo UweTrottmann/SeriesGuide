@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.shows
 import android.content.Context
 import android.text.format.DateUtils
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.collection.SparseArrayCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -39,6 +40,9 @@ import com.battlelancer.seriesguide.traktapi.TraktRetry
 import com.battlelancer.seriesguide.traktapi.TraktStop
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowService.HEXAGON
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowService.TMDB
+import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowService.TRAKT
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -67,6 +71,12 @@ import com.battlelancer.seriesguide.enums.Result as SgResult
  */
 class ShowTools2(val showTools: ShowTools, val context: Context) {
 
+    enum class ShowService(@StringRes val nameResId: Int) {
+        HEXAGON(R.string.hexagon),
+        TMDB(R.string.tmdb),
+        TRAKT(R.string.trakt)
+    }
+
     enum class ShowResult {
         SUCCESS,
         IN_DATABASE,
@@ -81,8 +91,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     sealed class UpdateResult {
         object Success : UpdateResult()
         object DoesNotExist : UpdateResult()
-        object ApiErrorStop : UpdateResult()
-        object ApiErrorRetry : UpdateResult()
+        class ApiErrorStop(val service: ShowService) : UpdateResult()
+        class ApiErrorRetry(val service: ShowService) : UpdateResult()
         object DatabaseError : UpdateResult()
     }
 
@@ -113,22 +123,20 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val seasons: List<TvSeason>? = null
     )
 
-    enum class GetShowService { TMDB, TRAKT }
-
-    sealed class GetShowError(val service: GetShowService)
+    sealed class GetShowError(val service: ShowService)
 
     /**
      * The API request might succeed if tried again after a brief delay
      * (e.g. time outs or other temporary network issues).
      */
-    class GetShowRetry(service: GetShowService) : GetShowError(service)
+    class GetShowRetry(service: ShowService) : GetShowError(service)
 
     /**
      * The API request is unlikely to succeed if retried, at least right now
      * (e.g. API bugs or changes).
      */
-    class GetShowStop(service: GetShowService) : GetShowError(service)
-    object GetShowDoesNotExist : GetShowError(GetShowService.TMDB)
+    class GetShowStop(service: ShowService) : GetShowError(service)
+    object GetShowDoesNotExist : GetShowError(TMDB)
 
     /**
      * If [updateOnly] returns a show for updating, but without its ID set!
@@ -795,7 +803,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                             it.language = show.language
                             it.isRemoved = false
                         }))
-                        if (!uploadSuccess) return Err(UpdateResult.ApiErrorStop)
+                        if (!uploadSuccess) return Err(UpdateResult.ApiErrorStop(HEXAGON))
                         // Schedule episode upload
                         helper.setHexagonMergeNotCompleted(showId)
                     }
@@ -1299,12 +1307,14 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return when (this) {
             GetShowDoesNotExist -> ShowResult.DOES_NOT_EXIST
             is GetShowRetry -> when (this.service) {
-                GetShowService.TMDB -> ShowResult.TMDB_ERROR
-                GetShowService.TRAKT -> ShowResult.TRAKT_ERROR
+                HEXAGON -> throw IllegalStateException("getShowDetails does not use HEXAGON")
+                TMDB -> ShowResult.TMDB_ERROR
+                TRAKT -> ShowResult.TRAKT_ERROR
             }
             is GetShowStop -> when (this.service) {
-                GetShowService.TMDB -> ShowResult.TMDB_ERROR
-                GetShowService.TRAKT -> ShowResult.TRAKT_ERROR
+                HEXAGON -> throw IllegalStateException("getShowDetails does not use HEXAGON")
+                TMDB -> ShowResult.TMDB_ERROR
+                TRAKT -> ShowResult.TRAKT_ERROR
             }
         }
     }
@@ -1319,36 +1329,36 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     private fun GetShowError.toUpdateResult(): UpdateResult {
         return when (this) {
             GetShowDoesNotExist -> UpdateResult.DoesNotExist
-            is GetShowRetry -> UpdateResult.ApiErrorRetry
-            is GetShowStop -> UpdateResult.ApiErrorStop
+            is GetShowRetry -> UpdateResult.ApiErrorRetry(this.service)
+            is GetShowStop -> UpdateResult.ApiErrorStop(this.service)
         }
     }
 
     private fun HexagonError.toUpdateResult(): UpdateResult {
         return when (this) {
-            HexagonRetry -> UpdateResult.ApiErrorRetry
-            HexagonStop -> UpdateResult.ApiErrorStop
+            HexagonRetry -> UpdateResult.ApiErrorRetry(HEXAGON)
+            HexagonStop -> UpdateResult.ApiErrorStop(HEXAGON)
         }
     }
 
     private fun TmdbError.toUpdateResult(): UpdateResult {
         return when (this) {
-            TmdbRetry -> UpdateResult.ApiErrorRetry
-            TmdbStop -> UpdateResult.ApiErrorStop
+            TmdbRetry -> UpdateResult.ApiErrorRetry(TMDB)
+            TmdbStop -> UpdateResult.ApiErrorStop(TMDB)
         }
     }
 
     private fun TmdbError.toGetShowError(): GetShowError {
         return when (this) {
-            TmdbRetry -> GetShowRetry(GetShowService.TMDB)
-            TmdbStop -> GetShowStop(GetShowService.TMDB)
+            TmdbRetry -> GetShowRetry(TMDB)
+            TmdbStop -> GetShowStop(TMDB)
         }
     }
 
     private fun TraktError.toGetShowError(): GetShowError {
         return when (this) {
-            TraktRetry -> GetShowRetry(GetShowService.TRAKT)
-            TraktStop -> GetShowStop(GetShowService.TRAKT)
+            TraktRetry -> GetShowRetry(TRAKT)
+            TraktStop -> GetShowStop(TRAKT)
         }
     }
 
