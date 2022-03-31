@@ -671,8 +671,9 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     data class SeasonInfo(val id: Long, val number: Int)
 
     /**
+     * Inserts, updates and removes (removal incl. episodes) seasons in the database based on the
+     * given seasons.
      * Returns season IDs (and numbers) that were inserted or updated, excluding removed seasons.
-     * Use to update episodes of those e
      */
     private fun updateSeasons(tmdbSeasons: List<TvSeason>?, showId: Long): List<SeasonInfo> {
         if (tmdbSeasons.isNullOrEmpty()) return emptyList()
