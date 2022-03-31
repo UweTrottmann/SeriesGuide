@@ -68,6 +68,7 @@ class ShowSync(
                 // - API error (parsing error, other error) => abort, report and try again later
                 // - show does no longer exist => ignore and continue
                 // - database error => abort, report and try again later
+                // Note: reporting is done where the exception occurs.
                 result = showTools.updateShow(showId)
 
                 if (result is ApiErrorRetry) {
