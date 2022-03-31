@@ -46,10 +46,8 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
-import com.github.michaelbull.result.get
 import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.mapError
-import com.github.michaelbull.result.onFailure
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import com.uwetrottmann.tmdb2.entities.TvEpisode
@@ -61,6 +59,7 @@ import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.util.TimeZone
+import kotlin.collections.set
 import com.battlelancer.seriesguide.enums.Result as SgResult
 
 /**
@@ -311,8 +310,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         if (hexagonEnabled) {
             val hexagonShow = SgApp.getServicesComponent(context).hexagonTools()
                 .getShow(showTmdbId, show.tvdbId)
-                .onFailure { return ShowResult.HEXAGON_ERROR }
-                .get()
+                .getOrElse { return ShowResult.HEXAGON_ERROR }
             if (hexagonShow != null) {
                 if (hexagonShow.isFavorite != null) {
                     show.favorite = hexagonShow.isFavorite
@@ -783,8 +781,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 if (HexagonSettings.isEnabled(context)) {
                     val hexagonShow = SgApp.getServicesComponent(context).hexagonTools()
                         .getShow(showTmdbId, null)
-                        .onFailure { return Err(it.toUpdateResult()) }
-                        .get()
+                        .getOrElse { return@andThen Err(it.toUpdateResult()) }
                     if (hexagonShow == null) {
                         // Hexagon does not have show via TMDB ID
                         // Upload local show info
@@ -818,8 +815,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         val database = SgRoomDatabase.getInstance(context)
         val seasonNumbers = database.sgSeason2Helper().getSeasonNumbersOfShow(showId)
         val tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, language, context)
-            .onFailure { return it.toUpdateResult() }
-            .get() ?: return UpdateResult.DoesNotExist
+            .getOrElse { return it.toUpdateResult() }
+            ?: return UpdateResult.DoesNotExist
         val tmdbSeasons = tmdbShow.seasons
 
         if (tmdbSeasons.isNullOrEmpty()) {
