@@ -135,10 +135,11 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 .get() ?: return ShowDetails(ShowResult.DOES_NOT_EXIST)
         }
 
-        val traktResult = TraktTools2.getShowByTmdbId(showTmdbId, context)
-        // Fail if looking up Trakt details failed to avoid removing them for existing shows.
-        if (traktResult.result != ShowResult.SUCCESS) return ShowDetails(traktResult.result)
-        val traktShow = traktResult.show
+        val traktShow = TraktTools2.getShowByTmdbId(showTmdbId, context)
+            .getOrElse {
+                // Fail if looking up Trakt details failed to avoid removing them for existing shows.
+                return ShowDetails(ShowResult.TRAKT_ERROR)
+            }
         if (traktShow == null) {
             Timber.w("getShowDetails: no Trakt show found, using default values.")
         }
