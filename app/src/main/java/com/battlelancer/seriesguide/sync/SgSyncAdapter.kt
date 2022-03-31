@@ -110,6 +110,8 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         // Update show data.
         // If failed for at least one show, do not proceed with other sync steps to avoid
         // syncing with outdated show data.
+        // Note: it is still NOT guaranteed show data is up-to-date before syncing because a show
+        // does not get updated if it was recently (see ShowSync selecting which shows to update).
         val showTools = SgApp.getServicesComponent(context).showTools()
         var resultCode = showSync.sync(context, showTools, currentTime, progress)
         Timber.d("Syncing: TMDB shows...DONE")
