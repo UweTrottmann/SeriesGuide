@@ -803,7 +803,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                             it.language = show.language
                             it.isRemoved = false
                         }))
-                        if (!uploadSuccess) return Err(UpdateResult.ApiErrorStop(HEXAGON))
+                        if (!uploadSuccess) return@andThen Err(UpdateResult.ApiErrorStop(HEXAGON))
                         // Schedule episode upload
                         helper.setHexagonMergeNotCompleted(showId)
                     }
