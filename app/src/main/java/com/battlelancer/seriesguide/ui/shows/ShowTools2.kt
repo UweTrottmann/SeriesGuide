@@ -1306,12 +1306,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
     private fun GetShowError.toShowResult(): ShowResult {
         return when (this) {
             GetShowDoesNotExist -> ShowResult.DOES_NOT_EXIST
-            is GetShowRetry -> when (this.service) {
-                HEXAGON -> throw IllegalStateException("getShowDetails does not use HEXAGON")
-                TMDB -> ShowResult.TMDB_ERROR
-                TRAKT -> ShowResult.TRAKT_ERROR
-            }
-            is GetShowStop -> when (this.service) {
+            else -> when (this.service) {
                 HEXAGON -> throw IllegalStateException("getShowDetails does not use HEXAGON")
                 TMDB -> ShowResult.TMDB_ERROR
                 TRAKT -> ShowResult.TRAKT_ERROR
