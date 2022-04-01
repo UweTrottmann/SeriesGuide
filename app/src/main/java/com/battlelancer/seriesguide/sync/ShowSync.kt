@@ -92,7 +92,8 @@ class ShowSync(
                             )
                         } catch (e: InterruptedException) {
                             // This can happen if the system has decided to interrupt the sync
-                            // thread, just try again later.
+                            // thread (see AbstractThreadedSyncAdapter class documentation),
+                            // just try again later.
                             Timber.v("Wait for retry interrupted by system, trying again later.")
                             progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
                             return UpdateResult.INCOMPLETE
