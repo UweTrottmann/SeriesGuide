@@ -117,7 +117,7 @@ class ShowSync(
                         context,
                         progress,
                         showId,
-                        "Did not find show '%s' (TMDB id %s) at TMDB, maybe remove it."
+                        "Show '%s' removed from TMDB (id %s), maybe search for a replacement and remove it."
                     )
                 }
                 is ApiErrorRetry -> throw IllegalStateException("Should retry and not handle result.")
