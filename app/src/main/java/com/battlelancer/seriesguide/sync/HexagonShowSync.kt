@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.provider.SgShow2CloudUpdate
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
+import com.github.michaelbull.result.getOrElse
 import com.google.api.client.util.DateTime
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
@@ -17,6 +18,7 @@ import com.uwetrottmann.seriesguide.backend.shows.model.Show
 import timber.log.Timber
 import java.io.IOException
 import java.util.LinkedList
+import kotlin.collections.set
 
 class HexagonShowSync(
     private val context: Context,
@@ -222,9 +224,12 @@ class HexagonShowSync(
                 continue
             }
             val showTmdbIdOrNull = TmdbTools2().findShowTmdbId(context, showTvdbId)
-                ?: return null // Network error, abort.
+                .getOrElse {
+                    // Network or API error, abort.
+                    return null
+                }
             // Only add if TMDB id found
-            if (showTmdbIdOrNull != -1) {
+            if (showTmdbIdOrNull != null) {
                 val show = SgCloudShow()
                 show.tmdbId = showTmdbIdOrNull
                 show.isRemoved = legacyShow.isRemoved

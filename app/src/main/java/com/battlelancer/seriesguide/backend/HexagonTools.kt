@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.backend
 import android.content.Context
 import android.os.SystemClock
 import android.text.format.DateUtils
-import android.util.Pair
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
 import com.battlelancer.seriesguide.backend.HexagonAuthError.Companion.build
@@ -12,7 +11,13 @@ import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
+import com.battlelancer.seriesguide.util.isRetryError
 import com.firebase.ui.auth.AuthUI
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.mapError
+import com.github.michaelbull.result.runCatching
+import com.github.michaelbull.result.throwUnless
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.Tasks
@@ -273,13 +278,12 @@ class HexagonTools @Inject constructor(
 
     /**
      * Gets show by TMDB ID, or if not found and TVDB ID given, gets show by that.
-     * Returns false on service error.
+     * Returns null value if not found.
      */
-    fun getShow(showTmdbId: Int, showTvdbId: Int?): Pair<SgCloudShow?, Boolean> {
-        return try {
-            val showsService = showsService
-                ?: return Pair(null, false)
-
+    fun getShow(showTmdbId: Int, showTvdbId: Int?): Result<SgCloudShow?, HexagonError> {
+        val showsService = showsService
+            ?: return Err(HexagonStop)
+        return runCatching {
             var showOrNull = showsService.sgShow
                 .setShowTmdbId(showTmdbId)
                 .execute()
@@ -295,14 +299,13 @@ class HexagonTools @Inject constructor(
                     showOrNull.notify = legacyShowOrNull.notify
                 }
             }
-            Pair(showOrNull, true)
-        } catch (e: IOException) {
-            logAndReportHexagon("h: get show", e)
-            Pair(null, false)
-        } catch (e: IllegalArgumentException) {
+            showOrNull
+        }.throwUnless {
             // Note: JSON parser may throw IllegalArgumentException.
-            logAndReportHexagon("h: get show", e)
-            Pair(null, false)
+            it is IOException || it is IllegalArgumentException
+        }.mapError {
+            logAndReportHexagon("h: get show", it)
+            if (it.isRetryError()) HexagonRetry else HexagonStop
         }
     }
 
@@ -313,3 +316,17 @@ class HexagonTools @Inject constructor(
         private const val SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS
     }
 }
+
+sealed class HexagonError
+
+/**
+ * The API request might succeed if tried again after a brief delay
+ * (e.g. time outs or other temporary network issues).
+ */
+object HexagonRetry : HexagonError()
+
+/**
+ * The API request is unlikely to succeed if retried, at least right now
+ * (e.g. API bugs or changes).
+ */
+object HexagonStop : HexagonError()

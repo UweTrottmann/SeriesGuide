@@ -13,7 +13,9 @@ import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
+import com.battlelancer.seriesguide.ui.shows.ShowTools2
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.Dispatchers
 
 class AddShowDialogViewModel(
@@ -39,18 +41,25 @@ class AddShowDialogViewModel(
         this.showDetails = Transformations.switchMap(languageCode) { languageCode ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 val showTools = SgApp.getServicesComponent(application).showTools()
-
-                val showDetails = showTools.getShowDetails(showTmdbId, languageCode)
-                val localShowIdOrNull =
-                    showTools.getShowId(showTmdbId, showDetails.show?.tvdbId)
-
-                emit(
-                    ShowDetails(
-                        showDetails.show,
-                        localShowIdOrNull,
-                        showDetails.result == ShowResult.DOES_NOT_EXIST
-                    )
-                )
+                showTools.getShowDetails(showTmdbId, languageCode)
+                    .onFailure {
+                        emit(
+                            ShowDetails(
+                                null,
+                                showTools.getShowId(showTmdbId, null),
+                                it == ShowTools2.GetShowDoesNotExist
+                            )
+                        )
+                    }
+                    .onSuccess {
+                        emit(
+                            ShowDetails(
+                                it.show,
+                                showTools.getShowId(showTmdbId, it.show?.tvdbId),
+                                false
+                            )
+                        )
+                    }
             }
         }
     }

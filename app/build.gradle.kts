@@ -158,6 +158,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
+    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
+
     implementation(project(":api"))
     implementation(project(":billing"))
     implementation(project(":widgets"))

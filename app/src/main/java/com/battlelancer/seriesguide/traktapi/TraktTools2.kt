@@ -1,9 +1,16 @@
 package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
-import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.isRetryError
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
+import com.github.michaelbull.result.mapError
+import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.Ratings
 import com.uwetrottmann.trakt5.entities.Show
@@ -11,8 +18,6 @@ import com.uwetrottmann.trakt5.enums.Extended
 import com.uwetrottmann.trakt5.enums.IdType
 import com.uwetrottmann.trakt5.enums.Type
 import retrofit2.Response
-import java.net.SocketTimeoutException
-import java.util.HashMap
 
 object TraktTools2 {
 
@@ -21,11 +26,11 @@ object TraktTools2 {
     /**
      * Look up a show by its TMDB ID, may return `null` if not found.
      */
-    fun getShowByTmdbId(showTmdbId: Int, context: Context): SearchResult {
+    fun getShowByTmdbId(showTmdbId: Int, context: Context): Result<Show?, TraktError> {
         val action = "show trakt lookup"
-        try {
-            val response = getServicesComponent(context).trakt()
-                .search()
+        val trakt = SgApp.getServicesComponent(context).trakt()
+        return runCatching {
+            trakt.search()
                 .idLookup(
                     IdType.TMDB,
                     showTmdbId.toString(),
@@ -34,16 +39,26 @@ object TraktTools2 {
                     1,
                     1
                 ).execute()
-            if (response.isSuccessful) {
-                return SearchResult(ShowResult.SUCCESS, response.body()?.firstOrNull()?.show)
+        }.mapError {
+            Errors.logAndReport(action, it)
+            if (it.isRetryError()) TraktRetry else TraktStop
+        }.andThen {
+            if (it.isSuccessful) {
+                val result = it.body()?.firstOrNull()
+                if (result != null) {
+                    if (result.show != null) {
+                        return@andThen Ok(result.show)
+                    } else {
+                        // If there is a result, it should contain a show.
+                        Errors.logAndReport(action, it, "show of result is null")
+                    }
+                }
+                return@andThen Ok(null) // Not found.
             } else {
-                Errors.logAndReport(action, response)
+                Errors.logAndReport(action, it)
             }
-        } catch (e: Exception) {
-            Errors.logAndReport(action, e)
-            if (e is SocketTimeoutException) return SearchResult(ShowResult.TIMEOUT_ERROR, null)
+            return@andThen Err(TraktStop)
         }
-        return SearchResult(ShowResult.TRAKT_ERROR, null)
     }
 
     enum class ServiceResult {
@@ -57,7 +72,7 @@ object TraktTools2 {
         isCollectionNotWatched: Boolean,
         context: Context
     ): Pair<Map<Int, BaseShow>?, ServiceResult> {
-        val traktSync = getServicesComponent(context).traktSync()!!
+        val traktSync = SgApp.getServicesComponent(context).traktSync()!!
         val action = if (isCollectionNotWatched) "get collection" else "get watched"
         try {
             val response: Response<List<BaseShow>> = if (isCollectionNotWatched) {
@@ -102,7 +117,7 @@ object TraktTools2 {
     ): Pair<Double, Int>? {
         val ratings: Ratings =
             SgTrakt.executeCall(
-                getServicesComponent(context).trakt()
+                SgApp.getServicesComponent(context).trakt()
                     .episodes().ratings(showTraktId, seasonNumber, episodeNumber),
                 "get episode rating"
             ) ?: return null
@@ -116,3 +131,17 @@ object TraktTools2 {
     }
 
 }
+
+sealed class TraktError
+
+/**
+ * The API request might succeed if tried again after a brief delay
+ * (e.g. time outs or other temporary network issues).
+ */
+object TraktRetry : TraktError()
+
+/**
+ * The API request is unlikely to succeed if retried, at least right now
+ * (e.g. API bugs or changes).
+ */
+object TraktStop : TraktError()
