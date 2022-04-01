@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.util.shows
 
 import android.content.Context
-import android.text.format.DateUtils
 import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -388,15 +387,6 @@ class AddUpdateShowTools(val context: Context) {
         val toRemove = localEpisodesByTmdbId?.map { it.value.id } ?: emptyList()
 
         return EpisodeDetails(toInsert, toUpdate, toRemove)
-    }
-
-    /**
-     * Returns true if the given show has not been updated in the last 12 hours.
-     */
-    fun shouldUpdateShow(showId: Long): Boolean {
-        val lastUpdatedMs = SgRoomDatabase.getInstance(context).sgShow2Helper()
-            .getLastUpdated(showId) ?: return false
-        return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12
     }
 
     /**

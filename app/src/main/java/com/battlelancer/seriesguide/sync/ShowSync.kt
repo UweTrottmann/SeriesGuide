@@ -219,5 +219,14 @@ class ShowSync(
                 12 * DateUtils.HOUR_IN_MILLIS
         private const val UPDATE_THRESHOLD_DAILYS_MS = (DateUtils.DAY_IN_MILLIS
                 + 12 * DateUtils.HOUR_IN_MILLIS)
+
+        /**
+         * Returns true if the given show has not been updated in the last 12 hours.
+         */
+        fun shouldUpdateShow(context: Context, showId: Long): Boolean {
+            val lastUpdatedMs = SgRoomDatabase.getInstance(context).sgShow2Helper()
+                .getLastUpdated(showId) ?: return false
+            return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12
+        }
     }
 }

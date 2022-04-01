@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.util.TaskManager
-import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
 import com.uwetrottmann.trakt5.services.Sync
@@ -272,13 +271,13 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         /**
-         * Schedules a sync for a single show if [AddUpdateShowTools.shouldUpdateShow] returns true.
+         * Schedules a sync for a single show if [ShowSync.shouldUpdateShow] returns true.
          *
          * *Note: Runs a content provider op, so you should do this on a background thread.*
          */
         @JvmStatic
         fun requestSyncIfTime(context: Context, showId: Long) {
-            if (AddUpdateShowTools(context).shouldUpdateShow(showId)) {
+            if (ShowSync.shouldUpdateShow(context, showId)) {
                 requestSyncIfConnected(context, SyncType.SINGLE, showId)
             }
         }
