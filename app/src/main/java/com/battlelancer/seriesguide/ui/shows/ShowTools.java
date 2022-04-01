@@ -10,14 +10,10 @@ import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowDetails;
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
-import com.github.michaelbull.result.Result;
-import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.util.Map;
 import javax.inject.Inject;
 
@@ -56,30 +52,7 @@ public class ShowTools {
     @Inject
     public ShowTools(@ApplicationContext Context context) {
         this.context = context;
-        this.showTools2 = new ShowTools2(this, context);
-    }
-
-    @NonNull
-    public Result<ShowDetails, ShowTools2.GetShowError> getShowDetails(int showTmdbId, String desiredLanguage) {
-        return showTools2.getShowDetails(showTmdbId, desiredLanguage, false);
-    }
-
-    @Nullable
-    public Long getShowId(int showTmdbId, Integer showTvdbId) {
-        return showTools2.getShowId(showTmdbId, showTvdbId);
-    }
-
-    public ShowResult addShow(int showTmdbId,
-            @Nullable String desiredLanguage,
-            @Nullable Map<Integer, BaseShow> traktCollection,
-            @Nullable Map<Integer, BaseShow> traktWatched,
-            HexagonEpisodeSync hexagonEpisodeSync) {
-        return showTools2.addShow(showTmdbId, desiredLanguage, traktCollection, traktWatched,
-                hexagonEpisodeSync);
-    }
-
-    public ShowTools2.UpdateResult updateShow(long showId) {
-        return showTools2.updateShow(showId);
+        this.showTools2 = new ShowTools2(context);
     }
 
     public void removeShow(long showId) {
@@ -189,7 +162,4 @@ public class ShowTools {
         }
     }
 
-    public boolean shouldUpdateShow(long showId) {
-        return showTools2.shouldUpdateShow(showId);
-    }
 }

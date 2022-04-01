@@ -14,9 +14,10 @@ import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools2;
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult;
 import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools;
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.ShowResult;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import java.util.LinkedList;
@@ -205,7 +206,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                 break;
             }
 
-            ShowResult addResult = SgApp.getServicesComponent(context).showTools()
+            ShowResult addResult = new AddUpdateShowTools(context)
                     .addShow(nextShow.getTmdbId(), nextShow.getLanguage(),
                             traktCollection, traktWatched, hexagonEpisodeSync);
             if (addResult == ShowResult.SUCCESS) {

@@ -22,8 +22,8 @@ import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
 import com.battlelancer.seriesguide.ui.movies.MovieTools
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
 import com.uwetrottmann.trakt5.services.Sync
@@ -112,8 +112,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         // syncing with outdated show data.
         // Note: it is still NOT guaranteed show data is up-to-date before syncing because a show
         // does not get updated if it was recently (see ShowSync selecting which shows to update).
-        val showTools = SgApp.getServicesComponent(context).showTools()
-        var resultCode = showSync.sync(context, showTools, currentTime, progress)
+        var resultCode = showSync.sync(context, currentTime, progress)
         Timber.d("Syncing: TMDB shows...DONE")
         if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
             progress.recordError()
@@ -273,13 +272,13 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         /**
-         * Schedules a sync for a single show if [ShowTools.shouldUpdateShow] returns true.
+         * Schedules a sync for a single show if [AddUpdateShowTools.shouldUpdateShow] returns true.
          *
          * *Note: Runs a content provider op, so you should do this on a background thread.*
          */
         @JvmStatic
         fun requestSyncIfTime(context: Context, showId: Long) {
-            if (SgApp.getServicesComponent(context).showTools().shouldUpdateShow(showId)) {
+            if (AddUpdateShowTools(context).shouldUpdateShow(showId)) {
                 requestSyncIfConnected(context, SyncType.SINGLE, showId)
             }
         }

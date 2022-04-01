@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater;
+import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -947,7 +948,7 @@ public class SeriesGuideContract {
 
         /**
          * Note: currently unused, TMDB does not provide this info.
-         * See {@link com.battlelancer.seriesguide.ui.shows.ShowTools2}.
+         * See {@link ShowTools2}.
          *
          * Last time episode was edited (lastupdated field) in Unix time (seconds).
          * Added in {@link SeriesGuideDatabase#DBVER_27_IMDBIDSLASTEDIT}.
@@ -961,7 +962,7 @@ public class SeriesGuideContract {
 
         /**
          * Note: currently last updated value is unused, all episodes are always updated.
-         * See {@link com.battlelancer.seriesguide.ui.shows.ShowTools2}.
+         * See {@link ShowTools2}.
          *
          * Stores the last edited time after fetching full episode data from TVDB.
          * Added in {@link SeriesGuideDatabase#DBVER_41_EPISODE_LAST_UPDATED}.

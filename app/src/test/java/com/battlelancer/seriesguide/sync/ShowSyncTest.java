@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.test.core.app.ApplicationProvider;
 import com.battlelancer.seriesguide.EmptyTestApplication;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,16 +22,12 @@ import org.robolectric.annotation.Config;
 @Config(application = EmptyTestApplication.class)
 public class ShowSyncTest {
 
-    private ShowTools showTools;
-
     @Before
     public void switchToInMemoryDb() {
         // ProviderTestRule does not work with Room
         // so instead blatantly replace the instance with one that uses an in-memory database
         Context context = ApplicationProvider.getApplicationContext();
         SgRoomDatabase.switchToInMemory(context);
-
-        showTools = new ShowTools(context);
     }
 
     @After
@@ -73,6 +68,6 @@ public class ShowSyncTest {
     @Nullable
     private SgSyncAdapter.UpdateResult sync(ShowSync showSync) {
         return showSync.sync(ApplicationProvider.getApplicationContext(),
-                showTools, System.currentTimeMillis(), new SyncProgress());
+                System.currentTimeMillis(), new SyncProgress());
     }
 }

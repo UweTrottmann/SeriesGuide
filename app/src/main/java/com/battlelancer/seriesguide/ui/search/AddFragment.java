@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.NetworkResult;
-import com.battlelancer.seriesguide.ui.shows.ShowTools2;
+import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.util.List;

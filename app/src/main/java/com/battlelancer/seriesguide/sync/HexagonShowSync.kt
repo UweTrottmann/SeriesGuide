@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -15,6 +16,8 @@ import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShowList
 import com.uwetrottmann.seriesguide.backend.shows.model.Show
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
 import java.util.LinkedList
@@ -24,6 +27,11 @@ class HexagonShowSync(
     private val context: Context,
     private val hexagonTools: HexagonTools
 ) {
+
+    constructor(context: Context) : this(
+        context,
+        SgApp.getServicesComponent(context).hexagonTools()
+    )
 
     /**
      * Downloads shows from Hexagon and updates existing shows with new property values. Any
@@ -372,4 +380,11 @@ class HexagonShowSync(
         }
         return true
     }
+
+    suspend fun upload(show: SgCloudShow): Boolean {
+        return withContext(Dispatchers.IO) {
+            upload(listOf(show))
+        }
+    }
+
 }
