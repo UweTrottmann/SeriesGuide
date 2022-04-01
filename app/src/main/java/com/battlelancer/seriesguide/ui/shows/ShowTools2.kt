@@ -81,7 +81,6 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         SUCCESS,
         IN_DATABASE,
         DOES_NOT_EXIST,
-        TIMEOUT_ERROR,
         TMDB_ERROR,
         TRAKT_ERROR,
         HEXAGON_ERROR,
@@ -364,7 +363,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                     language,
                     null,
                     null
-                ).getOrElse { return@runInTransaction it.toShowResult() }
+                ).getOrElse { return@runInTransaction ShowResult.TMDB_ERROR }
                 val episodes = episodeDetails.toInsert
                 episodeHelper.insertEpisodes(episodes)
             }
@@ -1311,13 +1310,6 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 TMDB -> ShowResult.TMDB_ERROR
                 TRAKT -> ShowResult.TRAKT_ERROR
             }
-        }
-    }
-
-    private fun TmdbError.toShowResult(): ShowResult {
-        return when (this) {
-            TmdbRetry -> ShowResult.TIMEOUT_ERROR
-            TmdbStop -> ShowResult.TMDB_ERROR
         }
     }
 
