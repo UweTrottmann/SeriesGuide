@@ -810,8 +810,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 }
 
                 // Set TMDB ID on show last, is used to determine if successfully migrated.
-                helper.updateTmdbId(showId, showTmdbId)
-                Ok(showTmdbId)
+                val updated = helper.updateTmdbId(showId, showTmdbId)
+                return@andThen if (updated == 1) Ok(showTmdbId) else Err(UpdateResult.DatabaseError)
             }
     }
 
