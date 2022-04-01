@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.ui.search
 
 import android.content.Context
-import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 
 object SearchTools {
@@ -34,7 +34,7 @@ object SearchTools {
             return
         }
 
-        val localShowsToPoster = SgApp.getServicesComponent(context).showTools().tmdbIdsToPoster
+        val localShowsToPoster = ShowTools2(context).getTmdbIdsToPoster()
         for (result in results) {
             if (localShowsToPoster.indexOfKey(result.tmdbId) >= 0) {
                 // Is already in local database.

@@ -419,7 +419,7 @@ class ShowTools2(val context: Context) {
         return HexagonShowSync(context).upload(show)
     }
 
-    fun getTmdbIdsToPoster(context: Context): SparseArrayCompat<String> {
+    fun getTmdbIdsToPoster(): SparseArrayCompat<String> {
         val shows = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowsMinimal()
         val map = SparseArrayCompat<String>()
         shows.forEach {
@@ -430,7 +430,7 @@ class ShowTools2(val context: Context) {
         return map
     }
 
-    fun getTmdbIdsToShowIds(context: Context): Map<Int, Long> {
+    fun getTmdbIdsToShowIds(): Map<Int, Long> {
         val showIds = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIds()
         val map = mutableMapOf<Int, Long>()
         showIds.forEach {

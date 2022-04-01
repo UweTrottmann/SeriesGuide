@@ -6,7 +6,6 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.ui.search.AddShowTask
 import com.battlelancer.seriesguide.ui.search.TraktAddLoader
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService
@@ -34,7 +33,6 @@ interface ServicesComponent {
     fun moviesService(): MoviesService
     fun movieTools(): MovieTools
     fun peopleService(): PeopleService?
-    fun showTools(): ShowTools
     fun tmdb(): Tmdb
     fun trakt(): TraktV2
     fun traktSync(): Sync?

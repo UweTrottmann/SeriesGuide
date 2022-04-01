@@ -27,7 +27,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.api.Action
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.extensions.ActionsHelper
@@ -382,8 +381,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
 
         // store new value
         val isFavorite = view.tag as Boolean
-        getServicesComponent(requireContext()).showTools()
-            .storeIsFavorite(showId, !isFavorite)
+        ShowTools2(requireContext()).storeIsFavorite(showId, !isFavorite)
     }
 
     @OnClick(R.id.buttonEpisodeCheckin)

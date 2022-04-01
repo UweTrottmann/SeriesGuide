@@ -20,7 +20,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktTools
@@ -29,7 +28,6 @@ import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
@@ -43,6 +41,7 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.launch
@@ -161,14 +160,12 @@ class ShowFragment() : Fragment() {
 
     private var showId: Long = 0
     private var show: SgShow2? = null
-    private lateinit var showTools: ShowTools
     private var languageCode: String? = null
 
     val model: ShowViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showTools = SgApp.getServicesComponent(requireContext()).showTools()
         arguments?.let {
             showId = it.getLong(ARG_SHOW_ROWID)
         } ?: throw IllegalArgumentException("Missing arguments")
@@ -300,7 +297,7 @@ class ShowFragment() : Fragment() {
             setOnClickListener { v ->
                 // disable until action is complete
                 v.isEnabled = false
-                showTools.storeIsFavorite(showId, !isFavorite)
+                ShowTools2(requireContext()).storeIsFavorite(showId, !isFavorite)
             }
         }
 
@@ -326,7 +323,7 @@ class ShowFragment() : Fragment() {
                 if (Utils.hasAccessToX(activity)) {
                     // disable until action is complete
                     v.isEnabled = false
-                    showTools.storeNotify(showId, !notify)
+                    ShowTools2(requireContext()).storeNotify(showId, !notify)
                 } else {
                     Utils.advertiseSubscription(activity)
                 }
@@ -353,7 +350,7 @@ class ShowFragment() : Fragment() {
             setOnClickListener { v ->
                 // disable until action is complete
                 v.isEnabled = false
-                showTools.storeIsHidden(showId, !isHidden)
+                ShowTools2(requireContext()).storeIsHidden(showId, !isHidden)
             }
         }
 
@@ -507,7 +504,7 @@ class ShowFragment() : Fragment() {
         this.languageCode = languageCode
 
         Timber.d("Changing show language to %s", languageCode)
-        showTools.storeLanguage(showId, languageCode)
+        ShowTools2(requireContext()).storeLanguage(showId, languageCode)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

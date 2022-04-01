@@ -10,11 +10,11 @@ import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.DialogRemoveBinding
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -58,8 +58,7 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
                     it.textViewRemove.text = getString(R.string.confirm_delete, titleOrNull)
                     it.buttonPositive.setOnClickListener {
                         if (!SgSyncAdapter.isSyncActive(requireContext(), true)) {
-                            SgApp.getServicesComponent(requireContext()).showTools()
-                                .removeShow(showId)
+                            ShowTools2(requireContext()).removeShow(showId)
                             dismiss()
                         }
                     }
