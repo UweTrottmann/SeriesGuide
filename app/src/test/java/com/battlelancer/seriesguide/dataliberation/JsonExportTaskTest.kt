@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.provider.SgListHelper
 import com.battlelancer.seriesguide.provider.SgSeason2Helper
 import com.battlelancer.seriesguide.provider.SgShow2Helper
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
-import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.util.shows.ShowStatus
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -138,7 +138,7 @@ class JsonExportTaskTest {
                 network = "MBS",
                 imdbId = "imdbidvalue",
                 runtime = 24,
-                status = ShowTools.Status.ENDED,
+                status = ShowStatus.ENDED,
                 poster = "someurl/to/a/poster.jpg",
                 posterSmall = "someurl/to/a/poster.jpg",
                 language = "en",

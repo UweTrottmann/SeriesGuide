@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import kotlinx.coroutines.Dispatchers
@@ -59,25 +58,6 @@ class ShowTools2(val context: Context) {
             null
         } else {
             traktIdOrZero
-        }
-    }
-
-    /**
-     * Decodes the [ShowTools.Status] and returns the localized text representation.
-     * May be `null` if status is unknown.
-     */
-    fun getStatus(encodedStatus: Int): String? {
-        return when (encodedStatus) {
-            Status.IN_PRODUCTION -> context.getString(R.string.show_status_in_production)
-            Status.PILOT -> context.getString(R.string.show_status_pilot)
-            Status.CANCELED -> context.getString(R.string.show_status_canceled)
-            Status.PLANNED -> context.getString(R.string.show_isUpcoming)
-            Status.RETURNING -> context.getString(R.string.show_isalive)
-            Status.ENDED -> context.getString(R.string.show_isnotalive)
-            else -> {
-                // status unknown, display nothing
-                null
-            }
         }
     }
 

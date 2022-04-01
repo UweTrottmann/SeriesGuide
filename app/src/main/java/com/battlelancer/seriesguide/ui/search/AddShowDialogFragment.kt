@@ -15,14 +15,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
@@ -31,6 +29,7 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
+import com.battlelancer.seriesguide.util.shows.ShowStatus
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
@@ -251,8 +250,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
             // Continuing/ended status.
             val status = show.statusOrUnknown
-            val statusString = SgApp.getServicesComponent(requireContext()).showTools()
-                .getStatus(status)
+            val statusString = ShowStatus.getStatus(requireContext(), status)
             if (statusString != null) {
                 if (statusText.isNotEmpty()) {
                     statusText.append(" / ") // Like "2016 / Continuing".
@@ -262,7 +260,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 statusText.append(statusString)
 
                 // If continuing, paint status green.
-                val style = if (status == ShowTools.Status.RETURNING) {
+                val style = if (status == ShowStatus.RETURNING) {
                     R.style.TextAppearance_SeriesGuide_Body2_Accent
                 } else {
                     R.style.TextAppearance_SeriesGuide_Body2_Secondary

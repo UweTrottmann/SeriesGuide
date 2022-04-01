@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.traktapi.TraktError
 import com.battlelancer.seriesguide.traktapi.TraktRetry
 import com.battlelancer.seriesguide.traktapi.TraktStop
 import com.battlelancer.seriesguide.traktapi.TraktTools2
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.ShowService.TMDB
@@ -120,13 +119,13 @@ class GetShowTools(val context: Context) {
         val imdbId = tmdbShow.external_ids?.imdb_id ?: ""
         val runtime = tmdbShow.episode_run_time?.firstOrNull() ?: 45 // estimate 45 minutes if none.
         val status = when (tmdbShow.status) {
-            "Returning Series" -> ShowTools.Status.RETURNING
-            "Planned" -> ShowTools.Status.PLANNED
-            "Pilot" -> ShowTools.Status.PILOT
-            "Ended" -> ShowTools.Status.ENDED
-            "Canceled" -> ShowTools.Status.CANCELED
-            "In Production" -> ShowTools.Status.IN_PRODUCTION
-            else -> ShowTools.Status.UNKNOWN
+            "Returning Series" -> ShowStatus.RETURNING
+            "Planned" -> ShowStatus.PLANNED
+            "Pilot" -> ShowStatus.PILOT
+            "Ended" -> ShowStatus.ENDED
+            "Canceled" -> ShowStatus.CANCELED
+            "In Production" -> ShowStatus.IN_PRODUCTION
+            else -> ShowStatus.UNKNOWN
         }
         val poster = tmdbShow.poster_path ?: ""
 

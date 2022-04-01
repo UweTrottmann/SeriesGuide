@@ -9,7 +9,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.ui.shows.ShowTools.*
+import com.battlelancer.seriesguide.util.shows.ShowStatus
 import kotlinx.coroutines.Dispatchers
 
 class StatsViewModel(application: Application) : AndroidViewModel(application) {
@@ -121,13 +121,13 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         val showRuntimes = mutableMapOf<Long, Int>()
         for (show in showStats) {
             // count continuing shows
-            if (show.status == Status.RETURNING) {
+            if (show.status == ShowStatus.RETURNING) {
                 continuing++
             }
             // count shows that are planned to receive new episodes
-            if (show.status == Status.RETURNING
-                || show.status == Status.PLANNED
-                || show.status == Status.IN_PRODUCTION) {
+            if (show.status == ShowStatus.RETURNING
+                || show.status == ShowStatus.PLANNED
+                || show.status == ShowStatus.IN_PRODUCTION) {
                 withnext++
             }
             // map show to its runtime

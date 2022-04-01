@@ -6,8 +6,8 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater
+import com.battlelancer.seriesguide.util.shows.ShowStatus
 
 @Entity(
     tableName = "sg_show",
@@ -56,7 +56,7 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.RATING_VOTES) val ratingVotes: Int?,
     @ColumnInfo(name = SgShow2Columns.RATING_USER) val ratingUser: Int? = 0,
     @ColumnInfo(name = SgShow2Columns.RUNTIME) val runtime: Int? = 0,
-    @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int? = ShowTools.Status.UNKNOWN,
+    @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int? = ShowStatus.UNKNOWN,
     @ColumnInfo(name = SgShow2Columns.CONTENTRATING) val contentRating: String? = "",
     @ColumnInfo(name = SgShow2Columns.NEXTEPISODE) val nextEpisode: String? = "",
     @ColumnInfo(name = SgShow2Columns.POSTER) val poster: String? = "",
@@ -79,7 +79,7 @@ data class SgShow2(
     val releaseWeekDayOrDefault: Int
         get() = releaseWeekDay ?: -1
     val statusOrUnknown: Int
-        get() = status ?: ShowTools.Status.UNKNOWN
+        get() = status ?: ShowStatus.UNKNOWN
     val ratingGlobalOrZero: Double
         get() = ratingGlobal ?: 0.0
     val ratingVotesOrZero: Int

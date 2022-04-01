@@ -67,6 +67,8 @@ import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
+import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.battlelancer.seriesguide.widgets.FeedbackView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -743,8 +745,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
 
         // status
         val statusText = view.findViewById<TextView>(R.id.showStatus)
-        getServicesComponent(requireContext()).showTools()
-            .setStatusAndColor(statusText, show.statusOrUnknown)
+        ShowStatus.setStatusAndColor(statusText, show.statusOrUnknown)
 
         // favorite
         val isFavorite = show.favorite
