@@ -12,9 +12,9 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.uwetrottmann.trakt5.entities.BaseSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.ShowIds
@@ -208,7 +208,7 @@ class TraktEpisodeSync(
                 // show not watched/collected on Trakt
                 // check if this is because the show can not be tracked with Trakt (yet)
                 // keep state local and maybe upload in the future
-                val showTraktId = ShowTools.getShowTraktId(context, showId)
+                val showTraktId = ShowTools2(context).getShowTraktId(showId)
                 if (showTraktId != null) {
                     // Show can be tracked with Trakt.
                     if (isInitialSync) {
@@ -308,7 +308,7 @@ class TraktEpisodeSync(
         }
         return if (isInitialSync && syncSeasons.size > 0) {
             // upload watched/collected episodes for this show
-            val showTraktId = ShowTools.getShowTraktId(context, showRowId)
+            val showTraktId = ShowTools2(context).getShowTraktId(showRowId)
                 ?: return false // show should have a Trakt id, give up
             upload(traktSync!!, showTraktId, syncSeasons, flag)
         } else {

@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.util.shows
 
 import android.content.Context
-import android.text.format.DateUtils
 import android.widget.Toast
 import androidx.collection.SparseArrayCompat
 import com.battlelancer.seriesguide.R
@@ -48,6 +47,19 @@ class ShowTools2(val context: Context) {
         }
 
         return null
+    }
+
+    /**
+     * Returns the Trakt id of a show, or `null` if it is invalid or there is none.
+     */
+    fun getShowTraktId(showId: Long): Int? {
+        val traktIdOrZero = SgRoomDatabase.getInstance(context).sgShow2Helper()
+            .getShowTraktId(showId)
+        return if (traktIdOrZero <= 0) {
+            null
+        } else {
+            traktIdOrZero
+        }
     }
 
     /**

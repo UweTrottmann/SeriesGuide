@@ -9,7 +9,6 @@ import androidx.collection.SparseArrayCompat;
 import androidx.core.content.ContextCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
@@ -106,20 +105,6 @@ public class ShowTools {
     public static void removeFromWatchlist(Context context, int showTmdbId) {
         new RemoveShowFromWatchlistTask(context, showTmdbId).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    /**
-     * Returns the Trakt id of a show, or {@code null} if it is invalid or there is none.
-     */
-    @Nullable
-    public static Integer getShowTraktId(@NonNull Context context, long showId) {
-        int traktIdOrZero = SgRoomDatabase.getInstance(context).sgShow2Helper()
-                .getShowTraktId(showId);
-        if (traktIdOrZero <= 0) {
-            return null;
-        } else {
-            return traktIdOrZero;
-        }
     }
 
     @NonNull
