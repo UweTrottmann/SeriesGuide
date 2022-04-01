@@ -255,7 +255,7 @@ fun Throwable.isRetryError(): Boolean {
         // Not super type InterruptedIOException as possibly not caused by network issues?
         is SocketTimeoutException -> true
         // Not SSLException as likely not temporary or a network issue.
-        is InterruptedIOException -> true // Network request time outs.
+        is InterruptedIOException -> true // Network request time outs or interrupted by system.
         else -> false
     }
 }
