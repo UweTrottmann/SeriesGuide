@@ -9,6 +9,7 @@ import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
@@ -167,8 +168,10 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
             traktWatched = traktShows;
         }
 
+        ServicesComponent services = SgApp.getServicesComponent(context);
         HexagonEpisodeSync hexagonEpisodeSync = new HexagonEpisodeSync(context,
-                SgApp.getServicesComponent(context).hexagonTools());
+                services.hexagonTools());
+        AddUpdateShowTools showTools = services.addUpdateShowTools();
 
         int result;
         boolean addedAtLeastOneShow = false;
@@ -206,8 +209,7 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                 break;
             }
 
-            ShowResult addResult = new AddUpdateShowTools(context)
-                    .addShow(nextShow.getTmdbId(), nextShow.getLanguage(),
+            ShowResult addResult = showTools.addShow(nextShow.getTmdbId(), nextShow.getLanguage(),
                             traktCollection, traktWatched, hexagonEpisodeSync);
             if (addResult == ShowResult.SUCCESS) {
                 result = PROGRESS_SUCCESS;

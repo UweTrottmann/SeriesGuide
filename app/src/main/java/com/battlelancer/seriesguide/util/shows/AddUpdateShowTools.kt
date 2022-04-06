@@ -3,13 +3,14 @@ package com.battlelancer.seriesguide.util.shows
 import android.content.Context
 import androidx.annotation.StringRes
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonError
 import com.battlelancer.seriesguide.backend.HexagonRetry
 import com.battlelancer.seriesguide.backend.HexagonStop
+import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.model.SgEpisode2
 import com.battlelancer.seriesguide.model.SgSeason2
+import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SgEpisode2Ids
 import com.battlelancer.seriesguide.provider.SgEpisode2TmdbIdUpdate
 import com.battlelancer.seriesguide.provider.SgEpisode2Update
@@ -19,6 +20,7 @@ import com.battlelancer.seriesguide.provider.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.provider.SgSeason2Update
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
+import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync
 import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
@@ -44,13 +46,20 @@ import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
+import dagger.Lazy
 import timber.log.Timber
 import java.util.TimeZone
+import javax.inject.Inject
 
 /**
  * Adds or updates a show and its seasons and episodes.
  */
-class AddUpdateShowTools(val context: Context) {
+class AddUpdateShowTools @Inject constructor(
+    @param:ApplicationContext private val context: Context,
+    private val hexagonShowSync: Lazy<HexagonShowSync>,
+    private val hexagonTools: Lazy<HexagonTools>,
+    private val showTools: Lazy<ShowTools2>
+) {
 
     enum class ShowService(@StringRes val nameResId: Int) {
         HEXAGON(R.string.hexagon),
@@ -84,8 +93,9 @@ class AddUpdateShowTools(val context: Context) {
         hexagonEpisodeSync: HexagonEpisodeSync
     ): ShowResult {
         // Do nothing if TMDB ID already in database.
-        val showTools = SgApp.getServicesComponent(context).showTools()
-        if (showTools.getShowId(showTmdbId, null) != null) return ShowResult.IN_DATABASE
+        if (showTools.get().getShowId(showTmdbId, null) != null) {
+            return ShowResult.IN_DATABASE
+        }
 
         val language = desiredLanguage ?: DisplaySettings.LANGUAGE_EN
 
@@ -94,12 +104,14 @@ class AddUpdateShowTools(val context: Context) {
         val show = showDetails.show!!
 
         // Check again if in database using TVDB id, show might not have TMDB id, yet.
-        if (showTools.getShowId(showTmdbId, show.tvdbId) != null) return ShowResult.IN_DATABASE
+        if (showTools.get().getShowId(showTmdbId, show.tvdbId) != null) {
+            return ShowResult.IN_DATABASE
+        }
 
         // Restore properties from Hexagon
         val hexagonEnabled = HexagonSettings.isEnabled(context)
         if (hexagonEnabled) {
-            val hexagonShow = SgApp.getServicesComponent(context).hexagonTools()
+            val hexagonShow = hexagonTools.get()
                 .getShow(showTmdbId, show.tvdbId)
                 .getOrElse { return ShowResult.HEXAGON_ERROR }
             if (hexagonShow != null) {
@@ -570,7 +582,7 @@ class AddUpdateShowTools(val context: Context) {
                 // If Hexagon does not have this show by TMDB ID,
                 // send current show info and schedule re-upload of episodes using TMDB IDs.
                 if (HexagonSettings.isEnabled(context)) {
-                    val hexagonShow = SgApp.getServicesComponent(context).hexagonTools()
+                    val hexagonShow = hexagonTools.get()
                         .getShow(showTmdbId, null)
                         .getOrElse { return@andThen Err(it.toUpdateResult()) }
                     if (hexagonShow == null) {
@@ -691,7 +703,7 @@ class AddUpdateShowTools(val context: Context) {
     }
 
     private fun uploadShowsToCloud(shows: List<SgCloudShow>): Boolean {
-        return SgApp.getServicesComponent(context).hexagonShowSync().upload(shows)
+        return hexagonShowSync.get().upload(shows)
     }
 
     private fun GetShowError.toShowResult(): ShowResult {

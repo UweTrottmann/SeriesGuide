@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.sync
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.format.DateUtils
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
@@ -51,7 +52,7 @@ class ShowSync(
         val showsToUpdate = getShowsToUpdate(context, currentTime) ?: return null
         Timber.d("Updating %d show(s)...", showsToUpdate.size)
 
-        val showTools = AddUpdateShowTools(context)
+        val showTools = SgApp.getServicesComponent(context).addUpdateShowTools()
         var networkErrors = 0
         for (showId in showsToUpdate) {
             // Try to update this show.
