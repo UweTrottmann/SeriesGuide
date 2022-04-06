@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.widget.PopupMenu;
 import androidx.fragment.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
@@ -27,7 +28,7 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
         this.fragmentManager = fm;
         this.showId = showId;
         this.nextEpisodeId = nextEpisodeId;
-        this.showTools = new ShowTools2(context);
+        this.showTools = SgApp.getServicesComponent(context).showTools();
     }
 
     @Override

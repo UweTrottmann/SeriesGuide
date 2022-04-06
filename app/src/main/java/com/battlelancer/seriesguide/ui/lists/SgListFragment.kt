@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgListItemWithDetails
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
@@ -21,7 +22,6 @@ import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings.ListsSort
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.util.shows.ShowTools2
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -127,7 +127,8 @@ class SgListFragment : Fragment() {
 
 
             override fun onFavoriteClick(showId: Long, isFavorite: Boolean) {
-                ShowTools2(requireContext()).storeIsFavorite(showId, isFavorite)
+                SgApp.getServicesComponent(requireContext()).showTools()
+                    .storeIsFavorite(showId, isFavorite)
             }
         }
 

@@ -84,7 +84,7 @@ class AddUpdateShowTools(val context: Context) {
         hexagonEpisodeSync: HexagonEpisodeSync
     ): ShowResult {
         // Do nothing if TMDB ID already in database.
-        val showTools = ShowTools2(context)
+        val showTools = SgApp.getServicesComponent(context).showTools()
         if (showTools.getShowId(showTmdbId, null) != null) return ShowResult.IN_DATABASE
 
         val language = desiredLanguage ?: DisplaySettings.LANGUAGE_EN

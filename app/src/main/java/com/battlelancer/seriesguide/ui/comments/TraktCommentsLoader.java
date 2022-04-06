@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsFragment.InitBundle;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Comment;
@@ -91,7 +90,9 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                 return buildResultFailure(R.string.unknown);
             }
             // look up show trakt id
-            Integer showTraktId = new ShowTools2(getContext()).getShowTraktId(episode.getShowId());
+            Integer showTraktId = SgApp.getServicesComponent(getContext())
+                    .showTools()
+                    .getShowTraktId(episode.getShowId());
             if (showTraktId == null) {
                 Timber.e("Failed to get show %d", episode.getShowId());
                 return buildResultFailure(R.string.trakt_error_not_exists);
@@ -116,7 +117,9 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
 
         // show comments!
         long showId = args.getLong(InitBundle.SHOW_ID);
-        Integer showTraktId = new ShowTools2(getContext()).getShowTraktId(showId);
+        Integer showTraktId = SgApp.getServicesComponent(getContext())
+                .showTools()
+                .getShowTraktId(showId);
         if (showTraktId == null) {
             return buildResultFailure(R.string.trakt_error_not_exists);
         }

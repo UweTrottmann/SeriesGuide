@@ -9,7 +9,6 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.entities.SyncEpisode
 import com.uwetrottmann.trakt5.entities.SyncItems
@@ -29,7 +28,8 @@ class TraktEpisodeJob(
 
     override fun execute(context: Context): JobResult {
         // Do not send if show has no trakt id (was not on trakt last time we checked).
-        val showTraktId = ShowTools2(context).getShowTraktId(jobInfo.showId())
+        val showTraktId = SgApp.getServicesComponent(context)
+            .showTools().getShowTraktId(jobInfo.showId())
         val canSendToTrakt = showTraktId != null
         if (!canSendToTrakt) {
             return buildResult(context, NetworkJob.ERROR_TRAKT_NOT_FOUND)

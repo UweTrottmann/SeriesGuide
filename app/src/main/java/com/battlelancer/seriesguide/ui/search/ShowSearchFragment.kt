@@ -10,11 +10,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.shows.ShowMenuItemClickListener
 import com.battlelancer.seriesguide.util.TabClickEvent
-import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.battlelancer.seriesguide.widgets.EmptyView
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -123,7 +123,8 @@ class ShowSearchFragment : BaseSearchFragment() {
         }
 
         override fun onFavoriteClick(showId: Long, isFavorite: Boolean) {
-            ShowTools2(requireContext()).storeIsFavorite(showId, isFavorite)
+            SgApp.getServicesComponent(requireContext()).showTools()
+                .storeIsFavorite(showId, isFavorite)
         }
     }
 }

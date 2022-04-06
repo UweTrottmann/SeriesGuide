@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.TraktV2;
@@ -123,8 +122,8 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         List<SearchResult> results = new ArrayList<>();
 
         // build list
-        SparseArrayCompat<String> existingPosterPaths = new ShowTools2(context)
-                .getTmdbIdsToPoster();
+        SparseArrayCompat<String> existingPosterPaths = SgApp.getServicesComponent(context)
+                .showTools().getTmdbIdsToPoster();
         for (BaseShow baseShow : traktShows) {
             if (baseShow == null) {
                 continue;

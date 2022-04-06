@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.sync;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
@@ -11,7 +12,6 @@ import com.battlelancer.seriesguide.provider.SgShow2Ids;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.ui.search.SearchResult;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,7 +51,8 @@ public class HexagonSync {
      * changes to shows, episodes and movies.
      */
     public HexagonResult sync() {
-        Map<Integer, Long> tmdbIdsToShowIds = new ShowTools2(context).getTmdbIdsToShowIds();
+        Map<Integer, Long> tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
+                .getTmdbIdsToShowIds();
 
         //// EPISODES
         progress.publish(SyncProgress.Step.HEXAGON_EPISODES);

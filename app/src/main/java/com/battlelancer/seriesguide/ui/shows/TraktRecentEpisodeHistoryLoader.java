@@ -17,7 +17,6 @@ import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.battlelancer.seriesguide.util.TimeTools;
-import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
@@ -98,8 +97,8 @@ public class TraktRecentEpisodeHistoryLoader
     }
 
     protected void addItems(List<NowAdapter.NowItem> items, List<HistoryEntry> history) {
-        SparseArrayCompat<String> tmdbIdsToPoster = new ShowTools2(getContext())
-                .getTmdbIdsToPoster();
+        SparseArrayCompat<String> tmdbIdsToPoster = SgApp.getServicesComponent(getContext())
+                .showTools().getTmdbIdsToPoster();
         SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(getContext())
                 .sgEpisode2Helper();
         long timeDayAgo = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS;

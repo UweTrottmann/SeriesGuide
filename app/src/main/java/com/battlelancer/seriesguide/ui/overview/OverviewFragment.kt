@@ -27,6 +27,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Action
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.extensions.ActionsHelper
@@ -67,7 +68,6 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.shows.ShowStatus
-import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.battlelancer.seriesguide.widgets.FeedbackView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -381,7 +381,8 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
 
         // store new value
         val isFavorite = view.tag as Boolean
-        ShowTools2(requireContext()).storeIsFavorite(showId, !isFavorite)
+        SgApp.getServicesComponent(requireContext()).showTools()
+            .storeIsFavorite(showId, !isFavorite)
     }
 
     @OnClick(R.id.buttonEpisodeCheckin)

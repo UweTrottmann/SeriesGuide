@@ -20,6 +20,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktTools
@@ -41,7 +42,6 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.shows.ShowStatus
-import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.launch
@@ -297,7 +297,8 @@ class ShowFragment() : Fragment() {
             setOnClickListener { v ->
                 // disable until action is complete
                 v.isEnabled = false
-                ShowTools2(requireContext()).storeIsFavorite(showId, !isFavorite)
+                SgApp.getServicesComponent(requireContext()).showTools()
+                    .storeIsFavorite(showId, !isFavorite)
             }
         }
 
@@ -323,7 +324,8 @@ class ShowFragment() : Fragment() {
                 if (Utils.hasAccessToX(activity)) {
                     // disable until action is complete
                     v.isEnabled = false
-                    ShowTools2(requireContext()).storeNotify(showId, !notify)
+                    SgApp.getServicesComponent(requireContext()).showTools()
+                        .storeNotify(showId, !notify)
                 } else {
                     Utils.advertiseSubscription(activity)
                 }
@@ -350,7 +352,8 @@ class ShowFragment() : Fragment() {
             setOnClickListener { v ->
                 // disable until action is complete
                 v.isEnabled = false
-                ShowTools2(requireContext()).storeIsHidden(showId, !isHidden)
+                SgApp.getServicesComponent(requireContext()).showTools()
+                    .storeIsHidden(showId, !isHidden)
             }
         }
 
@@ -504,7 +507,8 @@ class ShowFragment() : Fragment() {
         this.languageCode = languageCode
 
         Timber.d("Changing show language to %s", languageCode)
-        ShowTools2(requireContext()).storeLanguage(showId, languageCode)
+        SgApp.getServicesComponent(requireContext()).showTools()
+            .storeLanguage(showId, languageCode)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

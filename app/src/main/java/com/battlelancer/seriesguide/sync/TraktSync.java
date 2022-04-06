@@ -5,12 +5,12 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
+import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
 import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
@@ -56,7 +56,8 @@ public class TraktSync {
         }
 
         TraktRatingsSync ratingsSync = new TraktRatingsSync(context, traktSync);
-        Map<Integer, Long> tmdbIdsToShowIds = new ShowTools2(context).getTmdbIdsToShowIds();
+        Map<Integer, Long> tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
+                .getTmdbIdsToShowIds();
         if (tmdbIdsToShowIds.size() == 0) {
             Timber.d("performTraktSync: no local shows, skip shows");
         } else {

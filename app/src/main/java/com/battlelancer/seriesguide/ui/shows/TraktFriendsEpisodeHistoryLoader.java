@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Friend;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
@@ -62,8 +61,7 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
                 new NowAdapter.NowItem().header(getContext().getString(R.string.friends_recently)));
 
         // add last watched episode for each friend
-        SparseArrayCompat<String> tmdbIdsToPoster = new ShowTools2(getContext())
-                .getTmdbIdsToPoster();
+        SparseArrayCompat<String> tmdbIdsToPoster = services.showTools().getTmdbIdsToPoster();
         SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(getContext())
                 .sgEpisode2Helper();
         boolean hideTitle = DisplaySettings.preventSpoilers(getContext());

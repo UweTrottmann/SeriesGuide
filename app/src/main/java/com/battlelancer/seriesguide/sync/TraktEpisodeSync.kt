@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgEpisode2CollectedUpdate
 import com.battlelancer.seriesguide.provider.SgEpisode2ForSync
 import com.battlelancer.seriesguide.provider.SgEpisode2WatchedUpdate
@@ -14,7 +15,6 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.uwetrottmann.trakt5.entities.BaseSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
 import com.uwetrottmann.trakt5.entities.ShowIds
@@ -208,7 +208,8 @@ class TraktEpisodeSync(
                 // show not watched/collected on Trakt
                 // check if this is because the show can not be tracked with Trakt (yet)
                 // keep state local and maybe upload in the future
-                val showTraktId = ShowTools2(context).getShowTraktId(showId)
+                val showTraktId = SgApp.getServicesComponent(context)
+                    .showTools().getShowTraktId(showId)
                 if (showTraktId != null) {
                     // Show can be tracked with Trakt.
                     if (isInitialSync) {
@@ -308,7 +309,8 @@ class TraktEpisodeSync(
         }
         return if (isInitialSync && syncSeasons.size > 0) {
             // upload watched/collected episodes for this show
-            val showTraktId = ShowTools2(context).getShowTraktId(showRowId)
+            val showTraktId = SgApp.getServicesComponent(context)
+                .showTools().getShowTraktId(showRowId)
                 ?: return false // show should have a Trakt id, give up
             upload(traktSync!!, showTraktId, syncSeasons, flag)
         } else {

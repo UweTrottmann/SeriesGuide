@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.enums.NetworkResult
+import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -15,17 +16,22 @@ import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
+import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 import kotlin.collections.set
 import com.battlelancer.seriesguide.enums.Result as SgResult
 
 /**
  * Provides some show operations as (async) suspend functions, running within global scope.
  */
-class ShowTools2(val context: Context) {
+class ShowTools2 @Inject constructor(
+    @param:ApplicationContext private val context: Context,
+    private val hexagonShowSync: Lazy<HexagonShowSync>
+) {
 
     /**
      * Gets row ID of a show by TMDB id first, then if given by TVDB id and null TMDB id (show is
@@ -342,7 +348,7 @@ class ShowTools2(val context: Context) {
                 }
 
                 val success = withContext(Dispatchers.IO) {
-                    HexagonShowSync(context).upload(shows)
+                    hexagonShowSync.get().upload(shows)
                 }
                 return@withContext !success
             }
@@ -416,7 +422,7 @@ class ShowTools2(val context: Context) {
     }
 
     private suspend fun uploadShowToCloud(show: SgCloudShow): Boolean {
-        return HexagonShowSync(context).upload(show)
+        return hexagonShowSync.get().upload(show)
     }
 
     fun getTmdbIdsToPoster(): SparseArrayCompat<String> {

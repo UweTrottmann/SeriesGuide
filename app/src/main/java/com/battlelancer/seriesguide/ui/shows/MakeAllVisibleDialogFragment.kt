@@ -10,8 +10,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +28,7 @@ class MakeAllVisibleDialogFragment : AppCompatDialogFragment() {
         dialog = MaterialAlertDialogBuilder(requireContext())
             .setMessage(getString(R.string.description_make_all_visible_format, "?"))
             .setPositiveButton(R.string.action_shows_make_all_visible) { _, _ ->
-                ShowTools2(requireContext()).storeAllHiddenVisible()
+                SgApp.getServicesComponent(requireContext()).showTools().storeAllHiddenVisible()
                 dismiss()
             }
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismiss() }
