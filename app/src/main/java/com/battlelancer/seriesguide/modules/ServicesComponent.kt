@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.modules
 
 import com.battlelancer.seriesguide.backend.HexagonTools
+import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.ui.movies.MovieTools
@@ -30,6 +31,7 @@ import javax.inject.Singleton
 interface ServicesComponent {
 
     fun hexagonTools(): HexagonTools
+    fun hexagonShowSync(): HexagonShowSync
     fun moviesService(): MoviesService
     fun movieTools(): MovieTools
     fun peopleService(): PeopleService?

@@ -19,7 +19,6 @@ import com.battlelancer.seriesguide.provider.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.provider.SgSeason2Update
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
-import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync
 import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
@@ -692,7 +691,7 @@ class AddUpdateShowTools(val context: Context) {
     }
 
     private fun uploadShowsToCloud(shows: List<SgCloudShow>): Boolean {
-        return HexagonShowSync(context).upload(shows)
+        return SgApp.getServicesComponent(context).hexagonShowSync().upload(shows)
     }
 
     private fun GetShowError.toShowResult(): ShowResult {
