@@ -56,6 +56,7 @@ import javax.inject.Inject
  */
 class AddUpdateShowTools @Inject constructor(
     @param:ApplicationContext private val context: Context,
+    private val getShowTools: GetShowTools,
     private val hexagonShowSync: Lazy<HexagonShowSync>,
     private val hexagonTools: Lazy<HexagonTools>,
     private val showTools: Lazy<ShowTools2>
@@ -99,7 +100,7 @@ class AddUpdateShowTools @Inject constructor(
 
         val language = desiredLanguage ?: DisplaySettings.LANGUAGE_EN
 
-        val showDetails = GetShowTools(context).getShowDetails(showTmdbId, language)
+        val showDetails = getShowTools.getShowDetails(showTmdbId, language)
             .getOrElse { return it.toShowResult() }
         val show = showDetails.show!!
 
@@ -429,7 +430,7 @@ class AddUpdateShowTools @Inject constructor(
                 }
         }
 
-        val showDetails = GetShowTools(context).getShowDetails(showTmdbId, language, true)
+        val showDetails = getShowTools.getShowDetails(showTmdbId, language, true)
             .getOrElse { return it.toUpdateResult() }
         val show = showDetails.showUpdate!!
         show.id = showId

@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.util.shows
 import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.model.SgShow2
+import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SgShow2Update
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.tmdbapi.TmdbError
@@ -26,11 +27,14 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Downloads details of a show.
  */
-class GetShowTools(val context: Context) {
+class GetShowTools @Inject constructor(
+    @param:ApplicationContext private val context: Context
+) {
 
     data class ShowDetails(
         val show: SgShow2? = null,
