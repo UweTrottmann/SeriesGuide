@@ -3,17 +3,17 @@ package com.battlelancer.seriesguide.sync
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.format.DateUtils
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
-import com.battlelancer.seriesguide.ui.shows.ShowTools
-import com.battlelancer.seriesguide.ui.shows.ShowTools2
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.ApiErrorRetry
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.ApiErrorStop
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.DatabaseError
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.DoesNotExist
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.UpdateResult.Success
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.UpdateResult.ApiErrorRetry
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.UpdateResult.ApiErrorStop
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.UpdateResult.DatabaseError
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.UpdateResult.DoesNotExist
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.UpdateResult.Success
 import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
 import kotlin.math.pow
@@ -44,7 +44,6 @@ class ShowSync(
     @SuppressLint("TimberExceptionLogging")
     fun sync(
         context: Context,
-        showTools: ShowTools,
         currentTime: Long,
         progress: SyncProgress
     ): UpdateResult? {
@@ -53,10 +52,11 @@ class ShowSync(
         val showsToUpdate = getShowsToUpdate(context, currentTime) ?: return null
         Timber.d("Updating %d show(s)...", showsToUpdate.size)
 
+        val showTools = SgApp.getServicesComponent(context).addUpdateShowTools()
         var networkErrors = 0
         for (showId in showsToUpdate) {
             // Try to update this show.
-            var result: ShowTools2.UpdateResult
+            var result: AddUpdateShowTools.UpdateResult
             do {
                 // Shortcut to stop updating if connectivity is lost.
                 if (!AndroidUtils.isNetworkConnected(context)) {
@@ -220,5 +220,14 @@ class ShowSync(
                 12 * DateUtils.HOUR_IN_MILLIS
         private const val UPDATE_THRESHOLD_DAILYS_MS = (DateUtils.DAY_IN_MILLIS
                 + 12 * DateUtils.HOUR_IN_MILLIS)
+
+        /**
+         * Returns true if the given show has not been updated in the last 12 hours.
+         */
+        fun shouldUpdateShow(context: Context, showId: Long): Boolean {
+            val lastUpdatedMs = SgRoomDatabase.getInstance(context).sgShow2Helper()
+                .getLastUpdated(showId) ?: return false
+            return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12
+        }
     }
 }

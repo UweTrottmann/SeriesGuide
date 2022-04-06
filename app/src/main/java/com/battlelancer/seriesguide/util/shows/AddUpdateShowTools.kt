@@ -1,22 +1,16 @@
-package com.battlelancer.seriesguide.ui.shows
+package com.battlelancer.seriesguide.util.shows
 
 import android.content.Context
-import android.text.format.DateUtils
-import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.collection.SparseArrayCompat
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonError
 import com.battlelancer.seriesguide.backend.HexagonRetry
 import com.battlelancer.seriesguide.backend.HexagonStop
+import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.model.SgEpisode2
 import com.battlelancer.seriesguide.model.SgSeason2
-import com.battlelancer.seriesguide.model.SgShow2
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SgEpisode2Ids
 import com.battlelancer.seriesguide.provider.SgEpisode2TmdbIdUpdate
 import com.battlelancer.seriesguide.provider.SgEpisode2Update
@@ -24,58 +18,49 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgSeason2Numbers
 import com.battlelancer.seriesguide.provider.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.provider.SgSeason2Update
-import com.battlelancer.seriesguide.provider.SgShow2Update
-import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.HexagonShowSync
-import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync
 import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
 import com.battlelancer.seriesguide.tmdbapi.TmdbStop
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.traktapi.TraktError
-import com.battlelancer.seriesguide.traktapi.TraktRetry
-import com.battlelancer.seriesguide.traktapi.TraktStop
-import com.battlelancer.seriesguide.traktapi.TraktTools2
-import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowService.HEXAGON
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowService.TMDB
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowService.TRAKT
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.ShowService.HEXAGON
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.ShowService.TMDB
+import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.ShowService.TRAKT
+import com.battlelancer.seriesguide.util.shows.GetShowTools.GetShowError
+import com.battlelancer.seriesguide.util.shows.GetShowTools.GetShowError.GetShowDoesNotExist
+import com.battlelancer.seriesguide.util.shows.GetShowTools.GetShowError.GetShowRetry
+import com.battlelancer.seriesguide.util.shows.GetShowTools.GetShowError.GetShowStop
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.mapError
-import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.EventBus
+import dagger.Lazy
 import timber.log.Timber
 import java.util.TimeZone
-import kotlin.collections.set
-import com.battlelancer.seriesguide.enums.Result as SgResult
+import javax.inject.Inject
 
 /**
- * Provides some show operations as (async) suspend functions, running within global scope.
+ * Adds or updates a show and its seasons and episodes.
  */
-class ShowTools2(val showTools: ShowTools, val context: Context) {
-
-    enum class ShowService(@StringRes val nameResId: Int) {
-        HEXAGON(R.string.hexagon),
-        TMDB(R.string.tmdb),
-        TRAKT(R.string.trakt)
-    }
+class AddUpdateShowTools @Inject constructor(
+    @param:ApplicationContext private val context: Context,
+    private val getShowTools: GetShowTools,
+    private val hexagonShowSync: Lazy<HexagonShowSync>,
+    private val hexagonTools: Lazy<HexagonTools>,
+    private val showTools: Lazy<ShowTools2>
+) {
 
     enum class ShowResult {
         SUCCESS,
@@ -87,212 +72,6 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         DATABASE_ERROR
     }
 
-    sealed class UpdateResult {
-        object Success : UpdateResult()
-        object DoesNotExist : UpdateResult()
-        class ApiErrorStop(val service: ShowService) : UpdateResult()
-        class ApiErrorRetry(val service: ShowService) : UpdateResult()
-        object DatabaseError : UpdateResult()
-    }
-
-    /**
-     * Gets row ID of a show by TMDB id first, then if given by TVDB id and null TMDB id (show is
-     * not migrated, yet). Null if not in database or matched by TVDB id, but has different TMDB id.
-     */
-    fun getShowId(showTmdbId: Int, showTvdbId: Int?): Long? {
-        val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
-
-        val showIdByTmdbId = helper.getShowIdByTmdbId(showTmdbId)
-        if (showIdByTmdbId > 0) return showIdByTmdbId
-
-        if (showTvdbId != null) {
-            // Note: TVDB might have a single show that is split into two or more shows on TMDB,
-            // so on TMDB the same TVDB is linked for both. To not prevent adding the second one,
-            // only return show ID if it was not migrated to avoid adding a duplicate show.
-            val showIdByTvdbId = helper.getShowIdByTvdbIdWithNullTmdbId(showTvdbId)
-            if (showIdByTvdbId > 0) return showIdByTvdbId
-        }
-
-        return null
-    }
-
-    data class ShowDetails(
-        val show: SgShow2? = null,
-        val showUpdate: SgShow2Update? = null,
-        val seasons: List<TvSeason>? = null
-    )
-
-    sealed class GetShowError(val service: ShowService)
-
-    /**
-     * The API request might succeed if tried again after a brief delay
-     * (e.g. time outs or other temporary network issues).
-     */
-    class GetShowRetry(service: ShowService) : GetShowError(service)
-
-    /**
-     * The API request is unlikely to succeed if retried, at least right now
-     * (e.g. API bugs or changes).
-     */
-    class GetShowStop(service: ShowService) : GetShowError(service)
-    object GetShowDoesNotExist : GetShowError(TMDB)
-
-    /**
-     * If [updateOnly] returns a show for updating, but without its ID set!
-     */
-    fun getShowDetails(
-        showTmdbId: Int,
-        desiredLanguage: String,
-        updateOnly: Boolean = false
-    ): Result<ShowDetails, GetShowError> {
-        var tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
-            .getOrElse { return Err(it.toGetShowError()) }
-            ?: return Err(GetShowDoesNotExist)
-        val tmdbSeasons = tmdbShow.seasons
-
-        val noTranslation = tmdbShow.overview.isNullOrEmpty()
-        if (noTranslation) {
-            tmdbShow = TmdbTools2().getShowAndExternalIds(
-                showTmdbId,
-                DisplaySettings.getShowsLanguageFallback(context),
-                context
-            ).getOrElse { return Err(it.toGetShowError()) }
-                ?: return Err(GetShowDoesNotExist)
-        }
-
-        val traktShow = TraktTools2.getShowByTmdbId(showTmdbId, context)
-            .getOrElse {
-                // Fail if looking up Trakt details failed to avoid removing them for existing shows.
-                return Err(it.toGetShowError())
-            }
-        if (traktShow == null) {
-            Timber.w("getShowDetails: no Trakt show found, using default values.")
-        }
-
-        val title = if (tmdbShow.name.isNullOrEmpty()) {
-            context.getString(R.string.no_translation_title)
-        } else {
-            tmdbShow.name
-        }
-
-        val overview = if (noTranslation || tmdbShow.overview.isNullOrEmpty()) {
-            // add note about non-translated or non-existing overview
-            var overview = TextTools.textNoTranslation(context, desiredLanguage)
-            // if there is one, append non-translated overview
-            if (!tmdbShow.overview.isNullOrEmpty()) {
-                overview += "\n\n${tmdbShow.overview}"
-            }
-            overview
-        } else {
-            tmdbShow.overview
-        }
-
-        val tvdbIdOrNull = tmdbShow.external_ids?.tvdb_id
-        val traktIdOrNull = traktShow?.ids?.trakt
-        val titleNoArticle = TextTools.trimLeadingArticle(tmdbShow.name)
-        val releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time)
-        val releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day)
-        val releaseCountry = traktShow?.country
-        val releaseTimeZone = traktShow?.airs?.timezone
-        val firstRelease = TimeTools.parseShowFirstRelease(traktShow?.first_aired)
-        val rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 } ?: 0.0
-        val votes = traktShow?.votes?.let { if (it >= 0) it else 0 } ?: 0
-        val genres =
-            TextTools.buildPipeSeparatedString(tmdbShow.genres?.map { genre -> genre.name })
-        val network = tmdbShow.networks?.firstOrNull()?.name ?: ""
-        val imdbId = tmdbShow.external_ids?.imdb_id ?: ""
-        val runtime = tmdbShow.episode_run_time?.firstOrNull() ?: 45 // estimate 45 minutes if none.
-        val status = when (tmdbShow.status) {
-            "Returning Series" -> Status.RETURNING
-            "Planned" -> Status.PLANNED
-            "Pilot" -> Status.PILOT
-            "Ended" -> Status.ENDED
-            "Canceled" -> Status.CANCELED
-            "In Production" -> Status.IN_PRODUCTION
-            else -> Status.UNKNOWN
-        }
-        val poster = tmdbShow.poster_path ?: ""
-
-        val showDetails = if (updateOnly) {
-            // For updating existing show.
-            ShowDetails(
-                showUpdate = SgShow2Update(
-                    tvdbId = tvdbIdOrNull,
-                    traktId = traktIdOrNull,
-                    title = title,
-                    titleNoArticle = titleNoArticle,
-                    overview = overview,
-                    releaseTime = releaseTime,
-                    releaseWeekDay = releaseWeekDay,
-                    releaseCountry = releaseCountry,
-                    releaseTimeZone = releaseTimeZone,
-                    firstRelease = firstRelease,
-                    ratingGlobal = rating,
-                    ratingVotes = votes,
-                    genres = genres,
-                    network = network,
-                    imdbId = imdbId,
-                    runtime = runtime,
-                    status = status,
-                    poster = poster,
-                    posterSmall = poster,
-                    lastUpdatedMs = System.currentTimeMillis() // now
-                ),
-                seasons = tmdbSeasons
-            )
-        } else {
-            // For inserting new show.
-            ShowDetails(
-                show = SgShow2(
-                    tmdbId = tmdbShow.id,
-                    tvdbId = tvdbIdOrNull,
-                    traktId = traktIdOrNull,
-                    title = title,
-                    titleNoArticle = titleNoArticle,
-                    overview = overview,
-                    releaseTime = releaseTime,
-                    releaseWeekDay = releaseWeekDay,
-                    releaseCountry = releaseCountry,
-                    releaseTimeZone = releaseTimeZone,
-                    firstRelease = firstRelease,
-                    ratingGlobal = rating,
-                    ratingVotes = votes,
-                    genres = genres,
-                    network = network,
-                    imdbId = imdbId,
-                    runtime = runtime,
-                    status = status,
-                    poster = poster,
-                    posterSmall = poster,
-                    // set desired language, might not be the content language if fallback used above.
-                    language = desiredLanguage,
-                    lastUpdatedMs = System.currentTimeMillis() // now
-                ),
-                seasons = tmdbSeasons
-            )
-        }
-        return Ok(showDetails)
-    }
-
-    /**
-     * Decodes the [ShowTools.Status] and returns the localized text representation.
-     * May be `null` if status is unknown.
-     */
-    fun getStatus(encodedStatus: Int): String? {
-        return when (encodedStatus) {
-            Status.IN_PRODUCTION -> context.getString(R.string.show_status_in_production)
-            Status.PILOT -> context.getString(R.string.show_status_pilot)
-            Status.CANCELED -> context.getString(R.string.show_status_canceled)
-            Status.PLANNED -> context.getString(R.string.show_isUpcoming)
-            Status.RETURNING -> context.getString(R.string.show_isalive)
-            Status.ENDED -> context.getString(R.string.show_isnotalive)
-            else -> {
-                // status unknown, display nothing
-                null
-            }
-        }
-    }
-
     fun addShow(
         showTmdbId: Int,
         desiredLanguage: String?,
@@ -301,21 +80,25 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         hexagonEpisodeSync: HexagonEpisodeSync
     ): ShowResult {
         // Do nothing if TMDB ID already in database.
-        if (getShowId(showTmdbId, null) != null) return ShowResult.IN_DATABASE
+        if (showTools.get().getShowId(showTmdbId, null) != null) {
+            return ShowResult.IN_DATABASE
+        }
 
         val language = desiredLanguage ?: DisplaySettings.LANGUAGE_EN
 
-        val showDetails = getShowDetails(showTmdbId, language)
+        val showDetails = getShowTools.getShowDetails(showTmdbId, language)
             .getOrElse { return it.toShowResult() }
         val show = showDetails.show!!
 
         // Check again if in database using TVDB id, show might not have TMDB id, yet.
-        if (getShowId(showTmdbId, show.tvdbId) != null) return ShowResult.IN_DATABASE
+        if (showTools.get().getShowId(showTmdbId, show.tvdbId) != null) {
+            return ShowResult.IN_DATABASE
+        }
 
         // Restore properties from Hexagon
         val hexagonEnabled = HexagonSettings.isEnabled(context)
         if (hexagonEnabled) {
-            val hexagonShow = SgApp.getServicesComponent(context).hexagonTools()
+            val hexagonShow = hexagonTools.get()
                 .getShow(showTmdbId, show.tvdbId)
                 .getOrElse { return ShowResult.HEXAGON_ERROR }
             if (hexagonShow != null) {
@@ -633,7 +416,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 }
         }
 
-        val showDetails = getShowDetails(showTmdbId, language, true)
+        val showDetails = getShowTools.getShowDetails(showTmdbId, language, true)
             .getOrElse { return it.toUpdateResult() }
         val show = showDetails.showUpdate!!
         show.id = showId
@@ -786,7 +569,7 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 // If Hexagon does not have this show by TMDB ID,
                 // send current show info and schedule re-upload of episodes using TMDB IDs.
                 if (HexagonSettings.isEnabled(context)) {
-                    val hexagonShow = SgApp.getServicesComponent(context).hexagonTools()
+                    val hexagonShow = hexagonTools.get()
                         .getShow(showTmdbId, null)
                         .getOrElse { return@andThen Err(it.toUpdateResult()) }
                     if (hexagonShow == null) {
@@ -906,400 +689,8 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return UpdateResult.Success
     }
 
-    /**
-     * Posted if a show is about to get removed.
-     */
-    data class OnRemovingShowEvent(val showId: Long)
-
-    /**
-     * Posted if show was just removed (or failure).
-     */
-    data class OnShowRemovedEvent(
-        val showTmdbId: Int,
-        /** One of [com.battlelancer.seriesguide.enums.NetworkResult]. */
-        val resultCode: Int
-    )
-
-    /**
-     * Removes a show and its seasons and episodes, including search docs. Sends isRemoved flag to
-     * Hexagon so the show will not be auto-added on any device connected to Hexagon.
-     *
-     * Posts [OnRemovingShowEvent] when starting and [OnShowRemovedEvent] once completed.
-     */
-    fun removeShow(showId: Long) {
-        SgApp.coroutineScope.launch(SgApp.SINGLE) {
-            withContext(Dispatchers.Main) {
-                EventBus.getDefault().post(OnRemovingShowEvent(showId))
-            }
-
-            // Get TMDB id for OnShowRemovedEvent before removing show.
-            val showTmdbId = withContext(Dispatchers.IO) {
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-            }
-
-            val result = removeShowAsync(showId)
-
-            withContext(Dispatchers.Main) {
-                if (result == NetworkResult.OFFLINE) {
-                    Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show()
-                } else if (result == NetworkResult.ERROR) {
-                    Toast.makeText(context, R.string.delete_error, Toast.LENGTH_LONG).show()
-                }
-                EventBus.getDefault().post(OnShowRemovedEvent(showTmdbId, result))
-            }
-        }
-    }
-
-    /**
-     * Returns [com.battlelancer.seriesguide.enums.NetworkResult].
-     */
-    private suspend fun removeShowAsync(showId: Long): Int {
-        // Send to cloud.
-        val isCloudFailed = withContext(Dispatchers.Default) {
-            if (!HexagonSettings.isEnabled(context)) {
-                return@withContext false
-            }
-            if (isNotConnected(context)) {
-                return@withContext true
-            }
-
-            val showTmdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-            if (showTmdbId == 0) {
-                // If this is a legacy show (has TVDB ID but no TMDB ID), still allow removal
-                // from local database. Do not send to Cloud but pretend no failure.
-                val showTvdbId =
-                    SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTvdbId(showId)
-                return@withContext showTvdbId == 0
-            }
-
-            // Sets the isRemoved flag of the given show on Hexagon, so the show will
-            // not be auto-added on any device connected to Hexagon.
-            val show = SgCloudShow()
-            show.tmdbId = showTmdbId
-            show.isRemoved = true
-
-            val success = uploadShowToCloud(show)
-            return@withContext !success
-        }
-        // Do not save to local database if sending to cloud has failed.
-        if (isCloudFailed) return SgResult.ERROR
-
-        return withContext(Dispatchers.IO) {
-            // Remove database entries in stages, so if an earlier stage fails,
-            // user can try again. Also saves memory by using smaller database transactions.
-            val database = SgRoomDatabase.getInstance(context)
-
-            var rowsUpdated = database.sgEpisode2Helper().deleteEpisodesOfShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
-
-            rowsUpdated = database.sgSeason2Helper().deleteSeasonsOfShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
-
-            rowsUpdated = database.sgShow2Helper().deleteShow(showId)
-            if (rowsUpdated == -1) return@withContext SgResult.ERROR
-
-            SeriesGuideDatabase.rebuildFtsTable(context)
-            SgResult.SUCCESS
-        }
-    }
-
-    /**
-     * Saves new favorite flag to the local database and, if signed in, up into the cloud as well.
-     */
-    fun storeIsFavorite(showId: Long, isFavorite: Boolean) {
-        SgApp.coroutineScope.launch {
-            storeIsFavoriteAsync(showId, isFavorite)
-        }
-    }
-
-    private suspend fun storeIsFavoriteAsync(showId: Long, isFavorite: Boolean) {
-        // Send to cloud.
-        val isCloudFailed = withContext(Dispatchers.Default) {
-            if (!HexagonSettings.isEnabled(context)) {
-                return@withContext false
-            }
-            if (isNotConnected(context)) {
-                return@withContext true
-            }
-
-            val showTmdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-            if (showTmdbId == 0) {
-                return@withContext true
-            }
-
-            val show = SgCloudShow()
-            show.tmdbId = showTmdbId
-            show.isFavorite = isFavorite
-
-            val success = uploadShowToCloud(show)
-            return@withContext !success
-        }
-        // Do not save to local database if sending to cloud has failed.
-        if (isCloudFailed) return
-
-        // Save to local database.
-        withContext(Dispatchers.IO) {
-            SgRoomDatabase.getInstance(context).sgShow2Helper().setShowFavorite(showId, isFavorite)
-
-            // Also notify URI used by lists.
-            context.contentResolver
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null)
-        }
-
-        // display info toast
-        withContext(Dispatchers.Main) {
-            Toast.makeText(
-                context, context.getString(
-                    if (isFavorite)
-                        R.string.favorited
-                    else
-                        R.string.unfavorited
-                ), Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    /**
-     * Saves new hidden flag to the local database and, if signed in, up into the cloud as well.
-     */
-    fun storeIsHidden(showId: Long, isHidden: Boolean) {
-        SgApp.coroutineScope.launch {
-            storeIsHiddenAsync(showId, isHidden)
-        }
-    }
-
-    private suspend fun storeIsHiddenAsync(showId: Long, isHidden: Boolean) {
-        // Send to cloud.
-        val isCloudFailed = withContext(Dispatchers.Default) {
-            if (!HexagonSettings.isEnabled(context)) {
-                return@withContext false
-            }
-            if (isNotConnected(context)) {
-                return@withContext true
-            }
-
-            val showTmdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-            if (showTmdbId == 0) {
-                return@withContext true
-            }
-
-            val show = SgCloudShow()
-            show.tmdbId = showTmdbId
-            show.isHidden = isHidden
-
-            val success = uploadShowToCloud(show)
-            return@withContext !success
-        }
-        // Do not save to local database if sending to cloud has failed.
-        if (isCloudFailed) return
-
-        // Save to local database.
-        withContext(Dispatchers.IO) {
-            SgRoomDatabase.getInstance(context).sgShow2Helper().setShowHidden(showId, isHidden)
-        }
-
-        // display info toast
-        withContext(Dispatchers.Main) {
-            Toast.makeText(
-                context, context.getString(
-                    if (isHidden)
-                        R.string.hidden
-                    else
-                        R.string.unhidden
-                ), Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    /**
-     * Saves new notify flag to the local database and, if signed in, up into the cloud as well.
-     */
-    fun storeNotify(showId: Long, notify: Boolean) {
-        SgApp.coroutineScope.launch {
-            storeNotifyAsync(showId, notify)
-        }
-    }
-
-    private suspend fun storeNotifyAsync(showId: Long, notify: Boolean) {
-        // Send to cloud.
-        val isCloudFailed = withContext(Dispatchers.Default) {
-            if (!HexagonSettings.isEnabled(context)) {
-                return@withContext false
-            }
-            if (isNotConnected(context)) {
-                return@withContext true
-            }
-
-            val showTmdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-            if (showTmdbId == 0) {
-                return@withContext true
-            }
-
-            val show = SgCloudShow()
-            show.tmdbId = showTmdbId
-            show.notify = notify
-
-            val success = uploadShowToCloud(show)
-            return@withContext !success
-        }
-        // Do not save to local database if sending to cloud has failed.
-        if (isCloudFailed) return
-
-        // Save to local database.
-        withContext(Dispatchers.IO) {
-            SgRoomDatabase.getInstance(context).sgShow2Helper().setShowNotify(showId, notify)
-        }
-
-        // new notify setting may determine eligibility for notifications
-        withContext(Dispatchers.Default) {
-            NotificationService.trigger(context)
-        }
-    }
-
-    /**
-     * Removes hidden flag from all hidden shows in the local database and, if signed in, sends to
-     * the cloud as well.
-     */
-    fun storeAllHiddenVisible() {
-        SgApp.coroutineScope.launch {
-            // Send to cloud.
-            val isCloudFailed = withContext(Dispatchers.Default) {
-                if (!HexagonSettings.isEnabled(context)) {
-                    return@withContext false
-                }
-                if (isNotConnected(context)) {
-                    return@withContext true
-                }
-
-                val hiddenShowTmdbIds = withContext(Dispatchers.IO) {
-                    SgRoomDatabase.getInstance(context).sgShow2Helper().getHiddenShowsTmdbIds()
-                }
-
-                val shows = hiddenShowTmdbIds.map { tmdbId ->
-                    val show = SgCloudShow()
-                    show.tmdbId = tmdbId
-                    show.isHidden = false
-                    show
-                }
-
-                val success = withContext(Dispatchers.IO) {
-                    uploadShowsToCloud(shows)
-                }
-                return@withContext !success
-            }
-            // Do not save to local database if sending to cloud has failed.
-            if (isCloudFailed) return@launch
-
-            // Save to local database.
-            withContext(Dispatchers.IO) {
-                SgRoomDatabase.getInstance(context).sgShow2Helper().makeHiddenVisible()
-            }
-        }
-    }
-
-    fun storeLanguage(showId: Long, languageCode: String) = SgApp.coroutineScope.launch {
-        // Send to cloud.
-        val isCloudFailed = withContext(Dispatchers.Default) {
-            if (!HexagonSettings.isEnabled(context)) {
-                return@withContext false
-            }
-            if (isNotConnected(context)) {
-                return@withContext true
-            }
-            val showTmdbId =
-                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-            if (showTmdbId == 0) {
-                return@withContext true
-            }
-
-            val show = SgCloudShow()
-            show.tmdbId = showTmdbId
-            show.language = languageCode
-
-            val success = uploadShowToCloud(show)
-            return@withContext !success
-        }
-        // Do not save to local database if sending to cloud has failed.
-        if (isCloudFailed) return@launch
-
-        // Save to local database and schedule sync.
-        withContext(Dispatchers.IO) {
-            // change language
-            val database = SgRoomDatabase.getInstance(context)
-            database.sgShow2Helper().updateLanguage(showId, languageCode)
-            // reset episode last update time so all get updated
-            database.sgEpisode2Helper().resetLastUpdatedForShow(showId)
-            // trigger update
-            SgSyncAdapter.requestSyncSingleImmediate(context, false, showId)
-        }
-
-        withContext(Dispatchers.Main) {
-            // show immediate feedback, also if offline and sync won't go through
-            if (AndroidUtils.isNetworkConnected(context)) {
-                // notify about upcoming sync
-                Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show()
-            } else {
-                // offline
-                Toast.makeText(context, R.string.update_no_connection, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private suspend fun isNotConnected(context: Context): Boolean {
-        val isConnected = AndroidUtils.isNetworkConnected(context)
-        // display offline toast
-        if (!isConnected) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show()
-            }
-        }
-        return !isConnected
-    }
-
-    private suspend fun uploadShowToCloud(show: SgCloudShow): Boolean {
-        return withContext(Dispatchers.IO) {
-            uploadShowsToCloud(listOf(show))
-        }
-    }
-
     private fun uploadShowsToCloud(shows: List<SgCloudShow>): Boolean {
-        return HexagonShowSync(
-            context,
-            SgApp.getServicesComponent(context).hexagonTools()
-        ).upload(shows)
-    }
-
-    fun getTmdbIdsToPoster(context: Context): SparseArrayCompat<String> {
-        val shows = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowsMinimal()
-        val map = SparseArrayCompat<String>()
-        shows.forEach {
-            if (it.tmdbId != null && it.tmdbId != 0) {
-                map.put(it.tmdbId, it.posterSmall)
-            }
-        }
-        return map
-    }
-
-    fun getTmdbIdsToShowIds(context: Context): Map<Int, Long> {
-        val showIds = SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIds()
-        val map = mutableMapOf<Int, Long>()
-        showIds.forEach {
-            if (it.tmdbId != null) map[it.tmdbId] = it.id
-        }
-        return map
-    }
-
-    /**
-     * Returns true if the given show has not been updated in the last 12 hours.
-     */
-    fun shouldUpdateShow(showId: Long): Boolean {
-        val lastUpdatedMs = SgRoomDatabase.getInstance(context).sgShow2Helper()
-            .getLastUpdated(showId) ?: return false
-        return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12
+        return hexagonShowSync.get().upload(shows)
     }
 
     private fun GetShowError.toShowResult(): ShowResult {
@@ -1311,6 +702,20 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
                 TRAKT -> ShowResult.TRAKT_ERROR
             }
         }
+    }
+
+    enum class ShowService(@StringRes val nameResId: Int) {
+        HEXAGON(R.string.hexagon),
+        TMDB(R.string.tmdb),
+        TRAKT(R.string.trakt)
+    }
+
+    sealed class UpdateResult {
+        object Success : UpdateResult()
+        object DoesNotExist : UpdateResult()
+        class ApiErrorStop(val service: ShowService) : UpdateResult()
+        class ApiErrorRetry(val service: ShowService) : UpdateResult()
+        object DatabaseError : UpdateResult()
     }
 
     private fun GetShowError.toUpdateResult(): UpdateResult {
@@ -1332,20 +737,6 @@ class ShowTools2(val showTools: ShowTools, val context: Context) {
         return when (this) {
             TmdbRetry -> UpdateResult.ApiErrorRetry(TMDB)
             TmdbStop -> UpdateResult.ApiErrorStop(TMDB)
-        }
-    }
-
-    private fun TmdbError.toGetShowError(): GetShowError {
-        return when (this) {
-            TmdbRetry -> GetShowRetry(TMDB)
-            TmdbStop -> GetShowStop(TMDB)
-        }
-    }
-
-    private fun TraktError.toGetShowError(): GetShowError {
-        return when (this) {
-            TraktRetry -> GetShowRetry(TRAKT)
-            TraktStop -> GetShowStop(TRAKT)
         }
     }
 

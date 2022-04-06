@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgListItemWithDetails
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
@@ -127,7 +127,7 @@ class SgListFragment : Fragment() {
 
 
             override fun onFavoriteClick(showId: Long, isFavorite: Boolean) {
-                getServicesComponent(requireContext()).showTools()
+                SgApp.getServicesComponent(requireContext()).showTools()
                     .storeIsFavorite(showId, isFavorite)
             }
         }

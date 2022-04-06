@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.ItemShowBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgListItemWithDetails
@@ -20,6 +19,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.SeasonTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.shows.ShowStatus
 import java.util.Date
 
 class SgListItemAdapter(
@@ -143,8 +143,7 @@ class SgListItemViewHolder(
             val fieldValue: String? = item.nextText
             if (fieldValue.isNullOrEmpty()) {
                 // display show status if there is no next episode
-                binding.episodetime.text = SgApp.getServicesComponent(context).showTools()
-                    .getStatus(item.statusOrUnknown)
+                binding.episodetime.text = ShowStatus.getStatus(context, item.statusOrUnknown)
                 binding.TextViewShowListNextEpisode.text = null
             } else {
                 binding.TextViewShowListNextEpisode.text = fieldValue

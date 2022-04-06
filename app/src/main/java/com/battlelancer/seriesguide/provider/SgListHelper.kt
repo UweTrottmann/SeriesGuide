@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.util.shows.ShowStatus
 
 @Dao
 interface SgListHelper {
@@ -80,7 +80,7 @@ data class SgListItemWithDetails(
     val releaseWeekDayOrDefault: Int
         get() = releaseWeekDay ?: -1
     val statusOrUnknown: Int
-        get() = status ?: ShowTools.Status.UNKNOWN
+        get() = status ?: ShowStatus.UNKNOWN
 
     companion object {
         const val SELECT = "SELECT ${ListItems._ID}," +

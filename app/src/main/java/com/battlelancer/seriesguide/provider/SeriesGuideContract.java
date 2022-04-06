@@ -9,8 +9,9 @@ import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater;
+import com.battlelancer.seriesguide.util.shows.ShowStatus;
+import com.battlelancer.seriesguide.util.shows.ShowTools2;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -54,7 +55,7 @@ public class SeriesGuideContract {
         String CONTENTRATING = "contentrating";
 
         /**
-         * Show status. Encoded as integer. See {@link ShowTools.Status}.
+         * Show status. Encoded as integer. See {@link ShowStatus}.
          */
         String STATUS = "status";
 
@@ -493,7 +494,7 @@ public class SeriesGuideContract {
         String CONTENTRATING = "series_contentrating";
 
         /**
-         * Show status. Encoded as integer. See {@link ShowTools.Status}.
+         * Show status. Encoded as integer. See {@link ShowStatus}.
          */
         String STATUS = "series_status";
 
@@ -708,17 +709,17 @@ public class SeriesGuideContract {
          * Using inverse of {@link SgShow2Columns#SELECTION_STATUS_NO_CONTINUING} as that is shorter.
          */
         String SELECTION_STATUS_CONTINUING = "("
-                + STATUS + "!=" + ShowTools.Status.ENDED
-                + " AND " + STATUS + "!=" + ShowTools.Status.CANCELED
-                + " AND " + STATUS + "!=" + ShowTools.Status.UNKNOWN
+                + STATUS + "!=" + ShowStatus.ENDED
+                + " AND " + STATUS + "!=" + ShowStatus.CANCELED
+                + " AND " + STATUS + "!=" + ShowStatus.UNKNOWN
                 + ")";
         /**
          * Technically ended, canceled and unknown state shows.
          */
         String SELECTION_STATUS_NO_CONTINUING = "("
-                + STATUS + "=" + ShowTools.Status.ENDED
-                + " OR " + STATUS + "=" + ShowTools.Status.CANCELED
-                + " OR " + STATUS + "=" + ShowTools.Status.UNKNOWN
+                + STATUS + "=" + ShowStatus.ENDED
+                + " OR " + STATUS + "=" + ShowStatus.CANCELED
+                + " OR " + STATUS + "=" + ShowStatus.UNKNOWN
                 + ")";
 
         String SELECTION_HAS_NEXT_EPISODE =
@@ -947,7 +948,7 @@ public class SeriesGuideContract {
 
         /**
          * Note: currently unused, TMDB does not provide this info.
-         * See {@link com.battlelancer.seriesguide.ui.shows.ShowTools2}.
+         * See {@link ShowTools2}.
          *
          * Last time episode was edited (lastupdated field) in Unix time (seconds).
          * Added in {@link SeriesGuideDatabase#DBVER_27_IMDBIDSLASTEDIT}.
@@ -961,7 +962,7 @@ public class SeriesGuideContract {
 
         /**
          * Note: currently last updated value is unused, all episodes are always updated.
-         * See {@link com.battlelancer.seriesguide.ui.shows.ShowTools2}.
+         * See {@link ShowTools2}.
          *
          * Stores the last edited time after fetching full episode data from TVDB.
          * Added in {@link SeriesGuideDatabase#DBVER_41_EPISODE_LAST_UPDATED}.

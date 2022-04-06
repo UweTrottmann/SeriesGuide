@@ -5,7 +5,6 @@ import android.text.format.DateUtils
 import androidx.collection.LruCache
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -62,7 +61,8 @@ object TraktRatingsFetcher {
         }
 
         // look up show trakt id
-        val showTraktId = ShowTools.getShowTraktId(context, episode.showId)
+        val showTraktId = SgApp.getServicesComponent(context)
+            .showTools().getShowTraktId(episode.showId)
         if (showTraktId == null) {
             Timber.d("Show %s has no trakt id, skip.", episode.showId)
             return@withContext

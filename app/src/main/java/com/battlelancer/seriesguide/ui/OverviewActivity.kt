@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.ui.overview.SeasonsFragment
 import com.battlelancer.seriesguide.ui.overview.ShowFragment
 import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment
 import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment.Companion.show
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.OnRemovingShowEvent
+import com.battlelancer.seriesguide.util.shows.ShowTools2.OnRemovingShowEvent
 import com.battlelancer.seriesguide.util.ImageTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

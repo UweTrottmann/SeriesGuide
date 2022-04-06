@@ -13,7 +13,7 @@ class EpisodeHistoryAdapter(
 
     override fun submitList(list: MutableList<TraktEpisodeHistoryLoader.HistoryItem>?) {
         // TODO This should be done async (e.g. in view model).
-        localShowPosters = SgApp.getServicesComponent(context).showTools().tmdbIdsToPoster
+        localShowPosters = SgApp.getServicesComponent(context).showTools().getTmdbIdsToPoster()
         super.submitList(list)
     }
 

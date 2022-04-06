@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.ui.search;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,9 +19,10 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
+import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
 import com.battlelancer.seriesguide.widgets.EmptyView;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -144,11 +146,13 @@ public class TraktAddFragment extends AddFragment {
         public boolean onMenuItemClick(MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_action_show_watchlist_add) {
-                ShowTools.addToWatchlist(context, showTmdbId);
+                new AddShowToWatchlistTask(context, showTmdbId)
+                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 return true;
             }
             if (itemId == R.id.menu_action_show_watchlist_remove) {
-                ShowTools.removeFromWatchlist(context, showTmdbId);
+                new RemoveShowFromWatchlistTask(context, showTmdbId)
+                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 return true;
             }
             return false;

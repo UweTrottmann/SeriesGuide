@@ -13,7 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.ui.shows.ShowTools2
+import com.battlelancer.seriesguide.util.shows.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.Dispatchers
@@ -40,14 +40,15 @@ class AddShowDialogViewModel(
         this.languageCode.value = initialLanguageCode
         this.showDetails = Transformations.switchMap(languageCode) { languageCode ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-                val showTools = SgApp.getServicesComponent(application).showTools()
-                showTools.getShowDetails(showTmdbId, languageCode)
+                val services = SgApp.getServicesComponent(application)
+                val showTools = services.showTools()
+                services.getShowTools().getShowDetails(showTmdbId, languageCode)
                     .onFailure {
                         emit(
                             ShowDetails(
                                 null,
                                 showTools.getShowId(showTmdbId, null),
-                                it == ShowTools2.GetShowDoesNotExist
+                                it == GetShowDoesNotExist
                             )
                         )
                     }

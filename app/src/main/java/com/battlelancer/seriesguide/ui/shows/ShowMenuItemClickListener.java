@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.util.shows.ShowTools2;
 
 /**
 * Item click listener for show item popup menu.
@@ -16,7 +17,7 @@ import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
 public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
     private final Context context;
-    private final ShowTools showTools;
+    private final ShowTools2 showTools;
     private final FragmentManager fragmentManager;
     private final long showId;
     private final long nextEpisodeId;

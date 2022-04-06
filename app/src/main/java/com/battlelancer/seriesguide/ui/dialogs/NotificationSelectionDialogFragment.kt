@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.DialogNotificationSelectionBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
@@ -73,7 +73,7 @@ class NotificationSelectionDialogFragment : AppCompatDialogFragment() {
 
     private val onItemClickListener = object : SelectionAdapter.OnItemClickListener {
         override fun onItemClick(showId: Long, notify: Boolean) {
-            getServicesComponent(requireContext()).showTools().storeNotify(showId, notify)
+            SgApp.getServicesComponent(requireContext()).showTools().storeNotify(showId, notify)
         }
     }
 

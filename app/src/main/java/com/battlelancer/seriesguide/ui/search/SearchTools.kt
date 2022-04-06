@@ -34,7 +34,8 @@ object SearchTools {
             return
         }
 
-        val localShowsToPoster = SgApp.getServicesComponent(context).showTools().tmdbIdsToPoster
+        val localShowsToPoster =
+            SgApp.getServicesComponent(context).showTools().getTmdbIdsToPoster()
         for (result in results) {
             if (localShowsToPoster.indexOfKey(result.tmdbId) >= 0) {
                 // Is already in local database.

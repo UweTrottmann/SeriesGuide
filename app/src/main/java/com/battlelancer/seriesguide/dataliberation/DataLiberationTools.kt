@@ -6,7 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport
-import com.battlelancer.seriesguide.ui.shows.ShowTools.Status
+import com.battlelancer.seriesguide.util.shows.ShowStatus
 import timber.log.Timber
 
 object DataLiberationTools {
@@ -15,19 +15,19 @@ object DataLiberationTools {
      * Transform a string representation of [ShowStatusExport]
      * to a [Status] to be stored in the database.
      *
-     * Falls back to [Status.UNKNOWN].
+     * Falls back to [ShowStatus.UNKNOWN].
      */
     fun encodeShowStatus(status: String?): Int {
         return if (status == null) {
-            Status.UNKNOWN
+            ShowStatus.UNKNOWN
         } else when (status) {
-            ShowStatusExport.IN_PRODUCTION -> Status.IN_PRODUCTION
-            ShowStatusExport.PILOT -> Status.PILOT
-            ShowStatusExport.CANCELED -> Status.CANCELED
-            ShowStatusExport.UPCOMING -> Status.PLANNED
-            ShowStatusExport.CONTINUING -> Status.RETURNING
-            ShowStatusExport.ENDED -> Status.ENDED
-            else -> Status.UNKNOWN
+            ShowStatusExport.IN_PRODUCTION -> ShowStatus.IN_PRODUCTION
+            ShowStatusExport.PILOT -> ShowStatus.PILOT
+            ShowStatusExport.CANCELED -> ShowStatus.CANCELED
+            ShowStatusExport.UPCOMING -> ShowStatus.PLANNED
+            ShowStatusExport.CONTINUING -> ShowStatus.RETURNING
+            ShowStatusExport.ENDED -> ShowStatus.ENDED
+            else -> ShowStatus.UNKNOWN
         }
     }
 
@@ -40,12 +40,12 @@ object DataLiberationTools {
      */
     fun decodeShowStatus(encodedStatus: Int): String {
         return when (encodedStatus) {
-            Status.IN_PRODUCTION -> ShowStatusExport.IN_PRODUCTION
-            Status.PILOT -> ShowStatusExport.PILOT
-            Status.CANCELED -> ShowStatusExport.CANCELED
-            Status.PLANNED -> ShowStatusExport.UPCOMING
-            Status.RETURNING -> ShowStatusExport.CONTINUING
-            Status.ENDED -> ShowStatusExport.ENDED
+            ShowStatus.IN_PRODUCTION -> ShowStatusExport.IN_PRODUCTION
+            ShowStatus.PILOT -> ShowStatusExport.PILOT
+            ShowStatus.CANCELED -> ShowStatusExport.CANCELED
+            ShowStatus.PLANNED -> ShowStatusExport.UPCOMING
+            ShowStatus.RETURNING -> ShowStatusExport.CONTINUING
+            ShowStatus.ENDED -> ShowStatusExport.ENDED
             else -> ShowStatusExport.UNKNOWN
         }
     }

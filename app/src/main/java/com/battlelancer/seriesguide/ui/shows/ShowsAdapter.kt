@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.shows.ShowStatus
 
 class ShowsAdapter(
     private val context: Context,
@@ -153,9 +153,7 @@ class ShowsAdapter(
                 val hasNextEpisode = !TextUtils.isEmpty(fieldValue)
                 if (!hasNextEpisode) {
                     // display show status if there is no next episode
-                    episodeTime = SgApp.getServicesComponent(context).showTools().getStatus(
-                        sgShow.status ?: ShowTools.Status.UNKNOWN
-                    )
+                    episodeTime = ShowStatus.getStatus(context, sgShow.status ?: ShowStatus.UNKNOWN)
                     episode = ""
                 } else {
                     episode = fieldValue
