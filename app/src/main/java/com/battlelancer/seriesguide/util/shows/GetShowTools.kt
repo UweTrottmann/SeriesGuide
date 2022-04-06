@@ -36,27 +36,6 @@ class GetShowTools @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) {
 
-    data class ShowDetails(
-        val show: SgShow2? = null,
-        val showUpdate: SgShow2Update? = null,
-        val seasons: List<TvSeason>? = null
-    )
-
-    sealed class GetShowError(val service: AddUpdateShowTools.ShowService) {
-        /**
-         * The API request might succeed if tried again after a brief delay
-         * (e.g. time outs or other temporary network issues).
-         */
-        class GetShowRetry(service: AddUpdateShowTools.ShowService) : GetShowError(service)
-
-        /**
-         * The API request is unlikely to succeed if retried, at least right now
-         * (e.g. API bugs or changes).
-         */
-        class GetShowStop(service: AddUpdateShowTools.ShowService) : GetShowError(service)
-        object GetShowDoesNotExist : GetShowError(TMDB)
-    }
-
     /**
      * If [updateOnly] returns a show for updating, but without its ID set!
      */
@@ -192,6 +171,27 @@ class GetShowTools @Inject constructor(
             )
         }
         return Ok(showDetails)
+    }
+
+    data class ShowDetails(
+        val show: SgShow2? = null,
+        val showUpdate: SgShow2Update? = null,
+        val seasons: List<TvSeason>? = null
+    )
+
+    sealed class GetShowError(val service: AddUpdateShowTools.ShowService) {
+        /**
+         * The API request might succeed if tried again after a brief delay
+         * (e.g. time outs or other temporary network issues).
+         */
+        class GetShowRetry(service: AddUpdateShowTools.ShowService) : GetShowError(service)
+
+        /**
+         * The API request is unlikely to succeed if retried, at least right now
+         * (e.g. API bugs or changes).
+         */
+        class GetShowStop(service: AddUpdateShowTools.ShowService) : GetShowError(service)
+        object GetShowDoesNotExist : GetShowError(TMDB)
     }
 
     private fun TmdbError.toGetShowError(): GetShowError {

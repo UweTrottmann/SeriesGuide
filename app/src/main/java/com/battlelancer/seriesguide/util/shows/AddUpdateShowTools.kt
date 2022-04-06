@@ -62,12 +62,6 @@ class AddUpdateShowTools @Inject constructor(
     private val showTools: Lazy<ShowTools2>
 ) {
 
-    enum class ShowService(@StringRes val nameResId: Int) {
-        HEXAGON(R.string.hexagon),
-        TMDB(R.string.tmdb),
-        TRAKT(R.string.trakt)
-    }
-
     enum class ShowResult {
         SUCCESS,
         IN_DATABASE,
@@ -76,14 +70,6 @@ class AddUpdateShowTools @Inject constructor(
         TRAKT_ERROR,
         HEXAGON_ERROR,
         DATABASE_ERROR
-    }
-
-    sealed class UpdateResult {
-        object Success : UpdateResult()
-        object DoesNotExist : UpdateResult()
-        class ApiErrorStop(val service: ShowService) : UpdateResult()
-        class ApiErrorRetry(val service: ShowService) : UpdateResult()
-        object DatabaseError : UpdateResult()
     }
 
     fun addShow(
@@ -716,6 +702,20 @@ class AddUpdateShowTools @Inject constructor(
                 TRAKT -> ShowResult.TRAKT_ERROR
             }
         }
+    }
+
+    enum class ShowService(@StringRes val nameResId: Int) {
+        HEXAGON(R.string.hexagon),
+        TMDB(R.string.tmdb),
+        TRAKT(R.string.trakt)
+    }
+
+    sealed class UpdateResult {
+        object Success : UpdateResult()
+        object DoesNotExist : UpdateResult()
+        class ApiErrorStop(val service: ShowService) : UpdateResult()
+        class ApiErrorRetry(val service: ShowService) : UpdateResult()
+        object DatabaseError : UpdateResult()
     }
 
     private fun GetShowError.toUpdateResult(): UpdateResult {
