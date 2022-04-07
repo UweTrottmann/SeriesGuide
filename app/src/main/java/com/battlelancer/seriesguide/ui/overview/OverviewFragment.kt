@@ -85,8 +85,6 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     }
 
     private var showId: Long = 0
-    private var show: SgShow2? = null
-    private var episode: SgEpisode2? = null
 
     private var hasSetEpisodeWatched = false
 
@@ -122,7 +120,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
 
             // Empty view buttons.
             buttonOverviewSimilarShows.setOnClickListener {
-                val show = show
+                val show = model.show.value
                 if (show?.tmdbId != null) {
                     startActivity(intent(requireContext(), show.tmdbId, show.title))
                 }
@@ -191,7 +189,6 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
                 requireActivity().finish()
                 return@observe
             }
-            show = sgShow2
             this.binding?.also { populateShowViews(it, sgShow2) }
             val episodeId = if (sgShow2.nextEpisode != null && sgShow2.nextEpisode.isNotEmpty()) {
                 sgShow2.nextEpisode.toLong()
@@ -200,10 +197,9 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             model.setShowTmdbId(sgShow2.tmdbId)
         }
         model.episode.observe(viewLifecycleOwner) { sgEpisode2: SgEpisode2? ->
-            // May be null if there is no next episode.
-            episode = sgEpisode2
             this.binding?.also {
                 maybeAddFeedbackView(it)
+                // May be null if there is no next episode.
                 updateEpisodeViews(it, sgEpisode2)
             }
         }
@@ -255,8 +251,8 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun createCalendarEvent() {
-        val currentShow = show
-        val currentEpisode = episode
+        val currentShow = model.show.value
+        val currentEpisode = model.episode.value
         if (currentShow == null || currentEpisode == null) {
             return
         }
@@ -274,7 +270,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun onButtonFavoriteClick() {
-        val currentShow = show ?: return
+        val currentShow = model.show.value ?: return
         SgApp.getServicesComponent(requireContext()).showTools()
             .storeIsFavorite(showId, !currentShow.favorite)
     }
@@ -322,7 +318,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun shareEpisode() {
-        val currentShow = show ?: return
+        val currentShow = model.show.value ?: return
         runIfHasEpisode { episode ->
             if (currentShow.tmdbId != null) {
                 ShareUtils.shareEpisode(
@@ -519,7 +515,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             ViewTools.configureImdbButton(
                 it.buttonEpisodeImdb,
                 lifecycleScope, requireContext(),
-                show, episode
+                model.show.value, episode
             )
 
             // trakt button
@@ -535,8 +531,8 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
      * Updates the episode description and TVDB button. Need both show and episode data loaded.
      */
     private fun populateEpisodeDescriptionAndTvdbButton(binding: FragmentOverviewBinding) {
-        val show = show
-        val episode = episode
+        val show = model.show.value
+        val episode = model.episode.value
         if (show == null || episode == null) {
             // no show or episode data available
             return
@@ -685,7 +681,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun runIfHasEpisode(block: (episode: SgEpisode2) -> Unit) {
-        val currentEpisode = episode
+        val currentEpisode = model.episode.value
         if (currentEpisode != null) {
             block.invoke(currentEpisode)
         }
