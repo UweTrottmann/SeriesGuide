@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.ui.overview
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,13 +7,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewStub
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
@@ -22,14 +16,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Action
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.databinding.FragmentOverviewBinding
 import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader
@@ -78,146 +69,17 @@ import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 /**
- * Displays general information about a show and its next episode.
+ * Displays general information about a show and, if there is one, the next episode to watch.
  */
-@SuppressLint("NonConstantResourceId")
 class OverviewFragment : Fragment(), EpisodeActionsContract {
 
-    @BindView(R.id.viewStubOverviewFeedback)
-    @JvmField
-    var feedbackViewStub: ViewStub? = null
+    private var binding: FragmentOverviewBinding? = null
 
-    @BindView(R.id.feedbackViewOverview)
-    @JvmField
-    var feedbackView: FeedbackView? = null
-
-    @BindView(R.id.containerOverviewShow)
-    lateinit var containerShow: View
-
-    @BindView(R.id.imageButtonFavorite)
-    lateinit var buttonFavorite: ImageButton
-
-    @BindView(R.id.progress_container)
-    lateinit var containerProgress: View
-
-    @BindView(R.id.containerOverviewEpisode)
-    lateinit var containerEpisode: View
-
-    @BindView(R.id.episode_empty_container)
-    lateinit var containerEpisodeEmpty: View
-
-    @BindView(R.id.buttonOverviewSimilarShows)
-    lateinit var buttonSimilarShows: Button
-
-    @BindView(R.id.buttonOverviewRemoveShow)
-    lateinit var buttonRemoveShow: Button
-
-    @BindView(R.id.textViewOverviewNotMigrated)
-    lateinit var textViewOverviewNotMigrated: View
-
-    @BindView(R.id.episode_primary_container)
-    lateinit var containerEpisodePrimary: View
-
-    @BindView(R.id.dividerHorizontalOverviewEpisodeMeta)
-    lateinit var dividerEpisodeMeta: View
-
-    @BindView(R.id.imageViewOverviewEpisode)
-    lateinit var imageEpisode: ImageView
-
-    @BindView(R.id.episodeTitle)
-    lateinit var textEpisodeTitle: TextView
-
-    @BindView(R.id.episodeTime)
-    lateinit var textEpisodeTime: TextView
-
-    @BindView(R.id.episodeInfo)
-    lateinit var textEpisodeNumbers: TextView
-
-    @BindView(R.id.episode_meta_container)
-    lateinit var containerEpisodeMeta: View
-
-    @BindView(R.id.containerRatings)
-    lateinit var containerRatings: View
-
-    @BindView(R.id.dividerEpisodeButtons)
-    lateinit var dividerEpisodeButtons: View
-
-    @BindView(R.id.buttonEpisodeCheckin)
-    lateinit var buttonCheckin: Button
-
-    @BindView(R.id.buttonEpisodeWatchedUpTo)
-    lateinit var buttonWatchedUpTo: Button
-
-    @BindView(R.id.containerEpisodeStreamingSearch)
-    lateinit var containerEpisodeStreamingSearch: ViewGroup
-
-    @BindView(R.id.buttonEpisodeStreamingSearch)
-    lateinit var buttonStreamingSearch: Button
-
-    @BindView(R.id.buttonEpisodeStreamingSearchInfo)
-    lateinit var buttonEpisodeStreamingSearchInfo: ImageButton
-
-    @BindView(R.id.buttonEpisodeWatched)
-    lateinit var buttonWatch: Button
-
-    @BindView(R.id.buttonEpisodeCollected)
-    lateinit var buttonCollect: Button
-
-    @BindView(R.id.buttonEpisodeSkip)
-    lateinit var buttonSkip: Button
-
-    @BindView(R.id.TextViewEpisodeDescription)
-    lateinit var textDescription: TextView
-
-    @BindView(R.id.labelDvd)
-    lateinit var labelDvdNumber: View
-
-    @BindView(R.id.textViewEpisodeDVDnumber)
-    lateinit var textDvdNumber: TextView
-
-    @BindView(R.id.labelGuestStars)
-    lateinit var labelGuestStars: View
-
-    @BindView(R.id.TextViewEpisodeGuestStars)
-    lateinit var textGuestStars: TextView
-
-    @BindView(R.id.textViewRatingsValue)
-    lateinit var textRating: TextView
-
-    @BindView(R.id.textViewRatingsRange)
-    lateinit var textRatingRange: TextView
-
-    @BindView(R.id.textViewRatingsVotes)
-    lateinit var textRatingVotes: TextView
-
-    @BindView(R.id.textViewRatingsUser)
-    lateinit var textUserRating: TextView
-
-    @BindView(R.id.buttonEpisodeImdb)
-    lateinit var buttonImdb: Button
-
-    @BindView(R.id.buttonEpisodeTmdb)
-    lateinit var buttonTmdb: Button
-
-    @BindView(R.id.buttonEpisodeTrakt)
-    lateinit var buttonTrakt: Button
-
-    @BindView(R.id.buttonEpisodeShare)
-    lateinit var buttonShare: Button
-
-    @BindView(R.id.buttonEpisodeCalendar)
-    lateinit var buttonAddToCalendar: Button
-
-    @BindView(R.id.buttonEpisodeComments)
-    lateinit var buttonComments: Button
-
-    @BindView(R.id.containerEpisodeActions)
-    @JvmField
-    var containerActions: LinearLayout? = null
+    /** Inflated on demand from ViewStub. */
+    private var feedbackView: FeedbackView? = null
 
     private val handler = Handler(Looper.getMainLooper())
     private var ratingFetchJob: Job? = null
-    private lateinit var unbinder: Unbinder
     private val model: OverviewViewModel by viewModels {
         OverviewViewModelFactory(showId, requireActivity().application)
     }
@@ -236,88 +98,126 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_overview, container, false)
+    ): View {
+        return FragmentOverviewBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        unbinder = ButterKnife.bind(this, view)
+        val binding = binding!!
+        with(binding) {
+            containerOverviewEpisode.visibility = View.GONE
+            containerOverviewEmpty.visibility = View.GONE
 
-        containerEpisode.visibility = View.GONE
-        containerEpisodeEmpty.visibility = View.GONE
+            buttonOverviewFavoriteShow.setOnClickListener { onButtonFavoriteClick() }
 
-        containerEpisodePrimary.setOnClickListener { v: View? ->
-            runIfHasEpisode { episode ->
-                // display episode details
-                val intent = intentEpisode(episode.id, requireContext())
-                Utils.startActivityWithAnimation(activity, intent, v)
+            containerOverviewEpisodeCard.setOnClickListener { v: View? ->
+                runIfHasEpisode { episode ->
+                    // display episode details
+                    val intent = intentEpisode(episode.id, requireContext())
+                    Utils.startActivityWithAnimation(activity, intent, v)
+                }
             }
-        }
 
-        // Empty view buttons.
-        buttonSimilarShows.setOnClickListener {
-            val show = show
-            if (show?.tmdbId != null) {
-                startActivity(intent(requireContext(), show.tmdbId, show.title))
+            // Empty view buttons.
+            buttonOverviewSimilarShows.setOnClickListener {
+                val show = show
+                if (show?.tmdbId != null) {
+                    startActivity(intent(requireContext(), show.tmdbId, show.title))
+                }
             }
+            buttonOverviewRemoveShow.setOnClickListener {
+                show(showId, parentFragmentManager, requireContext())
+            }
+
+            // episode buttons
+            with(includeButtons) {
+                buttonEpisodeWatchedUpTo.visibility = View.GONE // Unused in this fragment.
+                buttonEpisodeCheckin.setOnClickListener { onButtonCheckInClick() }
+                buttonEpisodeWatched.setOnClickListener { onButtonWatchedClick() }
+                buttonEpisodeCollected.setOnClickListener { onButtonCollectedClick() }
+                buttonEpisodeSkip.setOnClickListener { onButtonSkipClicked() }
+
+                TooltipCompat.setTooltipText(
+                    buttonEpisodeCheckin,
+                    buttonEpisodeCheckin.contentDescription
+                )
+                TooltipCompat.setTooltipText(
+                    buttonEpisodeWatched,
+                    buttonEpisodeWatched.contentDescription
+                )
+                TooltipCompat.setTooltipText(
+                    buttonEpisodeSkip,
+                    buttonEpisodeSkip.contentDescription
+                )
+                initButtons(
+                    buttonEpisodeStreamingSearch, buttonEpisodeStreamingSearchInfo,
+                    parentFragmentManager
+                )
+            }
+
+            // ratings
+            with(includeRatings) {
+                root.setOnClickListener { onButtonRateClick() }
+                TooltipCompat.setTooltipText(
+                    root,
+                    root.context.getString(R.string.action_rate)
+                )
+                textViewRatingsRange.text = getString(R.string.format_rating_range, 10)
+            }
+
+            with(includeServices.includeMore) {
+                buttonEpisodeShare.setOnClickListener { shareEpisode() }
+                buttonEpisodeCalendar.setOnClickListener { createCalendarEvent() }
+                buttonEpisodeComments.setOnClickListener {
+                    onButtonCommentsClick(buttonEpisodeComments)
+                }
+            }
+
+            // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
+            textViewEpisodeDescription.copyTextToClipboardOnLongClick()
+            textGuestStars.copyTextToClipboardOnLongClick()
+            textDvdNumber.copyTextToClipboardOnLongClick()
+
+            // Hide show info if show fragment is visible due to multi-pane layout.
+            val isDisplayShowInfo = resources.getBoolean(R.bool.isOverviewSinglePane)
+            containerOverviewShow.visibility = if (isDisplayShowInfo) View.VISIBLE else View.GONE
         }
-        buttonRemoveShow.setOnClickListener {
-            show(showId, parentFragmentManager, requireContext())
-        }
 
-        // episode buttons
-        buttonWatchedUpTo.visibility = View.GONE // Unused.
-        TooltipCompat.setTooltipText(buttonCheckin, buttonCheckin.contentDescription)
-        TooltipCompat.setTooltipText(buttonWatch, buttonWatch.contentDescription)
-        TooltipCompat.setTooltipText(buttonSkip, buttonSkip.contentDescription)
-        initButtons(
-            buttonStreamingSearch, buttonEpisodeStreamingSearchInfo,
-            parentFragmentManager
-        )
-
-        // ratings
-        TooltipCompat.setTooltipText(
-            containerRatings,
-            containerRatings.context.getString(R.string.action_rate)
-        )
-        textRatingRange.text = getString(R.string.format_rating_range, 10)
-        buttonShare.setOnClickListener { shareEpisode() }
-        buttonAddToCalendar.setOnClickListener { createCalendarEvent() }
-
-        // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
-        textDescription.copyTextToClipboardOnLongClick()
-        textGuestStars.copyTextToClipboardOnLongClick()
-        textDvdNumber.copyTextToClipboardOnLongClick()
-
-        // Hide show info if show fragment is visible due to multi-pane layout.
-        val isDisplayShowInfo = resources.getBoolean(R.bool.isOverviewSinglePane)
-        containerShow.visibility = if (isDisplayShowInfo) View.VISIBLE else View.GONE
-
-        model.show.observe(viewLifecycleOwner, { sgShow2: SgShow2? ->
+        model.show.observe(viewLifecycleOwner) { sgShow2: SgShow2? ->
             if (sgShow2 == null) {
                 Timber.e("Failed to load show %s", showId)
                 requireActivity().finish()
                 return@observe
             }
             show = sgShow2
-            populateShowViews(sgShow2)
+            this.binding?.also { populateShowViews(it, sgShow2) }
             val episodeId = if (sgShow2.nextEpisode != null && sgShow2.nextEpisode.isNotEmpty()) {
                 sgShow2.nextEpisode.toLong()
             } else -1
             model.setEpisodeId(episodeId)
             model.setShowTmdbId(sgShow2.tmdbId)
-        })
-        model.episode.observe(viewLifecycleOwner, { sgEpisode2: SgEpisode2? ->
+        }
+        model.episode.observe(viewLifecycleOwner) { sgEpisode2: SgEpisode2? ->
             // May be null if there is no next episode.
             episode = sgEpisode2
-            maybeAddFeedbackView()
-            updateEpisodeViews(sgEpisode2)
-        })
-        model.watchProvider.observe(viewLifecycleOwner, { watchInfo: TmdbTools2.WatchInfo? ->
-            if (watchInfo != null) {
-                StreamingSearch.configureButton(buttonStreamingSearch, watchInfo, true)
+            this.binding?.also {
+                maybeAddFeedbackView(it)
+                updateEpisodeViews(it, sgEpisode2)
             }
-        })
+        }
+        model.watchProvider.observe(viewLifecycleOwner) { watchInfo: TmdbTools2.WatchInfo? ->
+            if (watchInfo != null) {
+                this.binding?.let {
+                    StreamingSearch.configureButton(
+                        it.includeButtons.buttonEpisodeStreamingSearch,
+                        watchInfo,
+                        true
+                    )
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -342,9 +242,9 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         // This ensures that the anonymous callback we have does not prevent the fragment from
         // being garbage collected. It also prevents our callback from getting invoked even after the
         // fragment is destroyed.
-        Picasso.get().cancelRequest(imageEpisode)
+        Picasso.get().cancelRequest(binding!!.imageViewOverviewEpisode)
 
-        unbinder.unbind()
+        binding = null
     }
 
     override fun onDestroy() {
@@ -373,61 +273,48 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         )
     }
 
-    @OnClick(R.id.imageButtonFavorite)
-    fun onButtonFavoriteClick(view: View) {
-        if (view.tag == null) {
-            return
-        }
-
-        // store new value
-        val isFavorite = view.tag as Boolean
+    private fun onButtonFavoriteClick() {
+        val currentShow = show ?: return
         SgApp.getServicesComponent(requireContext()).showTools()
-            .storeIsFavorite(showId, !isFavorite)
+            .storeIsFavorite(showId, !currentShow.favorite)
     }
 
-    @OnClick(R.id.buttonEpisodeCheckin)
-    fun onButtonCheckInClick() {
+    private fun onButtonCheckInClick() {
         runIfHasEpisode { episode ->
             CheckInDialogFragment
                 .show(requireContext(), parentFragmentManager, episode.id)
         }
     }
 
-    @OnClick(R.id.buttonEpisodeWatched)
-    fun onButtonWatchedClick() {
+    private fun onButtonWatchedClick() {
         hasSetEpisodeWatched = true
         changeEpisodeFlag(EpisodeFlags.WATCHED)
     }
 
-    @OnClick(R.id.buttonEpisodeCollected)
-    fun onButtonCollectedClick() {
+    private fun onButtonCollectedClick() {
         runIfHasEpisode { episode ->
             EpisodeTools.episodeCollected(context, episode.id, !episode.collected)
         }
     }
 
-    @OnClick(R.id.buttonEpisodeSkip)
-    fun onButtonSkipClicked() {
+    private fun onButtonSkipClicked() {
         changeEpisodeFlag(EpisodeFlags.SKIPPED)
     }
 
     private fun changeEpisodeFlag(episodeFlag: Int) {
         runIfHasEpisode { episode ->
-            EpisodeTools
-                .episodeWatched(context, episode.id, episodeFlag)
+            EpisodeTools.episodeWatched(context, episode.id, episodeFlag)
         }
     }
 
-    @OnClick(R.id.containerRatings)
-    fun onButtonRateClick() {
+    private fun onButtonRateClick() {
         runIfHasEpisode { episode ->
             RateDialogFragment.newInstanceEpisode(episode.id)
                 .safeShow(context, parentFragmentManager)
         }
     }
 
-    @OnClick(R.id.buttonEpisodeComments)
-    fun onButtonCommentsClick(v: View?) {
+    private fun onButtonCommentsClick(v: View?) {
         runIfHasEpisode { episode ->
             val i = intentEpisode(requireContext(), episode.title, episode.id)
             Utils.startActivityWithAnimation(activity, i, v)
@@ -466,61 +353,68 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun setEpisodeButtonsEnabled(enabled: Boolean) {
-        if (view == null) {
-            return
+        val binding = binding ?: return
+        with(binding.includeButtons) {
+            buttonEpisodeWatched.isEnabled = enabled
+            buttonEpisodeCollected.isEnabled = enabled
+            buttonEpisodeSkip.isEnabled = enabled
+            buttonEpisodeCheckin.isEnabled = enabled
         }
-        buttonWatch.isEnabled = enabled
-        buttonCollect.isEnabled = enabled
-        buttonSkip.isEnabled = enabled
-        buttonCheckin.isEnabled = enabled
     }
 
-    private fun updateEpisodeViews(episode: SgEpisode2?) {
+    private fun updateEpisodeViews(binding: FragmentOverviewBinding, episode: SgEpisode2?) {
         if (episode != null) {
             // hide check-in if not connected to trakt or hexagon is enabled
             val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
             val displayCheckIn = (isConnectedToTrakt
                     && !HexagonSettings.isEnabled(requireContext()))
-            buttonCheckin.visibility = if (displayCheckIn) View.VISIBLE else View.GONE
-            buttonStreamingSearch.nextFocusUpId =
+            binding.includeButtons.buttonEpisodeCheckin.visibility =
+                if (displayCheckIn) View.VISIBLE else View.GONE
+            binding.includeButtons.buttonEpisodeStreamingSearch.nextFocusUpId =
                 if (displayCheckIn) R.id.buttonCheckIn else R.id.buttonEpisodeWatched
 
             // populate episode details
-            populateEpisodeViews(episode)
-            populateEpisodeDescriptionAndTvdbButton()
+            populateEpisodeViews(binding, episode)
+            populateEpisodeDescriptionAndTvdbButton(binding)
 
             // load full info and ratings, image, actions
             loadEpisodeDetails()
-            loadEpisodeImage(episode.image)
+            loadEpisodeImage(binding.imageViewOverviewEpisode, episode.image)
             loadEpisodeActionsDelayed()
 
-            containerEpisodeEmpty.visibility = View.GONE
-            containerEpisodePrimary.visibility = View.VISIBLE
-            containerEpisodeMeta.visibility = View.VISIBLE
+            binding.containerOverviewEmpty.visibility = View.GONE
+            binding.containerOverviewEpisodeCard.visibility = View.VISIBLE
+            binding.containerOverviewEpisodeDetails.visibility = View.VISIBLE
         } else {
             // No next episode: display empty view with suggestion on what to do.
-            textViewOverviewNotMigrated.visibility = View.GONE
-            containerEpisodeEmpty.visibility = View.VISIBLE
-            containerEpisodePrimary.visibility = View.GONE
-            containerEpisodeMeta.visibility = View.GONE
+            binding.textViewOverviewNotMigrated.visibility = View.GONE
+            binding.containerOverviewEmpty.visibility = View.VISIBLE
+            binding.containerOverviewEpisodeCard.visibility = View.GONE
+            binding.containerOverviewEpisodeDetails.visibility = View.GONE
         }
 
         // animate view into visibility
-        if (containerEpisode.visibility == View.GONE) {
-            containerProgress.startAnimation(
-                AnimationUtils.loadAnimation(containerProgress.context, android.R.anim.fade_out)
+        if (binding.containerOverviewEpisode.visibility == View.GONE) {
+            binding.containerOverviewProgress.startAnimation(
+                AnimationUtils.loadAnimation(
+                    binding.containerOverviewProgress.context,
+                    android.R.anim.fade_out
+                )
             )
-            containerProgress.visibility = View.GONE
-            containerEpisode.startAnimation(
-                AnimationUtils.loadAnimation(containerEpisode.context, android.R.anim.fade_in)
+            binding.containerOverviewProgress.visibility = View.GONE
+            binding.containerOverviewEpisode.startAnimation(
+                AnimationUtils.loadAnimation(
+                    binding.containerOverviewEpisode.context,
+                    android.R.anim.fade_in
+                )
             )
-            containerEpisode.visibility = View.VISIBLE
+            binding.containerOverviewEpisode.visibility = View.VISIBLE
         }
     }
 
-    private fun populateEpisodeViews(episode: SgEpisode2) {
+    private fun populateEpisodeViews(binding: FragmentOverviewBinding, episode: SgEpisode2) {
         ViewTools.configureNotMigratedWarning(
-            textViewOverviewNotMigrated,
+            binding.textViewOverviewNotMigrated,
             episode.tmdbId == null
         )
 
@@ -531,7 +425,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             requireContext(),
             if (preventSpoilers(requireContext())) null else episode.title, number
         )
-        textEpisodeTitle.text = title
+        binding.episodeTitle.text = title
 
         // number
         val infoText = StringBuilder()
@@ -543,7 +437,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             && episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
             infoText.append(" (").append(episodeAbsoluteNumber).append(")")
         }
-        textEpisodeNumbers.text = infoText
+        binding.episodeInfo.text = infoText
 
         // air date
         val releaseTime = episode.firstReleasedMs
@@ -555,89 +449,92 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             } else {
                 TimeTools.formatToLocalRelativeTime(context, actualRelease)
             }
-            textEpisodeTime.text = getString(
+            binding.episodeTime.text = getString(
                 R.string.format_date_and_day, dateTime,
                 TimeTools.formatToLocalDay(actualRelease)
             )
         } else {
-            textEpisodeTime.text = null
+            binding.episodeTime.text = null
         }
 
         // watched button
-        val isWatched = EpisodeTools.isWatched(episode.watched)
-        if (isWatched) {
-            ViewTools.setVectorDrawableTop(
-                buttonWatch,
-                R.drawable.ic_watched_24dp
-            )
-        } else {
-            ViewTools.setVectorDrawableTop(
-                buttonWatch,
-                R.drawable.ic_watch_black_24dp
-            )
+        binding.includeButtons.buttonEpisodeWatched.also {
+            val isWatched = EpisodeTools.isWatched(episode.watched)
+            if (isWatched) {
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_watched_24dp)
+            } else {
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_watch_black_24dp)
+            }
+            val plays = episode.plays
+            it.text = TextTools.getWatchedButtonText(requireContext(), isWatched, plays)
         }
-        val plays = episode.plays
-        buttonWatch.text =
-            TextTools.getWatchedButtonText(requireContext(), isWatched, plays)
 
         // collected button
-        val isCollected = episode.collected
-        if (isCollected) {
-            ViewTools.setVectorDrawableTop(buttonCollect, R.drawable.ic_collected_24dp)
-        } else {
-            ViewTools.setVectorDrawableTop(buttonCollect, R.drawable.ic_collect_black_24dp)
-        }
-        buttonCollect.setText(
-            if (isCollected) R.string.state_in_collection else R.string.action_collection_add
-        )
-        TooltipCompat.setTooltipText(
-            buttonCollect,
-            buttonCollect.context.getString(
-                if (isCollected) R.string.action_collection_remove else R.string.action_collection_add
+        binding.includeButtons.buttonEpisodeCollected.also {
+            val isCollected = episode.collected
+            if (isCollected) {
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_collected_24dp)
+            } else {
+                ViewTools.setVectorDrawableTop(it, R.drawable.ic_collect_black_24dp)
+            }
+            it.setText(
+                if (isCollected) R.string.state_in_collection else R.string.action_collection_add
             )
-        )
+            TooltipCompat.setTooltipText(
+                it,
+                it.context.getString(
+                    if (isCollected) R.string.action_collection_remove else R.string.action_collection_add
+                )
+            )
+        }
 
         // dvd number
         var isShowingMeta = ViewTools.setLabelValueOrHide(
-            labelDvdNumber, textDvdNumber, episode.dvdNumber
+            binding.labelDvdNumber, binding.textDvdNumber, episode.dvdNumber
         )
         // guest stars
         isShowingMeta = isShowingMeta or ViewTools.setLabelValueOrHide(
-            labelGuestStars, textGuestStars, TextTools.splitPipeSeparatedStrings(episode.guestStars)
+            binding.labelGuestStars,
+            binding.textGuestStars,
+            TextTools.splitPipeSeparatedStrings(episode.guestStars)
         )
         // hide divider if no meta is visible
-        dividerEpisodeMeta.visibility = if (isShowingMeta) View.VISIBLE else View.GONE
+        binding.dividerOverviewEpisodeDetails.visibility =
+            if (isShowingMeta) View.VISIBLE else View.GONE
 
-        // trakt rating
-        textRating.text = TraktTools.buildRatingString(episode.ratingGlobal)
-        textRatingVotes.text = TraktTools.buildRatingVotesString(
-            activity, episode.ratingVotes
-        )
+        // Trakt rating
+        binding.includeRatings.also {
+            it.textViewRatingsValue.text = TraktTools.buildRatingString(episode.ratingGlobal)
+            it.textViewRatingsVotes.text = TraktTools.buildRatingVotesString(
+                activity, episode.ratingVotes
+            )
+            // user rating
+            it.textViewRatingsUser.text = TraktTools.buildUserRatingString(
+                activity, episode.ratingUser
+            )
+        }
 
-        // user rating
-        textUserRating.text = TraktTools.buildUserRatingString(
-            activity, episode.ratingUser
-        )
+        binding.includeServices.includeMore.also {
+            // IMDb button
+            ViewTools.configureImdbButton(
+                it.buttonEpisodeImdb,
+                lifecycleScope, requireContext(),
+                show, episode
+            )
 
-        // IMDb button
-        ViewTools.configureImdbButton(
-            buttonImdb,
-            lifecycleScope, requireContext(),
-            show, episode
-        )
-
-        // trakt button
-        if (episode.tmdbId != null) {
-            val traktLink = TraktTools.buildEpisodeUrl(episode.tmdbId)
-            ViewTools.openUriOnClick(buttonTrakt, traktLink)
-            buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
+            // trakt button
+            if (episode.tmdbId != null) {
+                val traktLink = TraktTools.buildEpisodeUrl(episode.tmdbId)
+                ViewTools.openUriOnClick(it.buttonEpisodeTrakt, traktLink)
+                it.buttonEpisodeTrakt.copyTextToClipboardOnLongClick(traktLink)
+            }
         }
     }
 
     /**
      * Updates the episode description and TVDB button. Need both show and episode data loaded.
      */
-    private fun populateEpisodeDescriptionAndTvdbButton() {
+    private fun populateEpisodeDescriptionAndTvdbButton(binding: FragmentOverviewBinding) {
         val show = show
         val episode = episode
         if (show == null || episode == null) {
@@ -652,14 +549,15 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         } else if (preventSpoilers(requireContext())) {
             overview = getString(R.string.no_spoilers)
         }
-        textDescription.text = TextTools.textWithTmdbSource(
-            textDescription.context, overview
+        binding.textViewEpisodeDescription.text = TextTools.textWithTmdbSource(
+            binding.textViewEpisodeDescription.context, overview
         )
 
         // TMDb button
         val showTmdbId = show.tmdbId
         if (showTmdbId != null) {
             val url = TmdbTools.buildEpisodeUrl(showTmdbId, episode.season, episode.number)
+            val buttonTmdb = binding.includeServices.includeMore.buttonEpisodeTmdb
             ViewTools.openUriOnClick(buttonTmdb, url)
             buttonTmdb.copyTextToClipboardOnLongClick(url)
         }
@@ -688,16 +586,16 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         )
     }
 
-    private fun loadEpisodeImage(imagePath: String?) {
-        if (TextUtils.isEmpty(imagePath)) {
-            imageEpisode.setImageDrawable(null)
+    private fun loadEpisodeImage(imageView: ImageView, imagePath: String?) {
+        if (imagePath.isNullOrEmpty()) {
+            imageView.setImageDrawable(null)
             return
         }
 
         if (preventSpoilers(requireContext())) {
             // show image placeholder
-            imageEpisode.scaleType = ImageView.ScaleType.CENTER_INSIDE
-            imageEpisode.setImageResource(R.drawable.ic_photo_gray_24dp)
+            imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            imageView.setImageResource(R.drawable.ic_photo_gray_24dp)
         } else {
             // try loading image
             ServiceUtils.loadWithPicasso(
@@ -705,14 +603,14 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
                 tmdbOrTvdbStillUrl(imagePath, requireContext(), false)
             )
                 .error(R.drawable.ic_photo_gray_24dp)
-                .into(imageEpisode,
+                .into(imageView,
                     object : Callback {
                         override fun onSuccess() {
-                            imageEpisode.scaleType = ImageView.ScaleType.CENTER_CROP
+                            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
                         }
 
                         override fun onError(e: Exception) {
-                            imageEpisode.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                            imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
                         }
                     }
                 )
@@ -731,7 +629,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         }
     }
 
-    private fun populateShowViews(show: SgShow2) {
+    private fun populateShowViews(binding: FragmentOverviewBinding, show: SgShow2) {
         // set show title in action bar
         val showTitle = show.title
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
@@ -740,22 +638,20 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             requireActivity().title = getString(R.string.description_overview) + showTitle
         }
 
-        val view = view ?: return
-
         // status
-        val statusText = view.findViewById<TextView>(R.id.showStatus)
-        ShowStatus.setStatusAndColor(statusText, show.statusOrUnknown)
+        ShowStatus.setStatusAndColor(binding.overviewShowStatus, show.statusOrUnknown)
 
         // favorite
         val isFavorite = show.favorite
-        buttonFavorite.setImageResource(
-            if (isFavorite) R.drawable.ic_star_black_24dp else R.drawable.ic_star_border_black_24dp
-        )
-        buttonFavorite.contentDescription = getString(
-            if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
-        )
-        TooltipCompat.setTooltipText(buttonFavorite, buttonFavorite.contentDescription)
-        buttonFavorite.tag = isFavorite
+        binding.buttonOverviewFavoriteShow.also {
+            it.setImageResource(
+                if (isFavorite) R.drawable.ic_star_black_24dp else R.drawable.ic_star_border_black_24dp
+            )
+            it.contentDescription = getString(
+                if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
+            )
+            TooltipCompat.setTooltipText(it, it.contentDescription)
+        }
 
         // Regular network, release time and length.
         val network = show.network
@@ -780,13 +676,12 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             R.string.runtime_minutes, show.runtime.toString()
         )
         val combinedString = TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
-        val textViewNetworkAndTime = view.findViewById<TextView>(R.id.showmeta)
-        textViewNetworkAndTime.text = combinedString
+        binding.overviewShowNetworkAndTime.text = combinedString
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
-        textViewNetworkAndTime.copyTextToClipboardOnLongClick()
+        binding.overviewShowNetworkAndTime.copyTextToClipboardOnLongClick()
 
         // episode description might need show language, so update it here as well
-        populateEpisodeDescriptionAndTvdbButton()
+        populateEpisodeDescriptionAndTvdbButton(binding)
     }
 
     private fun runIfHasEpisode(block: (episode: SgEpisode2) -> Unit) {
@@ -796,36 +691,36 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         }
     }
 
-    private fun maybeAddFeedbackView() {
-        val feedbackViewStub = feedbackViewStub
-        if (feedbackView != null || feedbackViewStub == null
+    private fun maybeAddFeedbackView(binding: FragmentOverviewBinding) {
+        if (feedbackView != null
             || !hasSetEpisodeWatched || !AppSettings.shouldAskForFeedback(requireContext())) {
             return  // can or should not add feedback view
         }
-        feedbackView = feedbackViewStub.inflate() as FeedbackView
-        this.feedbackViewStub = null
-        feedbackView?.setCallback(object : FeedbackView.Callback {
-            override fun onRate() {
-                if (Utils.launchWebsite(context, getString(R.string.url_store_page))) {
-                    removeFeedbackView()
+        (binding.viewStubOverviewFeedback.inflate() as FeedbackView).also {
+            feedbackView = it
+            it.setCallback(object : FeedbackView.Callback {
+                override fun onRate() {
+                    if (Utils.launchWebsite(context, getString(R.string.url_store_page))) {
+                        hideFeedbackView()
+                    }
                 }
-            }
 
-            override fun onFeedback() {
-                if (Utils.tryStartActivity(
-                        requireContext(), getFeedbackEmailIntent(requireContext()), true
-                    )) {
-                    removeFeedbackView()
+                override fun onFeedback() {
+                    if (Utils.tryStartActivity(
+                            requireContext(), getFeedbackEmailIntent(requireContext()), true
+                        )) {
+                        hideFeedbackView()
+                    }
                 }
-            }
 
-            override fun onDismiss() {
-                removeFeedbackView()
-            }
-        })
+                override fun onDismiss() {
+                    hideFeedbackView()
+                }
+            })
+        }
     }
 
-    private fun removeFeedbackView() {
+    private fun hideFeedbackView() {
         feedbackView?.visibility = View.GONE
         setAskedForFeedback(requireContext())
     }
@@ -841,9 +736,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
                 loader: Loader<MutableList<Action>?>,
                 data: MutableList<Action>?
             ) {
-                if (!isAdded) {
-                    return
-                }
+                val binding = binding ?: return
                 if (data == null) {
                     Timber.e("onLoadFinished: did not receive valid actions")
                 } else {
@@ -851,14 +744,15 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
                 }
                 ActionsHelper.populateActions(
                     requireActivity().layoutInflater,
-                    requireActivity().theme, containerActions, data
+                    requireActivity().theme, binding.includeServices.containerEpisodeActions, data
                 )
             }
 
             override fun onLoaderReset(loader: Loader<MutableList<Action>?>) {
+                val binding = binding ?: return
                 ActionsHelper.populateActions(
                     requireActivity().layoutInflater,
-                    requireActivity().theme, containerActions, null
+                    requireActivity().theme, binding.includeServices.containerEpisodeActions, null
                 )
             }
         }
