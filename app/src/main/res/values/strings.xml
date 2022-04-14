@@ -356,7 +356,7 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="use_integrated_browser">Use integrated browser</string>
-    <string name="show_library">Show your Trakt library</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
 
     <!-- trakt ratings -->
