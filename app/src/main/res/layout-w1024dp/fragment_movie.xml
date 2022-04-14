@@ -185,11 +185,29 @@
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                         tools:text="Action, Comedy, Drama" />
 
+                    <TextView
+                        android:id="@+id/labelMovieLastUpdated"
+                        style="@style/Block.WithTopMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewMovieGenres"
+                        android:text="@string/last_updated"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
+
+                    <TextView
+                        android:id="@+id/textMovieLastUpdated"
+                        style="@style/Block"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/labelMovieLastUpdated"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                        tools:text="July 17, 21:48" />
+
                     <View
                         android:id="@+id/dividerMovie2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_below="@id/textViewMovieGenres"
+                        android:layout_below="@id/textMovieLastUpdated"
                         android:layout_marginBottom="@dimen/default_padding"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginRight="@dimen/large_padding"

@@ -65,7 +65,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
-import java.util.ArrayList
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a poster.
@@ -93,6 +92,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         binding.progressBar.isGone = true
         binding.textViewMovieGenresLabel.isGone = true
+        binding.labelMovieLastUpdated.isGone = true
 
         // trailer button
         binding.buttonMovieTrailer.setOnClickListener {
@@ -462,6 +462,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         ViewTools.setValueOrPlaceholder(
             binding.textViewMovieGenres, TmdbTools.buildGenresString(tmdbMovie.genres)
         )
+
+        // When this movie was last updated by this app
+        binding.labelMovieLastUpdated.isGone = false
+        binding.textMovieLastUpdated.text =
+            TextTools.timeInMillisToDateAndTime(requireContext(), movieDetails.lastUpdatedMillis)
 
         // trakt comments link
         binding.buttonMovieComments.setOnClickListener { v ->
