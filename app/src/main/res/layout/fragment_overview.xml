@@ -23,41 +23,36 @@
             android:orientation="vertical"
             android:paddingTop="@dimen/default_padding">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/containerOverviewShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
                 android:orientation="horizontal">
 
-                <RelativeLayout
+                <TextView
+                    android:id="@+id/overviewShowStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/large_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:layout_marginTop="@dimen/default_padding"
-                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                    app:layout_constraintEnd_toStartOf="@id/buttonOverviewFavoriteShow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/show_isalive" />
+
+                <TextView
+                    android:id="@+id/overviewShowNetworkAndTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:focusable="true"
-                    android:nextFocusDown="@+id/checkinButton"
-                    tools:ignore="RtlHardcoded">
-
-                    <TextView
-                        android:id="@+id/overviewShowStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
-                        tools:text="@string/show_isalive" />
-
-                    <TextView
-                        android:id="@+id/overviewShowNetworkAndTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/overviewShowStatus"
-                        android:background="?attr/selectableItemBackground"
-                        android:focusable="true"
-                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
-                        tools:text="XYZ . Tue 5:00 AM . 60 min" />
-                </RelativeLayout>
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                    app:layout_constraintEnd_toStartOf="@id/buttonOverviewFavoriteShow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/overviewShowStatus"
+                    tools:text="XYZ . Tue 5:00 AM . 60 min" />
 
                 <ImageButton
                     android:id="@+id/buttonOverviewFavoriteShow"
@@ -66,10 +61,26 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/ic_star_black_24dp"
                     tools:tint="?attr/sgColorIcon" />
 
-            </LinearLayout>
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrierOverviewShowDivider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="overviewShowNetworkAndTime,buttonOverviewFavoriteShow" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="@dimen/default_padding"
+                    android:background="?attr/sgColorDivider"
+                    app:layout_constraintTop_toTopOf="@id/barrierOverviewShowDivider" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ViewStub
                 android:id="@+id/viewStubOverviewFeedback"
@@ -101,12 +112,35 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/textViewOverviewNotMigrated"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:background="?attr/selectableItemBackground"
+                        android:focusable="true"
+                        android:nextFocusDown="@+id/containerOverviewEpisodeCard"
+                        android:text="@string/not_migrated"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error" />
+
+                    <TextView
+                        android:id="@+id/textOverviewEpisodeHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:text="@string/next_to_watch"
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/containerOverviewEmpty"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/larger_padding"
-                        android:paddingBottom="@dimen/larger_padding"
-                        android:id="@+id/containerOverviewEmpty">
+                        android:paddingBottom="@dimen/larger_padding">
 
                         <TextView
                             android:id="@+id/textViewOverviewEmpty"
@@ -142,19 +176,6 @@
                             tools:drawableTint="?attr/sgColorIcon" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/textViewOverviewNotMigrated"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/large_padding"
-                        android:layout_marginTop="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/large_padding"
-                        android:background="?attr/selectableItemBackground"
-                        android:focusable="true"
-                        android:nextFocusDown="@+id/containerOverviewEpisodeCard"
-                        android:text="@string/not_migrated"
-                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/containerOverviewEpisodeCard"
@@ -193,10 +214,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:background="@drawable/background_gradient"
-                            android:paddingBottom="8dp"
                             android:paddingLeft="@dimen/default_padding"
+                            android:paddingTop="@dimen/inline_padding"
                             android:paddingRight="@dimen/default_padding"
-                            android:paddingTop="@dimen/inline_padding">
+                            android:paddingBottom="8dp">
 
                             <TextView
                                 android:id="@+id/episodeTitle"
@@ -247,9 +268,9 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginBottom="@dimen/large_padding"
                             android:layout_marginLeft="@dimen/large_padding"
                             android:layout_marginRight="@dimen/large_padding"
+                            android:layout_marginBottom="@dimen/large_padding"
                             android:background="?attr/sgColorDivider" />
 
                         <TextView
