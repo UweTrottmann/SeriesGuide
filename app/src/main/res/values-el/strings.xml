@@ -45,7 +45,7 @@
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
     <string name="updated_details">Λεπτομέρειες</string>
-    <string name="norating">n/a</string>
+    <string name="norating">μη διαθέσιμο</string>
     <string name="unknown">άγνωστο</string>
     <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
     <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί</string>
@@ -402,7 +402,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Εμφάνιση</string>
     <string name="pref_theme">Θέμα</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Χρήση χρωμάτων συστήματος</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Χρήση προεπιλογής συστήματος</string>
     <string name="theme_app_auto_battery">Ορίστηκε από το Battery Saver</string>
