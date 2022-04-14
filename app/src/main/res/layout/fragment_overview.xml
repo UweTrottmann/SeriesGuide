@@ -127,13 +127,14 @@
 
                     <TextView
                         android:id="@+id/textOverviewEpisodeHeader"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/large_padding"
                         android:layout_marginTop="@dimen/default_padding"
                         android:layout_marginRight="@dimen/large_padding"
                         android:text="@string/next_to_watch"
-                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
+                        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
+                        tools:text="Next to watch 11 remaining" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/containerOverviewEmpty"

@@ -676,6 +676,15 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         binding.overviewShowNetworkAndTime.copyTextToClipboardOnLongClick()
 
+        // Remaining episodes
+        binding.textOverviewEpisodeHeader.text = TextTools.buildTitleAndSecondary(
+            requireContext(),
+            getString(R.string.next_to_watch),
+            R.style.TextAppearance_SeriesGuide_Body2_Bold,
+            TextTools.getRemainingEpisodes(requireContext().resources, show.unwatchedCount),
+            R.style.TextAppearance_SeriesGuide_Body2_Dim
+        )
+
         // episode description might need show language, so update it here as well
         populateEpisodeDescriptionAndTvdbButton(binding)
     }

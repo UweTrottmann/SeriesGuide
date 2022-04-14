@@ -334,6 +334,26 @@ object TextTools {
         return buildTitleAndSummary(context, title, summary)
     }
 
+    fun buildTitleAndSecondary(
+        context: Context,
+        title: String,
+        @StyleRes titleAppearance: Int,
+        secondary: String?,
+        @StyleRes secondaryAppearance: Int
+    ): Spannable {
+        val titleAndContext = if (secondary != null) {
+            "$title · $secondary".toSpannable()
+        } else {
+            title.toSpannable()
+        }
+        titleAndContext[0, title.length] = TextAppearanceSpan(context, titleAppearance)
+        if (secondary != null) {
+            titleAndContext[title.length, titleAndContext.length] =
+                TextAppearanceSpan(context, secondaryAppearance)
+        }
+        return titleAndContext
+    }
+
     /**
      * Spannable with TextAppearance applied to the whole string.
      */
