@@ -84,6 +84,9 @@ class ShowFragment() : Fragment() {
     @BindView(R.id.textViewShowFirstAirdate)
     internal lateinit var textViewFirstRelease: TextView
 
+    @BindView(R.id.textShowLastUpdated)
+    internal lateinit var textShowLastUpdated: TextView
+
     @BindView(R.id.textViewShowContentRating)
     internal lateinit var textViewContentRating: TextView
 
@@ -384,6 +387,10 @@ class ShowFragment() : Fragment() {
             textViewFirstRelease,
             TimeTools.getShowReleaseYear(show.firstRelease)
         )
+
+        // When the show was last updated by this app
+        textShowLastUpdated.text =
+            TextTools.timeInMillisToDateAndTime(requireContext(), show.lastUpdatedMs)
 
         // content rating
         ViewTools.setValueOrPlaceholder(textViewContentRating, show.contentRating)
