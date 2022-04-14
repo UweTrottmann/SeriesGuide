@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemSeasonBinding
 import com.battlelancer.seriesguide.model.SgSeason2
 import com.battlelancer.seriesguide.util.SeasonTools
+import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
@@ -92,12 +93,7 @@ class SeasonsAdapter(
                     R.style.TextAppearance_SeriesGuide_Caption_Narrow
                 )
                 if (released > 0) {
-                    countText.append(
-                        res.getQuantityString(
-                            R.plurals.remaining_episodes_plural,
-                            released, released
-                        )
-                    )
+                    countText.append(TextTools.getRemainingEpisodes(res, released))
                 }
             } else {
                 TextViewCompat.setTextAppearance(

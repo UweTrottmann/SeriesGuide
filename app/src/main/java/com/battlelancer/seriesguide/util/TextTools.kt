@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
+import android.content.res.Resources
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
@@ -117,6 +118,21 @@ object TextTools {
     ): String {
         val number = getEpisodeNumber(context, season, episode)
         return "$title $number"
+    }
+
+    /**
+     * Returns null if [remaining] is 0 or less.
+     */
+    fun getRemainingEpisodes(resources: Resources, remaining: Int): String? {
+        return if (remaining > 0) {
+            resources.getQuantityString(
+                R.plurals.remaining_episodes_plural,
+                remaining,
+                remaining
+            )
+        } else {
+            null
+        }
     }
 
     /**

@@ -224,12 +224,10 @@ class SgListItemViewHolder(
 
     private fun setRemainingCount(unwatched: Int) {
         val textView = binding.textViewShowsRemaining
+        textView.text = TextTools.getRemainingEpisodes(textView.resources, unwatched)
         if (unwatched > 0) {
-            textView.text = textView.resources
-                .getQuantityString(R.plurals.remaining_episodes_plural, unwatched, unwatched)
             textView.visibility = View.VISIBLE
         } else {
-            textView.text = null
             textView.visibility = View.GONE
         }
     }
