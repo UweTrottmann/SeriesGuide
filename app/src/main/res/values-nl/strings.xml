@@ -98,7 +98,7 @@
     <string name="no_translation_title">Niet vertaald</string>
     <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat u spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
     <string name="format_source">Bron: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Laatst bijgewerkt</string>
     <!-- Date and Time -->
     <string name="today">vandaag</string>
     <string name="now">nu</string>
@@ -161,7 +161,7 @@
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>
     <string name="action_episodes_switch_view">Wissel weergave</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Volgende om te bekijken</string>
     <!-- History -->
     <string name="user_stream">Geschiedenis</string>
     <string name="recently_watched">Laatst gekeken</string>
@@ -314,7 +314,7 @@
     <string name="connect">Verbinden</string>
     <string name="disconnect">Verbreken</string>
     <string name="use_integrated_browser">Gebruik de geïntegreerde browser</string>
-    <string name="show_library">Uw trakt-bibliotheek tonen</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent. <a href="http://trakt.tv">Meer weten</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Beoordelen</string>

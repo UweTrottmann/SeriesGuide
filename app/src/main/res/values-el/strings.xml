@@ -314,7 +314,7 @@
     <string name="connect">Σύνδεση</string>
     <string name="disconnect">Αποσύνδεση</string>
     <string name="use_integrated_browser">Χρησιμοποιήστε ενσωματωμένο πρόγραμμα περιήγησης</string>
-    <string name="show_library">Εμφάνιση της  βιβλιοθήκη σας</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε. <a href="http://trakt.tv"> Μάθετε περισσότερα</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>

@@ -314,7 +314,7 @@
     <string name="connect">Конектирај</string>
     <string name="disconnect">Исклучи</string>
     <string name="use_integrated_browser">Кoристи интегрирaн прелистувaч</string>
-    <string name="show_library">Прикажи ја твојата trakt библиотека</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt помага да води евиденција кој ТВ емисии и филмови вие гледате. <a href="https://trakt.tv"> Дознај повеќе </a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>

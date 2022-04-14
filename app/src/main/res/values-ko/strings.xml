@@ -307,7 +307,7 @@
     <string name="connect">연결</string>
     <string name="disconnect">연결 해제</string>
     <string name="use_integrated_browser">내부 웹브라우저 사용</string>
-    <string name="show_library">trakt 라이브러리 표시</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt는 여러분이 시청한 TV 프로그램과 영화를 개록해줍니다. <a href="http://trakt.tv">자세히 알아보기</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">평가</string>

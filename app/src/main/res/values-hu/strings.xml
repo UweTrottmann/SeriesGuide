@@ -314,7 +314,7 @@
     <string name="connect">Kapcsolódás</string>
     <string name="disconnect">Megszakítás</string>
     <string name="use_integrated_browser">Beépített böngésző használata</string>
-    <string name="show_library">Műsortárad mutatása</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Értékelj</string>

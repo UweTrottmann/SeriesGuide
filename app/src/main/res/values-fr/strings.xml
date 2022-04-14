@@ -314,7 +314,7 @@
     <string name="connect">Se connecter</string>
     <string name="disconnect">Se déconnecter</string>
     <string name="use_integrated_browser">Utiliser le navigateur intégré</string>
-    <string name="show_library">Voir votre bibliothèque</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Noter</string>

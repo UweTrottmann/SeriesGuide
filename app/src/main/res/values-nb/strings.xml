@@ -314,7 +314,7 @@
     <string name="connect">Koble til</string>
     <string name="disconnect">Koble fra</string>
     <string name="use_integrated_browser">Bruk integrert nettleser</string>
-    <string name="show_library">Vis ditt trakt-bibliotek</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt hjelper deg å holde oversikten over hvilke TV-serier og filmer du ser på. <a href="http://trakt.tv"> Lær mer</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>

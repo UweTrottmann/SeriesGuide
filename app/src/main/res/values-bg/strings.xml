@@ -314,7 +314,7 @@
     <string name="connect">Свързване</string>
     <string name="disconnect">Прекъсване на връзката</string>
     <string name="use_integrated_browser">Използвай вградения четец</string>
-    <string name="show_library">Показване на вашата trakt библиотека</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt записва какви сериали и филми гледате. <a href="http://trakt.tv">Научете повече</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>

@@ -314,7 +314,7 @@
     <string name="connect">Forbind</string>
     <string name="disconnect">Afbryd</string>
     <string name="use_integrated_browser">Brug integreret browser</string>
-    <string name="show_library">Vis dit trakt-bibliotek</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt hjælper dig med at holde styr på dine TV-serier. <a href="https://trakt.tv">Flere oplysninger</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>

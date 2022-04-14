@@ -328,7 +328,7 @@
     <string name="connect">Подключиться</string>
     <string name="disconnect">Отключиться</string>
     <string name="use_integrated_browser">Использовать встроенный браузер</string>
-    <string name="show_library">Показать вашу библиотеку на trakt.tv</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите. <a href="http://trakt.tv">Узнать больше</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Oценить</string>

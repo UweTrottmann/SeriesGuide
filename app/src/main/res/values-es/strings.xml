@@ -315,7 +315,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Usar navegador integrado</string>
-    <string name="show_library">Muestra su biblioteca</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt ayuda a mantener un registro de los programas de televisión y películas que estás viendo. <a href="http://trakt.tv">Saber más</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Calificar</string>

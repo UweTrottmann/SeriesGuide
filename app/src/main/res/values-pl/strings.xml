@@ -328,7 +328,7 @@
     <string name="connect">Połącz</string>
     <string name="disconnect">Rozłącz</string>
     <string name="use_integrated_browser">Użyj zintegrowanej przeglądarki</string>
-    <string name="show_library">Pokaż bibliotekę</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>

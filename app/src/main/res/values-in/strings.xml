@@ -307,7 +307,7 @@
     <string name="connect">Sambungkan</string>
     <string name="disconnect">Putuskan</string>
     <string name="use_integrated_browser">Gunakan browser bawaan</string>
-    <string name="show_library">Tampilkan Perpustakaan trakt Anda</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton. <a href="https://trakt.tv"> selengkapnya</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Beri nilai</string>

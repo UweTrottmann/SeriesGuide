@@ -328,7 +328,7 @@
     <string name="connect">Připojit</string>
     <string name="disconnect">Odpojit</string>
     <string name="use_integrated_browser">Použít integrovaný prohlížeč</string>
-    <string name="show_library">Ukázat vaši knihovnu</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete. <a href="https://trakt.tv">Další informace</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Ohodnotit</string>

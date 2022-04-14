@@ -321,7 +321,7 @@
     <string name="connect">Poveži</string>
     <string name="disconnect">Odspoji</string>
     <string name="use_integrated_browser">Koristi ugrađeni preglednik</string>
-    <string name="show_library">Prikaži svoju zbirku</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt vam pomaže pratiti koje serije i filmove gledate. <a href="https://trakt.tv">Saznajte više</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Ocijeni</string>

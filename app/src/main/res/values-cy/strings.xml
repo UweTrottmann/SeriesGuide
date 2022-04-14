@@ -342,7 +342,7 @@
     <string name="connect">Cysylltu</string>
     <string name="disconnect">Datgysylltwch</string>
     <string name="use_integrated_browser">Defnyddiwch borwr integredig</string>
-    <string name="show_library">Dangoswch eich llyfrgell Trakt</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio. <a href="https://trakt.tv"> Dysgu mwy</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>

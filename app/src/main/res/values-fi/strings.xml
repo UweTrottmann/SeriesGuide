@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ei käännetty</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
     <string name="format_source">Lähde: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Viimeksi päivitetty</string>
     <!-- Date and Time -->
     <string name="today">tänään</string>
     <string name="now">nyt</string>
@@ -314,7 +314,7 @@
     <string name="connect">Yhdistä</string>
     <string name="disconnect">Katkaise yhteys</string>
     <string name="use_integrated_browser">Käytä sisäistä selainta</string>
-    <string name="show_library">Näytä Trakt-kirjastosi</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>

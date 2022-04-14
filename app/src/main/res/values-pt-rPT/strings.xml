@@ -98,7 +98,7 @@
     <string name="no_translation_title">Por traduzir</string>
     <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Definições para desactivar esta prevenção.</string>
     <string name="format_source">Fonte: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Última atualização</string>
     <!-- Date and Time -->
     <string name="today">hoje</string>
     <string name="now">agora</string>
@@ -161,7 +161,7 @@
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Marcar próximo episódio como visto</string>
     <string name="action_episodes_switch_view">Alterar visualização</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Próximo a assistir</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Visto recentemente</string>
@@ -314,7 +314,7 @@
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Usar navegador integrado</string>
-    <string name="show_library">Mostrar a tua biblioteca do Trakt</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">O Trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes. <a href="http://trakt.tv">Experimenta!</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>

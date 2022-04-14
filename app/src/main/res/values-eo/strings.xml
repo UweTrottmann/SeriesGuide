@@ -314,7 +314,7 @@
     <string name="connect">Konekti</string>
     <string name="disconnect">Malkonekti</string>
     <string name="use_integrated_browser">Uzi integritan retumilon</string>
-    <string name="show_library">Montri vian Trakt -an bibliotekon</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Taksi</string>

@@ -314,7 +314,7 @@
     <string name="connect">وصل کردن</string>
     <string name="disconnect">قطع کردن</string>
     <string name="use_integrated_browser">استفاده از مرورگر یکپارچه</string>
-    <string name="show_library">نشان دادن کتاب‌خانهٔ ترکت</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">ترکت کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید. <a href="https://trakt.tv">بیش‌تر بدانید</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>

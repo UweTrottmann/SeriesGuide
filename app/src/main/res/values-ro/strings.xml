@@ -321,7 +321,7 @@
     <string name="connect">Conectează-te</string>
     <string name="disconnect">Deconectează-te</string>
     <string name="use_integrated_browser">Deschide în browser integrat</string>
-    <string name="show_library">Arată biblioteca dvs. trakt</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi. <a href="https://trakt.tv">Află mai multe</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Evaluare</string>

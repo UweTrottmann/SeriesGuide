@@ -307,7 +307,7 @@
     <string name="connect">接続</string>
     <string name="disconnect">切断</string>
     <string name="use_integrated_browser">統合ブラウザーを使用</string>
-    <string name="show_library">Trakt ライブラリを表示</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt は、あなたが観ているテレビ番組や映画を記録するのに役立ちます。<a href="https://trakt.tv">詳細はこちら</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">作品を評価</string>

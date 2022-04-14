@@ -97,7 +97,7 @@
     <string name="no_translation_title">ยังไม่ถูกแปล</string>
     <string name="no_spoilers">รายละเอียดบางอย่างถูกซ่อนเพื่อป้องกันการสปอยล์ ปิดการป้องกันนี้ได้ในการตั้งค่า</string>
     <string name="format_source">ที่มา: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">อัปเดตล่าสุด</string>
     <!-- Date and Time -->
     <string name="today">วันนี้</string>
     <string name="now">ขณะนี้</string>
@@ -307,7 +307,7 @@
     <string name="connect">เชื่อมต่อ</string>
     <string name="disconnect">เลิกเชื่อมต่อ</string>
     <string name="use_integrated_browser">ใช้เบราว์เซอร์ภายใน</string>
-    <string name="show_library">แสดงห้องสมุด trakt ของคุณ</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt ช่วยเก็บบันทึกรายการทีวีและภาพยนตร์ที่คุณกำลังดูอยู่ <a href="https://trakt.tv">เรียนรู้เพิ่มเติม</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">ให้คะแนน</string>
