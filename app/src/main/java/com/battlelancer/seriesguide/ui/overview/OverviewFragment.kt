@@ -433,11 +433,10 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             && episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != number) {
             infoText.append(" (").append(episodeAbsoluteNumber).append(")")
         }
-        binding.episodeInfo.text = infoText
 
-        // air date
+        // release date
         val releaseTime = episode.firstReleasedMs
-        if (releaseTime != -1L) {
+        val timeText = if (releaseTime != -1L) {
             val actualRelease = TimeTools.applyUserOffset(requireContext(), releaseTime)
             // "Oct 31 (Fri)" or "in 14 mins (Fri)"
             val dateTime: String = if (isDisplayExactDate(requireContext())) {
@@ -445,13 +444,21 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             } else {
                 TimeTools.formatToLocalRelativeTime(context, actualRelease)
             }
-            binding.episodeTime.text = getString(
+            getString(
                 R.string.format_date_and_day, dateTime,
                 TimeTools.formatToLocalDay(actualRelease)
             )
         } else {
-            binding.episodeTime.text = null
+            null
         }
+
+        binding.textOverviewEpisodeInfo.text = TextTools.buildTitleAndSecondary(
+            requireContext(),
+            infoText.toString(),
+            R.style.TextAppearance_SeriesGuide_Caption,
+            timeText,
+            R.style.TextAppearance_SeriesGuide_Caption_Dim
+        )
 
         // watched button
         binding.includeButtons.buttonEpisodeWatched.also {

@@ -210,11 +210,12 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:background="@drawable/background_gradient"
+                            android:orientation="vertical"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingTop="@dimen/inline_padding"
                             android:paddingRight="@dimen/default_padding"
@@ -230,29 +231,13 @@
                                 tools:text="Episode Title Of Episode" />
 
                             <TextView
-                                android:id="@+id/episodeTime"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/textOverviewEpisodeInfo"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/episodeTitle"
-                                android:layout_marginRight="@dimen/default_padding"
-                                android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
-                                tools:text="OCT 15, 2013 (TUE)" />
+                                tools:text="Apr 14, 2022 (Tue) Season 3 Episode 3 (51)" />
 
-                            <TextView
-                                android:id="@+id/episodeInfo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/episodeTitle"
-                                android:layout_toRightOf="@+id/episodeTime"
-                                android:ellipsize="marquee"
-                                android:maxLines="1"
-                                android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
-                                tools:ignore="EllipsizeMaxLines"
-                                tools:text="Season 3 Episode 3 (51)" />
-
-                        </RelativeLayout>
+                        </LinearLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 
