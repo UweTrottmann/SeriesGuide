@@ -165,6 +165,7 @@
     <string name="context_updateshow">تحديث</string>
     <string name="context_marknext">تم مشاهدة الحلقة، الحلقة التالية</string>
     <string name="action_episodes_switch_view">تغيير طريقة العرض</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">السجل</string>
     <string name="recently_watched">تم مشاهدته مؤخراً</string>

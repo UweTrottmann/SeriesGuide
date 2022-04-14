@@ -161,6 +161,7 @@
     <string name="context_updateshow">Bijwerken</string>
     <string name="context_marknext">Volgende aflevering bekeken</string>
     <string name="action_episodes_switch_view">Wissel weergave</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Geschiedenis</string>
     <string name="recently_watched">Laatst gekeken</string>

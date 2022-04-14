@@ -161,6 +161,7 @@
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Próximo episódio já assistido</string>
     <string name="action_episodes_switch_view">Alterar visualização</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Recentemente assistido</string>

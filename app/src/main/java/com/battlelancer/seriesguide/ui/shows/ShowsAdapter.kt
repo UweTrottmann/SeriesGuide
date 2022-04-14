@@ -118,15 +118,8 @@ class ShowsAdapter(
             }
 
             fun map(sgShow: SgShow2ForLists, context: Context): ShowItem {
-                val remainingCount = if (sgShow.unwatchedCount > 0) {
-                    context.resources.getQuantityString(
-                        R.plurals.remaining_episodes_plural,
-                        sgShow.unwatchedCount,
-                        sgShow.unwatchedCount
-                    )
-                } else {
-                    null
-                }
+                val remainingCount =
+                    TextTools.getRemainingEpisodes(context.resources, sgShow.unwatchedCount)
 
                 val weekDay = sgShow.releaseWeekDay
                 val time = sgShow.releaseTime

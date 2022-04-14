@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
+import android.content.res.Resources
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.format.DateUtils
@@ -117,6 +118,21 @@ object TextTools {
     ): String {
         val number = getEpisodeNumber(context, season, episode)
         return "$title $number"
+    }
+
+    /**
+     * Returns null if [remaining] is 0 or less.
+     */
+    fun getRemainingEpisodes(resources: Resources, remaining: Int): String? {
+        return if (remaining > 0) {
+            resources.getQuantityString(
+                R.plurals.remaining_episodes_plural,
+                remaining,
+                remaining
+            )
+        } else {
+            null
+        }
     }
 
     /**
@@ -316,6 +332,26 @@ object TextTools {
         val title = context.getString(titleRes)
         val summary = context.getString(summaryRes)
         return buildTitleAndSummary(context, title, summary)
+    }
+
+    fun buildTitleAndSecondary(
+        context: Context,
+        title: String,
+        @StyleRes titleAppearance: Int,
+        secondary: String?,
+        @StyleRes secondaryAppearance: Int
+    ): Spannable {
+        val titleAndContext = if (secondary != null) {
+            "$title · $secondary".toSpannable()
+        } else {
+            title.toSpannable()
+        }
+        titleAndContext[0, title.length] = TextAppearanceSpan(context, titleAppearance)
+        if (secondary != null) {
+            titleAndContext[title.length, titleAndContext.length] =
+                TextAppearanceSpan(context, secondaryAppearance)
+        }
+        return titleAndContext
     }
 
     /**

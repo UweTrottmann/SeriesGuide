@@ -165,6 +165,7 @@
     <string name="context_updateshow">Diweddariad</string>
     <string name="context_marknext">Wedi gwylio\'r bennod nesaf</string>
     <string name="action_episodes_switch_view">Newid golygfa</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Hanes</string>
     <string name="recently_watched">Gwyliwyd yn ddiweddar</string>

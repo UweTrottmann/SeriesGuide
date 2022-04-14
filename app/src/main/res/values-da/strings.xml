@@ -161,6 +161,7 @@
     <string name="context_updateshow">Opdatér</string>
     <string name="context_marknext">Næste episode set</string>
     <string name="action_episodes_switch_view">Skift visning</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Set for nylig</string>

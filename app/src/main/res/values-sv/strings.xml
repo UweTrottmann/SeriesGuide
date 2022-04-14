@@ -161,6 +161,7 @@
     <string name="context_updateshow">Uppdatera</string>
     <string name="context_marknext">Sett nästa avsnitt</string>
     <string name="action_episodes_switch_view">Ändra vy</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Nyligen sedda</string>

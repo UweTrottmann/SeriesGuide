@@ -161,6 +161,7 @@
     <string name="context_updateshow">Güncelle</string>
     <string name="context_marknext">Sıradaki bölüm izlendi</string>
     <string name="action_episodes_switch_view">Görünümü değiştir</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Geçmiş</string>
     <string name="recently_watched">Yakın zamanda izlenen</string>

@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.util.TextTools
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -259,17 +260,10 @@ class SeasonsFragment() : Fragment() {
         if (result == null) {
             return
         }
+        val binding = binding ?: return
         val unwatched = result.unwatchedEpisodes
-        if (unwatched <= 0) {
-            binding?.textViewSeasonsRemaining?.text = null // failed to calculate
-        } else {
-            binding?.textViewSeasonsRemaining?.text =
-                requireContext().resources.getQuantityString(
-                    R.plurals.remaining_episodes_plural,
-                    unwatched,
-                    unwatched
-                )
-        }
+        binding.textViewSeasonsRemaining.text =
+            TextTools.getRemainingEpisodes(requireContext().resources, unwatched)
         setWatchedToggleState(unwatched)
         setCollectedToggleState(result.uncollectedEpisodes)
     }

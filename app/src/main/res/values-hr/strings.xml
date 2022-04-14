@@ -162,6 +162,7 @@
     <string name="context_updateshow">Ažuriraj</string>
     <string name="context_marknext">Pogledana sljedeća epizoda</string>
     <string name="action_episodes_switch_view">Promijeni pogled</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Povijest</string>
     <string name="recently_watched">Nedavno pogledano</string>
