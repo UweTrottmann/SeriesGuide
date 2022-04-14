@@ -98,7 +98,7 @@
     <string name="no_translation_title">No traduït</string>
     <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
     <string name="format_source">Font: %s</string>
-    <string name="format_last_edited">Darrera actualització: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">avui</string>
     <string name="now">ara</string>

@@ -24,6 +24,8 @@ public class MovieDetails {
 
     private int userRating;
 
+    private long lastUpdatedMillis;
+
     @Nullable
     public Ratings traktRatings() {
         return traktRatings;
@@ -80,6 +82,14 @@ public class MovieDetails {
 
     public void setUserRating(int userRating) {
         this.userRating = userRating;
+    }
+
+    public long getLastUpdatedMillis() {
+        return lastUpdatedMillis;
+    }
+
+    public void setLastUpdatedMillis(long lastUpdatedMillis) {
+        this.lastUpdatedMillis = lastUpdatedMillis;
     }
 
     /**

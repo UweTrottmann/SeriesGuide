@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ikke oversatt</string>
     <string name="no_spoilers">Noen detaljer er skjult for å unngå spoilere. Gå til Innstillinger for å deaktivere dette.</string>
     <string name="format_source">Kilde: %s</string>
-    <string name="format_last_edited">Sist endret: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">i dag</string>
     <string name="now">nå</string>

@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ei käännetty</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
     <string name="format_source">Lähde: %s</string>
-    <string name="format_last_edited">Viimeksi muokattu: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">tänään</string>
     <string name="now">nyt</string>

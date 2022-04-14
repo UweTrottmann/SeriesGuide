@@ -46,6 +46,7 @@ internal class MovieLoader(
         details.plays = dbMovieOrNull.plays
         // also use local state of user rating
         details.userRating = dbMovieOrNull.ratingUser ?: 0
+        details.lastUpdatedMillis = dbMovieOrNull.lastUpdated ?: 0
 
         // only overwrite other info if remote data failed to load
         if (details.traktRatings() == null) {

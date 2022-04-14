@@ -98,7 +98,7 @@
     <string name="no_translation_title">Не преведено</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Извори: %s</string>
-    <string name="format_last_edited">Последно ажурирање: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">денес</string>
     <string name="now">сега</string>

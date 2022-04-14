@@ -100,7 +100,7 @@
     <string name="no_translation_title">לא תורגם</string>
     <string name="no_spoilers">פרטים מסוימים מוסתרים כדי למנוע ספוילרים. כדי לבטל את זה עבור להגדרות.</string>
     <string name="format_source">מקור: %s</string>
-    <string name="format_last_edited">נערך לאחרונה: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">היום</string>
     <string name="now">עכשיו</string>

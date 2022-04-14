@@ -98,7 +98,7 @@
     <string name="no_translation_title">Niet vertaald</string>
     <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat u spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
     <string name="format_source">Bron: %s</string>
-    <string name="format_last_edited">Aangepast op: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">vandaag</string>
     <string name="now">nu</string>

@@ -102,7 +102,7 @@
     <string name="no_translation_title">غير مترجمة</string>
     <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا الانتقال إلى إعدادات.</string>
     <string name="format_source">المصدر: %s</string>
-    <string name="format_last_edited">آخر تعديل: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">اليوم</string>
     <string name="now">الآن</string>

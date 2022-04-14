@@ -97,7 +97,7 @@
     <string name="no_translation_title">翻訳されていません</string>
     <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これを無効にするには設定に移動します。</string>
     <string name="format_source">ソース: %s</string>
-    <string name="format_last_edited">最終更新日: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">今日</string>
     <string name="now">今</string>

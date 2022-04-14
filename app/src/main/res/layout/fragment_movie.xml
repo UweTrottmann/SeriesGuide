@@ -182,18 +182,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewMovieGenresLabel"
-                android:layout_marginBottom="@dimen/large_padding"
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                 tools:text="Action, Comedy, Drama" />
+
+            <TextView
+                android:id="@+id/labelMovieLastUpdated"
+                style="@style/Block.WithTopMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewMovieGenres"
+                android:text="@string/last_updated"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
+
+            <TextView
+                android:id="@+id/textMovieLastUpdated"
+                style="@style/Block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/labelMovieLastUpdated"
+                android:layout_marginBottom="@dimen/large_padding"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                tools:text="July 17, 21:48" />
 
             <include
                 android:id="@+id/moviePeople"
                 layout="@layout/cast_and_crew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewMovieGenres" />
+                android:layout_below="@+id/textMovieLastUpdated" />
 
             <View
                 android:id="@+id/dividerMovie3"

@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.util
 import android.content.Context
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.format.DateUtils
 import android.text.style.TextAppearanceSpan
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
@@ -217,6 +218,17 @@ object TextTools {
             dotSeparate(network, "$dayString $timeString")
         } else {
             dotSeparate(network, null)
+        }
+    }
+
+    fun timeInMillisToDateAndTime(context: Context, timeInMillis: Long): String {
+        return if (timeInMillis != 0L) {
+            DateUtils.formatDateTime(
+                context, timeInMillis,
+                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
+            )
+        } else {
+            context.getString(R.string.unknown)
         }
     }
 

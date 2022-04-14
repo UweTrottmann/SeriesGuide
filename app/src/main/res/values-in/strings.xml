@@ -97,7 +97,7 @@
     <string name="no_translation_title">Belum diterjemahkan</string>
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
     <string name="format_source">Sumber: %s</string>
-    <string name="format_last_edited">Terakhir diubah: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">hari ini</string>
     <string name="now">sekarang</string>

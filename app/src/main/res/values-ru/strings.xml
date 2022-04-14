@@ -100,7 +100,7 @@
     <string name="no_translation_title">Не переведено</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
-    <string name="format_last_edited">Последнее изменение: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">сегодня</string>
     <string name="now">сейчас</string>
