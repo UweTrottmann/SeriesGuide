@@ -14,6 +14,15 @@ Version 64
 ----------
 *in development*
 
+#### 64.0.3*
+*2022-04-14*
+
+* 🔧 Clearly label next episode to watch in show overview screen.
+* 🔧 Improve updating of shows, on failure display exact service that failed, better suggestions.
+* 🔧 Display the last time a show or movie (if added to a list) was updated.
+* 🔨 Movie details screen: always display the oldest theatrical release date, matching other screens.
+* 📝 Latest user interface translations from Crowdin.
+
 #### 64.0.2*
 *2022-03-10*
 
