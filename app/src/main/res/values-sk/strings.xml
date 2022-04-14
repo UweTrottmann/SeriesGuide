@@ -163,6 +163,7 @@
     <string name="context_updateshow">Aktualizovať</string>
     <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
     <string name="action_episodes_switch_view">Zmeniť zobrazenie</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">História</string>
     <string name="recently_watched">Nedávno videné</string>

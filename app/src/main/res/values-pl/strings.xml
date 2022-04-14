@@ -163,6 +163,7 @@
     <string name="context_updateshow">Aktualizuj</string>
     <string name="context_marknext">Odcinek obejrzany</string>
     <string name="action_episodes_switch_view">Przełącz widok</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Niedawno obejrzane</string>

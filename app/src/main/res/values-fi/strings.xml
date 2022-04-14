@@ -161,6 +161,7 @@
     <string name="context_updateshow">Päivitä</string>
     <string name="context_marknext">Seuraava jakso katsottu</string>
     <string name="action_episodes_switch_view">Vaihda näkymä</string>
+    <string name="next_to_watch">Seuraava katsottava</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Äskettäin katsotut</string>

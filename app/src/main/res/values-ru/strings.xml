@@ -163,6 +163,7 @@
     <string name="context_updateshow">Обновить</string>
     <string name="context_marknext">Смотреть следующий эпизод</string>
     <string name="action_episodes_switch_view">Изменить вид</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Недавно просмотренные</string>

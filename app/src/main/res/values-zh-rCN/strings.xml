@@ -160,6 +160,7 @@
     <string name="context_updateshow">更新</string>
     <string name="context_marknext">标记本集为看过</string>
     <string name="action_episodes_switch_view">切换视图</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">历史记录</string>
     <string name="recently_watched">最近看过</string>

@@ -161,6 +161,7 @@
     <string name="context_updateshow">Frissítés</string>
     <string name="context_marknext">Láttam a következő epizódot</string>
     <string name="action_episodes_switch_view">Nézet váltása</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Előzmények</string>
     <string name="recently_watched">Nemrég megnézett</string>
