@@ -102,7 +102,7 @@
     <string name="no_translation_title">Heb ei gyfieithu</string>
     <string name="no_spoilers">Mae rhai manylion wedi\'u cuddio i atal anrheithwyr. I ddiffodd hyn ewch i Gosodiadau.</string>
     <string name="format_source">Ffynhonnell: %s</string>
-    <string name="format_last_edited">Golygwyd ddiwethaf: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">heddiw</string>
     <string name="now">nawr</string>

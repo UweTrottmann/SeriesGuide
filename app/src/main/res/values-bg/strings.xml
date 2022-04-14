@@ -98,7 +98,7 @@
     <string name="no_translation_title">Не е преведено</string>
     <string name="no_spoilers">Някои детайли са скрити, за да се избегнат спойлерите. За да изключите това отидете в настройки.</string>
     <string name="format_source">Източник: %s</string>
-    <string name="format_last_edited">Последно редактиран: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">днес</string>
     <string name="now">сега</string>

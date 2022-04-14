@@ -98,7 +98,7 @@
     <string name="no_translation_title">Çevrilmedi</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
     <string name="format_source">Kaynak: %s</string>
-    <string name="format_last_edited">Son güncelleme: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">bugün</string>
     <string name="now">şimdi</string>

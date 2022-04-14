@@ -98,7 +98,7 @@
     <string name="no_translation_title">Sin traducir</string>
     <string name="no_spoilers">Algunos detalles están ocultos para evitar spoilers. Para cambiarlo, ir a Ajustes > básico.</string>
     <string name="format_source">Fuente: %s</string>
-    <string name="format_last_edited">Última edición: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>

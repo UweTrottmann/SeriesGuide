@@ -97,7 +97,7 @@
     <string name="no_translation_title">번역되지 않음</string>
     <string name="no_spoilers">일부 내용은 스포일러를 방지하기 위해 숨겨진 상태입니다. 설정에서 이를 해제할 수 있습니다.</string>
     <string name="format_source">소스: %s</string>
-    <string name="format_last_edited">최종 편집: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">오늘</string>
     <string name="now">지금</string>

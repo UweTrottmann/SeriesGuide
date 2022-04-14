@@ -99,7 +99,7 @@
     <string name="no_translation_title">Nije prevedeno</string>
     <string name="no_spoilers">Neki od detalja nisu vidljivi da se izbegnu spojleri. Da isključite ovo posetite Settings.</string>
     <string name="format_source">Izvor %s</string>
-    <string name="format_last_edited">Poslednji put izmenjeno %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">данас</string>
     <string name="now">сада</string>

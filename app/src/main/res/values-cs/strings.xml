@@ -100,7 +100,7 @@
     <string name="no_translation_title">Nepřeloženo</string>
     <string name="no_spoilers">Některé detaily jsou skryty, aby se zabránilo spoilerům. Toto můžete vypnout v nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
-    <string name="format_last_edited">Poslední úprava: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">dnes</string>
     <string name="now">nyní</string>

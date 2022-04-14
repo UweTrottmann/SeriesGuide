@@ -98,7 +98,7 @@
     <string name="no_translation_title">ترجمه نشده</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
     <string name="format_source">منبع: %s</string>
-    <string name="format_last_edited">آخرین ویرایش: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">امروز</string>
     <string name="now">اکنون</string>

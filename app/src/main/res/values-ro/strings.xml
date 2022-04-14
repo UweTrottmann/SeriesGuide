@@ -99,7 +99,7 @@
     <string name="no_translation_title">Ne tradus</string>
     <string name="no_spoilers">Unele detalii sunt ascunse pentru a evita spoilere. Pentru a nu folosi aceasta protecție mergeți în Setări.</string>
     <string name="format_source">Sursa: %s</string>
-    <string name="format_last_edited">Ultima editare: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">astăzi</string>
     <string name="now">acum</string>

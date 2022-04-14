@@ -97,7 +97,7 @@
     <string name="no_translation_title">未翻译</string>
     <string name="no_spoilers">已隐藏部分详细信息来防止剧透。可在设置中关闭此功能。</string>
     <string name="format_source">来源：%s</string>
-    <string name="format_last_edited">最后编辑于：%s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">今天</string>
     <string name="now">现在</string>

@@ -100,7 +100,7 @@
     <string name="no_translation_title">Не перекладено</string>
     <string name="no_spoilers">Деякі деталі приховані для запобігання спойлерам. Щоб вимкнути це використовуйте Налаштування.</string>
     <string name="format_source">Джерело: %s</string>
-    <string name="format_last_edited">Остання редакція: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">сьогодні</string>
     <string name="now">Сьогодні</string>
