@@ -6,7 +6,8 @@
         app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.notifications"
         app:summary="@string/pref_notificationssummary"
-        app:title="@string/pref_notifications" />
+        app:title="@string/pref_notifications"
+        app:widgetLayout="@layout/custom_switch" />
 
     <Preference
         app:iconSpaceReserved="false"

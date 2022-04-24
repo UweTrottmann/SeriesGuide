@@ -8,7 +8,8 @@
         app:iconSpaceReserved="false"
         app:key="com.battlelancer.seriesguide.autoupdate"
         app:summary="@string/pref_autoupdatesummary"
-        app:title="@string/pref_autoupdate" />
+        app:title="@string/pref_autoupdate"
+        app:widgetLayout="@layout/custom_switch" />
 
     <CheckBoxPreference
         app:defaultValue="False"
@@ -61,7 +62,8 @@
             app:defaultValue="False"
             app:iconSpaceReserved="false"
             app:key="com.uwetrottmann.seriesguide.dynamiccolor"
-            app:title="@string/pref_dynamic_colors" />
+            app:title="@string/pref_dynamic_colors"
+            app:widgetLayout="@layout/custom_switch" />
 
         <ListPreference
             app:defaultValue="default"
@@ -87,7 +89,8 @@
             app:defaultValue="True"
             app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.sendErrorReports"
-            app:title="@string/pref_error_reports" />
+            app:title="@string/pref_error_reports"
+            app:widgetLayout="@layout/custom_switch" />
 
     </PreferenceCategory>
 
@@ -102,7 +105,8 @@
             app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.userDebugModeEnabled"
             app:summary="@string/pref_user_debug_mode_summary"
-            app:title="@string/pref_user_debug_mode" />
+            app:title="@string/pref_user_debug_mode"
+            app:widgetLayout="@layout/custom_switch" />
 
     </PreferenceCategory>
 
