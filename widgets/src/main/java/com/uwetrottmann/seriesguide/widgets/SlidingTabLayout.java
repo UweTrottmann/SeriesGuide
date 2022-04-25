@@ -76,6 +76,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private int tabViewLayoutId;
     private int tabViewTextViewId;
+    private boolean disableAnimations;
 
     private ViewPager viewPager;
     private ViewPager2.OnPageChangeCallback viewPagerPageChangeListener;
@@ -105,6 +106,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
         tabStrip = new SlidingTabStrip(context);
         addView(tabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+    }
+
+    public void setDisableAnimations(boolean disableAnimations) {
+        this.disableAnimations = disableAnimations;
     }
 
     /**
@@ -368,10 +373,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
                         onTabClickListener.onTabClick(i);
                     }
                     if (viewPager != null) {
-                        viewPager.setCurrentItem(i);
+                        viewPager.setCurrentItem(i, !disableAnimations);
                     }
                     if (viewPager2 != null) {
-                        viewPager2.setCurrentItem(i);
+                        viewPager2.setCurrentItem(i, !disableAnimations);
                     }
                     return;
                 }

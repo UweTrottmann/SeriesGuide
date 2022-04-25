@@ -71,6 +71,12 @@
             app:key="numberformat"
             app:title="@string/pref_number" />
 
+        <SwitchPreferenceCompat
+            app:defaultValue="False"
+            app:iconSpaceReserved="false"
+            app:key="seriesguide.DISABLE_ANIMATIONS"
+            app:title="@string/pref_disable_animations" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -140,6 +140,17 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             setListPreferenceSummary(this)
         }
 
+        findPreference<SwitchPreferenceCompat>(DisplaySettings.KEY_DISABLE_ANIMATIONS)!!.apply {
+            setOnPreferenceClickListener {
+                // restart to apply animation settings, go back to this settings screen
+                TaskStackBuilder.create(requireActivity())
+                    .addNextIntent(Intent(activity, ShowsActivity::class.java))
+                    .addNextIntent(requireActivity().intent)
+                    .startActivities()
+                true
+            }
+        }
+
         // show currently set values for list prefs
         setListPreferenceSummary(findPreference(DisplaySettings.KEY_NUMBERFORMAT))
 

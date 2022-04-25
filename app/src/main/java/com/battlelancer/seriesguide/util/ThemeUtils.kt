@@ -51,6 +51,7 @@ object ThemeUtils {
         setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem)
         setSelectedIndicatorColors(getColorFromAttribute(context, R.attr.colorPrimary))
         setUnderlineColor(getColorFromAttribute(context, R.attr.sgColorDivider))
+        setDisableAnimations(DisplaySettings.isDisableAnimations(context))
     }
 
     /**
