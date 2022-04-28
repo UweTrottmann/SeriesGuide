@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.androidutils.AndroidUtils

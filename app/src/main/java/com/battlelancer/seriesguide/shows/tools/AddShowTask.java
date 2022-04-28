@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.shows.search.SearchResult;
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult;
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult;
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;

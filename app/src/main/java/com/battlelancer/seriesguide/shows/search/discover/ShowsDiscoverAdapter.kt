@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools

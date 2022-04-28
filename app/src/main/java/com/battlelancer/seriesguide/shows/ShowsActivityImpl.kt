@@ -18,7 +18,7 @@ import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.shows.calendar.CalendarFragment2
 import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
-import com.battlelancer.seriesguide.shows.search.SearchResult
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.BaseTopActivity

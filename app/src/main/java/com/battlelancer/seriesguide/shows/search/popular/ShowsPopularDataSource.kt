@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.SearchResult
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.SearchTools
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.Errors

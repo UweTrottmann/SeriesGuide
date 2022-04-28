@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.shows.tools.AddShowTask;
-import com.battlelancer.seriesguide.shows.search.SearchResult;
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult;
 import java.util.ArrayList;
 import java.util.List;
 import kotlinx.coroutines.Job;

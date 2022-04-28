@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.shows.search
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.AddAdapter.OnItemClickListener
-import com.battlelancer.seriesguide.shows.search.discover.AddIndicator
 import com.battlelancer.seriesguide.util.ImageTools
 
 class SearchResultViewHolder(

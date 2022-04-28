@@ -19,7 +19,6 @@ import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
-import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.shows.search;
+package com.battlelancer.seriesguide.shows.search.discover;
 
 import android.os.Parcel;
 import android.os.Parcelable;

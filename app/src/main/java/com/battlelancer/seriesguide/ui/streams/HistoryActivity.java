@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment;
-import com.battlelancer.seriesguide.shows.search.SearchResult;
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.TaskManager;
 import timber.log.Timber;

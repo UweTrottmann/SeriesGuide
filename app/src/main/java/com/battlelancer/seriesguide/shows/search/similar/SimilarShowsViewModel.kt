@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.search.SearchResult
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.SearchTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils

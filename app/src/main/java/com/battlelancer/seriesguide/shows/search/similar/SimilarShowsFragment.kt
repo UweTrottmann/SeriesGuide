@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
-import com.battlelancer.seriesguide.shows.search.SearchResult
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.util.ViewTools

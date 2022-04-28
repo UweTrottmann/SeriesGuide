@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.shows.search.SearchResult;
 
 public class AddIndicator extends FrameLayout {
 
