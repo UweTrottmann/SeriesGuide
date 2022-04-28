@@ -1,22 +1,22 @@
-package com.battlelancer.seriesguide.shows.overview;
+package com.battlelancer.seriesguide.shows.overview
 
-import android.content.Context;
-import com.battlelancer.seriesguide.R;
+import android.content.Context
+import com.battlelancer.seriesguide.R
 
-public class SeasonTools {
+object SeasonTools {
 
-    public static boolean hasSkippedTag(String tags) {
-        return SeasonTags.SKIPPED.equals(tags);
+    fun hasSkippedTag(tags: String?): Boolean {
+        return SeasonTags.SKIPPED == tags
     }
 
     /**
      * Builds a localized string like "Season 5" or if the number is 0 "Special Episodes".
      */
-    public static String getSeasonString(Context context, int seasonNumber) {
-        if (seasonNumber == 0) {
-            return context.getString(R.string.specialseason);
+    fun getSeasonString(context: Context, seasonNumber: Int): String {
+        return if (seasonNumber == 0) {
+            context.getString(R.string.specialseason)
         } else {
-            return context.getString(R.string.season_number, seasonNumber);
+            context.getString(R.string.season_number, seasonNumber)
         }
     }
 

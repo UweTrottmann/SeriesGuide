@@ -1,9 +1,8 @@
-package com.battlelancer.seriesguide.shows.overview;
+package com.battlelancer.seriesguide.shows.overview
 
-public interface SeasonTags {
-
-    String NONE = "";
-
-    String SKIPPED = "skipped";
-
+interface SeasonTags {
+    companion object {
+        const val NONE = ""
+        const val SKIPPED = "skipped"
+    }
 }
