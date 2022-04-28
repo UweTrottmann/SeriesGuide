@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.shows.search
 
 import android.app.SearchManager
 import android.os.Bundle

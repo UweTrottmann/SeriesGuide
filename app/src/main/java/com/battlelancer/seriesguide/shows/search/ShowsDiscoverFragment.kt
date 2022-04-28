@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.shows.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,7 +24,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.ui.search.AddFragment.OnAddingShowEvent
+import com.battlelancer.seriesguide.shows.search.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils

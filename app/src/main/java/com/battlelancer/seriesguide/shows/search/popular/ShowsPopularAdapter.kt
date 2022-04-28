@@ -3,10 +3,10 @@ package com.battlelancer.seriesguide.shows.search.popular
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.ui.search.AddFragment
-import com.battlelancer.seriesguide.ui.search.SearchResult
-import com.battlelancer.seriesguide.ui.search.SearchResultDiffCallback
-import com.battlelancer.seriesguide.ui.search.SearchResultViewHolder
+import com.battlelancer.seriesguide.shows.search.AddFragment
+import com.battlelancer.seriesguide.shows.search.SearchResult
+import com.battlelancer.seriesguide.shows.search.SearchResultDiffCallback
+import com.battlelancer.seriesguide.shows.search.SearchResultViewHolder
 
 class ShowsPopularAdapter(
     val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener

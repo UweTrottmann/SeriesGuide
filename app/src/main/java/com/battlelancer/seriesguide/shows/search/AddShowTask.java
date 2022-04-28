@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search;
+package com.battlelancer.seriesguide.shows.search;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

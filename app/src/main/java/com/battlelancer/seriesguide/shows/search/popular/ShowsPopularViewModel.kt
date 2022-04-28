@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.ui.search.SearchResult
+import com.battlelancer.seriesguide.shows.search.SearchResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 

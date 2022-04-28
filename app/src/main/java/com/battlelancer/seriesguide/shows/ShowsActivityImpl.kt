@@ -17,6 +17,8 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.shows.calendar.CalendarFragment2
 import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
+import com.battlelancer.seriesguide.shows.search.AddShowDialogFragment
+import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.battlelancer.seriesguide.sync.AccountUtils
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.BaseTopActivity
@@ -24,8 +26,6 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
-import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
-import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils

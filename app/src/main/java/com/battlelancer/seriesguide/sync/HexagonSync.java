@@ -10,7 +10,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.provider.SgShow2Helper;
 import com.battlelancer.seriesguide.provider.SgShow2Ids;
 import com.battlelancer.seriesguide.ui.movies.MovieTools;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
+import com.battlelancer.seriesguide.shows.search.SearchResult;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import java.util.HashMap;

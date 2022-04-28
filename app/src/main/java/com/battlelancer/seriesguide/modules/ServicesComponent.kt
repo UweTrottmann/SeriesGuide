@@ -8,8 +8,8 @@ import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.ui.movies.MovieTools
-import com.battlelancer.seriesguide.ui.search.AddShowTask
-import com.battlelancer.seriesguide.ui.search.TraktAddLoader
+import com.battlelancer.seriesguide.shows.search.AddShowTask
+import com.battlelancer.seriesguide.shows.search.TraktAddLoader
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService

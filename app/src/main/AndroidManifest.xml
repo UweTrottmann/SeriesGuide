@@ -152,7 +152,7 @@
         </activity>
         <activity android:name=".shows.search.similar.SimilarShowsActivity" />
         <activity
-            android:name=".ui.search.TraktShowsActivity"
+            android:name=".shows.search.TraktShowsActivity"
             android:parentActivityName=".ui.SearchActivity" />
 
         <!-- Movies -->

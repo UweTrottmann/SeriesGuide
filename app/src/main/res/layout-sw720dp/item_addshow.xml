@@ -36,7 +36,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.battlelancer.seriesguide.ui.search.AddIndicator
+        <com.battlelancer.seriesguide.shows.search.AddIndicator
             android:id="@+id/addIndicatorAddShow"
             android:layout_width="48dp"
             android:layout_height="48dp"

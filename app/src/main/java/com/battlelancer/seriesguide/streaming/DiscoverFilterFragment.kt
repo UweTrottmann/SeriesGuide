@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverFilterBindi
 import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.model.SgWatchProvider.Type
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFilterAdapter
+import com.battlelancer.seriesguide.shows.search.ShowsDiscoverFilterAdapter
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers

@@ -13,13 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment.Companion.show
+import com.battlelancer.seriesguide.shows.search.EpisodeSearchFragment
+import com.battlelancer.seriesguide.shows.tools.ShowTools2.OnRemovingShowEvent
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.ui.overview.OverviewFragment
 import com.battlelancer.seriesguide.ui.overview.SeasonsFragment
 import com.battlelancer.seriesguide.ui.overview.ShowFragment
-import com.battlelancer.seriesguide.ui.search.EpisodeSearchFragment
-import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment.Companion.show
-import com.battlelancer.seriesguide.shows.tools.ShowTools2.OnRemovingShowEvent
 import com.battlelancer.seriesguide.util.ImageTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +27,6 @@ import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.lang.ref.WeakReference
-import java.util.ArrayList
 
 /**
  * Hosts an [OverviewFragment].

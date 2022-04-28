@@ -2,10 +2,10 @@ package com.battlelancer.seriesguide.shows.search.similar
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.battlelancer.seriesguide.ui.search.AddFragment
-import com.battlelancer.seriesguide.ui.search.SearchResult
-import com.battlelancer.seriesguide.ui.search.SearchResultDiffCallback
-import com.battlelancer.seriesguide.ui.search.SearchResultViewHolder
+import com.battlelancer.seriesguide.shows.search.AddFragment
+import com.battlelancer.seriesguide.shows.search.SearchResult
+import com.battlelancer.seriesguide.shows.search.SearchResultDiffCallback
+import com.battlelancer.seriesguide.shows.search.SearchResultViewHolder
 
 class SimilarShowsAdapter(
     val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener

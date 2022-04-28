@@ -13,10 +13,10 @@ import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.SearchActivity
+import com.battlelancer.seriesguide.shows.search.BaseAddShowsFragment
+import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.ui.search.BaseAddShowsFragment
-import com.battlelancer.seriesguide.ui.search.SearchResult
+import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.uwetrottmann.seriesguide.common.SingleLiveEvent
