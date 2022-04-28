@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragment;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;
 
 /**

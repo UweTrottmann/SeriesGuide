@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.lists
+package com.battlelancer.seriesguide.lists
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -15,11 +15,11 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.shows.overview.SeasonTools
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import java.util.Date
 
 class SgListItemAdapter(

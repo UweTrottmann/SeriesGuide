@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.lists
+package com.battlelancer.seriesguide.lists
 
 import android.app.Dialog
 import android.content.Context
@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
-import java.util.HashSet
 
 /**
  * Displays a dialog to add a new list to lists.

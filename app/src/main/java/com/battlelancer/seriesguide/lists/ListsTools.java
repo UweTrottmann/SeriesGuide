@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.lists;
+package com.battlelancer.seriesguide.lists;
 
 import android.content.Context;
 import android.database.Cursor;

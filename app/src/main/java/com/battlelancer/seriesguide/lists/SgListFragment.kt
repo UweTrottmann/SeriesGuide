@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.lists
+package com.battlelancer.seriesguide.lists
 
 import android.content.Context
 import android.os.Bundle
@@ -15,11 +15,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.lists.ListsDistillationSettings.ListsSortOrderChangedEvent
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgListItemWithDetails
-import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
-import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings.ListsSortOrderChangedEvent
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
@@ -105,7 +105,7 @@ class SgListFragment : Fragment() {
             override fun onItemClick(anchor: View, item: SgListItemWithDetails) {
                 Utils.startActivityWithAnimation(
                     requireActivity(),
-                    intentShow(requireActivity(), item.showId),
+                    OverviewActivity.intentShow(requireActivity(), item.showId),
                     anchor
                 )
             }

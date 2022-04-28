@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.lists
+package com.battlelancer.seriesguide.lists
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -8,11 +8,10 @@ import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogListsReorderBinding
+import com.battlelancer.seriesguide.lists.OrderedListsLoader.OrderedList
 import com.battlelancer.seriesguide.ui.ListsActivity
-import com.battlelancer.seriesguide.ui.lists.OrderedListsLoader.OrderedList
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController
-import java.util.ArrayList
 
 /**
  * Dialog to reorder lists using a vertical list with drag handles. Currently not accessibility or

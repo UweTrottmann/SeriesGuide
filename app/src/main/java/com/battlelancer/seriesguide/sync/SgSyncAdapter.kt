@@ -21,7 +21,7 @@ import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
+import com.battlelancer.seriesguide.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.lists
+package com.battlelancer.seriesguide.lists
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

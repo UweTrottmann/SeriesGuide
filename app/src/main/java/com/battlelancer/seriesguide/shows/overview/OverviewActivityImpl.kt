@@ -18,7 +18,7 @@ import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
-import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

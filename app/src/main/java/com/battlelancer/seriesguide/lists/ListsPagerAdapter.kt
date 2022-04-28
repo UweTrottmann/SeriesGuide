@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.lists
+package com.battlelancer.seriesguide.lists
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
