@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgEpisode2Numbers
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgShow2Minimal
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -75,7 +74,7 @@ class EpisodesActivityViewModel(
 
         // Get episode list.
         val seasonId = seasonInfo.seasonId
-        val sortOrder = DisplaySettings.getEpisodeSortOrder(getApplication())
+        val sortOrder = EpisodesSettings.getEpisodeSortOrder(getApplication())
         val episodes = database.sgEpisode2Helper()
             .getEpisodeNumbersOfSeason(SgEpisode2Numbers.buildQuery(seasonId, sortOrder))
 

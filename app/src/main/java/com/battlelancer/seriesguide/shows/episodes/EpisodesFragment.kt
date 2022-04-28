@@ -273,14 +273,14 @@ class EpisodesFragment : Fragment() {
         SingleChoiceDialogFragment.show(
             parentFragmentManager,
             R.array.epsorting,
-            R.array.epsortingData, DisplaySettings.getEpisodeSortOrder(requireActivity()).index(),
-            DisplaySettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
+            R.array.epsortingData, EpisodesSettings.getEpisodeSortOrder(requireActivity()).index(),
+            EpisodesSettings.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting,
             "episodeSortOrderDialog"
         )
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
-        if (DisplaySettings.KEY_EPISODE_SORT_ORDER == key) {
+        if (EpisodesSettings.KEY_EPISODE_SORT_ORDER == key) {
             scrollToCheckedItemOnDataRefresh = true
             model.updateOrder()
         }

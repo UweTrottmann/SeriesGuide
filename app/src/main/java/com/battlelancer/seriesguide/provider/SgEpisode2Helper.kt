@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Column
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.shows.episodes.EpisodesSettings
 import com.battlelancer.seriesguide.util.TimeTools
 
 @Dao
@@ -643,7 +644,7 @@ data class SgEpisode2Info(
         /**
          * Compile time validated using copy at [SgEpisode2Helper.dummyToValidateSgEpisode2Info].
          */
-        fun buildQuery(seasonId: Long, order: Constants.EpisodeSorting): SimpleSQLiteQuery {
+        fun buildQuery(seasonId: Long, order: EpisodesSettings.EpisodeSorting): SimpleSQLiteQuery {
             val orderClause = order.query()
             return SimpleSQLiteQuery(
                 "SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
@@ -671,7 +672,7 @@ data class SgEpisode2Numbers(
         /**
          * Compile time validated using copy at [SgEpisode2Helper.getEpisodeNumbersOfSeason].
          */
-        fun buildQuery(seasonId: Long, order: Constants.EpisodeSorting): SimpleSQLiteQuery {
+        fun buildQuery(seasonId: Long, order: EpisodesSettings.EpisodeSorting): SimpleSQLiteQuery {
             val orderClause = order.query()
             return SimpleSQLiteQuery(
                 "SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"

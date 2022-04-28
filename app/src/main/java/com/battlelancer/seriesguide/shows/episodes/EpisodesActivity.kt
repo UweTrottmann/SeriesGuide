@@ -17,11 +17,9 @@ import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob
 import com.battlelancer.seriesguide.service.NotificationService
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.overview.SeasonTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -232,7 +230,7 @@ class EpisodesActivity : BaseMessageActivity() {
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
-        if (DisplaySettings.KEY_EPISODE_SORT_ORDER == key) {
+        if (EpisodesSettings.KEY_EPISODE_SORT_ORDER == key) {
             reorderAndUpdateTabs()
         }
     }
@@ -327,8 +325,8 @@ class EpisodesActivity : BaseMessageActivity() {
     fun onEvent(event: ServiceCompletedEvent) {
         if (event.isSuccessful && event.flagJob is BaseEpisodesJob) {
             // order can only change if sorted by unwatched first
-            val sortOrder = DisplaySettings.getEpisodeSortOrder(this)
-            if (sortOrder == Constants.EpisodeSorting.UNWATCHED_FIRST) {
+            val sortOrder = EpisodesSettings.getEpisodeSortOrder(this)
+            if (sortOrder == EpisodesSettings.EpisodeSorting.UNWATCHED_FIRST) {
                 // Temporarily remove page change listener to avoid scrolling to checked item.
                 episodeDetailsTabs.setOnPageChangeListener(null)
                 // Listener is re-set once view model completes loading.

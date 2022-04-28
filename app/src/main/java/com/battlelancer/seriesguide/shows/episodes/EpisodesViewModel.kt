@@ -7,10 +7,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.battlelancer.seriesguide.Constants.EpisodeSorting
 import com.battlelancer.seriesguide.provider.SgEpisode2Info
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +24,7 @@ class EpisodesViewModel(
     )
 
     var showId: Long = 0
-    private val order = MutableLiveData<EpisodeSorting>()
+    private val order = MutableLiveData<EpisodesSettings.EpisodeSorting>()
     val episodes = Transformations.switchMap(order) {
         SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
             .getEpisodeInfoOfSeasonLiveData(SgEpisode2Info.buildQuery(seasonId, it))
@@ -45,7 +43,7 @@ class EpisodesViewModel(
     }
 
     fun updateOrder() {
-        order.value = DisplaySettings.getEpisodeSortOrder(getApplication())
+        order.value = EpisodesSettings.getEpisodeSortOrder(getApplication())
     }
 
     fun updateCounts() = viewModelScope.launch(Dispatchers.IO) {
