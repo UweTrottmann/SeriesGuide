@@ -9,7 +9,6 @@ import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogListsReorderBinding
 import com.battlelancer.seriesguide.lists.OrderedListsLoader.OrderedList
-import com.battlelancer.seriesguide.ui.ListsActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController
 
@@ -40,7 +39,7 @@ class ListsReorderDialogFragment : AppCompatDialogFragment() {
         binding.listViewListsReorder.adapter = adapter
 
         LoaderManager.getInstance(this)
-            .initLoader(ListsActivity.LISTS_REORDER_LOADER_ID, null, listsLoaderCallbacks)
+            .initLoader(ListsActivityImpl.LISTS_REORDER_LOADER_ID, null, listsLoaderCallbacks)
 
         return MaterialAlertDialogBuilder(requireContext())
             .setView(binding.root)
