@@ -1,23 +1,20 @@
-package com.battlelancer.seriesguide.ui.comments;
+package com.battlelancer.seriesguide.comments;
 
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
+import com.battlelancer.seriesguide.comments.TraktCommentsFragment.InitBundle;
 import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.ui.comments.TraktCommentsFragment.InitBundle;
-import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.enums.Extended;
-import com.uwetrottmann.trakt5.services.Episodes;
-import com.uwetrottmann.trakt5.services.Movies;
-import com.uwetrottmann.trakt5.services.Shows;
-import dagger.Lazy;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit2.Response;
@@ -41,10 +38,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
     private static final int PAGE_SIZE = 25;
 
     private final Bundle args;
-    @Inject MovieTools movieTools;
-    @Inject Lazy<Episodes> traktEpisodes;
-    @Inject Lazy<Movies> traktMovies;
-    @Inject Lazy<Shows> traktShows;
+    @Inject TraktV2 trakt;
 
     TraktCommentsLoader(Context context, Bundle args) {
         super(context);
@@ -57,13 +51,13 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
         // movie comments?
         int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
         if (movieTmdbId != 0) {
-            Integer movieTraktId = movieTools.lookupTraktId(movieTmdbId);
+            Integer movieTraktId = TraktTools.lookupMovieTraktId(trakt, movieTmdbId);
             if (movieTraktId != null) {
                 if (movieTraktId == -1) {
                     return buildResultFailure(R.string.trakt_error_not_exists);
                 }
                 try {
-                    Response<List<Comment>> response = traktMovies.get()
+                    Response<List<Comment>> response = trakt.movies()
                             .comments(String.valueOf(movieTraktId), 1, PAGE_SIZE, Extended.FULL)
                             .execute();
                     if (response.isSuccessful()) {
@@ -98,7 +92,8 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
                 return buildResultFailure(R.string.trakt_error_not_exists);
             }
             try {
-                Response<List<Comment>> response = traktEpisodes.get().comments(
+                Response<List<Comment>> response = trakt.episodes()
+                        .comments(
                         String.valueOf(showTraktId),
                         episode.getSeason(),
                         episode.getEpisodenumber(),
@@ -124,7 +119,7 @@ public class TraktCommentsLoader extends GenericSimpleLoader<TraktCommentsLoader
             return buildResultFailure(R.string.trakt_error_not_exists);
         }
         try {
-            Response<List<Comment>> response = traktShows.get()
+            Response<List<Comment>> response = trakt.shows()
                     .comments(String.valueOf(showTraktId), 1, PAGE_SIZE, Extended.FULL)
                     .execute();
             if (response.isSuccessful()) {

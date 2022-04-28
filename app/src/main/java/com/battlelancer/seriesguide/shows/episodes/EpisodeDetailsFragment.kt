@@ -19,6 +19,7 @@ import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.api.Action
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.ButtonsEpisodeBinding
 import com.battlelancer.seriesguide.databinding.ButtonsEpisodeMoreBinding
 import com.battlelancer.seriesguide.databinding.ButtonsServicesBinding
@@ -43,7 +44,6 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity.Companion.intent
-import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
@@ -627,7 +627,8 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         // Trakt comments
         bindingBottom.buttonEpisodeComments.setOnClickListener { v: View? ->
-            val intent = intentEpisode(requireContext(), episodeTitle, episodeId)
+            val intent =
+                TraktCommentsActivity.intentEpisode(requireContext(), episodeTitle, episodeId)
             Utils.startActivityWithAnimation(requireActivity(), intent, v)
         }
     }

@@ -6,7 +6,7 @@ import com.battlelancer.seriesguide.shows.tools.GetShowTools
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
+import com.battlelancer.seriesguide.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.shows.tools.AddShowTask
 import com.battlelancer.seriesguide.shows.search.discover.TraktAddLoader

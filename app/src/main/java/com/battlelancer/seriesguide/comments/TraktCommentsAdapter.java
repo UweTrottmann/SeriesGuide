@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.ui.comments;
+package com.battlelancer.seriesguide.comments;
 
 import android.content.Context;
 import android.text.format.DateUtils;

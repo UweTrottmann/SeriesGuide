@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Action
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.databinding.FragmentOverviewBinding
 import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract
@@ -32,6 +33,9 @@ import com.battlelancer.seriesguide.settings.AppSettings.setAskedForFeedback
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
@@ -44,11 +48,7 @@ import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher.fetchEpisodeRat
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
-import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity.Companion.intentEpisode
-import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
-import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
-import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.Companion.intentEpisode
-import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity.Companion.getFeedbackEmailIntent
+import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
@@ -112,7 +112,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             containerOverviewEpisodeCard.setOnClickListener { v: View? ->
                 runIfHasEpisode { episode ->
                     // display episode details
-                    val intent = intentEpisode(episode.id, requireContext())
+                    val intent = EpisodesActivity.intentEpisode(episode.id, requireContext())
                     Utils.startActivityWithAnimation(activity, intent, v)
                 }
             }
@@ -317,7 +317,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
 
     private fun onButtonCommentsClick(v: View?) {
         runIfHasEpisode { episode ->
-            val i = intentEpisode(requireContext(), episode.title, episode.id)
+            val i = TraktCommentsActivity.intentEpisode(requireContext(), episode.title, episode.id)
             Utils.startActivityWithAnimation(activity, i, v)
         }
     }
@@ -724,7 +724,9 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
 
                 override fun onFeedback() {
                     if (Utils.tryStartActivity(
-                            requireContext(), getFeedbackEmailIntent(requireContext()), true
+                            requireContext(),
+                            MoreOptionsActivity.getFeedbackEmailIntent(requireContext()),
+                            true
                         )) {
                         hideFeedbackView()
                     }

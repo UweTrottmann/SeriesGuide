@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.comments;
+package com.battlelancer.seriesguide.comments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;

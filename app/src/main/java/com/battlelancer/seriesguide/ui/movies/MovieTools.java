@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
+import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Errors;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -24,12 +25,8 @@ import com.uwetrottmann.tmdb2.entities.AppendToResponse;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem;
 import com.uwetrottmann.tmdb2.services.MoviesService;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Ratings;
-import com.uwetrottmann.trakt5.entities.SearchResult;
-import com.uwetrottmann.trakt5.enums.IdType;
-import com.uwetrottmann.trakt5.enums.Type;
-import com.uwetrottmann.trakt5.services.Movies;
-import com.uwetrottmann.trakt5.services.Search;
 import dagger.Lazy;
 import java.text.DateFormat;
 import java.util.Date;
@@ -67,21 +64,18 @@ public class MovieTools {
 
     private final Context context;
     private final Lazy<MoviesService> tmdbMovies;
-    private final Lazy<Movies> traktMovies;
-    private final Lazy<Search> traktSearch;
+    private final Lazy<TraktV2> trakt;
     private final MovieTools2 movieTools2;
 
     @Inject
     public MovieTools(
             @ApplicationContext Context context,
             Lazy<MoviesService> tmdbMovies,
-            Lazy<Movies> traktMovies,
-            Lazy<Search> traktSearch
+            Lazy<TraktV2> trakt
     ) {
         this.context = context;
         this.tmdbMovies = tmdbMovies;
-        this.traktMovies = traktMovies;
-        this.traktSearch = traktSearch;
+        this.trakt = trakt;
         this.movieTools2 = new MovieTools2();
     }
 
@@ -320,36 +314,6 @@ public class MovieTools {
     }
 
     /**
-     * @return {@code null} if looking up the id failed, -1 if the movie was not found or the movie
-     * id if it was found.
-     */
-    @Nullable
-    public Integer lookupTraktId(int movieTmdbId) {
-        try {
-            Response<List<SearchResult>> response = traktSearch.get().idLookup(IdType.TMDB,
-                    String.valueOf(movieTmdbId), Type.MOVIE, null, 1, 1).execute();
-            if (response.isSuccessful()) {
-                List<SearchResult> results = response.body();
-                if (results == null || results.size() != 1) {
-                    Timber.e("Finding trakt movie failed (no results)");
-                    return -1;
-                }
-                SearchResult result = results.get(0);
-                if (result.movie != null && result.movie.ids != null) {
-                    return result.movie.ids.trakt;
-                }
-                Timber.e("Finding trakt movie failed (not in results)");
-                return -1;
-            } else {
-                Errors.logAndReport("movie trakt id lookup", response);
-            }
-        } catch (Exception e) {
-            Errors.logAndReport("movie trakt id lookup", e);
-        }
-        return null;
-    }
-
-    /**
      * Adds new movies to the database.
      *
      * @param newCollectionMovies Movie TMDB ids to add to the collection.
@@ -447,7 +411,7 @@ public class MovieTools {
 
         // load ratings from trakt
         if (getTraktRating) {
-            Integer movieTraktId = lookupTraktId(movieTmdbId);
+            Integer movieTraktId = TraktTools.lookupMovieTraktId(trakt.get(), movieTmdbId);
             if (movieTraktId != null) {
                 details.traktRatings(loadRatingsFromTrakt(movieTraktId));
             }
@@ -461,7 +425,7 @@ public class MovieTools {
 
     private Ratings loadRatingsFromTrakt(int movieTraktId) {
         try {
-            Response<Ratings> response = traktMovies.get()
+            Response<Ratings> response = trakt.get().movies()
                     .ratings(String.valueOf(movieTraktId))
                     .execute();
             if (response.isSuccessful()) {

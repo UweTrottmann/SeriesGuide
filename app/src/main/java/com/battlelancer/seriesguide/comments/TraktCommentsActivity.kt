@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.comments
+package com.battlelancer.seriesguide.comments
 
 import android.content.Context
 import android.content.Intent
@@ -26,7 +26,8 @@ class TraktCommentsActivity : BaseActivity() {
         setupActionBar()
 
         if (savedInstanceState == null) {
-            val f = TraktCommentsFragment().apply {
+            val f = TraktCommentsFragment()
+                .apply {
                 arguments = intent.extras
             }
             supportFragmentManager.beginTransaction()
