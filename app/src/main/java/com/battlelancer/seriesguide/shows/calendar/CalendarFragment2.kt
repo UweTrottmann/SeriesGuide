@@ -25,14 +25,14 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.ShowsActivityImpl
+import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
-import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.widgets.SgFastScroller
 import kotlinx.coroutines.delay
@@ -114,9 +114,9 @@ class CalendarFragment2 : Fragment() {
             .observe(viewLifecycleOwner) { tabPosition: Int? ->
                 if (tabPosition != null) {
                     if (CalendarType.UPCOMING == type
-                        && tabPosition == ShowsActivity.INDEX_TAB_UPCOMING
+                        && tabPosition == ShowsActivityImpl.Tab.UPCOMING.index
                         || CalendarType.RECENT == type
-                        && tabPosition == ShowsActivity.INDEX_TAB_RECENT) {
+                        && tabPosition == ShowsActivityImpl.Tab.RECENT.index) {
                         recyclerView.smoothScrollToPosition(0)
                     }
                 }

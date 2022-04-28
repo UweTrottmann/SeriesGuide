@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstanc
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isHidingSpecials
 import com.battlelancer.seriesguide.settings.NotificationSettings
+import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity.Companion.intentEpisode
@@ -286,11 +287,7 @@ class NotificationService(context: Context) {
         val contentText: CharSequence
         val contentIntent: PendingIntent
         // base intent for task stack
-        val showsIntent = Intent(context, ShowsActivity::class.java)
-        showsIntent.putExtra(
-            ShowsActivity.EXTRA_SELECTED_TAB,
-            ShowsActivity.INDEX_TAB_UPCOMING
-        )
+        val showsIntent = ShowsActivity.newIntent(context, ShowsActivityImpl.Tab.UPCOMING.index)
 
         val count = notifyPositions.size
         if (count == 1) {

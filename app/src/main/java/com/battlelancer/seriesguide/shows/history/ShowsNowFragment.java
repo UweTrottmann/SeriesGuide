@@ -27,12 +27,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
+import com.battlelancer.seriesguide.shows.ShowsActivityViewModel;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment;
-import com.battlelancer.seriesguide.shows.ShowsActivityViewModel;
 import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
@@ -104,7 +104,7 @@ public class ShowsNowFragment extends Fragment {
                 .getScrollTabToTopLiveData()
                 .observe(getViewLifecycleOwner(), tabPosition -> {
                     if (tabPosition != null
-                            && tabPosition == ShowsActivity.INDEX_TAB_NOW) {
+                            && tabPosition == ShowsActivity.Tab.NOW.getIndex()) {
                         recyclerView.smoothScrollToPosition(0);
                     }
                 });

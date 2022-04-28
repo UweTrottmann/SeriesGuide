@@ -28,12 +28,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider.Companion.notifyDataChanged
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.settings.AdvancedSettings
-import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
-import com.battlelancer.seriesguide.ui.SearchActivity
-import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
-import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.shows.FilterShowsView.ShowFilter
 import com.battlelancer.seriesguide.shows.FilterShowsView.ShowFilter.Companion.allDisabled
 import com.battlelancer.seriesguide.shows.FirstRunView.ButtonEvent
@@ -43,6 +37,11 @@ import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.sh
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.getSortQuery2
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.saveFilter
 import com.battlelancer.seriesguide.shows.SortShowsView.ShowSortOrder
+import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
+import com.battlelancer.seriesguide.ui.SearchActivity
+import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SgFastScroller
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -118,7 +117,7 @@ class ShowsFragment : Fragment() {
 
         activityModel.scrollTabToTopLiveData.observe(viewLifecycleOwner) { tabPosition: Int? ->
             if (tabPosition != null
-                && tabPosition == ShowsActivity.INDEX_TAB_SHOWS) {
+                && tabPosition == ShowsActivityImpl.Tab.SHOWS.index) {
                 recyclerView.smoothScrollToPosition(0)
             }
         }

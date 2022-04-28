@@ -7,7 +7,6 @@ import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.Constants.EpisodeSorting
 import com.battlelancer.seriesguide.Constants.SeasonSorting
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.TextTools
 import java.util.Locale
 
@@ -38,7 +37,6 @@ object DisplaySettings {
     const val KEY_EPISODE_SORT_ORDER = "episodeSorting"
     const val KEY_HIDE_SPECIALS = "onlySeasonEpisodes"
     const val KEY_SORT_IGNORE_ARTICLE = "com.battlelancer.seriesguide.sort.ignorearticle"
-    const val KEY_LAST_ACTIVE_SHOWS_TAB = "com.battlelancer.seriesguide.activitytab"
     const val KEY_LAST_ACTIVE_LISTS_TAB = "com.battlelancer.seriesguide.listsActiveTab"
     const val KEY_LAST_ACTIVE_MOVIES_TAB = "com.battlelancer.seriesguide.moviesActiveTab"
     const val KEY_DISPLAY_EXACT_DATE = "com.battlelancer.seriesguide.shows.exactdate"
@@ -195,18 +193,6 @@ object DisplaySettings {
     fun isSortOrderIgnoringArticles(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_SORT_IGNORE_ARTICLE, false)
-    }
-
-    /**
-     * Return the position of the last selected shows tab.
-     */
-    @JvmStatic
-    fun getLastShowsTabPosition(context: Context): Int {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getInt(
-                KEY_LAST_ACTIVE_SHOWS_TAB,
-                ShowsActivity.INDEX_TAB_SHOWS
-            )
     }
 
     /**
