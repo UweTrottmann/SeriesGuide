@@ -47,7 +47,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity.Companion.getFeedbackEmailIntent
-import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity.Companion.intent
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity.Companion.intent
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment.Companion.show
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.ServiceUtils

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.shows.search.similar
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.ui.search.SearchResult
+import com.battlelancer.seriesguide.ui.search.SearchTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.shows.search.similar
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.ui.search.AddShowDialogFragment
+import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.TaskManager
 
 class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowListener {

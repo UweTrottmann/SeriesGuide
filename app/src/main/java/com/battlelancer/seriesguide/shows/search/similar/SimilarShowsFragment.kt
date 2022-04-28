@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.shows.search.similar
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.search.BaseAddShowsFragment
+import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.EmptyView
 import com.uwetrottmann.seriesguide.common.SingleLiveEvent

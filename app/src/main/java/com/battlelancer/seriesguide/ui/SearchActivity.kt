@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.ui.search.SearchTriggerListener
 import com.battlelancer.seriesguide.ui.search.ShowSearchFragment
 import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFragment
-import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity
-import com.battlelancer.seriesguide.ui.search.SimilarShowsFragment
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.search.TmdbIdExtractor
 import com.battlelancer.seriesguide.util.HighlightTools
 import com.battlelancer.seriesguide.util.HighlightTools.Feature
