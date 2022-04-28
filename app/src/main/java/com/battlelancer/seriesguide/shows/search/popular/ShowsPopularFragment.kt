@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.shows.search.popular
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.search.BaseAddShowsFragment
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest

@@ -1,10 +1,12 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.shows.search.popular
 
 import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.ui.search.SearchResult
+import com.battlelancer.seriesguide.ui.search.SearchTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.Tmdb

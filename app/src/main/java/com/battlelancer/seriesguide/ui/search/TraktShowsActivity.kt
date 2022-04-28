@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularFragment
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
