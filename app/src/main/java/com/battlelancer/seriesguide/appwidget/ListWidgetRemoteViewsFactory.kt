@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
-import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools

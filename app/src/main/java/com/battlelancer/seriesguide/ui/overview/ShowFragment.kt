@@ -41,7 +41,7 @@ import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
-import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.launch

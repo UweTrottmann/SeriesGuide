@@ -29,7 +29,7 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
-import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus

@@ -6,7 +6,7 @@ import android.app.backup.SharedPreferencesBackupHelper
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.ui.shows.FirstRunView
+import com.battlelancer.seriesguide.shows.FirstRunView
 
 /**
  * On API 23+ (M+) uses full backup. On older versions key-value based backup, which requires

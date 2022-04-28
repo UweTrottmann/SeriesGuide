@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.ui.movies;
 import android.content.Context;
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
-import com.battlelancer.seriesguide.ui.shows.NowAdapter;
+import com.battlelancer.seriesguide.shows.history.NowAdapter;
 import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler;

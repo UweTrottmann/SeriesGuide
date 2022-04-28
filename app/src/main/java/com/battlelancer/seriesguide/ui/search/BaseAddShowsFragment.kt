@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.util.shows.ShowTools2
+import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.util.TaskManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

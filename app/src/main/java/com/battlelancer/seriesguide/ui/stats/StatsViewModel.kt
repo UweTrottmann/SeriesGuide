@@ -9,7 +9,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import kotlinx.coroutines.Dispatchers
 
 class StatsViewModel(application: Application) : AndroidViewModel(application) {

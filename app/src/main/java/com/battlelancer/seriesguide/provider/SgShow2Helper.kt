@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.sync.ShowLastWatchedInfo
-import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 
 @Dao
 interface SgShow2Helper {

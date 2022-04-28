@@ -48,7 +48,7 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity.Companion.getFeedbackEmailIntent
 import com.battlelancer.seriesguide.ui.search.SimilarShowsActivity.Companion.intent
-import com.battlelancer.seriesguide.ui.shows.RemoveShowDialogFragment.Companion.show
+import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment.Companion.show
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
@@ -58,7 +58,7 @@ import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
-import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.widgets.FeedbackView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso

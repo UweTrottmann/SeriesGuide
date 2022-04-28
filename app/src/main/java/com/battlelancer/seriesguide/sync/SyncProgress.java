@@ -114,7 +114,7 @@ public class SyncProgress {
      * {@link #publish} or {@link #publishFinished} is called.
      * Does nothing if this was already called.
      */
-    void setImportantErrorIfNone(@NonNull String message) {
+    public void setImportantErrorIfNone(@NonNull String message) {
         if (importantErrorOrNull == null) {
             importantErrorOrNull = message;
         }

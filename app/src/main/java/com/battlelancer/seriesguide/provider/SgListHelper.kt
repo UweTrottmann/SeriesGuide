@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 
 @Dao
 interface SgListHelper {

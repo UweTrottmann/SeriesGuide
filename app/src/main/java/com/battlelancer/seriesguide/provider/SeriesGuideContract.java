@@ -10,8 +10,8 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater;
-import com.battlelancer.seriesguide.util.shows.ShowStatus;
-import com.battlelancer.seriesguide.util.shows.ShowTools2;
+import com.battlelancer.seriesguide.shows.tools.ShowStatus;
+import com.battlelancer.seriesguide.shows.tools.ShowTools2;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 

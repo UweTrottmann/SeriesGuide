@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.provider.SgListHelper
 import com.battlelancer.seriesguide.provider.SgSeason2Helper
 import com.battlelancer.seriesguide.provider.SgShow2Helper
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
-import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher

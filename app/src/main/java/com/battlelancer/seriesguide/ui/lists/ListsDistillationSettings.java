@@ -4,8 +4,8 @@ import android.content.Context;
 import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings;
-import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings.ShowsSortOrder;
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings;
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowsSortOrder;
 
 /**
  * Provides settings used to sort displayed list items.

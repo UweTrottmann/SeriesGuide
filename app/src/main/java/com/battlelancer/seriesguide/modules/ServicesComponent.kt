@@ -1,15 +1,15 @@
 package com.battlelancer.seriesguide.modules
 
 import com.battlelancer.seriesguide.backend.HexagonTools
+import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools
+import com.battlelancer.seriesguide.shows.tools.GetShowTools
+import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
 import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.ui.search.AddShowTask
 import com.battlelancer.seriesguide.ui.search.TraktAddLoader
-import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools
-import com.battlelancer.seriesguide.util.shows.GetShowTools
-import com.battlelancer.seriesguide.util.shows.ShowTools2
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService
