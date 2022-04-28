@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.overview
+package com.battlelancer.seriesguide.shows.overview
 
 import android.content.Context
 import androidx.lifecycle.LiveData

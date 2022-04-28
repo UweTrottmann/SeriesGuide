@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.shows.overview.UnwatchedUpdateWorker;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -64,7 +65,7 @@ public class TimeTools {
      *
      * Note: this may seem harsh, but is equal to how to be released are calculated for seasons.
      *
-     * @see com.battlelancer.seriesguide.ui.overview.UnwatchedUpdateWorker
+     * @see UnwatchedUpdateWorker
      */
     public static boolean isReleased(Date actualRelease) {
         return actualRelease.before(new Date(System.currentTimeMillis()));

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.overview
+package com.battlelancer.seriesguide.shows.overview
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -22,13 +22,14 @@ import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgShow2
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.people.PeopleListHelper
-import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
@@ -41,7 +42,6 @@ import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
-import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.google.android.material.button.MaterialButton
 import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.launch

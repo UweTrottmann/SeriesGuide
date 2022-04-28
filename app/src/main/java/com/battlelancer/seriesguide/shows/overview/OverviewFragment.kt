@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.overview
+package com.battlelancer.seriesguide.shows.overview
 
 import android.os.Bundle
 import android.os.Handler
@@ -31,6 +31,9 @@ import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.AppSettings.setAskedForFeedback
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
+import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment
+import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearch.initButtons
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
@@ -47,8 +50,6 @@ import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity.Companion.getFeedbackEmailIntent
-import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity.Companion.intent
-import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment.Companion.show
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
@@ -58,7 +59,6 @@ import com.battlelancer.seriesguide.util.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
-import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.widgets.FeedbackView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -122,11 +122,17 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             buttonOverviewSimilarShows.setOnClickListener {
                 val show = model.show.value
                 if (show?.tmdbId != null) {
-                    startActivity(intent(requireContext(), show.tmdbId, show.title))
+                    startActivity(
+                        SimilarShowsActivity.intent(
+                            requireContext(),
+                            show.tmdbId,
+                            show.title
+                        )
+                    )
                 }
             }
             buttonOverviewRemoveShow.setOnClickListener {
-                show(showId, parentFragmentManager, requireContext())
+                RemoveShowDialogFragment.show(showId, parentFragmentManager, requireContext())
             }
 
             // episode buttons

@@ -14,12 +14,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment.Companion.show
+import com.battlelancer.seriesguide.shows.overview.OverviewFragment
+import com.battlelancer.seriesguide.shows.overview.SeasonsFragment
+import com.battlelancer.seriesguide.shows.overview.ShowFragment
 import com.battlelancer.seriesguide.shows.search.EpisodeSearchFragment
 import com.battlelancer.seriesguide.shows.tools.ShowTools2.OnRemovingShowEvent
 import com.battlelancer.seriesguide.ui.lists.ManageListsDialogFragment
-import com.battlelancer.seriesguide.ui.overview.OverviewFragment
-import com.battlelancer.seriesguide.ui.overview.SeasonsFragment
-import com.battlelancer.seriesguide.ui.overview.ShowFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

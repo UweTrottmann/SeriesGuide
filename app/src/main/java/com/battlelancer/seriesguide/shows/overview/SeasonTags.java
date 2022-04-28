@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.enums;
+package com.battlelancer.seriesguide.shows.overview;
 
 public interface SeasonTags {
 

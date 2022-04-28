@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.SeasonTools
+import com.battlelancer.seriesguide.shows.overview.SeasonTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout

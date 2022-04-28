@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.overview
+package com.battlelancer.seriesguide.shows.overview
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemSeasonBinding
 import com.battlelancer.seriesguide.model.SgSeason2
-import com.battlelancer.seriesguide.util.SeasonTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.androidutils.AndroidUtils
 

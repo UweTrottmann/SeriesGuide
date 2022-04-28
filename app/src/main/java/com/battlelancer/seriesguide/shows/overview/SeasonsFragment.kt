@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.overview
+package com.battlelancer.seriesguide.shows.overview
 
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle

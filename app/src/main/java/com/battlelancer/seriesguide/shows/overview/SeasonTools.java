@@ -1,8 +1,7 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.shows.overview;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.enums.SeasonTags;
 
 public class SeasonTools {
 

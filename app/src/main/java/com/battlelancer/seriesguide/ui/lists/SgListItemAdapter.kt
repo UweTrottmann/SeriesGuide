@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.provider.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.SeasonTools
+import com.battlelancer.seriesguide.shows.overview.SeasonTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
