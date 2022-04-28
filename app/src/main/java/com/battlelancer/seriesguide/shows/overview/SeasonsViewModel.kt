@@ -7,7 +7,6 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 
 class SeasonsViewModel(
@@ -15,10 +14,10 @@ class SeasonsViewModel(
     private val showId: Long
 ): AndroidViewModel(application) {
 
-    private val order = MutableLiveData<Constants.SeasonSorting>()
+    private val order = MutableLiveData<SeasonsSettings.SeasonSorting>()
     val seasons = Transformations.switchMap(order) {
         val helper = SgRoomDatabase.getInstance(application).sgSeason2Helper()
-        if (it == Constants.SeasonSorting.LATEST_FIRST) {
+        if (it == SeasonsSettings.SeasonSorting.LATEST_FIRST) {
             helper.getSeasonsOfShowLatestFirst(showId)
         } else {
             helper.getSeasonsOfShowOldestFirst(showId)
