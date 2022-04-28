@@ -11,9 +11,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.shows.ShowMenuItemClickListener
+import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.widgets.EmptyView
 import org.greenrobot.eventbus.Subscribe
@@ -64,7 +63,7 @@ class ShowSearchFragment : BaseSearchFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: SearchActivity.SearchQueryEvent) {
+    fun onEventMainThread(event: SearchActivityImpl.SearchQueryEvent) {
         updateQuery(event.args)
     }
 
@@ -75,7 +74,7 @@ class ShowSearchFragment : BaseSearchFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventTabClick(event: TabClickEvent) {
-        if (event.position == SearchActivity.TAB_POSITION_SHOWS) {
+        if (event.position == SearchActivityImpl.TAB_POSITION_SHOWS) {
             gridView.smoothScrollToPosition(0)
         }
     }

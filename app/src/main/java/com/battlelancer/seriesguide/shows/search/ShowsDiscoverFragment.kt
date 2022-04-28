@@ -18,13 +18,12 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.search.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.ui.SearchActivity
-import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.shows.search.AddFragment.OnAddingShowEvent
+import com.battlelancer.seriesguide.ui.OverviewActivity
+import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
@@ -71,7 +70,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         } else {
             // use initial query (if any)
             val queryEvent = EventBus.getDefault().getStickyEvent(
-                    SearchActivity.SearchQuerySubmitEvent::class.java)
+                SearchActivityImpl.SearchQuerySubmitEvent::class.java)
             queryEvent?.query ?: ""
         }
 
@@ -170,7 +169,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: SearchActivity.SearchQuerySubmitEvent) {
+    fun onEventMainThread(event: SearchActivityImpl.SearchQuerySubmitEvent) {
         query = event.query
         loadResults()
     }
@@ -204,7 +203,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         return when (item.itemId) {
             R.id.menu_action_shows_search_clear_history -> {
                 // tell the hosting activity to clear the search view history
-                EventBus.getDefault().post(SearchActivity.ClearSearchHistoryEvent())
+                EventBus.getDefault().post(SearchActivityImpl.ClearSearchHistoryEvent())
                 true
             }
             R.id.menu_action_shows_search_filter -> {
@@ -259,7 +258,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTabClickEvent(event: TabClickEvent) {
-        if (event.position == SearchActivity.TAB_POSITION_SEARCH) {
+        if (event.position == SearchActivityImpl.TAB_POSITION_SEARCH) {
             recyclerView.smoothScrollToPosition(0)
         }
     }

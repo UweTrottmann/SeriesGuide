@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.SearchActivity
 import org.greenrobot.eventbus.EventBus
 
 abstract class BaseSearchFragment : Fragment() {
@@ -27,7 +26,7 @@ abstract class BaseSearchFragment : Fragment() {
         if (savedInstanceState == null) {
             // use initial query (if any)
             val queryEvent = EventBus.getDefault()
-                .getStickyEvent(SearchActivity.SearchQueryEvent::class.java)
+                .getStickyEvent(SearchActivityImpl.SearchQueryEvent::class.java)
             if (queryEvent != null) {
                 initialSearchArgs = queryEvent.args
             }

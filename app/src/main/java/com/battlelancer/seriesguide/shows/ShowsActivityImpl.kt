@@ -183,11 +183,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         val buttonAddShow = findViewById<FloatingActionButton>(R.id.buttonShowsAdd)
         buttonAddShow.setOnClickListener {
             startActivity(
-                Intent(this@ShowsActivityImpl, SearchActivity::class.java)
-                    .putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB,
-                        SearchActivity.TAB_POSITION_SEARCH
-                    )
+                SearchActivity.newIntent(this@ShowsActivityImpl)
             )
         }
 

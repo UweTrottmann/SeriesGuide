@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.Utils
@@ -56,7 +55,7 @@ class EpisodeSearchFragment : BaseSearchFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: SearchActivity.SearchQueryEvent) {
+    fun onEventMainThread(event: SearchActivityImpl.SearchQueryEvent) {
         updateQuery(event.args)
     }
 
@@ -69,7 +68,7 @@ class EpisodeSearchFragment : BaseSearchFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventTabClick(event: TabClickEvent) {
-        if (event.position == SearchActivity.TAB_POSITION_EPISODES) {
+        if (event.position == SearchActivityImpl.TAB_POSITION_EPISODES) {
             gridView.smoothScrollToPosition(0)
         }
     }

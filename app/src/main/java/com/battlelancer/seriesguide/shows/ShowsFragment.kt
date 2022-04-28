@@ -37,10 +37,10 @@ import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.sh
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.getSortQuery2
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.saveFilter
 import com.battlelancer.seriesguide.shows.SortShowsView.ShowSortOrder
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
-import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SgFastScroller
@@ -271,11 +271,7 @@ class ShowsFragment : Fragment() {
     fun onEventFirstRunButton(event: ButtonEvent) {
         when (event.type) {
             ButtonType.ADD_SHOW -> {
-                startActivity(
-                    Intent(activity, SearchActivity::class.java).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH
-                    )
-                )
+                startActivityAddShows()
             }
             ButtonType.SIGN_IN -> {
                 startActivity(Intent(activity, MoreOptionsActivity::class.java))
@@ -296,9 +292,7 @@ class ShowsFragment : Fragment() {
 
     private fun startActivityAddShows() {
         startActivity(
-            Intent(activity, SearchActivity::class.java).putExtra(
-                SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH
-            )
+            SearchActivity.newIntent(requireContext())
         )
     }
 

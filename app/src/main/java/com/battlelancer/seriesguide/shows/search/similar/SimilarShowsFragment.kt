@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.shows.search.similar
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -117,8 +116,8 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         return when (item.itemId) {
             MENU_ITEM_SEARCH_ID -> {
                 startActivity(
-                    Intent(activity, SearchActivity::class.java).putExtra(
-                        SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH
+                    SearchActivity.newIntent(
+                        requireContext()
                     )
                 )
                 true
