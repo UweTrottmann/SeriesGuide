@@ -8,9 +8,9 @@ import android.os.Parcelable;
  */
 public class SearchResult implements Parcelable {
 
-    static final int STATE_ADD = 0;
-    static final int STATE_ADDING = 1;
-    static final int STATE_ADDED = 2;
+    public static final int STATE_ADD = 0;
+    public static final int STATE_ADDING = 1;
+    public static final int STATE_ADDED = 2;
 
     private int tvdbid;
     private int tmdbId;
