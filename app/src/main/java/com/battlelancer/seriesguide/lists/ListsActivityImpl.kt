@@ -46,7 +46,7 @@ open class ListsActivityImpl : BaseTopActivity() {
             if (!viewModel.hasRestoredLastListsTabPosition) {
                 viewModel.hasRestoredLastListsTabPosition = true
                 binding.viewPagerLists.setCurrentItem(
-                    DisplaySettings.getLastListsTabPosition(this),
+                    ListsSettings.getLastListsTabPosition(this),
                     false
                 )
             }
@@ -69,7 +69,7 @@ open class ListsActivityImpl : BaseTopActivity() {
     override fun onPause() {
         super.onPause()
         PreferenceManager.getDefaultSharedPreferences(this).edit()
-            .putInt(DisplaySettings.KEY_LAST_ACTIVE_LISTS_TAB, binding.viewPagerLists.currentItem)
+            .putInt(ListsSettings.KEY_LAST_ACTIVE_LISTS_TAB, binding.viewPagerLists.currentItem)
             .apply()
     }
 
