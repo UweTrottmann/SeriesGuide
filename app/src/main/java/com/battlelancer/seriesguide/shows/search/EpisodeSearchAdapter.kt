@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemSearchResultBinding
 import com.battlelancer.seriesguide.provider.SgEpisode2SearchResult
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 

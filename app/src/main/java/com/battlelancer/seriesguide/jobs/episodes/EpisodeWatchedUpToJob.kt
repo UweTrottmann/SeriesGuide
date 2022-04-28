@@ -5,7 +5,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.provider.SgEpisode2Numbers
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 
 /**
  * Set episodes watched up to (== including) a specific one excluding those with no release date.

@@ -21,8 +21,8 @@ import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 import timber.log.Timber
 import java.util.Random

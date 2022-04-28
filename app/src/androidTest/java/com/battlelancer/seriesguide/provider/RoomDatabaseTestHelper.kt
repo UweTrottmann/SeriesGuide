@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.movies.MovieDetails
 
 object RoomDatabaseTestHelper {

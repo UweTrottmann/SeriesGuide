@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.episodes;
+package com.battlelancer.seriesguide.shows.episodes;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.jobs.FlagJobExecutor;

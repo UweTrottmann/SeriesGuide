@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity.Companion.intentEpisode
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.battlelancer.seriesguide.util.ServiceUtils

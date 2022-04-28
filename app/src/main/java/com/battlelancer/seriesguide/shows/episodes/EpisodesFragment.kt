@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.episodes
+package com.battlelancer.seriesguide.shows.episodes
 
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
@@ -188,11 +188,17 @@ class EpisodesFragment : Fragment() {
                 menu.apply {
                     findItem(R.id.menu_action_episodes_collection_add).isVisible = !isCollected
                     findItem(R.id.menu_action_episodes_collection_remove).isVisible = isCollected
-                    val isWatched = EpisodeTools.isWatched(watchedFlag)
+                    val isWatched =
+                        EpisodeTools.isWatched(
+                            watchedFlag
+                        )
                     findItem(R.id.menu_action_episodes_watched).isVisible = !isWatched
                     findItem(R.id.menu_action_episodes_not_watched).isVisible = isWatched
                     findItem(R.id.menu_action_episodes_watched_up_to).isVisible = !isWatched
-                    val isSkipped = EpisodeTools.isSkipped(watchedFlag)
+                    val isSkipped =
+                        EpisodeTools.isSkipped(
+                            watchedFlag
+                        )
                     findItem(R.id.menu_action_episodes_skip).isVisible = !isWatched && !isSkipped
                     findItem(R.id.menu_action_episodes_dont_skip).isVisible = isSkipped
                 }
@@ -256,7 +262,11 @@ class EpisodesFragment : Fragment() {
     }
 
     private fun onFlagEpisodeCollected(episodeId: Long, isCollected: Boolean) {
-        EpisodeTools.episodeCollected(requireContext(), episodeId, isCollected)
+        EpisodeTools.episodeCollected(
+            requireContext(),
+            episodeId,
+            isCollected
+        )
     }
 
     private fun showSortDialog() {
@@ -311,11 +321,19 @@ class EpisodesFragment : Fragment() {
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_WATCHED_ALL -> {
-                        EpisodeTools.seasonWatched(context, seasonId, EpisodeFlags.WATCHED)
+                        EpisodeTools.seasonWatched(
+                            context,
+                            seasonId,
+                            EpisodeFlags.WATCHED
+                        )
                         true
                     }
                     CONTEXT_WATCHED_NONE -> {
-                        EpisodeTools.seasonWatched(context, seasonId, EpisodeFlags.UNWATCHED)
+                        EpisodeTools.seasonWatched(
+                            context,
+                            seasonId,
+                            EpisodeFlags.UNWATCHED
+                        )
                         true
                     }
                     else -> false
@@ -349,11 +367,19 @@ class EpisodesFragment : Fragment() {
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     CONTEXT_COLLECTED_ALL -> {
-                        EpisodeTools.seasonCollected(context, seasonId, true)
+                        EpisodeTools.seasonCollected(
+                            context,
+                            seasonId,
+                            true
+                        )
                         true
                     }
                     CONTEXT_COLLECTED_NONE -> {
-                        EpisodeTools.seasonCollected(context, seasonId, false)
+                        EpisodeTools.seasonCollected(
+                            context,
+                            seasonId,
+                            false
+                        )
                         true
                     }
                     else -> false

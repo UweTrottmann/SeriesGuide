@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.episodes
+package com.battlelancer.seriesguide.shows.episodes
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment

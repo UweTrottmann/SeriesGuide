@@ -1,11 +1,9 @@
-package com.battlelancer.seriesguide.widgets;
+package com.battlelancer.seriesguide.shows.episodes;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatImageView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools;
 
 /**
  * Image view that displays a watched, skipped or watch icon depending on the given episode flag.

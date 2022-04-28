@@ -117,7 +117,7 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.episodes.EpisodesActivity" />
+        <activity android:name="com.battlelancer.seriesguide.shows.episodes.EpisodesActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.ListsActivity"
             android:label="@string/lists" />

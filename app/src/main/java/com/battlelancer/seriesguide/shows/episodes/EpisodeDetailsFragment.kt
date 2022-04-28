@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.episodes
+package com.battlelancer.seriesguide.shows.episodes
 
 import android.os.Bundle
 import android.os.Handler
@@ -230,7 +230,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
      * If episode was watched, flags as unwatched. Otherwise, flags as watched.
      */
     private fun onToggleWatched() {
-        val watched = EpisodeTools.isWatched(episodeFlag)
+        val watched =
+            EpisodeTools.isWatched(
+                episodeFlag
+            )
         if (watched) {
             val anchor: View = bindingButtons!!.buttonEpisodeWatched
             val popupMenu = PopupMenu(anchor.context, anchor)
@@ -262,18 +265,29 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
      * If episode was skipped, flags as unwatched. Otherwise, flags as skipped.
      */
     private fun onToggleSkipped() {
-        val skipped = EpisodeTools.isSkipped(episodeFlag)
+        val skipped =
+            EpisodeTools.isSkipped(
+                episodeFlag
+            )
         changeEpisodeFlag(if (skipped) EpisodeFlags.UNWATCHED else EpisodeFlags.SKIPPED)
     }
 
     private fun changeEpisodeFlag(episodeFlag: Int) {
         this.episodeFlag = episodeFlag
-        EpisodeTools.episodeWatched(requireContext(), episodeId, episodeFlag)
+        EpisodeTools.episodeWatched(
+            requireContext(),
+            episodeId,
+            episodeFlag
+        )
     }
 
     private fun onToggleCollected() {
         collected = !collected
-        EpisodeTools.episodeCollected(requireContext(), episodeId, collected)
+        EpisodeTools.episodeCollected(
+            requireContext(),
+            episodeId,
+            collected
+        )
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -327,7 +341,9 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             requireContext(),
             episode.title, episode.number
         )
-        val hideDetails = EpisodeTools.isUnwatched(episodeFlag)
+        val hideDetails = EpisodeTools.isUnwatched(
+            episodeFlag
+        )
                 && DisplaySettings.preventSpoilers(requireContext())
         binding.textviewTitle.text = TextTools.getEpisodeTitle(
             requireContext(), if (hideDetails) null else episodeTitle, episodeNumber
@@ -478,7 +494,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             if (displayCheckIn) View.VISIBLE else View.GONE
 
         // Watched up to button.
-        val isWatched = EpisodeTools.isWatched(episodeFlag)
+        val isWatched =
+            EpisodeTools.isWatched(
+                episodeFlag
+            )
         val displayWatchedUpTo = !isWatched
         bindingButtons.buttonEpisodeWatchedUpTo.visibility =
             if (displayWatchedUpTo) View.VISIBLE else View.GONE
@@ -553,7 +572,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         } else {
             bindingButtons.buttonEpisodeSkip.visibility = View.VISIBLE
 
-            val isSkipped = EpisodeTools.isSkipped(episodeFlag)
+            val isSkipped =
+                EpisodeTools.isSkipped(
+                    episodeFlag
+                )
             if (isSkipped) {
                 ViewTools.setVectorDrawableTop(
                     bindingButtons.buttonEpisodeSkip,

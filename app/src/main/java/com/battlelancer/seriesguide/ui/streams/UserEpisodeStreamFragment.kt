@@ -9,7 +9,7 @@ import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.uwetrottmann.trakt5.entities.HistoryEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

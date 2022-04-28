@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.episodes
+package com.battlelancer.seriesguide.shows.episodes
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.widgets.WatchedBox
 import java.text.NumberFormat
 
 
@@ -98,7 +97,10 @@ class EpisodeViewHolder(
                 val box = view as WatchedBox
                 // disable button, will be re-enabled on data reload once action completes
                 box.isEnabled = false
-                clickListener.onWatchedBoxClick(it.id, !EpisodeTools.isWatched(box.episodeFlag))
+                clickListener.onWatchedBoxClick(it.id, !EpisodeTools.isWatched(
+                    box.episodeFlag
+                )
+                )
             }
         }
         binding.imageViewContextMenu.setOnClickListener { v ->
@@ -135,7 +137,9 @@ class EpisodeViewHolder(
         // episode title
         val watchedFlag = episode.watched
         val episodeNumber = episode.episodenumber
-        val hideTitle = (EpisodeTools.isUnwatched(watchedFlag) && preventSpoilers(context))
+        val hideTitle = (EpisodeTools.isUnwatched(
+            watchedFlag
+        ) && preventSpoilers(context))
         binding.textViewEpisodeTitle.text = TextTools.getEpisodeTitle(
             context, if (hideTitle) null else episode.title, episodeNumber
         )
@@ -146,7 +150,10 @@ class EpisodeViewHolder(
         // watched box
         binding.watchedBoxEpisode.episodeFlag = watchedFlag
         binding.watchedBoxEpisode.isEnabled = true
-        val watched = EpisodeTools.isWatched(watchedFlag)
+        val watched =
+            EpisodeTools.isWatched(
+                watchedFlag
+            )
         binding.watchedBoxEpisode.contentDescription =
             context.getString(if (watched) R.string.action_unwatched else R.string.action_watched)
         TooltipCompat.setTooltipText(

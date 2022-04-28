@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.util.NextEpisodeUpdater;
 import com.battlelancer.seriesguide.shows.tools.ShowStatus;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;

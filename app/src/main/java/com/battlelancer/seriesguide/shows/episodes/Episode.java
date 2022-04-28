@@ -1,5 +1,4 @@
-
-package com.battlelancer.seriesguide.ui.episodes;
+package com.battlelancer.seriesguide.shows.episodes;
 
 public class Episode {
     public int episodeId;

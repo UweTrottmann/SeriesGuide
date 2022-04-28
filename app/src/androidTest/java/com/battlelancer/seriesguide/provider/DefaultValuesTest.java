@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.model.SgSeason2;
 import com.battlelancer.seriesguide.model.SgShow2;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.ui.movies.MovieDetails;
 import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.uwetrottmann.tmdb2.entities.Movie;

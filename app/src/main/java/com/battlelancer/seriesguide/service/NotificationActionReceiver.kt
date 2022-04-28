@@ -5,9 +5,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.service.NotificationActionReceiver
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 
 /**
  * Listens to notification actions, currently only setting an episode watched.
