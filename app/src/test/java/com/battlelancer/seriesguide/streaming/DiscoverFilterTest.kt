@@ -1,8 +1,7 @@
-package com.battlelancer.seriesguide.ui.search
+package com.battlelancer.seriesguide.streaming
 
 import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.model.SgWatchProvider.Type
-import com.battlelancer.seriesguide.streaming.DiscoverFilterViewModel
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import org.junit.Test
