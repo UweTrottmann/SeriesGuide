@@ -5,7 +5,6 @@ import android.util.DisplayMetrics
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.Constants.EpisodeSorting
-import com.battlelancer.seriesguide.Constants.SeasonSorting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.TextTools
 import java.util.Locale
@@ -33,7 +32,6 @@ object DisplaySettings {
     const val KEY_NUMBERFORMAT = "numberformat"
     const val KEY_SHOWS_TIME_OFFSET = "com.battlelancer.seriesguide.timeoffset"
     const val KEY_NO_RELEASED_EPISODES = "onlyFutureEpisodes"
-    const val KEY_SEASON_SORT_ORDER = "seasonSorting"
     const val KEY_EPISODE_SORT_ORDER = "episodeSorting"
     const val KEY_HIDE_SPECIALS = "onlySeasonEpisodes"
     const val KEY_SORT_IGNORE_ARTICLE = "com.battlelancer.seriesguide.sort.ignorearticle"
@@ -156,12 +154,6 @@ object DisplaySettings {
         val orderId = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_EPISODE_SORT_ORDER, null)
         return EpisodeSorting.fromValue(orderId)
-    }
-
-    fun getSeasonSortOrder(context: Context): SeasonSorting {
-        val orderId = PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_SEASON_SORT_ORDER, null)
-        return SeasonSorting.fromValue(orderId)
     }
 
     @JvmStatic

@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.settings.DisplaySettings
 
 class SeasonsViewModel(
     application: Application,
@@ -32,7 +31,7 @@ class SeasonsViewModel(
     }
 
     fun updateOrder() {
-        order.value = DisplaySettings.getSeasonSortOrder(getApplication())
+        order.value = SeasonsSettings.getSeasonSortOrder(getApplication())
     }
 
 }

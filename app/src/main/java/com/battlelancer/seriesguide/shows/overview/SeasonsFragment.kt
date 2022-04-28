@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentSeasonsBinding
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
@@ -345,16 +344,16 @@ class SeasonsFragment() : Fragment() {
     }
 
     private fun showSortDialog() {
-        val sortOrder = DisplaySettings.getSeasonSortOrder(requireContext())
+        val sortOrder = SeasonsSettings.getSeasonSortOrder(requireContext())
         SingleChoiceDialogFragment.show(parentFragmentManager,
                 R.array.sesorting,
                 R.array.sesortingData, sortOrder.index,
-                DisplaySettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
+            SeasonsSettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
                 "seasonSortOrderDialog")
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
-        if (DisplaySettings.KEY_SEASON_SORT_ORDER == key) {
+        if (SeasonsSettings.KEY_SEASON_SORT_ORDER == key) {
             // reload seasons in new order
             model.updateOrder()
         }
