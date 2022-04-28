@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
 import com.battlelancer.seriesguide.shows.calendar.CalendarFragment2ViewModel.CalendarItem
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 
 class CalendarAdapter2(
     private val context: Context,

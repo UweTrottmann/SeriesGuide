@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.search.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
@@ -97,8 +97,10 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             loadResults(true)
         }
 
-        val layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth,
-                2, 2).apply {
+        val layoutManager = AutoGridLayoutManager(
+            context, R.dimen.showgrid_columnWidth,
+            2, 2
+        ).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when (adapter.getItemViewType(position)) {

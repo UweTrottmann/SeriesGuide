@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.movies;
+package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
 import android.content.res.Resources;

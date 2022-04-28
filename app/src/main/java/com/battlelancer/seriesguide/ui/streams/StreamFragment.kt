@@ -14,7 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentStreamBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -65,11 +65,12 @@ abstract class StreamFragment : Fragment() {
             binding.swipeRefreshLayoutStream
         )
 
-        val layoutManager = AutoGridLayoutManager(
-            context,
-            R.dimen.showgrid_columnWidth, 1, 1,
-            listAdapter
-        )
+        val layoutManager =
+            AutoGridLayoutManager(
+                context,
+                R.dimen.showgrid_columnWidth, 1, 1,
+                listAdapter
+            )
 
         binding.recyclerViewStream.also {
             it.setHasFixedSize(true)

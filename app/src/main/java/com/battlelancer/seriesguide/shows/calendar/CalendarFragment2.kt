@@ -32,7 +32,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.widgets.SgFastScroller
 import kotlinx.coroutines.delay
@@ -88,11 +88,12 @@ class CalendarFragment2 : Fragment() {
 
         adapter = CalendarAdapter2(requireContext(), calendarItemClickListener)
 
-        val layoutManager = AutoGridLayoutManager(
-            context,
-            R.dimen.showgrid_columnWidth, 1, 1,
-            adapter
-        )
+        val layoutManager =
+            AutoGridLayoutManager(
+                context,
+                R.dimen.showgrid_columnWidth, 1, 1,
+                adapter
+            )
 
         recyclerView.also {
             it.setHasFixedSize(true)

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesWatchedBinding
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.MoviesActivity
 import com.battlelancer.seriesguide.widgets.SgFastScroller
 import kotlinx.coroutines.flow.collectLatest
@@ -57,9 +58,10 @@ class MoviesWatchedFragment : Fragment() {
 
         binding!!.recyclerViewMoviesWatched.also {
             it.setHasFixedSize(true)
-            it.layoutManager = AutoGridLayoutManager(
-                context, R.dimen.movie_grid_columnWidth, 1, 3
-            )
+            it.layoutManager =
+                AutoGridLayoutManager(
+                    context, R.dimen.movie_grid_columnWidth, 1, 3
+                )
             it.adapter = adapter
             SgFastScroller(requireContext(), it)
         }

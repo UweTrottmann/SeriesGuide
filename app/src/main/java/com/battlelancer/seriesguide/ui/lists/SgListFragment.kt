@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgListItemWithDetails
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.lists.ListsDistillationSettings.ListsSortOrderChangedEvent
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
@@ -57,9 +57,10 @@ class SgListFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewListItems).also {
             it.setHasFixedSize(true)
-            it.layoutManager = AutoGridLayoutManager(
-                requireContext(), R.dimen.showgrid_columnWidth, 1, 1
-            )
+            it.layoutManager =
+                AutoGridLayoutManager(
+                    requireContext(), R.dimen.showgrid_columnWidth, 1, 1
+                )
             it.adapter = adapter
         }
 

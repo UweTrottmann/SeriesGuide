@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ViewTools
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
@@ -77,7 +78,13 @@ class MoviesSearchFragment : Fragment() {
         // setup grid view
         binding.recyclerViewMoviesSearch.apply {
             setHasFixedSize(true)
-            layoutManager = AutoGridLayoutManager(context, R.dimen.movie_grid_columnWidth, 1, 1)
+            layoutManager =
+                AutoGridLayoutManager(
+                    context,
+                    R.dimen.movie_grid_columnWidth,
+                    1,
+                    1
+                )
         }
 
         adapter = MoviesSearchAdapter(requireContext(), MovieClickListenerImpl(requireContext()))

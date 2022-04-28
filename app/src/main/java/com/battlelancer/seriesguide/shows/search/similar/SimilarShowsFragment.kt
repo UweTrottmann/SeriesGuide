@@ -14,7 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.SearchActivity
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.search.BaseAddShowsFragment
 import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.ViewTools
@@ -73,7 +73,13 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
 
         recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth, 1, 1)
+            layoutManager =
+                AutoGridLayoutManager(
+                    context,
+                    R.dimen.showgrid_columnWidth,
+                    1,
+                    1
+                )
         }
 
         adapter = SimilarShowsAdapter(itemClickListener)

@@ -13,7 +13,7 @@ import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
-import com.battlelancer.seriesguide.ui.movies.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
@@ -61,7 +61,13 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
         binding.recyclerViewShowsPopular.apply {
             setHasFixedSize(true)
-            layoutManager = AutoGridLayoutManager(context, R.dimen.showgrid_columnWidth, 1, 1)
+            layoutManager =
+                AutoGridLayoutManager(
+                    context,
+                    R.dimen.showgrid_columnWidth,
+                    1,
+                    1
+                )
         }
 
         adapter = ShowsPopularAdapter(itemClickListener)
