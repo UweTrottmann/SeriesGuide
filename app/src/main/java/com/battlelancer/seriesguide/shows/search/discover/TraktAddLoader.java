@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.shows.search;
+package com.battlelancer.seriesguide.shows.search.discover;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -9,6 +9,7 @@ import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.shows.search.SearchResult;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;

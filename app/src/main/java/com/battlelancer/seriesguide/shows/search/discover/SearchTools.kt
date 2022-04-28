@@ -1,7 +1,8 @@
-package com.battlelancer.seriesguide.shows.search
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
 
 object SearchTools {

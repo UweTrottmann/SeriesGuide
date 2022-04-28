@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.shows.search
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,9 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.search.AddFragment.OnAddingShowEvent
+import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
+import com.battlelancer.seriesguide.shows.search.SearchResult
+import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
@@ -135,7 +137,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
         override fun onLinkClick(anchor: View, link: TraktShowsLink) {
             Utils.startActivityWithAnimation(activity,
-                    TraktShowsActivity.intent(requireContext(), link),
+                TraktShowsActivity.intent(requireContext(), link),
                     anchor)
         }
 
@@ -163,7 +165,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                 // only support adding shows to watchlist
                 menu.findItem(R.id.menu_action_show_watchlist_remove).isVisible = false
                 setOnMenuItemClickListener(
-                        TraktAddFragment.AddItemMenuItemClickListener(context, showTmdbId))
+                    TraktAddFragment.AddItemMenuItemClickListener(context, showTmdbId)
+                )
             }.show()
         }
     }

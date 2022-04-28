@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.shows.search;
+package com.battlelancer.seriesguide.shows.search.discover;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -17,6 +17,7 @@ import androidx.loader.content.Loader;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.shows.search.SearchResult;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
 import com.battlelancer.seriesguide.util.TaskManager;

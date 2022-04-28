@@ -7,7 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.AddFragment.AddAdapter.OnItemClickListener
+import com.battlelancer.seriesguide.shows.search.discover.AddFragment.AddAdapter.OnItemClickListener
+import com.battlelancer.seriesguide.shows.search.discover.AddIndicator
 import com.battlelancer.seriesguide.util.ImageTools
 
 class SearchResultViewHolder(

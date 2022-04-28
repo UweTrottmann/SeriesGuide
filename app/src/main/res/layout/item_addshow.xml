@@ -48,7 +48,7 @@
             app:srcCompat="@drawable/ic_more_vert_black_20dp"
             tools:ignore="MissingPrefix" />
 
-        <com.battlelancer.seriesguide.shows.search.AddIndicator
+        <com.battlelancer.seriesguide.shows.search.discover.AddIndicator
             android:id="@+id/addIndicatorAddShow"
             android:layout_width="48dp"
             android:layout_height="48dp"

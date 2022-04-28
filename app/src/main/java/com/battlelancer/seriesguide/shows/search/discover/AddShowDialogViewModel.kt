@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.shows.search
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

@@ -18,6 +18,8 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.SearchSettings
+import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity

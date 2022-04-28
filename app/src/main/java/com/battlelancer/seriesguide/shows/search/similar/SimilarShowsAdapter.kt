@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.shows.search.similar
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.battlelancer.seriesguide.shows.search.AddFragment
+import com.battlelancer.seriesguide.shows.search.discover.AddFragment
 import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.battlelancer.seriesguide.shows.search.SearchResultDiffCallback
 import com.battlelancer.seriesguide.shows.search.SearchResultViewHolder

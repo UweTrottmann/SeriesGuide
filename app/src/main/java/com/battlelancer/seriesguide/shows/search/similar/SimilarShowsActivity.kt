@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.search.AddShowDialogFragment
+import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.battlelancer.seriesguide.util.TaskManager

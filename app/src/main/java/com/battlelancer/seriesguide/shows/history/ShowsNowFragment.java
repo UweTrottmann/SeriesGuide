@@ -28,7 +28,7 @@ import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
 import com.battlelancer.seriesguide.shows.ShowsActivityViewModel;
-import com.battlelancer.seriesguide.shows.search.AddShowDialogFragment;
+import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;

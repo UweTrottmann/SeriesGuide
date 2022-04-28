@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.shows.search;
+package com.battlelancer.seriesguide.shows.search.discover;
 
 import androidx.annotation.StringRes;
 import androidx.collection.SparseArrayCompat;

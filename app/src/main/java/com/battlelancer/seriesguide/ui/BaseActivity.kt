@@ -7,7 +7,7 @@ import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.Companion.requestSyncIfTime
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
-import com.battlelancer.seriesguide.shows.search.AddShowTask.OnShowAddedEvent
+import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.util.DBUtils.DatabaseErrorEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import org.greenrobot.eventbus.EventBus

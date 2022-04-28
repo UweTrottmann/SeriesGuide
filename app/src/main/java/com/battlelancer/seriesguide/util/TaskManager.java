@@ -7,7 +7,7 @@ import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
-import com.battlelancer.seriesguide.shows.search.AddShowTask;
+import com.battlelancer.seriesguide.shows.tools.AddShowTask;
 import com.battlelancer.seriesguide.shows.search.SearchResult;
 import java.util.ArrayList;
 import java.util.List;

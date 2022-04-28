@@ -1,10 +1,12 @@
-package com.battlelancer.seriesguide.shows.search
+package com.battlelancer.seriesguide.shows.search.discover
 
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.tools.AddShowTask
+import com.battlelancer.seriesguide.shows.search.SearchResult
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.util.TaskManager
