@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.stats
+package com.battlelancer.seriesguide.stats
 
 import android.os.Bundle
 import android.text.format.DateUtils

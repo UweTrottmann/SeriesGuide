@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.stats
+package com.battlelancer.seriesguide.stats
 
 import android.app.Application
 import android.text.format.DateUtils
@@ -55,11 +55,13 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
             if (watchedEpisodesOfShowCount == -1) {
                 // episode query failed, return what we have so far
                 stats.episodesWatchedRuntime = totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS
-                emit(StatsUpdateEvent(
+                emit(
+                    StatsUpdateEvent(
                     stats,
                     finalValues = false,
                     successful = false
-                ))
+                )
+                )
                 return@liveData
             }
             // make sure we calculate with long here (first arg is long) to avoid overflows
@@ -78,11 +80,13 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
         stats.episodesWatchedRuntime = totalRuntimeMin * DateUtils.MINUTE_IN_MILLIS
 
         // return final values
-        emit(StatsUpdateEvent(
+        emit(
+            StatsUpdateEvent(
             stats,
             finalValues = true,
             successful = true
-        ))
+        )
+        )
     }
 
     private fun buildUpdate(stats: Stats): StatsUpdateEvent {
