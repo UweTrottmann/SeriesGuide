@@ -52,7 +52,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        val settings = arguments?.getString(SeriesGuidePreferences.EXTRA_SETTINGS_SCREEN)
+        val settings = arguments?.getString(PreferencesActivityImpl.EXTRA_SETTINGS_SCREEN)
         when (settings) {
             null -> {
                 setPreferencesFromResource(R.xml.settings_root, rootKey)
@@ -248,7 +248,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         super.onStart()
 
         // update summary values not handled by onSharedPreferenceChanged
-        val settings = arguments?.getString(SeriesGuidePreferences.EXTRA_SETTINGS_SCREEN)
+        val settings = arguments?.getString(PreferencesActivityImpl.EXTRA_SETTINGS_SCREEN)
         if (settings == null) {
             updateRootSettings()
         }
@@ -455,12 +455,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(@Suppress("UNUSED_PARAMETER") event: SeriesGuidePreferences.UpdateSummariesEvent) {
+    fun onEvent(@Suppress("UNUSED_PARAMETER") event: PreferencesActivityImpl.UpdateSummariesEvent) {
         if (!isResumed) {
             return
         }
         // update summary values not handled by onSharedPreferenceChanged
-        val settings = arguments?.getString(SeriesGuidePreferences.EXTRA_SETTINGS_SCREEN)
+        val settings = arguments?.getString(PreferencesActivityImpl.EXTRA_SETTINGS_SCREEN)
         if (settings != null && settings == KEY_SCREEN_NOTIFICATIONS) {
             updateNotificationSettings()
         }

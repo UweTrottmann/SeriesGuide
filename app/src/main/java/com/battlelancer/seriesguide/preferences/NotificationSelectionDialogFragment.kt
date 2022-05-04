@@ -25,7 +25,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgShow2Notify
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences.UpdateSummariesEvent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
 
@@ -68,7 +67,7 @@ class NotificationSelectionDialogFragment : AppCompatDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        EventBus.getDefault().post(UpdateSummariesEvent())
+        EventBus.getDefault().post(PreferencesActivityImpl.UpdateSummariesEvent())
     }
 
     private val onItemClickListener = object : SelectionAdapter.OnItemClickListener {
