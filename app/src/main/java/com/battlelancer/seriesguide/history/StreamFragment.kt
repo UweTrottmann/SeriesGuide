@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.streams
+package com.battlelancer.seriesguide.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentStreamBinding
+import com.battlelancer.seriesguide.history.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.widgets.SgFastScroller

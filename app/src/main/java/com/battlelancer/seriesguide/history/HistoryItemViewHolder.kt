@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.streams
+package com.battlelancer.seriesguide.history
 
 import android.graphics.drawable.Drawable
 import android.text.format.DateUtils
@@ -9,8 +9,8 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
+import com.battlelancer.seriesguide.history.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools

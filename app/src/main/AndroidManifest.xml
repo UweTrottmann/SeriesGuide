@@ -122,7 +122,7 @@
             android:name="com.battlelancer.seriesguide.ui.ListsActivity"
             android:label="@string/lists" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.streams.HistoryActivity"
+            android:name=".history.HistoryActivity"
             android:label="@string/user_stream" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.streams
+package com.battlelancer.seriesguide.history
 
 import android.content.Context
 import android.view.View
@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.history.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.ui.streams.TraktEpisodeHistoryLoader.HistoryItem
 import com.uwetrottmann.trakt5.entities.HistoryEntry
 
 abstract class BaseHistoryAdapter(

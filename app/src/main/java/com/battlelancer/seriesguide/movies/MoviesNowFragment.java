@@ -28,7 +28,7 @@ import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity;
 import com.battlelancer.seriesguide.shows.history.NowAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
-import com.battlelancer.seriesguide.ui.streams.HistoryActivity;
+import com.battlelancer.seriesguide.history.HistoryActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;

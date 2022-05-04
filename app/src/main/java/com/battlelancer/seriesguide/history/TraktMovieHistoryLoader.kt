@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.streams
+package com.battlelancer.seriesguide.history
 
 import android.content.Context
 import com.battlelancer.seriesguide.R
