@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.preferences
+package com.battlelancer.seriesguide.preferences
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseTopActivity
-import com.battlelancer.seriesguide.ui.DebugViewFragment
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools

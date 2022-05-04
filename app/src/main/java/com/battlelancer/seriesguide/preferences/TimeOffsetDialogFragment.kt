@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.dialogs
+package com.battlelancer.seriesguide.preferences
 
 import android.annotation.SuppressLint
 import android.app.Dialog

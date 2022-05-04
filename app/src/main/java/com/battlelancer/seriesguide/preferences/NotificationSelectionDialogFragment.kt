@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.dialogs
+package com.battlelancer.seriesguide.preferences
 
 import android.app.Application
 import android.app.Dialog

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.StyleRes
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.preferences.SgPreferencesFragment
+import com.battlelancer.seriesguide.preferences.SgPreferencesFragment
 
 /**
  * Allows tweaking of various SeriesGuide settings. Does NOT inherit

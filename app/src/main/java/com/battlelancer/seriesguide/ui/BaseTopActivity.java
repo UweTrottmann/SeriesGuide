@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.dataliberation.BackupSettings;
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity;
 import com.battlelancer.seriesguide.sync.AccountUtils;
-import com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity;
+import com.battlelancer.seriesguide.preferences.MoreOptionsActivity;
 import com.battlelancer.seriesguide.stats.StatsActivity;
 import com.battlelancer.seriesguide.util.SupportTheDev;
 import com.battlelancer.seriesguide.util.Utils;

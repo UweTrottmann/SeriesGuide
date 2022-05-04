@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.preferences
+package com.battlelancer.seriesguide.preferences
 
 import android.app.backup.BackupManager
 import android.content.Context
@@ -38,9 +38,6 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
-import com.battlelancer.seriesguide.ui.dialogs.NotificationSelectionDialogFragment
-import com.battlelancer.seriesguide.ui.dialogs.NotificationThresholdDialogFragment
-import com.battlelancer.seriesguide.ui.dialogs.TimeOffsetDialogFragment
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils

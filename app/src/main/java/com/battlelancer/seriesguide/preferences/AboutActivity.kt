@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.preferences
+package com.battlelancer.seriesguide.preferences
 
 import android.os.Bundle
 import android.view.MenuItem
