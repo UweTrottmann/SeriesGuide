@@ -7,7 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity;
+import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity;
 
 /**
  * Displays a stream of movies the user has recently watched on trakt.

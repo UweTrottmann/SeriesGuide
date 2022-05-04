@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.provider.SgShow2Helper;
 import com.battlelancer.seriesguide.provider.SgShow2Ids;
-import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.movies.tools.MovieTools;
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;

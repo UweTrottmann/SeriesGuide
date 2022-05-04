@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.model.ActivityType;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow;
-import com.battlelancer.seriesguide.ui.movies.MovieDetails;
+import com.battlelancer.seriesguide.movies.details.MovieDetails;
 import com.battlelancer.seriesguide.util.ImageTools;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.io.IOException;

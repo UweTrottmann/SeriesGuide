@@ -6,22 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseTopActivity;
 import com.battlelancer.seriesguide.ui.TabStripAdapter;
-import com.battlelancer.seriesguide.ui.movies.MoviesActivityViewModel;
-import com.battlelancer.seriesguide.ui.movies.MoviesCollectionFragment;
-import com.battlelancer.seriesguide.ui.movies.MoviesDiscoverFragment;
-import com.battlelancer.seriesguide.ui.movies.MoviesNowFragment;
-import com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity;
-import com.battlelancer.seriesguide.ui.movies.MoviesWatchListFragment;
-import com.battlelancer.seriesguide.ui.movies.MoviesWatchedFragment;
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 
 /**
@@ -99,7 +91,7 @@ public class MoviesActivityImpl extends BaseTopActivity {
 
         tabsAdapter.notifyTabsChanged();
         if (savedInstanceState == null) {
-            viewPager.setCurrentItem(DisplaySettings.getLastMoviesTabPosition(this), false);
+            viewPager.setCurrentItem(MoviesSettings.getLastMoviesTabPosition(this), false);
         }
     }
 
@@ -122,9 +114,7 @@ public class MoviesActivityImpl extends BaseTopActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putInt(DisplaySettings.KEY_LAST_ACTIVE_MOVIES_TAB, viewPager.getCurrentItem())
-                .apply();
+        MoviesSettings.saveLastMoviesTabPosition(this, viewPager.getCurrentItem());
     }
 
     @Override

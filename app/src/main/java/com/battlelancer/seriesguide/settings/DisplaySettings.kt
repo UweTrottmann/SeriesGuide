@@ -33,7 +33,6 @@ object DisplaySettings {
     const val KEY_NO_RELEASED_EPISODES = "onlyFutureEpisodes"
     const val KEY_HIDE_SPECIALS = "onlySeasonEpisodes"
     const val KEY_SORT_IGNORE_ARTICLE = "com.battlelancer.seriesguide.sort.ignorearticle"
-    const val KEY_LAST_ACTIVE_MOVIES_TAB = "com.battlelancer.seriesguide.moviesActiveTab"
     const val KEY_DISPLAY_EXACT_DATE = "com.battlelancer.seriesguide.shows.exactdate"
     const val KEY_PREVENT_SPOILERS = "com.battlelancer.seriesguide.PREVENT_SPOILERS"
 
@@ -176,15 +175,6 @@ object DisplaySettings {
     fun isSortOrderIgnoringArticles(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_SORT_IGNORE_ARTICLE, false)
-    }
-
-    /**
-     * Return the position of the last selected movies tab.
-     */
-    @JvmStatic
-    fun getLastMoviesTabPosition(context: Context): Int {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getInt(KEY_LAST_ACTIVE_MOVIES_TAB, 0)
     }
 
     /**

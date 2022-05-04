@@ -160,11 +160,11 @@
             android:name="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:label="@string/movies" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity"
+            android:name=".movies.search.MoviesSearchActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity"
+            android:name=".movies.details.MovieDetailsActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity" />
 
         <!-- Settings -->
