@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.people;
+package com.battlelancer.seriesguide.people;
 
 import android.content.Intent;
 import android.os.Bundle;

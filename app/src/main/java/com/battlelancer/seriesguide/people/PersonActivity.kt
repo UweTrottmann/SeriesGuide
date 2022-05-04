@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.people
+package com.battlelancer.seriesguide.people
 
 import android.os.Bundle
 import android.view.MenuItem

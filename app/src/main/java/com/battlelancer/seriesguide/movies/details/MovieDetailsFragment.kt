@@ -44,7 +44,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
-import com.battlelancer.seriesguide.ui.people.PeopleListHelper
+import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils

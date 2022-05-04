@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.DisplayMetrics
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.TextTools
 
 /**
@@ -16,8 +15,6 @@ object DisplaySettings {
 
     const val KEY_THEME = "com.uwetrottmann.seriesguide.theme"
     const val KEY_DYNAMIC_COLOR = "com.uwetrottmann.seriesguide.dynamiccolor"
-
-    private const val KEY_PERSON_LANGUAGE = "com.uwetrottmann.seriesguide.languageperson"
 
     const val KEY_NUMBERFORMAT = "numberformat"
     const val KEY_SHOWS_TIME_OFFSET = "com.battlelancer.seriesguide.timeoffset"
@@ -44,22 +41,6 @@ object DisplaySettings {
         // Default to false to keep our own brand colors.
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_DYNAMIC_COLOR, false)
-    }
-
-    /**
-     * @return Two letter ISO 639-1 language code plus an extra ISO-3166-1 region tag used by TMDB
-     * as preferred by the user. Or the default language.
-     */
-    fun getPersonLanguage(context: Context): String {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_PERSON_LANGUAGE, null)
-            ?: context.getString(R.string.movie_default_language)
-    }
-
-    fun setPersonLanguage(context: Context, languageCode: String) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putString(KEY_PERSON_LANGUAGE, languageCode)
-        }
     }
 
     @JvmStatic

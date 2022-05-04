@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.people
+package com.battlelancer.seriesguide.people
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentPersonBinding
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
@@ -82,7 +81,7 @@ class PersonFragment : Fragment() {
             setProgressVisibility(false)
             populatePersonViews(it)
         })
-        model.languageCode.value = DisplaySettings.getPersonLanguage(requireContext())
+        model.languageCode.value = PeopleSettings.getPersonLanguage(requireContext())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -120,7 +119,7 @@ class PersonFragment : Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: L10nDialogFragment.LanguageChangedEvent) {
-        DisplaySettings.setPersonLanguage(requireContext(), event.selectedLanguageCode)
+        PeopleSettings.setPersonLanguage(requireContext(), event.selectedLanguageCode)
         model.languageCode.value = event.selectedLanguageCode
     }
 
@@ -146,7 +145,7 @@ class PersonFragment : Fragment() {
                 TextTools.textNoTranslationMovieLanguage(
                     requireContext(),
                     model.languageCode.value,
-                    DisplaySettings.getPersonLanguage(requireContext())
+                    PeopleSettings.getPersonLanguage(requireContext())
                 )
             } else {
                 person.biography
