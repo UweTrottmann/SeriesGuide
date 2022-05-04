@@ -17,7 +17,7 @@ import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.settings.SearchSettings
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFragment
@@ -25,7 +25,6 @@ import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
-import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.HighlightTools
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -103,7 +102,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         }
 
         // setup search history (only used by TVDb search)
-        searchHistory = SearchHistory(this, SearchSettings.KEY_SUFFIX_SHOWS)
+        searchHistory = SearchHistory(this, "thetvdb")
         searchHistoryAdapter = ArrayAdapter(
             this, R.layout.item_dropdown, searchHistory.searchHistory
         )

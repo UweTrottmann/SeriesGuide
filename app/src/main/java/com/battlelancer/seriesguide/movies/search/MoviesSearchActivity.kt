@@ -17,7 +17,6 @@ import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesDiscoverAdapter
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
-import com.battlelancer.seriesguide.settings.SearchSettings
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.HighlightTools
@@ -111,7 +110,7 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
         searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
 
         // setup search history
-        searchHistory = SearchHistory(this, SearchSettings.KEY_SUFFIX_MOVIES)
+        searchHistory = SearchHistory(this, "tmdb")
         searchHistoryAdapter = ArrayAdapter(
             this,
             R.layout.item_dropdown,
