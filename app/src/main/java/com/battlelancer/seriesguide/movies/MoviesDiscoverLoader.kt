@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.movies
 import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.androidutils.GenericSimpleLoader
@@ -43,8 +42,8 @@ class MoviesDiscoverLoader(context: Context) :
         }
 
     override fun loadInBackground(): Result {
-        val languageCode = DisplaySettings.getMoviesLanguage(context)
-        val regionCode = DisplaySettings.getMoviesRegion(context)
+        val languageCode = MoviesSettings.getMoviesLanguage(context)
+        val regionCode = MoviesSettings.getMoviesRegion(context)
 
         val action = "get now playing movies"
         val call = tmdb.discoverMovie()

@@ -145,7 +145,8 @@ class PersonFragment : Fragment() {
             val biography = if (TextUtils.isEmpty(person.biography)) {
                 TextTools.textNoTranslationMovieLanguage(
                     requireContext(),
-                    model.languageCode.value
+                    model.languageCode.value,
+                    DisplaySettings.getPersonLanguage(requireContext())
                 )
             } else {
                 person.biography

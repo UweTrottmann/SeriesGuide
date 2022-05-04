@@ -12,11 +12,11 @@ import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
 import com.battlelancer.seriesguide.model.SgMovieFlags;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
+import com.battlelancer.seriesguide.movies.MoviesSettings;
 import com.battlelancer.seriesguide.movies.details.MovieDetails;
 import com.battlelancer.seriesguide.provider.MovieHelper;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Errors;
@@ -339,8 +339,8 @@ public class MovieTools {
         newMovies.addAll(newWatchlistMovies);
         newMovies.addAll(newWatchedMoviesToPlays.keySet());
 
-        String languageCode = DisplaySettings.getMoviesLanguage(context);
-        String regionCode = DisplaySettings.getMoviesRegion(context);
+        String languageCode = MoviesSettings.getMoviesLanguage(context);
+        String regionCode = MoviesSettings.getMoviesRegion(context);
         List<MovieDetails> movies = new LinkedList<>();
 
         // loop through ids
@@ -388,15 +388,15 @@ public class MovieTools {
 
     /**
      * Download movie data from TMDB (and trakt) using
-     * {@link DisplaySettings#getMoviesLanguage(Context)}
-     * and {@link DisplaySettings#getMoviesRegion(Context)}.
+     * {@link MoviesSettings#getMoviesLanguage(Context)}
+     * and {@link MoviesSettings#getMoviesRegion(Context)}.
      *
      * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
      * looking up the trakt id first, so skip if not necessary.
      */
     public MovieDetails getMovieDetails(int movieTmdbId, boolean getTraktRating) {
-        String languageCode = DisplaySettings.getMoviesLanguage(context);
-        String regionCode = DisplaySettings.getMoviesRegion(context);
+        String languageCode = MoviesSettings.getMoviesLanguage(context);
+        String regionCode = MoviesSettings.getMoviesRegion(context);
         return getMovieDetails(languageCode, regionCode, movieTmdbId, getTraktRating);
     }
 
@@ -460,7 +460,8 @@ public class MovieTools {
             // add note about non-translated or non-existing overview
             String untranslatedOverview = movieFallback.overview;
             movieFallback.overview = TextTools
-                    .textNoTranslationMovieLanguage(context, languageCode);
+                    .textNoTranslationMovieLanguage(context, languageCode,
+                            MoviesSettings.getMoviesLanguage(context));
             if (!TextUtils.isEmpty(untranslatedOverview)) {
                 movieFallback.overview += "\n\n" + untranslatedOverview;
             }
@@ -473,7 +474,7 @@ public class MovieTools {
 
     @Nullable
     public Movie getMovieSummary(int movieTmdbId) {
-        String languageCode = DisplaySettings.getMoviesLanguage(context);
+        String languageCode = MoviesSettings.getMoviesLanguage(context);
         return getMovieSummary("get local movie summary", languageCode, movieTmdbId, false);
     }
 

@@ -297,10 +297,10 @@ object TextTools {
     }
 
     @JvmStatic
-    fun textNoTranslationMovieLanguage(context: Context, languageCode: String?): String {
+    fun textNoTranslationMovieLanguage(context: Context, languageCode: String?, fallback: String): String {
         return context.getString(
             R.string.no_translation,
-            LanguageTools.getMovieLanguageStringFor(context, languageCode),
+            LanguageTools.getMovieLanguageStringFor(context, languageCode, fallback),
             context.getString(R.string.tmdb)
         )
     }

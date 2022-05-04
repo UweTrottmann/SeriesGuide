@@ -14,9 +14,9 @@ import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
+import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import kotlinx.coroutines.flow.Flow
@@ -41,8 +41,8 @@ class MoviesSearchViewModel(
                     // Note: currently TMDB page is 20 items, on phones around 9 are displayed at once.
                     PagingConfig(pageSize = 20, enablePlaceholders = true)
                 ) {
-                    val languageCode = DisplaySettings.getMoviesLanguage(application)
-                    val regionCode = DisplaySettings.getMoviesRegion(application)
+                    val languageCode = MoviesSettings.getMoviesLanguage(application)
+                    val regionCode = MoviesSettings.getMoviesRegion(application)
                     val watchRegion = StreamingSearch.getCurrentRegionOrNull(application)
                     TmdbMoviesDataSource(
                         application,

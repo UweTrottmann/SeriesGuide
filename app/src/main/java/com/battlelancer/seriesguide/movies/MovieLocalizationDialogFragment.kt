@@ -8,11 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
@@ -20,7 +18,6 @@ import com.battlelancer.seriesguide.databinding.DialogLocalizationBinding
 import com.battlelancer.seriesguide.databinding.ItemDropdownBinding
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment.LocalizationAdapter.LocalizationItem
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment.LocalizationChangedEvent
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -182,10 +179,10 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
 
     private fun updateButtonText() {
         // example: "en-US"
-        val languageCode = DisplaySettings.getMoviesLanguage(requireContext())
+        val languageCode = MoviesSettings.getMoviesLanguage(requireContext())
         binding.buttonLocalizationLanguage.text =
             LanguageTools.buildLanguageDisplayName(languageCode)
-        val regionCode = DisplaySettings.getMoviesRegion(requireContext())
+        val regionCode = MoviesSettings.getMoviesRegion(requireContext())
         binding.buttonLocalizationRegion.text = Locale("", regionCode).displayCountry
     }
 
@@ -203,16 +200,8 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
             override fun onItemClick(code: String?) {
                 setListVisible(false)
                 when (currentCodeType) {
-                    CodeType.Language -> {
-                        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                            putString(DisplaySettings.KEY_MOVIES_LANGUAGE, code)
-                        }
-                    }
-                    CodeType.Region -> {
-                        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
-                            putString(DisplaySettings.KEY_MOVIES_REGION, code)
-                        }
-                    }
+                    CodeType.Language -> MoviesSettings.saveMoviesLanguage(requireContext(), code)
+                    CodeType.Region -> MoviesSettings.saveMoviesRegion(requireContext(), code)
                 }
                 updateButtonText()
             }

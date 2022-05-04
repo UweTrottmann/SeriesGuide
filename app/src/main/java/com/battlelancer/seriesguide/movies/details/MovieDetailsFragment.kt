@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.extensions.MovieActionsContract
 import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
+import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
@@ -422,7 +423,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // language button
         binding.buttonMovieLanguage.also {
-            it.text = LanguageTools.getMovieLanguageStringFor(requireContext(), null)
+            it.text = LanguageTools.getMovieLanguageStringFor(
+                requireContext(),
+                null,
+                MoviesSettings.getMoviesLanguage(requireContext())
+            )
             it.isGone = false
         }
 

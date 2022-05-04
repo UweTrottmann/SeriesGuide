@@ -6,7 +6,6 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.TextTools
-import java.util.Locale
 
 /**
  * Settings related to appearance, display formats and sort orders.
@@ -22,9 +21,6 @@ object DisplaySettings {
     const val KEY_LANGUAGE_PREFERRED = "language"
     const val KEY_LANGUAGE_FALLBACK = "com.battlelancer.seriesguide.languageFallback"
     const val KEY_LANGUAGE_SEARCH = "com.battlelancer.seriesguide.languagesearch"
-
-    const val KEY_MOVIES_LANGUAGE = "com.battlelancer.seriesguide.languagemovies"
-    const val KEY_MOVIES_REGION = "com.battlelancer.seriesguide.regionmovies"
 
     private const val KEY_PERSON_LANGUAGE = "com.uwetrottmann.seriesguide.languageperson"
 
@@ -59,17 +55,6 @@ object DisplaySettings {
      * @return Two letter ISO 639-1 language code plus an extra ISO-3166-1 region tag used by TMDB
      * as preferred by the user. Or the default language.
      */
-    @JvmStatic
-    fun getMoviesLanguage(context: Context): String {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_MOVIES_LANGUAGE, null)
-            ?: context.getString(R.string.movie_default_language)
-    }
-
-    /**
-     * @return Two letter ISO 639-1 language code plus an extra ISO-3166-1 region tag used by TMDB
-     * as preferred by the user. Or the default language.
-     */
     fun getPersonLanguage(context: Context): String {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_PERSON_LANGUAGE, null)
@@ -80,23 +65,6 @@ object DisplaySettings {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putString(KEY_PERSON_LANGUAGE, languageCode)
         }
-    }
-
-    /**
-     * @return Two letter ISO-3166-1 region tag used by TMDB as preferred by the user. Or the
-     * default region of the device. Or as a last resort "US".
-     */
-    @JvmStatic
-    fun getMoviesRegion(context: Context): String {
-        var countryCode = PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_MOVIES_REGION, null)
-        if (countryCode.isNullOrEmpty()) {
-            countryCode = Locale.getDefault().country
-            if (countryCode.isNullOrEmpty()) {
-                countryCode = Locale.US.country
-            }
-        }
-        return countryCode!!
     }
 
     /**

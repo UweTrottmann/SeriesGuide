@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.movies.MoviesSettings;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb2.entities.Videos;
@@ -31,7 +31,7 @@ class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
     public Videos.Video loadInBackground() {
         // try to get a local trailer
         Videos.Video trailer = getTrailer(
-                DisplaySettings.getMoviesLanguage(getContext()), "get local movie trailer");
+                MoviesSettings.getMoviesLanguage(getContext()), "get local movie trailer");
         if (trailer != null) {
             return trailer;
         }
