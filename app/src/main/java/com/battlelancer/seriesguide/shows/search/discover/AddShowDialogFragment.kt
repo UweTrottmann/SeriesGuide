@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.traktapi.TraktTools
@@ -68,7 +69,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         val languageCodeOrNull = requireArguments().getString(ARG_STRING_LANGUAGE_CODE)
         if (languageCodeOrNull.isNullOrEmpty()) {
             // Use search language.
-            this.languageCode = DisplaySettings.getShowsSearchLanguage(context)
+            this.languageCode = ShowsSettings.getShowsSearchLanguage(context)
         } else {
             this.languageCode = languageCodeOrNull
         }

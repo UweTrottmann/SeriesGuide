@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SgShow2Update
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
 import com.battlelancer.seriesguide.tmdbapi.TmdbStop
@@ -53,7 +54,7 @@ class GetShowTools @Inject constructor(
         if (noTranslation) {
             tmdbShow = TmdbTools2().getShowAndExternalIds(
                 showTmdbId,
-                DisplaySettings.getShowsLanguageFallback(context),
+                ShowsSettings.getShowsLanguageFallback(context),
                 context
             ).getOrElse { return Err(it.toGetShowError()) }
                 ?: return Err(GetShowDoesNotExist)

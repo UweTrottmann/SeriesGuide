@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.provider.SgSeason2Numbers
 import com.battlelancer.seriesguide.provider.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.provider.SgSeason2Update
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync
@@ -232,7 +233,7 @@ class AddUpdateShowTools @Inject constructor(
         localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?,
         localEpisodesWithoutTmdbIdByNumber: MutableMap<Int, SgEpisode2Ids>?
     ): Result<EpisodeDetails, TmdbError> {
-        val fallbackLanguage: String? = DisplaySettings.getShowsLanguageFallback(context)
+        val fallbackLanguage: String? = ShowsSettings.getShowsLanguageFallback(context)
             .let { if (it != language) it else null }
 
         val tmdbEpisodes = TmdbTools2().getSeason(showTmdbId, seasonNumber, language, context)

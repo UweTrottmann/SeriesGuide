@@ -8,16 +8,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.content.edit
 import androidx.fragment.app.viewModels
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
@@ -122,7 +120,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                 TraktCredentials.get(requireContext()).hasCredentials(), true)
         recyclerView.adapter = adapter
 
-        languageCode = DisplaySettings.getShowsSearchLanguage(requireContext())
+        languageCode = ShowsSettings.getShowsSearchLanguage(requireContext())
 
         // observe and load results
         model.data.observe(viewLifecycleOwner, { handleResultsUpdate(it) })
@@ -252,9 +250,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         this.languageCode = languageCode
 
         // save selected search language
-        PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putString(DisplaySettings.KEY_LANGUAGE_SEARCH, languageCode)
-        }
+        ShowsSettings.saveShowsSearchLanguage(requireContext(), languageCode)
         Timber.d("Set search language to %s", languageCode)
     }
 

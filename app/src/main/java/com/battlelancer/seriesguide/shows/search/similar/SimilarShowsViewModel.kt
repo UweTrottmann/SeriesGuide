@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.SearchTools
 import com.battlelancer.seriesguide.util.Errors
@@ -34,7 +34,7 @@ class SimilarShowsViewModel(
             val context = getApplication<Application>()
 
             // Get similar shows.
-            val languageCode = DisplaySettings.getShowsSearchLanguage(getApplication())
+            val languageCode = ShowsSettings.getShowsSearchLanguage(getApplication())
             val page = try {
                 val response = SgApp.getServicesComponent(getApplication()).tmdb()
                     .tvService()

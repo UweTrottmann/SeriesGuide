@@ -10,9 +10,9 @@ import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
@@ -30,7 +30,7 @@ class ShowsPopularViewModel(application: Application) : AndroidViewModel(applica
             Pager(
                 PagingConfig(pageSize = 25, enablePlaceholders = true)
             ) {
-                val languageCode = DisplaySettings.getShowsSearchLanguage(application)
+                val languageCode = ShowsSettings.getShowsSearchLanguage(application)
                 val watchRegion = StreamingSearch.getCurrentRegionOrNull(application)
                 ShowsPopularDataSource(application, tmdb, languageCode, it, watchRegion)
             }.flow

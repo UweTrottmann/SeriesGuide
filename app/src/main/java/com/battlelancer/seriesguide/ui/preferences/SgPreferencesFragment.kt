@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
@@ -232,12 +233,12 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         updateStreamSearchServiceSummary(findPreference(StreamingSearch.KEY_SETTING_REGION)!!)
         updateTimeOffsetSummary(findPreference(DisplaySettings.KEY_SHOWS_TIME_OFFSET)!!)
 
-        findPreference<Preference>(DisplaySettings.KEY_LANGUAGE_FALLBACK)!!.also {
+        findPreference<Preference>(ShowsSettings.KEY_LANGUAGE_FALLBACK)!!.also {
             updateFallbackLanguageSummary(it)
             it.setOnPreferenceClickListener {
                 L10nDialogFragment.forShow(
                     parentFragmentManager,
-                    DisplaySettings.getShowsLanguageFallback(requireContext()),
+                    ShowsSettings.getShowsLanguageFallback(requireContext()),
                     TAG_LANGUAGE_FALLBACK
                 )
                 true
@@ -394,7 +395,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 || DisplaySettings.KEY_THEME == key) {
                 setListPreferenceSummary(pref as ListPreference)
             }
-            if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
+            if (ShowsSettings.KEY_LANGUAGE_FALLBACK == key) {
                 updateFallbackLanguageSummary(pref)
             }
             if (DisplaySettings.KEY_SHOWS_TIME_OFFSET == key) {
@@ -430,7 +431,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             ListWidgetProvider.notifyDataChanged(requireActivity())
         }
 
-        if (DisplaySettings.KEY_LANGUAGE_FALLBACK == key) {
+        if (ShowsSettings.KEY_LANGUAGE_FALLBACK == key) {
             // reset last updated date of all episodes so they will get updated
             Thread {
                 android.os.Process
@@ -472,7 +473,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     fun onEvent(event: L10nDialogFragment.LanguageChangedEvent) {
         if (event.tag == TAG_LANGUAGE_FALLBACK) {
             PreferenceManager.getDefaultSharedPreferences(context).edit {
-                putString(DisplaySettings.KEY_LANGUAGE_FALLBACK, event.selectedLanguageCode)
+                putString(ShowsSettings.KEY_LANGUAGE_FALLBACK, event.selectedLanguageCode)
             }
         }
     }
@@ -515,7 +516,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     private fun updateFallbackLanguageSummary(pref: Preference) {
         pref.summary = LanguageTools.getShowLanguageStringFor(
             requireContext(),
-            DisplaySettings.getShowsLanguageFallback(requireContext())
+            ShowsSettings.getShowsLanguageFallback(requireContext())
         )
     }
 

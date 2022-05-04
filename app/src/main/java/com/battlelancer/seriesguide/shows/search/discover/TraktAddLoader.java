@@ -8,7 +8,7 @@ import androidx.annotation.StringRes;
 import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.shows.ShowsSettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -96,7 +96,7 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         }
 
         return buildResultSuccess(parseTraktShowsToSearchResults(getContext(), shows,
-                DisplaySettings.getShowsSearchLanguage(getContext())));
+                ShowsSettings.getShowsSearchLanguage(getContext())));
     }
 
     private Result buildResultSuccess(List<SearchResult> results) {
