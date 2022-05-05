@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.lists
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.model.SgListItem
+import com.battlelancer.seriesguide.lists.database.SgListItem
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.Errors
@@ -39,7 +39,12 @@ object ListsTools2 {
                 // also do not remove and re-insert to Cloud, would fail.
                 val oldListId = oldItem.listId
                 if (!oldListId.isNullOrEmpty()) {
-                    val newListItem = SgListItem(tmdbIdOrZero, ListItemTypes.TMDB_SHOW, oldListId)
+                    val newListItem =
+                        SgListItem(
+                            tmdbIdOrZero,
+                            ListItemTypes.TMDB_SHOW,
+                            oldListId
+                        )
                     toInsert.add(newListItem)
 
                     // Cloud changes

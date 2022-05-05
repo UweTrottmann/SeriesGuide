@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.provider
+package com.battlelancer.seriesguide.lists.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
@@ -9,13 +9,11 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.battlelancer.seriesguide.model.SgList
-import com.battlelancer.seriesguide.model.SgListItem
-import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 
 @Dao

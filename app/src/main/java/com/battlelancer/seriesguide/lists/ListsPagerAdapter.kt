@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.battlelancer.seriesguide.model.SgList
+import com.battlelancer.seriesguide.lists.database.SgList
 
 /**
  * Returns [SgListFragment] for every list.

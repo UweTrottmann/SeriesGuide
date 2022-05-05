@@ -11,7 +11,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
-import com.battlelancer.seriesguide.provider.SgListItemWithDetails
+import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 
 /**
