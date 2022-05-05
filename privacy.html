@@ -15,14 +15,15 @@ title: Privacy Policy
 
     <p>Based on legitimate interests (in the sense of Art. <a href="https://gdpr-info.eu/art-6-gdpr/">6</a> lit. f. GDPR) SeriesGuide uses third-party services provided by Google LLC ("Google") to collect and store data.</p>
 
-    <p>Data collected by the Google services is transferred to, stored and processed in the United States and other countries where the services operate.</p>
+    <p>Data collected by the Google services is transferred over a secure connection to, stored and processed in the United States and other countries where the services operate.</p>
 
     <h3>Firebase Crashlytics</h3>
-    <p>This Google service collects:</p>
+    <p>This Google service:</p>
     <ul>
-        <li>device-specific information (like model and operating system version)</li>
-        <li>unique identifier of app installation (Installation UUID)</li>
-        <li>crash and error traces</li>
+        <li>Collects stack traces when the application crashes or an error occurs.</li>
+        <li>Collects relevant application state when the application crashes or an error occurs.</li>
+        <li>Collects point-in-time <a href="https://firebase.google.com/support/privacy#crash-stored-info">metadata about the device</a> when the application crashes or an error occurs.</li>
+        <li>Generates and stores the Crashlytics installation UUID to measure the number of users impacted by a crash or error.</li>
     </ul>
 
     <p>Crash and error traces and their associated identifiers are kept for 90 days.</p>
@@ -31,6 +32,7 @@ title: Privacy Policy
 
     <p>For more details have a look at:</p>
     <ul>
+      <li><a href="https://firebase.google.com/docs/android/play-data-disclosure?hl=en#crashlytics">Firebase data disclosure info about Crashlytics</a></li>
       <li><a href="https://firebase.google.com/support/privacy">Privacy and Security in Firebase</a></li>
       <li><a href="https://firebase.google.com/terms/crashlytics">Firebase Crashlytics Terms of Service</a></li>
       <li><a href="https://firebase.google.com/terms/crashlytics-app-distribution-data-processing-terms">Crashlytics Data Processing and Security Terms</a></li>
@@ -39,17 +41,21 @@ title: Privacy Policy
     <h3>Google Cloud Platform and Firebase Authentication</h3>
     <p>If you use SeriesGuide Cloud additional data is collected and stored by these Google services:</p>
     <ul>
-        <li>request logs (including IP addresses and SeriesGuide version)</li>
-        <li>email address and password</li>
-        <li>SeriesGuide data (including shows, lists, movies, statistics)</li>
+      <li>Collects your SeriesGuide data including shows, episodes, lists, movies, statistics.</li>
+      <li>Collects your email address to uniquely identify an account and its stored data.</li>
+      <li>Generates and stores request logs (including IP addresses and SeriesGuide version) to determine usage of and issues with the Cloud service.</li>
+      <li>Collects the Firebase user agent that includes device metadata, the app used to install the app (e.g. Play Store) and which Firebase SDKs are used. The Firebase user agent is used internally by Google to determine platform and version adoption in order to provide, maintain, and improve Firebase services. It is never linked to a user or device identifier.</li>
+      <li>Collects IP addresses to provide added security and prevent abuse during sign-up and authentication.</li>
+      <li>Collects user agent strings (that the app uses FirebaseUI, version of Authentication SDK, platform of the device) to provide, maintain, and improve Firebase services.</li>
+      <li>Collects the Firebase Android App ID of the app.</li>
+      <li>Generates and stores a unique Firebase Authentication identifier.</li>
     </ul>
 
-    <p>Request logs are kept for about 30 days. Your email address, password and SeriesGuide data is kept until you remove your SeriesGuide Cloud account from within SeriesGuide on all connected devices.</p>
-
-    <p>Request logs help to determine usage of and issues with the Cloud service. The email address and password is used to uniquely identify an account and its stored data.</p>
+    <p>Request logs are kept for about 30 days. Your email address and SeriesGuide data is kept until you remove your SeriesGuide Cloud account from within SeriesGuide on all connected devices.</p>
 
     <p>For more details have a look at:</p>
     <ul>
+      <li><a href="https://firebase.google.com/docs/android/play-data-disclosure?hl=en#authentication">Firebase data disclosure info about Authentication</a></li>
         <li><a href="https://cloud.google.com/terms">Google Cloud Platform Terms of Service</a></li>
         <li><a href="https://cloud.google.com/terms/data-processing-terms">Data Processing and Security Terms</a></li>
         <li><a href="https://firebase.google.com/support/privacy">Privacy and Security in Firebase</a></li>
@@ -95,7 +101,8 @@ title: Privacy Policy
     </dl>
 
     <h2>Update history</h2>
-    <p>Last updated on 2021-07-07. Add Firebase Authentication, remove Countly service.</p>
+    <p>Last updated on 2022-05-05. More details about data collected by Firebase Crashlytics and Authentication, noted data is transferred securely.</p>
+    <p>Before on 2021-07-07. Add Firebase Authentication, remove Countly service.</p>
     <p>Before on 2020-12-04. Add new service: self-hosted Countly instance.</p>
     <p>Before on 2020-08-13. Drop mention of Privacy Shield, update Crashlytics and Google Cloud sections.</p>
     <p>Before on 2019-01-05. Dropped Google Analytics, SeriesGuide no longer uses it.</p>
