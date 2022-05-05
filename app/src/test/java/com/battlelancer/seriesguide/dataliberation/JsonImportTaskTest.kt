@@ -5,7 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow2
-import com.battlelancer.seriesguide.provider.SgEpisode2Helper
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgSeason2Helper
 import com.battlelancer.seriesguide.provider.SgShow2Helper

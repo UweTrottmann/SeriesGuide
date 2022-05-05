@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;

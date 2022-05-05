@@ -24,7 +24,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
-import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isHidingSpecials

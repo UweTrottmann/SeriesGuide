@@ -7,7 +7,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.battlelancer.seriesguide.provider.SgEpisode2Info
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Info
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers

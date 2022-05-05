@@ -23,7 +23,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.shows.ShowsActivityViewModel

@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.battlelancer.seriesguide.provider.SgEpisode2Numbers
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers
 
 /**
  * Maps [Episode] objects to [EpisodeDetailsFragment] pages.

@@ -6,7 +6,7 @@ import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.comments.TraktCommentsFragment.InitBundle;
-import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
 import com.battlelancer.seriesguide.util.Errors;

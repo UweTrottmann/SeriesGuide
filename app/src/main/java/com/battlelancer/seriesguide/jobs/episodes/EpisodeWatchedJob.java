@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
 import com.battlelancer.seriesguide.provider.SgActivityHelper;
-import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;

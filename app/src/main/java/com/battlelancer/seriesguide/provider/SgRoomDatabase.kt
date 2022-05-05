@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.model.SgWatchProvider
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import timber.log.Timber
 
 @Database(

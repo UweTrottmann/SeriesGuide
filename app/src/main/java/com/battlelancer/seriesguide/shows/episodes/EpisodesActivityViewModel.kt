@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.battlelancer.seriesguide.provider.SgEpisode2Numbers
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgShow2Minimal
 import kotlinx.coroutines.Dispatchers

@@ -11,9 +11,9 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.modules.ApplicationContext
-import com.battlelancer.seriesguide.provider.SgEpisode2Ids
-import com.battlelancer.seriesguide.provider.SgEpisode2TmdbIdUpdate
-import com.battlelancer.seriesguide.provider.SgEpisode2Update
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Ids
+import com.battlelancer.seriesguide.shows.database.SgEpisode2TmdbIdUpdate
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Update
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgSeason2Numbers
 import com.battlelancer.seriesguide.provider.SgSeason2TmdbIdUpdate

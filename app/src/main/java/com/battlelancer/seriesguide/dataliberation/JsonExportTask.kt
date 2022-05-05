@@ -15,7 +15,7 @@ import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.provider.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.provider.SgEpisode2Helper
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.provider.SgListHelper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.provider.SgSeason2Helper

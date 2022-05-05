@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.provider.SgEpisode2WithShow
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.shows.calendar.CalendarFragment2ViewModel.CalendarItem
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 

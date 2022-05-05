@@ -8,7 +8,7 @@ import androidx.annotation.StringRes;
 import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SgEpisode2Helper;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;

@@ -14,6 +14,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2SearchResult;
 import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;

@@ -3,9 +3,9 @@ package com.battlelancer.seriesguide.sync
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.provider.SgEpisode2CollectedUpdate
-import com.battlelancer.seriesguide.provider.SgEpisode2ForSync
-import com.battlelancer.seriesguide.provider.SgEpisode2WatchedUpdate
+import com.battlelancer.seriesguide.shows.database.SgEpisode2CollectedUpdate
+import com.battlelancer.seriesguide.shows.database.SgEpisode2ForSync
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WatchedUpdate
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktSettings

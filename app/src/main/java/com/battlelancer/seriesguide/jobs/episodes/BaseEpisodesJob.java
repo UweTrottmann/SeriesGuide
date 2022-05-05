@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
-import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask;
 import com.google.flatbuffers.FlatBufferBuilder;

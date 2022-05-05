@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemEpisodeBinding
-import com.battlelancer.seriesguide.provider.SgEpisode2Info
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Info
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
 import com.battlelancer.seriesguide.util.TextTools

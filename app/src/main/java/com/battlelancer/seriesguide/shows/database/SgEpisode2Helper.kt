@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.provider
+package com.battlelancer.seriesguide.shows.database
 
 import android.content.Context
 import android.text.format.DateUtils
@@ -13,12 +13,12 @@ import androidx.room.Transaction
 import androidx.room.Update
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.battlelancer.seriesguide.shows.database.SgEpisode2
-import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodesSettings
 import com.battlelancer.seriesguide.util.TimeTools
