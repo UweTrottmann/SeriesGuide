@@ -17,7 +17,7 @@ import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.widgets.EmptyView
+import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.uwetrottmann.seriesguide.common.SingleLiveEvent
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 

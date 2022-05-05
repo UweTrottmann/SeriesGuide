@@ -18,7 +18,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.widgets.SgFastScroller
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**

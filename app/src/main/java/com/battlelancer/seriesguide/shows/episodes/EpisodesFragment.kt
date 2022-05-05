@@ -15,10 +15,9 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.safeShow
-import com.battlelancer.seriesguide.widgets.SgFastScroller
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 
 /**
  * Displays a list of episodes of a season.

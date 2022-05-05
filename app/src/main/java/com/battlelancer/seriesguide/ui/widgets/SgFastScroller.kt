@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.widgets
+package com.battlelancer.seriesguide.ui.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context

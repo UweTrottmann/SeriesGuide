@@ -34,7 +34,7 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.Utils
-import com.battlelancer.seriesguide.widgets.SgFastScroller
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate

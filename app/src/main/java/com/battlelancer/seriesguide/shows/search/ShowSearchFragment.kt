@@ -14,7 +14,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.shows.ShowMenuItemClickListener
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.TabClickEvent
-import com.battlelancer.seriesguide.widgets.EmptyView
+import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 

@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:text="@string/hexagon_signout" />
 
-        <com.battlelancer.seriesguide.widgets.SyncStatusView
+        <com.battlelancer.seriesguide.ui.widgets.SyncStatusView
             android:id="@+id/syncStatusCloud"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCloudUser" />
 
-        <com.battlelancer.seriesguide.widgets.FeatureStatusView
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
             android:id="@+id/feature_status_cloud_supported"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewCloudDescription"
             app:layout_constraintWidth_max="150dp" />
 
-        <com.battlelancer.seriesguide.widgets.FeatureStatusView
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
             android:id="@+id/feature_status_cloud_not_supported"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
             app:layout_constraintStart_toEndOf="@+id/feature_status_cloud_supported"
             app:layout_constraintTop_toTopOf="@+id/feature_status_cloud_supported" />
 
-        <com.battlelancer.seriesguide.widgets.FeatureStatusView
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
             android:id="@+id/featureStatusCloudSync"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feature_status_cloud_supported" />
 
-        <com.battlelancer.seriesguide.widgets.FeatureStatusView
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
             android:id="@+id/featureStatusCloudSyncShows"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudSync" />
 
-        <com.battlelancer.seriesguide.widgets.FeatureStatusView
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
             android:id="@+id/featureStatusCloudSyncLists"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featureStatusCloudSyncShows" />
 
-        <com.battlelancer.seriesguide.widgets.FeatureStatusView
+        <com.battlelancer.seriesguide.ui.widgets.FeatureStatusView
             android:id="@+id/featureStatusCloudSyncMovies"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

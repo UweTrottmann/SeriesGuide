@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.battlelancer.seriesguide.widgets;
+package com.battlelancer.seriesguide.ui.widgets;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

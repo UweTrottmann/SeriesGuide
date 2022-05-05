@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesWatchedBinding
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.MoviesActivity
-import com.battlelancer.seriesguide.widgets.SgFastScroller
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.launch

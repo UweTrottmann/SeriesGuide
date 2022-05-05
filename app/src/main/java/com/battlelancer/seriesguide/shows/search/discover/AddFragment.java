@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.shows.tools.AddShowTask;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;
 import com.battlelancer.seriesguide.util.ImageTools;
-import com.battlelancer.seriesguide.widgets.EmptyView;
+import com.battlelancer.seriesguide.ui.widgets.EmptyView;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

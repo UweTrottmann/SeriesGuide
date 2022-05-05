@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.widgets.EmptyView
+import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**

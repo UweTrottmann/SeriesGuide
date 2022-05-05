@@ -43,7 +43,7 @@ import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.widgets.SgFastScroller
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

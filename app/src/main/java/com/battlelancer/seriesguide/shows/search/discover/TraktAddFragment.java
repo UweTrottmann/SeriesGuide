@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
-import com.battlelancer.seriesguide.widgets.EmptyView;
+import com.battlelancer.seriesguide.ui.widgets.EmptyView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
