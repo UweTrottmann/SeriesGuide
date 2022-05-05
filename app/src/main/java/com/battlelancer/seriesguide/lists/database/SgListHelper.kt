@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.lists.database
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Dao
@@ -46,6 +47,13 @@ interface SgListHelper {
             deleteListItem(it)
         }
     }
+
+    /**
+     * By default the database inserts a first list when being created, d
+     */
+    @VisibleForTesting
+    @Query("DELETE FROM lists")
+    fun deleteAllLists()
 
 }
 

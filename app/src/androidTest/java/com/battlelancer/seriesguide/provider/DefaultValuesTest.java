@@ -15,14 +15,15 @@ import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.lists.database.SgList;
+import com.battlelancer.seriesguide.movies.details.MovieDetails;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.shows.database.SgSeason2;
 import com.battlelancer.seriesguide.shows.database.SgShow2;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
-import com.battlelancer.seriesguide.movies.details.MovieDetails;
 import com.battlelancer.seriesguide.util.tasks.AddListTask;
 import com.uwetrottmann.tmdb2.entities.Movie;
 import java.util.ArrayList;
@@ -184,23 +185,28 @@ public class DefaultValuesTest {
 
     @Test
     public void listDefaultValues() {
+        Context context = ApplicationProvider.getApplicationContext();
+        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+
         AddListTask addListTask = new AddListTask(ApplicationProvider.getApplicationContext(),
                 LIST.name);
         addListTask.doDatabaseUpdate(resolver, addListTask.getListId());
 
-        Cursor query = resolver.query(Lists.CONTENT_URI, null,
-                null, null, null);
-        assertThat(query).isNotNull();
-        assertThat(query.getCount()).isEqualTo(1);
-        assertThat(query.moveToFirst()).isTrue();
+        java.util.List<SgList> lists = database.sgListHelper().getListsForExport();
+        // Initial data + new list from above; initial data asserted with RoomInitialDataTest.
+        assertThat(lists).hasSize(2);
+        assertThat(lists.get(1).name).isEqualTo(LIST.name);
 
-        assertDefaultValue(query, Lists.ORDER, 0);
-
-        query.close();
+        assertThat(lists.get(1).order).isEqualTo(0);
     }
 
     @Test
     public void listDefaultValuesImport() throws Exception {
+        Context context = ApplicationProvider.getApplicationContext();
+        SgRoomDatabase database = SgRoomDatabase.getInstance(context);
+        // Delete initial list.
+        database.sgListHelper().deleteAllLists();
+
         ContentValues values = LIST.toContentValues();
 
         ContentProviderOperation op = ContentProviderOperation.newInsert(Lists.CONTENT_URI)
@@ -210,15 +216,11 @@ public class DefaultValuesTest {
         batch.add(op);
         resolver.applyBatch(SgApp.CONTENT_AUTHORITY, batch);
 
-        Cursor query = resolver.query(Lists.CONTENT_URI, null,
-                null, null, null);
-        assertThat(query).isNotNull();
-        assertThat(query.getCount()).isEqualTo(1);
-        assertThat(query.moveToFirst()).isTrue();
+        java.util.List<SgList> lists = database.sgListHelper().getListsForExport();
+        assertThat(lists).hasSize(1);
+        assertThat(lists.get(0).name).isEqualTo(LIST.name);
 
-        assertDefaultValue(query, Lists.ORDER, 0);
-
-        query.close();
+        assertThat(lists.get(0).order).isEqualTo(0);
     }
 
     @Test
