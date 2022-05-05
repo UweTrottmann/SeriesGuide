@@ -7,8 +7,8 @@ import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.model.SgEpisode2;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.shows.overview.UnwatchedUpdateWorker;
 import java.text.SimpleDateFormat;
@@ -181,7 +181,7 @@ public class TimeTools {
             @NonNull LocalTime showReleaseTime, @Nullable String showCountry,
             @Nullable String showNetwork, @NonNull String deviceTimeZone) {
         if (releaseDate == null) {
-            return Constants.EPISODE_UNKNOWN_RELEASE;
+            return SgEpisode2.EPISODE_UNKNOWN_RELEASE;
         }
 
         // Get local date: tmdb-java parses date string to Date using SimpleDateFormat,

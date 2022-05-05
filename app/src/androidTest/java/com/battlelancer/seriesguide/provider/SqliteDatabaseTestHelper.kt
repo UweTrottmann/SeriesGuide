@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.provider
 
 import android.database.sqlite.SQLiteDatabase
-import com.battlelancer.seriesguide.Constants
+import com.battlelancer.seriesguide.model.SgEpisode2
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow
 
@@ -42,7 +42,7 @@ object SqliteDatabaseTestHelper {
             seasonTvdbId,
             showTvdbId,
             seasonNumber,
-            Constants.EPISODE_UNKNOWN_RELEASE.toLong()
+            SgEpisode2.EPISODE_UNKNOWN_RELEASE.toLong()
         )
         db.insertWithOnConflict(
             SeriesGuideDatabase.Tables.EPISODES, null, values,

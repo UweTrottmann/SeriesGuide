@@ -13,7 +13,6 @@ import androidx.room.Transaction
 import androidx.room.Update
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.battlelancer.seriesguide.Constants
 import com.battlelancer.seriesguide.model.SgEpisode2
 import com.battlelancer.seriesguide.model.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
@@ -213,26 +212,26 @@ interface SgEpisode2Helper {
      * Returns how many episodes of a show are left to collect. Only considers regular, released
      * episodes (no specials, must have a release date in the past).
      */
-    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 0 AND episode_season_number != 0 AND episode_firstairedms != ${Constants.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 0 AND episode_season_number != 0 AND episode_firstairedms != ${SgEpisode2.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
     fun countNotCollectedEpisodesOfShow(showId: Long, currentTimeToolsTime: Long): Int
 
     /**
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
      * episodes with no air date and without specials).
      */
-    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_season_number != 0 AND episode_firstairedms != ${Constants.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_season_number != 0 AND episode_firstairedms != ${SgEpisode2.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
     fun countNotWatchedEpisodesOfShow(showId: Long, currentTimeToolsTime: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId")
     fun countEpisodesOfSeason(seasonId: Long): Int
 
-    @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms != ${Constants.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms != ${SgEpisode2.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
     fun countNotWatchedReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms > :currentTimeToolsTime")
     fun countNotWatchedToBeReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
 
-    @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms = ${Constants.EPISODE_UNKNOWN_RELEASE}")
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms = ${SgEpisode2.EPISODE_UNKNOWN_RELEASE}")
     fun countNotWatchedNoReleaseEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.SKIPPED}")

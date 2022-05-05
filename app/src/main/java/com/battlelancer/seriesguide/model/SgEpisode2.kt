@@ -52,4 +52,11 @@ data class SgEpisode2(
 ) {
     val playsOrZero: Int
         get() = plays ?: 0
+
+    companion object {
+        /**
+         * See [com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes.FIRSTAIREDMS].
+         */
+        const val EPISODE_UNKNOWN_RELEASE = -1
+    }
 }
