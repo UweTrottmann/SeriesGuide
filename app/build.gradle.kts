@@ -264,19 +264,13 @@ dependencies {
     val googleApiClientVersion = "1.33.4"
     implementation("com.google.api-client:google-api-client-android:$googleApiClientVersion") {
         exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
-        exclude(group = "org.checkerframework") // from guava, not needed at runtime
-        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
     }
     implementation("com.google.api-client:google-api-client:$googleApiClientVersion") {
         exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
-        exclude(group = "org.checkerframework") // from guava, not needed at runtime
-        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
     }
     // https://github.com/googleapis/google-http-java-client/releases
     implementation("com.google.http-client:google-http-client-gson:1.41.5") {
         exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
-        exclude(group = "org.checkerframework") // from guava, not needed at runtime
-        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
     }
 
     // Amazon flavor specific
@@ -294,17 +288,17 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.4.0")
     // Espresso
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0") {
+        // conflicts with checker-qual from guava transitive dependency
+        exclude(group = "org.checkerframework", module = "checker")
+    }
     // Assertions
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.ext:truth:1.4.0") {
         exclude(group = "com.google.truth") // include manually to control conflicting deps
     }
     val truthVersion = "1.1.3" // https://github.com/google/truth/releases
-    androidTestImplementation("com.google.truth:truth:$truthVersion") {
-        exclude(group = "org.checkerframework") // from guava, not needed at runtime
-        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
-    }
+    androidTestImplementation("com.google.truth:truth:$truthVersion")
     implementation("com.google.code.findbugs:jsr305:3.0.2")
     androidTestImplementation("com.google.code.findbugs:jsr305:3.0.2")
     kaptAndroidTest("com.google.dagger:dagger-compiler:$daggerVersion")
@@ -313,10 +307,7 @@ dependencies {
     // Local unit tests
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.annotation:annotation:$annotationVersion")
-    testImplementation("com.google.truth:truth:$truthVersion") {
-        exclude(group = "org.checkerframework") // from guava, not needed at runtime
-        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
-    }
+    testImplementation("com.google.truth:truth:$truthVersion")
     // https://github.com/robolectric/robolectric/releases/
     // Note: 4.6.1 pulls in bcprov-jdk15on code targeting newer Java breaking Jetifier
     // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
