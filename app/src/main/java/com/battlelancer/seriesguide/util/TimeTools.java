@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.model.SgEpisode2;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.shows.overview.UnwatchedUpdateWorker;
 import java.text.SimpleDateFormat;

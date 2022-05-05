@@ -8,8 +8,8 @@ import com.battlelancer.seriesguide.backend.HexagonRetry
 import com.battlelancer.seriesguide.backend.HexagonStop
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.model.SgEpisode2
-import com.battlelancer.seriesguide.model.SgSeason2
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SgEpisode2Ids
 import com.battlelancer.seriesguide.provider.SgEpisode2TmdbIdUpdate

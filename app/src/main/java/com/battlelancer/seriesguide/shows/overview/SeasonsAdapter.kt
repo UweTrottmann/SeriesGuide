@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemSeasonBinding
-import com.battlelancer.seriesguide.model.SgSeason2
+import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.util.TextTools
 import com.uwetrottmann.androidutils.AndroidUtils
 

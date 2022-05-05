@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.model.SgShow2
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.github.michaelbull.result.onFailure

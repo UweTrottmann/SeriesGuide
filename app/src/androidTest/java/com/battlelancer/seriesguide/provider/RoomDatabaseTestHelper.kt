@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.provider
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.battlelancer.seriesguide.model.SgEpisode2
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags

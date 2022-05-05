@@ -1,7 +1,7 @@
 package com.battlelancer.seriesguide.provider
 
 import android.database.sqlite.SQLiteDatabase
-import com.battlelancer.seriesguide.model.SgEpisode2
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow
 

@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.battlelancer.seriesguide.model.SgSeason2
+import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 
 @Dao

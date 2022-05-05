@@ -3,12 +3,12 @@ package com.battlelancer.seriesguide.dataliberation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
-import com.battlelancer.seriesguide.model.SgEpisode2
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.model.SgList
 import com.battlelancer.seriesguide.model.SgListItem
 import com.battlelancer.seriesguide.model.SgMovie
-import com.battlelancer.seriesguide.model.SgSeason2
-import com.battlelancer.seriesguide.model.SgShow2
+import com.battlelancer.seriesguide.shows.database.SgSeason2
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.provider.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgEpisode2Helper

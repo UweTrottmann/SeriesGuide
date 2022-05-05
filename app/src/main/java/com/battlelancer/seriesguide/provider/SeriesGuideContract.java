@@ -7,7 +7,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.model.SgEpisode2;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.shows.tools.ShowStatus;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;

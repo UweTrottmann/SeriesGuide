@@ -30,8 +30,8 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader
 import com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionReceivedEvent
-import com.battlelancer.seriesguide.model.SgEpisode2
-import com.battlelancer.seriesguide.model.SgShow2
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.streaming.StreamingSearch

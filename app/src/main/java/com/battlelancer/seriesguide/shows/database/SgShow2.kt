@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.model
+package com.battlelancer.seriesguide.shows.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,8 +6,8 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
-import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
+import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 
 @Entity(
     tableName = "sg_show",
