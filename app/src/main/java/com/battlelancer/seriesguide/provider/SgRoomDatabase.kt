@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.shows.history.ActivityType
 import com.battlelancer.seriesguide.shows.history.SgActivity
 import com.battlelancer.seriesguide.shows.database.SgEpisode
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
-import com.battlelancer.seriesguide.model.SgJob
+import com.battlelancer.seriesguide.jobs.SgJob
 import com.battlelancer.seriesguide.lists.database.SgList
 import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.lists.database.SgListItem
