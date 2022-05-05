@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.databinding.FragmentPersonBinding
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TmdbTools
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Person

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TmdbTools;
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.entities.CastMember;
 import com.uwetrottmann.tmdb2.entities.Credits;

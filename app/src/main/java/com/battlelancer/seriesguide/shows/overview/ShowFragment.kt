@@ -38,7 +38,7 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.util.TmdbTools
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick

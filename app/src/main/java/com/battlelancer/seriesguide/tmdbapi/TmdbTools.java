@@ -1,7 +1,8 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.tmdbapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.entities.Genre;
 import java.util.List;
 

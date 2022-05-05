@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TmdbTools;
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
 import java.util.List;
 
 /**
