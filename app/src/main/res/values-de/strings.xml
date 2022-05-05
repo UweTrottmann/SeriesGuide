@@ -47,7 +47,7 @@
     <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">unbekannt</string>
-    <string name="offline">Mit einem Netzwerk verbinden, dann erneut versuchen</string>
+    <string name="offline">Mit dem Internet verbinden, dann erneut versuchen</string>
     <string name="app_not_available">Keine App verfügbar um dies auszuführen</string>
     <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
     <string name="database_error">Daten konnten nicht geändert werden</string>

@@ -53,7 +53,7 @@
     <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">unknown</string>
-    <string name="offline">Connect to a network, then try again</string>
+    <string name="offline">Connect to the internet, then try again</string>
     <string name="app_not_available">No app available to handle this</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
     <string name="database_error">Could not modify data</string>
