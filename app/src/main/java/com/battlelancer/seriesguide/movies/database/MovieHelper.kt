@@ -1,13 +1,10 @@
-package com.battlelancer.seriesguide.provider
+package com.battlelancer.seriesguide.movies.database
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.battlelancer.seriesguide.movies.database.SgMovie
-import com.battlelancer.seriesguide.movies.database.SgMovieFlags
-import com.battlelancer.seriesguide.movies.database.SgMovieTmdbId
 
 /**
  * Data Access Object for the movies table.

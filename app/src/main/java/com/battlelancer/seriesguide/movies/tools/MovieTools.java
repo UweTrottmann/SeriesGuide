@@ -14,7 +14,7 @@ import com.battlelancer.seriesguide.movies.database.SgMovieFlags;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.movies.MoviesSettings;
 import com.battlelancer.seriesguide.movies.details.MovieDetails;
-import com.battlelancer.seriesguide.provider.MovieHelper;
+import com.battlelancer.seriesguide.movies.database.MovieHelper;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
