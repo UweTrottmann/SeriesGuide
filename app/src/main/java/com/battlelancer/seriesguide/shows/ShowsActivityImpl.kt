@@ -14,7 +14,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.shows.calendar.CalendarFragment2
 import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment

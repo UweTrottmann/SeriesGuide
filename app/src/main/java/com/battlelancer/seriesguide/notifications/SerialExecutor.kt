@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.service
+package com.battlelancer.seriesguide.notifications
 
 import android.os.AsyncTask
 import java.util.ArrayDeque

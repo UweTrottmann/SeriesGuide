@@ -19,7 +19,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob
-import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.shows.overview.SeasonTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity

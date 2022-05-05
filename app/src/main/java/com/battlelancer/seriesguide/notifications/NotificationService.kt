@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.service
+package com.battlelancer.seriesguide.notifications
 
 import android.app.AlarmManager
 import android.app.Notification
@@ -24,15 +24,15 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
-import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.provider.SgRoomDatabase.Companion.getInstance
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isHidingSpecials
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.Companion.intentEpisode
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.battlelancer.seriesguide.util.ServiceUtils

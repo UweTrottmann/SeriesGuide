@@ -234,8 +234,8 @@
         <activity android:name="com.battlelancer.seriesguide.people.PersonActivity" />
 
         <!-- Notification service -->
-        <receiver android:name="com.battlelancer.seriesguide.service.NotificationActionReceiver" />
-        <receiver android:name="com.battlelancer.seriesguide.service.NotificationAlarmReceiver"
+        <receiver android:name=".notifications.NotificationActionReceiver" />
+        <receiver android:name=".notifications.NotificationAlarmReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

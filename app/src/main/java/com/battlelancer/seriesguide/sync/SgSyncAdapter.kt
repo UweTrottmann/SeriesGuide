@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
-import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
