@@ -21,7 +21,7 @@ import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
-import com.battlelancer.seriesguide.model.ActivityType;
+import com.battlelancer.seriesguide.shows.history.ActivityType;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason;
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow;

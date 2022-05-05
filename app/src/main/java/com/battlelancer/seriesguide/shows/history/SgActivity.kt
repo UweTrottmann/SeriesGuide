@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.model
+package com.battlelancer.seriesguide.shows.history
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

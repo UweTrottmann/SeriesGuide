@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.shows.history
 
 import android.content.Context
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.model.ActivityType
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl

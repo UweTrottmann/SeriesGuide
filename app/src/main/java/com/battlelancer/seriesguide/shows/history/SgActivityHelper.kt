@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.provider
+package com.battlelancer.seriesguide.shows.history
 
 import android.content.Context
 import android.text.format.DateUtils
@@ -6,8 +6,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.battlelancer.seriesguide.model.ActivityType
-import com.battlelancer.seriesguide.model.SgActivity
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import timber.log.Timber
 
 /**
