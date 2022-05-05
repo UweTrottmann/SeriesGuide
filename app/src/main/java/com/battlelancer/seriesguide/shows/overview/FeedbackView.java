@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.widgets;
+package com.battlelancer.seriesguide.shows.overview;
 
 import android.content.Context;
 import android.os.Parcel;
