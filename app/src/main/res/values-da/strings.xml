@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ikke oversat</string>
     <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
     <string name="format_source">Kilde: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Sidst opdateret</string>
     <!-- Date and Time -->
     <string name="today">i dag</string>
     <string name="now">nu</string>
@@ -314,7 +314,7 @@
     <string name="connect">Forbind</string>
     <string name="disconnect">Afbryd</string>
     <string name="use_integrated_browser">Brug integreret browser</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Tilføj serier fra Trakt</string>
     <string name="about_trakt">trakt hjælper dig med at holde styr på dine TV-serier. <a href="https://trakt.tv">Flere oplysninger</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>

@@ -314,7 +314,7 @@
     <string name="connect">Connetti</string>
     <string name="disconnect">Disconnetti</string>
     <string name="use_integrated_browser">Utilizza il browser integrato</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Aggiungi serie da Trakt</string>
     <string name="about_trakt">trakt ti aiuta a tenere traccia delle serie TV e dei film che guardi. <a href="http://trakt.tv">Maggiori informazioni</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Vota</string>

@@ -55,7 +55,7 @@
     <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
     <string name="api_failed">Misslyckades: %s</string>
     <string name="copy_to_clipboard">Kopierat till urklipp</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Serien är inte migrerad till TMDB-data. Vissa åtgärder inkl. Trakt och Cloud sync kanske inte fungerar. Prova att söka efter en ersättare och ta bort denna serie. Tryck för att visa detaljer.</string>
     <!-- Sharing -->
     <string name="share">Dela</string>
     <string name="share_show">Dela serie</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ej översatt</string>
     <string name="no_spoilers">Vissa detaljer är dolda för att undvika spoilers. För att stänga av detta, gå till inställningar.</string>
     <string name="format_source">Källa: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Senast uppdaterad</string>
     <!-- Date and Time -->
     <string name="today">idag</string>
     <string name="now">nu</string>
@@ -161,7 +161,7 @@
     <string name="context_updateshow">Uppdatera</string>
     <string name="context_marknext">Sett nästa avsnitt</string>
     <string name="action_episodes_switch_view">Ändra vy</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Härnäst</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Nyligen sedda</string>
@@ -314,7 +314,7 @@
     <string name="connect">Anslut</string>
     <string name="disconnect">Koppla ner</string>
     <string name="use_integrated_browser">Använd inbyggd webbläsare</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Lägg till serier från Trakt</string>
     <string name="about_trakt">trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på. <a href="http://trakt.tv">Lär dig mer</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>

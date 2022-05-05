@@ -342,7 +342,7 @@
     <string name="connect">الاتصال</string>
     <string name="disconnect">قطع الاتصال</string>
     <string name="use_integrated_browser">استخدام متصفح متكامل</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">إضافة مسلسلات من Trakt</string>
     <string name="about_trakt">يساعدك trait على حفظ ما تشاهده من أفلام و مسلسلات.<a href="http://trakt.tv">مزيد من المعلومات</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">التقييم</string>

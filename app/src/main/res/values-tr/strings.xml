@@ -98,7 +98,7 @@
     <string name="no_translation_title">Çevrilmedi</string>
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
     <string name="format_source">Kaynak: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Son güncelleme</string>
     <!-- Date and Time -->
     <string name="today">bugün</string>
     <string name="now">şimdi</string>
@@ -161,7 +161,7 @@
     <string name="context_updateshow">Güncelle</string>
     <string name="context_marknext">Sıradaki bölüm izlendi</string>
     <string name="action_episodes_switch_view">Görünümü değiştir</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Sıradaki izlenecek</string>
     <!-- History -->
     <string name="user_stream">Geçmiş</string>
     <string name="recently_watched">Yakın zamanda izlenen</string>
@@ -314,7 +314,7 @@
     <string name="connect">Bağlan</string>
     <string name="disconnect">Bağlantıyı Kes</string>
     <string name="use_integrated_browser">Tarayıcı entegrasyonunu kullan</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Trakt\'tan dizileri ekle</string>
     <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur. <a href="https://trakt.tv">Daha fazla bilgi</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Derecelendir</string>
