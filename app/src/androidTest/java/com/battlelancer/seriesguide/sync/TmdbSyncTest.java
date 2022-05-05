@@ -8,7 +8,7 @@ import android.content.Context;
 import android.text.format.DateUtils;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import com.battlelancer.seriesguide.model.SgMovie;
+import com.battlelancer.seriesguide.movies.database.SgMovie;
 import com.battlelancer.seriesguide.modules.AppModule;
 import com.battlelancer.seriesguide.modules.DaggerTestServicesComponent;
 import com.battlelancer.seriesguide.modules.TestHttpClientModule;

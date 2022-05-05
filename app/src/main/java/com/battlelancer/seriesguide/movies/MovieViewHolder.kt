@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemDiscoverMovieBinding
-import com.battlelancer.seriesguide.model.SgMovie
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.tmdb2.entities.BaseMovie

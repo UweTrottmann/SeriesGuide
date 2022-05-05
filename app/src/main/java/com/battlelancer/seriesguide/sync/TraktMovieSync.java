@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
-import com.battlelancer.seriesguide.model.SgMovieFlags;
+import com.battlelancer.seriesguide.movies.database.SgMovieFlags;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;

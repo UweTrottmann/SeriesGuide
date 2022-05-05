@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.battlelancer.seriesguide.model.SgMovie
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import java.text.DateFormat

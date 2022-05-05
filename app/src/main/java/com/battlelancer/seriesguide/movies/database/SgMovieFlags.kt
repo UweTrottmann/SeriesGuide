@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.model
+package com.battlelancer.seriesguide.movies.database
 
 import androidx.room.ColumnInfo
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies

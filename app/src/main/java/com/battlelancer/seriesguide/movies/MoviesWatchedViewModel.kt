@@ -10,7 +10,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.model.SgMovie
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase

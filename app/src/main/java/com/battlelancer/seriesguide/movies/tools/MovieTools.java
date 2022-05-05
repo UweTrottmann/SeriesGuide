@@ -10,7 +10,7 @@ import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
-import com.battlelancer.seriesguide.model.SgMovieFlags;
+import com.battlelancer.seriesguide.movies.database.SgMovieFlags;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.movies.MoviesSettings;
 import com.battlelancer.seriesguide.movies.details.MovieDetails;

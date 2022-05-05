@@ -6,7 +6,7 @@ import com.battlelancer.seriesguide.EmptyTestApplication
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.model.SgList
 import com.battlelancer.seriesguide.model.SgListItem
-import com.battlelancer.seriesguide.model.SgMovie
+import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.provider.MovieHelper
