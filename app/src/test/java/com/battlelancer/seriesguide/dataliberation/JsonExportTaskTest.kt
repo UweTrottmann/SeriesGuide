@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.provider.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.provider.SgListHelper
-import com.battlelancer.seriesguide.provider.SgSeason2Helper
+import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.provider.SgShow2Helper
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.tools.ShowStatus

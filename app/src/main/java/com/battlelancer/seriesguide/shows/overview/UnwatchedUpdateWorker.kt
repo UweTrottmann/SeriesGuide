@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.shows.overview
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.provider.SgSeason2CountUpdate
+import com.battlelancer.seriesguide.shows.database.SgSeason2CountUpdate
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

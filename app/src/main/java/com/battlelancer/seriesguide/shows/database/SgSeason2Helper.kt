@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.provider
+package com.battlelancer.seriesguide.shows.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.battlelancer.seriesguide.shows.database.SgSeason2
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 
 @Dao
