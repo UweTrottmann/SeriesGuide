@@ -27,7 +27,6 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
 import com.battlelancer.seriesguide.tmdbapi.TmdbStop
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.util.NextEpisodeUpdater
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.HEXAGON

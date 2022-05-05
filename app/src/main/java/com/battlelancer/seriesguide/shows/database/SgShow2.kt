@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
-import com.battlelancer.seriesguide.util.NextEpisodeUpdater
+import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater
 
 @Entity(
     tableName = "sg_show",

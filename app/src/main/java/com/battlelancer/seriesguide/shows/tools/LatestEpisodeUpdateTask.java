@@ -1,9 +1,10 @@
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.shows.tools;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.util.TaskManager;
 import timber.log.Timber;
 
 /**

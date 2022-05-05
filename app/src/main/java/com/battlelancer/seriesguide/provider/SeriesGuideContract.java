@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.shows.tools.ShowStatus;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;
-import com.battlelancer.seriesguide.util.NextEpisodeUpdater;
+import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
