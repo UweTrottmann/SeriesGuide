@@ -115,12 +115,6 @@ public class ShowsActivityTest {
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.buttonEpisodeWatched), withText(R.string.action_watched),
-                        withContentDescription(R.string.action_watched),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.include_buttons),
-                                        0),
-                                0),
                         isDisplayed()));
         appCompatButton2.perform(click());
 
