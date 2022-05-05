@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.ui.movies
+package com.battlelancer.seriesguide.movies.tools
 
 import com.google.common.truth.Truth.assertThat
 import com.uwetrottmann.tmdb2.entities.Movie
