@@ -23,7 +23,7 @@ import com.battlelancer.seriesguide.databinding.DialogNotificationSelectionBindi
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.provider.SgShow2Notify
+import com.battlelancer.seriesguide.shows.database.SgShow2Notify
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus

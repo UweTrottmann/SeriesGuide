@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
-import com.battlelancer.seriesguide.provider.SgShow2Helper
+import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.provider
+package com.battlelancer.seriesguide.shows.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
@@ -9,12 +9,11 @@ import androidx.room.RawQuery
 import androidx.room.Transaction
 import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
-import com.battlelancer.seriesguide.sync.ShowLastWatchedInfo
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
+import com.battlelancer.seriesguide.sync.ShowLastWatchedInfo
 
 @Dao
 interface SgShow2Helper {

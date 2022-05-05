@@ -6,8 +6,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Colum
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.provider.SgShow2LastWatchedEpisode
-import com.battlelancer.seriesguide.provider.SgShow2NextEpisodeUpdate
+import com.battlelancer.seriesguide.shows.database.SgShow2LastWatchedEpisode
+import com.battlelancer.seriesguide.shows.database.SgShow2NextEpisodeUpdate
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import timber.log.Timber
 

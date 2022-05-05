@@ -4,7 +4,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.modules.ApplicationContext
-import com.battlelancer.seriesguide.provider.SgShow2Update
+import com.battlelancer.seriesguide.shows.database.SgShow2Update
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
