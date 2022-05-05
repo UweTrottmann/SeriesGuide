@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.shows.database.SgSeason
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow
 import com.battlelancer.seriesguide.shows.database.SgShow2
-import com.battlelancer.seriesguide.model.SgWatchProvider
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.history.SgActivityHelper
+import com.battlelancer.seriesguide.streaming.SgWatchProviderHelper
 import timber.log.Timber
 
 @Database(

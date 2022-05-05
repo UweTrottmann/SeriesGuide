@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemWatchProviderBinding
-import com.battlelancer.seriesguide.model.SgWatchProvider
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
 
 class ShowsDiscoverFilterAdapter(
     private val clickListener: ClickListener

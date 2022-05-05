@@ -10,12 +10,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.model.SgWatchProvider
-import com.battlelancer.seriesguide.model.SgWatchProvider.Type
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsSettings
+import com.battlelancer.seriesguide.streaming.SgWatchProvider.Type
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import kotlinx.coroutines.Dispatchers

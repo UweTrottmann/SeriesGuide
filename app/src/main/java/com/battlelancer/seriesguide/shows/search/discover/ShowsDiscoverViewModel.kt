@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.shows.search.discover
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.battlelancer.seriesguide.model.SgWatchProvider
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 
 class ShowsDiscoverViewModel(application: Application) : AndroidViewModel(application) {

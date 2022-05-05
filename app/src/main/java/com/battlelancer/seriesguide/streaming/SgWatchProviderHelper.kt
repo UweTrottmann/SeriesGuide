@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.provider
+package com.battlelancer.seriesguide.streaming
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
@@ -9,7 +9,6 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.battlelancer.seriesguide.model.SgWatchProvider
 import kotlinx.coroutines.flow.Flow
 
 @Dao

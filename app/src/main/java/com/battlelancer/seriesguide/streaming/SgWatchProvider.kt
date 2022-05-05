@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.model
+package com.battlelancer.seriesguide.streaming
 
 import androidx.room.Entity
 import androidx.room.Index

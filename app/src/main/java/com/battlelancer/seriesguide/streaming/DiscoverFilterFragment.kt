@@ -10,8 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverFilterBinding
-import com.battlelancer.seriesguide.model.SgWatchProvider
-import com.battlelancer.seriesguide.model.SgWatchProvider.Type
+import com.battlelancer.seriesguide.streaming.SgWatchProvider.Type
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFilterAdapter
 import com.battlelancer.seriesguide.util.safeShow
