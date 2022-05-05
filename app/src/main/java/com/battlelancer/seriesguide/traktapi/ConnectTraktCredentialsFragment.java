@@ -18,8 +18,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
 import com.battlelancer.seriesguide.sync.SyncProgress;
 import com.battlelancer.seriesguide.ui.SearchActivity;
-import com.battlelancer.seriesguide.widgets.FeatureStatusView;
-import com.battlelancer.seriesguide.widgets.SyncStatusView;
+import com.battlelancer.seriesguide.ui.widgets.FeatureStatusView;
+import com.battlelancer.seriesguide.ui.widgets.SyncStatusView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -58,8 +58,7 @@ public class ConnectTraktCredentialsFragment extends Fragment {
         // library button
         buttonLibrary.setOnClickListener(v -> {
             // open search tab, will now have links to trakt lists
-            startActivity(new Intent(getActivity(), SearchActivity.class).putExtra(
-                    SearchActivity.EXTRA_DEFAULT_TAB, SearchActivity.TAB_POSITION_SEARCH));
+            startActivity(SearchActivity.newIntent(requireContext()));
         });
 
         syncStatusView.setVisibility(View.GONE);

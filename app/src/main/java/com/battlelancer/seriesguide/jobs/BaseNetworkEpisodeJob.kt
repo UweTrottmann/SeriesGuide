@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 
 abstract class BaseNetworkEpisodeJob(

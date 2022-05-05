@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.core.app.NotificationManagerCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.traktapi.GenericCheckInDialogFragment.CheckInDialogDismissedEvent
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.ui.BaseThemeActivity

@@ -18,7 +18,7 @@
         tools:ignore="RtlSymmetry"
         tools:listitem="@layout/item_person" />
 
-    <com.battlelancer.seriesguide.widgets.EmptyView
+    <com.battlelancer.seriesguide.ui.widgets.EmptyView
         android:id="@+id/emptyViewPeople"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

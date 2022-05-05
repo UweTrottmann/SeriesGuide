@@ -6,12 +6,12 @@ import android.text.TextUtils;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags;
-import com.battlelancer.seriesguide.util.NextEpisodeUpdater;
-import com.battlelancer.seriesguide.util.shows.ShowStatus;
-import com.battlelancer.seriesguide.util.shows.ShowTools2;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2;
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
+import com.battlelancer.seriesguide.shows.tools.ShowStatus;
+import com.battlelancer.seriesguide.shows.tools.ShowTools2;
+import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -380,7 +380,7 @@ public class SeriesGuideContract {
          *
          * <pre>
          * Range:   long
-         * Default: {@link Constants#EPISODE_UNKNOWN_RELEASE}
+         * Default: {@link SgEpisode2#EPISODE_UNKNOWN_RELEASE}
          * </pre>
          */
         String FIRSTAIREDMS = "episode_firstairedms";
@@ -921,7 +921,7 @@ public class SeriesGuideContract {
          *
          * <pre>
          * Range:   long
-         * Default: {@link Constants#EPISODE_UNKNOWN_RELEASE}
+         * Default: {@link SgEpisode2#EPISODE_UNKNOWN_RELEASE}
          * </pre>
          */
         String FIRSTAIREDMS = "episode_firstairedms";
@@ -978,7 +978,8 @@ public class SeriesGuideContract {
         String SELECTION_NOT_SKIPPED = WATCHED + "!=" + EpisodeFlags.SKIPPED;
         String SELECTION_COLLECTED = COLLECTED + "=1";
         String SELECTION_NO_SPECIALS = SEASON + "!=0";
-        String SELECTION_HAS_RELEASE_DATE = FIRSTAIREDMS + "!=" + Constants.EPISODE_UNKNOWN_RELEASE;
+        String SELECTION_HAS_RELEASE_DATE =
+                FIRSTAIREDMS + "!=" + SgEpisode2.EPISODE_UNKNOWN_RELEASE;
         String SELECTION_ONLY_PREMIERES = NUMBER + "=1";
 
         String SORT_UPCOMING = FIRSTAIREDMS + " ASC," + SgShow2Columns.SORT_TITLE + "," + NUMBER + " ASC";

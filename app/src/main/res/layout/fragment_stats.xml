@@ -11,7 +11,7 @@
         style="@style/Page.Centered"
         android:animateLayoutChanges="true">
 
-        <com.battlelancer.seriesguide.widgets.EmptyView
+        <com.battlelancer.seriesguide.ui.widgets.EmptyView
             android:id="@+id/errorView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

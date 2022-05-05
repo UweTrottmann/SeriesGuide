@@ -5,7 +5,7 @@ import com.battlelancer.seriesguide.jobs.BaseJob
 import com.battlelancer.seriesguide.jobs.FlagJob
 import com.battlelancer.seriesguide.jobs.SgJobInfo
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
-import com.battlelancer.seriesguide.ui.movies.MovieTools.MovieChangedEvent
+import com.battlelancer.seriesguide.movies.tools.MovieTools.MovieChangedEvent
 import com.google.flatbuffers.FlatBufferBuilder
 import org.greenrobot.eventbus.EventBus
 

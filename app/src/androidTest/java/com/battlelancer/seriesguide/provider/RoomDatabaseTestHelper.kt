@@ -3,10 +3,10 @@ package com.battlelancer.seriesguide.provider
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.battlelancer.seriesguide.Constants
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
-import com.battlelancer.seriesguide.ui.movies.MovieDetails
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 
 object RoomDatabaseTestHelper {
 
@@ -117,7 +117,7 @@ object RoomDatabaseTestHelper {
             seasonTvdbId,
             showTvdbId,
             seasonNumber,
-            Constants.EPISODE_UNKNOWN_RELEASE.toLong()
+            SgEpisode2.EPISODE_UNKNOWN_RELEASE.toLong()
         )
         if (watched) values.put("watched", EpisodeFlags.WATCHED)
         db.insert(Tables.EPISODES, SQLiteDatabase.CONFLICT_REPLACE, values)

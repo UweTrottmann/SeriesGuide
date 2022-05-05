@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="com.battlelancer.seriesguide.ui.overview.OverviewFragment">
+    tools:context="com.battlelancer.seriesguide.shows.overview.OverviewFragment">
 
     <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
     <ScrollView

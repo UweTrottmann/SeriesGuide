@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.preferences.AboutActivity">
+    tools:context=".preferences.AboutActivity">
 
     <include layout="@layout/toolbar_elevated" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/aboutFragmentContainer"
-        android:name="com.battlelancer.seriesguide.ui.preferences.AboutPreferencesFragment"
+        android:name="com.battlelancer.seriesguide.preferences.AboutPreferencesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

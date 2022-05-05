@@ -5,7 +5,7 @@
     android:id="@+id/rootLayoutMovie"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.movies.MovieDetailsActivity">
+    tools:context=".movies.details.MovieDetailsActivity">
 
     <ProgressBar
         android:id="@+id/progressBar"

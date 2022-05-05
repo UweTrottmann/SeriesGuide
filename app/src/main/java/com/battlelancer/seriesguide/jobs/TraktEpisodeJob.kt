@@ -6,8 +6,8 @@ import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor.JobResult
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.entities.SyncEpisode

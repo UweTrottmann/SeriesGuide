@@ -4,7 +4,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.isRetryError
-import com.battlelancer.seriesguide.util.shows.AddUpdateShowTools.ShowResult
+import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowResult
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result

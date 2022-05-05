@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.settings
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.shows.ShowsDistillationSettings
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
 
 /**
  * Access some widget related settings values.

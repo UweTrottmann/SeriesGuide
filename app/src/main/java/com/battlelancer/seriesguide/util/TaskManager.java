@@ -7,8 +7,9 @@ import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
-import com.battlelancer.seriesguide.ui.search.AddShowTask;
-import com.battlelancer.seriesguide.ui.search.SearchResult;
+import com.battlelancer.seriesguide.shows.tools.AddShowTask;
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult;
+import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask;
 import java.util.ArrayList;
 import java.util.List;
 import kotlinx.coroutines.Job;
@@ -100,7 +101,7 @@ public class TaskManager {
     }
 
     /**
-     * Schedules a {@link com.battlelancer.seriesguide.util.LatestEpisodeUpdateTask} for all shows
+     * Schedules a {@link LatestEpisodeUpdateTask} for all shows
      * if no other one of this type is currently running.
      */
     @MainThread

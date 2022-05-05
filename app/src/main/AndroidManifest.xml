@@ -117,12 +117,12 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.episodes.EpisodesActivity" />
+        <activity android:name="com.battlelancer.seriesguide.shows.episodes.EpisodesActivity" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.ListsActivity"
             android:label="@string/lists" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.streams.HistoryActivity"
+            android:name=".history.HistoryActivity"
             android:label="@string/user_stream" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
@@ -150,9 +150,9 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.search.SimilarShowsActivity" />
+        <activity android:name=".shows.search.similar.SimilarShowsActivity" />
         <activity
-            android:name=".ui.search.TraktShowsActivity"
+            android:name=".shows.search.discover.TraktShowsActivity"
             android:parentActivityName=".ui.SearchActivity" />
 
         <!-- Movies -->
@@ -160,17 +160,17 @@
             android:name="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:label="@string/movies" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.movies.MoviesSearchActivity"
+            android:name=".movies.search.MoviesSearchActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.movies.MovieDetailsActivity"
+            android:name=".movies.details.MovieDetailsActivity"
             android:parentActivityName="com.battlelancer.seriesguide.ui.MoviesActivity" />
 
         <!-- Settings -->
-        <activity android:name="com.battlelancer.seriesguide.ui.preferences.MoreOptionsActivity" />
+        <activity android:name=".preferences.MoreOptionsActivity" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.preferences.AboutActivity"
+            android:name=".preferences.AboutActivity"
             android:label="@string/prefs_category_about" />
         <activity
             android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
@@ -215,13 +215,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.battlelancer.seriesguide.ui.comments.TraktCommentsActivity"
+            android:name="com.battlelancer.seriesguide.comments.TraktCommentsActivity"
             android:windowSoftInputMode="stateHidden" />
 
         <!-- Others -->
         <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" />
         <activity
-            android:name="com.battlelancer.seriesguide.ui.stats.StatsActivity"
+            android:name=".stats.StatsActivity"
             android:label="@string/statistics" />
         <activity
             android:name="com.battlelancer.seriesguide.traktapi.QuickCheckInActivity"
@@ -230,12 +230,12 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.FullscreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity android:name="com.battlelancer.seriesguide.ui.people.PeopleActivity" />
-        <activity android:name="com.battlelancer.seriesguide.ui.people.PersonActivity" />
+        <activity android:name="com.battlelancer.seriesguide.people.PeopleActivity" />
+        <activity android:name="com.battlelancer.seriesguide.people.PersonActivity" />
 
         <!-- Notification service -->
-        <receiver android:name="com.battlelancer.seriesguide.service.NotificationActionReceiver" />
-        <receiver android:name="com.battlelancer.seriesguide.service.NotificationAlarmReceiver"
+        <receiver android:name=".notifications.NotificationActionReceiver" />
+        <receiver android:name=".notifications.NotificationAlarmReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
-import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.movies.tools.MovieTools;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.entities.LastActivities;

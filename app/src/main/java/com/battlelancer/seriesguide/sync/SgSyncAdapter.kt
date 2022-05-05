@@ -16,12 +16,13 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
-import com.battlelancer.seriesguide.service.NotificationService
+import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.settings.UpdateSettings
+import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
-import com.battlelancer.seriesguide.ui.movies.MovieTools
+import com.battlelancer.seriesguide.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
+import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService

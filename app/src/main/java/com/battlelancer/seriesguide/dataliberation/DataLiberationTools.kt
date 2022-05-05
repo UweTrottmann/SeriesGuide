@@ -6,7 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport
-import com.battlelancer.seriesguide.util.shows.ShowStatus
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import timber.log.Timber
 
 object DataLiberationTools {

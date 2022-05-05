@@ -6,7 +6,7 @@ import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor.JobResult
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.util.Errors
 import com.google.api.client.http.HttpResponseException
 import com.uwetrottmann.seriesguide.backend.episodes.model.SgCloudEpisode

@@ -122,7 +122,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.battlelancer.seriesguide.widgets.WatchedBox
+        <com.battlelancer.seriesguide.shows.episodes.WatchedBox
             android:id="@+id/watchedBoxActivity"
             android:layout_width="48dp"
             android:layout_height="48dp"
