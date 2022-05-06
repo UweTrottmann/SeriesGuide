@@ -14,6 +14,12 @@ Version 64
 ----------
 *in development*
 
+#### 64.0.4*
+*2022-05-06*
+
+* 🔨 Movies: properly clean up movies watched by friends data on refresh.
+* 📝 Latest user interface translations from Crowdin.
+
 #### 64.0.3*
 *2022-04-14*
 
