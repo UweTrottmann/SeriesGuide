@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor
-import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.battlelancer.seriesguide.util.isRetryError
 import com.firebase.ui.auth.AuthUI
@@ -19,8 +19,6 @@ import com.github.michaelbull.result.runCatching
 import com.github.michaelbull.result.throwUnless
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Tasks
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
@@ -239,8 +237,7 @@ class HexagonTools @Inject constructor(
                         httpRequestInitializer.firebaseUser = it
                     }
                 } else {
-                    logAndReport(
-                        ACTION_SILENT_SIGN_IN,
+                    Errors.logAndReportHexagonAuthError(
                         HexagonAuthError(ACTION_SILENT_SIGN_IN, "FirebaseUser is null")
                     )
                 }
@@ -250,14 +247,9 @@ class HexagonTools @Inject constructor(
                     Timber.w(e, "Sign-in check interrupted")
                 } else {
                     // Do not report sign in required errors, this is expected and handled below.
-                    val cause = e.cause
-                    val isSignInRequiredError = cause is ApiException
-                            && cause.statusCode == CommonStatusCodes.SIGN_IN_REQUIRED
-                    if (!isSignInRequiredError) {
-                        logAndReport(
-                            ACTION_SILENT_SIGN_IN,
-                            HexagonAuthError.build(ACTION_SILENT_SIGN_IN, e)
-                        )
+                    val authEx = HexagonAuthError.build(ACTION_SILENT_SIGN_IN, e)
+                    if (!authEx.isSignInRequiredError()) {
+                        Errors.logAndReportHexagonAuthError(authEx)
                     }
                 }
             }

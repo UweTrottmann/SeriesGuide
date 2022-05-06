@@ -9,10 +9,9 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
-import com.battlelancer.seriesguide.backend.HexagonAuthError.Companion.build
 import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.AccountRemovedEvent
 import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.CanceledEvent
-import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.Tasks
@@ -84,7 +83,9 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
             try {
                 Tasks.await(task)
             } catch (e: Exception) {
-                logAndReport("remove account", build("remove account", e))
+                Errors.logAndReportHexagonAuthError(
+                    HexagonAuthError.build("remove account", e)
+                )
                 return false
             }
 

@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.util
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.backend.HexagonAuthError
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -74,6 +75,9 @@ class Errors {
 
         /**
          * Inserts the call site stack trace element at the beginning of the bottom-most exception.
+         *
+         * This is useful as the reporting tool differentiates exceptions based on the first stack
+         * trace element.
          */
         private fun bendCauseStackTrace(throwable: Throwable) {
             val synthStackTrace = Throwable().stackTrace
@@ -123,6 +127,16 @@ class Errors {
 
             getReporter()?.setCustomKey("action", action)
             statusCode?.let { getReporter()?.setCustomKey("code", it) }
+            getReporter()?.recordException(throwable)
+        }
+
+        fun logAndReportHexagonAuthError(throwable: HexagonAuthError) {
+            Timber.e(throwable, throwable.action)
+
+            bendCauseStackTrace(throwable)
+
+            getReporter()?.setCustomKey("action", throwable.action)
+            throwable.statusCode?.let { getReporter()?.setCustomKey("code", it) }
             getReporter()?.recordException(throwable)
         }
 

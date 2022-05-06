@@ -234,8 +234,7 @@ class CloudSetupFragment : Fragment() {
                                     errorMessage = getString(R.string.hexagon_signin_google_only)
                                 } else {
                                     errorMessage = ex.message
-                                    Errors.logAndReport(
-                                        ACTION_SIGN_IN,
+                                    Errors.logAndReportHexagonAuthError(
                                         HexagonAuthError.build(ACTION_SIGN_IN, ex)
                                     )
                                 }
@@ -243,8 +242,7 @@ class CloudSetupFragment : Fragment() {
                         }
                     } else {
                         errorMessage = "Unknown error"
-                        Errors.logAndReport(
-                            ACTION_SIGN_IN,
+                        Errors.logAndReportHexagonAuthError(
                             HexagonAuthError(ACTION_SIGN_IN, errorMessage)
                         )
                     }
