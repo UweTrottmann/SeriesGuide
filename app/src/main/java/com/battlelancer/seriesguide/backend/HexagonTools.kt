@@ -5,7 +5,6 @@ import android.os.SystemClock
 import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
-import com.battlelancer.seriesguide.backend.HexagonAuthError.Companion.build
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor
@@ -20,6 +19,8 @@ import com.github.michaelbull.result.runCatching
 import com.github.michaelbull.result.throwUnless
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.tasks.Tasks
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
@@ -248,10 +249,16 @@ class HexagonTools @Inject constructor(
                     // Do not report thread interruptions, it's expected.
                     Timber.w(e, "Sign-in check interrupted")
                 } else {
-                    logAndReport(
-                        ACTION_SILENT_SIGN_IN,
-                        build(ACTION_SILENT_SIGN_IN, e)
-                    )
+                    // Do not report sign in required errors, this is expected and handled below.
+                    val cause = e.cause
+                    val isSignInRequiredError = cause is ApiException
+                            && cause.statusCode == CommonStatusCodes.SIGN_IN_REQUIRED
+                    if (!isSignInRequiredError) {
+                        logAndReport(
+                            ACTION_SILENT_SIGN_IN,
+                            HexagonAuthError.build(ACTION_SILENT_SIGN_IN, e)
+                        )
+                    }
                 }
             }
         }
