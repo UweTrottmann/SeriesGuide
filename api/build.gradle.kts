@@ -14,6 +14,7 @@ val sgTargetSdk: Int by rootProject.extra
 val coreVersion: String by rootProject.extra
 
 android {
+    namespace = "com.battlelancer.seriesguide.api"
     compileSdk = sgCompileSdk
     defaultConfig {
         minSdk = sgMinSdk

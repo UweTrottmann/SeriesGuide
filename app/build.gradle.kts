@@ -34,6 +34,7 @@ val fragmentVersion: String by rootProject.extra
 val timberVersion: String by rootProject.extra
 
 android {
+    namespace = "com.battlelancer.seriesguide"
     compileSdk = sgCompileSdk
 
     useLibrary("android.test.base")
