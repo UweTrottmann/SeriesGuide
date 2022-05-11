@@ -225,7 +225,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
-    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.squareup.picasso:picasso:2.8")
 
     // https://github.com/UweTrottmann/AndroidUtils/releases
     implementation("com.uwetrottmann.androidutils:androidutils:3.0.0")
