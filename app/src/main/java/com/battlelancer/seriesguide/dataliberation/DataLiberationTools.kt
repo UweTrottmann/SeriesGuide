@@ -66,7 +66,7 @@ object DataLiberationTools {
     }
 
     class CreateExportFileContract : ActivityResultContract<String, Uri?>() {
-        override fun createIntent(context: Context, suggestedFileName: String?): Intent {
+        override fun createIntent(context: Context, input: String): Intent {
             return Intent(Intent.ACTION_CREATE_DOCUMENT)
                 // Filter to only show results that can be "opened", such as
                 // a file (as opposed to a list of contacts or timezones).
@@ -77,7 +77,7 @@ object DataLiberationTools {
                 // providers where the correct application/json mime type is used, *sigh*
                 // so, use application/* and let the provider decide
                 .setType("application/*")
-                .putExtra(Intent.EXTRA_TITLE, suggestedFileName)
+                .putExtra(Intent.EXTRA_TITLE, input)
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
@@ -89,7 +89,7 @@ object DataLiberationTools {
     }
 
     class SelectImportFileContract : ActivityResultContract<Unit, Uri?>() {
-        override fun createIntent(context: Context, input: Unit?): Intent {
+        override fun createIntent(context: Context, input: Unit): Intent {
             return Intent(Intent.ACTION_OPEN_DOCUMENT)
                 // Filter to only show results that can be "opened", such as a
                 // file (as opposed to a list of contacts or timezones)
