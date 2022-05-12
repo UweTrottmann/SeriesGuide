@@ -74,8 +74,11 @@ public class NotificationSettings {
         int threshold = THRESHOLD_DEFAULT_MIN;
 
         try {
-            threshold = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
-                    .getString(KEY_THRESHOLD, String.valueOf(THRESHOLD_DEFAULT_MIN)));
+            String value = PreferenceManager.getDefaultSharedPreferences(context)
+                    .getString(KEY_THRESHOLD, null);
+            if (value != null) {
+                threshold = Integer.parseInt(value);
+            }
         } catch (NumberFormatException ignored) {
         }
 
