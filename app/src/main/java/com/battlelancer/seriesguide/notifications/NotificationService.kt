@@ -12,6 +12,7 @@ import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.format.DateUtils
 import android.text.style.StyleSpan
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
@@ -118,45 +119,8 @@ class NotificationService(context: Context) {
         val plannedWakeUpTime = (TimeTools.applyUserOffset(context, nextEpisodeReleaseTime).time
                 - DateUtils.MINUTE_IN_MILLIS * notificationThreshold)
 
-        // note: on first run plannedWakeUpTime will be <= 0
-        var checkForNewEpisodes = true
-
-        if (System.currentTimeMillis() < plannedWakeUpTime) {
-            Timber.d("Woke up earlier than planned, checking for new episodes")
-            checkForNewEpisodes = false
-            val releaseTimeLastNotified = NotificationSettings.getLastNotifiedAbout(context)
-
-            if (upcomingEpisodes.isEmpty()) {
-                // No upcoming episodes to notify about, always re-schedule next wake-up time.
-                checkForNewEpisodes = true
-            } else {
-                for (episode in upcomingEpisodes) {
-                    val releaseTime = episode.episode_firstairedms
-                    // Any episodes added, or with changed release time, or where notifications
-                    // where enabled for a show that release before the next one planned to notify
-                    // about?
-                    if (releaseTime < nextEpisodeReleaseTime) {
-                        // limit to those released after the episode we last notified about to avoid
-                        // notifying about an episode we already notified about
-                        // limitation: so if added episodes release at or before that last episode
-                        // they will not be notified about
-                        if (releaseTime > releaseTimeLastNotified) {
-                            checkForNewEpisodes = true
-                            break
-                        }
-                    } else {
-                        // Episode released at or after the next planned one.
-                        if (releaseTime > nextEpisodeReleaseTime) {
-                            // Episode is not the one planned to notify about, find a new one.
-                            // This can happen if the episode release time has changed, it was
-                            // removed or notifications for a show have been disabled.
-                            checkForNewEpisodes = true
-                        }
-                        break
-                    }
-                }
-            }
-        }
+        val checkForNewEpisodes =
+            shouldCheckToNotify(plannedWakeUpTime, nextEpisodeReleaseTime, upcomingEpisodes)
 
         var nextWakeUpTime: Long = 0
         var needExactAlarm = true
@@ -228,6 +192,65 @@ class NotificationService(context: Context) {
                 am.set(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
             }
         }
+    }
+
+    /**
+     * Returns if the service may need to display notifications and should find a new wake-up time,
+     * or otherwise should go to sleep and wake-up as planned.
+     *
+     * True if running for the first time ([plannedWakeUpTime] is <= 0) or woken up as planned
+     * (or later). Also if woken up earlier than planned and
+     * - there are no [upcomingEpisodes], or
+     * - there is an upcoming episode released before [nextEpisodeReleaseTime] and after the release
+     *   time of the last one notified about, or
+     * - there is no upcoming episode released at [nextEpisodeReleaseTime].
+     */
+    @VisibleForTesting
+    fun shouldCheckToNotify(
+        plannedWakeUpTime: Long,
+        nextEpisodeReleaseTime: Long,
+        upcomingEpisodes: List<SgEpisode2WithShow>
+    ): Boolean {
+        // Note: on first run plannedWakeUpTime will be <= 0.
+        if (System.currentTimeMillis() >= plannedWakeUpTime) {
+            return true // Running the first time or woken up as planned or later, check to notify.
+        }
+
+        Timber.d("Woke up earlier than planned, checking to notify or reschedule")
+        val releaseTimeLastNotified = NotificationSettings.getLastNotifiedAbout(context)
+
+        if (upcomingEpisodes.isEmpty()) {
+            // No upcoming episodes to notify about, always find a new wake-up time.
+            return true
+        }
+
+        for (episode in upcomingEpisodes) {
+            val releaseTime = episode.episode_firstairedms
+            // Any episodes added, or with changed release time, or where notifications
+            // where enabled for a show that release before the next one planned to notify
+            // about?
+            if (releaseTime < nextEpisodeReleaseTime) {
+                // limit to those released after the episode we last notified about to avoid
+                // notifying about an episode we already notified about
+                // limitation: so if added episodes release at or before that last episode
+                // they will not be notified about
+                if (releaseTime > releaseTimeLastNotified) {
+                    return true
+                }
+            } else {
+                // Episode released at or after the next planned one.
+                @Suppress("RedundantIf")
+                return if (releaseTime > nextEpisodeReleaseTime) {
+                    // Episode is not the one planned to notify about, find a new one.
+                    // This can happen if the episode release time has changed, it was
+                    // removed or notifications for a show have been disabled.
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+        return false // Continue sleeping until planned wake-up time.
     }
 
     private fun AlarmManager.canScheduleExactAlarmsCompat(): Boolean {
