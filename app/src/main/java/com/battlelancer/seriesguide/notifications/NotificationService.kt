@@ -246,11 +246,14 @@ class NotificationService(context: Context) {
                     // removed or notifications for a show have been disabled.
                     true
                 } else {
+                    // Next to notify about is the planned one, continue sleeping until then.
                     false
                 }
             }
         }
-        return false // Continue sleeping until planned wake-up time.
+
+        // No episodes to notify about now or later, find new wake-up time.
+        return true
     }
 
     private fun AlarmManager.canScheduleExactAlarmsCompat(): Boolean {

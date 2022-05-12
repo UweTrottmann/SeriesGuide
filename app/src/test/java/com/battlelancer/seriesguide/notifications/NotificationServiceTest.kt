@@ -72,8 +72,18 @@ class NotificationServiceTest {
                 )
             )
         ).isTrue()
+        //   Earlier episodes already notified about, no new ones, find new wake-up time.
+        assertThat(
+            service.shouldCheckToNotify(
+                beforeNextRelease, nextRelease,
+                listOf(
+                    sgEpisode2WithShow(1, lastNotifiedAbout - DateUtils.HOUR_IN_MILLIS),
+                    sgEpisode2WithShow(2, lastNotifiedAbout)
+                )
+            )
+        ).isTrue()
 
-        //   No earlier upcoming episodes, should continue sleeping.
+        //   Next one to notify about is the planned one, continue sleeping until then.
         assertThat(
             service.shouldCheckToNotify(
                 beforeNextRelease, nextRelease,
@@ -81,16 +91,6 @@ class NotificationServiceTest {
                     sgEpisode2WithShow(3, nextRelease),
                     sgEpisode2WithShow(4, nextRelease + 10 * DateUtils.HOUR_IN_MILLIS),
                     sgEpisode2WithShow(5, nextRelease + 14 * DateUtils.DAY_IN_MILLIS)
-                )
-            )
-        ).isFalse()
-        //   Earlier upcoming episodes already notified about, should continue sleeping.
-        assertThat(
-            service.shouldCheckToNotify(
-                beforeNextRelease, nextRelease,
-                listOf(
-                    sgEpisode2WithShow(1, lastNotifiedAbout - DateUtils.HOUR_IN_MILLIS),
-                    sgEpisode2WithShow(2, lastNotifiedAbout)
                 )
             )
         ).isFalse()
