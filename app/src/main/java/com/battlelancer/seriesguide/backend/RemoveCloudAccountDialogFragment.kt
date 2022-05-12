@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.AccountRemovedEvent
 import com.battlelancer.seriesguide.backend.RemoveCloudAccountDialogFragment.CanceledEvent
 import com.battlelancer.seriesguide.util.Errors
-import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.Tasks
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,7 +21,9 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
 import java.io.IOException
+import java.util.concurrent.ExecutionException
 
 /**
  * Confirms whether to obliterate a SeriesGuide cloud account. If removal is tried, posts result as
@@ -74,7 +75,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
                     ?: return false
                 accountService.deleteData().execute()
             } catch (e: IOException) {
-                logAndReportHexagon("remove account", e)
+                Errors.logAndReportHexagon(ACTION_REMOVE_ACCOUNT, e)
                 return false
             }
 
@@ -83,9 +84,19 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
             try {
                 Tasks.await(task)
             } catch (e: Exception) {
-                Errors.logAndReportHexagonAuthError(
-                    HexagonAuthError.build("remove account", e)
-                )
+                // https://developers.google.com/android/reference/com/google/android/gms/tasks/Tasks#public-static-tresult-await-tasktresult-task
+                if (e is InterruptedException) {
+                    // Do not report thread interruptions, it's expected.
+                    Timber.w(e, ACTION_REMOVE_ACCOUNT)
+                } else {
+                    val cause = if (e is ExecutionException) {
+                        e.cause ?: e // The Task failed, getCause returns the original exception.
+                    } else {
+                        e // Unexpected exception.
+                    }
+                    val authEx = HexagonAuthError.build(ACTION_REMOVE_ACCOUNT, cause)
+                    Errors.logAndReportHexagonAuthError(authEx)
+                }
                 return false
             }
 
@@ -99,6 +110,7 @@ class RemoveCloudAccountDialogFragment : AppCompatDialogFragment() {
         }
 
         companion object {
+            private const val ACTION_REMOVE_ACCOUNT = "remove account"
             private val removeJobSemaphore = Semaphore(permits = 1)
         }
     }

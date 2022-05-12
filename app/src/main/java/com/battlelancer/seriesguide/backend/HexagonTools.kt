@@ -35,6 +35,7 @@ import com.uwetrottmann.seriesguide.backend.shows.Shows
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import timber.log.Timber
 import java.io.IOException
+import java.util.concurrent.ExecutionException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -242,12 +243,18 @@ class HexagonTools @Inject constructor(
                     )
                 }
             } catch (e: Exception) {
+                // https://developers.google.com/android/reference/com/google/android/gms/tasks/Tasks#public-static-tresult-await-tasktresult-task
                 if (e is InterruptedException) {
                     // Do not report thread interruptions, it's expected.
-                    Timber.w(e, "Sign-in check interrupted")
+                    Timber.w(e, ACTION_SILENT_SIGN_IN)
                 } else {
+                    val cause = if (e is ExecutionException) {
+                        e.cause ?: e // The Task failed, getCause returns the original exception.
+                    } else {
+                        e // Unexpected exception.
+                    }
                     // Do not report sign in required errors, this is expected and handled below.
-                    val authEx = HexagonAuthError.build(ACTION_SILENT_SIGN_IN, e)
+                    val authEx = HexagonAuthError.build(ACTION_SILENT_SIGN_IN, cause)
                     if (!authEx.isSignInRequiredError()) {
                         Errors.logAndReportHexagonAuthError(authEx)
                     }

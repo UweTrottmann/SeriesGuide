@@ -274,6 +274,9 @@ fun Throwable.isRetryError(): Boolean {
     }
 }
 
+/**
+ * Returns the bottom most cause, or this if there is no cause.
+ */
 private fun Throwable.getUltimateCause(): Throwable {
     return cause?.getUltimateCause() ?: this
 }

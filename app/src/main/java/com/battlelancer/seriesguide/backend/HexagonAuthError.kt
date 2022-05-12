@@ -23,22 +23,14 @@ class HexagonAuthError(
     companion object {
 
         /**
-         * Extracts info from Tasks API exceptions with ApiException cause, FirebaseUiException.
+         * Extracts status code from ApiException, FirebaseUiException.
          */
         @JvmStatic
         fun build(action: String, throwable: Throwable): HexagonAuthError {
-            // Prefer ApiException message.
-            // Note: when using the Tasks API, ApiException is wrapped in an ExecutionException.
-            val cause = throwable.cause
-            val causeMessage = cause?.message
-            val message = if (causeMessage != null && cause is ApiException) {
-                causeMessage
-            } else {
-                throwable.message ?: ""
-            }
-            val statusCode = when {
-                throwable is FirebaseUiException -> throwable.errorCode
-                cause is ApiException -> cause.statusCode
+            val message = throwable.message ?: ""
+            val statusCode = when (throwable) {
+                is FirebaseUiException -> throwable.errorCode
+                is ApiException -> throwable.statusCode
                 else -> null
             }
             return HexagonAuthError(action, message, throwable, statusCode)
