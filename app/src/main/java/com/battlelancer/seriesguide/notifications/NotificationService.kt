@@ -126,20 +126,34 @@ class NotificationService(context: Context) {
             checkForNewEpisodes = false
             val releaseTimeLastNotified = NotificationSettings.getLastNotifiedAbout(context)
 
-            for (episode in upcomingEpisodes) {
-                val releaseTime = episode.episode_firstairedms
-                // any episodes added that release before the next one planned to notify about?
-                if (releaseTime < nextEpisodeReleaseTime) {
-                    // limit to those released after the episode we last notified about to avoid
-                    // notifying about an episode we already notified about
-                    // limitation: so if added episodes release at or before that last episode
-                    // they will not be notified about
-                    if (releaseTime > releaseTimeLastNotified) {
-                        checkForNewEpisodes = true
+            if (upcomingEpisodes.isEmpty()) {
+                // No upcoming episodes to notify about, always re-schedule next wake-up time.
+                checkForNewEpisodes = true
+            } else {
+                for (episode in upcomingEpisodes) {
+                    val releaseTime = episode.episode_firstairedms
+                    // Any episodes added, or with changed release time, or where notifications
+                    // where enabled for a show that release before the next one planned to notify
+                    // about?
+                    if (releaseTime < nextEpisodeReleaseTime) {
+                        // limit to those released after the episode we last notified about to avoid
+                        // notifying about an episode we already notified about
+                        // limitation: so if added episodes release at or before that last episode
+                        // they will not be notified about
+                        if (releaseTime > releaseTimeLastNotified) {
+                            checkForNewEpisodes = true
+                            break
+                        }
+                    } else {
+                        // Episode released at or after the next planned one.
+                        if (releaseTime > nextEpisodeReleaseTime) {
+                            // Episode is not the one planned to notify about, find a new one.
+                            // This can happen if the episode release time has changed, it was
+                            // removed or notifications for a show have been disabled.
+                            checkForNewEpisodes = true
+                        }
                         break
                     }
-                } else {
-                    break
                 }
             }
         }
@@ -228,6 +242,7 @@ class NotificationService(context: Context) {
     /**
      * Get episodes which released 12 hours ago until in 14 days (to avoid
      * loading too much data), excludes some episodes based on user settings.
+     * Ordered by [ORDER].
      */
     private fun queryUpcomingEpisodes(customCurrentTime: Long): List<SgEpisode2WithShow> {
         val selection = StringBuilder(SELECTION)
@@ -559,7 +574,7 @@ class NotificationService(context: Context) {
                 + SgEpisode2Columns.FIRSTAIREDMS + ">= ? AND "
                 + SgEpisode2Columns.FIRSTAIREDMS + "< ?")
 
-        // by airdate, then by show, then lowest number first
+        /** By release date, then by show, then lowest number first. */
         private const val ORDER = (SgEpisode2Columns.FIRSTAIREDMS + " ASC,"
                 + SgShow2Columns.SORT_TITLE + ","
                 + SgEpisode2Columns.NUMBER + " ASC")
