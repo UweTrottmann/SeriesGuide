@@ -125,7 +125,7 @@ public class SeriesGuideDatabase {
     /**
      * Add {@link Shows#NOTIFY} flag to shows table.
      */
-    static final int DBVER_40_NOTIFY_PER_SHOW = 40;
+    public static final int DBVER_40_NOTIFY_PER_SHOW = 40;
 
     /**
      * Add {@link Episodes#LAST_UPDATED} flag to episodes table.
