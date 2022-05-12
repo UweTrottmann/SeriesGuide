@@ -15,14 +15,14 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
+import com.battlelancer.seriesguide.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
+import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.notifications.NotificationService
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
-import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
@@ -229,6 +229,9 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
     }
 
     companion object {
+        /** Used when registering the SyncAdapter, see [AccountUtils.createAccount]. */
+        const val SYNC_INTERVAL_SECONDS = 24 * 60 * 60 // 1 day (in seconds)
+
         /** Should never be outside 4-32 so back-off works as expected.  */
         private const val SYNC_INTERVAL_MINIMUM_MINUTES = 5
 
