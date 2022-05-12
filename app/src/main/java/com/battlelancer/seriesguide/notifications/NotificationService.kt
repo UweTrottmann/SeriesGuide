@@ -200,13 +200,28 @@ class NotificationService(context: Context) {
         if (am != null) {
             if (needExactAlarm) {
                 if (AndroidUtils.isMarshmallowOrHigher) {
-                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
+                    if (am.canScheduleExactAlarmsCompat()) {
+                        am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
+                    } else {
+                        // At least trigger while idle so the notification might still be timely.
+                        Timber.d("Not allowed to set exact alarm")
+                        am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
+                    }
                 } else {
                     am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
                 }
             } else {
                 am.set(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
             }
+        }
+    }
+
+    private fun AlarmManager.canScheduleExactAlarmsCompat(): Boolean {
+        // https://developer.android.com/training/scheduling/alarms#exact-permission-check
+        return if (AndroidUtils.isAtLeastS) {
+            canScheduleExactAlarms()
+        } else {
+            true
         }
     }
 

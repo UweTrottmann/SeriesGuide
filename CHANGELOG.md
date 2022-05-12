@@ -14,6 +14,11 @@ Version 64
 ----------
 *in development*
 
+#### next
+
+* 🔨 Do not crash if permission to set alarms and reminders has been removed, schedule inexact
+  episode notifications instead.
+
 #### 64.0.4*
 *2022-05-06*
 
