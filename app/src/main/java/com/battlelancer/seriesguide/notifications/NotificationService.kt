@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.Companion.intentEpisode
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
@@ -155,11 +156,13 @@ class NotificationService(context: Context) {
             nextWakeUpTime = plannedWakeUpTime
         }
 
-        // Set a default wake-up time if there are no future episodes for now
         if (nextWakeUpTime <= 0) {
-            nextWakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS
+            // Set a default wake-up time if there are currently no future episodes,
+            // schedule after the default sync interval as sync likely wakes this up already.
+            nextWakeUpTime = System.currentTimeMillis() +
+                    SgSyncAdapter.SYNC_INTERVAL_SECONDS * DateUtils.SECOND_IN_MILLIS
             needExactAlarm = false
-            Timber.d("No future episodes found, wake up in 6 hours")
+            Timber.d("No future episodes found, wake up after next sync")
         }
 
         if (DEBUG) {
