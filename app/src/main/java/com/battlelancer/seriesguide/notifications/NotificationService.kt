@@ -145,6 +145,7 @@ class NotificationService(context: Context) {
         }
 
         var nextWakeUpTime: Long = 0
+        var needExactAlarm = true
         if (checkForNewEpisodes) {
             val latestTimeToInclude = (customCurrentTime
                     + DateUtils.MINUTE_IN_MILLIS * notificationThreshold)
@@ -179,25 +180,32 @@ class NotificationService(context: Context) {
         // Set a default wake-up time if there are no future episodes for now
         if (nextWakeUpTime <= 0) {
             nextWakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS
+            needExactAlarm = false
             Timber.d("No future episodes found, wake up in 6 hours")
         }
 
         if (DEBUG) {
             Timber.d("DEBUG MODE: wake up in 1 minute")
             nextWakeUpTime = System.currentTimeMillis() + DateUtils.MINUTE_IN_MILLIS
+            needExactAlarm = true
         }
 
         val am = context.getSystemService<AlarmManager>()
         val pi = wakeUpPendingIntent
         Timber.d(
-            "Going to sleep, setting wake-up alarm to: %s",
+            "Setting alarm: exact=%s time=%s",
+            needExactAlarm,
             Instant.ofEpochMilli(nextWakeUpTime)
         )
         if (am != null) {
-            if (AndroidUtils.isMarshmallowOrHigher) {
-                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
+            if (needExactAlarm) {
+                if (AndroidUtils.isMarshmallowOrHigher) {
+                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
+                } else {
+                    am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
+                }
             } else {
-                am.setExact(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
+                am.set(AlarmManager.RTC_WAKEUP, nextWakeUpTime, pi)
             }
         }
     }
