@@ -96,7 +96,7 @@ class NotificationService(context: Context) {
             Timber.d("Notifications disabled, removing wake-up alarm")
             val am = context.getSystemService<AlarmManager>()
             am?.cancel(wakeUpPendingIntent)
-            resetLastEpisodeAirtime(prefs)
+            NotificationSettings.resetLastEpisodeAirtime(context)
             return
         }
 
@@ -109,7 +109,7 @@ class NotificationService(context: Context) {
             // a week, for debugging (use only one show to get single episode notifications)
             notificationThreshold = 10080
             // notify again for same episodes
-            resetLastEpisodeAirtime(prefs)
+            NotificationSettings.resetLastEpisodeAirtime(context)
         }
         val upcomingEpisodes = queryUpcomingEpisodes(customCurrentTime)
 
@@ -269,7 +269,7 @@ class NotificationService(context: Context) {
         if (notifyPositions.size > 0) {
             val latestAirtime = upcomingEpisodes[notifyPositions[notifyPositions.size - 1]]
                 .episode_firstairedms
-            prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime).apply()
+            NotificationSettings.setLastNotifiedAbout(context, latestAirtime)
             Timber.d(
                 "Notify about %d episodes, latest released at: %s",
                 notifyPositions.size, Instant.ofEpochMilli(latestAirtime)
@@ -562,23 +562,9 @@ class NotificationService(context: Context) {
             if (clearedTime != 0L) {
                 // Never show the cleared episode(s) again
                 Timber.d("Notification cleared, setting last cleared episode time: %d", clearedTime)
-                PreferenceManager.getDefaultSharedPreferences(context)
-                    .edit()
-                    .putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime)
-                    .apply()
+                NotificationSettings.setLastCleared(context, clearedTime)
             }
         }
 
-        /**
-         * Resets the air time of the last notified about episode. Afterwards notifications for episodes
-         * may appear, which were already notified about.
-         */
-        fun resetLastEpisodeAirtime(prefs: SharedPreferences) {
-            Timber.d("Resetting last cleared and last notified")
-            prefs.edit()
-                .putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
-                .putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0)
-                .apply()
-        }
     }
 }

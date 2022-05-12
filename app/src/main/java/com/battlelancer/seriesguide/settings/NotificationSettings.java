@@ -10,6 +10,7 @@ import androidx.preference.PreferenceManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import timber.log.Timber;
 
 /**
  * Access settings related to the notification service.
@@ -30,10 +31,10 @@ public class NotificationSettings {
     public static final String KEY_CHANNELS
             = "com.battlelancer.seriesguide.notifications.channels";
 
-    public static final String KEY_LAST_CLEARED
+    private static final String KEY_LAST_CLEARED
             = "com.battlelancer.seriesguide.notifications.latestcleared";
 
-    public static final String KEY_LAST_NOTIFIED
+    private static final String KEY_LAST_NOTIFIED
             = "com.battlelancer.seriesguide.notifications.latestnotified";
 
     public static final String KEY_NEXT_TO_NOTIFY
@@ -120,12 +121,38 @@ public class NotificationSettings {
                 .getLong(KEY_LAST_CLEARED, 0);
     }
 
+    public static void setLastCleared(Context context, long clearedTime) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime)
+                .apply();
+    }
+
     /**
      * Get the air time of the episode we last notified about.
      */
     public static long getLastNotifiedAbout(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_NOTIFIED, 0);
+    }
+
+    public static void setLastNotifiedAbout(Context context, long releaseTime) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(NotificationSettings.KEY_LAST_NOTIFIED, releaseTime)
+                .apply();
+    }
+
+    /**
+     * Resets the air time of the last notified about episode. Afterwards notifications for episodes
+     * may appear, which were already notified about.
+     */
+    public static void resetLastEpisodeAirtime(Context context) {
+        Timber.d("Resetting last cleared and last notified");
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
+                .putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0)
+                .apply();
     }
 
     /**

@@ -522,9 +522,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
      * changing the time offset.
      */
     private fun resetAndRunNotificationsService(context: Context) {
-        NotificationService.resetLastEpisodeAirtime(
-            PreferenceManager.getDefaultSharedPreferences(context)
-        )
+        NotificationSettings.resetLastEpisodeAirtime(context)
         NotificationService.trigger(context)
     }
 
