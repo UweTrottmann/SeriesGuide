@@ -13,7 +13,6 @@ import timber.log.Timber;
 
 public class AccountUtils {
 
-    public static final int SYNC_FREQUENCY = 24 * 60 * 60; // 1 day (in seconds)
 
     private static final String ACCOUNT_NAME = "SeriesGuide Sync";
 
@@ -48,7 +47,7 @@ public class AccountUtils {
             // may modify this based
             // on other scheduled syncs and network utilization.
             ContentResolver.addPeriodicSync(account, SgApp.CONTENT_AUTHORITY,
-                    new Bundle(), SYNC_FREQUENCY);
+                    new Bundle(), SgSyncAdapter.SYNC_INTERVAL_SECONDS);
         }
 
         Timber.d("Setting up account...DONE");

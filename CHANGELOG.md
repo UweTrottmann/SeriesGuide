@@ -14,6 +14,12 @@ Version 64
 ----------
 *in development*
 
+#### next
+
+* 🔨 Do not crash if permission to set alarms and reminders has been removed, schedule inexact
+  episode notifications instead.
+* 🔧 Improve when the app wakes the device to notify about upcoming episodes.
+
 #### 64.0.4*
 *2022-05-06*
 
