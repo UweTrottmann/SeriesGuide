@@ -5,7 +5,6 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("com.google.cloud.tools.endpoints-framework-client")
 }
 
 if (project.file("google-services.json").exists()) {
@@ -162,6 +161,7 @@ dependencies {
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
 
     implementation(project(":api"))
+    implementation(project(":backend"))
     implementation(project(":billing"))
     implementation(project(":widgets"))
 
@@ -256,24 +256,9 @@ dependencies {
     // https://developers.google.com/android/guides/releases
     implementation("com.google.android.gms:play-services-auth:20.0.1")
 
-
     // Crashlytics
     // https://firebase.google.com/support/release-notes/android
     implementation("com.google.firebase:firebase-crashlytics:18.2.5")
-
-    // App Engine
-    // https://github.com/googleapis/google-api-java-client/releases
-    val googleApiClientVersion = "1.33.4"
-    implementation("com.google.api-client:google-api-client-android:$googleApiClientVersion") {
-        exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
-    }
-    implementation("com.google.api-client:google-api-client:$googleApiClientVersion") {
-        exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
-    }
-    // https://github.com/googleapis/google-http-java-client/releases
-    implementation("com.google.http-client:google-http-client-gson:1.41.5") {
-        exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
-    }
 
     // Amazon flavor specific
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
@@ -320,18 +305,6 @@ dependencies {
     // https://github.com/mockito/mockito/releases
     testImplementation("org.mockito:mockito-core:4.2.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-}
-
-endpointsClient {
-    setDiscoveryDocs(
-        listOf(
-            "src/endpoints/account-v2-rest.discovery",
-            "src/endpoints/episodes-v2-rest.discovery",
-            "src/endpoints/lists-v2-rest.discovery",
-            "src/endpoints/movies-v2-rest.discovery",
-            "src/endpoints/shows-v2-rest.discovery"
-        )
-    )
 }
 
 fun propertyOrEmpty(name: String): String {

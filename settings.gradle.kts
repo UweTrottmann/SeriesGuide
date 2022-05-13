@@ -18,6 +18,7 @@ dependencyResolutionManagement {
 }
 
 include(":api")
+include(":backend")
 include(":billing")
 include(":widgets")
 include(":app")
