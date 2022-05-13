@@ -47,7 +47,7 @@
     <string name="updated_details">详细信息</string>
     <string name="norating">无评分</string>
     <string name="unknown">未知</string>
-    <string name="offline">请连接到网络后重试</string>
+    <string name="offline">请连接到互联网后重试</string>
     <string name="app_not_available">没有可用于处理此操作的应用</string>
     <string name="people_empty">什么也没有？！点按一下再试试。</string>
     <string name="database_error">无法修改数据</string>
