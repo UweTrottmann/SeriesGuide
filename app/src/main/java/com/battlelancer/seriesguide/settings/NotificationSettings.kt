@@ -15,7 +15,13 @@ import timber.log.Timber
 object NotificationSettings {
 
     const val KEY_ENABLED = "com.battlelancer.seriesguide.notifications"
-    const val KEY_FAVONLY = "com.battlelancer.seriesguide.notifications.favonly"
+
+//    @Deprecated(
+//        """Notifications are enabled on a per-show basis since {@link
+//     * SeriesGuideDatabase#DBVER_40_NOTIFY_PER_SHOW}."""
+//    )
+//    const val KEY_FAVONLY = "com.battlelancer.seriesguide.notifications.favonly"
+
     const val KEY_THRESHOLD = "com.battlelancer.seriesguide.notifications.threshold"
 
     /** Just a link to a screen to select shows to notify about.  */
@@ -43,15 +49,6 @@ object NotificationSettings {
     fun isNotificationsEnabled(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_ENABLED, true)
-    }
-
-    @Deprecated(
-        """Notifications are enabled on a per-show basis since {@link
-     * SeriesGuideDatabase#DBVER_40_NOTIFY_PER_SHOW}."""
-    )
-    fun isNotifyAboutFavoritesOnly(context: Context): Boolean {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_FAVONLY, false)
     }
 
     /**
