@@ -120,8 +120,8 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // notifications link
         findPreference<Preference>(KEY_SCREEN_NOTIFICATIONS)!!.apply {
-            if (hasAccessToX && NotificationSettings.isNotificationsEnabled(activity)) {
-                summary = NotificationSettings.getLatestToIncludeTresholdValue(activity)
+            if (hasAccessToX && NotificationSettings.isNotificationsEnabled(requireContext())) {
+                summary = NotificationSettings.getLatestToIncludeTresholdValue(requireContext())
             } else {
                 setSummary(R.string.pref_notificationssummary)
             }
@@ -177,7 +177,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             }
             // disable advanced notification settings if notifications are disabled
             val isNotificationsEnabled = NotificationSettings.isNotificationsEnabled(
-                activity
+                requireContext()
             )
             thresholdPref.isEnabled = isNotificationsEnabled
             selectionPref.isEnabled = isNotificationsEnabled
@@ -330,7 +330,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 )
 
             // restore selected sound or silent (empty string)
-            val existingValue = NotificationSettings.getNotificationsRingtone(activity)
+            val existingValue = NotificationSettings.getNotificationsRingtone(requireContext())
             intent.putExtra(
                 RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
                 if (TextUtils.isEmpty(existingValue)) null else Uri.parse(existingValue)
@@ -530,9 +530,11 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
 
         // Preference keys
         private const val KEY_CLEAR_CACHE = "clearCache"
+
         //    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
         //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
-        private const val KEY_BATTERY_SETTINGS = "com.battlelancer.seriesguide.notifications.battery"
+        private const val KEY_BATTERY_SETTINGS =
+            "com.battlelancer.seriesguide.notifications.battery"
 
         // links
         private const val LINK_BASE_KEY = "com.battlelancer.seriesguide.settings."
