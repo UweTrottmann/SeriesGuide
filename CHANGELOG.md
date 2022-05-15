@@ -14,8 +14,8 @@ Version 64
 ----------
 *in development*
 
-#### next
-*TBD*
+#### 64.0.6
+*2022-05-15*
 
 * 🔨 Do not crash when selecting backup file to restore from.
 
