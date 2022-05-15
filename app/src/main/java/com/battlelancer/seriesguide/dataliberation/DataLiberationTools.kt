@@ -65,6 +65,9 @@ object DataLiberationTools {
         }
     }
 
+    /**
+     * Input is used as suggested file name.
+     */
     class CreateExportFileContract : ActivityResultContract<String, Uri?>() {
         override fun createIntent(context: Context, input: String): Intent {
             return Intent(Intent.ACTION_CREATE_DOCUMENT)
@@ -88,8 +91,8 @@ object DataLiberationTools {
         }
     }
 
-    class SelectImportFileContract : ActivityResultContract<Unit, Uri?>() {
-        override fun createIntent(context: Context, input: Unit): Intent {
+    class SelectImportFileContract : ActivityResultContract<Unit?, Uri?>() {
+        override fun createIntent(context: Context, input: Unit?): Intent {
             return Intent(Intent.ACTION_OPEN_DOCUMENT)
                 // Filter to only show results that can be "opened", such as a
                 // file (as opposed to a list of contacts or timezones)
