@@ -14,6 +14,11 @@ Version 64
 ----------
 *in development*
 
+#### 64.0.7
+*2022-05-18*
+
+* 🔨 Resolve Android not responding issue when viewing a show or its episodes.
+
 #### 64.0.6
 *2022-05-15*
 
