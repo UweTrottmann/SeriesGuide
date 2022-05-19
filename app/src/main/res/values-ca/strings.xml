@@ -483,7 +483,6 @@
     <string name="billing_action_subscribe">Vull subscriure\'m</string>
     <string name="billing_action_manage_subscriptions">Gestionar subscripcions</string>
     <string name="billing_action_pass">Obtenir un «X Pass App»</string>
-    <string name="billing_price_subscribe">%1$s/any, prova de forma gratuïta, cancel·la en qualsevol moment mitjançant %2$s</string>
     <string name="billing_duration_format">%1$s l\'any</string>
     <string name="billing_sub_description">Prova 30 dies gratuïtament, cancel·la en qualsevol moment</string>
     <string name="billing_price_pass">compra única</string>

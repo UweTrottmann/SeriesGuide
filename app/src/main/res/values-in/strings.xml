@@ -472,7 +472,6 @@
     <string name="billing_action_subscribe">Berlangganan</string>
     <string name="billing_action_manage_subscriptions">Kelola langganan</string>
     <string name="billing_action_pass">Dapatkan X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/tahun, coba gratis, batalkan Kapan saja melalui %2$s</string>
     <string name="billing_duration_format">%1$s/tahun</string>
     <string name="billing_sub_description">Coba gratis 30 hari, batalkan kapan saja.</string>
     <string name="billing_price_pass">pembelian satu kali</string>

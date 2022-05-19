@@ -505,7 +505,6 @@
     <string name="billing_action_subscribe">Predplatiť</string>
     <string name="billing_action_manage_subscriptions">Správa predplatného</string>
     <string name="billing_action_pass">Získať X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/ročne, vyskúšajte zadarmo, zrušte kedykoľvek prostredníctvom %2$s</string>
     <string name="billing_duration_format">%1$s/rok</string>
     <string name="billing_sub_description">Vyskúšajte 30 dní zadarmo, kedykoľvek môžete zrušiť.</string>
     <string name="billing_price_pass">jednorázová platba</string>

@@ -472,7 +472,6 @@
     <string name="billing_action_subscribe">订阅</string>
     <string name="billing_action_manage_subscriptions">管理订阅</string>
     <string name="billing_action_pass">购买 X Pass App</string>
-    <string name="billing_price_subscribe">每年 %1$s，免费试用，通过 %2$s 随时取消订阅</string>
     <string name="billing_duration_format">%1$s / 年</string>
     <string name="billing_sub_description">免费试用 30 天，随时取消。</string>
     <string name="billing_price_pass">一次性买断</string>
