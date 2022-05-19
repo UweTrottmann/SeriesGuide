@@ -16,6 +16,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -96,6 +97,24 @@ interface SgEpisode2Helper {
 
     @RawQuery
     fun getEpisodeInfo(query: SupportSQLiteQuery): SgEpisode2Info?
+
+    fun getEpisodeInfo(
+        showId: Long,
+        nextEpisodeSelection: String,
+        sortClause: String,
+        selectionArgs: Array<Any>
+    ): SgEpisode2Info? {
+        return getEpisodeInfo(
+            SimpleSQLiteQuery(
+                "SELECT * FROM " + SeriesGuideDatabase.Tables.SG_EPISODE
+                        + " WHERE " + SgShow2Columns.REF_SHOW_ID + " = " + showId
+                        + " AND " + nextEpisodeSelection
+                        + " ORDER BY " + sortClause
+                        + " LIMIT 1",
+                selectionArgs
+            )
+        )
+    }
 
     @Query("SELECT * FROM sg_episode WHERE _id = :episodeId")
     fun getEpisode(episodeId: Long): SgEpisode2?

@@ -197,7 +197,7 @@ class AddUpdateShowTools @Inject constructor(
         }
 
         // Calculate next episode
-        NextEpisodeUpdater().updateForShows(context, showId)
+        NextEpisodeUpdater(context).updateForShows(showId)
 
         return ShowResult.SUCCESS
     }
