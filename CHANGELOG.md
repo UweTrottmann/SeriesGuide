@@ -10,6 +10,13 @@ Release notes
 
 \* Releases marked with an asterisk (*) are/were available on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 65
+----------
+*in development*
+
+#### next
+*release-date*
+
 Version 64
 ----------
 *in development*
