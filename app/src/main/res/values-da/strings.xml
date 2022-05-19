@@ -483,7 +483,6 @@
     <string name="billing_action_subscribe">Abonnér</string>
     <string name="billing_action_manage_subscriptions">Administrer abonnementer</string>
     <string name="billing_action_pass">Få X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/år, prøv gratis, afmeld når som helst via %2$s</string>
     <string name="billing_duration_format">%1$s/år</string>
     <string name="billing_sub_description">Prøv 30 dage gratis, opsig når som helst.</string>
     <string name="billing_price_pass">engangskøb</string>

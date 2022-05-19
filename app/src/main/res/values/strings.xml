@@ -547,7 +547,6 @@
     <string name="billing_action_subscribe">Subscribe</string>
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
     <string name="billing_action_pass">Get X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/year, try for free, cancel any time through %2$s</string>
     <string name="billing_duration_format">%1$s/year</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="billing_price_pass">one-time purchase</string>

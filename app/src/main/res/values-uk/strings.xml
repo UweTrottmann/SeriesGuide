@@ -505,7 +505,6 @@
     <string name="billing_action_subscribe">Підписатись</string>
     <string name="billing_action_manage_subscriptions">Впорядкувати підписки</string>
     <string name="billing_action_pass">Отримати X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/рік, спробуйте безкоштовно, скасуйте у будь-який час через %2$s</string>
     <string name="billing_duration_format">%1$s/рік</string>
     <string name="billing_sub_description">Спробуйте 30 днів безкоштовно, скасуйте у будь-який час.</string>
     <string name="billing_price_pass">Одноразове замовлення</string>

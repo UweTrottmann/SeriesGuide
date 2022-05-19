@@ -18,6 +18,18 @@ import timber.log.Timber
 
 /**
  * Offers a single subscription and in-app purchase using the Amazon in-app purchasing library.
+ *
+ * To debug: install on device with Amazon App Store and download App Tester app, put
+ * `amazon.sdktester.json` onto `sdcard`.
+ * Run command `adb shell setprop debug.amazon.sandboxmode debug` and launch app tester, then app.
+ * Debug version of app works.
+ *
+ * To disable sandbox mode run `adb shell setprop debug.amazon.sandboxmode none`.
+ *
+ * 2022-05-19: subscription not recognized because sku in receipt is null, entitlement works.
+ * Confirmed that subscription works and is recognized with production version.
+ *
+ * https://developer.amazon.com/de/docs/in-app-purchasing/iap-app-tester-user-guide.html
  */
 class AmazonBillingActivity : BaseActivity() {
 
@@ -134,10 +146,10 @@ class AmazonBillingActivity : BaseActivity() {
             price = "--"
         }
         if (AmazonSku.SERIESGUIDE_SUB_YEARLY.sku == product.sku) {
-            binding.textViewAmazonBillingSubPrice.text = getString(
-                R.string.billing_price_subscribe,
-                price, getString(R.string.amazon)
-            )
+            val priceString = getString(R.string.billing_duration_format, price)
+            val trialInfo = getString(R.string.billing_sub_description)
+            val finalPriceString = "$priceString\n$trialInfo"
+            binding.textViewAmazonBillingSubPrice.text = finalPriceString
         } else if (AmazonSku.SERIESGUIDE_PASS.sku == product.sku) {
             binding.textViewAmazonBillingPricePass.text =
                 String.format("%s\n%s", price, getString(R.string.billing_price_pass))
