@@ -103,6 +103,13 @@ interface SgEpisode2Helper {
     @Query("SELECT * FROM sg_episode WHERE _id=:id")
     fun getEpisodeLiveData(id: Long): LiveData<SgEpisode2?>
 
+    /**
+     * Get the watched or skipped episode with the latest release date, if multiple highest season,
+     * if multiple highest number. Or null if none found.
+     */
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED} ORDER BY episode_firstairedms DESC, episode_season_number DESC, episode_number DESC LIMIT 1")
+    fun getNewestWatchedEpisodeOfShow(showId: Long): SgEpisode2Info?
+
     @Query(
         """SELECT _id FROM sg_episode WHERE season_id = :seasonId 
         AND episode_firstairedms <= :currentTimePlusOneHour

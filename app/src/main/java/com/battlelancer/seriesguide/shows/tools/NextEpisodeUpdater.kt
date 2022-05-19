@@ -68,13 +68,19 @@ class NextEpisodeUpdater {
             val plays = if (show.episodePlays == null || show.episodePlays == 0) {
                 1
             } else show.episodePlays
-            // Note: Due to LEFT JOIN query, episode values are null if no matching episode found.
+            // Note: Due to LEFT JOIN query, episode values are null if no matching episode found
+            // or there is no last watched episode ID stored.
             if (show.lastWatchedEpisodeId == 0L
                 || season == null || number == null || releaseTime == null) {
-                // by default: no watched episodes, include all starting with special 0
-                season = -1
-                number = -1
-                releaseTime = Long.MIN_VALUE
+                // If there is no info about a last watched episode
+                // use the newest watched/skipped episode, if there is one.
+                // This is useful when adding a show from Cloud/Trakt or restoring a backup where
+                // there is no last watched episode set on the show.
+                val newestWatched = episodeHelper.getNewestWatchedEpisodeOfShow(show.id)
+                // Otherwise assume all episodes unwatched: include all starting with special 0.
+                season = newestWatched?.season ?: -1
+                number = newestWatched?.episodenumber ?: -1
+                releaseTime = newestWatched?.firstReleasedMs ?: Long.MIN_VALUE
             }
 
             // STEP 2: get episode released closest afterwards
