@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build, Test and Lint
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
@@ -36,6 +36,19 @@ jobs:
         if: ${{ always() }} # also run if build step failed
         with:
           files: app/build/test-results/**/*.xml
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
 
       # To speed up lint check only run for release variant and only on app module
       # Note: the app module has lintOptions.checkDependencies true, so submodules will be checked
