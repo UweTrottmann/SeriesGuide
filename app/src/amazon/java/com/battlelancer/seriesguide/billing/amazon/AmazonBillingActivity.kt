@@ -1,148 +1,146 @@
-package com.battlelancer.seriesguide.billing.amazon;
+package com.battlelancer.seriesguide.billing.amazon
 
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-import androidx.appcompat.app.ActionBar;
-import com.amazon.device.iap.PurchasingService;
-import com.amazon.device.iap.model.Product;
-import com.amazon.device.iap.model.RequestId;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.databinding.ActivityAmazonBillingBinding;
-import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.util.Utils;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import timber.log.Timber;
+import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import com.amazon.device.iap.PurchasingService
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapAvailabilityEvent
+import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapMessageEvent
+import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapProductEvent
+import com.battlelancer.seriesguide.databinding.ActivityAmazonBillingBinding
+import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.util.Utils
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
-public class AmazonBillingActivity extends BaseActivity {
+/**
+ * Offers a single subscription and in-app purchase using the Amazon in-app purchasing library.
+ */
+class AmazonBillingActivity : BaseActivity() {
 
-    private ActivityAmazonBillingBinding binding;
+    private lateinit var binding: ActivityAmazonBillingBinding
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityAmazonBillingBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        setupActionBar();
-
-        setupViews();
-
-        AmazonHelper.create(this);
-        AmazonHelper.getIapManager().register();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityAmazonBillingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupActionBar()
+        setupViews()
+        AmazonHelper.create(this)
+        AmazonHelper.iapManager.register()
     }
 
-    @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        ActionBar actionBar = getSupportActionBar();
+    override fun setupActionBar() {
+        super.setupActionBar()
+        val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
+            actionBar.setDisplayHomeAsUpEnabled(true)
         }
     }
 
-    private void setupViews() {
-        binding.buttonAmazonBillingSubscribe.setEnabled(false);
-        binding.buttonAmazonBillingSubscribe.setOnClickListener(v -> subscribe());
+    private fun setupViews() {
+        binding.buttonAmazonBillingSubscribe.isEnabled = false
+        binding.buttonAmazonBillingSubscribe.setOnClickListener { v: View? -> subscribe() }
 
-        binding.buttonAmazonBillingGetPass.setEnabled(false);
-        binding.buttonAmazonBillingGetPass.setOnClickListener(v -> purchasePass());
+        binding.buttonAmazonBillingGetPass.isEnabled = false
+        binding.buttonAmazonBillingGetPass.setOnClickListener { v: View? -> purchasePass() }
 
-        binding.textViewAmazonBillingMoreInfo.setOnClickListener(
-                v -> Utils.launchWebsite(v.getContext(), getString(R.string.url_whypay)));
-
-        binding.progressBarAmazonBilling.setVisibility(View.VISIBLE);
+        binding.textViewAmazonBillingMoreInfo.setOnClickListener { v: View ->
+            Utils.launchWebsite(
+                v.context,
+                getString(R.string.url_whypay)
+            )
+        }
+        binding.progressBarAmazonBilling.visibility = View.VISIBLE
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    override fun onStart() {
+        super.onStart()
 
         // no need to get product data every time we were hidden, so do it in onStart
-        AmazonHelper.getIapManager().requestProductData();
+        AmazonHelper.iapManager.requestProductData()
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        AmazonHelper.getIapManager().activate();
-        AmazonHelper.getIapManager().requestUserDataAndPurchaseUpdates();
+    override fun onResume() {
+        super.onResume()
+        AmazonHelper.iapManager.activate()
+        AmazonHelper.iapManager.requestUserDataAndPurchaseUpdates()
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        AmazonHelper.getIapManager().deactivate();
+    override fun onPause() {
+        super.onPause()
+        AmazonHelper.iapManager.deactivate()
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            super.onBackPressed();
-            return true;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            super.onBackPressed()
+            return true
         }
-        return false;
+        return false
     }
 
-    private void subscribe() {
-        final RequestId requestId = PurchasingService.purchase(
-                AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku());
-        Timber.d("subscribe: requestId (%s)", requestId);
+    private fun subscribe() {
+        val requestId = PurchasingService.purchase(
+            AmazonSku.SERIESGUIDE_SUB_YEARLY.sku
+        )
+        Timber.d("subscribe: requestId (%s)", requestId)
     }
 
-    private void purchasePass() {
-        final RequestId requestId = PurchasingService.purchase(
-                AmazonSku.SERIESGUIDE_PASS.getSku());
-        Timber.d("purchasePass: requestId (%s)", requestId);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(AmazonIapManager.AmazonIapMessageEvent event) {
-        Toast.makeText(this, event.messageResId, Toast.LENGTH_LONG).show();
+    private fun purchasePass() {
+        val requestId = PurchasingService.purchase(
+            AmazonSku.SERIESGUIDE_PASS.sku
+        )
+        Timber.d("purchasePass: requestId (%s)", requestId)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(AmazonIapManager.AmazonIapAvailabilityEvent event) {
-        binding.progressBarAmazonBilling.setVisibility(View.GONE);
+    fun onEventMainThread(event: AmazonIapMessageEvent) {
+        Toast.makeText(this, event.messageResId, Toast.LENGTH_LONG).show()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventMainThread(event: AmazonIapAvailabilityEvent) {
+        binding.progressBarAmazonBilling.visibility = View.GONE
 
         // enable or disable purchase buttons based on what can be purchased
-        binding.buttonAmazonBillingSubscribe
-                .setEnabled(event.subscriptionAvailable && !event.userHasActivePurchase);
-        binding.buttonAmazonBillingGetPass
-                .setEnabled(event.passAvailable && !event.userHasActivePurchase);
+        binding.buttonAmazonBillingSubscribe.isEnabled =
+            event.subscriptionAvailable && !event.userHasActivePurchase
+        binding.buttonAmazonBillingGetPass.isEnabled =
+            event.passAvailable && !event.userHasActivePurchase
 
         // status text
         if (!event.subscriptionAvailable && !event.passAvailable) {
             // neither purchase available, probably not signed in
-            binding.textViewAmazonBillingExisting.setText(R.string.subscription_not_signed_in);
+            binding.textViewAmazonBillingExisting.setText(R.string.subscription_not_signed_in)
         } else {
             // subscription or pass available
             // show message if either one is active
-            binding.textViewAmazonBillingExisting.setText(
-                    event.userHasActivePurchase ? getString(R.string.upgrade_success) : null);
+            binding.textViewAmazonBillingExisting.text =
+                if (event.userHasActivePurchase) getString(R.string.upgrade_success) else null
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(AmazonIapManager.AmazonIapProductEvent event) {
-        Product product = event.product;
+    fun onEventMainThread(event: AmazonIapProductEvent) {
+        val product = event.product
         // display the actual price like "1.23 C"
-        String price = product.getPrice();
+        var price = product.price
         if (price == null) {
-            price = "--";
+            price = "--"
         }
-        if (AmazonSku.SERIESGUIDE_SUB_YEARLY.getSku().equals(product.getSku())) {
-            binding.textViewAmazonBillingSubPrice.setText(
-                    getString(R.string.billing_price_subscribe,
-                            price, getString(R.string.amazon))
-            );
-        } else if (AmazonSku.SERIESGUIDE_PASS.getSku().equals(product.getSku())) {
-            binding.textViewAmazonBillingPricePass.setText(
-                    String.format("%s\n%s", price, getString(R.string.billing_price_pass)));
+        if (AmazonSku.SERIESGUIDE_SUB_YEARLY.sku == product.sku) {
+            binding.textViewAmazonBillingSubPrice.text = getString(
+                R.string.billing_price_subscribe,
+                price, getString(R.string.amazon)
+            )
+        } else if (AmazonSku.SERIESGUIDE_PASS.sku == product.sku) {
+            binding.textViewAmazonBillingPricePass.text =
+                String.format("%s\n%s", price, getString(R.string.billing_price_pass))
         }
     }
 }
