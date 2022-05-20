@@ -12,19 +12,25 @@ Release notes
 
 Version 64
 ----------
-*in development*
+*2022-05-18*
+
+* 🔧 Show filters: move no released episodes option there, display status also as text.
+* 🔧 Clearly label the next episode to watch in the overview screen.
+* 🔧 Display the last time a show or movie was updated.
+* 🔨 Do not crash if permission to set alarms and reminders has been removed (Android 12), schedule 
+inexact episode notifications instead.
 
 #### 64.0.7
 *2022-05-18*
 
 * 🔨 Resolve Android not responding issue when viewing a show or its episodes.
 
-#### 64.0.6
+#### 64.0.6*
 *2022-05-15*
 
 * 🔨 Do not crash when selecting backup file to restore from.
 
-#### 64.0.5
+#### 64.0.5*
 *2022-05-13*
 
 * 🔨 Do not crash if permission to set alarms and reminders has been removed, schedule inexact
