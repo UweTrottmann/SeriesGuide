@@ -6,24 +6,14 @@ import android.content.OperationApplicationException;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.database.sqlite.SQLiteException;
 import android.os.RemoteException;
-import android.text.TextUtils;
 import android.widget.Toast;
-import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import java.util.ArrayList;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 public class DBUtils {
-
-    /**
-     * Used if the number of remaining episodes to watch for a show is not (yet) known.
-     *
-     * @see Shows#UNWATCHED_COUNT
-     */
-    public static final int UNKNOWN_UNWATCHED_COUNT = -1;
 
     private static final int SMALL_BATCH_SIZE = 50;
 
@@ -112,31 +102,5 @@ public class DBUtils {
             Timber.e(e, "applyBatch: failed, database error.");
             postDatabaseError(e);
         }
-    }
-
-    /**
-     * Removes a leading article from the given string (including the first whitespace that
-     * follows). <p> <em>Currently only supports English articles (the, a and an).</em>
-     */
-    @Nullable
-    public static String trimLeadingArticle(String title) {
-        if (TextUtils.isEmpty(title)) {
-            return title;
-        }
-
-        if (title.length() > 4 &&
-                (title.startsWith("The ") || title.startsWith("the "))) {
-            return title.substring(4);
-        }
-        if (title.length() > 2 &&
-                (title.startsWith("A ") || title.startsWith("a "))) {
-            return title.substring(2);
-        }
-        if (title.length() > 3 &&
-                (title.startsWith("An ") || title.startsWith("an "))) {
-            return title.substring(3);
-        }
-
-        return title;
     }
 }

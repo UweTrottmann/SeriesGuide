@@ -55,7 +55,7 @@
     <string name="api_error_generic">Nincs kapcsolat ezzel: %s. Próbáld újra később.</string>
     <string name="api_failed">Meghiúsult: %s</string>
     <string name="copy_to_clipboard">Vágólapra másolva</string>
-    <string name="not_migrated">Nem megtalálható a TMDb-nél, egy jövőbeli frissítésben eltávolításra fog kerülni. Kattints a részletekért.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Megosztás</string>
     <string name="share_show">Műsor megosztása</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Nincs lefordítva</string>
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
     <string name="format_source">Forrás: %s</string>
-    <string name="format_last_edited">Utoljára szerkesztve: %s</string>
+    <string name="last_updated">Utoljára frissítve</string>
     <!-- Date and Time -->
     <string name="today">ma</string>
     <string name="now">most</string>
@@ -145,9 +145,9 @@
     <string name="action_shows_filter_unwatched">Nem látott</string>
     <string name="action_shows_filter_upcoming">Következő</string>
     <string name="action_shows_filter_hidden">Rejtett</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_disabled">Letiltva</string>
     <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_excluded">Kizárva</string>
     <string name="action_shows_make_all_visible">Elrejtett szöveg mutatása</string>
     <string name="description_make_all_visible_format">Az összes elrejtett sorozat (%s) mutatása?</string>
     <string name="action_shows_sort">Sorozatok rendezése</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Frissítés</string>
     <string name="context_marknext">Láttam a következő epizódot</string>
     <string name="action_episodes_switch_view">Nézet váltása</string>
+    <string name="next_to_watch">Következő megnézendő</string>
     <!-- History -->
     <string name="user_stream">Előzmények</string>
     <string name="recently_watched">Nemrég megnézett</string>
@@ -249,7 +250,7 @@
     <string name="action_movies_sort">Filmek rendezése</string>
     <string name="action_movies_sort_title">Cím</string>
     <string name="action_movies_sort_release">Első adás</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Filmek szűrése</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nem sikerült kiszámítani a statisztikát.</string>
     <string name="shows_finished">%s teljesen megnézve</string>
@@ -313,7 +314,7 @@
     <string name="connect">Kapcsolódás</string>
     <string name="disconnect">Megszakítás</string>
     <string name="use_integrated_browser">Beépített böngésző használata</string>
-    <string name="show_library">Műsortárad mutatása</string>
+    <string name="show_library">Sorozatok hozzáadása innen: Trakt</string>
     <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Értékelj</string>
@@ -402,7 +403,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Megjelenés</string>
     <string name="pref_theme">Téma</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Rendszer színének használata</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Alapbeállítás használata</string>
     <string name="theme_app_auto_battery">Beállítás Akkumlátorkímélő mód alapján</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Vágjunk bele!</string>
     <string name="dismiss">Mégsem</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s kezdődik</string>
-    <string name="upcoming_episodes">Új epizódok kezdődnek</string>
     <string name="upcoming_episodes_number">%s új epizód</string>
     <string name="more">még %d</string>
     <string name="upcoming_display">Válassza ki a közelgő műsorok megjelenítéséhez</string>

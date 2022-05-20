@@ -3,8 +3,15 @@ package com.battlelancer.seriesguide.tmdbapi
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.ui.shows.ShowTools2.ShowResult
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.isRetryError
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
+import com.github.michaelbull.result.get
+import com.github.michaelbull.result.mapError
+import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
@@ -13,7 +20,7 @@ import com.uwetrottmann.tmdb2.entities.DiscoverFilter
 import com.uwetrottmann.tmdb2.entities.DiscoverFilter.Separator.OR
 import com.uwetrottmann.tmdb2.entities.Person
 import com.uwetrottmann.tmdb2.entities.TmdbDate
-import com.uwetrottmann.tmdb2.entities.TvSeason
+import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 import com.uwetrottmann.tmdb2.entities.WatchProviders
@@ -26,39 +33,46 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 import retrofit2.create
-import java.net.SocketTimeoutException
 import java.util.Calendar
 import java.util.Date
 
 class TmdbTools2 {
 
     /**
-     * Tries to find the TMDB id for the given show's TheTVDB id. Returns -1 if not found,
-     * returns null on error or failure.
+     * Tries to find the TMDB id for the given show's TheTVDB id. Returns null value if not found.
      */
-    fun findShowTmdbId(context: Context, showTvdbId: Int): Int? {
+    fun findShowTmdbId(context: Context, showTvdbId: Int): Result<Int?, TmdbError> {
+        val action = "find tvdb show"
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
-        try {
-            val response = tmdb.findService()
+        return runCatching {
+            tmdb.findService()
                 .find(showTvdbId, ExternalSource.TVDB_ID, null)
                 .execute()
-            if (response.isSuccessful) {
-                val tvResults = response.body()?.tv_results
-                if (!tvResults.isNullOrEmpty()) {
-                    val showId = tvResults[0].id
-                    showId?.let {
-                        return it // found it!
+        }.mapError {
+            Errors.logAndReport(action, it)
+            if (it.isRetryError()) TmdbRetry else TmdbStop
+        }.andThen {
+            if (it.isSuccessful) {
+                val tvResults = it.body()?.tv_results
+                if (tvResults != null) {
+                    if (tvResults.isNotEmpty()) {
+                        val showId = tvResults[0].id
+                        if (showId != null && showId > 0) {
+                            return@andThen Ok(showId) // found it!
+                        } else {
+                            Errors.logAndReport(action, it, "show id is invalid")
+                        }
+                    } else {
+                        return@andThen Ok(null) // not found
                     }
+                } else {
+                    Errors.logAndReport(action, it, "tv_results is null")
                 }
-                return -1 // not found
             } else {
-                Errors.logAndReport("find tvdb show", response)
+                Errors.logAndReport(action, it)
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("find tvdb show", e)
+            return@andThen Err(TmdbStop)
         }
-
-        return null
     }
 
     fun getShowDetails(showTmdbId: Int, language: String, context: Context): TvShow? {
@@ -80,33 +94,37 @@ class TmdbTools2 {
     }
 
     /**
-     * Returns true if the show is null because it no longer exists (TMDB returned HTTP 404).
+     * Returns null value if the show no longer exists (TMDB returned HTTP 404).
      */
     fun getShowAndExternalIds(
         showTmdbId: Int,
         language: String,
         context: Context
-    ): Pair<TvShow?, ShowResult> {
+    ): Result<TvShow?, TmdbError> {
+        val action = "show n ids"
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
-        try {
-            val response = tmdb.tvService()
+        return runCatching {
+            tmdb.tvService()
                 .tv(showTmdbId, language, AppendToResponse(AppendToResponseItem.EXTERNAL_IDS))
                 .execute()
-            if (response.isSuccessful) {
-                val results = response.body()
-                if (results != null) return Pair(results, ShowResult.SUCCESS)
+        }.mapError {
+            Errors.logAndReport(action, it)
+            if (it.isRetryError()) TmdbRetry else TmdbStop
+        }.andThen {
+            if (it.isSuccessful) {
+                val tvShow = it.body()
+                if (tvShow != null) {
+                    return@andThen Ok(tvShow)
+                } else {
+                    Errors.logAndReport(action, it, "show is null")
+                }
             } else {
                 // Explicitly indicate if result is null because show no longer exists.
-                if (response.code() == 404) {
-                    return Pair(null, ShowResult.DOES_NOT_EXIST)
-                }
-                Errors.logAndReport("show n ids", response)
+                if (it.code() == 404) return@andThen Ok(null)
+                Errors.logAndReport(action, it)
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("show n ids", e)
-            if (e is SocketTimeoutException) return Pair(null, ShowResult.TIMEOUT_ERROR)
+            return@andThen Err(TmdbStop)
         }
-        return Pair(null, ShowResult.TMDB_ERROR)
     }
 
     /**
@@ -240,7 +258,7 @@ class TmdbTools2 {
                 ?: return@withContext null
             val tmdbId = showIds.tmdbId
                 ?: if (showIds.tvdbId != null) {
-                    findShowTmdbId(context, showIds.tvdbId)
+                    findShowTmdbId(context, showIds.tvdbId).get()
                 } else {
                     null
                 }
@@ -305,21 +323,29 @@ class TmdbTools2 {
         seasonNumber: Int,
         language: String,
         context: Context
-    ): TvSeason? {
+    ): Result<List<TvEpisode>, TmdbError> {
+        val action = "get season"
         val tmdb = SgApp.getServicesComponent(context).tmdb()
-        try {
-            val response = tmdb.tvSeasonsService()
+        return runCatching {
+            tmdb.tvSeasonsService()
                 .season(showTmdbId, seasonNumber, language)
                 .execute()
-            if (response.isSuccessful) {
-                return response.body()
+        }.mapError {
+            Errors.logAndReport(action, it)
+            if (it.isRetryError()) TmdbRetry else TmdbStop
+        }.andThen {
+            if (it.isSuccessful) {
+                val tvSeason = it.body()?.episodes
+                if (tvSeason != null) {
+                    return@andThen Ok(tvSeason)
+                } else {
+                    Errors.logAndReport(action, it, "episodes is null")
+                }
             } else {
-                Errors.logAndReport("get shows w new episodes", response)
+                Errors.logAndReport(action, it)
             }
-        } catch (e: Exception) {
-            Errors.logAndReport("get shows w new episodes", e)
+            return@andThen Err(TmdbStop)
         }
-        return null
     }
 
     data class WatchInfo(
@@ -403,3 +429,17 @@ class TmdbTools2 {
     }
 
 }
+
+sealed class TmdbError
+
+/**
+ * The API request might succeed if tried again after a brief delay
+ * (e.g. time outs or other temporary network issues).
+ */
+object TmdbRetry : TmdbError()
+
+/**
+ * The API request is unlikely to succeed if retried, at least right now
+ * (e.g. API bugs or changes).
+ */
+object TmdbStop : TmdbError()

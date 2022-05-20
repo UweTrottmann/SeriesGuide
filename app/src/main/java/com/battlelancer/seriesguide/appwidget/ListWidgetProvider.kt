@@ -19,9 +19,10 @@ import androidx.core.content.getSystemService
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.settings.WidgetSettings.WidgetTheme
+import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.ui.episodes.EpisodeTools
-import com.battlelancer.seriesguide.ui.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.PendingIntentCompat
 import timber.log.Timber
 import java.util.Random
@@ -76,8 +77,7 @@ class ListWidgetProvider : AppWidgetProvider() {
                 val episodeId = intent.getLongExtra(EXTRA_EPISODE_ID, -1)
 
                 if (showsTabIndex != -1 && episodeId != -1L) {
-                    val appLaunchIntent = Intent(context, ShowsActivity::class.java)
-                        .putExtra(ShowsActivity.EXTRA_SELECTED_TAB, showsTabIndex)
+                    val appLaunchIntent = ShowsActivity.newIntent(context, showsTabIndex)
                     TaskStackBuilder.create(context).run {
                         addNextIntent(appLaunchIntent)
                         addNextIntent(
@@ -246,21 +246,18 @@ class ListWidgetProvider : AppWidgetProvider() {
             when (widgetType) {
                 WidgetSettings.Type.SHOWS -> {
                     // Shows.
-                    showsTabIndex =
-                        ShowsActivity.INDEX_TAB_SHOWS
+                    showsTabIndex = ShowsActivityImpl.Tab.SHOWS.index
                     titleResId = R.string.shows
                     emptyResId = R.string.no_nextepisode
                 }
                 WidgetSettings.Type.RECENT -> {
-                    showsTabIndex =
-                        ShowsActivity.INDEX_TAB_RECENT
+                    showsTabIndex = ShowsActivityImpl.Tab.RECENT.index
                     titleResId = R.string.recent
                     emptyResId = R.string.norecent
                 }
                 else -> {
                     // Upcoming is the default.
-                    showsTabIndex =
-                        ShowsActivity.INDEX_TAB_UPCOMING
+                    showsTabIndex = ShowsActivityImpl.Tab.UPCOMING.index
                     titleResId = R.string.upcoming
                     emptyResId = R.string.noupcoming
                 }
@@ -274,8 +271,7 @@ class ListWidgetProvider : AppWidgetProvider() {
             }
 
             // Set up app launch button.
-            val appLaunchIntent = Intent(context, ShowsActivity::class.java)
-                .putExtra(ShowsActivity.EXTRA_SELECTED_TAB, showsTabIndex)
+            val appLaunchIntent = ShowsActivity.newIntent(context, showsTabIndex)
             TaskStackBuilder.create(context)
                 .addNextIntent(appLaunchIntent)
                 .getPendingIntent(

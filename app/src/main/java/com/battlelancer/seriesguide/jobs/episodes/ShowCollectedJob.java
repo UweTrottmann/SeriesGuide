@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.jobs.episodes;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import java.util.List;
 

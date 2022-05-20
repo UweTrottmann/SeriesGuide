@@ -55,7 +55,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Malsukcesis: %s</string>
     <string name="copy_to_clipboard">Kopita al tondejo</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Konigi</string>
     <string name="share_show">Konigi televidaĵon</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ne tradukita</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Fonto: %s</string>
-    <string name="format_last_edited">Laste redaktita: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">hodiaŭ</string>
     <string name="now">nun</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Ĝisdatigi</string>
     <string name="context_marknext">Spektis sekvan epizodon</string>
     <string name="action_episodes_switch_view">Baskuli vidon</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Historio</string>
     <string name="recently_watched">Laste spektita</string>
@@ -313,7 +314,7 @@
     <string name="connect">Konekti</string>
     <string name="disconnect">Malkonekti</string>
     <string name="use_integrated_browser">Uzi integritan retumilon</string>
-    <string name="show_library">Montri vian Trakt -an bibliotekon</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Taksi</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Komenci</string>
     <string name="dismiss">Rezigni</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s venas</string>
-    <string name="upcoming_episodes">Novaj epizodoj venas</string>
     <string name="upcoming_episodes_number">%s novaj epizodoj</string>
     <string name="more">%d pli</string>
     <string name="upcoming_display">Elekti por montri venontajn televidaĵojn</string>

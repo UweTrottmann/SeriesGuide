@@ -37,10 +37,10 @@ object LanguageTools {
      * If the given language code is `null`, uses [DisplaySettings.getMoviesLanguage].
      */
     @JvmStatic
-    fun getMovieLanguageStringFor(context: Context, languageCode: String?): String {
+    fun getMovieLanguageStringFor(context: Context, languageCode: String?, fallback: String): String {
         val actualLanguageCode = if (TextUtils.isEmpty(languageCode)) {
             // fall back to default language
-            DisplaySettings.getMoviesLanguage(context)
+            fallback
         } else languageCode
 
         return getLanguageStringFor(context, actualLanguageCode, R.array.languageCodesMovies)

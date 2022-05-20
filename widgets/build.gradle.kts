@@ -13,6 +13,7 @@ val fragmentVersion: String by rootProject.extra
 val timberVersion: String by rootProject.extra
 
 android {
+    namespace = "com.uwetrottmann.seriesguide.widgets"
     compileSdk = sgCompileSdk
 
     defaultConfig {

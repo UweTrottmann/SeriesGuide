@@ -55,7 +55,7 @@
     <string name="api_error_generic">Nie można połączyć z %s. Spróbuj ponownie później.</string>
     <string name="api_failed">Błąd: %s</string>
     <string name="copy_to_clipboard">Skopiowano do schowka</string>
-    <string name="not_migrated">Nie znaleziono na TMDb. Pozycja zostanie usunięta w przyszłej aktualizacji. Kliknij, aby zobaczyć szczegóły</string>
+    <string name="not_migrated">Serial nie został zmigrowany na dane TMDB. Niektóre akcje, takie jak Trakt i synchronizacja z chmurą mogą nie działać. Zalecamy wyszukanie serialu z bazy TMDB i usunięcie tego serialu. Naciśnij, aby wyświetlić szczegóły.</string>
     <!-- Sharing -->
     <string name="share">Udostępnij</string>
     <string name="share_show">Współdziel serial</string>
@@ -100,7 +100,7 @@
     <string name="no_translation_title">Nie przetłumaczone</string>
     <string name="no_spoilers">Niektóre informacje zostały ukryte, aby zapobiec spoilerowaniu. W celu wyłączenia tej funkcji wejdź do ustawień.</string>
     <string name="format_source">Źródło: %s</string>
-    <string name="format_last_edited">Ostatnio edytowane: %s</string>
+    <string name="last_updated">Zaktualizowano</string>
     <!-- Date and Time -->
     <string name="today">dziś</string>
     <string name="now">teraz</string>
@@ -163,6 +163,7 @@
     <string name="context_updateshow">Aktualizuj</string>
     <string name="context_marknext">Odcinek obejrzany</string>
     <string name="action_episodes_switch_view">Przełącz widok</string>
+    <string name="next_to_watch">Następny do obejrzenia</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Niedawno obejrzane</string>
@@ -327,7 +328,7 @@
     <string name="connect">Połącz</string>
     <string name="disconnect">Rozłącz</string>
     <string name="use_integrated_browser">Użyj zintegrowanej przeglądarki</string>
-    <string name="show_library">Pokaż bibliotekę</string>
+    <string name="show_library">Dodaj seriale z Trakt</string>
     <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
@@ -468,8 +469,6 @@
     <string name="get_started">Wprowadzenie</string>
     <string name="dismiss">Zamknij</string>
     <!-- Notifications -->
-    <string name="upcoming_show">Nadchodzi odcinek %s</string>
-    <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
     <string name="upcoming_episodes_number">%s nowych odcinków</string>
     <string name="more">%d więcej</string>
     <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>

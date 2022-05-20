@@ -8,13 +8,13 @@
 - Push to GitHub and check build succeeds, tests are green and Lint file is OK.
 
 
-## Play Store (betas + stable)
+## Play Store (testing + production)
 
 - `bundlePureRelease`
 - Publish to alpha channel, test.
 
-Published to beta:
-- Tag like `v12` or `v12-beta1`.
+Published to beta channel:
+- Tag like `v12.0.3`.
 
 Published to production:
 - Download universal APK from Play Store and attach to GitHub tag.

@@ -45,7 +45,7 @@
     <!-- Status messages -->
     <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
     <string name="updated_details">Λεπτομέρειες</string>
-    <string name="norating">n/a</string>
+    <string name="norating">μη διαθέσιμο</string>
     <string name="unknown">άγνωστο</string>
     <string name="offline">Συνδεθείτε σε ένα δίκτυο και, ξανά προσπαθήστε.</string>
     <string name="app_not_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να το χειριστεί</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Δεν είναι δυνατή η επικοινωνία με το %s. Ξαναδοκιμάστε αργότερα.</string>
     <string name="api_failed">Αποτυχία: %s</string>
     <string name="copy_to_clipboard">Αντιγράφηκε στο πρόχειρο</string>
-    <string name="not_migrated">Δεν βρέθηκε στο TMDb, θα αφαιρεθεί σε μελλοντική ενημέρωση. Πατήστε για λεπτομέρειες.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Μοίρασε</string>
     <string name="share_show">Κοινοποίηση σειράς</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Χωρίς μετάφραση</string>
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
     <string name="format_source">Πηγή: %s</string>
-    <string name="format_last_edited">Τελευταία τροποποίηση: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">Σήμερα</string>
     <string name="now">τώρα</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Ενημέρωση</string>
     <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
     <string name="action_episodes_switch_view">Αλλαγή προβολής</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Ιστορικό</string>
     <string name="recently_watched">Παρακολουθήσατε πρόσφατα</string>
@@ -313,7 +314,7 @@
     <string name="connect">Σύνδεση</string>
     <string name="disconnect">Αποσύνδεση</string>
     <string name="use_integrated_browser">Χρησιμοποιήστε ενσωματωμένο πρόγραμμα περιήγησης</string>
-    <string name="show_library">Εμφάνιση της  βιβλιοθήκη σας</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε. <a href="http://trakt.tv"> Μάθετε περισσότερα</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
@@ -402,7 +403,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Εμφάνιση</string>
     <string name="pref_theme">Θέμα</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Χρήση χρωμάτων συστήματος</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Χρήση προεπιλογής συστήματος</string>
     <string name="theme_app_auto_battery">Ορίστηκε από το Battery Saver</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Ξεκινήστε</string>
     <string name="dismiss">Απόρριψη</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s επερχόμενα</string>
-    <string name="upcoming_episodes">Νέα επεισόδια έρχονται</string>
     <string name="upcoming_episodes_number">%s νέα επεισόδια</string>
     <string name="more">%d περισσότερο</string>
     <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>

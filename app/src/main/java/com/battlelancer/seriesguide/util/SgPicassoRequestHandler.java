@@ -9,7 +9,7 @@ import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2;
-import com.battlelancer.seriesguide.ui.movies.MovieTools;
+import com.battlelancer.seriesguide.movies.tools.MovieTools;
 import com.squareup.picasso.Downloader;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;

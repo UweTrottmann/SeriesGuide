@@ -47,7 +47,7 @@
     <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">unbekannt</string>
-    <string name="offline">Mit einem Netzwerk verbinden, dann erneut versuchen</string>
+    <string name="offline">Mit dem Internet verbinden, dann erneut versuchen</string>
     <string name="app_not_available">Keine App verfügbar um dies auszuführen</string>
     <string name="people_empty">Niemand hier?! Tippen Sie um es erneut zu versuchen.</string>
     <string name="database_error">Daten konnten nicht geändert werden</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Konnte %s nicht erreichen. Versuchen Sie es später erneut.</string>
     <string name="api_failed">Gescheitert: %s</string>
     <string name="copy_to_clipboard">In Zwischenablage kopiert</string>
-    <string name="not_migrated">Noch nicht auf TMDB gefunden. Wird evtl. keine Updates erhalten oder nicht mit Trakt und Cloud funktionieren. Antippen um Details anzuzeigen.</string>
+    <string name="not_migrated">Serie nicht zu TMDB-Daten migriert. Einige Funktionen inkl. Trakt- und Cloud-Sync funktionieren wsl. nicht. Evtl. nach einem Ersatz suchen und diese Serie entfernen. Tippen um Details anzuzeigen.</string>
     <!-- Sharing -->
     <string name="share">Teilen</string>
     <string name="share_show">Serie teilen</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Nicht übersetzt</string>
     <string name="no_spoilers">Einige Details werden ausgeblendet um Spoiler zu vermeiden. Dies kann in den Einstellungen ausgeschaltet werden.</string>
     <string name="format_source">Quelle: %s</string>
-    <string name="format_last_edited">Zuletzt bearbeitet: %s</string>
+    <string name="last_updated">Zuletzt aktualisiert</string>
     <!-- Date and Time -->
     <string name="today">heute</string>
     <string name="now">jetzt</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Aktualisieren</string>
     <string name="context_marknext">Nächste Folge angesehen</string>
     <string name="action_episodes_switch_view">Ansicht wechseln</string>
+    <string name="next_to_watch">Als nächstes Ansehen</string>
     <!-- History -->
     <string name="user_stream">Verlauf</string>
     <string name="recently_watched">Vor kurzem angesehen</string>
@@ -313,7 +314,7 @@
     <string name="connect">Verbinden</string>
     <string name="disconnect">Trennen</string>
     <string name="use_integrated_browser">Integrierten Browser verwenden</string>
-    <string name="show_library">Ihre Trakt Bibliothek anzeigen</string>
+    <string name="show_library">Serien von Trakt hinzufügen</string>
     <string name="about_trakt">Trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Bewerten</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Erste Schritte</string>
     <string name="dismiss">Schließen</string>
     <!-- Notifications -->
-    <string name="upcoming_show">In Kürze läuft %s</string>
-    <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
     <string name="upcoming_episodes_number">%s neue Folgen</string>
     <string name="more">%d mehr</string>
     <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>

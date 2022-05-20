@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.util
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.battlelancer.seriesguide.backend.HexagonAuthError
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.google.api.client.http.HttpResponseException
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -11,6 +12,7 @@ import retrofit2.Response
 import timber.log.Timber
 import java.io.InterruptedIOException
 import java.net.ConnectException
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLException
 
@@ -73,6 +75,9 @@ class Errors {
 
         /**
          * Inserts the call site stack trace element at the beginning of the bottom-most exception.
+         *
+         * This is useful as the reporting tool differentiates exceptions based on the first stack
+         * trace element.
          */
         private fun bendCauseStackTrace(throwable: Throwable) {
             val synthStackTrace = Throwable().stackTrace
@@ -122,6 +127,16 @@ class Errors {
 
             getReporter()?.setCustomKey("action", action)
             statusCode?.let { getReporter()?.setCustomKey("code", it) }
+            getReporter()?.recordException(throwable)
+        }
+
+        fun logAndReportHexagonAuthError(throwable: HexagonAuthError) {
+            Timber.e(throwable, throwable.action)
+
+            bendCauseStackTrace(throwable)
+
+            getReporter()?.setCustomKey("action", throwable.action)
+            throwable.statusCode?.let { getReporter()?.setCustomKey("code", it) }
             getReporter()?.recordException(throwable)
         }
 
@@ -243,6 +258,25 @@ private fun Throwable.shouldReport(): Boolean {
     }
 }
 
+/**
+ * Returns true if the throwable is a network exception that might be
+ * recovered from by retrying the network request.
+ */
+fun Throwable.isRetryError(): Boolean {
+    return when (this) {
+        is ConnectException -> true
+        is UnknownHostException -> true
+        // Not super type InterruptedIOException as possibly not caused by network issues?
+        is SocketTimeoutException -> true
+        // Not SSLException as likely not temporary or a network issue.
+        is InterruptedIOException -> true // Network request time outs or interrupted by system.
+        else -> false
+    }
+}
+
+/**
+ * Returns the bottom most cause, or this if there is no cause.
+ */
 private fun Throwable.getUltimateCause(): Throwable {
     return cause?.getUltimateCause() ?: this
 }

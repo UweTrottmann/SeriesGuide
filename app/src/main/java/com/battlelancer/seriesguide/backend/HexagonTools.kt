@@ -3,24 +3,28 @@ package com.battlelancer.seriesguide.backend
 import android.content.Context
 import android.os.SystemClock
 import android.text.format.DateUtils
-import android.util.Pair
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
-import com.battlelancer.seriesguide.backend.HexagonAuthError.Companion.build
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.sync.NetworkJobProcessor
-import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
+import com.battlelancer.seriesguide.util.isRetryError
 import com.firebase.ui.auth.AuthUI
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.mapError
+import com.github.michaelbull.result.runCatching
+import com.github.michaelbull.result.throwUnless
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.Tasks
-import com.google.api.client.extensions.android.json.AndroidJsonFactory
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.JsonFactory
+import com.google.api.client.json.gson.GsonFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.uwetrottmann.seriesguide.backend.account.Account
@@ -31,6 +35,7 @@ import com.uwetrottmann.seriesguide.backend.shows.Shows
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import timber.log.Timber
 import java.io.IOException
+import java.util.concurrent.ExecutionException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -233,20 +238,26 @@ class HexagonTools @Inject constructor(
                         httpRequestInitializer.firebaseUser = it
                     }
                 } else {
-                    logAndReport(
-                        ACTION_SILENT_SIGN_IN,
+                    Errors.logAndReportHexagonAuthError(
                         HexagonAuthError(ACTION_SILENT_SIGN_IN, "FirebaseUser is null")
                     )
                 }
             } catch (e: Exception) {
+                // https://developers.google.com/android/reference/com/google/android/gms/tasks/Tasks#public-static-tresult-await-tasktresult-task
                 if (e is InterruptedException) {
                     // Do not report thread interruptions, it's expected.
-                    Timber.w(e, "Sign-in check interrupted")
+                    Timber.w(e, ACTION_SILENT_SIGN_IN)
                 } else {
-                    logAndReport(
-                        ACTION_SILENT_SIGN_IN,
-                        build(ACTION_SILENT_SIGN_IN, e)
-                    )
+                    val cause = if (e is ExecutionException) {
+                        e.cause ?: e // The Task failed, getCause returns the original exception.
+                    } else {
+                        e // Unexpected exception.
+                    }
+                    // Do not report sign in required errors, this is expected and handled below.
+                    val authEx = HexagonAuthError.build(ACTION_SILENT_SIGN_IN, cause)
+                    if (!authEx.isSignInRequiredError()) {
+                        Errors.logAndReportHexagonAuthError(authEx)
+                    }
                 }
             }
         }
@@ -273,13 +284,12 @@ class HexagonTools @Inject constructor(
 
     /**
      * Gets show by TMDB ID, or if not found and TVDB ID given, gets show by that.
-     * Returns false on service error.
+     * Returns null value if not found.
      */
-    fun getShow(showTmdbId: Int, showTvdbId: Int?): Pair<SgCloudShow?, Boolean> {
-        return try {
-            val showsService = showsService
-                ?: return Pair(null, false)
-
+    fun getShow(showTmdbId: Int, showTvdbId: Int?): Result<SgCloudShow?, HexagonError> {
+        val showsService = showsService
+            ?: return Err(HexagonStop)
+        return runCatching {
             var showOrNull = showsService.sgShow
                 .setShowTmdbId(showTmdbId)
                 .execute()
@@ -295,21 +305,34 @@ class HexagonTools @Inject constructor(
                     showOrNull.notify = legacyShowOrNull.notify
                 }
             }
-            Pair(showOrNull, true)
-        } catch (e: IOException) {
-            logAndReportHexagon("h: get show", e)
-            Pair(null, false)
-        } catch (e: IllegalArgumentException) {
+            showOrNull
+        }.throwUnless {
             // Note: JSON parser may throw IllegalArgumentException.
-            logAndReportHexagon("h: get show", e)
-            Pair(null, false)
+            it is IOException || it is IllegalArgumentException
+        }.mapError {
+            logAndReportHexagon("h: get show", it)
+            if (it.isRetryError()) HexagonRetry else HexagonStop
         }
     }
 
     companion object {
         private const val ACTION_SILENT_SIGN_IN = "silent sign-in"
-        private val JSON_FACTORY: JsonFactory = AndroidJsonFactory()
+        private val JSON_FACTORY: JsonFactory = GsonFactory()
         private val HTTP_TRANSPORT: HttpTransport = NetHttpTransport()
         private const val SIGN_IN_CHECK_INTERVAL_MS = 5 * DateUtils.MINUTE_IN_MILLIS
     }
 }
+
+sealed class HexagonError
+
+/**
+ * The API request might succeed if tried again after a brief delay
+ * (e.g. time outs or other temporary network issues).
+ */
+object HexagonRetry : HexagonError()
+
+/**
+ * The API request is unlikely to succeed if retried, at least right now
+ * (e.g. API bugs or changes).
+ */
+object HexagonStop : HexagonError()

@@ -70,7 +70,7 @@
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
-    <style name="TextAppearance.SeriesGuide.Subtitle1.Dim">
+    <style name="TextAppearance.SeriesGuide.Subtitle1.Bold.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
     <style name="TextAppearance.SeriesGuide.Subtitle1.Secondary">

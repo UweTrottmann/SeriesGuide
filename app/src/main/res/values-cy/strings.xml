@@ -55,7 +55,7 @@
     <string name="api_error_generic">Methu siarad â %s Rhowch gynnig arall arni yn nes ymlaen.</string>
     <string name="api_failed">Wedi methu: %s</string>
     <string name="copy_to_clipboard">Copi i\'r clipfwrdd</string>
-    <string name="not_migrated">Heb ei ddarganfod eto ar TMDB. Oni allai dderbyn diweddariadau na gweithio gyda Trakt a Cloud. Cliciwch i weld y manylion.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Rhannu</string>
     <string name="share_show">Sioe rhannu</string>
@@ -102,7 +102,7 @@
     <string name="no_translation_title">Heb ei gyfieithu</string>
     <string name="no_spoilers">Mae rhai manylion wedi\'u cuddio i atal anrheithwyr. I ddiffodd hyn ewch i Gosodiadau.</string>
     <string name="format_source">Ffynhonnell: %s</string>
-    <string name="format_last_edited">Golygwyd ddiwethaf: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">heddiw</string>
     <string name="now">nawr</string>
@@ -165,6 +165,7 @@
     <string name="context_updateshow">Diweddariad</string>
     <string name="context_marknext">Wedi gwylio\'r bennod nesaf</string>
     <string name="action_episodes_switch_view">Newid golygfa</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Hanes</string>
     <string name="recently_watched">Gwyliwyd yn ddiweddar</string>
@@ -341,7 +342,7 @@
     <string name="connect">Cysylltu</string>
     <string name="disconnect">Datgysylltwch</string>
     <string name="use_integrated_browser">Defnyddiwch borwr integredig</string>
-    <string name="show_library">Dangoswch eich llyfrgell Trakt</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio. <a href="https://trakt.tv"> Dysgu mwy</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>
@@ -490,8 +491,6 @@
     <string name="get_started">Dechrau</string>
     <string name="dismiss">Diswyddo</string>
     <!-- Notifications -->
-    <string name="upcoming_show">Mae %s yn dod i fyny</string>
-    <string name="upcoming_episodes">Mae penodau newydd yn dod i fyny</string>
     <string name="upcoming_episodes_number">%s pennod newydd</string>
     <string name="more">%d arall</string>
     <string name="upcoming_display">Dewiswch i arddangos sioeau sydd ar ddod</string>

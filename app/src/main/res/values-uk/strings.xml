@@ -55,7 +55,7 @@
     <string name="api_error_generic">Не вдалося зв\'язатися з %s. Спробуйте пізніше.</string>
     <string name="api_failed">Не вдалося: %s</string>
     <string name="copy_to_clipboard">Скопійовано до буфера обміну</string>
-    <string name="not_migrated">Не знайдено в TMDb, буде видалено в майбутньому оновлення. Натисніть для деталей.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Поділитись</string>
     <string name="share_show">Поділитись серіалом</string>
@@ -100,7 +100,7 @@
     <string name="no_translation_title">Не перекладено</string>
     <string name="no_spoilers">Деякі деталі приховані для запобігання спойлерам. Щоб вимкнути це використовуйте Налаштування.</string>
     <string name="format_source">Джерело: %s</string>
-    <string name="format_last_edited">Остання редакція: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">сьогодні</string>
     <string name="now">Сьогодні</string>
@@ -163,6 +163,7 @@
     <string name="context_updateshow">Оновити</string>
     <string name="context_marknext">Переглянута наступна серія</string>
     <string name="action_episodes_switch_view">Змінити вигляд</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Історія</string>
     <string name="recently_watched">Недавно переглянуті</string>
@@ -327,7 +328,7 @@
     <string name="connect">Підключитись</string>
     <string name="disconnect">Від\'єднатись</string>
     <string name="use_integrated_browser">Використовувати вбудований браузер</string>
-    <string name="show_library">Показати вашу бібліотеку з trakt</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Рейтинг</string>
@@ -468,8 +469,6 @@
     <string name="get_started">Початок роботи</string>
     <string name="dismiss">Відхилити</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s наближається</string>
-    <string name="upcoming_episodes">Виходять нові серії</string>
     <string name="upcoming_episodes_number">%s нових серій</string>
     <string name="more">%d більше</string>
     <string name="upcoming_display">Виберіть для відображення найближчих серіалів</string>

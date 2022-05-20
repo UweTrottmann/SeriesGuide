@@ -109,7 +109,12 @@ public class SyncProgress {
         }
     }
 
-    void setImportantErrorIfNone(@NonNull String message) {
+    /**
+     * Set message to be appended to the step description once
+     * {@link #publish} or {@link #publishFinished} is called.
+     * Does nothing if this was already called.
+     */
+    public void setImportantErrorIfNone(@NonNull String message) {
         if (importantErrorOrNull == null) {
             importantErrorOrNull = message;
         }

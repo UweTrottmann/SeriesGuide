@@ -55,7 +55,7 @@
     <string name="api_error_generic">No és possible contactar amb %s. Proveu-ho més tard.</string>
     <string name="api_failed">Ha fallat: %s</string>
     <string name="copy_to_clipboard">Copiat al portapapers</string>
-    <string name="not_migrated">No es troba a TMDb, serà esborrat en una futura actualització. Toca per més detalls.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Comparteix</string>
     <string name="share_show">Comparteix la serie</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">No traduït</string>
     <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
     <string name="format_source">Font: %s</string>
-    <string name="format_last_edited">Darrera actualització: %s</string>
+    <string name="last_updated">Darrera actualització</string>
     <!-- Date and Time -->
     <string name="today">avui</string>
     <string name="now">ara</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Actualitza</string>
     <string name="context_marknext">Següent episodi vist</string>
     <string name="action_episodes_switch_view">Canvia la vista</string>
+    <string name="next_to_watch">Següent a mirar</string>
     <!-- History -->
     <string name="user_stream">Històric</string>
     <string name="recently_watched">Vist Recentment</string>
@@ -313,7 +314,7 @@
     <string name="connect">Connecta</string>
     <string name="disconnect">Desconnecta</string>
     <string name="use_integrated_browser">Utilitza el navegador integrat</string>
-    <string name="show_library">Mostra\'m la biblioteca del trakt</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">La plataforma Trakt us ajuda a controlar les sèries i peŀlícules que esteu veient. <a href="https://trakt.tv">Més informació</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Puntua</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Començar</string>
     <string name="dismiss">Omet</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s és a punt de sortir</string>
-    <string name="upcoming_episodes">Nous episodis són a punt de sortir</string>
     <string name="upcoming_episodes_number">%s episodis nous</string>
     <string name="more">%d més</string>
     <string name="upcoming_display">Seleccioneu-ho per veure les sèries que han de sortir</string>

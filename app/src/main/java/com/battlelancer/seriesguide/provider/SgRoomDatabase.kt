@@ -8,19 +8,29 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.battlelancer.seriesguide.model.ActivityType
-import com.battlelancer.seriesguide.model.SgActivity
-import com.battlelancer.seriesguide.model.SgEpisode
-import com.battlelancer.seriesguide.model.SgEpisode2
-import com.battlelancer.seriesguide.model.SgJob
-import com.battlelancer.seriesguide.model.SgList
-import com.battlelancer.seriesguide.model.SgListItem
-import com.battlelancer.seriesguide.model.SgMovie
-import com.battlelancer.seriesguide.model.SgSeason
-import com.battlelancer.seriesguide.model.SgSeason2
-import com.battlelancer.seriesguide.model.SgShow
-import com.battlelancer.seriesguide.model.SgShow2
-import com.battlelancer.seriesguide.model.SgWatchProvider
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.shows.history.ActivityType
+import com.battlelancer.seriesguide.shows.history.SgActivity
+import com.battlelancer.seriesguide.shows.database.SgEpisode
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.jobs.SgJob
+import com.battlelancer.seriesguide.lists.database.SgList
+import com.battlelancer.seriesguide.lists.database.SgListHelper
+import com.battlelancer.seriesguide.lists.database.SgListItem
+import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.shows.database.SgSeason
+import com.battlelancer.seriesguide.shows.database.SgSeason2
+import com.battlelancer.seriesguide.shows.database.SgShow
+import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
+import com.battlelancer.seriesguide.movies.database.MovieHelper
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
+import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
+import com.battlelancer.seriesguide.shows.database.SgShow2Helper
+import com.battlelancer.seriesguide.shows.history.SgActivityHelper
+import com.battlelancer.seriesguide.streaming.SgWatchProviderHelper
 import timber.log.Timber
 
 @Database(
@@ -51,6 +61,24 @@ abstract class SgRoomDatabase : RoomDatabase() {
     abstract fun movieHelper(): MovieHelper
 
     abstract fun sgWatchProviderHelper(): SgWatchProviderHelper
+
+    class SgRoomCallback(context: Context) : Callback() {
+        private val context = context.applicationContext
+
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            // manually create FTS table, not supported by Room
+            db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE)
+            // Add initial data, currently only first list
+            val listName = context.getString(R.string.first_list)
+            val listId = Lists.generateListId(listName)
+            val stmt= db.compileStatement("INSERT INTO `${Tables.LISTS}` (`${Lists.LIST_ID}`,`${Lists.NAME}`,`${Lists.ORDER}`) VALUES (?,?,?)")
+            stmt.bindString(1, listId)
+            stmt.bindString(2, listName)
+            stmt.bindLong(3, 0)
+            stmt.executeInsert()
+            //db.execSQL("INSERT INTO `${Tables.LISTS}` (`${Lists.LIST_ID}`,`${Lists.NAME}`,`${Lists.ORDER}`) VALUES (`$listId`,`$listName`,0)")
+        }
+    }
 
     companion object {
 
@@ -91,30 +119,31 @@ abstract class SgRoomDatabase : RoomDatabase() {
                 if (existingInLock != null) { // Second check (with locking)
                     existingInLock
                 } else {
-                    val newInstance = Room.databaseBuilder(
-                        context.applicationContext,
-                        SgRoomDatabase::class.java,
-                        SeriesGuideDatabase.DATABASE_NAME
-                    ).addMigrations(
-                        MIGRATION_49_50,
-                        MIGRATION_48_49,
-                        MIGRATION_47_48,
-                        MIGRATION_46_47,
-                        MIGRATION_45_46,
-                        MIGRATION_44_45,
-                        MIGRATION_42_44,
-                        MIGRATION_43_44,
-                        MIGRATION_42_43,
-                        MIGRATION_41_43,
-                        MIGRATION_40_43,
-                        MIGRATION_39_43,
-                        MIGRATION_38_43,
-                        MIGRATION_37_43,
-                        MIGRATION_36_43,
-                        MIGRATION_35_43,
-                        MIGRATION_34_43
-                    )
-                        .addCallback(CALLBACK)
+                    val newInstance = Room
+                        .databaseBuilder(
+                            context.applicationContext,
+                            SgRoomDatabase::class.java,
+                            SeriesGuideDatabase.DATABASE_NAME
+                        ).addMigrations(
+                            MIGRATION_49_50,
+                            MIGRATION_48_49,
+                            MIGRATION_47_48,
+                            MIGRATION_46_47,
+                            MIGRATION_45_46,
+                            MIGRATION_44_45,
+                            MIGRATION_42_44,
+                            MIGRATION_43_44,
+                            MIGRATION_42_43,
+                            MIGRATION_41_43,
+                            MIGRATION_40_43,
+                            MIGRATION_39_43,
+                            MIGRATION_38_43,
+                            MIGRATION_37_43,
+                            MIGRATION_36_43,
+                            MIGRATION_35_43,
+                            MIGRATION_34_43
+                        )
+                        .addCallback(SgRoomCallback(context))
                         .allowMainThreadQueries()
                         .build()
                     instance = newInstance
@@ -129,20 +158,12 @@ abstract class SgRoomDatabase : RoomDatabase() {
         @VisibleForTesting
         @JvmStatic
         fun switchToInMemory(context: Context) {
-            instance = Room.inMemoryDatabaseBuilder(context.applicationContext,
-                    SgRoomDatabase::class.java)
-                    .addMigrations(MIGRATION_42_43)
-                    .addCallback(CALLBACK)
-                    .allowMainThreadQueries()
-                    .build()
-        }
-
-        @JvmField
-        val CALLBACK: Callback = object : Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                // manually create FTS table, not supported by Room
-                db.execSQL(SeriesGuideDatabase.CREATE_SEARCH_TABLE)
-            }
+            instance = Room
+                .inMemoryDatabaseBuilder(context.applicationContext, SgRoomDatabase::class.java)
+                .addMigrations(MIGRATION_42_43)
+                .addCallback(SgRoomCallback(context))
+                .allowMainThreadQueries()
+                .build()
         }
 
         data class SeasonIds(

@@ -14,6 +14,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2SearchResult;
+import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodesColumns;
@@ -123,7 +125,7 @@ public class SeriesGuideDatabase {
     /**
      * Add {@link Shows#NOTIFY} flag to shows table.
      */
-    static final int DBVER_40_NOTIFY_PER_SHOW = 40;
+    public static final int DBVER_40_NOTIFY_PER_SHOW = 40;
 
     /**
      * Add {@link Episodes#LAST_UPDATED} flag to episodes table.
@@ -348,7 +350,7 @@ public class SeriesGuideDatabase {
 
             + ShowsColumns.LANGUAGE + " TEXT DEFAULT '',"
 
-            + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
+            + ShowsColumns.UNWATCHED_COUNT + " INTEGER DEFAULT " + SgShow2.UNKNOWN_UNWATCHED_COUNT
             + ","
 
             + ShowsColumns.NOTIFY + " INTEGER DEFAULT 1"
@@ -597,7 +599,7 @@ public class SeriesGuideDatabase {
         }
         if (isTableColumnMissing(db, Tables.SHOWS, Shows.UNWATCHED_COUNT)) {
             db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN "
-                    + Shows.UNWATCHED_COUNT + " INTEGER DEFAULT " + DBUtils.UNKNOWN_UNWATCHED_COUNT
+                    + Shows.UNWATCHED_COUNT + " INTEGER DEFAULT " + SgShow2.UNKNOWN_UNWATCHED_COUNT
                     + ";");
         }
     }
@@ -749,7 +751,7 @@ public class SeriesGuideDatabase {
 //                while (shows.moveToNext()) {
 //                    // put overwrites previous value
 //                    newTitleValues.put(Shows.TITLE_NOARTICLE,
-//                            DBUtils.trimLeadingArticle(shows.getString(1)));
+//                            TextTools.trimLeadingArticle(shows.getString(1)));
 //                    db.update(Tables.SHOWS, newTitleValues, Shows._ID + "=" + shows.getInt(0),
 //                            null);
 //                }
@@ -772,7 +774,7 @@ public class SeriesGuideDatabase {
 //                while (movies.moveToNext()) {
 //                    // put overwrites previous value
 //                    newTitleValues.put(Movies.TITLE_NOARTICLE,
-//                            DBUtils.trimLeadingArticle(movies.getString(1)));
+//                            TextTools.trimLeadingArticle(movies.getString(1)));
 //                    db.update(Tables.MOVIES, newTitleValues, Movies._ID + "=" + movies.getInt(0),
 //                            null);
 //                }

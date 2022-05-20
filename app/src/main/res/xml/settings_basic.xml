@@ -13,7 +13,7 @@
         app:iconSpaceReserved="false"
         app:key="com.uwetrottmann.seriesguide.watch.region"
         app:title="@string/action_stream"
-        tools:summary="@string/action_turn_off" />
+        tools:summary="@string/action_select_region" />
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
@@ -30,13 +30,6 @@
             app:iconSpaceReserved="false"
             app:key="com.battlelancer.seriesguide.languageFallback"
             app:title="@string/pref_language_fallback" />
-
-        <CheckBoxPreference
-            app:defaultValue="False"
-            app:iconSpaceReserved="false"
-            app:key="onlyFutureEpisodes"
-            app:summary="@string/pref_onlyfuturesummary"
-            app:title="@string/pref_onlyfuture" />
 
         <CheckBoxPreference
             app:defaultValue="False"

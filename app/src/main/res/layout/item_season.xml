@@ -17,7 +17,7 @@
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
         android:ellipsize="end"
         android:paddingTop="@dimen/large_padding"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
         tools:text="@string/season_number" />
 
     <androidx.appcompat.widget.AppCompatImageView

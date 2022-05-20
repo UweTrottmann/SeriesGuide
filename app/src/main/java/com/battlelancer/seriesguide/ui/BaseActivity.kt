@@ -1,15 +1,17 @@
 package com.battlelancer.seriesguide.ui
 
-import android.os.Handler
-import android.os.Looper
 import android.text.format.DateUtils
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.dataliberation.BackupSettings
+import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.Companion.requestSyncIfTime
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
-import com.battlelancer.seriesguide.ui.search.AddShowTask.OnShowAddedEvent
 import com.battlelancer.seriesguide.util.DBUtils.DatabaseErrorEvent
 import com.battlelancer.seriesguide.util.TaskManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -21,9 +23,6 @@ import org.greenrobot.eventbus.ThreadMode
  * see [registerEventBus] and [unregisterEventBus] to prevent that.
  */
 abstract class BaseActivity : BaseThemeActivity() {
-
-    private var handler: Handler? = null
-    private var updateShowRunnable: Runnable? = null
 
     override fun onStart() {
         super.onStart()
@@ -45,11 +44,6 @@ abstract class BaseActivity : BaseThemeActivity() {
 
     override fun onStop() {
         super.onStop()
-        val handler = handler
-        val updateShowRunnable = updateShowRunnable
-        if (handler != null && updateShowRunnable != null) {
-            handler.removeCallbacks(updateShowRunnable)
-        }
         unregisterEventBus()
     }
 
@@ -126,13 +120,11 @@ abstract class BaseActivity : BaseThemeActivity() {
      * See [SgSyncAdapter.requestSyncIfTime].
      */
     protected fun updateShowDelayed(showId: Long) {
-        val handler = handler ?: Handler(Looper.getMainLooper())
-            .also { handler = it }
-
-        // delay sync request to avoid slowing down UI
         val context = applicationContext
-        val updateShowRunnable = Runnable { requestSyncIfTime(context, showId) }
-            .also { updateShowRunnable = it }
-        handler.postDelayed(updateShowRunnable, DateUtils.SECOND_IN_MILLIS)
+        lifecycleScope.launch(Dispatchers.IO) {
+            // Delay sync request to avoid slowing down UI.
+            delay(DateUtils.SECOND_IN_MILLIS)
+            requestSyncIfTime(context, showId)
+        }
     }
 }

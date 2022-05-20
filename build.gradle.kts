@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     // https://github.com/ben-manes/gradle-versions-plugin/releases
-    id("com.github.ben-manes.versions") version "0.39.0"
+    id("com.github.ben-manes.versions") version "0.42.0"
     // https://github.com/gradle-nexus/publish-plugin/releases
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // api
 }
@@ -12,8 +12,8 @@ buildscript {
     val sgTargetSdk by extra(31) // Android 12 (S)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106306)
-    val sgVersionName by extra("63.1.0")
+    val sgVersionCode by extra(2106407)
+    val sgVersionName by extra("64.0.7")
 
     val kotlinVersion by extra("1.6.10") // https://kotlinlang.org/docs/releases.html#release-details
     val coroutinesVersion by extra("1.6.0") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
@@ -38,13 +38,8 @@ buildscript {
         }
     }
 
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.1.1") // libraries, SeriesGuide
+        classpath("com.android.tools.build:gradle:7.2.0") // libraries, SeriesGuide
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
@@ -76,14 +71,6 @@ nexusPublishing {
                 password.set(rootProject.property("SONATYPE_NEXUS_PASSWORD").toString())
             }
         }
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
     }
 }
 

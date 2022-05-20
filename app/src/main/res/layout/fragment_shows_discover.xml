@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.battlelancer.seriesguide.widgets.EmptyView
+            <com.battlelancer.seriesguide.ui.widgets.EmptyView
                 android:id="@+id/emptyViewShowsDiscover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

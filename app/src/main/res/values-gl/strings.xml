@@ -55,7 +55,7 @@
     <string name="api_error_generic">Non se puido conectar con %s. Tenta máis tarde.</string>
     <string name="api_failed">Fallou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferencia</string>
-    <string name="not_migrated">Non se atopou en TMDb, borrarase nunha futura actualización. Preme para máis información.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Partillar</string>
     <string name="share_show">Partillar serie</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Non traducida</string>
     <string name="no_spoilers">Algúns detalles están ocultos para evitar spoilers. Para desativar aceda a Configuracións.</string>
     <string name="format_source">Fonte: %s</string>
-    <string name="format_last_edited">Última edición: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">hoxe</string>
     <string name="now">agora</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Próximo episodio visto</string>
     <string name="action_episodes_switch_view">Cambiar vista</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Visto recentemente</string>
@@ -313,7 +314,7 @@
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Empregar navegador integrado</string>
-    <string name="show_library">Amosar a túa biblioteca</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt axuda a manter un rexistro dos programas de televisión e películas que estás a ver. <a href="https://trakt.tv">Saber máis</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Votar</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Comezar</string>
     <string name="dismiss">Rexeitar</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s is coming up</string>
-    <string name="upcoming_episodes">New episodes are coming up</string>
     <string name="upcoming_episodes_number">%s novos episodios</string>
     <string name="more">%d máis</string>
     <string name="upcoming_display">Select to display upcoming shows</string>

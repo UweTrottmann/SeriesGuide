@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.dataliberation.model;
 
 import android.content.ContentValues;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.TextTools;
 import com.google.gson.annotations.SerializedName;
 
 public class Movie {
@@ -43,7 +43,7 @@ public class Movie {
         values.put(Movies.TMDB_ID, tmdbId);
         values.put(Movies.IMDB_ID, imdbId);
         values.put(Movies.TITLE, title);
-        values.put(Movies.TITLE_NOARTICLE, DBUtils.trimLeadingArticle(title));
+        values.put(Movies.TITLE_NOARTICLE, TextTools.trimLeadingArticle(title));
         values.put(Movies.RELEASED_UTC_MS, releasedUtcMs);
         values.put(Movies.RUNTIME_MIN, runtimeMin);
         values.put(Movies.POSTER, poster);

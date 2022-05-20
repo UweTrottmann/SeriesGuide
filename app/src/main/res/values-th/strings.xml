@@ -55,7 +55,7 @@
     <string name="api_error_generic">ไม่สามารถติดต่อกับ %s ลองอีกครั้งในภายหลัง</string>
     <string name="api_failed">ล้มเหลว: %s</string>
     <string name="copy_to_clipboard">คัดลอกไปยังคลิปบอร์ดแล้ว</string>
-    <string name="not_migrated">ไม่พบบน TMDb และจะถูกลบในอัปเดตที่กำลังจะมาถึง แตะเพื่อดูรายละเอียด</string>
+    <string name="not_migrated">รายการไม่ได้ย้ายไปใช้ข้อมูล TMDB บางการกระทำ เช่น การซิงค์กับ Trakt และคลาวด์อาจไม่ทำงาน ลองค้นหารายการแทนที่และลบรายการนี้ แตะเพื่อดูข้อมูลเพิ่มเติม</string>
     <!-- Sharing -->
     <string name="share">แบ่งปัน</string>
     <string name="share_show">แบ่งปันซีรีส์</string>
@@ -97,7 +97,7 @@
     <string name="no_translation_title">ยังไม่ถูกแปล</string>
     <string name="no_spoilers">รายละเอียดบางอย่างถูกซ่อนเพื่อป้องกันการสปอยล์ ปิดการป้องกันนี้ได้ในการตั้งค่า</string>
     <string name="format_source">ที่มา: %s</string>
-    <string name="format_last_edited">แก้ไขล่าสุด: %s</string>
+    <string name="last_updated">อัปเดตล่าสุด</string>
     <!-- Date and Time -->
     <string name="today">วันนี้</string>
     <string name="now">ขณะนี้</string>
@@ -160,6 +160,7 @@
     <string name="context_updateshow">อัปเดต</string>
     <string name="context_marknext">ดูตอนถัดไป</string>
     <string name="action_episodes_switch_view">เปลี่ยนมุมมอง</string>
+    <string name="next_to_watch">ดูถัดไป</string>
     <!-- History -->
     <string name="user_stream">ประวัติ</string>
     <string name="recently_watched">เพิ่งดู</string>
@@ -306,7 +307,7 @@
     <string name="connect">เชื่อมต่อ</string>
     <string name="disconnect">เลิกเชื่อมต่อ</string>
     <string name="use_integrated_browser">ใช้เบราว์เซอร์ภายใน</string>
-    <string name="show_library">แสดงห้องสมุด trakt ของคุณ</string>
+    <string name="show_library">เพิ่มรายการจาก Trakt</string>
     <string name="about_trakt">trakt ช่วยเก็บบันทึกรายการทีวีและภาพยนตร์ที่คุณกำลังดูอยู่ <a href="https://trakt.tv">เรียนรู้เพิ่มเติม</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">ให้คะแนน</string>
@@ -435,8 +436,6 @@
     <string name="get_started">เริ่มต้น</string>
     <string name="dismiss">ปิด</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s กำลังมา</string>
-    <string name="upcoming_episodes">ตอนใหม่กำลังมา</string>
     <string name="upcoming_episodes_number">%s ตอนใหม่</string>
     <string name="more">อื่นๆ อีก %d</string>
     <string name="upcoming_display">เลือกเพื่อแสดงซีรีส์ที่กำลังมา</string>

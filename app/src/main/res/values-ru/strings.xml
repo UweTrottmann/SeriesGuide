@@ -36,8 +36,8 @@
     <string name="sync_and_update">Синхронизировать и обновить</string>
     <string name="sync_and_download_all">Синхронизировать и обновить всё</string>
     <string name="action_stream">Стриминг или покупка</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_stream_info">Стриминг или покупка</string>
+    <string name="action_select_region">Выберите регион</string>
     <string name="action_include_any_watch_provider">Include any</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
     <string name="api_failed">Не удалось: %s</string>
     <string name="copy_to_clipboard">Скопировано в буфер обмена</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Отправить</string>
     <string name="share_show">Поделиться сериалом</string>
@@ -93,14 +93,14 @@
     <string name="show_isalive">Продолжается</string>
     <string name="show_isnotalive">Завершён</string>
     <string name="show_isUpcoming">Следующие эпизоды</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">В производстве</string>
+    <string name="show_status_pilot">Пилот</string>
+    <string name="show_status_canceled">Отменён</string>
     <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
     <string name="no_translation_title">Не переведено</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
-    <string name="format_last_edited">Последнее изменение: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">сегодня</string>
     <string name="now">сейчас</string>
@@ -158,11 +158,12 @@
     <string name="action_shows_sort_oldest_episode">Старейший эпизод</string>
     <string name="action_shows_sort_last_watched">Последний просмотренный</string>
     <string name="action_shows_sort_remaining">Оставшиеся эпизоды</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">Статус</string>
     <string name="action_shows_sort_favorites">Сначала избранные</string>
     <string name="context_updateshow">Обновить</string>
     <string name="context_marknext">Смотреть следующий эпизод</string>
     <string name="action_episodes_switch_view">Изменить вид</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Недавно просмотренные</string>
@@ -265,7 +266,7 @@
     <string name="shows_continuing">%s продолжается</string>
     <string name="episodes_watched">%s просмотрено</string>
     <string name="movies_on_watchlist">%s в списке просмотра</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d в коллекции</string>
     <string name="movies_watched_format">%s просмотрено</string>
     <plurals name="days_plural">
         <item quantity="one">%d день</item>
@@ -298,7 +299,7 @@
     <string name="hexagon_signin">Войти</string>
     <string name="hexagon_signout">Выйти</string>
     <string name="hexagon_setup_incomplete">Настройка SeriesGuide Cloud не была завершена.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">К вашему аккаунту не привязан адрес электронной почты.</string>
     <string name="hexagon_remove_account">Удалить аккаунт</string>
     <string name="hexagon_remove_account_success">Аккаунт уничтожен.</string>
     <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
@@ -327,7 +328,7 @@
     <string name="connect">Подключиться</string>
     <string name="disconnect">Отключиться</string>
     <string name="use_integrated_browser">Использовать встроенный браузер</string>
-    <string name="show_library">Показать вашу библиотеку на trakt.tv</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите. <a href="http://trakt.tv">Узнать больше</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Oценить</string>
@@ -376,7 +377,7 @@
     <string name="pref_language_fallback">Альтернативное изображение</string>
     <string name="pref_updatewifionly">Картинки только через Wi-Fi</string>
     <string name="pref_updatewifionlysummary">Чтобы сократить расходы на передачу данных, не скачивать через мобильные сети</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Сообщить разработчику об ошибках</string>
     <plurals name="days_before_plural">
         <item quantity="one">за %d дн. до</item>
         <item quantity="few">за %d дн. до</item>
@@ -420,11 +421,11 @@
     <string name="upcoming_upto_one_week">1 неделя</string>
     <string name="upcoming_upto_two_weeks">2 недели</string>
     <string name="upcoming_upto_one_month">1 месяц</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">все</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Оформление</string>
     <string name="pref_theme">Тема</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Использовать системные цвета</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Использовать системные настройки</string>
     <string name="theme_app_auto_battery">Настроить режим энергосбережения</string>
@@ -468,8 +469,6 @@
     <string name="get_started">Начать</string>
     <string name="dismiss">Отменить</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s выпущено</string>
-    <string name="upcoming_episodes">Выходят новые эпизоды</string>
     <string name="upcoming_episodes_number">%s новый(х) эпизод(ов)</string>
     <string name="more">%d больше</string>
     <string name="upcoming_display">Выберите, чтобы показать предстоящие передачи</string>
@@ -486,7 +485,7 @@
     <string name="pref_notification_channel_errors">Ошибки</string>
     <string name="pref_notifications_next_episodes_only">Только для следующих серий</string>
     <string name="pref_notifications_next_episodes_only_summary">Уведомлять только если новая серия следующая для просмотра</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
+    <string name="pref_notifications_battery_settings">Параметры батареи</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
@@ -546,5 +545,5 @@
     <string name="feedback_action_ok">Да, конечно</string>
     <string name="feedback_action_nothanks">Нет, спасибо</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Поддержать разработчика?</string>
 </resources>

@@ -10,9 +10,8 @@ import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.provider.SgEpisode2Numbers;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.ui.shows.ShowTools;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktV2;
@@ -264,7 +263,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
                         Timber.e("Failed to get episode %d", episodeId);
                         return buildErrorResponse();
                     }
-                    Integer showTraktId = ShowTools.getShowTraktId(context, episode.getShowId());
+                    Integer showTraktId = SgApp.getServicesComponent(context)
+                            .showTools()
+                            .getShowTraktId(episode.getShowId());
                     if (showTraktId == null) {
                         Timber.e("Failed to get show %d", episode.getShowId());
                         return buildErrorResponse();
@@ -405,7 +406,9 @@ public class TraktTask extends AsyncTask<Void, Void, TraktTask.TraktResponse> {
         // show?
         long showId = args.getLong(InitBundle.SHOW_ID);
         if (showId != 0) {
-            Integer showTraktId = ShowTools.getShowTraktId(context, showId);
+            Integer showTraktId = SgApp.getServicesComponent(context)
+                    .showTools()
+                    .getShowTraktId(showId);
             if (showTraktId == null) {
                 Timber.e("Failed to get show %d", showId);
                 return null;

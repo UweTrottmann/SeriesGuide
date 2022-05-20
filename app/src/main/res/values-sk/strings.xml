@@ -55,7 +55,7 @@
     <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
     <string name="api_failed">Zlyhanie: %s</string>
     <string name="copy_to_clipboard">Skopírované do schránky</string>
-    <string name="not_migrated">Nenašiel sa na TMDb, bude odstránený v budúcej aktualizácii. Klepnutím zobrazíte ďalšie podrobnosti.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Zdieľať</string>
     <string name="share_show">Zdieľať seriál</string>
@@ -100,7 +100,7 @@
     <string name="no_translation_title">Nie je preložené</string>
     <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo prezradeniu deja. Pre ich zobrazenie prejdite do nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
-    <string name="format_last_edited">Naposledy upravené: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">dnes</string>
     <string name="now">teraz</string>
@@ -163,6 +163,7 @@
     <string name="context_updateshow">Aktualizovať</string>
     <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
     <string name="action_episodes_switch_view">Zmeniť zobrazenie</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">História</string>
     <string name="recently_watched">Nedávno videné</string>
@@ -327,7 +328,7 @@
     <string name="connect">Pripojiť</string>
     <string name="disconnect">Odpojiť</string>
     <string name="use_integrated_browser">Použiť vstavaný prehliadač</string>
-    <string name="show_library">Zobraziť trakt knižnicu</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">V trakt zaznamenávate, ktoré seriály a filmy sledujete. <a href="https://trakt.tv">Zistite viac</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>
@@ -468,8 +469,6 @@
     <string name="get_started">Začíname</string>
     <string name="dismiss">Zatvoriť</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s práve vychádzajú</string>
-    <string name="upcoming_episodes">Práve vychádzajú nové epizódy</string>
     <string name="upcoming_episodes_number">%s nových epizód</string>
     <string name="more">%d ďalších</string>
     <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>

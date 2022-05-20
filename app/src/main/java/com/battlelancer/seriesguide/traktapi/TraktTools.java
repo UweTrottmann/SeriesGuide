@@ -6,14 +6,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
+import com.uwetrottmann.trakt5.entities.SearchResult;
+import com.uwetrottmann.trakt5.enums.IdType;
+import com.uwetrottmann.trakt5.enums.Type;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import retrofit2.Response;
+import timber.log.Timber;
 
 public class TraktTools {
 
@@ -134,5 +141,37 @@ public class TraktTools {
             default:
                 return 0;
         }
+    }
+
+    /**
+     * @return {@code null} if looking up the id failed, -1 if the movie was not found or the movie
+     * id if it was found.
+     */
+    @Nullable
+    public static Integer lookupMovieTraktId(TraktV2 trakt, int movieTmdbId) {
+        try {
+            Response<List<SearchResult>> response = trakt
+                    .search()
+                    .idLookup(IdType.TMDB, String.valueOf(movieTmdbId), Type.MOVIE, null, 1, 1)
+                    .execute();
+            if (response.isSuccessful()) {
+                List<SearchResult> results = response.body();
+                if (results == null || results.size() != 1) {
+                    Timber.e("Finding trakt movie failed (no results)");
+                    return -1;
+                }
+                SearchResult result = results.get(0);
+                if (result.movie != null && result.movie.ids != null) {
+                    return result.movie.ids.trakt;
+                }
+                Timber.e("Finding trakt movie failed (not in results)");
+                return -1;
+            } else {
+                Errors.logAndReport("movie trakt id lookup", response);
+            }
+        } catch (Exception e) {
+            Errors.logAndReport("movie trakt id lookup", e);
+        }
+        return null;
     }
 }

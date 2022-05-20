@@ -15,14 +15,6 @@
 # Ignore notes about reflection use in support library
 -dontnote android.support.**
 
-# Cloud Endpoints libraries
-# Needed to keep generic types and @Key annotations accessed via reflection
--keepattributes Signature,RuntimeVisibleAnnotations,AnnotationDefault
-
--keepclassmembers class * {
-  @com.google.api.client.util.Key <fields>;
-}
-
 # Amazon IAP library
 -dontwarn com.amazon.**
 -keep class com.amazon.** { *; }
@@ -46,16 +38,6 @@
 -keepattributes Signature
 # Gson specific classes
 -dontwarn sun.misc.Unsafe
-
-# Google API client
-# warnings due to Guava classes used in tests and ErrorProne annotations
--dontwarn afu.org.checkerframework.**
--dontwarn org.checkerframework.**
--dontwarn com.google.errorprone.**
--dontwarn sun.misc.Unsafe
--dontwarn java.lang.ClassValue
--dontwarn com.google.api.client.http.apache.** # Apache HTTP was removed as of Android M
--dontwarn com.google.api.client.util.** # Unused Apache commons-codec code
 
 # OkHttp 3
 # JSR 305 annotations are for embedding nullability information.

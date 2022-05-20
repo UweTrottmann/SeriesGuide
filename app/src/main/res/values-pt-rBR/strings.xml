@@ -55,7 +55,7 @@
     <string name="api_error_generic">Não foi possível conectar-se com %s. Tente mais tarde.</string>
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
-    <string name="not_migrated">Não encontrado no TMDb, será removido em uma atualização futura. Toque para mais detalhes.</string>
+    <string name="not_migrated">Os dados TMDB sobre a série não foram migrados. Algumas ações tais como sincronização do Trakt e da Cloud podem não estar a funcionar. Procure se existe uma entrada alternativa para esta série e remova a entrada atual. Toque para ver mais detalhes.</string>
     <!-- Sharing -->
     <string name="share">Compartilhar</string>
     <string name="share_show">Compartilhar série</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Não traduzido</string>
     <string name="no_spoilers">Alguns detalhes estão ocultos para evitar spoilers. Para desativar, vá até as configurações.</string>
     <string name="format_source">Fonte: %s</string>
-    <string name="format_last_edited">Editado pela última vez: %s</string>
+    <string name="last_updated">Última atualização</string>
     <!-- Date and Time -->
     <string name="today">hoje</string>
     <string name="now">agora</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Próximo episódio já assistido</string>
     <string name="action_episodes_switch_view">Alterar visualização</string>
+    <string name="next_to_watch">Próximo a assistir</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Recentemente assistido</string>
@@ -301,7 +302,7 @@
     <string name="traktcheckin_inprogress">Você já fez check-in em outro episódio ou filme. Substitua o check-in anterior ou aguarde %s e tente novamente.</string>
     <string name="traktcheckin_wait">Vou esperar</string>
     <string name="trakt_success">Enviado ao trakt.</string>
-    <string name="trakt_error_account_locked">Sua conta Trakt está bloqueada. Contate o suporte.</string>
+    <string name="trakt_error_account_locked">Sua conta Trakt está bloqueada. Contate o suporte do Trakt.</string>
     <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
     <string name="trakt_error_not_exists">Não disponível (ainda) no trakt. Tente novamente mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser rastreado com trakt</string>
@@ -313,7 +314,7 @@
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Usar o navegador integrado</string>
-    <string name="show_library">Mostrar sua coleção do trakt</string>
+    <string name="show_library">Adicionar séries do Trakt</string>
     <string name="about_trakt">trakt ajuda a manter um registro dos programas de TV e filmes você está assistindo. <a href="http://trakt.tv">Saiba mais</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Avaliar</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Começar</string>
     <string name="dismiss">Dispensar</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s está chegando</string>
-    <string name="upcoming_episodes">Novos episódios estão chegando</string>
     <string name="upcoming_episodes_number">%s novos episódios</string>
     <string name="more">e outros %d</string>
     <string name="upcoming_display">Selecione para mostrar próximas séries</string>

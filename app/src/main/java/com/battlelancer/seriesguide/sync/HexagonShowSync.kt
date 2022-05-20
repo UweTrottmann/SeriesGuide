@@ -4,22 +4,28 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.provider.SgShow2CloudUpdate
+import com.battlelancer.seriesguide.shows.database.SgShow2CloudUpdate
+import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.ui.search.SearchResult
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
+import com.github.michaelbull.result.getOrElse
 import com.google.api.client.util.DateTime
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShowList
 import com.uwetrottmann.seriesguide.backend.shows.model.Show
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
 import java.util.LinkedList
+import javax.inject.Inject
+import kotlin.collections.set
 
-class HexagonShowSync(
-    private val context: Context,
+class HexagonShowSync @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val hexagonTools: HexagonTools
 ) {
 
@@ -222,9 +228,12 @@ class HexagonShowSync(
                 continue
             }
             val showTmdbIdOrNull = TmdbTools2().findShowTmdbId(context, showTvdbId)
-                ?: return null // Network error, abort.
+                .getOrElse {
+                    // Network or API error, abort.
+                    return null
+                }
             // Only add if TMDB id found
-            if (showTmdbIdOrNull != -1) {
+            if (showTmdbIdOrNull != null) {
                 val show = SgCloudShow()
                 show.tmdbId = showTmdbIdOrNull
                 show.isRemoved = legacyShow.isRemoved
@@ -367,4 +376,11 @@ class HexagonShowSync(
         }
         return true
     }
+
+    suspend fun upload(show: SgCloudShow): Boolean {
+        return withContext(Dispatchers.IO) {
+            upload(listOf(show))
+        }
+    }
+
 }

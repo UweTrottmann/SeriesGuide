@@ -55,7 +55,7 @@
     <string name="api_error_generic">No se pudo hablar con %s. Intenta nuevamente.</string>
     <string name="api_failed">Error: %s</string>
     <string name="copy_to_clipboard">Copiado al portapapeles</string>
-    <string name="not_migrated">No encontrado en TMDb, se eliminará en una actualización futura. Pulse para más detalles.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Compartir</string>
     <string name="share_show">Compartir serie</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Sin traducir</string>
     <string name="no_spoilers">Algunos detalles están ocultos para evitar spoilers. Para cambiarlo, ir a Ajustes > básico.</string>
     <string name="format_source">Fuente: %s</string>
-    <string name="format_last_edited">Última edición: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>
@@ -145,9 +145,9 @@
     <string name="action_shows_filter_unwatched">No vistos</string>
     <string name="action_shows_filter_upcoming">Próximos</string>
     <string name="action_shows_filter_hidden">Escondidos</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_disabled">Desactivado</string>
+    <string name="state_shows_filter_included">Incluido</string>
+    <string name="state_shows_filter_excluded">Excluido</string>
     <string name="action_shows_make_all_visible">Todo visible</string>
     <string name="description_make_all_visible_format">¿Hacer visibles todas las series ocultas (%s) de nuevo?</string>
     <string name="action_shows_sort">Ordenar series</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Actualizar</string>
     <string name="context_marknext">Siguiente episodio visto</string>
     <string name="action_episodes_switch_view">Cambiar vista</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Historial</string>
     <string name="recently_watched">Vistas recientemente</string>
@@ -249,7 +250,7 @@
     <string name="action_movies_sort">Ordenar películas</string>
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Fecha de estreno</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Filtrar películas</string>
     <!-- Statistics -->
     <string name="statistics_failed">No se pudieron calcular las estadísticas.</string>
     <string name="shows_finished">%s vistos completamente</string>
@@ -314,7 +315,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Usar navegador integrado</string>
-    <string name="show_library">Muestra su biblioteca</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt ayuda a mantener un registro de los programas de televisión y películas que estás viendo. <a href="http://trakt.tv">Saber más</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Calificar</string>
@@ -403,7 +404,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Apariencia</string>
     <string name="pref_theme">Tema</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Usar colores del sistema</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Usar el predeterminado del sistema</string>
     <string name="theme_app_auto_battery">Establecido por Ahorro de Batería</string>
@@ -447,8 +448,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="get_started">Empezar</string>
     <string name="dismiss">Descartar</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s está llegando</string>
-    <string name="upcoming_episodes">Vienen nuevos episodios</string>
     <string name="upcoming_episodes_number">%s nuevos episodios</string>
     <string name="more">%d más</string>
     <string name="upcoming_display">Seleccione esta opción para mostrar las series que vienen</string>

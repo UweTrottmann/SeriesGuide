@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
 
-        <com.battlelancer.seriesguide.widgets.WatchedBox
+        <com.battlelancer.seriesguide.shows.episodes.WatchedBox
             android:id="@+id/watchedBoxEpisode"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -33,7 +33,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:ellipsize="end"
             android:paddingTop="16dp"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
             tools:text="Episode Title" />
 
         <TextView

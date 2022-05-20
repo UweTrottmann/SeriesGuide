@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:orientation="vertical"
+    tools:parentTag="android.widget.LinearLayout">
 
-    <com.battlelancer.seriesguide.widgets.FilterBox
+    <com.battlelancer.seriesguide.ui.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_unwatched"
         style="@style/Widget.SeriesGuide.FilterBox"
         android:layout_width="match_parent"
@@ -14,7 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.battlelancer.seriesguide.widgets.FilterBox
+        <com.battlelancer.seriesguide.ui.widgets.FilterBox
             android:id="@+id/checkbox_shows_filter_upcoming"
             style="@style/Widget.SeriesGuide.FilterBox"
             android:layout_width="0dp"
@@ -33,21 +36,21 @@
 
     </LinearLayout>
 
-    <com.battlelancer.seriesguide.widgets.FilterBox
+    <com.battlelancer.seriesguide.ui.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_continuing"
         style="@style/Widget.SeriesGuide.FilterBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:filterBoxDescription="@string/show_isalive" />
 
-    <com.battlelancer.seriesguide.widgets.FilterBox
+    <com.battlelancer.seriesguide.ui.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_favorites"
         style="@style/Widget.SeriesGuide.FilterBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:filterBoxDescription="@string/action_shows_filter_favorites" />
 
-    <com.battlelancer.seriesguide.widgets.FilterBox
+    <com.battlelancer.seriesguide.ui.widgets.FilterBox
         android:id="@+id/checkbox_shows_filter_hidden"
         style="@style/Widget.SeriesGuide.FilterBox"
         android:layout_width="match_parent"
@@ -67,5 +70,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/action_shows_make_all_visible" />
+
+    <CheckBox
+        android:id="@+id/checkbox_shows_filter_no_released"
+        style="@style/Widget.SeriesGuide.DistillationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_padding"
+        tools:text="@string/pref_onlyfuture" />
 
 </merge>

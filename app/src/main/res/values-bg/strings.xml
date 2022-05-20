@@ -55,7 +55,7 @@
     <string name="api_error_generic">Няма връзка с %s. trakt. Опитайте отново по-късно.</string>
     <string name="api_failed">Грешно: %s</string>
     <string name="copy_to_clipboard">Копирано в клипборда</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
     <string name="share_show">Сподели ТВ предаване</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Не е преведено</string>
     <string name="no_spoilers">Някои детайли са скрити, за да се избегнат спойлерите. За да изключите това отидете в настройки.</string>
     <string name="format_source">Източник: %s</string>
-    <string name="format_last_edited">Последно редактиран: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">днес</string>
     <string name="now">сега</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Актуализирай</string>
     <string name="context_marknext">Гледан следващ епизод</string>
     <string name="action_episodes_switch_view">Switch view</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Наскоро гледан/и</string>
@@ -313,7 +314,7 @@
     <string name="connect">Свързване</string>
     <string name="disconnect">Прекъсване на връзката</string>
     <string name="use_integrated_browser">Използвай вградения четец</string>
-    <string name="show_library">Показване на вашата trakt библиотека</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt записва какви сериали и филми гледате. <a href="http://trakt.tv">Научете повече</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Начало</string>
     <string name="dismiss">Отхвърли</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s предстои</string>
-    <string name="upcoming_episodes">Предстоят нови епизоди</string>
     <string name="upcoming_episodes_number">%s нови епизоди</string>
     <string name="more">%d още</string>
     <string name="upcoming_display">Изберете да се показват предстоящи сериали</string>

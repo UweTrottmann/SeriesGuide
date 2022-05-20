@@ -10,10 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverFilterBinding
-import com.battlelancer.seriesguide.model.SgWatchProvider
-import com.battlelancer.seriesguide.model.SgWatchProvider.Type
+import com.battlelancer.seriesguide.streaming.SgWatchProvider.Type
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.ui.search.ShowsDiscoverFilterAdapter
+import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFilterAdapter
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
@@ -51,11 +50,11 @@ class DiscoverFilterFragment : AppCompatDialogFragment() {
             text = StreamingSearch.getCurrentRegionOrSelectString(requireContext())
             setOnClickListener { StreamingSearchConfigureDialog.show(parentFragmentManager) }
         }
-        StreamingSearch.regionLiveData.observe(this, {
+        StreamingSearch.regionLiveData.observe(this) {
             this.binding?.buttonWatchRegion?.text =
                 StreamingSearch.getCurrentRegionOrSelectString(requireContext())
             if (it != null) model.updateWatchProviders(it)
-        })
+        }
 
         // disable all button
         binding.buttonDisableAllProviders.setOnClickListener {
@@ -79,8 +78,12 @@ class DiscoverFilterFragment : AppCompatDialogFragment() {
             }
         }
 
+        val titleRes = when (type) {
+            Type.SHOWS -> R.string.action_shows_filter
+            Type.MOVIES -> R.string.action_movies_filter
+        }
         return MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.action_stream)
+            .setTitle(titleRes)
             .setView(binding.root)
             .setPositiveButton(R.string.dismiss, null)
             .create()

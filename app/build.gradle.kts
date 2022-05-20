@@ -5,7 +5,6 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("com.google.cloud.tools.endpoints-framework-client")
 }
 
 if (project.file("google-services.json").exists()) {
@@ -34,6 +33,7 @@ val fragmentVersion: String by rootProject.extra
 val timberVersion: String by rootProject.extra
 
 android {
+    namespace = "com.battlelancer.seriesguide"
     compileSdk = sgCompileSdk
 
     useLibrary("android.test.base")
@@ -158,12 +158,16 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
+    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
+
     implementation(project(":api"))
+    implementation(project(":backend"))
     implementation(project(":billing"))
     implementation(project(":widgets"))
 
     implementation("androidx.core:core-ktx:$coreVersion")
     implementation("androidx.annotation:annotation:$annotationVersion")
+    implementation("androidx.activity:activity-ktx:1.4.0")
     // https://developer.android.com/jetpack/androidx/releases/appcompat
     implementation("androidx.appcompat:appcompat:1.4.1")
     // https://developer.android.com/jetpack/androidx/releases/browser
@@ -181,6 +185,8 @@ dependencies {
     // ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+
     // Paging
     implementation("androidx.paging:paging-runtime-ktx:3.1.0")
 
@@ -205,9 +211,9 @@ dependencies {
 
     implementation("com.google.flatbuffers:flatbuffers-java:1.12.0")
     // https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.code.gson:gson:2.9.0")
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
-    implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
+    implementation("com.jakewharton.threetenabp:threetenabp:1.4.0")
     implementation("com.jakewharton.timber:timber:$timberVersion")
     implementation("com.readystatesoftware.systembartint:systembartint:1.0.4")
 
@@ -220,7 +226,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
-    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.squareup.picasso:picasso:2.8")
 
     // https://github.com/UweTrottmann/AndroidUtils/releases
     implementation("com.uwetrottmann.androidutils:androidutils:3.0.0")
@@ -247,21 +253,12 @@ dependencies {
     // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
     implementation("com.firebaseui:firebase-ui-auth:8.0.0")
     // Update play-services-auth which adds Android 12 mutable Intent flags.
+    // https://developers.google.com/android/guides/releases
     implementation("com.google.android.gms:play-services-auth:20.0.1")
-
 
     // Crashlytics
     // https://firebase.google.com/support/release-notes/android
     implementation("com.google.firebase:firebase-crashlytics:18.2.5")
-
-    // App Engine
-    // https://github.com/googleapis/google-api-java-client/releases
-    // Note: 1.31.5 has broken dependencies.
-    implementation("com.google.api-client:google-api-client-android:1.31.2") {
-        exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
-        exclude(group = "org.checkerframework") // from guava, not needed at runtime
-        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
-    }
 
     // Amazon flavor specific
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
@@ -278,17 +275,17 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.4.0")
     // Espresso
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0") {
+        // conflicts with checker-qual from guava transitive dependency
+        exclude(group = "org.checkerframework", module = "checker")
+    }
     // Assertions
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.ext:truth:1.4.0") {
         exclude(group = "com.google.truth") // include manually to control conflicting deps
     }
     val truthVersion = "1.1.3" // https://github.com/google/truth/releases
-    androidTestImplementation("com.google.truth:truth:$truthVersion") {
-        exclude(group = "org.checkerframework") // from guava, not needed at runtime
-        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
-    }
+    androidTestImplementation("com.google.truth:truth:$truthVersion")
     implementation("com.google.code.findbugs:jsr305:3.0.2")
     androidTestImplementation("com.google.code.findbugs:jsr305:3.0.2")
     kaptAndroidTest("com.google.dagger:dagger-compiler:$daggerVersion")
@@ -297,10 +294,7 @@ dependencies {
     // Local unit tests
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.annotation:annotation:$annotationVersion")
-    testImplementation("com.google.truth:truth:$truthVersion") {
-        exclude(group = "org.checkerframework") // from guava, not needed at runtime
-        exclude(group = "com.google.errorprone") // from guava, not needed at runtime
-    }
+    testImplementation("com.google.truth:truth:$truthVersion")
     // https://github.com/robolectric/robolectric/releases/
     // Note: 4.6.1 pulls in bcprov-jdk15on code targeting newer Java breaking Jetifier
     // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
@@ -311,18 +305,6 @@ dependencies {
     // https://github.com/mockito/mockito/releases
     testImplementation("org.mockito:mockito-core:4.2.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-}
-
-endpointsClient {
-    setDiscoveryDocs(
-        listOf(
-            "src/endpoints/account-v2-rest.discovery",
-            "src/endpoints/episodes-v2-rest.discovery",
-            "src/endpoints/lists-v2-rest.discovery",
-            "src/endpoints/movies-v2-rest.discovery",
-            "src/endpoints/shows-v2-rest.discovery"
-        )
-    )
 }
 
 fun propertyOrEmpty(name: String): String {

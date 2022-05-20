@@ -55,7 +55,7 @@
     <string name="api_error_generic">Kunne ikke tale med %s. Forsøg venligst igen senere.</string>
     <string name="api_failed">Mislykkedes: %s</string>
     <string name="copy_to_clipboard">Kopieret til udklipsholder</string>
-    <string name="not_migrated">Ikke fundet på TMDb, vil blive fjernet med en fremtidig opdatering. Tryk for detaljer.</string>
+    <string name="not_migrated">Serie ikke migreret til TMDB-data. Visse handlinger, herunder synkronisering med Trakt og skyen, fungerer muligvis ikke. Prøv at søge efter en erstatning, og fjern denne serie. Tryk for at få vist flere oplysninger.</string>
     <!-- Sharing -->
     <string name="share">Del</string>
     <string name="share_show">Del serie</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ikke oversat</string>
     <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
     <string name="format_source">Kilde: %s</string>
-    <string name="format_last_edited">Senest ændret: %s</string>
+    <string name="last_updated">Senest opdateret</string>
     <!-- Date and Time -->
     <string name="today">i dag</string>
     <string name="now">nu</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Opdatér</string>
     <string name="context_marknext">Næste episode set</string>
     <string name="action_episodes_switch_view">Skift visning</string>
+    <string name="next_to_watch">Næste usete episode</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Set for nylig</string>
@@ -313,7 +314,7 @@
     <string name="connect">Forbind</string>
     <string name="disconnect">Afbryd</string>
     <string name="use_integrated_browser">Brug integreret browser</string>
-    <string name="show_library">Vis dit trakt-bibliotek</string>
+    <string name="show_library">Tilføj serier fra Trakt</string>
     <string name="about_trakt">trakt hjælper dig med at holde styr på dine TV-serier. <a href="https://trakt.tv">Flere oplysninger</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Kom i gang</string>
     <string name="dismiss">Ignorér</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s sendes snart</string>
-    <string name="upcoming_episodes">Nye episoder kommer snart</string>
     <string name="upcoming_episodes_number">%s nye episoder</string>
     <string name="more">%d mere</string>
     <string name="upcoming_display">Vælg for at vise kommende serier</string>

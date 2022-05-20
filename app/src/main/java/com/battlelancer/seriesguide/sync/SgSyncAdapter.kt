@@ -15,14 +15,14 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
+import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
-import com.battlelancer.seriesguide.service.NotificationService
 import com.battlelancer.seriesguide.settings.UpdateSettings
+import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
-import com.battlelancer.seriesguide.ui.movies.MovieTools
-import com.battlelancer.seriesguide.ui.shows.ShowTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
@@ -31,6 +31,7 @@ import dagger.Lazy
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.pow
+import kotlin.random.Random
 
 /**
  * [AbstractThreadedSyncAdapter] which updates show and movie data and sends data to
@@ -76,6 +77,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
         // JOBS
         if (options.syncType == SyncType.JOBS || options.syncType == SyncType.DELTA) {
+            // Note: will not process further jobs if one fails, safe to call again to retry.
             NetworkJobProcessor(context).process()
             if (options.syncType == SyncType.JOBS) {
                 return  // do nothing else
@@ -83,9 +85,8 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         // SYNC
-        val showSync = ShowSync(options.syncType, options.singleShowId)
-
         // should we sync?
+        val showSync = ShowSync(options.syncType, options.singleShowId)
         val currentTime = System.currentTimeMillis()
         if (!options.syncImmediately && showSync.isSyncMultiple) {
             if (!isTimeForSync(context, currentTime)) {
@@ -98,22 +99,28 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         val progress = SyncProgress()
         progress.publish(SyncProgress.Step.TMDB)
 
+        // Get latest TMDb configuration.
+        // No need to abort on failure, can use default or last fetched config.
         val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
-        // get latest TMDb configuration
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         if (!tmdbSync.updateConfiguration(prefs)) {
             progress.recordError()
         }
 
-        val showTools = SgApp.getServicesComponent(context).showTools()
-        var resultCode = showSync.sync(context, showTools, currentTime, progress)
+        // Update show data.
+        // If failed for at least one show, do not proceed with other sync steps to avoid
+        // syncing with outdated show data.
+        // Note: it is still NOT guaranteed show data is up-to-date before syncing because a show
+        // does not get updated if it was recently (see ShowSync selecting which shows to update).
+        var resultCode = showSync.sync(context, currentTime, progress)
+        Timber.d("Syncing: TMDB shows...DONE")
         if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
             progress.recordError()
-        }
-        Timber.d("Syncing: TMDB shows...DONE")
-        if (resultCode == null) {
             progress.publishFinished()
-            return  // invalid show(s), abort
+            if (showSync.isSyncMultiple) {
+                updateTimeAndFailedCounter(prefs, resultCode)
+            }
+            return // Try again later.
         }
 
         // do some more things if this is not a quick update
@@ -173,7 +180,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
             // update next episodes for all shows
             TaskManager.getInstance().tryNextEpisodeUpdateTask(context)
 
-            updateTimeAndFailedCounter(prefs, currentTime, resultCode)
+            updateTimeAndFailedCounter(prefs, resultCode)
         }
 
         // There could have been new episodes added after an update
@@ -185,10 +192,10 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
     private fun updateTimeAndFailedCounter(
         prefs: SharedPreferences,
-        currentTime: Long,
         resultCode: UpdateResult?
     ) {
         // store time of update, set retry counter on failure
+        val currentTime = System.currentTimeMillis()
         if (resultCode == UpdateResult.SUCCESS) {
             // we were successful, reset failed counter
             prefs.edit()
@@ -196,25 +203,24 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
                 .putInt(UpdateSettings.KEY_FAILED_COUNTER, 0)
                 .apply()
         } else {
-            var failed = UpdateSettings.getFailedNumberOfUpdates(context)
+            val failed = UpdateSettings.getFailedNumberOfUpdates(context) + 1
+
+            val backOffExponent = failed.coerceAtMost(5)
+            // Back off by 2**(failures) minutes + random milliseconds
+            // (random to have more spread across all installs).
+            // Currently: 2min, 4min, 8min, 16min and max. 32min + random ms
+            val backOffMinutes = 2.0.pow(backOffExponent).toLong()
+            Timber.d("Syncing: backing off for %d minutes", backOffMinutes)
+            val backOffMs = backOffMinutes * DateUtils.MINUTE_IN_MILLIS +
+                    Random.nextLong(1000)
 
             /*
-             * Back off by 2**(failure + 2) * minutes. Purposely set a fake
-             * last update time, because the next update will be triggered
+             * Purposely set a fake last update time, because the next update will be triggered
              * SYNC_INTERVAL_MINIMUM_MINUTES minutes after the last update time.
-             * This will trigger sync earlier/later than the default (5min) interval
-              * (4min, 8min, 16min and 32min).
+             * This will trigger sync earlier/later than the default (5min) interval.
              */
-            val fakeLastUpdateTime: Long = if (failed < 4) {
-                // 1, -3, -9, -27
-                val posOrNegInterval = (SYNC_INTERVAL_MINIMUM_MINUTES
-                        - 2.0.pow(failed + 2).toInt())
-                currentTime - (posOrNegInterval * DateUtils.MINUTE_IN_MILLIS)
-            } else {
-                currentTime
-            }
+            val fakeLastUpdateTime = currentTime - SYNC_INTERVAL_MINIMUM_MINUTES + backOffMs
 
-            failed += 1
             prefs.edit()
                 .putLong(UpdateSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
                 .putInt(UpdateSettings.KEY_FAILED_COUNTER, failed)
@@ -223,6 +229,9 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
     }
 
     companion object {
+        /** Used when registering the SyncAdapter, see [AccountUtils.createAccount]. */
+        const val SYNC_INTERVAL_SECONDS = 24 * 60 * 60 // 1 day (in seconds)
+
         /** Should never be outside 4-32 so back-off works as expected.  */
         private const val SYNC_INTERVAL_MINIMUM_MINUTES = 5
 
@@ -266,13 +275,13 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         /**
-         * Schedules a sync for a single show if [ShowTools.shouldUpdateShow] returns true.
+         * Schedules a sync for a single show if [ShowSync.shouldUpdateShow] returns true.
          *
          * *Note: Runs a content provider op, so you should do this on a background thread.*
          */
         @JvmStatic
         fun requestSyncIfTime(context: Context, showId: Long) {
-            if (SgApp.getServicesComponent(context).showTools().shouldUpdateShow(showId)) {
+            if (ShowSync.shouldUpdateShow(context, showId)) {
                 requestSyncIfConnected(context, SyncType.SINGLE, showId)
             }
         }

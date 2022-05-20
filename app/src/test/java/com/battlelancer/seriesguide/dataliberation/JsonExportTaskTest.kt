@@ -3,20 +3,20 @@ package com.battlelancer.seriesguide.dataliberation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
-import com.battlelancer.seriesguide.model.SgEpisode2
-import com.battlelancer.seriesguide.model.SgList
-import com.battlelancer.seriesguide.model.SgListItem
-import com.battlelancer.seriesguide.model.SgMovie
-import com.battlelancer.seriesguide.model.SgSeason2
-import com.battlelancer.seriesguide.model.SgShow2
-import com.battlelancer.seriesguide.provider.MovieHelper
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.lists.database.SgList
+import com.battlelancer.seriesguide.lists.database.SgListItem
+import com.battlelancer.seriesguide.movies.database.SgMovie
+import com.battlelancer.seriesguide.shows.database.SgSeason2
+import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
-import com.battlelancer.seriesguide.provider.SgEpisode2Helper
-import com.battlelancer.seriesguide.provider.SgListHelper
-import com.battlelancer.seriesguide.provider.SgSeason2Helper
-import com.battlelancer.seriesguide.provider.SgShow2Helper
-import com.battlelancer.seriesguide.ui.episodes.EpisodeFlags
-import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
+import com.battlelancer.seriesguide.lists.database.SgListHelper
+import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
+import com.battlelancer.seriesguide.shows.database.SgShow2Helper
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -138,7 +138,7 @@ class JsonExportTaskTest {
                 network = "MBS",
                 imdbId = "imdbidvalue",
                 runtime = 24,
-                status = ShowTools.Status.ENDED,
+                status = ShowStatus.ENDED,
                 poster = "someurl/to/a/poster.jpg",
                 posterSmall = "someurl/to/a/poster.jpg",
                 language = "en",

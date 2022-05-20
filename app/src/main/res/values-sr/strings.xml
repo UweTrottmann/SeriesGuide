@@ -55,7 +55,7 @@
     <string name="api_error_generic">Neuspešna komunikacija sa %s. Pokušajte ponovo kasnije.</string>
     <string name="api_failed">Neuspelo %s</string>
     <string name="copy_to_clipboard">Kopirano u klipbord</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Подели</string>
     <string name="share_show">Подели серију</string>
@@ -99,7 +99,7 @@
     <string name="no_translation_title">Nije prevedeno</string>
     <string name="no_spoilers">Neki od detalja nisu vidljivi da se izbegnu spojleri. Da isključite ovo posetite Settings.</string>
     <string name="format_source">Izvor %s</string>
-    <string name="format_last_edited">Poslednji put izmenjeno %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">данас</string>
     <string name="now">сада</string>
@@ -162,6 +162,7 @@
     <string name="context_updateshow">Ажурирање</string>
     <string name="context_marknext">Погледана, следећа епизода</string>
     <string name="action_episodes_switch_view">Switch view</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Историјат</string>
     <string name="recently_watched">Недавно гледано</string>
@@ -320,7 +321,7 @@
     <string name="connect">Повежи</string>
     <string name="disconnect">Прекини везу</string>
     <string name="use_integrated_browser">Use integrated browser</string>
-    <string name="show_library">Прикажите вашу trakt библиотеку</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt води евиденцију серија и филмова које гледате. <a href="http://trakt.tv">Сазнај више</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
@@ -457,8 +458,6 @@
     <string name="get_started">Почни</string>
     <string name="dismiss">Одбаци</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s ускоро долази</string>
-    <string name="upcoming_episodes">Нове епизоде долазе ускоро</string>
     <string name="upcoming_episodes_number">%s нових епизода</string>
     <string name="more">%d више</string>
     <string name="upcoming_display">Одабери долазеће серије за приказивање</string>

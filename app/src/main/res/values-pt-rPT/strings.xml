@@ -33,7 +33,7 @@
     <string name="add_to_homescreen">Adicionar ao Ecrã inicial</string>
     <string name="action_open">Abrir</string>
     <string name="sync_manually">Sincronizar manualmente</string>
-    <string name="sync_and_update">Sincronizar &amp; Atualizar</string>
+    <string name="sync_and_update">Sincronizar e Atualizar</string>
     <string name="sync_and_download_all">Sincronizar &amp; Retransferir</string>
     <string name="action_stream">Comprar ou Ver Online</string>
     <string name="action_stream_info">Informação sobre Comprar ou Ver Online</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Houve uma falha ao comunicar com o %s. Tenta mais tarde.</string>
     <string name="api_failed">Falhou: %s</string>
     <string name="copy_to_clipboard">Copiado para a área de transferência</string>
-    <string name="not_migrated">Não foi encontrado no TMDb, será removido numa futura atualização. Toque para mais detalhes.</string>
+    <string name="not_migrated">Os dados TMDB sobre a série não foram migrados. Algumas ações tais como sincronização do Trakt e da Cloud podem não estar a funcionar. Procura se existe uma entrada alternativa para esta série e remove a entrada atual. Toca para ver mais detalhes.</string>
     <!-- Sharing -->
     <string name="share">Partilhar</string>
     <string name="share_show">Partilhar série</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Por traduzir</string>
     <string name="no_spoilers">Alguns detalhes estão ocultados para prevenir spoilers. Aceda às Definições para desactivar esta prevenção.</string>
     <string name="format_source">Fonte: %s</string>
-    <string name="format_last_edited">Última edição: %s</string>
+    <string name="last_updated">Última atualização</string>
     <!-- Date and Time -->
     <string name="today">hoje</string>
     <string name="now">agora</string>
@@ -116,7 +116,7 @@
     <string name="action_collection_add">Adicionar à coleção</string>
     <string name="action_collection_remove">Remover da coleção</string>
     <string name="action_watched">Marcar como visto</string>
-    <string name="action_unwatched">Marcado como não visto</string>
+    <string name="action_unwatched">Marcar como não visto</string>
     <string name="state_watched">Visto</string>
     <string name="state_watched_multiple_format">Visto (%d)</string>
     <string name="state_skipped">Ignorado</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Atualizar</string>
     <string name="context_marknext">Marcar próximo episódio como visto</string>
     <string name="action_episodes_switch_view">Alterar visualização</string>
+    <string name="next_to_watch">Próximo a ser visto</string>
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Visto recentemente</string>
@@ -202,7 +203,7 @@
     <string name="no_results">Nenhum resultado, tenta palavras completas.</string>
     <string name="empty_show_search">Não foi encontrado na tua lista de séries</string>
     <string name="action_try_again">Tentar novamente</string>
-    <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TMDB. Tenta mais tarde.</string>
+    <string name="tvdb_error_does_not_exist">A série (ainda) não existe no TMDB. Por favor, tenta novamente mais tarde.</string>
     <string name="add_all">Adicionar todas as séries</string>
     <string name="add_multiple">Todas as séries irão aparecer na sua lista brevemente.</string>
     <string name="add_started">%s irá aparecer na sua lista de séries brevemente.</string>
@@ -313,7 +314,7 @@
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Usar navegador integrado</string>
-    <string name="show_library">Mostrar a tua biblioteca do Trakt</string>
+    <string name="show_library">Adicionar séries do Trakt</string>
     <string name="about_trakt">O Trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes. <a href="http://trakt.tv">Experimenta!</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Começar</string>
     <string name="dismiss">Dispensar</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s brevemente</string>
-    <string name="upcoming_episodes">Novos episódios brevemente</string>
     <string name="upcoming_episodes_number">%s novos episódios</string>
     <string name="more">e outros %d</string>
     <string name="upcoming_display">Seleciona para exibir as próximas séries</string>
@@ -483,7 +482,7 @@
     <string name="action_upgrade">Desbloquear Todas as Funcionalidades</string>
     <string name="billing_action_subscribe">Subscrever</string>
     <string name="billing_action_manage_subscriptions">Gerir Subscrições</string>
-    <string name="billing_action_pass">Obter X Pass App</string>
+    <string name="billing_action_pass">Obter a App \"X Pass\"</string>
     <string name="billing_price_subscribe">%1$s/ano, experimenta gratuitamente, cancela a qualquer momento através de %2$s</string>
     <string name="billing_duration_format">%1$s/ano</string>
     <string name="billing_sub_description">Experimenta gratuitamente durante 30 dias, cancela a qualquer momento.</string>

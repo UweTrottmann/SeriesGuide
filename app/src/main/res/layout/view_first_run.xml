@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     style="@style/FirstRunColumn"
     android:layout_height="wrap_content"
@@ -59,98 +60,62 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewAutoBackupDetected" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- Wrap CheckBox in FrameLayout to get full size selectable background. -->
+        <FrameLayout
             android:id="@+id/containerNoSpoilers"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_padding"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:minHeight="?android:attr/listPreferredItemHeight"
             android:paddingStart="@dimen/large_padding"
             android:paddingEnd="@dimen/large_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonRestoreAutoBackup">
 
+            <!-- Title and summary set in code. -->
             <CheckBox
                 android:id="@+id/checkboxNoSpoilers"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:background="@android:color/transparent"
                 android:clickable="false"
                 android:focusable="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:paddingStart="4dp"
+                tools:text="@string/pref_nospoilers" />
 
-            <TextView
-                android:id="@+id/textViewNoSpoilers"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/pref_nospoilers"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-                app:layout_constraintBaseline_toBaselineOf="@id/checkboxNoSpoilers"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkboxNoSpoilers" />
+        </FrameLayout>
 
-            <TextView
-                android:id="@+id/textViewNoSpoilersSummary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/inline_padding"
-                android:text="@string/pref_nospoilers_summary"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewNoSpoilers"
-                app:layout_constraintTop_toBottomOf="@id/textViewNoSpoilers" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- Wrap CheckBox in FrameLayout to get full size selectable background. -->
+        <FrameLayout
             android:id="@+id/containerDataSaver"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:focusable="true"
-            android:minHeight="?android:attr/listPreferredItemHeight"
             android:paddingStart="@dimen/large_padding"
             android:paddingEnd="@dimen/large_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/containerNoSpoilers">
 
+            <!-- Title and summary set in code. -->
             <CheckBox
                 android:id="@+id/checkboxDataSaver"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:background="@android:color/transparent"
                 android:clickable="false"
                 android:focusable="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:paddingStart="4dp"
+                tools:text="@string/pref_updatewifionly" />
 
-            <TextView
-                android:id="@+id/textViewDataSaver"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/pref_updatewifionly"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-                app:layout_constraintBaseline_toBaselineOf="@id/checkboxDataSaver"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkboxDataSaver" />
-
-            <TextView
-                android:id="@+id/textViewDataSaverSummary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/inline_padding"
-                android:text="@string/pref_updatewifionlysummary"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewDataSaver"
-                app:layout_constraintTop_toBottomOf="@id/textViewDataSaver" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
         <Button
             android:id="@+id/buttonAddShow"
@@ -174,9 +139,9 @@
             android:layout_marginEnd="8dp"
             app:constraint_referenced_ids="buttonSignIn,buttonRestoreBackup"
             app:flow_horizontalBias="1"
+            app:flow_horizontalGap="4dp"
             app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
-            app:flow_horizontalGap="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonAddShow" />
@@ -204,7 +169,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/flowGetStartedButtons" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- Wrap CheckBox in FrameLayout to get full size selectable background. -->
+        <FrameLayout
             android:id="@+id/containerErrorReports"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -218,26 +184,16 @@
 
             <CheckBox
                 android:id="@+id/checkboxErrorReports"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:checked="true"
                 android:clickable="false"
                 android:focusable="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:paddingStart="4dp"
+                tools:text="@string/pref_error_reports" />
 
-            <TextView
-                android:id="@+id/textViewErrorReports"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/pref_error_reports"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Dim"
-                app:layout_constraintBaseline_toBaselineOf="@id/checkboxErrorReports"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkboxErrorReports" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/textViewPolicyLink"

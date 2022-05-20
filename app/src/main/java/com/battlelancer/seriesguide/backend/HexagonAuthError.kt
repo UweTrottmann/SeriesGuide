@@ -1,29 +1,39 @@
 package com.battlelancer.seriesguide.backend
 
+import com.firebase.ui.auth.FirebaseUiException
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
 
 /**
  * Error for tracking Cloud Sign-In failures.
  */
-class HexagonAuthError(action: String, failure: String, cause: Throwable?) :
-    Throwable("$action: $failure", cause) {
+class HexagonAuthError(
+    val action: String,
+    failure: String,
+    cause: Throwable?,
+    val statusCode: Int?
+) : Throwable("$action: $failure", cause) {
 
-    constructor(action: String, failure: String) : this(action, failure, null)
+    constructor(action: String, failure: String) : this(action, failure, null, null)
+
+    fun isSignInRequiredError(): Boolean {
+        return cause is ApiException && statusCode == CommonStatusCodes.SIGN_IN_REQUIRED
+    }
 
     companion object {
+
+        /**
+         * Extracts status code from ApiException, FirebaseUiException.
+         */
         @JvmStatic
         fun build(action: String, throwable: Throwable): HexagonAuthError {
-            return HexagonAuthError(action, extractStatusCodeString(throwable), throwable)
-        }
-
-        private fun extractStatusCodeString(throwable: Throwable): String {
-            // Prefer ApiException message if it is the direct cause.
-            val causeMessage = throwable.cause?.message
-            return if (causeMessage != null && throwable.cause is ApiException) {
-                causeMessage
-            } else {
-                throwable.message ?: ""
+            val message = throwable.message ?: ""
+            val statusCode = when (throwable) {
+                is FirebaseUiException -> throwable.errorCode
+                is ApiException -> throwable.statusCode
+                else -> null
             }
+            return HexagonAuthError(action, message, throwable, statusCode)
         }
     }
 

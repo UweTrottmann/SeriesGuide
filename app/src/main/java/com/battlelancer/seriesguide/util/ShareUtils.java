@@ -12,6 +12,7 @@ import androidx.annotation.StringRes;
 import androidx.core.app.ShareCompat;
 import androidx.core.app.ShareCompat.IntentBuilder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
 
 /**
  * Contains helpers to share a show, episode (share intent, calendar event) or movie.

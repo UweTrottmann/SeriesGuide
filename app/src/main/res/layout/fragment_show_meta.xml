@@ -110,4 +110,19 @@
         android:focusable="true"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
 
+    <TextView
+        style="@style/Block.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/last_updated"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
+
+    <TextView
+        android:id="@+id/textShowLastUpdated"
+        style="@style/Block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+        tools:text="July 17, 21:48" />
+
 </merge>

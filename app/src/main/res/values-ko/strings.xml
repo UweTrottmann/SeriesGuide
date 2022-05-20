@@ -55,7 +55,7 @@
     <string name="api_error_generic">%s와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="api_failed">%s 실패</string>
     <string name="copy_to_clipboard">클립보드에 복사됨</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">공유</string>
     <string name="share_show">프로그램 공유</string>
@@ -97,7 +97,7 @@
     <string name="no_translation_title">번역되지 않음</string>
     <string name="no_spoilers">일부 내용은 스포일러를 방지하기 위해 숨겨진 상태입니다. 설정에서 이를 해제할 수 있습니다.</string>
     <string name="format_source">소스: %s</string>
-    <string name="format_last_edited">최종 편집: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">오늘</string>
     <string name="now">지금</string>
@@ -160,6 +160,7 @@
     <string name="context_updateshow">업데이트</string>
     <string name="context_marknext">다음 에피소드 시청 완료</string>
     <string name="action_episodes_switch_view">Switch view</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">기록</string>
     <string name="recently_watched">최근 시청 항목</string>
@@ -306,7 +307,7 @@
     <string name="connect">연결</string>
     <string name="disconnect">연결 해제</string>
     <string name="use_integrated_browser">내부 웹브라우저 사용</string>
-    <string name="show_library">trakt 라이브러리 표시</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt는 여러분이 시청한 TV 프로그램과 영화를 개록해줍니다. <a href="http://trakt.tv">자세히 알아보기</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">평가</string>
@@ -435,8 +436,6 @@
     <string name="get_started">시작하기</string>
     <string name="dismiss">취소</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s가 방영 예정입니다</string>
-    <string name="upcoming_episodes">새 에피소드 방영예정</string>
     <string name="upcoming_episodes_number">%s 개의 새로운 에피소드</string>
     <string name="more">%d개의 에피소드 정보 더 있음</string>
     <string name="upcoming_display">방영 예정인 프로그램을 표시하려면 선택하세요</string>

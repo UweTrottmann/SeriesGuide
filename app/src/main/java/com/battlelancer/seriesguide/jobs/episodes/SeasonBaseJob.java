@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.jobs.episodes;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.provider.SgSeason2Numbers;
+import com.battlelancer.seriesguide.shows.database.SgSeason2Numbers;
 
 /**
  * Flagging whole seasons watched or collected.

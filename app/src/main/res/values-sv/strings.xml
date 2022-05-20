@@ -55,7 +55,7 @@
     <string name="api_error_generic">Kunde inte kommunicera med %s. Försök igen senare.</string>
     <string name="api_failed">Misslyckades: %s</string>
     <string name="copy_to_clipboard">Kopierat till urklipp</string>
-    <string name="not_migrated">Hittades inte på TMDb, kommer att tas bort i en framtida uppdatering. Tryck för detaljer.</string>
+    <string name="not_migrated">Serien är inte migrerad till TMDB-data. Vissa åtgärder inkl. Trakt och Cloud sync kanske inte fungerar. Prova att söka efter en ersättare och ta bort denna serie. Tryck för att visa detaljer.</string>
     <!-- Sharing -->
     <string name="share">Dela</string>
     <string name="share_show">Dela serie</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ej översatt</string>
     <string name="no_spoilers">Vissa detaljer är dolda för att undvika spoilers. För att stänga av detta, gå till inställningar.</string>
     <string name="format_source">Källa: %s</string>
-    <string name="format_last_edited">Senast redigerad: %s</string>
+    <string name="last_updated">Senast uppdaterad</string>
     <!-- Date and Time -->
     <string name="today">idag</string>
     <string name="now">nu</string>
@@ -145,9 +145,9 @@
     <string name="action_shows_filter_unwatched">Osedda</string>
     <string name="action_shows_filter_upcoming">Kommande</string>
     <string name="action_shows_filter_hidden">Dolda</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_disabled">Inaktiverad</string>
+    <string name="state_shows_filter_included">Inkluderad</string>
+    <string name="state_shows_filter_excluded">Exkluderad</string>
     <string name="action_shows_make_all_visible">Gör alla gömda synliga</string>
     <string name="description_make_all_visible_format">Göra alla gömda serier (%s) synliga igen?</string>
     <string name="action_shows_sort">Sortera serier</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Uppdatera</string>
     <string name="context_marknext">Sett nästa avsnitt</string>
     <string name="action_episodes_switch_view">Ändra vy</string>
+    <string name="next_to_watch">Härnäst</string>
     <!-- History -->
     <string name="user_stream">Historik</string>
     <string name="recently_watched">Nyligen sedda</string>
@@ -313,7 +314,7 @@
     <string name="connect">Anslut</string>
     <string name="disconnect">Koppla ner</string>
     <string name="use_integrated_browser">Använd inbyggd webbläsare</string>
-    <string name="show_library">Visa ditt bibliotek</string>
+    <string name="show_library">Lägg till serier från Trakt</string>
     <string name="about_trakt">trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på. <a href="http://trakt.tv">Lär dig mer</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
@@ -402,7 +403,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Utseende</string>
     <string name="pref_theme">Tema</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Använd systemfärger</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Använd systemstandard</string>
     <string name="theme_app_auto_battery">Ställ in efter batterisparläge</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Kom igång</string>
     <string name="dismiss">Avfärda</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s kommande</string>
-    <string name="upcoming_episodes">Nya avsnitt är på väg</string>
     <string name="upcoming_episodes_number">%s nya avsnitt</string>
     <string name="more">%d fler</string>
     <string name="upcoming_display">Välj för att visa kommande serier</string>

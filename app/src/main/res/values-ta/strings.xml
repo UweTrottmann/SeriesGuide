@@ -55,7 +55,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">பகிர்</string>
     <string name="share_show">பங்கு காண்பி</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">இல்லை மொழிபெயர்க்க</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Source: %s</string>
-    <string name="format_last_edited">Last edited: %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">இன்று</string>
     <string name="now">இப்போது</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">புதுப்பித்தல்</string>
     <string name="context_marknext">பார்த்த அடுத்த சம்பவம்</string>
     <string name="action_episodes_switch_view">Switch view</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">வரலாறு</string>
     <string name="recently_watched">சமீபத்தில் பார்த்த</string>
@@ -313,7 +314,7 @@
     <string name="connect">இணை</string>
     <string name="disconnect">துண்டி</string>
     <string name="use_integrated_browser">ஒருங்கிணைந்த உலாவியைப் பயன்படுத்து</string>
-    <string name="show_library">உங்கள் trakt நூலகத்தில் காண்பி</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt டிவி என்ன காண்பிக்கும் பதிவேட்டை வைத்திருக்க உதவுகிறது மற்றும் திரைப்படங்கள் நீங்கள் வருவதாக. <a href="https://trakt.tv"> மேலும் அறிய</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">விகிதம்</string>
@@ -446,8 +447,6 @@
     <string name="get_started">தொடங்குதல்</string>
     <string name="dismiss">நீக்கு</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s வந்து</string>
-    <string name="upcoming_episodes">புதிய episodes உள்ளன வருவன</string>
     <string name="upcoming_episodes_number">%s புதிய episodes</string>
     <string name="more">%d மேலும்</string>
     <string name="upcoming_display">வரவிருக்கும் காட்சிகள் காண்பிக்க தேர்ந்தெடு</string>

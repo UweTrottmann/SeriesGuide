@@ -55,7 +55,7 @@
     <string name="api_error_generic">Kommunikointi palvelun %s kanssa ei onnistunut. Yritä myöhemmin uudelleen.</string>
     <string name="api_failed">Epäonnistui: %s</string>
     <string name="copy_to_clipboard">Kopioitu leikepöydälle</string>
-    <string name="not_migrated">Ei löydy TMDb:stä, poistetaan tulevassa päivityksessä. Napauta saadaksesi lisätietoja.</string>
+    <string name="not_migrated">Sarjaa ei ole siirretty TMDB:hen. Jotkut toiminnot, kuten Trakt- ja Cloud-synkronointi, eivät välttämättä toimi. Suosittelemme, että teet uuden haun ja poistat tämän sarjan. Napauta nähdäksesi tiedot.</string>
     <!-- Sharing -->
     <string name="share">Jaa</string>
     <string name="share_show">Jaa ohjelma</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Ei käännetty</string>
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
     <string name="format_source">Lähde: %s</string>
-    <string name="format_last_edited">Viimeksi muokattu: %s</string>
+    <string name="last_updated">Viimeksi päivitetty</string>
     <!-- Date and Time -->
     <string name="today">tänään</string>
     <string name="now">nyt</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Päivitä</string>
     <string name="context_marknext">Seuraava jakso katsottu</string>
     <string name="action_episodes_switch_view">Vaihda näkymä</string>
+    <string name="next_to_watch">Seuraava katsottava</string>
     <!-- History -->
     <string name="user_stream">Historia</string>
     <string name="recently_watched">Äskettäin katsotut</string>
@@ -313,7 +314,7 @@
     <string name="connect">Yhdistä</string>
     <string name="disconnect">Katkaise yhteys</string>
     <string name="use_integrated_browser">Käytä sisäistä selainta</string>
-    <string name="show_library">Näytä Trakt-kirjastosi</string>
+    <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Aloita</string>
     <string name="dismiss">Hylkää</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s on tulossa</string>
-    <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
     <string name="upcoming_episodes_number">%s uutta jaksoa</string>
     <string name="more">%d lisää</string>
     <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>

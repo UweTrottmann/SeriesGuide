@@ -55,7 +55,7 @@
     <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
     <string name="api_failed">Échec : %s</string>
     <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
-    <string name="not_migrated">Introuvable sur TMDb, sera supprimé dans une prochaine mise à jour. Appuyez pour plus de détails.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
     <!-- Sharing -->
     <string name="share">Partager</string>
     <string name="share_show">Partager la série</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Non traduit</string>
     <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>
     <string name="format_source">Source : %s</string>
-    <string name="format_last_edited">Dernière mise à jour : %s</string>
+    <string name="last_updated">Last updated</string>
     <!-- Date and Time -->
     <string name="today">aujourd\'hui</string>
     <string name="now">maintenant</string>
@@ -161,6 +161,7 @@
     <string name="context_updateshow">Mettre à jour</string>
     <string name="context_marknext">Prochain épisode vu</string>
     <string name="action_episodes_switch_view">Basculer l’affichage</string>
+    <string name="next_to_watch">Next to watch</string>
     <!-- History -->
     <string name="user_stream">Historique</string>
     <string name="recently_watched">Vu récemment</string>
@@ -313,7 +314,7 @@
     <string name="connect">Se connecter</string>
     <string name="disconnect">Se déconnecter</string>
     <string name="use_integrated_browser">Utiliser le navigateur intégré</string>
-    <string name="show_library">Voir votre bibliothèque</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Noter</string>
@@ -446,8 +447,6 @@
     <string name="get_started">Commencer</string>
     <string name="dismiss">Passer</string>
     <!-- Notifications -->
-    <string name="upcoming_show">%s arrive bientôt</string>
-    <string name="upcoming_episodes">De nouveaux épisodes arrivent</string>
     <string name="upcoming_episodes_number">%s nouveaux épisodes</string>
     <string name="more">%d en plus</string>
     <string name="upcoming_display">Afficher les épisodes à venir</string>

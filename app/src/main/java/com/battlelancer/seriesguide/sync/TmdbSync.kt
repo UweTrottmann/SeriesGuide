@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.text.format.DateUtils
 import androidx.core.content.edit
+import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.TmdbSettings
-import com.battlelancer.seriesguide.ui.movies.MovieTools
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
@@ -58,8 +58,8 @@ class TmdbSync internal constructor(
             .getMoviesToUpdate(releasedAfter, updatedBefore, updatedBeforeOther)
         Timber.d("Updating %d movie(s)...", movies.size)
 
-        val languageCode = DisplaySettings.getMoviesLanguage(context)
-        val regionCode = DisplaySettings.getMoviesRegion(context)
+        val languageCode = MoviesSettings.getMoviesLanguage(context)
+        val regionCode = MoviesSettings.getMoviesRegion(context)
 
         var result = true
         for (movie in movies) {

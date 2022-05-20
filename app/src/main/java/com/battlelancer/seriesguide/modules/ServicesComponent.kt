@@ -1,12 +1,15 @@
 package com.battlelancer.seriesguide.modules
 
 import com.battlelancer.seriesguide.backend.HexagonTools
+import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools
+import com.battlelancer.seriesguide.shows.tools.GetShowTools
+import com.battlelancer.seriesguide.shows.tools.ShowTools2
+import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
-import com.battlelancer.seriesguide.ui.comments.TraktCommentsLoader
-import com.battlelancer.seriesguide.ui.movies.MovieTools
-import com.battlelancer.seriesguide.ui.search.AddShowTask
-import com.battlelancer.seriesguide.ui.search.TraktAddLoader
-import com.battlelancer.seriesguide.ui.shows.ShowTools
+import com.battlelancer.seriesguide.comments.TraktCommentsLoader
+import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.shows.tools.AddShowTask
+import com.battlelancer.seriesguide.shows.search.discover.TraktAddLoader
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.services.MoviesService
 import com.uwetrottmann.tmdb2.services.PeopleService
@@ -31,10 +34,13 @@ import javax.inject.Singleton
 interface ServicesComponent {
 
     fun hexagonTools(): HexagonTools
+    fun hexagonShowSync(): HexagonShowSync
     fun moviesService(): MoviesService
     fun movieTools(): MovieTools
     fun peopleService(): PeopleService?
-    fun showTools(): ShowTools
+    fun showTools(): ShowTools2
+    fun addUpdateShowTools(): AddUpdateShowTools
+    fun getShowTools(): GetShowTools
     fun tmdb(): Tmdb
     fun trakt(): TraktV2
     fun traktSync(): Sync?

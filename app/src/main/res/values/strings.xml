@@ -53,7 +53,7 @@
     <string name="updated_details">Details</string>
     <string name="norating">n/a</string>
     <string name="unknown">unknown</string>
-    <string name="offline">Connect to a network, then try again</string>
+    <string name="offline">Connect to the internet, then try again</string>
     <string name="app_not_available">No app available to handle this</string>
     <string name="people_empty">Nobody here?! Touch to try again.</string>
     <string name="database_error">Could not modify data</string>
@@ -61,7 +61,7 @@
     <string name="api_error_generic">Could not talk to %s. Try again later.</string>
     <string name="api_failed">Failed: %s</string>
     <string name="copy_to_clipboard">Copied to clipboard</string>
-    <string name="not_migrated">Not yet found on TMDB. Might not receive updates or work with Trakt and Cloud. Tap to view details.</string>
+    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
 
     <!-- Sharing -->
     <string name="share">Share</string>
@@ -111,7 +111,7 @@
     <string name="no_translation_title">Not translated</string>
     <string name="no_spoilers">Some details are hidden to prevent spoilers. To turn this off go to Settings.</string>
     <string name="format_source">Source: %s</string>
-    <string name="format_last_edited">Last edited: %s</string>
+    <string name="last_updated">Last updated</string>
 
     <!-- Date and Time -->
     <string name="today">today</string>
@@ -177,6 +177,7 @@
     <string name="context_updateshow">Update</string>
     <string name="context_marknext">Watched next episode</string>
     <string name="action_episodes_switch_view">Switch view</string>
+    <string name="next_to_watch">Next to watch</string>
 
     <!-- History -->
     <string name="user_stream">History</string>
@@ -355,7 +356,7 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="use_integrated_browser">Use integrated browser</string>
-    <string name="show_library">Show your Trakt library</string>
+    <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
 
     <!-- trakt ratings -->
@@ -507,8 +508,6 @@
     <string name="dismiss">Dismiss</string>
 
     <!-- Notifications -->
-    <string name="upcoming_show">%s is coming up</string>
-    <string name="upcoming_episodes">New episodes are coming up</string>
     <string name="upcoming_episodes_number">%s new episodes</string>
     <string name="more">%d more</string>
     <string name="upcoming_display">Select to display upcoming shows</string>

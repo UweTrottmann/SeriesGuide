@@ -8,6 +8,71 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
+\* Releases marked with an asterisk (*) are/were available on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
+
+Version 64
+----------
+*2022-05-18*
+
+* 🔧 Show filters: move no released episodes option there, display status also as text.
+* 🔧 Clearly label the next episode to watch in the overview screen.
+* 🔧 Display the last time a show or movie was updated.
+* 🔨 Do not crash if permission to set alarms and reminders has been removed (Android 12), schedule 
+inexact episode notifications instead.
+
+#### 64.0.7
+*2022-05-18*
+
+* 🔨 Resolve Android not responding issue when viewing a show or its episodes.
+
+#### 64.0.6*
+*2022-05-15*
+
+* 🔨 Do not crash when selecting backup file to restore from.
+
+#### 64.0.5*
+*2022-05-13*
+
+* 🔨 Do not crash if permission to set alarms and reminders has been removed, schedule inexact
+  episode notifications instead.
+* 🔧 Improve when the app wakes the device to notify about upcoming episodes.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 64.0.4*
+*2022-05-06*
+
+* 🔨 Movies: properly clean up movies watched by friends data on refresh.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 64.0.3*
+*2022-04-14*
+
+* 🔧 Clearly label next episode to watch in show overview screen.
+* 🔧 Improve updating of shows, on failure display exact service that failed, better suggestions.
+* 🔧 Display the last time a show or movie (if added to a list) was updated.
+* 🔨 Movie details screen: always display the oldest theatrical release date, matching other screens.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 64.0.2*
+*2022-03-10*
+
+* 🔨 Cloud: when signing in do not add shows that were removed after the TMDB migration.
+* 🔨 Fixed: when first tapping any episode in a season always displays the first episode.
+* 🔨 Fixed: upcoming/recent does not update over time.
+* 🔨 Fixed: guest stars, writers, etc. not separated by comma.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 64.0.1*
+*2022-03-03*
+
+* 🔧 Move no aired episodes option to shows filter view.
+* 🔧 Display state of show filters also as text.
+* 🔧 Rephrase TMDB migration info and suggest action (search for a replacement).
+* 🔧 Create first list when installing app instead of when visiting lists screen.
+* 🔧 Various small design tweaks.
+* 🔨 Display error if managing lists of a show is not possible.
+* 📝 Latest user interface translations from Crowdin.
+
 Version 63
 ----------
 *2022-02-18*
