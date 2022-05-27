@@ -301,10 +301,10 @@ dependencies {
     // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
     // https://github.com/robolectric/robolectric/issues/6521
     // https://issuetracker.google.com/issues/159151549
-    testImplementation("org.robolectric:robolectric:4.7.3")
+    testImplementation("org.robolectric:robolectric:4.8.1")
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
     // https://github.com/mockito/mockito/releases
-    testImplementation("org.mockito:mockito-core:4.2.0")
+    testImplementation("org.mockito:mockito-core:4.5.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }
 
