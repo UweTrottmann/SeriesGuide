@@ -250,16 +250,15 @@ dependencies {
     implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:$debugDrawerVersion")
 
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:29.0.1"))
+    // https://firebase.google.com/support/release-notes/android
+    implementation(platform("com.google.firebase:firebase-bom:30.1.0"))
+    // Crashlytics
+    implementation("com.google.firebase:firebase-crashlytics")
     // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
     implementation("com.firebaseui:firebase-ui-auth:8.0.0")
     // Update play-services-auth which adds Android 12 mutable Intent flags.
     // https://developers.google.com/android/guides/releases
     implementation("com.google.android.gms:play-services-auth:20.2.0")
-
-    // Crashlytics
-    // https://firebase.google.com/support/release-notes/android
-    implementation("com.google.firebase:firebase-crashlytics:18.2.5")
 
     // Amazon flavor specific
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
