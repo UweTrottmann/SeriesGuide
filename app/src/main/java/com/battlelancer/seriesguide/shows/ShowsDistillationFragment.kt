@@ -129,7 +129,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     private val sortOrderListener = object : SortShowsView.SortOrderListener {
         override fun onSortOrderUpdate(showSortOrder: SortShowsView.ShowSortOrder) {
             // save new sort order to preferences
-            PreferenceManager.getDefaultSharedPreferences(activity).edit {
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
                 putInt(ShowsDistillationSettings.KEY_SORT_ORDER, showSortOrder.sortOrderId)
                 putBoolean(
                     ShowsDistillationSettings.KEY_SORT_FAVORITES_FIRST,

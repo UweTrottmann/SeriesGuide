@@ -158,7 +158,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
-    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
+    // https://github.com/michaelbull/kotlin-result/releases
+    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.16")
 
     implementation(project(":api"))
     implementation(project(":backend"))
@@ -179,16 +180,17 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
-    implementation("androidx.preference:preference-ktx:1.1.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    // https://developer.android.com/jetpack/androidx/releases/preference
+    implementation("androidx.preference:preference-ktx:1.2.0")
 
     // ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
 
-    // Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+    // Paging https://developer.android.com/jetpack/androidx/releases/paging
+    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
 
     // Room
     implementation("androidx.room:room-runtime:$roomVersion")
@@ -202,7 +204,7 @@ dependencies {
     implementation("com.jakewharton:butterknife:$butterknifeVersion")
     kapt("com.jakewharton:butterknife-compiler:$butterknifeVersion")
     // https://github.com/google/dagger/releases
-    val daggerVersion  = "2.40.5"
+    val daggerVersion  = "2.42"
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
     val eventbusVersion = "3.3.1"
@@ -234,7 +236,7 @@ dependencies {
     implementation("com.getkeepsafe.taptargetview:taptargetview:1.13.3")
 
     // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.6.0")
+    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.7.0")
     // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
     implementation("com.uwetrottmann.trakt5:trakt-java:6.10.0") {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
@@ -249,16 +251,15 @@ dependencies {
     implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:$debugDrawerVersion")
 
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:29.0.1"))
+    // https://firebase.google.com/support/release-notes/android
+    implementation(platform("com.google.firebase:firebase-bom:30.1.0"))
+    // Crashlytics
+    implementation("com.google.firebase:firebase-crashlytics")
     // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
     implementation("com.firebaseui:firebase-ui-auth:8.0.0")
     // Update play-services-auth which adds Android 12 mutable Intent flags.
     // https://developers.google.com/android/guides/releases
-    implementation("com.google.android.gms:play-services-auth:20.0.1")
-
-    // Crashlytics
-    // https://firebase.google.com/support/release-notes/android
-    implementation("com.google.firebase:firebase-crashlytics:18.2.5")
+    implementation("com.google.android.gms:play-services-auth:20.2.0")
 
     // Amazon flavor specific
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
@@ -300,10 +301,10 @@ dependencies {
     // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
     // https://github.com/robolectric/robolectric/issues/6521
     // https://issuetracker.google.com/issues/159151549
-    testImplementation("org.robolectric:robolectric:4.7.3")
+    testImplementation("org.robolectric:robolectric:4.8.1")
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
     // https://github.com/mockito/mockito/releases
-    testImplementation("org.mockito:mockito-core:4.2.0")
+    testImplementation("org.mockito:mockito-core:4.5.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }
 

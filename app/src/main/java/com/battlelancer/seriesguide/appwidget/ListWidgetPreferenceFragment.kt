@@ -125,7 +125,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         }
 
         // Build the preference screen.
-        val prefScreen = preferenceManager.createPreferenceScreen(activity).apply {
+        val prefScreen = preferenceManager.createPreferenceScreen(requireContext()).apply {
             addPreference(typePref)
             addPreference(showsSortPref)
             addPreference(onlyFavoritesPref)
@@ -134,7 +134,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
             addPreference(hideWatchedPreference)
             addPreference(isInfinitePref)
             addPreference(isHideWatchedButtonPref)
-            val appearanceCategory = PreferenceCategory(activity).apply {
+            val appearanceCategory = PreferenceCategory(requireContext()).apply {
                 setTitle(R.string.pref_appearance)
             }
             // Need to add to screen first so added prefs can get unique IDs.
@@ -157,10 +157,10 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         bindPreferenceSummaryToValue(themePref)
 
         // Disable saving some prefs not available for non-supporters.
-        if (!Utils.hasAccessToX(activity)) {
+        if (!Utils.hasAccessToX(requireContext())) {
             val onDisablePreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
-                    Utils.advertiseSubscription(activity)
+                    Utils.advertiseSubscription(requireContext())
                     false
                 }
             typePref.apply {
@@ -200,7 +200,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         @StringRes titleRes: Int,
         defaultValue: Boolean
     ): CheckBoxPreference {
-        return CheckBoxPreference(activity).also {
+        return CheckBoxPreference(requireContext()).also {
             it.key = key
             it.setTitle(titleRes)
             it.setDefaultValue(defaultValue)
@@ -214,7 +214,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         @ArrayRes values: Int,
         defaultValue: String
     ): ListPreference {
-        return ListPreference(activity).also {
+        return ListPreference(requireContext()).also {
             it.key = key
             it.setTitle(title)
             it.setEntries(entries)
@@ -241,7 +241,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
     }
 
     private fun saveAllPreferences() {
-        preferenceManager.sharedPreferences.edit {
+        preferenceManager.sharedPreferences!!.edit {
             savePreferences(preferenceScreen, this)
         }
     }
@@ -304,7 +304,7 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
                 if (isSystemTheme) {
                     backgroundPref.value = WidgetSettings.DEFAULT_WIDGET_BACKGROUND_OPACITY
                     // Need to manually trigger change listener for whatever reason.
-                    backgroundPref.onPreferenceChangeListener.onPreferenceChange(
+                    backgroundPref.onPreferenceChangeListener!!.onPreferenceChange(
                         backgroundPref,
                         backgroundPref.value
                     )

@@ -117,7 +117,7 @@ class StatsFragment : Fragment() {
             return true
         }
         if (itemId == R.id.menu_action_stats_filter_specials) {
-            PreferenceManager.getDefaultSharedPreferences(activity).edit()
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                 .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked)
                 .apply()
 

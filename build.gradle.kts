@@ -15,14 +15,14 @@ buildscript {
     val sgVersionCode by extra(2106407)
     val sgVersionName by extra("64.0.7")
 
-    val kotlinVersion by extra("1.6.10") // https://kotlinlang.org/docs/releases.html#release-details
-    val coroutinesVersion by extra("1.6.0") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    val kotlinVersion by extra("1.6.21") // https://kotlinlang.org/docs/releases.html#release-details
+    val coroutinesVersion by extra("1.6.1") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 
     // https://developer.android.com/jetpack/androidx/releases
     val coreVersion by extra("1.7.0") // https://developer.android.com/jetpack/androidx/releases/core
     val annotationVersion by extra("1.3.0")
-    val lifecycleVersion by extra("2.4.0")
-    val roomVersion by extra("2.4.1") // https://developer.android.com/jetpack/androidx/releases/room
+    val lifecycleVersion by extra("2.4.1") // https://developer.android.com/jetpack/androidx/releases/lifecycle
+    val roomVersion by extra("2.4.2") // https://developer.android.com/jetpack/androidx/releases/room
     val fragmentVersion by extra("1.4.1") // https://developer.android.com/jetpack/androidx/releases/fragment
 
     val timberVersion by extra("5.0.1") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
@@ -45,7 +45,7 @@ buildscript {
         // Firebase Crashlytics
         // https://firebase.google.com/support/release-notes/android
         classpath("com.google.gms:google-services:4.3.10")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.8.1")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.0")
     }
 }
 
