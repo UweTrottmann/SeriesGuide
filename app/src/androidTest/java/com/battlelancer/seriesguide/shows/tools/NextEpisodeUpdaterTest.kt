@@ -47,7 +47,7 @@ class NextEpisodeUpdaterTest {
         val episode1 = season.episodeToInsert(seasonId, 1, 11000)
             .copy(watched = EpisodeFlags.UNWATCHED)
         val episode2 = season.episodeToInsert(seasonId, 2, 12000)
-            .copy(watched = EpisodeFlags.WATCHED)
+            .copy(watched = EpisodeFlags.WATCHED, plays = 1)
         val episode3 = season.episodeToInsert(seasonId, 3, 13000)
             .copy(watched = EpisodeFlags.UNWATCHED)
         val episodeIds = episodeHelper.insertEpisodes(listOf(episode1, episode2, episode3))
@@ -73,7 +73,7 @@ class NextEpisodeUpdaterTest {
         val special1 = specials.episodeToInsert(specialsId, 1, 12000)
             .copy(watched = EpisodeFlags.UNWATCHED)
         val episode1 = season1.episodeToInsert(season1Id, 1, 11000)
-            .copy(watched = EpisodeFlags.WATCHED)
+            .copy(watched = EpisodeFlags.WATCHED, plays = 1)
         val episode2 = season1.episodeToInsert(season1Id, 2, 13000)
             .copy(watched = EpisodeFlags.UNWATCHED)
         val episodeIds = episodeHelper.insertEpisodes(listOf(special1, episode1, episode2))
@@ -87,6 +87,32 @@ class NextEpisodeUpdaterTest {
     }
 
     @Test
+    fun updateForShows_rewatchPicksWatchedWithLessPlays() {
+        val showHelper = db.sgShow2Helper()
+        val episodeHelper = db.sgEpisode2Helper()
+
+        // Insert show with no last watched episode ID set.
+        val showId = showHelper.insertShow(showToInsert())
+        val season = seasonToInsert(showId, 1)
+        val seasonId = db.sgSeason2Helper().insertSeason(season)
+        // There is an episode with one play before an unwatched episode with zero plays.
+        val episode1 = season.episodeToInsert(seasonId, 1, 11000)
+            .copy(watched = EpisodeFlags.WATCHED, plays = 2)
+        val episode2 = season.episodeToInsert(seasonId, 2, 12000)
+            .copy(watched = EpisodeFlags.WATCHED, plays = 1)
+        val episode3 = season.episodeToInsert(seasonId, 3, 13000)
+            .copy(watched = EpisodeFlags.UNWATCHED)
+        val episodeIds = episodeHelper.insertEpisodes(listOf(episode1, episode2, episode3))
+        // Set last watched ID to episode1.
+        showHelper.updateLastWatchedEpisodeId(showId, episodeIds[0])
+
+        val nextEpisodeId =
+            NextEpisodeUpdater(context, showHelper, episodeHelper).updateForShows(showId)
+        // Should pick the one that has a single play and not the unwatched one.
+        assertThat(nextEpisodeId).isEqualTo(episodeIds[1])
+    }
+
+    @Test
     fun updateForShows_showUpdatedWithExpectedValues() {
         val showHelper = db.sgShow2Helper()
         val episodeHelper = db.sgEpisode2Helper()
@@ -96,7 +122,7 @@ class NextEpisodeUpdaterTest {
         val season1 = seasonToInsert(showId, 1)
         val season1Id = db.sgSeason2Helper().insertSeason(season1)
         val episode1 = season1.episodeToInsert(season1Id, 1, 11000)
-            .copy(watched = EpisodeFlags.WATCHED)
+            .copy(watched = EpisodeFlags.WATCHED, plays = 1)
         val episode1Id = episodeHelper.insertEpisode(episode1)
         // Set last watched ID to episode1.
         showHelper.updateLastWatchedEpisodeId(showId, episode1Id)
