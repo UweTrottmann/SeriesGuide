@@ -19,11 +19,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentSeasonsBinding
 import com.battlelancer.seriesguide.jobs.episodes.SeasonWatchedJob
-import com.battlelancer.seriesguide.ui.BaseMessageActivity
-import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
+import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.TextTools
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -96,7 +96,7 @@ class SeasonsFragment() : Fragment() {
         }
 
         // listen to changes to the sorting preference
-        PreferenceManager.getDefaultSharedPreferences(activity).apply {
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
             registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
         }
     }
@@ -124,7 +124,7 @@ class SeasonsFragment() : Fragment() {
         super.onDestroy()
 
         // stop listening to sort pref changes
-        PreferenceManager.getDefaultSharedPreferences(activity).apply {
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
             unregisterOnSharedPreferenceChangeListener(onSortOrderChangedListener)
         }
     }

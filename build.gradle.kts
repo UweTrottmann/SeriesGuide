@@ -21,8 +21,8 @@ buildscript {
     // https://developer.android.com/jetpack/androidx/releases
     val coreVersion by extra("1.7.0") // https://developer.android.com/jetpack/androidx/releases/core
     val annotationVersion by extra("1.3.0")
-    val lifecycleVersion by extra("2.4.0")
-    val roomVersion by extra("2.4.1") // https://developer.android.com/jetpack/androidx/releases/room
+    val lifecycleVersion by extra("2.4.1") // https://developer.android.com/jetpack/androidx/releases/lifecycle
+    val roomVersion by extra("2.4.2") // https://developer.android.com/jetpack/androidx/releases/room
     val fragmentVersion by extra("1.4.1") // https://developer.android.com/jetpack/androidx/releases/fragment
 
     val timberVersion by extra("5.0.1") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md

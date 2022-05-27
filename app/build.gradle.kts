@@ -179,16 +179,17 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
-    implementation("androidx.preference:preference-ktx:1.1.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    // https://developer.android.com/jetpack/androidx/releases/preference
+    implementation("androidx.preference:preference-ktx:1.2.0")
 
     // ViewModel and LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
 
-    // Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+    // Paging https://developer.android.com/jetpack/androidx/releases/paging
+    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
 
     // Room
     implementation("androidx.room:room-runtime:$roomVersion")

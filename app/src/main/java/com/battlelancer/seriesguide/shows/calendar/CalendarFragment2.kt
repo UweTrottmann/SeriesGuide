@@ -23,18 +23,18 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
-import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
+import com.battlelancer.seriesguide.util.Utils
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
@@ -83,7 +83,7 @@ class CalendarFragment2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        PreferenceManager.getDefaultSharedPreferences(activity)
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
             .registerOnSharedPreferenceChangeListener(prefChangeListener)
 
         adapter = CalendarAdapter2(requireContext(), calendarItemClickListener)
@@ -161,7 +161,7 @@ class CalendarFragment2 : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        PreferenceManager.getDefaultSharedPreferences(activity)
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
     }
 
@@ -217,7 +217,7 @@ class CalendarFragment2 : Fragment() {
     }
 
     private fun toggleFilterSetting(item: MenuItem, key: String) {
-        PreferenceManager.getDefaultSharedPreferences(activity).edit {
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
             putBoolean(key, !item.isChecked)
         }
         // refresh filter icon state
