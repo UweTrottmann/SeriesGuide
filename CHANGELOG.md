@@ -14,8 +14,8 @@ Version 65
 ----------
 *in development*
 
-#### next
-*release-date*
+#### 65.0.0
+*2022-05-27*
 
 * 🔧 Choose newest unwatched episode as next when adding a show that has watched episodes, e.g.
 after signing into Cloud on a new device.
