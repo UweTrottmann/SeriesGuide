@@ -158,7 +158,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
-    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.14")
+    // https://github.com/michaelbull/kotlin-result/releases
+    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.16")
 
     implementation(project(":api"))
     implementation(project(":backend"))
