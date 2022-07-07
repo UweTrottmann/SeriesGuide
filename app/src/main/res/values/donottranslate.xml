@@ -104,6 +104,92 @@
     </string-array>
 
     <!-- Content languages -->
+    <!-- These are the primary languages of TMDB
+    https://developers.themoviedb.org/3/configuration/get-primary-translations
+     Removed cn-CN because it doesn't seem to exist. -->
+    <string name="content_default_language">en-US</string>
+    <string-array name="content_languages">
+        <item>af-ZA</item>
+        <item>ar-AE</item>
+        <item>ar-SA</item>
+        <item>be-BY</item>
+        <item>bg-BG</item>
+        <item>bn-BD</item>
+        <item>ca-ES</item>
+        <item>ch-GU</item>
+        <item>cs-CZ</item>
+        <item>cy-GB</item>
+        <item>da-DK</item>
+        <item>de-AT</item>
+        <item>de-CH</item>
+        <item>de-DE</item>
+        <item>el-GR</item>
+        <item>en-AU</item>
+        <item>en-CA</item>
+        <item>en-GB</item>
+        <item>en-IE</item>
+        <item>en-NZ</item>
+        <item>@string/content_default_language</item>
+        <item>eo-EO</item>
+        <item>es-ES</item>
+        <item>es-MX</item>
+        <item>et-EE</item>
+        <item>eu-ES</item>
+        <item>fa-IR</item>
+        <item>fi-FI</item>
+        <item>fr-CA</item>
+        <item>fr-FR</item>
+        <item>ga-IE</item>
+        <item>gd-GB</item>
+        <item>gl-ES</item>
+        <item>he-IL</item>
+        <item>hi-IN</item>
+        <item>hr-HR</item>
+        <item>hu-HU</item>
+        <item>id-ID</item>
+        <item>it-IT</item>
+        <item>ja-JP</item>
+        <item>ka-GE</item>
+        <item>kk-KZ</item>
+        <item>kn-IN</item>
+        <item>ko-KR</item>
+        <item>ky-KG</item>
+        <item>lt-LT</item>
+        <item>lv-LV</item>
+        <item>ml-IN</item>
+        <item>mr-IN</item>
+        <item>ms-MY</item>
+        <item>ms-SG</item>
+        <item>nb-NO</item>
+        <item>nl-BE</item>
+        <item>nl-NL</item>
+        <item>no-NO</item>
+        <item>pa-IN</item>
+        <item>pl-PL</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>ro-RO</item>
+        <item>ru-RU</item>
+        <item>si-LK</item>
+        <item>sk-SK</item>
+        <item>sl-SI</item>
+        <item>sq-AL</item>
+        <item>sr-RS</item>
+        <item>sv-SE</item>
+        <item>ta-IN</item>
+        <item>te-IN</item>
+        <item>th-TH</item>
+        <item>tl-PH</item>
+        <item>tr-TR</item>
+        <item>uk-UA</item>
+        <item>vi-VN</item>
+        <item>zh-CN</item>
+        <item>zh-HK</item>
+        <item>zh-SG</item>
+        <item>zh-TW</item>
+        <item>zu-ZA</item>
+    </string-array>
+
     <string name="show_default_language">en</string>
     <string-array name="languageCodesShows">
         <item>@string/show_default_language</item>
