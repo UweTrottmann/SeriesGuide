@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.LanguageTools
 
 object ShowsSettings {
 
@@ -38,21 +39,25 @@ object ShowsSettings {
     }
 
     /**
-     * Returns a two letter ISO 639-1 language code, plus optional ISO-3166-1 region tag,
+     * Returns a two letter ISO 639-1 language code plus ISO-3166-1 region tag,
      * of the language the user prefers when searching. Defaults to English.
      */
     @JvmStatic
     fun getShowsSearchLanguage(context: Context): String {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         var languageCode = prefs.getString(KEY_LANGUAGE_SEARCH, null)
-        // For backwards compatibility: change "any language" code to not set.
-        if (languageCode != null
-            && context.getString(R.string.language_code_any) == languageCode) {
-            prefs.edit().remove(KEY_LANGUAGE_SEARCH).apply()
-            languageCode = null
+        // For backwards compatibility:
+        if (languageCode != null) {
+            // - map legacy codes to include region tag (en -> en-US),
+            languageCode = LanguageTools.mapLegacyShowCode(languageCode)
+            // - change "any language" code to not set.
+            if (context.getString(R.string.language_code_any) == languageCode) {
+                prefs.edit().remove(KEY_LANGUAGE_SEARCH).apply()
+                languageCode = null
+            }
         }
         return if (languageCode.isNullOrEmpty()) {
-            context.getString(R.string.show_default_language)
+            context.getString(R.string.content_default_language)
         } else languageCode
     }
 
