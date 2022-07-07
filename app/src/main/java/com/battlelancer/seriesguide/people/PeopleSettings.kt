@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.LanguageTools
 
 object PeopleSettings {
 
@@ -14,9 +15,10 @@ object PeopleSettings {
      * as preferred by the user. Or the default language.
      */
     fun getPersonLanguage(context: Context): String {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        val languageCode = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_PERSON_LANGUAGE, null)
-            ?: context.getString(R.string.movie_default_language)
+            ?: context.getString(R.string.content_default_language)
+        return LanguageTools.mapLegacyMovieCode(languageCode)
     }
 
     fun setPersonLanguage(context: Context, languageCode: String) {
