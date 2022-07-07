@@ -21,15 +21,16 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.comments.TraktCommentsActivity
+import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
-import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
-import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
@@ -38,7 +39,6 @@ import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
@@ -362,7 +362,7 @@ class ShowFragment() : Fragment() {
 
         // overview
         var overview = show.overview
-        val languageCode = show.language
+        val languageCode = show.language?.let { LanguageTools.mapLegacyShowCode(it) }
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             overview = TextTools.textNoTranslation(requireContext(), languageCode)
