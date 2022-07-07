@@ -62,13 +62,14 @@ object ShowsSettings {
     }
 
     /**
-     * Returns a two letter ISO 639-1 language code, plus optional ISO-3166-1 region tag,
-     * of the fallback show language preferred by the user. Defaults to 'en'.
+     * Returns a two letter ISO 639-1 language code plus ISO-3166-1 region tag
+     * of the fallback show language preferred by the user. Defaults to English.
      */
     fun getShowsLanguageFallback(context: Context): String {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        val languageCode = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_LANGUAGE_FALLBACK, null)
-            ?: context.getString(R.string.show_default_language)
+            ?: context.getString(R.string.content_default_language)
+        return LanguageTools.mapLegacyShowCode(languageCode)
     }
 
 }
