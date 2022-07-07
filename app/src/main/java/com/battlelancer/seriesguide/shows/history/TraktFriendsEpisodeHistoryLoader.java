@@ -6,12 +6,13 @@ import androidx.collection.SparseArrayCompat;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.modules.ServicesComponent;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper;
 import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.util.ImageTools;
+import com.battlelancer.seriesguide.util.LanguageTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.trakt5.entities.Friend;
@@ -99,7 +100,7 @@ class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapt
             if (showTmdbId != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
                 posterUrl = ImageTools.posterUrlOrResolve(tmdbIdsToPoster.get(showTmdbId),
-                        showTmdbId, DisplaySettings.LANGUAGE_EN, getContext());
+                        showTmdbId, LanguageTools.LANGUAGE_EN, getContext());
             } else {
                 posterUrl = null;
             }

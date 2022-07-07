@@ -11,8 +11,6 @@ import com.battlelancer.seriesguide.util.TextTools
  */
 object DisplaySettings {
 
-    const val LANGUAGE_EN = "en"
-
     const val KEY_THEME = "com.uwetrottmann.seriesguide.theme"
     const val KEY_DYNAMIC_COLOR = "com.uwetrottmann.seriesguide.dynamiccolor"
 

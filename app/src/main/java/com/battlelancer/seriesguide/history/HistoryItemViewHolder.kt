@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
 import com.battlelancer.seriesguide.history.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.trakt5.entities.HistoryEntry
@@ -95,7 +96,7 @@ class HistoryItemViewHolder(
             ImageTools.posterUrlOrResolve(
                 localShowPosters.get(showTmdbId),
                 showTmdbId,
-                DisplaySettings.LANGUAGE_EN,
+                LanguageTools.LANGUAGE_EN,
                 context
             )
         } else {

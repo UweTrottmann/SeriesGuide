@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.TextUtils
 import androidx.annotation.ArrayRes
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import java.util.Locale
 
 /**
@@ -12,16 +11,18 @@ import java.util.Locale
  */
 object LanguageTools {
 
+    const val LANGUAGE_EN = "en-US"
+
     /**
      * Returns the string representation of the given two letter ISO 639-1 language code
      * plus ISO-3166-1 region tag, if it is supported by SeriesGuide.
      *
-     * If the given language code is `null` uses [DisplaySettings.LANGUAGE_EN] to ensure consistent
+     * If the given language code is `null` uses [LANGUAGE_EN] to ensure consistent
      * behavior across devices.
      */
     fun getShowLanguageStringFor(context: Context, languageCode: String?): String {
         val actualLanguageCode = if (languageCode.isNullOrEmpty()) {
-            DisplaySettings.LANGUAGE_EN // default
+            LANGUAGE_EN // default
         } else languageCode
 
         return getLanguageStringFor(context, actualLanguageCode, R.array.content_languages)
@@ -65,7 +66,7 @@ object LanguageTools {
      * Together with the language code, returns the string representation of the given two letter
      * ISO 639-1 language code plus ISO-3166-1 region tag, if it is supported by SeriesGuide.
      *
-     * If the given language code is `null` uses [DisplaySettings.LANGUAGE_EN] to ensure consistent
+     * If the given language code is `null` uses [LANGUAGE_EN] to ensure consistent
      * behavior across devices.
      */
     fun getShowLanguageDataFor(
@@ -73,7 +74,7 @@ object LanguageTools {
         languageCode: String?
     ): LanguageData? {
         val actualLanguageCode = if (languageCode.isNullOrEmpty()) {
-            DisplaySettings.LANGUAGE_EN // default
+            LANGUAGE_EN // default
         } else languageCode
 
         val languageCodes = context.resources.getStringArray(R.array.content_languages)

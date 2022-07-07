@@ -1,9 +1,9 @@
 package com.battlelancer.seriesguide.shows.tools
 
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TimeTools
 
 object ShowTestHelper {
@@ -31,7 +31,7 @@ object ShowTestHelper {
             poster = "poster.jpg",
             posterSmall = "poster.jpg",
             // set desired language, might not be the content language if fallback used above.
-            language = DisplaySettings.LANGUAGE_EN,
+            language = LanguageTools.LANGUAGE_EN,
             lastUpdatedMs = System.currentTimeMillis() // now
         )
     }

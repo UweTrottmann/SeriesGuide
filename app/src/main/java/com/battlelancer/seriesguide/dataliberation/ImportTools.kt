@@ -6,8 +6,8 @@ import com.battlelancer.seriesguide.dataliberation.model.Show
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgShow2
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 
@@ -36,7 +36,7 @@ object ImportTools {
             status = DataLiberationTools.encodeShowStatus(status),
             poster = poster ?: "",
             posterSmall = poster ?: "",
-            language = language ?: DisplaySettings.LANGUAGE_EN,
+            language = language ?: LanguageTools.LANGUAGE_EN,
             lastUpdatedMs = 0, // never, e.g. update next.
             favorite = favorite,
             notify = notify ?: true,
