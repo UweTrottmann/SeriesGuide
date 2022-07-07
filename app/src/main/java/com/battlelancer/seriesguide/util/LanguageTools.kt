@@ -92,30 +92,28 @@ object LanguageTools {
 
     /**
      * Based on the first two letters gets the language display name. Except for
+     * - Arabic (ar-AE, ar-SA)
+     * - German (de-AT, de-CH, de-DE)
+     * - English (en-AU, en-CA, en-GB, en-IE, en-NZ, en-US)
      * - Spanish (es-ES, es-MX)
-     * - French (fr-FR, fr-CA)
-     * - Portuguese (pt, pt-PT and pt-BR) and
-     * - Chinese (zh, zh-CN, zh-TW, zh-HK),
+     * - French (fr-CA, fr-FR)
+     * - Malay (ms-MY, ms-SG)
+     * - Dutch (nl-BE, nl-NL)
+     * - Portuguese (pt-PT, pt-BR) and
+     * - Chinese (zh-CN, zh-HK, zh-SG, zh-TW),
      * where the region is added to the display name.
-     *
-     * For other languages region variants for TMDB appear to be superfluous or make no sense
-     * (report to TMDB?).
      */
     fun buildLanguageDisplayName(languageCode: String): String {
         return when (languageCode) {
-            "pt" -> {
-                // Manually add country for pt-PT as for backwards compat
-                // the show language code is still pt.
-                Locale(languageCode.substring(0, 2), "PT")
-                    .displayName
-            }
-            "zh" -> {
-                // Manually add country for zh-CN as for backwards compat
-                // the show language code is still zh (and TMDB returns zh-CN data).
-                Locale(languageCode.substring(0, 2), "CN")
-                    .displayName
-            }
-            "es-ES", "es-MX", "fr-CA", "fr-FR", "pt-PT", "pt-BR", "zh-CN", "zh-HK", "zh-TW" -> {
+            "ar-AE", "ar-SA",
+            "de-AT", "de-CH", "de-DE",
+            "en-AU", "en-CA", "en-GB", "en-IE", "en-NZ", "en-US",
+            "es-ES", "es-MX",
+            "fr-CA", "fr-FR",
+            "ms-MY", "ms-SG",
+            "nl-BE", "nl-NL",
+            "pt-PT", "pt-BR",
+            "zh-CN", "zh-HK", "zh-SG", "zh-TW" -> {
                 Locale(languageCode.substring(0, 2), languageCode.substring(3, 5))
                     .displayName
             }
