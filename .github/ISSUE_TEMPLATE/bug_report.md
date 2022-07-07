@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help improve SeriesGuide
+about: Report if something isn't working
 title: ''
 labels: bug
 assignees: ''
