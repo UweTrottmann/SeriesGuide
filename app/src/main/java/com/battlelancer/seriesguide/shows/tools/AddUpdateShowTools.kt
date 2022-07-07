@@ -394,10 +394,15 @@ class AddUpdateShowTools @Inject constructor(
         val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
 
         val language = helper.getLanguage(showId).let {
-            // handle legacy records
+            // Handle legacy records.
             // default to 'en' for consistent behavior across devices
             // and to encourage users to set language
-            if (it.isNullOrEmpty()) LanguageTools.LANGUAGE_EN else it
+            if (it.isNullOrEmpty()) {
+                LanguageTools.LANGUAGE_EN
+            } else {
+                // Map legacy language codes.
+                LanguageTools.mapLegacyShowCode(it)
+            }
         }
 
         var showTmdbId = helper.getShowTmdbId(showId)
