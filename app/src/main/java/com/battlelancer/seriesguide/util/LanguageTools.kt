@@ -13,37 +13,38 @@ import java.util.Locale
 object LanguageTools {
 
     /**
-     * Returns the string representation of the given two letter ISO 639-1 language code,
-     * plus optional ISO-3166-1 region tag, if it is supported by SeriesGuide
-     * (see R.array.languageCodesShows).
+     * Returns the string representation of the given two letter ISO 639-1 language code
+     * plus ISO-3166-1 region tag, if it is supported by SeriesGuide.
      *
-     * If the given language code is `null` uses 'en' to ensure consistent behavior across
-     * devices.
+     * If the given language code is `null` uses [DisplaySettings.LANGUAGE_EN] to ensure consistent
+     * behavior across devices.
      */
     fun getShowLanguageStringFor(context: Context, languageCode: String?): String {
         val actualLanguageCode = if (languageCode.isNullOrEmpty()) {
-            // default to 'en'
-            DisplaySettings.LANGUAGE_EN
+            DisplaySettings.LANGUAGE_EN // default
         } else languageCode
 
-        return getLanguageStringFor(context, actualLanguageCode, R.array.languageCodesShows)
+        return getLanguageStringFor(context, actualLanguageCode, R.array.content_languages)
     }
 
     /**
-     * Returns the string representation of the given two letter ISO 639-1 language code,
-     * plus optional ISO-3166-1 region tag, if it is supported by SeriesGuide
-     * (see R.array.languageCodesMovies).
+     * Returns the string representation of the given two letter ISO 639-1 language code
+     * plus ISO-3166-1 region tag, if it is supported by SeriesGuide.
      *
-     * If the given language code is `null`, uses [DisplaySettings.getMoviesLanguage].
+     * If the given language code is `null`, uses [fallback].
      */
     @JvmStatic
-    fun getMovieLanguageStringFor(context: Context, languageCode: String?, fallback: String): String {
+    fun getMovieLanguageStringFor(
+        context: Context,
+        languageCode: String?,
+        fallback: String
+    ): String {
         val actualLanguageCode = if (TextUtils.isEmpty(languageCode)) {
             // fall back to default language
             fallback
         } else languageCode
 
-        return getLanguageStringFor(context, actualLanguageCode, R.array.languageCodesMovies)
+        return getLanguageStringFor(context, actualLanguageCode, R.array.content_languages)
     }
 
     private fun getLanguageStringFor(
@@ -61,23 +62,21 @@ object LanguageTools {
     }
 
     /**
-     * Together with the language code, returns the string representation of the given
-     * two letter ISO 639-1 language code, plus optional ISO-3166-1 region tag,
-     * if it is supported by SeriesGuide (see R.array.languageCodesShows).
+     * Together with the language code, returns the string representation of the given two letter
+     * ISO 639-1 language code plus ISO-3166-1 region tag, if it is supported by SeriesGuide.
      *
-     * If the given language code is `null` uses 'en' to ensure consistent behavior across
-     * devices.
+     * If the given language code is `null` uses [DisplaySettings.LANGUAGE_EN] to ensure consistent
+     * behavior across devices.
      */
     fun getShowLanguageDataFor(
         context: Context,
         languageCode: String?
     ): LanguageData? {
         val actualLanguageCode = if (languageCode.isNullOrEmpty()) {
-            // default to 'en'
-            DisplaySettings.LANGUAGE_EN
+            DisplaySettings.LANGUAGE_EN // default
         } else languageCode
 
-        val languageCodes = context.resources.getStringArray(R.array.languageCodesShows)
+        val languageCodes = context.resources.getStringArray(R.array.content_languages)
         for (i in languageCodes.indices) {
             if (languageCodes[i] == actualLanguageCode) {
                 val languageName = buildLanguageDisplayName(actualLanguageCode)
