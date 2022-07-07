@@ -103,8 +103,8 @@ class L10nDialogFragment : AppCompatDialogFragment() {
         }
 
         /**
-         * @param selectedLanguageCode two letter ISO 639-1 language code,
-         * plus optional ISO-3166-1 region tag. If null selects first language code.
+         * @param selectedLanguageCode two letter ISO 639-1 language code
+         * plus ISO-3166-1 region tag. If null selects first language code.
          */
         @JvmStatic
         fun forShow(
@@ -112,12 +112,12 @@ class L10nDialogFragment : AppCompatDialogFragment() {
             selectedLanguageCode: String?,
             tag: String
         ) {
-            show(fragmentManager, selectedLanguageCode, R.array.languageCodesShows, tag)
+            show(fragmentManager, selectedLanguageCode, R.array.content_languages, tag)
         }
 
         /**
-         * @param selectedLanguageCode two letter ISO 639-1 language code,
-         * plus optional ISO-3166-1 region tag. If null selects first language code.
+         * @param selectedLanguageCode two letter ISO 639-1 language code
+         * plus ISO-3166-1 region tag. If null selects first language code.
          */
         @JvmStatic
         fun forPerson(
@@ -125,7 +125,7 @@ class L10nDialogFragment : AppCompatDialogFragment() {
             selectedLanguageCode: String?,
             tag: String
         ) {
-            show(fragmentManager, selectedLanguageCode, R.array.languageCodesMovies, tag)
+            show(fragmentManager, selectedLanguageCode, R.array.content_languages, tag)
         }
     }
 }
