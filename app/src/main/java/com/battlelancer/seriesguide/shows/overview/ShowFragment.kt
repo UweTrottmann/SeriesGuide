@@ -504,7 +504,7 @@ class ShowFragment() : Fragment() {
     }
 
     private fun displayLanguageSettings() {
-        L10nDialogFragment.forShow(
+        L10nDialogFragment.show(
             parentFragmentManager,
             languageCode, "showLanguageDialog"
         )

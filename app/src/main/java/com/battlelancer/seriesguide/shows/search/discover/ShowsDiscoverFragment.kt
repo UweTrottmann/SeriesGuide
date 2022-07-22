@@ -218,7 +218,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private fun displayLanguageSettings() {
-        L10nDialogFragment.forShow(
+        L10nDialogFragment.show(
             parentFragmentManager,
             languageCode,
             L10nDialogFragment.TAG_DISCOVER

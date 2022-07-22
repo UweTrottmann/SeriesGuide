@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.notifications.NotificationService
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.NotificationSettings
@@ -233,7 +233,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(ShowsSettings.KEY_LANGUAGE_FALLBACK)!!.also {
             updateFallbackLanguageSummary(it)
             it.setOnPreferenceClickListener {
-                L10nDialogFragment.forShow(
+                L10nDialogFragment.show(
                     parentFragmentManager,
                     ShowsSettings.getShowsLanguageFallback(requireContext()),
                     TAG_LANGUAGE_FALLBACK
