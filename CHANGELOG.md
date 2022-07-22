@@ -14,7 +14,8 @@ Version 65
 ----------
 *in development*
 
-#### next
+#### 65.0.1
+*2022-07-22*
 
 * 🔧 Clean up supported languages for show and movie content. Languages not longer supported are
 changed to US English. As a side-effect should resolve issues with translations switching back to
