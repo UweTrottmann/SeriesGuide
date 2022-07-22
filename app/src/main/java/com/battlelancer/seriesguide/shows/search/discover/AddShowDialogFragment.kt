@@ -120,7 +120,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             textViewAddGenres.copyTextToClipboardOnLongClick()
 
             buttonAddLanguage.setOnClickListener {
-                L10nDialogFragment.forShow(
+                L10nDialogFragment.show(
                     parentFragmentManager,
                     languageCode,
                     L10nDialogFragment.TAG_ADD_DIALOG

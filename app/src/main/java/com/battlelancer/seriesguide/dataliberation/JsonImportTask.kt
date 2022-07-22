@@ -18,18 +18,19 @@ import com.battlelancer.seriesguide.dataliberation.model.List
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
-import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItems
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TaskManager
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
@@ -45,7 +46,6 @@ import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStreamReader
-import java.util.ArrayList
 
 /**
  * Imports shows, lists or movies from a human-readable JSON file replacing existing data.
@@ -63,7 +63,7 @@ class JsonImportTask(
 
     private val context: Context = context.applicationContext
     private val languageCodes: Array<String> =
-        this.context.resources.getStringArray(R.array.languageCodesShows)
+        this.context.resources.getStringArray(R.array.content_languages)
     private var isImportingAutoBackup: Boolean
     private val isImportShows: Boolean
     private val isImportLists: Boolean
@@ -388,7 +388,11 @@ class JsonImportTask(
             return
         }
 
-        // reset language if it is not supported
+        // Map legacy language codes.
+        if (!show.language.isNullOrEmpty()) {
+            show.language = LanguageTools.mapLegacyShowCode(show.language)
+        }
+        // Reset language if it is not supported.
         val languageSupported = languageCodes.find { it == show.language } != null
         if (!languageSupported) {
             show.language = null

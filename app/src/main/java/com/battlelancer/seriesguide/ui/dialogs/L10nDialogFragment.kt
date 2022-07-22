@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.annotation.ArrayRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
@@ -88,44 +87,22 @@ class L10nDialogFragment : AppCompatDialogFragment() {
         private const val ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode"
         private const val ARG_RES_ID_LANGUAGE_CODES = "resIdLanguageCodes"
 
-        private fun show(
+        /**
+         * @param selectedLanguageCode two letter ISO 639-1 language code
+         * plus ISO-3166-1 region tag. If null selects first language code.
+         */
+        fun show(
             fragmentManager: FragmentManager,
             selectedLanguageCode: String?,
-            @ArrayRes resIdLanguageCodes: Int,
             tag: String
         ) {
             L10nDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode)
-                    putInt(ARG_RES_ID_LANGUAGE_CODES, resIdLanguageCodes)
+                    putInt(ARG_RES_ID_LANGUAGE_CODES, R.array.content_languages)
                 }
             }.safeShow(fragmentManager, tag)
         }
 
-        /**
-         * @param selectedLanguageCode two letter ISO 639-1 language code,
-         * plus optional ISO-3166-1 region tag. If null selects first language code.
-         */
-        @JvmStatic
-        fun forShow(
-            fragmentManager: FragmentManager,
-            selectedLanguageCode: String?,
-            tag: String
-        ) {
-            show(fragmentManager, selectedLanguageCode, R.array.languageCodesShows, tag)
-        }
-
-        /**
-         * @param selectedLanguageCode two letter ISO 639-1 language code,
-         * plus optional ISO-3166-1 region tag. If null selects first language code.
-         */
-        @JvmStatic
-        fun forPerson(
-            fragmentManager: FragmentManager,
-            selectedLanguageCode: String?,
-            tag: String
-        ) {
-            show(fragmentManager, selectedLanguageCode, R.array.languageCodesMovies, tag)
-        }
     }
 }

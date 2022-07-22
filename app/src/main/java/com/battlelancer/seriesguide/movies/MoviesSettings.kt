@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.LanguageTools
 import java.util.Locale
 
 object MoviesSettings {
@@ -41,9 +42,10 @@ object MoviesSettings {
      */
     @JvmStatic
     fun getMoviesLanguage(context: Context): String {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        val languageCode = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_MOVIES_LANGUAGE, null)
-            ?: context.getString(R.string.movie_default_language)
+            ?: context.getString(R.string.content_default_language)
+        return LanguageTools.mapLegacyMovieCode(languageCode)
     }
 
     fun saveMoviesRegion(context: Context, code: String?) {

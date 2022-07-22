@@ -8,27 +8,17 @@ import com.battlelancer.seriesguide.backend.HexagonRetry
 import com.battlelancer.seriesguide.backend.HexagonStop
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.shows.database.SgEpisode2
-import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.modules.ApplicationContext
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.ShowsSettings
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Ids
 import com.battlelancer.seriesguide.shows.database.SgEpisode2TmdbIdUpdate
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Update
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgSeason2Numbers
 import com.battlelancer.seriesguide.shows.database.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.shows.database.SgSeason2Update
-import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.ShowsSettings
-import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
-import com.battlelancer.seriesguide.sync.HexagonShowSync
-import com.battlelancer.seriesguide.sync.TraktEpisodeSync
-import com.battlelancer.seriesguide.tmdbapi.TmdbError
-import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
-import com.battlelancer.seriesguide.tmdbapi.TmdbStop
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.HEXAGON
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TMDB
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TRAKT
@@ -36,6 +26,16 @@ import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowStop
+import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
+import com.battlelancer.seriesguide.sync.HexagonShowSync
+import com.battlelancer.seriesguide.sync.TraktEpisodeSync
+import com.battlelancer.seriesguide.tmdbapi.TmdbError
+import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
+import com.battlelancer.seriesguide.tmdbapi.TmdbStop
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.TimeTools
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -84,7 +84,7 @@ class AddUpdateShowTools @Inject constructor(
             return ShowResult.IN_DATABASE
         }
 
-        val language = desiredLanguage ?: DisplaySettings.LANGUAGE_EN
+        val language = desiredLanguage ?: LanguageTools.LANGUAGE_EN
 
         val showDetails = getShowTools.getShowDetails(showTmdbId, language)
             .getOrElse { return it.toShowResult() }
@@ -394,10 +394,15 @@ class AddUpdateShowTools @Inject constructor(
         val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
 
         val language = helper.getLanguage(showId).let {
-            // handle legacy records
+            // Handle legacy records.
             // default to 'en' for consistent behavior across devices
             // and to encourage users to set language
-            if (it.isNullOrEmpty()) DisplaySettings.LANGUAGE_EN else it
+            if (it.isNullOrEmpty()) {
+                LanguageTools.LANGUAGE_EN
+            } else {
+                // Map legacy language codes.
+                LanguageTools.mapLegacyShowCode(it)
+            }
         }
 
         var showTmdbId = helper.getShowTmdbId(showId)
