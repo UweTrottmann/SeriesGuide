@@ -270,6 +270,7 @@ object LanguageTools {
         "pa" to "pa-IN",
         "pi" to LANGUAGE_EN,
         "ps" to LANGUAGE_EN,
+//        "pt-BR"
         "qu" to LANGUAGE_EN,
         "rm" to LANGUAGE_EN,
         "ro" to "ro-RO",
@@ -316,6 +317,8 @@ object LanguageTools {
         "yi" to LANGUAGE_EN,
         "yo" to LANGUAGE_EN,
         "za" to LANGUAGE_EN,
+//        "zh-HK"
+//        "zh-TW"
         "zu" to "zu-ZA",
     )
 
@@ -336,43 +339,66 @@ object LanguageTools {
         "az-AZ" to LANGUAGE_EN,
         "bm-BM" to LANGUAGE_EN,
         "ba-BA" to LANGUAGE_EN,
+//        "eu-ES"
         "be-BE" to "be-BY",
+//        "bn-BD"
         "bi-BI" to LANGUAGE_EN,
         "bs-BS" to LANGUAGE_EN,
         "br-BR" to LANGUAGE_EN,
+//        "bg-BG"
         "my-MY" to LANGUAGE_EN,
         "cn-CN" to LANGUAGE_EN,
+//        "ca-ES"
+//        "ch-GU"
         "ce-CE" to LANGUAGE_EN,
         "ny-NY" to LANGUAGE_EN,
         "cv-CV" to LANGUAGE_EN,
         "kw-KW" to LANGUAGE_EN,
         "co-CO" to LANGUAGE_EN,
         "cr-CR" to LANGUAGE_EN,
+//        "hr-HR"
+//        "cs-CZ"
+//        "da-DK"
         "dv-DV" to LANGUAGE_EN,
+//        "nl-NL"
         "dz-DZ" to LANGUAGE_EN,
+//        "en-US"
+//        "eo-EO"
         "et-ET" to "et-EE",
         "ee-EE" to LANGUAGE_EN,
         "fo-FO" to LANGUAGE_EN,
         "fj-FJ" to LANGUAGE_EN,
+//        "fi-FI"
+//        "fr-CA"
+//        "fr-FR"
         "fy-FY" to LANGUAGE_EN,
         "ff-FF" to LANGUAGE_EN,
         "gd-GD" to "gd-GB",
         "gl-GL" to "gl-ES",
         "lg-LG" to LANGUAGE_EN,
+//        "ka-GE"
+//        "de-DE"
+//        "el-GR"
         "gn-GN" to LANGUAGE_EN,
         "gu-GU" to LANGUAGE_EN,
         "ht-HT" to LANGUAGE_EN,
         "ha-HA" to LANGUAGE_EN,
+//        "he-IL"
         "hz-HZ" to LANGUAGE_EN,
+//        "hi-IN"
         "ho-HO" to LANGUAGE_EN,
+//        "hu-HU"
         "is-IS" to LANGUAGE_EN,
         "io-IO" to LANGUAGE_EN,
         "ig-IG" to LANGUAGE_EN,
+//        "id-ID"
         "ia-IA" to LANGUAGE_EN,
         "ie-IE" to LANGUAGE_EN,
         "iu-IU" to LANGUAGE_EN,
         "ik-IK" to LANGUAGE_EN,
         "ga-GA" to "ga-IE",
+//        "it-IT"
+//        "ja-JP"
         "jv-JV" to LANGUAGE_EN,
         "kl-KL" to LANGUAGE_EN,
         "kn-KN" to "kn-IN",
@@ -385,19 +411,25 @@ object LanguageTools {
         "ky-KY" to "ky-KG",
         "kv-KV" to LANGUAGE_EN,
         "kg-KG" to LANGUAGE_EN,
+//        "ko-KR"
         "kj-KJ" to LANGUAGE_EN,
         "ku-KU" to LANGUAGE_EN,
         "lo-LO" to LANGUAGE_EN,
         "la-LA" to LANGUAGE_EN,
+//        "lv-LV"
         "lb-LB" to LANGUAGE_EN,
         "li-LI" to LANGUAGE_EN,
         "ln-LN" to LANGUAGE_EN,
+//        "lt-LT"
         "lu-LU" to LANGUAGE_EN,
         "mk-MK" to LANGUAGE_EN,
         "mg-MG" to LANGUAGE_EN,
         "ms-MS" to "ms-MY",
         "ml-ML" to "ml-IN",
         "mt-MT" to LANGUAGE_EN,
+//        "zh-CN"
+//        "zh-HK"
+//        "zh-TW"
         "gv-GV" to LANGUAGE_EN,
         "mi-MI" to LANGUAGE_EN,
         "mr-MR" to "mr-IN",
@@ -412,6 +444,8 @@ object LanguageTools {
         "ne-NE" to LANGUAGE_EN,
         "xx-XX" to LANGUAGE_EN,
         "se-SE" to LANGUAGE_EN,
+//        "no-NO"
+//        "nb-NO"
         "nn-NN" to LANGUAGE_EN,
         "oc-OC" to LANGUAGE_EN,
         "oj-OJ" to LANGUAGE_EN,
@@ -419,41 +453,58 @@ object LanguageTools {
         "om-OM" to LANGUAGE_EN,
         "os-OS" to LANGUAGE_EN,
         "pi-PI" to LANGUAGE_EN,
+//        "fa-IR"
+//        "pl-PL"
+//        "pt-BR"
+//        "pt-PT"
         "pa-PA" to "pa-IN",
         "ps-PS" to LANGUAGE_EN,
         "qu-QU" to LANGUAGE_EN,
         "rm-RM" to LANGUAGE_EN,
+//        "ro-RO"
         "rn-RN" to LANGUAGE_EN,
+//        "ru-RU"
         "sm-SM" to LANGUAGE_EN,
         "sg-SG" to LANGUAGE_EN,
         "sa-SA" to LANGUAGE_EN,
         "sc-SC" to LANGUAGE_EN,
+//        "sr-RS"
         "sh-SH" to LANGUAGE_EN,
         "sn-SN" to LANGUAGE_EN,
         "sd-SD" to LANGUAGE_EN,
         "si-SI" to "si-LK",
         "cu-CU" to LANGUAGE_EN,
+//        "sk-SK"
+//        "sl-SI"
         "so-SO" to LANGUAGE_EN,
         "st-ST" to LANGUAGE_EN,
+//        "es-ES"
+//        "es-MX"
         "su-SU" to LANGUAGE_EN,
         "sw-SW" to LANGUAGE_EN,
         "ss-SS" to LANGUAGE_EN,
+//        "sv-SE"
         "tl-TL" to "tl-PH",
         "ty-TY" to LANGUAGE_EN,
         "tg-TG" to LANGUAGE_EN,
+//        "ta-IN"
         "tt-TT" to LANGUAGE_EN,
         "te-TE" to "te-IN",
+//        "th-TH"
         "bo-BO" to LANGUAGE_EN,
         "ti-TI" to LANGUAGE_EN,
         "to-TO" to LANGUAGE_EN,
         "ts-TS" to LANGUAGE_EN,
         "tn-TN" to LANGUAGE_EN,
+//        "tr-TR"
         "tk-TK" to LANGUAGE_EN,
         "tw-TW" to LANGUAGE_EN,
         "ug-UG" to LANGUAGE_EN,
+//        "uk-UA"
         "ur-UR" to LANGUAGE_EN,
         "uz-UZ" to LANGUAGE_EN,
         "ve-VE" to LANGUAGE_EN,
+//        "vi-VN"
         "vo-VO" to LANGUAGE_EN,
         "wa-WA" to LANGUAGE_EN,
         "cy-CY" to "cy-GB",
