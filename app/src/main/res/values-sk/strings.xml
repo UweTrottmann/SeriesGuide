@@ -100,7 +100,7 @@
     <string name="no_translation_title">Nie je preložené</string>
     <string name="no_spoilers">Niektoré detaily sú skryté aby sa zabránilo prezradeniu deja. Pre ich zobrazenie prejdite do nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Naposledy aktualizované</string>
     <!-- Date and Time -->
     <string name="today">dnes</string>
     <string name="now">teraz</string>
@@ -163,7 +163,7 @@
     <string name="context_updateshow">Aktualizovať</string>
     <string name="context_marknext">Označiť nasledujúcu ako videnú</string>
     <string name="action_episodes_switch_view">Zmeniť zobrazenie</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Ďalšie na sledovanie</string>
     <!-- History -->
     <string name="user_stream">História</string>
     <string name="recently_watched">Nedávno videné</string>
@@ -328,7 +328,7 @@
     <string name="connect">Pripojiť</string>
     <string name="disconnect">Odpojiť</string>
     <string name="use_integrated_browser">Použiť vstavaný prehliadač</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Pridať seriály z Trakt</string>
     <string name="about_trakt">V trakt zaznamenávate, ktoré seriály a filmy sledujete. <a href="https://trakt.tv">Zistite viac</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>

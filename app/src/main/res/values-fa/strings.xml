@@ -98,7 +98,7 @@
     <string name="no_translation_title">ترجمه نشده</string>
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
     <string name="format_source">منبع: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">آخرین به‌روز رسانی</string>
     <!-- Date and Time -->
     <string name="today">امروز</string>
     <string name="now">اکنون</string>
@@ -112,7 +112,7 @@
     <string name="collect_all">همه به کلکسیون افزوده شده</string>
     <string name="uncollect_all">هیچ کدام به کلکسیون افزوده نشده</string>
     <string name="action_skip">رد کردن</string>
-    <string name="action_dont_skip">رد نشو</string>
+    <string name="action_dont_skip">رد نکردن</string>
     <string name="action_collection_add">افزودن به مجموعه</string>
     <string name="action_collection_remove">برداشتن از مجموعه</string>
     <string name="action_watched">تنظیم به تماشا شده</string>
@@ -145,7 +145,7 @@
     <string name="action_shows_filter_unwatched">تماشا نشده</string>
     <string name="action_shows_filter_upcoming">بزودی</string>
     <string name="action_shows_filter_hidden">پنهان شده</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
+    <string name="state_shows_filter_disabled">از کار افتاده</string>
     <string name="state_shows_filter_included">Included</string>
     <string name="state_shows_filter_excluded">Excluded</string>
     <string name="action_shows_make_all_visible">آشکارسازی همه‌ی پنهان‌شده‌ها</string>
@@ -156,12 +156,12 @@
     <string name="action_shows_sort_oldest_episode">قدیمی‌ترین قسمت</string>
     <string name="action_shows_sort_last_watched">آخرین تماشا شده</string>
     <string name="action_shows_sort_remaining">قسمت‌های باقی مانده</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">وضعیت</string>
     <string name="action_shows_sort_favorites">نخست برگزیده‌ها</string>
     <string name="context_updateshow">به‌روز رسانی</string>
     <string name="context_marknext">قسمت بعدی تماشا شد</string>
     <string name="action_episodes_switch_view">تعویض نما</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">برنامهٔ بعدی</string>
     <!-- History -->
     <string name="user_stream">تاریخچه</string>
     <string name="recently_watched">به‌تازگی تماشا شده</string>
@@ -195,7 +195,7 @@
     </plurals>
     <plurals name="remaining_episodes_plural">
         <item quantity="one">%d باقی مانده</item>
-        <item quantity="other">%d باقی مانده</item>
+        <item quantity="other">%d قسمت مانده</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">نام یک اثر نمایشی را بنویسید</string>
@@ -250,7 +250,7 @@
     <string name="action_movies_sort">چینش فیلم‌ها</string>
     <string name="action_movies_sort_title">عنوان</string>
     <string name="action_movies_sort_release">تاریخ انتشار</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">پالایش فیلم‌ها</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
     <string name="shows_finished">%s finished watching</string>
@@ -285,15 +285,15 @@
     <string name="hexagon_signin">ورود</string>
     <string name="hexagon_signout">خروج از سیستم</string>
     <string name="hexagon_setup_incomplete">راه اندازی فضای ابری SeriesGuide کامل نشد.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">حسابتان نشانی رایانامه‌ای ندارد</string>
     <string name="hexagon_remove_account">حذف حساب</string>
     <string name="hexagon_remove_account_success">حساب حذف شد.</string>
     <string name="hexagon_remove_account_failure">قادر به حذف حساب نیست.</string>
     <string name="hexagon_remove_account_confirmation">حذف حسابتان تمام نمایش‌ها و فیلم‌ها را از فضای ابری SeriesGuide پاک می‌کند. مطمئن شوید که آن را از دیگر افزاره‌های وصل شده نیز حذف میکنید.</string>
     <string name="hexagon_api_queued">در حال ارسال به فضای ابری SeriesGuide.</string>
     <string name="hexagon_signed_out">از فضای ابری SeriesGuide خارج شدید.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">خطا در ورود (%s)</string>
+    <string name="hexagon_signin_google_only">نشانی رایانامه نیازمند ورود گوگلی است</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">ارسال به trakt.</string>
     <string name="checkin_success_trakt">%s روی trakt ثبت شد.</string>
@@ -314,7 +314,7 @@
     <string name="connect">وصل کردن</string>
     <string name="disconnect">قطع کردن</string>
     <string name="use_integrated_browser">استفاده از مرورگر یکپارچه</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">افزودن نمایش‌ها از ترکت</string>
     <string name="about_trakt">ترکت کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید. <a href="https://trakt.tv">بیش‌تر بدانید</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
@@ -381,8 +381,8 @@
     <string name="about_open_source">SeriesGuide با استفاده از نرم‌افزارهای متن باز ساخته شده است.</string>
     <string name="licences_and_credits">مجوزها و اعتبارات</string>
     <!-- Sort -->
-    <string name="sort">مرتب کردن بر اساس</string>
-    <string name="action_sort_ignore_articles">چشم پوشی از مقالات</string>
+    <string name="sort">چینش با</string>
+    <string name="action_sort_ignore_articles">چشم‌پوشی از حروف تعریف</string>
     <!-- Sort orders -->
     <string name="sort_order_latest_first">نخست جدیدترین</string>
     <string name="sort_order_oldest_first">نخست قدیمی‌ترین</string>
@@ -399,20 +399,20 @@
     <string name="upcoming_upto_one_week">۱ هفته</string>
     <string name="upcoming_upto_two_weeks">۲ هفته</string>
     <string name="upcoming_upto_one_month">۱ ماه</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">همه</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">ظاهر</string>
     <string name="pref_theme">زمینه</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">استفاده از رنگ‌های سامانه</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">استفاده از پیش‌گزیدهٔ سامانه</string>
     <string name="theme_app_auto_battery">تنطیم به دست ذخیره‌ساز باتری</string>
     <string name="theme_app_dark">تاریک</string>
     <string name="theme_app_light">روشن</string>
     <!-- Other advanced settings -->
-    <string name="pref_other">سایر موارد</string>
-    <string name="pref_autoupdatesummary">به صورت خودکار داده های SeriesGuide را همگام سازی و بروزرسانی کن</string>
-    <string name="backup">پشتیبان گیری / بازیابی</string>
+    <string name="pref_other">دیگر</string>
+    <string name="pref_autoupdatesummary">به‌روز رسانی و همگام سازی خودکار محتوا</string>
+    <string name="backup">پشتیبان/بازیابی</string>
     <string name="backup_summary">پشتیبان گیری یا بازگردانی نمایش‌هایتان</string>
     <string name="pref_number">قالب شماره</string>
     <string name="pref_offset">جابه‌جایی زمان دستی</string>
@@ -470,7 +470,7 @@
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>
     <string name="pref_widget_type">نوع ابزارک</string>
     <string name="pref_large_font">استفاده از خط درشت</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_hide_watch_button">نهفتن دکمهٔ نمایش</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">شفّاف</string>
     <string name="widget_background_25">۲۵٪</string>

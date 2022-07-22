@@ -232,7 +232,7 @@
     <string name="list_manage">Управление списком</string>
     <string name="list_item_manage">Управление списками</string>
     <string name="list_item_remove">Удалить из списка</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Вы можете добавить сериалы в этот список</string>
     <string name="action_lists_sort">Отсортировать списки</string>
     <string name="action_lists_reorder">Сортировка списков</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
@@ -261,7 +261,7 @@
     <string name="action_movies_filter">Filter movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не удалось рассчитать статистику.</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s Просмотрено</string>
     <string name="shows_with_next">%s новых эпизодов</string>
     <string name="shows_continuing">%s продолжается</string>
     <string name="episodes_watched">%s просмотрено</string>

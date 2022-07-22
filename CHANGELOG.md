@@ -19,6 +19,7 @@ Version 65
 * 🔧 Clean up supported languages for show and movie content. Languages not longer supported are
 changed to US English. As a side-effect should resolve issues with translations switching back to
 English at random.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 65.0.0
 *2022-05-27*
