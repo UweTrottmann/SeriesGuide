@@ -69,6 +69,10 @@ public class SgMovie {
     @ColumnInfo(name = Movies.LAST_UPDATED)
     public Long lastUpdated;
 
+    /**
+     * If {@link #releasedMs} is not null returns it, otherwise {@link Long#MAX_VALUE}.
+     * See {@link Movies#RELEASED_UTC_MS RELEASED_UTC_MS}.
+     */
     public long getReleasedMsOrDefault() {
         return releasedMs != null ? releasedMs : Long.MAX_VALUE;
     }
