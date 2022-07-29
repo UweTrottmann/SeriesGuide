@@ -14,17 +14,17 @@ abstract class BaseNetworkJob(
      * @return JobResult.jobRemovable true if the job can be removed, false if it should be retried
      * later.
      */
-    protected fun buildResult(context: Context, result: Int): JobResult {
+    protected fun buildResult(context: Context, result: Int): NetworkJobResult {
         val error: String
         val removeJob: Boolean
         when (result) {
             SUCCESS -> {
-                return JobResult(successful = true, jobRemovable = true)
+                return NetworkJobResult(successful = true, jobRemovable = true)
             }
             ERROR_CONNECTION,
             ERROR_HEXAGON_SERVER,
             ERROR_TRAKT_SERVER -> {
-                return JobResult(successful = false, jobRemovable = false)
+                return NetworkJobResult(successful = false, jobRemovable = false)
             }
             ERROR_HEXAGON_AUTH -> {
                 // TODO ut better error message if auth is missing, or drop?
@@ -57,9 +57,9 @@ abstract class BaseNetworkJob(
                 error = context.getString(R.string.trakt_notice_not_exists)
                 removeJob = true
             }
-            else -> return JobResult(successful = true, jobRemovable = true)
+            else -> return NetworkJobResult(successful = true, jobRemovable = true)
         }
-        return JobResult(
+        return NetworkJobResult(
             successful = false,
             jobRemovable = removeJob,
             item = getItemTitle(context),

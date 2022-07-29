@@ -20,7 +20,7 @@ class TraktMovieJob(
     private val actionAtMs: Long
 ) : BaseNetworkMovieJob(action, jobInfo) {
 
-    override fun execute(context: Context): JobResult {
+    override fun execute(context: Context): NetworkJobResult {
         return buildResult(context, upload(context))
     }
 

@@ -18,7 +18,7 @@ class HexagonEpisodeJob(
     jobInfo: SgJobInfo
 ) : BaseNetworkEpisodeJob(action, jobInfo) {
 
-    override fun execute(context: Context): JobResult {
+    override fun execute(context: Context): NetworkJobResult {
         val showTmdbIdOrZero = SgRoomDatabase.getInstance(context).sgShow2Helper()
             .getShowTmdbId(jobInfo.showId())
         if (showTmdbIdOrZero <= 0) {

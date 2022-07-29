@@ -21,7 +21,7 @@ class HexagonMovieJob(
     jobInfo: SgJobInfo
 ) : BaseNetworkMovieJob(action, jobInfo) {
 
-    override fun execute(context: Context): JobResult {
+    override fun execute(context: Context): NetworkJobResult {
         val uploadWrapper = MovieList()
         uploadWrapper.movies = getMovieForHexagon()
 

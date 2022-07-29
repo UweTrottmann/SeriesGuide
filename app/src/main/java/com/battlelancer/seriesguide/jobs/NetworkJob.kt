@@ -4,6 +4,6 @@ import android.content.Context
 
 interface NetworkJob {
 
-    fun execute(context: Context): JobResult
+    fun execute(context: Context): NetworkJobResult
 
 }

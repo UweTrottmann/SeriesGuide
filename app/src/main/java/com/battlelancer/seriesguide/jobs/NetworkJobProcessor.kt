@@ -155,7 +155,7 @@ class NetworkJobProcessor(private val context: Context) {
         }
     }
 
-    private fun showNotification(jobId: Long, jobCreatedAt: Long, result: JobResult) {
+    private fun showNotification(jobId: Long, jobCreatedAt: Long, result: NetworkJobResult) {
         if (result.action == null || result.error == null || result.item == null) {
             return // missing required values
         }

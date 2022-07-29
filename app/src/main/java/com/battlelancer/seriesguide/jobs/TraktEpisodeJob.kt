@@ -25,7 +25,7 @@ class TraktEpisodeJob(
     private val actionAtMs: Long
 ) : BaseNetworkEpisodeJob(action, jobInfo) {
 
-    override fun execute(context: Context): JobResult {
+    override fun execute(context: Context): NetworkJobResult {
         // Do not send if show has no trakt id (was not on trakt last time we checked).
         val showTraktId = SgApp.getServicesComponent(context)
             .showTools().getShowTraktId(jobInfo.showId())

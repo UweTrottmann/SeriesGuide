@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.jobs
 
 import android.app.PendingIntent
 
-data class JobResult(
+data class NetworkJobResult(
     val successful: Boolean,
     val jobRemovable: Boolean,
     val action: String? = null,
