@@ -5,9 +5,8 @@ import android.content.Context;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.jobs.BaseJob;
+import com.battlelancer.seriesguide.jobs.BaseFlagJob;
 import com.battlelancer.seriesguide.jobs.EpisodeInfo;
-import com.battlelancer.seriesguide.jobs.FlagJob;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
@@ -18,7 +17,7 @@ import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask;
 import com.google.flatbuffers.FlatBufferBuilder;
 import java.util.List;
 
-public abstract class BaseEpisodesJob extends BaseJob implements FlagJob {
+public abstract class BaseEpisodesJob extends BaseFlagJob {
 
     private final int flagValue;
 
