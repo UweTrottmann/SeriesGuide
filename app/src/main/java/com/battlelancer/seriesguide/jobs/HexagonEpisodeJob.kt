@@ -4,15 +4,13 @@ import android.content.Context
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
-import com.battlelancer.seriesguide.sync.NetworkJobProcessor.JobResult
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.util.Errors
 import com.google.api.client.http.HttpResponseException
 import com.uwetrottmann.seriesguide.backend.episodes.model.SgCloudEpisode
 import com.uwetrottmann.seriesguide.backend.episodes.model.SgCloudEpisodeList
 import java.io.IOException
-import java.util.ArrayList
 
 class HexagonEpisodeJob(
     private val hexagonTools: HexagonTools,
@@ -25,7 +23,7 @@ class HexagonEpisodeJob(
             .getShowTmdbId(jobInfo.showId())
         if (showTmdbIdOrZero <= 0) {
             // Can't run this job (for now), report error and remove.
-            return buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT)
+            return buildResult(context, ERROR_HEXAGON_CLIENT)
         }
 
         val uploadWrapper = SgCloudEpisodeList()
@@ -53,29 +51,29 @@ class HexagonEpisodeJob(
 
             try {
                 val episodesService = hexagonTools.episodesService
-                    ?: return buildResult(context, NetworkJob.ERROR_HEXAGON_AUTH)
+                    ?: return buildResult(context, ERROR_HEXAGON_AUTH)
                 episodesService.saveSgEpisodes(uploadWrapper).execute()
             } catch (e: HttpResponseException) {
                 Errors.logAndReportHexagon("save episodes", e)
                 val code = e.statusCode
                 return if (code in 400..499) {
-                    buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT)
+                    buildResult(context, ERROR_HEXAGON_CLIENT)
                 } else {
-                    buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER)
+                    buildResult(context, ERROR_HEXAGON_SERVER)
                 }
             } catch (e: IOException) {
                 Errors.logAndReportHexagon("save episodes", e)
-                return buildResult(context, NetworkJob.ERROR_CONNECTION)
+                return buildResult(context, ERROR_CONNECTION)
             } catch (e: IllegalArgumentException) {
                 // Note: JSON parser may throw IllegalArgumentException.
                 Errors.logAndReportHexagon("save episodes", e)
-                return buildResult(context, NetworkJob.ERROR_CONNECTION)
+                return buildResult(context, ERROR_CONNECTION)
             }
 
             // prepare for next batch
             smallBatch.clear()
         }
-        return buildResult(context, NetworkJob.SUCCESS)
+        return buildResult(context, SUCCESS)
     }
 
     /**

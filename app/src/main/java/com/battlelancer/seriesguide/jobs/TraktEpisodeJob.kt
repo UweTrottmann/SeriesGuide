@@ -3,11 +3,10 @@ package com.battlelancer.seriesguide.jobs
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
-import com.battlelancer.seriesguide.sync.NetworkJobProcessor.JobResult
-import com.battlelancer.seriesguide.traktapi.SgTrakt
-import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.entities.SyncEpisode
@@ -32,7 +31,7 @@ class TraktEpisodeJob(
             .showTools().getShowTraktId(jobInfo.showId())
         val canSendToTrakt = showTraktId != null
         if (!canSendToTrakt) {
-            return buildResult(context, NetworkJob.ERROR_TRAKT_NOT_FOUND)
+            return buildResult(context, ERROR_TRAKT_NOT_FOUND)
         }
         val result = upload(context, showTraktId!!)
         return buildResult(context, result)
@@ -43,18 +42,18 @@ class TraktEpisodeJob(
 
         // skipped flag not supported by trakt
         if (EpisodeTools.isSkipped(flagValue)) {
-            return NetworkJob.SUCCESS
+            return SUCCESS
         }
 
         val isAddNotDelete = (flagValue
                 != EpisodeFlags.UNWATCHED) // 0 for not watched or not collected
         val seasons = getEpisodesForTrakt(isAddNotDelete)
         if (seasons.isEmpty()) {
-            return NetworkJob.SUCCESS // nothing to upload, done.
+            return SUCCESS // nothing to upload, done.
         }
 
         if (!TraktCredentials.get(context).hasCredentials()) {
-            return NetworkJob.ERROR_TRAKT_AUTH
+            return ERROR_TRAKT_AUTH
         }
 
         // outer wrapper and show are always required
@@ -92,11 +91,11 @@ class TraktEpisodeJob(
             if (response.isSuccessful) {
                 // check if any items were not found
                 if (!isSyncSuccessful(response.body())) {
-                    return NetworkJob.ERROR_TRAKT_NOT_FOUND
+                    return ERROR_TRAKT_NOT_FOUND
                 }
             } else {
                 if (SgTrakt.isUnauthorized(context, response)) {
-                    return NetworkJob.ERROR_TRAKT_AUTH
+                    return ERROR_TRAKT_AUTH
                 }
                 Errors.logAndReport(
                     errorLabel, response,
@@ -104,16 +103,16 @@ class TraktEpisodeJob(
                 )
                 val code = response.code()
                 return if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
-                    NetworkJob.ERROR_TRAKT_SERVER
+                    ERROR_TRAKT_SERVER
                 } else {
-                    NetworkJob.ERROR_TRAKT_CLIENT
+                    ERROR_TRAKT_CLIENT
                 }
             }
         } catch (e: Exception) {
             Errors.logAndReport(errorLabel, e)
-            return NetworkJob.ERROR_CONNECTION
+            return ERROR_CONNECTION
         }
-        return NetworkJob.SUCCESS
+        return SUCCESS
     }
 
     /**

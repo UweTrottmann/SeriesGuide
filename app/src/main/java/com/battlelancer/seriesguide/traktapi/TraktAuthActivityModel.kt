@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.sync.NetworkJobProcessor
+import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.AccessToken
@@ -94,7 +94,8 @@ class TraktAuthActivityModel(application: Application) : AndroidViewModel(applic
             }
 
             // reset sync state before hasCredentials may return true
-            NetworkJobProcessor(getApplication()).removeObsoleteJobs(false)
+            NetworkJobProcessor(getApplication())
+                .removeObsoleteJobs(false)
             PreferenceManager.getDefaultSharedPreferences(getApplication()).edit {
                 // make next sync merge local watched and collected episodes with those on trakt
                 putBoolean(TraktSettings.KEY_HAS_MERGED_EPISODES, false)

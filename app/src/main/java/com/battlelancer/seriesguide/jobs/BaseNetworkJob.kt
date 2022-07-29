@@ -4,7 +4,6 @@ import android.app.PendingIntent
 import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
-import com.battlelancer.seriesguide.sync.NetworkJobProcessor.JobResult
 
 abstract class BaseNetworkJob(
     val action: JobAction,
@@ -19,18 +18,15 @@ abstract class BaseNetworkJob(
         val error: String
         val removeJob: Boolean
         when (result) {
-            NetworkJob.SUCCESS -> {
-                return JobResult(true, true)
+            SUCCESS -> {
+                return JobResult(successful = true, jobRemovable = true)
             }
-            NetworkJob.ERROR_CONNECTION,
-            NetworkJob.ERROR_HEXAGON_SERVER,
-            NetworkJob.ERROR_TRAKT_SERVER -> {
-                return JobResult(
-                    false,
-                    false
-                )
+            ERROR_CONNECTION,
+            ERROR_HEXAGON_SERVER,
+            ERROR_TRAKT_SERVER -> {
+                return JobResult(successful = false, jobRemovable = false)
             }
-            NetworkJob.ERROR_HEXAGON_AUTH -> {
+            ERROR_HEXAGON_AUTH -> {
                 // TODO ut better error message if auth is missing, or drop?
                 error = context.getString(
                     R.string.api_error_generic,
@@ -38,40 +34,66 @@ abstract class BaseNetworkJob(
                 )
                 removeJob = false
             }
-            NetworkJob.ERROR_TRAKT_AUTH -> {
+            ERROR_TRAKT_AUTH -> {
                 error = context.getString(R.string.trakt_error_credentials)
                 removeJob = false
             }
-            NetworkJob.ERROR_HEXAGON_CLIENT -> {
+            ERROR_HEXAGON_CLIENT -> {
                 error = context.getString(
                     R.string.api_error_generic,
                     context.getString(R.string.hexagon)
                 )
                 removeJob = true
             }
-            NetworkJob.ERROR_TRAKT_CLIENT -> {
+            ERROR_TRAKT_CLIENT -> {
                 error = context.getString(
                     R.string.api_error_generic,
                     context.getString(R.string.trakt)
                 )
                 removeJob = true
             }
-            NetworkJob.ERROR_TRAKT_NOT_FOUND -> {
+            ERROR_TRAKT_NOT_FOUND -> {
                 // show not on trakt: notify, but complete successfully
                 error = context.getString(R.string.trakt_notice_not_exists)
                 removeJob = true
             }
-            else -> return JobResult(true, true)
+            else -> return JobResult(successful = true, jobRemovable = true)
         }
-        val jobResult = JobResult(false, removeJob)
-        jobResult.item = getItemTitle(context)
-        jobResult.action = getActionDescription(context)
-        jobResult.error = error
-        jobResult.contentIntent = getErrorIntent(context)
-        return jobResult
+        return JobResult(
+            successful = false,
+            jobRemovable = removeJob,
+            item = getItemTitle(context),
+            action = getActionDescription(context),
+            error = error,
+            contentIntent = getErrorIntent(context)
+        )
     }
 
     protected abstract fun getItemTitle(context: Context): String?
     protected abstract fun getActionDescription(context: Context): String?
     protected abstract fun getErrorIntent(context: Context): PendingIntent
+
+    companion object {
+        const val SUCCESS = 0
+
+        /** Issue connecting or reading a response, should retry.  */
+        const val ERROR_CONNECTION = -1
+        const val ERROR_TRAKT_AUTH = -2
+
+        /** Issue with request, do not retry.  */
+        const val ERROR_TRAKT_CLIENT = -3
+
+        /** Issue with connection or server, do retry.  */
+        const val ERROR_TRAKT_SERVER = -4
+
+        /** Show, season or episode not found, do not retry, but notify.  */
+        const val ERROR_TRAKT_NOT_FOUND = -5
+
+        /** Issue with the request, do not retry.  */
+        const val ERROR_HEXAGON_CLIENT = -6
+
+        /** Issue with connection or server, should retry.  */
+        const val ERROR_HEXAGON_SERVER = -7
+        const val ERROR_HEXAGON_AUTH = -8
+    }
 }

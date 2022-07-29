@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.jobs
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
-import com.battlelancer.seriesguide.sync.NetworkJobProcessor.JobResult
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.Errors
@@ -27,7 +26,7 @@ class TraktMovieJob(
 
     private fun upload(context: Context): Int {
         if (!TraktCredentials.get(context).hasCredentials()) {
-            return NetworkJob.ERROR_TRAKT_AUTH
+            return ERROR_TRAKT_AUTH
         }
 
         val movie = SyncMovie().id(MovieIds.tmdb(jobInfo.movieTmdbId()))
@@ -88,11 +87,11 @@ class TraktMovieJob(
             if (response.isSuccessful) {
                 // check if any items were not found
                 if (!isSyncSuccessful(response.body())) {
-                    return NetworkJob.ERROR_TRAKT_NOT_FOUND
+                    return ERROR_TRAKT_NOT_FOUND
                 }
             } else {
                 if (SgTrakt.isUnauthorized(context, response)) {
-                    return NetworkJob.ERROR_TRAKT_AUTH
+                    return ERROR_TRAKT_AUTH
                 }
                 Errors.logAndReport(
                     errorLabel, response,
@@ -100,16 +99,16 @@ class TraktMovieJob(
                 )
                 val code = response.code()
                 return if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
-                    NetworkJob.ERROR_TRAKT_SERVER
+                    ERROR_TRAKT_SERVER
                 } else {
-                    NetworkJob.ERROR_TRAKT_CLIENT
+                    ERROR_TRAKT_CLIENT
                 }
             }
         } catch (e: Exception) {
             Errors.logAndReport(errorLabel, e)
-            return NetworkJob.ERROR_CONNECTION
+            return ERROR_CONNECTION
         }
-        return NetworkJob.SUCCESS
+        return SUCCESS
     }
 
     companion object {

@@ -7,7 +7,7 @@ import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.modules.ApplicationContext
-import com.battlelancer.seriesguide.sync.NetworkJobProcessor
+import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.battlelancer.seriesguide.util.isRetryError

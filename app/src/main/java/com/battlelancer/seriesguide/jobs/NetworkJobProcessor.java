@@ -1,7 +1,6 @@
-package com.battlelancer.seriesguide.sync;
+package com.battlelancer.seriesguide.jobs;
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
@@ -14,12 +13,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
-import com.battlelancer.seriesguide.jobs.HexagonEpisodeJob;
-import com.battlelancer.seriesguide.jobs.HexagonMovieJob;
-import com.battlelancer.seriesguide.jobs.NetworkJob;
-import com.battlelancer.seriesguide.jobs.SgJobInfo;
-import com.battlelancer.seriesguide.jobs.TraktEpisodeJob;
-import com.battlelancer.seriesguide.jobs.TraktMovieJob;
 import com.battlelancer.seriesguide.jobs.episodes.JobAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Jobs;
 import com.battlelancer.seriesguide.settings.NotificationSettings;
@@ -97,9 +90,9 @@ public class NetworkJobProcessor {
             NetworkJob hexagonJob = getHexagonJobForAction(hexagonTools, action, jobInfo);
             if (hexagonJob != null) {
                 JobResult result = hexagonJob.execute(context);
-                if (!result.successful) {
+                if (!result.getSuccessful()) {
                     showNotification(jobId, createdAt, result);
-                    return result.jobRemovable;
+                    return result.getJobRemovable();
                 }
             }
         }
@@ -115,8 +108,8 @@ public class NetworkJobProcessor {
                 JobResult result = traktJob.execute(context);
                 // may need to show notification if successful (for not found error)
                 showNotification(jobId, createdAt, result);
-                if (!result.successful) {
-                    return result.jobRemovable;
+                if (!result.getSuccessful()) {
+                    return result.getJobRemovable();
                 }
             }
         }
@@ -162,7 +155,7 @@ public class NetworkJobProcessor {
     }
 
     private void showNotification(long jobId, long jobCreatedAt, @NonNull JobResult result) {
-        if (result.action == null || result.error == null || result.item == null) {
+        if (result.getAction() == null || result.getError() == null || result.getItem() == null) {
             return; // missing required values
         }
 
@@ -173,11 +166,13 @@ public class NetworkJobProcessor {
         nb.setSmallIcon(R.drawable.ic_notification);
         // like: 'Failed: Remove from collection · BoJack Horseman'
         nb.setContentTitle(
-                context.getString(R.string.api_failed, result.action + " · " + result.item));
-        nb.setContentText(result.error);
+                context.getString(R.string.api_failed,
+                        result.getAction() + " · " + result.getItem()));
+        nb.setContentText(result.getError());
         nb.setStyle(new NotificationCompat.BigTextStyle().bigText(
-                getErrorDetails(result.item, result.error, result.action, jobCreatedAt)));
-        nb.setContentIntent(result.contentIntent);
+                getErrorDetails(result.getItem(), result.getError(), result.getAction(),
+                        jobCreatedAt)));
+        nb.setContentIntent(result.getContentIntent());
         nb.setAutoCancel(true);
 
         NotificationManager nm = (NotificationManager) context.getSystemService(
@@ -229,19 +224,5 @@ public class NetworkJobProcessor {
             return; // still signed in to either service, do not clear jobs
         }
         context.getContentResolver().delete(Jobs.CONTENT_URI, null, null);
-    }
-
-    public static class JobResult {
-        public boolean successful;
-        public boolean jobRemovable;
-        @Nullable public String action;
-        @Nullable public String error;
-        @Nullable public String item;
-        @Nullable public PendingIntent contentIntent;
-
-        public JobResult(boolean successful, boolean jobRemovable) {
-            this.successful = successful;
-            this.jobRemovable = jobRemovable;
-        }
     }
 }
