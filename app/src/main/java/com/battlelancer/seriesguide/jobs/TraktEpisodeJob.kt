@@ -8,13 +8,22 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.Errors
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.getOrElse
+import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.entities.SyncEpisode
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncResponse
 import com.uwetrottmann.trakt5.entities.SyncSeason
 import com.uwetrottmann.trakt5.entities.SyncShow
+import com.uwetrottmann.trakt5.entities.UserSlug
+import com.uwetrottmann.trakt5.enums.HistoryType
+import com.uwetrottmann.trakt5.services.Users
 import org.threeten.bp.Instant
+import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.ZoneOffset
 import retrofit2.Call
 import java.util.LinkedList
@@ -47,7 +56,8 @@ class TraktEpisodeJob(
 
         val isAddNotDelete = (flagValue
                 != EpisodeFlags.UNWATCHED) // 0 for not watched or not collected
-        val seasons = getEpisodesForTrakt(isAddNotDelete)
+        val seasons = getEpisodesForTrakt(context, showTraktId, isAddNotDelete)
+            .getOrElse { return it }
         if (seasons.isEmpty()) {
             return SUCCESS // nothing to upload, done.
         }
@@ -64,9 +74,9 @@ class TraktEpisodeJob(
         // determine network call
         val errorLabel: String
         val call: Call<SyncResponse>
-        val component = SgApp.getServicesComponent(context)
-        val trakt = component.trakt()
-        val traktSync = component.traktSync()!!
+
+        val trakt = SgApp.getServicesComponent(context).trakt()
+        val traktSync = trakt.sync()
         when (action) {
             JobAction.EPISODE_WATCHED_FLAG -> if (isAddNotDelete) {
                 errorLabel = "set episodes watched"
@@ -116,23 +126,62 @@ class TraktEpisodeJob(
     }
 
     /**
-     * Builds a list of [SyncSeason] objects to submit to Trakt.
+     * Builds a list of [SyncSeason] objects to submit to Trakt. When adding watched history
+     * entries, checks against Trakt history if an entry exists at that time for an episode
+     * and excludes those episodes. This is to prevent duplicate entries due to sending failing
+     * due to a network error, but changes getting still applied at Trakt.
      */
-    private fun getEpisodesForTrakt(isAddNotDelete: Boolean): List<SyncSeason> {
-        // send time of action to avoid adding duplicate plays/collection events at trakt
-        // if this job re-runs due to failure, but trakt already applied changes (it happens)
-        // also if execution is delayed to due being offline this will ensure
-        // the actual action time is stored at trakt
+    private fun getEpisodesForTrakt(
+        context: Context,
+        showTraktId: Int,
+        isAddNotDelete: Boolean
+    ): Result<List<SyncSeason>, Int> {
+        val isAddingWatchedEntry = action == JobAction.EPISODE_WATCHED_FLAG && isAddNotDelete
+
+        // Send time of action to avoid adding duplicate collection entries at Trakt (does not work
+        // for watched entries, separate check for those below) if this job re-runs due to failure,
+        // but Trakt already applied changes (it happens).
+        // Also if execution is delayed due to being offline this will ensure the actual action time
+        // is stored at Trakt.
         val instant = Instant.ofEpochMilli(actionAtMs)
         val actionAtDateTime = instant.atOffset(ZoneOffset.UTC)
 
         val seasons: MutableList<SyncSeason> = ArrayList()
+        val trakt = SgApp.getServicesComponent(context).trakt()
+        val traktUsers = trakt.users()
+
+        // If sending a watched entry, check if there are already episodes watched at
+        // actionAtDateTime, then exclude those. This is to prevent duplicate watched entries at
+        // Trakt if this job re-runs due to failure, but Trakt already applied changes.
+        val watchedEpisodes = mutableListOf<WatchedEpisode>()
+        if (isAddingWatchedEntry) {
+            var page = 1
+            do {
+                val historyPage =
+                    getHistoryEntryPage(
+                        context,
+                        trakt,
+                        traktUsers,
+                        showTraktId,
+                        actionAtDateTime,
+                        page
+                    ).getOrElse { return Err(it) }
+                watchedEpisodes.addAll(historyPage.episodes)
+                page++
+            } while (page <= historyPage.pageCount)
+        }
 
         var currentSeason: SyncSeason? = null
         for (i in 0 until jobInfo.episodesLength()) {
             val episodeInfo = jobInfo.episodes(i)
-
+            val number = episodeInfo.number()
             val seasonNumber = episodeInfo.season()
+
+            if (isAddingWatchedEntry
+                && watchedEpisodes.find { it.number == number && it.season == seasonNumber } != null) {
+                // Skip, this episode already has an entry at actionAtDateTime.
+                continue
+            }
 
             // start new season?
             if (currentSeason == null || currentSeason.number?.let { seasonNumber > it } == true) {
@@ -153,7 +202,57 @@ class TraktEpisodeJob(
             }
             currentSeason.episodes!!.add(episode)
         }
-        return seasons
+        return Ok(seasons)
+    }
+
+    data class WatchedEpisode(
+        val number: Int,
+        val season: Int
+    )
+
+    data class HistoryPage(
+        val episodes: List<WatchedEpisode>,
+        val pageCount: Int
+    )
+
+    private fun getHistoryEntryPage(
+        context: Context,
+        trakt: TraktV2,
+        traktUsers: Users,
+        showTraktId: Int,
+        actionAtDateTime: OffsetDateTime,
+        page: Int
+    ): Result<HistoryPage, Int> {
+        val action = "get history of show"
+        val historyCall = traktUsers.history(
+            UserSlug.ME,
+            HistoryType.SHOWS,
+            showTraktId,
+            page,
+            null,
+            null,
+            actionAtDateTime,
+            actionAtDateTime
+        )
+        return executeTraktCall(
+            context,
+            trakt,
+            historyCall,
+            action
+        ) { response, body ->
+            val episodes = body.map {
+                val number = it.episode?.number
+                val season = it.episode?.season
+                if (number == null || season == null) {
+                    Errors.logAndReport(action, response, "episode is null")
+                    return@executeTraktCall Err(ERROR_TRAKT_CLIENT)
+                }
+                WatchedEpisode(number, season)
+            }
+            val pageCount = response.headers()["x-pagination-page-count"]?.toIntOrNull()
+                ?: 1
+            Ok(HistoryPage(episodes, pageCount))
+        }
     }
 
     companion object {
