@@ -14,7 +14,7 @@ Version 65
 ----------
 *in development*
 
-#### 65.0.1
+#### 65.0.1*
 *2022-07-22*
 
 * 🔧 Clean up supported languages for show and movie content. Languages not longer supported are
@@ -22,7 +22,7 @@ changed to US English. As a side-effect should resolve issues with translations 
 English at random.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 65.0.0
+#### 65.0.0*
 *2022-05-27*
 
 * 🔧 Choose newest unwatched episode as next when adding a show that has watched episodes, e.g.
