@@ -10,10 +10,7 @@ import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.getOrElse
-import com.github.michaelbull.result.mapError
-import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncMovie
@@ -156,35 +153,13 @@ class TraktMovieJob(
             actionAtDateTime,
             actionAtDateTime
         )
-        return runCatching {
-            historyCall.execute()
-        }.mapError {
-            Errors.logAndReport(action, it)
-            ERROR_CONNECTION
-        }.andThen { response ->
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body != null) {
-                    return@andThen Ok(body.isNotEmpty())
-                } else {
-                    Errors.logAndReport(action, response, "body is null")
-                    return@andThen Err(ERROR_TRAKT_CLIENT)
-                }
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return@andThen Err(ERROR_TRAKT_AUTH)
-                }
-                Errors.logAndReport(
-                    action, response,
-                    SgTrakt.checkForTraktError(trakt, response)
-                )
-                val code = response.code()
-                return@andThen if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
-                    Err(ERROR_TRAKT_SERVER)
-                } else {
-                    Err(ERROR_TRAKT_CLIENT)
-                }
-            }
+        return executeTraktCall(
+            context,
+            trakt,
+            historyCall,
+            action
+        ) { _, body ->
+            Ok(body.isNotEmpty())
         }
     }
 

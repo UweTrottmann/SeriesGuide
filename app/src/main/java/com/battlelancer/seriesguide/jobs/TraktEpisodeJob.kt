@@ -11,10 +11,7 @@ import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.getOrElse
-import com.github.michaelbull.result.mapError
-import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.trakt5.TraktV2
 import com.uwetrottmann.trakt5.entities.ShowIds
 import com.uwetrottmann.trakt5.entities.SyncEpisode
@@ -237,46 +234,24 @@ class TraktEpisodeJob(
             actionAtDateTime,
             actionAtDateTime
         )
-        return runCatching {
-            historyCall.execute()
-        }.mapError {
-            Errors.logAndReport(action, it)
-            ERROR_CONNECTION
-        }.andThen { response ->
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body != null) {
-                    val episodes = body.map {
-                        val number = it.episode?.number
-                        val season = it.episode?.season
-                        if (number == null || season == null) {
-                            Errors.logAndReport(action, response, "episode is null")
-                            return@andThen Err(ERROR_TRAKT_CLIENT)
-                        }
-                        WatchedEpisode(number, season)
-                    }
-                    val pageCount = response.headers()["x-pagination-page-count"]?.toIntOrNull()
-                        ?: 1
-                    return@andThen Ok(HistoryPage(episodes, pageCount))
-                } else {
-                    Errors.logAndReport(action, response, "body is null")
-                    return@andThen Err(ERROR_TRAKT_CLIENT)
+        return executeTraktCall(
+            context,
+            trakt,
+            historyCall,
+            action
+        ) { response, body ->
+            val episodes = body.map {
+                val number = it.episode?.number
+                val season = it.episode?.season
+                if (number == null || season == null) {
+                    Errors.logAndReport(action, response, "episode is null")
+                    return@executeTraktCall Err(ERROR_TRAKT_CLIENT)
                 }
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return@andThen Err(ERROR_TRAKT_AUTH)
-                }
-                Errors.logAndReport(
-                    action, response,
-                    SgTrakt.checkForTraktError(trakt, response)
-                )
-                val code = response.code()
-                return@andThen if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
-                    Err(ERROR_TRAKT_SERVER)
-                } else {
-                    Err(ERROR_TRAKT_CLIENT)
-                }
+                WatchedEpisode(number, season)
             }
+            val pageCount = response.headers()["x-pagination-page-count"]?.toIntOrNull()
+                ?: 1
+            Ok(HistoryPage(episodes, pageCount))
         }
     }
 

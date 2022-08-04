@@ -4,6 +4,16 @@ import android.app.PendingIntent
 import android.content.Context
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.util.Errors
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
+import com.github.michaelbull.result.mapError
+import com.github.michaelbull.result.runCatching
+import com.uwetrottmann.trakt5.TraktV2
+import retrofit2.Call
+import retrofit2.Response
 
 abstract class BaseNetworkJob(
     val action: JobAction,
@@ -72,6 +82,45 @@ abstract class BaseNetworkJob(
     protected abstract fun getItemTitle(context: Context): String?
     protected abstract fun getActionDescription(context: Context): String?
     protected abstract fun getErrorIntent(context: Context): PendingIntent
+
+    fun <T, R> executeTraktCall(
+        context: Context,
+        trakt: TraktV2,
+        call: Call<T>,
+        action: String,
+        bodyAction: (Response<T>, T) -> Result<R, Int>
+    ): Result<R, Int> {
+        return runCatching {
+            call.execute()
+        }.mapError {
+            Errors.logAndReport(action, it)
+            ERROR_CONNECTION
+        }.andThen { response ->
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) {
+                    return@andThen bodyAction(response, body)
+                } else {
+                    Errors.logAndReport(action, response, "body is null")
+                    return@andThen Err(ERROR_TRAKT_CLIENT)
+                }
+            } else {
+                if (SgTrakt.isUnauthorized(context, response)) {
+                    return@andThen Err(ERROR_TRAKT_AUTH)
+                }
+                Errors.logAndReport(
+                    action, response,
+                    SgTrakt.checkForTraktError(trakt, response)
+                )
+                val code = response.code()
+                return@andThen if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
+                    Err(ERROR_TRAKT_SERVER)
+                } else {
+                    Err(ERROR_TRAKT_CLIENT)
+                }
+            }
+        }
+    }
 
     companion object {
         const val SUCCESS = 0
