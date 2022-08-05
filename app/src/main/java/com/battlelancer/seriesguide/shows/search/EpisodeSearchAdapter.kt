@@ -1,11 +1,11 @@
 package com.battlelancer.seriesguide.shows.search
 
 import android.content.Context
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.text.HtmlCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemSearchResultBinding
 import com.battlelancer.seriesguide.shows.database.SgEpisode2SearchResult
@@ -84,7 +84,9 @@ class EpisodeSearchViewHolder(
 
         // ensure matched term is bold
         val snippet: String? = episode.overview
-        binding.textViewSearchSnippet.text = if (snippet != null) Html.fromHtml(snippet) else null
+        binding.textViewSearchSnippet.text = if (snippet != null) {
+            HtmlCompat.fromHtml(snippet, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        } else null
 
         // episode
         binding.textViewSearchEpisode.text = TextTools.getNextEpisodeString(
