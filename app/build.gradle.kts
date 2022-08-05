@@ -213,7 +213,7 @@ dependencies {
 
     implementation("com.google.flatbuffers:flatbuffers-java:1.12.0")
     // https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.9.1")
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     implementation("com.jakewharton.threetenabp:threetenabp:1.4.0")
     implementation("com.jakewharton.timber:timber:$timberVersion")
