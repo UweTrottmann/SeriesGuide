@@ -221,7 +221,7 @@ dependencies {
 
     // Use latest OkHttp.
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
     // Use latest retrofit.
     // https://github.com/square/retrofit/blob/master/CHANGELOG.md
     val retrofitVersion = "2.9.0"
