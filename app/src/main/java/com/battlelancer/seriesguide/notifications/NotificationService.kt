@@ -605,8 +605,6 @@ class NotificationService(context: Context) {
                 + SgShow2Columns.SORT_TITLE + ","
                 + SgEpisode2Columns.NUMBER + " ASC")
 
-        val SERIAL_EXECUTOR: Executor = SerialExecutor()
-
         /**
          * Send broadcast to run the notification service to display and (re)schedule upcoming episode
          * alarms.
