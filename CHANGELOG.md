@@ -14,10 +14,12 @@ Version 65
 ----------
 *in development*
 
-#### next
+#### 65.0.2*
+*2022-08-05*
 
 * 🔨 Trakt: prevent adding a duplicate play in the rare case a play was already sent and stored at
   Trakt, but no confirmation was received.
+* 🔨 Movies: instead of a future date, show no date if release date is unknown in watched movies list.
 
 #### 65.0.1*
 *2022-07-22*
