@@ -15,8 +15,8 @@ buildscript {
     val sgVersionCode by extra(2106501)
     val sgVersionName by extra("65.0.1")
 
-    val kotlinVersion by extra("1.6.21") // https://kotlinlang.org/docs/releases.html#release-details
-    val coroutinesVersion by extra("1.6.1") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    val kotlinVersion by extra("1.7.10") // https://kotlinlang.org/docs/releases.html#release-details
+    val coroutinesVersion by extra("1.6.4") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 
     // https://developer.android.com/jetpack/androidx/releases
     val coreVersion by extra("1.7.0") // https://developer.android.com/jetpack/androidx/releases/core
