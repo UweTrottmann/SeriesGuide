@@ -14,6 +14,11 @@ Version 65
 ----------
 *in development*
 
+#### next
+
+* 🔨 Trakt: prevent adding a duplicate play in the rare case a play was already sent and stored at
+  Trakt, but no confirmation was received.
+
 #### 65.0.1*
 *2022-07-22*
 
