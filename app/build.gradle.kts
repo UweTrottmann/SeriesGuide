@@ -252,7 +252,7 @@ dependencies {
 
     // Import the Firebase BoM
     // https://firebase.google.com/support/release-notes/android
-    implementation(platform("com.google.firebase:firebase-bom:30.1.0"))
+    implementation(platform("com.google.firebase:firebase-bom:30.3.1"))
     // Crashlytics
     implementation("com.google.firebase:firebase-crashlytics")
     // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
