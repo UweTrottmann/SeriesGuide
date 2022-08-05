@@ -228,6 +228,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
+    // https://github.com/square/picasso/releases
     implementation("com.squareup.picasso:picasso:2.8")
 
     // https://github.com/UweTrottmann/AndroidUtils/releases
