@@ -13,6 +13,8 @@ import android.widget.GridView;
 import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuProvider;
+import androidx.lifecycle.Lifecycle;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.R;
@@ -109,7 +111,11 @@ public class TraktAddFragment extends AddFragment {
                         traktAddCallbacks);
 
         // add menu options
-        setHasOptionsMenu(true);
+        requireActivity().addMenuProvider(
+                optionsMenuProvider,
+                getViewLifecycleOwner(),
+                Lifecycle.State.RESUMED
+        );
     }
 
     private final AddAdapter.OnItemClickListener itemClickListener
@@ -178,34 +184,36 @@ public class TraktAddFragment extends AddFragment {
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.trakt_library_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_add_all) {
-            if (searchResults != null) {
-                List<SearchResult> showsToAdd = new LinkedList<>();
-                // only include shows not already added
-                for (SearchResult result : searchResults) {
-                    if (result.getState() == SearchResult.STATE_ADD) {
-                        showsToAdd.add(result);
-                        result.setState(SearchResult.STATE_ADDING);
-                    }
-                }
-                EventBus.getDefault().post(new OnAddingShowEvent());
-                TaskManager.getInstance().performAddTask(getContext(), showsToAdd, false, false);
-            }
-            // disable the item so the user has to come back
-            item.setEnabled(false);
-            return true;
+    private final MenuProvider optionsMenuProvider = new MenuProvider() {
+        @Override
+        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            menuInflater.inflate(R.menu.trakt_library_menu, menu);
         }
-        return super.onOptionsItemSelected(item);
-    }
+
+        @Override
+        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.menu_add_all) {
+                if (searchResults != null) {
+                    List<SearchResult> showsToAdd = new LinkedList<>();
+                    // only include shows not already added
+                    for (SearchResult result : searchResults) {
+                        if (result.getState() == SearchResult.STATE_ADD) {
+                            showsToAdd.add(result);
+                            result.setState(SearchResult.STATE_ADDING);
+                        }
+                    }
+                    EventBus.getDefault().post(new OnAddingShowEvent());
+                    TaskManager.getInstance()
+                            .performAddTask(getContext(), showsToAdd, false, false);
+                }
+                // disable the item so the user has to come back
+                menuItem.setEnabled(false);
+                return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     public void onDestroyView() {

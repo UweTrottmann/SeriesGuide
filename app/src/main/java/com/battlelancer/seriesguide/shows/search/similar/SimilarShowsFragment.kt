@@ -8,8 +8,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
@@ -90,7 +92,11 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
             swipeRefreshLayout.isRefreshing = false
         }
 
-        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private fun loadSimilarShows() {
@@ -103,26 +109,26 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         (activity as AppCompatActivity).supportActionBar?.subtitle = showTitle
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        menu.add(0, MENU_ITEM_SEARCH_ID, 0, R.string.search).apply {
-            setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            setIcon(R.drawable.ic_search_white_24dp)
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            MENU_ITEM_SEARCH_ID -> {
-                startActivity(
-                    SearchActivity.newIntent(
-                        requireContext()
-                    )
-                )
-                true
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menu.add(0, MENU_ITEM_SEARCH_ID, 0, R.string.search).apply {
+                setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+                setIcon(R.drawable.ic_search_white_24dp)
             }
-            else -> super.onOptionsItemSelected(item)
+        }
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                MENU_ITEM_SEARCH_ID -> {
+                    startActivity(
+                        SearchActivity.newIntent(
+                            requireContext()
+                        )
+                    )
+                    true
+                }
+                else -> false
+            }
         }
     }
 

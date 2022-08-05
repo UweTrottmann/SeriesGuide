@@ -7,7 +7,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
@@ -33,11 +35,6 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     private val model: ShowsPopularViewModel by viewModels()
     private lateinit var adapter: ShowsPopularAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,20 +91,27 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
                 }
             }
         }
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.shows_popular_menu, menu)
-    }
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.shows_popular_menu, menu)
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_action_shows_popular_filter -> {
-                DiscoverFilterFragment.showForShows(parentFragmentManager)
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_shows_popular_filter -> {
+                    DiscoverFilterFragment.showForShows(parentFragmentManager)
+                    true
+                }
+                else -> false
             }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

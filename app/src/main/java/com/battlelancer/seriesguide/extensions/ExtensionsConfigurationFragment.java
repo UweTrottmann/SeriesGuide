@@ -17,7 +17,9 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import com.battlelancer.seriesguide.BuildConfig;
@@ -73,7 +75,11 @@ public class ExtensionsConfigurationFragment extends Fragment {
         adapter = new ExtensionsAdapter(requireContext(), onItemClickListener);
         binding.listViewExtensionsConfig.setAdapter(adapter);
 
-        setHasOptionsMenu(true);
+        requireActivity().addMenuProvider(
+                optionsMenuProvider,
+                getViewLifecycleOwner(),
+                Lifecycle.State.RESUMED
+        );
     }
 
     @Override
@@ -85,41 +91,42 @@ public class ExtensionsConfigurationFragment extends Fragment {
                         loaderCallbacks);
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        if (BuildConfig.DEBUG) {
-            // add debug options to enable/disable all extensions
-            inflater.inflate(R.menu.extensions_configuration_menu, menu);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_extensions_enable) {
-            List<Extension> extensions = ExtensionManager.get(requireContext())
-                    .queryAllAvailableExtensions(requireContext());
-            List<ComponentName> enabledExtensions = new ArrayList<>();
-            for (Extension extension : extensions) {
-                enabledExtensions.add(extension.componentName);
+    private final MenuProvider optionsMenuProvider = new MenuProvider() {
+        @Override
+        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            if (BuildConfig.DEBUG) {
+                // add debug options to enable/disable all extensions
+                menuInflater.inflate(R.menu.extensions_configuration_menu, menu);
             }
-            ExtensionManager.get(requireContext())
-                    .setEnabledExtensions(requireContext(), enabledExtensions);
-            Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
-                    .show();
-            return true;
-        }
-        if (itemId == R.id.menu_action_extensions_disable) {
-            ExtensionManager.get(requireContext())
-                    .setEnabledExtensions(requireContext(), new ArrayList<>());
-            Toast.makeText(getActivity(), "Disabled all available extensions", Toast.LENGTH_LONG)
-                    .show();
-            return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+        @Override
+        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.menu_action_extensions_enable) {
+                List<Extension> extensions = ExtensionManager.get(requireContext())
+                        .queryAllAvailableExtensions(requireContext());
+                List<ComponentName> enabledExtensions = new ArrayList<>();
+                for (Extension extension : extensions) {
+                    enabledExtensions.add(extension.componentName);
+                }
+                ExtensionManager.get(requireContext())
+                        .setEnabledExtensions(requireContext(), enabledExtensions);
+                Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
+                        .show();
+                return true;
+            }
+            if (itemId == R.id.menu_action_extensions_disable) {
+                ExtensionManager.get(requireContext())
+                        .setEnabledExtensions(requireContext(), new ArrayList<>());
+                Toast.makeText(getActivity(), "Disabled all available extensions",
+                                Toast.LENGTH_LONG)
+                        .show();
+                return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     public void onDestroyView() {

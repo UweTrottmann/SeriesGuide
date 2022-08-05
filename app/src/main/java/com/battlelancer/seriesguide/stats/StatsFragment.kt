@@ -8,9 +8,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentStatsBinding
@@ -84,7 +86,11 @@ class StatsFragment : Fragment() {
 
         model.statsData.observe(viewLifecycleOwner) { this.handleStatsUpdate(it) }
 
-        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     override fun onDestroyView() {
@@ -93,36 +99,32 @@ class StatsFragment : Fragment() {
         binding = null
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.stats_menu, menu)
 
-        // guard against not attached to activity
-        if (!isAdded) {
-            return
+            menu.findItem(R.id.menu_action_stats_filter_specials).isChecked =
+                DisplaySettings.isHidingSpecials(requireContext())
         }
 
-        inflater.inflate(R.menu.stats_menu, menu)
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            when (menuItem.itemId) {
+                R.id.menu_action_stats_share -> {
+                    shareStats()
+                    return true
+                }
+                R.id.menu_action_stats_filter_specials -> {
+                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
+                        .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !menuItem.isChecked)
+                        .apply()
 
-        menu.findItem(R.id.menu_action_stats_filter_specials).isChecked =
-            DisplaySettings.isHidingSpecials(requireContext())
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.menu_action_stats_share) {
-            shareStats()
-            return true
+                    requireActivity().invalidateOptionsMenu()
+                    loadStats()
+                    return true
+                }
+                else -> return false
+            }
         }
-        if (itemId == R.id.menu_action_stats_filter_specials) {
-            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
-                .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !item.isChecked)
-                .apply()
-
-            requireActivity().invalidateOptionsMenu()
-            loadStats()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun loadStats() {

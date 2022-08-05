@@ -17,10 +17,12 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -36,22 +38,22 @@ import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
-import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
@@ -173,9 +175,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 binding.containerMovieButtons.buttonMovieStreamingSearch,
                 watchInfo
             )
-        })
+        }
 
-        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private fun setupViews() {
@@ -238,60 +244,60 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         _binding = null
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            movieDetails?.let {
+                menuInflater.inflate(R.menu.movie_details_menu, menu)
 
-        movieDetails?.let {
-            inflater.inflate(R.menu.movie_details_menu, menu)
+                // enable/disable actions
+                val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
+                menu.findItem(R.id.menu_movie_share).apply {
+                    isEnabled = hasTitle
+                    isVisible = hasTitle
+                }
+                menu.findItem(R.id.menu_open_metacritic).apply {
+                    isEnabled = hasTitle
+                    isVisible = hasTitle
+                }
 
-            // enable/disable actions
-            val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
-            menu.findItem(R.id.menu_movie_share).apply {
-                isEnabled = hasTitle
-                isVisible = hasTitle
-            }
-            menu.findItem(R.id.menu_open_metacritic).apply {
-                isEnabled = hasTitle
-                isVisible = hasTitle
-            }
-
-            val isEnableImdb = !it.tmdbMovie()?.imdb_id.isNullOrEmpty()
-            menu.findItem(R.id.menu_open_imdb).apply {
-                isEnabled = isEnableImdb
-                isVisible = isEnableImdb
+                val isEnableImdb = !it.tmdbMovie()?.imdb_id.isNullOrEmpty()
+                menu.findItem(R.id.menu_open_imdb).apply {
+                    isEnabled = isEnableImdb
+                    isVisible = isEnableImdb
+                }
             }
         }
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_movie_share -> {
-                movieDetails?.tmdbMovie()
-                    ?.title
-                    ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_movie_share -> {
+                    movieDetails?.tmdbMovie()
+                        ?.title
+                        ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
+                    true
+                }
+                R.id.menu_open_imdb -> {
+                    movieDetails?.tmdbMovie()
+                        ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
+                    true
+                }
+                R.id.menu_open_metacritic -> {
+                    // Metacritic only has English titles, so using the original title is the best bet.
+                    val titleOrNull = movieDetails?.tmdbMovie()
+                        ?.let { it.original_title ?: it.title }
+                    titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
+                    true
+                }
+                R.id.menu_open_tmdb -> {
+                    TmdbTools.openTmdbMovie(activity, tmdbId)
+                    true
+                }
+                R.id.menu_open_trakt -> {
+                    Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
+                    true
+                }
+                else -> false
             }
-            R.id.menu_open_imdb -> {
-                movieDetails?.tmdbMovie()
-                    ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
-                true
-            }
-            R.id.menu_open_metacritic -> {
-                // Metacritic only has English titles, so using the original title is the best bet.
-                val titleOrNull = movieDetails?.tmdbMovie()
-                    ?.let { it.original_title ?: it.title }
-                titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
-                true
-            }
-            R.id.menu_open_tmdb -> {
-                TmdbTools.openTmdbMovie(activity, tmdbId)
-                true
-            }
-            R.id.menu_open_trakt -> {
-                Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

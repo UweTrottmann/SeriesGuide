@@ -14,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
@@ -140,7 +142,11 @@ public class ShowsNowFragment extends Fragment {
                     traktFriendsHistoryCallbacks);
         }
 
-        setHasOptionsMenu(true);
+        requireActivity().addMenuProvider(
+                optionsMenuProvider,
+                getViewLifecycleOwner(),
+                Lifecycle.State.RESUMED
+        );
     }
 
     @Override
@@ -187,27 +193,22 @@ public class ShowsNowFragment extends Fragment {
         binding = null;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-        // guard against not attached to activity
-        if (!isAdded()) {
-            return;
+    private final MenuProvider optionsMenuProvider = new MenuProvider() {
+        @Override
+        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            menuInflater.inflate(R.menu.shows_now_menu, menu);
         }
 
-        inflater.inflate(R.menu.shows_now_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_shows_now_refresh) {
-            refreshStream();
-            return true;
+        @Override
+        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.menu_action_shows_now_refresh) {
+                refreshStream();
+                return true;
+            }
+            return false;
         }
-        return super.onOptionsItemSelected(item);
-    }
+    };
 
     private void refreshStream() {
         showProgressBar(true);

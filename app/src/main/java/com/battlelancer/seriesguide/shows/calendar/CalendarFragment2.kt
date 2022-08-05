@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.edit
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -65,7 +66,6 @@ class CalendarFragment2 : Fragment() {
             CalendarType.RECENT.id -> CalendarType.RECENT
             else -> throw IllegalArgumentException("Unknown calendar type $argType")
         }
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -148,6 +148,12 @@ class CalendarFragment2 : Fragment() {
                 }
             }
         }
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private fun updateEmptyView(isEmpty: Boolean) {
@@ -165,54 +171,54 @@ class CalendarFragment2 : Fragment() {
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.calendar_menu, menu)
 
-        inflater.inflate(R.menu.calendar_menu, menu)
+            // set menu items to current values
+            val context = requireContext()
+            menu.findItem(R.id.menu_action_calendar_onlyfavorites).isChecked =
+                CalendarSettings.isOnlyFavorites(context)
+            menu.findItem(R.id.menu_action_calendar_onlypremieres).isChecked =
+                CalendarSettings.isOnlyPremieres(context)
+            menu.findItem(R.id.menu_action_calendar_onlycollected).isChecked =
+                CalendarSettings.isOnlyCollected(context)
+            menu.findItem(R.id.menu_action_calendar_nospecials).isChecked =
+                DisplaySettings.isHidingSpecials(context)
+            menu.findItem(R.id.menu_action_calendar_nowatched).isChecked =
+                CalendarSettings.isHidingWatchedEpisodes(context)
+            menu.findItem(R.id.menu_action_calendar_infinite).isChecked =
+                CalendarSettings.isInfiniteScrolling(context)
+        }
 
-        // set menu items to current values
-        val context = requireContext()
-        menu.findItem(R.id.menu_action_calendar_onlyfavorites).isChecked =
-            CalendarSettings.isOnlyFavorites(context)
-        menu.findItem(R.id.menu_action_calendar_onlypremieres).isChecked =
-            CalendarSettings.isOnlyPremieres(context)
-        menu.findItem(R.id.menu_action_calendar_onlycollected).isChecked =
-            CalendarSettings.isOnlyCollected(context)
-        menu.findItem(R.id.menu_action_calendar_nospecials).isChecked =
-            DisplaySettings.isHidingSpecials(context)
-        menu.findItem(R.id.menu_action_calendar_nowatched).isChecked =
-            CalendarSettings.isHidingWatchedEpisodes(context)
-        menu.findItem(R.id.menu_action_calendar_infinite).isChecked =
-            CalendarSettings.isInfiniteScrolling(context)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_action_calendar_onlyfavorites -> {
-                toggleFilterSetting(item, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS)
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_calendar_onlyfavorites -> {
+                    toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_FAVORITE_SHOWS)
+                    true
+                }
+                R.id.menu_action_calendar_onlypremieres -> {
+                    toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_PREMIERES)
+                    true
+                }
+                R.id.menu_action_calendar_onlycollected -> {
+                    toggleFilterSetting(menuItem, CalendarSettings.KEY_ONLY_COLLECTED)
+                    true
+                }
+                R.id.menu_action_calendar_nospecials -> {
+                    toggleFilterSetting(menuItem, DisplaySettings.KEY_HIDE_SPECIALS)
+                    true
+                }
+                R.id.menu_action_calendar_nowatched -> {
+                    toggleFilterSetting(menuItem, CalendarSettings.KEY_HIDE_WATCHED_EPISODES)
+                    true
+                }
+                R.id.menu_action_calendar_infinite -> {
+                    toggleFilterSetting(menuItem, CalendarSettings.KEY_INFINITE_SCROLLING_2)
+                    true
+                }
+                else -> false
             }
-            R.id.menu_action_calendar_onlypremieres -> {
-                toggleFilterSetting(item, CalendarSettings.KEY_ONLY_PREMIERES)
-                true
-            }
-            R.id.menu_action_calendar_onlycollected -> {
-                toggleFilterSetting(item, CalendarSettings.KEY_ONLY_COLLECTED)
-                true
-            }
-            R.id.menu_action_calendar_nospecials -> {
-                toggleFilterSetting(item, DisplaySettings.KEY_HIDE_SPECIALS)
-                true
-            }
-            R.id.menu_action_calendar_nowatched -> {
-                toggleFilterSetting(item, CalendarSettings.KEY_HIDE_WATCHED_EPISODES)
-                true
-            }
-            R.id.menu_action_calendar_infinite -> {
-                toggleFilterSetting(item, CalendarSettings.KEY_INFINITE_SCROLLING_2)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

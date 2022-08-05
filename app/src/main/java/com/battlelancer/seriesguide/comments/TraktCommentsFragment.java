@@ -17,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
@@ -108,7 +110,11 @@ public class TraktCommentsFragment extends Fragment {
                         commentsLoaderCallbacks);
 
         // enable menu
-        setHasOptionsMenu(true);
+        requireActivity().addMenuProvider(
+                optionsMenuProvider,
+                getViewLifecycleOwner(),
+                Lifecycle.State.RESUMED
+        );
     }
 
     private void comment() {
@@ -175,20 +181,22 @@ public class TraktCommentsFragment extends Fragment {
         binding = null;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.comments_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_comments_refresh) {
-            refreshCommentsWithNetworkCheck();
-            return true;
+    private final MenuProvider optionsMenuProvider = new MenuProvider() {
+        @Override
+        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            menuInflater.inflate(R.menu.comments_menu, menu);
         }
-        return super.onOptionsItemSelected(item);
-    }
+
+        @Override
+        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.menu_action_comments_refresh) {
+                refreshCommentsWithNetworkCheck();
+                return true;
+            }
+            return false;
+        }
+    };
 
     private final AdapterView.OnItemClickListener onItemClickListener
             = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position);

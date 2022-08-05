@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
@@ -91,7 +93,11 @@ public class MoviesDiscoverFragment extends Fragment {
 
         LoaderManager.getInstance(this).initLoader(0, null, nowPlayingLoaderCallbacks);
 
-        setHasOptionsMenu(true);
+        requireActivity().addMenuProvider(
+                optionsMenuProvider,
+                getViewLifecycleOwner(),
+                Lifecycle.State.RESUMED
+        );
     }
 
     @Override
@@ -112,21 +118,22 @@ public class MoviesDiscoverFragment extends Fragment {
         binding = null;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.movies_discover_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_movies_search_change_language) {
-            MovieLocalizationDialogFragment.show(getParentFragmentManager());
-            return true;
+    private final MenuProvider optionsMenuProvider = new MenuProvider() {
+        @Override
+        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+            menuInflater.inflate(R.menu.movies_discover_menu, menu);
         }
-        return super.onOptionsItemSelected(item);
-    }
+
+        @Override
+        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.menu_action_movies_search_change_language) {
+                MovieLocalizationDialogFragment.show(getParentFragmentManager());
+                return true;
+            }
+            return false;
+        }
+    };
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventLanguageChanged(

@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -27,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider.Companion.notifyDataChanged
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
+import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.shows.FilterShowsView.ShowFilter
 import com.battlelancer.seriesguide.shows.FilterShowsView.ShowFilter.Companion.allDisabled
@@ -37,13 +39,12 @@ import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.sh
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.getSortQuery2
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.saveFilter
 import com.battlelancer.seriesguide.shows.SortShowsView.ShowSortOrder
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.SearchActivity
-import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
-import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
+import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -192,7 +193,11 @@ class ShowsFragment : Fragment() {
             .getDefaultSharedPreferences(requireActivity())
             .registerOnSharedPreferenceChangeListener(onPreferenceChangeListener)
 
-        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private fun updateShowsQuery() {
@@ -239,31 +244,33 @@ class ShowsFragment : Fragment() {
         prefs.unregisterOnSharedPreferenceChangeListener(onPreferenceChangeListener)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.shows_menu, menu)
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.shows_menu, menu)
 
-        // set filter icon state
-        menu.findItem(R.id.menu_action_shows_filter).setIcon(
-            if (showFilter.isAnyFilterEnabled()) {
-                R.drawable.ic_filter_selected_white_24dp
-            } else {
-                R.drawable.ic_filter_white_24dp
-            }
-        )
-    }
+            // set filter icon state
+            menu.findItem(R.id.menu_action_shows_filter)
+                .setIcon(
+                if (showFilter.isAnyFilterEnabled()) {
+                    R.drawable.ic_filter_selected_white_24dp
+                } else {
+                    R.drawable.ic_filter_white_24dp
+                }
+            )
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_action_shows_add -> {
-                startActivityAddShows()
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_shows_add -> {
+                    startActivityAddShows()
+                    true
+                }
+                R.id.menu_action_shows_filter -> {
+                    show(parentFragmentManager)
+                    true
+                }
+                else -> false
             }
-            R.id.menu_action_shows_filter -> {
-                show(parentFragmentManager)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

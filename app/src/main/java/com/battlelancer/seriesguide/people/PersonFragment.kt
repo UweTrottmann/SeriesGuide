@@ -12,8 +12,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentPersonBinding
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
@@ -44,7 +46,6 @@ class PersonFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         personTmdbId = arguments?.getInt(ARG_PERSON_TMDB_ID) ?: 0
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -82,22 +83,32 @@ class PersonFragment : Fragment() {
             populatePersonViews(it)
         }
         model.languageCode.value = PeopleSettings.getPersonLanguage(requireContext())
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.person_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_action_person_language) {
-            L10nDialogFragment.show(
-                parentFragmentManager,
-                model.languageCode.value,
-                "person-language-dialog"
-            )
-            return true
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.person_menu, menu)
         }
-        return super.onOptionsItemSelected(item)
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_person_language -> {
+                    L10nDialogFragment.show(
+                        parentFragmentManager,
+                        model.languageCode.value,
+                        "person-language-dialog"
+                    )
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onStart() {

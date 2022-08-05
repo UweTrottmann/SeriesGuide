@@ -8,7 +8,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
@@ -56,8 +58,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             )
             queryEvent?.query ?: ""
         }
-
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -123,6 +123,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         model.watchProviderIds.observe(viewLifecycleOwner) {
             loadResults()
         }
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
@@ -199,26 +205,28 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.shows_discover_menu, menu)
-    }
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.shows_discover_menu, menu)
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_action_shows_search_clear_history -> {
-                // tell the hosting activity to clear the search view history
-                EventBus.getDefault().post(SearchActivityImpl.ClearSearchHistoryEvent())
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_shows_search_clear_history -> {
+                    // tell the hosting activity to clear the search view history
+                    EventBus.getDefault().post(SearchActivityImpl.ClearSearchHistoryEvent())
+                    true
+                }
+                R.id.menu_action_shows_search_filter -> {
+                    DiscoverFilterFragment.showForShows(parentFragmentManager)
+                    true
+                }
+                R.id.menu_action_shows_search_change_language -> {
+                    displayLanguageSettings()
+                    true
+                }
+                else -> false
             }
-            R.id.menu_action_shows_search_filter -> {
-                DiscoverFilterFragment.showForShows(parentFragmentManager)
-                true
-            }
-            R.id.menu_action_shows_search_change_language -> {
-                displayLanguageSettings()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

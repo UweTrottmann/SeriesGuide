@@ -3,15 +3,13 @@ package com.battlelancer.seriesguide.movies
 import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -40,7 +38,6 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
         super.onCreate(savedInstanceState)
 
         EventBus.getDefault().register(this)
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -77,6 +74,12 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
         )
         gridView.adapter = adapter
 
+        requireActivity().addMenuProvider(
+            MoviesOptionsMenu(requireActivity()),
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+
         LoaderManager.getInstance(this).initLoader(loaderId, null, this)
     }
 
@@ -84,26 +87,6 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
         super.onDestroy()
 
         EventBus.getDefault().unregister(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        // guard against not attached to activity
-        if (!isAdded) {
-            return
-        }
-
-        MoviesOptionsMenu(requireContext()).create(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val menu = MoviesOptionsMenu(requireContext())
-        return if (menu.onItemSelected(item, requireActivity())) {
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
