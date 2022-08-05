@@ -34,7 +34,7 @@ android {
 dependencies {
     // App Engine
     // https://github.com/googleapis/google-api-java-client/releases
-    val googleApiClientVersion = "1.34.1"
+    val googleApiClientVersion = "2.0.0"
     api("com.google.api-client:google-api-client-android:$googleApiClientVersion") {
         exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
     }
@@ -42,7 +42,7 @@ dependencies {
         exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
     }
     // https://github.com/googleapis/google-http-java-client/releases
-    api("com.google.http-client:google-http-client-gson:1.41.8") {
+    api("com.google.http-client:google-http-client-gson:1.42.2") {
         exclude(group = "org.apache.httpcomponents", module = "httpclient") // unused
     }
 }
