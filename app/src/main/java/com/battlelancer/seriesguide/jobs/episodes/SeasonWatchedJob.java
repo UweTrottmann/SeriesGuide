@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
-import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
@@ -13,13 +12,15 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.util.TextTools;
 import java.util.List;
 
+/**
+ * Sets *all* episodes of a season watched, skipped or not watched. Includes also episodes that do
+ * not have a release date, which is common for special episodes. Also it is unexpected if all does
+ * not mean all (previously this only marked episodes with release date up to current time + 1 hour).
+ */
 public class SeasonWatchedJob extends SeasonBaseJob {
 
-    private final long currentTimePlusOneHour;
-
-    public SeasonWatchedJob(long seasonId, int episodeFlags, long currentTime) {
+    public SeasonWatchedJob(long seasonId, int episodeFlags) {
         super(seasonId, episodeFlags, JobAction.EPISODE_WATCHED_FLAG);
-        this.currentTimePlusOneHour = currentTime + DateUtils.HOUR_IN_MILLIS;
     }
 
     private long getLastWatchedEpisodeId(Context context) {
@@ -30,10 +31,10 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         } else {
             // watched or skipped season
 
-            // get the highest flagged episode of the season
+            // Get the highest episode of the season.
             long highestWatchedId = SgRoomDatabase.getInstance(context)
                     .sgEpisode2Helper()
-                    .getHighestWatchedEpisodeOfSeason(seasonId, currentTimePlusOneHour);
+                    .getHighestEpisodeOfSeason(seasonId);
             if (highestWatchedId != 0) {
                 return highestWatchedId;
             } else {
@@ -65,11 +66,10 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         int rowsUpdated;
         switch (getFlagValue()) {
             case EpisodeFlags.SKIPPED:
-                rowsUpdated = helper.setSeasonSkipped(seasonId, currentTimePlusOneHour);
+                rowsUpdated = helper.setSeasonSkipped(seasonId);
                 break;
             case EpisodeFlags.WATCHED:
-                rowsUpdated = helper
-                        .setSeasonWatchedAndAddPlay(seasonId, currentTimePlusOneHour);
+                rowsUpdated = helper.setSeasonWatchedAndAddPlay(seasonId);
                 break;
             case EpisodeFlags.UNWATCHED:
                 rowsUpdated = helper.setSeasonNotWatchedAndRemovePlays(seasonId);
@@ -91,9 +91,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
         } else {
             // set watched or skipped
             // do NOT mark watched episodes again to avoid Trakt adding a new watch
-            // only mark episodes that have been released until within the hour
-            return helper
-                    .getNotWatchedOrSkippedEpisodeNumbersOfSeason(seasonId, currentTimePlusOneHour);
+            return helper.getNotWatchedOrSkippedEpisodeNumbersOfSeason(seasonId);
         }
     }
 
@@ -116,7 +114,7 @@ public class SeasonWatchedJob extends SeasonBaseJob {
 
     @NonNull
     @Override
-    public String getConfirmationText(Context context) {
+    public String getConfirmationText(@NonNull Context context) {
         int actionResId;
         int flagValue = getFlagValue();
         if (EpisodeTools.isSkipped(flagValue)) {
