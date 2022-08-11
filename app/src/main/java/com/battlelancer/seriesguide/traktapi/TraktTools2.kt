@@ -12,6 +12,9 @@ import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
 import com.uwetrottmann.trakt5.entities.BaseShow
+import com.uwetrottmann.trakt5.entities.LastActivities
+import com.uwetrottmann.trakt5.entities.LastActivity
+import com.uwetrottmann.trakt5.entities.LastActivityMore
 import com.uwetrottmann.trakt5.entities.Ratings
 import com.uwetrottmann.trakt5.entities.Show
 import com.uwetrottmann.trakt5.enums.Extended
@@ -127,6 +130,47 @@ object TraktTools2 {
             Pair(rating, votes)
         } else {
             null
+        }
+    }
+
+    data class LastActivities(
+        val episodes: LastActivityMore,
+        val shows: LastActivity,
+        val movies: LastActivityMore,
+    )
+
+    fun getLastActivity(context: Context): Result<LastActivities, TraktError> {
+        val action = "get last activity"
+        return runCatching {
+            SgApp.getServicesComponent(context).trakt().sync()
+                .lastActivities()
+                .execute()
+        }.mapError {
+            Errors.logAndReport(action, it)
+            if (it.isRetryError()) TraktRetry else TraktStop
+        }.andThen { response ->
+            if (response.isSuccessful) {
+                val lastActivities = response.body()
+                val episodes = lastActivities?.episodes
+                val shows = lastActivities?.shows
+                val movies = lastActivities?.movies
+                if (episodes != null && shows != null && movies != null) {
+                    return@andThen Ok(
+                        LastActivities(
+                            episodes = episodes,
+                            shows = shows,
+                            movies = movies
+                        )
+                    )
+                } else {
+                    Errors.logAndReport(action, response, "last activity is null")
+                }
+            } else {
+                if (!SgTrakt.isUnauthorized(context, response)) {
+                    Errors.logAndReport(action, response)
+                }
+            }
+            return@andThen Err(TraktStop)
         }
     }
 
