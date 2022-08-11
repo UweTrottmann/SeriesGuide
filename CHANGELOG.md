@@ -14,6 +14,12 @@ Version 65
 ----------
 *in development*
 
+#### next
+
+* 🔧 When making changes to a season, always apply to all episodes. Previously, setting watched or
+skipped only affected episodes with a release date and released in the past. But adding to/removing
+from collection affected all.
+
 #### 65.0.2*
 *2022-08-05*
 
