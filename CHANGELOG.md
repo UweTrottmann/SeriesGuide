@@ -19,6 +19,7 @@ Version 65
 * 🔧 When making changes to a season, always apply to all episodes. Previously, setting watched or
 skipped only affected episodes with a release date and released in the past. But adding to/removing
 from collection affected all.
+* 🔧 When updating shows, do not fail if just Trakt info can not be updated.
 
 #### 65.0.2*
 *2022-08-05*

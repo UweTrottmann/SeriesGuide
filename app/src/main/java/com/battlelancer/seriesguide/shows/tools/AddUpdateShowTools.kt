@@ -392,8 +392,10 @@ class AddUpdateShowTools @Inject constructor(
      */
     fun updateShow(showId: Long): UpdateResult {
         val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
+        val show = helper.getShow(showId)
+            ?: return UpdateResult.DatabaseError
 
-        val language = helper.getLanguage(showId).let {
+        val language = show.language.let {
             // Handle legacy records.
             // default to 'en' for consistent behavior across devices
             // and to encourage users to set language
@@ -405,10 +407,10 @@ class AddUpdateShowTools @Inject constructor(
             }
         }
 
-        var showTmdbId = helper.getShowTmdbId(showId)
+        var showTmdbId = show.tmdbId ?: 0
         if (showTmdbId == 0) {
             Timber.d("Try to migrate show %d to TMDB IDs", showId)
-            showTmdbId = migrateShowToTmdbIds(showId, language)
+            showTmdbId = migrateShowToTmdbIds(showId, show.tvdbId ?: 0, language)
                 .getOrElse {
                     return when (it) {
                         UpdateResult.DoesNotExist -> {
@@ -421,10 +423,10 @@ class AddUpdateShowTools @Inject constructor(
                 }
         }
 
-        val showDetails = getShowTools.getShowDetails(showTmdbId, language, true)
+        val showDetails = getShowTools.getShowDetails(showTmdbId, language, show)
             .getOrElse { return it.toUpdateResult() }
-        val show = showDetails.showUpdate!!
-        show.id = showId
+        val updatedShow = showDetails.showUpdate!!
+        updatedShow.id = showId
 
         // Insert, update and remove seasons.
         val seasons = updateSeasons(showDetails.seasons, showId)
@@ -446,10 +448,10 @@ class AddUpdateShowTools @Inject constructor(
 
             val episodeDetails = getEpisodesOfSeason(
                 ReleaseInfo(
-                    show.releaseTimeZone,
-                    show.releaseTime,
-                    show.releaseCountry,
-                    show.network
+                    updatedShow.releaseTimeZone,
+                    updatedShow.releaseTime,
+                    updatedShow.releaseCountry,
+                    updatedShow.network
                 ),
                 showTmdbId,
                 showId,
@@ -472,7 +474,7 @@ class AddUpdateShowTools @Inject constructor(
 //        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
 
         // At last store shows update (sets last updated timestamp).
-        val updated = database.sgShow2Helper().updateShow(show)
+        val updated = database.sgShow2Helper().updateShow(updatedShow)
         return if (updated == 1) {
             UpdateResult.Success
         } else {
@@ -555,11 +557,14 @@ class AddUpdateShowTools @Inject constructor(
      * If Hexagon is enabled and not uploaded via TMDB ID, uploads show info and schedules
      * episode upload.
      */
-    private fun migrateShowToTmdbIds(showId: Long, language: String): Result<Int, UpdateResult> {
+    private fun migrateShowToTmdbIds(
+        showId: Long,
+        showTvdbId: Int,
+        language: String
+    ): Result<Int, UpdateResult> {
         val database = SgRoomDatabase.getInstance(context)
         val helper = database.sgShow2Helper()
 
-        val showTvdbId = helper.getShowTvdbId(showId)
         if (showTvdbId == 0) return Err(UpdateResult.DatabaseError)
 
         // Find TMDB ID

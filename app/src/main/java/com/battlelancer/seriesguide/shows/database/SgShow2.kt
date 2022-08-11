@@ -6,8 +6,8 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
-import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 
 @Entity(
     tableName = "sg_show",
@@ -76,6 +76,8 @@ data class SgShow2(
 ) {
     val releaseTimeOrDefault: Int
         get() = releaseTime ?: -1
+    val firstReleaseOrDefault: String
+        get() = firstRelease ?: ""
     val releaseWeekDayOrDefault: Int
         get() = releaseWeekDay ?: -1
     val statusOrUnknown: Int
