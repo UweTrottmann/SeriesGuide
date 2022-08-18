@@ -45,7 +45,6 @@ import org.threeten.bp.Instant
 import timber.log.Timber
 import java.io.IOException
 import java.text.NumberFormat
-import java.util.concurrent.Executor
 
 /**
  * To debug set [.DEBUG] to true.
@@ -342,7 +341,10 @@ class NotificationService(context: Context) {
         }
     }
 
-    private fun notifyAbout(
+    /**
+     * Only visible for debugging.
+     */
+    fun notifyAbout(
         upcomingEpisodes: List<SgEpisode2WithShow>,
         notifyPositions: List<Int>,
         latestAirtime: Long
