@@ -13,9 +13,10 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.notifications.NotificationService
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.calendar.CalendarFragment2
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
@@ -25,7 +26,6 @@ import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
-import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
@@ -270,12 +270,15 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-
+        // Unused outside of onCreate, but set for future use.
+        setIntent(intent)
         // handle intents that just want to view a specific show/episode
-        if (!handleViewIntents(intent)) {
-            // if no special intent, restore the last selected tab
-            setInitialTab(intent.extras)
-        }
+        handleViewIntents(intent)
+
+        // Note: do not modify UI here. On some devices (Android 8-10) this crashed
+        // due to Kotlin complaining about lateinit tabsAdapter not being initialized.
+        // Unsure in which case this may happen (onCreate should always be called and set up UI),
+        // but do not modify UI here regardless.
     }
 
     override fun onResume() {
