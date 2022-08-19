@@ -170,12 +170,6 @@ object StreamingSearch {
     }
 
     @JvmStatic
-    fun isNotConfigured(context: Context): Boolean {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(KEY_SETTING_REGION, null) == null
-    }
-
-    @JvmStatic
     fun getCurrentRegionOrNull(context: Context): String? {
         val regionOrNull = PreferenceManager.getDefaultSharedPreferences(context)
             .getString(KEY_SETTING_REGION, null) ?: return null
