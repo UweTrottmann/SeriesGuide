@@ -14,6 +14,10 @@ Version 65
 ----------
 *in development*
 
+#### next*
+
+* 🔧 Add latest supported countries to streaming search.
+
 #### 65.0.3*
 *2022-08-12*
 

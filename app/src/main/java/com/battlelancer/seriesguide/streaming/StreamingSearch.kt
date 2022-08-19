@@ -30,55 +30,117 @@ object StreamingSearch {
     const val KEY_SETTING_REGION = "com.uwetrottmann.seriesguide.watch.region"
 
     val supportedRegions = listOf(
-        "AR",
-        "AT",
-        "AU",
-        "BE",
-        "BR",
-        "CA",
-        "CH",
-        "CL",
-        "CO",
-        "CZ",
-        "DE",
-        "DK",
-        "EC",
-        "EE",
-        "ES",
-        "FI",
-        "FR",
-        "GB",
-        "GR",
-        "HR",
-        "HU",
-        "ID",
-        "IE",
-        "IN",
-        "IS",
-        "IT",
-        "JP",
-        "KR",
-        "LT",
-        "LV",
-        "MX",
-        "MY",
-        "NL",
-        "NO",
-        "NZ",
-        "PE",
-        "PH",
-        "PL",
-        "PT",
-        "RO",
-        "RU",
-        "SE",
-        "SG",
-        "SK",
-        "TH",
-        "TR",
-        "US",
-        "VE",
-        "ZA"
+        "AD", // Andorra
+        "AE", // United Arab Emirates
+        "AL", // Albania
+        "AR", // Argentina
+        "AT", // Austria
+        "AU", // Australia
+        "BA", // Bosnia and Herzegovina
+        "BE", // Belgium
+        "BG", // Bulgaria
+        "BH", // Bahrain
+        "BM", // Bermuda
+        "BO", // Bolivia
+        "BR", // Brazil
+        "CA", // Canada
+        "CH", // Switzerland
+        "CI", // Ivory Coast
+        "CL", // Chile
+        "CO", // Colombia
+        "CR", // Costa Rica
+        "CV", // Cape Verde
+        "CZ", // Czeck Republic
+        "DE", // Germany
+        "DK", // Denmark
+        "DZ", // Algeria
+        "EC", // Ecuador
+        "EE", // Estonia
+        "EG", // Egypt
+        "ES", // Spain
+        "FI", // Finland
+        "FJ", // Fiji
+        "FR", // France
+        "GB", // United Kingdom // TMDB (correctly) uses GB instead of UK
+        "GF", // French Guiana
+        "GH", // Ghana
+        "GI", // Gibraltar
+        "GG", // Guernsey
+        "GQ", // Equatorial Guinea
+        "GR", // Greece
+        "GT", // Guatemala
+        "HK", // Hong Kong
+        "HN", // Honduras
+        "HR", // Croatia
+        "HU", // Hungary
+        "ID", // Indonesia
+        "IE", // Ireland
+        "IL", // Israel
+        "IN", // India
+        "IQ", // Iraq
+        "IS", // Iceland
+        "IT", // Italy
+        "JO", // Jordan
+        "JP", // Japan
+        "KE", // Kenya
+        "KR", // Korea
+        "KW", // Kuwait
+        "LB", // Lebanon
+        "LI", // Liechtenstein
+        "LT", // Lithuania
+        "LV", // Latvia
+        "LY", // Libya
+        "MA", // Morocco
+        "MC", // Monaco
+        "MD", // Moldova
+        "MK", // Macedonia
+        "MT", // Malta
+        "MU", // Mauritius
+        "MX", // Mexico
+        "MY", // Malaysia
+        "MZ", // Mozambique
+        "NE", // Niger
+        "NG", // Nigeria
+        "NL", // Netherlands
+        "NO", // Norway
+        "NZ", // New Zealand
+        "OM", // Oman
+        "PA", // Panama
+        "PE", // Peru
+        "PF", // French Polynesia
+        "PH", // Philippines
+        "PK", // Pakistan
+        "PL", // Poland
+        "PS", // Palestine
+        "PT", // Portugal
+        "PY", // Paraguay
+        "QA", // Qatar
+        "RO", // Romania
+        "RS", // Serbia
+        "RU", // Russia
+        "SA", // Saudi Arabia
+        "SC", // Seychelles
+        "SE", // Sweden
+        "SI", // Slovenia
+        "SG", // Singapore
+        "SK", // Slovakia
+        "SM", // San Marino
+        "SN", // Senegal
+        "SV", // El Salvador
+        "TH", // Thailand
+        "TN", // Tunisia
+        "TR", // Türkiye
+        "TW", // Taiwan
+        "UG", // Uganda
+//        "UK", // TMDB (correctly) uses GB instead of UK
+        "UY", // Uruguay
+        "US", // United States
+        "VA", // Vatican City
+        "VE", // Venezuela
+        "XK", // Kosovo
+        "YE", // Yemen
+        "ZA", // South Africa
+        "ZM", // Zambia
     )
 
     fun initRegionLiveData(context: Context) {
