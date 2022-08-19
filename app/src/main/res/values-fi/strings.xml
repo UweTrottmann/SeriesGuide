@@ -299,7 +299,7 @@
     <string name="checkin_success_trakt">Kuitattu kohteeseen %s Traktissa</string>
     <string name="checkin_canceled_success_trakt">Kuittaus peruttu Traktissa</string>
     <string name="traktcheckin_cancel">Korvaa</string>
-    <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen kohteeseen. Korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
+    <string name="traktcheckin_inprogress">Olet jo kuitannut. Korvaa kuittaus tai odota %s ja yritä uudelleen.</string>
     <string name="traktcheckin_wait">Odotetaan</string>
     <string name="trakt_success">Lähetetty Traktiin</string>
     <string name="trakt_error_account_locked">Trakt-tilisi on lukittu. Ota yhteyttä Traktin tukeen.</string>
@@ -315,7 +315,7 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="use_integrated_browser">Käytä sisäistä selainta</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
-    <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
+    <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista. <a href="https://trakt.tv">Lisätietoa</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="your_rating">Arvosanasi</string>
@@ -334,7 +334,7 @@
         <item quantity="other">%d ääntä</item>
     </plurals>
     <!-- Check Ins -->
-    <string name="checkin">Kuittaa</string>
+    <string name="checkin">Kuittaus</string>
     <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
     <string name="paste_title">Liitä nimi</string>
     <string name="pref_quick_checkin">Nopea kuittaus</string>

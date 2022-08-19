@@ -17,6 +17,8 @@ Version 65
 #### next*
 
 * 🔧 Add latest supported countries to streaming search.
+* 🔧 Restored subscription expired notification as in-app message.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 65.0.3*
 *2022-08-12*
