@@ -14,7 +14,8 @@ Version 65
 ----------
 *in development*
 
-#### next*
+#### 65.0.4*
+*2022-08-19*
 
 * 🔧 Add latest supported countries to streaming search.
 * 🔧 Restored subscription expired notification as in-app message.
