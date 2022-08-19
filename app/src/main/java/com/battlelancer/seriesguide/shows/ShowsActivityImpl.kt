@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.api.Intents
+import com.battlelancer.seriesguide.billing.BillingActivity
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -261,11 +262,10 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             ViewModelProvider(this, BillingViewModelFactory(application, SgApp.coroutineScope))
                 .get(BillingViewModel::class.java)
         billingViewModel.entitlementRevokedEvent
-            .observe(this, {
-                // TODO Replace notification with less disturbing in-app info.
-                // Sometimes sub is not really expired, only billing API not returning purchase.
-                // BillingActivity.showExpiredNotification(this)
-            })
+            .observe(this) {
+                // Note: sometimes sub is not really expired, only billing API not returning purchase.
+                BillingActivity.showExpiredNotification(this, snackbarParentView)
+            }
     }
 
     override fun onNewIntent(intent: Intent) {
