@@ -14,6 +14,10 @@ Version 65
 ----------
 *in development*
 
+#### latest
+
+* 🔧 Support "Themed icons" beta feature of Android 13.
+
 #### 65.0.4*
 *2022-08-19*
 
