@@ -55,6 +55,51 @@ android {
         buildConfigField("String", "TRAKT_CLIENT_SECRET", propertyOrEmpty("SG_TRAKT_CLIENT_SECRET"))
         buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
+
+        // This must match the added values-<lang> folders and locales_config.xml.
+        resourceConfigurations.addAll(
+            listOf(
+                "ar",
+                "bg",
+                "ca",
+                "cs",
+                "cy",
+                "da",
+                "de",
+                "el",
+                "en",
+                "eo",
+                "es",
+                "fa",
+                "fi",
+                "fr",
+                "gl",
+                "hr",
+                "hu",
+                "in",
+                "it",
+                "iw",
+                "ja",
+                "ko",
+                "mk",
+                "nb",
+                "nl",
+                "pl",
+                "pt-rBR",
+                "pt-rPT",
+                "ro",
+                "ru",
+                "sk",
+                "sr",
+                "sv",
+                "ta",
+                "th",
+                "tr",
+                "uk",
+                "zh-rCN",
+                "zh-rTW",
+            )
+        )
     }
 
     sourceSets {
@@ -204,7 +249,7 @@ dependencies {
     implementation("com.jakewharton:butterknife:$butterknifeVersion")
     kapt("com.jakewharton:butterknife-compiler:$butterknifeVersion")
     // https://github.com/google/dagger/releases
-    val daggerVersion  = "2.42"
+    val daggerVersion = "2.42"
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
     val eventbusVersion = "3.3.1"
