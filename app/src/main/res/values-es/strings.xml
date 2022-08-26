@@ -38,7 +38,7 @@
     <string name="action_stream">Ver en línea o comprar</string>
     <string name="action_stream_info">Ver en línea o información sobre compra</string>
     <string name="action_select_region">Seleccionar región</string>
-    <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_include_any_watch_provider">Incluye cualquier</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">No se pudo hablar con %s. Intenta nuevamente.</string>
     <string name="api_failed">Error: %s</string>
     <string name="copy_to_clipboard">Copiado al portapapeles</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Serie no migrada a datos de TMDB. Algunas acciones incluyendo sincronización con Trakt y con la nube podrían no funcionar. Tal vez busque un reemplazo y elimine esta serie. Toque para ver los detalles.</string>
     <!-- Sharing -->
     <string name="share">Compartir</string>
     <string name="share_show">Compartir serie</string>
@@ -98,7 +98,7 @@
     <string name="no_translation_title">Sin traducir</string>
     <string name="no_spoilers">Algunos detalles están ocultos para evitar spoilers. Para cambiarlo, ir a Ajustes > básico.</string>
     <string name="format_source">Fuente: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Última actualización</string>
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>
@@ -161,7 +161,7 @@
     <string name="context_updateshow">Actualizar</string>
     <string name="context_marknext">Siguiente episodio visto</string>
     <string name="action_episodes_switch_view">Cambiar vista</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Siguiente para ver</string>
     <!-- History -->
     <string name="user_stream">Historial</string>
     <string name="recently_watched">Vistas recientemente</string>
@@ -315,7 +315,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Usar navegador integrado</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Añadir series de Trakt</string>
     <string name="about_trakt">trakt ayuda a mantener un registro de los programas de televisión y películas que estás viendo. <a href="http://trakt.tv">Saber más</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Calificar</string>

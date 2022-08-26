@@ -18,6 +18,7 @@ Version 65
 
 * 🔧 Support "Themed icons" beta feature of Android 13.
 * 🔧 Support per-app language setting of Android 13.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 65.0.4*
 *2022-08-19*
