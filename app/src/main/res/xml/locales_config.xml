@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- This must match the added values-<lang> folders and build.gradle.kts. -->
+    <locale android:name="ar"/> <!-- Arabic -->
+    <locale android:name="bg"/> <!-- Bulgarian -->
+    <locale android:name="ca"/> <!-- Catalan -->
+    <locale android:name="cs"/> <!-- Czech -->
+    <locale android:name="cy"/> <!-- Welsh -->
+    <locale android:name="da"/> <!-- Danish -->
+    <locale android:name="de"/> <!-- German -->
+    <locale android:name="el"/> <!-- Greek -->
+    <locale android:name="en"/> <!-- English -->
+    <locale android:name="eo"/> <!-- Esperanto -->
+    <locale android:name="es"/> <!-- Spanish (Spain) -->
+    <locale android:name="fa"/> <!-- Farsi -->
+    <locale android:name="fi"/> <!-- Finnish -->
+    <locale android:name="fr"/> <!-- French (France) -->
+    <locale android:name="gl"/> <!-- Galician -->
+    <locale android:name="hr"/> <!-- Croatian -->
+    <locale android:name="hu"/> <!-- Hungarian -->
+    <locale android:name="in"/> <!-- Indonesian -->
+    <locale android:name="it"/> <!-- Italian -->
+    <locale android:name="iw"/> <!-- Hebrew -->
+    <locale android:name="ja"/> <!-- Japanese -->
+    <locale android:name="ko"/> <!-- Korean -->
+    <locale android:name="mk"/> <!-- Macedonian -->
+    <locale android:name="nb"/> <!-- Norwegian -->
+    <locale android:name="nl"/> <!-- Dutch -->
+    <locale android:name="pl"/> <!-- Polish -->
+    <locale android:name="pt-BR"/> <!-- Portuguese (Brazil) -->
+    <locale android:name="pt-PT"/> <!-- Portuguese (Portugal) -->
+    <locale android:name="ro"/> <!-- Romanian -->
+    <locale android:name="ru"/> <!-- Russian -->
+    <locale android:name="sk"/> <!-- Slovak -->
+    <locale android:name="sr"/> <!-- Serbian (Cyrillic) -->
+    <locale android:name="sv"/> <!-- Swedish -->
+    <locale android:name="ta"/> <!-- Tamil -->
+    <locale android:name="th"/> <!-- Thai -->
+    <locale android:name="tr"/> <!-- Turkish -->
+    <locale android:name="uk"/> <!-- Ukrainian -->
+    <locale android:name="zh-CN"/> <!-- Chinese (Simplified) -->
+    <locale android:name="zh-TW"/> <!-- Chinese (Traditional) -->
+</locale-config>
