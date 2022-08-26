@@ -56,50 +56,9 @@ android {
         buildConfigField("String", "IMAGE_CACHE_URL", propertyOrNull("SG_IMAGE_CACHE_URL"))
         buildConfigField("String", "IMAGE_CACHE_SECRET", propertyOrEmpty("SG_IMAGE_CACHE_SECRET"))
 
-        // This must match the added values-<lang> folders and locales_config.xml.
-        resourceConfigurations.addAll(
-            listOf(
-                "ar",
-                "bg",
-                "ca",
-                "cs",
-                "cy",
-                "da",
-                "de",
-                "el",
-                "en",
-                "eo",
-                "es",
-                "fa",
-                "fi",
-                "fr",
-                "gl",
-                "hr",
-                "hu",
-                "in",
-                "it",
-                "iw",
-                "ja",
-                "ko",
-                "mk",
-                "nb",
-                "nl",
-                "pl",
-                "pt-rBR",
-                "pt-rPT",
-                "ro",
-                "ru",
-                "sk",
-                "sr",
-                "sv",
-                "ta",
-                "th",
-                "tr",
-                "uk",
-                "zh-rCN",
-                "zh-rTW",
-            )
-        )
+        // Note: do not exclude languages from libraries that the app doesn't have, e.g. Firebase Auth.
+        // They still might be helpful to users, e.g. for regional dialects.
+        // resourceConfigurations
     }
 
     sourceSets {
