@@ -6,6 +6,18 @@ title: Help
 <div class="row justify-content-sm-center justify-content-lg-start"> 
   <div class="col-md-9 col-lg-7 col-xl-6">
     <h1>Help</h1>
+
+    <h2 class="mt-3">Fix an issue</h2>
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action" href="#syncfail">Show, episode or movie data is outdated or missing</a>
+      <a class="list-group-item list-group-item-action" href="#missing">Can not find a show or movie</a>
+      <a class="list-group-item list-group-item-action" href="#translation">A translation is wrong or missing</a>
+      <a class="list-group-item list-group-item-action" href="#airtimes">The release time of a show or episode is wrong</a>
+      <a class="list-group-item list-group-item-action" href="#watch">Watching shows or movies is not supported</a>
+      <a class="list-group-item list-group-item-action" href="#images">Images are not displayed</a>
+      <a class="list-group-item list-group-item-action" href="#widget">The widget is not updating or is missing</a>
+      <a class="list-group-item list-group-item-action" href="#timezone">After changing the time zone times are incorrect</a>
+    </div>
     
     <h2>How to</h2>
     <div class="list-group">
@@ -22,18 +34,6 @@ title: Help
       <a class="list-group-item list-group-item-action" href="#sources">Improve show, episode and movie data</a>
     </div>
     
-    <h2 class="mt-3">Fix an issue</h2>
-    <div class="list-group">
-      <a class="list-group-item list-group-item-action" href="#watch">Watching shows or movies is not supported</a>
-      <a class="list-group-item list-group-item-action" href="#images">Images are not displayed</a>
-      <a class="list-group-item list-group-item-action" href="#syncfail">Show, episode or movie data is not updated regularly</a>
-      <a class="list-group-item list-group-item-action" href="#translation">A translation is wrong or missing</a>
-      <a class="list-group-item list-group-item-action" href="#airtimes">A show or episode air/release time is wrong</a>
-      <a class="list-group-item list-group-item-action" href="#missing">Show, episode or movie data is wrong or missing</a>
-      <a class="list-group-item list-group-item-action" href="#widget">The widget is not updating or is missing</a>
-      <a class="list-group-item list-group-item-action" href="#timezone">After changing the time zone times are incorrect</a>
-    </div>
-    
     <h2 class="mt-3"><img src="images/trakt-80.png" width="32" height="32" alt="Trakt logo"/> Trakt integration</h2>
     <div class="list-group">
       <a class="list-group-item list-group-item-action" href="#connecttrakt">Connect to Trakt/Troubleshooting</a>
@@ -47,6 +47,118 @@ title: Help
       <a class="list-group-item list-group-item-action" href="#contact">Ask for help</a>
     </div>
 
+<!-- ##################################################### -->
+
+    <span class="anchor" id="fixes"></span>
+    <h2 class="mt-5">Fix an issue</h2>
+
+    <span class="anchor" id="syncfail"></span>
+    <section class="mt-2">
+      <h3>Show, episode or movie data is outdated or missing</h3>
+      <p><span class="emoji">ℹ</span> Show and movie data is loaded from the user-created database
+        at <a href="{{ site.data.links.tmdb }}">themoviedb.org</a>. The contributors there are typically quick
+        to update things. If not, consider to help out.</p>
+      <p><span class="emoji">ℹ</span> Access to <a href="#sources">the services SeriesGuide uses</a> 
+        might be (temporarily) blocked in your region, for example because your internet connection has issues or
+        your internet provider is blocking access. Try <a href="{{ site.data.links.community }}">checking the forum</a>
+        for other affected users.</p>
+
+      <p>Regardless, here are some things to check and try:</p>
+      
+      <p class="title">Check <em>Sync &amp; Update</em> setting</p>
+      <p>Tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span>, then <b>Settings</b>
+        and check if <strong>Sync &amp; Update</strong> is enabled.</p>
+      
+      <p class="title">Check device Accounts sync setting</p>
+      <p>Open the Settings app of your device. Find and open the Accounts settings and check that 
+        <strong>Auto-sync data</strong> is enabled. You should also see a SeriesGuide Sync account there.</p>
+      
+      <p class="title">Check device power saving settings</p>
+      <p>SeriesGuide might not be able to update in the background because of power saving settings. 
+        Try to <a href="{{ site.data.links.dontkillmyapp }}">exclude SeriesGuide from power optimizations</a>.</p>
+      
+      <p class="title">Last resort: remove and add the show again</p>
+      <p>If a show does not update, as a last resort, remove the show and add it again.</p>
+    </section>
+
+    <span class="anchor" id="missing"></span>
+    <section class="mt-2">
+      <h3>Can not find a show or movie</h3>
+      <p>If search can't find a show, <a href="https://discuss.seriesgui.de/t/tips-for-searching-for-shows/67">try the tips post on the forum</a>.</p>
+      <p>Also, sometimes a supposedly TV show is actually a series of movies and can be found under Movies.</p>
+      <p>The same applies to movies, for example made for TV movies are found under Shows.</p>
+      <p>Anyhow, all series and movie data is loaded from the user-created database at <a href="{{ site.data.links.tmdb }}">themoviedb.org</a></a>. Feel free to help out there to add missing information for all other users.</p>
+    </section>
+
+    <span class="anchor" id="translation"></span>
+    <section class="mt-2">
+      <h3>A translation is wrong or missing</h3>
+      <p class="title">Shows, episodes or movies</p>
+      <p>You can help improve the translation at <a href="{{ site.data.links.tmdb }}">themoviedb.org</a>.</p>
+      <p class="title">SeriesGuide app</p>
+      <p>Please <a href="#contact">send a message</a>. Or consider <a href="{{ site.data.links.crowdin }}">to translate or proof read</a>.</p>
+    </section>
+
+    <span class="anchor" id="airtimes"></span>
+    <section class="mt-2">
+      <h3>The release time of a show or episode is wrong</h3>
+      <p><span class="emoji">ℹ</span> The show/episode release times are restricted to the <strong>original release</strong> in the country of origin.</p>
+      <p><span class="emoji">✅</span> If you want local listings and listings of re-broadcasts, please look for a suitable TV guide offering in your region.</p>
+      <p>If <strong>the release country is known</strong>, SeriesGuide assumes the release time is in a time zone of this country (for example Eastern Time for US shows, British Time for British shows, Central European Time for German shows, ...). Then it is <strong>converted to your device time zone</strong>.</p>
+      <p>If <strong>the release country is not known</strong>, SeriesGuide will assume the country to be the United States of America.</p>
+      <p>You can view the country in the detailed show information.</p>
+      <p><span class="emoji">ℹ</span> If your device is <strong>set to a US mainland time zone</strong>, SeriesGuide will automatically adjust the release time (for example one hour earlier in Central Time).</p>
+      <p>If <strong>the displayed country is not correct</strong> it can be changed at <a href="#sources">the data source</a>.</p>
+      <p>If <strong>the country is correct</strong>, but you believe the release time is incorrectly converted in SeriesGuide, please <a href="#contact">send a message</a>.</p>
+    </section>
+
+    <span class="anchor" id="watch"></span>
+    <section class="mt-2">
+      <h3>Watching shows or movies is not supported</h3>
+      <p>You can <strong>not</strong> watch shows or movies within SeriesGuide.</p>
+      <p>However, on the episode and movie details screens there is a Stream or puchase button to help you find streaming and purchasing services a show or movie is available on in your region.</p>
+    </section>
+
+    <span class="anchor" id="images"></span>
+    <section class="mt-2">
+      <h3>Images are not displayed</h3>
+      <dl class="sg-padded-list">
+        <dt>Desired language has no poster</dt>
+        <dd>Try to <a href="#content-language">change the language of the show</a>, most often to English. If you prefer another language, <a href="#content-language">change the alternative language</a> in settings to English instead.</dd>
+
+        <dt>Image cache is corrupted</dt>
+        <dd>You can try clearing the cache for SeriesGuide. Tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <b>Settings</b> > <b>Clear image cache</b>. In the App Info screen that opens, go to Storage and tap Clear Cache.</dd>
+
+        <img src="images/cache-settings.png" width="295" height="80" alt="Clear Cache Settings screen" />
+
+        <dt class="mt-3"><em>Images over Wi-Fi only</em> is enabled</dt>
+        <dd>If your current connection is metered and this setting is enabled, no images are downloaded. Tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <b>Settings</b> and disable the setting.</dd>
+        
+        <dt><em>Prevent spoilers</em> setting is enabled</dt>
+        <dd>If an episode is not watched and this setting is enabled, the episode image remains hidden. Tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <b>Settings</b> > <b>Advanced</b>. Disable the setting.</dd>
+      </dl>
+    </section>
+
+    <span class="anchor" id="widget"></span>
+    <section class="mt-2">
+      <h3>The widget is not updating or is missing</h3>
+      <p>You may have moved SeriesGuide to the SD card/external storage. For SeriesGuide to work properly it <strong>has to be installed on your device/internal memory</strong>. Move it back and everything should be fine again (if not, <strong>try rebooting your device</strong>).</p>
+      <p>If that is not the case, it may help to <a href="{{ site.data.links.dontkillmyapp }}">exclude SeriesGuide from overreaching power optimizations</a>.</p>
+    </section>
+
+    <span class="anchor" id="timezone"></span>
+    <section class="mt-2">
+      <h3>After changing the time zone, times are incorrect</h3>
+      <p>Please stop SeriesGuide and restart it:</p>
+      <ol>
+        <li>Tap the switch app button on your device.</li>
+        <li>Swipe SeriesGuide away or tap the X button.</li>
+        <li>Launch the SeriesGuide app again.</li>
+      </ol>
+      <p>If that won't help, try to <a href="#update">update all shows</a>.</p>
+    </section>
+
+<!-- ##################################################### -->
 
     <span class="anchor" id="howto"></span> 
     <h2 class="mt-5">How to</h2>
@@ -299,108 +411,7 @@ title: Help
       </div>
     </section>
 
-    <span class="anchor" id="fixes"></span>
-    <h2 class="mt-5">Fix an issue</h2>
-
-    <span class="anchor" id="watch"></span>
-    <section class="mt-2">
-      <h3>Watching shows or movies is not supported</h3>
-      <p>You can <strong>not</strong> watch shows or movies within SeriesGuide.</p>
-      <p>However, on the episode and movie details screens there is a Stream or puchase button to help you find streaming and purchasing services a show or movie is available on in your region.</p>
-    </section>
-
-    <span class="anchor" id="images"></span>
-    <section class="mt-2">
-      <h3>Images are not displayed</h3>
-      <dl class="sg-padded-list">
-        <dt>Desired language has no poster</dt>
-        <dd>Try to <a href="#content-language">change the language of the show</a>, most often to English. If you prefer another language, <a href="#content-language">change the alternative language</a> in settings to English instead.</dd>
-
-        <dt>Image cache is corrupted</dt>
-        <dd>You can try clearing the cache for SeriesGuide. Tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <b>Settings</b> > <b>Clear image cache</b>. In the App Info screen that opens, go to Storage and tap Clear Cache.</dd>
-
-        <img src="images/cache-settings.png" width="295" height="80" alt="Clear Cache Settings screen" />
-
-        <dt class="mt-3"><em>Images over Wi-Fi only</em> is enabled</dt>
-        <dd>If your current connection is metered and this setting is enabled, no images are downloaded. Tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <b>Settings</b> and disable the setting.</dd>
-        
-        <dt><em>Prevent spoilers</em> setting is enabled</dt>
-        <dd>If an episode is not watched and this setting is enabled, the episode image remains hidden. Tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <b>Settings</b> > <b>Advanced</b>. Disable the setting.</dd>
-      </dl>
-    </section>
-
-    <span class="anchor" id="syncfail"></span>
-    <section class="mt-2">
-      <h3>Show, episode or movie data is not updated regularly</h3>
-      <p><span class="badge badge-info">Note</span> Information <a href="#missing">might not be available, yet</a>,
-        your internet connection might experience temporary issues, or your access to one of <a href="#sources">the 
-        services SeriesGuide uses</a> might be blocked in your region. Often it's best to try again later.</p>
-
-      <p>Regardless, here are some things to check and try:</p>
-      
-      <p class="title">Check <em>Sync &amp; Update</em> setting</p>
-      <p>Tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <b>Settings</b> and check if <strong>Sync &amp; Update</strong> is enabled.</p>
-      
-      <p class="title">Check device Accounts sync setting</p>
-      <p>Open the Settings app of your device. Go to Accounts and check that <strong>Auto-sync data</strong> is enabled. You should also see a SeriesGuide Sync account there.</p>
-      
-      <p class="title">Check device power saving settings</p>
-      <p>Try to <a href="{{ site.data.links.dontkillmyapp }}">exclude SeriesGuide from power optimizations</a>.</p>
-      
-      <p class="title">Manually update, remove and add show</p>
-      <p>If all is configured correctly, try to <a href="#update">manually update</a> the show. As a last resort, remove the show and add it again.</p>
-    </section>
-
-    <span class="anchor" id="translation"></span>
-    <section class="mt-2">
-      <h3>A translation is wrong or missing</h3>
-      <p class="title">SeriesGuide app</p>
-      <p>Please <a href="#contact">send a message</a>. Or consider <a href="{{ site.data.links.crowdin }}">to translate or proof read</a>.</p>
-      <p class="title">Shows, episodes or movies</p>
-      <p>You can help improve translation at the <a href="#sources">data sources</a>.</p>
-    </section>
-
-    <span class="anchor" id="airtimes"></span>
-    <section class="mt-2">
-      <h3>A show or episode air/release time is wrong</h3>
-      <p>The show/episode release times are restricted to the <strong>original release</strong> in the country of origin.</p>
-      <p><span class="badge badge-info">Tip</span> If you want local listings and listings of re-broadcasts, please look for a suitable TV guide offering in your region.</p>
-      <p>If <strong>the release country is known</strong>, SeriesGuide assumes the release time is in a time zone of this country (for example Eastern Time for US shows, British Time for British shows, Central European Time for German shows, ...). Then it is <strong>converted to your device time zone</strong>.</p>
-      <p>If <strong>the release country is not known</strong>, SeriesGuide will assume the country to be the United States of America.</p>
-      <p>You can view the country in the detailed show information.</p>
-      <p><span class="badge badge-info">Info</span> If your device is <strong>set to a US mainland time zone</strong>, SeriesGuide will automatically adjust the release time (for example one hour earlier in Central Time).</p>
-      <p>If <strong>the displayed country is not correct</strong> it can be changed at <a href="#sources">the data source</a>.</p>
-      <p>If <strong>the country is correct</strong>, but you believe the release time is incorrectly converted in SeriesGuide, please <a href="#contact">drop a message</a>.</p>
-    </section>
-
-    <span class="anchor" id="missing"></span>
-    <section class="mt-2">
-      <h3>Show, episode or movie data is wrong or missing</h3>
-      <p class="title">Trying to add a show:</p>
-      <p>If search can't find a show, <a href="https://discuss.seriesgui.de/t/tips-for-searching-for-shows/67">try these tips</a>.</p>
-      <p class="title">Show or movie in your library:</p>
-      <p><a href="#syncfail">Make sure Auto Update is working</a>.</p>
-      <p>Otherwise, you can <strong>check or help update the information</strong> at <a href="#sources">the data source</a>.</p>
-    </section>
-
-    <span class="anchor" id="widget"></span>
-    <section class="mt-2">
-      <h3>The widget is not updating or is missing</h3>
-      <p>You may have moved SeriesGuide to the SD card/external storage. For SeriesGuide to work properly it <strong>has to be installed on your device/internal memory</strong>. Move it back and everything should be fine again (if not, <strong>try rebooting your device</strong>).</p>
-      <p>If that is not the case, it may help to <a href="{{ site.data.links.dontkillmyapp }}">exclude SeriesGuide from overreaching power optimizations</a>.</p>
-    </section>
-
-    <span class="anchor" id="timezone"></span>
-    <section class="mt-2">
-      <h3>After changing the time zone, times are incorrect</h3>
-      <p>Please stop SeriesGuide and restart it:</p>
-      <ol>
-        <li>Tap the switch app button on your device.</li>
-        <li>Swipe SeriesGuide away or tap the X button.</li>
-        <li>Launch the SeriesGuide app again.</li>
-      </ol>
-      <p>If that won't help, try to <a href="#update">update all shows</a>.</p>
-    </section>
+<!-- ##################################################### -->
 
     <span class="anchor" id="trakt"></span>
     <h2 class="mt-5"><img src="images/trakt-80.png" width="32" height="32" alt="trakt logo"/> Trakt integration</h2>
@@ -440,6 +451,8 @@ title: Help
       <p>Check-in to let friends or the world know what you are watching right now. Checking in requires you to <a href="#trakt">connect SeriesGuide only with Trakt</a>.</p>
       <p>After the runtime of the episode or movie has passed, the episode or movie will be set watched on your Trakt profile and in SeriesGuide.</p>
     </section>
+
+<!-- ##################################################### -->
 
     <span class="anchor" id="contact"></span>
     <section class="mt-5">
