@@ -8,27 +8,34 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
-\* Releases marked with an asterisk (*) are/were available on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
+Releases marked with 🧪 are/were available on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
 Version 65
 ----------
-*in development*
+*2022-09-01*
 
-#### 65.0.5*
+* 🔧 Clean up supported languages for show and movie content. Languages not longer supported are
+  changed to US English.
+* 🔧 When making changes to a season, always apply to all episodes. Previously, e.g. set watched 
+  only affected episodes with a past release date, but add to collection affects all.
+* 🔧 Streaming search: add latest supported countries.
+* 🔧 Android 13: support per-app language setting.
+
+#### 65.0.5
 *2022-08-26*
 
 * 🔧 Support "Themed icons" beta feature of Android 13.
 * 🔧 Support per-app language setting of Android 13.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 65.0.4*
+#### 65.0.4 🧪
 *2022-08-19*
 
 * 🔧 Add latest supported countries to streaming search.
 * 🔧 Restored subscription expired notification as in-app message.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 65.0.3*
+#### 65.0.3 🧪
 *2022-08-12*
 
 * 🔧 When making changes to a season, always apply to all episodes. Previously, setting watched or
@@ -36,14 +43,14 @@ skipped only affected episodes with a release date and released in the past. But
 from collection affected all.
 * 🔧 When updating shows, do not fail if just Trakt info can not be updated.
 
-#### 65.0.2*
+#### 65.0.2 🧪
 *2022-08-05*
 
 * 🔨 Trakt: prevent adding a duplicate play in the rare case a play was already sent and stored at
   Trakt, but no confirmation was received.
 * 🔨 Movies: instead of a future date, show no date if release date is unknown in watched movies list.
 
-#### 65.0.1*
+#### 65.0.1 🧪
 *2022-07-22*
 
 * 🔧 Clean up supported languages for show and movie content. Languages not longer supported are
@@ -51,7 +58,7 @@ changed to US English. As a side-effect should resolve issues with translations 
 English at random.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 65.0.0*
+#### 65.0.0 🧪
 *2022-05-27*
 
 * 🔧 Choose newest unwatched episode as next when adding a show that has watched episodes, e.g.
@@ -72,12 +79,12 @@ inexact episode notifications instead.
 
 * 🔨 Resolve Android not responding issue when viewing a show or its episodes.
 
-#### 64.0.6*
+#### 64.0.6 🧪
 *2022-05-15*
 
 * 🔨 Do not crash when selecting backup file to restore from.
 
-#### 64.0.5*
+#### 64.0.5 🧪
 *2022-05-13*
 
 * 🔨 Do not crash if permission to set alarms and reminders has been removed, schedule inexact
@@ -85,13 +92,13 @@ inexact episode notifications instead.
 * 🔧 Improve when the app wakes the device to notify about upcoming episodes.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 64.0.4*
+#### 64.0.4 🧪
 *2022-05-06*
 
 * 🔨 Movies: properly clean up movies watched by friends data on refresh.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 64.0.3*
+#### 64.0.3 🧪
 *2022-04-14*
 
 * 🔧 Clearly label next episode to watch in show overview screen.
@@ -100,7 +107,7 @@ inexact episode notifications instead.
 * 🔨 Movie details screen: always display the oldest theatrical release date, matching other screens.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 64.0.2*
+#### 64.0.2 🧪
 *2022-03-10*
 
 * 🔨 Cloud: when signing in do not add shows that were removed after the TMDB migration.
@@ -109,7 +116,7 @@ inexact episode notifications instead.
 * 🔨 Fixed: guest stars, writers, etc. not separated by comma.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 64.0.1*
+#### 64.0.1 🧪
 *2022-03-03*
 
 * 🔧 Move no aired episodes option to shows filter view.
