@@ -94,7 +94,7 @@ public class SearchResult implements Parcelable {
         this.tmdbId = tmdbId;
     }
 
-    /** Two-letter ISO 639-1 language code. */
+    /** Two-letter ISO 639-1 language code plus ISO-3166-1 region tag. */
     public String getLanguage() {
         return language;
     }

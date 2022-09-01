@@ -43,8 +43,8 @@ internal class MovieViewHolder(
         } else {
             movieTmdbId = sgMovie.tmdbId
             title.text = sgMovie.title
-            if (sgMovie.releasedMs != null) {
-                date.text = dateFormatMovieReleaseDate.format(sgMovie.releasedMs)
+            if (sgMovie.releasedMsOrDefault != Long.MAX_VALUE) {
+                date.text = dateFormatMovieReleaseDate.format(sgMovie.releasedMsOrDefault)
             } else {
                 date.text = ""
             }

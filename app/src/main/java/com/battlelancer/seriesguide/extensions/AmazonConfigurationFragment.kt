@@ -16,11 +16,9 @@ class AmazonConfigurationFragment : BaseSettingsFragment() {
         preferenceManager.sharedPreferencesMode = 0
 
         // Create a preference screen.
-        val preferenceScreen = preferenceManager.createPreferenceScreen(
-            activity
-        )
+        val preferenceScreen = preferenceManager.createPreferenceScreen(requireContext())
 
-        val countryPreference = ListPreference(activity).apply {
+        val countryPreference = ListPreference(requireContext()).apply {
             key = AmazonSettings.KEY_COUNTRY
             setTitle(R.string.pref_amazon_domain)
             setEntries(R.array.amazonDomainsData)
@@ -34,7 +32,7 @@ class AmazonConfigurationFragment : BaseSettingsFragment() {
         setPreferenceScreen(preferenceScreen)
 
         bindPreferenceSummaryToValue(
-            preferenceManager.sharedPreferences,
+            preferenceManager.sharedPreferences!!,
             countryPreference
         )
     }

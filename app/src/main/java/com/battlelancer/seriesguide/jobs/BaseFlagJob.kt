@@ -5,7 +5,7 @@ import android.content.Context
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 
-abstract class BaseJob(private val action: JobAction) {
+abstract class BaseFlagJob(private val action: JobAction) : FlagJob {
 
     protected fun persistNetworkJob(context: Context, jobInfo: ByteArray): Boolean {
         val values = ContentValues()

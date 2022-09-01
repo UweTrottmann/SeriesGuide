@@ -483,7 +483,6 @@
     <string name="billing_action_subscribe">Előfizetés</string>
     <string name="billing_action_manage_subscriptions">Feliratkozások kezelése</string>
     <string name="billing_action_pass">X Pass App beszerzése</string>
-    <string name="billing_price_subscribe">%1$s/év, próbálja ki ingyen, bármikor kiléphet a %2$s segítségével</string>
     <string name="billing_duration_format">%1$s/év</string>
     <string name="billing_sub_description">Próbáld ki 30 napig ingyen, bármikor visszavonható.</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>

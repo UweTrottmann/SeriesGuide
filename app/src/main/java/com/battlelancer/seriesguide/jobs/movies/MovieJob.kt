@@ -1,8 +1,7 @@
 package com.battlelancer.seriesguide.jobs.movies
 
 import android.content.Context
-import com.battlelancer.seriesguide.jobs.BaseJob
-import com.battlelancer.seriesguide.jobs.FlagJob
+import com.battlelancer.seriesguide.jobs.BaseFlagJob
 import com.battlelancer.seriesguide.jobs.SgJobInfo
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.movies.tools.MovieTools.MovieChangedEvent
@@ -13,7 +12,7 @@ abstract class MovieJob(
     action: JobAction,
     private val movieTmdbId: Int,
     private val plays: Int
-) : BaseJob(action), FlagJob {
+) : BaseFlagJob(action) {
 
     override fun supportsHexagon(): Boolean {
         return true

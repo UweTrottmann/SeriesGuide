@@ -5,7 +5,6 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.net.Uri
 import android.text.SpannableStringBuilder
@@ -46,7 +45,6 @@ import org.threeten.bp.Instant
 import timber.log.Timber
 import java.io.IOException
 import java.text.NumberFormat
-import java.util.concurrent.Executor
 
 /**
  * To debug set [.DEBUG] to true.
@@ -93,7 +91,6 @@ class NotificationService(context: Context) {
         Timber.d("Waking up...")
 
         // remove notification service wake-up alarm if notifications are disabled or not unlocked
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         if (!NotificationSettings.isNotificationsEnabled(context) || !Utils.hasAccessToX(context)) {
             Timber.d("Notifications disabled, removing wake-up alarm")
             val am = context.getSystemService<AlarmManager>()
@@ -129,13 +126,13 @@ class NotificationService(context: Context) {
             val latestTimeToInclude = (customCurrentTime
                     + DateUtils.MINUTE_IN_MILLIS * notificationThreshold)
 
-            maybeNotify(prefs, upcomingEpisodes, latestTimeToInclude)
+            maybeNotify(upcomingEpisodes, latestTimeToInclude)
 
             // plan next episode to notify about
             for (episode in upcomingEpisodes) {
                 val releaseTime = episode.episode_firstairedms
                 if (releaseTime > latestTimeToInclude) {
-                    prefs.edit()
+                    PreferenceManager.getDefaultSharedPreferences(context).edit()
                         .putLong(NotificationSettings.KEY_NEXT_TO_NOTIFY, releaseTime)
                         .apply()
                     Timber.d(
@@ -310,7 +307,6 @@ class NotificationService(context: Context) {
     }
 
     private fun maybeNotify(
-        prefs: SharedPreferences,
         upcomingEpisodes: List<SgEpisode2WithShow>,
         latestTimeToInclude: Long
     ) {
@@ -345,7 +341,10 @@ class NotificationService(context: Context) {
         }
     }
 
-    private fun notifyAbout(
+    /**
+     * Only visible for debugging.
+     */
+    fun notifyAbout(
         upcomingEpisodes: List<SgEpisode2WithShow>,
         notifyPositions: List<Int>,
         latestAirtime: Long
@@ -607,8 +606,6 @@ class NotificationService(context: Context) {
         private const val ORDER = (SgEpisode2Columns.FIRSTAIREDMS + " ASC,"
                 + SgShow2Columns.SORT_TITLE + ","
                 + SgEpisode2Columns.NUMBER + " ASC")
-
-        val SERIAL_EXECUTOR: Executor = SerialExecutor()
 
         /**
          * Send broadcast to run the notification service to display and (re)schedule upcoming episode

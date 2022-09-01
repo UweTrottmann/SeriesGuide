@@ -31,7 +31,7 @@ class ShowsDiscoverLiveData(
     )
 
     private var query: String = ""
-    private var language: String = context.getString(R.string.show_default_language)
+    private var language: String = context.getString(R.string.content_default_language)
     private var watchProviderIds: List<Int>? = null
     private var currentJob: Job? = null
 

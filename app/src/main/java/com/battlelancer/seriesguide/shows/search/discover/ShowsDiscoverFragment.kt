@@ -23,11 +23,11 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
+import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -56,7 +56,6 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     private lateinit var adapter: ShowsDiscoverAdapter
     private val model: ShowsDiscoverViewModel by viewModels()
 
-    /** Two letter ISO 639-1 language code. */
     private lateinit var languageCode: String
     private var query: String = ""
 
@@ -219,7 +218,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private fun displayLanguageSettings() {
-        L10nDialogFragment.forShow(
+        L10nDialogFragment.show(
             parentFragmentManager,
             languageCode,
             L10nDialogFragment.TAG_DISCOVER

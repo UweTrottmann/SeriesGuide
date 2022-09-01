@@ -31,6 +31,9 @@
     <style name="TextAppearance.SeriesGuide.Body2.Bold.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
+    <style name="TextAppearance.SeriesGuide.Body2.Bold.Error">
+        <item name="android:textColor">?attr/colorError</item>
+    </style>
     <style name="TextAppearance.SeriesGuide.Body2.Italic">
         <item name="android:textStyle">italic</item>
     </style>

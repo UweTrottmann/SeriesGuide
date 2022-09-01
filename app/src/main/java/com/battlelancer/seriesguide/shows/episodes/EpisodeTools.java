@@ -66,8 +66,7 @@ public class EpisodeTools {
 
     public static void seasonWatched(Context context, long seasonId, int episodeFlags) {
         validateFlags(episodeFlags);
-        FlagJobExecutor.execute(context,
-                new SeasonWatchedJob(seasonId, episodeFlags, TimeTools.getCurrentTime(context)));
+        FlagJobExecutor.execute(context, new SeasonWatchedJob(seasonId, episodeFlags));
     }
 
     public static void seasonCollected(Context context, long seasonId, boolean isCollected) {

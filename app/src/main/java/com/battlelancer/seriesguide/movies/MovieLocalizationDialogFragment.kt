@@ -72,7 +72,7 @@ class MovieLocalizationDialogFragment : AppCompatDialogFragment() {
             setListVisible(true)
             lifecycleScope.launch {
                 val languageCodes = requireContext().resources
-                    .getStringArray(R.array.languageCodesMovies)
+                    .getStringArray(R.array.content_languages)
                 val items: MutableList<LocalizationItem> = ArrayList(languageCodes.size)
 
                 for (languageCode in languageCodes) {

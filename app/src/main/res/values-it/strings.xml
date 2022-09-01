@@ -483,7 +483,6 @@
     <string name="billing_action_subscribe">Abbonati</string>
     <string name="billing_action_manage_subscriptions">Gestisci abbonamenti</string>
     <string name="billing_action_pass">Ottieni X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/anno, prova gratuita, annulla in qualsiasi momento tramite %2$s</string>
     <string name="billing_duration_format">%1$s/anno</string>
     <string name="billing_sub_description">Prova 30 giorni gratis, annulla in qualsiasi momento.</string>
     <string name="billing_price_pass">paga una sola volta</string>

@@ -13,11 +13,11 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem
 import com.battlelancer.seriesguide.dataliberation.model.Movie
 import com.battlelancer.seriesguide.dataliberation.model.Season
 import com.battlelancer.seriesguide.dataliberation.model.Show
+import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.movies.database.MovieHelper
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
-import com.battlelancer.seriesguide.lists.database.SgListHelper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
@@ -41,7 +41,6 @@ import java.io.IOException
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
-import java.util.ArrayList
 import com.battlelancer.seriesguide.dataliberation.model.List as ExportList
 
 /**
@@ -302,6 +301,8 @@ class JsonExportTask(
             show.favorite = sgShow.favorite
             show.notify = sgShow.notify
             show.hidden = sgShow.hidden
+            // Note: not mapping legacy language codes so backups can be imported in older versions,
+            // which would drop the language if it isn't recognized.
             show.language = sgShow.language
             show.release_time = sgShow.releaseTimeOrDefault
             show.release_weekday = sgShow.releaseWeekDayOrDefault
@@ -517,7 +518,7 @@ class JsonExportTask(
 
     /**
      * Show status used when exporting data.
-     * Compare with [com.battlelancer.seriesguide.ui.shows.ShowTools.Status].
+     * Compare with [com.battlelancer.seriesguide.shows.tools.ShowStatus].
      */
     object ShowStatusExport {
         const val IN_PRODUCTION = "in_production"

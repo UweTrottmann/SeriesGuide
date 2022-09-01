@@ -1,17 +1,13 @@
 package com.battlelancer.seriesguide.billing
 
 import android.annotation.SuppressLint
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.app.NotificationCompat
-import androidx.core.app.TaskStackBuilder
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,13 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
-import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.ui.BaseActivity
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
-import com.battlelancer.seriesguide.ui.ShowsActivity
-import com.battlelancer.seriesguide.util.PendingIntentCompat
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
 import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
@@ -60,25 +53,25 @@ class BillingActivity : BaseActivity() {
         billingViewModel =
             ViewModelProvider(this, BillingViewModelFactory(application, SgApp.coroutineScope))
                 .get(BillingViewModel::class.java).also {
-                    it.subsSkuDetailsListLiveData.observe(this, { skuDetails ->
+                    it.subsSkuDetailsListLiveData.observe(this) { skuDetails ->
                         adapter.setSkuDetailsList(skuDetails)
-                    })
+                    }
                 }
-        billingViewModel.errorEvent.observe(this, { message ->
+        billingViewModel.errorEvent.observe(this) { message ->
             message?.let {
                 textViewBillingError.apply {
                     text = "${getString(R.string.subscription_unavailable)} ($message)"
                     isGone = false
                 }
             }
-        })
+        }
         // Only use subscription state if unlock app is not installed.
         if (Utils.hasXpass(this)) {
             setWaitMode(false)
             updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         } else {
             setWaitMode(true)
-            billingViewModel.goldStatusLiveData.observe(this, { goldStatus ->
+            billingViewModel.goldStatusLiveData.observe(this) { goldStatus ->
                 setWaitMode(false)
                 updateViewStates(goldStatus != null && goldStatus.entitled, false)
                 manageSubscriptionUrl =
@@ -87,7 +80,7 @@ class BillingActivity : BaseActivity() {
                     } else {
                         PLAY_MANAGE_SUBS_ALL
                     }
-            })
+            }
         }
     }
 
@@ -174,40 +167,19 @@ class BillingActivity : BaseActivity() {
             "$PLAY_MANAGE_SUBS_ALL?package=${BuildConfig.APPLICATION_ID}&sku="
 
         /**
-         * Displays a notification that the subscription has expired. Its action opens this activity.
+         * Displays a [Snackbar] that the subscription has expired. Its action opens this activity.
          */
         @JvmStatic
-        fun showExpiredNotification(context: Context) {
-            val nb = NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_ERRORS)
-            NotificationSettings.setDefaultsForChannelErrors(context, nb)
-
-            // set required attributes
-            nb.setSmallIcon(R.drawable.ic_notification)
-            nb.setContentTitle(context.getString(R.string.subscription_expired))
-            nb.setContentText(context.getString(R.string.subscription_expired_details))
-            nb.setTicker(context.getString(R.string.subscription_expired_details))
-            nb.setAutoCancel(true)
-
-            // build task stack
-            val notificationIntent = Intent(context, BillingActivity::class.java)
-            val contentIntent = TaskStackBuilder
-                .create(context)
-                .addNextIntent(Intent(context, ShowsActivity::class.java))
-                .addNextIntent(Intent(context, SeriesGuidePreferences::class.java))
-                .addNextIntent(notificationIntent)
-                .getPendingIntent(
-                    0,
-                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
-                )
-            nb.setContentIntent(contentIntent)
-
-            // build the notification
-            val notification = nb.build()
-
-            // show the notification
-            val nm = context
-                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-            nm?.notify(SgApp.NOTIFICATION_SUBSCRIPTION_ID, notification)
+        fun showExpiredNotification(activity: Activity, parentView: View) {
+            val snackbar = Snackbar.make(
+                parentView,
+                R.string.subscription_expired_details,
+                Snackbar.LENGTH_INDEFINITE
+            )
+            snackbar.setAction(R.string.billing_action_manage_subscriptions) {
+                activity.startActivity(Intent(activity, BillingActivity::class.java))
+            }
+            snackbar.show()
         }
     }
 }

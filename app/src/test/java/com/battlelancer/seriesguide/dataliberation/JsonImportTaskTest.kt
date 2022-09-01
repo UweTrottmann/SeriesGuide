@@ -3,11 +3,11 @@ package com.battlelancer.seriesguide.dataliberation
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
-import com.battlelancer.seriesguide.shows.database.SgSeason2
-import com.battlelancer.seriesguide.shows.database.SgShow2
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
+import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgSeason2Helper
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
@@ -71,7 +71,8 @@ class JsonImportTaskTest {
 
         val expectedShow = JsonExportTaskTest.listOfTestShows[0].copy(
             id = 0, // insert
-            titleNoArticle = "Jujutsu Kaisen" // set from title
+            titleNoArticle = "Jujutsu Kaisen", // set from title
+            language = "de-DE" // Legacy language code is mapped.
         )
         verify(sgShow2Helper).insertShow(expectedShow)
 

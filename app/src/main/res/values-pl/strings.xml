@@ -505,7 +505,6 @@
     <string name="billing_action_subscribe">Subskrybuj</string>
     <string name="billing_action_manage_subscriptions">Zarządzaj subskrypcjami</string>
     <string name="billing_action_pass">Kup X Pass App</string>
-    <string name="billing_price_subscribe">%1$s na rok. Wypróbuj za darmo. Anuluj w każdym momencie przy użyciu %2$s</string>
     <string name="billing_duration_format">%1$s/rok</string>
     <string name="billing_sub_description">Wypróbuj przez 30 dni. Anuluj w dowolnym momencie.</string>
     <string name="billing_price_pass">jednorazowy zakup</string>

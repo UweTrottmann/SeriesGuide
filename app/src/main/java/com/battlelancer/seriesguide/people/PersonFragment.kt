@@ -16,10 +16,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentPersonBinding
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Person
@@ -90,7 +90,7 @@ class PersonFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_action_person_language) {
-            L10nDialogFragment.forPerson(
+            L10nDialogFragment.show(
                 parentFragmentManager,
                 model.languageCode.value,
                 "person-language-dialog"

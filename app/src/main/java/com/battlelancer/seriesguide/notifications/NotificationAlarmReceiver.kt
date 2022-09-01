@@ -1,16 +1,16 @@
 package com.battlelancer.seriesguide.notifications
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.SystemClock
 import android.text.format.DateUtils
 import androidx.core.content.getSystemService
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.util.PendingIntentCompat
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class NotificationAlarmReceiver : BroadcastReceiver() {
@@ -33,20 +33,14 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
             // run the notification service right away
             Timber.d("Run notifications service right away")
 
-            // as jobs are not allowed to run while the device is idle, use an AsyncTask instead
+            // As jobs are not allowed to run while the device is idle, use coroutine instead.
             val pendingResult = goAsync()
             val notificationService = NotificationService(context)
-            @SuppressLint("StaticFieldLeak") val task: AsyncTask<Void, Void, Void> =
-                object : AsyncTask<Void, Void, Void>() {
-                    override fun doInBackground(vararg voids: Void): Void? {
-                        notificationService.run()
-                        pendingResult.finish()
-                        return null
-                    }
-                }
-            // run in serial to avoid alarm scheduling conflicts
-            // separate serial executor as AsyncTask one might be busy longer than onReceive timeout
-            task.executeOnExecutor(NotificationService.SERIAL_EXECUTOR)
+            // Do not run in parallel to avoid alarm scheduling conflicts.
+            SgApp.coroutineScope.launch(SgApp.SINGLE) {
+                notificationService.run()
+                pendingResult.finish()
+            }
         }
     }
 

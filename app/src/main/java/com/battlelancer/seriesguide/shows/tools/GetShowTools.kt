@@ -2,10 +2,15 @@ package com.battlelancer.seriesguide.shows.tools
 
 import android.content.Context
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.modules.ApplicationContext
-import com.battlelancer.seriesguide.shows.database.SgShow2Update
 import com.battlelancer.seriesguide.shows.ShowsSettings
+import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.shows.database.SgShow2Update
+import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TMDB
+import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TRAKT
+import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
+import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
+import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowStop
 import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
 import com.battlelancer.seriesguide.tmdbapi.TmdbStop
@@ -16,14 +21,10 @@ import com.battlelancer.seriesguide.traktapi.TraktStop
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TMDB
-import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TRAKT
-import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
-import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
-import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowStop
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import timber.log.Timber
@@ -37,12 +38,12 @@ class GetShowTools @Inject constructor(
 ) {
 
     /**
-     * If [updateOnly] returns a show for updating, but without its ID set!
+     * If [existingShow] is passed, returns a show for updating, but without its ID set!
      */
     fun getShowDetails(
         showTmdbId: Int,
         desiredLanguage: String,
-        updateOnly: Boolean = false
+        existingShow: SgShow2? = null
     ): Result<ShowDetails, GetShowError> {
         var tmdbShow = TmdbTools2().getShowAndExternalIds(showTmdbId, desiredLanguage, context)
             .getOrElse { return Err(it.toGetShowError()) }
@@ -59,14 +60,35 @@ class GetShowTools @Inject constructor(
                 ?: return Err(GetShowDoesNotExist)
         }
 
-        val traktShow = TraktTools2.getShowByTmdbId(showTmdbId, context)
-            .getOrElse {
-                // Fail if looking up Trakt details failed to avoid removing them for existing shows.
-                return Err(it.toGetShowError())
+        val traktDetails = TraktTools2.getShowByTmdbId(showTmdbId, context)
+            .andThen { traktShow ->
+                if (traktShow == null) {
+                    Timber.w("getShowDetails: no Trakt show found, using default values.")
+                }
+                Ok(TraktDetails(
+                    traktIdOrNull = traktShow?.ids?.trakt,
+                    releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time),
+                    releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day),
+                    releaseCountry = traktShow?.country,
+                    releaseTimeZone = traktShow?.airs?.timezone,
+                    firstRelease = TimeTools.parseShowFirstRelease(traktShow?.first_aired),
+                    rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 } ?: 0.0,
+                    votes = traktShow?.votes?.let { if (it >= 0) it else 0 } ?: 0
+                ))
+            }.getOrElse {
+                if (existingShow == null) return Err(it.toGetShowError())
+                // Use previously loaded details instead of failing.
+                TraktDetails(
+                    traktIdOrNull = existingShow.traktId,
+                    releaseTime = existingShow.releaseTimeOrDefault,
+                    releaseWeekDay = existingShow.releaseWeekDayOrDefault,
+                    releaseCountry = existingShow.releaseCountry,
+                    releaseTimeZone = existingShow.releaseTimeZone,
+                    firstRelease = existingShow.firstReleaseOrDefault,
+                    rating = existingShow.ratingGlobalOrZero,
+                    votes = existingShow.ratingVotesOrZero
+                )
             }
-        if (traktShow == null) {
-            Timber.w("getShowDetails: no Trakt show found, using default values.")
-        }
 
         val title = if (tmdbShow.name.isNullOrEmpty()) {
             context.getString(R.string.no_translation_title)
@@ -87,15 +109,7 @@ class GetShowTools @Inject constructor(
         }
 
         val tvdbIdOrNull = tmdbShow.external_ids?.tvdb_id
-        val traktIdOrNull = traktShow?.ids?.trakt
         val titleNoArticle = TextTools.trimLeadingArticle(tmdbShow.name)
-        val releaseTime = TimeTools.parseShowReleaseTime(traktShow?.airs?.time)
-        val releaseWeekDay = TimeTools.parseShowReleaseWeekDay(traktShow?.airs?.day)
-        val releaseCountry = traktShow?.country
-        val releaseTimeZone = traktShow?.airs?.timezone
-        val firstRelease = TimeTools.parseShowFirstRelease(traktShow?.first_aired)
-        val rating = traktShow?.rating?.let { if (it in 0.0..10.0) it else 0.0 } ?: 0.0
-        val votes = traktShow?.votes?.let { if (it >= 0) it else 0 } ?: 0
         val genres =
             TextTools.buildPipeSeparatedString(tmdbShow.genres?.map { genre -> genre.name })
         val network = tmdbShow.networks?.firstOrNull()?.name ?: ""
@@ -112,22 +126,22 @@ class GetShowTools @Inject constructor(
         }
         val poster = tmdbShow.poster_path ?: ""
 
-        val showDetails = if (updateOnly) {
+        val showDetails = if (existingShow != null) {
             // For updating existing show.
             ShowDetails(
                 showUpdate = SgShow2Update(
                     tvdbId = tvdbIdOrNull,
-                    traktId = traktIdOrNull,
+                    traktId = traktDetails.traktIdOrNull,
                     title = title,
                     titleNoArticle = titleNoArticle,
                     overview = overview,
-                    releaseTime = releaseTime,
-                    releaseWeekDay = releaseWeekDay,
-                    releaseCountry = releaseCountry,
-                    releaseTimeZone = releaseTimeZone,
-                    firstRelease = firstRelease,
-                    ratingGlobal = rating,
-                    ratingVotes = votes,
+                    releaseTime = traktDetails.releaseTime,
+                    releaseWeekDay = traktDetails.releaseWeekDay,
+                    releaseCountry = traktDetails.releaseCountry,
+                    releaseTimeZone = traktDetails.releaseTimeZone,
+                    firstRelease = traktDetails.firstRelease,
+                    ratingGlobal = traktDetails.rating,
+                    ratingVotes = traktDetails.votes,
                     genres = genres,
                     network = network,
                     imdbId = imdbId,
@@ -145,17 +159,17 @@ class GetShowTools @Inject constructor(
                 show = SgShow2(
                     tmdbId = tmdbShow.id,
                     tvdbId = tvdbIdOrNull,
-                    traktId = traktIdOrNull,
+                    traktId = traktDetails.traktIdOrNull,
                     title = title,
                     titleNoArticle = titleNoArticle,
                     overview = overview,
-                    releaseTime = releaseTime,
-                    releaseWeekDay = releaseWeekDay,
-                    releaseCountry = releaseCountry,
-                    releaseTimeZone = releaseTimeZone,
-                    firstRelease = firstRelease,
-                    ratingGlobal = rating,
-                    ratingVotes = votes,
+                    releaseTime = traktDetails.releaseTime,
+                    releaseWeekDay = traktDetails.releaseWeekDay,
+                    releaseCountry = traktDetails.releaseCountry,
+                    releaseTimeZone = traktDetails.releaseTimeZone,
+                    firstRelease = traktDetails.firstRelease,
+                    ratingGlobal = traktDetails.rating,
+                    ratingVotes = traktDetails.votes,
                     genres = genres,
                     network = network,
                     imdbId = imdbId,
@@ -177,6 +191,17 @@ class GetShowTools @Inject constructor(
         val show: SgShow2? = null,
         val showUpdate: SgShow2Update? = null,
         val seasons: List<TvSeason>? = null
+    )
+
+    data class TraktDetails(
+        val traktIdOrNull: Int?,
+        val releaseTime: Int,
+        val releaseWeekDay: Int,
+        val releaseCountry: String?,
+        val releaseTimeZone: String?,
+        val firstRelease: String,
+        val rating: Double,
+        val votes: Int
     )
 
     sealed class GetShowError(val service: AddUpdateShowTools.ShowService) {

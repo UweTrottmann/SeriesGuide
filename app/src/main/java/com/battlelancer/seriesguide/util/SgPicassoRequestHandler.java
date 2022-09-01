@@ -56,7 +56,7 @@ public class SgPicassoRequestHandler extends RequestHandler {
             int showTmdbId = Integer.parseInt(host);
             String language = request.uri.getQueryParameter(QUERY_LANGUAGE);
             if (language == null || language.length() == 0) {
-                language = DisplaySettings.LANGUAGE_EN;
+                language = LanguageTools.LANGUAGE_EN;
             }
             TvShow showDetails = new TmdbTools2().getShowDetails(showTmdbId, language, context);
             if (showDetails != null) {

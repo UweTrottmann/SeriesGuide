@@ -25,8 +25,8 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.notifications.NotificationService
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.NotificationSettings
@@ -233,7 +233,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(ShowsSettings.KEY_LANGUAGE_FALLBACK)!!.also {
             updateFallbackLanguageSummary(it)
             it.setOnPreferenceClickListener {
-                L10nDialogFragment.forShow(
+                L10nDialogFragment.show(
                     parentFragmentManager,
                     ShowsSettings.getShowsLanguageFallback(requireContext()),
                     TAG_LANGUAGE_FALLBACK
@@ -253,7 +253,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
             updateRootSettings()
         }
 
-        PreferenceManager.getDefaultSharedPreferences(activity).also {
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).also {
             it.registerOnSharedPreferenceChangeListener(this)
         }
         EventBus.getDefault().register(this)
@@ -262,7 +262,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     override fun onStop() {
         super.onStop()
 
-        PreferenceManager.getDefaultSharedPreferences(activity).also {
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).also {
             it.unregisterOnSharedPreferenceChangeListener(this)
         }
         EventBus.getDefault().unregister(this)
@@ -372,7 +372,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                         ringtoneUri = Settings.System.DEFAULT_NOTIFICATION_URI
                     }
                 }
-                PreferenceManager.getDefaultSharedPreferences(activity).edit {
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
                     // map silent (null) to empty string
                     putString(NotificationSettings.KEY_RINGTONE, ringtoneUri?.toString() ?: "")
                 }
@@ -469,7 +469,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: L10nDialogFragment.LanguageChangedEvent) {
         if (event.tag == TAG_LANGUAGE_FALLBACK) {
-            PreferenceManager.getDefaultSharedPreferences(context).edit {
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
                 putString(ShowsSettings.KEY_LANGUAGE_FALLBACK, event.selectedLanguageCode)
             }
         }

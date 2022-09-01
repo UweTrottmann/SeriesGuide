@@ -1,31 +1,40 @@
 package com.battlelancer.seriesguide.shows.tools
 
 import android.content.Context
-import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper
+import com.battlelancer.seriesguide.shows.database.SgShow2Helper
 import com.battlelancer.seriesguide.shows.database.SgShow2LastWatchedEpisode
 import com.battlelancer.seriesguide.shows.database.SgShow2NextEpisodeUpdate
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import timber.log.Timber
 
-class NextEpisodeUpdater {
+class NextEpisodeUpdater(
+    private val context: Context,
+    private val showHelper: SgShow2Helper,
+    private val episodeHelper: SgEpisode2Helper
+) {
+
+    constructor(context: Context) : this(
+        context,
+        SgRoomDatabase.getInstance(context).sgShow2Helper(),
+        SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+    )
 
     /**
      * Update next episode field and unwatched episode count for the given show. If no show id is
      * passed, will update next episodes for all shows.
      *
-     * @return If only one show was passed, the row id of the new next episode. Otherwise -1.
+     * @return If only one show was passed, the row id of the new next episode. May be 0 if there is
+     * no next episode. On failure -1.
      */
-    fun updateForShows(context: Context, showIdOrNull: Long?): Long {
+    fun updateForShows(showIdOrNull: Long?): Long {
         // Get a list of shows and their last watched episodes.
         val shows: List<SgShow2LastWatchedEpisode>
-        val database = SgRoomDatabase.getInstance(context)
-        val showHelper = database.sgShow2Helper()
         if (showIdOrNull != null) {
             val show = showHelper.getShowWithLastWatchedEpisode(showIdOrNull)
             if (show == null) {
@@ -47,7 +56,6 @@ class NextEpisodeUpdater {
         // build updated next episode values for each show
         val batch: MutableList<SgShow2NextEpisodeUpdate> = ArrayList()
         var nextEpisodeIdResult: Long = -1
-        val episodeHelper = database.sgEpisode2Helper()
         val currentTime = TimeTools.getCurrentTime(context)
         val preventSpoilers = DisplaySettings.preventSpoilers(context)
 
@@ -68,13 +76,19 @@ class NextEpisodeUpdater {
             val plays = if (show.episodePlays == null || show.episodePlays == 0) {
                 1
             } else show.episodePlays
-            // Note: Due to LEFT JOIN query, episode values are null if no matching episode found.
+            // Note: Due to LEFT JOIN query, episode values are null if no matching episode found
+            // or there is no last watched episode ID stored.
             if (show.lastWatchedEpisodeId == 0L
                 || season == null || number == null || releaseTime == null) {
-                // by default: no watched episodes, include all starting with special 0
-                season = -1
-                number = -1
-                releaseTime = Long.MIN_VALUE
+                // If there is no info about a last watched episode
+                // use the newest watched/skipped episode, if there is one.
+                // This is useful when adding a show from Cloud/Trakt or restoring a backup where
+                // there is no last watched episode set on the show.
+                val newestWatched = episodeHelper.getNewestWatchedEpisodeOfShow(show.id)
+                // Otherwise assume all episodes unwatched: include all starting with special 0.
+                season = newestWatched?.season ?: -1
+                number = newestWatched?.episodenumber ?: -1
+                releaseTime = newestWatched?.firstReleasedMs ?: Long.MIN_VALUE
             }
 
             // STEP 2: get episode released closest afterwards
@@ -93,17 +107,12 @@ class NextEpisodeUpdater {
                     plays, releaseTime, number, season, releaseTime
                 )
             }
-            val episodeOrNull = episodeHelper
-                .getEpisodeInfo(
-                    SimpleSQLiteQuery(
-                        "SELECT * FROM " + SeriesGuideDatabase.Tables.SG_EPISODE
-                                + " WHERE " + SgShow2Columns.REF_SHOW_ID + " = " + show.id
-                                + " AND " + nextEpisodeSelection
-                                + " ORDER BY " + SORTORDER
-                                + " LIMIT 1",
-                        selectionArgs
-                    )
-                )
+            val episodeOrNull = episodeHelper.getEpisodeInfo(
+                show.id,
+                nextEpisodeSelection,
+                SORTORDER,
+                selectionArgs
+            )
 
             // STEP 3: get remaining episodes count
             val unwatchedEpisodesCount = episodeHelper

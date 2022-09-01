@@ -1,4 +1,4 @@
-SeriesGuide – Show & Movie Manager
+SeriesGuide: show manager
 
 Keep track of your favorite TV shows and movies.
 
@@ -25,9 +25,9 @@ This app uses data and images by Trakt. https://trakt.tv/terms
 
 Example shows by Das Erste/ARD (https://www.ard.de) and ZDF (https://www.zdf.de).
 
-SeriesGuide X Pass – Unlock all features
+SeriesGuide X Unlock Key
 
-Unlock permanent access to all features of SeriesGuide. Requires both SeriesGuide and X Pass to be installed.
+Unlock permanent access to all features of SeriesGuide. Requires both SeriesGuide and this key to be installed.
 
 All Access Sub
 Unlock all features, including Cloud backup.

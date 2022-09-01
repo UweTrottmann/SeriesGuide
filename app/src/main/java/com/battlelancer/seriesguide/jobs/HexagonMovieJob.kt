@@ -9,13 +9,11 @@ import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHED_REMOVE
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHED_SET
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_ADD
 import com.battlelancer.seriesguide.jobs.episodes.JobAction.MOVIE_WATCHLIST_REMOVE
-import com.battlelancer.seriesguide.sync.NetworkJobProcessor
 import com.battlelancer.seriesguide.util.Errors
 import com.google.api.client.http.HttpResponseException
 import com.uwetrottmann.seriesguide.backend.movies.model.Movie
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList
 import java.io.IOException
-import java.util.ArrayList
 
 class HexagonMovieJob(
     private val hexagonTools: HexagonTools,
@@ -23,30 +21,30 @@ class HexagonMovieJob(
     jobInfo: SgJobInfo
 ) : BaseNetworkMovieJob(action, jobInfo) {
 
-    override fun execute(context: Context): NetworkJobProcessor.JobResult {
+    override fun execute(context: Context): NetworkJobResult {
         val uploadWrapper = MovieList()
         uploadWrapper.movies = getMovieForHexagon()
 
         try {
             val moviesService = hexagonTools.moviesService ?: return buildResult(
                 context,
-                NetworkJob.ERROR_HEXAGON_AUTH
+                ERROR_HEXAGON_AUTH
             )
             moviesService.save(uploadWrapper).execute()
         } catch (e: HttpResponseException) {
             Errors.logAndReportHexagon("save movie", e)
             val code = e.statusCode
             return if (code in 400..499) {
-                buildResult(context, NetworkJob.ERROR_HEXAGON_CLIENT)
+                buildResult(context, ERROR_HEXAGON_CLIENT)
             } else {
-                buildResult(context, NetworkJob.ERROR_HEXAGON_SERVER)
+                buildResult(context, ERROR_HEXAGON_SERVER)
             }
         } catch (e: IOException) {
             Errors.logAndReportHexagon("save movie", e)
-            return buildResult(context, NetworkJob.ERROR_CONNECTION)
+            return buildResult(context, ERROR_CONNECTION)
         }
 
-        return buildResult(context, NetworkJob.SUCCESS)
+        return buildResult(context, SUCCESS)
     }
 
     private fun getMovieForHexagon(): List<Movie> {

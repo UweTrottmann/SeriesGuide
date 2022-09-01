@@ -16,9 +16,8 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.database.SgEpisode2
-import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodesSettings
 import com.battlelancer.seriesguide.util.TimeTools
@@ -97,18 +96,42 @@ interface SgEpisode2Helper {
     @RawQuery
     fun getEpisodeInfo(query: SupportSQLiteQuery): SgEpisode2Info?
 
+    fun getEpisodeInfo(
+        showId: Long,
+        nextEpisodeSelection: String,
+        sortClause: String,
+        selectionArgs: Array<Any>
+    ): SgEpisode2Info? {
+        return getEpisodeInfo(
+            SimpleSQLiteQuery(
+                "SELECT * FROM " + SeriesGuideDatabase.Tables.SG_EPISODE
+                        + " WHERE " + SgShow2Columns.REF_SHOW_ID + " = " + showId
+                        + " AND " + nextEpisodeSelection
+                        + " ORDER BY " + sortClause
+                        + " LIMIT 1",
+                selectionArgs
+            )
+        )
+    }
+
     @Query("SELECT * FROM sg_episode WHERE _id = :episodeId")
     fun getEpisode(episodeId: Long): SgEpisode2?
 
     @Query("SELECT * FROM sg_episode WHERE _id=:id")
     fun getEpisodeLiveData(id: Long): LiveData<SgEpisode2?>
 
+    /**
+     * Get the watched or skipped episode with the latest release date, if multiple highest season,
+     * if multiple highest number. Or null if none found.
+     */
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED} ORDER BY episode_firstairedms DESC, episode_season_number DESC, episode_number DESC LIMIT 1")
+    fun getNewestWatchedEpisodeOfShow(showId: Long): SgEpisode2Info?
+
     @Query(
         """SELECT _id FROM sg_episode WHERE season_id = :seasonId 
-        AND episode_firstairedms <= :currentTimePlusOneHour
         ORDER BY episode_number DESC, episode_firstairedms DESC"""
     )
-    fun getHighestWatchedEpisodeOfSeason(seasonId: Long, currentTimePlusOneHour: Long): Long
+    fun getHighestEpisodeOfSeason(seasonId: Long): Long
 
     @Query("""SELECT _id FROM sg_episode WHERE series_id = :showId 
         AND episode_season_number > 0 AND episode_watched != ${EpisodeFlags.UNWATCHED} 
@@ -331,25 +354,22 @@ interface SgEpisode2Helper {
     }
 
     /**
-     * Does NOT include watched episodes to avoid Trakt adding a new play,
-     * only includes episodes that have been released until within the hour.
+     * Does NOT include watched episodes to avoid Trakt adding a new play.
      *
      * Note: keep in sync with [setSeasonSkipped] and [setSeasonWatchedAndAddPlay].
      */
     @Query(
         """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.WATCHED}
-        AND episode_firstairedms <= :currentTimePlusOneHour AND episode_firstairedms != -1
         ORDER BY episode_season_number ASC, episode_number ASC"""
     )
-    fun getNotWatchedOrSkippedEpisodeNumbersOfSeason(seasonId: Long, currentTimePlusOneHour: Long): List<SgEpisode2Numbers>
+    fun getNotWatchedOrSkippedEpisodeNumbersOfSeason(seasonId: Long): List<SgEpisode2Numbers>
 
     @Query("UPDATE sg_episode SET episode_watched = 1, episode_plays = 1 WHERE season_id = :seasonId")
     fun setSeasonWatched(seasonId: Long): Int
 
     /**
-     * Sets not watched or skipped episodes, released until within the hour,
-     * as watched and adds play.
+     * Sets all not watched or skipped episodes of a season as watched and adds a play.
      *
      * Does NOT mark watched episodes again to avoid adding a new play (Trakt and local).
      *
@@ -357,22 +377,20 @@ interface SgEpisode2Helper {
      */
     @Query(
         """UPDATE sg_episode SET episode_watched = 1, episode_plays = episode_plays + 1 
-            WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.WATCHED}
-            AND episode_firstairedms <= :currentTimePlusOneHour AND episode_firstairedms != -1"""
+            WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.WATCHED}"""
     )
-    fun setSeasonWatchedAndAddPlay(seasonId: Long, currentTimePlusOneHour: Long): Int
+    fun setSeasonWatchedAndAddPlay(seasonId: Long): Int
 
     /**
-     * Sets not watched episodes, released until within the hour, as skipped.
+     * Sets all not watched episodes of a season as skipped.
      *
      * Note: keep in sync with [getNotWatchedOrSkippedEpisodeNumbersOfSeason].
      */
     @Query(
         """UPDATE sg_episode SET episode_watched = 2 
-            WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED}
-            AND episode_firstairedms <= :currentTimePlusOneHour AND episode_firstairedms != -1"""
+            WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED}"""
     )
-    fun setSeasonSkipped(seasonId: Long, currentTimePlusOneHour: Long): Int
+    fun setSeasonSkipped(seasonId: Long): Int
 
     /**
      * Note: keep in sync with [setShowNotWatchedAndRemovePlays].
@@ -488,14 +506,14 @@ interface SgEpisode2Helper {
 
     /**
      * Note: currently last updated value is unused, all episodes are always updated.
-     * See [com.battlelancer.seriesguide.ui.shows.ShowTools2].
+     * See [com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools].
      */
     @Query("UPDATE sg_episode SET episode_lastupdate = 0")
     fun resetLastUpdatedForAll()
 
     /**
      * Note: currently last updated value is unused, all episodes are always updated.
-     * See [com.battlelancer.seriesguide.ui.shows.ShowTools2].
+     * See [com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools].
      */
     @Query("UPDATE sg_episode SET episode_lastupdate = 0 WHERE series_id = :showId")
     fun resetLastUpdatedForShow(showId: Long)

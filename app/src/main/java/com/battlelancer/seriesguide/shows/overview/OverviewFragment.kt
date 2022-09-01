@@ -26,13 +26,14 @@ import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader
 import com.battlelancer.seriesguide.extensions.ExtensionManager.EpisodeActionReceivedEvent
-import com.battlelancer.seriesguide.shows.database.SgEpisode2
-import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.AppSettings.setAskedForFeedback
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
@@ -40,6 +41,7 @@ import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearch.initButtons
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.CheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
@@ -48,13 +50,12 @@ import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher.fetchEpisodeRat
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
-import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
@@ -549,7 +550,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             return
         }
         var overview = episode.overview
-        val languageCode = show.language
+        val languageCode = show.language?.let { LanguageTools.mapLegacyShowCode(it) }
         if (TextUtils.isEmpty(overview)) {
             // no description available, show no translation available message
             overview = TextTools.textNoTranslation(requireContext(), languageCode)

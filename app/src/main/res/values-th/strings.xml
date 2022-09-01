@@ -472,7 +472,6 @@
     <string name="billing_action_subscribe">สมัครสมาชิก</string>
     <string name="billing_action_manage_subscriptions">จัดการการสมัครสมาชิก​</string>
     <string name="billing_action_pass">รับ X Pass App</string>
-    <string name="billing_price_subscribe">%1$s/ปี, ลองใช้ฟรี, ยกเลิกได้ทุกเวลาผ่าน %2$s</string>
     <string name="billing_duration_format">%1$s/ปี</string>
     <string name="billing_sub_description">ลองใช้ฟรี 30 วัน ยกเลิกได้ทุกเมื่อ</string>
     <string name="billing_price_pass">จ่ายครั้งเดียว</string>
