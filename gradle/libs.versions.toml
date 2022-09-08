@@ -1,0 +1,7 @@
+# https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
+
+[libraries]
+# https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
+tmdbJava = "com.uwetrottmann.tmdb2:tmdb-java:2.7.0"
+# https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
+traktJava = "com.uwetrottmann.trakt5:trakt-java:6.10.0"
