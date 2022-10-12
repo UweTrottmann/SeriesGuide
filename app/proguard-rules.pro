@@ -50,13 +50,6 @@
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
 -dontwarn org.conscrypt.ConscryptHostnameVerifier
 
-# Retrofit 2.x
-# Keep entity and enum classes. R8 may strip unused, but required fields from entities.
--keep class com.uwetrottmann.trakt5.entities.** { *; }
--keep class com.uwetrottmann.trakt5.enums.** { *; }
--keep class com.uwetrottmann.tmdb2.entities.** { *; }
--keep class com.uwetrottmann.tmdb2.enumerations.** { *; }
-
 # Apache HTTP was removed as of Android M
 -dontwarn org.apache.http.**
 -dontwarn android.net.http.AndroidHttpClient
