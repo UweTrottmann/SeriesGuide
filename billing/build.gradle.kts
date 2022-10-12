@@ -8,8 +8,6 @@ val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
 val sgTargetSdk: Int by rootProject.extra
 
-val kotlinVersion: String by rootProject.extra
-val coroutinesVersion: String by rootProject.extra
 val lifecycleVersion: String by rootProject.extra
 val roomVersion: String by rootProject.extra
 val timberVersion: String by rootProject.extra
@@ -43,9 +41,9 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation(libs.kotlin.stdlib.jdk8)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     // Google Play Billing
     // https://developer.android.com/google/play/billing/billing_library_releases_notes

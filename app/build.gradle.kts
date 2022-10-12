@@ -21,9 +21,6 @@ val sgTargetSdk: Int by rootProject.extra
 val sgVersionCode: Int by rootProject.extra
 val sgVersionName: String by rootProject.extra
 
-val kotlinVersion: String by rootProject.extra
-val coroutinesVersion: String by rootProject.extra
-
 val coreVersion: String by rootProject.extra
 val annotationVersion: String by rootProject.extra
 val lifecycleVersion: String by rootProject.extra
@@ -158,9 +155,9 @@ kapt {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation(libs.kotlin.stdlib.jdk8)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     // https://github.com/michaelbull/kotlin-result/releases
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.16")
@@ -310,7 +307,7 @@ dependencies {
     testImplementation("androidx.test:core:$androidXtestCoreVersion")
     // https://github.com/mockito/mockito/releases
     testImplementation("org.mockito:mockito-core:4.5.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 fun propertyOrEmpty(name: String): String {

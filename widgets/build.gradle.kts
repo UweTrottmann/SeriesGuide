@@ -7,7 +7,6 @@ val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
 val sgTargetSdk: Int by rootProject.extra
 
-val kotlinVersion: String by rootProject.extra
 val annotationVersion: String by rootProject.extra
 val fragmentVersion: String by rootProject.extra
 val timberVersion: String by rootProject.extra
@@ -36,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    implementation(libs.kotlin.stdlib.jdk8)
 
     implementation("androidx.annotation:annotation:$annotationVersion")
     // https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
