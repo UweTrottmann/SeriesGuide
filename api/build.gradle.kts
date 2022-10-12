@@ -11,8 +11,6 @@ val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
 val sgTargetSdk: Int by rootProject.extra
 
-val coreVersion: String by rootProject.extra
-
 android {
     namespace = "com.battlelancer.seriesguide.api"
     compileSdk = sgCompileSdk
@@ -35,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core:$coreVersion")
+    implementation(libs.androidx.core)
 }
 
 // Note: should build web version with JDK 9+ to get no-frames version.

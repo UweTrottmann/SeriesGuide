@@ -21,17 +21,6 @@ val sgTargetSdk: Int by rootProject.extra
 val sgVersionCode: Int by rootProject.extra
 val sgVersionName: String by rootProject.extra
 
-val kotlinVersion: String by rootProject.extra
-val coroutinesVersion: String by rootProject.extra
-
-val coreVersion: String by rootProject.extra
-val annotationVersion: String by rootProject.extra
-val lifecycleVersion: String by rootProject.extra
-val roomVersion: String by rootProject.extra
-val fragmentVersion: String by rootProject.extra
-
-val timberVersion: String by rootProject.extra
-
 android {
     namespace = "com.battlelancer.seriesguide"
     compileSdk = sgCompileSdk
@@ -158,159 +147,128 @@ kapt {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation(libs.kotlin.stdlib.jdk8)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
-    // https://github.com/michaelbull/kotlin-result/releases
-    implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.16")
+    implementation(libs.kotlinx.result)
 
     implementation(project(":api"))
     implementation(project(":backend"))
     implementation(project(":billing"))
     implementation(project(":widgets"))
 
-    implementation("androidx.core:core-ktx:$coreVersion")
-    implementation("androidx.annotation:annotation:$annotationVersion")
-    implementation("androidx.activity:activity-ktx:1.5.1")
-    // https://developer.android.com/jetpack/androidx/releases/appcompat
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    // https://developer.android.com/jetpack/androidx/releases/browser
-    implementation("androidx.browser:browser:1.4.0")
-    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
-    // https://github.com/material-components/material-components-android/releases
-    implementation("com.google.android.material:material:1.5.0")
-    implementation("androidx.palette:palette-ktx:1.0.0")
-    // https://developer.android.com/jetpack/androidx/releases/recyclerview
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    // https://developer.android.com/jetpack/androidx/releases/preference
-    implementation("androidx.preference:preference-ktx:1.2.0")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.browser)
+    implementation(libs.androidx.fragment)
+    implementation(libs.material)
+    implementation(libs.androidx.palette)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.coordinatorlayout)
+    implementation(libs.androidx.preference)
 
     // ViewModel and LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.runtime)
 
-    // Paging https://developer.android.com/jetpack/androidx/releases/paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
+    // Paging
+    implementation(libs.androidx.paging)
 
     // Room
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     // Paging 3 Integration
-    implementation("androidx.room:room-paging:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation(libs.androidx.room.paging)
+    kapt(libs.androidx.room.compiler)
 
-    // https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
-    val butterknifeVersion = "10.2.3"
-    implementation("com.jakewharton:butterknife:$butterknifeVersion")
-    kapt("com.jakewharton:butterknife-compiler:$butterknifeVersion")
-    // https://github.com/google/dagger/releases
-    val daggerVersion = "2.42"
-    implementation("com.google.dagger:dagger:$daggerVersion")
-    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
-    val eventbusVersion = "3.3.1"
-    implementation("org.greenrobot:eventbus:$eventbusVersion")
-    kapt("org.greenrobot:eventbus-annotation-processor:$eventbusVersion")
+    implementation(libs.butterknife)
+    kapt(libs.butterknife.compiler)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    implementation(libs.greenrobot.eventbus)
+    kapt(libs.greenrobot.eventbus.processor)
 
-    implementation("com.google.flatbuffers:flatbuffers-java:1.12.0")
-    // https://github.com/google/gson/blob/master/CHANGELOG.md
-    implementation("com.google.code.gson:gson:2.9.1")
-    // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
-    implementation("com.jakewharton.threetenabp:threetenabp:1.4.0")
-    implementation("com.jakewharton.timber:timber:$timberVersion")
-    implementation("com.readystatesoftware.systembartint:systembartint:1.0.4")
+    implementation(libs.flatbuffers)
+    implementation(libs.gson)
+    implementation(libs.threetenabp)
+    implementation(libs.timber)
+    implementation(libs.systembartint)
 
     // Use latest OkHttp.
-    // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation(libs.okhttp)
     // Use latest retrofit.
-    // https://github.com/square/retrofit/blob/master/CHANGELOG.md
-    val retrofitVersion = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation(libs.retrofit2)
+    implementation(libs.retrofit2.gson)
 
-    // https://github.com/square/picasso/releases
-    implementation("com.squareup.picasso:picasso:2.8")
+    implementation(libs.picasso)
 
-    // https://github.com/UweTrottmann/AndroidUtils/releases
-    implementation("com.uwetrottmann.androidutils:androidutils:3.0.0")
-    implementation("com.uwetrottmann.photoview:library:1.2.4")
-    implementation("com.getkeepsafe.taptargetview:taptargetview:1.13.3")
+    implementation(libs.androidutils)
+    implementation(libs.photoview)
+    implementation(libs.taptargetview)
 
-    // https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
-    implementation("com.uwetrottmann.tmdb2:tmdb-java:2.7.0")
-    // https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
-    implementation("com.uwetrottmann.trakt5:trakt-java:6.10.0") {
+    implementation(libs.tmdb.java)
+    implementation(libs.trakt.java) {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
     }
 
-    // https://github.com/lenguyenthanh/DebugDrawer
-    val debugDrawerVersion = "0.9.0"
-    implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-base:$debugDrawerVersion")
-    implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-view:$debugDrawerVersion")
-    implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-commons:$debugDrawerVersion")
-    implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-actions:$debugDrawerVersion")
-    implementation("com.github.lenguyenthanh.debugdrawer:debugdrawer-timber:$debugDrawerVersion")
+    implementation(libs.debugdrawer.base)
+    implementation(libs.debugdrawer.view)
+    implementation(libs.debugdrawer.commons)
+    implementation(libs.debugdrawer.actions)
+    implementation(libs.debugdrawer.timber)
 
     // Import the Firebase BoM
-    // https://firebase.google.com/support/release-notes/android
-    implementation(platform("com.google.firebase:firebase-bom:30.3.1"))
+    implementation(platform(libs.firebase))
     // Crashlytics
     implementation("com.google.firebase:firebase-crashlytics")
-    // Firebase Sign-In https://github.com/firebase/FirebaseUI-Android/releases
-    implementation("com.firebaseui:firebase-ui-auth:8.0.0")
+    // Firebase Sign-In
+    implementation(libs.firebase.ui.auth)
     // Update play-services-auth which adds Android 12 mutable Intent flags.
     // https://developers.google.com/android/guides/releases
-    implementation("com.google.android.gms:play-services-auth:20.2.0")
+    implementation(libs.play.services.auth)
 
     // Amazon flavor specific
     // Note: requires to add AppstoreAuthenticationKey.pem into amazon/assets.
-    "amazonImplementation"("com.amazon.device:amazon-appstore-sdk:3.0.2")
+    "amazonImplementation"(libs.amazon.appstore.sdk)
 
     // Instrumented unit tests
-    // https://developer.android.com/jetpack/androidx/releases/test
-    androidTestImplementation("androidx.annotation:annotation:$annotationVersion")
+    androidTestImplementation(libs.androidx.annotation)
     // Core library
-    val androidXtestCoreVersion = "1.4.0"
-    androidTestImplementation("androidx.test:core:$androidXtestCoreVersion")
+    androidTestImplementation(libs.androidx.test.core)
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("androidx.test:rules:1.4.0")
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
     // Espresso
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0") {
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.test.espresso.contrib) {
         // conflicts with checker-qual from guava transitive dependency
         exclude(group = "org.checkerframework", module = "checker")
     }
     // Assertions
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.ext:truth:1.4.0") {
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.ext.truth) {
         exclude(group = "com.google.truth") // include manually to control conflicting deps
     }
-    val truthVersion = "1.1.3" // https://github.com/google/truth/releases
-    androidTestImplementation("com.google.truth:truth:$truthVersion")
-    implementation("com.google.code.findbugs:jsr305:3.0.2")
-    androidTestImplementation("com.google.code.findbugs:jsr305:3.0.2")
-    kaptAndroidTest("com.google.dagger:dagger-compiler:$daggerVersion")
-    androidTestImplementation("androidx.room:room-testing:$roomVersion")
+    androidTestImplementation(libs.truth)
+    implementation(libs.findbugs.jsr305)
+    androidTestImplementation(libs.findbugs.jsr305)
+    kaptAndroidTest(libs.dagger.compiler)
+    androidTestImplementation(libs.androidx.room.testing)
 
     // Local unit tests
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.annotation:annotation:$annotationVersion")
-    testImplementation("com.google.truth:truth:$truthVersion")
-    // https://github.com/robolectric/robolectric/releases/
-    // Note: 4.6.1 pulls in bcprov-jdk15on code targeting newer Java breaking Jetifier
-    // Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
-    // https://github.com/robolectric/robolectric/issues/6521
-    // https://issuetracker.google.com/issues/159151549
-    testImplementation("org.robolectric:robolectric:4.8.1")
-    testImplementation("androidx.test:core:$androidXtestCoreVersion")
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.annotation)
+    testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
     // https://github.com/mockito/mockito/releases
-    testImplementation("org.mockito:mockito-core:4.5.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation(libs.mockito)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 fun propertyOrEmpty(name: String): String {
