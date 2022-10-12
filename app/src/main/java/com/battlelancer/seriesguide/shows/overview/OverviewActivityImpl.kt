@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.EpisodeSearchFragment
@@ -18,7 +19,6 @@ import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
-import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -238,13 +238,13 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         }
     }
 
-    override fun getSnackbarParentView(): View {
-        return if (resources.getBoolean(R.bool.isOverviewSinglePane)) {
+
+    override val snackbarParentView: View
+        get() = if (resources.getBoolean(R.bool.isOverviewSinglePane)) {
             findViewById(R.id.coordinatorLayoutOverview)
         } else {
-            super.getSnackbarParentView()
+            super.snackbarParentView
         }
-    }
 
     companion object {
         const val OVERVIEW_ACTIONS_LOADER_ID = 104

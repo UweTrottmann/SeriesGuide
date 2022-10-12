@@ -198,9 +198,8 @@ open class ListsActivityImpl : BaseTopActivity() {
         EventBus.getDefault().post(ListsDistillationSettings.ListsSortOrderChangedEvent())
     }
 
-    override fun getSnackbarParentView(): View {
-        return binding.rootLayoutLists
-    }
+    override val snackbarParentView: View
+        get() = binding.rootLayoutLists
 
     companion object {
         const val LISTS_REORDER_LOADER_ID = 2

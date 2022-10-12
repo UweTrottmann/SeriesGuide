@@ -142,9 +142,9 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.buttonDebugView.isGone = !AppSettings.isUserDebugModeEnabled(this)
     }
 
-    override fun getSnackbarParentView(): View {
-        return binding.coordinatorLayoutMoreOptions
-    }
+
+    override val snackbarParentView: View
+        get() = binding.coordinatorLayoutMoreOptions
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onEvent(event: SyncProgress.SyncEvent) {

@@ -304,7 +304,7 @@ public class ShowsNowFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventEpisodeTask(BaseMessageActivity.ServiceCompletedEvent event) {
-        if (event.flagJob == null || !event.isSuccessful) {
+        if (event.getFlagJob() == null || !event.isSuccessful()) {
             return; // no changes applied
         }
         if (!isAdded()) {
@@ -312,7 +312,7 @@ public class ShowsNowFragment extends Fragment {
         }
         // reload recently watched if user set or unset an episode watched
         // however, if connected to trakt do not show local history
-        if (event.flagJob instanceof EpisodeWatchedJob
+        if (event.getFlagJob() instanceof EpisodeWatchedJob
                 && !TraktCredentials.get(getActivity()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             LoaderManager.getInstance(this)

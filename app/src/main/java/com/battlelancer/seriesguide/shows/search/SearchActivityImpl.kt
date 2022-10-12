@@ -323,9 +323,9 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         searchAutoCompleteView.text = null
     }
 
-    override fun getSnackbarParentView(): View {
-        return findViewById(R.id.coordinatorLayoutSearch)
-    }
+
+    override val snackbarParentView: View
+        get() = findViewById(R.id.coordinatorLayoutSearch)
 
     override fun switchToDiscoverAndSearch() {
         viewPager.currentItem = TAB_POSITION_SEARCH

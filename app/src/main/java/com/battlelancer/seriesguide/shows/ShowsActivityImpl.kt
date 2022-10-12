@@ -347,9 +347,8 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         TaskManager.getInstance().performAddTask(this, show)
     }
 
-    override fun getSnackbarParentView(): View {
-        return findViewById(R.id.rootLayoutShows)
-    }
+    override val snackbarParentView: View
+        get() = findViewById(R.id.rootLayoutShows)
 
     /**
      * Page change listener which hides the floating action button for all but the shows tab.

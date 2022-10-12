@@ -1,126 +1,112 @@
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui
 
-import android.content.Context;
-import android.view.View;
-import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.jobs.FlagJob;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import android.content.Context
+import android.view.View
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.jobs.FlagJob
+import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
+import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
- * A {@link BaseActivity} that displays a permanent snack bar
+ * A [BaseActivity] that displays a permanent snack bar
  * if a service action is running (e.g. any Cloud or Trakt action).
- * <p>
- * Service state is determined by the {@link ServiceActiveEvent}
- * and {@link ServiceCompletedEvent} events.
- * <p>
- * Implementers should override {@link #getSnackbarParentView()} and at best
+ *
+ * Service state is determined by the [ServiceActiveEvent]
+ * and [ServiceCompletedEvent] events.
+ *
+ * Implementers should override [snackbarParentView] and at best
  * supply a CoordinatorLayout to attach it to.
  */
-public abstract class BaseMessageActivity extends BaseActivity {
+abstract class BaseMessageActivity : BaseActivity() {
 
     /**
      * Posted sticky while a service task is running.
      */
-    public static class ServiceActiveEvent {
-        private final boolean shouldSendToHexagon;
-        private final boolean shouldSendToTrakt;
-
-        public ServiceActiveEvent(boolean shouldSendToHexagon, boolean shouldSendToTrakt) {
-            this.shouldSendToHexagon = shouldSendToHexagon;
-            this.shouldSendToTrakt = shouldSendToTrakt;
+    class ServiceActiveEvent(
+        private val shouldSendToHexagon: Boolean,
+        private val shouldSendToTrakt: Boolean
+    ) {
+        fun shouldDisplayMessage(): Boolean {
+            return shouldSendToHexagon || shouldSendToTrakt
         }
 
-        public boolean shouldDisplayMessage() {
-            return shouldSendToHexagon || shouldSendToTrakt;
-        }
-
-        public String getStatusMessage(Context context) {
-            StringBuilder statusText = new StringBuilder();
+        fun getStatusMessage(context: Context): String {
+            val statusText = StringBuilder()
             if (shouldSendToHexagon) {
-                statusText.append(context.getString(R.string.hexagon_api_queued));
+                statusText.append(context.getString(R.string.hexagon_api_queued))
             }
             if (shouldSendToTrakt) {
-                if (statusText.length() > 0) {
-                    statusText.append(" ");
+                if (statusText.isNotEmpty()) {
+                    statusText.append(" ")
                 }
-                statusText.append(context.getString(R.string.trakt_submitqueued));
+                statusText.append(context.getString(R.string.trakt_submitqueued))
             }
-            return statusText.toString();
+            return statusText.toString()
         }
     }
 
     /**
      * Posted once a service action has completed. It may not have been successful.
      */
-    public static class ServiceCompletedEvent {
+    class ServiceCompletedEvent(
+        val confirmationText: String?,
+        var isSuccessful: Boolean,
+        val flagJob: FlagJob?
+    )
 
-        @Nullable public final String confirmationText;
-        public boolean isSuccessful;
-        @Nullable public final FlagJob flagJob;
+    private var snackbarProgress: Snackbar? = null
 
-        public ServiceCompletedEvent(@Nullable String confirmationText, boolean isSuccessful,
-                @Nullable FlagJob flagJob) {
-            this.confirmationText = confirmationText;
-            this.isSuccessful = isSuccessful;
-            this.flagJob = flagJob;
-        }
-    }
-
-    private Snackbar snackbarProgress;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        ServiceActiveEvent event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent.class);
-        handleServiceActiveEvent(event);
+    override fun onStart() {
+        super.onStart()
+        val event = EventBus.getDefault().getStickyEvent(ServiceActiveEvent::class.java)
+        handleServiceActiveEvent(event)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(ServiceActiveEvent event) {
-        handleServiceActiveEvent(event);
+    fun onEventEpisodeTask(event: ServiceActiveEvent?) {
+        handleServiceActiveEvent(event)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(ServiceCompletedEvent event) {
+    fun onEventEpisodeTask(event: ServiceCompletedEvent) {
         if (event.confirmationText != null) {
             // show a confirmation/error text
-            Snackbar snackbarCompleted = Snackbar
-                    .make(getSnackbarParentView(), event.confirmationText,
-                            event.isSuccessful ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG);
+            val snackbarCompleted = Snackbar.make(
+                snackbarParentView, event.confirmationText,
+                if (event.isSuccessful) Snackbar.LENGTH_SHORT else Snackbar.LENGTH_LONG
+            )
             // replaces any previous snackbar, including the indefinite progress one
-            snackbarCompleted.show();
+            snackbarCompleted.show()
         } else {
-            handleServiceActiveEvent(null);
+            handleServiceActiveEvent(null)
         }
     }
 
     /**
-     * Return a view to pass to {@link Snackbar#make(View, CharSequence, int) Snackbar.make},
-     * ideally a {@link CoordinatorLayout CoordinatorLayout}.
+     * Return a view to pass to [Snackbar.make], ideally a [CoordinatorLayout].
      */
-    protected View getSnackbarParentView() {
-        return findViewById(android.R.id.content);
-    }
+    protected open val snackbarParentView: View
+        get() = findViewById(android.R.id.content)
 
-    private void handleServiceActiveEvent(@Nullable ServiceActiveEvent event) {
+    private fun handleServiceActiveEvent(event: ServiceActiveEvent?) {
+        val currentSnackbar = snackbarProgress
         if (event != null && event.shouldDisplayMessage()) {
-            if (snackbarProgress == null) {
-                snackbarProgress = Snackbar.make(getSnackbarParentView(),
-                        event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE);
+            val newSnackbar = if (currentSnackbar != null) {
+                currentSnackbar.setText(event.getStatusMessage(this))
+                currentSnackbar.duration = BaseTransientBottomBar.LENGTH_INDEFINITE
+                currentSnackbar
             } else {
-                snackbarProgress.setText(event.getStatusMessage(this));
-                snackbarProgress.setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE);
+                Snackbar.make(
+                    snackbarParentView,
+                    event.getStatusMessage(this), Snackbar.LENGTH_INDEFINITE
+                ).also { this.snackbarProgress = it }
             }
-            snackbarProgress.show();
-        } else if (snackbarProgress != null) {
-            snackbarProgress.dismiss();
-        }
+            newSnackbar.show()
+        } else currentSnackbar?.dismiss()
     }
 }
