@@ -242,8 +242,8 @@ dependencies {
     implementation("com.uwetrottmann.photoview:library:1.2.4")
     implementation("com.getkeepsafe.taptargetview:taptargetview:1.13.3")
 
-    implementation(libs.tmdbJava)
-    implementation(libs.traktJava) {
+    implementation(libs.tmdb.java)
+    implementation(libs.trakt.java) {
         exclude(group = "org.threeten", module = "threetenbp") // using ThreeTenABP instead
     }
 
