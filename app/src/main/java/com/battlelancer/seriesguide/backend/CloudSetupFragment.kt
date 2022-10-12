@@ -196,8 +196,9 @@ class CloudSetupFragment : Fragment() {
         setProgressVisible(false)
         updateViews()
 
-        if (signedIn && Utils.hasAccessToX(context)) {
-            if (!HexagonSettings.isEnabled(context) || HexagonSettings.shouldValidateAccount(context)) {
+        if (signedIn && Utils.hasAccessToX(requireContext())) {
+            if (!HexagonSettings.isEnabled(requireContext())
+                || HexagonSettings.shouldValidateAccount(requireContext())) {
                 Timber.i("Auto-start Cloud setup.")
                 startHexagonSetup()
             }
@@ -284,10 +285,10 @@ class CloudSetupFragment : Fragment() {
     }
 
     private fun updateViews() {
-        if (HexagonSettings.isEnabled(context)) {
+        if (HexagonSettings.isEnabled(requireContext())) {
             // hexagon enabled...
-            binding?.textViewCloudUser?.text = HexagonSettings.getAccountName(activity)
-            if (HexagonSettings.shouldValidateAccount(context)) {
+            binding?.textViewCloudUser?.text = HexagonSettings.getAccountName(requireContext())
+            if (HexagonSettings.shouldValidateAccount(requireContext())) {
                 // ...but account needs to be repaired
                 binding?.textViewCloudDescription?.setText(R.string.hexagon_signed_out)
                 setButtonsVisible(
@@ -306,7 +307,7 @@ class CloudSetupFragment : Fragment() {
             }
         } else {
             // did try to setup, but failed?
-            if (!HexagonSettings.hasCompletedSetup(activity)) {
+            if (!HexagonSettings.hasCompletedSetup(requireContext())) {
                 // show error message
                 binding?.textViewCloudDescription?.setText(R.string.hexagon_setup_incomplete)
             } else {
@@ -367,7 +368,7 @@ class CloudSetupFragment : Fragment() {
         } else {
             Timber.i("Setting up Hexagon...")
             // set setup incomplete flag
-            HexagonSettings.setSetupIncomplete(context)
+            HexagonSettings.setSetupIncomplete(requireContext())
 
             // validate account data
             if (signInAccountOrNull.email.isNullOrEmpty()) {
@@ -381,7 +382,7 @@ class CloudSetupFragment : Fragment() {
                 // schedule full sync
                 Timber.d("Setting up Hexagon...SUCCESS_SYNC_REQUIRED")
                 SgSyncAdapter.requestSyncFullImmediate(requireContext(), false)
-                HexagonSettings.setSetupCompleted(activity)
+                HexagonSettings.setSetupCompleted(requireContext())
             } else {
                 // Do not set completed, will show setup incomplete message.
                 Timber.d("Setting up Hexagon...FAILURE")
