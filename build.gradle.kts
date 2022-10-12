@@ -27,7 +27,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.2.2") // libraries, SeriesGuide
+        classpath("com.android.tools.build:gradle:7.3.0") // libraries, SeriesGuide
         classpath(libs.kotlin.gradle)
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
