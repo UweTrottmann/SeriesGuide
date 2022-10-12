@@ -185,6 +185,8 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     // https://developer.android.com/jetpack/androidx/releases/constraintlayout
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    // https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.1.0")
     // https://developer.android.com/jetpack/androidx/releases/preference
     implementation("androidx.preference:preference-ktx:1.2.0")
 
