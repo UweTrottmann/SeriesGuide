@@ -16,25 +16,36 @@ title: Help
       <a class="list-group-item list-group-item-action" href="#watch">Watching shows or movies is not supported</a>
       <a class="list-group-item list-group-item-action" href="#images">Images are not displayed</a>
       <a class="list-group-item list-group-item-action" href="#widget">The widget is not updating or is missing</a>
-      <a class="list-group-item list-group-item-action" href="#timezone">After changing the time zone times are incorrect</a>
+      <a class="list-group-item list-group-item-action" href="#timezone">After changing the time zone times are incorrect</a>      
     </div>
     
-    <h2>How to</h2>
+    <h2 class="mt-3">How to</h2>
+    <h3>SeriesGuide X</h3>
     <div class="list-group">
       <a class="list-group-item list-group-item-action" href="#upgrade">Unlock all features</a>
+      <a class="list-group-item list-group-item-action" href="#hideicon">Hide the SeriesGuide X launcher icon</a>
+    </div>
+
+    <h3 class="mt-3">Basics</h3>
+    <div class="list-group">
       <a class="list-group-item list-group-item-action" href="#buttons">Check in, set watched, add to collection and skip episodes</a>
       <a class="list-group-item list-group-item-action" href="#remove">Remove a show</a>
       <a class="list-group-item list-group-item-action" href="#hide">Make a hidden show visible again</a>
       <a class="list-group-item list-group-item-action" href="#update">Manually update shows</a>
-      <a class="list-group-item list-group-item-action" href="#backup">Backup or restore your data using files</a>
-      <a class="list-group-item list-group-item-action" href="#autobackup">Restore your data from an Auto-Backup</a>
-      <a class="list-group-item list-group-item-action" href="#sync">Backup and sync using SeriesGuide Cloud or Trakt</a>
       <a class="list-group-item list-group-item-action" href="#language">Change the app language</a>
       <a class="list-group-item list-group-item-action" href="#content-language">Change the language of a show</a>
       <a class="list-group-item list-group-item-action" href="#sources">Improve show, episode and movie data</a>
     </div>
+
+    <h3 class="mt-3">Backup and Cloud</h3>
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action" href="#backup">Backup or restore your data using files</a>
+      <a class="list-group-item list-group-item-action" href="#autobackup">Restore your data from an Auto-Backup</a>
+      <a class="list-group-item list-group-item-action" href="#sync">Backup and sync using SeriesGuide Cloud or Trakt</a>
+      <a class="list-group-item list-group-item-action" href="#change-email">Change the email address used for SeriesGuide Cloud</a>
+    </div>
     
-    <h2 class="mt-3"><img src="images/trakt-80.png" width="32" height="32" alt="Trakt logo"/> Trakt integration</h2>
+    <h3 class="mt-3">Trakt integration</h3>
     <div class="list-group">
       <a class="list-group-item list-group-item-action" href="#connecttrakt">Connect to Trakt/Troubleshooting</a>
       <a class="list-group-item list-group-item-action" href="#library">Add shows from your Trakt library</a>
@@ -158,7 +169,7 @@ title: Help
       <p>If that won't help, try to <a href="#update">update all shows</a>.</p>
     </section>
 
-<!-- ##################################################### -->
+    <!-- ##################################################### -->
 
     <span class="anchor" id="howto"></span> 
     <h2 class="mt-5">How to</h2>
@@ -168,6 +179,20 @@ title: Help
       <h3>Unlock all features</h3>
       <p>Learn more about <a href="/whypay">unlocking all features</a>.</p>
     </section>
+
+    <span class="anchor" id="hideicon"></span>
+    <section class="mt-2">
+      <h3>Hide the SeriesGuide X app icon from the launcher</h3>
+      <p><strong><span class="emoji">ℹ</span> On Android 13 and newer, it is no longer possible to hide the 
+        launcher icon (apparently malicious apps have been abusing this to hide from users).</strong></p>
+      <p>Launch the SeriesGuide X unlock app, then tap the button at the bottom to hide the launcher icon.
+        It may take a few seconds for the icon to disappear from your launcher. On some devices, 
+        it may be necessary to reboot the device.</p>
+      <p>To restore the icon, uninstall the SeriesGuide X app either from your devices Settings or the Play Store app.
+        Then install it again.</p>
+    </section>
+
+    <!-- ##################################################### -->
 
     <span class="anchor" id="buttons"></span>
     <section class="mt-2">
@@ -222,97 +247,6 @@ title: Help
         <li>Tap <strong>Sync &amp; Update</strong>.</li>
       </ol>
       <p><span class="badge badge-info">Note</span> <em>You can force a re-download of all shows using <strong>Sync &amp; Download all</strong>.</em></p>
-    </section>
-    
-    <span class="anchor" id="backup"></span>  
-    <section class="mt-2">
-      <h3>Backup or restore your data using files</h3>
-      <p><strong>To backup your shows, lists and movies:</strong></p>
-      <ol>
-        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
-        <li>Tap <strong>Backup/Restore</strong>.</li>
-        <li>Look for the <strong>Create backup</strong> section.</li>
-        <li>Tap <strong>Select file</strong> for either shows, lists or movies to create a backup.</li>
-      </ol>
-      <p><span class="badge badge-info">Note</span> On Android 4.3 and older you can not choose the backup file location. Instead SeriesGuide will store the backup files in the <em>Download</em> folder on your device.</p>
-      <p><strong>To restore your shows, lists and movies:</strong></p>
-      <ol>
-        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
-        <li>Tap <strong>Backup/Restore</strong>.</li>
-        <li>Look for the <strong>Restore backup</strong> section.</li>
-        <li>Tap <strong>Select file</strong> for each type of data you want to restore and select the matching backup file.</li>
-        <li>Tick the check box next to each type you want to restore.</li>
-        <li>Tap <strong>Restore backup</strong>.</li>
-      </ol>
-      <p>To restore your backup <strong>on another device</strong>, first transfer the created files to it. For example send yourself an email with the files attached, plug your device into a computer to access its storage or save the files to online storage.</p>
-      <p><span class="badge badge-info">Note</span> You can use a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a> app to view or copy the backup files.</p>
-      <p><span class="badge badge-info">Note</span> You can import data from another source as long as it uses the <a href="https://github.com/UweTrottmann/SeriesGuide/wiki/JSON-export-format">JSON format that SeriesGuide expects</a>. 
-        Add some shows/lists/movies and create a backup, then just open the created JSON file to see an example with actual data.</p>
-    </section>
-
-    <span class="anchor" id="autobackup"></span>
-    <section class="mt-2">
-      <h3>Restore your data from an Auto Backup</h3>
-      <p>Auto Backup creates a file-based <strong>weekly automatic backup</strong> of your shows, lists and movies.</p>
-      <p><strong>To restore an Auto Backup:</strong></p>
-      <ol>
-        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
-        <li>Tap <strong>Auto Backup</strong>.</li>
-        <li>Tap the <strong>Restore Auto Backup</strong> button. If it is disabled, there is no auto backup available to restore from. Use the Backup/Restore tool to restore a backup from another location (e.g. Google Drive).</li>
-      </ol>
-      <p><span class="badge badge-danger">Note</span> Restoring a backup affects your device only. It won't affect data synced to Cloud or Trakt.</p>
-      <p><strong>To turn on and configure Auto Backup:</strong></p>
-      <ol>
-        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
-        <li>Tap <strong>Auto Backup</strong>.</li>
-        <li>Turn on Auto Backup.</li>
-        <li>(Recommended) Enable the option to create copies, select files in an off-device location (e.g. Google Drive).</li>
-      </ol>
-      <p><span class="badge badge-danger">Note</span> The Auto Backup files are saved to a storage directory that is removed when the app is uninstalled. Hence, it is recommended to turn on the option to create additional backups to an off-device location (e.g. Google Drive).</p>
-    </section>
-
-    <span class="anchor" id="sync"></span>
-    <section class="mt-2">
-      <h3>Backup and sync using SeriesGuide Cloud or Trakt</h3>
-      <p>You can backup and sync using either SeriesGuide Cloud or <a href="{{ site.data.links.trakt }}">Trakt <span class="fas fa-external-link-alt"></span></a>. Each has its advantages and disadvantages. Which one you want to use depends on the devices and apps you use.</p>
-      <p class="title">SeriesGuide Cloud</p>
-      <p>Works best if you only use SeriesGuide on your devices. It supports backing up and syncing all SeriesGuide data:</p>
-      <ul>
-        <li>Sync
-          <ul>
-            <li>Shows</li>
-            <li>Lists</li>
-            <li>Movies</li>
-          </ul>
-        </li>
-      </ul>
-      
-      <p class="title">Trakt</p>
-      <p>Works best if you use other apps connected to Trakt (for example <a href="{{ site.data.links.trakt }}apps">apps on iOS or a media center <span class="fas fa-external-link-alt"></span></a>) or the <a href="{{ site.data.links.trakt }}">Trakt website <span class="fas fa-external-link-alt"></span></a>. It supports:</p>
-      <ul>
-        <li>Sync
-          <ul>
-            <li>Shows (excluding favorite/hidden state, skipped state)</li>
-            <li>Movies (watchlist, collection, watched)</li>
-          </ul>
-        </li>
-        <li>Display your and friends Trakt viewing history.</li>
-        <li>Check-in (episodes and movies).</li>
-        <li>Post comments.</li>
-        <li>Rate shows, episodes and movies.</li>
-      </ul>
-      <p><span class="badge badge-info">Note</span> Unlike with Cloud, shows are not added automatically and the Lists section is not synced. But you can quickly <a href="#library">access your Trakt show watchlist and watched and collected shows</a>.</p>
-      <p>Check-Ins are submitted immediately to Trakt. But only with the next sync are checked-in episodes and movies marked as watched within SeriesGuide.</p>
-      
-      <p class="title">Setup</p>
-      <p>To connect to either service:</p>
-      <ol>
-        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span>.</li>
-        <li>Tap either <strong>SeriesGuide Cloud</strong> or <strong>Trakt</strong>.</li>
-        <li>Tap the sign in or connect button and complete the sign-in process.</li>
-      </ol>
-      <p><span class="badge badge-info">Note</span> You can be <strong>connected to SeriesGuide Cloud and Trakt</strong> at the same time. Setting watched and collected, commenting, rating and more will still be sent to Trakt. However, <strong>check-in and sync with Trakt will be disabled</strong>. Changes on the Trakt website or other apps connected to Trakt will not download.</p>
-      <p><span class="badge badge-info">Note</span> <strong>You can always change your mind!</strong> First, disconnect both SeriesGuide Cloud and Trakt. Then, sign into only one of them. The data on your device will be merged with the existing data on the service.</p>
     </section>
 
     <span class="anchor" id="language"></span>
@@ -411,10 +345,107 @@ title: Help
       </div>
     </section>
 
-<!-- ##################################################### -->
+    <!-- ##################################################### -->
+    
+    <span class="anchor" id="backup"></span>  
+    <section class="mt-2">
+      <h3>Backup or restore your data using files</h3>
+      <p><strong>To backup your shows, lists and movies:</strong></p>
+      <ol>
+        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>Backup/Restore</strong>.</li>
+        <li>Look for the <strong>Create backup</strong> section.</li>
+        <li>Tap <strong>Select file</strong> for either shows, lists or movies to create a backup.</li>
+      </ol>
+      <p><span class="badge badge-info">Note</span> On Android 4.3 and older you can not choose the backup file location. Instead SeriesGuide will store the backup files in the <em>Download</em> folder on your device.</p>
+      <p><strong>To restore your shows, lists and movies:</strong></p>
+      <ol>
+        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>Backup/Restore</strong>.</li>
+        <li>Look for the <strong>Restore backup</strong> section.</li>
+        <li>Tap <strong>Select file</strong> for each type of data you want to restore and select the matching backup file.</li>
+        <li>Tick the check box next to each type you want to restore.</li>
+        <li>Tap <strong>Restore backup</strong>.</li>
+      </ol>
+      <p>To restore your backup <strong>on another device</strong>, first transfer the created files to it. For example send yourself an email with the files attached, plug your device into a computer to access its storage or save the files to online storage.</p>
+      <p><span class="badge badge-info">Note</span> You can use a <a href="https://play.google.com/store/search?q=file+manager&amp;c=apps">file manager</a> app to view or copy the backup files.</p>
+      <p><span class="badge badge-info">Note</span> You can import data from another source as long as it uses the <a href="https://github.com/UweTrottmann/SeriesGuide/wiki/JSON-export-format">JSON format that SeriesGuide expects</a>. 
+        Add some shows/lists/movies and create a backup, then just open the created JSON file to see an example with actual data.</p>
+    </section>
 
-    <span class="anchor" id="trakt"></span>
-    <h2 class="mt-5"><img src="images/trakt-80.png" width="32" height="32" alt="trakt logo"/> Trakt integration</h2>
+    <span class="anchor" id="autobackup"></span>
+    <section class="mt-2">
+      <h3>Restore your data from an Auto Backup</h3>
+      <p>Auto Backup creates a file-based <strong>weekly automatic backup</strong> of your shows, lists and movies.</p>
+      <p><strong>To restore an Auto Backup:</strong></p>
+      <ol>
+        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>Auto Backup</strong>.</li>
+        <li>Tap the <strong>Restore Auto Backup</strong> button. If it is disabled, there is no auto backup available to restore from. Use the Backup/Restore tool to restore a backup from another location (e.g. Google Drive).</li>
+      </ol>
+      <p><span class="badge badge-danger">Note</span> Restoring a backup affects your device only. It won't affect data synced to Cloud or Trakt.</p>
+      <p><strong>To turn on and configure Auto Backup:</strong></p>
+      <ol>
+        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span> > <strong>Settings</strong>.</li>
+        <li>Tap <strong>Auto Backup</strong>.</li>
+        <li>Turn on Auto Backup.</li>
+        <li>(Recommended) Enable the option to create copies, select files in an off-device location (e.g. Google Drive).</li>
+      </ol>
+      <p><span class="badge badge-danger">Note</span> The Auto Backup files are saved to a storage directory that is removed when the app is uninstalled. Hence, it is recommended to turn on the option to create additional backups to an off-device location (e.g. Google Drive).</p>
+    </section>
+
+    <span class="anchor" id="sync"></span>
+    <section class="mt-2">
+      <h3>Backup and sync using SeriesGuide Cloud or Trakt</h3>
+      <p>You can backup and sync using either SeriesGuide Cloud or <a href="{{ site.data.links.trakt }}">Trakt <span class="fas fa-external-link-alt"></span></a>. Each has its advantages and disadvantages. Which one you want to use depends on the devices and apps you use.</p>
+      <p class="title">SeriesGuide Cloud</p>
+      <p>Works best if you only use SeriesGuide on your devices. It supports backing up and syncing all SeriesGuide data:</p>
+      <ul>
+        <li>Sync
+          <ul>
+            <li>Shows</li>
+            <li>Lists</li>
+            <li>Movies</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <p class="title">Trakt</p>
+      <p>Works best if you use other apps connected to Trakt (for example <a href="{{ site.data.links.trakt }}apps">apps on iOS or a media center <span class="fas fa-external-link-alt"></span></a>) or the <a href="{{ site.data.links.trakt }}">Trakt website <span class="fas fa-external-link-alt"></span></a>. It supports:</p>
+      <ul>
+        <li>Sync
+          <ul>
+            <li>Shows (excluding favorite/hidden state, skipped state)</li>
+            <li>Movies (watchlist, collection, watched)</li>
+          </ul>
+        </li>
+        <li>Display your and friends Trakt viewing history.</li>
+        <li>Check-in (episodes and movies).</li>
+        <li>Post comments.</li>
+        <li>Rate shows, episodes and movies.</li>
+      </ul>
+      <p><span class="badge badge-info">Note</span> Unlike with Cloud, shows are not added automatically and the Lists section is not synced. But you can quickly <a href="#library">access your Trakt show watchlist and watched and collected shows</a>.</p>
+      <p>Check-Ins are submitted immediately to Trakt. But only with the next sync are checked-in episodes and movies marked as watched within SeriesGuide.</p>
+      
+      <p class="title">Setup</p>
+      <p>To connect to either service:</p>
+      <ol>
+        <li>In the bottom bar, tap <strong>More</strong> <span class="fas fa-bars" aria-hidden="true"></span>.</li>
+        <li>Tap either <strong>SeriesGuide Cloud</strong> or <strong>Trakt</strong>.</li>
+        <li>Tap the sign in or connect button and complete the sign-in process.</li>
+      </ol>
+      <p><span class="badge badge-info">Note</span> You can be <strong>connected to SeriesGuide Cloud and Trakt</strong> at the same time. Setting watched and collected, commenting, rating and more will still be sent to Trakt. However, <strong>check-in and sync with Trakt will be disabled</strong>. Changes on the Trakt website or other apps connected to Trakt will not download.</p>
+      <p><span class="badge badge-info">Note</span> <strong>You can always change your mind!</strong> First, disconnect both SeriesGuide Cloud and Trakt. Then, sign into only one of them. The data on your device will be merged with the existing data on the service.</p>
+    </section>
+
+    <span class="anchor" id="change-email"></span>
+    <section class="mt-2">
+      <h3>Change the email address used for SeriesGuide Cloud</h3>
+      <p>There is currently no process to change your email address.</p>
+      <p>However, you can just sign out of Cloud and sign in with a different email address to create a new account. All data on your device will be uploaded to the new account.</p>
+    </section>
+
+<!-- ##################################################### -->
 
     <span class="anchor" id="connecttrakt"></span>
     <section class="mt-2">
