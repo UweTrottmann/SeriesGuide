@@ -1174,8 +1174,6 @@ public class SeriesGuideContract {
 
     public static final String PATH_LISTS = "lists";
 
-    public static final String PATH_WITH_LIST_ITEM_ID = "with_list_item";
-
     public static final String PATH_LIST_ITEMS = "listitems";
 
     public static final String PATH_WITH_DETAILS = "with_details";
@@ -1290,14 +1288,6 @@ public class SeriesGuideContract {
                 .build();
 
         /**
-         * Lists table joined with list items table (to get in which lists an item is in or not).
-         * See {@link SeriesGuideProvider#LISTS_WITH_LIST_ITEM_ID}.
-         */
-        public static final Uri CONTENT_WITH_LIST_ITEM_URI = CONTENT_URI.buildUpon()
-                .appendPath(PATH_WITH_LIST_ITEM_ID)
-                .build();
-
-        /**
          * Use if multiple items get returned
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.list";
@@ -1313,10 +1303,6 @@ public class SeriesGuideContract {
 
         public static Uri buildListUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
-        }
-
-        public static Uri buildListsWithListItemUri(String itemId) {
-            return CONTENT_WITH_LIST_ITEM_URI.buildUpon().appendPath(itemId).build();
         }
 
         public static String getId(Uri uri) {

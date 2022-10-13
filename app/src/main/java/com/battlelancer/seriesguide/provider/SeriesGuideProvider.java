@@ -83,8 +83,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
     static final int LISTS_ID = 501;
 
-    static final int LISTS_WITH_LIST_ITEM_ID = 502;
-
     static final int LIST_ITEMS = 600;
 
     static final int LIST_ITEMS_ID = 601;
@@ -161,8 +159,6 @@ public class SeriesGuideProvider extends ContentProvider {
 
         // Lists
         matcher.addURI(authority, SeriesGuideContract.PATH_LISTS, LISTS);
-        matcher.addURI(authority, SeriesGuideContract.PATH_LISTS + "/"
-                + SeriesGuideContract.PATH_WITH_LIST_ITEM_ID + "/*", LISTS_WITH_LIST_ITEM_ID);
         matcher.addURI(authority, SeriesGuideContract.PATH_LISTS + "/*", LISTS_ID);
 
         // List items
@@ -283,7 +279,6 @@ public class SeriesGuideProvider extends ContentProvider {
             case SEASONS_ID:
                 return Seasons.CONTENT_ITEM_TYPE;
             case LISTS:
-            case LISTS_WITH_LIST_ITEM_ID:
                 return Lists.CONTENT_TYPE;
             case LISTS_ID:
                 return Lists.CONTENT_ITEM_TYPE;
@@ -676,16 +671,6 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String listId = Lists.getId(uri);
                 return builder.table(Tables.LISTS).where(Lists.LIST_ID + "=?", listId);
             }
-            case LISTS_WITH_LIST_ITEM_ID: {
-                final String itemId = uri.getPathSegments().get(2);
-                return builder
-                        .table(Tables.LISTS
-                                + " LEFT OUTER JOIN (" + SubQuery.LISTS_LIST_ITEM_ID
-                                + "'" + itemId
-                                + "%') AS " + Tables.LIST_ITEMS + " ON "
-                                + Qualified.LISTS_LIST_ID + "=" + Qualified.LIST_ITEMS_LIST_ID)
-                        .mapToTable(Lists._ID, Tables.LISTS);
-            }
             case LIST_ITEMS: {
                 return builder.table(Tables.LIST_ITEMS);
             }
@@ -720,13 +705,6 @@ public class SeriesGuideProvider extends ContentProvider {
         }
     }
 
-    private interface SubQuery {
-
-        String LISTS_LIST_ITEM_ID = "SELECT * FROM "
-                + Tables.LIST_ITEMS + " WHERE "
-                + ListItems.LIST_ITEM_ID + " LIKE ";
-    }
-
     /**
      * {@link SeriesGuideContract} fields that are fully qualified with a specific parent {@link
      * Tables}. Used when needed to work around SQL ambiguity.
@@ -735,8 +713,5 @@ public class SeriesGuideProvider extends ContentProvider {
 
         String EPISODES_EPISODE_ID = Tables.EPISODES + "." + Episodes._ID;
 
-        String LISTS_LIST_ID = Tables.LISTS + "." + Lists.LIST_ID;
-
-        String LIST_ITEMS_LIST_ID = Tables.LIST_ITEMS + "." + Lists.LIST_ID;
     }
 }
