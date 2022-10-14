@@ -15,7 +15,7 @@ Version 66
 *in development*
 
 #### 66.0.0 🧪
-*in development*
+*2022-10-14*
 
 * 🔨 Manage lists: fix an item getting removed from other lists if there are many lists.
 * 📝 Latest user interface translations from Crowdin.
