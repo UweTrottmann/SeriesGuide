@@ -32,10 +32,10 @@ jobs:
         run: ./gradlew :app:testPureDebugUnitTest
 
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: ${{ always() }} # also run if build step failed
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always() # also run if build step failed
         with:
-          files: app/build/test-results/**/*.xml
+          junit_files: app/build/test-results/**/*.xml
 
   lint:
     name: Lint
