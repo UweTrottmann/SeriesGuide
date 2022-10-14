@@ -17,7 +17,7 @@ Version 66
 #### 66.0.0 🧪
 *in development*
 
-
+* 🔨 Manage lists: fix an item getting removed from other lists if there are many lists.
 
 Version 65
 ----------
