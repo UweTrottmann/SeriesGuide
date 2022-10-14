@@ -10,28 +10,19 @@ import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
-import androidx.viewpager.widget.ViewPager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
+import com.battlelancer.seriesguide.databinding.DialogShowsDistillationBinding
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.safeShow
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
 class ShowsDistillationFragment : AppCompatDialogFragment() {
 
-    @BindView(R.id.tabLayoutShowsDistillation)
-    internal lateinit var tabLayout: SlidingTabLayout
-    @BindView(R.id.viewPagerShowsDistillation)
-    internal lateinit var viewPager: ViewPager
-
-    private lateinit var unbinder: Unbinder
+    private var binding: DialogShowsDistillationBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +34,10 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         dialog?.window?.setGravity(Gravity.TOP or Gravity.END)
 
-        val view = inflater.inflate(R.layout.dialog_shows_distillation, container, false)
-        unbinder = ButterKnife.bind(this, view)
-
+        val binding = DialogShowsDistillationBinding.inflate(inflater, container, false)
 
         val tabsAdapter = ShowsDistillationPageAdapter(
             requireContext(),
@@ -57,9 +46,10 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             SortShowsView.ShowSortOrder.fromSettings(requireContext()),
             sortOrderListener
         )
+        val viewPager = binding.viewPagerShowsDistillation
         viewPager.adapter = tabsAdapter
-        tabLayout.setDefaultStyle()
-        tabLayout.setViewPager(viewPager)
+        binding.tabLayoutShowsDistillation.setDefaultStyle()
+        binding.tabLayoutShowsDistillation.setViewPager(viewPager)
 
         // ensure size matches children in any case
         // (on some devices did not resize correctly, Android layouting change?)
@@ -68,7 +58,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             viewPager?.requestLayout()
         }
 
-        return view
+        return binding.root
     }
 
     private val filterListener = object : FilterShowsView.FilterListener {
@@ -154,7 +144,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        unbinder.unbind()
+        binding = null
     }
 
     companion object {
