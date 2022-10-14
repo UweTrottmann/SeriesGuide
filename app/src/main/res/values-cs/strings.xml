@@ -29,7 +29,7 @@
     <string name="discard">Zrušit</string>
     <string name="save_selection">Uložit výběr</string>
     <string name="action_display_all">Zobrazit vše</string>
-    <string name="web_search">Webové vyhledávání</string>
+    <string name="web_search">Vyhledávání na webu</string>
     <string name="add_to_homescreen">Přidat na základní obrazovku</string>
     <string name="action_open">Otevřít</string>
     <string name="sync_manually">Synchronizovat ručně</string>
@@ -53,9 +53,9 @@
     <string name="database_error">Nelze upravovat data.</string>
     <string name="reinstall_info">Zkuste zálohovat v sekci nastavení, přeinstalovat a obnovit</string>
     <string name="api_error_generic">Nelze komunikovat s %s. Zkuste to prosím později.</string>
-    <string name="api_failed">Chyba během: %s</string>
+    <string name="api_failed">Chyba: %s</string>
     <string name="copy_to_clipboard">Zkopírováno do schránky</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Seriál není migrovaný na TMDB. Některé akce včetně Trakt a Cloud synchronizace nemusí fungovat. Vyhledejte případně náhradu a odstraňte tento seriál. Klepnutím zobrazíte podrobnosti.</string>
     <!-- Sharing -->
     <string name="share">Sdílet</string>
     <string name="share_show">Sdílet seriál</string>
@@ -100,7 +100,7 @@
     <string name="no_translation_title">Nepřeloženo</string>
     <string name="no_spoilers">Některé detaily jsou skryty, aby se zabránilo spoilerům. Toto můžete vypnout v nastavení.</string>
     <string name="format_source">Zdroj: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Poslední aktualizace</string>
     <!-- Date and Time -->
     <string name="today">dnes</string>
     <string name="now">nyní</string>
@@ -163,7 +163,7 @@
     <string name="context_updateshow">Aktualizovat</string>
     <string name="context_marknext">Následujicí epizoda zhlédnuta</string>
     <string name="action_episodes_switch_view">Přepnout zobrazení</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Další ke zhlédnutí</string>
     <!-- History -->
     <string name="user_stream">Historie</string>
     <string name="recently_watched">Nedávno zhlédnuto</string>
@@ -266,7 +266,7 @@
     <string name="shows_continuing">%s pokračujicích</string>
     <string name="episodes_watched">%s zhlédnutých</string>
     <string name="movies_on_watchlist">%s z Watchlistu</string>
-    <string name="stats_in_collection_format">%d be sbírce</string>
+    <string name="stats_in_collection_format">%d ve sbírce</string>
     <string name="movies_watched_format">%s zhlédnutých</string>
     <plurals name="days_plural">
         <item quantity="one">%d den</item>
@@ -303,7 +303,7 @@
     <string name="hexagon_remove_account">Odebrat účet</string>
     <string name="hexagon_remove_account_success">Účet odstraněn</string>
     <string name="hexagon_remove_account_failure">Účet nelze odstranit</string>
-    <string name="hexagon_remove_account_confirmation">Odebráním účtu smažete veškeré seriály a filmy ze SeriesGuide cloudu. Ujistěte se, že jste ho odebrali i na ostatních připojených zařízeních.</string>
+    <string name="hexagon_remove_account_confirmation">Tímto smažete vaše seriály, seznamy a filmy ze SeriesGuide cloudu.</string>
     <string name="hexagon_api_queued">Odesílání do SeriesGuide Cloud.</string>
     <string name="hexagon_signed_out">Odhlášeno z SeriesGuide Cloudu.</string>
     <string name="hexagon_signin_fail_format">Chyba při přihlášení (%s)</string>
@@ -315,10 +315,10 @@
     <string name="traktcheckin_cancel">Přepsat</string>
     <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
     <string name="traktcheckin_wait">Budu čekat</string>
-    <string name="trakt_success">Odesláno do trakt.tv.</string>
+    <string name="trakt_success">Odesláno do Trakt</string>
     <string name="trakt_error_account_locked">Váš Trakt účet je uzamčen. Obraťte se na Trakt podporu.</string>
     <string name="trakt_error_credentials">Nastala chyba. Zkontrolujte vaše přihlašovací údaje pro Trakt a zkuste to znovu.</string>
-    <string name="trakt_error_not_exists">Není k dispozici na traktu (zatím). Zkuste to později.</string>
+    <string name="trakt_error_not_exists">Na Traktu není (zatím) k dispozici. Zkuste to později.</string>
     <string name="trakt_notice_not_exists">Nelze (zatím) synchronizovat s traktem.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Připojit trakt.tv</string>
@@ -328,7 +328,7 @@
     <string name="connect">Připojit</string>
     <string name="disconnect">Odpojit</string>
     <string name="use_integrated_browser">Použít integrovaný prohlížeč</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Přidat seriály z Trakt</string>
     <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete. <a href="https://trakt.tv">Další informace</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Ohodnotit</string>
@@ -439,8 +439,8 @@
     <string name="pref_number">Formát číslování</string>
     <string name="pref_offset">Ruční časový posun</string>
     <string name="pref_offsetsummary">Posunout vysílací čas o %d hodin</string>
-    <string name="clear_cache">Vymazat paměť pro obrázky</string>
-    <string name="clear_cache_summary">Odstranit všechny stažené obrázky ze zařízení</string>
+    <string name="clear_cache">Vymazat mezipaměť</string>
+    <string name="clear_cache_summary">Přejděte do nastavení úložiště pro odstranění obrázků z mezipaměti a síťových odpovědí</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Zahrnout popisy, detaily, hodnocení</string>
     <string name="backup_failed_file_access">Nelze zálohovat. Záložní soubor nebyl nalezen nebo není přístupný.</string>
@@ -467,15 +467,15 @@
     <string name="autobackup_restore_available">Automatická záloha může být k dispozici pro obnovení.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Začněte</string>
-    <string name="dismiss">Storno</string>
+    <string name="dismiss">Zrušit</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s nových epizod</string>
     <string name="more">%d další</string>
     <string name="upcoming_display">Vyberte pro zobrazení nadcházejících seriálů</string>
     <string name="pref_notifications">Upozornění</string>
     <string name="pref_notificationssummary">Upozorňovat na nové epizody</string>
-    <string name="pref_ringtone">Vyzváněcí tón</string>
-    <string name="pref_vibrate">Vibrovat</string>
+    <string name="pref_ringtone">Zvuk</string>
+    <string name="pref_vibrate">Vibrace</string>
     <string name="pref_vibratesummary">Při upozornění také vibrovat</string>
     <string name="pref_notifications_treshold">Čas upozornění</string>
     <string name="pref_notifications_select_shows">Vybrat pořad</string>
@@ -500,11 +500,11 @@
     <string name="widget_background_75">75%</string>
     <string name="widget_background_opaque">Neprůhledné</string>
     <!-- Google In-App Billing -->
-    <string name="onlyx">Pouze pro dárce</string>
+    <string name="onlyx">Pouze pro podporovatele</string>
     <string name="action_upgrade">Odemknout všechny funkce</string>
     <string name="billing_action_subscribe">Odebírat</string>
     <string name="billing_action_manage_subscriptions">Spravovat předplatné</string>
-    <string name="billing_action_pass">Získejte X Pass App</string>
+    <string name="billing_action_pass">Získejte aplikaci X Pass App</string>
     <string name="billing_duration_format">%1$s/ročně</string>
     <string name="billing_sub_description">Vyzkoušejte na 30 dní zdarma, kdykoliv můžete zrušit.</string>
     <string name="billing_price_pass">jednorázový nákup</string>
@@ -512,10 +512,10 @@
     <string name="upgrade_success">Díky za podpoření SeriesGuide! Nyní máte přístup ke všem funkcím.</string>
     <string name="billing_unlock_detected">X Pass aplikace byla detekována. Stále se můžete přihlásit k odběru dalších aktualizací.</string>
     <string name="billing_learn_more">Další informace / pomoc</string>
-    <string name="subscription_expired">Vypršela platnost</string>
+    <string name="subscription_expired">Předplatné vypršelo</string>
     <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Přihlaste se pomocí účtu Amazon!</string>
+    <string name="subscription_not_signed_in">Přihlaste se ke svému účtu Amazon</string>
     <string name="subscription_unavailable">Odběr momentálně není k dispozici.</string>
     <string name="subscription_failed">Nákup nebyl dokončen.</string>
     <string name="pass_unavailable">X Pass není momentálně k dispozici.</string>

@@ -55,7 +55,7 @@
     <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
     <string name="api_failed">Zlyhanie: %s</string>
     <string name="copy_to_clipboard">Skopírované do schránky</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Seriál nebol migrovaný na TMDB. Niektoré akcie vrátane Trakt a Cloud synchronizácie nemusia fungovať. Vyhľadajte prípadnú náhradu a tento seriál odstráňte. Klepnutím zobrazíte podrobnosti.</string>
     <!-- Sharing -->
     <string name="share">Zdieľať</string>
     <string name="share_show">Zdieľať seriál</string>

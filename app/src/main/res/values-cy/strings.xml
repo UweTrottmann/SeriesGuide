@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Main Menu -->
-    <string name="shows">Sioeau</string>
-    <string name="lists">Rhestrau</string>
+    <string name="shows">SioeauRhaglenni</string>
+    <string name="lists">Rhestri</string>
     <string name="movies">Ffilmiau</string>
     <string name="statistics">Ystadegau</string>
     <string name="navigation_more">Mwy</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Methu siarad â %s Rhowch gynnig arall arni yn nes ymlaen.</string>
     <string name="api_failed">Wedi methu: %s</string>
     <string name="copy_to_clipboard">Copi i\'r clipfwrdd</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Rhaglen heb ei symud i ddata TMDB. Efallai na fydd rhai gweithredoedd gan gynnwys Trakt a Cloud sync yn gweithio. Efallai chwiliwch am un arall a chael gwared ar y sioe hon. Tapiwch i weld y manylion.</string>
     <!-- Sharing -->
     <string name="share">Rhannu</string>
     <string name="share_show">Sioe rhannu</string>
@@ -102,7 +102,7 @@
     <string name="no_translation_title">Heb ei gyfieithu</string>
     <string name="no_spoilers">Mae rhai manylion wedi\'u cuddio i atal anrheithwyr. I ddiffodd hyn ewch i Gosodiadau.</string>
     <string name="format_source">Ffynhonnell: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Diweddarwyd diwethaf</string>
     <!-- Date and Time -->
     <string name="today">heddiw</string>
     <string name="now">nawr</string>
@@ -149,9 +149,9 @@
     <string name="action_shows_filter_unwatched">Heb ei wylio</string>
     <string name="action_shows_filter_upcoming">Ar ddod</string>
     <string name="action_shows_filter_hidden">Cudd</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_disabled">Anweithredol</string>
+    <string name="state_shows_filter_included">Yn gynwysedig</string>
+    <string name="state_shows_filter_excluded">Eithriedig</string>
     <string name="action_shows_make_all_visible">Gwneud pob cudd yn weladwy</string>
     <string name="description_make_all_visible_format">Gwneud pob sioe gudd (%s) yn weladwy eto?</string>
     <string name="action_shows_sort">Trefnu sioeau</string>
@@ -165,7 +165,7 @@
     <string name="context_updateshow">Diweddariad</string>
     <string name="context_marknext">Wedi gwylio\'r bennod nesaf</string>
     <string name="action_episodes_switch_view">Newid golygfa</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Nesaf i wylio</string>
     <!-- History -->
     <string name="user_stream">Hanes</string>
     <string name="recently_watched">Gwyliwyd yn ddiweddar</string>
@@ -342,7 +342,7 @@
     <string name="connect">Cysylltu</string>
     <string name="disconnect">Datgysylltwch</string>
     <string name="use_integrated_browser">Defnyddiwch borwr integredig</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Ychwanegu rhaglenni o Trakt</string>
     <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio. <a href="https://trakt.tv"> Dysgu mwy</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>
@@ -447,7 +447,7 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Ymddangosiad</string>
     <string name="pref_theme">Thema</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Defnyddiwch liwiau system</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Defnyddiwch system ddiofyn</string>
     <string name="theme_app_auto_battery">Wedi\'i osod gan Batri Saver</string>
