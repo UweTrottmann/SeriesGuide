@@ -10,6 +10,15 @@ Release notes
 
 Releases marked with 🧪 are/were available on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 66
+----------
+*in development*
+
+#### 66.0.0 🧪
+*in development*
+
+
+
 Version 65
 ----------
 *2022-09-01*
