@@ -82,7 +82,7 @@ class TraktFriendsMovieHistoryLoader extends GenericSimpleLoader<List<NowAdapter
 
             String avatar = (friend.user.images == null || friend.user.images.avatar == null)
                     ? null : friend.user.images.avatar.full;
-            // trakt has removed image support: currently displaying no image
+            // Poster resolved on demand, see view holder binding.
             NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
                     displayData(
                             entry.watched_at.toInstant().toEpochMilli(),

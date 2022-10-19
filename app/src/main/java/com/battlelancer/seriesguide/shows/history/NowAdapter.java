@@ -5,28 +5,21 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ImageTools;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.TextTools;
-import com.battlelancer.seriesguide.util.TimeTools;
+import com.battlelancer.seriesguide.databinding.ItemHistoryBinding;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * Sectioned adapter displaying recently watched episodes and episodes recently watched by trakt
+ * Sectioned adapter displaying recently watched episodes and episodes recently watched by
  * friends.
  */
 public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -35,29 +28,6 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface ItemClickListener {
         void onItemClick(View view, int position);
-    }
-
-    protected static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.textViewHistoryHeader) public TextView header;
-        @BindView(R.id.constaintLayoutHistory) public ViewGroup containerItem;
-        @BindView(R.id.textViewHistoryShow) public TextView show;
-        @BindView(R.id.textViewHistoryEpisode) public TextView episode;
-        @BindView(R.id.imageViewHistoryPoster) public ImageView poster;
-        @BindView(R.id.textViewHistoryInfo) public TextView info;
-        @BindView(R.id.imageViewHistoryAvatar) public ImageView avatar;
-        @BindView(R.id.imageViewHistoryType) public ImageView type;
-
-        public HistoryViewHolder(View itemView, final ItemClickListener listener) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            containerItem.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onItemClick(v, position);
-                }
-            });
-            header.setVisibility(View.GONE); // Only used in history-only view.
-        }
     }
 
     static class MoreViewHolder extends RecyclerView.ViewHolder {
@@ -119,7 +89,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public String title;
         public String description;
         public String network;
-        public String tvdbPosterUrl;
+        public String posterUrl;
         public String username;
         public String avatar;
         public String action;
@@ -159,11 +129,11 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public NowItem displayData(long timestamp, String title, String description,
-                String tvdbPosterUrl) {
+                String posterUrl) {
             this.timestamp = timestamp;
             this.title = title;
             this.description = description;
-            this.tvdbPosterUrl = tvdbPosterUrl;
+            this.posterUrl = posterUrl;
             return this;
         }
 
@@ -190,8 +160,9 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 R.drawable.ic_checkin_16dp);
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         if (viewType == ViewType.HEADER) {
             View v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.item_grid_header, viewGroup, false);
@@ -210,13 +181,13 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
     protected RecyclerView.ViewHolder getHistoryViewHolder(ViewGroup viewGroup,
             ItemClickListener itemClickListener) {
-        View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_history, viewGroup, false);
-        return new HistoryViewHolder(v, itemClickListener);
+        return new HistoryViewHolder(
+                ItemHistoryBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup,
+                        false), itemClickListener);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         NowItem item = getItem(position);
 
         if (viewHolder instanceof HeaderViewHolder) {
@@ -229,42 +200,7 @@ public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.title.setText(item.title);
         } else if (viewHolder instanceof HistoryViewHolder) {
             HistoryViewHolder holder = (HistoryViewHolder) viewHolder;
-
-            String time = TimeTools.formatToLocalRelativeTime(getContext(),
-                    new Date(item.timestamp));
-            if (item.type == ItemType.HISTORY) {
-                // user history entry
-                holder.avatar.setVisibility(View.GONE);
-                holder.info.setText(time);
-            } else {
-                // friend history entry
-                holder.avatar.setVisibility(View.VISIBLE);
-                holder.info.setText(TextTools.dotSeparate(item.username, time));
-
-                // trakt avatar
-                ServiceUtils.loadWithPicasso(getContext(), item.avatar).into(holder.avatar);
-            }
-
-            // a TVDb or no poster
-            ImageTools.loadShowPosterUrlResizeSmallCrop(getContext(), holder.poster,
-                    item.tvdbPosterUrl);
-
-            holder.show.setText(item.title);
-            holder.episode.setText(item.description);
-
-            // action type indicator (only if showing trakt history)
-            if (TRAKT_ACTION_WATCH.equals(item.action)) {
-                holder.type.setImageDrawable(getDrawableWatched());
-                holder.type.setEnabled(false);
-            } else if (item.action != null) {
-                // check-in, scrobble
-                holder.type.setImageDrawable(getDrawableCheckin());
-                holder.type.setVisibility(View.VISIBLE);
-            } else {
-                holder.type.setVisibility(View.GONE);
-            }
-            // Set disabled for darker icon (non-interactive).
-            holder.type.setEnabled(false);
+            holder.bindToShow(getContext(), item, getDrawableWatched(), getDrawableCheckin());
         }
     }
 

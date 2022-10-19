@@ -117,7 +117,7 @@ public class TraktRecentEpisodeHistoryLoader
                 break;
             }
 
-            // look for a TVDB poster
+            // look for a poster
             String posterUrl;
             Integer showTmdbId = entry.show.ids == null ? null : entry.show.ids.tmdb;
             if (showTmdbId != null) {
