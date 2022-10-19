@@ -77,7 +77,7 @@ public class MoviesNowFragment extends Fragment {
                     return 1;
                 }
                 // make headers and more links span all columns
-                int type = adapter.getItem(position).type;
+                int type = adapter.getItem(position).getType();
                 return (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK)
                         ? spanCount : 1;
             }
@@ -240,19 +240,19 @@ public class MoviesNowFragment extends Fragment {
             }
 
             // more history link?
-            if (item.type == NowAdapter.ItemType.MORE_LINK) {
+            if (item.getType() == NowAdapter.ItemType.MORE_LINK) {
                 startActivity(new Intent(getActivity(), HistoryActivity.class).putExtra(
                         HistoryActivity.InitBundle.HISTORY_TYPE,
                         HistoryActivity.DISPLAY_MOVIE_HISTORY));
                 return;
             }
 
-            if (item.movieTmdbId == null) {
+            if (item.getMovieTmdbId() == null) {
                 return;
             }
 
             // display movie details
-            Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movieTmdbId);
+            Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.getMovieTmdbId());
 
             // simple scale up animation as there are no images
             Utils.startActivityWithAnimation(getActivity(), i, view);

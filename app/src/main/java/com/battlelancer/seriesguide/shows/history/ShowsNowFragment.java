@@ -82,7 +82,7 @@ public class ShowsNowFragment extends Fragment {
                     return 1;
                 }
                 // make headers and more links span all columns
-                int type = adapter.getItem(position).type;
+                int type = adapter.getItem(position).getType();
                 return (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK)
                         ? spanCount : 1;
             }
@@ -320,19 +320,19 @@ public class ShowsNowFragment extends Fragment {
             }
 
             // more history link?
-            if (item.type == NowAdapter.ItemType.MORE_LINK) {
+            if (item.getType() == NowAdapter.ItemType.MORE_LINK) {
                 startActivity(new Intent(getActivity(), HistoryActivity.class).putExtra(
                         HistoryActivity.InitBundle.HISTORY_TYPE,
                         HistoryActivity.DISPLAY_EPISODE_HISTORY));
                 return;
             }
 
-            if (item.episodeRowId != null && item.episodeRowId > 0) {
+            if (item.getEpisodeRowId() != null && item.getEpisodeRowId() > 0) {
                 // episode in database: display details
-                showDetails(view, item.episodeRowId);
-            } else if (item.showTmdbId != null && item.showTmdbId > 0) {
+                showDetails(view, item.getEpisodeRowId());
+            } else if (item.getShowTmdbId() != null && item.getShowTmdbId() > 0) {
                 // episode missing: show likely not in database, suggest adding it
-                AddShowDialogFragment.show(getParentFragmentManager(), item.showTmdbId);
+                AddShowDialogFragment.show(getParentFragmentManager(), item.getShowTmdbId());
             }
         }
     };

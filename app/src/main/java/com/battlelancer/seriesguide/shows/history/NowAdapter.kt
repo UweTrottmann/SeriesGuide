@@ -1,297 +1,280 @@
-package com.battlelancer.seriesguide.shows.history;
+package com.battlelancer.seriesguide.shows.history
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.recyclerview.widget.RecyclerView;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.databinding.ItemHistoryBinding;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.annotation.IntDef
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.recyclerview.widget.RecyclerView
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
 
 /**
  * Sectioned adapter displaying recently watched episodes and episodes recently watched by
  * friends.
  */
-public class NowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+open class NowAdapter(
+    protected val context: Context,
+    private val listener: ItemClickListener
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    protected static final String TRAKT_ACTION_WATCH = "watch";
-
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
+    interface ItemClickListener {
+        fun onItemClick(view: View, position: Int)
     }
 
-    static class MoreViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
+    internal class MoreViewHolder(itemView: View, listener: ItemClickListener) :
+        RecyclerView.ViewHolder(itemView) {
+        var title: TextView
 
-        public MoreViewHolder(View itemView, final ItemClickListener listener) {
-            super(itemView);
-            title = itemView.findViewById(R.id.textViewNowMoreText);
-
-            itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onItemClick(v, position);
+        init {
+            title = itemView.findViewById(R.id.textViewNowMoreText)
+            itemView.setOnClickListener { v: View ->
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(v, position)
                 }
-            });
+            }
         }
     }
 
-    static class HeaderViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
+    internal class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var title: TextView
 
-        public HeaderViewHolder(View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.textViewGridHeader);
+        init {
+            title = itemView.findViewById(R.id.textViewGridHeader)
         }
     }
 
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ItemType.HISTORY, ItemType.FRIEND, ItemType.MORE_LINK, ItemType.HEADER})
-    public @interface ItemType {
-        int HISTORY = 1;
-        int FRIEND = 2;
-        int MORE_LINK = 3;
-        int HEADER = 4;
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(ItemType.HISTORY, ItemType.FRIEND, ItemType.MORE_LINK, ItemType.HEADER)
+    annotation class ItemType {
+        companion object {
+            const val HISTORY = 1
+            const val FRIEND = 2
+            const val MORE_LINK = 3
+            const val HEADER = 4
+        }
     }
 
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ViewType.HISTORY, ViewType.MORE_LINK, ViewType.HEADER})
-    public @interface ViewType {
-        int HISTORY = 1;
-        int MORE_LINK = 2;
-        int HEADER = 3;
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(ViewType.HISTORY, ViewType.MORE_LINK, ViewType.HEADER)
+    annotation class ViewType {
+        companion object {
+            const val HISTORY = 1
+            const val MORE_LINK = 2
+            const val HEADER = 3
+        }
     }
 
-    private final Context context;
-    private final ItemClickListener listener;
-    private final Drawable drawableWatched;
-    private final Drawable drawableCheckin;
+    class NowItem {
+        var episodeRowId: Long? = null
+        var showTmdbId: Int? = null
+        var movieTmdbId: Int? = null
+        var timestamp: Long = 0
+        var title: String? = null
+        var description: String? = null
+        var network: String? = null
+        var posterUrl: String? = null
+        var username: String? = null
+        var avatar: String? = null
+        var action: String? = null
 
-    private List<NowItem> dataset;
-    private List<NowItem> recentlyWatched;
-    private List<NowItem> friendsRecently;
+        @ItemType
+        var type = 0
 
-    public static class NowItem {
-        public Long episodeRowId;
-        public Integer showTmdbId;
-        public Integer movieTmdbId;
-        public long timestamp;
-        public String title;
-        public String description;
-        public String network;
-        public String posterUrl;
-        public String username;
-        public String avatar;
-        public String action;
-        @ItemType public int type;
-
-        public NowItem recentlyWatchedLocal() {
-            this.type = ItemType.HISTORY;
-            return this;
+        fun recentlyWatchedLocal(): NowItem {
+            this.type = ItemType.HISTORY
+            return this
         }
 
-        public NowItem recentlyWatchedTrakt(@Nullable String action) {
-            this.action = action;
-            this.type = ItemType.HISTORY;
-            return this;
+        fun recentlyWatchedTrakt(action: String?): NowItem {
+            this.action = action
+            this.type = ItemType.HISTORY
+            return this
         }
 
-        public NowItem friend(String username, String avatar, String action) {
-            this.username = username;
-            this.avatar = avatar;
-            this.action = action;
-            this.type = ItemType.FRIEND;
-            return this;
+        fun friend(username: String?, avatar: String?, action: String?): NowItem {
+            this.username = username
+            this.avatar = avatar
+            this.action = action
+            this.type = ItemType.FRIEND
+            return this
         }
 
         /**
          * Pass 0 if no value.
          */
-        public NowItem episodeIds(long episodeRowId, int showTmdbId) {
-            this.episodeRowId = episodeRowId;
-            this.showTmdbId = showTmdbId;
-            return this;
+        fun episodeIds(episodeRowId: Long, showTmdbId: Int): NowItem {
+            this.episodeRowId = episodeRowId
+            this.showTmdbId = showTmdbId
+            return this
         }
 
-        public NowItem tmdbId(Integer movieTmdbId) {
-            this.movieTmdbId = movieTmdbId;
-            return this;
+        fun tmdbId(movieTmdbId: Int?): NowItem {
+            this.movieTmdbId = movieTmdbId
+            return this
         }
 
-        public NowItem displayData(long timestamp, String title, String description,
-                String posterUrl) {
-            this.timestamp = timestamp;
-            this.title = title;
-            this.description = description;
-            this.posterUrl = posterUrl;
-            return this;
+        fun displayData(
+            timestamp: Long, title: String?, description: String?,
+            posterUrl: String?
+        ): NowItem {
+            this.timestamp = timestamp
+            this.title = title
+            this.description = description
+            this.posterUrl = posterUrl
+            return this
         }
 
-        public NowItem moreLink(String title) {
-            this.type = ItemType.MORE_LINK;
-            this.title = title;
-            return this;
+        fun moreLink(title: String): NowItem {
+            this.type = ItemType.MORE_LINK
+            this.title = title
+            return this
         }
 
-        public NowItem header(String title) {
-            this.type = ItemType.HEADER;
-            this.title = title;
-            return this;
-        }
-    }
-
-    public NowAdapter(Context context, ItemClickListener listener) {
-        this.context = context;
-        this.listener = listener;
-        this.dataset = new ArrayList<>();
-        this.drawableWatched = AppCompatResources.getDrawable(getContext(),
-                R.drawable.ic_watch_16dp);
-        this.drawableCheckin = AppCompatResources.getDrawable(getContext(),
-                R.drawable.ic_checkin_16dp);
-    }
-
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        if (viewType == ViewType.HEADER) {
-            View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_grid_header, viewGroup, false);
-            return new HeaderViewHolder(v);
-        } else if (viewType == ViewType.MORE_LINK) {
-            View v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_now_more, viewGroup, false);
-            return new MoreViewHolder(v, listener);
-        } else if (viewType == ViewType.HISTORY) {
-            return getHistoryViewHolder(viewGroup, listener);
-        } else {
-            throw new IllegalArgumentException("Using unrecognized view type.");
+        fun header(title: String): NowItem {
+            this.type = ItemType.HEADER
+            this.title = title
+            return this
         }
     }
 
-    @NonNull
-    protected RecyclerView.ViewHolder getHistoryViewHolder(ViewGroup viewGroup,
-            ItemClickListener itemClickListener) {
-        return new HistoryViewHolder(
-                ItemHistoryBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup,
-                        false), itemClickListener);
+    protected val drawableWatched: Drawable
+    protected val drawableCheckin: Drawable
+
+    private val dataset: MutableList<NowItem>
+    private var recentlyWatched: List<NowItem>? = null
+    private var friendsRecently: List<NowItem>? = null
+
+    init {
+        dataset = ArrayList()
+        drawableWatched = AppCompatResources.getDrawable(context, R.drawable.ic_watch_16dp)!!
+        drawableCheckin = AppCompatResources.getDrawable(context, R.drawable.ic_checkin_16dp)!!
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        NowItem item = getItem(position);
-
-        if (viewHolder instanceof HeaderViewHolder) {
-            HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
-
-            holder.title.setText(item.title);
-        } else if (viewHolder instanceof MoreViewHolder) {
-            MoreViewHolder holder = (MoreViewHolder) viewHolder;
-
-            holder.title.setText(item.title);
-        } else if (viewHolder instanceof HistoryViewHolder) {
-            HistoryViewHolder holder = (HistoryViewHolder) viewHolder;
-            holder.bindToShow(getContext(), item, getDrawableWatched(), getDrawableCheckin());
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            ViewType.HEADER -> {
+                val v = LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.item_grid_header, viewGroup, false)
+                HeaderViewHolder(v)
+            }
+            ViewType.MORE_LINK -> {
+                val v = LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.item_now_more, viewGroup, false)
+                MoreViewHolder(v, listener)
+            }
+            ViewType.HISTORY -> {
+                getHistoryViewHolder(viewGroup, listener)
+            }
+            else -> {
+                throw IllegalArgumentException("Using unrecognized view type.")
+            }
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return dataset.size();
+    private fun getHistoryViewHolder(
+        viewGroup: ViewGroup,
+        itemClickListener: ItemClickListener
+    ): RecyclerView.ViewHolder {
+        return HistoryViewHolder(
+            ItemHistoryBinding.inflate(
+                LayoutInflater.from(viewGroup.context), viewGroup, false
+            ),
+            itemClickListener
+        )
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        int itemType = getItem(position).type;
-        switch (itemType) {
-            case ItemType.HISTORY:
-            case ItemType.FRIEND:
-                return ViewType.HISTORY;
-            case ItemType.MORE_LINK:
-                return ViewType.MORE_LINK;
-            case ItemType.HEADER:
-                return ViewType.HEADER;
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        val item = getItem(position)
+        when (viewHolder) {
+            is HeaderViewHolder -> {
+                viewHolder.title.text = item.title
+            }
+            is MoreViewHolder -> {
+                viewHolder.title.text = item.title
+            }
+            is HistoryViewHolder -> {
+                viewHolder.bindToShow(context, item, drawableWatched, drawableCheckin)
+            }
         }
-        return 0;
     }
 
-    protected Context getContext() {
-        return context;
+    override fun getItemCount(): Int = dataset.size
+
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position).type) {
+            ItemType.HISTORY, ItemType.FRIEND -> ViewType.HISTORY
+            ItemType.MORE_LINK -> ViewType.MORE_LINK
+            ItemType.HEADER -> ViewType.HEADER
+            else -> 0
+        }
     }
 
-    protected Drawable getDrawableWatched() {
-        return drawableWatched;
+    fun getItem(position: Int): NowItem = dataset[position]
+
+    fun setRecentlyWatched(items: List<NowItem>?) {
+        val oldCount = recentlyWatched?.size ?: 0
+        val newCount = items?.size ?: 0
+        recentlyWatched = items
+        reloadData()
+        notifyAboutChanges(0, oldCount, newCount)
     }
 
-    protected Drawable getDrawableCheckin() {
-        return drawableCheckin;
-    }
-
-    public NowItem getItem(int position) {
-        return dataset.get(position);
-    }
-
-    public void setRecentlyWatched(List<NowItem> items) {
-        int oldCount = recentlyWatched == null ? 0 : recentlyWatched.size();
-        int newCount = items == null ? 0 : items.size();
-
-        recentlyWatched = items;
-        reloadData();
-        notifyAboutChanges(0, oldCount, newCount);
-    }
-
-    public void setFriendsRecentlyWatched(List<NowItem> items) {
-        int oldCount = friendsRecently == null ? 0 : friendsRecently.size();
-        int newCount = items == null ? 0 : items.size();
+    fun setFriendsRecentlyWatched(items: List<NowItem>?) {
+        val oldCount = friendsRecently?.size ?: 0
+        val newCount = items?.size ?: 0
         // items start after recently watched (if any)
-        int startPosition = recentlyWatched == null ? 0 : recentlyWatched.size();
-
-        friendsRecently = items;
-        reloadData();
-        notifyAboutChanges(startPosition, oldCount, newCount);
+        val startPosition = recentlyWatched?.size ?: 0
+        friendsRecently = items
+        reloadData()
+        notifyAboutChanges(startPosition, oldCount, newCount)
     }
 
-    private void reloadData() {
-        dataset.clear();
+    private fun reloadData() {
+        dataset.clear()
+        val recentlyWatched = recentlyWatched
         if (recentlyWatched != null) {
-            dataset.addAll(recentlyWatched);
+            dataset.addAll(recentlyWatched)
         }
+        val friendsRecently = friendsRecently
         if (friendsRecently != null) {
-            dataset.addAll(friendsRecently);
+            dataset.addAll(friendsRecently)
         }
     }
 
-    private void notifyAboutChanges(int startPosition, int oldItemCount, int newItemCount) {
+    private fun notifyAboutChanges(startPosition: Int, oldItemCount: Int, newItemCount: Int) {
         if (newItemCount == 0 && oldItemCount == 0) {
-            return;
+            return
         }
-
         if (newItemCount == oldItemCount) {
             // identical number of items
-            notifyItemRangeChanged(startPosition, oldItemCount);
+            notifyItemRangeChanged(startPosition, oldItemCount)
         } else if (newItemCount > oldItemCount) {
             // more items than before
             if (oldItemCount > 0) {
-                notifyItemRangeChanged(startPosition, oldItemCount);
+                notifyItemRangeChanged(startPosition, oldItemCount)
             }
-            notifyItemRangeInserted(startPosition + oldItemCount,
-                    newItemCount - oldItemCount);
+            notifyItemRangeInserted(
+                startPosition + oldItemCount,
+                newItemCount - oldItemCount
+            )
         } else {
             // less items than before
             if (newItemCount > 0) {
-                notifyItemRangeChanged(startPosition, newItemCount);
+                notifyItemRangeChanged(startPosition, newItemCount)
             }
-            notifyItemRangeRemoved(startPosition + newItemCount,
-                    oldItemCount - newItemCount);
+            notifyItemRangeRemoved(
+                startPosition + newItemCount,
+                oldItemCount - newItemCount
+            )
         }
+    }
+
+    companion object {
+        const val TRAKT_ACTION_WATCH = "watch"
     }
 }
