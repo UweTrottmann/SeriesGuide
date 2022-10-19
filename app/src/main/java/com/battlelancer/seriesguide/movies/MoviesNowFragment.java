@@ -105,7 +105,7 @@ public class MoviesNowFragment extends Fragment {
                 binding.swipeRefreshLayoutNow);
 
         // define dataset
-        adapter = new MoviesNowAdapter(getContext(), itemClickListener);
+        adapter = new MoviesNowAdapter(requireContext(), itemClickListener);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
