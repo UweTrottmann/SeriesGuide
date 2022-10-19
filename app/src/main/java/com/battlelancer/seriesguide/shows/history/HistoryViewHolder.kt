@@ -22,8 +22,8 @@ class HistoryViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.constaintLayoutHistory.setOnClickListener { v: View? ->
-            val position = adapterPosition
+        binding.constaintLayoutHistory.setOnClickListener { v: View ->
+            val position = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(v, position)
             }

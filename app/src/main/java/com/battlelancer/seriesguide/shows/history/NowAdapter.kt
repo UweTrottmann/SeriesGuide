@@ -32,7 +32,7 @@ open class NowAdapter(
         init {
             title = itemView.findViewById(R.id.textViewNowMoreText)
             itemView.setOnClickListener { v: View ->
-                val position = adapterPosition
+                val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(v, position)
                 }
