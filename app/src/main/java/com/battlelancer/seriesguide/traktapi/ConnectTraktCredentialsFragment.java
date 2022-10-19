@@ -8,18 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsBinding;
 import com.battlelancer.seriesguide.sync.SyncProgress;
 import com.battlelancer.seriesguide.ui.SearchActivity;
-import com.battlelancer.seriesguide.ui.widgets.FeatureStatusView;
-import com.battlelancer.seriesguide.ui.widgets.SyncStatusView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -29,41 +24,31 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public class ConnectTraktCredentialsFragment extends Fragment {
 
-    @BindView(R.id.textViewTraktAbout) TextView textViewAbout;
-    @BindView(R.id.buttonTraktConnect) Button buttonAccount;
-    @BindView(R.id.textViewTraktUser) TextView textViewUsername;
-    @BindView(R.id.syncStatusTrakt) SyncStatusView syncStatusView;
-    @BindView(R.id.featureStatusTraktCheckIn) FeatureStatusView featureStatusCheckIn;
-    @BindView(R.id.featureStatusTraktSync) FeatureStatusView featureStatusSync;
-    @BindView(R.id.featureStatusTraktSyncShows) FeatureStatusView featureStatusSyncShows;
-    @BindView(R.id.featureStatusTraktSyncMovies) FeatureStatusView featureStatusSyncMovies;
-    @BindView(R.id.buttonTraktLibrary) Button buttonLibrary;
-    private Unbinder unbinder;
+    private FragmentConnectTraktCredentialsBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_connect_trakt_credentials, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        binding = FragmentConnectTraktCredentialsBinding.inflate(inflater, container, false);
 
         // make learn more link clickable
-        textViewAbout.setMovementMethod(LinkMovementMethod.getInstance());
+        binding.textViewTraktAbout.setMovementMethod(LinkMovementMethod.getInstance());
 
-        boolean hexagonEnabled = HexagonSettings.isEnabled(getContext());
-        featureStatusCheckIn.setFeatureEnabled(!hexagonEnabled);
-        featureStatusSync.setFeatureEnabled(!hexagonEnabled);
-        featureStatusSyncShows.setFeatureEnabled(!hexagonEnabled);
-        featureStatusSyncMovies.setFeatureEnabled(!hexagonEnabled);
+        boolean hexagonEnabled = HexagonSettings.isEnabled(requireContext());
+        binding.featureStatusTraktCheckIn.setFeatureEnabled(!hexagonEnabled);
+        binding.featureStatusTraktSync.setFeatureEnabled(!hexagonEnabled);
+        binding.featureStatusTraktSyncShows.setFeatureEnabled(!hexagonEnabled);
+        binding.featureStatusTraktSyncMovies.setFeatureEnabled(!hexagonEnabled);
 
         // library button
-        buttonLibrary.setOnClickListener(v -> {
+        binding.buttonTraktLibrary.setOnClickListener(v -> {
             // open search tab, will now have links to trakt lists
             startActivity(SearchActivity.newIntent(requireContext()));
         });
 
-        syncStatusView.setVisibility(View.GONE);
+        binding.syncStatusTrakt.setVisibility(View.GONE);
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -82,16 +67,16 @@ public class ConnectTraktCredentialsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        binding = null;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEvent(SyncProgress.SyncEvent event) {
-        syncStatusView.setProgress(event);
+        binding.syncStatusTrakt.setProgress(event);
     }
 
     private void updateViews() {
-        TraktCredentials traktCredentials = TraktCredentials.get(getActivity());
+        TraktCredentials traktCredentials = TraktCredentials.get(requireContext());
         boolean hasCredentials = traktCredentials.hasCredentials();
         if (hasCredentials) {
             String username = traktCredentials.getUsername();
@@ -99,27 +84,28 @@ public class ConnectTraktCredentialsFragment extends Fragment {
             if (!TextUtils.isEmpty(displayName)) {
                 username += " (" + displayName + ")";
             }
-            textViewUsername.setText(username);
+            binding.textViewTraktUser.setText(username);
             setAccountButtonState(false);
-            buttonLibrary.setVisibility(View.VISIBLE);
+            binding.buttonTraktLibrary.setVisibility(View.VISIBLE);
         } else {
-            textViewUsername.setText(null);
+            binding.textViewTraktUser.setText(null);
             setAccountButtonState(true);
-            buttonLibrary.setVisibility(View.GONE);
+            binding.buttonTraktLibrary.setVisibility(View.GONE);
         }
     }
 
     private void connect() {
-        buttonAccount.setEnabled(false);
+        binding.buttonTraktConnect.setEnabled(false);
         startActivity(new Intent(getActivity(), TraktAuthActivity.class));
     }
 
     private void disconnect() {
-        TraktCredentials.get(getActivity()).removeCredentials();
+        TraktCredentials.get(requireContext()).removeCredentials();
         updateViews();
     }
 
     private void setAccountButtonState(boolean connectEnabled) {
+        Button buttonAccount = binding.buttonTraktConnect;
         buttonAccount.setEnabled(true);
         buttonAccount.setText(connectEnabled ? R.string.connect : R.string.disconnect);
         if (connectEnabled) {
