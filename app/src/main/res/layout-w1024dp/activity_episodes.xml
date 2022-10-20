@@ -14,7 +14,7 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <androidx.legacy.widget.Space
+        <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
@@ -70,7 +70,7 @@
 
         </FrameLayout>
 
-        <androidx.legacy.widget.Space
+        <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
