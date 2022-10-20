@@ -10,10 +10,10 @@ import android.widget.ImageView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.SystemUiHider
+import com.github.chrisbanes.photoview.PhotoView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import uk.co.senab.photoview.PhotoView
 
 /**
  * Displays an image URL full screen in a zoomable view. If a preview image URL is provided, it is

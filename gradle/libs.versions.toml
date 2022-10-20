@@ -84,7 +84,7 @@ kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16" # https:/
 material = "com.google.android.material:material:1.5.0" # https://github.com/material-components/material-components-android/releases
 mockito = "org.mockito:mockito-core:4.5.1"
 okhttp = "com.squareup.okhttp3:okhttp:4.10.0" # https://github.com/square/okhttp/blob/master/CHANGELOG.md
-photoview = "com.uwetrottmann.photoview:library:1.2.4"
+photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
 play-services-auth = "com.google.android.gms:play-services-auth:20.2.0"
 retrofit2-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit2" }
