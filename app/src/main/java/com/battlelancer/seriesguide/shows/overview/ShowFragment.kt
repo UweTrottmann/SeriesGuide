@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.shows.overview
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -16,9 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
@@ -54,113 +50,13 @@ import timber.log.Timber
  * Displays extended information (poster, release info, description, ...) and actions (favoriting,
  * shortcut) for a particular show.
  */
-@SuppressLint("NonConstantResourceId")
 class ShowFragment() : Fragment() {
 
     constructor(showRowId: Long) : this() {
         arguments = buildArgs(showRowId)
     }
 
-    @BindView(R.id.containerShowPoster)
-    internal lateinit var containerPoster: View
-
-    @BindView(R.id.imageViewShowPoster)
-    internal lateinit var imageViewPoster: ImageView
-
-    @BindView(R.id.textViewShowStatus)
-    @JvmField
-    internal var textViewStatus: TextView? = null
-
-    @BindView(R.id.textViewShowReleaseTime)
-    @JvmField
-    internal var textViewReleaseTime: TextView? = null
-
-    @BindView(R.id.textViewShowOverview)
-    internal lateinit var textViewOverview: TextView
-
-    @BindView(R.id.textViewShowReleaseCountry)
-    internal lateinit var textViewReleaseCountry: TextView
-
-    @BindView(R.id.textViewShowFirstAirdate)
-    internal lateinit var textViewFirstRelease: TextView
-
-    @BindView(R.id.textShowLastUpdated)
-    internal lateinit var textShowLastUpdated: TextView
-
-    @BindView(R.id.textViewShowContentRating)
-    internal lateinit var textViewContentRating: TextView
-
-    @BindView(R.id.textViewShowGenres)
-    internal lateinit var textViewGenres: TextView
-
-    @BindView(R.id.textViewRatingsValue)
-    internal lateinit var textViewRating: TextView
-
-    @BindView(R.id.textViewRatingsRange)
-    internal lateinit var textViewRatingRange: TextView
-
-    @BindView(R.id.textViewRatingsVotes)
-    internal lateinit var textViewRatingVotes: TextView
-
-    @BindView(R.id.textViewRatingsUser)
-    internal lateinit var textViewRatingUser: TextView
-
-    @BindView(R.id.buttonShowFavorite)
-    internal lateinit var buttonFavorite: MaterialButton
-
-    @BindView(R.id.buttonShowNotify)
-    internal lateinit var buttonNotify: MaterialButton
-
-    @BindView(R.id.buttonShowHidden)
-    internal lateinit var buttonHidden: MaterialButton
-
-    @BindView(R.id.buttonShowShortcut)
-    internal lateinit var buttonShortcut: Button
-
-    @BindView(R.id.buttonShowLanguage)
-    internal lateinit var buttonLanguage: Button
-
-    @BindView(R.id.containerRatings)
-    internal lateinit var buttonRate: View
-
-    @BindView(R.id.buttonShowSimilar)
-    internal lateinit var buttonSimilar: Button
-
-    @BindView(R.id.buttonShowImdb)
-    internal lateinit var buttonImdb: Button
-
-    @BindView(R.id.buttonShowMetacritic)
-    internal lateinit var buttonShowMetacritic: Button
-
-    @BindView(R.id.buttonShowTmdb)
-    internal lateinit var buttonTmdb: Button
-
-    @BindView(R.id.buttonShowTrakt)
-    internal lateinit var buttonTrakt: Button
-
-    @BindView(R.id.buttonShowWebSearch)
-    internal lateinit var buttonWebSearch: Button
-
-    @BindView(R.id.buttonShowComments)
-    internal lateinit var buttonComments: Button
-
-    @BindView(R.id.buttonShowShare)
-    internal lateinit var buttonShare: Button
-
-    @BindView(R.id.labelCast)
-    internal lateinit var castLabel: TextView
-
-    @BindView(R.id.containerCast)
-    internal lateinit var castContainer: LinearLayout
-
-    @BindView(R.id.labelCrew)
-    internal lateinit var crewLabel: TextView
-
-    @BindView(R.id.containerCrew)
-    internal lateinit var crewContainer: LinearLayout
-
-    private lateinit var unbinder: Unbinder
-
+    private var binding: Binding? = null
     private var showId: Long = 0
     private var show: SgShow2? = null
     private var languageCode: String? = null
@@ -174,22 +70,96 @@ class ShowFragment() : Fragment() {
         } ?: throw IllegalArgumentException("Missing arguments")
     }
 
+    class Binding(view: View) {
+        val containerPoster: View
+        val imageViewPoster: ImageView
+        val textViewStatus: TextView
+        val textViewReleaseTime: TextView
+        val textViewOverview: TextView
+        val textViewReleaseCountry: TextView
+        val textViewFirstRelease: TextView
+        val textShowLastUpdated: TextView
+        val textViewContentRating: TextView
+        val textViewGenres: TextView
+        val textViewRating: TextView
+        val textViewRatingRange: TextView
+        val textViewRatingVotes: TextView
+        val textViewRatingUser: TextView
+        val buttonFavorite: MaterialButton
+        val buttonNotify: MaterialButton
+        val buttonHidden: MaterialButton
+        val buttonShortcut: Button
+        val buttonLanguage: Button
+        val buttonRate: View
+        val buttonSimilar: Button
+        val buttonImdb: Button
+        val buttonShowMetacritic: Button
+        val buttonTmdb: Button
+        val buttonTrakt: Button
+        val buttonWebSearch: Button
+        val buttonComments: Button
+        val buttonShare: Button
+        val castLabel: TextView
+        val castContainer: LinearLayout
+        val crewLabel: TextView
+        val crewContainer: LinearLayout
+
+        init {
+            // Show fragment and included layouts vary depending on screen size,
+            // currently not seeing an easy way to use view binding, so just using findViewById.
+            containerPoster = view.findViewById(R.id.containerShowPoster)
+            imageViewPoster = view.findViewById(R.id.imageViewShowPoster)
+            textViewStatus = view.findViewById(R.id.textViewShowStatus)
+            textViewReleaseTime = view.findViewById(R.id.textViewShowReleaseTime)
+            textViewOverview = view.findViewById(R.id.textViewShowOverview)
+            textViewReleaseCountry = view.findViewById(R.id.textViewShowReleaseCountry)
+            textViewFirstRelease = view.findViewById(R.id.textViewShowFirstAirdate)
+            textShowLastUpdated = view.findViewById(R.id.textShowLastUpdated)
+            textViewContentRating = view.findViewById(R.id.textViewShowContentRating)
+            textViewGenres = view.findViewById(R.id.textViewShowGenres)
+            textViewRating = view.findViewById(R.id.textViewRatingsValue)
+            textViewRatingRange = view.findViewById(R.id.textViewRatingsRange)
+            textViewRatingVotes = view.findViewById(R.id.textViewRatingsVotes)
+            textViewRatingUser = view.findViewById(R.id.textViewRatingsUser)
+            buttonFavorite = view.findViewById(R.id.buttonShowFavorite)
+            buttonNotify = view.findViewById(R.id.buttonShowNotify)
+            buttonHidden = view.findViewById(R.id.buttonShowHidden)
+            buttonShortcut = view.findViewById(R.id.buttonShowShortcut)
+            buttonLanguage = view.findViewById(R.id.buttonShowLanguage)
+            buttonRate = view.findViewById(R.id.containerRatings)
+            buttonSimilar = view.findViewById(R.id.buttonShowSimilar)
+            buttonImdb = view.findViewById(R.id.buttonShowImdb)
+            buttonShowMetacritic = view.findViewById(R.id.buttonShowMetacritic)
+            buttonTmdb = view.findViewById(R.id.buttonShowTmdb)
+            buttonTrakt = view.findViewById(R.id.buttonShowTrakt)
+            buttonWebSearch = view.findViewById(R.id.buttonShowWebSearch)
+            buttonComments = view.findViewById(R.id.buttonShowComments)
+            buttonShare = view.findViewById(R.id.buttonShowShare)
+            castLabel = view.findViewById(R.id.labelCast)
+            castContainer = view.findViewById(R.id.containerCast)
+            crewLabel = view.findViewById(R.id.labelCrew)
+            crewContainer = view.findViewById(R.id.containerCrew)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_show, container, false)
-        unbinder = ButterKnife.bind(this, view)
+        binding = Binding(view)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = binding ?: return
         // favorite + notifications + visibility button
-        TooltipCompat.setTooltipText(buttonFavorite, buttonFavorite.contentDescription)
-        TooltipCompat.setTooltipText(buttonNotify, buttonNotify.contentDescription)
-        TooltipCompat.setTooltipText(buttonHidden, buttonHidden.contentDescription)
+        TooltipCompat.setTooltipText(binding.buttonFavorite, binding.buttonFavorite.contentDescription)
+        TooltipCompat.setTooltipText(binding.buttonNotify, binding.buttonNotify.contentDescription)
+        TooltipCompat.setTooltipText(binding.buttonHidden, binding.buttonHidden.contentDescription)
 
         // language button
+        val buttonLanguage = binding.buttonLanguage
         buttonLanguage.setOnClickListener { displayLanguageSettings() }
         TooltipCompat.setTooltipText(
             buttonLanguage,
@@ -197,25 +167,26 @@ class ShowFragment() : Fragment() {
         )
 
         // rate button
+        val buttonRate = binding.buttonRate
         buttonRate.setOnClickListener { rateShow() }
         TooltipCompat.setTooltipText(buttonRate, buttonRate.context.getString(R.string.action_rate))
-        textViewRatingRange.text = getString(R.string.format_rating_range, 10)
+        binding.textViewRatingRange.text = getString(R.string.format_rating_range, 10)
 
         // share button
-        buttonShare.setOnClickListener { shareShow() }
+        binding.buttonShare.setOnClickListener { shareShow() }
 
         // shortcut button
-        buttonShortcut.setOnClickListener { createShortcut() }
+        binding.buttonShortcut.setOnClickListener { createShortcut() }
 
-        setCastVisibility(false)
-        setCrewVisibility(false)
+        setCastVisibility(binding, false)
+        setCrewVisibility(binding, false)
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
-        textViewOverview.copyTextToClipboardOnLongClick()
-        textViewGenres.copyTextToClipboardOnLongClick()
-        textViewContentRating.copyTextToClipboardOnLongClick()
-        textViewReleaseCountry.copyTextToClipboardOnLongClick()
-        textViewFirstRelease.copyTextToClipboardOnLongClick()
+        binding.textViewOverview.copyTextToClipboardOnLongClick()
+        binding.textViewGenres.copyTextToClipboardOnLongClick()
+        binding.textViewContentRating.copyTextToClipboardOnLongClick()
+        binding.textViewReleaseCountry.copyTextToClipboardOnLongClick()
+        binding.textViewFirstRelease.copyTextToClipboardOnLongClick()
 
         model.setShowId(showId)
         model.show.observe(viewLifecycleOwner) { sgShow2 ->
@@ -243,15 +214,14 @@ class ShowFragment() : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        unbinder.unbind()
+        binding = null
     }
 
     private fun populateShow(show: SgShow2) {
+        val binding = binding ?: return
+
         // status
-        textViewStatus?.let {
-            ShowStatus.setStatusAndColor(it, show.statusOrUnknown)
-        }
+        ShowStatus.setStatusAndColor(binding.textViewStatus, show.statusOrUnknown)
 
         // Network, next release day and time, runtime
         val releaseCountry = show.releaseCountry
@@ -278,11 +248,11 @@ class ShowFragment() : Fragment() {
         )
         val combinedString =
             TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
-        textViewReleaseTime?.text = combinedString
+        binding.textViewReleaseTime.text = combinedString
 
         // favorite button
         val isFavorite = show.favorite
-        buttonFavorite.apply {
+        binding.buttonFavorite.apply {
             text = getString(
                 if (isFavorite) R.string.state_favorite else R.string.context_favorite
             )
@@ -307,7 +277,7 @@ class ShowFragment() : Fragment() {
 
         // notifications button
         val notify = show.notify
-        buttonNotify.apply {
+        binding.buttonNotify.apply {
             contentDescription = getString(
                 if (notify) {
                     R.string.action_episode_notifications_off
@@ -337,7 +307,7 @@ class ShowFragment() : Fragment() {
 
         // hidden button
         val isHidden = show.hidden
-        buttonHidden.apply {
+        binding.buttonHidden.apply {
             text = getString(
                 if (isHidden) R.string.action_shows_filter_hidden else R.string.context_hide
             )
@@ -367,7 +337,7 @@ class ShowFragment() : Fragment() {
             // no description available, show no translation available message
             overview = TextTools.textNoTranslation(requireContext(), languageCode)
         }
-        textViewOverview.text = TextTools.textWithTmdbSource(textViewOverview.context, overview)
+        binding.textViewOverview.text = TextTools.textWithTmdbSource(binding.textViewOverview.context, overview)
 
         // language preferred for content
         val languageData = LanguageTools.getShowLanguageDataFor(
@@ -375,69 +345,69 @@ class ShowFragment() : Fragment() {
         )
         if (languageData != null) {
             this.languageCode = languageData.languageCode
-            buttonLanguage.text = languageData.languageString
+            binding.buttonLanguage.text = languageData.languageString
         }
 
         // country for release time calculation
         // show "unknown" if country is not supported
-        textViewReleaseCountry.text = TimeTools.getCountry(activity, releaseCountry)
+        binding.textViewReleaseCountry.text = TimeTools.getCountry(activity, releaseCountry)
 
         // original release
         ViewTools.setValueOrPlaceholder(
-            textViewFirstRelease,
+            binding.textViewFirstRelease,
             TimeTools.getShowReleaseYear(show.firstRelease)
         )
 
         // When the show was last updated by this app
-        textShowLastUpdated.text =
+        binding.textShowLastUpdated.text =
             TextTools.timeInMillisToDateAndTime(requireContext(), show.lastUpdatedMs)
 
         // content rating
-        ViewTools.setValueOrPlaceholder(textViewContentRating, show.contentRating)
+        ViewTools.setValueOrPlaceholder(binding.textViewContentRating, show.contentRating)
         // genres
         ViewTools.setValueOrPlaceholder(
-            textViewGenres,
+            binding.textViewGenres,
             TextTools.splitPipeSeparatedStrings(show.genres)
         )
 
         // trakt rating
-        textViewRating.text = TraktTools.buildRatingString(show.ratingGlobal)
-        textViewRatingVotes.text = TraktTools.buildRatingVotesString(activity, show.ratingVotes)
+        binding.textViewRating.text = TraktTools.buildRatingString(show.ratingGlobal)
+        binding.textViewRatingVotes.text = TraktTools.buildRatingVotesString(activity, show.ratingVotes)
 
         // user rating
-        textViewRatingUser.text = TraktTools.buildUserRatingString(activity, show.ratingUser)
+        binding.textViewRatingUser.text = TraktTools.buildUserRatingString(activity, show.ratingUser)
 
         // Similar shows button.
-        buttonSimilar.setOnClickListener {
+        binding.buttonSimilar.setOnClickListener {
             show.tmdbId?.also {
                 startActivity(SimilarShowsActivity.intent(requireContext(), it, show.title))
             }
         }
 
         // IMDb button
-        ServiceUtils.setUpImdbButton(show.imdbId, buttonImdb)
+        ServiceUtils.setUpImdbButton(show.imdbId, binding.buttonImdb)
 
         show.tmdbId?.also {
             // TMDb button
             val url = TmdbTools.buildShowUrl(it)
-            ViewTools.openUriOnClick(buttonTmdb, url)
-            buttonTmdb.copyTextToClipboardOnLongClick(url)
+            ViewTools.openUriOnClick(binding.buttonTmdb, url)
+            binding.buttonTmdb.copyTextToClipboardOnLongClick(url)
 
             // Trakt button
             val traktLink = TraktTools.buildShowUrl(it)
-            ViewTools.openUriOnClick(buttonTrakt, traktLink)
-            buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
+            ViewTools.openUriOnClick(binding.buttonTrakt, traktLink)
+            binding.buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
         }
 
-        buttonShowMetacritic.setOnClickListener {
+        binding.buttonShowMetacritic.setOnClickListener {
             if (show.title.isNotEmpty()) Metacritic.searchForTvShow(requireContext(), show.title)
         }
 
         // web search button
-        ServiceUtils.setUpWebSearchButton(show.title, buttonWebSearch)
+        ServiceUtils.setUpWebSearchButton(show.title, binding.buttonWebSearch)
 
         // shout button
-        buttonComments.setOnClickListener { v ->
+        binding.buttonComments.setOnClickListener { v ->
             val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
             Utils.startActivityWithAnimation(activity, i, v)
         }
@@ -446,13 +416,13 @@ class ShowFragment() : Fragment() {
         val posterSmall = show.posterSmall
         if (posterSmall.isNullOrEmpty()) {
             // have no poster
-            containerPoster.isClickable = false
-            containerPoster.isFocusable = false
+            binding.containerPoster.isClickable = false
+            binding.containerPoster.isFocusable = false
         } else {
             // poster and fullscreen button
-            ImageTools.loadShowPoster(requireActivity(), imageViewPoster, posterSmall)
-            containerPoster.isFocusable = true
-            containerPoster.setOnClickListener { v ->
+            ImageTools.loadShowPoster(requireActivity(), binding.imageViewPoster, posterSmall)
+            binding.containerPoster.isFocusable = true
+            binding.containerPoster.setOnClickListener { v ->
                 val intent = FullscreenImageActivity.intent(
                     requireContext(),
                     ImageTools.tmdbOrTvdbPosterUrl(posterSmall, requireContext()),
@@ -468,35 +438,36 @@ class ShowFragment() : Fragment() {
     }
 
     private fun populateCredits(credits: Credits?) {
+        val binding = binding ?: return
         if (credits == null) {
-            setCastVisibility(false)
-            setCrewVisibility(false)
+            setCastVisibility(binding, false)
+            setCrewVisibility(binding, false)
             return
         }
 
         if (credits.cast?.size != 0
-            && PeopleListHelper.populateShowCast(activity, castContainer, credits)) {
-            setCastVisibility(true)
+            && PeopleListHelper.populateShowCast(activity, binding.castContainer, credits)) {
+            setCastVisibility(binding, true)
         } else {
-            setCastVisibility(false)
+            setCastVisibility(binding, false)
         }
 
         if (credits.crew?.size != 0
-            && PeopleListHelper.populateShowCrew(activity, crewContainer, credits)) {
-            setCrewVisibility(true)
+            && PeopleListHelper.populateShowCrew(activity, binding.crewContainer, credits)) {
+            setCrewVisibility(binding, true)
         } else {
-            setCrewVisibility(false)
+            setCrewVisibility(binding, false)
         }
     }
 
-    private fun setCastVisibility(visible: Boolean) {
-        castLabel.visibility = if (visible) View.VISIBLE else View.GONE
-        castContainer.visibility = if (visible) View.VISIBLE else View.GONE
+    private fun setCastVisibility(binding: Binding, visible: Boolean) {
+        binding.castLabel.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.castContainer.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
-    private fun setCrewVisibility(visible: Boolean) {
-        crewLabel.visibility = if (visible) View.VISIBLE else View.GONE
-        crewContainer.visibility = if (visible) View.VISIBLE else View.GONE
+    private fun setCrewVisibility(binding: Binding, visible: Boolean) {
+        binding.crewLabel.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.crewContainer.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     private fun rateShow() {

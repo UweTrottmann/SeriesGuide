@@ -8,7 +8,6 @@ androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/re
 androidx-room = "2.4.3" # https://developer.android.com/jetpack/androidx/releases/room
 androidx-test = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/test
 androidx-test-espresso = "3.4.0"
-butterknife = "10.2.3" # https://github.com/JakeWharton/butterknife/blob/master/CHANGELOG.md
 coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 dagger = "2.42" # https://github.com/google/dagger/releases
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
@@ -55,8 +54,6 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
 androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta01" # https://developer.android.com/jetpack/androidx/releases/viewpager2
 billing = "com.android.billingclient:billing-ktx:4.0.0" # https://developer.android.com/google/play/billing/billing_library_releases_notes
-butterknife = { module = "com.jakewharton:butterknife", version.ref = "butterknife" }
-butterknife-compiler = { module = "com.jakewharton:butterknife-compiler", version.ref = "butterknife" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 debugdrawer-actions = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-actions", version.ref = "debugdrawer" }

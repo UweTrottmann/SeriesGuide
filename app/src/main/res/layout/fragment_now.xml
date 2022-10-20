@@ -37,6 +37,7 @@
         <include
             style="@style/Widget.SeriesGuide.InlineSnackbar"
             layout="@layout/layout_snackbar_sg"
+            android:id="@+id/include_snackbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom" />

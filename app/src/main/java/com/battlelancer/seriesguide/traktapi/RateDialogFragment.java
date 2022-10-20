@@ -1,21 +1,16 @@
 package com.battlelancer.seriesguide.traktapi;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.FragmentManager;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.DialogTraktRateBinding;
 import com.battlelancer.seriesguide.util.DialogTools;
 import com.battlelancer.seriesguide.util.tasks.BaseRateItemTask;
 import com.battlelancer.seriesguide.util.tasks.RateEpisodeTask;
@@ -23,6 +18,7 @@ import com.battlelancer.seriesguide.util.tasks.RateMovieTask;
 import com.battlelancer.seriesguide.util.tasks.RateShowTask;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.uwetrottmann.trakt5.enums.Rating;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,19 +79,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         return f;
     }
 
-    @BindViews({
-            R.id.rating1,
-            R.id.rating2,
-            R.id.rating3,
-            R.id.rating4,
-            R.id.rating5,
-            R.id.rating6,
-            R.id.rating7,
-            R.id.rating8,
-            R.id.rating9,
-            R.id.rating10
-    }) List<Button> ratingButtons;
-    private Unbinder unbinder;
+    private DialogTraktRateBinding binding;
 
     /**
      * Checks and asks for missing trakt credentials. Otherwise if they are valid shows the dialog.
@@ -112,10 +96,19 @@ public class RateDialogFragment extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder;
 
-        @SuppressLint("InflateParams") View layout = LayoutInflater.from(getContext())
-                .inflate(R.layout.dialog_trakt_rate, null);
+        binding = DialogTraktRateBinding.inflate(LayoutInflater.from(getContext()));
 
-        unbinder = ButterKnife.bind(this, layout);
+        List<Button> ratingButtons = new ArrayList<>();
+        ratingButtons.add(binding.rating1);
+        ratingButtons.add(binding.rating2);
+        ratingButtons.add(binding.rating3);
+        ratingButtons.add(binding.rating4);
+        ratingButtons.add(binding.rating5);
+        ratingButtons.add(binding.rating6);
+        ratingButtons.add(binding.rating7);
+        ratingButtons.add(binding.rating8);
+        ratingButtons.add(binding.rating9);
+        ratingButtons.add(binding.rating10);
 
         for (int i = 0; i < ratingButtons.size(); i++) {
             Button ratingButton = ratingButtons.get(i);
@@ -135,7 +128,7 @@ public class RateDialogFragment extends AppCompatDialogFragment {
         ratingButtons.get(9).setOnClickListener(v -> rate(Rating.TOTALLYNINJA));
 
         builder = new MaterialAlertDialogBuilder(requireContext());
-        builder.setView(layout);
+        builder.setView(binding.getRoot());
 
         return builder.create();
     }
@@ -174,8 +167,6 @@ public class RateDialogFragment extends AppCompatDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
+        binding = null;
     }
 }

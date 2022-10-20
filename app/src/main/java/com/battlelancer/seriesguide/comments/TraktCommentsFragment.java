@@ -12,9 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,15 +22,12 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding;
 import com.battlelancer.seriesguide.traktapi.TraktAction;
 import com.battlelancer.seriesguide.traktapi.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
-import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.entities.Comment;
@@ -53,45 +47,41 @@ public class TraktCommentsFragment extends Fragment {
         String EPISODE_ID = "episode";
     }
 
-    @BindView(R.id.listViewShouts) ListView list;
-    @BindView(R.id.textViewShoutsEmpty) TextView emptyView;
-    @BindView(R.id.swipeRefreshLayoutShouts) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.buttonShouts) Button buttonShout;
-    @BindView(R.id.editTextShouts) EditText editTextShout;
-    @BindView(R.id.checkBoxShouts) CheckBox checkBoxIsSpoiler;
-
+    private FragmentCommentsBinding binding;
     private TraktCommentsAdapter adapter;
-    private Unbinder unbinder;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_comments, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        binding = FragmentCommentsBinding.inflate(inflater, container, false);
 
-        swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewComments, R.id.listViewShouts);
-        swipeRefreshLayout.setOnRefreshListener(this::refreshCommentsWithNetworkCheck);
-        swipeRefreshLayout.setProgressViewOffset(false, getResources().getDimensionPixelSize(
-                R.dimen.swipe_refresh_progress_bar_start_margin),
+        binding.swipeRefreshLayoutShouts.setSwipeableChildren(R.id.scrollViewComments,
+                R.id.listViewShouts);
+        binding.swipeRefreshLayoutShouts.setOnRefreshListener(
+                this::refreshCommentsWithNetworkCheck);
+        binding.swipeRefreshLayoutShouts.setProgressViewOffset(false,
+                getResources().getDimensionPixelSize(
+                        R.dimen.swipe_refresh_progress_bar_start_margin),
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
+                binding.swipeRefreshLayoutShouts);
 
-        list.setOnItemClickListener(onItemClickListener);
-        list.setEmptyView(emptyView);
+        binding.listViewShouts.setOnItemClickListener(onItemClickListener);
+        binding.listViewShouts.setEmptyView(binding.textViewShoutsEmpty);
 
-        buttonShout.setOnClickListener(v -> comment());
+        binding.buttonShouts.setOnClickListener(v -> comment());
 
         // disable comment button by default, enable if comment entered
-        buttonShout.setEnabled(false);
-        editTextShout.addTextChangedListener(new TextWatcher() {
+        binding.buttonShouts.setEnabled(false);
+        binding.editTextShouts.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                buttonShout.setEnabled(!TextUtils.isEmpty(s));
+                binding.buttonShouts.setEnabled(!TextUtils.isEmpty(s));
             }
 
             @Override
@@ -102,21 +92,21 @@ public class TraktCommentsFragment extends Fragment {
         // set initial view states
         showProgressBar(true);
 
-        return view;
+        return binding.getRoot();
     }
 
     private void comment() {
         // prevent empty comments
-        String comment = editTextShout.getText().toString();
+        String comment = binding.editTextShouts.getText().toString();
         if (TextUtils.isEmpty(comment)) {
             return;
         }
 
         // disable the comment button
-        buttonShout.setEnabled(false);
+        binding.buttonShouts.setEnabled(false);
 
         Bundle args = requireArguments();
-        boolean isSpoiler = checkBoxIsSpoiler.isChecked();
+        boolean isSpoiler = binding.checkBoxShouts.isChecked();
 
         // as determined by "science", episode comments are most likely, so check for them first
         // comment for an episode?
@@ -152,7 +142,7 @@ public class TraktCommentsFragment extends Fragment {
 
         // setup adapter
         adapter = new TraktCommentsAdapter(getActivity());
-        list.setAdapter(adapter);
+        binding.listViewShouts.setAdapter(adapter);
 
         // load data
         LoaderManager.getInstance(this)
@@ -183,8 +173,7 @@ public class TraktCommentsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        binding = null;
     }
 
     @Override
@@ -271,7 +260,7 @@ public class TraktCommentsFragment extends Fragment {
      * Changes the empty message.
      */
     private void setEmptyMessage(String stringResourceId) {
-        emptyView.setText(stringResourceId);
+        binding.textViewShoutsEmpty.setText(stringResourceId);
     }
 
     /**
@@ -279,7 +268,7 @@ public class TraktCommentsFragment extends Fragment {
      * wrapping the comments list.
      */
     protected void showProgressBar(boolean isShowing) {
-        swipeRefreshLayout.setRefreshing(isShowing);
+        binding.swipeRefreshLayoutShouts.setRefreshing(isShowing);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -289,11 +278,11 @@ public class TraktCommentsFragment extends Fragment {
         }
 
         // reenable the shout button
-        buttonShout.setEnabled(true);
+        binding.buttonShouts.setEnabled(true);
 
         if (event.wasSuccessful) {
             // clear the text field and show recent shout
-            editTextShout.setText("");
+            binding.editTextShouts.setText("");
             refreshCommentsWithNetworkCheck();
         }
     }

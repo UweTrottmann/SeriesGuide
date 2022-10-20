@@ -20,12 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.api.SeriesGuideExtension;
+import com.battlelancer.seriesguide.databinding.FragmentExtensionsConfigurationBinding;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController;
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView;
@@ -42,11 +40,9 @@ import timber.log.Timber;
  */
 public class ExtensionsConfigurationFragment extends Fragment {
 
-    @BindView(R.id.listViewExtensionsConfiguration) DragSortListView listView;
-
+    private FragmentExtensionsConfigurationBinding binding;
     private ExtensionsAdapter adapter;
     private PopupMenu addExtensionPopupMenu;
-    private Unbinder unbinder;
 
     private List<Extension> disabledExtensions = new ArrayList<>();
     private List<ComponentName> enabledNames;
@@ -55,29 +51,28 @@ public class ExtensionsConfigurationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_extensions_configuration, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        binding = FragmentExtensionsConfigurationBinding.inflate(inflater, container, false);
 
         final ExtensionsDragSortController dragSortController = new ExtensionsDragSortController();
-        listView.setFloatViewManager(dragSortController);
-        listView.setOnTouchListener(dragSortController);
-        listView.setDropListener((from, to) -> {
+        binding.listViewExtensionsConfig.setFloatViewManager(dragSortController);
+        binding.listViewExtensionsConfig.setOnTouchListener(dragSortController);
+        binding.listViewExtensionsConfig.setDropListener((from, to) -> {
             ComponentName extension = enabledNames.remove(from);
             enabledNames.add(to, extension);
             saveExtensions();
         });
         // allow focusing menu buttons with a remote/d-pad
-        listView.setItemsCanFocus(true);
+        binding.listViewExtensionsConfig.setItemsCanFocus(true);
 
-        return v;
+        return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new ExtensionsAdapter(getActivity(), onItemClickListener);
-        listView.setAdapter(adapter);
+        adapter = new ExtensionsAdapter(requireContext(), onItemClickListener);
+        binding.listViewExtensionsConfig.setAdapter(adapter);
 
         setHasOptionsMenu(true);
     }
@@ -130,8 +125,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        binding = null;
     }
 
     private final LoaderManager.LoaderCallbacks<List<Extension>> loaderCallbacks
@@ -189,16 +183,16 @@ public class ExtensionsConfigurationFragment extends Fragment {
         }
     };
 
-    private ExtensionsAdapter.OnItemClickListener onItemClickListener =
+    private final ExtensionsAdapter.OnItemClickListener onItemClickListener =
             new ExtensionsAdapter.OnItemClickListener() {
                 @Override
-                public void onExtensionMenuButtonClick(View anchor,
-                        Extension extension, int position) {
+                public void onExtensionMenuButtonClick(@NonNull View anchor,
+                        @NonNull Extension extension, int position) {
                     showExtensionPopupMenu(anchor, extension, position);
                 }
 
                 @Override
-                public void onAddExtensionClick(View anchor) {
+                public void onAddExtensionClick(@NonNull View anchor) {
                     showAddExtensionPopupMenu(anchor);
                 }
             };
@@ -230,21 +224,21 @@ public class ExtensionsConfigurationFragment extends Fragment {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menu_action_extension_settings:
-                    // launch settings activity
-                    Utils.tryStartActivity(requireContext(), new Intent()
-                                    .setComponent(settingsActivity)
-                                    .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS,
-                                            true),
-                            true
-                    );
-                    ExtensionManager.get(getContext()).clearActionsCache();
-                    return true;
-                case R.id.menu_action_extension_disable:
-                    enabledNames.remove(position);
-                    saveExtensions();
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.menu_action_extension_settings) {
+                // launch settings activity
+                Utils.tryStartActivity(requireContext(), new Intent()
+                                .setComponent(settingsActivity)
+                                .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS,
+                                        true),
+                        true
+                );
+                ExtensionManager.get(getContext()).clearActionsCache();
+                return true;
+            } else if (itemId == R.id.menu_action_extension_disable) {
+                enabledNames.remove(position);
+                saveExtensions();
+                return true;
             }
             return false;
         }
@@ -282,7 +276,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
             enabledNames.add(extension.componentName);
             saveExtensions();
             // scroll to end of list
-            listView.smoothScrollToPosition(adapter.getCount() - 1);
+            binding.listViewExtensionsConfig.smoothScrollToPosition(adapter.getCount() - 1);
             return true;
         });
 
@@ -300,8 +294,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
                         loaderCallbacks);
     }
 
-    private Comparator<Extension> alphabeticalComparator
-            = new Comparator<Extension>() {
+    private final Comparator<Extension> alphabeticalComparator = new Comparator<Extension>() {
         @Override
         public int compare(Extension extension1,
                 Extension extension2) {
@@ -324,7 +317,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
         private int floatViewOriginPosition;
 
         ExtensionsDragSortController() {
-            super(listView, R.id.drag_handle, DragSortController.ON_DOWN,
+            super(binding.listViewExtensionsConfig, R.id.drag_handle, DragSortController.ON_DOWN,
                     DragSortController.CLICK_REMOVE);
             setRemoveEnabled(false);
         }
@@ -349,6 +342,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
 
         @Override
         public void onDragFloatView(View floatView, Point floatPoint, Point touchPoint) {
+            DragSortListView listView = binding.listViewExtensionsConfig;
             final int addButtonPosition = adapter.getCount() - 1;
             final int first = listView.getFirstVisiblePosition();
             final int lvDivHeight = listView.getDividerHeight();

@@ -9,8 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -20,15 +19,13 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.FragmentNowBinding;
+import com.battlelancer.seriesguide.history.HistoryActivity;
 import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity;
 import com.battlelancer.seriesguide.shows.history.NowAdapter;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
-import com.battlelancer.seriesguide.history.HistoryActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ViewTools;
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
@@ -40,26 +37,19 @@ import java.util.List;
  */
 public class MoviesNowFragment extends Fragment {
 
-    @BindView(R.id.swipeRefreshLayoutNow) EmptyViewSwipeRefreshLayout swipeRefreshLayout;
-
-    @BindView(R.id.recyclerViewNow) RecyclerView recyclerView;
-    @BindView(R.id.emptyViewNow) TextView emptyView;
-    @BindView(R.id.containerSnackbar) View snackbar;
-    @BindView(R.id.textViewSnackbar) TextView snackbarText;
-    @BindView(R.id.buttonSnackbar) Button snackbarButton;
+    private FragmentNowBinding binding;
 
     private MoviesNowAdapter adapter;
     private boolean isLoadingRecentlyWatched;
     private boolean isLoadingFriends;
-    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_now, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        binding = FragmentNowBinding.inflate(inflater, container, false);
 
+        EmptyViewSwipeRefreshLayout swipeRefreshLayout = binding.swipeRefreshLayoutNow;
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
         swipeRefreshLayout.setOnRefreshListener(this::refreshStream);
         swipeRefreshLayout.setProgressViewOffset(false,
@@ -68,11 +58,11 @@ public class MoviesNowFragment extends Fragment {
                 getResources().getDimensionPixelSize(
                         R.dimen.swipe_refresh_progress_bar_end_margin));
 
-        emptyView.setText(R.string.now_movies_empty);
+        binding.emptyViewNow.setText(R.string.now_movies_empty);
 
         showError(null);
-        snackbarButton.setText(R.string.refresh);
-        snackbarButton.setOnClickListener(v -> refreshStream());
+        binding.includeSnackbar.buttonSnackbar.setText(R.string.refresh);
+        binding.includeSnackbar.buttonSnackbar.setOnClickListener(v -> refreshStream());
 
         // recycler view layout manager
         final int spanCount = getResources().getInteger(R.integer.grid_column_count);
@@ -87,34 +77,35 @@ public class MoviesNowFragment extends Fragment {
                     return 1;
                 }
                 // make headers and more links span all columns
-                int type = adapter.getItem(position).type;
+                int type = adapter.getItem(position).getType();
                 return (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK)
                         ? spanCount : 1;
             }
         });
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+        binding.recyclerViewNow.setLayoutManager(layoutManager);
+        binding.recyclerViewNow.setHasFixedSize(true);
 
         new ViewModelProvider(requireActivity()).get(MoviesActivityViewModel.class)
                 .getScrollTabToTopLiveData()
                 .observe(getViewLifecycleOwner(), event -> {
                     if (event != null
                             && event.getTabPosition() == MoviesActivity.TAB_POSITION_NOW) {
-                        recyclerView.smoothScrollToPosition(0);
+                        binding.recyclerViewNow.smoothScrollToPosition(0);
                     }
                 });
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
+                binding.swipeRefreshLayoutNow);
 
         // define dataset
-        adapter = new MoviesNowAdapter(getContext(), itemClickListener);
+        adapter = new MoviesNowAdapter(requireContext(), itemClickListener);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -131,10 +122,10 @@ public class MoviesNowFragment extends Fragment {
                 updateEmptyState();
             }
         });
-        recyclerView.setAdapter(adapter);
+        binding.recyclerViewNow.setAdapter(adapter);
 
         // if connected to trakt, replace local history with trakt history, show friends history
-        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+        if (TraktCredentials.get(requireContext()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             isLoadingFriends = true;
             showProgressBar(true);
@@ -151,8 +142,7 @@ public class MoviesNowFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        binding = null;
     }
 
     @Override
@@ -183,7 +173,7 @@ public class MoviesNowFragment extends Fragment {
 
         // user might get disconnected during our life-time,
         // so properly clean up old loaders so they won't interfere
-        if (TraktCredentials.get(getActivity()).hasCredentials()) {
+        if (TraktCredentials.get(requireContext()).hasCredentials()) {
             isLoadingRecentlyWatched = true;
             LoaderManager loaderManager = LoaderManager.getInstance(this);
             loaderManager.restartLoader(MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
@@ -209,8 +199,9 @@ public class MoviesNowFragment extends Fragment {
     private void showError(@Nullable String errorText) {
         boolean show = errorText != null;
         if (show) {
-            snackbarText.setText(errorText);
+            binding.includeSnackbar.textViewSnackbar.setText(errorText);
         }
+        LinearLayout snackbar = binding.includeSnackbar.containerSnackbar;
         if (snackbar.getVisibility() == (show ? View.VISIBLE : View.GONE)) {
             // already in desired state, avoid replaying animation
             return;
@@ -231,16 +222,16 @@ public class MoviesNowFragment extends Fragment {
                 return;
             }
         }
-        swipeRefreshLayout.setRefreshing(show);
+        binding.swipeRefreshLayoutNow.setRefreshing(show);
     }
 
     private void updateEmptyState() {
         boolean isEmpty = adapter.getItemCount() == 0;
-        recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
-        emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+        binding.recyclerViewNow.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        binding.emptyViewNow.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
     }
 
-    private NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
+    private final NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
             NowAdapter.NowItem item = adapter.getItem(position);
@@ -249,19 +240,19 @@ public class MoviesNowFragment extends Fragment {
             }
 
             // more history link?
-            if (item.type == NowAdapter.ItemType.MORE_LINK) {
+            if (item.getType() == NowAdapter.ItemType.MORE_LINK) {
                 startActivity(new Intent(getActivity(), HistoryActivity.class).putExtra(
                         HistoryActivity.InitBundle.HISTORY_TYPE,
                         HistoryActivity.DISPLAY_MOVIE_HISTORY));
                 return;
             }
 
-            if (item.movieTmdbId == null) {
+            if (item.getMovieTmdbId() == null) {
                 return;
             }
 
             // display movie details
-            Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movieTmdbId);
+            Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.getMovieTmdbId());
 
             // simple scale up animation as there are no images
             Utils.startActivityWithAnimation(getActivity(), i, view);

@@ -16,12 +16,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.FragmentMoviesDiscoverBinding;
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity;
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager;
 import com.battlelancer.seriesguide.ui.MoviesActivity;
@@ -33,12 +30,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class MoviesDiscoverFragment extends Fragment {
 
-    @BindView(R.id.swipeRefreshLayoutMoviesDiscover) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.recyclerViewMoviesDiscover) RecyclerView recyclerView;
+    private FragmentMoviesDiscoverBinding binding;
 
     private MoviesDiscoverAdapter adapter;
     private GridLayoutManager layoutManager;
-    private Unbinder unbinder;
 
     public MoviesDiscoverFragment() {
     }
@@ -52,12 +47,12 @@ public class MoviesDiscoverFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movies_discover, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        binding = FragmentMoviesDiscoverBinding.inflate(inflater, container, false);
 
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-        swipeRefreshLayout.setRefreshing(false);
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), swipeRefreshLayout);
+        binding.swipeRefreshLayoutMoviesDiscover.setOnRefreshListener(onRefreshListener);
+        binding.swipeRefreshLayoutMoviesDiscover.setRefreshing(false);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
+                binding.swipeRefreshLayoutMoviesDiscover);
 
         adapter = new MoviesDiscoverAdapter(requireContext(),
                 new DiscoverItemClickListener(requireContext()));
@@ -81,20 +76,20 @@ public class MoviesDiscoverFragment extends Fragment {
             }
         });
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        binding.recyclerViewMoviesDiscover.setHasFixedSize(true);
+        binding.recyclerViewMoviesDiscover.setLayoutManager(layoutManager);
+        binding.recyclerViewMoviesDiscover.setAdapter(adapter);
 
         new ViewModelProvider(requireActivity()).get(MoviesActivityViewModel.class)
                 .getScrollTabToTopLiveData()
                 .observe(getViewLifecycleOwner(), event -> {
                     if (event != null
                             && event.getTabPosition() == MoviesActivity.TAB_POSITION_DISCOVER) {
-                        recyclerView.smoothScrollToPosition(0);
+                        binding.recyclerViewMoviesDiscover.smoothScrollToPosition(0);
                     }
                 });
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -118,8 +113,7 @@ public class MoviesDiscoverFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        binding = null;
     }
 
     @Override
@@ -172,7 +166,7 @@ public class MoviesDiscoverFragment extends Fragment {
             if (!isAdded()) {
                 return;
             }
-            swipeRefreshLayout.setRefreshing(false);
+            binding.swipeRefreshLayoutMoviesDiscover.setRefreshing(false);
             adapter.updateMovies(data.getResults());
         }
 
@@ -182,7 +176,7 @@ public class MoviesDiscoverFragment extends Fragment {
         }
     };
 
-    private SwipeRefreshLayout.OnRefreshListener onRefreshListener
+    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener
             = () -> LoaderManager.getInstance(MoviesDiscoverFragment.this)
                     .restartLoader(0, null, nowPlayingLoaderCallbacks);
 }

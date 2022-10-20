@@ -9,21 +9,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.FragmentAddshowTraktBinding;
 import com.battlelancer.seriesguide.ui.OverviewActivity;
 import com.battlelancer.seriesguide.ui.SearchActivity;
+import com.battlelancer.seriesguide.ui.widgets.EmptyView;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask;
 import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask;
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask;
-import com.battlelancer.seriesguide.ui.widgets.EmptyView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,6 +42,8 @@ public class TraktAddFragment extends AddFragment {
      */
     private final static String ARG_TYPE = "traktListType";
 
+    private FragmentAddshowTraktBinding binding;
+
     public static TraktAddFragment newInstance(TraktShowsLink link) {
         TraktAddFragment f = new TraktAddFragment();
 
@@ -52,7 +54,6 @@ public class TraktAddFragment extends AddFragment {
         return f;
     }
 
-    private Unbinder unbinder;
     private TraktShowsLink listType;
 
     @Override
@@ -66,13 +67,32 @@ public class TraktAddFragment extends AddFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_addshow_trakt, container, false);
-        unbinder = ButterKnife.bind(this, v);
+        binding = FragmentAddshowTraktBinding.inflate(inflater, container, false);
 
         // set initial view states
         setProgressVisible(true, false);
 
-        return v;
+        return binding.getRoot();
+    }
+
+    @Override
+    public View getContentContainer() {
+        return binding.containerAddContent;
+    }
+
+    @Override
+    public View getProgressBar() {
+        return binding.progressBarAdd;
+    }
+
+    @Override
+    public GridView getResultsGridView() {
+        return binding.gridViewAdd;
+    }
+
+    @Override
+    public EmptyView getEmptyView() {
+        return binding.emptyViewAdd;
     }
 
     @Override
@@ -191,8 +211,7 @@ public class TraktAddFragment extends AddFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        unbinder.unbind();
+        binding = null;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

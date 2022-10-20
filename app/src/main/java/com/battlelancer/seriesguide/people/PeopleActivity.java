@@ -3,20 +3,13 @@ package com.battlelancer.seriesguide.people;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.ActivityPeopleBinding;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
-
-    @Nullable
-    @BindView(R.id.viewPeopleShadowStart)
-    View shadowPeoplePane;
-    @BindView(R.id.containerPeople) View containerPeople;
 
     private boolean isTwoPane;
 
@@ -36,6 +29,7 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             this.value = value;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return value;
@@ -52,24 +46,22 @@ public class PeopleActivity extends BaseActivity implements PeopleFragment.OnSho
             this.value = value;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return value;
         }
     }
 
-    static final int PEOPLE_LOADER_ID = 100;
-    static final int PERSON_LOADER_ID = 101;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_people);
-        ButterKnife.bind(this);
+        ActivityPeopleBinding binding = ActivityPeopleBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         setupActionBar();
 
         // if there is a pane shadow, we are in two pane layout
-        isTwoPane = shadowPeoplePane != null;
+        isTwoPane = binding.viewPeopleShadowStart != null;
 
         if (savedInstanceState == null) {
             // check if we should directly show a person

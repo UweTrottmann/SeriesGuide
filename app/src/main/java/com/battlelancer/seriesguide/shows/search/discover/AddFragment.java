@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.shows.search.discover;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +10,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.ItemAddshowBinding;
 import com.battlelancer.seriesguide.enums.NetworkResult;
 import com.battlelancer.seriesguide.shows.tools.AddShowTask;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;
-import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.ui.widgets.EmptyView;
+import com.battlelancer.seriesguide.util.ImageTools;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,7 +32,9 @@ import org.greenrobot.eventbus.ThreadMode;
 public abstract class AddFragment extends Fragment {
 
     public static class OnAddingShowEvent {
-        /** Is -1 if adding all shows of a tab. Not updating other tabs then. */
+        /**
+         * Is -1 if adding all shows of a tab. Not updating other tabs then.
+         */
         public final int showTmdbId;
 
         public OnAddingShowEvent(int showTmdbId) {
@@ -49,27 +49,29 @@ public abstract class AddFragment extends Fragment {
         }
     }
 
-    @BindView(R.id.containerAddContent) View contentContainer;
-    @BindView(R.id.progressBarAdd) View progressBar;
-    @BindView(R.id.gridViewAdd) GridView resultsGridView;
-    @BindView(R.id.emptyViewAdd) EmptyView emptyView;
-
     protected List<SearchResult> searchResults;
     protected AddAdapter adapter;
 
     /**
-     * Implementers should inflate their own layout and inject views with {@link
-     * butterknife.ButterKnife}.
+     * Implementers should inflate their own layout and provide views through getters.
      */
     @Override
     public abstract View onCreateView(@NonNull LayoutInflater inflater,
             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
+    public abstract View getContentContainer();
+
+    public abstract View getProgressBar();
+
+    public abstract GridView getResultsGridView();
+
+    public abstract EmptyView getEmptyView();
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setupEmptyView(emptyView);
+        setupEmptyView(getEmptyView());
     }
 
     @Override
@@ -77,13 +79,13 @@ public abstract class AddFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // basic setup of grid view
-        resultsGridView.setEmptyView(emptyView);
+        getResultsGridView().setEmptyView(getEmptyView());
         // enable app bar scrolling out of view
-        ViewCompat.setNestedScrollingEnabled(resultsGridView, true);
+        ViewCompat.setNestedScrollingEnabled(getResultsGridView(), true);
 
         // restore an existing adapter
         if (adapter != null) {
-            resultsGridView.setAdapter(adapter);
+            getResultsGridView().setAdapter(adapter);
         }
     }
 
@@ -107,14 +109,14 @@ public abstract class AddFragment extends Fragment {
      * Changes the empty message.
      */
     protected void setEmptyMessage(CharSequence message) {
-        emptyView.setMessage(message);
+        getEmptyView().setMessage(message);
     }
 
     public void setSearchResults(List<SearchResult> searchResults) {
         this.searchResults = searchResults;
         adapter.clear();
         adapter.addAll(searchResults);
-        resultsGridView.setAdapter(adapter);
+        getResultsGridView().setAdapter(adapter);
     }
 
     /**
@@ -124,11 +126,11 @@ public abstract class AddFragment extends Fragment {
         if (animate) {
             Animation out = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out);
             Animation in = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
-            contentContainer.startAnimation(visible ? out : in);
-            progressBar.startAnimation(visible ? in : out);
+            getContentContainer().startAnimation(visible ? out : in);
+            getProgressBar().startAnimation(visible ? in : out);
         }
-        contentContainer.setVisibility(visible ? View.GONE : View.VISIBLE);
-        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+        getContentContainer().setVisibility(visible ? View.GONE : View.VISIBLE);
+        getProgressBar().setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -174,7 +176,9 @@ public abstract class AddFragment extends Fragment {
 
         public interface OnItemClickListener {
             void onItemClick(SearchResult item);
+
             void onAddClick(SearchResult item);
+
             void onMenuWatchlistClick(View view, int showTmdbId);
         }
 
@@ -225,9 +229,10 @@ public abstract class AddFragment extends Fragment {
             ViewHolder holder;
 
             if (convertView == null) {
-                convertView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_addshow, parent, false);
-                holder = new ViewHolder(convertView, menuClickListener);
+                ItemAddshowBinding binding = ItemAddshowBinding.inflate(
+                        LayoutInflater.from(parent.getContext()), parent, false);
+                holder = new ViewHolder(binding, menuClickListener);
+                convertView = binding.getRoot();
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -237,59 +242,67 @@ public abstract class AddFragment extends Fragment {
             if (item == null) {
                 return convertView; // all bets are off!
             }
-            holder.item = item;
-
-            // hide watchlist menu if not useful
-            holder.buttonContextMenu.setVisibility(showMenuWatchlist ? View.VISIBLE : View.GONE);
-            // display added indicator instead of add button if already added that show
-            holder.addIndicator.setState(item.getState());
-            String showTitle = item.getTitle();
-            holder.addIndicator.setContentDescriptionAdded(
-                    getContext().getString(R.string.add_already_exists, showTitle));
-
-            // set text properties immediately
-            holder.title.setText(showTitle);
-            holder.description.setText(item.getOverview());
-
-            // only local shows will have a poster path set
-            // try to fall back to the TMDB poster for all others
-            String posterUrl = ImageTools.posterUrlOrResolve(item.getPosterPath(),
-                    item.getTmdbId(),
-                    item.getLanguage(),
-                    getContext());
-            ImageTools.loadShowPosterUrlResizeCrop(getContext(), holder.poster, posterUrl);
+            holder.bindTo(item, getContext(), showMenuWatchlist);
 
             return convertView;
         }
 
         static class ViewHolder {
 
-            public SearchResult item;
+            private final ItemAddshowBinding binding;
+            @Nullable private SearchResult item;
 
-            @BindView(R.id.textViewAddTitle) public TextView title;
-            @BindView(R.id.textViewAddDescription) public TextView description;
-            @BindView(R.id.imageViewAddPoster) public ImageView poster;
-            @BindView(R.id.addIndicatorAddShow) public AddIndicator addIndicator;
-            @BindView(R.id.buttonItemAddMore) public ImageView buttonContextMenu;
-
-            public ViewHolder(View view,
+            public ViewHolder(ItemAddshowBinding binding,
                     final OnItemClickListener onItemClickListener) {
-                ButterKnife.bind(this, view);
-                view.setOnClickListener(v -> {
+                this.binding = binding;
+                binding.getRoot().setOnClickListener(v -> {
                     if (onItemClickListener != null) {
                         onItemClickListener.onItemClick(item);
                     }
                 });
-                addIndicator.setOnAddClickListener(v -> {
+                binding.addIndicatorAddShow.setOnAddClickListener(v -> {
                     if (onItemClickListener != null) {
                         onItemClickListener.onAddClick(item);
                     }
                 });
-                buttonContextMenu.setOnClickListener(v -> {
-                    if (onItemClickListener != null) {
+                binding.buttonItemAddMore.setOnClickListener(v -> {
+                    if (onItemClickListener != null && item != null) {
                         onItemClickListener.onMenuWatchlistClick(v, item.getTmdbId());
                     }
                 });
+            }
+
+            public void bindTo(@Nullable SearchResult item, Context context, boolean showMenuWatchlist) {
+                this.item = item;
+                // hide watchlist menu if not useful
+                binding.buttonItemAddMore.setVisibility(
+                        showMenuWatchlist ? View.VISIBLE : View.GONE);
+                if (item == null) {
+                    binding.addIndicatorAddShow.setState(SearchResult.STATE_ADD);
+                    binding.addIndicatorAddShow.setContentDescriptionAdded(null);
+                    binding.textViewAddTitle.setText(null);
+                    binding.textViewAddDescription.setText(null);
+                    binding.imageViewAddPoster.setImageDrawable(null);
+                } else {
+                    // display added indicator instead of add button if already added that show
+                    binding.addIndicatorAddShow.setState(item.getState());
+                    String showTitle = item.getTitle();
+                    binding.addIndicatorAddShow.setContentDescriptionAdded(
+                            context.getString(R.string.add_already_exists, showTitle));
+
+                    // set text properties immediately
+                    binding.textViewAddTitle.setText(showTitle);
+                    binding.textViewAddDescription.setText(item.getOverview());
+
+                    // only local shows will have a poster path set
+                    // try to fall back to the TMDB poster for all others
+                    String posterUrl = ImageTools.posterUrlOrResolve(item.getPosterPath(),
+                            item.getTmdbId(),
+                            item.getLanguage(),
+                            context);
+                    ImageTools.loadShowPosterUrlResizeCrop(context, binding.imageViewAddPoster,
+                            posterUrl);
+                }
             }
         }
     }

@@ -2,14 +2,14 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayoutEpisodes"
+    android:id="@+id/rootEpisodes"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/Widget.SeriesGuide.AppBarLayout.Transparent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.SeriesGuide.AppBarLayout.Transparent">
+        android:layout_height="wrap_content">
 
         <include layout="@layout/toolbar" />
 

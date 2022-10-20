@@ -14,9 +14,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ActivitySearchBinding
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
@@ -31,8 +30,6 @@ import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.gms.actions.SearchIntents
-import com.google.android.material.textfield.TextInputLayout
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -45,20 +42,13 @@ import org.greenrobot.eventbus.ThreadMode
 open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener,
     SearchTriggerListener {
 
-    @BindView(R.id.containerSearchBar)
-    internal lateinit var searchContainer: View
+    private lateinit var binding: ActivitySearchBinding
 
-    @BindView(R.id.text_input_layout_toolbar)
-    internal lateinit var searchInputLayout: TextInputLayout
+    private val viewPager
+        get() = binding.pagerSearch
 
-    @BindView(R.id.auto_complete_view_toolbar)
-    internal lateinit var searchAutoCompleteView: AutoCompleteTextView
-
-    @BindView(R.id.tabsSearch)
-    internal lateinit var tabs: SlidingTabLayout
-
-    @BindView(R.id.pagerSearch)
-    internal lateinit var viewPager: ViewPager2
+    private val searchAutoCompleteView
+        get() = binding.sgToolbar.autoCompleteViewToolbar
 
     private lateinit var searchHistory: SearchHistory
     private lateinit var searchHistoryAdapter: ArrayAdapter<String>
@@ -66,15 +56,16 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupActionBar()
 
-        setupViews(savedInstanceState == null)
+        bindViews(savedInstanceState == null)
 
-        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, {
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {
             startActivity(SimilarShowsActivity.intent(this, it.tmdbId, it.title))
-        })
+        }
 
         handleSearchIntent(intent)
     }
@@ -87,9 +78,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         }
     }
 
-    private fun setupViews(mayShowKeyboard: Boolean) {
-        ButterKnife.bind(this)
-
+    private fun bindViews(mayShowKeyboard: Boolean) {
         searchAutoCompleteView.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH
                 || (event != null && event.action == KeyEvent.ACTION_DOWN
@@ -117,6 +106,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
             dismissDropDown()
         }
 
+        val tabs = binding.tabsSearch
         val tabsAdapter = TabStripAdapter(this, viewPager, tabs)
         tabs.setOnPageChangeListener(pageChangeListener)
         tabs.setOnTabClickListener { position ->
@@ -170,11 +160,12 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         override fun onPageSelected(position: Int) {
             // only display search box if it can be used
             val searchVisible = position <= TAB_POSITION_SEARCH
-            searchContainer.visibility = if (searchVisible) View.VISIBLE else View.GONE
+            val toolbar = binding.sgToolbar
+            toolbar.containerSearchBar.visibility = if (searchVisible) View.VISIBLE else View.GONE
             if (searchVisible) {
                 remoteSearchVisible = position == TAB_POSITION_SEARCH
                 searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (remoteSearchVisible) searchHistoryAdapter else null)
-                searchInputLayout.hint =
+                toolbar.textInputLayoutToolbar.hint =
                     getString(if (remoteSearchVisible) R.string.checkin_searchhint else R.string.search)
             }
         }

@@ -5,16 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridView
 import android.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.databinding.FragmentShowSearchBinding
 import com.battlelancer.seriesguide.shows.ShowMenuItemClickListener
 import com.battlelancer.seriesguide.ui.OverviewActivity
-import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
+import com.battlelancer.seriesguide.util.TabClickEvent
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -23,6 +25,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class ShowSearchFragment : BaseSearchFragment() {
 
+    private var binding: FragmentShowSearchBinding? = null
     private val model by viewModels<ShowSearchViewModel>()
     private lateinit var adapter: ShowSearchAdapter
     private lateinit var searchTriggerListener: SearchTriggerListener
@@ -30,9 +33,17 @@ class ShowSearchFragment : BaseSearchFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_show_search, container, false)
+    ): View {
+        return FragmentShowSearchBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
     }
+
+    override val emptyView: View
+        get() = binding!!.textViewSearchEmpty
+
+    override val gridView: GridView
+        get() = binding!!.gridViewSearch
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,6 +71,11 @@ class ShowSearchFragment : BaseSearchFragment() {
         if (args != null) {
             updateQuery(args)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -5,16 +5,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.ViewPager2;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.ActivityMoviesBinding;
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseTopActivity;
 import com.battlelancer.seriesguide.ui.TabStripAdapter;
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout;
 
 /**
  * Movie section of the app, displays various movie tabs.
@@ -37,8 +35,7 @@ public class MoviesActivityImpl extends BaseTopActivity {
     public static final int TAB_POSITION_WATCHED_WITH_NOW = 4;
     private static final int TAB_COUNT_WITH_TRAKT = 5;
 
-    @BindView(R.id.viewPagerTabs) ViewPager2 viewPager;
-    @BindView(R.id.tabLayoutTabs) SlidingTabLayout tabs;
+    private ActivityMoviesBinding binding;
     private TabStripAdapter tabsAdapter;
     private boolean showNowTab;
 
@@ -47,7 +44,8 @@ public class MoviesActivityImpl extends BaseTopActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabs_drawer);
+        binding = ActivityMoviesBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         setupActionBar();
         setupBottomNavigation(R.id.navigation_item_movies);
 
@@ -60,21 +58,19 @@ public class MoviesActivityImpl extends BaseTopActivity {
             postponeEnterTransition();
             // Allow the adapters to repopulate during the next layout pass
             // before starting the transition animation
-            viewPager.post(this::startPostponedEnterTransition);
+            binding.viewPagerMovies.post(this::startPostponedEnterTransition);
         }
     }
 
     private void setupViews(Bundle savedInstanceState) {
-        ButterKnife.bind(this);
-
         // tabs
         showNowTab = TraktCredentials.get(this).hasCredentials();
-        tabs.setOnTabClickListener(position -> {
-            if (viewPager.getCurrentItem() == position) {
+        binding.tabLayoutMovies.setOnTabClickListener(position -> {
+            if (binding.viewPagerMovies.getCurrentItem() == position) {
                 scrollSelectedTabToTop();
             }
         });
-        tabsAdapter = new TabStripAdapter(this, viewPager, tabs);
+        tabsAdapter = new TabStripAdapter(this, binding.viewPagerMovies, binding.tabLayoutMovies);
         // discover
         tabsAdapter.addTab(R.string.title_discover, MoviesDiscoverFragment.class, null);
         // trakt-only tabs should only be visible if connected
@@ -91,12 +87,12 @@ public class MoviesActivityImpl extends BaseTopActivity {
 
         tabsAdapter.notifyTabsChanged();
         if (savedInstanceState == null) {
-            viewPager.setCurrentItem(MoviesSettings.getLastMoviesTabPosition(this), false);
+            binding.viewPagerMovies.setCurrentItem(MoviesSettings.getLastMoviesTabPosition(this), false);
         }
     }
 
     private void scrollSelectedTabToTop() {
-        viewModel.scrollTabToTop(viewPager.getCurrentItem(), showNowTab);
+        viewModel.scrollTabToTop(binding.viewPagerMovies.getCurrentItem(), showNowTab);
     }
 
     @Override
@@ -114,11 +110,11 @@ public class MoviesActivityImpl extends BaseTopActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        MoviesSettings.saveLastMoviesTabPosition(this, viewPager.getCurrentItem());
+        MoviesSettings.saveLastMoviesTabPosition(this, binding.viewPagerMovies.getCurrentItem());
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.movies_menu, menu);
         return true;
@@ -146,9 +142,9 @@ public class MoviesActivityImpl extends BaseTopActivity {
         }
     }
 
+    @NonNull
     @Override
     protected View getSnackbarParentView() {
-        return findViewById(R.id.rootLayoutTabs);
+        return binding.coordinatorLayoutMovies;
     }
-
 }
