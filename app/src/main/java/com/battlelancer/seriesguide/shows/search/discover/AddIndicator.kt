@@ -1,48 +1,53 @@
-package com.battlelancer.seriesguide.shows.search.discover;
+package com.battlelancer.seriesguide.shows.search.discover
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.widget.FrameLayout;
-import com.battlelancer.seriesguide.databinding.LayoutAddIndicatorBinding;
+import android.content.Context
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.widget.FrameLayout
+import com.battlelancer.seriesguide.databinding.LayoutAddIndicatorBinding
 
-public class AddIndicator extends FrameLayout {
+/**
+ * A three state visual indicator with states add, adding and added from [SearchResult].
+ */
+class AddIndicator(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
-    private final LayoutAddIndicatorBinding binding;
+    private val binding: LayoutAddIndicatorBinding
 
-    public AddIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        binding = LayoutAddIndicatorBinding.inflate(LayoutInflater.from(context), this);
+    init {
+        binding = LayoutAddIndicatorBinding.inflate(LayoutInflater.from(context), this)
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        binding.imageViewAddIndicatorAdded.setVisibility(GONE);
-        binding.progressBarAddIndicator.setVisibility(GONE);
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        binding.imageViewAddIndicatorAdded.visibility = GONE
+        binding.progressBarAddIndicator.visibility = GONE
     }
 
-    public void setContentDescriptionAdded(CharSequence contentDescription) {
-        binding.imageViewAddIndicatorAdded.setContentDescription(contentDescription);
+    fun setContentDescriptionAdded(contentDescription: CharSequence?) {
+        binding.imageViewAddIndicatorAdded.contentDescription = contentDescription
     }
 
-    public void setOnAddClickListener(OnClickListener onClickListener) {
-        binding.imageViewAddIndicator.setOnClickListener(onClickListener);
+    fun setOnAddClickListener(onClickListener: OnClickListener?) {
+        binding.imageViewAddIndicator.setOnClickListener(onClickListener)
     }
 
-    public void setState(int state) {
-        if (state == SearchResult.STATE_ADD) {
-            binding.imageViewAddIndicator.setVisibility(VISIBLE);
-            binding.progressBarAddIndicator.setVisibility(GONE);
-            binding.imageViewAddIndicatorAdded.setVisibility(GONE);
-        } else if (state == SearchResult.STATE_ADDING) {
-            binding.imageViewAddIndicator.setVisibility(GONE);
-            binding.progressBarAddIndicator.setVisibility(VISIBLE);
-            binding.imageViewAddIndicatorAdded.setVisibility(GONE);
-        } else if (state == SearchResult.STATE_ADDED) {
-            binding.imageViewAddIndicator.setVisibility(GONE);
-            binding.progressBarAddIndicator.setVisibility(GONE);
-            binding.imageViewAddIndicatorAdded.setVisibility(VISIBLE);
+    fun setState(state: Int) {
+        when (state) {
+            SearchResult.STATE_ADD -> {
+                binding.imageViewAddIndicator.visibility = VISIBLE
+                binding.progressBarAddIndicator.visibility = GONE
+                binding.imageViewAddIndicatorAdded.visibility = GONE
+            }
+            SearchResult.STATE_ADDING -> {
+                binding.imageViewAddIndicator.visibility = GONE
+                binding.progressBarAddIndicator.visibility = VISIBLE
+                binding.imageViewAddIndicatorAdded.visibility = GONE
+            }
+            SearchResult.STATE_ADDED -> {
+                binding.imageViewAddIndicator.visibility = GONE
+                binding.progressBarAddIndicator.visibility = GONE
+                binding.imageViewAddIndicatorAdded.visibility = VISIBLE
+            }
         }
     }
 }
