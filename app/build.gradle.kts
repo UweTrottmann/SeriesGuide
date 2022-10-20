@@ -170,6 +170,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.coordinatorlayout)
     implementation(libs.androidx.preference)
+    implementation(libs.androidx.swiperefreshlayout)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
