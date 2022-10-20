@@ -186,8 +186,6 @@ dependencies {
     implementation(libs.androidx.room.paging)
     kapt(libs.androidx.room.compiler)
 
-    implementation(libs.butterknife)
-    kapt(libs.butterknife.compiler)
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
     implementation(libs.greenrobot.eventbus)

@@ -64,9 +64,6 @@ Copyright 2013 The Android Open Source Project
 AndroidUtils (https://github.com/UweTrottmann/AndroidUtils)
 Copyright 2012 Uwe Trottmann
 
-butterknife (https://github.com/JakeWharton/butterknife)
-Copyright 2013 Jake Wharton
-
 dagger 2 (https://github.com/google/dagger)
 Copyright 2012 Square, Inc.
 Copyright 2012 Google, Inc.
