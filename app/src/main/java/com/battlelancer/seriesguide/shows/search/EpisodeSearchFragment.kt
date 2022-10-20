@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridView
 import androidx.fragment.app.viewModels
-import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentSearchBinding
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.Utils
@@ -18,15 +19,23 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class EpisodeSearchFragment : BaseSearchFragment() {
 
+    private var binding: FragmentSearchBinding? = null
     private val model by viewModels<EpisodeSearchViewModel>()
     private lateinit var adapter: EpisodeSearchAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        return FragmentSearchBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
     }
+
+    override val emptyView: View
+        get() = binding!!.textViewSearchEmpty
+    override val gridView: GridView
+        get() = binding!!.gridViewSearch
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,6 +61,11 @@ class EpisodeSearchFragment : BaseSearchFragment() {
         if (args != null) {
             updateQuery(args)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
