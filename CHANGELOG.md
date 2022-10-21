@@ -14,13 +14,13 @@ Version 66
 ----------
 *in development*
 
-#### next
-*in development*
+#### 66.0.1 🧪
+*2022-10-21*
 
 * 🔨 Fix crash when resizing the app while on the episodes screen.
 
 #### 66.0.0 🧪
-*2022-10-14*
+*2022-10-20*
 
 * 🔨 Manage lists: fix an item getting removed from other lists if there are many lists.
 * 📝 Latest user interface translations from Crowdin.
