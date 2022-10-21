@@ -14,6 +14,11 @@ Version 66
 ----------
 *in development*
 
+#### next
+*in development*
+
+* 🔨 Fix crash when resizing the app while on the episodes screen.
+
 #### 66.0.0 🧪
 *2022-10-14*
 
