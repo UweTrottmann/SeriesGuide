@@ -81,7 +81,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16" # https://github.com/michaelbull/kotlin-result/releases
-material = "com.google.android.material:material:1.5.0" # https://github.com/material-components/material-components-android/releases
+material = "com.google.android.material:material:1.7.0" # https://github.com/material-components/material-components-android/releases
 mockito = "org.mockito:mockito-core:4.5.1"
 okhttp = "com.squareup.okhttp3:okhttp:4.10.0" # https://github.com/square/okhttp/blob/master/CHANGELOG.md
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
