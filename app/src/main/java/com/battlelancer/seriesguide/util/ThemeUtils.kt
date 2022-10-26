@@ -61,7 +61,7 @@ object ThemeUtils {
     fun setTheme(activity: Activity, themeResId: Int = SeriesGuidePreferences.THEME) {
         activity.setTheme(themeResId)
         if (DisplaySettings.isDynamicColorsEnabled(activity)) {
-            DynamicColors.applyIfAvailable(activity)
+            DynamicColors.applyToActivityIfAvailable(activity)
         }
     }
 }
