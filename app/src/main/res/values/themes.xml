@@ -67,6 +67,7 @@
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
 
         <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
         <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
@@ -140,6 +141,7 @@
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
 
         <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
         <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
