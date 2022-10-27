@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -79,6 +80,17 @@ class EpisodesActivity : BaseMessageActivity() {
             getBoolean(STATE_HAS_TAPPED_ITEM_SINGLE_PANE) ?: false
 
         setupViews()
+
+        onBackPressedDispatcher.addCallback {
+            // If single pane view and previously switched to pager by tapping on list item,
+            // go back to list first instead of finishing activity.
+            if (isSinglePaneView && isListGone && hasTappedItemInSinglePaneView) {
+                hasTappedItemInSinglePaneView = false
+                switchView(makeListVisible = true, updateOptionsMenu = true)
+            } else {
+                finish()
+            }
+        }
 
         val episodeRowId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
         val episodeTvdbId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, 0)
@@ -281,17 +293,6 @@ class EpisodesActivity : BaseMessageActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onBackPressed() {
-        // If single pane view and previously switched to pager by tapping on list item,
-        // go back to list first instead of finishing activity.
-        if (isSinglePaneView && isListGone && hasTappedItemInSinglePaneView) {
-            hasTappedItemInSinglePaneView = false
-            switchView(makeListVisible = true, updateOptionsMenu = true)
-            return
-        }
-        super.onBackPressed()
     }
 
     /**
