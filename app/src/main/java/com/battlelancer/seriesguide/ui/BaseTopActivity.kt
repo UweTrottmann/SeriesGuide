@@ -3,11 +3,13 @@ package com.battlelancer.seriesguide.ui
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.SyncStatusObserver
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatDelegate
 import com.battlelancer.seriesguide.BuildConfig
@@ -43,6 +45,22 @@ abstract class BaseTopActivity : BaseMessageActivity() {
     private var syncProgressBar: View? = null
     private var syncObserverHandle: Any? = null
     private var snackbar: Snackbar? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        onBackPressedDispatcher.addCallback {
+            finish()
+            // Use a custom animation when navigating away from a top activity
+            // but not when exiting the app (use the default system animations).
+            if (!isTaskRoot) {
+                overridePendingTransition(
+                    R.anim.activity_fade_enter_sg,
+                    R.anim.activity_fade_exit_sg
+                )
+            }
+        }
+    }
 
     override fun setupActionBar() {
         super.setupActionBar()
@@ -167,16 +185,6 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         val snackbar = snackbar
         if (snackbar != null && snackbar.isShown) {
             snackbar.dismiss()
-        }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-        // use special animation when navigating away from a top activity
-        // but not when exiting the app (use the default system animations)
-        if (!isTaskRoot) {
-            overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg)
         }
     }
 
