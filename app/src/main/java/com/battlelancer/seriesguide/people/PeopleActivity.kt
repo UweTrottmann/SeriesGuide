@@ -1,133 +1,116 @@
-package com.battlelancer.seriesguide.people;
+package com.battlelancer.seriesguide.people
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.databinding.ActivityPeopleBinding;
-import com.battlelancer.seriesguide.ui.BaseActivity;
+import android.content.Intent
+import android.os.Bundle
+import android.view.MenuItem
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ActivityPeopleBinding
+import com.battlelancer.seriesguide.people.PeopleFragment.OnShowPersonListener
+import com.battlelancer.seriesguide.ui.BaseActivity
 
-public class PeopleActivity extends BaseActivity implements PeopleFragment.OnShowPersonListener {
+/**
+ * Displays a list of people, and on wide enough screens person details.
+ * Otherwise lets [PersonActivity] show details.
+ */
+class PeopleActivity : BaseActivity(), OnShowPersonListener {
 
-    private boolean isTwoPane;
+    private var isTwoPane = false
 
-    interface InitBundle {
-        String MEDIA_TYPE = "media_title";
-        String ITEM_TMDB_ID = "item_tmdb_id";
-        String PEOPLE_TYPE = "people_type";
+    internal interface InitBundle {
+        companion object {
+            const val MEDIA_TYPE = "media_title"
+            const val ITEM_TMDB_ID = "item_tmdb_id"
+            const val PEOPLE_TYPE = "people_type"
+        }
     }
 
-    public enum MediaType {
+    enum class MediaType(private val value: String) {
         SHOW("SHOW"),
         MOVIE("MOVIE");
 
-        private final String value;
-
-        MediaType(String value) {
-            this.value = value;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return value;
-        }
+        override fun toString(): String = value
     }
 
-    enum PeopleType {
+    internal enum class PeopleType(private val value: String) {
         CAST("CAST"),
         CREW("CREW");
 
-        private final String value;
-
-        PeopleType(String value) {
-            this.value = value;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return value;
-        }
+        override fun toString(): String = value
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ActivityPeopleBinding binding = ActivityPeopleBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        setupActionBar();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val binding = ActivityPeopleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupActionBar()
 
-        // if there is a pane shadow, we are in two pane layout
-        isTwoPane = binding.viewPeopleShadowStart != null;
+        // If there is a pane shadow, this is using a two pane layout.
+        isTwoPane = binding.viewPeopleShadowStart != null
 
         if (savedInstanceState == null) {
-            // check if we should directly show a person
-            int personTmdbId = getIntent().getIntExtra(PersonFragment.ARG_PERSON_TMDB_ID, -1);
+            // Check if this should directly show a person.
+            val personTmdbId = intent.getIntExtra(PersonFragment.ARG_PERSON_TMDB_ID, -1)
             if (personTmdbId != -1) {
-                showPerson(personTmdbId);
+                showPerson(personTmdbId)
 
-                // if this is not a dual pane layout, remove ourselves from back stack
+                // If this is not a dual pane layout, allow to go back directly by removing
+                // this from back stack.
                 if (!isTwoPane) {
-                    finish();
-                    return;
+                    finish()
+                    return
                 }
             }
 
-            PeopleFragment f = new PeopleFragment();
-            f.setArguments(getIntent().getExtras());
-
-            // in two-pane mode, list items should be activated when touched
+            val f = PeopleFragment()
+            f.arguments = intent.extras
+            // In two-pane mode, list items should be activated when touched.
             if (isTwoPane) {
-                f.setActivateOnItemClick();
+                f.setActivateOnItemClick()
             }
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.containerPeople, f, "people-list")
-                    .commit();
+            supportFragmentManager.beginTransaction()
+                .add(R.id.containerPeople, f, "people-list")
+                .commit()
         }
     }
 
-    @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        PeopleType peopleType = PeopleType.valueOf(
-                getIntent().getStringExtra(InitBundle.PEOPLE_TYPE));
-        setTitle(peopleType == PeopleType.CAST ? R.string.movie_cast : R.string.movie_crew);
-        ActionBar actionBar = getSupportActionBar();
+    override fun setupActionBar() {
+        super.setupActionBar()
+        val peopleType = PeopleType.valueOf(
+            intent.getStringExtra(InitBundle.PEOPLE_TYPE)!!
+        )
+        setTitle(if (peopleType == PeopleType.CAST) R.string.movie_cast else R.string.movie_crew)
+        val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_clear_24dp)
+            actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setTitle(
-                    peopleType == PeopleType.CAST ? R.string.movie_cast : R.string.movie_crew);
+                if (peopleType == PeopleType.CAST) R.string.movie_cast else R.string.movie_crew
+            )
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
-            onBackPressed();
-            return true;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void showPerson(int tmdbId) {
+    override fun showPerson(tmdbId: Int) {
         if (isTwoPane) {
             // show inline
-            PersonFragment f = PersonFragment.newInstance(tmdbId);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.containerPeoplePerson, f)
-                    .commit();
+            val f = PersonFragment.newInstance(tmdbId)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.containerPeoplePerson, f)
+                .commit()
         } else {
             // start new activity
-            Intent i = new Intent(this, PersonActivity.class);
-            i.putExtra(PersonFragment.ARG_PERSON_TMDB_ID, tmdbId);
-            startActivity(i);
+            val i = Intent(this, PersonActivity::class.java)
+            i.putExtra(PersonFragment.ARG_PERSON_TMDB_ID, tmdbId)
+            startActivity(i)
         }
     }
 }
