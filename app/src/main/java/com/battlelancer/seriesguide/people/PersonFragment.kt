@@ -77,10 +77,10 @@ class PersonFragment : Fragment() {
         }
 
         setProgressVisibility(true)
-        model.personLiveData.observe(viewLifecycleOwner, {
+        model.personLiveData.observe(viewLifecycleOwner) {
             setProgressVisibility(false)
             populatePersonViews(it)
-        })
+        }
         model.languageCode.value = PeopleSettings.getPersonLanguage(requireContext())
     }
 

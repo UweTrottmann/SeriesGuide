@@ -165,10 +165,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
             )
         }
-        model.credits.observe(viewLifecycleOwner, {
+        model.credits.observe(viewLifecycleOwner) {
             populateMovieCreditsViews(it)
-        })
-        model.watchProvider.observe(viewLifecycleOwner, { watchInfo ->
+        }
+        model.watchProvider.observe(viewLifecycleOwner) { watchInfo ->
             StreamingSearch.configureButton(
                 binding.containerMovieButtons.buttonMovieStreamingSearch,
                 watchInfo

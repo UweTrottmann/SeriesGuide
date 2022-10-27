@@ -68,21 +68,18 @@ class MoviesWatchedFragment : Fragment() {
 
         ViewModelProvider(requireActivity()).get(MoviesActivityViewModel::class.java)
             .scrollTabToTopLiveData
-            .observe(
-                viewLifecycleOwner,
-                {
-                    if (it != null) {
-                        val positionOfThisTab = if (it.isShowingNowTab) {
-                            MoviesActivity.TAB_POSITION_WATCHED_WITH_NOW
-                        } else {
-                            MoviesActivity.TAB_POSITION_WATCHED_DEFAULT
-                        }
-                        if (it.tabPosition == positionOfThisTab) {
-                            binding?.recyclerViewMoviesWatched?.scrollToPosition(0)
-                        }
+            .observe(viewLifecycleOwner) {
+                if (it != null) {
+                    val positionOfThisTab = if (it.isShowingNowTab) {
+                        MoviesActivity.TAB_POSITION_WATCHED_WITH_NOW
+                    } else {
+                        MoviesActivity.TAB_POSITION_WATCHED_DEFAULT
+                    }
+                    if (it.tabPosition == positionOfThisTab) {
+                        binding?.recyclerViewMoviesWatched?.scrollToPosition(0)
                     }
                 }
-            )
+            }
 
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.onPagesUpdatedFlow.conflate().collectLatest {

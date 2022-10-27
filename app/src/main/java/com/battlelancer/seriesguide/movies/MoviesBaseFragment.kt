@@ -63,16 +63,13 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
 
         ViewModelProvider(requireActivity()).get(MoviesActivityViewModel::class.java)
             .scrollTabToTopLiveData
-            .observe(
-                viewLifecycleOwner,
-                {
-                    if (it != null) {
-                        if (it.tabPosition == getTabPosition(it.isShowingNowTab)) {
-                            gridView.smoothScrollToPosition(0)
-                        }
+            .observe(viewLifecycleOwner) {
+                if (it != null) {
+                    if (it.tabPosition == getTabPosition(it.isShowingNowTab)) {
+                        gridView.smoothScrollToPosition(0)
                     }
                 }
-            )
+            }
 
         adapter = MoviesCursorAdapter(
             context, MovieClickListenerImpl(requireContext()),
