@@ -1,224 +1,213 @@
-package com.battlelancer.seriesguide.traktapi;
+package com.battlelancer.seriesguide.traktapi
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.util.Errors;
-import com.battlelancer.seriesguide.util.Utils;
-import timber.log.Timber;
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.webkit.CookieManager
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.TextView
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportNoBend
+import com.battlelancer.seriesguide.util.Utils
+import timber.log.Timber
 
 /**
  * Base class to create an OAuth 2.0 authorization flow using the browser, offering fallback to an
- * embedded {@link android.webkit.WebView}.
+ * embedded [android.webkit.WebView].
  */
-public abstract class BaseOAuthActivity extends BaseActivity {
+abstract class BaseOAuthActivity : BaseActivity() {
 
-    /** Pass with true to not auto launch the external browser, display default error message. */
-    public static final String EXTRA_KEY_IS_RETRY = "isRetry";
+    private var webview: WebView? = null
+    private lateinit var buttonContainer: View
+    private lateinit var progressBar: View
+    private lateinit var textViewMessage: TextView
 
-    /** Needs to match with the scheme registered in the manifest. */
-    private static final String OAUTH_URI_SCHEME = "sgoauth";
-    public static final String OAUTH_CALLBACK_URL_CUSTOM = OAUTH_URI_SCHEME + "://callback";
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_oauth)
+        setupActionBar()
 
-    @Nullable private WebView webview;
-    private View buttonContainer;
-    private View progressBar;
-    private TextView textViewMessage;
+        bindViews()
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_oauth);
-        setupActionBar();
-
-        setupViews();
-
-        if (handleAuthIntent(getIntent())) {
-            return;
+        if (handleAuthIntent(intent)) {
+            return
         }
 
-        boolean isRetry = getIntent().getBooleanExtra(EXTRA_KEY_IS_RETRY, false);
+        val isRetry = intent.getBooleanExtra(EXTRA_KEY_IS_RETRY, false)
         if (isRetry) {
-            setMessage(getAuthErrorMessage());
+            setMessage(authErrorMessage)
         }
 
         if (savedInstanceState == null && !isRetry) {
             // try to launch external browser with OAuth page
-            launchBrowser();
+            launchBrowser()
         }
     }
 
-    @Override
-    protected void setupActionBar() {
-        super.setupActionBar();
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+    override fun setupActionBar() {
+        super.setupActionBar()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private void setupViews() {
-        buttonContainer = findViewById(R.id.containerOauthButtons);
-        progressBar = findViewById(R.id.progressBarOauth);
-        textViewMessage = buttonContainer.findViewById(R.id.textViewOauthMessage);
+    private fun bindViews() {
+        buttonContainer = findViewById(R.id.containerOauthButtons)
+        progressBar = findViewById(R.id.progressBarOauth)
+        textViewMessage = buttonContainer.findViewById(R.id.textViewOauthMessage)
 
-        // setup buttons (can be used if browser launch fails or user comes back without code)
-        Button buttonBrowser = findViewById(R.id.buttonOauthBrowser);
-        buttonBrowser.setOnClickListener(v -> launchBrowser());
-        Button buttonWebView = findViewById(R.id.buttonOauthWebView);
-        buttonWebView.setOnClickListener(v -> activateWebView());
+        // set up buttons (can be used if browser launch fails or user comes back without code)
+        findViewById<Button>(R.id.buttonOauthBrowser).setOnClickListener { launchBrowser() }
+        findViewById<Button>(R.id.buttonOauthWebView).setOnClickListener { activateWebView() }
 
-        activateFallbackButtons();
-        setMessage(null);
+        activateFallbackButtons()
+        setMessage(null)
     }
 
-    private void launchBrowser() {
-        String authorizationUrl = getAuthorizationUrl();
+    private fun launchBrowser() {
+        val authorizationUrl = authorizationUrl
         if (authorizationUrl != null) {
-            Utils.launchWebsite(this, authorizationUrl);
+            Utils.launchWebsite(this, authorizationUrl)
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        handleAuthIntent(intent);
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleAuthIntent(intent)
     }
 
-    private boolean handleAuthIntent(Intent intent) {
+    private fun handleAuthIntent(intent: Intent): Boolean {
         // handle auth callback from external browser
-        Uri callbackUri = intent.getData();
-        if (callbackUri == null || !OAUTH_URI_SCHEME.equals(callbackUri.getScheme())) {
-            return false;
+        val callbackUri = intent.data
+        if (callbackUri == null || OAUTH_URI_SCHEME != callbackUri.scheme) {
+            return false
         }
-        fetchTokensAndFinish(callbackUri.getQueryParameter("code"),
-                callbackUri.getQueryParameter("state"));
-        return true;
+        fetchTokensAndFinish(
+            callbackUri.getQueryParameter("code"),
+            callbackUri.getQueryParameter("state")
+        )
+        return true
     }
 
-    protected void activateFallbackButtons() {
-        buttonContainer.setVisibility(View.VISIBLE);
-        if (webview != null) {
-            webview.setVisibility(View.GONE);
-        }
+    protected fun activateFallbackButtons() {
+        buttonContainer.visibility = View.VISIBLE
+        webview?.visibility = View.GONE
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    protected void activateWebView() {
-        buttonContainer.setVisibility(View.GONE);
+    protected fun activateWebView() {
+        buttonContainer.visibility = View.GONE
 
         // Inflate the WebView on demand.
-        WebView webview = findViewById(R.id.webView);
-        if (webview == null) {
-            FrameLayout container = findViewById(R.id.frameLayoutOauth);
-            try {
-                LayoutInflater.from(container.getContext())
-                        .inflate(R.layout.view_webview, container, true);
-                webview = findViewById(R.id.webView);
-            } catch (Exception e) {
+        val webview = findViewById(R.id.webView)
+            ?: try {
+                val container = findViewById<FrameLayout>(R.id.frameLayoutOauth)
+                LayoutInflater.from(container.context)
+                    .inflate(R.layout.view_webview, container, true)
+                findViewById<WebView>(R.id.webView)
+            } catch (e: Exception) {
                 // There are various crashes where inflating fails due to a
                 // "Failed to load WebView provider: No WebView installed" exception.
                 // The most reasonable explanation is that the WebView is getting updated right
                 // when we want to inflate it.
                 // So just finish the activity and make the user open it again.
-                Errors.logAndReportNoBend("Inflate WebView", e);
-                finish();
-                return;
+                logAndReportNoBend("Inflate WebView", e)
+                finish()
+                return
             }
+        this.webview = webview
+        webview.also {
+            it.visibility = View.VISIBLE
+            it.webViewClient = webViewClient
+            it.settings.javaScriptEnabled = true
         }
-        this.webview = webview;
-
-        webview.setVisibility(View.VISIBLE);
-
-        webview.setWebViewClient(webViewClient);
-        webview.getSettings().setJavaScriptEnabled(true);
 
         // Clear all previous sign-in state.
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeAllCookies(null);
-        webview.clearCache(true);
+        val cookieManager = CookieManager.getInstance()
+        cookieManager.removeAllCookies(null)
+        webview.clearCache(true)
 
         // Load the authorization page.
-        Timber.d("Initiating authorization request...");
-        String authUrl = getAuthorizationUrl();
+        Timber.d("Initiating authorization request...")
+        val authUrl = authorizationUrl
         if (authUrl != null) {
-            webview.loadUrl(authUrl);
+            webview.loadUrl(authUrl)
         }
     }
 
-    protected void setMessage(CharSequence message) {
-        setMessage(message, false);
+    protected fun setMessage(message: CharSequence?) {
+        setMessage(message, false)
     }
 
-    protected void setMessage(CharSequence message, boolean progressVisible) {
+    protected fun setMessage(message: CharSequence?, progressVisible: Boolean) {
         if (message == null) {
-            textViewMessage.setVisibility(View.GONE);
+            textViewMessage.visibility = View.GONE
         } else {
-            textViewMessage.setVisibility(View.VISIBLE);
-            textViewMessage.setText(message);
+            textViewMessage.visibility = View.VISIBLE
+            textViewMessage.text = message
         }
-        progressBar.setVisibility(progressVisible ? View.VISIBLE : View.GONE);
+        progressBar.visibility = if (progressVisible) View.VISIBLE else View.GONE
     }
 
-    protected WebViewClient webViewClient = new WebViewClient() {
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description,
-                String failingUrl) {
-            Timber.e("WebView error: %s %s", errorCode, description);
-            activateFallbackButtons();
-            setMessage(getAuthErrorMessage() + "\n\n(" + errorCode + " " + description + ")");
+    protected var webViewClient: WebViewClient = object : WebViewClient() {
+        override fun onReceivedError(
+            view: WebView, errorCode: Int, description: String,
+            failingUrl: String
+        ) {
+            Timber.e("WebView error: %s %s", errorCode, description)
+            activateFallbackButtons()
+            setMessage("$authErrorMessage\n\n($errorCode $description)")
         }
 
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
             if (url != null && url.startsWith(OAUTH_CALLBACK_URL_CUSTOM)) {
-                Uri uri = Uri.parse(url);
-                fetchTokensAndFinish(uri.getQueryParameter("code"), uri.getQueryParameter("state"));
-                return true;
+                val uri = Uri.parse(url)
+                fetchTokensAndFinish(uri.getQueryParameter("code"), uri.getQueryParameter("state"))
+                return true
             }
-            return false;
+            return false
         }
-    };
+    }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
-            onBackPressed();
-            return true;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
      * Return the url of the OAuth authorization page.
      */
-    @Nullable
-    protected abstract String getAuthorizationUrl();
+    protected abstract val authorizationUrl: String?
 
     /**
      * Return an error message displayed if authorization fails at any point.
      */
-    protected abstract String getAuthErrorMessage();
+    protected abstract val authErrorMessage: String
 
     /**
-     * Called with the OAuth auth code and state retrieved from the {@link #getAuthorizationUrl()}
+     * Called with the OAuth auth code and state retrieved from the [authorizationUrl]
      * once the user has authorized us. If state was sent, ensure it matches. Then retrieve the
      * OAuth tokens with the auth code.
      */
-    protected abstract void fetchTokensAndFinish(@Nullable String authCode, @Nullable String state);
+    protected abstract fun fetchTokensAndFinish(authCode: String?, state: String?)
+
+    companion object {
+        /** Pass with true to not auto launch the external browser, display default error message. */
+        const val EXTRA_KEY_IS_RETRY = "isRetry"
+
+        /** Needs to match with the scheme registered in the manifest. */
+        private const val OAUTH_URI_SCHEME = "sgoauth"
+        const val OAUTH_CALLBACK_URL_CUSTOM = "$OAUTH_URI_SCHEME://callback"
+    }
 }

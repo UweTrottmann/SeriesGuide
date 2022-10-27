@@ -23,9 +23,9 @@ class TraktAuthActivity : BaseOAuthActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        model.connectResult.observe(this, {
+        model.connectResult.observe(this) {
             handleTraktConnectResult(it)
-        })
+        }
 
         if (savedInstanceState != null) {
             // restore state on recreation
@@ -39,16 +39,16 @@ class TraktAuthActivity : BaseOAuthActivity() {
         outState.putString(KEY_STATE, state)
     }
 
-    override fun getAuthorizationUrl(): String? {
-        val state = BigInteger(130, SecureRandom()).toString(32).also {
-            this.state = it
+    override val authorizationUrl: String?
+        get() {
+            val state = BigInteger(130, SecureRandom()).toString(32).also {
+                this.state = it
+            }
+            return getServicesComponent(this).trakt().buildAuthorizationUrl(state)
         }
-        return getServicesComponent(this).trakt().buildAuthorizationUrl(state)
-    }
 
-    override fun getAuthErrorMessage(): String {
-        return getString(R.string.trakt_error_credentials)
-    }
+    override val authErrorMessage: String
+        get() = getString(R.string.trakt_error_credentials)
 
     override fun fetchTokensAndFinish(authCode: String?, state: String?) {
         activateFallbackButtons()
