@@ -16,8 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
@@ -37,7 +37,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 /**
- * A custom {@link ListFragment} to display show or episode shouts and for posting own shouts.
+ * Displays show or episode comments and supports posting comments.
  */
 public class TraktCommentsFragment extends Fragment {
 
@@ -54,6 +54,12 @@ public class TraktCommentsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         binding = FragmentCommentsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         binding.swipeRefreshLayoutShouts.setSwipeableChildren(R.id.scrollViewComments,
                 R.id.listViewShouts);
@@ -92,7 +98,17 @@ public class TraktCommentsFragment extends Fragment {
         // set initial view states
         showProgressBar(true);
 
-        return binding.getRoot();
+        // setup adapter
+        adapter = new TraktCommentsAdapter(getActivity());
+        binding.listViewShouts.setAdapter(adapter);
+
+        // load data
+        LoaderManager.getInstance(this)
+                .initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
+                        commentsLoaderCallbacks);
+
+        // enable menu
+        setHasOptionsMenu(true);
     }
 
     private void comment() {
@@ -134,23 +150,6 @@ public class TraktCommentsFragment extends Fragment {
 
         // if all ids were 0, do nothing
         Timber.e("comment: did nothing, all possible ids were 0");
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        // setup adapter
-        adapter = new TraktCommentsAdapter(getActivity());
-        binding.listViewShouts.setAdapter(adapter);
-
-        // load data
-        LoaderManager.getInstance(this)
-                .initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                        commentsLoaderCallbacks);
-
-        // enable menu
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -213,8 +212,9 @@ public class TraktCommentsFragment extends Fragment {
         }
     }
 
-    private LoaderCallbacks<TraktCommentsLoader.Result> commentsLoaderCallbacks
+    private final LoaderCallbacks<TraktCommentsLoader.Result> commentsLoaderCallbacks
             = new LoaderCallbacks<TraktCommentsLoader.Result>() {
+        @NonNull
         @Override
         public Loader<TraktCommentsLoader.Result> onCreateLoader(int id, Bundle args) {
             showProgressBar(true);

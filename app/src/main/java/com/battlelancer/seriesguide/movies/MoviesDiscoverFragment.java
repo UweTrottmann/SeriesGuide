@@ -39,15 +39,15 @@ public class MoviesDiscoverFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         binding = FragmentMoviesDiscoverBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         binding.swipeRefreshLayoutMoviesDiscover.setOnRefreshListener(onRefreshListener);
         binding.swipeRefreshLayoutMoviesDiscover.setRefreshing(false);
@@ -89,13 +89,9 @@ public class MoviesDiscoverFragment extends Fragment {
                     }
                 });
 
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         LoaderManager.getInstance(this).initLoader(0, null, nowPlayingLoaderCallbacks);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -153,8 +149,9 @@ public class MoviesDiscoverFragment extends Fragment {
         }
     }
 
-    private LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result> nowPlayingLoaderCallbacks
+    private final LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result> nowPlayingLoaderCallbacks
             = new LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result>() {
+        @NonNull
         @Override
         public Loader<MoviesDiscoverLoader.Result> onCreateLoader(int id, Bundle args) {
             return new MoviesDiscoverLoader(requireContext());
@@ -178,5 +175,5 @@ public class MoviesDiscoverFragment extends Fragment {
 
     private final SwipeRefreshLayout.OnRefreshListener onRefreshListener
             = () -> LoaderManager.getInstance(MoviesDiscoverFragment.this)
-                    .restartLoader(0, null, nowPlayingLoaderCallbacks);
+            .restartLoader(0, null, nowPlayingLoaderCallbacks);
 }

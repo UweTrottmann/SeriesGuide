@@ -47,11 +47,17 @@ public class ExtensionsConfigurationFragment extends Fragment {
     private List<Extension> disabledExtensions = new ArrayList<>();
     private List<ComponentName> enabledNames;
 
-    @SuppressLint("ClickableViewAccessibility") // ordering not supported if non-touch
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         binding = FragmentExtensionsConfigurationBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @SuppressLint("ClickableViewAccessibility") // ordering not supported if non-touch
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         final ExtensionsDragSortController dragSortController = new ExtensionsDragSortController();
         binding.listViewExtensionsConfig.setFloatViewManager(dragSortController);
@@ -63,13 +69,6 @@ public class ExtensionsConfigurationFragment extends Fragment {
         });
         // allow focusing menu buttons with a remote/d-pad
         binding.listViewExtensionsConfig.setItemsCanFocus(true);
-
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
         adapter = new ExtensionsAdapter(requireContext(), onItemClickListener);
         binding.listViewExtensionsConfig.setAdapter(adapter);
@@ -130,6 +129,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
 
     private final LoaderManager.LoaderCallbacks<List<Extension>> loaderCallbacks
             = new LoaderManager.LoaderCallbacks<List<Extension>>() {
+        @NonNull
         @Override
         public Loader<List<Extension>> onCreateLoader(int id, Bundle args) {
             return new AvailableExtensionsLoader(requireContext());
@@ -354,7 +354,7 @@ public class ExtensionsConfigurationFragment extends Fragment {
             View div = listView.getChildAt(addButtonPosition - first);
 
             if (touchPoint.x > listView.getWidth() / 2) {
-                float scale = touchPoint.x - listView.getWidth() / 2;
+                float scale = touchPoint.x - (float) listView.getWidth() / 2;
                 scale /= (float) (listView.getWidth() / 5);
                 ViewGroup.LayoutParams lp = floatView.getLayoutParams();
                 lp.height = Math.max(floatViewHeight, (int) (scale * floatViewHeight));

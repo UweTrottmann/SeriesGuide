@@ -53,6 +53,12 @@ public class ShowsNowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         binding = FragmentNowBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         EmptyViewSwipeRefreshLayout swipeRefreshLayout = binding.swipeRefreshLayoutNow;
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
@@ -99,17 +105,11 @@ public class ShowsNowFragment extends Fragment {
                     }
                 });
 
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(), binding.swipeRefreshLayoutNow);
+        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
+                binding.swipeRefreshLayoutNow);
 
         // define dataset
-        adapter = new NowAdapter(getActivity(), itemClickListener);
+        adapter = new NowAdapter(requireContext(), itemClickListener);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -313,11 +313,8 @@ public class ShowsNowFragment extends Fragment {
 
     private final NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
         @Override
-        public void onItemClick(View view, int position) {
+        public void onItemClick(@NonNull View view, int position) {
             NowAdapter.NowItem item = adapter.getItem(position);
-            if (item == null) {
-                return;
-            }
 
             // more history link?
             if (item.getType() == NowAdapter.ItemType.MORE_LINK) {
@@ -337,8 +334,9 @@ public class ShowsNowFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyLocalCallbacks
+    private final LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyLocalCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
+        @NonNull
         @Override
         public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
             return new RecentlyWatchedLoader(requireContext());
@@ -365,9 +363,10 @@ public class ShowsNowFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result>
+    private final LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result>
             recentlyTraktCallbacks
             = new LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result>() {
+        @NonNull
         @Override
         public Loader<TraktRecentEpisodeHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
             return new TraktRecentEpisodeHistoryLoader(getActivity());
@@ -395,8 +394,9 @@ public class ShowsNowFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> traktFriendsHistoryCallbacks
+    private final LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> traktFriendsHistoryCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
+        @NonNull
         @Override
         public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
             return new TraktFriendsEpisodeHistoryLoader(getActivity());

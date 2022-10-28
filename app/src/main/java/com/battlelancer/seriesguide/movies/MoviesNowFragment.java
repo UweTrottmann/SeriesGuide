@@ -48,6 +48,12 @@ public class MoviesNowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         binding = FragmentNowBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         EmptyViewSwipeRefreshLayout swipeRefreshLayout = binding.swipeRefreshLayoutNow;
         swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
@@ -93,13 +99,6 @@ public class MoviesNowFragment extends Fragment {
                         binding.recyclerViewNow.smoothScrollToPosition(0);
                     }
                 });
-
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
         ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
                 binding.swipeRefreshLayoutNow);
@@ -233,11 +232,8 @@ public class MoviesNowFragment extends Fragment {
 
     private final NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
         @Override
-        public void onItemClick(View view, int position) {
+        public void onItemClick(@NonNull View view, int position) {
             NowAdapter.NowItem item = adapter.getItem(position);
-            if (item == null) {
-                return;
-            }
 
             // more history link?
             if (item.getType() == NowAdapter.ItemType.MORE_LINK) {
@@ -259,9 +255,10 @@ public class MoviesNowFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result>
+    private final LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result>
             recentlyTraktCallbacks
             = new LoaderManager.LoaderCallbacks<TraktRecentMovieHistoryLoader.Result>() {
+        @NonNull
         @Override
         public Loader<TraktRecentMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
             return new TraktRecentMovieHistoryLoader(getActivity());
@@ -289,8 +286,9 @@ public class MoviesNowFragment extends Fragment {
         }
     };
 
-    private LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> traktFriendsHistoryCallbacks
+    private final LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> traktFriendsHistoryCallbacks
             = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
+        @NonNull
         @Override
         public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
             return new TraktFriendsMovieHistoryLoader(getActivity());

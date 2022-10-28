@@ -72,12 +72,6 @@ public abstract class AddFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setupEmptyView(getEmptyView());
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
         // basic setup of grid view
         getResultsGridView().setEmptyView(getEmptyView());
         // enable app bar scrolling out of view

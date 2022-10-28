@@ -68,10 +68,6 @@ public class TraktAddFragment extends AddFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         binding = FragmentAddshowTraktBinding.inflate(inflater, container, false);
-
-        // set initial view states
-        setProgressVisible(true, false);
-
         return binding.getRoot();
     }
 
@@ -96,8 +92,11 @@ public class TraktAddFragment extends AddFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // set initial view states
+        setProgressVisible(true, false);
 
         // setup adapter, enable context menu only for watchlist
         adapter = new AddAdapter(getActivity(), new ArrayList<>(), itemClickListener,
@@ -236,6 +235,7 @@ public class TraktAddFragment extends AddFragment {
 
     private final LoaderManager.LoaderCallbacks<TraktAddLoader.Result> traktAddCallbacks
             = new LoaderManager.LoaderCallbacks<TraktAddLoader.Result>() {
+        @NonNull
         @Override
         public Loader<TraktAddLoader.Result> onCreateLoader(int id, Bundle args) {
             return new TraktAddLoader(getContext(), listType);
