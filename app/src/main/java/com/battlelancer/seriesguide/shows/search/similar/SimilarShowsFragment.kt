@@ -16,8 +16,8 @@ import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.SearchActivity
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
+import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.seriesguide.common.SingleLiveEvent
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 
@@ -41,8 +41,6 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
 
         showTmdbId = requireArguments().getInt(ARG_SHOW_TMDB_ID)
         showTitle = requireArguments().getString(ARG_SHOW_TITLE)
-
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -84,13 +82,15 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
         adapter = SimilarShowsAdapter(itemClickListener)
         recyclerView.adapter = adapter
 
-        similarShowsViewModel.resultLiveData.observe(viewLifecycleOwner, {
+        similarShowsViewModel.resultLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it.results)
             emptyView.setMessage(it.emptyMessage)
             recyclerView.isGone = it.results.isNullOrEmpty()
             emptyView.isGone = !it.results.isNullOrEmpty()
             swipeRefreshLayout.isRefreshing = false
-        })
+        }
+
+        setHasOptionsMenu(true)
     }
 
     private fun loadSimilarShows() {
