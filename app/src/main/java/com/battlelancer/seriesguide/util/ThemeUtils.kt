@@ -2,20 +2,28 @@ package com.battlelancer.seriesguide.util
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
+import android.view.Window
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.WindowCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.google.android.material.color.DynamicColors
+import com.google.android.material.color.MaterialColors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
 /**
- * Helper methods to support SeriesGuide's different themes.
+ * Helper methods to configure the appearance of the app.
  */
 object ThemeUtils {
+
+    private const val EDGE_TO_EDGE_BAR_ALPHA = 128
 
     /**
      * Sets the global app theme variable. Applied by all activities once they are created.
@@ -63,5 +71,100 @@ object ThemeUtils {
         if (DisplaySettings.isDynamicColorsEnabled(activity)) {
             DynamicColors.applyToActivityIfAvailable(activity)
         }
+    }
+
+    /**
+     * Configures the window, status and navigation bar of an activity for edge to edge display.
+     *
+     * Call after `super.onCreate` and before `setContentView`.
+     *
+     * CoordinatorLayout and Material 3 AppBarLayout should use `android:fitsSystemWindows="true"`
+     * to draw behind the system bars.
+     *
+     * Scroll views or RecyclerViews should add bottom padding matching the navigation bar:
+     * ```
+     * ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { view, insets ->
+     *     val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+     *     view.setPadding(
+     *         view.paddingLeft,
+     *         view.paddingTop,
+     *         view.paddingRight,
+     *         systemBarInsets.bottom
+     *     )
+     *     // Return CONSUMED to not pass the window insets down to descendant views.
+     *     WindowInsetsCompat.CONSUMED
+     * }
+     * ```
+     */
+    fun configureEdgeToEdge(window: Window) {
+        // https://developer.android.com/develop/ui/views/layout/edge-to-edge
+        // Let the app draw from edge to edge (below status and navigation bar).
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val colorBackground =
+            MaterialColors.getColor(window.context, android.R.attr.colorBackground, Color.BLACK)
+        val isLightBackground = MaterialColors.isColorLight(colorBackground)
+
+        val statusBarColor = getStatusBarColor(window.context)
+        val navigationBarColor = getNavigationBarColor(window.context)
+
+        window.statusBarColor = statusBarColor
+        window.navigationBarColor = navigationBarColor
+
+        // For transparent status bars (M+), check if the background has a light color;
+        // for colored status bars check if itself has a light color.
+        // If a light color, tell the system to color icons accordingly.
+        setLightStatusBar(
+            window,
+            isUsingLightSystemBar(statusBarColor, isLightBackground)
+        )
+        // Do the same check for nav bars
+        // (only difference: transparent nav bars supported since O_MR1+).
+        setLightNavigationBar(
+            window,
+            isUsingLightSystemBar(navigationBarColor, isLightBackground)
+        )
+    }
+
+    private fun getStatusBarColor(context: Context): Int {
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            // A light status bar is only supported on M+.
+            // Use a translucent black status bar instead.
+            val opaqueStatusBarColor: Int =
+                MaterialColors.getColor(context, android.R.attr.statusBarColor, Color.BLACK)
+            ColorUtils.setAlphaComponent(opaqueStatusBarColor, EDGE_TO_EDGE_BAR_ALPHA)
+        } else {
+            Color.TRANSPARENT
+        }
+    }
+
+    private fun getNavigationBarColor(context: Context): Int {
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
+            // A light navigation bar is only supported on O_MR1+.
+            // Use a translucent black navigation bar instead.
+            val opaqueNavBarColor =
+                MaterialColors.getColor(context, android.R.attr.navigationBarColor, Color.BLACK)
+            ColorUtils.setAlphaComponent(opaqueNavBarColor, EDGE_TO_EDGE_BAR_ALPHA)
+        } else {
+            Color.TRANSPARENT
+        }
+    }
+
+    private fun setLightStatusBar(window: Window, isLight: Boolean) {
+        WindowCompat.getInsetsController(window, window.decorView)
+            .isAppearanceLightStatusBars = isLight
+    }
+
+    private fun setLightNavigationBar(window: Window, isLight: Boolean) {
+        WindowCompat.getInsetsController(window, window.decorView)
+            .isAppearanceLightNavigationBars = isLight
+    }
+
+    private fun isUsingLightSystemBar(
+        systemBarColor: Int,
+        isLightBackground: Boolean
+    ): Boolean {
+        return MaterialColors.isColorLight(systemBarColor)
+                || (systemBarColor == Color.TRANSPARENT && isLightBackground)
     }
 }
