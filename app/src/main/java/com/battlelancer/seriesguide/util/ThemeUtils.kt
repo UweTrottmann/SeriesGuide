@@ -13,8 +13,10 @@ import androidx.core.view.WindowCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.shape.MaterialShapeDrawable
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 
@@ -166,5 +168,14 @@ object ThemeUtils {
     ): Boolean {
         return MaterialColors.isColorLight(systemBarColor)
                 || (systemBarColor == Color.TRANSPARENT && isLightBackground)
+    }
+
+    /**
+     * Configure app bar to hide content scrolling below it. Use with a toolbar
+     * that scrolls out of view.
+     */
+    fun configureAppBarForContentBelow(activity: Activity) {
+        activity.findViewById<AppBarLayout>(R.id.sgAppBarLayout)
+            .statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(activity)
     }
 }
