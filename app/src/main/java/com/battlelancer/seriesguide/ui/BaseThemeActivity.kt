@@ -23,6 +23,7 @@ abstract class BaseThemeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeUtils.setTheme(this, getCustomTheme())
         super.onCreate(savedInstanceState)
+        ThemeUtils.configureEdgeToEdge(window)
     }
 
     /**
