@@ -200,6 +200,7 @@
     </style>
 
     <!-- Toolbar -->
+    <!-- Theme overlay for colored text and icons. -->
     <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.Material3.Toolbar.Surface">
         <item name="colorOnSurface">?attr/colorPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorPrimary</item>
