@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.activity.addCallback
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseThemeActivity
-import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Allows tweaking of various SeriesGuide settings. Does NOT inherit
@@ -19,7 +18,6 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        ThemeUtils.configureAppBarForContentBelow(this)
         setupActionBar()
 
         if (savedInstanceState == null) {

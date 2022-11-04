@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/top_app_bar_scrolling" />
+    <include layout="@layout/top_app_bar_elevating" />
 
     <!-- Wrap so FrameLayout can be match_parent, otherwise padding is broken. -->
     <FrameLayout
