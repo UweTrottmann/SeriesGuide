@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -62,6 +63,8 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             return
         }
         setContentView(R.layout.activity_shows)
+        ThemeUtils.configureAppBarForContentBelow(this)
+        ThemeUtils.dispatchWindowInsetsToAllChildren(findViewById(R.id.rootLayoutShows))
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_shows)
 
@@ -93,7 +96,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
 
         // setup all the views!
         setupViews()
-        setupSyncProgressBar(R.id.progressBarTabs)
+        setupSyncProgressBar(R.id.sgProgressBar)
         setInitialTab(intent.extras)
 
         // query for in-app purchases
@@ -190,7 +193,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         }
 
         viewPager = findViewById(R.id.viewPagerTabs)
-        val tabs = findViewById<SlidingTabLayout>(R.id.tabLayoutTabs)
+        val tabs = findViewById<SlidingTabLayout>(R.id.sgTabLayout)
         tabs.setOnTabClickListener { position: Int ->
             if (viewPager.currentItem == position) {
                 scrollSelectedTabToTop()
@@ -337,7 +340,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
     }
 
     override val snackbarParentView: View
-        get() = findViewById(R.id.rootLayoutShows)
+        get() = findViewById(R.id.coordinatorLayoutShows)
 
     /**
      * Page change listener which hides the floating action button for all but the shows tab.

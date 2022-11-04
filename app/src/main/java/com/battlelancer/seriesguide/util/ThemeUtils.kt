@@ -4,12 +4,17 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.forEach
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
@@ -80,23 +85,16 @@ object ThemeUtils {
      *
      * Call after `super.onCreate` and before `setContentView`.
      *
-     * CoordinatorLayout and Material 3 AppBarLayout should use `android:fitsSystemWindows="true"`
-     * to draw behind the system bars.
+     * The Material 3 AppBarLayout should use `android:fitsSystemWindows="true"`
+     * to receive window insets so it can adjust padding when drawing behind the system bars.
      *
-     * Scroll views or RecyclerViews should add bottom padding matching the navigation bar:
-     * ```
-     * ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { view, insets ->
-     *     val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-     *     view.setPadding(
-     *         view.paddingLeft,
-     *         view.paddingTop,
-     *         view.paddingRight,
-     *         systemBarInsets.bottom
-     *     )
-     *     // Return CONSUMED to not pass the window insets down to descendant views.
-     *     WindowInsetsCompat.CONSUMED
-     * }
-     * ```
+     * ViewGroup only dispatches windows insets starting from the first child until one
+     * consumes them. So it may be necessary to manually dispatch insets to all children, e.g. a
+     * LinearLayout containing an app bar and a BottomNavigationView is a common case.
+     * See [dispatchWindowInsetsToAllChildren].
+     *
+     * Scroll views or RecyclerViews should add bottom padding matching the navigation bar, see
+     * [applySystemBarInset].
      */
     fun configureEdgeToEdge(window: Window) {
         // https://developer.android.com/develop/ui/views/layout/edge-to-edge
@@ -177,5 +175,40 @@ object ThemeUtils {
     fun configureAppBarForContentBelow(activity: Activity) {
         activity.findViewById<AppBarLayout>(R.id.sgAppBarLayout)
             .statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(activity)
+    }
+
+    /**
+     * Sets a window insets dispatch listener and changes the bottom padding to the system bar
+     * inset. Consumes the insets so no children of the given view will receive them.
+     */
+    fun applySystemBarInset(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(
+                v.paddingLeft,
+                v.paddingTop,
+                v.paddingRight,
+                systemBarInsets.bottom
+            )
+            // Return CONSUMED to not pass the window insets down to descendant views.
+            WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    /**
+     * ViewGroup only dispatches windows insets starting from the first child until one
+     * consumes them. Call this to manually dispatch insets to all direct children.
+     */
+    fun dispatchWindowInsetsToAllChildren(viewGroup: ViewGroup) {
+        ViewCompat.setOnApplyWindowInsetsListener(viewGroup) { v, insets ->
+            var consumed = false
+            (v as ViewGroup).forEach { child ->
+                val childResult = ViewCompat.dispatchApplyWindowInsets(child, insets)
+                if (childResult.isConsumed) {
+                    consumed = true
+                }
+            }
+            if (consumed) WindowInsetsCompat.CONSUMED else insets
+        }
     }
 }

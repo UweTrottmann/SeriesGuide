@@ -17,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -81,17 +79,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     ): RecyclerView {
         val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState)
         // Adjust preferences RecyclerView bottom padding to navigation bar height.
-        ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { view, insets ->
-            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(
-                view.paddingLeft,
-                view.paddingTop,
-                view.paddingRight,
-                systemBarInsets.bottom
-            )
-            // Return CONSUMED to not pass the window insets down to descendant views.
-            WindowInsetsCompat.CONSUMED
-        }
+        ThemeUtils.applySystemBarInset(recyclerView)
         return recyclerView
     }
 

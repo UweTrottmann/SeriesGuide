@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollViewNow"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -22,7 +22,7 @@
                 android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
                 tools:text="@string/now_empty" />
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewNow"

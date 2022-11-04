@@ -244,8 +244,6 @@
 
     <!-- BottomNavigationView -->
     <style name="Widget.SeriesGuide.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-        <!-- Set different from colorSurface to prevent BottomNavigationView from using color to elevate. -->
-        <item name="android:background">?attr/sgColorTopAppBar</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
     </style>
 
