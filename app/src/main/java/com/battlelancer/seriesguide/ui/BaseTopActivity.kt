@@ -70,7 +70,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
     fun setupBottomNavigation(@IdRes selectedItemId: Int) {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.selectedItemId = selectedItemId
-        bottomNav.setOnNavigationItemSelectedListener { item: MenuItem ->
+        bottomNav.setOnItemSelectedListener {  item ->
             onNavItemClick(item.itemId)
             false // Do not change selected item.
         }
