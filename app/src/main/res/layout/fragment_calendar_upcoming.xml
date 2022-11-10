@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".shows.calendar.CalendarFragment2">
+    tools:context=".shows.calendar.UpcomingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCalendar"
+        android:id="@+id/recyclerViewCalendarUpcoming"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -15,13 +15,13 @@
         tools:listitem="@layout/item_calendar" />
 
     <TextView
-        android:id="@+id/textViewCalendarEmpty"
+        android:id="@+id/textViewCalendarUpcomingEmpty"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
         android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
-        tools:text="@string/noupcoming" />
+        android:text="@string/noupcoming" />
 
 </FrameLayout>

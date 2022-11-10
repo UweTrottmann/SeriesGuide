@@ -3,12 +3,10 @@ package com.battlelancer.seriesguide.shows.calendar
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.edit
@@ -25,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
 import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
@@ -43,42 +40,18 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class CalendarFragment2 : Fragment() {
+/**
+ * Base class for a fragment displaying a list of episodes grouped by release date.
+ */
+abstract class CalendarFragment2 : Fragment() {
 
-    enum class CalendarType(val id: Int) {
-        UPCOMING(1),
-        RECENT(2)
-    }
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var textViewEmpty: TextView
-    private val viewModel: CalendarFragment2ViewModel by viewModels()
+    protected lateinit var recyclerView: RecyclerView
+    protected lateinit var textViewEmpty: TextView
+    protected val viewModel: CalendarFragment2ViewModel by viewModels()
 
     private lateinit var adapter: CalendarAdapter2
-    private lateinit var type: CalendarType
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val argType = requireArguments().getInt(ARG_CALENDAR_TYPE)
-        type = when (argType) {
-            CalendarType.UPCOMING.id -> CalendarType.UPCOMING
-            CalendarType.RECENT.id -> CalendarType.RECENT
-            else -> throw IllegalArgumentException("Unknown calendar type $argType")
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_calendar2, container, false)
-
-        recyclerView = view.findViewById(R.id.recyclerViewCalendar)
-        textViewEmpty = view.findViewById(R.id.textViewCalendarEmpty)
-
-        return view
-    }
+    abstract val tabPosition: Int
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -102,22 +75,11 @@ class CalendarFragment2 : Fragment() {
         }
         SgFastScroller(requireContext(), recyclerView)
 
-        textViewEmpty.setText(
-            if (type == CalendarType.UPCOMING) {
-                R.string.noupcoming
-            } else {
-                R.string.norecent
-            }
-        )
-
         ViewModelProvider(requireActivity()).get(ShowsActivityViewModel::class.java)
             .scrollTabToTopLiveData
-            .observe(viewLifecycleOwner) { tabPosition: Int? ->
-                if (tabPosition != null) {
-                    if (CalendarType.UPCOMING == type
-                        && tabPosition == ShowsActivityImpl.Tab.UPCOMING.index
-                        || CalendarType.RECENT == type
-                        && tabPosition == ShowsActivityImpl.Tab.RECENT.index) {
+            .observe(viewLifecycleOwner) { position: Int? ->
+                if (position != null) {
+                    if (position == tabPosition) {
                         recyclerView.smoothScrollToPosition(0)
                     }
                 }
@@ -161,9 +123,7 @@ class CalendarFragment2 : Fragment() {
         textViewEmpty.isGone = !isEmpty
     }
 
-    private suspend fun updateCalendarQuery() {
-        viewModel.updateCalendarQuery(type == CalendarType.UPCOMING)
-    }
+    abstract suspend fun updateCalendarQuery()
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -324,8 +284,6 @@ class CalendarFragment2 : Fragment() {
     }
 
     companion object {
-        const val ARG_CALENDAR_TYPE = "calendarType"
-
         private const val CONTEXT_FLAG_WATCHED_ID = 0
         private const val CONTEXT_FLAG_UNWATCHED_ID = 1
         private const val CONTEXT_CHECKIN_ID = 2

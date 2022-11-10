@@ -16,7 +16,8 @@ import com.battlelancer.seriesguide.billing.BillingActivity
 import com.battlelancer.seriesguide.billing.amazon.AmazonHelper
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.shows.calendar.CalendarFragment2
+import com.battlelancer.seriesguide.shows.calendar.RecentFragment
+import com.battlelancer.seriesguide.shows.calendar.UpcomingFragment
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.shows.history.ShowsNowFragment
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
@@ -205,22 +206,10 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         tabsAdapter.addTab(R.string.user_stream, ShowsNowFragment::class.java, null)
 
         // upcoming tab
-        val argsUpcoming = Bundle().apply {
-            putInt(
-                CalendarFragment2.ARG_CALENDAR_TYPE,
-                CalendarFragment2.CalendarType.UPCOMING.id
-            )
-        }
-        tabsAdapter.addTab(R.string.upcoming, CalendarFragment2::class.java, argsUpcoming)
+        tabsAdapter.addTab(R.string.upcoming, UpcomingFragment::class.java, null)
 
         // recent tab
-        val argsRecent = Bundle().apply {
-            putInt(
-                CalendarFragment2.ARG_CALENDAR_TYPE,
-                CalendarFragment2.CalendarType.RECENT.id
-            )
-        }
-        tabsAdapter.addTab(R.string.recent, CalendarFragment2::class.java, argsRecent)
+        tabsAdapter.addTab(R.string.recent, RecentFragment::class.java, null)
 
         // display new tabs
         tabsAdapter.notifyTabsChanged()
