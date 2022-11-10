@@ -93,6 +93,9 @@ object ThemeUtils {
      * LinearLayout containing an app bar and a BottomNavigationView is a common case.
      * See [dispatchWindowInsetsToAllChildren].
      *
+     * Note: on Android 10+ BottomNavigationView still does draw behind the navigation bar using
+     * button mode, however, the system adds an almost opaque scrim so color is barely noticeable.
+     *
      * Scroll views or RecyclerViews should add bottom padding matching the navigation bar, see
      * [applySystemBarInset].
      */
