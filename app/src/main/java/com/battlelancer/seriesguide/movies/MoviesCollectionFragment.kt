@@ -9,7 +9,6 @@ import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
-import com.battlelancer.seriesguide.ui.MoviesActivity
 
 /**
  * Displays a users collection of movies in a grid.
@@ -17,7 +16,7 @@ import com.battlelancer.seriesguide.ui.MoviesActivity
 class MoviesCollectionFragment : MoviesBaseFragment() {
 
     override val loaderId: Int
-        get() = MoviesActivity.COLLECTION_LOADER_ID
+        get() = MoviesActivityImpl.COLLECTION_LOADER_ID
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +39,9 @@ class MoviesCollectionFragment : MoviesBaseFragment() {
 
     override fun getTabPosition(showingNowTab: Boolean): Int {
         return if (showingNowTab) {
-            MoviesActivity.TAB_POSITION_COLLECTION_WITH_NOW
+            MoviesActivityImpl.TAB_POSITION_COLLECTION_WITH_NOW
         } else {
-            MoviesActivity.TAB_POSITION_COLLECTION_DEFAULT
+            MoviesActivityImpl.TAB_POSITION_COLLECTION_DEFAULT
         }
     }
 }

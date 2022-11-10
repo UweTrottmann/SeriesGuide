@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesWatchedBinding
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.ui.MoviesActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
@@ -74,9 +73,9 @@ class MoviesWatchedFragment : Fragment() {
             .observe(viewLifecycleOwner) {
                 if (it != null) {
                     val positionOfThisTab = if (it.isShowingNowTab) {
-                        MoviesActivity.TAB_POSITION_WATCHED_WITH_NOW
+                        MoviesActivityImpl.TAB_POSITION_WATCHED_WITH_NOW
                     } else {
-                        MoviesActivity.TAB_POSITION_WATCHED_DEFAULT
+                        MoviesActivityImpl.TAB_POSITION_WATCHED_DEFAULT
                     }
                     if (it.tabPosition == positionOfThisTab) {
                         binding?.recyclerViewMoviesWatched?.scrollToPosition(0)

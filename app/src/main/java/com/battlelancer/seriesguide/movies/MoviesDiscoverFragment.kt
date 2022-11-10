@@ -23,7 +23,6 @@ import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment.Local
 import com.battlelancer.seriesguide.movies.MoviesActivityViewModel.ScrollTabToTopEvent
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
-import com.battlelancer.seriesguide.ui.MoviesActivity
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
@@ -74,7 +73,7 @@ class MoviesDiscoverFragment : Fragment() {
                     return 3
                 }
                 if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_HEADER) {
-                    return layoutManager.getSpanCount()
+                    return layoutManager.spanCount
                 }
                 return if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_MOVIE) {
                     2
@@ -90,7 +89,7 @@ class MoviesDiscoverFragment : Fragment() {
             .scrollTabToTopLiveData
             .observe(viewLifecycleOwner) { event: ScrollTabToTopEvent? ->
                 if (event != null
-                    && event.tabPosition == MoviesActivity.TAB_POSITION_DISCOVER) {
+                    && event.tabPosition == MoviesActivityImpl.TAB_POSITION_DISCOVER) {
                     binding.recyclerViewMoviesDiscover.smoothScrollToPosition(0)
                 }
             }

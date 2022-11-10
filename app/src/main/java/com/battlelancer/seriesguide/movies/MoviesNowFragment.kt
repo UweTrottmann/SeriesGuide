@@ -26,7 +26,6 @@ import com.battlelancer.seriesguide.shows.history.NowAdapter
 import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
 import com.battlelancer.seriesguide.shows.history.TraktRecentEpisodeHistoryLoader
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
-import com.battlelancer.seriesguide.ui.MoviesActivity
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 
@@ -107,7 +106,7 @@ class MoviesNowFragment : Fragment() {
             .scrollTabToTopLiveData
             .observe(viewLifecycleOwner) { event: ScrollTabToTopEvent? ->
                 if (event != null
-                    && event.tabPosition == MoviesActivity.TAB_POSITION_NOW) {
+                    && event.tabPosition == MoviesActivityImpl.TAB_POSITION_NOW) {
                     binding.recyclerViewNow.smoothScrollToPosition(0)
                 }
             }
@@ -124,11 +123,11 @@ class MoviesNowFragment : Fragment() {
             showProgressBar(true)
             val loaderManager = LoaderManager.getInstance(this)
             loaderManager.initLoader(
-                MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
+                MoviesActivityImpl.NOW_TRAKT_USER_LOADER_ID, null,
                 recentlyTraktCallbacks
             )
             loaderManager.initLoader(
-                MoviesActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+                MoviesActivityImpl.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                 traktFriendsHistoryCallbacks
             )
         }
@@ -170,18 +169,18 @@ class MoviesNowFragment : Fragment() {
             isLoadingRecentlyWatched = true
             val loaderManager = LoaderManager.getInstance(this)
             loaderManager.restartLoader(
-                MoviesActivity.NOW_TRAKT_USER_LOADER_ID, null,
+                MoviesActivityImpl.NOW_TRAKT_USER_LOADER_ID, null,
                 recentlyTraktCallbacks
             )
             isLoadingFriends = true
             loaderManager.restartLoader(
-                MoviesActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+                MoviesActivityImpl.NOW_TRAKT_FRIENDS_LOADER_ID, null,
                 traktFriendsHistoryCallbacks
             )
         } else {
             // destroy trakt loaders and remove any shown error message
-            destroyLoaderIfExists(MoviesActivity.NOW_TRAKT_USER_LOADER_ID)
-            destroyLoaderIfExists(MoviesActivity.NOW_TRAKT_FRIENDS_LOADER_ID)
+            destroyLoaderIfExists(MoviesActivityImpl.NOW_TRAKT_USER_LOADER_ID)
+            destroyLoaderIfExists(MoviesActivityImpl.NOW_TRAKT_FRIENDS_LOADER_ID)
             showError(null)
         }
     }

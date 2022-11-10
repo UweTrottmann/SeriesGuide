@@ -1,150 +1,141 @@
-package com.battlelancer.seriesguide.movies;
+package com.battlelancer.seriesguide.movies
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.databinding.ActivityMoviesBinding;
-import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.BaseTopActivity;
-import com.battlelancer.seriesguide.ui.TabStripAdapter;
+import android.content.Intent
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ActivityMoviesBinding
+import com.battlelancer.seriesguide.movies.MoviesSettings.getLastMoviesTabPosition
+import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.ui.BaseTopActivity
+import com.battlelancer.seriesguide.ui.TabStripAdapter
 
 /**
  * Movie section of the app, displays various movie tabs.
  */
-public class MoviesActivityImpl extends BaseTopActivity {
-
-    public static final int SEARCH_LOADER_ID = 100;
-    public static final int NOW_TRAKT_USER_LOADER_ID = 101;
-    public static final int NOW_TRAKT_FRIENDS_LOADER_ID = 102;
-    public static final int WATCHLIST_LOADER_ID = 103;
-    public static final int COLLECTION_LOADER_ID = 104;
-
-    public static final int TAB_POSITION_DISCOVER = 0;
-    public static final int TAB_POSITION_WATCHLIST_DEFAULT = 1;
-    public static final int TAB_POSITION_COLLECTION_DEFAULT = 2;
-    public static final int TAB_POSITION_WATCHED_DEFAULT = 2;
-    public static final int TAB_POSITION_NOW = 1;
-    public static final int TAB_POSITION_WATCHLIST_WITH_NOW = 2;
-    public static final int TAB_POSITION_COLLECTION_WITH_NOW = 3;
-    public static final int TAB_POSITION_WATCHED_WITH_NOW = 4;
-    private static final int TAB_COUNT_WITH_TRAKT = 5;
-
-    private ActivityMoviesBinding binding;
-    private TabStripAdapter tabsAdapter;
-    private boolean showNowTab;
-
-    private MoviesActivityViewModel viewModel;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityMoviesBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        setupActionBar();
-        setupBottomNavigation(R.id.navigation_item_movies);
-
-        viewModel = new ViewModelProvider(this).get(MoviesActivityViewModel.class);
-
-        setupViews(savedInstanceState);
-        setupSyncProgressBar(R.id.progressBarTabs);
-
+open class MoviesActivityImpl : BaseTopActivity() {
+    
+    private lateinit var binding: ActivityMoviesBinding
+    private lateinit var tabsAdapter: TabStripAdapter
+    private var showNowTab = false
+    
+    private val viewModel by viewModels<MoviesActivityViewModel>()
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMoviesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupActionBar()
+        setupBottomNavigation(R.id.navigation_item_movies)
+        setupViews(savedInstanceState)
+        setupSyncProgressBar(R.id.progressBarTabs)
+        
         if (savedInstanceState != null) {
-            postponeEnterTransition();
+            postponeEnterTransition()
             // Allow the adapters to repopulate during the next layout pass
             // before starting the transition animation
-            binding.viewPagerMovies.post(this::startPostponedEnterTransition);
+            binding.viewPagerMovies.post { startPostponedEnterTransition() }
         }
     }
 
-    private void setupViews(Bundle savedInstanceState) {
-        // tabs
-        showNowTab = TraktCredentials.get(this).hasCredentials();
-        binding.tabLayoutMovies.setOnTabClickListener(position -> {
-            if (binding.viewPagerMovies.getCurrentItem() == position) {
-                scrollSelectedTabToTop();
+    private fun setupViews(savedInstanceState: Bundle?) {
+        binding.tabLayoutMovies.setOnTabClickListener { position: Int ->
+            if (binding.viewPagerMovies.currentItem == position) {
+                scrollSelectedTabToTop()
             }
-        });
-        tabsAdapter = new TabStripAdapter(this, binding.viewPagerMovies, binding.tabLayoutMovies);
-        // discover
-        tabsAdapter.addTab(R.string.title_discover, MoviesDiscoverFragment.class, null);
-        // trakt-only tabs should only be visible if connected
-        if (showNowTab) {
-            // history tab
-            tabsAdapter.addTab(R.string.user_stream, MoviesNowFragment.class, null);
         }
-        // watchlist
-        tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
-        // collection
-        tabsAdapter.addTab(R.string.movies_collection, MoviesCollectionFragment.class, null);
-        // watched
-        tabsAdapter.addTab(R.string.movies_watched, MoviesWatchedFragment.class, null);
-
-        tabsAdapter.notifyTabsChanged();
+        showNowTab = TraktCredentials.get(this@MoviesActivityImpl).hasCredentials()
+        tabsAdapter = TabStripAdapter(this, binding.viewPagerMovies, binding.tabLayoutMovies)
+            .apply {
+                // discover
+                addTab(R.string.title_discover, MoviesDiscoverFragment::class.java, null)
+                // Trakt-only tabs should only be visible if connected
+                if (showNowTab) {
+                    // history tab
+                    addTab(R.string.user_stream, MoviesNowFragment::class.java, null)
+                }
+                // watchlist
+                addTab(R.string.movies_watchlist, MoviesWatchListFragment::class.java, null)
+                // collection
+                addTab(R.string.movies_collection, MoviesCollectionFragment::class.java, null)
+                // watched
+                addTab(R.string.movies_watched, MoviesWatchedFragment::class.java, null)
+                notifyTabsChanged()
+            }
         if (savedInstanceState == null) {
-            binding.viewPagerMovies.setCurrentItem(MoviesSettings.getLastMoviesTabPosition(this), false);
+            binding.viewPagerMovies.setCurrentItem(getLastMoviesTabPosition(this), false)
         }
     }
 
-    private void scrollSelectedTabToTop() {
-        viewModel.scrollTabToTop(binding.viewPagerMovies.getCurrentItem(), showNowTab);
+    private fun scrollSelectedTabToTop() {
+        viewModel.scrollTabToTop(binding.viewPagerMovies.currentItem, showNowTab)
     }
 
-    @Override
-    protected void onSelectedCurrentNavItem() {
-        scrollSelectedTabToTop();
+    override fun onSelectedCurrentNavItem() {
+        scrollSelectedTabToTop()
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        maybeAddNowTab();
+    override fun onStart() {
+        super.onStart()
+        maybeAddNowTab()
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MoviesSettings.saveLastMoviesTabPosition(this, binding.viewPagerMovies.getCurrentItem());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.movies_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_action_movies_search) {
-            startActivity(new Intent(this, MoviesSearchActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void maybeAddNowTab() {
-        int currentTabCount = tabsAdapter.getItemCount();
-        showNowTab = TraktCredentials.get(this).hasCredentials();
+    private fun maybeAddNowTab() {
+        val currentTabCount = tabsAdapter.itemCount
+        showNowTab = TraktCredentials.get(this).hasCredentials()
         if (showNowTab && currentTabCount != TAB_COUNT_WITH_TRAKT) {
             tabsAdapter.addTab(
-                    R.string.user_stream, MoviesNowFragment.class, null, TAB_POSITION_NOW
-            );
+                R.string.user_stream, MoviesNowFragment::class.java, null, TAB_POSITION_NOW
+            )
             // update tabs
-            tabsAdapter.notifyTabsChanged();
+            tabsAdapter.notifyTabsChanged()
         }
     }
 
-    @NonNull
-    @Override
-    protected View getSnackbarParentView() {
-        return binding.coordinatorLayoutMovies;
+    override fun onPause() {
+        super.onPause()
+        MoviesSettings.saveLastMoviesTabPosition(this, binding.viewPagerMovies.currentItem)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.movies_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_action_movies_search -> {
+                startActivity(Intent(this, MoviesSearchActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override val snackbarParentView: View
+        get() = binding.coordinatorLayoutMovies
+
+    companion object {
+//        const val SEARCH_LOADER_ID = 100
+        const val NOW_TRAKT_USER_LOADER_ID = 101
+        const val NOW_TRAKT_FRIENDS_LOADER_ID = 102
+        const val WATCHLIST_LOADER_ID = 103
+        const val COLLECTION_LOADER_ID = 104
+
+        const val TAB_POSITION_DISCOVER = 0
+        const val TAB_POSITION_WATCHLIST_DEFAULT = 1
+        const val TAB_POSITION_COLLECTION_DEFAULT = 2
+        const val TAB_POSITION_WATCHED_DEFAULT = 2
+        const val TAB_POSITION_NOW = 1
+        const val TAB_POSITION_WATCHLIST_WITH_NOW = 2
+        const val TAB_POSITION_COLLECTION_WITH_NOW = 3
+        const val TAB_POSITION_WATCHED_WITH_NOW = 4
+
+        private const val TAB_COUNT_WITH_TRAKT = 5
     }
 }

@@ -9,7 +9,6 @@ import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
-import com.battlelancer.seriesguide.ui.MoviesActivity
 
 /**
  * Loads and displays the users trakt movie watchlist.
@@ -17,7 +16,7 @@ import com.battlelancer.seriesguide.ui.MoviesActivity
 class MoviesWatchListFragment : MoviesBaseFragment() {
 
     override val loaderId: Int
-        get() = MoviesActivity.WATCHLIST_LOADER_ID
+        get() = MoviesActivityImpl.WATCHLIST_LOADER_ID
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +39,9 @@ class MoviesWatchListFragment : MoviesBaseFragment() {
 
     override fun getTabPosition(showingNowTab: Boolean): Int {
         return if (showingNowTab) {
-            MoviesActivity.TAB_POSITION_WATCHLIST_WITH_NOW
+            MoviesActivityImpl.TAB_POSITION_WATCHLIST_WITH_NOW
         } else {
-            MoviesActivity.TAB_POSITION_WATCHLIST_DEFAULT
+            MoviesActivityImpl.TAB_POSITION_WATCHLIST_DEFAULT
         }
     }
 }
