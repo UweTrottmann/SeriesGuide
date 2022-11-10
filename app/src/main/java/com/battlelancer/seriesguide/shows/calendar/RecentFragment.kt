@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentCalendarRecentBinding
 import com.battlelancer.seriesguide.shows.ShowsActivityImpl
 
@@ -27,6 +28,10 @@ class RecentFragment : CalendarFragment2() {
 
     override suspend fun updateCalendarQuery() {
         viewModel.updateCalendarQuery(false)
+    }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewCalendarRecent
     }
 
 }

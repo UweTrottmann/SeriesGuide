@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
@@ -200,7 +201,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             }
         }
         tabsAdapter = TabStripAdapter(this, viewPager, tabs)
-        tabs.setOnPageChangeListener(ShowsPageChangeListener(buttonAddShow))
+        tabs.setOnPageChangeListener(ShowsPageChangeListener(findViewById(R.id.sgAppBarLayout), buttonAddShow))
 
         // shows tab
         tabsAdapter.addTab(R.string.shows, ShowsFragment::class.java, null)
@@ -343,15 +344,30 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         get() = findViewById(R.id.coordinatorLayoutShows)
 
     /**
-     * Page change listener which hides the floating action button for all but the shows tab.
+     * Page change listener which
+     * - sets the scroll view of the current visible tab as the lift on scroll target view of the
+     *   app bar and
+     * - hides the floating action button for all but the shows tab.
      */
     class ShowsPageChangeListener(
+        private val appBarLayout: AppBarLayout,
         private val floatingActionButton: FloatingActionButton
     ) : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrollStateChanged(arg0: Int) {}
         override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
 
         override fun onPageSelected(position: Int) {
+            // Change the scrolling view the AppBarLayout should use to determine if it should lift.
+            // This is required so the AppBarLayout does not flicker its background when scrolling.
+            val liftOnScrollTarget = when (position) {
+                Tab.SHOWS.index -> ShowsFragment.liftOnScrollTargetViewId
+                Tab.NOW.index -> ShowsNowFragment.liftOnScrollTargetViewId
+                Tab.UPCOMING.index -> UpcomingFragment.liftOnScrollTargetViewId
+                Tab.RECENT.index -> RecentFragment.liftOnScrollTargetViewId
+                else -> throw IllegalArgumentException("Unexpected page position")
+            }
+            appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
+
             // only display add show button on Shows tab
             if (position == Tab.SHOWS.index) {
                 floatingActionButton.show()
