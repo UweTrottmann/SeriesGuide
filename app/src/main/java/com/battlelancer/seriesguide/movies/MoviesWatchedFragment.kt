@@ -23,10 +23,6 @@ import org.greenrobot.eventbus.ThreadMode
 
 class MoviesWatchedFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MoviesWatchedFragment()
-    }
-
     private var binding: FragmentMoviesWatchedBinding? = null
 
     private val model by viewModels<MoviesWatchedViewModel>()
@@ -109,6 +105,12 @@ class MoviesWatchedFragment : Fragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: MoviesDistillationSettings.MoviesSortOrderChangedEvent) {
         model.updateQueryString()
+    }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewMoviesWatched
+
+        fun newInstance() = MoviesWatchedFragment()
     }
 
 }

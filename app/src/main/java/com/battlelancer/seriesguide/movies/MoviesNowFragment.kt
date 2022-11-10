@@ -303,4 +303,8 @@ class MoviesNowFragment : Fragment() {
                 adapter.setFriendsRecentlyWatched(null)
             }
         }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewNow
+    }
 }

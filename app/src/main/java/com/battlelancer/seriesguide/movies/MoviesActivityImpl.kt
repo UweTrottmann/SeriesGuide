@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesBinding
 import com.battlelancer.seriesguide.movies.MoviesSettings.getLastMoviesTabPosition
@@ -13,27 +14,32 @@ import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
+import com.battlelancer.seriesguide.util.ThemeUtils
+import com.google.android.material.appbar.AppBarLayout
 
 /**
  * Movie section of the app, displays various movie tabs.
  */
 open class MoviesActivityImpl : BaseTopActivity() {
-    
+
     private lateinit var binding: ActivityMoviesBinding
     private lateinit var tabsAdapter: TabStripAdapter
+    private lateinit var pageChangeListener: MoviesPageChangeListener
     private var showNowTab = false
-    
+
     private val viewModel by viewModels<MoviesActivityViewModel>()
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMoviesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ThemeUtils.configureAppBarForContentBelow(this)
+        ThemeUtils.dispatchWindowInsetsToAllChildren(binding.root)
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_movies)
         setupViews(savedInstanceState)
-        setupSyncProgressBar(R.id.progressBarTabs)
-        
+        setupSyncProgressBar(R.id.sgProgressBar)
+
         if (savedInstanceState != null) {
             postponeEnterTransition()
             // Allow the adapters to repopulate during the next layout pass
@@ -43,13 +49,17 @@ open class MoviesActivityImpl : BaseTopActivity() {
     }
 
     private fun setupViews(savedInstanceState: Bundle?) {
-        binding.tabLayoutMovies.setOnTabClickListener { position: Int ->
+        val tabLayout = binding.sgAppBarLayout.sgTabLayout
+        tabLayout.setOnTabClickListener { position: Int ->
             if (binding.viewPagerMovies.currentItem == position) {
                 scrollSelectedTabToTop()
             }
         }
         showNowTab = TraktCredentials.get(this@MoviesActivityImpl).hasCredentials()
-        tabsAdapter = TabStripAdapter(this, binding.viewPagerMovies, binding.tabLayoutMovies)
+        pageChangeListener =
+            MoviesPageChangeListener(binding.sgAppBarLayout.sgAppBarLayout, showNowTab)
+        tabLayout.setOnPageChangeListener(pageChangeListener)
+        tabsAdapter = TabStripAdapter(this, binding.viewPagerMovies, tabLayout)
             .apply {
                 // discover
                 addTab(R.string.title_discover, MoviesDiscoverFragment::class.java, null)
@@ -87,6 +97,7 @@ open class MoviesActivityImpl : BaseTopActivity() {
     private fun maybeAddNowTab() {
         val currentTabCount = tabsAdapter.itemCount
         showNowTab = TraktCredentials.get(this).hasCredentials()
+        pageChangeListener.isShowingNowTab = showNowTab
         if (showNowTab && currentTabCount != TAB_COUNT_WITH_TRAKT) {
             tabsAdapter.addTab(
                 R.string.user_stream, MoviesNowFragment::class.java, null, TAB_POSITION_NOW
@@ -120,8 +131,44 @@ open class MoviesActivityImpl : BaseTopActivity() {
     override val snackbarParentView: View
         get() = binding.coordinatorLayoutMovies
 
+    /**
+     * Page change listener which sets the scroll view of the current visible tab as the lift on
+     * scroll target view of the app bar.
+     */
+    class MoviesPageChangeListener(
+        private val appBarLayout: AppBarLayout,
+        var isShowingNowTab: Boolean
+    ) : ViewPager2.OnPageChangeCallback() {
+        override fun onPageScrollStateChanged(arg0: Int) {}
+        override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
+
+        override fun onPageSelected(position: Int) {
+            // Change the scrolling view the AppBarLayout should use to determine if it should lift.
+            // This is required so the AppBarLayout does not flicker its background when scrolling.
+            val liftOnScrollTarget = if (isShowingNowTab) {
+                when (position) {
+                    TAB_POSITION_DISCOVER -> MoviesDiscoverFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_NOW -> MoviesNowFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_WATCHLIST_WITH_NOW -> MoviesWatchListFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_COLLECTION_WITH_NOW -> MoviesCollectionFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_WATCHED_WITH_NOW -> MoviesWatchedFragment.liftOnScrollTargetViewId
+                    else -> return
+                }
+            } else {
+                when (position) {
+                    TAB_POSITION_DISCOVER -> MoviesDiscoverFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_WATCHLIST_DEFAULT -> MoviesWatchListFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_COLLECTION_DEFAULT -> MoviesCollectionFragment.liftOnScrollTargetViewId
+                    TAB_POSITION_WATCHED_DEFAULT -> MoviesWatchedFragment.liftOnScrollTargetViewId
+                    else -> return
+                }
+            }
+            appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
+        }
+    }
+
     companion object {
-//        const val SEARCH_LOADER_ID = 100
+        //        const val SEARCH_LOADER_ID = 100
         const val NOW_TRAKT_USER_LOADER_ID = 101
         const val NOW_TRAKT_FRIENDS_LOADER_ID = 102
         const val WATCHLIST_LOADER_ID = 103

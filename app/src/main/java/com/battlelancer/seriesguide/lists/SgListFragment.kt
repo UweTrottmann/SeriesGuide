@@ -155,6 +155,8 @@ class SgListFragment : Fragment() {
     }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewListItems
+
         private const val ARG_LIST_ID = "LIST_ID"
         private const val ARG_LIST_POSITION = "LIST_POSITION"
 
