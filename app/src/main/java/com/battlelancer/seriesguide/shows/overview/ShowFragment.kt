@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.MULTI_PANE_VERTICAL
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
@@ -157,7 +158,11 @@ class ShowFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding ?: return
-        ThemeUtils.applySystemBarInset(binding.scrollViewShow)
+        // In the vertical multi-pane layout the show fragment sits on top of the seasons fragment,
+        // so do not inset to avoid navigation bar.
+        if (OverviewActivityImpl.getLayoutType(requireContext()) != MULTI_PANE_VERTICAL) {
+            ThemeUtils.applySystemBarInset(binding.scrollViewShow)
+        }
 
         // favorite + notifications + visibility button
         TooltipCompat.setTooltipText(

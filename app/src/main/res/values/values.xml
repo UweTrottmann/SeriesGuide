@@ -2,6 +2,6 @@
 <resources>
 
     <bool name="gridClipToPadding">false</bool>
-    <bool name="isOverviewSinglePane">true</bool>
+    <integer name="overviewLayoutType">0</integer>
 
 </resources>

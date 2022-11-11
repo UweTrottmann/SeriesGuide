@@ -7,6 +7,7 @@
     android:id="@+id/scrollViewShow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     tools:layout_width="240dp">
     <!-- Width based on 40% 600dp screen width as used in activity_overview_multipane (portrait)
     or 30% 800dp screen width as used in activity_overview_multipane_wide (landscape). -->
@@ -17,113 +18,125 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/large_padding">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
+            style="?attr/materialCardViewFilledStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="?attr/sgColorBackgroundDim">
 
-            <View
-                android:id="@+id/imageViewShowPosterBackground"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="?attr/sgColorBackgroundDim"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/containerShowPoster"
-                android:layout_width="@dimen/show_poster_width_default"
-                android:layout_height="@dimen/show_poster_height_default"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:foreground="?attr/selectableItemBackground"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                <View
+                    android:id="@+id/imageViewShowPosterBackground"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="?attr/sgColorBackgroundDim"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageViewShowPoster"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/description_poster"
-                    android:scaleType="centerCrop"
-                    tools:src="@color/sg_black_38" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/containerShowPoster"
+                    style="?attr/materialCardViewFilledStyle"
+                    android:layout_width="@dimen/show_poster_width_default"
+                    android:layout_height="@dimen/show_poster_height_default"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </com.google.android.material.card.MaterialCardView>
+                    <ImageView
+                        android:id="@+id/imageViewShowPoster"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/description_poster"
+                        android:scaleType="centerCrop"
+                        tools:src="@color/sg_black_38" />
 
-            <TextView
-                android:id="@+id/textViewShowReleaseTime"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/barrierPosterButtonsBottom"
-                tools:text="ABC (US) : Sat 08:00 PM : 43 min" />
+                </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/textViewShowStatus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewShowReleaseTime"
-                tools:text="Continuing" />
+                <TextView
+                    android:id="@+id/textViewShowReleaseTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrierPosterButtonsBottom"
+                    tools:text="ABC (US) : Sat 08:00 PM : 43 min" />
 
-            <Button
-                android:id="@+id/buttonShowFavorite"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|start"
-                android:text="@string/context_favorite"
-                android:insetTop="0dp"
-                app:icon="@drawable/ic_star_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
-                app:layout_constraintTop_toTopOf="@+id/containerShowPoster" />
+                <TextView
+                    android:id="@+id/textViewShowStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewShowReleaseTime"
+                    tools:text="Continuing" />
 
-            <Button
-                android:id="@+id/buttonShowNotify"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/action_episode_notifications_off"
-                android:gravity="center_vertical|start"
-                android:text="@string/pref_notifications"
-                app:icon="@drawable/ic_notifications_active_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
-                app:layout_constraintTop_toBottomOf="@+id/buttonShowFavorite" />
+                <Button
+                    android:id="@+id/buttonShowFavorite"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:insetTop="0dp"
+                    android:text="@string/context_favorite"
+                    app:icon="@drawable/ic_star_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                    app:layout_constraintTop_toTopOf="@+id/containerShowPoster" />
 
-            <Button
-                android:id="@+id/buttonShowHidden"
-                style="@style/Widget.SeriesGuide.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|start"
-                android:text="@string/context_hide"
-                app:icon="@drawable/ic_visibility_white_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
-                app:layout_constraintTop_toBottomOf="@+id/buttonShowNotify" />
+                <Button
+                    android:id="@+id/buttonShowNotify"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_episode_notifications_off"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/pref_notifications"
+                    app:icon="@drawable/ic_notifications_active_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonShowFavorite" />
 
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrierPosterButtonsBottom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="containerShowPoster,buttonShowHidden"
-                tools:layout_editor_absoluteY="195dp" />
+                <Button
+                    android:id="@+id/buttonShowHidden"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/context_hide"
+                    app:icon="@drawable/ic_visibility_white_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonShowNotify" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrierPosterButtonsBottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="containerShowPoster,buttonShowHidden" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <include
             android:id="@+id/containerRatings"

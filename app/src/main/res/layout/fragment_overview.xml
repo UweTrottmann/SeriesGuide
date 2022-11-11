@@ -13,6 +13,7 @@
         android:id="@+id/scrollViewOverview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         tools:ignore="UnusedAttribute,UselessParent">
 
         <LinearLayout
@@ -31,8 +32,8 @@
                     android:id="@+id/overviewShowStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_padding"
                     android:layout_marginStart="@dimen/large_padding"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     app:layout_constraintEnd_toStartOf="@id/buttonOverviewFavoriteShow"
                     app:layout_constraintStart_toStartOf="parent"
