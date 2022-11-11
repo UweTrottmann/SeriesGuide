@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <include
-        android:id="@+id/sgToolbar"
-        layout="@layout/toolbar_elevated"
+        layout="@layout/top_app_bar_fixed"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guidelineOverviewHorizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVertical"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/sgAppBarLayout" />
 
     <View
         android:id="@+id/viewOverviewShadowBottom"
@@ -64,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVertical"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/sgAppBarLayout"
         tools:src="#66ff0099" />
 
     <FrameLayout
@@ -74,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVertical"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/sgAppBarLayout" />
 
     <View
         android:id="@+id/viewOverviewShadowStart"
@@ -83,6 +82,6 @@
         android:background="@drawable/sg_shadow_right_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVertical"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/sgAppBarLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

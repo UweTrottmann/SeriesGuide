@@ -55,6 +55,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -104,6 +105,8 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding!!
         with(binding) {
+            ThemeUtils.applySystemBarInset(scrollViewOverview)
+
             containerOverviewEpisode.visibility = View.GONE
             containerOverviewEmpty.visibility = View.GONE
 
@@ -777,6 +780,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.scrollViewOverview
 
         private const val ARG_LONG_SHOW_ROWID = "show_id"
         private const val ARG_EPISODE_ID = "episode_id"

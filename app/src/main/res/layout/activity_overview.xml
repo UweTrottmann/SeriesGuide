@@ -12,18 +12,7 @@
         android:contentDescription="@null"
         android:scaleType="centerCrop" />
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/toolbar" />
-
-        <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
-            android:id="@+id/tabsOverview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <include layout="@layout/top_app_bar_scrolling_tabs" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pagerOverview"

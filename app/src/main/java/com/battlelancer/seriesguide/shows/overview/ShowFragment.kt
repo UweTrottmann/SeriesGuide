@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +35,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -71,6 +73,7 @@ class ShowFragment() : Fragment() {
     }
 
     class Binding(view: View) {
+        val scrollViewShow: NestedScrollView
         val containerPoster: View
         val imageViewPoster: ImageView
         val textViewStatus: TextView
@@ -107,6 +110,7 @@ class ShowFragment() : Fragment() {
         init {
             // Show fragment and included layouts vary depending on screen size,
             // currently not seeing an easy way to use view binding, so just using findViewById.
+            scrollViewShow = view.findViewById(R.id.scrollViewShow)
             containerPoster = view.findViewById(R.id.containerShowPoster)
             imageViewPoster = view.findViewById(R.id.imageViewShowPoster)
             textViewStatus = view.findViewById(R.id.textViewShowStatus)
@@ -153,8 +157,13 @@ class ShowFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding ?: return
+        ThemeUtils.applySystemBarInset(binding.scrollViewShow)
+
         // favorite + notifications + visibility button
-        TooltipCompat.setTooltipText(binding.buttonFavorite, binding.buttonFavorite.contentDescription)
+        TooltipCompat.setTooltipText(
+            binding.buttonFavorite,
+            binding.buttonFavorite.contentDescription
+        )
         TooltipCompat.setTooltipText(binding.buttonNotify, binding.buttonNotify.contentDescription)
         TooltipCompat.setTooltipText(binding.buttonHidden, binding.buttonHidden.contentDescription)
 
@@ -337,7 +346,8 @@ class ShowFragment() : Fragment() {
             // no description available, show no translation available message
             overview = TextTools.textNoTranslation(requireContext(), languageCode)
         }
-        binding.textViewOverview.text = TextTools.textWithTmdbSource(binding.textViewOverview.context, overview)
+        binding.textViewOverview.text =
+            TextTools.textWithTmdbSource(binding.textViewOverview.context, overview)
 
         // language preferred for content
         val languageData = LanguageTools.getShowLanguageDataFor(
@@ -372,10 +382,12 @@ class ShowFragment() : Fragment() {
 
         // trakt rating
         binding.textViewRating.text = TraktTools.buildRatingString(show.ratingGlobal)
-        binding.textViewRatingVotes.text = TraktTools.buildRatingVotesString(activity, show.ratingVotes)
+        binding.textViewRatingVotes.text =
+            TraktTools.buildRatingVotesString(activity, show.ratingVotes)
 
         // user rating
-        binding.textViewRatingUser.text = TraktTools.buildUserRatingString(activity, show.ratingUser)
+        binding.textViewRatingUser.text =
+            TraktTools.buildUserRatingString(activity, show.ratingUser)
 
         // Similar shows button.
         binding.buttonSimilar.setOnClickListener {
@@ -525,6 +537,7 @@ class ShowFragment() : Fragment() {
     }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.scrollViewShow
 
         private const val ARG_SHOW_ROWID = "show_id"
 

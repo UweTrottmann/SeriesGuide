@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Enable nested scrolling to scroll app bar, fix fling to top registering. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollViewShow"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:nestedScrollingEnabled="true"
     tools:layout_width="288dp"
     tools:ignore="UnusedAttribute">
     <!-- 40% of 720dp assuming activity_overview_multipane (portrait),
@@ -156,4 +155,4 @@
             <include layout="@layout/buttons_show_bottom" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

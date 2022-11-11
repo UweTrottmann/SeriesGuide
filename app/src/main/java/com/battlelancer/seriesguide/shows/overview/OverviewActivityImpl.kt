@@ -20,6 +20,9 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ThemeUtils
+import com.google.android.material.appbar.AppBarLayout
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -89,15 +92,17 @@ open class OverviewActivityImpl : BaseMessageActivity() {
 
         // look if we are on a multi-pane or single-pane layout...
         val pagerView = findViewById<View>(R.id.pagerOverview)
-        if (pagerView != null && pagerView.visibility == View.VISIBLE) {
-            // ...single pane layout with view pager
+        val isViewPagerLayout = pagerView != null && pagerView.visibility == View.VISIBLE
+        if (isViewPagerLayout) {
+            // Single pane layout with view pager
+            ThemeUtils.configureAppBarForContentBelow(this)
 
             // clear up left-over fragments from multi-pane layout
             findAndRemoveFragment(R.id.fragment_overview)
             findAndRemoveFragment(R.id.fragment_seasons)
-            setupViewPager(pagerView)
+            setupViewPager()
         } else {
-            // ...multi-pane overview and seasons fragment
+            // Multi-pane show, overview and seasons fragment
 
             // clear up left-over fragments from single-pane layout
             val isSwitchingLayouts = activeFragments.size != 0
@@ -132,13 +137,13 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         ft3.commit()
     }
 
-    private fun setupViewPager(pagerView: View) {
-        val pager = pagerView as ViewPager2
+    private fun setupViewPager() {
+        val pager = findViewById<ViewPager2>(R.id.pagerOverview)
 
         // setup tab strip
-        val tabsAdapter = TabStripAdapter(
-            this, pager, findViewById(R.id.tabsOverview)
-        )
+        val tabLayout = findViewById<SlidingTabLayout>(R.id.sgTabLayout)
+        val tabsAdapter = TabStripAdapter(this, pager, tabLayout)
+        tabLayout.setOnPageChangeListener(OverviewPageChangeListener(findViewById(R.id.sgAppBarLayout)))
         tabsAdapter.addTab(
             R.string.show_details,
             ShowFragment::class.java,
@@ -159,6 +164,30 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         // select overview to be shown initially
         val displaySeasons = intent.getBooleanExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, false)
         pager.setCurrentItem(if (displaySeasons) 2 /* seasons */ else 1 /* overview */, false)
+    }
+
+
+    /**
+     * Page change listener which sets the scroll view of the current visible tab as the lift on
+     * scroll target view of the app bar.
+     */
+    class OverviewPageChangeListener(
+        private val appBarLayout: AppBarLayout
+    ) : ViewPager2.OnPageChangeCallback() {
+        override fun onPageScrollStateChanged(arg0: Int) {}
+        override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
+
+        override fun onPageSelected(position: Int) {
+            // Change the scrolling view the AppBarLayout should use to determine if it should lift.
+            // This is required so the AppBarLayout does not flicker its background when scrolling.
+            val liftOnScrollTarget = when (position) {
+                0 -> ShowFragment.liftOnScrollTargetViewId
+                1 -> OverviewFragment.liftOnScrollTargetViewId
+                2 -> SeasonsFragment.liftOnScrollTargetViewId
+                else -> throw IllegalArgumentException("Unexpected page position")
+            }
+            appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
+        }
     }
 
     private fun findAndRemoveFragment(fragmentId: Int) {
@@ -237,7 +266,6 @@ open class OverviewActivityImpl : BaseMessageActivity() {
             startActivity(intent)
         }
     }
-
 
     override val snackbarParentView: View
         get() = if (resources.getBoolean(R.bool.isOverviewSinglePane)) {
