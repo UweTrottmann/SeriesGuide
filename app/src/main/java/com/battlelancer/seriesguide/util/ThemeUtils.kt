@@ -181,21 +181,73 @@ object ThemeUtils {
     }
 
     /**
+     * Wrapper around [androidx.core.view.OnApplyWindowInsetsListener] which also passes the
+     * initial padding set on the view. Used with [setOnApplyWindowInsetsListenerWithInitialPadding].
+     */
+    private interface OnApplyWindowInsetsInitialPaddingListener {
+        /**
+         * When [set][View.setOnApplyWindowInsetsListener] on a View, this listener method will be
+         * called instead of the view's own [View.onApplyWindowInsets] method. The [initialPadding]
+         * is the view's original padding which can be updated and will be applied to the view
+         * automatically. This method should return a new [WindowInsetsCompat] with any insets
+         * consumed.
+         */
+        fun onApplyWindowInsets(
+            view: View, insets: WindowInsetsCompat, initialPadding: RelativePadding
+        ): WindowInsetsCompat
+    }
+
+    /** Simple data object to store the initial padding for a view.  */
+    private data class RelativePadding(
+        val start: Int,
+        val top: Int,
+        val end: Int,
+        val bottom: Int
+    ) {
+        fun applyToView(view: View) = view.setPaddingRelative(start, top, end, bottom)
+    }
+
+    /**
+     *  Sets an [androidx.core.view.OnApplyWindowInsetsListener] that calls the given [listener]
+     *  with initial padding values of this view.
+     *
+     *  Note: this is based on similar code of the Material Components ViewUtils class.
+     */
+    private fun View.setOnApplyWindowInsetsListenerWithInitialPadding(
+        listener: OnApplyWindowInsetsInitialPaddingListener
+    ) {
+        // Get the current padding values of the view.
+        val initialPadding = RelativePadding(
+            paddingStart,
+            paddingTop,
+            paddingEnd,
+            paddingBottom
+        )
+        ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+            listener.onApplyWindowInsets(v, insets, initialPadding)
+        }
+    }
+
+    /**
      * Sets a window insets dispatch listener and changes the bottom padding to the system bar
      * inset. Consumes the insets so no children of the given view will receive them.
      */
     fun applySystemBarInset(view: View) {
-        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(
-                v.paddingLeft,
-                v.paddingTop,
-                v.paddingRight,
-                systemBarInsets.bottom
-            )
-            // Return CONSUMED to not pass the window insets down to descendant views.
-            WindowInsetsCompat.CONSUMED
-        }
+        view.setOnApplyWindowInsetsListenerWithInitialPadding(object :
+            OnApplyWindowInsetsInitialPaddingListener {
+            override fun onApplyWindowInsets(
+                view: View,
+                insets: WindowInsetsCompat,
+                initialPadding: RelativePadding
+            ): WindowInsetsCompat {
+                val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                initialPadding
+                    .copy(bottom = initialPadding.bottom + systemBarInsets.bottom)
+                    .applyToView(view)
+                // Return CONSUMED to not pass the window insets down to descendant views.
+                return WindowInsetsCompat.CONSUMED
+            }
+        })
     }
 
     /**
