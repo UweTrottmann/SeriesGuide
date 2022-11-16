@@ -15,6 +15,7 @@ title: Help
       <a class="list-group-item list-group-item-action" href="#airtimes">The release time of a show or episode is wrong</a>
       <a class="list-group-item list-group-item-action" href="#watch">Watching shows or movies is not supported</a>
       <a class="list-group-item list-group-item-action" href="#images">Images are not displayed</a>
+      <a class="list-group-item list-group-item-action" href="#battery">Notifications appear too late</a>
       <a class="list-group-item list-group-item-action" href="#widget">The widget is not updating or is missing</a>
       <a class="list-group-item list-group-item-action" href="#timezone">After changing the time zone times are incorrect</a>      
     </div>
@@ -85,8 +86,8 @@ title: Help
         <strong>Auto-sync data</strong> is enabled. You should also see a SeriesGuide Sync account there.</p>
       
       <p class="title">Check device power saving settings</p>
-      <p>SeriesGuide might not be able to update in the background because of power saving settings. 
-        Try to <a href="{{ site.data.links.dontkillmyapp }}">exclude SeriesGuide from power optimizations</a>.</p>
+      <p>SeriesGuide might not be able to update in the background because of battery use optimization settings. 
+        Try to <a href="#battery">exclude SeriesGuide from battery use optimizations</a>.</p>
       
       <p class="title">Last resort: remove and add the show again</p>
       <p>If a show does not update, as a last resort, remove the show and add it again.</p>
@@ -150,11 +151,24 @@ title: Help
       </dl>
     </section>
 
+    <span class="anchor" id="battery"></span>
+    <section class="mt-2">
+      <h3>Notifications appear too late</h3>
+      <p>If notifications only appear once you start using your device, SeriesGuide is affected by the battery use optimization settings of your device.</p>
+      <p>To disable battery optimization for SeriesGuide:</p>
+      <ul>
+        <li>open the <strong>Settings</strong> app,</li>
+        <li>go to <strong>Apps</strong> and look for SeriesGuide,</li>
+        <li>open the <strong>Battery</strong> section,</li>
+        <li>choose <strong>Unrestricted</strong> or change <strong>Battery optimization</strong> to <strong>Don't optimize</strong>.</li>
+      </ul>
+    </section>
+
     <span class="anchor" id="widget"></span>
     <section class="mt-2">
       <h3>The widget is not updating or is missing</h3>
       <p>You may have moved SeriesGuide to the SD card/external storage. For SeriesGuide to work properly it <strong>has to be installed on your device/internal memory</strong>. Move it back and everything should be fine again (if not, <strong>try rebooting your device</strong>).</p>
-      <p>If that is not the case, it may help to <a href="{{ site.data.links.dontkillmyapp }}">exclude SeriesGuide from overreaching power optimizations</a>.</p>
+      <p>If that is not the case, it may help to <a href="#battery">exclude SeriesGuide from battery optimizations</a>.</p>
     </section>
 
     <span class="anchor" id="timezone"></span>
