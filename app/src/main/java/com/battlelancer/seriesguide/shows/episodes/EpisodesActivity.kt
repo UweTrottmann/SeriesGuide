@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.core.content.edit
@@ -23,7 +24,9 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
+import com.google.android.material.shape.MaterialShapeDrawable
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -63,6 +66,7 @@ class EpisodesActivity : BaseMessageActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEpisodesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root as ViewGroup)
         setupActionBar()
 
         // if coming from a notification, set last cleared time
@@ -156,6 +160,10 @@ class EpisodesActivity : BaseMessageActivity() {
 
     private fun setupViews() {
         if (isSinglePaneView) {
+            // Note: currently app bar does not lift, so the status bar foreground will stay
+            // transparent, but still hides content scrolling below it.
+            binding.sgAppBarLayout?.statusBarForeground =
+                MaterialShapeDrawable.createWithElevationOverlay(this)
             switchView(isListVisibleInSinglePaneView, updateOptionsMenu = false)
         }
 

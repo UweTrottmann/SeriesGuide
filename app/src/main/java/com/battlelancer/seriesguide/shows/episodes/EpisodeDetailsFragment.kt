@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -101,6 +102,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         savedInstanceState: Bundle?
     ): View {
         val bindingRoot = FragmentEpisodeBinding.inflate(inflater, container, false)
+        ThemeUtils.applyBottomPaddingForNavigationBar(bindingRoot.scrollViewEpisode)
         binding = bindingRoot.includeEpisode.also { binding ->
             bindingButtons = binding.includeButtons
             bindingRatings = binding.includeRatings

@@ -187,14 +187,9 @@
     </style>
 
     <!-- AppBar -->
-    <!-- Material3: for now keeping old style with elevation to avoid having to color status bar,
-         also new liftOnScroll flickers on scrolling. -->
-    <style name="Widget.SeriesGuide.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
-        <item name="android:background">?attr/sgColorTopAppBar</item>
-    </style>
-
-    <!-- Transparent background, disable shadow. -->
-    <style name="Widget.SeriesGuide.AppBarLayout.Transparent" parent="">
+    <!-- Transparent background, disable lift. -->
+    <style name="Widget.SeriesGuide.AppBarLayout.Transparent" parent="Widget.Material3.AppBarLayout">
+        <item name="liftOnScroll">false</item>
         <item name="android:background">@color/transparent</item>
         <item name="elevation">0dp</item>
     </style>
