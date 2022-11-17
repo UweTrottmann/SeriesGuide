@@ -120,7 +120,7 @@ open class OverviewActivityImpl : BaseMessageActivity() {
             // clear up left-over fragments from multi-pane layout
             findAndRemoveFragment(R.id.fragment_overview)
             findAndRemoveFragment(R.id.fragment_seasons)
-            setupViewPager()
+            setupViewPager(isNotRestoringState = savedInstanceState == null)
         } else {
             // Multi-pane show, overview and seasons fragment
             // Bottom pad the card containing the overview fragment.
@@ -159,7 +159,7 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         ft3.commit()
     }
 
-    private fun setupViewPager() {
+    private fun setupViewPager(isNotRestoringState: Boolean) {
         val pager = findViewById<ViewPager2>(R.id.pagerOverview)
 
         // setup tab strip
@@ -184,8 +184,10 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         tabsAdapter.notifyTabsChanged()
 
         // select overview to be shown initially
-        val displaySeasons = intent.getBooleanExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, false)
-        pager.setCurrentItem(if (displaySeasons) 2 /* seasons */ else 1 /* overview */, false)
+        if (isNotRestoringState) {
+            val displaySeasons = intent.getBooleanExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, false)
+            pager.setCurrentItem(if (displaySeasons) 2 /* seasons */ else 1 /* overview */, false)
+        }
     }
 
 
