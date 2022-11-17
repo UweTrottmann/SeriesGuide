@@ -89,6 +89,13 @@ open class OverviewActivityImpl : BaseMessageActivity() {
     }
 
     private fun setupViews(savedInstanceState: Bundle?) {
+        val rootViewId = if (layoutType == SINGLE_PANE) {
+            R.id.coordinatorLayoutOverview
+        } else {
+            R.id.rootLayoutOverview
+        }
+        ThemeUtils.configureForEdgeToEdge(findViewById(rootViewId))
+
         // poster background
         val backgroundImageView = findViewById<ImageView>(R.id.imageViewOverviewBackground)
         lifecycleScope.launch {
@@ -116,9 +123,8 @@ open class OverviewActivityImpl : BaseMessageActivity() {
             setupViewPager()
         } else {
             // Multi-pane show, overview and seasons fragment
-            // Inset the card containing the overview fragment.
-            ThemeUtils.dispatchWindowInsetsToAllChildren(findViewById(R.id.rootLayoutOverview))
-            ThemeUtils.applySystemBarInset(findViewById(R.id.wrapperOverview))
+            // Bottom pad the card containing the overview fragment.
+            ThemeUtils.applyBottomPaddingForNavigationBar(findViewById(R.id.wrapperOverview))
 
             // clear up left-over fragments from single-pane layout
             val isSwitchingLayouts = activeFragments.size != 0
@@ -285,6 +291,7 @@ open class OverviewActivityImpl : BaseMessageActivity() {
 
     override val snackbarParentView: View
         get() = if (layoutType == SINGLE_PANE) {
+            // The single pane layout uses a CoordinatorLayout as root view.
             findViewById(R.id.coordinatorLayoutOverview)
         } else {
             super.snackbarParentView

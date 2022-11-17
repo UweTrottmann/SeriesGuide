@@ -33,8 +33,8 @@ open class ListsActivityImpl : BaseTopActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityListsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root)
         ThemeUtils.configureAppBarForContentBelow(this)
-        ThemeUtils.dispatchWindowInsetsToAllChildren(binding.root)
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_lists)
 

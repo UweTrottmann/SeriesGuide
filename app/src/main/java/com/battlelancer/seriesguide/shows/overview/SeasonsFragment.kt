@@ -72,7 +72,7 @@ class SeasonsFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ThemeUtils.applySystemBarInset(binding!!.recyclerViewSeasons)
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding!!.recyclerViewSeasons)
 
         adapter = SeasonsAdapter(
             requireContext(),

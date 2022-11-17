@@ -115,7 +115,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             // so only inset on single pane layout.
             val overviewLayoutType = OverviewActivityImpl.getLayoutType(requireContext())
             if (overviewLayoutType == SINGLE_PANE) {
-                ThemeUtils.applySystemBarInset(scrollViewOverview)
+                ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewOverview)
             }
 
             containerOverviewEpisode.visibility = View.GONE

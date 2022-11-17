@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.util
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.view.View
@@ -91,13 +92,13 @@ object ThemeUtils {
      * ViewGroup only dispatches windows insets starting from the first child until one
      * consumes them. So it may be necessary to manually dispatch insets to all children, e.g. a
      * LinearLayout containing an app bar and a BottomNavigationView is a common case.
-     * See [dispatchWindowInsetsToAllChildren].
+     * See [configureForEdgeToEdge].
      *
      * Note: on Android 10+ BottomNavigationView still does draw behind the navigation bar using
      * button mode, however, the system adds an almost opaque scrim so color is barely noticeable.
      *
      * Scroll views or RecyclerViews should add bottom padding matching the navigation bar, see
-     * [applySystemBarInset].
+     * [applyBottomPaddingForNavigationBar].
      */
     fun configureEdgeToEdge(window: Window) {
         // https://developer.android.com/develop/ui/views/layout/edge-to-edge
@@ -172,6 +173,43 @@ object ThemeUtils {
     }
 
     /**
+     * This ensures the [viewGroup] is padded when a navigation bar in button mode is used in
+     * landscape configuration as the bar is drawn left or right instead of at the bottom.
+     *
+     * Note: this should not be used with the Window decor view as it breaks the navigation bar
+     * background protection (it will be fully transparent).
+     *
+     * ViewGroup also only dispatches windows insets starting from the first child until one
+     * consumes them. This manually dispatches insets to all direct children.
+     */
+    fun configureForEdgeToEdge(viewGroup: ViewGroup) {
+        ViewCompat.setOnApplyWindowInsetsListener(viewGroup) { v, insets ->
+            // Safe guard to only apply navigation bar insets in landscape view.
+            if (v.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                // Note: do not apply bottom padding as on large screens the navigation bar is
+                // displayed opaque on the bottom.
+                val navBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+                v.setPaddingRelative(
+                    navBarInsets.left,
+                    v.paddingTop,
+                    navBarInsets.right,
+                    v.paddingBottom
+                )
+            }
+
+            // Let *all* direct child views receive insets, e.g. app bar and scrolling views.
+            var consumed = false
+            (v as ViewGroup).forEach { child ->
+                val childResult = ViewCompat.dispatchApplyWindowInsets(child, insets)
+                if (childResult.isConsumed) {
+                    consumed = true
+                }
+            }
+            if (consumed) WindowInsetsCompat.CONSUMED else insets
+        }
+    }
+
+    /**
      * Configure app bar to hide content scrolling below it. Use with a toolbar
      * that scrolls out of view.
      */
@@ -182,7 +220,7 @@ object ThemeUtils {
 
     /**
      * Wrapper around [androidx.core.view.OnApplyWindowInsetsListener] which also passes the
-     * initial padding set on the view. Used with [setOnApplyWindowInsetsListenerWithInitialPadding].
+     * initial padding set on the view. Used with [applyBottomPaddingForNavigationBar].
      */
     private interface OnApplyWindowInsetsInitialPaddingListener {
         /**
@@ -208,62 +246,42 @@ object ThemeUtils {
     }
 
     /**
-     *  Sets an [androidx.core.view.OnApplyWindowInsetsListener] that calls the given [listener]
-     *  with initial padding values of this view.
-     *
-     *  Note: this is based on similar code of the Material Components ViewUtils class.
-     */
-    private fun View.setOnApplyWindowInsetsListenerWithInitialPadding(
-        listener: OnApplyWindowInsetsInitialPaddingListener
-    ) {
-        // Get the current padding values of the view.
-        val initialPadding = RelativePadding(
-            paddingStart,
-            paddingTop,
-            paddingEnd,
-            paddingBottom
-        )
-        ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
-            listener.onApplyWindowInsets(v, insets, initialPadding)
-        }
-    }
-
-    /**
-     * Sets a window insets dispatch listener and changes the bottom padding to the system bar
+     * Sets a window insets dispatch listener and changes the bottom padding to the navigation bar
      * inset. Consumes the insets so no children of the given view will receive them.
      */
-    fun applySystemBarInset(view: View) {
-        view.setOnApplyWindowInsetsListenerWithInitialPadding(object :
-            OnApplyWindowInsetsInitialPaddingListener {
-            override fun onApplyWindowInsets(
-                view: View,
-                insets: WindowInsetsCompat,
-                initialPadding: RelativePadding
-            ): WindowInsetsCompat {
-                val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                initialPadding
-                    .copy(bottom = initialPadding.bottom + systemBarInsets.bottom)
-                    .applyToView(view)
-                // Return CONSUMED to not pass the window insets down to descendant views.
-                return WindowInsetsCompat.CONSUMED
+    fun applyBottomPaddingForNavigationBar(view: View) {
+        view.apply {
+            // Get the current padding values of the view.
+            val initialPadding = RelativePadding(
+                paddingStart,
+                paddingTop,
+                paddingEnd,
+                paddingBottom
+            )
+            // Sets an [androidx.core.view.OnApplyWindowInsetsListener] that calls the custom
+            // listener with initial padding values of this view.
+            // Note: this is based on similar code of the Material Components ViewUtils class.
+            ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+                navigationBarBottomInsetListener.onApplyWindowInsets(v, insets, initialPadding)
             }
-        })
-    }
-
-    /**
-     * ViewGroup only dispatches windows insets starting from the first child until one
-     * consumes them. Call this to manually dispatch insets to all direct children.
-     */
-    fun dispatchWindowInsetsToAllChildren(viewGroup: ViewGroup) {
-        ViewCompat.setOnApplyWindowInsetsListener(viewGroup) { v, insets ->
-            var consumed = false
-            (v as ViewGroup).forEach { child ->
-                val childResult = ViewCompat.dispatchApplyWindowInsets(child, insets)
-                if (childResult.isConsumed) {
-                    consumed = true
-                }
-            }
-            if (consumed) WindowInsetsCompat.CONSUMED else insets
         }
     }
+
+    // Re-use the same instance across all views, there is no view specific state.
+    private val navigationBarBottomInsetListener = object :
+        OnApplyWindowInsetsInitialPaddingListener {
+        override fun onApplyWindowInsets(
+            view: View,
+            insets: WindowInsetsCompat,
+            initialPadding: RelativePadding
+        ): WindowInsetsCompat {
+            val navBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            initialPadding
+                .copy(bottom = initialPadding.bottom + navBarInsets.bottom)
+                .applyToView(view)
+            // Return CONSUMED to not pass the window insets down to descendant views.
+            return WindowInsetsCompat.CONSUMED
+        }
+    }
+
 }

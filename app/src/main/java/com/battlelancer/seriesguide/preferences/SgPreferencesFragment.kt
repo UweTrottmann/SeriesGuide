@@ -79,7 +79,7 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
     ): RecyclerView {
         val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState)
         // Adjust preferences RecyclerView bottom padding to navigation bar height.
-        ThemeUtils.applySystemBarInset(recyclerView)
+        ThemeUtils.applyBottomPaddingForNavigationBar(recyclerView)
         return recyclerView
     }
 

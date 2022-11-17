@@ -161,7 +161,7 @@ class ShowFragment() : Fragment() {
         // In the vertical multi-pane layout the show fragment sits on top of the seasons fragment,
         // so do not inset to avoid navigation bar.
         if (OverviewActivityImpl.getLayoutType(requireContext()) != MULTI_PANE_VERTICAL) {
-            ThemeUtils.applySystemBarInset(binding.scrollViewShow)
+            ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewShow)
         }
 
         // favorite + notifications + visibility button

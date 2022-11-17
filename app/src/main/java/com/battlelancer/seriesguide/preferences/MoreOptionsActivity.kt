@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnClick
@@ -44,6 +45,7 @@ class MoreOptionsActivity : BaseTopActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMoreOptionsBinding.inflate(layoutInflater)
+        ThemeUtils.configureForEdgeToEdge(binding.root)
         setContentView(binding.root)
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_more)
