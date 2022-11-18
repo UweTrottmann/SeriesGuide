@@ -1,186 +1,176 @@
-package com.battlelancer.seriesguide.movies;
+package com.battlelancer.seriesguide.movies
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.MenuProvider;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.databinding.FragmentMoviesDiscoverBinding;
-import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity;
-import com.battlelancer.seriesguide.ui.AutoGridLayoutManager;
-import com.battlelancer.seriesguide.ui.MoviesActivity;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.util.ViewTools;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentMoviesDiscoverBinding
+import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment.LocalizationChangedEvent
+import com.battlelancer.seriesguide.movies.MoviesActivityViewModel.ScrollTabToTopEvent
+import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity
+import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.MoviesActivity
+import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-public class MoviesDiscoverFragment extends Fragment {
+/**
+ * Displays links to movie lists (see [MoviesDiscoverAdapter]) and movies currently in theaters.
+ */
+class MoviesDiscoverFragment : Fragment() {
 
-    private FragmentMoviesDiscoverBinding binding;
+    private var binding: FragmentMoviesDiscoverBinding? = null
+    private lateinit var adapter: MoviesDiscoverAdapter
 
-    private MoviesDiscoverAdapter adapter;
-    private GridLayoutManager layoutManager;
-
-    public MoviesDiscoverFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return FragmentMoviesDiscoverBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        binding = FragmentMoviesDiscoverBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = binding!!
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        binding.swipeRefreshLayoutMoviesDiscover.setOnRefreshListener(onRefreshListener)
+        binding.swipeRefreshLayoutMoviesDiscover.isRefreshing = false
+        ViewTools.setSwipeRefreshLayoutColors(
+            requireActivity().theme,
+            binding.swipeRefreshLayoutMoviesDiscover
+        )
 
-        binding.swipeRefreshLayoutMoviesDiscover.setOnRefreshListener(onRefreshListener);
-        binding.swipeRefreshLayoutMoviesDiscover.setRefreshing(false);
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
-                binding.swipeRefreshLayoutMoviesDiscover);
+        adapter = MoviesDiscoverAdapter(
+            requireContext(),
+            DiscoverItemClickListener(requireContext())
+        )
 
-        adapter = new MoviesDiscoverAdapter(requireContext(),
-                new DiscoverItemClickListener(requireContext()));
-
-        layoutManager = new AutoGridLayoutManager(getContext(),
-                R.dimen.movie_grid_columnWidth, 2, 6);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                int viewType = adapter.getItemViewType(position);
+        val layoutManager = AutoGridLayoutManager(
+            context,
+            R.dimen.movie_grid_columnWidth, 2, 6
+        )
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val viewType = adapter.getItemViewType(position)
                 if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_LINK) {
-                    return 3;
+                    return 3
                 }
                 if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_HEADER) {
-                    return layoutManager.getSpanCount();
+                    return layoutManager.getSpanCount()
                 }
-                if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_MOVIE) {
-                    return 2;
-                }
-                return 0;
+                return if (viewType == MoviesDiscoverAdapter.VIEW_TYPE_MOVIE) {
+                    2
+                } else 0
             }
-        });
+        }
 
-        binding.recyclerViewMoviesDiscover.setHasFixedSize(true);
-        binding.recyclerViewMoviesDiscover.setLayoutManager(layoutManager);
-        binding.recyclerViewMoviesDiscover.setAdapter(adapter);
+        binding.recyclerViewMoviesDiscover.setHasFixedSize(true)
+        binding.recyclerViewMoviesDiscover.layoutManager = layoutManager
+        binding.recyclerViewMoviesDiscover.adapter = adapter
 
-        new ViewModelProvider(requireActivity()).get(MoviesActivityViewModel.class)
-                .getScrollTabToTopLiveData()
-                .observe(getViewLifecycleOwner(), event -> {
-                    if (event != null
-                            && event.getTabPosition() == MoviesActivity.TAB_POSITION_DISCOVER) {
-                        binding.recyclerViewMoviesDiscover.smoothScrollToPosition(0);
-                    }
-                });
+        ViewModelProvider(requireActivity())[MoviesActivityViewModel::class.java]
+            .scrollTabToTopLiveData
+            .observe(viewLifecycleOwner) { event: ScrollTabToTopEvent? ->
+                if (event != null
+                    && event.tabPosition == MoviesActivity.TAB_POSITION_DISCOVER) {
+                    binding.recyclerViewMoviesDiscover.smoothScrollToPosition(0)
+                }
+            }
 
-        LoaderManager.getInstance(this).initLoader(0, null, nowPlayingLoaderCallbacks);
+        LoaderManager.getInstance(this).initLoader(0, null, nowPlayingLoaderCallbacks)
 
         requireActivity().addMenuProvider(
-                optionsMenuProvider,
-                getViewLifecycleOwner(),
-                Lifecycle.State.RESUMED
-        );
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
-    private final MenuProvider optionsMenuProvider = new MenuProvider() {
-        @Override
-        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-            menuInflater.inflate(R.menu.movies_discover_menu, menu);
+    private val optionsMenuProvider: MenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.movies_discover_menu, menu)
         }
 
-        @Override
-        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-            int itemId = menuItem.getItemId();
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            val itemId = menuItem.itemId
             if (itemId == R.id.menu_action_movies_search_change_language) {
-                MovieLocalizationDialogFragment.show(getParentFragmentManager());
-                return true;
+                MovieLocalizationDialogFragment.show(parentFragmentManager)
+                return true
             }
-            return false;
+            return false
         }
-    };
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventLanguageChanged(
-            MovieLocalizationDialogFragment.LocalizationChangedEvent event) {
-        LoaderManager.getInstance(this).restartLoader(0, null, nowPlayingLoaderCallbacks);
+    fun onEventLanguageChanged(event: LocalizationChangedEvent?) {
+        LoaderManager.getInstance(this).restartLoader(0, null, nowPlayingLoaderCallbacks)
     }
 
-    private static class DiscoverItemClickListener extends MovieClickListenerImpl
-            implements MoviesDiscoverAdapter.ItemClickListener {
-
-        DiscoverItemClickListener(Context context) {
-            super(context);
-        }
-
-        @Override
-        public void onClickLink(MoviesDiscoverLink link, View anchor) {
-            Intent intent = new Intent(getContext(), MoviesSearchActivity.class);
-            intent.putExtra(MoviesSearchActivity.EXTRA_ID_LINK, link.id);
-            Utils.startActivityWithAnimation(getContext(), intent, anchor);
+    private class DiscoverItemClickListener(context: Context) : MovieClickListenerImpl(context),
+        MoviesDiscoverAdapter.ItemClickListener {
+        override fun onClickLink(link: MoviesDiscoverLink, anchor: View) {
+            val intent = Intent(context, MoviesSearchActivity::class.java)
+            intent.putExtra(MoviesSearchActivity.EXTRA_ID_LINK, link.id)
+            Utils.startActivityWithAnimation(context, intent, anchor)
         }
     }
 
-    private final LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result> nowPlayingLoaderCallbacks
-            = new LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result>() {
-        @NonNull
-        @Override
-        public Loader<MoviesDiscoverLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new MoviesDiscoverLoader(requireContext());
-        }
-
-        @Override
-        public void onLoadFinished(@NonNull Loader<MoviesDiscoverLoader.Result> loader,
-                MoviesDiscoverLoader.Result data) {
-            if (!isAdded()) {
-                return;
+    private val nowPlayingLoaderCallbacks: LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result> =
+        object : LoaderManager.LoaderCallbacks<MoviesDiscoverLoader.Result> {
+            override fun onCreateLoader(
+                id: Int,
+                args: Bundle?
+            ): Loader<MoviesDiscoverLoader.Result> {
+                return MoviesDiscoverLoader(requireContext())
             }
-            binding.swipeRefreshLayoutMoviesDiscover.setRefreshing(false);
-            adapter.updateMovies(data.getResults());
-        }
 
-        @Override
-        public void onLoaderReset(@NonNull Loader<MoviesDiscoverLoader.Result> loader) {
-            adapter.updateMovies(null);
-        }
-    };
+            override fun onLoadFinished(
+                loader: Loader<MoviesDiscoverLoader.Result>,
+                data: MoviesDiscoverLoader.Result
+            ) {
+                binding?.swipeRefreshLayoutMoviesDiscover?.isRefreshing = false
+                adapter.updateMovies(data.results)
+            }
 
-    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener
-            = () -> LoaderManager.getInstance(MoviesDiscoverFragment.this)
-            .restartLoader(0, null, nowPlayingLoaderCallbacks);
+            override fun onLoaderReset(loader: Loader<MoviesDiscoverLoader.Result>) {
+                adapter.updateMovies(null)
+            }
+        }
+    private val onRefreshListener = OnRefreshListener {
+        LoaderManager.getInstance(this@MoviesDiscoverFragment)
+            .restartLoader(0, null, nowPlayingLoaderCallbacks)
+    }
 }
