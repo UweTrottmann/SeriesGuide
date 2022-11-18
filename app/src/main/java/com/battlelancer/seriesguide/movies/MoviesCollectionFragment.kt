@@ -5,28 +5,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridView
+import android.widget.TextView
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentMoviesCollectionBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 
 /**
- * Displays a users collection of movies in a grid.
+ * Displays the users collection of movies.
  */
 class MoviesCollectionFragment : MoviesBaseFragment() {
 
-    override val loaderId: Int
-        get() = MoviesActivityImpl.COLLECTION_LOADER_ID
+    override val loaderId: Int = MoviesActivityImpl.COLLECTION_LOADER_ID
+
+    override val emptyViewTextResId = R.string.movies_collection_empty
+
+    override val gridView: GridView
+        get() = binding!!.gridViewMoviesCollection
+
+    override val emptyView: TextView
+        get() = binding!!.textViewMoviesCollectionEmpty
+
+    private var binding: FragmentMoviesCollectionBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val v = super.onCreateView(inflater, container, savedInstanceState)
-
-        emptyView.setText(R.string.movies_collection_empty)
-
-        return v
+    ): View {
+        return FragmentMoviesCollectionBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
