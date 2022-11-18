@@ -130,7 +130,7 @@ open class MoviesActivityImpl : BaseTopActivity() {
         const val TAB_POSITION_DISCOVER = 0
         const val TAB_POSITION_WATCHLIST_DEFAULT = 1
         const val TAB_POSITION_COLLECTION_DEFAULT = 2
-        const val TAB_POSITION_WATCHED_DEFAULT = 2
+        const val TAB_POSITION_WATCHED_DEFAULT = 3
         const val TAB_POSITION_NOW = 1
         const val TAB_POSITION_WATCHLIST_WITH_NOW = 2
         const val TAB_POSITION_COLLECTION_WITH_NOW = 3
