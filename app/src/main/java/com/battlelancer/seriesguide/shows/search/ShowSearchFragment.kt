@@ -40,10 +40,10 @@ class ShowSearchFragment : BaseSearchFragment() {
     }
 
     override val emptyView: View
-        get() = binding!!.textViewSearchEmpty
+        get() = binding!!.textViewSearchShowsEmpty
 
     override val gridView: GridView
-        get() = binding!!.gridViewSearch
+        get() = binding!!.gridViewSearchShows
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

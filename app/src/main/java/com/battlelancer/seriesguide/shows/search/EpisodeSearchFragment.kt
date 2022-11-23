@@ -33,9 +33,9 @@ class EpisodeSearchFragment : BaseSearchFragment() {
     }
 
     override val emptyView: View
-        get() = binding!!.textViewSearchEmpty
+        get() = binding!!.textViewSearchEpisodesEmpty
     override val gridView: GridView
-        get() = binding!!.gridViewSearch
+        get() = binding!!.gridViewSearchEpisodes
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

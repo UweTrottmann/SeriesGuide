@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search_fragment"
+    android:id="@+id/rootLayoutSearchEpisodes"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textViewSearchEmpty"
+        android:id="@+id/textViewSearchEpisodesEmpty"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -16,7 +16,7 @@
         android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
 
     <GridView
-        android:id="@+id/gridViewSearch"
+        android:id="@+id/gridViewSearchEpisodes"
         style="@style/Widget.SeriesGuide.Grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
