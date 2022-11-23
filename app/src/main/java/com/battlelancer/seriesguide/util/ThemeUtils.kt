@@ -285,7 +285,9 @@ object ThemeUtils {
             insets: WindowInsetsCompat,
             initialOffset: InitialOffset
         ): WindowInsetsCompat {
-            val navBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val navBarInsets = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            )
             initialOffset
                 .copy(bottom = initialOffset.bottom + navBarInsets.bottom)
                 .applyAsPadding(view)
@@ -324,7 +326,9 @@ object ThemeUtils {
             insets: WindowInsetsCompat,
             initialOffset: InitialOffset
         ): WindowInsetsCompat {
-            val navBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val navBarInsets = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            )
             initialOffset
                 .copy(bottom = initialOffset.bottom + navBarInsets.bottom)
                 .applyAsMargin(view)
