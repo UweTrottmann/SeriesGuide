@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.util.HighlightTools
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.gms.actions.SearchIntents
 import kotlinx.coroutines.launch
@@ -58,6 +59,8 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root)
+        ThemeUtils.configureAppBarForContentBelow(this)
 
         setupActionBar()
 
@@ -150,27 +153,21 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
     }
 
     private val pageChangeListener = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int
-        ) {
-        }
-
         override fun onPageSelected(position: Int) {
-            // only display search box if it can be used
-            val searchVisible = position <= TAB_POSITION_SEARCH
-            val toolbar = binding.sgToolbar
-            toolbar.containerSearchBar.visibility = if (searchVisible) View.VISIBLE else View.GONE
-            if (searchVisible) {
-                remoteSearchVisible = position == TAB_POSITION_SEARCH
-                searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (remoteSearchVisible) searchHistoryAdapter else null)
-                toolbar.textInputLayoutToolbar.hint =
-                    getString(if (remoteSearchVisible) R.string.checkin_searchhint else R.string.search)
+            remoteSearchVisible = position == TAB_POSITION_SEARCH
+            searchAutoCompleteView.setAdapter<ArrayAdapter<String>>(if (remoteSearchVisible) searchHistoryAdapter else null)
+            binding.sgToolbar.textInputLayoutToolbar.hint =
+                getString(if (remoteSearchVisible) R.string.checkin_searchhint else R.string.search)
+
+            // Change the scrolling view the AppBarLayout should use to determine if it should lift.
+            // This is required so the AppBarLayout does not flicker its background when scrolling.
+            binding.sgAppBarLayout.liftOnScrollTargetViewId = when (position) {
+                TAB_POSITION_SHOWS -> ShowSearchFragment.liftOnScrollTargetViewId
+                TAB_POSITION_EPISODES -> EpisodeSearchFragment.liftOnScrollTargetViewId
+                TAB_POSITION_SEARCH -> ShowsDiscoverFragment.liftOnScrollTargetViewId
+                else -> throw IllegalArgumentException("Unknown page position")
             }
         }
-
-        override fun onPageScrollStateChanged(state: Int) {}
     }
 
     override fun onNewIntent(intent: Intent) {

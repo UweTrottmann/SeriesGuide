@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
@@ -103,6 +104,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         }
 
         val recyclerView = binding.recyclerViewShowsDiscover
+        ThemeUtils.applyBottomPaddingForNavigationBar(recyclerView)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByDiscover)
         recyclerView.apply {
             setHasFixedSize(true)
             this.layoutManager = layoutManager
@@ -281,6 +284,8 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewShowsDiscover
+
         private const val KEY_QUERY = "searchQuery"
     }
 

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.GridView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import com.battlelancer.seriesguide.util.ThemeUtils
 import org.greenrobot.eventbus.EventBus
 
 abstract class BaseSearchFragment : Fragment() {
@@ -33,6 +34,7 @@ abstract class BaseSearchFragment : Fragment() {
 
         // enable app bar scrolling out of view
         ViewCompat.setNestedScrollingEnabled(gridView, true)
+        ThemeUtils.applyBottomPaddingForNavigationBar(gridView)
 
         emptyView.visibility = View.GONE
     }
