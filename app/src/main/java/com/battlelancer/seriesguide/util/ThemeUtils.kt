@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.Window
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
@@ -16,6 +17,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.forEach
+import androidx.core.view.marginBottom
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
+import androidx.core.view.marginTop
+import androidx.core.view.updateLayoutParams
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
@@ -220,29 +226,33 @@ object ThemeUtils {
 
     /**
      * Wrapper around [androidx.core.view.OnApplyWindowInsetsListener] which also passes the
-     * initial padding set on the view. Used with [applyBottomPaddingForNavigationBar].
+     * initial padding or margin set on the view.
      */
     private interface OnApplyWindowInsetsInitialPaddingListener {
         /**
          * When [set][View.setOnApplyWindowInsetsListener] on a View, this listener method will be
-         * called instead of the view's own [View.onApplyWindowInsets] method. The [initialPadding]
-         * is the view's original padding which can be updated and will be applied to the view
-         * automatically. This method should return a new [WindowInsetsCompat] with any insets
+         * called instead of the view's own [View.onApplyWindowInsets] method. The [initialOffset]
+         * is the view's original padding or margin which can be updated and will be applied to the
+         * view automatically. This method should return a new [WindowInsetsCompat] with any insets
          * consumed.
          */
         fun onApplyWindowInsets(
-            view: View, insets: WindowInsetsCompat, initialPadding: RelativePadding
+            view: View, insets: WindowInsetsCompat, initialOffset: InitialOffset
         ): WindowInsetsCompat
     }
 
-    /** Simple data object to store the initial padding for a view.  */
-    private data class RelativePadding(
+    /** Simple data object to store the initial padding or margin for a view.  */
+    private data class InitialOffset(
         val start: Int,
         val top: Int,
         val end: Int,
         val bottom: Int
     ) {
-        fun applyToView(view: View) = view.setPaddingRelative(start, top, end, bottom)
+        fun applyAsPadding(view: View) = view.setPaddingRelative(start, top, end, bottom)
+
+        fun applyAsMargin(view: View) = view.updateLayoutParams<MarginLayoutParams> {
+            bottomMargin = bottom
+        }
     }
 
     /**
@@ -252,7 +262,7 @@ object ThemeUtils {
     fun applyBottomPaddingForNavigationBar(view: View) {
         view.apply {
             // Get the current padding values of the view.
-            val initialPadding = RelativePadding(
+            val initialPadding = InitialOffset(
                 paddingStart,
                 paddingTop,
                 paddingEnd,
@@ -262,23 +272,62 @@ object ThemeUtils {
             // listener with initial padding values of this view.
             // Note: this is based on similar code of the Material Components ViewUtils class.
             ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
-                navigationBarBottomInsetListener.onApplyWindowInsets(v, insets, initialPadding)
+                navigationBarBottomPaddingListener.onApplyWindowInsets(v, insets, initialPadding)
             }
         }
     }
 
     // Re-use the same instance across all views, there is no view specific state.
-    private val navigationBarBottomInsetListener = object :
+    private val navigationBarBottomPaddingListener = object :
         OnApplyWindowInsetsInitialPaddingListener {
         override fun onApplyWindowInsets(
             view: View,
             insets: WindowInsetsCompat,
-            initialPadding: RelativePadding
+            initialOffset: InitialOffset
         ): WindowInsetsCompat {
             val navBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            initialPadding
-                .copy(bottom = initialPadding.bottom + navBarInsets.bottom)
-                .applyToView(view)
+            initialOffset
+                .copy(bottom = initialOffset.bottom + navBarInsets.bottom)
+                .applyAsPadding(view)
+            // Return CONSUMED to not pass the window insets down to descendant views.
+            return WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    /**
+     * Sets a window insets dispatch listener and changes the bottom margin to the navigation bar
+     * inset. Consumes the insets so no children of the given view will receive them.
+     */
+    fun applyBottomMarginForNavigationBar(view: View) {
+        view.apply {
+            // Get the current margin values of the view.
+            val initialPadding = InitialOffset(
+                marginStart,
+                marginTop,
+                marginEnd,
+                marginBottom
+            )
+            // Sets an [androidx.core.view.OnApplyWindowInsetsListener] that calls the custom
+            // listener with initial margin values of this view.
+            // Note: this is based on similar code of the Material Components ViewUtils class.
+            ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+                navigationBarBottomMarginListener.onApplyWindowInsets(v, insets, initialPadding)
+            }
+        }
+    }
+
+    // Re-use the same instance across all views, there is no view specific state.
+    private val navigationBarBottomMarginListener = object :
+        OnApplyWindowInsetsInitialPaddingListener {
+        override fun onApplyWindowInsets(
+            view: View,
+            insets: WindowInsetsCompat,
+            initialOffset: InitialOffset
+        ): WindowInsetsCompat {
+            val navBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            initialOffset
+                .copy(bottom = initialOffset.bottom + navBarInsets.bottom)
+                .applyAsMargin(view)
             // Return CONSUMED to not pass the window insets down to descendant views.
             return WindowInsetsCompat.CONSUMED
         }
