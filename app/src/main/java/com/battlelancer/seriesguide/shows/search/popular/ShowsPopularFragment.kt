@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
@@ -47,6 +48,9 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding ?: return
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewShowsPopular)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByShowsPopular)
 
         binding.swipeRefreshLayoutShowsPopular.apply {
             ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, this)
@@ -126,6 +130,10 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     override fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
         adapter.setStateForTmdbId(showTmdbId, newState)
+    }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewShowsPopular
     }
 
 }
