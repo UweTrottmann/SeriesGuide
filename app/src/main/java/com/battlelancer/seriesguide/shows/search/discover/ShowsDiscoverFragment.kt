@@ -169,7 +169,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                 // only support adding shows to watchlist
                 menu.findItem(R.id.menu_action_show_watchlist_remove).isVisible = false
                 setOnMenuItemClickListener(
-                    TraktAddFragment.AddItemMenuItemClickListener(context, showTmdbId)
+                    TraktAddFragment.AddItemMenuItemClickListener(requireContext(), showTmdbId)
                 )
             }.show()
         }
