@@ -34,6 +34,7 @@ open class MoviesActivityImpl : BaseTopActivity() {
         binding = ActivityMoviesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ThemeUtils.configureForEdgeToEdge(binding.root)
+        ThemeUtils.restoreDefaultWindowInsetsBehavior(binding.viewPagerMovies)
         ThemeUtils.configureAppBarForContentBelow(this)
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_movies)

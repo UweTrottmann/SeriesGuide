@@ -16,12 +16,12 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.forEach
 import androidx.core.view.marginBottom
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
+import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
@@ -95,16 +95,15 @@ object ThemeUtils {
      * The Material 3 AppBarLayout should use `android:fitsSystemWindows="true"`
      * to receive window insets so it can adjust padding when drawing behind the system bars.
      *
-     * ViewGroup only dispatches windows insets starting from the first child until one
-     * consumes them. So it may be necessary to manually dispatch insets to all children, e.g. a
-     * LinearLayout containing an app bar and a BottomNavigationView is a common case.
-     * See [configureForEdgeToEdge].
-     *
-     * Note: on Android 10+ BottomNavigationView still does draw behind the navigation bar using
-     * button mode, however, the system adds an almost opaque scrim so color is barely noticeable.
+     * The root view group likely needs to be padded start and end to handle a navigation bar in
+     * button mode in landscape, see [configureForEdgeToEdge].
      *
      * Scroll views or RecyclerViews should add bottom padding matching the navigation bar, see
      * [applyBottomPaddingForNavigationBar].
+     *
+     * Note: on Android 10+ BottomNavigationView *does* draw behind the navigation bar using
+     * button mode automatically, however, the system adds an almost opaque scrim so its color is
+     * barely noticeable.
      */
     fun configureEdgeToEdge(window: Window) {
         // https://developer.android.com/develop/ui/views/layout/edge-to-edge
@@ -184,9 +183,6 @@ object ThemeUtils {
      *
      * Note: this should not be used with the Window decor view as it breaks the navigation bar
      * background protection (it will be fully transparent).
-     *
-     * ViewGroup also only dispatches windows insets starting from the first child until one
-     * consumes them. This manually dispatches insets to all direct children.
      */
     fun configureForEdgeToEdge(viewGroup: ViewGroup) {
         ViewCompat.setOnApplyWindowInsetsListener(viewGroup) { v, insets ->
@@ -202,16 +198,24 @@ object ThemeUtils {
                     v.paddingBottom
                 )
             }
+            // Do *not* consume or modify insets so any other views receive them
+            // (only required for pre-R, see View.sBrokenInsetsDispatch).
+            insets
+        }
+    }
 
-            // Let *all* direct child views receive insets, e.g. app bar and scrolling views.
-            var consumed = false
-            (v as ViewGroup).forEach { child ->
-                val childResult = ViewCompat.dispatchApplyWindowInsets(child, insets)
-                if (childResult.isConsumed) {
-                    consumed = true
-                }
-            }
-            if (consumed) WindowInsetsCompat.CONSUMED else insets
+    /**
+     * This ensures ViewPager2 does not consume insets and insets are passed on to other views.
+     *
+     * Since ViewPager2 1.1.0-beta01 it does custom inset handling in onApplyWindowInsets which
+     * consumes insets to prevent child views modifying or consuming insets (which is possible pre-R
+     * due to how system insets work, see View.sBrokenInsetsDispatch). However, this prevents other
+     * views, like BottomNavigationView, to receive them. As long as no child views part of pages
+     * consume or modify insets use this to restore the default behavior.
+     */
+    fun restoreDefaultWindowInsetsBehavior(viewPager2: ViewPager2) {
+        ViewCompat.setOnApplyWindowInsetsListener(viewPager2) { _, insets ->
+            insets
         }
     }
 
@@ -257,7 +261,7 @@ object ThemeUtils {
 
     /**
      * Sets a window insets dispatch listener and changes the bottom padding to the navigation bar
-     * inset. Consumes the insets so no children of the given view will receive them.
+     * inset.
      */
     fun applyBottomPaddingForNavigationBar(view: View) {
         view.apply {
@@ -291,14 +295,15 @@ object ThemeUtils {
             initialOffset
                 .copy(bottom = initialOffset.bottom + navBarInsets.bottom)
                 .applyAsPadding(view)
-            // Return CONSUMED to not pass the window insets down to descendant views.
-            return WindowInsetsCompat.CONSUMED
+            // Do *not* consume or modify insets so any other views receive them
+            // (only required for pre-R, see View.sBrokenInsetsDispatch).
+            return insets
         }
     }
 
     /**
      * Sets a window insets dispatch listener and changes the bottom margin to the navigation bar
-     * inset. Consumes the insets so no children of the given view will receive them.
+     * inset.
      */
     fun applyBottomMarginForNavigationBar(view: View) {
         view.apply {
@@ -332,8 +337,9 @@ object ThemeUtils {
             initialOffset
                 .copy(bottom = initialOffset.bottom + navBarInsets.bottom)
                 .applyAsMargin(view)
-            // Return CONSUMED to not pass the window insets down to descendant views.
-            return WindowInsetsCompat.CONSUMED
+            // Do *not* consume or modify insets so any other views receive them
+            // (only required for pre-R, see View.sBrokenInsetsDispatch).
+            return insets
         }
     }
 

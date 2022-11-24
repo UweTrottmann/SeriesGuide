@@ -34,6 +34,7 @@ open class ListsActivityImpl : BaseTopActivity() {
         binding = ActivityListsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ThemeUtils.configureForEdgeToEdge(binding.root)
+        ThemeUtils.restoreDefaultWindowInsetsBehavior(binding.viewPagerLists)
         ThemeUtils.configureAppBarForContentBelow(this)
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_lists)
