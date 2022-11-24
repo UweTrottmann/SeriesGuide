@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.history.TraktEpisodeHistoryLoader.HistoryIte
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -46,6 +47,9 @@ abstract class StreamFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewStream)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding.floatingActionButtonStream)
+
         binding.floatingActionButtonStream.setOnClickListener {
             Utils.launchWebsite(context, TRAKT_HISTORY_URL)
         }
@@ -167,5 +171,7 @@ abstract class StreamFragment : Fragment() {
 
     companion object {
         private const val TRAKT_HISTORY_URL = "https://trakt.tv/users/me/history/"
+
+        const val liftOnScrollTargetViewId = R.id.recyclerViewStream
     }
 }

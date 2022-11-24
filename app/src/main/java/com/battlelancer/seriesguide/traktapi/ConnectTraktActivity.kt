@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.ui.SinglePaneActivity
 
 /**
  * Hosts a [ConnectTraktCredentialsFragment].
@@ -12,7 +13,7 @@ class ConnectTraktActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_singlepane)
+        SinglePaneActivity.onCreateFor(this)
         setupActionBar()
 
         if (savedInstanceState == null) {

@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment.OnAddShowListener
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.ui.SinglePaneActivity
 import com.battlelancer.seriesguide.util.TaskManager
 import timber.log.Timber
 
@@ -24,7 +25,9 @@ class HistoryActivity : BaseActivity(), OnAddShowListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_singlepane)
+        val binding = SinglePaneActivity.onCreateFor(this)
+        binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
+            StreamFragment.liftOnScrollTargetViewId
         setupActionBar()
 
         if (savedInstanceState == null) {

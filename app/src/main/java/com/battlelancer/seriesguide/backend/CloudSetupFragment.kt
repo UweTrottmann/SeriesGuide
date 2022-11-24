@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
 import com.firebase.ui.auth.AuthUI
@@ -67,6 +68,7 @@ class CloudSetupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding!!.apply {
+            ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewCloud)
             buttonCloudSignIn.setOnClickListener {
                 // restrict access to supporters
                 if (Utils.hasAccessToX(activity)) {

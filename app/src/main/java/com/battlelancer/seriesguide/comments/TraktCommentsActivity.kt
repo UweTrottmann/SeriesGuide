@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.ui.SinglePaneActivity
 import timber.log.Timber
 
 /**
@@ -15,7 +16,8 @@ class TraktCommentsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_singlepane)
+        val binding = SinglePaneActivity.onCreateFor(this)
+        binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId = R.id.listViewShouts
 
         if (intent.extras == null) {
             finish()

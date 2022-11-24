@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.FragmentAutoBackupBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationFragment.LiberationResultEvent
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.tryLaunch
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -44,6 +45,8 @@ class AutoBackupFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding ?: return
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewAutoBackup)
 
         // setup listeners
         binding.switchAutoBackup.setOnCheckedChangeListener { _, isChecked ->
