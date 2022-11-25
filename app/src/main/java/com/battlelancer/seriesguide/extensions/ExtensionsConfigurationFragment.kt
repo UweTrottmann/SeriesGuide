@@ -1,387 +1,368 @@
-package com.battlelancer.seriesguide.extensions;
+package com.battlelancer.seriesguide.extensions
 
-import android.annotation.SuppressLint;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.graphics.Point;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupMenu;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.MenuProvider;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import com.battlelancer.seriesguide.BuildConfig;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.api.SeriesGuideExtension;
-import com.battlelancer.seriesguide.databinding.FragmentExtensionsConfigurationBinding;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController;
-import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import timber.log.Timber;
+import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Intent
+import android.graphics.Point
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
+import com.battlelancer.seriesguide.BuildConfig
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.api.SeriesGuideExtension
+import com.battlelancer.seriesguide.databinding.FragmentExtensionsConfigurationBinding
+import com.battlelancer.seriesguide.util.Utils
+import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController
+import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
+import timber.log.Timber
+import java.util.Collections
+import kotlin.math.max
 
 /**
  * Provides tools to display all installed extensions and enable or disable them.
  */
-public class ExtensionsConfigurationFragment extends Fragment {
+class ExtensionsConfigurationFragment : Fragment() {
 
-    private FragmentExtensionsConfigurationBinding binding;
-    private ExtensionsAdapter adapter;
-    private PopupMenu addExtensionPopupMenu;
+    private var binding: FragmentExtensionsConfigurationBinding? = null
+    private lateinit var adapter: ExtensionsAdapter
+    private var addExtensionPopupMenu: PopupMenu? = null
 
-    private List<Extension> disabledExtensions = new ArrayList<>();
-    private List<ComponentName> enabledNames;
+    private var disabledExtensions: List<Extension> = ArrayList()
+    private var enabledNames: MutableList<ComponentName>? = null
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        binding = FragmentExtensionsConfigurationBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = FragmentExtensionsConfigurationBinding.inflate(inflater, container, false)
+        .also { binding = it }
+        .root
 
     @SuppressLint("ClickableViewAccessibility") // ordering not supported if non-touch
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = binding ?: return
 
-        final ExtensionsDragSortController dragSortController = new ExtensionsDragSortController();
-        binding.listViewExtensionsConfig.setFloatViewManager(dragSortController);
-        binding.listViewExtensionsConfig.setOnTouchListener(dragSortController);
-        binding.listViewExtensionsConfig.setDropListener((from, to) -> {
-            ComponentName extension = enabledNames.remove(from);
-            enabledNames.add(to, extension);
-            saveExtensions();
-        });
-        // allow focusing menu buttons with a remote/d-pad
-        binding.listViewExtensionsConfig.setItemsCanFocus(true);
+        adapter = ExtensionsAdapter(requireContext(), onItemClickListener)
 
-        adapter = new ExtensionsAdapter(requireContext(), onItemClickListener);
-        binding.listViewExtensionsConfig.setAdapter(adapter);
+        val dragSortController =
+            ExtensionsDragSortController(binding.listViewExtensionsConfig, adapter)
+        binding.listViewExtensionsConfig.also {
+            it.setFloatViewManager(dragSortController)
+            it.setOnTouchListener(dragSortController)
+            it.setDropListener { from: Int, to: Int ->
+                val enabledNames = enabledNames ?: return@setDropListener
+                val extension = enabledNames.removeAt(from)
+                enabledNames.add(to, extension)
+                saveExtensions()
+            }
+            // allow focusing menu buttons with a remote/d-pad
+            it.itemsCanFocus = true
+            it.adapter = adapter
+        }
 
         requireActivity().addMenuProvider(
-                optionsMenuProvider,
-                getViewLifecycleOwner(),
-                Lifecycle.State.RESUMED
-        );
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
+    override fun onResume() {
+        super.onResume()
         LoaderManager.getInstance(this)
-                .restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
-                        loaderCallbacks);
+            .restartLoader(
+                ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
+                loaderCallbacks
+            )
     }
 
-    private final MenuProvider optionsMenuProvider = new MenuProvider() {
-        @Override
-        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+    private val optionsMenuProvider: MenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
             if (BuildConfig.DEBUG) {
                 // add debug options to enable/disable all extensions
-                menuInflater.inflate(R.menu.extensions_configuration_menu, menu);
+                menuInflater.inflate(R.menu.extensions_configuration_menu, menu)
             }
         }
 
-        @Override
-        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-            int itemId = menuItem.getItemId();
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            val itemId = menuItem.itemId
             if (itemId == R.id.menu_action_extensions_enable) {
-                List<Extension> extensions = ExtensionManager.get(requireContext())
-                        .queryAllAvailableExtensions(requireContext());
-                List<ComponentName> enabledExtensions = new ArrayList<>();
-                for (Extension extension : extensions) {
-                    enabledExtensions.add(extension.componentName);
+                val extensions = ExtensionManager.get(requireContext())
+                    .queryAllAvailableExtensions(requireContext())
+                val enabledExtensions: MutableList<ComponentName> = ArrayList()
+                for (extension in extensions) {
+                    enabledExtensions.add(extension.componentName)
                 }
                 ExtensionManager.get(requireContext())
-                        .setEnabledExtensions(requireContext(), enabledExtensions);
-                Toast.makeText(getActivity(), "Enabled all available extensions", Toast.LENGTH_LONG)
-                        .show();
-                return true;
+                    .setEnabledExtensions(requireContext(), enabledExtensions)
+                Toast.makeText(activity, "Enabled all available extensions", Toast.LENGTH_LONG)
+                    .show()
+                return true
             }
             if (itemId == R.id.menu_action_extensions_disable) {
                 ExtensionManager.get(requireContext())
-                        .setEnabledExtensions(requireContext(), new ArrayList<>());
-                Toast.makeText(getActivity(), "Disabled all available extensions",
-                                Toast.LENGTH_LONG)
-                        .show();
-                return true;
+                    .setEnabledExtensions(requireContext(), ArrayList())
+                Toast.makeText(
+                    activity, "Disabled all available extensions",
+                    Toast.LENGTH_LONG
+                ).show()
+                return true
             }
-            return false;
+            return false
         }
-    };
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 
-    private final LoaderManager.LoaderCallbacks<List<Extension>> loaderCallbacks
-            = new LoaderManager.LoaderCallbacks<List<Extension>>() {
-        @NonNull
-        @Override
-        public Loader<List<Extension>> onCreateLoader(int id, Bundle args) {
-            return new AvailableExtensionsLoader(requireContext());
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 
-        @Override
-        public void onLoadFinished(@NonNull Loader<List<Extension>> loader,
-                @NonNull List<Extension> all) {
-            if (all.size() == 0) {
-                Timber.d("Did not find any extension");
-            } else {
-                Timber.d("Found %d extensions", all.size());
+    private val loaderCallbacks: LoaderManager.LoaderCallbacks<MutableList<Extension>> =
+        object : LoaderManager.LoaderCallbacks<MutableList<Extension>> {
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<MutableList<Extension>> {
+                return AvailableExtensionsLoader(requireContext())
             }
 
-            // find all disabled extensions
-            List<ComponentName> enabledNames = ExtensionManager.get(getContext())
-                    .getEnabledExtensions(getContext());
-            List<Extension> disabled = new ArrayList<>();
-            Map<ComponentName, Extension> enabledByComponent = new HashMap<>();
-            for (Extension extension : all) {
-                if (enabledNames.contains(extension.componentName)) {
-                    enabledByComponent.put(extension.componentName, extension);
+            override fun onLoadFinished(
+                loader: Loader<MutableList<Extension>>,
+                all: MutableList<Extension>
+            ) {
+                if (all.size == 0) {
+                    Timber.d("Did not find any extension")
                 } else {
-                    disabled.add(extension);
+                    Timber.d("Found %d extensions", all.size)
                 }
+
+                // find all disabled extensions
+                val enabledNames = ExtensionManager.get(context)
+                    .getEnabledExtensions(context)
+                val disabled: MutableList<Extension> = ArrayList()
+                val enabledByComponent: MutableMap<ComponentName, Extension> = HashMap()
+                for (extension in all) {
+                    if (enabledNames.contains(extension.componentName)) {
+                        enabledByComponent[extension.componentName] = extension
+                    } else {
+                        disabled.add(extension)
+                    }
+                }
+
+                // list enabled extensions in order dictated by extension manager
+                val enabled: MutableList<Extension> = ArrayList()
+                for (component in enabledNames) {
+                    enabled.add(enabledByComponent[component]!!)
+                }
+
+                this@ExtensionsConfigurationFragment.enabledNames = enabledNames
+                disabledExtensions = disabled
+
+                // force re-creation of extension add menu
+                addExtensionPopupMenu?.dismiss()
+                addExtensionPopupMenu = null
+
+                // refresh enabled extensions list
+                adapter.clear()
+                adapter.addAll(enabled)
             }
 
-            // list enabled extensions in order dictated by extension manager
-            List<Extension> enabled = new ArrayList<>();
-            for (ComponentName component : enabledNames) {
-                enabled.add(enabledByComponent.get(component));
+            override fun onLoaderReset(loader: Loader<MutableList<Extension>>) {
+                adapter.clear()
+            }
+        }
+    private val onItemClickListener: ExtensionsAdapter.OnItemClickListener =
+        object : ExtensionsAdapter.OnItemClickListener {
+            override fun onExtensionMenuButtonClick(
+                anchor: View,
+                extension: Extension, position: Int
+            ) {
+                showExtensionPopupMenu(anchor, extension, position)
             }
 
-            ExtensionsConfigurationFragment.this.enabledNames = enabledNames;
-            disabledExtensions = disabled;
-
-            // force re-creation of extension add menu
-            if (addExtensionPopupMenu != null) {
-                addExtensionPopupMenu.dismiss();
-                addExtensionPopupMenu = null;
+            override fun onAddExtensionClick(anchor: View) {
+                showAddExtensionPopupMenu(anchor)
             }
-
-            // refresh enabled extensions list
-            adapter.clear();
-            adapter.addAll(enabled);
         }
 
-        @Override
-        public void onLoaderReset(@NonNull Loader<List<Extension>> loader) {
-            adapter.clear();
-        }
-    };
-
-    private final ExtensionsAdapter.OnItemClickListener onItemClickListener =
-            new ExtensionsAdapter.OnItemClickListener() {
-                @Override
-                public void onExtensionMenuButtonClick(@NonNull View anchor,
-                        @NonNull Extension extension, int position) {
-                    showExtensionPopupMenu(anchor, extension, position);
-                }
-
-                @Override
-                public void onAddExtensionClick(@NonNull View anchor) {
-                    showAddExtensionPopupMenu(anchor);
-                }
-            };
-
-    private void showExtensionPopupMenu(View anchor, Extension extension,
-            int position) {
-        PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
-        popupMenu.getMenuInflater().inflate(R.menu.extension_menu, popupMenu.getMenu());
+    private fun showExtensionPopupMenu(anchor: View, extension: Extension, position: Int) {
+        val popupMenu = PopupMenu(anchor.context, anchor)
+        popupMenu.menuInflater.inflate(R.menu.extension_menu, popupMenu.menu)
         if (extension.settingsActivity == null) {
-            MenuItem item = popupMenu.getMenu()
-                    .findItem(R.id.menu_action_extension_settings);
-            item.setVisible(false);
-            item.setEnabled(false);
+            val item = popupMenu.menu.findItem(R.id.menu_action_extension_settings)
+            item.isVisible = false
+            item.isEnabled = false
         }
         popupMenu.setOnMenuItemClickListener(
-                new OverflowItemClickListener(extension.settingsActivity, position));
-        popupMenu.show();
+            OverflowItemClickListener(extension.settingsActivity, position)
+        )
+        popupMenu.show()
     }
 
-    private class OverflowItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        @Nullable private final ComponentName settingsActivity;
-        private final int position;
-
-        OverflowItemClickListener(@Nullable ComponentName settingsActivity, int position) {
-            this.settingsActivity = settingsActivity;
-            this.position = position;
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            int itemId = item.getItemId();
+    private inner class OverflowItemClickListener(
+        private val settingsActivity: ComponentName?,
+        private val position: Int
+    ) : PopupMenu.OnMenuItemClickListener {
+        override fun onMenuItemClick(item: MenuItem): Boolean {
+            val itemId = item.itemId
             if (itemId == R.id.menu_action_extension_settings) {
                 // launch settings activity
-                Utils.tryStartActivity(requireContext(), new Intent()
-                                .setComponent(settingsActivity)
-                                .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS,
-                                        true),
-                        true
-                );
-                ExtensionManager.get(getContext()).clearActionsCache();
-                return true;
+                Utils.tryStartActivity(
+                    requireContext(),
+                    Intent()
+                        .setComponent(settingsActivity)
+                        .putExtra(SeriesGuideExtension.EXTRA_FROM_SERIESGUIDE_SETTINGS, true),
+                    true
+                )
+                ExtensionManager.get(context).clearActionsCache()
+                return true
             } else if (itemId == R.id.menu_action_extension_disable) {
-                enabledNames.remove(position);
-                saveExtensions();
-                return true;
+                enabledNames?.removeAt(position)
+                saveExtensions()
+                return true
             }
-            return false;
+            return false
         }
     }
 
-    private void showAddExtensionPopupMenu(View anchorView) {
-        if (addExtensionPopupMenu != null) {
-            addExtensionPopupMenu.dismiss();
-        }
-
-        addExtensionPopupMenu = new PopupMenu(getActivity(), anchorView);
-        Menu menu = addExtensionPopupMenu.getMenu();
+    private fun showAddExtensionPopupMenu(anchorView: View) {
+        addExtensionPopupMenu?.dismiss()
+        val popupMenu = PopupMenu(activity, anchorView)
+            .also { addExtensionPopupMenu = it }
+        val menu = popupMenu.menu
 
         // sort disabled extensions alphabetically
-        Collections.sort(disabledExtensions, alphabeticalComparator);
+        Collections.sort(disabledExtensions, alphabeticalComparator)
         // list of installed, but disabled extensions
-        for (int i = 0; i < disabledExtensions.size(); i++) {
-            Extension extension = disabledExtensions.get(i);
-            menu.add(Menu.NONE, i + 1, Menu.NONE, extension.label);
+        for (i in disabledExtensions.indices) {
+            val extension = disabledExtensions[i]
+            menu.add(Menu.NONE, i + 1, Menu.NONE, extension.label)
         }
         // no third-party extensions supported on Amazon app store for now
         if (!Utils.isAmazonVersion()) {
             // link to get more extensions
-            menu.add(Menu.NONE, 0, Menu.NONE, R.string.action_extensions_search);
+            menu.add(Menu.NONE, 0, Menu.NONE, R.string.action_extensions_search)
         }
-        addExtensionPopupMenu.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == 0) {
+        popupMenu.setOnMenuItemClickListener { item: MenuItem ->
+            if (item.itemId == 0) {
                 // special item: search for more extensions
-                onGetMoreExtensions();
-                return true;
+                onGetMoreExtensions()
+                return@setOnMenuItemClickListener true
             }
 
             // add to enabled extensions
-            Extension extension = disabledExtensions.get(item.getItemId() - 1);
-            enabledNames.add(extension.componentName);
-            saveExtensions();
+            val extension = disabledExtensions[item.itemId - 1]
+            enabledNames?.add(extension.componentName)
+            saveExtensions()
             // scroll to end of list
-            binding.listViewExtensionsConfig.smoothScrollToPosition(adapter.getCount() - 1);
-            return true;
-        });
-
-        addExtensionPopupMenu.show();
+            binding?.listViewExtensionsConfig?.smoothScrollToPosition(adapter.count - 1)
+            true
+        }
+        popupMenu.show()
     }
 
-    private void onGetMoreExtensions() {
-        Utils.launchWebsite(getActivity(), getString(R.string.url_extensions_search));
+    private fun onGetMoreExtensions() {
+        Utils.launchWebsite(activity, getString(R.string.url_extensions_search))
     }
 
-    private void saveExtensions() {
-        ExtensionManager.get(getContext()).setEnabledExtensions(getContext(), enabledNames);
+    private fun saveExtensions() {
+        val enabledNames = enabledNames ?: return
+        ExtensionManager.get(context).setEnabledExtensions(context, enabledNames)
         LoaderManager.getInstance(this)
-                .restartLoader(ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
-                        loaderCallbacks);
+            .restartLoader(
+                ExtensionsConfigurationActivity.LOADER_ACTIONS_ID, null,
+                loaderCallbacks
+            )
     }
 
-    private final Comparator<Extension> alphabeticalComparator = new Comparator<Extension>() {
-        @Override
-        public int compare(Extension extension1,
-                Extension extension2) {
-            String title1 = createTitle(extension1);
-            String title2 = createTitle(extension2);
-            return title1.compareToIgnoreCase(title2);
+    private val alphabeticalComparator: Comparator<Extension> = object : Comparator<Extension> {
+        override fun compare(extension1: Extension, extension2: Extension): Int {
+            val title1 = createTitle(extension1)
+            val title2 = createTitle(extension2)
+            return title1.compareTo(title2, ignoreCase = true)
         }
 
-        private String createTitle(Extension extension) {
-            String title = extension.label;
+        private fun createTitle(extension: Extension): String {
+            var title = extension.label
             if (TextUtils.isEmpty(title)) {
-                title = extension.componentName.flattenToShortString();
+                title = extension.componentName.flattenToShortString()
             }
-            return title;
+            return title
         }
-    };
+    }
 
-    private class ExtensionsDragSortController extends DragSortController {
+    class ExtensionsDragSortController(
+        private val dragSortListView: DragSortListView,
+        private val adapter: ExtensionsAdapter
+    ) : DragSortController(
+        dragSortListView,
+        R.id.drag_handle,
+        ON_DOWN,
+        CLICK_REMOVE
+    ) {
 
-        private int floatViewOriginPosition;
+        private var floatViewOriginPosition = 0
+        private var floatViewHeight = -1 // cache height
 
-        ExtensionsDragSortController() {
-            super(binding.listViewExtensionsConfig, R.id.drag_handle, DragSortController.ON_DOWN,
-                    DragSortController.CLICK_REMOVE);
-            setRemoveEnabled(false);
-        }
-
-        @Override
-        public int startDragPosition(MotionEvent ev) {
-            int hitPosition = super.dragHandleHitPosition(ev);
-            if (hitPosition >= adapter.getCount() - 1) {
-                return DragSortController.MISS;
-            }
-
-            return hitPosition;
+        init {
+            isRemoveEnabled = false
         }
 
-        @Override
-        public View onCreateFloatView(int position) {
-            floatViewOriginPosition = position;
-            return super.onCreateFloatView(position);
+        override fun startDragPosition(ev: MotionEvent): Int {
+            val hitPosition = super.dragHandleHitPosition(ev)
+            return if (hitPosition >= adapter.count - 1) {
+                MISS
+            } else hitPosition
         }
 
-        private int floatViewHeight = -1; // cache height
+        override fun onCreateFloatView(position: Int): View {
+            floatViewOriginPosition = position
+            return super.onCreateFloatView(position)
+        }
 
-        @Override
-        public void onDragFloatView(View floatView, Point floatPoint, Point touchPoint) {
-            DragSortListView listView = binding.listViewExtensionsConfig;
-            final int addButtonPosition = adapter.getCount() - 1;
-            final int first = listView.getFirstVisiblePosition();
-            final int lvDivHeight = listView.getDividerHeight();
+        override fun onDragFloatView(floatView: View, floatPoint: Point, touchPoint: Point) {
+            val listView = dragSortListView
+            val addButtonPosition = adapter.count - 1
+            val first = listView.firstVisiblePosition
+            val lvDivHeight = listView.dividerHeight
 
             if (floatViewHeight == -1) {
-                floatViewHeight = floatView.getHeight();
+                floatViewHeight = floatView.height
             }
 
-            View div = listView.getChildAt(addButtonPosition - first);
+            val div = listView.getChildAt(addButtonPosition - first)
 
-            if (touchPoint.x > listView.getWidth() / 2) {
-                float scale = touchPoint.x - (float) listView.getWidth() / 2;
-                scale /= (float) (listView.getWidth() / 5);
-                ViewGroup.LayoutParams lp = floatView.getLayoutParams();
-                lp.height = Math.max(floatViewHeight, (int) (scale * floatViewHeight));
-                floatView.setLayoutParams(lp);
+            if (touchPoint.x > listView.width / 2) {
+                var scale = touchPoint.x - listView.width.toFloat() / 2
+                scale /= (listView.width / 5).toFloat()
+                val lp = floatView.layoutParams
+                lp.height = max(floatViewHeight, (scale * floatViewHeight).toInt())
+                floatView.layoutParams = lp
             }
 
             if (div != null) {
                 if (floatViewOriginPosition > addButtonPosition) {
                     // don't allow floating View to go above
                     // section divider
-                    final int limit = div.getBottom() + lvDivHeight;
+                    val limit = div.bottom + lvDivHeight
                     if (floatPoint.y < limit) {
-                        floatPoint.y = limit;
+                        floatPoint.y = limit
                     }
                 } else {
                     // don't allow floating View to go below
                     // section divider
-                    final int limit = div.getTop() - lvDivHeight - floatView.getHeight();
+                    val limit = div.top - lvDivHeight - floatView.height
                     if (floatPoint.y > limit) {
-                        floatPoint.y = limit;
+                        floatPoint.y = limit
                     }
                 }
             }
