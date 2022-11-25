@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.api.SeriesGuideExtension
 import com.battlelancer.seriesguide.databinding.FragmentExtensionsConfigurationBinding
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
@@ -52,6 +53,9 @@ class ExtensionsConfigurationFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility") // ordering not supported if non-touch
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding ?: return
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.listViewExtensionsConfig)
+        binding.listViewExtensionsConfig.isNestedScrollingEnabled = true
 
         adapter = ExtensionsAdapter(requireContext(), onItemClickListener)
 

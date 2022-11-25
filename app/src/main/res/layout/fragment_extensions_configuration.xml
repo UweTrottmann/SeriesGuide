@@ -8,6 +8,7 @@
     <com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
         android:id="@+id/listViewExtensionsConfig"
         style="@style/Page.Centered"
+        android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:drawSelectorOnTop="true"
