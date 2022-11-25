@@ -29,7 +29,6 @@ import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
 import timber.log.Timber
 import java.util.Collections
-import kotlin.math.max
 
 /**
  * Provides tools to display all installed extensions and enable or disable them.
@@ -311,7 +310,6 @@ class ExtensionsConfigurationFragment : Fragment() {
     ) {
 
         private var floatViewOriginPosition = 0
-        private var floatViewHeight = -1 // cache height
 
         init {
             isRemoveEnabled = false
@@ -335,32 +333,19 @@ class ExtensionsConfigurationFragment : Fragment() {
             val first = listView.firstVisiblePosition
             val lvDivHeight = listView.dividerHeight
 
-            if (floatViewHeight == -1) {
-                floatViewHeight = floatView.height
-            }
-
-            val div = listView.getChildAt(addButtonPosition - first)
-
-            if (touchPoint.x > listView.width / 2) {
-                var scale = touchPoint.x - listView.width.toFloat() / 2
-                scale /= (listView.width / 5).toFloat()
-                val lp = floatView.layoutParams
-                lp.height = max(floatViewHeight, (scale * floatViewHeight).toInt())
-                floatView.layoutParams = lp
-            }
-
-            if (div != null) {
+            val divider = listView.getChildAt(addButtonPosition - first)
+            if (divider != null) {
                 if (floatViewOriginPosition > addButtonPosition) {
                     // don't allow floating View to go above
                     // section divider
-                    val limit = div.bottom + lvDivHeight
+                    val limit = divider.bottom + lvDivHeight
                     if (floatPoint.y < limit) {
                         floatPoint.y = limit
                     }
                 } else {
                     // don't allow floating View to go below
                     // section divider
-                    val limit = div.top - lvDivHeight - floatView.height
+                    val limit = divider.top - lvDivHeight - floatView.height
                     if (floatPoint.y > limit) {
                         floatPoint.y = limit
                     }
