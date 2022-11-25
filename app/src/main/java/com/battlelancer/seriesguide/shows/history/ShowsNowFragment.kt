@@ -1,168 +1,165 @@
-package com.battlelancer.seriesguide.shows.history;
+package com.battlelancer.seriesguide.shows.history
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.MenuProvider;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.databinding.FragmentNowBinding;
-import com.battlelancer.seriesguide.history.HistoryActivity;
-import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob;
-import com.battlelancer.seriesguide.shows.ShowsActivityViewModel;
-import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity;
-import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.ui.BaseMessageActivity;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.util.ViewTools;
-import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout;
-import java.util.List;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentNowBinding
+import com.battlelancer.seriesguide.history.HistoryActivity
+import com.battlelancer.seriesguide.jobs.episodes.EpisodeWatchedJob
+import com.battlelancer.seriesguide.shows.ShowsActivityImpl
+import com.battlelancer.seriesguide.shows.ShowsActivityViewModel
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
+import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
+import com.battlelancer.seriesguide.util.ViewTools
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Displays recently watched episodes and recent episodes from friends (if connected to trakt).
  */
-public class ShowsNowFragment extends Fragment {
+class ShowsNowFragment : Fragment() {
 
-    private FragmentNowBinding binding;
+    private var binding: FragmentNowBinding? = null
 
-    private NowAdapter adapter;
-    private boolean isLoadingRecentlyWatched;
-    private boolean isLoadingFriends;
+    private lateinit var adapter: NowAdapter
+    private var isLoadingRecentlyWatched = false
+    private var isLoadingFriends = false
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        binding = FragmentNowBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = FragmentNowBinding.inflate(inflater, container, false)
+        .also { binding = it }
+        .root
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = binding!!
 
-        EmptyViewSwipeRefreshLayout swipeRefreshLayout = binding.swipeRefreshLayoutNow;
-        swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow);
-        swipeRefreshLayout.setOnRefreshListener(this::refreshStream);
-        swipeRefreshLayout.setProgressViewOffset(false,
-                getResources().getDimensionPixelSize(
-                        R.dimen.swipe_refresh_progress_bar_start_margin),
-                getResources().getDimensionPixelSize(
-                        R.dimen.swipe_refresh_progress_bar_end_margin));
+        val swipeRefreshLayout = binding.swipeRefreshLayoutNow
+        swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewNow, R.id.recyclerViewNow)
+        swipeRefreshLayout.setOnRefreshListener { refreshStream() }
+        swipeRefreshLayout.setProgressViewOffset(
+            false,
+            resources.getDimensionPixelSize(
+                R.dimen.swipe_refresh_progress_bar_start_margin
+            ),
+            resources.getDimensionPixelSize(
+                R.dimen.swipe_refresh_progress_bar_end_margin
+            )
+        )
+        binding.emptyViewNow.setText(R.string.now_empty)
 
-        binding.emptyViewNow.setText(R.string.now_empty);
-
-        showError(null);
-        binding.includeSnackbar.buttonSnackbar.setText(R.string.refresh);
-        binding.includeSnackbar.buttonSnackbar.setOnClickListener(v -> refreshStream());
-
-        // recycler view layout manager
-        final int spanCount = getResources().getInteger(R.integer.grid_column_count);
-        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (adapter == null) {
-                    return 1;
-                }
-                if (position >= adapter.getItemCount()) {
-                    return 1;
-                }
-                // make headers and more links span all columns
-                int type = adapter.getItem(position).getType();
-                return (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK)
-                        ? spanCount : 1;
-            }
-        });
-        binding.recyclerViewNow.setLayoutManager(layoutManager);
-        binding.recyclerViewNow.setHasFixedSize(true);
-
-        new ViewModelProvider(requireActivity()).get(ShowsActivityViewModel.class)
-                .getScrollTabToTopLiveData()
-                .observe(getViewLifecycleOwner(), tabPosition -> {
-                    if (tabPosition != null
-                            && tabPosition == ShowsActivity.Tab.NOW.getIndex()) {
-                        binding.recyclerViewNow.smoothScrollToPosition(0);
-                    }
-                });
-
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
-                binding.swipeRefreshLayoutNow);
+        showError(null)
+        binding.includeSnackbar.buttonSnackbar.setText(R.string.refresh)
+        binding.includeSnackbar.buttonSnackbar.setOnClickListener { refreshStream() }
 
         // define dataset
-        adapter = new NowAdapter(requireContext(), itemClickListener);
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                updateEmptyState();
+        adapter = NowAdapter(requireContext(), itemClickListener)
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                updateEmptyState()
             }
 
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                updateEmptyState();
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                updateEmptyState()
             }
 
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                updateEmptyState();
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                updateEmptyState()
             }
-        });
-        binding.recyclerViewNow.setAdapter(adapter);
+        })
+
+        // recycler view layout manager
+        val spanCount = resources.getInteger(R.integer.grid_column_count)
+        val layoutManager = GridLayoutManager(activity, spanCount)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                if (position >= adapter.itemCount) {
+                    return 1
+                }
+                // make headers and more links span all columns
+                val type = adapter.getItem(position).type
+                return if (type == NowAdapter.ItemType.HEADER || type == NowAdapter.ItemType.MORE_LINK) {
+                    spanCount
+                } else {
+                    1
+                }
+            }
+        }
+        binding.recyclerViewNow.layoutManager = layoutManager
+        binding.recyclerViewNow.setHasFixedSize(true)
+        binding.recyclerViewNow.adapter = adapter
+
+        ViewModelProvider(requireActivity()).get(ShowsActivityViewModel::class.java)
+            .scrollTabToTopLiveData
+            .observe(viewLifecycleOwner) { tabPosition: Int? ->
+                if (tabPosition != null
+                    && tabPosition == ShowsActivityImpl.Tab.NOW.index) {
+                    binding.recyclerViewNow.smoothScrollToPosition(0)
+                }
+            }
+
+        ViewTools.setSwipeRefreshLayoutColors(
+            requireActivity().theme,
+            binding.swipeRefreshLayoutNow
+        )
 
         // if connected to trakt, replace local history with trakt history, show friends history
         if (TraktCredentials.get(requireContext()).hasCredentials()) {
-            isLoadingRecentlyWatched = true;
-            isLoadingFriends = true;
-            showProgressBar(true);
-            LoaderManager loaderManager = LoaderManager.getInstance(this);
-            loaderManager.initLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
-                    recentlyTraktCallbacks);
-            loaderManager.initLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
-                    traktFriendsHistoryCallbacks);
+            isLoadingRecentlyWatched = true
+            isLoadingFriends = true
+            showProgressBar(true)
+            val loaderManager = LoaderManager.getInstance(this)
+            loaderManager.initLoader(
+                ShowsActivityImpl.NOW_TRAKT_USER_LOADER_ID, null,
+                recentlyTraktCallbacks
+            )
+            loaderManager.initLoader(
+                ShowsActivityImpl.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+                traktFriendsHistoryCallbacks
+            )
         }
 
         requireActivity().addMenuProvider(
-                optionsMenuProvider,
-                getViewLifecycleOwner(),
-                Lifecycle.State.RESUMED
-        );
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        EventBus.getDefault().register(this);
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
 
         /*
-          Init recently watched loader here the earliest.
-          So we can restart them if they already exist to ensure up to date data (the loaders do
-          not react to database changes themselves) and avoid loading data twice in a row.
-         */
+        Init recently watched loader here the earliest.
+        So we can restart them if they already exist to ensure up to date data (the loaders do
+        not react to database changes themselves) and avoid loading data twice in a row.
+        */
         if (!TraktCredentials.get(requireContext()).hasCredentials()) {
-            isLoadingRecentlyWatched = true;
-            initAndMaybeRestartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, recentlyLocalCallbacks);
+            isLoadingRecentlyWatched = true
+            initAndMaybeRestartLoader()
         }
     }
 
@@ -170,257 +167,251 @@ public class ShowsNowFragment extends Fragment {
      * Init the loader. If the loader already exists, will restart it (the default behavior of init
      * would be to get the last loaded data).
      */
-    private <D> void initAndMaybeRestartLoader(int loaderId,
-            LoaderManager.LoaderCallbacks<D> callbacks) {
-        LoaderManager loaderManager = LoaderManager.getInstance(this);
-        boolean isLoaderExists = loaderManager.getLoader(loaderId) != null;
-        loaderManager.initLoader(loaderId, null, callbacks);
+    private fun initAndMaybeRestartLoader() {
+        val loaderId = ShowsActivityImpl.NOW_RECENTLY_LOADER_ID
+        val loaderManager = LoaderManager.getInstance(this)
+        val isLoaderExists = loaderManager.getLoader<Any>(loaderId) != null
+        loaderManager.initLoader(loaderId, null, recentlyLocalCallbacks)
         if (isLoaderExists) {
-            loaderManager.restartLoader(loaderId, null, callbacks);
+            loaderManager.restartLoader(loaderId, null, recentlyLocalCallbacks)
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        EventBus.getDefault().unregister(this);
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
-    private final MenuProvider optionsMenuProvider = new MenuProvider() {
-        @Override
-        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-            menuInflater.inflate(R.menu.shows_now_menu, menu);
+    private val optionsMenuProvider: MenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.shows_now_menu, menu)
         }
 
-        @Override
-        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-            int itemId = menuItem.getItemId();
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            val itemId = menuItem.itemId
             if (itemId == R.id.menu_action_shows_now_refresh) {
-                refreshStream();
-                return true;
+                refreshStream()
+                return true
             }
-            return false;
+            return false
         }
-    };
+    }
 
-    private void refreshStream() {
-        showProgressBar(true);
-        showError(null);
+    private fun refreshStream() {
+        showProgressBar(true)
+        showError(null)
 
         // if connected to trakt, replace local history with trakt history, show friends history
         // user might get disconnected during our life-time,
         // so properly clean up old loaders so they won't interfere
-        isLoadingRecentlyWatched = true;
-        LoaderManager loaderManager = LoaderManager.getInstance(this);
+        isLoadingRecentlyWatched = true
+        val loaderManager = LoaderManager.getInstance(this)
         if (TraktCredentials.get(requireContext()).hasCredentials()) {
-            destroyLoaderIfExists(ShowsActivity.NOW_RECENTLY_LOADER_ID);
+            destroyLoaderIfExists(ShowsActivityImpl.NOW_RECENTLY_LOADER_ID)
 
-            loaderManager.restartLoader(ShowsActivity.NOW_TRAKT_USER_LOADER_ID, null,
-                    recentlyTraktCallbacks);
-            isLoadingFriends = true;
-            loaderManager.restartLoader(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID, null,
-                    traktFriendsHistoryCallbacks);
+            loaderManager.restartLoader(
+                ShowsActivityImpl.NOW_TRAKT_USER_LOADER_ID, null,
+                recentlyTraktCallbacks
+            )
+            isLoadingFriends = true
+            loaderManager.restartLoader(
+                ShowsActivityImpl.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+                traktFriendsHistoryCallbacks
+            )
         } else {
             // destroy trakt loaders and remove any shown error message
-            destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_USER_LOADER_ID);
-            destroyLoaderIfExists(ShowsActivity.NOW_TRAKT_FRIENDS_LOADER_ID);
-            showError(null);
+            destroyLoaderIfExists(ShowsActivityImpl.NOW_TRAKT_USER_LOADER_ID)
+            destroyLoaderIfExists(ShowsActivityImpl.NOW_TRAKT_FRIENDS_LOADER_ID)
+            showError(null)
 
-            loaderManager.restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
-                    recentlyLocalCallbacks);
+            loaderManager.restartLoader(
+                ShowsActivityImpl.NOW_RECENTLY_LOADER_ID, null,
+                recentlyLocalCallbacks
+            )
         }
     }
 
-    private void destroyLoaderIfExists(int loaderId) {
-        LoaderManager loaderManager = LoaderManager.getInstance(this);
-        if (loaderManager.getLoader(loaderId) != null) {
-            loaderManager.destroyLoader(loaderId);
+    private fun destroyLoaderIfExists(loaderId: Int) {
+        val loaderManager = LoaderManager.getInstance(this)
+        if (loaderManager.getLoader<Any>(loaderId) != null) {
+            loaderManager.destroyLoader(loaderId)
         }
     }
 
     /**
      * Starts an activity to display the given episode.
      */
-    private void showDetails(View view, long episodeId) {
-        Intent intent = EpisodesActivity.intentEpisode(episodeId, requireContext());
+    private fun showDetails(view: View, episodeId: Long) {
+        val intent = EpisodesActivity.intentEpisode(episodeId, requireContext())
 
-        ActivityCompat.startActivity(requireContext(), intent,
-                ActivityOptionsCompat
-                        .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                        .toBundle()
-        );
+        ActivityCompat.startActivity(
+            requireContext(), intent,
+            ActivityOptionsCompat
+                .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
+                .toBundle()
+        )
     }
 
-    private void showError(@Nullable String errorText) {
-        boolean show = errorText != null;
+    private fun showError(errorText: String?) {
+        val binding = binding ?: return
+
+        val show = errorText != null
         if (show) {
-            binding.includeSnackbar.textViewSnackbar.setText(errorText);
+            binding.includeSnackbar.textViewSnackbar.text = errorText
         }
-        LinearLayout snackbar = binding.includeSnackbar.containerSnackbar;
-        if (snackbar.getVisibility() == (show ? View.VISIBLE : View.GONE)) {
+        val snackbar = binding.includeSnackbar.containerSnackbar
+        if (snackbar.visibility == (if (show) View.VISIBLE else View.GONE)) {
             // already in desired state, avoid replaying animation
-            return;
+            return
         }
-        snackbar.startAnimation(AnimationUtils.loadAnimation(snackbar.getContext(),
-                show ? R.anim.fade_in : R.anim.fade_out));
-        snackbar.setVisibility(show ? View.VISIBLE : View.GONE);
+        snackbar.startAnimation(
+            AnimationUtils.loadAnimation(
+                snackbar.context,
+                if (show) R.anim.fade_in else R.anim.fade_out
+            )
+        )
+        snackbar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     /**
-     * Show or hide the progress bar of the {@link SwipeRefreshLayout}
-     * wrapping view.
+     * Show or hide the progress bar of the SwipeRefreshLayout wrapping view.
      */
-    private void showProgressBar(boolean show) {
+    private fun showProgressBar(show: Boolean) {
         // only hide if everybody has finished loading
         if (!show) {
             if (isLoadingRecentlyWatched || isLoadingFriends) {
-                return;
+                return
             }
         }
-        binding.swipeRefreshLayoutNow.setRefreshing(show);
+        binding?.swipeRefreshLayoutNow?.isRefreshing = show
     }
 
-    private void updateEmptyState() {
-        boolean isEmpty = adapter.getItemCount() == 0;
-        binding.recyclerViewNow.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
-        binding.emptyViewNow.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+    private fun updateEmptyState() {
+        val binding = binding ?: return
+        val isEmpty = adapter.itemCount == 0
+        binding.recyclerViewNow.visibility =
+            if (isEmpty) View.GONE else View.VISIBLE
+        binding.emptyViewNow.visibility =
+            if (isEmpty) View.VISIBLE else View.GONE
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventEpisodeTask(BaseMessageActivity.ServiceCompletedEvent event) {
-        if (event.getFlagJob() == null || !event.isSuccessful()) {
-            return; // no changes applied
+    fun onEventEpisodeTask(event: ServiceCompletedEvent) {
+        if (event.flagJob == null || !event.isSuccessful) {
+            return  // no changes applied
         }
-        if (!isAdded()) {
-            return; // no longer added to activity
+        if (!isAdded) {
+            return  // no longer added to activity
         }
         // reload recently watched if user set or unset an episode watched
         // however, if connected to trakt do not show local history
-        if (event.getFlagJob() instanceof EpisodeWatchedJob
-                && !TraktCredentials.get(requireContext()).hasCredentials()) {
-            isLoadingRecentlyWatched = true;
+        if (event.flagJob is EpisodeWatchedJob
+            && !TraktCredentials.get(requireContext()).hasCredentials()) {
+            isLoadingRecentlyWatched = true
             LoaderManager.getInstance(this)
-                    .restartLoader(ShowsActivity.NOW_RECENTLY_LOADER_ID, null,
-                            recentlyLocalCallbacks);
+                .restartLoader(
+                    ShowsActivityImpl.NOW_RECENTLY_LOADER_ID, null,
+                    recentlyLocalCallbacks
+                )
         }
     }
 
-    private final NowAdapter.ItemClickListener itemClickListener = new NowAdapter.ItemClickListener() {
-        @Override
-        public void onItemClick(@NonNull View view, int position) {
-            NowAdapter.NowItem item = adapter.getItem(position);
+    private val itemClickListener: NowAdapter.ItemClickListener =
+        object : NowAdapter.ItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val item = adapter.getItem(position)
 
-            // more history link?
-            if (item.getType() == NowAdapter.ItemType.MORE_LINK) {
-                startActivity(new Intent(getActivity(), HistoryActivity.class).putExtra(
-                        HistoryActivity.InitBundle.HISTORY_TYPE,
-                        HistoryActivity.DISPLAY_EPISODE_HISTORY));
-                return;
+                // more history link?
+                if (item.type == NowAdapter.ItemType.MORE_LINK) {
+                    startActivity(
+                        Intent(activity, HistoryActivity::class.java).putExtra(
+                            HistoryActivity.InitBundle.HISTORY_TYPE,
+                            HistoryActivity.DISPLAY_EPISODE_HISTORY
+                        )
+                    )
+                    return
+                }
+                val episodeRowId = item.episodeRowId
+                val showTmdbId = item.showTmdbId
+                if (episodeRowId != null && episodeRowId > 0) {
+                    // episode in database: display details
+                    showDetails(view, episodeRowId)
+                } else if (showTmdbId != null && showTmdbId > 0) {
+                    // episode missing: show likely not in database, suggest adding it
+                    AddShowDialogFragment.show(parentFragmentManager, showTmdbId)
+                }
+            }
+        }
+
+    private val recentlyLocalCallbacks: LoaderManager.LoaderCallbacks<MutableList<NowItem>> =
+        object : LoaderManager.LoaderCallbacks<MutableList<NowItem>> {
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<MutableList<NowItem>> {
+                return RecentlyWatchedLoader(requireContext())
             }
 
-            if (item.getEpisodeRowId() != null && item.getEpisodeRowId() > 0) {
-                // episode in database: display details
-                showDetails(view, item.getEpisodeRowId());
-            } else if (item.getShowTmdbId() != null && item.getShowTmdbId() > 0) {
-                // episode missing: show likely not in database, suggest adding it
-                AddShowDialogFragment.show(getParentFragmentManager(), item.getShowTmdbId());
+            override fun onLoadFinished(
+                loader: Loader<MutableList<NowItem>>,
+                data: MutableList<NowItem>
+            ) {
+                adapter.setRecentlyWatched(data)
+                isLoadingRecentlyWatched = false
+                showProgressBar(false)
+            }
+
+            override fun onLoaderReset(loader: Loader<MutableList<NowItem>>) {
+                // clear existing data
+                adapter.setRecentlyWatched(null)
             }
         }
-    };
 
-    private final LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> recentlyLocalCallbacks
-            = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
-        @NonNull
-        @Override
-        public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
-            return new RecentlyWatchedLoader(requireContext());
-        }
-
-        @Override
-        public void onLoadFinished(@NonNull Loader<List<NowAdapter.NowItem>> loader,
-                List<NowAdapter.NowItem> data) {
-            if (!isAdded()) {
-                return;
+    private val recentlyTraktCallbacks: LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result> =
+        object : LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result> {
+            override fun onCreateLoader(
+                id: Int,
+                args: Bundle?
+            ): Loader<TraktRecentEpisodeHistoryLoader.Result> {
+                return TraktRecentEpisodeHistoryLoader(activity)
             }
-            adapter.setRecentlyWatched(data);
-            isLoadingRecentlyWatched = false;
-            showProgressBar(false);
-        }
 
-        @Override
-        public void onLoaderReset(@NonNull Loader<List<NowAdapter.NowItem>> loader) {
-            if (!isVisible()) {
-                return;
+            override fun onLoadFinished(
+                loader: Loader<TraktRecentEpisodeHistoryLoader.Result>,
+                data: TraktRecentEpisodeHistoryLoader.Result
+            ) {
+                adapter.setRecentlyWatched(data.items)
+                isLoadingRecentlyWatched = false
+                showProgressBar(false)
+                showError(data.errorText)
             }
-            // clear existing data
-            adapter.setRecentlyWatched(null);
-        }
-    };
 
-    private final LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result>
-            recentlyTraktCallbacks
-            = new LoaderManager.LoaderCallbacks<TraktRecentEpisodeHistoryLoader.Result>() {
-        @NonNull
-        @Override
-        public Loader<TraktRecentEpisodeHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
-            return new TraktRecentEpisodeHistoryLoader(getActivity());
-        }
-
-        @Override
-        public void onLoadFinished(@NonNull Loader<TraktRecentEpisodeHistoryLoader.Result> loader,
-                TraktRecentEpisodeHistoryLoader.Result data) {
-            if (!isAdded()) {
-                return;
+            override fun onLoaderReset(loader: Loader<TraktRecentEpisodeHistoryLoader.Result>) {
+                // clear existing data
+                adapter.setRecentlyWatched(null)
             }
-            adapter.setRecentlyWatched(data.items);
-            isLoadingRecentlyWatched = false;
-            showProgressBar(false);
-            showError(data.errorText);
         }
 
-        @Override
-        public void onLoaderReset(@NonNull Loader<TraktRecentEpisodeHistoryLoader.Result> loader) {
-            if (!isVisible()) {
-                return;
+    private val traktFriendsHistoryCallbacks: LoaderManager.LoaderCallbacks<List<NowItem>> =
+        object : LoaderManager.LoaderCallbacks<List<NowItem>> {
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<NowItem>> {
+                return TraktFriendsEpisodeHistoryLoader(activity)
             }
-            // clear existing data
-            adapter.setRecentlyWatched(null);
-        }
-    };
 
-    private final LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>> traktFriendsHistoryCallbacks
-            = new LoaderManager.LoaderCallbacks<List<NowAdapter.NowItem>>() {
-        @NonNull
-        @Override
-        public Loader<List<NowAdapter.NowItem>> onCreateLoader(int id, Bundle args) {
-            return new TraktFriendsEpisodeHistoryLoader(getActivity());
-        }
-
-        @Override
-        public void onLoadFinished(@NonNull Loader<List<NowAdapter.NowItem>> loader,
-                List<NowAdapter.NowItem> data) {
-            if (!isAdded()) {
-                return;
+            override fun onLoadFinished(
+                loader: Loader<List<NowItem>>,
+                data: List<NowItem>
+            ) {
+                adapter.setFriendsRecentlyWatched(data)
+                isLoadingFriends = false
+                showProgressBar(false)
             }
-            adapter.setFriendsRecentlyWatched(data);
-            isLoadingFriends = false;
-            showProgressBar(false);
-        }
 
-        @Override
-        public void onLoaderReset(@NonNull Loader<List<NowAdapter.NowItem>> loader) {
-            if (!isVisible()) {
-                return;
+            override fun onLoaderReset(loader: Loader<List<NowItem>>) {
+                // clear existing data
+                adapter.setFriendsRecentlyWatched(null)
             }
-            // clear existing data
-            adapter.setFriendsRecentlyWatched(null);
         }
-    };
 }
