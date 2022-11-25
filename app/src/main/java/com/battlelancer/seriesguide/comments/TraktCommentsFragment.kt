@@ -1,297 +1,286 @@
-package com.battlelancer.seriesguide.comments;
+package com.battlelancer.seriesguide.comments
 
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.MenuProvider;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.app.LoaderManager.LoaderCallbacks;
-import androidx.loader.content.Loader;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding;
-import com.battlelancer.seriesguide.traktapi.TraktAction;
-import com.battlelancer.seriesguide.traktapi.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.util.ViewTools;
-import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.trakt5.TraktLink;
-import com.uwetrottmann.trakt5.entities.Comment;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import timber.log.Timber;
+import android.os.AsyncTask
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ListView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
+import com.battlelancer.seriesguide.traktapi.TraktAction
+import com.battlelancer.seriesguide.traktapi.TraktTask
+import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
+import com.uwetrottmann.androidutils.AndroidUtils
+import com.uwetrottmann.trakt5.TraktLink
+import com.uwetrottmann.trakt5.entities.Comment
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Displays show or episode comments and supports posting comments.
  */
-public class TraktCommentsFragment extends Fragment {
+class TraktCommentsFragment : Fragment() {
 
-    public interface InitBundle {
-        String MOVIE_TMDB_ID = "movie";
-        String SHOW_ID = "show";
-        String EPISODE_ID = "episode";
+    interface InitBundle {
+        companion object {
+            const val MOVIE_TMDB_ID = "movie"
+            const val SHOW_ID = "show"
+            const val EPISODE_ID = "episode"
+        }
     }
 
-    private FragmentCommentsBinding binding;
-    private TraktCommentsAdapter adapter;
+    private var binding: FragmentCommentsBinding? = null
+    private lateinit var adapter: TraktCommentsAdapter
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        binding = FragmentCommentsBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = FragmentCommentsBinding.inflate(inflater, container, false)
+        .also { binding = it }
+        .root
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = binding!!
 
-        binding.swipeRefreshLayoutShouts.setSwipeableChildren(R.id.scrollViewComments,
-                R.id.listViewShouts);
-        binding.swipeRefreshLayoutShouts.setOnRefreshListener(
-                this::refreshCommentsWithNetworkCheck);
-        binding.swipeRefreshLayoutShouts.setProgressViewOffset(false,
-                getResources().getDimensionPixelSize(
-                        R.dimen.swipe_refresh_progress_bar_start_margin),
-                getResources().getDimensionPixelSize(
-                        R.dimen.swipe_refresh_progress_bar_end_margin));
-        ViewTools.setSwipeRefreshLayoutColors(requireActivity().getTheme(),
-                binding.swipeRefreshLayoutShouts);
+        binding.swipeRefreshLayoutShouts.setSwipeableChildren(
+            R.id.scrollViewComments,
+            R.id.listViewShouts
+        )
+        binding.swipeRefreshLayoutShouts.setOnRefreshListener { refreshCommentsWithNetworkCheck() }
+        binding.swipeRefreshLayoutShouts.setProgressViewOffset(
+            false,
+            resources.getDimensionPixelSize(
+                R.dimen.swipe_refresh_progress_bar_start_margin
+            ),
+            resources.getDimensionPixelSize(
+                R.dimen.swipe_refresh_progress_bar_end_margin
+            )
+        )
+        ViewTools.setSwipeRefreshLayoutColors(
+            requireActivity().theme,
+            binding.swipeRefreshLayoutShouts
+        )
 
-        binding.listViewShouts.setOnItemClickListener(onItemClickListener);
-        binding.listViewShouts.setEmptyView(binding.textViewShoutsEmpty);
+        binding.listViewShouts.onItemClickListener = onItemClickListener
+        binding.listViewShouts.emptyView = binding.textViewShoutsEmpty
 
-        binding.buttonShouts.setOnClickListener(v -> comment());
+        binding.buttonShouts.setOnClickListener { comment() }
 
         // disable comment button by default, enable if comment entered
-        binding.buttonShouts.setEnabled(false);
-        binding.editTextShouts.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        binding.buttonShouts.isEnabled = false
+        binding.editTextShouts.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                binding.buttonShouts.isEnabled = !TextUtils.isEmpty(s)
             }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                binding.buttonShouts.setEnabled(!TextUtils.isEmpty(s));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+            override fun afterTextChanged(s: Editable) {}
+        })
 
         // set initial view states
-        showProgressBar(true);
+        showProgressBar(true)
 
         // setup adapter
-        adapter = new TraktCommentsAdapter(getActivity());
-        binding.listViewShouts.setAdapter(adapter);
+        adapter = TraktCommentsAdapter(activity)
+        binding.listViewShouts.adapter = adapter
 
         // load data
         LoaderManager.getInstance(this)
-                .initLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                        commentsLoaderCallbacks);
+            .initLoader(
+                TraktCommentsActivity.LOADER_ID_COMMENTS, arguments,
+                commentsLoaderCallbacks
+            )
 
         // enable menu
         requireActivity().addMenuProvider(
-                optionsMenuProvider,
-                getViewLifecycleOwner(),
-                Lifecycle.State.RESUMED
-        );
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
-    private void comment() {
+    private fun comment() {
+        val binding = binding ?: return
+
         // prevent empty comments
-        String comment = binding.editTextShouts.getText().toString();
+        val comment = binding.editTextShouts.text.toString()
         if (TextUtils.isEmpty(comment)) {
-            return;
+            return
         }
 
         // disable the comment button
-        binding.buttonShouts.setEnabled(false);
-
-        Bundle args = requireArguments();
-        boolean isSpoiler = binding.checkBoxShouts.isChecked();
+        binding.buttonShouts.isEnabled = false
+        val args = requireArguments()
+        val isSpoiler = binding.checkBoxShouts.isChecked
 
         // as determined by "science", episode comments are most likely, so check for them first
         // comment for an episode?
-        long episodeId = args.getLong(InitBundle.EPISODE_ID);
-        if (episodeId != 0) {
-            new TraktTask(getContext()).commentEpisode(episodeId, comment, isSpoiler)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            return;
+        val episodeId = args.getLong(InitBundle.EPISODE_ID)
+        if (episodeId != 0L) {
+            TraktTask(context).commentEpisode(episodeId, comment, isSpoiler)
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            return
         }
 
         // comment for a movie?
-        int movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID);
+        val movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID)
         if (movieTmdbId != 0) {
-            new TraktTask(getContext()).commentMovie(movieTmdbId, comment, isSpoiler)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            return;
+            TraktTask(context).commentMovie(movieTmdbId, comment, isSpoiler)
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            return
         }
 
         // comment for a show?
-        long showId = args.getLong(InitBundle.SHOW_ID);
-        if (showId != 0) {
-            new TraktTask(getContext()).commentShow(showId, comment, isSpoiler)
-                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        val showId = args.getLong(InitBundle.SHOW_ID)
+        if (showId != 0L) {
+            TraktTask(context).commentShow(showId, comment, isSpoiler)
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
 
         // if all ids were 0, do nothing
-        Timber.e("comment: did nothing, all possible ids were 0");
+        throw IllegalArgumentException("comment: did nothing, all possible ids were 0")
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        EventBus.getDefault().register(this);
+    override fun onResume() {
+        super.onResume()
+        EventBus.getDefault().register(this)
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        EventBus.getDefault().unregister(this);
+    override fun onPause() {
+        super.onPause()
+        EventBus.getDefault().unregister(this)
     }
 
-    /**
-     * Detach from list view.
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
-    private final MenuProvider optionsMenuProvider = new MenuProvider() {
-        @Override
-        public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-            menuInflater.inflate(R.menu.comments_menu, menu);
+    private val optionsMenuProvider: MenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.comments_menu, menu)
         }
 
-        @Override
-        public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-            int itemId = menuItem.getItemId();
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            val itemId = menuItem.itemId
             if (itemId == R.id.menu_action_comments_refresh) {
-                refreshCommentsWithNetworkCheck();
-                return true;
+                refreshCommentsWithNetworkCheck()
+                return true
             }
-            return false;
+            return false
         }
-    };
-
-    private final AdapterView.OnItemClickListener onItemClickListener
-            = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position);
-
-    public void onListItemClick(ListView l, View v, int position) {
-        final Comment comment = (Comment) l.getItemAtPosition(position);
-        if (comment == null) {
-            return;
+    }
+    private val onItemClickListener =
+        AdapterView.OnItemClickListener { parent: AdapterView<*>, v: View, position: Int, _: Long ->
+            onListItemClick(parent as ListView, v, position)
         }
 
-        if (comment.spoiler) {
+    private fun onListItemClick(l: ListView, v: View, position: Int) {
+        val comment = l.getItemAtPosition(position) as Comment?
+            ?: return
+        if (comment.spoiler == true) {
             // if comment is a spoiler it is hidden, first click should reveal it
-            comment.spoiler = false;
-            TextView shoutText = v.findViewById(R.id.textViewComment);
+            comment.spoiler = false
+            val shoutText = v.findViewById<TextView>(R.id.textViewComment)
             if (shoutText != null) {
-                shoutText.setText(comment.comment);
+                shoutText.text = comment.comment
             }
         } else {
             // open comment website
-            Utils.launchWebsite(getContext(), TraktLink.comment(comment.id));
+            comment.id?.let { Utils.launchWebsite(context, TraktLink.comment(it)) }
         }
     }
 
-    private final LoaderCallbacks<TraktCommentsLoader.Result> commentsLoaderCallbacks
-            = new LoaderCallbacks<TraktCommentsLoader.Result>() {
-        @NonNull
-        @Override
-        public Loader<TraktCommentsLoader.Result> onCreateLoader(int id, Bundle args) {
-            showProgressBar(true);
-            return new TraktCommentsLoader(getContext(), args);
-        }
-
-        @Override
-        public void onLoadFinished(@NonNull Loader<TraktCommentsLoader.Result> loader,
-                TraktCommentsLoader.Result data) {
-            if (!isAdded()) {
-                return;
+    private val commentsLoaderCallbacks: LoaderManager.LoaderCallbacks<TraktCommentsLoader.Result> =
+        object : LoaderManager.LoaderCallbacks<TraktCommentsLoader.Result> {
+            override fun onCreateLoader(
+                id: Int,
+                args: Bundle?
+            ): Loader<TraktCommentsLoader.Result> {
+                showProgressBar(true)
+                return TraktCommentsLoader(context, args)
             }
-            adapter.setData(data.results);
-            setEmptyMessage(data.emptyText);
-            showProgressBar(false);
+
+            override fun onLoadFinished(
+                loader: Loader<TraktCommentsLoader.Result>,
+                data: TraktCommentsLoader.Result
+            ) {
+                adapter.setData(data.results)
+                setEmptyMessage(data.emptyText)
+                showProgressBar(false)
+            }
+
+            override fun onLoaderReset(loader: Loader<TraktCommentsLoader.Result>) {
+                // keep existing data
+            }
         }
 
-        @Override
-        public void onLoaderReset(@NonNull Loader<TraktCommentsLoader.Result> loader) {
-            // keep existing data
-        }
-    };
-
-    private void refreshCommentsWithNetworkCheck() {
+    private fun refreshCommentsWithNetworkCheck() {
         if (!AndroidUtils.isNetworkConnected(requireContext())) {
             // keep existing data, but update empty view anyhow
-            showProgressBar(false);
-            setEmptyMessage(getString(R.string.offline));
-            Toast.makeText(requireContext(), R.string.offline, Toast.LENGTH_SHORT).show();
-            return;
+            showProgressBar(false)
+            setEmptyMessage(getString(R.string.offline))
+            Toast.makeText(requireContext(), R.string.offline, Toast.LENGTH_SHORT).show()
+            return
         }
-
-        refreshComments();
+        refreshComments()
     }
 
-    private void refreshComments() {
+    private fun refreshComments() {
         LoaderManager.getInstance(this)
-                .restartLoader(TraktCommentsActivity.LOADER_ID_COMMENTS, getArguments(),
-                        commentsLoaderCallbacks);
+            .restartLoader(
+                TraktCommentsActivity.LOADER_ID_COMMENTS, arguments,
+                commentsLoaderCallbacks
+            )
     }
 
     /**
      * Changes the empty message.
      */
-    private void setEmptyMessage(String stringResourceId) {
-        binding.textViewShoutsEmpty.setText(stringResourceId);
+    private fun setEmptyMessage(stringResourceId: String) {
+        binding?.textViewShoutsEmpty?.text = stringResourceId
     }
 
     /**
-     * Show or hide the progress bar of the {@link SwipeRefreshLayout}
+     * Show or hide the progress bar of the SwipeRefreshLayout
      * wrapping the comments list.
      */
-    protected void showProgressBar(boolean isShowing) {
-        binding.swipeRefreshLayoutShouts.setRefreshing(isShowing);
+    private fun showProgressBar(isShowing: Boolean) {
+        binding?.swipeRefreshLayoutShouts?.isRefreshing = isShowing
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(TraktTask.TraktActionCompleteEvent event) {
-        if (event.traktAction != TraktAction.COMMENT || getView() == null) {
-            return;
+    fun onEventMainThread(event: TraktActionCompleteEvent) {
+        if (event.traktAction != TraktAction.COMMENT || view == null) {
+            return
         }
 
         // reenable the shout button
-        binding.buttonShouts.setEnabled(true);
-
+        val binding = binding ?: return
+        binding.buttonShouts.isEnabled = true
         if (event.wasSuccessful) {
             // clear the text field and show recent shout
-            binding.editTextShouts.setText("");
-            refreshCommentsWithNetworkCheck();
+            binding.editTextShouts.setText("")
+            refreshCommentsWithNetworkCheck()
         }
     }
 }
