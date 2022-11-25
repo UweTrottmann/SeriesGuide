@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <bool name="gridClipToPadding">false</bool>
     <integer name="overviewLayoutType">0</integer>
+    <bool name="isWideCommentsLayout">false</bool>
 
 </resources>

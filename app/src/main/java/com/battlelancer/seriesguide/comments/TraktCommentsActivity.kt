@@ -17,7 +17,8 @@ class TraktCommentsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = SinglePaneActivity.onCreateFor(this)
-        binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId = R.id.listViewShouts
+        binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
+            TraktCommentsFragment.liftOnScrollTargetViewId
 
         if (intent.extras == null) {
             finish()
@@ -29,9 +30,7 @@ class TraktCommentsActivity : BaseActivity() {
 
         if (savedInstanceState == null) {
             val f = TraktCommentsFragment()
-                .apply {
-                arguments = intent.extras
-            }
+                .apply { arguments = intent.extras }
             supportFragmentManager.beginTransaction()
                 .add(R.id.content_frame, f)
                 .commit()

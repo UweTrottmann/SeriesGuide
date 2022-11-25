@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
 import com.battlelancer.seriesguide.traktapi.TraktTask
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -61,6 +62,13 @@ class TraktCommentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = binding!!
 
+        if (resources.getBoolean(R.bool.isWideCommentsLayout)) {
+            ThemeUtils.applyBottomPaddingForNavigationBar(binding.listViewShouts)
+            ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByComments)
+        } else {
+            ThemeUtils.applyBottomPaddingForNavigationBar(binding.containerComments)
+        }
+
         binding.swipeRefreshLayoutShouts.setSwipeableChildren(
             R.id.scrollViewComments,
             R.id.listViewShouts
@@ -80,6 +88,7 @@ class TraktCommentsFragment : Fragment() {
             binding.swipeRefreshLayoutShouts
         )
 
+        binding.listViewShouts.isNestedScrollingEnabled = true
         binding.listViewShouts.onItemClickListener = onItemClickListener
         binding.listViewShouts.emptyView = binding.textViewShoutsEmpty
 
@@ -87,7 +96,7 @@ class TraktCommentsFragment : Fragment() {
 
         // disable comment button by default, enable if comment entered
         binding.buttonShouts.isEnabled = false
-        binding.editTextShouts.addTextChangedListener(object : TextWatcher {
+        binding.textFieldComments.editText!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 binding.buttonShouts.isEnabled = !TextUtils.isEmpty(s)
@@ -122,7 +131,7 @@ class TraktCommentsFragment : Fragment() {
         val binding = binding ?: return
 
         // prevent empty comments
-        val comment = binding.editTextShouts.text.toString()
+        val comment = binding.textFieldComments.editText!!.text.toString()
         if (TextUtils.isEmpty(comment)) {
             return
         }
@@ -279,8 +288,12 @@ class TraktCommentsFragment : Fragment() {
         binding.buttonShouts.isEnabled = true
         if (event.wasSuccessful) {
             // clear the text field and show recent shout
-            binding.editTextShouts.setText("")
+            binding.textFieldComments.editText!!.setText("")
             refreshCommentsWithNetworkCheck()
         }
+    }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.listViewShouts
     }
 }
