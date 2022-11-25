@@ -1,4 +1,4 @@
-package com.battlelancer.seriesguide.extensions
+package com.battlelancer.seriesguide.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
- * A [android.preference.PreferenceFragment] which has a helper method to easily display the
- * current settings value of a [android.preference.ListPreference].
+ * A [androidx.preference.PreferenceFragmentCompat] which has a helper method to easily display the
+ * current settings value of a [android.preference.ListPreference]. Also configures the RecyclerView
+ * displaying the settings to adjust bottom padding for the navigation bar.
  */
-abstract class BaseSettingsFragment : PreferenceFragmentCompat() {
+abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onCreateRecyclerView(
         inflater: LayoutInflater,

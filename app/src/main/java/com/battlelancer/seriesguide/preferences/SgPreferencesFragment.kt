@@ -10,8 +10,6 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.provider.Settings
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.TaskStackBuilder
@@ -19,10 +17,8 @@ import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
-import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
@@ -38,6 +34,7 @@ import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
+import com.battlelancer.seriesguide.ui.BasePreferencesFragment
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
@@ -51,7 +48,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SgPreferencesFragment : PreferenceFragmentCompat(),
+class SgPreferencesFragment : BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -70,17 +67,6 @@ class SgPreferencesFragment : PreferenceFragmentCompat(),
                 setupNotificationSettings()
             }
         }
-    }
-
-    override fun onCreateRecyclerView(
-        inflater: LayoutInflater,
-        parent: ViewGroup,
-        savedInstanceState: Bundle?
-    ): RecyclerView {
-        val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState)
-        // Adjust preferences RecyclerView bottom padding to navigation bar height.
-        ThemeUtils.applyBottomPaddingForNavigationBar(recyclerView)
-        return recyclerView
     }
 
     private fun setupRootSettings() {
