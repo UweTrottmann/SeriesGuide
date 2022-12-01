@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.HighlightTools
 import com.battlelancer.seriesguide.util.SearchHistory
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -42,6 +43,10 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
         super.onCreate(savedInstanceState)
         binding = ActivityMoviesSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root)
+        ThemeUtils.configureAppBarForContentBelow(this)
+        binding.sgAppBarLayout.liftOnScrollTargetViewId =
+            MoviesSearchFragment.liftOnScrollTargetViewId
 
         val linkId = intent.getIntExtra(
             EXTRA_ID_LINK,
