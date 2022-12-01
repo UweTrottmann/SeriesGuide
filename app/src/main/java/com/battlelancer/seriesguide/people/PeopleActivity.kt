@@ -3,10 +3,12 @@ package com.battlelancer.seriesguide.people
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.ViewGroup
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityPeopleBinding
 import com.battlelancer.seriesguide.people.PeopleFragment.OnShowPersonListener
 import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Displays a list of people, and on wide enough screens person details.
@@ -42,7 +44,10 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
         super.onCreate(savedInstanceState)
         val binding = ActivityPeopleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root as ViewGroup)
         setupActionBar()
+        binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
+            PeopleFragment.liftOnScrollTargetViewId
 
         // If there is a pane shadow, this is using a two pane layout.
         isTwoPane = binding.viewPeopleShadowStart != null

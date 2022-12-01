@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
@@ -90,9 +91,8 @@ class PeopleFragment : Fragment() {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION))
         }
 
-        adapter = PeopleAdapter(context)
-        listView.adapter = adapter
-
+        ThemeUtils.applyBottomPaddingForNavigationBar(listView)
+        listView.isNestedScrollingEnabled = true
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             adapter.getItem(position)?.let {
                 onShowPersonListener.showPerson(it.tmdbId)
@@ -100,6 +100,9 @@ class PeopleFragment : Fragment() {
         }
 
         emptyView.setButtonClickListener { refresh() }
+
+        adapter = PeopleAdapter(context)
+        listView.adapter = adapter
 
         model.credits.observe(viewLifecycleOwner, Observer {
             setProgressVisibility(false)
@@ -188,6 +191,7 @@ class PeopleFragment : Fragment() {
     }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.listViewPeople
 
         /**
          * The serialization (saved instance state) Bundle key representing the activated item position.
