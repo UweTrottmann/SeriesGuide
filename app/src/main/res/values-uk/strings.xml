@@ -38,7 +38,7 @@
     <string name="action_stream">Переглянути або замовити</string>
     <string name="action_stream_info">Інформація про трансляцію або покупку</string>
     <string name="action_select_region">Виберіть регіон</string>
-    <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_include_any_watch_provider">Включаючи будь-які</string>
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Не вдалося зв\'язатися з %s. Спробуйте пізніше.</string>
     <string name="api_failed">Не вдалося: %s</string>
     <string name="copy_to_clipboard">Скопійовано до буфера обміну</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Показати дані, що не перенесені до TMDB. Деякі функції, як-от синхронізація з Trakt та Cloud може не працювати. Можливо, пошукайте замінник або виділіть цей серіал чи фільм натомість. Натисніть, щоб ознайомитись із подробицями.</string>
     <!-- Sharing -->
     <string name="share">Поділитись</string>
     <string name="share_show">Поділитись серіалом</string>
@@ -100,7 +100,7 @@
     <string name="no_translation_title">Не перекладено</string>
     <string name="no_spoilers">Деякі деталі приховані для запобігання спойлерам. Щоб вимкнути це використовуйте Налаштування.</string>
     <string name="format_source">Джерело: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Востаннє оновлено</string>
     <!-- Date and Time -->
     <string name="today">сьогодні</string>
     <string name="now">Сьогодні</string>
@@ -147,9 +147,9 @@
     <string name="action_shows_filter_unwatched">Непереглянуті</string>
     <string name="action_shows_filter_upcoming">Незабаром</string>
     <string name="action_shows_filter_hidden">Приховані</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_disabled">Вимкнено</string>
+    <string name="state_shows_filter_included">Включно</string>
+    <string name="state_shows_filter_excluded">Виключно</string>
     <string name="action_shows_make_all_visible">Зробити все приховане видимим</string>
     <string name="description_make_all_visible_format">Зробити всі приховані серіали (%s) видимими знову?</string>
     <string name="action_shows_sort">Сортувати серіали за</string>
@@ -158,12 +158,12 @@
     <string name="action_shows_sort_oldest_episode">Найстарішою серією</string>
     <string name="action_shows_sort_last_watched">Останнім переглядом</string>
     <string name="action_shows_sort_remaining">Залишилося серій</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">Статус</string>
     <string name="action_shows_sort_favorites">Улюблене спочатку</string>
     <string name="context_updateshow">Оновити</string>
     <string name="context_marknext">Переглянута наступна серія</string>
     <string name="action_episodes_switch_view">Змінити вигляд</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">До перегляду далі</string>
     <!-- History -->
     <string name="user_stream">Історія</string>
     <string name="recently_watched">Недавно переглянуті</string>
@@ -258,10 +258,10 @@
     <string name="action_movies_sort">Сортувати фільми</string>
     <string name="action_movies_sort_title">Назвою</string>
     <string name="action_movies_sort_release">Датою виходу</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Фільтрувати фільми</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не вдалося підрахувати статистику</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s завершених переглядів</string>
     <string name="shows_with_next">%s з новою серією</string>
     <string name="shows_continuing">%s продовжуються</string>
     <string name="episodes_watched">%s переглянуто</string>
@@ -299,15 +299,15 @@
     <string name="hexagon_signin">Увійти</string>
     <string name="hexagon_signout">Вийти</string>
     <string name="hexagon_setup_incomplete">Налаштування хмари SeriesGuide не було завершено.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Ваш обліковий запис не містить адреси електронної скриньки</string>
     <string name="hexagon_remove_account">Видалити обліковий запис</string>
     <string name="hexagon_remove_account_success">Обліковий запис видалено.</string>
     <string name="hexagon_remove_account_failure">Не вдалося видалити обліковий запис.</string>
     <string name="hexagon_remove_account_confirmation">Видалення облікового запису призведе до видалення всіх серіалів та фільмів з хмари SeriesGuide. Переконайтесь що видалили його і на інших підключених пристроях.</string>
     <string name="hexagon_api_queued">Надсилання до хмари SeriesGuide.</string>
     <string name="hexagon_signed_out">Вихід з SeriesGuide хмари.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Помилка входу (%s)</string>
+    <string name="hexagon_signin_google_only">Адреса електронної скриньки вимагає авторизації Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Надсилання до trakt.</string>
     <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
@@ -328,7 +328,7 @@
     <string name="connect">Підключитись</string>
     <string name="disconnect">Від\'єднатись</string>
     <string name="use_integrated_browser">Використовувати вбудований браузер</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Додати серіали чи фільми з Trakt</string>
     <string name="about_trakt">trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся. <a href="http://trakt.tv">Дізнатись більше</a></string>
     <!-- trakt ratings -->
     <string name="action_rate">Рейтинг</string>
@@ -421,11 +421,11 @@
     <string name="upcoming_upto_one_week">1 тижня</string>
     <string name="upcoming_upto_two_weeks">2 тижнів</string>
     <string name="upcoming_upto_one_month">1 місяця</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">усі</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Оформлення</string>
     <string name="pref_theme">Тема</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Використовувати типові кольори</string>
     <!-- Themes -->
     <string name="theme_app_follow_system">Використати значення за замовчуванням</string>
     <string name="theme_app_auto_battery">Увімкнути режим економії заряду акумулятора</string>
@@ -492,7 +492,7 @@
     <string name="pref_widget_opacity">Фон віджета</string>
     <string name="pref_widget_type">Тип віджета</string>
     <string name="pref_large_font">Використовувати великий шрифт</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_hide_watch_button">Приховати кнопку \"дивитися\"</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозорий</string>
     <string name="widget_background_25">25%</string>
@@ -544,5 +544,5 @@
     <string name="feedback_action_ok">Так, звісно</string>
     <string name="feedback_action_nothanks">Ні, дякую</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Бажаєте підтримати розробника?</string>
 </resources>

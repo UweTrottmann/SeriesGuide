@@ -124,7 +124,7 @@
     <string name="state_on_watchlist">Seurantalistalla</string>
     <string name="state_favorite">Suosikki</string>
     <!-- Shows -->
-    <string name="confirm_delete">Poista %s?</string>
+    <string name="confirm_delete">Poistetaanko %s?</string>
     <string name="delete_error">Ohjelman poistaminen ei onnistunut. Yritä myöhemmin uudelleen.</string>
     <string name="delete_show">Poista</string>
     <string name="no_nextepisode">seuraavaa jaksoa ei löytynyt</string>
@@ -516,7 +516,7 @@
     <string name="feedback_question_enjoy">Pidätkö SeriesGuidesta?</string>
     <string name="feedback_action_yes">Kyllä!</string>
     <string name="feedback_action_notreally">En oikeastaan</string>
-    <string name="feedback_question_rate_google">Arvostele se Google Playssä?</string>
+    <string name="feedback_question_rate_google">Haluatko arvostella sovelluksen Google Playssa?</string>
     <string name="feedback_question_rate_amazon">Arvostele se Amazonissa?</string>
     <string name="feedback_question_feedback">Kerro minulle miten sitä voisi parantaa?</string>
     <string name="feedback_action_ok">Ok, toki</string>
