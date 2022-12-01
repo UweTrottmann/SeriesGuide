@@ -14,6 +14,8 @@ Version 66
 ----------
 *in development*
 
+* 🔧 Show filters: change option to remove all filters to instead restore defaults (exclude hidden).
+
 #### 66.0.1 🧪
 *2022-10-21*
 

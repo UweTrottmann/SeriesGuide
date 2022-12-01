@@ -156,7 +156,7 @@
     <string name="unhidden">Show is visible again</string>
     <string name="action_shows_add">Add show</string>
     <string name="action_shows_filter">Filter shows</string>
-    <string name="empty_filter">Remove all filters</string>
+    <string name="empty_filter">Reset filters</string>
     <string name="action_shows_filter_favorites">Favorites</string>
     <string name="action_shows_filter_unwatched">Unwatched</string>
     <string name="action_shows_filter_upcoming">Upcoming</string>

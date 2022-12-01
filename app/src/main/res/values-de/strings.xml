@@ -140,7 +140,7 @@
     <string name="unhidden">Serie wieder sichtbar</string>
     <string name="action_shows_add">Serie hinzufügen</string>
     <string name="action_shows_filter">Serien filtern</string>
-    <string name="empty_filter">Alle Filter entfernen</string>
+    <string name="empty_filter">Filter zurücksetzen</string>
     <string name="action_shows_filter_favorites">Favoriten</string>
     <string name="action_shows_filter_unwatched">Nicht angesehen</string>
     <string name="action_shows_filter_upcoming">Demnächst</string>

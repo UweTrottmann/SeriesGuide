@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.databinding.DialogShowsDistillationBinding
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
@@ -41,7 +42,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         val tabsAdapter = ShowsDistillationPageAdapter(
             requireContext(),
-            FilterShowsView.ShowFilter.fromSettings(requireContext()),
+            ShowFilter.fromSettings(requireContext()),
             filterListener,
             SortShowsView.ShowSortOrder.fromSettings(requireContext()),
             sortOrderListener
@@ -62,19 +63,8 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
     }
 
     private val filterListener = object : FilterShowsView.FilterListener {
-        override fun onFilterUpdate(filter: FilterShowsView.ShowFilter) {
-            // save new setting
-            ShowsDistillationSettings.saveFilter(
-                context!!,
-                filter.isFilterFavorites,
-                filter.isFilterUnwatched,
-                filter.isFilterUpcoming,
-                filter.isFilterHidden,
-                filter.isFilterContinuing
-            )
-
-            // broadcast new filter
-            ShowsDistillationSettings.filterLiveData.postValue(filter)
+        override fun onFilterUpdate(filter: ShowFilter) {
+            ShowsDistillationSettings.saveFilter(requireContext(), filter)
         }
 
         override fun onConfigureUpcomingRangeClick() {

@@ -30,14 +30,12 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider.Companion.notif
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.settings.AdvancedSettings
-import com.battlelancer.seriesguide.shows.FilterShowsView.ShowFilter
-import com.battlelancer.seriesguide.shows.FilterShowsView.ShowFilter.Companion.allDisabled
 import com.battlelancer.seriesguide.shows.FirstRunView.ButtonEvent
 import com.battlelancer.seriesguide.shows.FirstRunView.ButtonType
 import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.getSortQuery2
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.saveFilter
 import com.battlelancer.seriesguide.shows.SortShowsView.ShowSortOrder
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
@@ -86,15 +84,7 @@ class ShowsFragment : Fragment() {
         emptyViewFilter = v.findViewById(R.id.emptyViewShowsFilter)
         ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
         emptyViewFilter.setOnClickListener {
-            ShowsDistillationSettings.filterLiveData.setValue(allDisabled())
-            saveFilter(
-                requireContext(),
-                null,
-                null,
-                null,
-                null,
-                null
-            )
+            ShowsDistillationSettings.saveFilter(requireContext(), ShowFilter.default())
         }
         return v
     }
