@@ -20,10 +20,14 @@ abstract class BaseThemeActivity : AppCompatActivity() {
         return SeriesGuidePreferences.THEME
     }
 
+    protected open fun configureEdgeToEdge() {
+        ThemeUtils.configureEdgeToEdge(window)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeUtils.setTheme(this, getCustomTheme())
         super.onCreate(savedInstanceState)
-        ThemeUtils.configureEdgeToEdge(window)
+        configureEdgeToEdge()
     }
 
     /**

@@ -218,7 +218,7 @@
     </style>
 
     <style name="ThemeOverlay.SeriesGuide.Toolbar.Gradient" parent="ThemeOverlay.Material3.Toolbar.Surface">
-        <item name="colorControlNormal">@color/sg_on_dark_emphasis_medium</item>
+        <item name="colorControlNormal">@color/sg_white</item>
         <item name="colorControlHighlight">@color/sg_ripple_material_dark</item>
         <item name="actionMenuTextColor">@color/sg_on_dark_emphasis_medium</item>
     </style>

@@ -105,7 +105,7 @@ object ThemeUtils {
      * button mode automatically, however, the system adds an almost opaque scrim so its color is
      * barely noticeable.
      */
-    fun configureEdgeToEdge(window: Window) {
+    fun configureEdgeToEdge(window: Window, forceDarkStatusBars: Boolean = false) {
         // https://developer.android.com/develop/ui/views/layout/edge-to-edge
         // Let the app draw from edge to edge (below status and navigation bar).
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -125,7 +125,11 @@ object ThemeUtils {
         // If a light color, tell the system to color icons accordingly.
         setLightStatusBar(
             window,
-            isUsingLightSystemBar(statusBarColor, isLightBackground)
+            if (forceDarkStatusBars) {
+                false
+            } else {
+                isUsingLightSystemBar(statusBarColor, isLightBackground)
+            }
         )
         // Do the same check for nav bars
         // (only difference: transparent nav bars supported since O_MR1+).

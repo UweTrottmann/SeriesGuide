@@ -63,6 +63,8 @@ class PersonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
+            // Note: this currently does not add top padding when the person is shown
+            // in single pane view in landscape.
             ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewPerson)
 
             buttonPersonTmdbLink.setOnClickListener {
