@@ -47,6 +47,7 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
         // If there is a pane shadow, this is using a two pane layout.
         isTwoPane = binding.viewPeopleShadowStart != null
 
+        val peopleFragment: PeopleFragment
         if (savedInstanceState == null) {
             // Check if this should directly show a person.
             val personTmdbId = intent.getIntExtra(PersonFragment.ARG_PERSON_TMDB_ID, -1)
@@ -61,15 +62,17 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
                 }
             }
 
-            val f = PeopleFragment()
-            f.arguments = intent.extras
-            // In two-pane mode, list items should be activated when touched.
-            if (isTwoPane) {
-                f.setActivateOnItemClick()
-            }
+            peopleFragment = PeopleFragment()
+            peopleFragment.arguments = intent.extras
             supportFragmentManager.beginTransaction()
-                .add(R.id.containerPeople, f, "people-list")
+                .add(R.id.containerPeople, peopleFragment, "people-list")
                 .commit()
+        } else {
+            peopleFragment =supportFragmentManager.findFragmentById(R.id.containerPeople) as PeopleFragment
+        }
+        // In two-pane mode, list items should be activated when touched.
+        if (isTwoPane) {
+            peopleFragment.setActivateOnItemClick()
         }
     }
 
