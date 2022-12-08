@@ -14,7 +14,7 @@ Version 66
 ----------
 *in development*
 
-* 🔨 Appearance: draw behind status and navigation bar whenever possible.
+* 🔧 Appearance: draw behind status and navigation bar whenever possible.
 * 🔧 Show filters: change option to remove all filters to instead restore defaults (exclude hidden).
 * 📝 Latest user interface translations from Crowdin.
 
