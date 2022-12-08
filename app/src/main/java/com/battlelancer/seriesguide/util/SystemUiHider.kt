@@ -1,229 +1,185 @@
+package com.battlelancer.seriesguide.util
 
-package com.battlelancer.seriesguide.util;
-
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.view.View;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import android.view.View
+import android.view.View.OnSystemUiVisibilityChangeListener
+import androidx.appcompat.app.AppCompatActivity
+import com.battlelancer.seriesguide.util.SystemUiHider.Companion.FLAG_FULLSCREEN
+import com.battlelancer.seriesguide.util.SystemUiHider.Companion.FLAG_HIDE_NAVIGATION
 
 /**
  * A utility class that helps with showing and hiding system UI such as the
  * status bar and navigation/system bar on API 11+ devices.
- * <p>
- * For more on system bars, see <a href=
- * "http://developer.android.com/design/get-started/ui-overview.html#system-bars"
- * > System Bars</a>.
  *
- * @see android.view.View#setSystemUiVisibility(int)
- * @see android.view.WindowManager.LayoutParams#FLAG_FULLSCREEN
+ * For more on system bars, see [System Bars](http://developer.android.com/design/get-started/ui-overview.html#system-bars).
+ *
+ * @see android.view.View.setSystemUiVisibility
+ * @see android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
  */
-public class SystemUiHider {
-
-    /**
-     * When this flag is set, {@link #show()} and {@link #hide()} will toggle
-     * the visibility of the status bar. If there is a navigation bar, show and
-     * hide will toggle low profile mode.
-     */
-    public static final int FLAG_FULLSCREEN = 0x2;
-
-    /**
-     * When this flag is set, {@link #show()} and {@link #hide()} will toggle
-     * the visibility of the navigation bar, if it's present on the device and
-     * the device allows hiding it. In cases where the navigation bar is present
-     * but cannot be hidden, show and hide will toggle low profile mode.
-     */
-    public static final int FLAG_HIDE_NAVIGATION = FLAG_FULLSCREEN | 0x4;
-
+class SystemUiHider private constructor(
     /**
      * The activity associated with this UI hider object.
      */
-    protected AppCompatActivity activity;
-
+    private val activity: AppCompatActivity,
     /**
-     * The view on which {@link View#setSystemUiVisibility(int)} will be called.
+     * The view on which [View.setSystemUiVisibility] will be called.
      */
-    protected View anchorView;
-
+    private val anchorView: View,
     /**
      * The current UI hider flags.
      *
-     * @see #FLAG_FULLSCREEN
-     * @see #FLAG_HIDE_NAVIGATION
+     * @see FLAG_FULLSCREEN
+     * @see FLAG_HIDE_NAVIGATION
      */
-    protected int flags;
-
+    flags: Int
+) {
     /**
-     * Flags for {@link View#setSystemUiVisibility(int)} to use when showing the
+     * Flags for [View.setSystemUiVisibility] to use when showing the
      * system UI.
      */
-    private int showFlags;
+    private var showFlags: Int
 
     /**
-     * Flags for {@link View#setSystemUiVisibility(int)} to use when hiding the
+     * Flags for [View.setSystemUiVisibility] to use when hiding the
      * system UI.
      */
-    private int hideFlags;
+    private var hideFlags: Int
 
     /**
      * Flags to test against the first parameter in
-     * {@link android.view.View.OnSystemUiVisibilityChangeListener#onSystemUiVisibilityChange(int)}
+     * [android.view.View.OnSystemUiVisibilityChangeListener.onSystemUiVisibilityChange]
      * to determine the system UI visibility state.
      */
-    private int testFlags;
+    private var testFlags: Int
 
     /**
      * Whether or not the system UI is currently visible. This is cached from
-     * {@link android.view.View.OnSystemUiVisibilityChangeListener}.
+     * [android.view.View.OnSystemUiVisibilityChangeListener].
      */
-    private boolean visible = true;
+    var isVisible = true
+        private set
 
     /**
-     * The current visibility callback.
+     * A callback, to be triggered when the system UI visibility changes.
      */
-    protected OnVisibilityChangeListener onVisibilityChangeListener = sDummyListener;
+    var onVisibilityChangeListener: OnVisibilityChangeListener? = null
 
-    /**
-     * Creates and returns an instance of {@link SystemUiHider}.
-     *
-     * @param activity The activity whose window's system UI should be controlled by this class.
-     * @param anchorView The view on which {@link View#setSystemUiVisibility(int)} will be called.
-     * @param flags Either 0 or any combination of {@link #FLAG_FULLSCREEN} and {@link
-     * #FLAG_HIDE_NAVIGATION}.
-     */
-    public static SystemUiHider getInstance(AppCompatActivity activity, View anchorView,
-            int flags) {
-        return new SystemUiHider(activity, anchorView, flags);
-    }
+    init {
+        showFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        hideFlags = View.SYSTEM_UI_FLAG_LOW_PROFILE or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        testFlags = View.SYSTEM_UI_FLAG_LOW_PROFILE
 
-    /**
-     * Constructor not intended to be called by clients. Use
-     * {@link SystemUiHider#getInstance} to obtain an instance.
-     */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private SystemUiHider(AppCompatActivity activity, View anchorView, int flags) {
-        this.activity = activity;
-        this.anchorView = anchorView;
-        this.flags = flags;
-
-        showFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        hideFlags = View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        testFlags = View.SYSTEM_UI_FLAG_LOW_PROFILE;
-
-        if ((this.flags & FLAG_FULLSCREEN) == FLAG_FULLSCREEN) {
+        if (flags and FLAG_FULLSCREEN == FLAG_FULLSCREEN) {
             // If the client requested fullscreen, add flags relevant to hiding
-            // the status bar. Note that some of these constants are new as of
-            // API 16 (Jelly Bean). It is safe to use them, as they are inlined
-            // at compile-time and do nothing on pre-Jelly Bean devices.
-            showFlags |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            hideFlags |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            // the status bar.
+            showFlags = showFlags or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            hideFlags =
+                hideFlags or (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_FULLSCREEN)
         }
 
-        if ((this.flags & FLAG_HIDE_NAVIGATION) == FLAG_HIDE_NAVIGATION) {
+        if (flags and FLAG_HIDE_NAVIGATION == FLAG_HIDE_NAVIGATION) {
             // If the client requested hiding navigation, add relevant flags.
-            showFlags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-            hideFlags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-            testFlags |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+            showFlags = showFlags or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            hideFlags = hideFlags or (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+            testFlags = testFlags or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         }
     }
 
     /**
-     * Sets up the system UI hider. Should be called from {@link AppCompatActivity#onCreate}.
+     * Sets up the system UI hider. Should be called from [AppCompatActivity.onCreate].
      */
-    public void setup() {
-        anchorView.setOnSystemUiVisibilityChangeListener(systemUiVisibilityChangeListener);
-    }
-
-    /**
-     * Returns whether or not the system UI is visible.
-     */
-    public boolean isVisible() {
-        return visible;
+    fun setup() {
+        anchorView.setOnSystemUiVisibilityChangeListener(systemUiVisibilityChangeListener)
     }
 
     /**
      * Hide the system UI.
      */
-    public void hide() {
-        anchorView.setSystemUiVisibility(hideFlags);
+    fun hide() {
+        anchorView.systemUiVisibility = hideFlags
     }
 
     /**
      * Show the system UI.
      */
-    public void show() {
-        anchorView.setSystemUiVisibility(showFlags);
+    fun show() {
+        anchorView.systemUiVisibility = showFlags
     }
 
     /**
      * Toggle the visibility of the system UI.
      */
-    public void toggle() {
-        if (isVisible()) {
-            hide();
+    fun toggle() {
+        if (isVisible) {
+            hide()
         } else {
-            show();
+            show()
         }
     }
-
-    /**
-     * Registers a callback, to be triggered when the system UI visibility
-     * changes.
-     */
-    public void setOnVisibilityChangeListener(OnVisibilityChangeListener listener) {
-        if (listener == null) {
-            listener = sDummyListener;
-        }
-
-        onVisibilityChangeListener = listener;
-    }
-
-    /**
-     * A dummy no-op callback for use when there is no other listener set.
-     */
-    private static OnVisibilityChangeListener sDummyListener = visible -> {
-    };
 
     /**
      * A callback interface used to listen for system UI visibility changes.
      */
-    public interface OnVisibilityChangeListener {
+    interface OnVisibilityChangeListener {
         /**
          * Called when the system UI visibility has changed.
          *
          * @param visible True if the system UI is visible.
          */
-        void onVisibilityChange(boolean visible);
+        fun onVisibilityChange(visible: Boolean)
     }
 
-    private View.OnSystemUiVisibilityChangeListener systemUiVisibilityChangeListener
-            = new View.OnSystemUiVisibilityChangeListener() {
-        @Override
-        public void onSystemUiVisibilityChange(int vis) {
-            // Test against testFlags to see if the system UI is visible.
-            ActionBar supportActionBar = activity.getSupportActionBar();
-            if ((vis & testFlags) != 0) {
-                // As we use the appcompat toolbar as an action bar, we must manually hide it
-                if (supportActionBar != null) {
-                    supportActionBar.hide();
+    private val systemUiVisibilityChangeListener: OnSystemUiVisibilityChangeListener =
+        object : OnSystemUiVisibilityChangeListener {
+            override fun onSystemUiVisibilityChange(vis: Int) {
+                // Test against testFlags to see if the system UI is visible.
+                val supportActionBar = activity.supportActionBar
+                if (vis and testFlags != 0) {
+                    // As we use the appcompat toolbar as an action bar, we must manually hide it
+                    supportActionBar?.hide()
+
+                    // Trigger the registered listener and cache the visibility state.
+                    onVisibilityChangeListener?.onVisibilityChange(false)
+                    isVisible = false
+                } else {
+                    anchorView.systemUiVisibility = showFlags
+
+                    // As we use the appcompat toolbar as an action bar, we must manually show it
+                    supportActionBar?.show()
+
+                    // Trigger the registered listener and cache the visibility state.
+                    onVisibilityChangeListener?.onVisibilityChange(true)
+                    isVisible = true
                 }
-
-                // Trigger the registered listener and cache the visibility state.
-                onVisibilityChangeListener.onVisibilityChange(false);
-                visible = false;
-            } else {
-                anchorView.setSystemUiVisibility(showFlags);
-
-                // As we use the appcompat toolbar as an action bar, we must manually show it
-                if (supportActionBar != null) {
-                    supportActionBar.show();
-                }
-
-                // Trigger the registered listener and cache the visibility state.
-                onVisibilityChangeListener.onVisibilityChange(true);
-                visible = true;
             }
         }
-    };
+
+    companion object {
+        /**
+         * When this flag is set, [show] and [hide] will toggle
+         * the visibility of the status bar. If there is a navigation bar, show and
+         * hide will toggle low profile mode.
+         */
+        const val FLAG_FULLSCREEN = 0x2
+
+        /**
+         * When this flag is set, [show] and [hide] will toggle
+         * the visibility of the navigation bar, if it's present on the device and
+         * the device allows hiding it. In cases where the navigation bar is present
+         * but cannot be hidden, show and hide will toggle low profile mode.
+         */
+        const val FLAG_HIDE_NAVIGATION = FLAG_FULLSCREEN or 0x4
+
+        /**
+         * Creates and returns an instance of [SystemUiHider].
+         *
+         * @param activity The activity whose window's system UI should be controlled by this class.
+         * @param anchorView The view on which [View.setSystemUiVisibility] will be called.
+         * @param flags Either 0 or any combination of [FLAG_FULLSCREEN] and [FLAG_HIDE_NAVIGATION].
+         */
+        fun getInstance(
+            activity: AppCompatActivity, anchorView: View,
+            flags: Int
+        ): SystemUiHider = SystemUiHider(activity, anchorView, flags)
+    }
 }
