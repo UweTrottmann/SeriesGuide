@@ -10,14 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Add enough bottom padding so last item is above powered by text. -->
         <GridView
             android:id="@+id/gridViewAdd"
             style="@style/Widget.SeriesGuide.Grid"
-            android:listSelector="@color/transparent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:columnWidth="@dimen/showgrid_columnWidth"
+            android:listSelector="@color/transparent"
             android:numColumns="auto_fit"
+            android:paddingBottom="40dp"
             android:stretchMode="columnWidth"
             tools:listitem="@layout/item_show" />
 
@@ -37,11 +40,13 @@
         android:layout_gravity="center" />
 
     <TextView
-        android:id="@+id/poweredby"
+        android:id="@+id/textViewPoweredByAddShowTrakt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:background="@color/protection_dark"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/background_protection_round"
         android:padding="@dimen/default_padding"
         android:text="@string/powered_by_trakt"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"

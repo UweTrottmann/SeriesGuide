@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Person
@@ -62,6 +63,10 @@ class PersonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
+            // Note: this currently does not add top padding when the person is shown
+            // in single pane view in landscape.
+            ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewPerson)
+
             buttonPersonTmdbLink.setOnClickListener {
                 person?.id?.let { TmdbTools.openTmdbPerson(activity, it) }
             }

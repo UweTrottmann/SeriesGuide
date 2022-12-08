@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentAboutBinding
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 
 /**
@@ -34,6 +35,8 @@ class AboutPreferencesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding!!.apply {
+            ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewAbout)
+
             // display version number and database version
             textViewAboutVersion.text = Utils.getVersionString(activity)
 

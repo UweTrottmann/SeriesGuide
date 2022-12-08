@@ -38,6 +38,7 @@
         <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
         <item name="android:colorBackground">@color/sg_color_background_dark</item>
         <item name="colorOnBackground">@color/md_theme_dark_onSurface</item>
+        <!-- This should match colorBackground. -->
         <item name="colorSurface">@color/sg_color_background_dark</item>
         <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
         <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
@@ -67,8 +68,8 @@
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
 
-        <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
         <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
 
         <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
@@ -109,8 +110,8 @@
         <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
         <item name="android:colorBackground">@color/sg_color_background_light</item>
         <item name="colorOnBackground">@color/sg_color_background_dark</item>
-        <!-- This must not match sgColorTopAppBar or AppBarLayout uses color to elevate itself. -->
-        <item name="colorSurface">@color/sg_white</item>
+        <!-- This should match colorBackground. -->
+        <item name="colorSurface">@color/sg_color_background_light</item>
         <item name="colorOnSurface">@color/sg_color_background_dark</item>
         <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
@@ -135,13 +136,12 @@
         <item name="sgColorDivider">@color/sg_black_10</item>
         <item name="sgColorShadow">@color/sg_black_7</item>
         <item name="sgColorStatusBarOverlay">@color/sg_white_87</item>
-        <!-- This must not match colorSurface or AppBarLayout uses color to elevate itself. -->
         <item name="sgColorTopAppBar">@color/sg_color_background</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
         <item name="dialogTheme">@style/ThemeOverlay.Material3.Dialog</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
 
-        <item name="appBarLayoutStyle">@style/Widget.SeriesGuide.AppBarLayout</item>
         <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
 
         <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>

@@ -17,7 +17,6 @@ import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.battlelancer.seriesguide.BuildConfig
@@ -35,6 +34,7 @@ import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.streaming.StreamingSearchConfigureDialog
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
+import com.battlelancer.seriesguide.ui.BasePreferencesFragment
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
@@ -48,7 +48,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SgPreferencesFragment : PreferenceFragmentCompat(),
+class SgPreferencesFragment : BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

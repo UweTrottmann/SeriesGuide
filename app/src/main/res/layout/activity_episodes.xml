@@ -7,12 +7,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- This app bar scrolls out of screen when scrolling up. -->
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/sgAppBarLayout"
         style="@style/Widget.SeriesGuide.AppBarLayout.Transparent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
-        <include layout="@layout/toolbar" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/sgToolbar"
+            style="@style/Widget.SeriesGuide.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways|snap" />
 
         <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
             android:id="@+id/tabsEpisodes"

@@ -54,4 +54,8 @@ class MoviesCollectionFragment : MoviesBaseFragment() {
             MoviesActivityImpl.TAB_POSITION_COLLECTION_DEFAULT
         }
     }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.gridViewMoviesCollection
+    }
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import androidx.fragment.app.viewModels
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentSearchBinding
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.util.TabClickEvent
@@ -95,6 +96,8 @@ class EpisodeSearchFragment : BaseSearchFragment() {
     }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.gridViewSearchEpisodes
+
         const val ARG_SHOW_TITLE = "title"
     }
 }

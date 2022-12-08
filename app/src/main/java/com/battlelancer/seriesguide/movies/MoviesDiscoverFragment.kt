@@ -172,4 +172,8 @@ class MoviesDiscoverFragment : Fragment() {
         LoaderManager.getInstance(this@MoviesDiscoverFragment)
             .restartLoader(0, null, nowPlayingLoaderCallbacks)
     }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewMoviesDiscover
+    }
 }

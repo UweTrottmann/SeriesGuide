@@ -5,25 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/top_app_bar_scrolling_tabs" />
+
+    <!-- Counter-intuitively the image view must come after the app bar so the app bar remains
+    transparent while not scrolled. -->
     <ImageView
         android:id="@+id/imageViewOverviewBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:scaleType="centerCrop" />
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/toolbar" />
-
-        <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
-            android:id="@+id/tabsOverview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pagerOverview"

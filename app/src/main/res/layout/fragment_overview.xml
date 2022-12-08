@@ -8,12 +8,12 @@
     android:animateLayoutChanges="true"
     tools:context="com.battlelancer.seriesguide.shows.overview.OverviewFragment">
 
-    <!-- Enable nested scrolling for Lollipop and up to scroll app bar. -->
-    <ScrollView
+    <!-- Enable nested scrolling to scroll app bar, fix fling to top registering. -->
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollViewOverview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true"
+        android:clipToPadding="false"
         tools:ignore="UnusedAttribute,UselessParent">
 
         <LinearLayout
@@ -32,8 +32,8 @@
                     android:id="@+id/overviewShowStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_padding"
                     android:layout_marginStart="@dimen/large_padding"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     app:layout_constraintEnd_toStartOf="@id/buttonOverviewFavoriteShow"
                     app:layout_constraintStart_toStartOf="parent"
@@ -325,6 +325,6 @@
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

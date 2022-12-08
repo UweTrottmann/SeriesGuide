@@ -16,6 +16,7 @@ import android.widget.TextView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportNoBend
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import timber.log.Timber
 
@@ -33,6 +34,7 @@ abstract class BaseOAuthActivity : BaseActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_oauth)
+        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutOauth))
         setupActionBar()
 
         bindViews()
@@ -58,6 +60,8 @@ abstract class BaseOAuthActivity : BaseActivity() {
     }
 
     private fun bindViews() {
+        ThemeUtils.applyBottomPaddingForNavigationBar(findViewById(R.id.frameLayoutOauth))
+
         buttonContainer = findViewById(R.id.containerOauthButtons)
         progressBar = findViewById(R.id.progressBarOauth)
         textViewMessage = buttonContainer.findViewById(R.id.textViewOauthMessage)

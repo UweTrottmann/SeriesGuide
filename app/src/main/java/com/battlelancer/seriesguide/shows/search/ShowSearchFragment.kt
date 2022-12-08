@@ -142,4 +142,8 @@ class ShowSearchFragment : BaseSearchFragment() {
                 .storeIsFavorite(showId, isFavorite)
         }
     }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.gridViewSearchShows
+    }
 }

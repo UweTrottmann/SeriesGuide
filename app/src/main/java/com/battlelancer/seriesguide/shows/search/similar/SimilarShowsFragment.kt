@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.seriesguide.common.SingleLiveEvent
 import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
@@ -58,6 +59,9 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        ThemeUtils.applyBottomPaddingForNavigationBar(recyclerView)
+        ThemeUtils.applyBottomMarginForNavigationBar(view.findViewById(R.id.textViewPoweredByShowsSimilar))
+
         swipeRefreshLayout.apply {
             ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, this)
             setOnRefreshListener { loadSimilarShows() }
@@ -141,6 +145,8 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewShowsSimilar
+
         private const val ARG_SHOW_TMDB_ID = "ARG_SHOW_TMDB_ID"
         private const val ARG_SHOW_TITLE = "ARG_SHOW_TITLE"
         private const val MENU_ITEM_SEARCH_ID = 1

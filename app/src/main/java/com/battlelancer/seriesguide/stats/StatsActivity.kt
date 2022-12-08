@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseTopActivity
+import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Hosts fragments displaying statistics.
@@ -13,6 +14,7 @@ class StatsActivity : BaseTopActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats)
+        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutStats))
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_stats)
 

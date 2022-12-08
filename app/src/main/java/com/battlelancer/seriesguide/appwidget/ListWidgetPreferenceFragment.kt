@@ -16,9 +16,9 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.BasePreferencesFragment
 import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.util.Utils
 
@@ -26,7 +26,7 @@ import com.battlelancer.seriesguide.util.Utils
  * Shows settings fragment for a specific app widget, hosted inside a [ListWidgetPreferenceActivity]
  * activity.
  */
-class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
+class ListWidgetPreferenceFragment : BasePreferencesFragment() {
 
     private lateinit var typePref: ListPreference
     private lateinit var showsSortPref: ListPreference

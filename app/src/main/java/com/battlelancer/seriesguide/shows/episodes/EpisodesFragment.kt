@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.safeShow
 
 /**
@@ -85,6 +86,8 @@ class EpisodesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.also { binding ->
+            ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewEpisodes)
+
             binding.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
             binding.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
 

@@ -1,15 +1,32 @@
-package com.battlelancer.seriesguide.extensions
+package com.battlelancer.seriesguide.ui
 
 import android.content.SharedPreferences
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
- * A [android.preference.PreferenceFragment] which has a helper method to easily display the
- * current settings value of a [android.preference.ListPreference].
+ * A [androidx.preference.PreferenceFragmentCompat] which has a helper method to easily display the
+ * current settings value of a [android.preference.ListPreference]. Also configures the RecyclerView
+ * displaying the settings to adjust bottom padding for the navigation bar.
  */
-abstract class BaseSettingsFragment : PreferenceFragmentCompat() {
+abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
+
+    override fun onCreateRecyclerView(
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        savedInstanceState: Bundle?
+    ): RecyclerView {
+        val recyclerView = super.onCreateRecyclerView(inflater, parent, savedInstanceState)
+        // Adjust preferences RecyclerView bottom padding to navigation bar height.
+        ThemeUtils.applyBottomPaddingForNavigationBar(recyclerView)
+        return recyclerView
+    }
 
     companion object {
 

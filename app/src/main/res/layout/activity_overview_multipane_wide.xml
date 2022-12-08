@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayoutOverview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <include
-        android:id="@+id/sgToolbar"
-        layout="@layout/toolbar_elevated"
+        layout="@layout/top_app_bar_fixed"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,55 +34,50 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVerticalLeft"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/sgAppBarLayout" />
 
-    <ImageView
-        android:id="@+id/imageViewOverviewBackground"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVerticalLeft"
-        app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVerticalRight"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar"
-        tools:src="#66ff0099" />
-
+    <!-- Wraps card, in code bottom padding is applied to avoid system navigation bar. -->
     <FrameLayout
-        android:id="@+id/fragment_overview"
+        android:id="@+id/wrapperOverview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVerticalLeft"
         app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVerticalRight"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/sgAppBarLayout">
 
-    <View
-        android:id="@+id/viewOverviewShadowStart"
-        android:layout_width="4dp"
-        android:layout_height="0dp"
-        android:background="@drawable/sg_shadow_right_left"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVerticalLeft"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardOverview"
+            style="?attr/materialCardViewFilledStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
 
-    <View
-        android:id="@+id/viewOverviewShadowEnd"
-        android:layout_width="4dp"
-        android:layout_height="0dp"
-        android:background="@drawable/sg_shadow_left_right"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVerticalRight"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+            <ImageView
+                android:id="@+id/imageViewOverviewBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop" />
+
+            <FrameLayout
+                android:id="@+id/fragment_overview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fragment_seasons"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_below="@id/sgToolbar"
+        android:layout_below="@id/sgAppBarLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVerticalRight"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sgToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/sgAppBarLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

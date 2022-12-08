@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsBinding
 import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
 import com.battlelancer.seriesguide.ui.SearchActivity.Companion.newIntent
+import com.battlelancer.seriesguide.util.ThemeUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -29,6 +30,8 @@ class ConnectTraktCredentialsFragment : Fragment() {
     ): View {
         val binding = FragmentConnectTraktCredentialsBinding.inflate(inflater, container, false)
             .also { binding = it }
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewTraktCredentials)
 
         // make learn more link clickable
         binding.textViewTraktAbout.movementMethod = LinkMovementMethod.getInstance()

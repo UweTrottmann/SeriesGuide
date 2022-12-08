@@ -7,12 +7,14 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.preference.PreferenceManager
+import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.databinding.ActivityListsBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.safeShow
@@ -31,16 +33,19 @@ open class ListsActivityImpl : BaseTopActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityListsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root)
+        ThemeUtils.restoreDefaultWindowInsetsBehavior(binding.viewPagerLists)
+        ThemeUtils.configureAppBarForContentBelow(this)
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_lists)
 
         setupViews()
-        setupSyncProgressBar(R.id.progressBarTabs)
+        setupSyncProgressBar(R.id.sgProgressBar)
 
         viewModel.listsLiveData.observe(this) { items ->
             listsAdapter.updateItems(items)
             // update tabs
-            binding.tabLayoutLists.setViewPager2(binding.viewPagerLists) { position ->
+            binding.sgAppBarLayout.sgTabLayout.setViewPager2(binding.viewPagerLists) { position ->
                 items[position].name
             }
             if (!viewModel.hasRestoredLastListsTabPosition) {
@@ -58,12 +63,25 @@ open class ListsActivityImpl : BaseTopActivity() {
 
         binding.viewPagerLists.adapter = listsAdapter
 
-        binding.tabLayoutLists.setDefaultStyle()
-        binding.tabLayoutLists.setOnTabClickListener { position: Int ->
+        val tabLayout = binding.sgAppBarLayout.sgTabLayout
+        tabLayout.setDefaultStyle()
+        tabLayout.setOnTabClickListener { position: Int ->
             if (binding.viewPagerLists.currentItem == position) {
                 showListManageDialog(position)
             }
         }
+
+        // This is a workaround to avoid the app bar color flickering when scrolling,
+        // however, when switching to another tab it will still briefly flicker when starting
+        // to scroll up. Getting and setting the RecyclerView directly on page change makes no
+        // difference.
+        binding.viewPagerLists.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
+                    SgListFragment.liftOnScrollTargetViewId
+            }
+        })
     }
 
     override fun onPause() {
@@ -199,7 +217,7 @@ open class ListsActivityImpl : BaseTopActivity() {
     }
 
     override val snackbarParentView: View
-        get() = binding.rootLayoutLists
+        get() = binding.coordinatorLayoutLists
 
     companion object {
         const val LISTS_REORDER_LOADER_ID = 2

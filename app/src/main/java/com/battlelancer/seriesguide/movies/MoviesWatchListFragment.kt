@@ -59,4 +59,8 @@ class MoviesWatchListFragment : MoviesBaseFragment() {
         super.onDestroyView()
         binding = null
     }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.gridViewMoviesWatchlist
+    }
 }

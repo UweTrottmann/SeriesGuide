@@ -6,15 +6,18 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
-import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
+import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.ui.SinglePaneActivity
 import com.battlelancer.seriesguide.util.TaskManager
 
 class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_singlepane)
+        val binding = SinglePaneActivity.onCreateFor(this)
+        binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
+            SimilarShowsFragment.liftOnScrollTargetViewId
         setupActionBar()
 
         val showTmdbId = intent.getIntExtra(EXTRA_SHOW_TMDB_ID, 0)
@@ -28,9 +31,9 @@ class SimilarShowsActivity : BaseActivity(), AddShowDialogFragment.OnAddShowList
             addFragmentWithSimilarShows(showTmdbId, showTitle)
         }
 
-        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this, {
+        SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {
             addFragmentWithSimilarShows(it.tmdbId, it.title, true)
-        })
+        }
     }
 
     override fun setupActionBar() {

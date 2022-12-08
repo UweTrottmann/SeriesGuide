@@ -12,18 +12,9 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include layout="@layout/toolbar_progress" />
-
-            <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
-                android:id="@+id/tabLayoutMovies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.appbar.AppBarLayout>
+        <include
+            android:id="@+id/sgAppBarLayout"
+            layout="@layout/top_app_bar_scrolling_tabs_progress" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPagerMovies"
@@ -37,7 +28,6 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_navigation_menu" />
 

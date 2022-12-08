@@ -27,6 +27,7 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -71,6 +72,7 @@ class SeasonsFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding!!.recyclerViewSeasons)
 
         adapter = SeasonsAdapter(
             requireContext(),
@@ -369,6 +371,7 @@ class SeasonsFragment() : Fragment() {
     }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewSeasons
 
         private const val ARG_LONG_SHOW_ROW_ID = "show_id"
 

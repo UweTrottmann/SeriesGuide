@@ -5,19 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewAbout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         tools:ignore="UselessParent">
 
         <LinearLayout
             style="@style/Page.Centered"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/large_padding"
             android:paddingLeft="@dimen/keyline"
+            android:paddingTop="@dimen/large_padding"
             android:paddingRight="@dimen/keyline"
-            android:paddingTop="@dimen/large_padding">
+            android:paddingBottom="@dimen/large_padding">
 
             <TextView
                 android:id="@+id/textViewAboutTitle"
@@ -99,6 +101,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

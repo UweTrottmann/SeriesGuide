@@ -21,6 +21,7 @@ import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.tasks.AddShowToWatchlistTask
 import com.battlelancer.seriesguide.util.tasks.BaseShowActionTask.ShowChangedEvent
 import com.battlelancer.seriesguide.util.tasks.RemoveShowFromWatchlistTask
@@ -65,6 +66,9 @@ class TraktAddFragment : AddFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(resultsGridView)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding!!.textViewPoweredByAddShowTrakt)
 
         // set initial view states
         setProgressVisible(visible = true, animate = false)
@@ -229,6 +233,8 @@ class TraktAddFragment : AddFragment() {
          * Which trakt list should be shown. One of [TraktShowsLink].
          */
         private const val ARG_TYPE = "traktListType"
+
+        const val liftOnScrollTargetViewId = R.id.gridViewAdd
 
         fun newInstance(link: TraktShowsLink): TraktAddFragment {
             val f = TraktAddFragment()

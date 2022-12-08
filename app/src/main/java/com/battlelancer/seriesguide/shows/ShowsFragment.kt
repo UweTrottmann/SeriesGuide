@@ -339,4 +339,8 @@ class ShowsFragment : Fragment() {
                 notifyDataChanged(requireContext())
             }
         }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewShows
+    }
 }

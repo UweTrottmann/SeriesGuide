@@ -6,9 +6,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.appcompat.app.AppCompatActivity
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.ui.BaseThemeActivity
+import com.battlelancer.seriesguide.ui.SinglePaneActivity
 
 /**
  * Hosts a [ListWidgetPreferenceFragment] to allow changing settings of the associated app
@@ -17,16 +17,13 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
  * Does specifically NOT extend [com.battlelancer.seriesguide.ui.BaseActivity] to avoid
  * triggering update and backup mechanisms.
  */
-class ListWidgetPreferenceActivity : AppCompatActivity() {
+class ListWidgetPreferenceActivity : BaseThemeActivity() {
 
     private var appWidgetId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Use app theme.
-        setTheme(SeriesGuidePreferences.THEME)
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_singlepane)
+        SinglePaneActivity.onCreateFor(this)
         setupActionBar()
 
         // Get given app widget id, or finish if none.
@@ -52,10 +49,6 @@ class ListWidgetPreferenceActivity : AppCompatActivity() {
                 .add(R.id.content_frame, ListWidgetPreferenceFragment.newInstance(appWidgetId))
                 .commit()
         }
-    }
-
-    private fun setupActionBar() {
-        setSupportActionBar(findViewById(R.id.sgToolbar))
     }
 
     /**

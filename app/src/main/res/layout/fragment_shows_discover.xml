@@ -30,13 +30,14 @@
 
         </ScrollView>
 
+        <!-- Add enough bottom padding so last item is above powered by text. -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewShowsDiscover"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:paddingBottom="40dp"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,9 +47,12 @@
             tools:listitem="@layout/item_addshow" />
 
         <TextView
+            android:id="@+id/textViewPoweredByDiscover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/protection_dark"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/background_protection_round"
             android:padding="@dimen/default_padding"
             android:text="@string/powered_by_tmdb"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
