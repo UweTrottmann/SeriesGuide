@@ -205,10 +205,6 @@
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
     </style>
-    <!-- Toolbar which draws its own background. -->
-    <style name="Widget.SeriesGuide.Toolbar.Surface">
-        <item name="android:background">?attr/sgColorTopAppBar</item>
-    </style>
 
     <style name="Widget.SeriesGuide.Toolbar.Gradient">
         <item name="android:background">@drawable/background_actionbar_gradient</item>
