@@ -34,6 +34,11 @@ public class MovieDetailsActivity extends BaseMessageActivity {
     }
 
     @Override
+    protected void configureEdgeToEdge() {
+        // Do nothing.
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
