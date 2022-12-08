@@ -1,137 +1,132 @@
-package com.battlelancer.seriesguide.shows.history;
+package com.battlelancer.seriesguide.shows.history
 
-import android.app.Activity;
-import android.text.TextUtils;
-import androidx.collection.SparseArrayCompat;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.modules.ServicesComponent;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.util.ImageTools;
-import com.battlelancer.seriesguide.util.LanguageTools;
-import com.battlelancer.seriesguide.util.TextTools;
-import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.trakt5.entities.Friend;
-import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import com.uwetrottmann.trakt5.entities.UserSlug;
-import com.uwetrottmann.trakt5.enums.Extended;
-import com.uwetrottmann.trakt5.enums.HistoryType;
-import com.uwetrottmann.trakt5.services.Users;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import android.content.Context
+import android.text.TextUtils
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
+import com.battlelancer.seriesguide.traktapi.SgTrakt
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
+import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.TextTools
+import com.uwetrottmann.androidutils.GenericSimpleLoader
+import com.uwetrottmann.trakt5.entities.UserSlug
+import com.uwetrottmann.trakt5.enums.Extended
+import com.uwetrottmann.trakt5.enums.HistoryType
 
 /**
- * Loads trakt friends, then returns the most recently watched episode for each friend.
+ * Loads Trakt friends, then returns the most recently watched episode for each friend.
  */
-class TraktFriendsEpisodeHistoryLoader extends GenericSimpleLoader<List<NowAdapter.NowItem>> {
+internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
+    GenericSimpleLoader<List<NowItem>?>(context) {
 
-    TraktFriendsEpisodeHistoryLoader(Activity activity) {
-        super(activity);
-    }
-
-    @Override
-    public List<NowAdapter.NowItem> loadInBackground() {
-        if (!TraktCredentials.get(getContext()).hasCredentials()) {
-            return null;
+    override fun loadInBackground(): List<NowItem>? {
+        if (!TraktCredentials.get(context).hasCredentials()) {
+            return null
         }
 
         // get all trakt friends
-        ServicesComponent services = SgApp.getServicesComponent(getContext());
-        Users traktUsers = services.traktUsers();
-        List<Friend> friends = SgTrakt.executeAuthenticatedCall(getContext(),
-                traktUsers.friends(UserSlug.ME, Extended.FULL), "get friends");
-        if (friends == null) {
-            return null;
-        }
+        val services = getServicesComponent(context)
+        val traktUsers = services.traktUsers()!!
+        val friends = SgTrakt.executeAuthenticatedCall(
+            context,
+            traktUsers.friends(UserSlug.ME, Extended.FULL),
+            "get friends"
+        ) ?: return null
 
-        int size = friends.size();
+        val size = friends.size
         if (size == 0) {
-            return null; // no friends, done.
+            return null // no friends, done.
         }
 
         // estimate list size
-        List<NowAdapter.NowItem> items = new ArrayList<>(size + 1);
+        val items: MutableList<NowItem> = ArrayList(size + 1)
 
         // add header
         items.add(
-                new NowAdapter.NowItem().header(getContext().getString(R.string.friends_recently)));
+            NowItem().header(context.getString(R.string.friends_recently))
+        )
 
         // add last watched episode for each friend
-        SparseArrayCompat<String> tmdbIdsToPoster = services.showTools().getTmdbIdsToPoster();
-        SgEpisode2Helper episodeHelper = SgRoomDatabase.getInstance(getContext())
-                .sgEpisode2Helper();
-        boolean hideTitle = DisplaySettings.preventSpoilers(getContext());
-        for (int i = 0; i < size; i++) {
-            Friend friend = friends.get(i);
+        val tmdbIdsToPoster = services.showTools().getTmdbIdsToPoster()
+        val episodeHelper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
+        val hideTitle = DisplaySettings.preventSpoilers(context)
+        for (i in 0 until size) {
+            val friend = friends[i]
 
             // at least need a userSlug
-            if (friend.user == null) {
-                continue;
-            }
-            String userSlug = friend.user.ids.slug;
+            val user = friend.user ?: continue
+            val userSlug = user.ids?.slug
             if (TextUtils.isEmpty(userSlug)) {
-                continue;
+                continue
             }
 
             // get last watched episode
-            List<HistoryEntry> history = SgTrakt.executeCall(
-                    traktUsers.history(new UserSlug(userSlug), HistoryType.EPISODES, 1, 1,
-                            null, null, null), "get friend episode history");
-            if (history == null || history.size() == 0) {
-                continue; // no history
+            val history = SgTrakt.executeCall(
+                traktUsers.history(
+                    UserSlug(userSlug), HistoryType.EPISODES, 1, 1,
+                    null, null, null
+                ), "get friend episode history"
+            )
+            if (history == null || history.size == 0) {
+                continue  // no history
             }
 
-            HistoryEntry entry = history.get(0);
-            if (entry.watched_at == null || entry.episode == null
-                    || entry.episode.season == null || entry.episode.number == null
-                    || entry.show == null) {
+            val entry = history[0]
+            val watchedAt = entry.watched_at
+            val episode = entry.episode
+            val season = episode?.season
+            val number = episode?.number
+            val show = entry.show
+            if (watchedAt == null
+                || episode == null || season == null || number == null
+                || show == null) {
                 // missing required values
-                continue;
+                continue
             }
 
             // look for a poster
-            String posterUrl;
-            Integer showTmdbId = entry.show.ids == null ? null : entry.show.ids.tmdb;
-            if (showTmdbId != null) {
+            val showTmdbId = if (show.ids == null) null else show.ids?.tmdb
+            val posterUrl: String? = if (showTmdbId != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
-                posterUrl = ImageTools.posterUrlOrResolve(tmdbIdsToPoster.get(showTmdbId),
-                        showTmdbId, LanguageTools.LANGUAGE_EN, getContext());
+                ImageTools.posterUrlOrResolve(
+                    tmdbIdsToPoster[showTmdbId],
+                    showTmdbId, LanguageTools.LANGUAGE_EN, context
+                )
             } else {
-                posterUrl = null;
+                null
             }
 
-            String avatar = (friend.user.images == null || friend.user.images.avatar == null)
-                    ? null : friend.user.images.avatar.full;
-            String episodeString = TextTools.getNextEpisodeString(getContext(),
-                    entry.episode.season, entry.episode.number,
-                    hideTitle ? null : entry.episode.title);
+            val avatar = if (user.images?.avatar == null) null else user.images?.avatar?.full
+            val episodeString = TextTools.getNextEpisodeString(
+                context,
+                season, number,
+                if (hideTitle) null else episode.title
+            )
 
-            Integer episodeTmdbIdOrNull = entry.episode.ids != null ? entry.episode.ids.tmdb : null;
-            long localEpisodeIdOrZero = episodeTmdbIdOrNull != null
-                    ? episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull) : 0;
+            val episodeTmdbIdOrNull = if (episode.ids != null) episode.ids?.tmdb else null
+            val localEpisodeIdOrZero = if (episodeTmdbIdOrNull != null) {
+                episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull)
+            } else 0
 
-            NowAdapter.NowItem nowItem = new NowAdapter.NowItem().
-                    displayData(
-                            entry.watched_at.toInstant().toEpochMilli(),
-                            entry.show.title,
-                            episodeString,
-                            posterUrl
-                    )
-                    .episodeIds(localEpisodeIdOrZero, showTmdbId != null ? showTmdbId : 0)
-                    .friend(friend.user.username, avatar, entry.action);
-            items.add(nowItem);
+            val nowItem = NowItem()
+                .displayData(
+                    watchedAt.toInstant().toEpochMilli(),
+                    show.title,
+                    episodeString,
+                    posterUrl
+                )
+                .episodeIds(localEpisodeIdOrZero, showTmdbId ?: 0)
+                .friend(user.username, avatar, entry.action)
+            items.add(nowItem)
         }
 
         // only have a header? return nothing
-        if (items.size() == 1) {
-            return Collections.emptyList();
-        }
-
-        return items;
+        return if (items.size == 1) {
+            emptyList()
+        } else items
     }
 }

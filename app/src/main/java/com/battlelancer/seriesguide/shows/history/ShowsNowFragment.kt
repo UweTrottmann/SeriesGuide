@@ -394,22 +394,22 @@ class ShowsNowFragment : Fragment() {
             }
         }
 
-    private val traktFriendsHistoryCallbacks: LoaderManager.LoaderCallbacks<List<NowItem>> =
-        object : LoaderManager.LoaderCallbacks<List<NowItem>> {
-            override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<NowItem>> {
-                return TraktFriendsEpisodeHistoryLoader(activity)
+    private val traktFriendsHistoryCallbacks: LoaderManager.LoaderCallbacks<List<NowItem>?> =
+        object : LoaderManager.LoaderCallbacks<List<NowItem>?> {
+            override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<NowItem>?> {
+                return TraktFriendsEpisodeHistoryLoader(requireContext())
             }
 
             override fun onLoadFinished(
-                loader: Loader<List<NowItem>>,
-                data: List<NowItem>
+                loader: Loader<List<NowItem>?>,
+                data: List<NowItem>?
             ) {
                 adapter.setFriendsRecentlyWatched(data)
                 isLoadingFriends = false
                 showProgressBar(false)
             }
 
-            override fun onLoaderReset(loader: Loader<List<NowItem>>) {
+            override fun onLoaderReset(loader: Loader<List<NowItem>?>) {
                 // clear existing data
                 adapter.setFriendsRecentlyWatched(null)
             }
