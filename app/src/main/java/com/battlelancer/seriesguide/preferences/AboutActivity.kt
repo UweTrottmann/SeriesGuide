@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Just hosts a [AboutPreferencesFragment].
@@ -15,6 +16,7 @@ class AboutActivity : AppCompatActivity() {
         setTheme(SeriesGuidePreferences.THEME)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
+        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutAbout))
         setupActionBar()
     }
 
