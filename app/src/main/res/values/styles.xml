@@ -249,12 +249,6 @@
         <item name="colorOnSecondaryContainer" tools:ignore="PrivateResource">?attr/colorOnPrimaryContainer</item>
     </style>
 
-    <!-- Inline snackbar -->
-    <!-- Use of CoordinatorLayout shifts layouts down, counter by moving inline snackbar up. -->
-    <style name="Widget.SeriesGuide.InlineSnackbar">
-        <item name="android:layout_marginBottom">?attr/actionBarSize</item>
-    </style>
-
     <!-- Dialogs -->
     <style name="Animation.CheckinDialog" parent="android:Animation.Dialog">
         <item name="android:windowExitAnimation">@anim/checkin_dialog_exit</item>

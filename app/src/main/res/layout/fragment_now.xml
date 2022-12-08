@@ -29,18 +29,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical" />
 
+        <!-- Use of CoordinatorLayout shifts layouts down, counter by moving inline snackbar up. -->
         <include
-            style="@style/Widget.SeriesGuide.InlineSnackbar"
-            layout="@layout/layout_snackbar_sg"
             android:id="@+id/include_snackbar"
+            layout="@layout/layout_snackbar_sg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_marginBottom="?attr/actionBarSize" />
 
     </FrameLayout>
 
