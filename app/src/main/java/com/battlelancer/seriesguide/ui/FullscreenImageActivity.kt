@@ -75,6 +75,8 @@ class FullscreenImageActivity : BaseActivity() {
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
+        // Currently not using WindowInsetsControllerCompat as it resets zoom level when
+        // hiding/showing system bars *sigh* and I don't want to find out why right now.
         systemUiHider = SystemUiHider.getInstance(
             this, photoView, SystemUiHider.FLAG_FULLSCREEN
         )
