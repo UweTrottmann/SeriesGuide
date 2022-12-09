@@ -2,27 +2,23 @@ package com.battlelancer.seriesguide.preferences
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.ui.BaseThemeActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Just hosts a [AboutPreferencesFragment].
  */
-class AboutActivity : AppCompatActivity() {
+class AboutActivity : BaseThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(SeriesGuidePreferences.THEME)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
         ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutAbout))
         setupActionBar()
     }
 
-    private fun setupActionBar() {
-        val toolbar = findViewById<Toolbar>(R.id.sgToolbar)
-        setSupportActionBar(toolbar)
+    override fun setupActionBar() {
+        super.setupActionBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
