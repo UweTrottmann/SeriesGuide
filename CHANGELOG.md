@@ -14,6 +14,9 @@ Version 66
 ----------
 *in development*
 
+#### 66.0.2 🧪
+*2022-12-09*
+
 * 🔧 Appearance: draw behind status and navigation bar whenever possible.
 * 🔧 Show filters: change option to remove all filters to instead restore defaults (exclude hidden).
 * 🔨 Fix network detection on some Android 11 devices.
