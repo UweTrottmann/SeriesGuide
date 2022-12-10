@@ -89,7 +89,7 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
             }
 
             // look for a poster
-            val showTmdbId = if (show.ids == null) null else show.ids?.tmdb
+            val showTmdbId = show.ids?.tmdb
             val posterUrl: String? = if (showTmdbId != null) {
                 // prefer poster of already added show, fall back to first uploaded poster
                 ImageTools.posterUrlOrResolve(
@@ -100,14 +100,14 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
                 null
             }
 
-            val avatar = if (user.images?.avatar == null) null else user.images?.avatar?.full
+            val avatar = user.images?.avatar?.full
             val episodeString = TextTools.getNextEpisodeString(
                 context,
                 season, number,
                 if (hideTitle) null else episode.title
             )
 
-            val episodeTmdbIdOrNull = if (episode.ids != null) episode.ids?.tmdb else null
+            val episodeTmdbIdOrNull = episode.ids?.tmdb
             val localEpisodeIdOrZero = if (episodeTmdbIdOrNull != null) {
                 episodeHelper.getEpisodeIdByTmdbId(episodeTmdbIdOrNull)
             } else 0

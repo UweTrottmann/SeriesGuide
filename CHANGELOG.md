@@ -14,6 +14,8 @@ Version 66
 ----------
 *in development*
 
+* 🔨 Fix crash when loading movie watch history of Trakt friends and the device is offline.
+
 #### 66.0.2 🧪
 *2022-12-09*
 
