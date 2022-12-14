@@ -9,6 +9,7 @@ title: Help
 
     <h2 class="mt-3">Fix an issue</h2>
     <div class="list-group">
+      <a class="list-group-item list-group-item-action" href="#outage">Could not talk to TMDB or Trakt</a>
       <a class="list-group-item list-group-item-action" href="#syncfail">Show, episode or movie data is outdated or missing</a>
       <a class="list-group-item list-group-item-action" href="#missing">Can not find a show or movie</a>
       <a class="list-group-item list-group-item-action" href="#translation">A translation is wrong or missing</a>
@@ -63,6 +64,46 @@ title: Help
 
     <span class="anchor" id="fixes"></span>
     <h2 class="mt-5">Fix an issue</h2>
+
+    <span class="anchor" id="outage"></span>
+    <section class="mt-2">
+      <h3>Could not talk to TMDB or Trakt</h3>
+      <p><span class="emoji">ℹ</span> <strong>Since 2022-12-12 there is a major outage at Trakt.</strong> Adding shows
+         might not be possible, using any Trakt features might not be possible.</p>
+
+      <hr>
+
+      <p><span class="emoji">ℹ️</span> <strong>Since 2022-04-10, in Russia or Belarus</strong> it is currently not 
+        possible to search for, add or update shows and movies in SeriesGuide.</p>
+
+      <p>This is because the data source SeriesGuide uses, <a href="{{ site.data.links.tmdb }}">TMDB</a>, 
+        has decided to block access from IP addresses attributed to the Russia or Belarus region. 
+         <a href="https://blog.themoviedb.org/the-movie-database-suspends-access-from-russia-and-belarus-b6a1a96fb35b">Read their statement.</a></p>
+
+      <hr>
+
+      <p>If you receive this error the best solution is:</p>
+
+      <p><strong>Be patient and try again later.</strong> If the issue persists after a few days, then please email me about it.</p>
+        
+      <p><strong>Links to learn about ongoing issues and their status:</strong></p>
+      <ul>
+        <li><a href="https://twitter.com/themoviedb">TMDB Twitter account</a> and <a href="https://status.themoviedb.org">status.themoviedb.org</a></li>
+        <li><a href="https://twitter.com/trakt">Trakt Twitter account</a> and <a href="https://status.trakt.tv/">status.trakt.tv</a></li>
+      </ul>
+      
+      <p>TMDb, Trakt as well as SeriesGuide are services operated by a small or even one-person staff. 
+        If the service experiences issues, the person which can fix it can not always be available 
+        (it's night time, they are working another job or are on holiday). So it can take time until 
+        issues are resolved. Please do not expect 24/7 availability like from services that can 
+        afford a large, around the world support staff.</p>
+        
+      <p>Thank you for understanding!</p>
+        
+      <p><strong>Note: some countries or internet service providers (ISP) are known to block 
+        e.g. themoviedb.org or trakt.tv.</strong> In this case it may be possible to switch to 
+        another connection (different ISP) or use VPN software (at your own risk).</p>
+    </section>
 
     <span class="anchor" id="syncfail"></span>
     <section class="mt-2">
