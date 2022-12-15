@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemCommentBinding
+import com.battlelancer.seriesguide.util.CircleTransformation
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.uwetrottmann.trakt5.entities.Comment
 
@@ -71,6 +72,7 @@ class CommentViewHolder(
         binding.textViewCommentUsername.text = user?.username
 
         ServiceUtils.loadWithPicasso(context, user?.images?.avatar?.full)
+            .transform(avatarTransform)
             .into(binding.imageViewCommentAvatar)
 
         if (comment.spoiler == true) {
@@ -108,6 +110,8 @@ class CommentViewHolder(
     }
 
     companion object {
+        private val avatarTransform = CircleTransformation()
+
         fun create(
             parent: ViewGroup,
             onItemClickListener: TraktCommentsAdapter.OnItemClickListener
@@ -128,3 +132,5 @@ class CommentDiffCallback : DiffUtil.ItemCallback<Comment>() {
         oldItem.comment == newItem.comment
                 && oldItem.spoiler == newItem.spoiler
 }
+
+

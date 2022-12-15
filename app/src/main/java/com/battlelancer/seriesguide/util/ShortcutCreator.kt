@@ -3,11 +3,6 @@ package com.battlelancer.seriesguide.util
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapShader
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
-import android.graphics.Shader
 import android.widget.Toast
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -17,7 +12,6 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Transformation
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -72,7 +66,7 @@ class ShortcutCreator(
             // on O+ we use 108x108dp adaptive icon, no need to cut its corners
             // pre-O full bitmap is displayed, so cut corners for nicer icon shape
             requestCreator.transform(
-                RoundedCornerTransformation(posterUrl, 10f)
+                RoundedCornerTransformation(10f)
             )
         }
 
@@ -140,38 +134,6 @@ class ShortcutCreator(
         }
     }
 
-    /** A [Transformation] used to draw a [Bitmap] with round corners  */
-    private class RoundedCornerTransformation(
-        /** A key used to uniquely identify this [Transformation]  */
-        private val key: String,
-        /** The corner radius  */
-        private val radius: Float
-    ) : Transformation {
 
-        override fun transform(source: Bitmap): Bitmap {
-            val w = source.width
-            val h = source.height
-
-            val p = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
-            p.shader = BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-
-            val transformed = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-            val c = Canvas(transformed)
-            c.drawRoundRect(RectF(0f, 0f, w.toFloat(), h.toFloat()), radius, radius, p)
-
-            // Picasso requires the original Bitmap to be recycled if we aren't returning it
-            source.recycle()
-
-            // Release any references to avoid memory leaks
-            p.shader = null
-            c.setBitmap(null)
-
-            return transformed
-        }
-
-        override fun key(): String {
-            return key
-        }
-    }
 
 }
