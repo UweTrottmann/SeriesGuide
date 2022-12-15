@@ -1,110 +1,130 @@
+package com.battlelancer.seriesguide.comments
 
-package com.battlelancer.seriesguide.comments;
-
-import android.content.Context;
-import android.text.format.DateUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.core.widget.TextViewCompat;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.uwetrottmann.trakt5.entities.Comment;
-import java.util.List;
+import android.content.Context
+import android.text.format.DateUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.widget.TextViewCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ItemCommentBinding
+import com.battlelancer.seriesguide.util.ServiceUtils
+import com.uwetrottmann.trakt5.entities.Comment
 
 /**
- * Custom ArrayAdapter which binds {@link Comment} items to views using the ViewHolder pattern.
+ * Binds a list of [Comment]s.
  */
-class TraktCommentsAdapter extends ArrayAdapter<Comment> {
+class TraktCommentsAdapter(
+    val context: Context,
+    val onItemClickListener: OnItemClickListener
+) : ListAdapter<Comment, CommentViewHolder>(CommentDiffCallback()) {
 
-    TraktCommentsAdapter(Context context) {
-        super(context, R.layout.item_comment);
+    interface OnItemClickListener {
+        fun onOpenWebsite(commentId: Int)
     }
 
-    void setData(List<Comment> data) {
-        clear();
-        if (data != null) {
-            for (Comment item : data) {
-                add(item);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
+        return CommentViewHolder.create(parent, onItemClickListener)
+    }
+
+    override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
+        holder.bindTo(getItem(position), context)
+    }
+}
+
+class CommentViewHolder(
+    private val binding: ItemCommentBinding,
+    onItemClickListener: TraktCommentsAdapter.OnItemClickListener
+) : RecyclerView.ViewHolder(binding.root) {
+
+    private var comment: Comment? = null
+
+    init {
+        binding.root.setOnClickListener { v ->
+            val comment = comment ?: return@setOnClickListener
+            if (comment.spoiler == true) {
+                // If comment is a spoiler it is hidden, first click should reveal it.
+                comment.spoiler = false
+                binding.textViewComment.text = comment.comment
+            } else {
+                // Open comment website
+                comment.id?.let { onItemClickListener.onOpenWebsite(it) }
             }
         }
     }
 
-    @NonNull
-    @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        // A ViewHolder keeps references to children views to avoid
-        // unnecessary calls to findViewById() on each row.
-        TraktCommentsAdapter.ViewHolder holder;
-
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_comment, parent, false);
-
-            holder = new ViewHolder();
-            holder.username = convertView.findViewById(R.id.textViewCommentUsername);
-            holder.comment = convertView.findViewById(R.id.textViewComment);
-            holder.timestamp = convertView.findViewById(R.id.textViewCommentTimestamp);
-            holder.replies = convertView.findViewById(R.id.textViewCommentReplies);
-            holder.avatar = convertView.findViewById(R.id.imageViewCommentAvatar);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (TraktCommentsAdapter.ViewHolder) convertView.getTag();
-        }
-
-        // Bind the data efficiently with the holder.
-        final Comment comment = getItem(position);
+    fun bindTo(comment: Comment?, context: Context) {
+        this.comment = comment
         if (comment == null) {
-            return convertView;
+            binding.textViewCommentUsername.text = null
+            binding.imageViewCommentAvatar.setImageDrawable(null)
+            binding.textViewComment.text = null
+            binding.textViewCommentTimestamp.text = null
+            binding.textViewCommentReplies.text = null
+            return
         }
 
-        String name = null;
-        String avatarPath = null;
-        if (comment.user != null) {
-            name = comment.user.username;
-            if (comment.user.images != null && comment.user.images.avatar != null) {
-                avatarPath = comment.user.images.avatar.full;
-            }
-        }
-        holder.username.setText(name);
-        ServiceUtils.loadWithPicasso(getContext(), avatarPath).into(holder.avatar);
+        val user = comment.user
+        binding.textViewCommentUsername.text = user?.username
 
-        if (comment.spoiler) {
-            holder.comment.setText(R.string.isspoiler);
-            TextViewCompat.setTextAppearance(holder.comment,
-                    R.style.TextAppearance_SeriesGuide_Body2_Error);
+        ServiceUtils.loadWithPicasso(context, user?.images?.avatar?.full)
+            .into(binding.imageViewCommentAvatar)
+
+        if (comment.spoiler == true) {
+            binding.textViewComment.setText(R.string.isspoiler)
+            TextViewCompat.setTextAppearance(
+                binding.textViewComment,
+                R.style.TextAppearance_SeriesGuide_Body2_Error
+            )
         } else {
-            holder.comment.setText(comment.comment);
-            TextViewCompat.setTextAppearance(holder.comment, R.style.TextAppearance_SeriesGuide_Body2);
+            binding.textViewComment.text = comment.comment
+            TextViewCompat.setTextAppearance(
+                binding.textViewComment,
+                R.style.TextAppearance_SeriesGuide_Body2
+            )
         }
 
-        String timestamp = (String) DateUtils.getRelativeTimeSpanString(
-                comment.created_at.toInstant().toEpochMilli(), System.currentTimeMillis(),
-                DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-        holder.timestamp.setText(timestamp);
+        val timestamp = comment.created_at?.toInstant()?.toEpochMilli()
+            ?.let {
+                DateUtils.getRelativeTimeSpanString(
+                    it, System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL
+                )
+            } ?: context.getString(R.string.unknown)
+        binding.textViewCommentTimestamp.text = timestamp
 
-        if (comment.replies == null || comment.replies <= 0) {
+        val replies = comment.replies
+        if (replies == null || replies <= 0) {
             // no replies
-            holder.replies.setVisibility(View.GONE);
+            binding.textViewCommentReplies.visibility = View.GONE
         } else {
-            holder.replies.setVisibility(View.VISIBLE);
-            holder.replies.setText(getContext().getResources()
-                    .getQuantityString(R.plurals.replies_plural, comment.replies, comment.replies));
+            binding.textViewCommentReplies.visibility = View.VISIBLE
+            binding.textViewCommentReplies.text = context.resources
+                .getQuantityString(R.plurals.replies_plural, replies, replies)
         }
-
-        return convertView;
     }
 
-    static class ViewHolder {
-        TextView username;
-        TextView comment;
-        TextView timestamp;
-        TextView replies;
-        ImageView avatar;
+    companion object {
+        fun create(
+            parent: ViewGroup,
+            onItemClickListener: TraktCommentsAdapter.OnItemClickListener
+        ): CommentViewHolder {
+            return CommentViewHolder(
+                ItemCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                onItemClickListener
+            )
+        }
     }
+}
+
+class CommentDiffCallback : DiffUtil.ItemCallback<Comment>() {
+    override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean =
+        oldItem.comment == newItem.comment
+                && oldItem.spoiler == newItem.spoiler
 }

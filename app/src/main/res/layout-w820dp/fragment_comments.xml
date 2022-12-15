@@ -39,13 +39,11 @@ include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
             </ScrollView>
 
             <!-- Add enough bottom padding so last item is above powered by text. -->
-            <ListView
-                android:id="@+id/listViewShouts"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewComments"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:divider="@color/transparent"
-                android:dividerHeight="0dp"
                 android:nextFocusDown="@+id/editTextShouts"
                 android:paddingBottom="40dp"
                 tools:listitem="@layout/item_comment" />

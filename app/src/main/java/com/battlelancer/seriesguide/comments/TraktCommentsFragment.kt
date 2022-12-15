@@ -11,15 +11,14 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.MenuProvider
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
@@ -30,7 +29,6 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.TraktLink
-import com.uwetrottmann.trakt5.entities.Comment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -63,7 +61,7 @@ class TraktCommentsFragment : Fragment() {
         val binding = binding!!
 
         if (resources.getBoolean(R.bool.isWideCommentsLayout)) {
-            ThemeUtils.applyBottomPaddingForNavigationBar(binding.listViewShouts)
+            ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewComments)
             ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByComments)
         } else {
             ThemeUtils.applyBottomPaddingForNavigationBar(binding.containerComments)
@@ -71,7 +69,7 @@ class TraktCommentsFragment : Fragment() {
 
         binding.swipeRefreshLayoutShouts.setSwipeableChildren(
             R.id.scrollViewComments,
-            R.id.listViewShouts
+            R.id.recyclerViewComments
         )
         binding.swipeRefreshLayoutShouts.setOnRefreshListener { refreshCommentsWithNetworkCheck() }
         binding.swipeRefreshLayoutShouts.setProgressViewOffset(
@@ -88,10 +86,6 @@ class TraktCommentsFragment : Fragment() {
             binding.swipeRefreshLayoutShouts
         )
 
-        binding.listViewShouts.isNestedScrollingEnabled = true
-        binding.listViewShouts.onItemClickListener = onItemClickListener
-        binding.listViewShouts.emptyView = binding.textViewShoutsEmpty
-
         binding.buttonShouts.setOnClickListener { comment() }
 
         // disable comment button by default, enable if comment entered
@@ -106,11 +100,15 @@ class TraktCommentsFragment : Fragment() {
         })
 
         // set initial view states
+        binding.recyclerViewComments.isGone = false
+        binding.textViewShoutsEmpty.isGone = true
         showProgressBar(true)
 
         // setup adapter
-        adapter = TraktCommentsAdapter(activity)
-        binding.listViewShouts.adapter = adapter
+        adapter = TraktCommentsAdapter(requireContext(), onItemClickListener)
+        binding.recyclerViewComments.setHasFixedSize(true)
+        binding.recyclerViewComments.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewComments.adapter = adapter
 
         // load data
         LoaderManager.getInstance(this)
@@ -199,25 +197,11 @@ class TraktCommentsFragment : Fragment() {
         }
     }
     private val onItemClickListener =
-        AdapterView.OnItemClickListener { parent: AdapterView<*>, v: View, position: Int, _: Long ->
-            onListItemClick(parent as ListView, v, position)
-        }
-
-    private fun onListItemClick(l: ListView, v: View, position: Int) {
-        val comment = l.getItemAtPosition(position) as Comment?
-            ?: return
-        if (comment.spoiler == true) {
-            // if comment is a spoiler it is hidden, first click should reveal it
-            comment.spoiler = false
-            val shoutText = v.findViewById<TextView>(R.id.textViewComment)
-            if (shoutText != null) {
-                shoutText.text = comment.comment
+        object : TraktCommentsAdapter.OnItemClickListener {
+            override fun onOpenWebsite(commentId: Int) {
+                Utils.launchWebsite(context, TraktLink.comment(commentId))
             }
-        } else {
-            // open comment website
-            comment.id?.let { Utils.launchWebsite(context, TraktLink.comment(it)) }
         }
-    }
 
     private val commentsLoaderCallbacks: LoaderManager.LoaderCallbacks<TraktCommentsLoader.Result> =
         object : LoaderManager.LoaderCallbacks<TraktCommentsLoader.Result> {
@@ -233,8 +217,11 @@ class TraktCommentsFragment : Fragment() {
                 loader: Loader<TraktCommentsLoader.Result>,
                 data: TraktCommentsLoader.Result
             ) {
-                adapter.setData(data.results)
+                adapter.submitList(data.results)
                 setEmptyMessage(data.emptyText)
+                val hasNoData = data.results.isNullOrEmpty()
+                binding?.recyclerViewComments?.isGone = hasNoData
+                binding?.textViewShoutsEmpty?.isGone = !hasNoData
                 showProgressBar(false)
             }
 
