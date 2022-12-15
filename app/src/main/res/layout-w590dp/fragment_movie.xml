@@ -5,7 +5,6 @@
     android:id="@+id/rootLayoutMovie"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.movies.MovieDetailsFragment"
     tools:ignore="RtlHardcoded">
 
     <!-- Parent used for fullscreen color background. -->
@@ -23,20 +22,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
-        <!-- Padding is adjusted in code based on translucent status bar. -->
         <androidx.core.widget.NestedScrollView
             android:id="@+id/contentContainerMovie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="?attr/actionBarSize">
+            android:clipToPadding="false">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
-                android:paddingBottom="@dimen/default_padding"
-                android:paddingTop="@dimen/default_padding">
+                android:paddingBottom="@dimen/large_padding"
+                android:paddingTop="@dimen/large_padding">
 
                 <!-- Wrap in container to support reeeeally long movie titles. -->
                 <RelativeLayout
@@ -59,8 +56,7 @@
                             android:layout_height="match_parent"
                             android:contentDescription="@null"
                             android:scaleType="centerCrop"
-                            tools:src="#F44336"
-                            tools:targetApi="lollipop" />
+                            tools:src="#F44336" />
 
                     </com.google.android.material.card.MaterialCardView>
 

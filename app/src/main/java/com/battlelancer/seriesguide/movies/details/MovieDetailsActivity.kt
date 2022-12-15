@@ -3,13 +3,10 @@ package com.battlelancer.seriesguide.movies.details
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
-import com.readystatesoftware.systembartint.SystemBarTintManager
-import com.uwetrottmann.androidutils.AndroidUtils
+import com.battlelancer.seriesguide.util.ThemeUtils
+import com.google.android.material.appbar.AppBarLayout
 
 /**
  * Hosts a [MovieDetailsFragment] displaying details about the movie defined by the given TMDb
@@ -17,26 +14,13 @@ import com.uwetrottmann.androidutils.AndroidUtils
  */
 class MovieDetailsActivity : BaseMessageActivity() {
 
-    lateinit var systemBarTintManager: SystemBarTintManager
-
-    override fun getCustomTheme(): Int {
-        return R.style.Theme_SeriesGuide_DayNight_Immersive
-    }
-
-    override fun configureEdgeToEdge() {
-        // Do nothing.
-    }
+    lateinit var sgAppBarLayout: AppBarLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // support transparent status bar
-        if (AndroidUtils.isMarshmallowOrHigher) {
-            findViewById<View>(android.R.id.content).systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        }
-
         setContentView(R.layout.activity_movie)
+        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutMovieActivity))
+        sgAppBarLayout = findViewById(R.id.sgAppBarLayout)
         setupActionBar()
 
         if (intent.extras == null) {
@@ -49,32 +33,10 @@ class MovieDetailsActivity : BaseMessageActivity() {
             return
         }
 
-        setupViews()
-
         if (savedInstanceState == null) {
             val f = MovieDetailsFragment.newInstance(tmdbId)
             supportFragmentManager.beginTransaction().add(R.id.content_frame, f).commit()
         }
-    }
-
-    private fun setupViews() {
-        // fix padding with translucent (K+)/transparent (M+) status bar
-        // warning: pre-M status bar not always translucent (e.g. Nexus 10)
-        // (using fitsSystemWindows would not work correctly with multiple views)
-        val systemBarTintManager = SystemBarTintManager(this)
-            .also { systemBarTintManager = it }
-        val config = systemBarTintManager.config
-        val insetTop = if (AndroidUtils.isMarshmallowOrHigher) {
-            config.statusBarHeight // transparent status bar
-        } else {
-            config.getPixelInsetTop(false) // translucent status bar
-        }
-        val actionBarToolbar = findViewById<ViewGroup>(R.id.sgToolbar)
-        val layoutParams = actionBarToolbar.layoutParams as MarginLayoutParams
-        layoutParams.setMargins(
-            layoutParams.leftMargin, layoutParams.topMargin + insetTop,
-            layoutParams.rightMargin, layoutParams.bottomMargin
-        )
     }
 
     override fun setupActionBar() {

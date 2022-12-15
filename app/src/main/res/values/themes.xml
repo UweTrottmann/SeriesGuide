@@ -155,23 +155,6 @@
     <!-- Note: always launch with Dark on P- to avoid bright colors as user may have set Dark. -->
     <style name="Theme.SeriesGuide.Launch" parent="Theme.SeriesGuide.Dark" />
 
-    <!-- Immersive -->
-    <style name="Theme.SeriesGuide.DayNight.Immersive" parent="Theme.SeriesGuide.Light.Immersive" />
-    <style name="Theme.SeriesGuide.Dark.Immersive">
-
-        <!-- Translucent navbar (native, v19+) -->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-
-    </style>
-    <style name="Theme.SeriesGuide.Light.Immersive">
-
-        <!-- Translucent navbar (native, v19+) -->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-
-    </style>
-
     <style name="Theme.SeriesGuide.Wallpaper" parent="Theme.SeriesGuide.DayNight">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowShowWallpaper">true</item>

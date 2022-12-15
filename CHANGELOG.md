@@ -14,6 +14,7 @@ Version 66
 ----------
 *in development*
 
+* 🔧 Appearance: draw behind navigation bar in movie details screen.
 
 #### 66.0.3 🧪
 *2022-12-10*

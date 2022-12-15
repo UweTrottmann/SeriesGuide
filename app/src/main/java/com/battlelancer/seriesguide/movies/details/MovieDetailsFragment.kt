@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -88,6 +89,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private val model: MovieDetailsModel by viewModels {
         MovieDetailsModelFactory(tmdbId, requireActivity().application)
     }
+    private lateinit var scrollChangeListener: ToolbarScrollChangeListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -185,28 +187,15 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun setupViews() {
-        // avoid overlap with status + action bar (adjust top margin)
-        // warning: pre-M status bar not always translucent (e.g. Nexus 10)
-        // (using fitsSystemWindows would not work correctly with multiple views)
-        val config = (activity as MovieDetailsActivity).systemBarTintManager.config
-        val pixelInsetTop = if (AndroidUtils.isMarshmallowOrHigher) {
-            config.statusBarHeight // full screen, status bar transparent
-        } else {
-            config.getPixelInsetTop(false) // status bar translucent
-        }
-
-        // action bar height is pre-set as top margin, add to it
-        val decorationHeightPx = pixelInsetTop + binding.contentContainerMovie.paddingTop
-        binding.contentContainerMovie.setPadding(0, decorationHeightPx, 0, 0)
-
-        // dual pane layout?
-        binding.contentContainerMovieRight?.setPadding(0, decorationHeightPx, 0, 0)
-
         // show toolbar title and background when scrolling
-        val defaultPaddingPx = resources.getDimensionPixelSize(R.dimen.default_padding)
-        val scrollChangeListener = ToolbarScrollChangeListener(defaultPaddingPx, decorationHeightPx)
+        val defaultPaddingPx = resources.getDimensionPixelSize(R.dimen.large_padding)
+        val scrollChangeListener = ToolbarScrollChangeListener(defaultPaddingPx)
+            .also { scrollChangeListener = it }
         binding.contentContainerMovie.setOnScrollChangeListener(scrollChangeListener)
         binding.contentContainerMovieRight?.setOnScrollChangeListener(scrollChangeListener)
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.contentContainerMovie)
+        binding.contentContainerMovieRight?.let { ThemeUtils.applyBottomPaddingForNavigationBar(it) }
     }
 
     override fun onStart() {
@@ -504,19 +493,37 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                             val bitmap =
                                 (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
 
-                            val color = withContext(Dispatchers.Default) {
+                            val (colorBackground, colorAppBarLifted) = withContext(Dispatchers.Default) {
                                 val palette = try {
                                     Palette.from(bitmap).generate()
                                 } catch (e: Exception) {
                                     Timber.e(e, "Failed to generate palette.")
                                     null
                                 }
-                                palette
-                                    ?.getVibrantColor(Color.WHITE)
-                                    ?.let { ColorUtils.setAlphaComponent(it, 50) }
+                                val vibrantColor = palette?.getVibrantColor(Color.WHITE)
+                                Pair(
+                                    vibrantColor?.let { ColorUtils.setAlphaComponent(it, 50) },
+                                    vibrantColor?.let { ColorUtils.setAlphaComponent(it, 80) }
+                                )
                             }
 
-                            color?.let { binding.rootLayoutMovie.setBackgroundColor(it) }
+                            colorBackground?.let {
+                                // Color fragment background
+                                binding.rootLayoutMovie.setBackgroundColor(it)
+
+                                // Color app bar background
+                                scrollChangeListener.appBarBackground = colorBackground
+                                scrollChangeListener.appBarBackgroundLifted = colorAppBarLifted
+                                sgAppBarLayout.apply {
+                                    background = ColorDrawable(
+                                        if (scrollChangeListener.showOverlay) {
+                                            colorAppBarLifted!!
+                                        } else {
+                                            colorBackground
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 })
@@ -764,14 +771,20 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
+    private val sgAppBarLayout
+        get() = (activity as MovieDetailsActivity).sgAppBarLayout
+
     private inner class ToolbarScrollChangeListener(
-        private val overlayThresholdPx: Int,
-        private val titleThresholdPx: Int
+        private val overlayThresholdPx: Int
     ) : NestedScrollView.OnScrollChangeListener {
+
+        var appBarBackground: Int? = null
+        var appBarBackgroundLifted: Int? = null
 
         // we have determined by science that a capacity of 2 is good in our case :)
         private val showOverlayMap: SparseArrayCompat<Boolean> = SparseArrayCompat(2)
-        private var showOverlay: Boolean = false
+        var showOverlay: Boolean = false
+            private set
         private var showTitle: Boolean = false
 
         override fun onScrollChange(
@@ -789,30 +802,30 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             val shouldShowOverlay = shouldShowOverlayTemp
 
             if (!showOverlay && shouldShowOverlay) {
-                val primaryColor = ContextCompat.getColor(
+                val drawableColor = appBarBackgroundLifted ?: ContextCompat.getColor(
                     v.context,
                     Utils.resolveAttributeToResourceId(
                         v.context.theme, R.attr.sgColorStatusBarOverlay
                     )
                 )
-                actionBar.setBackgroundDrawable(ColorDrawable(primaryColor))
+                sgAppBarLayout.background = ColorDrawable(drawableColor)
             } else if (showOverlay && !shouldShowOverlay) {
-                actionBar.setBackgroundDrawable(null)
+                val drawableColor = appBarBackground ?: Color.TRANSPARENT
+                sgAppBarLayout.background = ColorDrawable(drawableColor)
             }
             showOverlay = shouldShowOverlay
 
-            // only main container should show/hide title
+            // Only show/hide title if main container displaying title is scrolled.
             if (viewId == R.id.contentContainerMovie) {
-                val shouldShowTitle = scrollY > titleThresholdPx
-                if (!showTitle && shouldShowTitle) {
+                if (!showTitle && shouldShowOverlay) {
                     movieDetails?.tmdbMovie()?.let {
                         actionBar.title = it.title
                         actionBar.setDisplayShowTitleEnabled(true)
                     }
-                } else if (showTitle && !shouldShowTitle) {
+                } else if (showTitle && !shouldShowOverlay) {
                     actionBar.setDisplayShowTitleEnabled(false)
                 }
-                showTitle = shouldShowTitle
+                showTitle = shouldShowOverlay
             }
         }
     }
