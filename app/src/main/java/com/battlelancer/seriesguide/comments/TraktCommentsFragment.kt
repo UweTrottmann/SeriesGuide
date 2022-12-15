@@ -226,7 +226,7 @@ class TraktCommentsFragment : Fragment() {
                 args: Bundle?
             ): Loader<TraktCommentsLoader.Result> {
                 showProgressBar(true)
-                return TraktCommentsLoader(context, args)
+                return TraktCommentsLoader(requireContext(), args!!)
             }
 
             override fun onLoadFinished(
