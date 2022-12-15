@@ -251,7 +251,7 @@ class MoviesNowFragment : Fragment() {
                 val movieTmdbId = item.movieTmdbId ?: return
 
                 // display movie details
-                val i = MovieDetailsActivity.intentMovie(activity, movieTmdbId)
+                val i = MovieDetailsActivity.intentMovie(requireContext(), movieTmdbId)
 
                 // simple scale up animation as there are no images
                 Utils.startActivityWithAnimation(activity, i, view)

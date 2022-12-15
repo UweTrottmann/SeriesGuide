@@ -1,75 +1,75 @@
-package com.battlelancer.seriesguide.history;
+package com.battlelancer.seriesguide.history
 
-import android.content.Intent;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity;
+import android.os.Bundle
+import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.Loader
+import com.battlelancer.seriesguide.movies.details.MovieDetailsActivity
+import com.uwetrottmann.trakt5.entities.HistoryEntry
 
 /**
- * Displays a stream of movies the user has recently watched on trakt.
+ * Displays a stream of movies the user has recently watched on Trakt.
  */
-public class UserMovieStreamFragment extends StreamFragment {
+class UserMovieStreamFragment : StreamFragment() {
 
-    private MovieHistoryAdapter adapter;
+    private var adapter: MovieHistoryAdapter? = null
 
-    @NonNull
-    @Override
-    protected BaseHistoryAdapter getListAdapter() {
-        if (adapter == null) {
-            adapter = new MovieHistoryAdapter(requireContext(), itemClickListener);
+    override val listAdapter: BaseHistoryAdapter
+        get() {
+            if (adapter == null) {
+                adapter = MovieHistoryAdapter(requireContext(), itemClickListener)
+            }
+            return adapter!!
         }
-        return adapter;
+
+    override fun initializeStream() {
+        LoaderManager.getInstance(this).initLoader(
+            HistoryActivity.MOVIES_LOADER_ID, null,
+            activityLoaderCallbacks
+        )
     }
 
-    @Override
-    protected void initializeStream() {
-        LoaderManager.getInstance(this).initLoader(HistoryActivity.MOVIES_LOADER_ID, null,
-                activityLoaderCallbacks);
+    override fun refreshStream() {
+        LoaderManager.getInstance(this).restartLoader(
+            HistoryActivity.MOVIES_LOADER_ID, null,
+            activityLoaderCallbacks
+        )
     }
 
-    @Override
-    protected void refreshStream() {
-        LoaderManager.getInstance(this).restartLoader(HistoryActivity.MOVIES_LOADER_ID, null,
-                activityLoaderCallbacks);
-    }
-
-    private MovieHistoryAdapter.OnItemClickListener itemClickListener = (view, item) -> {
-        // display movie details
-        if (item.movie == null || item.movie.ids == null || item.movie.ids.tmdb == null) {
-            return;
+    private val itemClickListener = object : BaseHistoryAdapter.OnItemClickListener {
+        override fun onItemClick(view: View, item: HistoryEntry) {
+            // display movie details
+            val tmdb = item.movie?.ids?.tmdb ?: return
+            val i = MovieDetailsActivity.intentMovie(requireContext(), tmdb)
+            ActivityCompat.startActivity(
+                requireContext(), i, ActivityOptionsCompat
+                    .makeScaleUpAnimation(view, 0, 0, view.width, view.height)
+                    .toBundle()
+            )
         }
-        Intent i = MovieDetailsActivity.intentMovie(getActivity(), item.movie.ids.tmdb);
+    }
 
-        ActivityCompat.startActivity(requireContext(), i, ActivityOptionsCompat
-                .makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight())
-                .toBundle()
-        );
-    };
+    private val activityLoaderCallbacks: LoaderManager.LoaderCallbacks<TraktEpisodeHistoryLoader.Result> =
+        object : LoaderManager.LoaderCallbacks<TraktEpisodeHistoryLoader.Result> {
+            override fun onCreateLoader(
+                id: Int,
+                args: Bundle?
+            ): Loader<TraktEpisodeHistoryLoader.Result> {
+                showProgressBar(true)
+                return TraktMovieHistoryLoader(requireContext())
+            }
 
-    private LoaderManager.LoaderCallbacks<TraktMovieHistoryLoader.Result> activityLoaderCallbacks =
-            new LoaderManager.LoaderCallbacks<TraktMovieHistoryLoader.Result>() {
-                @Override
-                public Loader<TraktMovieHistoryLoader.Result> onCreateLoader(int id, Bundle args) {
-                    showProgressBar(true);
-                    return new TraktMovieHistoryLoader(requireContext());
-                }
+            override fun onLoadFinished(
+                loader: Loader<TraktEpisodeHistoryLoader.Result>,
+                data: TraktEpisodeHistoryLoader.Result
+            ) {
+                setListData(data.results, data.emptyText)
+            }
 
-                @Override
-                public void onLoadFinished(@NonNull Loader<TraktMovieHistoryLoader.Result> loader,
-                        TraktMovieHistoryLoader.Result data) {
-                    if (!isAdded()) {
-                        return;
-                    }
-                    setListData(data.getResults(), data.getEmptyText());
-                }
-
-                @Override
-                public void onLoaderReset(@NonNull Loader<TraktMovieHistoryLoader.Result> loader) {
-                    // keep current data
-                }
-            };
+            override fun onLoaderReset(loader: Loader<TraktEpisodeHistoryLoader.Result>) {
+                // keep current data
+            }
+        }
 }

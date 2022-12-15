@@ -744,28 +744,22 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Videos.Video> {
-        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Videos.Video> {
-            return MovieTrailersLoader(
-                context,
-                args!!.getInt(ARG_TMDB_ID)
-            )
+    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Videos.Video?> {
+        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Videos.Video?> {
+            return MovieTrailersLoader(requireContext(), args!!.getInt(ARG_TMDB_ID))
         }
 
         override fun onLoadFinished(
-            trailersLoader: Loader<Videos.Video>,
+            trailersLoader: Loader<Videos.Video?>,
             trailer: Videos.Video?
         ) {
-            if (!isAdded) {
-                return
-            }
             if (trailer != null) {
                 this@MovieDetailsFragment.trailer = trailer
                 binding.buttonMovieTrailer.isEnabled = true
             }
         }
 
-        override fun onLoaderReset(trailersLoader: Loader<Videos.Video>) {
+        override fun onLoaderReset(trailersLoader: Loader<Videos.Video?>) {
             // do nothing
         }
     }

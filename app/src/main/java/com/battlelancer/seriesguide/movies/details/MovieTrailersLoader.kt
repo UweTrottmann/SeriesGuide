@@ -1,76 +1,64 @@
-package com.battlelancer.seriesguide.movies.details;
+package com.battlelancer.seriesguide.movies.details
 
-import android.content.Context;
-import android.text.TextUtils;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.movies.MoviesSettings;
-import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.androidutils.GenericSimpleLoader;
-import com.uwetrottmann.tmdb2.entities.Videos;
-import com.uwetrottmann.tmdb2.enumerations.VideoType;
-import com.uwetrottmann.tmdb2.services.MoviesService;
-import retrofit2.Response;
-import timber.log.Timber;
+import android.content.Context
+import android.text.TextUtils
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.movies.MoviesSettings.getMoviesLanguage
+import com.battlelancer.seriesguide.util.Errors
+import com.uwetrottmann.androidutils.GenericSimpleLoader
+import com.uwetrottmann.tmdb2.entities.Videos
+import com.uwetrottmann.tmdb2.enumerations.VideoType
+import timber.log.Timber
 
 /**
  * Loads a YouTube movie trailer from TMDb. Tries to get a local trailer, if not falls back to
  * English.
  */
-class MovieTrailersLoader extends GenericSimpleLoader<Videos.Video> {
+class MovieTrailersLoader(context: Context, private val tmdbId: Int) :
+    GenericSimpleLoader<Videos.Video?>(context) {
 
-    private int tmdbId;
-
-    MovieTrailersLoader(Context context, int tmdbId) {
-        super(context);
-        this.tmdbId = tmdbId;
-    }
-
-    @Override
-    public Videos.Video loadInBackground() {
+    override fun loadInBackground(): Videos.Video? {
         // try to get a local trailer
-        Videos.Video trailer = getTrailer(
-                MoviesSettings.getMoviesLanguage(getContext()), "get local movie trailer");
+        val trailer = getTrailer(
+            getMoviesLanguage(context), "get local movie trailer"
+        )
         if (trailer != null) {
-            return trailer;
+            return trailer
         }
-        Timber.d("Did not find a local movie trailer.");
+        Timber.d("Did not find a local movie trailer.")
 
         // fall back to default language trailer
-        return getTrailer(null, "get default movie trailer");
+        return getTrailer(null, "get default movie trailer")
     }
 
-    @Nullable
-    private Videos.Video getTrailer(@Nullable String language, @NonNull String action) {
-        MoviesService moviesService = SgApp.getServicesComponent(getContext()).moviesService();
+    private fun getTrailer(language: String?, action: String): Videos.Video? {
+        val moviesService = SgApp.getServicesComponent(context).moviesService()
         try {
-            Response<Videos> response = moviesService.videos(tmdbId, language).execute();
-            if (response.isSuccessful()) {
-                return extractTrailer(response.body());
+            val response = moviesService.videos(tmdbId, language).execute()
+            if (response.isSuccessful) {
+                return extractTrailer(response.body())
             } else {
-                Errors.logAndReport(action, response);
+                Errors.logAndReport(action, response)
             }
-        } catch (Exception e) {
-            Errors.logAndReport(action, e);
+        } catch (e: Exception) {
+            Errors.logAndReport(action, e)
         }
-        return null;
+        return null
     }
 
-    @Nullable
-    private Videos.Video extractTrailer(@Nullable Videos videos) {
-        if (videos == null || videos.results == null || videos.results.size() == 0) {
-            return null;
+    private fun extractTrailer(videos: Videos?): Videos.Video? {
+        val results = videos?.results
+        if (results == null || results.size == 0) {
+            return null
         }
 
         // fish out the first YouTube trailer
-        for (Videos.Video video : videos.results) {
-            if (video.type == VideoType.TRAILER && "YouTube".equals(video.site)
-                    && !TextUtils.isEmpty(video.key)) {
-                return video;
+        for (video in results) {
+            if (video.type == VideoType.TRAILER && "YouTube" == video.site
+                && !TextUtils.isEmpty(video.key)) {
+                return video
             }
         }
-
-        return null;
+        return null
     }
 }
