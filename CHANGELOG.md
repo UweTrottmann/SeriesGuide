@@ -8,11 +8,14 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
-Releases marked with 🧪 are/were available on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
+Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
 Version 66
 ----------
 *in development*
+
+#### 66.0.4 🧪
+*2022-12-16*
 
 * 🔧 Appearance: draw behind navigation bar in movie details screen.
 
