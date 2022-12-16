@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.movies;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +96,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged") // No need for incremental updates/animations.
     void updateMovies(@Nullable List<BaseMovie> newMovies) {
         movies.clear();
         if (newMovies != null) {
