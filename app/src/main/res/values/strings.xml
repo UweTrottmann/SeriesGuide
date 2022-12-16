@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Main Menu -->
     <string name="shows">Shows</string>
@@ -558,10 +558,10 @@
     <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
 
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Sign into your Amazon account</string>
-    <string name="subscription_unavailable">The subscription is currently not available</string>
-    <string name="subscription_failed">Purchase not completed</string>
-    <string name="pass_unavailable">X Pass is currently not available</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Sign into your Amazon account</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">The subscription is currently not available</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Purchase not completed</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass is currently not available</string>
 
     <!-- Extensions -->
     <string name="action_extensions_configure">Customize extensions</string>
