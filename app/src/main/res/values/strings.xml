@@ -319,7 +319,6 @@
     <string name="feature_sync">Sync</string>
 
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Sign In</string>
@@ -390,7 +389,6 @@
 
     <!-- Help -->
     <string name="feedback">Send feedback</string>
-    <string name="action_open_in_browser">Open in browser</string>
 
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>

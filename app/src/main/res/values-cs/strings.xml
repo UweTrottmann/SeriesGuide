@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Seriály</string>
     <string name="lists">Seznamy</string>
@@ -293,7 +293,6 @@
     <string name="feature_comments">Přidání komentářů</string>
     <string name="feature_sync">Synchronizace</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimentální!</string>
     <string name="hexagon_description">SeriesGuide Cloud pomáhá zálohovat a synchronizovat vaše seriály, seznamy a filmy.</string>
     <string name="hexagon_warning_trakt">Pokud jste přihlášení přes SeriesGuide Cloud, některé funkce trakt.tv nemusí být k dispozici.</string>
     <string name="hexagon_signin">Přihlásit se</string>
@@ -357,7 +356,6 @@
     <string name="pref_quick_checkin_summary">Bez možnosti přidání zprávy k ohlášení</string>
     <!-- Help -->
     <string name="feedback">Odeslat zpětnou vazbu</string>
-    <string name="action_open_in_browser">Otevřít v prohlížeči</string>
     <!-- Settings -->
     <string name="action_translate">Přeložit tuto aplikaci</string>
     <string name="action_contribute_content">Přeložit nebo vylepšit obsah</string>
@@ -515,10 +513,10 @@
     <string name="subscription_expired">Předplatné vypršelo</string>
     <string name="subscription_expired_details">Vaše zakoupení rozšířených funkcí vypršelo.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Přihlaste se ke svému účtu Amazon</string>
-    <string name="subscription_unavailable">Odběr momentálně není k dispozici.</string>
-    <string name="subscription_failed">Nákup nebyl dokončen.</string>
-    <string name="pass_unavailable">X Pass není momentálně k dispozici.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Přihlaste se ke svému účtu Amazon</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Odběr momentálně není k dispozici.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Nákup nebyl dokončen.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass není momentálně k dispozici.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Přispůsobit rozšíření</string>
     <string name="action_extensions_add">Přidat rozšíření</string>

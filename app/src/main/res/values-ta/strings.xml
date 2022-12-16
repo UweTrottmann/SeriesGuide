@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">நிகழ்ச்சி</string>
     <string name="lists">பட்டியல்கள்</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Post comments</string>
     <string name="feature_sync">Sync</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">பசோதனை</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">உள்நுழைக</string>
@@ -341,7 +340,6 @@
     <string name="pref_quick_checkin_summary">இல்லை செய்தியில் குறியீட்டு கேளுங்கள்</string>
     <!-- Help -->
     <string name="feedback">பின்னூட்டங்களை அனுப்பு</string>
-    <string name="action_open_in_browser">மேய்வானில் திற</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
     <string name="action_contribute_content">Translate or improve content</string>
@@ -493,10 +491,10 @@
     <string name="subscription_expired">சந்தா காலாவதியானது</string>
     <string name="subscription_expired_details">உங்கள் SeriesGuide சந்தா காலாவதியாகிவிட்டது.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">உங்கள் Amazon கணக்கு உள்!</string>
-    <string name="subscription_unavailable">இந்த சந்தா தற்போது இல்லை.</string>
-    <string name="subscription_failed">வாங்குதல் நிறைவடையவில்லை.</string>
-    <string name="pass_unavailable">X கடவுச் தற்போது இல்லை.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">உங்கள் Amazon கணக்கு உள்!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">இந்த சந்தா தற்போது இல்லை.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">வாங்குதல் நிறைவடையவில்லை.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X கடவுச் தற்போது இல்லை.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">நீட்டிப்புகள் விருப்பமாக்கு</string>
     <string name="action_extensions_add">நீட்டிப்பு சேர்</string>

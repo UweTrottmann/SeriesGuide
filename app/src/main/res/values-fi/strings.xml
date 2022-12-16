@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Ohjelmat</string>
     <string name="lists">Listat</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Lähetä kommentteja</string>
     <string name="feature_sync">Synkronointi</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Kokeellinen</string>
     <string name="hexagon_description">SeriesGuide Cloud auttaa varmuuskopioimaan ja synkronoimaan ohjelmasi, listasi ja elokuvasi.</string>
     <string name="hexagon_warning_trakt">Kun olet kirjautuneena sisään SeriesGuide Cloudiin, jotkin Traktin ominaisuudet eivät ole käytettävissä.</string>
     <string name="hexagon_signin">Kirjaudu sisään</string>
@@ -341,7 +340,6 @@
     <string name="pref_quick_checkin_summary">Älä kysy kuittausviestiä</string>
     <!-- Help -->
     <string name="feedback">Lähetä palautetta</string>
-    <string name="action_open_in_browser">Avaa selaimessa</string>
     <!-- Settings -->
     <string name="action_translate">Käännä tämä sovellus</string>
     <string name="action_contribute_content">Käännä tai paranna sisältöä</string>
@@ -493,10 +491,10 @@
     <string name="subscription_expired">Tilaus vanhentunut</string>
     <string name="subscription_expired_details">SeriesGuide-tilauksesi on vanhentunut.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Kirjaudu Amazon-tilillesi</string>
-    <string name="subscription_unavailable">Tilaus ei ole tällä hetkellä käytettävissä.</string>
-    <string name="subscription_failed">Ostos epäonnistui.</string>
-    <string name="pass_unavailable">X Pass ei ole tällä hetkellä käytettävissä.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Kirjaudu Amazon-tilillesi</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Tilaus ei ole tällä hetkellä käytettävissä.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Ostos epäonnistui.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass ei ole tällä hetkellä käytettävissä.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Muokkaa laajennuksia</string>
     <string name="action_extensions_add">Lisää laajennus</string>
