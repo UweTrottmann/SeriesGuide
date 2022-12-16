@@ -51,7 +51,8 @@
         android:restrictedAccountType="${applicationId}"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        android:theme="@style/Theme.SeriesGuide.Launch">
+        android:theme="@style/Theme.SeriesGuide.Launch"
+        tools:targetApi="tiramisu">
 
         <!-- AndroidX testing, remove once minSdkVersion is 28 or higher. -->
         <uses-library

@@ -8,12 +8,14 @@
     android:layout_height="match_parent">
 
     <!-- This app bar scrolls out of screen when scrolling up. -->
+    <!-- InconsistentLayout: Lint does not see app bar is included in other configurations. -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/sgAppBarLayout"
         style="@style/Widget.SeriesGuide.AppBarLayout.Transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        tools:ignore="InconsistentLayout">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/sgToolbar"

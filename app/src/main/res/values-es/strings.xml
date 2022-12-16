@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Series</string>
     <string name="lists">Listas</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Publicar comentarios</string>
     <string name="feature_sync">Sincronizar</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimental!</string>
     <string name="hexagon_description">SeriesGuide Cloud te permite realizar una copia de seguridad en la nube, y sincronizar tus series, listas y películas.</string>
     <string name="hexagon_warning_trakt">Mientras estés identificado en SeriesGuide Cloud, algunas funciones de trakt no estarán disponibles.</string>
     <string name="hexagon_signin">Iniciar sesión</string>
@@ -342,7 +341,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_quick_checkin_summary">No preguntar por un mensaje de check in</string>
     <!-- Help -->
     <string name="feedback">Enviar comentarios</string>
-    <string name="action_open_in_browser">Abrir en el navegador</string>
     <!-- Settings -->
     <string name="action_translate">Traducir esta aplicación</string>
     <string name="action_contribute_content">Traducir o mejorar el contenido</string>
@@ -494,10 +492,10 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="subscription_expired">Suscripción caducada</string>
     <string name="subscription_expired_details">Tu suscripción a las características X ha caducado.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Inicia sesión en tu cuenta de Amazon!</string>
-    <string name="subscription_unavailable">La suscripción no está disponible actualmente.</string>
-    <string name="subscription_failed">Compra no completada.</string>
-    <string name="pass_unavailable">El X Pass no esta disponible actualmente.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Inicia sesión en tu cuenta de Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">La suscripción no está disponible actualmente.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Compra no completada.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">El X Pass no esta disponible actualmente.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Personalizar extensiones</string>
     <string name="action_extensions_add">Agregar extensión</string>

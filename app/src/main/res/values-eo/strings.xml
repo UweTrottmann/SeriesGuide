@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Televidaĵoj</string>
     <string name="lists">Listoj</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Sendi komentoj</string>
     <string name="feature_sync">Sinkronigi</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Eksperimenta</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Ensaluti</string>
@@ -341,7 +340,6 @@
     <string name="pref_quick_checkin_summary">Ne demandi por kontrola mesaĝo</string>
     <!-- Help -->
     <string name="feedback">Sendi prikomentado</string>
-    <string name="action_open_in_browser">Malfermi en retumilo</string>
     <!-- Settings -->
     <string name="action_translate">Traduki tiun aplikaĵon</string>
     <string name="action_contribute_content">Traduki aŭ plibonigi enhavon</string>
@@ -493,10 +491,10 @@
     <string name="subscription_expired">Abono finiĝis</string>
     <string name="subscription_expired_details">Via SeriesGuide abono ĵus finiĝis.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Ensaluti al via Amazona konto</string>
-    <string name="subscription_unavailable">La abono nuntempe nedisponeblas</string>
-    <string name="subscription_failed">Aĉeto ne kompleta</string>
-    <string name="pass_unavailable">X Pass nuntempe nedisponeblas</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Ensaluti al via Amazona konto</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">La abono nuntempe nedisponeblas</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Aĉeto ne kompleta</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass nuntempe nedisponeblas</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Adapti aldonaĵoj</string>
     <string name="action_extensions_add">Aldoni aldonaĵon</string>

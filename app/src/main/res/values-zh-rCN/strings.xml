@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">节目</string>
     <string name="lists">列表</string>
@@ -272,7 +272,6 @@
     <string name="feature_comments">发布评论</string>
     <string name="feature_sync">同步</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">这是一个实验性功能！</string>
     <string name="hexagon_description">SeriesGuide Cloud 可帮您备份并同步您的节目、列表和电影</string>
     <string name="hexagon_warning_trakt">当登录到 SeriesGuide Cloud 时，Trakt 的某些功能将无法使用</string>
     <string name="hexagon_signin">登录</string>
@@ -333,7 +332,6 @@
     <string name="pref_quick_checkin_summary">不再询问签到内容</string>
     <!-- Help -->
     <string name="feedback">发送反馈</string>
-    <string name="action_open_in_browser">在浏览器中打开</string>
     <!-- Settings -->
     <string name="action_translate">翻译本应用</string>
     <string name="action_contribute_content">翻译或改进影视资料</string>
@@ -482,10 +480,10 @@
     <string name="subscription_expired">订阅已过期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 订阅已过期</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">登录您的亚马逊帐户</string>
-    <string name="subscription_unavailable">目前无法获取订阅</string>
-    <string name="subscription_failed">支付过程中断，购买无效</string>
-    <string name="pass_unavailable">目前无法获取 X Pass</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">登录您的亚马逊帐户</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">目前无法获取订阅</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">支付过程中断，购买无效</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">目前无法获取 X Pass</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">自定义扩展</string>
     <string name="action_extensions_add">添加扩展组件</string>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- UnusedAttribute: foreground only available on API 23+, that's fine. -->
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/checkedTextViewList"
@@ -15,4 +16,5 @@
     android:paddingRight="@dimen/larger_padding"
     android:paddingBottom="@dimen/default_padding"
     android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-    tools:text="Example List" />
+    tools:text="Example List"
+    tools:ignore="UnusedAttribute" />

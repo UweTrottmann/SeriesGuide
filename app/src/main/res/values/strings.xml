@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Main Menu -->
     <string name="shows">Shows</string>
@@ -319,7 +319,6 @@
     <string name="feature_sync">Sync</string>
 
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Sign In</string>
@@ -390,7 +389,6 @@
 
     <!-- Help -->
     <string name="feedback">Send feedback</string>
-    <string name="action_open_in_browser">Open in browser</string>
 
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
@@ -558,10 +556,10 @@
     <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
 
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Sign into your Amazon account</string>
-    <string name="subscription_unavailable">The subscription is currently not available</string>
-    <string name="subscription_failed">Purchase not completed</string>
-    <string name="pass_unavailable">X Pass is currently not available</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Sign into your Amazon account</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">The subscription is currently not available</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Purchase not completed</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass is currently not available</string>
 
     <!-- Extensions -->
     <string name="action_extensions_configure">Customize extensions</string>

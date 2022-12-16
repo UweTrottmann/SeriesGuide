@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.billing
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ open class SkuDetailsAdapter : RecyclerView.Adapter<SkuDetailsAdapter.SkuDetails
 
     fun getItem(position: Int) = if (skuDetailsList.isEmpty()) null else skuDetailsList[position]
 
+    @SuppressLint("NotifyDataSetChanged") // List is short, no point in only updating changed.
     fun setSkuDetailsList(list: List<AugmentedSkuDetails>) {
         if (list != skuDetailsList) {
             skuDetailsList = list

@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.shows.search.popular
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,7 @@ class ShowsPopularAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged") // Too much work to track changed positions.
     fun setAllPendingNotAdded() {
         // use the current PagedList instead of getItem to avoid loading more items
         (snapshot().items as List<SearchResult?>).let {

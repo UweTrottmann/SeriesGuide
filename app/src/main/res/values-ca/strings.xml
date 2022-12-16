@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Sèries</string>
     <string name="lists">Llistes</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Publicar comentaris</string>
     <string name="feature_sync">Sincronització</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud ajuda a fer còpia de seguretat i sincronitzar les teves sèries, llistes i pel·lícules.</string>
     <string name="hexagon_warning_trakt">Mentre siguis connectat a SeriesGuide Cloud algunes funcionalitats de trakt no són disponibles.</string>
     <string name="hexagon_signin">Inicia la sessió</string>
@@ -341,7 +340,6 @@
     <string name="pref_quick_checkin_summary">No demanis un missatge de registre</string>
     <!-- Help -->
     <string name="feedback">Envia comentaris</string>
-    <string name="action_open_in_browser">Obre al navegador</string>
     <!-- Settings -->
     <string name="action_translate">Traduïr l\'applicació</string>
     <string name="action_contribute_content">Tradueïx o millora el contingut</string>
@@ -493,10 +491,10 @@
     <string name="subscription_expired">La subscripció ha caducat</string>
     <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Inicia sessió al teu compte Amazon!</string>
-    <string name="subscription_unavailable">La subscripció no està disponible actualment.</string>
-    <string name="subscription_failed">Compra no completada.</string>
-    <string name="pass_unavailable">X Pass no està disponible actualment.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Inicia sessió al teu compte Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">La subscripció no està disponible actualment.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Compra no completada.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass no està disponible actualment.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Personalitzeu extensions</string>
     <string name="action_extensions_add">Afegeix extensió</string>

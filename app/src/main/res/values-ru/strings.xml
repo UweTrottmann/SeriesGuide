@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Сериалы</string>
     <string name="lists">Списки</string>
@@ -293,7 +293,6 @@
     <string name="feature_comments">Прокомментировать</string>
     <string name="feature_sync">Синхронизация</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Экспериментальный!</string>
     <string name="hexagon_description">SeriesGuide Cloud позволяет создавать резервную копию и синхронизировать ваши сериалы, списки и фильмы.</string>
     <string name="hexagon_warning_trakt">При подкючении к SeriesGuide Cloud некоторые функции trakt недоступны.</string>
     <string name="hexagon_signin">Войти</string>
@@ -357,7 +356,6 @@
     <string name="pref_quick_checkin_summary">Больше не спрашивать об отметке</string>
     <!-- Help -->
     <string name="feedback">Отправить отзыв</string>
-    <string name="action_open_in_browser">Открыть в браузере</string>
     <!-- Settings -->
     <string name="action_translate">Помочь с переводом</string>
     <string name="action_contribute_content">Перевести или улучшить контент</string>
@@ -515,10 +513,10 @@
     <string name="subscription_expired">Срок действия подписки истек</string>
     <string name="subscription_expired_details">Подписка X функции истекла.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Войдите в свой аккаунт Amazon!</string>
-    <string name="subscription_unavailable">Подписка в настоящее время не доступна.</string>
-    <string name="subscription_failed">Покупка не завершена.</string>
-    <string name="pass_unavailable">X Pass в данный момент не доступен.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Войдите в свой аккаунт Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Подписка в настоящее время не доступна.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Покупка не завершена.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass в данный момент не доступен.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Настроить расширения</string>
     <string name="action_extensions_add">Добавить расширение</string>

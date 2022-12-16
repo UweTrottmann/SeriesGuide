@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.shows.search.discover
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ class ShowsDiscoverAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged") // No need for incremental updates/animations.
     fun updateSearchResults(newSearchResults: List<SearchResult>?, showOnlyResults: Boolean) {
         this.showOnlyResults = showOnlyResults
         searchResults.clear()
@@ -46,6 +48,7 @@ class ShowsDiscoverAdapter(
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged") // Too much work to track changed positions.
     fun setStateForTmdbId(showTmdbId: Int, state: Int) {
         // multiple items may have the same TMDB id
         val matching = searchResults.asSequence()
@@ -57,6 +60,7 @@ class ShowsDiscoverAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged") // Too much work to track changed positions.
     fun setAllPendingNotAdded() {
         val matching = searchResults
             .asSequence()
