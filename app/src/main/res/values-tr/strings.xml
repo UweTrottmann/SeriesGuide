@@ -314,7 +314,8 @@
     <string name="disconnect">Bağlantıyı Kes</string>
     <string name="use_integrated_browser">Tarayıcı entegrasyonunu kullan</string>
     <string name="show_library">Trakt\'tan dizileri ekle</string>
-    <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur. <a href="https://trakt.tv">Daha fazla bilgi</a></string>
+    <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.</string>
+    <string name="support_trakt">Trakt\'ı VIP olarak destekle</string>
     <!-- trakt ratings -->
     <string name="action_rate">Derecelendir</string>
     <string name="your_rating">Sizin değerlendirmeniz</string>

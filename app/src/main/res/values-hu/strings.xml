@@ -314,7 +314,8 @@
     <string name="disconnect">Megszakítás</string>
     <string name="use_integrated_browser">Beépített böngésző használata</string>
     <string name="show_library">Sorozatok hozzáadása innen: Trakt</string>
-    <string name="about_trakt">a trakt segít nyilvántartani a nézett sorozatokat és filmeket. <a href="http://trakt.tv">Továbbiak (angolul)</a></string>
+    <string name="about_trakt">A Trakt segít nyilvántartani a nézett sorozatokat és filmeket.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Értékelj</string>
     <string name="your_rating">Saját értékelésed</string>

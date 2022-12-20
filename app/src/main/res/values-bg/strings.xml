@@ -314,7 +314,8 @@
     <string name="disconnect">Прекъсване на връзката</string>
     <string name="use_integrated_browser">Използвай вградения четец</string>
     <string name="show_library">Добавяне на сериали от Trakt</string>
-    <string name="about_trakt">trakt записва какви сериали и филми гледате. <a href="http://trakt.tv">Научете повече</a></string>
+    <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
+    <string name="support_trakt">Подкрепете Trakt с ВИП</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="your_rating">Вашата оценка</string>

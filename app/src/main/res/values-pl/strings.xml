@@ -328,7 +328,8 @@
     <string name="disconnect">Rozłącz</string>
     <string name="use_integrated_browser">Użyj zintegrowanej przeglądarki</string>
     <string name="show_library">Dodaj seriale z Trakt</string>
-    <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
+    <string name="about_trakt">Trakt pomaga zarządzać jakie seriale i filmy oglądasz.</string>
+    <string name="support_trakt">Wspomóż Trakt z VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
     <string name="your_rating">Twoja ocena</string>

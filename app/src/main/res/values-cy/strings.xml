@@ -342,7 +342,8 @@
     <string name="disconnect">Datgysylltwch</string>
     <string name="use_integrated_browser">Defnyddiwch borwr integredig</string>
     <string name="show_library">Ychwanegu rhaglenni o Trakt</string>
-    <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio. <a href="https://trakt.tv"> Dysgu mwy</a></string>
+    <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>
     <string name="your_rating">Eich sgôr</string>

@@ -314,7 +314,8 @@
     <string name="disconnect">Katkaise yhteys</string>
     <string name="use_integrated_browser">Käytä sisäistä selainta</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
-    <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista. <a href="https://trakt.tv">Lisätietoa</a></string>
+    <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
+    <string name="support_trakt">Tue Traktia VIP-tilauksella</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
     <string name="your_rating">Arvosanasi</string>

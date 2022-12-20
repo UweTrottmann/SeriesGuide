@@ -328,7 +328,8 @@
     <string name="disconnect">Odpojiť</string>
     <string name="use_integrated_browser">Použiť vstavaný prehliadač</string>
     <string name="show_library">Pridať seriály z Trakt</string>
-    <string name="about_trakt">V trakt zaznamenávate, ktoré seriály a filmy sledujete. <a href="https://trakt.tv">Zistite viac</a></string>
+    <string name="about_trakt">V Trakt zaznamenávate, ktoré seriály a filmy sledujete.</string>
+    <string name="support_trakt">Podporte Trakt s VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>
     <string name="your_rating">Vaše hodnotenie</string>

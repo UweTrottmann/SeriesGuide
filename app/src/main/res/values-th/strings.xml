@@ -307,7 +307,8 @@
     <string name="disconnect">เลิกเชื่อมต่อ</string>
     <string name="use_integrated_browser">ใช้เบราว์เซอร์ภายใน</string>
     <string name="show_library">เพิ่มรายการจาก Trakt</string>
-    <string name="about_trakt">trakt ช่วยเก็บบันทึกรายการทีวีและภาพยนตร์ที่คุณกำลังดูอยู่ <a href="https://trakt.tv">เรียนรู้เพิ่มเติม</a></string>
+    <string name="about_trakt">Trakt ช่วยเก็บบันทึกรายการทีวีและภาพยนตร์ที่คุณกำลังดูอยู่</string>
+    <string name="support_trakt">สนับสนุน Trakt ด้วย VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">ให้คะแนน</string>
     <string name="your_rating">คะแนนของคุณ</string>

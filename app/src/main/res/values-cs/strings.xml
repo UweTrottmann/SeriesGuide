@@ -328,7 +328,8 @@
     <string name="disconnect">Odpojit</string>
     <string name="use_integrated_browser">Použít integrovaný prohlížeč</string>
     <string name="show_library">Přidat seriály z Trakt</string>
-    <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete. <a href="https://trakt.tv">Další informace</a></string>
+    <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ohodnotit</string>
     <string name="your_rating">Vaše hodnocení</string>
