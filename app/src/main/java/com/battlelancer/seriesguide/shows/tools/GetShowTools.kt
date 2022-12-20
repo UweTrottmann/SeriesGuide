@@ -76,18 +76,33 @@ class GetShowTools @Inject constructor(
                     votes = traktShow?.votes?.let { if (it >= 0) it else 0 } ?: 0
                 ))
             }.getOrElse {
-                if (existingShow == null) return Err(it.toGetShowError())
-                // Use previously loaded details instead of failing.
-                TraktDetails(
-                    traktIdOrNull = existingShow.traktId,
-                    releaseTime = existingShow.releaseTimeOrDefault,
-                    releaseWeekDay = existingShow.releaseWeekDayOrDefault,
-                    releaseCountry = existingShow.releaseCountry,
-                    releaseTimeZone = existingShow.releaseTimeZone,
-                    firstRelease = existingShow.firstReleaseOrDefault,
-                    rating = existingShow.ratingGlobalOrZero,
-                    votes = existingShow.ratingVotesOrZero
-                )
+                if (existingShow == null) {
+                    // Use default values instead of failing.
+                    // On the next update Trakt might return a response and all
+                    // episode release times are recalculated.
+                    TraktDetails(
+                        traktIdOrNull = null,
+                        releaseTime = TimeTools.parseShowReleaseTime(null),
+                        releaseWeekDay = TimeTools.parseShowReleaseWeekDay(null),
+                        releaseCountry = null,
+                        releaseTimeZone = null,
+                        firstRelease = TimeTools.parseShowFirstRelease(null),
+                        rating = 0.0,
+                        votes = 0
+                    )
+                } else {
+                    // Use previously loaded details instead of failing.
+                    TraktDetails(
+                        traktIdOrNull = existingShow.traktId,
+                        releaseTime = existingShow.releaseTimeOrDefault,
+                        releaseWeekDay = existingShow.releaseWeekDayOrDefault,
+                        releaseCountry = existingShow.releaseCountry,
+                        releaseTimeZone = existingShow.releaseTimeZone,
+                        firstRelease = existingShow.firstReleaseOrDefault,
+                        rating = existingShow.ratingGlobalOrZero,
+                        votes = existingShow.ratingVotesOrZero
+                    )
+                }
             }
 
         val title = if (tmdbShow.name.isNullOrEmpty()) {

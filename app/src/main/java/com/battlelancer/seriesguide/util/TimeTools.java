@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
+import com.battlelancer.seriesguide.shows.database.SgEpisode2;
 import com.battlelancer.seriesguide.shows.overview.UnwatchedUpdateWorker;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -62,7 +62,7 @@ public class TimeTools {
 
     /**
      * Returns whether the given {@link Date} is before now.
-     *
+     * <p>
      * Note: this may seem harsh, but is equal to how to be released are calculated for seasons.
      *
      * @see UnwatchedUpdateWorker
@@ -73,8 +73,9 @@ public class TimeTools {
 
     /**
      * Returns the appropriate time zone for the given tzdata zone identifier.
-     *
-     * <p> Falls back to "America/New_York" if timezone string is empty or unknown.
+     * <p>
+     * If the string is empty or zone unknown, falls back to the devices time zone,
+     * or "America/New_York".
      */
     public static ZoneId getDateTimeZone(@Nullable String timezone) {
         if (timezone != null && timezone.length() != 0) {
@@ -84,7 +85,12 @@ public class TimeTools {
             }
         }
 
-        return ZoneId.of(TIMEZONE_ID_US_EASTERN);
+        try {
+            return ZoneId.systemDefault();
+        } catch (Exception e) {
+            Errors.logAndReport("Failed to get system time zone", e);
+            return ZoneId.of(TIMEZONE_ID_US_EASTERN);
+        }
     }
 
     /**
@@ -172,7 +178,7 @@ public class TimeTools {
      * Calculates the episode release date time as a millisecond instant. Adjusts for time zone
      * effects on release time, e.g. delays between time zones (e.g. in the United States) and DST.
      *
-     * @param showTimeZone See {@link #getDateTimeZone(String)}.
+     * @param showTimeZone    See {@link #getDateTimeZone(String)}.
      * @param showReleaseTime See {@link #getShowReleaseTime(int)}.
      * @return -1 if no conversion was possible. Otherwise, any other long value (may be negative!).
      */
@@ -485,7 +491,7 @@ public class TimeTools {
      * - If the time is today, returns local variant of 'Released today'.
      * - If the time is within the next or previous 6 days, just returns the day.
      * - If the time is more than 6 weeks away, returns the day with a short date.
-     *
+     * <p>
      * Note: on Android L_MR1 and below, shows date instead as 'in x weeks' is not supported.
      */
     public static String formatToLocalDayAndRelativeWeek(Context context, Date thenDate) {
