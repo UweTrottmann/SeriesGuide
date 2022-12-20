@@ -52,7 +52,7 @@
     <string name="people_empty">Onko kukaan täällä?! Kosketa yrittääksesi uudelleen.</string>
     <string name="database_error">Tietojen muokkaaminen ei onnistunut.</string>
     <string name="reinstall_info">Yritä varmuuskopioida asetuksista, asenna uudelleen ja palauta.</string>
-    <string name="api_error_generic">Kommunikointi palvelun %s kanssa ei onnistunut. Yritä myöhemmin uudelleen.</string>
+    <string name="api_error_generic">Kommunikointi %sin kanssa ei onnistu. Yritä myöhemmin uudelleen.</string>
     <string name="api_failed">Epäonnistui: %s</string>
     <string name="copy_to_clipboard">Kopioitu leikepöydälle</string>
     <string name="not_migrated">Sarjaa ei ole siirretty TMDB:hen. Jotkut toiminnot, kuten Trakt- ja Cloud-synkronointi, eivät välttämättä toimi. Suosittelemme, että teet uuden haun ja poistat tämän sarjan. Napauta nähdäksesi tiedot.</string>
@@ -207,7 +207,7 @@
     <string name="add_all">Lisää kaikki</string>
     <string name="add_multiple">Kaikki ohjelmat ilmestyvät pian ohjelmalistaasi</string>
     <string name="add_started">%s ilmestyy pian ohjelmalistallesi</string>
-    <string name="add_error">Ei voitu lisätä ohjelmaa %s.</string>
+    <string name="add_error">Ei lisätty ohjelmaa %s.</string>
     <string name="add_already_exists">%s on jo ohjelmalistallasi.</string>
     <string name="title_new_episodes">Uusia jaksoja</string>
     <string name="watched_shows">Katsotut</string>
