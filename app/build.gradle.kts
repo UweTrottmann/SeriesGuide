@@ -3,8 +3,8 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 if (project.file("google-services.json").exists()) {
@@ -147,7 +147,6 @@ kapt {
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib.jdk8)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 val sgCompileSdk: Int by rootProject.extra
@@ -37,7 +37,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib.jdk8)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 

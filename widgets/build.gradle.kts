@@ -1,6 +1,6 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
+    kotlin("android")
 }
 
 val sgCompileSdk: Int by rootProject.extra
@@ -31,8 +31,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib.jdk8)
-
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.viewpager)
