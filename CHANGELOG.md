@@ -15,6 +15,7 @@ Version 66
 *in development*
 
 * 🔧 When adding a show, do not fail if just Trakt info can not be loaded.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 66.0.4 🧪
 *2022-12-16*
