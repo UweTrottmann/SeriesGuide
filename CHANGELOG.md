@@ -14,7 +14,11 @@ Version 66
 ----------
 *in development*
 
-* 🔧 When adding a show, do not fail if just Trakt info can not be loaded.
+#### 66.0.5
+*2022-12-21*
+
+* 🔧 Support adding shows when Trakt is down, use default values (e.g. for release time and time zone).
+* 🔧 Trakt: add button to support with VIP; button to open website (or dashboard when signed in).
 * 📝 Latest user interface translations from Crowdin.
 
 #### 66.0.4 🧪
