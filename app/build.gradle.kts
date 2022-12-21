@@ -227,7 +227,7 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
     // Firebase Sign-In
     implementation(libs.firebase.ui.auth)
-    // Update play-services-auth which adds Android 12 mutable Intent flags.
+    // Use later play-services-auth than firebase-ui-auth to get latest fixes.
     // https://developers.google.com/android/guides/releases
     implementation(libs.play.services.auth)
 
