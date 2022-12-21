@@ -2,10 +2,10 @@ package com.battlelancer.seriesguide.traktapi
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsB
 import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
 import com.battlelancer.seriesguide.ui.SearchActivity.Companion.newIntent
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.Utils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -33,9 +34,6 @@ class ConnectTraktCredentialsFragment : Fragment() {
 
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewTraktCredentials)
 
-        // make learn more link clickable
-        binding.textViewTraktAbout.movementMethod = LinkMovementMethod.getInstance()
-
         val hexagonEnabled = HexagonSettings.isEnabled(requireContext())
         binding.featureStatusTraktCheckIn.setFeatureEnabled(!hexagonEnabled)
         binding.featureStatusTraktSync.setFeatureEnabled(!hexagonEnabled)
@@ -46,6 +44,14 @@ class ConnectTraktCredentialsFragment : Fragment() {
         binding.buttonTraktLibrary.setOnClickListener {
             // open search tab, will now have links to trakt lists
             startActivity(newIntent(requireContext()))
+        }
+        // Learn more button
+        binding.buttonTraktWebsite.setOnClickListener {
+            Utils.launchWebsite(requireContext(), getString(R.string.url_trakt))
+        }
+        // VIP button
+        binding.buttonTraktSupport.setOnClickListener {
+            Utils.launchWebsite(requireContext(), getString(R.string.url_trakt_vip))
         }
 
         binding.syncStatusTrakt.visibility = View.GONE
@@ -85,13 +91,12 @@ class ConnectTraktCredentialsFragment : Fragment() {
                 username += " ($displayName)"
             }
             binding.textViewTraktUser.text = username
-            setAccountButtonState(false)
-            binding.buttonTraktLibrary.visibility = View.VISIBLE
         } else {
             binding.textViewTraktUser.text = null
-            setAccountButtonState(true)
-            binding.buttonTraktLibrary.visibility = View.GONE
         }
+        setAccountButtonState(!hasCredentials)
+        binding.buttonTraktLibrary.isGone = !hasCredentials
+        binding.buttonTraktSupport.isGone = !hasCredentials
     }
 
     private fun connect() {

@@ -314,7 +314,8 @@
     <string name="disconnect">Afbryd</string>
     <string name="use_integrated_browser">Brug integreret browser</string>
     <string name="show_library">Tilføj serier fra Trakt</string>
-    <string name="about_trakt">trakt hjælper dig med at holde styr på dine TV-serier. <a href="https://trakt.tv">Flere oplysninger</a></string>
+    <string name="about_trakt">Trakt hjælper dig med at holde styr på dine TV-serier.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
     <string name="your_rating">Din bedømmelse</string>

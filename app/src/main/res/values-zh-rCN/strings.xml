@@ -307,7 +307,8 @@
     <string name="disconnect">断开</string>
     <string name="use_integrated_browser">使用内置浏览器</string>
     <string name="show_library">从 Trakt 中添加节目</string>
-    <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。<a href="https://trakt.tv">了解详情</a></string>
+    <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。</string>
+    <string name="support_trakt">使用 VIP 支持 Trakt</string>
     <!-- trakt ratings -->
     <string name="action_rate">评分</string>
     <string name="your_rating">您的评分</string>

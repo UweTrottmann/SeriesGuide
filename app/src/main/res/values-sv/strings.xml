@@ -314,7 +314,8 @@
     <string name="disconnect">Koppla ner</string>
     <string name="use_integrated_browser">Använd inbyggd webbläsare</string>
     <string name="show_library">Lägg till serier från Trakt</string>
-    <string name="about_trakt">trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på. <a href="http://trakt.tv">Lär dig mer</a></string>
+    <string name="about_trakt">Trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
     <string name="your_rating">Ditt betyg</string>

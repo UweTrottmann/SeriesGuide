@@ -182,4 +182,16 @@ public class TimeToolsTest {
                 .that(showTimeCorrected.withZoneSameInstant(ZoneId.of(timeZone)).toLocalTime())
                 .isEqualTo(localTimeExpected);
     }
+
+    @Test
+    public void test_getDateTimeZone() {
+        ZoneId defaultTimeZone = TimeTools.getDateTimeZone(null);
+        assertWithMessage("Emulators by default set to GMT")
+                .that(defaultTimeZone.toString()).isEqualTo("GMT");
+        // Test some common time zones to make sure threetenbp works.
+        assertThat(TimeTools.getDateTimeZone("Europe/Berlin").toString())
+                .isEqualTo("Europe/Berlin");
+        assertThat(TimeTools.getDateTimeZone(TimeTools.TIMEZONE_ID_US_EASTERN).toString())
+                .isEqualTo(TimeTools.TIMEZONE_ID_US_EASTERN);
+    }
 }
