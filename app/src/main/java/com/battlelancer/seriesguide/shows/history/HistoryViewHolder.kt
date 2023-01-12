@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
 import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
+import com.battlelancer.seriesguide.util.CircleTransformation
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
@@ -49,6 +50,7 @@ class HistoryViewHolder(
 
             // user avatar
             ServiceUtils.loadWithPicasso(context, item.avatar)
+                .transform(avatarTransform)
                 .into(binding.imageViewHistoryAvatar)
         }
 
@@ -97,5 +99,9 @@ class HistoryViewHolder(
         )
 
         binding.textViewHistoryShow.text = item.title
+    }
+
+    companion object {
+        private val avatarTransform = CircleTransformation()
     }
 }
