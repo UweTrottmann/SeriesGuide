@@ -317,7 +317,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="use_integrated_browser">Usar navegador integrado</string>
     <string name="show_library">Añadir series de Trakt</string>
     <string name="about_trakt">Trakt ayuda a mantener un registro de los programas de televisión y películas que estás viendo.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="support_trakt">Ayuda a Trakt con VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Calificar</string>
     <string name="your_rating">Tu calificación</string>
