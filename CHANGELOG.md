@@ -15,8 +15,12 @@ Version 66
 ----------
 *in development*
 
-* 🔧 Trakt: show special error messages if account is locked or list limit exceeded.
+#### 66.0.6
+*2023-01-13*
 
+* 🔧 Trakt: show special error messages if account is locked or list limit exceeded.
+* 📝 Latest user interface translations from Crowdin.
+* 
 #### 66.0.5
 *2022-12-21*
 
