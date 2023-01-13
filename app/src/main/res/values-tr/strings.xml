@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Bir şeyler yanlış gitti. Trakt giriş bilgilerinizi kontrol edin ve tekrar deneyin.</string>
     <string name="trakt_error_not_exists">Trakt\'ta (henüz) mevcut değil. Daha sonra tekrar deneyin.</string>
     <string name="trakt_notice_not_exists">Trakt\'ta (henüz) mevcut değil.</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Trakt\'a bağlan</string>
     <string name="trakt_reconnect">SeriesGuide ile Trakt\'a bağlan</string>

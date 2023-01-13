@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Noget gik galt. Kontrollér dine trakt-brugeroplysninger, og prøv igen.</string>
     <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Prøv igen senere.</string>
     <string name="trakt_notice_not_exists">Kan ikke spores med trakt (endnu).</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Forbind til trakt</string>
     <string name="trakt_reconnect">Forbind SeriesGuide til trakt</string>

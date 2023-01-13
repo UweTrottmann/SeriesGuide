@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
     <string name="trakt_error_not_exists">No disponible (encara) a trakt. Prova més tard.</string>
     <string name="trakt_notice_not_exists">No pot ser registrada (encara) a Trakt.</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Connecta\'t al Trakt</string>
     <string name="trakt_reconnect">Connecta SeriesGuide a Trakt</string>

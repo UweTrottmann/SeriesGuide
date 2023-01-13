@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre Trakt-Zugangsdaten und versuchen Sie es erneut.</string>
     <string name="trakt_error_not_exists">(Noch) nicht bei Trakt verfügbar. Versuchen Sie es später erneut.</string>
     <string name="trakt_notice_not_exists">Kann (noch) nicht mit Trakt verwaltet werden</string>
+    <string name="trakt_error_limit_exceeded">Liste ist voll, entferne Sie zuerst etwas.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Mit Trakt verbinden</string>
     <string name="trakt_reconnect">SeriesGuide mit Trakt verbinden</string>

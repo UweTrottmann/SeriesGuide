@@ -333,6 +333,7 @@
     <string name="trakt_error_credentials">Aeth rhywbeth o\'i le. Gwiriwch eich cymwysterau Trakt a rhoi cynnig arall arni.</string>
     <string name="trakt_error_not_exists">Ddim (eto) ar gael ar Trakt. Rhowch gynnig arall arni yn nes ymlaen.</string>
     <string name="trakt_notice_not_exists">Ni ellir (eto) olrhain gyda Trakt</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Cysylltu Trakt</string>
     <string name="trakt_reconnect">Cysylltu SeriesGuide â Trakt</string>

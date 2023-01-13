@@ -319,6 +319,7 @@
     <string name="trakt_error_credentials">Chyba. Skontrolujte užívateľské meno/heslo na trakt a skúste to znova.</string>
     <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
     <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Pripojiť na trakt</string>
     <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>

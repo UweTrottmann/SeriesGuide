@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
     <string name="trakt_error_not_exists">Nog (niet) beschikbaar op trakt. Probeer het later nog eens.</string>
     <string name="trakt_notice_not_exists">Kan (nog) niet gevolgd worden via trakt.</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Verbinden met trakt</string>
     <string name="trakt_reconnect">Verbind SeriesGuide met trakt</string>

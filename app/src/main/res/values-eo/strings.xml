@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Io misokazis. Kontrolu viajn identigilojn de Trakt kaj reprovu.</string>
     <string name="trakt_error_not_exists">Ne (ankoraŭ) disponebla je Trakt. Reprovu poste.</string>
     <string name="trakt_notice_not_exists">Ne povas (jam) sekvi Trakton</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Konekti Trakt -on</string>
     <string name="trakt_reconnect">Konekti SeriesGuide al Trakt</string>

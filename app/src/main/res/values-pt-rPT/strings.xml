@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais estão correctas e tenta de novo.</string>
     <string name="trakt_error_not_exists">Não está (ainda) disponível no Trakt. Tenta mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Conectar ao Trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide ao trakt</string>

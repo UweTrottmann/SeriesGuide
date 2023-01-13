@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista Trakt-tunnuksesi ja yritä uudelleen.</string>
     <string name="trakt_error_not_exists">Ei (vielä) saatavilla Traktissa. Yritä myöhemmin uudelleen.</string>
     <string name="trakt_notice_not_exists">Ei voida (vielä) seurata Traktissa</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Yhdistä Traktiin</string>
     <string name="trakt_reconnect">Yhdistä SeriesGuide Traktiin</string>

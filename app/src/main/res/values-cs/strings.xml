@@ -319,6 +319,7 @@
     <string name="trakt_error_credentials">Nastala chyba. Zkontrolujte vaše přihlašovací údaje pro Trakt a zkuste to znovu.</string>
     <string name="trakt_error_not_exists">Na Traktu není (zatím) k dispozici. Zkuste to později.</string>
     <string name="trakt_notice_not_exists">Nelze (zatím) synchronizovat s traktem.</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Připojit trakt.tv</string>
     <string name="trakt_reconnect">Připojit SeriesGuide k trakt.tv</string>

@@ -312,6 +312,7 @@
     <string name="trakt_error_credentials">Ceva a mers prost. Vă rugăm să vă verificaţi acreditările şi să încercaţi din nou.</string>
     <string name="trakt_error_not_exists">Nu este (încă) disponibil pe trakt. Încearcă mai târziu.</string>
     <string name="trakt_notice_not_exists">Nu poate (încă) fi urmărit cu trakt.</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Conectaţi trakt</string>
     <string name="trakt_reconnect">Conectează SeriesGuide cu trakt</string>

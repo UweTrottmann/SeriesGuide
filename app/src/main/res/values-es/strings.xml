@@ -306,6 +306,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="trakt_error_credentials">Algo salió mal. Por favor comprueba tus credenciales y vuelve a intentarlo.</string>
     <string name="trakt_error_not_exists">No disponible (todavía) en trakt. Prueba más tarde.</string>
     <string name="trakt_notice_not_exists">No puede ser seguido (todavía) con trakt.</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Conectar a trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide a trakt</string>

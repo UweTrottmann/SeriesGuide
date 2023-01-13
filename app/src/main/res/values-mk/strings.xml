@@ -305,6 +305,7 @@
     <string name="trakt_error_credentials">Нешто тргна наопаку. Проверете ја вашата trakt сметка и обидете се повторно.</string>
     <string name="trakt_error_not_exists">Не е (сеуште) достапно на trakt. Пробајте подоцна.</string>
     <string name="trakt_notice_not_exists">Не може (сеуште) да бидат тракирани со trakt.</string>
+    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Поврзи trakt</string>
     <string name="trakt_reconnect">Конектирај SeriesGuide со trakt</string>
