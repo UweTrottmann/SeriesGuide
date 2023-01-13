@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.SyncErrors;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.enums.Rating;
@@ -38,11 +39,12 @@ public abstract class BaseRateItemTask extends BaseActionTask {
 
             SyncItems ratedItems = buildTraktSyncItems();
             if (ratedItems == null) {
-                return ERROR_TRAKT_API;
+                return ERROR_DATABASE;
             }
 
-            Sync traktSync = SgApp.getServicesComponent(getContext()).traktSync();
-            int result = executeTraktCall(traktSync.addRatings(ratedItems), getTraktAction(),
+            TraktV2 trakt = SgApp.getServicesComponent(getContext()).trakt();
+            Sync traktSync = trakt.sync();
+            int result = executeTraktCall(traktSync.addRatings(ratedItems), trakt, getTraktAction(),
                     body -> {
                         SyncErrors notFound = body.not_found;
                         if (notFound != null) {

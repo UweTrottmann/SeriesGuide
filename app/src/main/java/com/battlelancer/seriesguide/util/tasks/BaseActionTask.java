@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
 import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.trakt5.TraktV2;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -19,12 +20,21 @@ import retrofit2.Response;
 public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
 
     public static final int SUCCESS = 0;
-    public static final int ERROR_NETWORK = -1;
+    private static final int ERROR_NETWORK = -1;
     public static final int ERROR_DATABASE = -2;
     public static final int ERROR_TRAKT_AUTH = -3;
-    public static final int ERROR_TRAKT_API = -4;
+    private static final int ERROR_TRAKT_API_CLIENT = -4;
     public static final int ERROR_TRAKT_API_NOT_FOUND = -5;
     public static final int ERROR_HEXAGON_API = -6;
+    private static final int ERROR_TRAKT_API_SERVER = -7;
+    /**
+     * Account limit exceeded (list count, item count, ...).
+     */
+    private static final int ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED = -8;
+    /**
+     * Locked User Account, have the user contact Trakt support.
+     */
+    private static final int ERROR_TRAKT_ACCOUNT_LOCKED = -9;
 
     @SuppressLint("StaticFieldLeak") // using application context
     private final Context context;
@@ -69,6 +79,7 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
 
     public <T> int executeTraktCall(
             Call<T> call,
+            TraktV2 trakt,
             String action,
             ResponseCallback<T> callbackOnSuccess
     ) {
@@ -76,18 +87,32 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
             Response<T> response = call.execute();
             if (response.isSuccessful()) {
                 T body = response.body();
-                if (body == null) return ERROR_TRAKT_API;
+                if (body == null) {
+                    return ERROR_TRAKT_API_CLIENT;
+                }
                 return callbackOnSuccess.handleSuccessfulResponse(body);
             } else {
                 if (SgTrakt.isUnauthorized(getContext(), response)) {
                     return ERROR_TRAKT_AUTH;
                 }
-                Errors.logAndReport(action, response);
-                return ERROR_TRAKT_API;
+                Errors.logAndReport(
+                        action, response,
+                        SgTrakt.checkForTraktError(trakt, response)
+                );
+                int code = response.code();
+                if (code == 429 || code >= 500) {
+                    return ERROR_TRAKT_API_SERVER;
+                } else if (code == 420) {
+                    return ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED;
+                } else if (code == 423) {
+                    return ERROR_TRAKT_ACCOUNT_LOCKED;
+                } else {
+                    return ERROR_TRAKT_API_CLIENT;
+                }
             }
         } catch (Exception e) {
             Errors.logAndReport(action, e);
-            return ERROR_TRAKT_API;
+            return ERROR_NETWORK;
         }
     }
 
@@ -117,7 +142,11 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
                 case ERROR_TRAKT_AUTH:
                     confirmationText = context.getString(R.string.trakt_error_credentials);
                     break;
-                case ERROR_TRAKT_API:
+                // Currently not differentiating client and server errors
+                // as there is no retry mechanism. May need to change once
+                // migrated to jobs.
+                case ERROR_TRAKT_API_CLIENT:
+                case ERROR_TRAKT_API_SERVER:
                     confirmationText = context.getString(R.string.api_error_generic,
                             context.getString(R.string.trakt));
                     break;
@@ -127,6 +156,12 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
                 case ERROR_HEXAGON_API:
                     confirmationText = context.getString(R.string.api_error_generic,
                             context.getString(R.string.hexagon));
+                    break;
+                case ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED:
+                    confirmationText = context.getString(R.string.trakt_error_limit_exceeded);
+                    break;
+                case ERROR_TRAKT_ACCOUNT_LOCKED:
+                    confirmationText = context.getString(R.string.trakt_error_account_locked);
                     break;
                 default:
                     confirmationText = null;

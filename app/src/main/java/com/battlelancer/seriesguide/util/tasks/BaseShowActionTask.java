@@ -4,6 +4,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
@@ -37,9 +38,10 @@ public abstract class BaseShowActionTask extends BaseActionTask {
             }
 
             SyncItems items = new SyncItems().shows(new SyncShow().id(ShowIds.tmdb(showTmdbId)));
-            Sync traktSync = SgApp.getServicesComponent(getContext()).traktSync();
+            TraktV2 trakt = SgApp.getServicesComponent(getContext()).trakt();
+            Sync traktSync = trakt.sync();
 
-            int result = executeTraktCall(buildTraktCall(traktSync, items), getTraktAction(),
+            int result = executeTraktCall(buildTraktCall(traktSync, items), trakt, getTraktAction(),
                     body -> {
                         if (isShowNotFound(body)) {
                             return ERROR_TRAKT_API_NOT_FOUND;
