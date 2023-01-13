@@ -22,7 +22,7 @@ public class AddShowToWatchlistTask extends BaseShowActionTask {
 
     @NonNull
     @Override
-    protected Call<SyncResponse> doTraktAction(Sync traktSync, SyncItems items) {
+    protected Call<SyncResponse> buildTraktCall(Sync traktSync, SyncItems items) {
         return traktSync.addItemsToWatchlist(items);
     }
 

@@ -4,12 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings;
+import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
 import com.battlelancer.seriesguide.ui.BaseMessageActivity;
+import com.battlelancer.seriesguide.util.Errors;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import org.greenrobot.eventbus.EventBus;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
 
@@ -57,6 +62,34 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
     }
 
     protected abstract Integer doBackgroundAction(Void... params);
+
+    public interface ResponseCallback<T> {
+        int handleSuccessfulResponse(@NonNull T body);
+    }
+
+    public <T> int executeTraktCall(
+            Call<T> call,
+            String action,
+            ResponseCallback<T> callbackOnSuccess
+    ) {
+        try {
+            Response<T> response = call.execute();
+            if (response.isSuccessful()) {
+                T body = response.body();
+                if (body == null) return ERROR_TRAKT_API;
+                return callbackOnSuccess.handleSuccessfulResponse(body);
+            } else {
+                if (SgTrakt.isUnauthorized(getContext(), response)) {
+                    return ERROR_TRAKT_AUTH;
+                }
+                Errors.logAndReport(action, response);
+                return ERROR_TRAKT_API;
+            }
+        } catch (Exception e) {
+            Errors.logAndReport(action, e);
+            return ERROR_TRAKT_API;
+        }
+    }
 
     @CallSuper
     @Override
