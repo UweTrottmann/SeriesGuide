@@ -3,10 +3,8 @@ package com.battlelancer.seriesguide.jobs
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
-import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
-import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -98,34 +96,10 @@ class TraktMovieJob(
             else -> throw IllegalArgumentException("Action $action not supported.")
         }
 
-        // execute call
-        try {
-            val response = call.execute()
-            if (response.isSuccessful) {
-                // check if any items were not found
-                if (!isSyncSuccessful(response.body())) {
-                    return ERROR_TRAKT_NOT_FOUND
-                }
-            } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return ERROR_TRAKT_AUTH
-                }
-                Errors.logAndReport(
-                    errorLabel, response,
-                    SgTrakt.checkForTraktError(trakt, response)
-                )
-                val code = response.code()
-                return if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
-                    ERROR_TRAKT_SERVER
-                } else {
-                    ERROR_TRAKT_CLIENT
-                }
-            }
-        } catch (e: Exception) {
-            Errors.logAndReport(errorLabel, e)
-            return ERROR_CONNECTION
-        }
-        return SUCCESS
+        return executeTraktCall(context, trakt, call, errorLabel) { _, body ->
+            // Check if any items were not found.
+            if (isSyncSuccessful(body)) Ok(SUCCESS) else Err(ERROR_TRAKT_NOT_FOUND)
+        }.getOrElse { return it }
     }
 
     private fun watchedEntryExistsAt(

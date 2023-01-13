@@ -67,6 +67,14 @@ abstract class BaseNetworkJob(
                 error = context.getString(R.string.trakt_notice_not_exists)
                 removeJob = true
             }
+            ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED -> {
+                error = context.getString(R.string.trakt_error_limit_exceeded)
+                removeJob = true
+            }
+            ERROR_TRAKT_ACCOUNT_LOCKED -> {
+                error = context.getString(R.string.trakt_error_account_locked)
+                removeJob = true
+            }
             else -> return NetworkJobResult(successful = true, jobRemovable = true)
         }
         return NetworkJobResult(
@@ -113,11 +121,14 @@ abstract class BaseNetworkJob(
                     SgTrakt.checkForTraktError(trakt, response)
                 )
                 val code = response.code()
-                return@andThen if (code == 429 /* Rate Limit Exceeded */ || code >= 500) {
-                    Err(ERROR_TRAKT_SERVER)
-                } else {
-                    Err(ERROR_TRAKT_CLIENT)
+                val resultCode = when {
+                    // 429 Rate Limit Exceeded or server error
+                    code == 429 || code >= 500 -> ERROR_TRAKT_SERVER
+                    code == 420 -> ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED
+                    code == 423 -> ERROR_TRAKT_ACCOUNT_LOCKED
+                    else -> ERROR_TRAKT_CLIENT
                 }
+                return Err(resultCode)
             }
         }
     }
@@ -144,5 +155,11 @@ abstract class BaseNetworkJob(
         /** Issue with connection or server, should retry.  */
         const val ERROR_HEXAGON_SERVER = -7
         const val ERROR_HEXAGON_AUTH = -8
+
+        /** Account limit exceeded (list count, item count, ...), do not retry, but notify.  */
+        private const val ERROR_TRAKT_ACCOUNT_LIMIT_EXCEEDED = -9
+
+        /** Locked User Account, have the user contact Trakt support. */
+        private const val ERROR_TRAKT_ACCOUNT_LOCKED = -10
     }
 }
