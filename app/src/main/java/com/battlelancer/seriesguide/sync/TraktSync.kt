@@ -2,16 +2,19 @@ package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools2
+import com.battlelancer.seriesguide.util.Errors
 import com.github.michaelbull.result.getOrElse
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.entities.LastActivityMore
 import com.uwetrottmann.trakt5.services.Sync
+import retrofit2.Response
 import timber.log.Timber
 
 /**
@@ -156,6 +159,22 @@ class TraktSync(
         editor.putLong(TraktSettings.KEY_LAST_FULL_EPISODE_SYNC, currentTime)
         editor.apply()
         return true
+    }
+
+    fun <T> handleUnsuccessfulResponse(response: Response<T>, action: String) {
+        // Handle auth error.
+        if (SgTrakt.isUnauthorized(context, response)) {
+            return // Do not report auth errors.
+        }
+        when (response.code()) {
+            420 -> progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_limit_exceeded))
+            423 -> {
+                // Note: Even though uploading typically happens after signing in, which should
+                // detect locked accounts, it's possible an account becomes locked afterwards.
+                progress.setImportantErrorIfNone(context.getString(R.string.trakt_error_account_locked))
+            }
+        }
+        Errors.logAndReport(action, response)
     }
 
 }

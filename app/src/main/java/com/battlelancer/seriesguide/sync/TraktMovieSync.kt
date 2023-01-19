@@ -356,10 +356,7 @@ class TraktMovieSync(
             return false
         }
         if (response != null && !response.isSuccessful) {
-            if (SgTrakt.isUnauthorized(context, response)) {
-                return false
-            }
-            Errors.logAndReport(action, response)
+            traktSync.handleUnsuccessfulResponse(response, action)
             return false
         }
 

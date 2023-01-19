@@ -22,7 +22,6 @@ import com.uwetrottmann.trakt5.entities.SyncEpisode
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncSeason
 import com.uwetrottmann.trakt5.entities.SyncShow
-import com.uwetrottmann.trakt5.services.Sync
 import org.threeten.bp.OffsetDateTime
 import timber.log.Timber
 
@@ -217,7 +216,7 @@ class TraktEpisodeSync(
                     if (isInitialSync) {
                         // upload all watched/collected episodes of the show
                         // do in between processing to stretch uploads over longer time periods
-                        uploadShow(traktSync!!.sync, showId, showTraktId, flag)
+                        uploadShow(traktSync!!, showId, showTraktId, flag)
                         uploadedShowsCount++
                     } else {
                         // Set all watched/collected episodes of show not watched/collected,
@@ -314,7 +313,7 @@ class TraktEpisodeSync(
             val showTraktId = SgApp.getServicesComponent(context)
                 .showTools().getShowTraktId(showRowId)
                 ?: return false // show should have a Trakt id, give up
-            upload(traktSync!!.sync, showTraktId, syncSeasons, flag)
+            upload(traktSync!!, showTraktId, syncSeasons, flag)
         } else {
             true
         }
@@ -470,7 +469,7 @@ class TraktEpisodeSync(
      * Uploads all watched/collected episodes for the given show to Trakt.
      */
     private fun uploadShow(
-        traktSync: Sync,
+        traktSync: TraktSync,
         showId: Long,
         showTraktId: Int,
         flag: Flag
@@ -492,7 +491,7 @@ class TraktEpisodeSync(
      * Uploads all the given watched/collected episodes of the given show to Trakt.
      */
     private fun upload(
-        traktSync: Sync,
+        traktSync: TraktSync,
         showTraktId: Int,
         syncSeasons: List<SyncSeason>,
         flag: Flag
@@ -504,26 +503,25 @@ class TraktEpisodeSync(
 
         // upload
         val syncItems = SyncItems().shows(syncShow)
+        val action = "add episodes to " + flag.id
         try {
             val response = if (flag == Flag.WATCHED) {
                 // uploading watched episodes
-                traktSync.addItemsToWatchedHistory(syncItems).execute()
+                traktSync.sync.addItemsToWatchedHistory(syncItems).execute()
             } else {
                 // uploading collected episodes
-                traktSync.addItemsToCollection(syncItems).execute()
+                traktSync.sync.addItemsToCollection(syncItems).execute()
             }
-            if (response.isSuccessful) {
-                return true
+            return if (response.isSuccessful) {
+                true
             } else {
-                if (SgTrakt.isUnauthorized(context, response)) {
-                    return false
-                }
-                Errors.logAndReport("add episodes to " + flag.id, response)
+                traktSync.handleUnsuccessfulResponse(response, action)
+                false
             }
         } catch (e: Exception) {
-            Errors.logAndReport("add episodes to " + flag.id, e)
+            Errors.logAndReport(action, e)
+            return false
         }
-        return false
     }
 
     /**
