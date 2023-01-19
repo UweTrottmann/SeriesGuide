@@ -33,8 +33,10 @@ import timber.log.Timber
  */
 class TraktEpisodeSync(
     private val context: Context,
-    private val traktSync: Sync?
+    private val traktSync: TraktSync?
 ) {
+
+    constructor(traktSync: TraktSync) : this(traktSync.context, traktSync)
 
     /**
      * Similar to the sync methods, but does not download anything and only processes a single show.
@@ -72,7 +74,7 @@ class TraktEpisodeSync(
         val lastWatchedAt = TraktSettings.getLastEpisodesWatchedAt(context)
         if (isInitialSync || TimeTools.isAfterMillis(watchedAt, lastWatchedAt)) {
             val watchedShowsTrakt = try {
-                val response = traktSync!!
+                val response = traktSync!!.sync
                     .watchedShows(null)
                     .execute()
                 if (!response.isSuccessful) {
@@ -133,7 +135,7 @@ class TraktEpisodeSync(
         val lastCollectedAt = TraktSettings.getLastEpisodesCollectedAt(context)
         if (isInitialSync || TimeTools.isAfterMillis(collectedAt, lastCollectedAt)) {
             val collectedShowsTrakt = try {
-                val response = traktSync!!
+                val response = traktSync!!.sync
                     .collectionShows(null)
                     .execute()
                 if (!response.isSuccessful) {
@@ -215,7 +217,7 @@ class TraktEpisodeSync(
                     if (isInitialSync) {
                         // upload all watched/collected episodes of the show
                         // do in between processing to stretch uploads over longer time periods
-                        uploadShow(traktSync!!, showId, showTraktId, flag)
+                        uploadShow(traktSync!!.sync, showId, showTraktId, flag)
                         uploadedShowsCount++
                     } else {
                         // Set all watched/collected episodes of show not watched/collected,
@@ -312,7 +314,7 @@ class TraktEpisodeSync(
             val showTraktId = SgApp.getServicesComponent(context)
                 .showTools().getShowTraktId(showRowId)
                 ?: return false // show should have a Trakt id, give up
-            upload(traktSync!!, showTraktId, syncSeasons, flag)
+            upload(traktSync!!.sync, showTraktId, syncSeasons, flag)
         } else {
             true
         }

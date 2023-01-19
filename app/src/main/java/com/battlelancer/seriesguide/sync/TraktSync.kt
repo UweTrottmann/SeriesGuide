@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.traktapi.SgTrakt
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import com.battlelancer.seriesguide.traktapi.TraktTools2
@@ -19,10 +20,10 @@ import timber.log.Timber
  * Removes movies not in any of these lists on Trakt.
  */
 class TraktSync(
-    private val context: Context,
-    private val movieTools: MovieTools,
-    private val traktSync: Sync,
-    private val progress: SyncProgress
+    val context: Context,
+    val movieTools: MovieTools,
+    val sync: Sync,
+    val progress: SyncProgress
 ) {
     /**
      * To not conflict with Hexagon sync, can turn on [onlyRatings] so only
@@ -43,7 +44,7 @@ class TraktSync(
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
             }
 
-        val ratingsSync = TraktRatingsSync(context, traktSync)
+        val ratingsSync = TraktRatingsSync(this)
         val tmdbIdsToShowIds = SgApp.getServicesComponent(context).showTools()
             .getTmdbIdsToShowIds()
         if (tmdbIdsToShowIds.isEmpty()) {
@@ -93,8 +94,7 @@ class TraktSync(
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
             }
-            if (!TraktMovieSync(context, movieTools, traktSync)
-                    .syncLists(lastActivity.movies)) {
+            if (!TraktMovieSync(this).syncLists(lastActivity.movies)) {
                 progress.recordError()
                 return SgSyncAdapter.UpdateResult.INCOMPLETE
             }
@@ -135,7 +135,7 @@ class TraktSync(
         val isInitialSync = !TraktSettings.hasMergedEpisodes(context)
 
         // Watched episodes.
-        val episodeSync = TraktEpisodeSync(context, traktSync)
+        val episodeSync = TraktEpisodeSync(this)
         if (!episodeSync
                 .syncWatched(tmdbIdsToShowIds, lastActivity.watched_at, isInitialSync)) {
             return false // failed, give up.

@@ -1,11 +1,9 @@
 package com.battlelancer.seriesguide.sync
 
 import android.content.ContentProviderOperation
-import android.content.Context
 import android.content.OperationApplicationException
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.movies.database.SgMovieFlags
-import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.traktapi.SgTrakt
@@ -20,7 +18,6 @@ import com.uwetrottmann.trakt5.entities.MovieIds
 import com.uwetrottmann.trakt5.entities.SyncItems
 import com.uwetrottmann.trakt5.entities.SyncMovie
 import com.uwetrottmann.trakt5.entities.SyncResponse
-import com.uwetrottmann.trakt5.services.Sync
 import retrofit2.Response
 import timber.log.Timber
 import kotlin.collections.set
@@ -29,10 +26,11 @@ import kotlin.collections.set
  * Syncs movie collection and watchlist and watched movies with the connected Trakt profile.
  */
 class TraktMovieSync(
-    private val context: Context,
-    private val movieTools: MovieTools,
-    private val traktSync: Sync
+    private val traktSync: TraktSync
 ) {
+
+    private val context = traktSync.context
+    private val movieTools = traktSync.movieTools
 
     /**
      * Updates the local movie database against trakt movie watchlist, collection and watched
@@ -215,7 +213,7 @@ class TraktMovieSync(
 
     private fun downloadCollection(): MutableSet<Int>? {
         return try {
-            val response = traktSync
+            val response = traktSync.sync
                 .collectionMovies(null)
                 .execute()
             val collection = verifyListResponse(
@@ -231,7 +229,7 @@ class TraktMovieSync(
 
     private fun downloadWatchlist(): MutableSet<Int>? {
         return try {
-            val response = traktSync
+            val response = traktSync.sync
                 .watchlistMovies(null)
                 .execute()
             val watchlist = verifyListResponse(
@@ -247,7 +245,7 @@ class TraktMovieSync(
 
     private fun downloadWatched(): MutableMap<Int, Int>? {
         return try {
-            val response = traktSync
+            val response = traktSync.sync
                 .watchedMovies(null)
                 .execute()
             val watched = verifyListResponse(
@@ -333,14 +331,14 @@ class TraktMovieSync(
                 val moviesToCollect = convertToSyncMovieList(toCollectOnTrakt)
                 action = "add movies to collection"
                 items.movies(moviesToCollect)
-                response = traktSync.addItemsToCollection(items).execute()
+                response = traktSync.sync.addItemsToCollection(items).execute()
             }
             if (response == null || response.isSuccessful) {
                 if (toWatchlistOnTrakt.isNotEmpty()) {
                     val moviesToWatchlist = convertToSyncMovieList(toWatchlistOnTrakt)
                     action = "add movies to watchlist"
                     items.movies(moviesToWatchlist)
-                    response = traktSync.addItemsToWatchlist(items).execute()
+                    response = traktSync.sync.addItemsToWatchlist(items).execute()
                 }
             }
             if (response == null || response.isSuccessful) {
@@ -350,7 +348,7 @@ class TraktMovieSync(
                     // so Trakt will use the date of this upload.
                     action = "add movies to watched history"
                     items.movies(moviesToSetWatched)
-                    response = traktSync.addItemsToWatchedHistory(items).execute()
+                    response = traktSync.sync.addItemsToWatchedHistory(items).execute()
                 }
             }
         } catch (e: Exception) {
