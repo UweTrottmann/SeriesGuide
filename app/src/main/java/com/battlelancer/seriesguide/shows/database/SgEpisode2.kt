@@ -57,6 +57,6 @@ data class SgEpisode2(
         /**
          * See [com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes.FIRSTAIREDMS].
          */
-        const val EPISODE_UNKNOWN_RELEASE = -1
+        const val EPISODE_UNKNOWN_RELEASE = -1L
     }
 }

@@ -365,7 +365,7 @@ class ShowFragment() : Fragment() {
 
         // country for release time calculation
         // show "unknown" if country is not supported
-        binding.textViewReleaseCountry.text = TimeTools.getCountry(activity, releaseCountry)
+        binding.textViewReleaseCountry.text = TimeTools.getCountry(requireContext(), releaseCountry)
 
         // original release
         ViewTools.setValueOrPlaceholder(

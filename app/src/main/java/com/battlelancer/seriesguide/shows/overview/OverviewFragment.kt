@@ -461,7 +461,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             val dateTime: String = if (isDisplayExactDate(requireContext())) {
                 TimeTools.formatToLocalDateShort(requireContext(), actualRelease)
             } else {
-                TimeTools.formatToLocalRelativeTime(context, actualRelease)
+                TimeTools.formatToLocalRelativeTime(requireContext(), actualRelease)
             }
             getString(
                 R.string.format_date_and_day, dateTime,
