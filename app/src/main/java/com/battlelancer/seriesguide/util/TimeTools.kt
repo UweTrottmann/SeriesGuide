@@ -612,16 +612,4 @@ object TimeTools {
         }
     }
 
-    /**
-     * Used instead of [applyUserOffset] if episode time can
-     * not be offset, so need to manipulate time instead.
-     */
-    fun applyUserOffsetInverted(context: Context, instant: Long): Long {
-        val dateTime = Calendar.getInstance()
-        dateTime.timeInMillis = instant
-
-        applyUserOffsetInverted(context, dateTime)
-
-        return dateTime.timeInMillis
-    }
 }
