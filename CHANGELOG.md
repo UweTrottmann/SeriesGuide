@@ -15,12 +15,14 @@ Version 66
 ----------
 *in development*
 
+* 🔨 Do not crash if time zone of device is not known, report and default to "America/New_York" instead.
+
 #### 66.0.6
 *2023-01-13*
 
 * 🔧 Trakt: show special error messages if account is locked or list limit exceeded.
 * 📝 Latest user interface translations from Crowdin.
-* 
+
 #### 66.0.5
 *2022-12-21*
 

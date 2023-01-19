@@ -8,7 +8,6 @@ import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
-import com.battlelancer.seriesguide.util.Errors.Companion.logAndReport
 import org.threeten.bp.Clock
 import org.threeten.bp.DateTimeException
 import org.threeten.bp.DayOfWeek
@@ -85,10 +84,22 @@ object TimeTools {
             } catch (ignored: DateTimeException) {
             }
         }
+        return safeSystemDefaultZoneId()
+    }
+
+    /**
+     * The system default time zone, or on failure [TIMEZONE_ID_US_EASTERN].
+     *
+     * ZoneId.systemDefault may fail if the ID returned by the system does not exist in the time
+     * zone data included in the current threetenbp version (time zones get renamed and added).
+     * If a zone is reported, check for updates of this library.
+     */
+    fun safeSystemDefaultZoneId(): ZoneId {
         return try {
             ZoneId.systemDefault()
         } catch (e: Exception) {
-            logAndReport("Failed to get system time zone", e)
+            Errors.logAndReport("Failed to get system time zone", e)
+            // Use a default zone ID that is very likely to exist.
             ZoneId.of(TIMEZONE_ID_US_EASTERN)
         }
     }
@@ -143,13 +154,12 @@ object TimeTools {
             return false
         }
 
+        val zoneId = safeSystemDefaultZoneId()
         val showInstant = Instant.ofEpochMilli(showDateTime.time)
-        val showDayOfWeek = LocalDateTime.ofInstant(showInstant, ZoneId.systemDefault())
-            .dayOfWeek
+        val showDayOfWeek = LocalDateTime.ofInstant(showInstant, zoneId).dayOfWeek
 
         val episodeInstant = Instant.ofEpochMilli(episodeDateTime.time)
-        val episodeDayOfWeek = LocalDateTime.ofInstant(episodeInstant, ZoneId.systemDefault())
-            .dayOfWeek
+        val episodeDayOfWeek = LocalDateTime.ofInstant(episodeInstant, zoneId).dayOfWeek
         return episodeDayOfWeek == showDayOfWeek
     }
 
@@ -183,7 +193,7 @@ object TimeTools {
         // Get local date: tmdb-java parses date string to Date using SimpleDateFormat,
         // which uses the default time zone.
         val instant = Instant.ofEpochMilli(releaseDate.time)
-        val localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate()
+        val localDate = instant.atZone(safeSystemDefaultZoneId()).toLocalDate()
 
         // set time
         var localDateTime = localDate.atTime(showReleaseTime)
@@ -490,7 +500,7 @@ object TimeTools {
         val dayAndTime = StringBuilder(localDayFormat.format(thenDate))
 
         val then = Instant.ofEpochMilli(thenDate.time)
-        val thenZoned = ZonedDateTime.ofInstant(then, ZoneId.systemDefault())
+        val thenZoned = ZonedDateTime.ofInstant(then, safeSystemDefaultZoneId())
 
         // append 'in x wk.' if date is not within a week, for example if today is Thursday:
         // - append for previous Thursday and earlier,
