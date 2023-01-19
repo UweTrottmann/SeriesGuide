@@ -298,7 +298,7 @@
     <string name="trakt_error_credentials">오류가 있습니다. trakt 계정을 확인하고 재시도해주세요.</string>
     <string name="trakt_error_not_exists">아직 trakt에 정보가 없습니다. 나중에 다시 시도하세요.</string>
     <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">trakt에 연결하기</string>
     <string name="trakt_reconnect">SeriesGuide를 trakt에 연결</string>

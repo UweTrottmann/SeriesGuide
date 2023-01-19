@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">Noget gik galt. Kontrollér dine trakt-brugeroplysninger, og prøv igen.</string>
     <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Prøv igen senere.</string>
     <string name="trakt_notice_not_exists">Kan ikke spores med trakt (endnu).</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Listen er fuld. Fjern nogle punkter først.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Forbind til trakt</string>
     <string name="trakt_reconnect">Forbind SeriesGuide til trakt</string>
@@ -316,7 +316,7 @@
     <string name="use_integrated_browser">Brug integreret browser</string>
     <string name="show_library">Tilføj serier fra Trakt</string>
     <string name="about_trakt">Trakt hjælper dig med at holde styr på dine TV-serier.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="support_trakt">Støt Trakt med VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
     <string name="your_rating">Din bedømmelse</string>

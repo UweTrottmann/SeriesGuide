@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
     <string name="trakt_error_not_exists">Pas (encore) disponible sur trakt. Réessayez plus tard.</string>
     <string name="trakt_notice_not_exists">Ne peut pas (encore) être suivis avec trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">La liste est pleine, supprimez d\'abord quelque chose.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Me connecter à trakt</string>
     <string name="trakt_reconnect">Connecter SeriesGuide à trakt</string>

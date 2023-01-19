@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
     <string name="trakt_error_not_exists">Ikke tilgjengelig på trakt. Prøv igjen senere.</string>
     <string name="trakt_notice_not_exists">Kan ikke spores med trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Koble til trakt</string>
     <string name="trakt_reconnect">Koble SeriesGuide til trakt</string>

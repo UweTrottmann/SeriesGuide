@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
     <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
     <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Anslut till trakt</string>
     <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>

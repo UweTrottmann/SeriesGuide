@@ -312,7 +312,7 @@
     <string name="trakt_error_credentials">Nešto je pošlo po zlu. Provjerite svoje podatke i pokušajte ponovno.</string>
     <string name="trakt_error_not_exists">Nije dostupno na trakt (još). Pokušajte ponovno kasnije.</string>
     <string name="trakt_notice_not_exists">Nije moguće povezivanje sa trakt-om (još).</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Poveži trakt</string>
     <string name="trakt_reconnect">Poveži SeriesGuide sa trakt-om</string>

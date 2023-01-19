@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
     <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>
     <string name="trakt_notice_not_exists">(Még) nem követhető nyomon a trakttal.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Trakt csatlakozás</string>
     <string name="trakt_reconnect">A SeriesGuide csatlakoztatása a trakthoz</string>

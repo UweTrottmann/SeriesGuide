@@ -319,7 +319,7 @@
     <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
     <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>
     <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Список переповнений, спершу мусите щось видалити.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Підключитись до trakt</string>
     <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>

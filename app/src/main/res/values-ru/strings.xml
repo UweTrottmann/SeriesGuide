@@ -319,7 +319,7 @@
     <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
     <string name="trakt_error_not_exists">На данный момент недоступен на trakt. Попробуйте позже.</string>
     <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Подключение trakt</string>
     <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>

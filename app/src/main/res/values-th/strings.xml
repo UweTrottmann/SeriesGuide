@@ -298,7 +298,7 @@
     <string name="trakt_error_credentials">มีบางอย่างผิดพลาด ตรวจสอบข้อมูล trakt ของคุณและลองอีกครั้ง</string>
     <string name="trakt_error_not_exists">(ยัง)ไม่พร้อมใช้งานบน trakt ลองอีกครั้งในภายหลัง</string>
     <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">รายการเต็ม, ลบบางอย่างออกก่อน</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">เชื่อมต่อ trakt</string>
     <string name="trakt_reconnect">เชื่อมต่อ SeriesGuide กับ trakt</string>

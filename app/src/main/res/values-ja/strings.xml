@@ -298,7 +298,7 @@
     <string name="trakt_error_credentials">問題が起きました。Trakt の認証情報を確認して、もう一度やり直してください。</string>
     <string name="trakt_error_not_exists">Trakt では利用できません。後でもう一度やり直してください。</string>
     <string name="trakt_notice_not_exists">Trakt では追跡できません。</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Trakt に接続</string>
     <string name="trakt_reconnect">SeriesGuide を Trakt に接続</string>

@@ -16,6 +16,7 @@ Version 66
 *in development*
 
 * 🔨 Do not crash if time zone of device is not known, report and default to "America/New_York" instead.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 66.0.6
 *2023-01-13*

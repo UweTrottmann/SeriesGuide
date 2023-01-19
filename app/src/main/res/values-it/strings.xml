@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
     <string name="trakt_error_not_exists">Non (ancora) disponibile su trakt. Riprova più tardi.</string>
     <string name="trakt_notice_not_exists">Non è (ancora) possibile monitorarlo con trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">La lista è piena, prima rimuovi qualcosa.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Collegati a trakt</string>
     <string name="trakt_reconnect">Collega SeriesGuide a trakt</string>

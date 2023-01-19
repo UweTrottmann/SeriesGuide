@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Σύνδεση trakt</string>
     <string name="trakt_reconnect">Σύνδεση του SeriesGuide με το trakt</string>
@@ -314,9 +314,9 @@
     <string name="connect">Σύνδεση</string>
     <string name="disconnect">Αποσύνδεση</string>
     <string name="use_integrated_browser">Χρησιμοποιήστε ενσωματωμένο πρόγραμμα περιήγησης</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="support_trakt">Υποστήριξη Trakt με VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
     <string name="your_rating">Η βαθμολογία σας</string>

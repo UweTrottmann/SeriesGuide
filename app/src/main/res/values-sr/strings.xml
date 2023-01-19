@@ -312,7 +312,7 @@
     <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
     <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Повежи trakt</string>
     <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>

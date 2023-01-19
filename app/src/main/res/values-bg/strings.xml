@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
     <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
     <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Списъкът е пълен, първо изтрийте нещо.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Свържете се с trakt</string>
     <string name="trakt_reconnect">Свържете SeriesGuide с trakt</string>

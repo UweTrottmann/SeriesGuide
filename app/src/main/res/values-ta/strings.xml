@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">ஏதோ தவறான சென்று. Trakt அறிமுகங்களை சரிபார்க்கவும் மற்றும் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="trakt_error_not_exists">(இதுவரை) இல்லை அன்று trakt. பின்னர் மீண்டும் முயற்சிக்கவும்.</string>
     <string name="trakt_notice_not_exists">இல்லை முடியும் (இதுவரை) குறியிட்ட கொண்டு trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Trakt இணை</string>
     <string name="trakt_reconnect">Trakt SeriesGuide இணைக்க</string>

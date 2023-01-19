@@ -333,7 +333,7 @@
     <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
     <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>
     <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة trakt بعد.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">القائمة ممتلئة، إزالة شيء أولاً.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">الإتصال بموقع Trakt</string>
     <string name="trakt_reconnect">ربط برنامج دليل المسلسلات بحساب Trak</string>

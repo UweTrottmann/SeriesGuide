@@ -298,7 +298,7 @@
     <string name="trakt_error_credentials">Sesuatu tidak beres. Periksa kredensial trakt anda dan coba lagi.</string>
     <string name="trakt_error_not_exists">Tidak (belum) tersedia pada trakt. Coba lagi nanti.</string>
     <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Sambungkan trakt</string>
     <string name="trakt_reconnect">Sambungkan SeriesGuide ke trakt</string>

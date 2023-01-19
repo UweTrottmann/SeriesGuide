@@ -298,7 +298,7 @@
     <string name="trakt_error_credentials">發生錯誤，請檢查您的trakt憑證並重試。</string>
     <string name="trakt_error_not_exists">Trakt還無法使用，稍後再試。</string>
     <string name="trakt_notice_not_exists">無法或尚未能以 Trakt 追蹤</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">連接 trakt</string>
     <string name="trakt_reconnect">連結SeriesGuide與trakt</string>

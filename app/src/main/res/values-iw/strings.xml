@@ -319,7 +319,7 @@
     <string name="trakt_error_credentials">משהו השתבש. אנא בדוק את הסיסמא/שם המשתמש שלך ונסה שוב.</string>
     <string name="trakt_error_not_exists">לא זמין (עדיין) ב-trakt. נסה שוב מאוחר יותר.</string>
     <string name="trakt_notice_not_exists">לא ניתן (עדיין) לעקוב עם trakt.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">התחבר trakt</string>
     <string name="trakt_reconnect">חבר את SeriesGuide ל trakt</string>

@@ -305,7 +305,7 @@
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">اتصال به ترکت</string>
     <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
