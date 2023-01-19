@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.sync
 
 import android.content.ContentProviderOperation
-import android.content.Context
 import android.content.OperationApplicationException
 import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
@@ -17,7 +16,6 @@ import com.uwetrottmann.trakt5.entities.RatedEpisode
 import com.uwetrottmann.trakt5.entities.RatedMovie
 import com.uwetrottmann.trakt5.entities.RatedShow
 import com.uwetrottmann.trakt5.enums.RatingsFilter
-import com.uwetrottmann.trakt5.services.Sync
 import org.threeten.bp.OffsetDateTime
 import timber.log.Timber
 
@@ -25,9 +23,10 @@ import timber.log.Timber
  * Downloads ratings for shows, episodes and movies from Trakt.
  */
 class TraktRatingsSync(
-    private val context: Context,
-    private val traktSync: Sync
+    private val traktSync: TraktSync
 ) {
+    private val context = traktSync.context
+
     /**
      * Downloads trakt show ratings and applies the latest ones to the database.
      *
@@ -53,7 +52,7 @@ class TraktRatingsSync(
         // download rated shows
         val ratedShows: List<RatedShow>?
         try {
-            val response = traktSync
+            val response = traktSync.sync
                 .ratingsShows(RatingsFilter.ALL, null, null, null)
                 .execute()
             if (response.isSuccessful) {
@@ -138,7 +137,7 @@ class TraktRatingsSync(
         // download rated episodes
         val ratedEpisodes: List<RatedEpisode>?
         try {
-            val response = traktSync
+            val response = traktSync.sync
                 .ratingsEpisodes(RatingsFilter.ALL, null, null, null)
                 .execute()
             if (response.isSuccessful) {
@@ -222,7 +221,7 @@ class TraktRatingsSync(
         // download rated shows
         val ratedMovies: List<RatedMovie>?
         try {
-            val response = traktSync
+            val response = traktSync.sync
                 .ratingsMovies(RatingsFilter.ALL, null, null, null)
                 .execute()
             if (response.isSuccessful) {

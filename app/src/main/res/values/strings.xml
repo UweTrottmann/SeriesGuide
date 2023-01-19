@@ -346,7 +346,7 @@
     <string name="trakt_error_credentials">Something went wrong. Check your Trakt credentials and try again.</string>
     <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
-    <string name="trakt_error_limit_exceeded">List is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
 
     <!-- Connect trakt -->
     <string name="connect_trakt">Connect Trakt</string>
