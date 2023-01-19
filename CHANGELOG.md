@@ -26,6 +26,7 @@ Version 66
 
 * 🔧 Support adding shows when Trakt is down, use default values (e.g. for release time and time zone).
 * 🔧 Trakt: add button to support with VIP; button to open website (or dashboard when signed in).
+* 🔨 Do not crash when devices are using the renamed "Europe/Kyiv" or new "America/Ciudad_Juarez" time zone.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 66.0.4 🧪
