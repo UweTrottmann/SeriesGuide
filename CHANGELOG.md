@@ -13,18 +13,26 @@ Releases marked with 🧪 were released on [the beta program](https://github.com
 
 Version 66
 ----------
-*in development*
+*2023-01-19*
+
+* 🔧 Appearance updates.
+* 🔧 Trakt: show special error messages if watchlist limit is exceeded.
+* 🔧 Show filters: change option to remove all filters to instead restore defaults (exclude hidden).
+* 🔨 Manage lists: fix an item getting removed from other lists if there are many lists.
+
+#### 66.0.7
+*2023-01-19*
 
 * 🔨 Do not crash if time zone of device is not known, report and default to "America/New_York" instead.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 66.0.6
+#### 66.0.6 🧪
 *2023-01-13*
 
 * 🔧 Trakt: show special error messages if account is locked or list limit exceeded.
 * 📝 Latest user interface translations from Crowdin.
 
-#### 66.0.5
+#### 66.0.5 🧪
 *2022-12-21*
 
 * 🔧 Support adding shows when Trakt is down, use default values (e.g. for release time and time zone).
