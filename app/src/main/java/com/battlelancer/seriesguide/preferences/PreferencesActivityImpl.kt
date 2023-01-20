@@ -2,8 +2,10 @@ package com.battlelancer.seriesguide.preferences
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.addCallback
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.BaseThemeActivity
+import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Allows tweaking of various SeriesGuide settings. Does NOT inherit
@@ -17,6 +19,7 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutSettings))
         setupActionBar()
 
         if (savedInstanceState == null) {
@@ -30,6 +33,14 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
                 switchToSettings(settingsScreen)
             }
         }
+
+        onBackPressedDispatcher.addCallback {
+            // Because the multi-screen support built into preferences library is not used,
+            // need to pop fragments manually
+            if (!supportFragmentManager.popBackStackImmediate()) {
+                finish()
+            }
+        }
     }
 
     override fun setupActionBar() {
@@ -37,18 +48,10 @@ open class PreferencesActivityImpl : BaseThemeActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onBackPressed() {
-        // Because the multi-screen support built into preferences library is not used,
-        // need to pop fragments manually
-        if (!supportFragmentManager.popBackStackImmediate()) {
-            super.onBackPressed()
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

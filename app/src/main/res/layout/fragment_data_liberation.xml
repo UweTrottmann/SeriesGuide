@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewDataLiberation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout style="@style/Page.Centered">
 
@@ -46,8 +48,8 @@
                 android:id="@+id/buttonDataLibShowsExportFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/action_select_file"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -56,8 +58,8 @@
                 android:id="@+id/textViewDataLibShowsExportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -87,8 +89,8 @@
                 android:id="@+id/textViewDataLibListsExportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -118,8 +120,8 @@
                 android:id="@+id/textViewDataLibMoviesExportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -160,8 +162,8 @@
                 android:id="@+id/textViewDataLibShowsImportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -192,8 +194,8 @@
                 android:id="@+id/textViewDataLibListsImportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -224,8 +226,8 @@
                 android:id="@+id/textViewDataLibMoviesImportFile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Secondary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -258,7 +260,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/progressBarDataLib"

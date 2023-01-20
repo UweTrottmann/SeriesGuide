@@ -42,7 +42,7 @@ public class TraktRecentMovieHistoryLoader extends TraktRecentEpisodeHistoryLoad
                 break;
             }
 
-            // trakt has removed image support: currently displaying no image
+            // Poster resolved on demand, see view holder binding.
             items.add(new NowAdapter.NowItem()
                     .displayData(
                             entry.watched_at.toInstant().toEpochMilli(),

@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.shows.overview
 
 import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -11,15 +12,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment
+import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.SINGLE_PANE
 import com.battlelancer.seriesguide.shows.search.EpisodeSearchFragment
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.TabStripAdapter
-import com.battlelancer.seriesguide.lists.ManageListsDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ThemeUtils
+import com.google.android.material.appbar.AppBarLayout
+import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -33,7 +38,18 @@ import java.lang.ref.WeakReference
  */
 open class OverviewActivityImpl : BaseMessageActivity() {
 
+    enum class OverviewLayoutType(val id: Int) {
+        SINGLE_PANE(0),
+        MULTI_PANE_VERTICAL(1),
+        MULTI_PANE_WIDE(2);
+
+        companion object {
+            fun from(id: Int): OverviewLayoutType = values().first { it.id == id }
+        }
+    }
+
     private var showId: Long = 0
+    private lateinit var layoutType: OverviewLayoutType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +75,8 @@ open class OverviewActivityImpl : BaseMessageActivity() {
             return
         }
 
+        layoutType = getLayoutType(this)
+
         setupViews(savedInstanceState)
 
         updateShowDelayed(showId)
@@ -71,6 +89,13 @@ open class OverviewActivityImpl : BaseMessageActivity() {
     }
 
     private fun setupViews(savedInstanceState: Bundle?) {
+        val rootViewId = if (layoutType == SINGLE_PANE) {
+            R.id.coordinatorLayoutOverview
+        } else {
+            R.id.rootLayoutOverview
+        }
+        ThemeUtils.configureForEdgeToEdge(findViewById(rootViewId))
+
         // poster background
         val backgroundImageView = findViewById<ImageView>(R.id.imageViewOverviewBackground)
         lifecycleScope.launch {
@@ -88,16 +113,18 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         }
 
         // look if we are on a multi-pane or single-pane layout...
-        val pagerView = findViewById<View>(R.id.pagerOverview)
-        if (pagerView != null && pagerView.visibility == View.VISIBLE) {
-            // ...single pane layout with view pager
+        if (layoutType == SINGLE_PANE) {
+            // Single pane layout with view pager
+            ThemeUtils.configureAppBarForContentBelow(this)
 
             // clear up left-over fragments from multi-pane layout
             findAndRemoveFragment(R.id.fragment_overview)
             findAndRemoveFragment(R.id.fragment_seasons)
-            setupViewPager(pagerView)
+            setupViewPager(isNotRestoringState = savedInstanceState == null)
         } else {
-            // ...multi-pane overview and seasons fragment
+            // Multi-pane show, overview and seasons fragment
+            // Bottom pad the card containing the overview fragment.
+            ThemeUtils.applyBottomPaddingForNavigationBar(findViewById(R.id.wrapperOverview))
 
             // clear up left-over fragments from single-pane layout
             val isSwitchingLayouts = activeFragments.size != 0
@@ -119,7 +146,7 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         ft1.replace(R.id.fragment_show, showsFragment)
         ft1.commit()
 
-        val overviewFragment: Fragment = OverviewFragment.newInstance(showId)
+        val overviewFragment: Fragment = OverviewFragment(showId)
         val ft2 = supportFragmentManager.beginTransaction()
         ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
         ft2.replace(R.id.fragment_overview, overviewFragment)
@@ -132,13 +159,13 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         ft3.commit()
     }
 
-    private fun setupViewPager(pagerView: View) {
-        val pager = pagerView as ViewPager2
+    private fun setupViewPager(isNotRestoringState: Boolean) {
+        val pager = findViewById<ViewPager2>(R.id.pagerOverview)
 
         // setup tab strip
-        val tabsAdapter = TabStripAdapter(
-            this, pager, findViewById(R.id.tabsOverview)
-        )
+        val tabLayout = findViewById<SlidingTabLayout>(R.id.sgTabLayout)
+        val tabsAdapter = TabStripAdapter(this, pager, tabLayout)
+        tabLayout.setOnPageChangeListener(OverviewPageChangeListener(findViewById(R.id.sgAppBarLayout)))
         tabsAdapter.addTab(
             R.string.show_details,
             ShowFragment::class.java,
@@ -157,8 +184,34 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         tabsAdapter.notifyTabsChanged()
 
         // select overview to be shown initially
-        val displaySeasons = intent.getBooleanExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, false)
-        pager.setCurrentItem(if (displaySeasons) 2 /* seasons */ else 1 /* overview */, false)
+        if (isNotRestoringState) {
+            val displaySeasons = intent.getBooleanExtra(EXTRA_BOOLEAN_DISPLAY_SEASONS, false)
+            pager.setCurrentItem(if (displaySeasons) 2 /* seasons */ else 1 /* overview */, false)
+        }
+    }
+
+
+    /**
+     * Page change listener which sets the scroll view of the current visible tab as the lift on
+     * scroll target view of the app bar.
+     */
+    class OverviewPageChangeListener(
+        private val appBarLayout: AppBarLayout
+    ) : ViewPager2.OnPageChangeCallback() {
+        override fun onPageScrollStateChanged(arg0: Int) {}
+        override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
+
+        override fun onPageSelected(position: Int) {
+            // Change the scrolling view the AppBarLayout should use to determine if it should lift.
+            // This is required so the AppBarLayout does not flicker its background when scrolling.
+            val liftOnScrollTarget = when (position) {
+                0 -> ShowFragment.liftOnScrollTargetViewId
+                1 -> OverviewFragment.liftOnScrollTargetViewId
+                2 -> SeasonsFragment.liftOnScrollTargetViewId
+                else -> throw IllegalArgumentException("Unexpected page position")
+            }
+            appBarLayout.liftOnScrollTargetViewId = liftOnScrollTarget
+        }
     }
 
     private fun findAndRemoveFragment(fragmentId: Int) {
@@ -238,13 +291,13 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         }
     }
 
-    override fun getSnackbarParentView(): View {
-        return if (resources.getBoolean(R.bool.isOverviewSinglePane)) {
+    override val snackbarParentView: View
+        get() = if (layoutType == SINGLE_PANE) {
+            // The single pane layout uses a CoordinatorLayout as root view.
             findViewById(R.id.coordinatorLayoutOverview)
         } else {
-            super.getSnackbarParentView()
+            super.snackbarParentView
         }
-    }
 
     companion object {
         const val OVERVIEW_ACTIONS_LOADER_ID = 104
@@ -260,6 +313,9 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         const val EXTRA_INT_SHOW_TMDBID = "show_tmdbid"
         const val EXTRA_LONG_SHOW_ROWID = "show_id"
         const val EXTRA_BOOLEAN_DISPLAY_SEASONS = "EXTRA_DISPLAY_SEASONS"
+
+        fun getLayoutType(context: Context): OverviewLayoutType =
+            OverviewLayoutType.from(context.resources.getInteger(R.integer.overviewLayoutType))
     }
 
 }

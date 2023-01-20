@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.notifications
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.Notification
 import android.app.PendingIntent
@@ -344,6 +345,9 @@ class NotificationService(context: Context) {
     /**
      * Only visible for debugging.
      */
+    // The core library is lying, the POST_NOTIFICATION permission is only
+    // required when targeting Android 13.
+    @SuppressLint("MissingPermission")
     fun notifyAbout(
         upcomingEpisodes: List<SgEpisode2WithShow>,
         notifyPositions: List<Int>,

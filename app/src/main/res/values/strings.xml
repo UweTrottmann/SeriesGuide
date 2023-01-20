@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Main Menu -->
     <string name="shows">Shows</string>
@@ -156,7 +156,7 @@
     <string name="unhidden">Show is visible again</string>
     <string name="action_shows_add">Add show</string>
     <string name="action_shows_filter">Filter shows</string>
-    <string name="empty_filter">Remove all filters</string>
+    <string name="empty_filter">Reset filters</string>
     <string name="action_shows_filter_favorites">Favorites</string>
     <string name="action_shows_filter_unwatched">Unwatched</string>
     <string name="action_shows_filter_upcoming">Upcoming</string>
@@ -319,7 +319,6 @@
     <string name="feature_sync">Sync</string>
 
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud helps to backup and sync your shows, lists and movies</string>
     <string name="hexagon_warning_trakt">While signed in with SeriesGuide Cloud some Trakt features are not available</string>
     <string name="hexagon_signin">Sign In</string>
@@ -347,6 +346,7 @@
     <string name="trakt_error_credentials">Something went wrong. Check your Trakt credentials and try again.</string>
     <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
     <string name="trakt_notice_not_exists">Can not (yet) be tracked with Trakt</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
 
     <!-- Connect trakt -->
     <string name="connect_trakt">Connect Trakt</string>
@@ -357,7 +357,8 @@
     <string name="disconnect">Disconnect</string>
     <string name="use_integrated_browser">Use integrated browser</string>
     <string name="show_library">Add shows from Trakt</string>
-    <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching. <a href="https://trakt.tv">Learn more</a></string>
+    <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
 
     <!-- trakt ratings -->
     <string name="action_rate">Rate</string>
@@ -390,7 +391,6 @@
 
     <!-- Help -->
     <string name="feedback">Send feedback</string>
-    <string name="action_open_in_browser">Open in browser</string>
 
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
@@ -558,10 +558,10 @@
     <string name="subscription_expired_details">Your SeriesGuide subscription has expired</string>
 
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Sign into your Amazon account</string>
-    <string name="subscription_unavailable">The subscription is currently not available</string>
-    <string name="subscription_failed">Purchase not completed</string>
-    <string name="pass_unavailable">X Pass is currently not available</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Sign into your Amazon account</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">The subscription is currently not available</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Purchase not completed</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass is currently not available</string>
 
     <!-- Extensions -->
     <string name="action_extensions_configure">Customize extensions</string>

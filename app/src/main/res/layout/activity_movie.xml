@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayoutMovieActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="MergeRootFrame">
+    android:orientation="vertical">
 
-    <FrameLayout
+    <!-- Background colored in code based on scroll state. -->
+    <include layout="@layout/top_app_bar_fixed" />
+
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <include layout="@layout/toolbar" />
-
-</FrameLayout>
+</LinearLayout>

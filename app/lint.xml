@@ -9,4 +9,6 @@
     <issue id="Typos" severity="ignore" />
     <!-- Mostly due to adding selectableItemBackground -->
     <issue id="Overdraw" severity="ignore" />
+    <!-- Not supplying drawable-hdpi, drawable-mdpi PNGs: only used in notifications. -->
+    <issue id="IconMissingDensityFolder" severity="ignore" />
 </lint>

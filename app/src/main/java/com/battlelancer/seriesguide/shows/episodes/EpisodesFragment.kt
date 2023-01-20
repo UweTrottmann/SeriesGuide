@@ -9,15 +9,18 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentEpisodesBinding
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
-import com.battlelancer.seriesguide.util.safeShow
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
+import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.safeShow
 
 /**
  * Displays a list of episodes of a season.
@@ -83,6 +86,8 @@ class EpisodesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.also { binding ->
+            ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewEpisodes)
+
             binding.imageViewEpisodesWatched.setImageResource(R.drawable.ic_watch_all_black_24dp)
             binding.imageViewEpisodesCollected.setImageResource(R.drawable.ic_collect_all_black_24dp)
 
@@ -123,7 +128,11 @@ class EpisodesFragment : Fragment() {
             model.updateCounts()
         }
 
-        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     /**
@@ -149,18 +158,19 @@ class EpisodesFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.episodelist_menu, menu)
-    }
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.episodelist_menu, menu)
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_epsorting -> {
-                showSortDialog()
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_epsorting -> {
+                    showSortDialog()
+                    true
+                }
+                else -> false
             }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

@@ -4,21 +4,16 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.databinding.ViewFeatureStatusBinding;
 
 public class FeatureStatusView extends LinearLayout {
 
-    @BindView(R.id.imageViewStatus) ImageView imageViewStatus;
-    @BindView(R.id.textViewStatus) TextView textViewStatus;
-
     private final boolean featureSupported;
     private final String featureDescription;
+    private final ViewFeatureStatusBinding binding;
 
     public FeatureStatusView(Context context) {
         this(context, null);
@@ -37,21 +32,20 @@ public class FeatureStatusView extends LinearLayout {
         }
 
         setOrientation(HORIZONTAL);
-        LayoutInflater.from(context).inflate(R.layout.view_feature_status, this);
+        binding = ViewFeatureStatusBinding.inflate(LayoutInflater.from(context), this);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
         if (featureSupported) {
             setFeatureEnabled(true);
         } else {
-            imageViewStatus.setImageResource(R.drawable.ic_remove_circle_black_24dp);
-            imageViewStatus.setContentDescription(
+            binding.imageViewStatus.setImageResource(R.drawable.ic_remove_circle_black_24dp);
+            binding.imageViewStatus.setContentDescription(
                     getContext().getString(R.string.feature_not_supported));
         }
-        textViewStatus.setText(featureDescription);
+        binding.textViewStatus.setText(featureDescription);
     }
 
     public void setFeatureEnabled(boolean available) {
@@ -61,8 +55,8 @@ public class FeatureStatusView extends LinearLayout {
                             ? R.drawable.ic_check_circle_green_24dp
                             : R.drawable.ic_cancel_red_24dp,
                     getContext().getTheme());
-            imageViewStatus.setImageDrawable(drawable);
-            imageViewStatus.setContentDescription(getContext().getString(available
+            binding.imageViewStatus.setImageDrawable(drawable);
+            binding.imageViewStatus.setContentDescription(getContext().getString(available
                     ? R.string.feature_supported
                     : R.string.feature_not_supported));
         }

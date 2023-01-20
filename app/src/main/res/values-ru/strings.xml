@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Сериалы</string>
     <string name="lists">Списки</string>
@@ -38,7 +38,7 @@
     <string name="action_stream">Стриминг или покупка</string>
     <string name="action_stream_info">Стриминг или покупка</string>
     <string name="action_select_region">Выберите регион</string>
-    <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_include_any_watch_provider">Включить любое</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Не могу связаться с %s. Попробуйте позже.</string>
     <string name="api_failed">Не удалось: %s</string>
     <string name="copy_to_clipboard">Скопировано в буфер обмена</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Сериал не смигрирован в TMDB. Некоторые действия, включая Trakt и Cloud синхронизацию, могут не работать. Рекомендуется поиск для замены и удаление этого сериала. Нажмите для просмотра деталей.</string>
     <!-- Sharing -->
     <string name="share">Отправить</string>
     <string name="share_show">Поделиться сериалом</string>
@@ -100,7 +100,7 @@
     <string name="no_translation_title">Не переведено</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Последнее обновление</string>
     <!-- Date and Time -->
     <string name="today">сегодня</string>
     <string name="now">сейчас</string>
@@ -120,7 +120,7 @@
     <string name="action_watched">Просмотрен</string>
     <string name="action_unwatched">Не просмотрено</string>
     <string name="state_watched">Просмотрено</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
+    <string name="state_watched_multiple_format">Просмотрено (%d)</string>
     <string name="state_skipped">пропущено</string>
     <string name="state_in_collection">В коллекции</string>
     <string name="state_on_watchlist">В списке просмотра</string>
@@ -147,9 +147,9 @@
     <string name="action_shows_filter_unwatched">Непросмотренные</string>
     <string name="action_shows_filter_upcoming">Следующие эпизоды</string>
     <string name="action_shows_filter_hidden">Скрытые</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_disabled">Отключено</string>
+    <string name="state_shows_filter_included">Включено</string>
+    <string name="state_shows_filter_excluded">Исключено</string>
     <string name="action_shows_make_all_visible">Сделать всё скрытое видимым</string>
     <string name="description_make_all_visible_format">Сделать все скрытые сериалы (%s) снова видимыми?</string>
     <string name="action_shows_sort">Сортировать сериалы</string>
@@ -163,7 +163,7 @@
     <string name="context_updateshow">Обновить</string>
     <string name="context_marknext">Смотреть следующий эпизод</string>
     <string name="action_episodes_switch_view">Изменить вид</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Далее к просмотру</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Недавно просмотренные</string>
@@ -211,7 +211,7 @@
     <string name="no_results">Результатов нет, попробуйте полное название.</string>
     <string name="empty_show_search">Не найдено в вашем списке</string>
     <string name="action_try_again">Повторить попытку</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">Сериал не существует (пока) на TMDB. Повторите попытку позже.</string>
     <string name="add_all">Добавить все</string>
     <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
     <string name="add_started">%s скоро появится в вашем списке.</string>
@@ -258,7 +258,7 @@
     <string name="action_movies_sort">Сортировать фильмы</string>
     <string name="action_movies_sort_title">Название</string>
     <string name="action_movies_sort_release">Дата выпуска</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Фильтр фильмов</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не удалось рассчитать статистику.</string>
     <string name="shows_finished">%s Просмотрено</string>
@@ -293,7 +293,6 @@
     <string name="feature_comments">Прокомментировать</string>
     <string name="feature_sync">Синхронизация</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Экспериментальный!</string>
     <string name="hexagon_description">SeriesGuide Cloud позволяет создавать резервную копию и синхронизировать ваши сериалы, списки и фильмы.</string>
     <string name="hexagon_warning_trakt">При подкючении к SeriesGuide Cloud некоторые функции trakt недоступны.</string>
     <string name="hexagon_signin">Войти</string>
@@ -306,8 +305,8 @@
     <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
     <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Ошибка входа в систему (%s)</string>
+    <string name="hexagon_signin_google_only">Адрес электронной почты требует авторизации Google</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
@@ -316,10 +315,11 @@
     <string name="traktcheckin_inprogress">Вы уже зарегистрировались в другом эпизоде или фильме. Вы можете заменить предыдущую регистрацию или подождать %s и попробовать снова.</string>
     <string name="traktcheckin_wait">Я подожду</string>
     <string name="trakt_success">Отправлено в trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Ваша учетная запись в Trakt заблокирована. Обратитесь в службу поддержки.</string>
     <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
     <string name="trakt_error_not_exists">На данный момент недоступен на trakt. Попробуйте позже.</string>
     <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Подключение trakt</string>
     <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>
@@ -328,8 +328,9 @@
     <string name="connect">Подключиться</string>
     <string name="disconnect">Отключиться</string>
     <string name="use_integrated_browser">Использовать встроенный браузер</string>
-    <string name="show_library">Add shows from Trakt</string>
-    <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите. <a href="http://trakt.tv">Узнать больше</a></string>
+    <string name="show_library">Добавить сериалы из Trakt</string>
+    <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите.</string>
+    <string name="support_trakt">Поддержка Trakt с VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oценить</string>
     <string name="your_rating">Ваша оценка</string>
@@ -357,7 +358,6 @@
     <string name="pref_quick_checkin_summary">Больше не спрашивать об отметке</string>
     <!-- Help -->
     <string name="feedback">Отправить отзыв</string>
-    <string name="action_open_in_browser">Открыть в браузере</string>
     <!-- Settings -->
     <string name="action_translate">Помочь с переводом</string>
     <string name="action_contribute_content">Перевести или улучшить контент</string>
@@ -486,13 +486,13 @@
     <string name="pref_notifications_next_episodes_only">Только для следующих серий</string>
     <string name="pref_notifications_next_episodes_only_summary">Уведомлять только если новая серия следующая для просмотра</string>
     <string name="pref_notifications_battery_settings">Параметры батареи</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_battery_settings_summary">Перейдите в настройки батареи, чтобы отключить оптимизацию батареи для надежных уведомлений</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
     <string name="pref_widget_type">Тип виджета</string>
     <string name="pref_large_font">Использовать крупный шрифт</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_hide_watch_button">Скрыть кнопку \"Смотреть\"</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозрачный</string>
     <string name="widget_background_25">25%</string>
@@ -510,15 +510,15 @@
     <string name="billing_price_pass">Единоразовая покупка</string>
     <string name="upgrade_description">Каждая подписка открывает все функции и поддерживает будущие обновления. Для использования этого приложения подписка не требуется.</string>
     <string name="upgrade_success">Спасибо за поддержку SeriesGuide! У вас есть доступ ко всем расширенным возможностям.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">Приложение X Pass обнаружено. Вы можете подписаться для поддержки будущих обновлений.</string>
     <string name="billing_learn_more">Дополнительная информация и помощь</string>
     <string name="subscription_expired">Срок действия подписки истек</string>
     <string name="subscription_expired_details">Подписка X функции истекла.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Войдите в свой аккаунт Amazon!</string>
-    <string name="subscription_unavailable">Подписка в настоящее время не доступна.</string>
-    <string name="subscription_failed">Покупка не завершена.</string>
-    <string name="pass_unavailable">X Pass в данный момент не доступен.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Войдите в свой аккаунт Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Подписка в настоящее время не доступна.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Покупка не завершена.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass в данный момент не доступен.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Настроить расширения</string>
     <string name="action_extensions_add">Добавить расширение</string>

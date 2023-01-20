@@ -13,11 +13,11 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogTimeOffsetBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.getShowsTimeOffset
+import com.battlelancer.seriesguide.util.TimeTools
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
-import org.threeten.bp.ZoneId
 import timber.log.Timber
 
 /**
@@ -103,7 +103,7 @@ class TimeOffsetDialogFragment : AppCompatDialogFragment() {
     private fun formatToTimeString(localDateTime: LocalDateTime): CharSequence {
         return DateUtils.getRelativeDateTimeString(
             requireContext(),
-            localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
+            localDateTime.atZone(TimeTools.safeSystemDefaultZoneId()).toInstant().toEpochMilli(),
             DateUtils.DAY_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, 0
         )
     }

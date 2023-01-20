@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Séries</string>
     <string name="lists">Listas</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Publicar comentário</string>
     <string name="feature_sync">Sincronizar</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimental</string>
     <string name="hexagon_description">SeriesGuide Cloud ajuda-te fazendo uma cópia de segurança e a sincronizar as tuas séries, listas e filmes.</string>
     <string name="hexagon_warning_trakt">Enquanto conectado ao SeriesGuide Cloud algumas funções do Trakt não estarão disponíveis</string>
     <string name="hexagon_signin">Conectar</string>
@@ -306,6 +305,7 @@
     <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais estão correctas e tenta de novo.</string>
     <string name="trakt_error_not_exists">Não está (ainda) disponível no Trakt. Tenta mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>
+    <string name="trakt_error_limit_exceeded">A lista está cheia, remove algo primeiro.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Conectar ao Trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide ao trakt</string>
@@ -315,7 +315,8 @@
     <string name="disconnect">Desconectar</string>
     <string name="use_integrated_browser">Usar navegador integrado</string>
     <string name="show_library">Adicionar séries do Trakt</string>
-    <string name="about_trakt">O Trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes. <a href="http://trakt.tv">Experimenta!</a></string>
+    <string name="about_trakt">O Trakt ajuda-te a manter a par da lista de séries e filmes que tu assistes.</string>
+    <string name="support_trakt">Apoia o Trakt tornando-te VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>
     <string name="your_rating">A minha classificação</string>
@@ -341,7 +342,6 @@
     <string name="pref_quick_checkin_summary">Dar entrada automaticamente sem pedir nenhuma mensagem</string>
     <!-- Help -->
     <string name="feedback">Enviar comentários</string>
-    <string name="action_open_in_browser">Abrir no navegador</string>
     <!-- Settings -->
     <string name="action_translate">Traduz esta App</string>
     <string name="action_contribute_content">Traduz ou melhora o conteúdo</string>
@@ -493,10 +493,10 @@
     <string name="subscription_expired">Subscrição expirada</string>
     <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Entra na tua conta Amazon!</string>
-    <string name="subscription_unavailable">De momento, a subscrição não está disponível.</string>
-    <string name="subscription_failed">Compra não concluída.</string>
-    <string name="pass_unavailable">De momento, o passe X não está disponível.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Entra na tua conta Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">De momento, a subscrição não está disponível.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Compra não concluída.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">De momento, o passe X não está disponível.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Personalizar extensões</string>
     <string name="action_extensions_add">Adicionar extensão</string>

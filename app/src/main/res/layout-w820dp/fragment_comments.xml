@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Screens with more than 820dp of available width. This would
+include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerComments"
+    android:layout_width="800dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:padding="0dp">
+
+    <com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayoutShouts"
+        android:layout_width="400dp"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:id="@+id/scrollViewComments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewShoutsEmpty"
+                    android:layout_width="@dimen/empty_view_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="@dimen/large_padding"
+                    android:text="@string/no_shouts"
+                    android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
+
+            </ScrollView>
+
+            <!-- Add enough bottom padding so last item is above powered by text. -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewComments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:nextFocusDown="@+id/editTextShouts"
+                android:paddingBottom="40dp"
+                tools:listitem="@layout/item_comment" />
+
+            <TextView
+                android:id="@+id/textViewPoweredByComments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/background_protection_round"
+                android:padding="@dimen/default_padding"
+                android:text="@string/powered_by_trakt"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
+                android:textColor="@color/black_11" />
+
+        </FrameLayout>
+
+    </com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginEnd="@dimen/large_padding"
+        android:layout_marginBottom="@dimen/default_padding">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldComments"
+            style="?attr/textInputFilledStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:hint="@string/shout_hint"
+            android:nextFocusUp="@+id/listViewShouts"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="2000"
+                android:maxLines="9"
+                android:minLines="3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonShouts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textFieldComments"
+            android:layout_alignParentRight="true"
+            android:text="@string/action_post" />
+
+        <CheckBox
+            android:id="@+id/checkBoxShouts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textFieldComments"
+            android:text="@string/isspoiler" />
+
+    </RelativeLayout>
+
+</LinearLayout>

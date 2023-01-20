@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Acara</string>
     <string name="lists">Daftar</string>
@@ -272,7 +272,6 @@
     <string name="feature_comments">Kirim komentar</string>
     <string name="feature_sync">Sync</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimentasi</string>
     <string name="hexagon_description">SeriesGuide Cloud membantumu untuk mencadangkan dan menyelaraskan acara, daftar, dan film anda.</string>
     <string name="hexagon_warning_trakt">Selama masuk menggunakan SeriesGuide Cloud beberapa fitur trakt tidak tersedia.</string>
     <string name="hexagon_signin">Masuk</string>
@@ -299,6 +298,7 @@
     <string name="trakt_error_credentials">Sesuatu tidak beres. Periksa kredensial trakt anda dan coba lagi.</string>
     <string name="trakt_error_not_exists">Tidak (belum) tersedia pada trakt. Coba lagi nanti.</string>
     <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Sambungkan trakt</string>
     <string name="trakt_reconnect">Sambungkan SeriesGuide ke trakt</string>
@@ -308,7 +308,8 @@
     <string name="disconnect">Putuskan</string>
     <string name="use_integrated_browser">Gunakan browser bawaan</string>
     <string name="show_library">Add shows from Trakt</string>
-    <string name="about_trakt">trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton. <a href="https://trakt.tv"> selengkapnya</a></string>
+    <string name="about_trakt">Trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Beri nilai</string>
     <string name="your_rating">Nilai anda</string>
@@ -333,7 +334,6 @@
     <string name="pref_quick_checkin_summary">Jangan tanya untuk pesan check-in</string>
     <!-- Help -->
     <string name="feedback">Kirim tanggapan</string>
-    <string name="action_open_in_browser">Buka di browser</string>
     <!-- Settings -->
     <string name="action_translate">Terjemahkan aplikasi ini</string>
     <string name="action_contribute_content">Terjemahkan atau tingkatkan konten</string>
@@ -482,10 +482,10 @@
     <string name="subscription_expired">Langganan berakhir</string>
     <string name="subscription_expired_details">Langganan SeriesGuide anda telah berakhir.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Masuk ke akun Amazon Anda!</string>
-    <string name="subscription_unavailable">Langganan saat ini tidak tersedia.</string>
-    <string name="subscription_failed">Pembelian tidak selesai.</string>
-    <string name="pass_unavailable">X Pass saat ini tidak tersedia.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Masuk ke akun Amazon Anda!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Langganan saat ini tidak tersedia.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Pembelian tidak selesai.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass saat ini tidak tersedia.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Sesuaikan ekstensi</string>
     <string name="action_extensions_add">Tambah ekstensi</string>

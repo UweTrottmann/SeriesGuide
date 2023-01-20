@@ -2,20 +2,16 @@ package com.battlelancer.seriesguide.movies
 
 import android.database.Cursor
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.movies.MoviesDistillationSettings.MoviesSortOrderChangedEvent
 import com.battlelancer.seriesguide.ui.MoviesActivity
 import org.greenrobot.eventbus.EventBus
@@ -27,58 +23,56 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
-    private lateinit var gridView: GridView
-    lateinit var emptyView: TextView
     private lateinit var adapter: MoviesCursorAdapter
 
     /**
      * Return a loader id different from any other used within [com.battlelancer.seriesguide.ui.MoviesActivity].
      */
-    internal abstract val loaderId: Int
+    abstract val loaderId: Int
+
+    @get:StringRes
+    abstract val emptyViewTextResId: Int
+
+    abstract val gridView: GridView
+
+    abstract val emptyView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         EventBus.getDefault().register(this)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val v = inflater.inflate(R.layout.fragment_movies, container, false)
-
-        gridView = v.findViewById(R.id.gridViewMovies)
-        // enable app bar scrolling out of view
-        ViewCompat.setNestedScrollingEnabled(gridView, true)
-        emptyView = v.findViewById(R.id.textViewMoviesEmpty)
-        gridView.emptyView = emptyView
-
-        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // enable app bar scrolling out of view
+        ViewCompat.setNestedScrollingEnabled(gridView, true)
+
+        emptyView.setText(emptyViewTextResId)
+        gridView.emptyView = emptyView
+
         ViewModelProvider(requireActivity()).get(MoviesActivityViewModel::class.java)
             .scrollTabToTopLiveData
-            .observe(
-                viewLifecycleOwner,
-                {
-                    if (it != null) {
-                        if (it.tabPosition == getTabPosition(it.isShowingNowTab)) {
-                            gridView.smoothScrollToPosition(0)
-                        }
+            .observe(viewLifecycleOwner) {
+                if (it != null) {
+                    if (it.tabPosition == getTabPosition(it.isShowingNowTab)) {
+                        gridView.smoothScrollToPosition(0)
                     }
                 }
-            )
+            }
 
         adapter = MoviesCursorAdapter(
             context, MovieClickListenerImpl(requireContext()),
             loaderId
         )
         gridView.adapter = adapter
+
+        requireActivity().addMenuProvider(
+            MoviesOptionsMenu(requireActivity()),
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
 
         LoaderManager.getInstance(this).initLoader(loaderId, null, this)
     }
@@ -87,26 +81,6 @@ abstract class MoviesBaseFragment : Fragment(), LoaderManager.LoaderCallbacks<Cu
         super.onDestroy()
 
         EventBus.getDefault().unregister(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        // guard against not attached to activity
-        if (!isAdded) {
-            return
-        }
-
-        MoviesOptionsMenu(requireContext()).create(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val menu = MoviesOptionsMenu(requireContext())
-        return if (menu.onItemSelected(item, requireActivity())) {
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

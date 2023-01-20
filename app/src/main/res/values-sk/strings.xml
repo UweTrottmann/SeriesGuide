@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Seriály</string>
     <string name="lists">Zoznamy</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Nemožno komunikovať s %s. Skúste to znova neskôr.</string>
     <string name="api_failed">Zlyhanie: %s</string>
     <string name="copy_to_clipboard">Skopírované do schránky</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Seriál nebol migrovaný na TMDB. Niektoré akcie vrátane Trakt a Cloud synchronizácie nemusia fungovať. Vyhľadajte prípadnú náhradu a tento seriál odstráňte. Klepnutím zobrazíte podrobnosti.</string>
     <!-- Sharing -->
     <string name="share">Zdieľať</string>
     <string name="share_show">Zdieľať seriál</string>
@@ -293,7 +293,6 @@
     <string name="feature_comments">Odosielať komentáre</string>
     <string name="feature_sync">Synchronizácia</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimentálne</string>
     <string name="hexagon_description">SeriesGuide Cloud pomáha zálohovať a synchronizovať vaše seriály, zoznamy a filmy.</string>
     <string name="hexagon_warning_trakt">Keď ste prihlásený na SeriesGuide Cloud niektoré trakt funkcie nie sú dostupné.</string>
     <string name="hexagon_signin">Prihlásiť sa</string>
@@ -320,6 +319,7 @@
     <string name="trakt_error_credentials">Chyba. Skontrolujte užívateľské meno/heslo na trakt a skúste to znova.</string>
     <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
     <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
+    <string name="trakt_error_limit_exceeded">Zoznam je plný, najskôr niečo odstráňte.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Pripojiť na trakt</string>
     <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>
@@ -329,7 +329,8 @@
     <string name="disconnect">Odpojiť</string>
     <string name="use_integrated_browser">Použiť vstavaný prehliadač</string>
     <string name="show_library">Pridať seriály z Trakt</string>
-    <string name="about_trakt">V trakt zaznamenávate, ktoré seriály a filmy sledujete. <a href="https://trakt.tv">Zistite viac</a></string>
+    <string name="about_trakt">V Trakt zaznamenávate, ktoré seriály a filmy sledujete.</string>
+    <string name="support_trakt">Podporte Trakt s VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>
     <string name="your_rating">Vaše hodnotenie</string>
@@ -357,7 +358,6 @@
     <string name="pref_quick_checkin_summary">Nepýtať sa na správu pri Práve pozeráte</string>
     <!-- Help -->
     <string name="feedback">Poslať reakciu</string>
-    <string name="action_open_in_browser">Otvoriť v prehliadači</string>
     <!-- Settings -->
     <string name="action_translate">Preložiť túto aplikáciu</string>
     <string name="action_contribute_content">Preložiť alebo vylepšiť obsah</string>
@@ -515,10 +515,10 @@
     <string name="subscription_expired">Predplatné vypršalo</string>
     <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Prihláste sa do svojho účtu Amazon!</string>
-    <string name="subscription_unavailable">Predplatné momentálne nie je dostupné.</string>
-    <string name="subscription_failed">Platba nebola dokončená.</string>
-    <string name="pass_unavailable">X Pass nie je momentálne k dispozícii.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Prihláste sa do svojho účtu Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Predplatné momentálne nie je dostupné.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Platba nebola dokončená.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass nie je momentálne k dispozícii.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Upraviť rozšírenia</string>
     <string name="action_extensions_add">Pridať rozšírenie</string>

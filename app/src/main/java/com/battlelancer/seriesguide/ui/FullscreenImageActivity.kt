@@ -10,10 +10,11 @@ import android.widget.ImageView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.SystemUiHider
+import com.battlelancer.seriesguide.util.ThemeUtils
+import com.github.chrisbanes.photoview.PhotoView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import uk.co.senab.photoview.PhotoView
 
 /**
  * Displays an image URL full screen in a zoomable view. If a preview image URL is provided, it is
@@ -34,6 +35,10 @@ class FullscreenImageActivity : BaseActivity() {
 
     private var hideHandler = Handler(Looper.getMainLooper())
     private var hideRunnable: Runnable = Runnable { systemUiHider.hide() }
+
+    override fun configureEdgeToEdge() {
+        ThemeUtils.configureEdgeToEdge(window, forceDarkStatusBars = true)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +80,10 @@ class FullscreenImageActivity : BaseActivity() {
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
+        // Currently not using WindowInsetsControllerCompat as it resets zoom level when
+        // hiding/showing system bars *sigh* and I don't want to find out why right now.
         systemUiHider = SystemUiHider.getInstance(
-            this, photoView, SystemUiHider.FLAG_FULLSCREEN
+            this, photoView, SystemUiHider.FLAG_HIDE_NAVIGATION
         )
         systemUiHider.setup()
 
@@ -139,7 +146,7 @@ class FullscreenImageActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

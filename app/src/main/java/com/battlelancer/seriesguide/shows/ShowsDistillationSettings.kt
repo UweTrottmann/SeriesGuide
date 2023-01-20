@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 object ShowsDistillationSettings {
 
     @JvmField
-    val filterLiveData = MutableLiveData<FilterShowsView.ShowFilter>()
+    val filterLiveData = MutableLiveData<ShowFilter>()
     @JvmField
     val sortOrderLiveData = MutableLiveData<SortShowsView.ShowSortOrder>()
 
@@ -104,21 +104,17 @@ object ShowsDistillationSettings {
     }
 
     @JvmStatic
-    fun saveFilter(
-        context: Context,
-        isFilteringFavorites: Boolean?,
-        isFilteringUnwatched: Boolean?,
-        isFilteringUpcoming: Boolean?,
-        isFilteringHidden: Boolean?,
-        isFilteringContinuing: Boolean?
-    ) {
+    fun saveFilter(context: Context, showFilter: ShowFilter) {
+        // Save setting
         PreferenceManager.getDefaultSharedPreferences(context).edit {
-            putInt(KEY_FILTER_FAVORITES, isFilteringFavorites.mapFilterState())
-            putInt(KEY_FILTER_UNWATCHED, isFilteringUnwatched.mapFilterState())
-            putInt(KEY_FILTER_UPCOMING, isFilteringUpcoming.mapFilterState())
-            putInt(KEY_FILTER_HIDDEN, isFilteringHidden.mapFilterState())
-            putInt(KEY_FILTER_CONTINUING, isFilteringContinuing.mapFilterState())
+            putInt(KEY_FILTER_FAVORITES, showFilter.isFilterFavorites.mapFilterState())
+            putInt(KEY_FILTER_UNWATCHED, showFilter.isFilterUnwatched.mapFilterState())
+            putInt(KEY_FILTER_UPCOMING, showFilter.isFilterUpcoming.mapFilterState())
+            putInt(KEY_FILTER_HIDDEN, showFilter.isFilterHidden.mapFilterState())
+            putInt(KEY_FILTER_CONTINUING, showFilter.isFilterContinuing.mapFilterState())
         }
+        // Broadcast new value
+        filterLiveData.postValue(showFilter)
     }
 
     private const val FILTER_INCLUDE = 1
@@ -174,5 +170,38 @@ object ShowsDistillationSettings {
         const val LAST_WATCHED_ID = 4
         const val LEAST_REMAINING_EPISODES_ID = 5
         const val STATUS = 6
+    }
+
+    data class ShowFilter(
+        val isFilterFavorites: Boolean?,
+        val isFilterUnwatched: Boolean?,
+        val isFilterUpcoming: Boolean?,
+        val isFilterHidden: Boolean?,
+        val isFilterContinuing: Boolean?
+    ) {
+        fun isAnyFilterEnabled(): Boolean {
+            return isFilterFavorites != null || isFilterUnwatched != null
+                    || isFilterUpcoming != null || isFilterHidden != null
+                    || isFilterContinuing != null
+        }
+
+        companion object {
+            @JvmStatic
+            fun default(): ShowFilter {
+                // Exclude hidden, all others disabled.
+                return ShowFilter(null, null, null, false, null)
+            }
+
+            @JvmStatic
+            fun fromSettings(context: Context): ShowFilter {
+                return ShowFilter(
+                    isFilteringFavorites(context),
+                    isFilteringUnwatched(context),
+                    isFilteringUpcoming(context),
+                    isFilteringHidden(context),
+                    isFilteringContinuing(context)
+                )
+            }
+        }
     }
 }

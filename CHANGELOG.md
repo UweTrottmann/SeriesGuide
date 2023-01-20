@@ -1,3 +1,4 @@
+
 <a name="top"></a>
 
 Release notes
@@ -8,7 +9,65 @@ Release notes
 🔨 = Resolved or fixed.
 📝 = Notable change.
 
-Releases marked with 🧪 are/were available on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
+Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
+
+Version 66
+----------
+*2023-01-19*
+
+* 🔧 Appearance updates.
+* 🔧 Trakt: show special error messages if watchlist limit is exceeded.
+* 🔧 Show filters: change option to remove all filters to instead restore defaults (exclude hidden).
+* 🔨 Manage lists: fix an item getting removed from other lists if there are many lists.
+
+#### 66.0.7
+*2023-01-19*
+
+* 🔨 Do not crash if time zone of device is not known, report and default to "America/New_York" instead.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 66.0.6 🧪
+*2023-01-13*
+
+* 🔧 Trakt: show special error messages if account is locked or list limit exceeded.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 66.0.5 🧪
+*2022-12-21*
+
+* 🔧 Support adding shows when Trakt is down, use default values (e.g. for release time and time zone).
+* 🔧 Trakt: add button to support with VIP; button to open website (or dashboard when signed in).
+* 🔨 Do not crash when devices are using the renamed "Europe/Kyiv" or new "America/Ciudad_Juarez" time zone.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 66.0.4 🧪
+*2022-12-16*
+
+* 🔧 Appearance: draw behind navigation bar in movie details screen.
+
+#### 66.0.3 🧪
+*2022-12-10*
+
+* 🔨 Fix crash when loading movie watch history of Trakt friends and the device is offline.
+
+#### 66.0.2 🧪
+*2022-12-09*
+
+* 🔧 Appearance: draw behind status and navigation bar whenever possible.
+* 🔧 Show filters: change option to remove all filters to instead restore defaults (exclude hidden).
+* 🔨 Fix network detection on some Android 11 devices.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 66.0.1 🧪
+*2022-10-21*
+
+* 🔨 Fix crash when resizing the app while on the episodes screen.
+
+#### 66.0.0 🧪
+*2022-10-20*
+
+* 🔨 Manage lists: fix an item getting removed from other lists if there are many lists.
+* 📝 Latest user interface translations from Crowdin.
 
 Version 65
 ----------

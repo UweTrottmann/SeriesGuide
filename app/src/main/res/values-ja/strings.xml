@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">番組</string>
     <string name="lists">リスト</string>
@@ -272,7 +272,6 @@
     <string name="feature_comments">コメントを投稿</string>
     <string name="feature_sync">同期</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">試験的</string>
     <string name="hexagon_description">SeriesGuide Cloud は番組、リスト、映画をバックアップおよび同期するのに役立ちます</string>
     <string name="hexagon_warning_trakt">SeriesGuide Cloud でログインすると、一部の Trakt の機能が利用できません</string>
     <string name="hexagon_signin">サインイン</string>
@@ -299,6 +298,7 @@
     <string name="trakt_error_credentials">問題が起きました。Trakt の認証情報を確認して、もう一度やり直してください。</string>
     <string name="trakt_error_not_exists">Trakt では利用できません。後でもう一度やり直してください。</string>
     <string name="trakt_notice_not_exists">Trakt では追跡できません。</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Trakt に接続</string>
     <string name="trakt_reconnect">SeriesGuide を Trakt に接続</string>
@@ -308,7 +308,8 @@
     <string name="disconnect">切断</string>
     <string name="use_integrated_browser">統合ブラウザーを使用</string>
     <string name="show_library">Add shows from Trakt</string>
-    <string name="about_trakt">Trakt は、あなたが観ているテレビ番組や映画を記録するのに役立ちます。<a href="https://trakt.tv">詳細はこちら</a></string>
+    <string name="about_trakt">Trakt は、あなたが観ているテレビ番組や映画を記録するのに役立ちます。</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">作品を評価</string>
     <string name="your_rating">あなたの評価</string>
@@ -333,7 +334,6 @@
     <string name="pref_quick_checkin_summary">チェックインのメッセージを求めません</string>
     <!-- Help -->
     <string name="feedback">フィードバックを送信</string>
-    <string name="action_open_in_browser">ブラウザーで開く</string>
     <!-- Settings -->
     <string name="action_translate">このアプリを翻訳</string>
     <string name="action_contribute_content">コンテンツを翻訳または改善する</string>
@@ -482,10 +482,10 @@
     <string name="subscription_expired">サブスクリプションの有効期限が切れました</string>
     <string name="subscription_expired_details">SeriesGuide サブスクリプションの有効期限が切れています。</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Amazon アカウントにサインイン!</string>
-    <string name="subscription_unavailable">サブスクリプションは現在利用できません。</string>
-    <string name="subscription_failed">支払は完了していません。</string>
-    <string name="pass_unavailable">X Pass は現在使用できません。</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon アカウントにサインイン!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">サブスクリプションは現在利用できません。</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">支払は完了していません。</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass は現在使用できません。</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">拡張機能をカスタマイズ</string>
     <string name="action_extensions_add">拡張機能を追加</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Serien</string>
     <string name="lists">Listen</string>
@@ -140,7 +140,7 @@
     <string name="unhidden">Serie wieder sichtbar</string>
     <string name="action_shows_add">Serie hinzufügen</string>
     <string name="action_shows_filter">Serien filtern</string>
-    <string name="empty_filter">Alle Filter entfernen</string>
+    <string name="empty_filter">Filter zurücksetzen</string>
     <string name="action_shows_filter_favorites">Favoriten</string>
     <string name="action_shows_filter_unwatched">Nicht angesehen</string>
     <string name="action_shows_filter_upcoming">Demnächst</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Kommentare posten</string>
     <string name="feature_sync">Sync</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimentell</string>
     <string name="hexagon_description">SeriesGuide Cloud hilft Ihre Serien, Listen und Filme zu sichern und synchronisieren</string>
     <string name="hexagon_warning_trakt">Während Sie bei SeriesGuide Cloud angemeldet sind, sind einige Trakt Funktionen nicht verfügbar</string>
     <string name="hexagon_signin">Anmelden</string>
@@ -306,6 +305,7 @@
     <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre Trakt-Zugangsdaten und versuchen Sie es erneut.</string>
     <string name="trakt_error_not_exists">(Noch) nicht bei Trakt verfügbar. Versuchen Sie es später erneut.</string>
     <string name="trakt_notice_not_exists">Kann (noch) nicht mit Trakt verwaltet werden</string>
+    <string name="trakt_error_limit_exceeded">Merkliste ist voll, entferne Sie zuerst etwas.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Mit Trakt verbinden</string>
     <string name="trakt_reconnect">SeriesGuide mit Trakt verbinden</string>
@@ -315,7 +315,8 @@
     <string name="disconnect">Trennen</string>
     <string name="use_integrated_browser">Integrierten Browser verwenden</string>
     <string name="show_library">Serien von Trakt hinzufügen</string>
-    <string name="about_trakt">Trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben. <a href="http://trakt.tv">Mehr erfahren</a></string>
+    <string name="about_trakt">Trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben.</string>
+    <string name="support_trakt">Unterstütze Trakt mit VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bewerten</string>
     <string name="your_rating">Ihre Bewertung</string>
@@ -341,7 +342,6 @@
     <string name="pref_quick_checkin_summary">Nicht nach einer Check In Nachricht fragen</string>
     <!-- Help -->
     <string name="feedback">Feedback senden</string>
-    <string name="action_open_in_browser">Im Browser öffnen</string>
     <!-- Settings -->
     <string name="action_translate">Diese App übersetzen</string>
     <string name="action_contribute_content">Inhalte übersetzen oder verbessern</string>
@@ -493,10 +493,10 @@
     <string name="subscription_expired">Abonnement abgelaufen</string>
     <string name="subscription_expired_details">Ihr SeriesGuide Abonnement ist abgelaufen</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Melden Sie sich bei Ihrem Amazon-Konto an</string>
-    <string name="subscription_unavailable">Das Abonnement ist derzeit nicht verfügbar</string>
-    <string name="subscription_failed">Kauf nicht abgeschlossen</string>
-    <string name="pass_unavailable">X Pass ist derzeit nicht verfügbar</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Melden Sie sich bei Ihrem Amazon-Konto an</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Das Abonnement ist derzeit nicht verfügbar</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Kauf nicht abgeschlossen</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass ist derzeit nicht verfügbar</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Erweiterungen anpassen</string>
     <string name="action_extensions_add">Erweiterung hinzufügen</string>

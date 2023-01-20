@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapMes
 import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapProductEvent
 import com.battlelancer.seriesguide.databinding.ActivityAmazonBillingBinding
 import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -39,6 +40,7 @@ class AmazonBillingActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAmazonBillingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root)
         setupActionBar()
         setupViews()
         AmazonHelper.create(this)
@@ -55,6 +57,8 @@ class AmazonBillingActivity : BaseActivity() {
     }
 
     private fun setupViews() {
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewAmazonBilling)
+
         binding.buttonAmazonBillingSubscribe.isEnabled = false
         binding.buttonAmazonBillingSubscribe.setOnClickListener { v: View? -> subscribe() }
 

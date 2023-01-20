@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">ТВ предавания</string>
     <string name="lists">Списъци</string>
     <string name="movies">Филми</string>
     <string name="statistics">Статистика</string>
-    <string name="navigation_more">More</string>
+    <string name="navigation_more">Още</string>
     <string name="search">Търсене</string>
     <string name="preferences">Настройки</string>
     <string name="help">Помощ</string>
-    <string name="no_more_updates">SeriesGuide will receive no more updates for this version of Android.</string>
+    <string name="no_more_updates">SeriesGuide няма да получава повече обновления за тази версия на Андроид.</string>
     <!-- Media items -->
-    <string name="show_details">Details</string>
+    <string name="show_details">Детайлна</string>
     <string name="episode">Епизод</string>
     <string name="episode_number">Епизод %d</string>
     <string name="episodes">Епизоди</string>
@@ -36,15 +36,15 @@
     <string name="sync_and_update">Синхронизиране &amp; актуализация</string>
     <string name="sync_and_download_all">Синхронизиране &amp; Изтегли всички</string>
     <string name="action_stream">Стрийм или закупи</string>
-    <string name="action_stream_info">Stream or purchase info</string>
-    <string name="action_select_region">Select region</string>
-    <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_stream_info">Поръчай онлайн</string>
+    <string name="action_select_region">Избор на регион</string>
+    <string name="action_include_any_watch_provider">Избери всички</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
     <string name="search_hint">Търсене на епизоди</string>
     <!-- Status messages -->
     <string name="updated">Актуализиран до последна версия.</string>
-    <string name="updated_details">Details</string>
+    <string name="updated_details">Детайлна</string>
     <string name="norating">няма</string>
     <string name="unknown">неизвестен</string>
     <string name="offline">Свържете се към мрежа и пробвайте отново.</string>
@@ -55,7 +55,7 @@
     <string name="api_error_generic">Няма връзка с %s. trakt. Опитайте отново по-късно.</string>
     <string name="api_failed">Грешно: %s</string>
     <string name="copy_to_clipboard">Копирано в клипборда</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Сериалът не е мигриран в TMDB. Някои действия, като синхронизация с Trakt и Cloud може да не работят. Опитайте се да премахнете сериала и да го потъсите и добавите отново. Кликни за подробности.</string>
     <!-- Sharing -->
     <string name="share">Сподели</string>
     <string name="share_show">Сподели ТВ предаване</string>
@@ -91,14 +91,14 @@
     <string name="show_isalive">Продължава</string>
     <string name="show_isnotalive">Завършил</string>
     <string name="show_isUpcoming">Предстоящи</string>
-    <string name="show_status_in_production">In Production</string>
-    <string name="show_status_pilot">Pilot</string>
-    <string name="show_status_canceled">Canceled</string>
+    <string name="show_status_in_production">В процес на производство</string>
+    <string name="show_status_pilot">Пилотен</string>
+    <string name="show_status_canceled">Прекратен</string>
     <string name="no_translation">Няма описание преведено на %1$s възможно на %2$s.</string>
     <string name="no_translation_title">Не е преведено</string>
     <string name="no_spoilers">Някои детайли са скрити, за да се избегнат спойлерите. За да изключите това отидете в настройки.</string>
     <string name="format_source">Източник: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Последно обновено</string>
     <!-- Date and Time -->
     <string name="today">днес</string>
     <string name="now">сега</string>
@@ -107,8 +107,8 @@
     <!-- Flagging -->
     <string name="mark_all">Всички са гледани</string>
     <string name="unmark_all">Никой не е гледан</string>
-    <string name="action_watched_up_to">Watched up to here</string>
-    <string name="confirmation_watched_up_to">Set all episodes up to here watched?</string>
+    <string name="action_watched_up_to">Гледан дотук</string>
+    <string name="confirmation_watched_up_to">Маркирай всички епизоди дотук като гледани</string>
     <string name="collect_all">Всички са в колекцията</string>
     <string name="uncollect_all">Нито един не е в колекцията</string>
     <string name="action_skip">Пропусни</string>
@@ -118,11 +118,11 @@
     <string name="action_watched">Гледано</string>
     <string name="action_unwatched">Негледан</string>
     <string name="state_watched">Гледано</string>
-    <string name="state_watched_multiple_format">Watched (%d)</string>
-    <string name="state_skipped">Skipped</string>
-    <string name="state_in_collection">In collection</string>
-    <string name="state_on_watchlist">On watchlist</string>
-    <string name="state_favorite">Favorite</string>
+    <string name="state_watched_multiple_format">Гледани (%d)</string>
+    <string name="state_skipped">Пропуснат</string>
+    <string name="state_in_collection">В колекцията</string>
+    <string name="state_on_watchlist">За гледане</string>
+    <string name="state_favorite">Любими</string>
     <!-- Shows -->
     <string name="confirm_delete">Наистина ли искате премахнете %s?</string>
     <string name="delete_error">Премахването неуспешно. Опитайте по-късно.</string>
@@ -145,23 +145,23 @@
     <string name="action_shows_filter_unwatched">Негледани</string>
     <string name="action_shows_filter_upcoming">Предстоящи</string>
     <string name="action_shows_filter_hidden">Скрити</string>
-    <string name="state_shows_filter_disabled">Disabled</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
-    <string name="action_shows_make_all_visible">Make all hidden visible</string>
-    <string name="description_make_all_visible_format">Make all hidden shows (%s) visible again?</string>
+    <string name="state_shows_filter_disabled">Изключено</string>
+    <string name="state_shows_filter_included">С тези</string>
+    <string name="state_shows_filter_excluded">Без тези</string>
+    <string name="action_shows_make_all_visible">Виж всички скрити</string>
+    <string name="description_make_all_visible_format">Направи всички скрити сериали (%s) видими?</string>
     <string name="action_shows_sort">Сортирай сериалите</string>
     <string name="action_shows_sort_title">Заглавие</string>
     <string name="action_shows_sort_latest_episode">Последен епизод</string>
     <string name="action_shows_sort_oldest_episode">Най-старият епизод</string>
     <string name="action_shows_sort_last_watched">Последно гледани</string>
     <string name="action_shows_sort_remaining">Оставащи епизоди</string>
-    <string name="action_shows_sort_status">Status</string>
+    <string name="action_shows_sort_status">Състояние</string>
     <string name="action_shows_sort_favorites">Първо Любими</string>
     <string name="context_updateshow">Актуализирай</string>
     <string name="context_marknext">Гледан следващ епизод</string>
-    <string name="action_episodes_switch_view">Switch view</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="action_episodes_switch_view">Промени изгледа</string>
+    <string name="next_to_watch">Следващ за гледане</string>
     <!-- History -->
     <string name="user_stream">История</string>
     <string name="recently_watched">Наскоро гледан/и</string>
@@ -177,7 +177,7 @@
     <string name="calendar_settings">Настройки на календара</string>
     <string name="only_favorites">Само Любими сериали</string>
     <string name="calendar_only_collected">Само притежавани епизоди</string>
-    <string name="calendar_only_premieres">Only premieres</string>
+    <string name="calendar_only_premieres">Само премиери</string>
     <string name="pref_infinite_scrolling">Безкраен календар</string>
     <!-- Updating -->
     <string name="update_scheduled">Обновяване&#8230;</string>
@@ -203,7 +203,7 @@
     <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
     <string name="empty_show_search">Не е намерено в твоя списък със сериали</string>
     <string name="action_try_again">Опитай отново</string>
-    <string name="tvdb_error_does_not_exist">The show does not exist (yet) on TMDB. Try again later.</string>
+    <string name="tvdb_error_does_not_exist">Сериалът не е наличен (все още) в TMDB. Опитайте по-късно.</string>
     <string name="add_all">Добави всички</string>
     <string name="add_multiple">Всички сериали ще се появят в списъка ви скоро.</string>
     <string name="add_started">Всеки момент %s ще се появи в списъка със сериали.</string>
@@ -214,8 +214,8 @@
     <string name="shows_collection">Колекция</string>
     <string name="watchlist">Списък за гледане</string>
     <!-- Similar shows -->
-    <string name="empty_no_results">No results</string>
-    <string name="title_similar_shows">Similar shows</string>
+    <string name="empty_no_results">Няма резултати</string>
+    <string name="title_similar_shows">Подобни сериали</string>
     <!-- Lists -->
     <string name="first_list">Първи списък</string>
     <string name="list_add">Добави списък</string>
@@ -224,7 +224,7 @@
     <string name="list_manage">Управление на списъка</string>
     <string name="list_item_manage">Управление на списъци</string>
     <string name="list_item_remove">Премахване от списъка</string>
-    <string name="list_empty">You can add shows to this list</string>
+    <string name="list_empty">Добавете сериали в този списък</string>
     <string name="action_lists_sort">Подреждане на списъка</string>
     <string name="action_lists_reorder">Пренареждане на списъците</string>
     <string name="error_name_already_exists">Списък с това име вече съществува</string>
@@ -250,15 +250,15 @@
     <string name="action_movies_sort">Подреждане на филми</string>
     <string name="action_movies_sort_title">Заглавие</string>
     <string name="action_movies_sort_release">Дата на издаване</string>
-    <string name="action_movies_filter">Filter movies</string>
+    <string name="action_movies_filter">Филтриране</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не може да се изчисли статистиката.</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s изгледани и приключени</string>
     <string name="shows_with_next">%s със предстоящите епизоди</string>
     <string name="shows_continuing">%s продължаващи</string>
     <string name="episodes_watched">%s гледани</string>
     <string name="movies_on_watchlist">%s в плейлистата</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d в колекцията</string>
     <string name="movies_watched_format">%s гледани</string>
     <plurals name="days_plural">
         <item quantity="one">%d ден</item>
@@ -279,21 +279,20 @@
     <string name="feature_comments">Публикувай коментар</string>
     <string name="feature_sync">Синхронизирай</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Експериментално</string>
     <string name="hexagon_description">SeriesGuide Cloud ти помага да създадеш копие на твоите сериали, списъци и филми и да ги синхронизираш</string>
     <string name="hexagon_warning_trakt">Докато си вписан с SeriesGuide Cloud някои от функциите на trakt не са достъпни</string>
     <string name="hexagon_signin">Вписване</string>
     <string name="hexagon_signout">Отписване</string>
     <string name="hexagon_setup_incomplete">Настройването на SeriesGuide облака не беше завършено.</string>
-    <string name="hexagon_setup_fail_auth">Your account does not have an email address</string>
+    <string name="hexagon_setup_fail_auth">Към вашия акаунт не е свързан email адрес</string>
     <string name="hexagon_remove_account">Премахване на акаунт</string>
     <string name="hexagon_remove_account_success">Акаунт унищожен.</string>
     <string name="hexagon_remove_account_failure">Не може да се премахне акаунта.</string>
     <string name="hexagon_remove_account_confirmation">С премахването на акаунта ви ще се изтрият всички предавания и филми от SeriesGuide облака. Не забраявайте да го премахнете и на други свързани устройства.</string>
     <string name="hexagon_api_queued">Изпращане към SeriesGuide облака.</string>
     <string name="hexagon_signed_out">Излизане от облака SeriesGuide.</string>
-    <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
-    <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_fail_format">Грешка при влизане с (%s)</string>
+    <string name="hexagon_signin_google_only">Email адресът изисква Google Sign-In</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Подаване към trakt.</string>
     <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
@@ -302,10 +301,11 @@
     <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
     <string name="traktcheckin_wait">Ще изчакам</string>
     <string name="trakt_success">Изпратено към trakt.</string>
-    <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
+    <string name="trakt_error_account_locked">Вашият акаунт в Trakt е заключен. Свържете се с поддръжката на Trakt.</string>
     <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
     <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
     <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
+    <string name="trakt_error_limit_exceeded">Списъкът е пълен, първо изтрийте нещо.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Свържете се с trakt</string>
     <string name="trakt_reconnect">Свържете SeriesGuide с trakt</string>
@@ -314,8 +314,9 @@
     <string name="connect">Свързване</string>
     <string name="disconnect">Прекъсване на връзката</string>
     <string name="use_integrated_browser">Използвай вградения четец</string>
-    <string name="show_library">Add shows from Trakt</string>
-    <string name="about_trakt">trakt записва какви сериали и филми гледате. <a href="http://trakt.tv">Научете повече</a></string>
+    <string name="show_library">Добавяне на сериали от Trakt</string>
+    <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
+    <string name="support_trakt">Подкрепете Trakt с ВИП</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
     <string name="your_rating">Вашата оценка</string>
@@ -341,10 +342,9 @@
     <string name="pref_quick_checkin_summary">Не питай за проверка в съобщенията</string>
     <!-- Help -->
     <string name="feedback">Обратна връзка</string>
-    <string name="action_open_in_browser">Отвори в браузър</string>
     <!-- Settings -->
-    <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
+    <string name="action_translate">Превеждане на приложението</string>
+    <string name="action_contribute_content">Превод или корекции на съдържанието</string>
     <string name="prefs_category_advanced">Разширени</string>
     <string name="prefs_category_about">Относно</string>
     <string name="pref_onlyfuture">Няма излъчени епизоди</string>
@@ -361,7 +361,7 @@
     <string name="pref_language_fallback">Алтернативен език</string>
     <string name="pref_updatewifionly">Изображения само при Wi-Fi</string>
     <string name="pref_updatewifionlysummary">За да намалите таксуването за пренос на данни, не теглете през мобилната мрежа</string>
-    <string name="pref_error_reports">Report errors to app developer</string>
+    <string name="pref_error_reports">Съобщете за грешки на разработчика</string>
     <plurals name="days_before_plural">
         <item quantity="one">%d ден предварително</item>
         <item quantity="other">%d дни предварително</item>
@@ -371,13 +371,13 @@
         <item quantity="other">%d 1 час преди</item>
     </plurals>
     <plurals name="minutes_before_plural">
-        <item quantity="one">%d minute before</item>
+        <item quantity="one">%d минута преди</item>
         <item quantity="other">%d минути преди</item>
     </plurals>
     <!-- About screen -->
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy">Политика за поверителност</string>
     <string name="licence_themoviedb">Този продукт използва TMDB API, но не е сертифицирано от TMDB.</string>
-    <string name="licence_trakt">This app uses data and images by Trakt.</string>
+    <string name="licence_trakt">Приложението използва данни и изображения от Trakt.</string>
     <string name="about_open_source">SeriesGuide е построена чрез използване на софтуер с отворен код.</string>
     <string name="licences_and_credits">Лицензии и кредити</string>
     <!-- Sort -->
@@ -399,16 +399,16 @@
     <string name="upcoming_upto_one_week">1 седмица</string>
     <string name="upcoming_upto_two_weeks">2 седмици</string>
     <string name="upcoming_upto_one_month">1 месец</string>
-    <string name="upcoming_all">all</string>
+    <string name="upcoming_all">всички</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">Външен вид</string>
     <string name="pref_theme">Тема</string>
-    <string name="pref_dynamic_colors">Use system colors</string>
+    <string name="pref_dynamic_colors">Използвай системните цветове</string>
     <!-- Themes -->
-    <string name="theme_app_follow_system">Use system default</string>
-    <string name="theme_app_auto_battery">Set by Battery Saver</string>
-    <string name="theme_app_dark">Dark</string>
-    <string name="theme_app_light">Light</string>
+    <string name="theme_app_follow_system">Използвай системната тема</string>
+    <string name="theme_app_auto_battery">От пестене на батерията</string>
+    <string name="theme_app_dark">Тъмна</string>
+    <string name="theme_app_light">Светла</string>
     <!-- Other advanced settings -->
     <string name="pref_other">Други</string>
     <string name="pref_autoupdatesummary">Автоматично синхронизиране и актуализиране данните на SeriesGuide</string>
@@ -436,13 +436,13 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматично създаване на резервно копие</string>
     <string name="pref_autobackupsummary">Седмичен архив на вашите предавания, списъци и филми</string>
-    <string name="autobackup_details">These backups are unavailable if the app is installed again. Create copies to preserve them otherwise.</string>
+    <string name="autobackup_details">Ако преинсталирате приложението, копията ще бъдат изтрити. Преди това направете допълнително копие.</string>
     <string name="last_auto_backup">Последно автоматично архивиране: %s</string>
     <string name="restore_auto_backup">Възстанови автоматично архивиране</string>
-    <string name="autobackup_failed">The last auto backup has failed</string>
+    <string name="autobackup_failed">Създаването на автоматично копие беше неуспешно.</string>
     <string name="autobackup_files_missing">За да използвате автоматично архивиране, изберете валиден архивн файл.</string>
-    <string name="autobackup_create_user_copy">Create a copy after each backup</string>
-    <string name="autobackup_restore_available">An auto backup might be available to restore from.</string>
+    <string name="autobackup_create_user_copy">Създавай копие всеки път</string>
+    <string name="autobackup_restore_available">Налично е автоматично създадено резервно копие.</string>
     <!-- Welcome dialog -->
     <string name="get_started">Начало</string>
     <string name="dismiss">Отхвърли</string>
@@ -458,19 +458,19 @@
     <string name="pref_notifications_treshold">Кога да извести</string>
     <string name="pref_notifications_select_shows">Избери сериали</string>
     <string name="pref_notifications_select_shows_summary">Сериали с включени известия (%d)</string>
-    <string name="pref_notifications_hidden">Ignore hidden shows</string>
-    <string name="pref_notifications_hidden_summary">Even if notifications are enabled, do not notify about hidden shows</string>
+    <string name="pref_notifications_hidden">Игнорирай скритите сериали</string>
+    <string name="pref_notifications_hidden_summary">Дори нотификациите да са позволени, не известявай за скрити сериали</string>
     <string name="pref_notification_channel_errors">Грешки</string>
-    <string name="pref_notifications_next_episodes_only">Only for episodes to watch next</string>
-    <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
-    <string name="pref_notifications_battery_settings">Battery settings</string>
-    <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="pref_notifications_next_episodes_only">Само за следващи епизоди за мен</string>
+    <string name="pref_notifications_next_episodes_only_summary">Известява само ако новият епизод е следващият за мен</string>
+    <string name="pref_notifications_battery_settings">Настройки на батерията</string>
+    <string name="pref_notifications_battery_settings_summary">Изключи оптимизациите на батерията от Настройки на батерия за сигурни нотификации</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрий гледаните епизоди</string>
     <string name="pref_widget_opacity">Фон на уиджета</string>
     <string name="pref_widget_type">Вид на уиджета</string>
-    <string name="pref_large_font">Use large font</string>
-    <string name="pref_hide_watch_button">Hide watch button</string>
+    <string name="pref_large_font">Използвай едър шрифт</string>
+    <string name="pref_hide_watch_button">Скрий бутона Гледай</string>
     <!-- Widget background options -->
     <string name="widget_background_transparent">Прозрачно</string>
     <string name="widget_background_25">25%</string>
@@ -483,20 +483,20 @@
     <string name="billing_action_subscribe">Абониране</string>
     <string name="billing_action_manage_subscriptions">Управление на абонаменти</string>
     <string name="billing_action_pass">Вземете X Pass App</string>
-    <string name="billing_duration_format">%1$s/year</string>
-    <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
+    <string name="billing_duration_format">%1$s/година</string>
+    <string name="billing_sub_description">Пробвайте за 30 дни, откажете се по всяко време.</string>
     <string name="billing_price_pass">еднократно закупуване</string>
-    <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
+    <string name="upgrade_description">Всички абонаменти дават достъп до всички функции и бъдещи добавки. Не се изисква абонамент, за да ползвате приложението.</string>
     <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
-    <string name="billing_learn_more">More info and help</string>
+    <string name="billing_unlock_detected">Имате приложението X Pass. Все пак можете да се абонирате, за да ни подкрепите.</string>
+    <string name="billing_learn_more">Информация и помощ</string>
     <string name="subscription_expired">Абонаментът е изтекъл</string>
     <string name="subscription_expired_details">Вашият абонамент за X функциите е изтекъл.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Влезте в профила си в Amazon!</string>
-    <string name="subscription_unavailable">Абонаментът не е наличен.</string>
-    <string name="subscription_failed">Покупката не завърши.</string>
-    <string name="pass_unavailable">X Pass е недостъпен в момента.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Влезте в профила си в Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Абонаментът не е наличен.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Покупката не завърши.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass е недостъпен в момента.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Персонализиране на разширения</string>
     <string name="action_extensions_add">Добави разширение</string>
@@ -522,5 +522,5 @@
     <string name="feedback_action_ok">Да, разбира се</string>
     <string name="feedback_action_nothanks">Не, благодаря</string>
     <!-- Support -->
-    <string name="support_the_dev">Support the developer?</string>
+    <string name="support_the_dev">Подкрепете разработчика</string>
 </resources>

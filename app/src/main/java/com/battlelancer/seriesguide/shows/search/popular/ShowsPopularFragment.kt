@@ -7,7 +7,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
@@ -15,6 +17,7 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
@@ -34,11 +37,6 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     private val model: ShowsPopularViewModel by viewModels()
     private lateinit var adapter: ShowsPopularAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +48,9 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding ?: return
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewShowsPopular)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByShowsPopular)
 
         binding.swipeRefreshLayoutShowsPopular.apply {
             ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, this)
@@ -94,20 +95,27 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
                 }
             }
         }
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.shows_popular_menu, menu)
-    }
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.shows_popular_menu, menu)
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_action_shows_popular_filter -> {
-                DiscoverFilterFragment.showForShows(parentFragmentManager)
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_shows_popular_filter -> {
+                    DiscoverFilterFragment.showForShows(parentFragmentManager)
+                    true
+                }
+                else -> false
             }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -122,6 +130,10 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     override fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
         adapter.setStateForTmdbId(showTmdbId, newState)
+    }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewShowsPopular
     }
 
 }

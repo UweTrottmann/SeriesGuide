@@ -23,6 +23,10 @@ class QuickCheckInActivity : BaseThemeActivity() {
         return R.style.Theme_SeriesGuide_Wallpaper
     }
 
+    override fun configureEdgeToEdge() {
+        // Do nothing.
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

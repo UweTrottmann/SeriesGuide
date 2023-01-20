@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Σειρές</string>
     <string name="lists">Λίστες</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Σχόλια Αναρτήσεων</string>
     <string name="feature_sync">Συγχρονισμός</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Πειραματική έκδοση!</string>
     <string name="hexagon_description">Το SeriesGuide Cloud διατηρεί συγχρονισμένο αντίγραφο to backup των σειρών, ταινιών και λιστών σας</string>
     <string name="hexagon_warning_trakt">Ενώ είστε συνδεμένοι με το SeriesGuide Cloud κάποιες δυνατότητες του trakt δεν είναι διαθέσιμες</string>
     <string name="hexagon_signin">Σύνδεση</string>
@@ -306,6 +305,7 @@
     <string name="trakt_error_credentials">Κάτι πήγε στραβά. Παρακαλώ ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
     <string name="trakt_error_not_exists">Δεν είναι (ακόμα) διαθέσιμο στο trakt. Ξαναδοκιμάστε αργότερα.</string>
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Σύνδεση trakt</string>
     <string name="trakt_reconnect">Σύνδεση του SeriesGuide με το trakt</string>
@@ -314,8 +314,9 @@
     <string name="connect">Σύνδεση</string>
     <string name="disconnect">Αποσύνδεση</string>
     <string name="use_integrated_browser">Χρησιμοποιήστε ενσωματωμένο πρόγραμμα περιήγησης</string>
-    <string name="show_library">Add shows from Trakt</string>
-    <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε. <a href="http://trakt.tv"> Μάθετε περισσότερα</a></string>
+    <string name="show_library">Προσθήκη σειρών από Trakt</string>
+    <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
+    <string name="support_trakt">Υποστήριξη Trakt με VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Αξιολόγηση</string>
     <string name="your_rating">Η βαθμολογία σας</string>
@@ -341,7 +342,6 @@
     <string name="pref_quick_checkin_summary">Να μη ζητείται check in</string>
     <!-- Help -->
     <string name="feedback">Αποστολή σχολίων</string>
-    <string name="action_open_in_browser">Άνοιγμα σε πρόγραμμα περιήγησης</string>
     <!-- Settings -->
     <string name="action_translate">Μετάφραση αυτής της εφαρμογής</string>
     <string name="action_contribute_content">Μετάφραση ή βελτίωση περιεχομένου</string>
@@ -493,10 +493,10 @@
     <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Συνδεθείτε στο λογαριασμό σας Amazon!</string>
-    <string name="subscription_unavailable">Η συνδρομή επί του παρόντος δεν είναι διαθέσιμη.</string>
-    <string name="subscription_failed">Η αγορά δεν έχει ολοκληρωθεί.</string>
-    <string name="pass_unavailable">Το X Pass δεν είναι προσωρινά διαθέσιμο.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Συνδεθείτε στο λογαριασμό σας Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Η συνδρομή επί του παρόντος δεν είναι διαθέσιμη.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Η αγορά δεν έχει ολοκληρωθεί.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">Το X Pass δεν είναι προσωρινά διαθέσιμο.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Προσαρμοσμένες επεκτάσεις</string>
     <string name="action_extensions_add">Προσθήκη επέκταση</string>

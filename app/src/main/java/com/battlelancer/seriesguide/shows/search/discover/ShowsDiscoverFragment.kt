@@ -8,13 +8,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
@@ -23,12 +22,11 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
-import com.battlelancer.seriesguide.ui.widgets.EmptyView
 import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.uwetrottmann.seriesguide.widgets.EmptyViewSwipeRefreshLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -41,18 +39,7 @@ import timber.log.Timber
  */
 class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
-    private val KEY_QUERY = "searchQuery"
-
-    @BindView(R.id.swipeRefreshLayoutShowsDiscover)
-    lateinit var swipeRefreshLayout: EmptyViewSwipeRefreshLayout
-
-    @BindView(R.id.recyclerViewShowsDiscover)
-    lateinit var recyclerView: RecyclerView
-
-    @BindView(R.id.emptyViewShowsDiscover)
-    lateinit var emptyView: EmptyView
-
-    private lateinit var unbinder: Unbinder
+    private var binding: FragmentShowsDiscoverBinding? = null
     private lateinit var adapter: ShowsDiscoverAdapter
     private val model: ShowsDiscoverViewModel by viewModels()
 
@@ -68,26 +55,32 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
         } else {
             // use initial query (if any)
             val queryEvent = EventBus.getDefault().getStickyEvent(
-                SearchActivityImpl.SearchQuerySubmitEvent::class.java)
+                SearchActivityImpl.SearchQuerySubmitEvent::class.java
+            )
             queryEvent?.query ?: ""
         }
-
-        setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_shows_discover, container, false).also {
-            unbinder = ButterKnife.bind(this, it)
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return FragmentShowsDiscoverBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        swipeRefreshLayout.setSwipeableChildren(R.id.scrollViewShowsDiscover,
-                R.id.recyclerViewShowsDiscover)
+        val binding = binding!!
+        val swipeRefreshLayout = binding.swipeRefreshLayoutShowsDiscover
+        swipeRefreshLayout.setSwipeableChildren(
+            R.id.scrollViewShowsDiscover,
+            R.id.recyclerViewShowsDiscover
+        )
         swipeRefreshLayout.setOnRefreshListener { loadResults(true) }
         ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, swipeRefreshLayout)
 
+        val emptyView = binding.emptyViewShowsDiscover
         emptyView.visibility = View.GONE
         emptyView.setButtonClickListener {
             // Retrying, force load results again.
@@ -110,38 +103,56 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
             }
         }
 
+        val recyclerView = binding.recyclerViewShowsDiscover
+        ThemeUtils.applyBottomPaddingForNavigationBar(recyclerView)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByDiscover)
         recyclerView.apply {
             setHasFixedSize(true)
             this.layoutManager = layoutManager
         }
 
-        adapter = ShowsDiscoverAdapter(requireContext(), discoverItemClickListener,
-                TraktCredentials.get(requireContext()).hasCredentials(), true)
+        adapter = ShowsDiscoverAdapter(
+            requireContext(), discoverItemClickListener,
+            TraktCredentials.get(requireContext()).hasCredentials(), true
+        )
         recyclerView.adapter = adapter
 
         languageCode = ShowsSettings.getShowsSearchLanguage(requireContext())
 
         // observe and load results
-        model.data.observe(viewLifecycleOwner, { handleResultsUpdate(it) })
+        model.data.observe(viewLifecycleOwner) { handleResultsUpdate(it) }
 
         // initial load after getting watch providers, reload on watch provider changes
-        model.watchProviderIds.observe(viewLifecycleOwner, {
+        model.watchProviderIds.observe(viewLifecycleOwner) {
             loadResults()
-        })
+        }
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
         override fun onLinkClick(anchor: View, link: TraktShowsLink) {
-            Utils.startActivityWithAnimation(activity,
+            Utils.startActivityWithAnimation(
+                activity,
                 TraktShowsActivity.intent(requireContext(), link),
-                    anchor)
+                anchor
+            )
         }
 
         override fun onItemClick(item: SearchResult) {
             if (item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {
                     // already in library, open it
-                    startActivity(OverviewActivity.intentShowByTmdbId(requireContext(), item.tmdbId))
+                    startActivity(
+                        OverviewActivity.intentShowByTmdbId(
+                            requireContext(),
+                            item.tmdbId
+                        )
+                    )
                 } else {
                     // display more details in a dialog
                     AddShowDialogFragment.show(parentFragmentManager, item)
@@ -161,7 +172,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                 // only support adding shows to watchlist
                 menu.findItem(R.id.menu_action_show_watchlist_remove).isVisible = false
                 setOnMenuItemClickListener(
-                    TraktAddFragment.AddItemMenuItemClickListener(context, showTmdbId)
+                    TraktAddFragment.AddItemMenuItemClickListener(requireContext(), showTmdbId)
                 )
             }.show()
         }
@@ -176,44 +187,49 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     private fun loadResults(forceLoad: Boolean = false) {
         val watchProviderIds = model.watchProviderIds.value
         val willLoad = model.data.load(query, languageCode, watchProviderIds, forceLoad)
-        if (willLoad) swipeRefreshLayout.isRefreshing = true
+        if (willLoad) binding?.swipeRefreshLayoutShowsDiscover?.isRefreshing = true
     }
 
     private fun handleResultsUpdate(result: ShowsDiscoverLiveData.Result?) {
         result?.let {
-            swipeRefreshLayout.isRefreshing = false
+            val binding = binding!!
+            binding.swipeRefreshLayoutShowsDiscover.isRefreshing = false
 
             val hasResults = result.searchResults.isNotEmpty()
 
+            val emptyView = binding.emptyViewShowsDiscover
             emptyView.setButtonText(R.string.action_try_again)
             emptyView.setMessage(result.emptyText)
             emptyView.visibility = if (hasResults) View.GONE else View.VISIBLE
 
-            recyclerView.visibility = if (hasResults) View.VISIBLE else View.GONE
+            binding.recyclerViewShowsDiscover.visibility =
+                if (hasResults) View.VISIBLE else View.GONE
             adapter.updateSearchResults(result.searchResults, result.isResultsForQuery)
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.shows_discover_menu, menu)
-    }
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.shows_discover_menu, menu)
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_action_shows_search_clear_history -> {
-                // tell the hosting activity to clear the search view history
-                EventBus.getDefault().post(SearchActivityImpl.ClearSearchHistoryEvent())
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_shows_search_clear_history -> {
+                    // tell the hosting activity to clear the search view history
+                    EventBus.getDefault().post(SearchActivityImpl.ClearSearchHistoryEvent())
+                    true
+                }
+                R.id.menu_action_shows_search_filter -> {
+                    DiscoverFilterFragment.showForShows(parentFragmentManager)
+                    true
+                }
+                R.id.menu_action_shows_search_change_language -> {
+                    displayLanguageSettings()
+                    true
+                }
+                else -> false
             }
-            R.id.menu_action_shows_search_filter -> {
-                DiscoverFilterFragment.showForShows(parentFragmentManager)
-                true
-            }
-            R.id.menu_action_shows_search_change_language -> {
-                displayLanguageSettings()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -232,8 +248,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        unbinder.unbind()
+        binding = null
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -256,7 +271,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTabClickEvent(event: TabClickEvent) {
         if (event.position == SearchActivityImpl.TAB_POSITION_SEARCH) {
-            recyclerView.smoothScrollToPosition(0)
+            binding?.recyclerViewShowsDiscover?.smoothScrollToPosition(0)
         }
     }
 
@@ -266,6 +281,12 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
 
     override fun setStateForTmdbId(showTmdbId: Int, newState: Int) {
         adapter.setStateForTmdbId(showTmdbId, newState)
+    }
+
+    companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewShowsDiscover
+
+        private const val KEY_QUERY = "searchQuery"
     }
 
 }

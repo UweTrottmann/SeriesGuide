@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">المسلسلات</string>
     <string name="lists">القوائم</string>
@@ -307,7 +307,6 @@
     <string name="feature_comments">أضف تعليق</string>
     <string name="feature_sync">نقل بيانات</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">تجريبي</string>
     <string name="hexagon_description">يساعد سيرايس جايد كلاود على حفظ مسلسلاتك و افلامك على حسابك الخاص اونلاين.</string>
     <string name="hexagon_warning_trakt">عندما تسجل الدخول لسيرايس كلاود سيتم فقد بعض خصائص موقع تراكت.</string>
     <string name="hexagon_signin">تسجيل الدخول</string>
@@ -334,6 +333,7 @@
     <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
     <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>
     <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة trakt بعد.</string>
+    <string name="trakt_error_limit_exceeded">القائمة ممتلئة، إزالة شيء أولاً.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">الإتصال بموقع Trakt</string>
     <string name="trakt_reconnect">ربط برنامج دليل المسلسلات بحساب Trak</string>
@@ -343,7 +343,8 @@
     <string name="disconnect">قطع الاتصال</string>
     <string name="use_integrated_browser">استخدام متصفح متكامل</string>
     <string name="show_library">إضافة مسلسلات من Trakt</string>
-    <string name="about_trakt">يساعدك trait على حفظ ما تشاهده من أفلام و مسلسلات.<a href="http://trakt.tv">مزيد من المعلومات</a></string>
+    <string name="about_trakt">يساعدك Trakt على حفظ ما تشاهده من أفلام و مسلسلات.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">التقييم</string>
     <string name="your_rating">تقييمك</string>
@@ -373,7 +374,6 @@
     <string name="pref_quick_checkin_summary">لا تسأل عن رسالة التحقق مرة أخرى</string>
     <!-- Help -->
     <string name="feedback">أرسل ملاحظاتك</string>
-    <string name="action_open_in_browser">فتح في المتصفح</string>
     <!-- Settings -->
     <string name="action_translate">ترجم هذا التطبيق</string>
     <string name="action_contribute_content">ترجمة أو تحسين المحتوى</string>
@@ -537,10 +537,10 @@
     <string name="subscription_expired">انتهت مدة الإشتراك</string>
     <string name="subscription_expired_details">انتهت مدة اشتراك في البرنامج المدفوع.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">قم بتسجيل الدخول في حساب أمازون الخاص بك !</string>
-    <string name="subscription_unavailable">الإشتراك غير متوفر حاليا .</string>
-    <string name="subscription_failed">الشراء لم يكتمل.</string>
-    <string name="pass_unavailable">X Pass غير متوفر حاليا.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">قم بتسجيل الدخول في حساب أمازون الخاص بك !</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">الإشتراك غير متوفر حاليا .</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">الشراء لم يكتمل.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass غير متوفر حاليا.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">تخصيص الإضافات</string>
     <string name="action_extensions_add">إضافة ملحق</string>

@@ -1,73 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerComment"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/large_padding"
-    android:paddingTop="@dimen/large_padding">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageViewCommentAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginStart="@dimen/large_padding"
+        android:layout_marginTop="@dimen/default_padding"
         android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:src="@color/protection_dark" />
 
-    <LinearLayout
-        android:id="@+id/containerCommentMeta"
-        android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewFilledStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/large_padding"
-        android:layout_toRightOf="@+id/imageViewCommentAvatar"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textViewCommentUsername"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-            tools:text="sgtest" />
-
-        <TextView
-            android:id="@+id/textViewCommentTimestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
-            tools:text="Dec 28, 2013" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textViewComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/containerCommentMeta"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginRight="@dimen/large_padding"
-        android:layout_toRightOf="@+id/imageViewCommentAvatar"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
-        tools:text="Some comment describing how the user felt or not felt about the watched media item..." />
-
-    <TextView
-        android:id="@+id/textViewCommentReplies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewComment"
-        android:layout_toRightOf="@+id/imageViewCommentAvatar"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
-        tools:text="3 replies" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/textViewCommentReplies"
+        android:layout_marginStart="@dimen/default_padding"
         android:layout_marginTop="@dimen/default_padding"
-        android:layout_toRightOf="@+id/imageViewCommentAvatar"
-        android:background="?attr/sgColorDivider" />
+        android:layout_marginEnd="@dimen/large_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageViewCommentAvatar"
+        app:layout_constraintTop_toTopOf="parent">
 
-</RelativeLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_padding">
+
+            <TextView
+                android:id="@+id/textViewCommentUsername"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
+                app:layout_constraintEnd_toStartOf="@+id/textViewCommentTimestamp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="My very long user name that never ever ends" />
+
+            <TextView
+                android:id="@+id/textViewCommentTimestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Dec 28, 2013" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierCommentHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="textViewCommentUsername, textViewCommentTimestamp" />
+
+            <TextView
+                android:id="@+id/textViewComment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrierCommentHeader"
+                tools:text="Some comment describing how the user felt or not felt about the watched media item..." />
+
+            <TextView
+                android:id="@+id/textViewCommentReplies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewComment"
+                tools:text="3 replies" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,38 +1,37 @@
 package com.battlelancer.seriesguide.movies
 
 import android.app.Activity
-import android.content.Context
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.core.view.MenuProvider
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.movies.MoviesDistillationSettings.MoviesSortOrder
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import org.greenrobot.eventbus.EventBus
 
-class MoviesOptionsMenu(val context: Context) {
+class MoviesOptionsMenu(val activity: Activity) : MenuProvider {
 
-    fun create(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.movies_lists_menu, menu)
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.movies_lists_menu, menu)
         menu.findItem(R.id.menu_action_movies_sort_ignore_articles).isChecked =
-            DisplaySettings.isSortOrderIgnoringArticles(context)
+            DisplaySettings.isSortOrderIgnoringArticles(activity)
     }
 
-    fun onItemSelected(item: MenuItem, activity: Activity): Boolean {
-        val itemId = item.itemId
-        when (itemId) {
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
             R.id.menu_action_movies_sort_title -> {
-                if (MoviesDistillationSettings.getSortOrderId(context) == MoviesSortOrder.TITLE_ALPHABETICAL_ID) {
-                    changeSortOrder(MoviesDistillationSettings.MoviesSortOrder.TITLE_REVERSE_ALHPABETICAL_ID)
+                if (MoviesDistillationSettings.getSortOrderId(activity) == MoviesSortOrder.TITLE_ALPHABETICAL_ID) {
+                    changeSortOrder(MoviesSortOrder.TITLE_REVERSE_ALHPABETICAL_ID)
                 } else {
                     // was sorted title reverse or by release date
-                    changeSortOrder(MoviesDistillationSettings.MoviesSortOrder.TITLE_ALPHABETICAL_ID)
+                    changeSortOrder(MoviesSortOrder.TITLE_ALPHABETICAL_ID)
                 }
                 return true
             }
             R.id.menu_action_movies_sort_release -> {
-                if (MoviesDistillationSettings.getSortOrderId(context) == MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID) {
+                if (MoviesDistillationSettings.getSortOrderId(activity) == MoviesSortOrder.RELEASE_DATE_NEWEST_FIRST_ID) {
                     changeSortOrder(MoviesSortOrder.RELEASE_DATE_OLDEST_FIRST_ID)
                 } else {
                     // was sorted by oldest first or by title
@@ -42,7 +41,7 @@ class MoviesOptionsMenu(val context: Context) {
             }
             R.id.menu_action_movies_sort_ignore_articles -> {
                 changeSortIgnoreArticles(
-                    !DisplaySettings.isSortOrderIgnoringArticles(context),
+                    !DisplaySettings.isSortOrderIgnoringArticles(activity),
                     activity
                 )
                 return true
@@ -52,7 +51,7 @@ class MoviesOptionsMenu(val context: Context) {
     }
 
     private fun changeSortOrder(sortOrderId: Int) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
+        PreferenceManager.getDefaultSharedPreferences(activity).edit()
             .putInt(MoviesDistillationSettings.KEY_SORT_ORDER, sortOrderId)
             .apply()
 
@@ -60,7 +59,7 @@ class MoviesOptionsMenu(val context: Context) {
     }
 
     private fun changeSortIgnoreArticles(value: Boolean, activity: Activity) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit()
+        PreferenceManager.getDefaultSharedPreferences(activity).edit()
             .putBoolean(DisplaySettings.KEY_SORT_IGNORE_ARTICLE, value)
             .apply()
 

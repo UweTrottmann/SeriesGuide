@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">节目</string>
     <string name="lists">列表</string>
@@ -220,7 +220,7 @@
     <string name="list_manage">管理列表</string>
     <string name="list_item_manage">管理列表</string>
     <string name="list_item_remove">从列表中移除</string>
-    <string name="list_empty">您可以将节目添加到此列表</string>
+    <string name="list_empty">您可以添加节目到此列表</string>
     <string name="action_lists_sort">排序列表</string>
     <string name="action_lists_reorder">对列表重新排序</string>
     <string name="error_name_already_exists">已存在同名列表</string>
@@ -272,7 +272,6 @@
     <string name="feature_comments">发布评论</string>
     <string name="feature_sync">同步</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">这是一个实验性功能！</string>
     <string name="hexagon_description">SeriesGuide Cloud 可帮您备份并同步您的节目、列表和电影</string>
     <string name="hexagon_warning_trakt">当登录到 SeriesGuide Cloud 时，Trakt 的某些功能将无法使用</string>
     <string name="hexagon_signin">登录</string>
@@ -299,6 +298,7 @@
     <string name="trakt_error_credentials">嗯～出了点小状况。请检查您的 Trakt 凭据后重试。</string>
     <string name="trakt_error_not_exists">Trakt 上（尚）无相关信息。请稍后重试。</string>
     <string name="trakt_notice_not_exists">（目前还）无法在 Trakt 上记录</string>
+    <string name="trakt_error_limit_exceeded">列表已满，请先移除某些内容。</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">关联 Trakt 帐户</string>
     <string name="trakt_reconnect">关联 SeriesGuide 与 Trakt</string>
@@ -308,7 +308,8 @@
     <string name="disconnect">断开</string>
     <string name="use_integrated_browser">使用内置浏览器</string>
     <string name="show_library">从 Trakt 中添加节目</string>
-    <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。<a href="https://trakt.tv">了解详情</a></string>
+    <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。</string>
+    <string name="support_trakt">使用 VIP 支持 Trakt</string>
     <!-- trakt ratings -->
     <string name="action_rate">评分</string>
     <string name="your_rating">您的评分</string>
@@ -333,7 +334,6 @@
     <string name="pref_quick_checkin_summary">不再询问签到内容</string>
     <!-- Help -->
     <string name="feedback">发送反馈</string>
-    <string name="action_open_in_browser">在浏览器中打开</string>
     <!-- Settings -->
     <string name="action_translate">翻译本应用</string>
     <string name="action_contribute_content">翻译或改进影视资料</string>
@@ -482,10 +482,10 @@
     <string name="subscription_expired">订阅已过期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 订阅已过期</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">登录您的亚马逊帐户</string>
-    <string name="subscription_unavailable">目前无法获取订阅</string>
-    <string name="subscription_failed">支付过程中断，购买无效</string>
-    <string name="pass_unavailable">目前无法获取 X Pass</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">登录您的亚马逊帐户</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">目前无法获取订阅</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">支付过程中断，购买无效</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">目前无法获取 X Pass</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">自定义扩展</string>
     <string name="action_extensions_add">添加扩展组件</string>

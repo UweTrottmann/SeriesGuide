@@ -7,15 +7,17 @@
     android:animateLayoutChanges="true"
     tools:ignore="RtlHardcoded">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewAutoBackup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
 
         <LinearLayout
             style="@style/Page.Centered"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switchAutoBackup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -249,7 +251,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/progressBarAutoBackup"

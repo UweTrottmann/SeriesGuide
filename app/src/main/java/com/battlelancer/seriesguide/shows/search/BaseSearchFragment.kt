@@ -5,18 +5,14 @@ import android.view.View
 import android.widget.GridView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.util.ThemeUtils
 import org.greenrobot.eventbus.EventBus
 
 abstract class BaseSearchFragment : Fragment() {
 
-    @BindView(R.id.textViewSearchEmpty)
-    lateinit var emptyView: View
+    abstract val emptyView: View
 
-    @BindView(R.id.gridViewSearch)
-    lateinit var gridView: GridView
+    abstract val gridView: GridView
 
     var initialSearchArgs: Bundle? = null
 
@@ -36,10 +32,9 @@ abstract class BaseSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ButterKnife.bind(this, view)
-
         // enable app bar scrolling out of view
         ViewCompat.setNestedScrollingEnabled(gridView, true)
+        ThemeUtils.applyBottomPaddingForNavigationBar(gridView)
 
         emptyView.visibility = View.GONE
     }

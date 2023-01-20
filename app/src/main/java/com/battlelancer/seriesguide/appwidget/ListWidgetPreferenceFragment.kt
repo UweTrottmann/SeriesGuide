@@ -5,17 +5,20 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.ui.BasePreferencesFragment
 import com.battlelancer.seriesguide.settings.WidgetSettings
 import com.battlelancer.seriesguide.util.Utils
 
@@ -23,7 +26,7 @@ import com.battlelancer.seriesguide.util.Utils
  * Shows settings fragment for a specific app widget, hosted inside a [ListWidgetPreferenceActivity]
  * activity.
  */
-class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
+class ListWidgetPreferenceFragment : BasePreferencesFragment() {
 
     private lateinit var typePref: ListPreference
     private lateinit var showsSortPref: ListPreference
@@ -33,11 +36,6 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
     private lateinit var isInfinitePref: CheckBoxPreference
     private lateinit var themePref: ListPreference
     private lateinit var backgroundPref: ListPreference
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
@@ -174,24 +172,36 @@ class ListWidgetPreferenceFragment : PreferenceFragmentCompat() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+    }
+
     override fun onResume() {
         super.onResume()
         // Trigger listener to update pref states based on current type.
         preferenceChangeListener.onPreferenceChange(typePref, typePref.value)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.widget_config_menu, menu)
-    }
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.widget_config_menu, menu)
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_save -> {
-                saveAllPreferences() // Persistence is disabled, save manually.
-                (activity as ListWidgetPreferenceActivity).updateWidget()
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_save -> {
+                    saveAllPreferences() // Persistence is disabled, save manually.
+                    (activity as ListWidgetPreferenceActivity).updateWidget()
+                    true
+                }
+                else -> false
             }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

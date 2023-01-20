@@ -16,14 +16,12 @@
 
 package com.uwetrottmann.seriesguide.widgets;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -90,7 +88,6 @@ public class DragGripView extends View {
         );
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

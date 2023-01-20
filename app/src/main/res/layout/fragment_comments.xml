@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerComments"
     style="@style/Page.Centered"
@@ -33,23 +34,25 @@
 
             </ScrollView>
 
-            <ListView
-                android:id="@+id/listViewShouts"
+            <!-- Add enough bottom padding so last item is above powered by text. -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewComments"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="@bool/gridClipToPadding"
-                android:divider="@color/transparent"
-                android:dividerHeight="0dp"
+                android:clipToPadding="false"
                 android:nextFocusDown="@+id/editTextShouts"
                 android:paddingTop="@dimen/default_padding"
+                android:paddingBottom="40dp"
                 tools:listitem="@layout/item_comment" />
 
             <TextView
-                android:id="@+id/poweredby"
+                android:id="@+id/textViewPoweredByComments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:background="@color/protection_dark"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/background_protection_round"
                 android:padding="@dimen/default_padding"
                 android:text="@string/powered_by_trakt"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
@@ -61,33 +64,39 @@
 
     <include
         android:id="@+id/divider"
-        layout="@layout/divider_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        layout="@layout/divider_horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/large_padding">
 
-        <EditText
-            android:id="@+id/editTextShouts"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldComments"
+            style="?attr/textInputFilledStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:gravity="top"
+            android:layout_marginBottom="8dp"
             android:hint="@string/shout_hint"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            android:maxLength="2000"
-            android:maxLines="3"
-            android:nextFocusUp="@+id/listViewShouts" />
+            android:nextFocusUp="@+id/listViewShouts"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="2000"
+                android:maxLines="3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/buttonShouts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editTextShouts"
+            android:layout_below="@+id/textFieldComments"
             android:layout_alignParentRight="true"
             android:text="@string/action_post" />
 
@@ -95,7 +104,7 @@
             android:id="@+id/checkBoxShouts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editTextShouts"
+            android:layout_below="@+id/textFieldComments"
             android:text="@string/isspoiler" />
 
     </RelativeLayout>

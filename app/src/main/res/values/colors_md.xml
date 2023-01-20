@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
 
     <!-- Exported using https://material-foundation.github.io/material-theme-builder/ and base color #6545a0 -->
     <!-- https://m3.material.io/styles/color/the-color-system/color-roles -->

@@ -4,11 +4,12 @@ import android.os.Bundle
 import androidx.preference.ListPreference
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.AmazonSettings
+import com.battlelancer.seriesguide.ui.BasePreferencesFragment
 
 /**
  * Allows to change the Amazon website used for the [AmazonExtension].
  */
-class AmazonConfigurationFragment : BaseSettingsFragment() {
+class AmazonConfigurationFragment : BasePreferencesFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         // Use the Amazon extension settings file.

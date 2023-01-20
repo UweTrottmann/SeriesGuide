@@ -8,17 +8,20 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentStreamBinding
 import com.battlelancer.seriesguide.history.TraktEpisodeHistoryLoader.HistoryItem
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
-import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.uwetrottmann.androidutils.AndroidUtils
 
 /**
@@ -44,6 +47,9 @@ abstract class StreamFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewStream)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding.floatingActionButtonStream)
+
         binding.floatingActionButtonStream.setOnClickListener {
             Utils.launchWebsite(context, TRAKT_HISTORY_URL)
         }
@@ -84,20 +90,26 @@ abstract class StreamFragment : Fragment() {
 
         initializeStream()
 
-        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.stream_menu, menu)
-    }
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.stream_menu, menu)
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_action_stream_refresh -> {
-                refreshStreamWithNetworkCheck()
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_stream_refresh -> {
+                    refreshStreamWithNetworkCheck()
+                    true
+                }
+                else -> false
             }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -159,5 +171,7 @@ abstract class StreamFragment : Fragment() {
 
     companion object {
         private const val TRAKT_HISTORY_URL = "https://trakt.tv/users/me/history/"
+
+        const val liftOnScrollTargetViewId = R.id.recyclerViewStream
     }
 }

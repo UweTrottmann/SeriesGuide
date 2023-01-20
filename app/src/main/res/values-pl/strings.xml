@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Seriale</string>
     <string name="lists">Listy</string>
@@ -293,7 +293,6 @@
     <string name="feature_comments">Dodaj komentarz</string>
     <string name="feature_sync">Synchronizacja</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Eksperymentalne</string>
     <string name="hexagon_description">SeriesGuide Cloud pomaga w synchronizacji i tworzeniu kopii bezpieczeństwa seriali, list i filmów.</string>
     <string name="hexagon_warning_trakt">W przypadku zalogowania do chmury SeriesGuide Cloud niektóre funkcje trakt są niedostępne.</string>
     <string name="hexagon_signin">Zaloguj się</string>
@@ -320,6 +319,7 @@
     <string name="trakt_error_credentials">Coś poszło nie tak. Sprawdź swoje poświadczenia i spróbuj ponownie.</string>
     <string name="trakt_error_not_exists">Jeszcze niedostępne na trakt. Spróbuj ponownie później.</string>
     <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
+    <string name="trakt_error_limit_exceeded">Lista jest pełna. Należy najpierw coś z niej usunąć.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Połącz z trakt</string>
     <string name="trakt_reconnect">Połącz SeriesGuide z trakt</string>
@@ -329,7 +329,8 @@
     <string name="disconnect">Rozłącz</string>
     <string name="use_integrated_browser">Użyj zintegrowanej przeglądarki</string>
     <string name="show_library">Dodaj seriale z Trakt</string>
-    <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
+    <string name="about_trakt">Trakt pomaga zarządzać jakie seriale i filmy oglądasz.</string>
+    <string name="support_trakt">Wspomóż Trakt z VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
     <string name="your_rating">Twoja ocena</string>
@@ -357,7 +358,6 @@
     <string name="pref_quick_checkin_summary">Nie wyświetlaj okna dialogowego \"oglądam\"</string>
     <!-- Help -->
     <string name="feedback">Wyślij opinię</string>
-    <string name="action_open_in_browser">Otwórz w przeglądarce</string>
     <!-- Settings -->
     <string name="action_translate">Przetłumacz aplikację</string>
     <string name="action_contribute_content">Przetłumacz lub ulepsz tłumaczenie</string>
@@ -515,10 +515,10 @@
     <string name="subscription_expired">Subskrypcja wygasła</string>
     <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Zaloguj się do konta Amazon!</string>
-    <string name="subscription_unavailable">Subskrypcja jest czasowo niedostępna.</string>
-    <string name="subscription_failed">Nie ukończono zakupu.</string>
-    <string name="pass_unavailable">X Pass nie jest obecnie dostępne.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Zaloguj się do konta Amazon!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Subskrypcja jest czasowo niedostępna.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Nie ukończono zakupu.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass nie jest obecnie dostępne.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Dostosuj rozszerzenia</string>
     <string name="action_extensions_add">Dodaj rozszerzenia</string>

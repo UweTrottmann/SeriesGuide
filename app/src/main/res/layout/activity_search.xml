@@ -6,10 +6,14 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/sgAppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
-        <include layout="@layout/toolbar_search" />
+        <include
+            android:id="@+id/sgToolbar"
+            layout="@layout/toolbar_search" />
 
         <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
             android:id="@+id/tabsSearch"

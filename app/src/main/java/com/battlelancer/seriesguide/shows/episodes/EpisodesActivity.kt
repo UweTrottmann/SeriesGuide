@@ -8,16 +8,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ActivityEpisodesBinding
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.shows.overview.SeasonTools
@@ -25,8 +24,9 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
-import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
+import com.google.android.material.shape.MaterialShapeDrawable
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -36,17 +36,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class EpisodesActivity : BaseMessageActivity() {
 
-    @BindView(R.id.fragment_episodes)
-    lateinit var containerList: ViewGroup
-    @BindView(R.id.containerEpisodesPager)
-    @JvmField
-    var containerPager: ViewGroup? = null
-    @BindView(R.id.pagerEpisodes)
-    lateinit var episodeDetailsPager: ViewPager2
-    @BindView(R.id.tabsEpisodes)
-    lateinit var episodeDetailsTabs: SlidingTabLayout
-    @BindView(R.id.imageViewEpisodesBackground)
-    lateinit var backgroundImageView: ImageView
+    private lateinit var binding: ActivityEpisodesBinding
 
     private var episodesListFragment: EpisodesFragment? = null
     private var episodeDetailsAdapter: EpisodePagerAdapter? = null
@@ -64,17 +54,19 @@ class EpisodesActivity : BaseMessageActivity() {
      * If list and pager are displayed side-by-side, or toggleable one or the other.
      */
     private val isSinglePaneView: Boolean
-        get() = containerPager != null
+        get() = binding.containerEpisodesPager != null
 
     private val isListGone: Boolean
-        get() = containerList.visibility == View.GONE
+        get() = binding.fragmentEpisodes.visibility == View.GONE
 
     private val isViewingSeason: Boolean
         get() = intent.hasExtra(EXTRA_LONG_SEASON_ID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_episodes)
+        binding = ActivityEpisodesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ThemeUtils.configureForEdgeToEdge(binding.root as ViewGroup)
         setupActionBar()
 
         // if coming from a notification, set last cleared time
@@ -91,8 +83,18 @@ class EpisodesActivity : BaseMessageActivity() {
         hasTappedItemInSinglePaneView = savedInstanceState?.
             getBoolean(STATE_HAS_TAPPED_ITEM_SINGLE_PANE) ?: false
 
-        ButterKnife.bind(this)
         setupViews()
+
+        onBackPressedDispatcher.addCallback {
+            // If single pane view and previously switched to pager by tapping on list item,
+            // go back to list first instead of finishing activity.
+            if (isSinglePaneView && isListGone && hasTappedItemInSinglePaneView) {
+                hasTappedItemInSinglePaneView = false
+                switchView(makeListVisible = true, updateOptionsMenu = true)
+            } else {
+                finish()
+            }
+        }
 
         val episodeRowId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
         val episodeTvdbId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, 0)
@@ -118,7 +120,7 @@ class EpisodesActivity : BaseMessageActivity() {
             // Set the image background.
             ImageTools.loadShowPosterAlpha(
                 this,
-                backgroundImageView,
+                binding.imageViewEpisodesBackground,
                 info.seasonAndShowInfo.show.posterSmall
             )
 
@@ -147,10 +149,10 @@ class EpisodesActivity : BaseMessageActivity() {
 
     private fun switchView(makeListVisible: Boolean, updateOptionsMenu: Boolean) {
         isListVisibleInSinglePaneView = makeListVisible
-        containerList.visibility = if (makeListVisible) View.VISIBLE else View.GONE
+        binding.fragmentEpisodes.visibility = if (makeListVisible) View.VISIBLE else View.GONE
         val visibilityPagerViews = if (makeListVisible) View.GONE else View.VISIBLE
-        containerPager!!.visibility = visibilityPagerViews
-        episodeDetailsTabs.visibility = visibilityPagerViews
+        binding.containerEpisodesPager!!.visibility = visibilityPagerViews
+        binding.tabsEpisodes.visibility = visibilityPagerViews
         if (updateOptionsMenu) {
             invalidateOptionsMenu()
         }
@@ -158,15 +160,19 @@ class EpisodesActivity : BaseMessageActivity() {
 
     private fun setupViews() {
         if (isSinglePaneView) {
+            // Note: currently app bar does not lift, so the status bar foreground will stay
+            // transparent, but still hides content scrolling below it.
+            binding.sgAppBarLayout?.statusBarForeground =
+                MaterialShapeDrawable.createWithElevationOverlay(this)
             switchView(isListVisibleInSinglePaneView, updateOptionsMenu = false)
         }
 
         // Tabs setup.
-        episodeDetailsTabs.setDefaultStyle()
-        episodeDetailsTabs.setDisplayUnderline(true)
+        binding.tabsEpisodes.setDefaultStyle()
+        binding.tabsEpisodes.setDisplayUnderline(true)
 
         // Preload next/previous page so swiping is smoother.
-        episodeDetailsPager.offscreenPageLimit = 1
+        binding.pagerEpisodes.offscreenPageLimit = 1
     }
 
     private val onPageChangeListener = object : ViewPager2.OnPageChangeCallback() {
@@ -208,25 +214,27 @@ class EpisodesActivity : BaseMessageActivity() {
         }
 
         // Episode pager.
+        val pagerEpisodes = binding.pagerEpisodes
+        val tabsEpisodes = binding.tabsEpisodes
         val adapter = episodeDetailsAdapter
         if (adapter == null) {
             episodeDetailsAdapter = EpisodePagerAdapter(this)
                 .also { it.updateItems(info.episodes) }
-            episodeDetailsPager.adapter = episodeDetailsAdapter
+            pagerEpisodes.adapter = episodeDetailsAdapter
         } else {
             adapter.updateItems(info.episodes)
         }
         // Refresh pager tab decoration.
-        episodeDetailsTabs.setViewPager2(episodeDetailsPager) { position ->
+        tabsEpisodes.setViewPager2(pagerEpisodes) { position ->
             val episode = info.episodes[position]
             TextTools.getEpisodeNumber(this, episode.season, episode.episodenumber)
         }
 
         // Remove page change listener to avoid changing checked episode on sort order changes.
-        episodeDetailsTabs.setOnPageChangeListener(null)
-        episodeDetailsPager.setCurrentItem(info.startPosition, false)
+        tabsEpisodes.setOnPageChangeListener(null)
+        pagerEpisodes.setCurrentItem(info.startPosition, false)
         // Set page listener after current item to avoid null pointer for non-existing content view.
-        episodeDetailsTabs.setOnPageChangeListener(onPageChangeListener)
+        tabsEpisodes.setOnPageChangeListener(onPageChangeListener)
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->
@@ -295,17 +303,6 @@ class EpisodesActivity : BaseMessageActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        // If single pane view and previously switched to pager by tapping on list item,
-        // go back to list first instead of finishing activity.
-        if (isSinglePaneView && isListGone && hasTappedItemInSinglePaneView) {
-            hasTappedItemInSinglePaneView = false
-            switchView(makeListVisible = true, updateOptionsMenu = true)
-            return
-        }
-        super.onBackPressed()
-    }
-
     /**
      * Switch to the episode at the given position.
      */
@@ -316,8 +313,8 @@ class EpisodesActivity : BaseMessageActivity() {
         }
         // Add setting item position to the event queue as the pager might not have been drawn,
         // yet, e.g. when in single pane view.
-        episodeDetailsPager.post {
-            episodeDetailsPager.setCurrentItem(position, true)
+        binding.pagerEpisodes.post {
+            binding.pagerEpisodes.setCurrentItem(position, true)
         }
     }
 
@@ -328,7 +325,7 @@ class EpisodesActivity : BaseMessageActivity() {
             val sortOrder = EpisodesSettings.getEpisodeSortOrder(this)
             if (sortOrder == EpisodesSettings.EpisodeSorting.UNWATCHED_FIRST) {
                 // Temporarily remove page change listener to avoid scrolling to checked item.
-                episodeDetailsTabs.setOnPageChangeListener(null)
+                binding.tabsEpisodes.setOnPageChangeListener(null)
                 // Listener is re-set once view model completes loading.
                 reorderAndUpdateTabs()
             }
@@ -337,7 +334,7 @@ class EpisodesActivity : BaseMessageActivity() {
 
     private fun reorderAndUpdateTabs() {
         // Get currently selected episode
-        val oldPosition = episodeDetailsPager.currentItem
+        val oldPosition = binding.pagerEpisodes.currentItem
         val episodeRowId = episodeDetailsAdapter?.getItemEpisodeId(oldPosition) ?: 0
 
         // Launch update.

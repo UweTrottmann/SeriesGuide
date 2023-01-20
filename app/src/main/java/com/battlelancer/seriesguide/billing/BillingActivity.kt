@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.BaseActivity
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
@@ -42,6 +43,7 @@ class BillingActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_billing)
+        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutBilling))
         setupActionBar()
 
         manageSubscriptionUrl = PLAY_MANAGE_SUBS_ALL
@@ -93,6 +95,10 @@ class BillingActivity : BaseActivity() {
     }
 
     private fun setupViews() {
+        progressScreen = findViewById(R.id.progressBarBilling)
+        contentContainer = findViewById(R.id.containerBilling)
+        ThemeUtils.applyBottomPaddingForNavigationBar(contentContainer)
+
         recyclerView = findViewById(R.id.recyclerViewBilling)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -120,9 +126,6 @@ class BillingActivity : BaseActivity() {
         buttonPass = findViewById(R.id.buttonBillingGetPass)
         ViewTools.openUriOnClick(buttonPass, getString(R.string.url_x_pass))
 
-        progressScreen = findViewById(R.id.progressBarBilling)
-        contentContainer = findViewById(R.id.containerBilling)
-
         findViewById<View>(R.id.textViewBillingMoreInfo).setOnClickListener {
             Utils.launchWebsite(
                 this@BillingActivity, getString(R.string.url_whypay)
@@ -133,7 +136,7 @@ class BillingActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                super.onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

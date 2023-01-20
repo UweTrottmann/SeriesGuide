@@ -17,10 +17,12 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
@@ -36,22 +38,23 @@ import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.MovieCheckInDialogFragment
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
-import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
@@ -86,6 +89,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private val model: MovieDetailsModel by viewModels {
         MovieDetailsModelFactory(tmdbId, requireActivity().application)
     }
+    private lateinit var scrollChangeListener: ToolbarScrollChangeListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -165,42 +169,33 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 MovieDetailsActivity.LOADER_ID_MOVIE_TRAILERS, args, trailerLoaderCallbacks
             )
         }
-        model.credits.observe(viewLifecycleOwner, {
+        model.credits.observe(viewLifecycleOwner) {
             populateMovieCreditsViews(it)
-        })
-        model.watchProvider.observe(viewLifecycleOwner, { watchInfo ->
+        }
+        model.watchProvider.observe(viewLifecycleOwner) { watchInfo ->
             StreamingSearch.configureButton(
                 binding.containerMovieButtons.buttonMovieStreamingSearch,
                 watchInfo
             )
-        })
+        }
 
-        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private fun setupViews() {
-        // avoid overlap with status + action bar (adjust top margin)
-        // warning: pre-M status bar not always translucent (e.g. Nexus 10)
-        // (using fitsSystemWindows would not work correctly with multiple views)
-        val config = (activity as MovieDetailsActivity).systemBarTintManager.config
-        val pixelInsetTop = if (AndroidUtils.isMarshmallowOrHigher) {
-            config.statusBarHeight // full screen, status bar transparent
-        } else {
-            config.getPixelInsetTop(false) // status bar translucent
-        }
-
-        // action bar height is pre-set as top margin, add to it
-        val decorationHeightPx = pixelInsetTop + binding.contentContainerMovie.paddingTop
-        binding.contentContainerMovie.setPadding(0, decorationHeightPx, 0, 0)
-
-        // dual pane layout?
-        binding.contentContainerMovieRight?.setPadding(0, decorationHeightPx, 0, 0)
-
         // show toolbar title and background when scrolling
-        val defaultPaddingPx = resources.getDimensionPixelSize(R.dimen.default_padding)
-        val scrollChangeListener = ToolbarScrollChangeListener(defaultPaddingPx, decorationHeightPx)
+        val defaultPaddingPx = resources.getDimensionPixelSize(R.dimen.large_padding)
+        val scrollChangeListener = ToolbarScrollChangeListener(defaultPaddingPx)
+            .also { scrollChangeListener = it }
         binding.contentContainerMovie.setOnScrollChangeListener(scrollChangeListener)
         binding.contentContainerMovieRight?.setOnScrollChangeListener(scrollChangeListener)
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.contentContainerMovie)
+        binding.contentContainerMovieRight?.let { ThemeUtils.applyBottomPaddingForNavigationBar(it) }
     }
 
     override fun onStart() {
@@ -238,60 +233,60 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         _binding = null
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            movieDetails?.let {
+                menuInflater.inflate(R.menu.movie_details_menu, menu)
 
-        movieDetails?.let {
-            inflater.inflate(R.menu.movie_details_menu, menu)
+                // enable/disable actions
+                val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
+                menu.findItem(R.id.menu_movie_share).apply {
+                    isEnabled = hasTitle
+                    isVisible = hasTitle
+                }
+                menu.findItem(R.id.menu_open_metacritic).apply {
+                    isEnabled = hasTitle
+                    isVisible = hasTitle
+                }
 
-            // enable/disable actions
-            val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
-            menu.findItem(R.id.menu_movie_share).apply {
-                isEnabled = hasTitle
-                isVisible = hasTitle
-            }
-            menu.findItem(R.id.menu_open_metacritic).apply {
-                isEnabled = hasTitle
-                isVisible = hasTitle
-            }
-
-            val isEnableImdb = !it.tmdbMovie()?.imdb_id.isNullOrEmpty()
-            menu.findItem(R.id.menu_open_imdb).apply {
-                isEnabled = isEnableImdb
-                isVisible = isEnableImdb
+                val isEnableImdb = !it.tmdbMovie()?.imdb_id.isNullOrEmpty()
+                menu.findItem(R.id.menu_open_imdb).apply {
+                    isEnabled = isEnableImdb
+                    isVisible = isEnableImdb
+                }
             }
         }
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_movie_share -> {
-                movieDetails?.tmdbMovie()
-                    ?.title
-                    ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
-                true
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_movie_share -> {
+                    movieDetails?.tmdbMovie()
+                        ?.title
+                        ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
+                    true
+                }
+                R.id.menu_open_imdb -> {
+                    movieDetails?.tmdbMovie()
+                        ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
+                    true
+                }
+                R.id.menu_open_metacritic -> {
+                    // Metacritic only has English titles, so using the original title is the best bet.
+                    val titleOrNull = movieDetails?.tmdbMovie()
+                        ?.let { it.original_title ?: it.title }
+                    titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
+                    true
+                }
+                R.id.menu_open_tmdb -> {
+                    TmdbTools.openTmdbMovie(activity, tmdbId)
+                    true
+                }
+                R.id.menu_open_trakt -> {
+                    Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
+                    true
+                }
+                else -> false
             }
-            R.id.menu_open_imdb -> {
-                movieDetails?.tmdbMovie()
-                    ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
-                true
-            }
-            R.id.menu_open_metacritic -> {
-                // Metacritic only has English titles, so using the original title is the best bet.
-                val titleOrNull = movieDetails?.tmdbMovie()
-                    ?.let { it.original_title ?: it.title }
-                titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
-                true
-            }
-            R.id.menu_open_tmdb -> {
-                TmdbTools.openTmdbMovie(activity, tmdbId)
-                true
-            }
-            R.id.menu_open_trakt -> {
-                Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -498,19 +493,37 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                             val bitmap =
                                 (binding.imageViewMoviePoster.drawable as BitmapDrawable).bitmap
 
-                            val color = withContext(Dispatchers.Default) {
+                            val (colorBackground, colorAppBarLifted) = withContext(Dispatchers.Default) {
                                 val palette = try {
                                     Palette.from(bitmap).generate()
                                 } catch (e: Exception) {
                                     Timber.e(e, "Failed to generate palette.")
                                     null
                                 }
-                                palette
-                                    ?.getVibrantColor(Color.WHITE)
-                                    ?.let { ColorUtils.setAlphaComponent(it, 50) }
+                                val vibrantColor = palette?.getVibrantColor(Color.WHITE)
+                                Pair(
+                                    vibrantColor?.let { ColorUtils.setAlphaComponent(it, 50) },
+                                    vibrantColor?.let { ColorUtils.setAlphaComponent(it, 80) }
+                                )
                             }
 
-                            color?.let { binding.rootLayoutMovie.setBackgroundColor(it) }
+                            colorBackground?.let {
+                                // Color fragment background
+                                binding.rootLayoutMovie.setBackgroundColor(it)
+
+                                // Color app bar background
+                                scrollChangeListener.appBarBackground = colorBackground
+                                scrollChangeListener.appBarBackgroundLifted = colorAppBarLifted
+                                sgAppBarLayout.apply {
+                                    background = ColorDrawable(
+                                        if (scrollChangeListener.showOverlay) {
+                                            colorAppBarLifted!!
+                                        } else {
+                                            colorBackground
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 })
@@ -738,40 +751,40 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Videos.Video> {
-        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Videos.Video> {
-            return MovieTrailersLoader(
-                context,
-                args!!.getInt(ARG_TMDB_ID)
-            )
+    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Videos.Video?> {
+        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Videos.Video?> {
+            return MovieTrailersLoader(requireContext(), args!!.getInt(ARG_TMDB_ID))
         }
 
         override fun onLoadFinished(
-            trailersLoader: Loader<Videos.Video>,
+            trailersLoader: Loader<Videos.Video?>,
             trailer: Videos.Video?
         ) {
-            if (!isAdded) {
-                return
-            }
             if (trailer != null) {
                 this@MovieDetailsFragment.trailer = trailer
                 binding.buttonMovieTrailer.isEnabled = true
             }
         }
 
-        override fun onLoaderReset(trailersLoader: Loader<Videos.Video>) {
+        override fun onLoaderReset(trailersLoader: Loader<Videos.Video?>) {
             // do nothing
         }
     }
 
+    private val sgAppBarLayout
+        get() = (activity as MovieDetailsActivity).sgAppBarLayout
+
     private inner class ToolbarScrollChangeListener(
-        private val overlayThresholdPx: Int,
-        private val titleThresholdPx: Int
+        private val overlayThresholdPx: Int
     ) : NestedScrollView.OnScrollChangeListener {
+
+        var appBarBackground: Int? = null
+        var appBarBackgroundLifted: Int? = null
 
         // we have determined by science that a capacity of 2 is good in our case :)
         private val showOverlayMap: SparseArrayCompat<Boolean> = SparseArrayCompat(2)
-        private var showOverlay: Boolean = false
+        var showOverlay: Boolean = false
+            private set
         private var showTitle: Boolean = false
 
         override fun onScrollChange(
@@ -789,30 +802,30 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             val shouldShowOverlay = shouldShowOverlayTemp
 
             if (!showOverlay && shouldShowOverlay) {
-                val primaryColor = ContextCompat.getColor(
+                val drawableColor = appBarBackgroundLifted ?: ContextCompat.getColor(
                     v.context,
                     Utils.resolveAttributeToResourceId(
                         v.context.theme, R.attr.sgColorStatusBarOverlay
                     )
                 )
-                actionBar.setBackgroundDrawable(ColorDrawable(primaryColor))
+                sgAppBarLayout.background = ColorDrawable(drawableColor)
             } else if (showOverlay && !shouldShowOverlay) {
-                actionBar.setBackgroundDrawable(null)
+                val drawableColor = appBarBackground ?: Color.TRANSPARENT
+                sgAppBarLayout.background = ColorDrawable(drawableColor)
             }
             showOverlay = shouldShowOverlay
 
-            // only main container should show/hide title
+            // Only show/hide title if main container displaying title is scrolled.
             if (viewId == R.id.contentContainerMovie) {
-                val shouldShowTitle = scrollY > titleThresholdPx
-                if (!showTitle && shouldShowTitle) {
+                if (!showTitle && shouldShowOverlay) {
                     movieDetails?.tmdbMovie()?.let {
                         actionBar.title = it.title
                         actionBar.setDisplayShowTitleEnabled(true)
                     }
-                } else if (showTitle && !shouldShowTitle) {
+                } else if (showTitle && !shouldShowOverlay) {
                     actionBar.setDisplayShowTitleEnabled(false)
                 }
-                showTitle = shouldShowTitle
+                showTitle = shouldShowOverlay
             }
         }
     }

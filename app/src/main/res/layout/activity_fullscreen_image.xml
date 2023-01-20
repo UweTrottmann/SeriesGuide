@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_black">
 
-    <uk.co.senab.photoview.PhotoView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

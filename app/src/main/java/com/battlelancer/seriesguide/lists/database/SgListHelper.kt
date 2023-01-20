@@ -26,6 +26,9 @@ interface SgListHelper {
     @Query("SELECT * FROM lists ORDER BY ${Lists.SORT_ORDER_THEN_NAME}")
     fun getListsForExport(): List<SgList>
 
+    @Query("SELECT  * FROM listitems WHERE item_ref_id = :tmdbId AND item_type = ${ListItemTypes.TMDB_SHOW}")
+    fun getListItemsWithTmdbId(tmdbId: Int): List<SgListItem>
+
     @RawQuery(observedEntities = [SgListItem::class, SgShow2::class])
     fun getListItemsWithDetails(query: SupportSQLiteQuery): LiveData<List<SgListItemWithDetails>>
 

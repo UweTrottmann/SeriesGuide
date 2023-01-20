@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     // https://github.com/ben-manes/gradle-versions-plugin/releases
-    id("com.github.ben-manes.versions") version "0.42.0"
+    id("com.github.ben-manes.versions") version "0.43.0"
     // https://github.com/gradle-nexus/publish-plugin/releases
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // api
 }
@@ -12,20 +12,8 @@ buildscript {
     val sgTargetSdk by extra(31) // Android 12 (S)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106505)
-    val sgVersionName by extra("65.0.5")
-
-    val kotlinVersion by extra("1.7.10") // https://kotlinlang.org/docs/releases.html#release-details
-    val coroutinesVersion by extra("1.6.4") // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-
-    // https://developer.android.com/jetpack/androidx/releases
-    val coreVersion by extra("1.8.0") // https://developer.android.com/jetpack/androidx/releases/core
-    val annotationVersion by extra("1.4.0")
-    val lifecycleVersion by extra("2.5.1") // https://developer.android.com/jetpack/androidx/releases/lifecycle
-    val roomVersion by extra("2.4.3") // https://developer.android.com/jetpack/androidx/releases/room
-    val fragmentVersion by extra("1.5.1") // https://developer.android.com/jetpack/androidx/releases/fragment
-
-    val timberVersion by extra("5.0.1") // https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
+    val sgVersionCode by extra(2106608)
+    val sgVersionName by extra("66.0.7")
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 
@@ -39,13 +27,12 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.2.2") // libraries, SeriesGuide
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("com.android.tools.build:gradle:7.4.0") // libraries, SeriesGuide
+        classpath(libs.kotlin.gradle)
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics
-        // https://firebase.google.com/support/release-notes/android
-        classpath("com.google.gms:google-services:4.3.13")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.1")
+        classpath(libs.firebase.google.services)
+        classpath(libs.firebase.crashlytics.gradle)
     }
 }
 

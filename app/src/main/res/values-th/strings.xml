@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">ซีรีส์</string>
     <string name="lists">รายการ</string>
@@ -272,7 +272,6 @@
     <string name="feature_comments">แสดงความคิดเห็น</string>
     <string name="feature_sync">ซิงค์</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">การทดลอง!</string>
     <string name="hexagon_description">SeriesGuide Cloud ช่วยสำรองข้อมูลและซิงค์ซีรีส์, รายการ และภาพยนตร์ของคุณ</string>
     <string name="hexagon_warning_trakt">ขณะเข้าสู่ระบบ SeriesGuide Cloud คุณสมบัติบางอย่างของ trakt จะใช้งานไม่ได้</string>
     <string name="hexagon_signin">เข้าสู่ระบบ</string>
@@ -299,6 +298,7 @@
     <string name="trakt_error_credentials">มีบางอย่างผิดพลาด ตรวจสอบข้อมูล trakt ของคุณและลองอีกครั้ง</string>
     <string name="trakt_error_not_exists">(ยัง)ไม่พร้อมใช้งานบน trakt ลองอีกครั้งในภายหลัง</string>
     <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
+    <string name="trakt_error_limit_exceeded">รายการเต็ม, ลบบางอย่างออกก่อน</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">เชื่อมต่อ trakt</string>
     <string name="trakt_reconnect">เชื่อมต่อ SeriesGuide กับ trakt</string>
@@ -308,7 +308,8 @@
     <string name="disconnect">เลิกเชื่อมต่อ</string>
     <string name="use_integrated_browser">ใช้เบราว์เซอร์ภายใน</string>
     <string name="show_library">เพิ่มรายการจาก Trakt</string>
-    <string name="about_trakt">trakt ช่วยเก็บบันทึกรายการทีวีและภาพยนตร์ที่คุณกำลังดูอยู่ <a href="https://trakt.tv">เรียนรู้เพิ่มเติม</a></string>
+    <string name="about_trakt">Trakt ช่วยเก็บบันทึกรายการทีวีและภาพยนตร์ที่คุณกำลังดูอยู่</string>
+    <string name="support_trakt">สนับสนุน Trakt ด้วย VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">ให้คะแนน</string>
     <string name="your_rating">คะแนนของคุณ</string>
@@ -333,7 +334,6 @@
     <string name="pref_quick_checkin_summary">ไม่ต้องถามข้อความเช็กอิน</string>
     <!-- Help -->
     <string name="feedback">ส่งความคิดเห็น</string>
-    <string name="action_open_in_browser">เปิดในเบราว์เซอร์</string>
     <!-- Settings -->
     <string name="action_translate">แปลแอปนี้</string>
     <string name="action_contribute_content">แปลหรือปรับปรุงเนื้อหาให้ดีขึ้น</string>
@@ -482,10 +482,10 @@
     <string name="subscription_expired">การสมัครสมาชิกหมดอายุแล้ว</string>
     <string name="subscription_expired_details">การสมัครสมาชิก SeriesGuide ของคุณหมดอายุแล้ว</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">เข้าสู่ระบบบัญชี Amazon ของคุณ!</string>
-    <string name="subscription_unavailable">การสมัครสมาชิกไม่สามารถใช้ได้</string>
-    <string name="subscription_failed">การชำระเงินไม่สมบูรณ์</string>
-    <string name="pass_unavailable">X Pass ไม่พร้อมใช้งาน</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">เข้าสู่ระบบบัญชี Amazon ของคุณ!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">การสมัครสมาชิกไม่สามารถใช้ได้</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">การชำระเงินไม่สมบูรณ์</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass ไม่พร้อมใช้งาน</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">ปรับแต่งส่วนเสริม</string>
     <string name="action_extensions_add">เพิ่มส่วนเสริม</string>

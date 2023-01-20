@@ -11,7 +11,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 
 class ShowsDistillationPageAdapter(
     private val context: Context,
-    private val initialShowFilter: FilterShowsView.ShowFilter,
+    private val initialShowFilter: ShowsDistillationSettings.ShowFilter,
     private val filterListener: FilterShowsView.FilterListener,
     private val initialShowSortOrder: SortShowsView.ShowSortOrder,
     private val sortOrderListener: SortShowsView.SortOrderListener

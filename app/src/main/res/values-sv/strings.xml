@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Serier</string>
     <string name="lists">Listor</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">Skicka kommentar</string>
     <string name="feature_sync">Synk</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Experimentelt</string>
     <string name="hexagon_description">SeriesGuide Cloud hjälper till att säkerhetskopiera och synkronisera dina, listor och filmer.</string>
     <string name="hexagon_warning_trakt">Väl inloggad med SeriesGuide Cloud så är vissa trakt-funktioner inte tillgängliga.</string>
     <string name="hexagon_signin">Logga in</string>
@@ -306,6 +305,7 @@
     <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
     <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
     <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Anslut till trakt</string>
     <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>
@@ -315,7 +315,8 @@
     <string name="disconnect">Koppla ner</string>
     <string name="use_integrated_browser">Använd inbyggd webbläsare</string>
     <string name="show_library">Lägg till serier från Trakt</string>
-    <string name="about_trakt">trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på. <a href="http://trakt.tv">Lär dig mer</a></string>
+    <string name="about_trakt">Trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
     <string name="your_rating">Ditt betyg</string>
@@ -341,7 +342,6 @@
     <string name="pref_quick_checkin_summary">Fråga inte efter meddelande vid incheckning</string>
     <!-- Help -->
     <string name="feedback">Skicka feedback</string>
-    <string name="action_open_in_browser">Öppna i webbläsare</string>
     <!-- Settings -->
     <string name="action_translate">Översätt appen</string>
     <string name="action_contribute_content">Översätt eller förbättra innehållet</string>
@@ -493,10 +493,10 @@
     <string name="subscription_expired">Prenumerationen har gått ut</string>
     <string name="subscription_expired_details">Dina X-funktioners prenumeration har gått ut.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Logga in med ditt Amazon-konto!</string>
-    <string name="subscription_unavailable">Prenumerationen är för tillfället otillgänglig.</string>
-    <string name="subscription_failed">Köp ej slutfört.</string>
-    <string name="pass_unavailable">X Pass är för tillfället otillgängligt.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Logga in med ditt Amazon-konto!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Prenumerationen är för tillfället otillgänglig.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Köp ej slutfört.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass är för tillfället otillgängligt.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Anpassa tillägg</string>
     <string name="action_extensions_add">Lägg till tillägg</string>

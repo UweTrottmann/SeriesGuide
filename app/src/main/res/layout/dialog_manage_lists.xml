@@ -48,11 +48,14 @@
             android:text="@string/not_migrated"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Error" />
 
-        <ListView
-            android:id="@+id/list"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewManageLists"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_list_checked" />
+
     </LinearLayout>
 
     <include layout="@layout/divider_horizontal" />

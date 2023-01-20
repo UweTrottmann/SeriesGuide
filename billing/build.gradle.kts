@@ -1,18 +1,12 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
 val sgTargetSdk: Int by rootProject.extra
-
-val kotlinVersion: String by rootProject.extra
-val coroutinesVersion: String by rootProject.extra
-val lifecycleVersion: String by rootProject.extra
-val roomVersion: String by rootProject.extra
-val timberVersion: String by rootProject.extra
 
 android {
     namespace = "com.uwetrottmann.seriesguide.billing"
@@ -43,22 +37,20 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     // Google Play Billing
-    // https://developer.android.com/google/play/billing/billing_library_releases_notes
-    implementation("com.android.billingclient:billing-ktx:4.0.0")
+    implementation(libs.billing)
 
     // ViewModel and LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.lifecycle.viewmodel)
     // Room
-    implementation("androidx.room:room-runtime:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
 
-    implementation("com.jakewharton.timber:timber:$timberVersion")
+    implementation(libs.timber)
 }
 
 fun propertyOrEmpty(name: String): String {

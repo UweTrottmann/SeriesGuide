@@ -3,9 +3,8 @@ package com.battlelancer.seriesguide.util.tasks;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.traktapi.SgTrakt;
 import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.battlelancer.seriesguide.util.Errors;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
@@ -13,7 +12,6 @@ import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.services.Sync;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
-import retrofit2.Response;
 
 public abstract class BaseShowActionTask extends BaseActionTask {
 
@@ -40,28 +38,30 @@ public abstract class BaseShowActionTask extends BaseActionTask {
             }
 
             SyncItems items = new SyncItems().shows(new SyncShow().id(ShowIds.tmdb(showTmdbId)));
+            TraktV2 trakt = SgApp.getServicesComponent(getContext()).trakt();
+            Sync traktSync = trakt.sync();
 
-            try {
-                Sync traktSync = SgApp.getServicesComponent(getContext()).traktSync();
-                Response<SyncResponse> response = doTraktAction(traktSync, items).execute();
-                if (response.isSuccessful()) {
-                    if (isShowNotFound(response.body())) {
-                        return ERROR_TRAKT_API_NOT_FOUND;
-                    }
-                } else {
-                    if (SgTrakt.isUnauthorized(getContext(), response)) {
-                        return ERROR_TRAKT_AUTH;
-                    }
-                    Errors.logAndReport(getTraktAction(), response);
-                    return ERROR_TRAKT_API;
-                }
-            } catch (Exception e) {
-                Errors.logAndReport(getTraktAction(), e);
-                return ERROR_TRAKT_API;
+            int result = executeTraktCall(buildTraktCall(traktSync, items), trakt, getTraktAction(),
+                    body -> {
+                        if (isShowNotFound(body)) {
+                            return ERROR_TRAKT_API_NOT_FOUND;
+                        } else {
+                            return SUCCESS;
+                        }
+                    });
+            //noinspection RedundantIfStatement
+            if (result != SUCCESS) {
+                return result;
             }
         }
 
         return SUCCESS;
+    }
+
+    private static boolean isShowNotFound(SyncResponse response) {
+        // if show was not found on trakt
+        return response.not_found != null && response.not_found.shows != null
+                && response.not_found.shows.size() != 0;
     }
 
     @Override
@@ -73,15 +73,9 @@ public abstract class BaseShowActionTask extends BaseActionTask {
         }
     }
 
-    private static boolean isShowNotFound(SyncResponse response) {
-        // if show was not found on trakt
-        return response.not_found != null && response.not_found.shows != null
-                && response.not_found.shows.size() != 0;
-    }
-
     @NonNull
     protected abstract String getTraktAction();
 
     @NonNull
-    protected abstract Call<SyncResponse> doTraktAction(Sync traktSync, SyncItems items);
+    protected abstract Call<SyncResponse> buildTraktCall(Sync traktSync, SyncItems items);
 }

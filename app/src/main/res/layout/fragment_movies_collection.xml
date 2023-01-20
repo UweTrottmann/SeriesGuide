@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayoutMoviesCollection"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewMoviesCollectionEmpty"
+        android:layout_width="@dimen/empty_view_width"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
+        android:visibility="gone" />
+
+    <GridView
+        android:id="@+id/gridViewMoviesCollection"
+        style="@style/Widget.SeriesGuide.Grid.Cards"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="@dimen/movie_grid_columnWidth"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        tools:listitem="@layout/item_movie" />
+
+</RelativeLayout>

@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.databinding.FragmentDataLiberationBinding
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.CreateExportFileContract
 import com.battlelancer.seriesguide.dataliberation.DataLiberationTools.SelectImportFileContract
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.tryLaunch
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -40,6 +41,9 @@ class DataLiberationFragment : Fragment(), OnTaskProgressListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding ?: return
+
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewDataLiberation)
+
         binding.progressBarDataLib.visibility = View.GONE
 
         // setup listeners

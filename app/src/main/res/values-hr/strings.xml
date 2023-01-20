@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">Serije</string>
     <string name="lists">Popisi</string>
@@ -286,7 +286,6 @@
     <string name="feature_comments">Komentari objava</string>
     <string name="feature_sync">Sinkronizacija</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">Eksperimentalno</string>
     <string name="hexagon_description">SeriesGuide Oblak vam pomaže sigurnosno kopirati i sinkronizirati vaše serije, popise i filmove.</string>
     <string name="hexagon_warning_trakt">Dok ste prijavljeni na SeriesGuide Oblak neke trakt značajke nisu dostupne.</string>
     <string name="hexagon_signin">Prijava</string>
@@ -313,6 +312,7 @@
     <string name="trakt_error_credentials">Nešto je pošlo po zlu. Provjerite svoje podatke i pokušajte ponovno.</string>
     <string name="trakt_error_not_exists">Nije dostupno na trakt (još). Pokušajte ponovno kasnije.</string>
     <string name="trakt_notice_not_exists">Nije moguće povezivanje sa trakt-om (još).</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Poveži trakt</string>
     <string name="trakt_reconnect">Poveži SeriesGuide sa trakt-om</string>
@@ -322,7 +322,8 @@
     <string name="disconnect">Odspoji</string>
     <string name="use_integrated_browser">Koristi ugrađeni preglednik</string>
     <string name="show_library">Add shows from Trakt</string>
-    <string name="about_trakt">trakt vam pomaže pratiti koje serije i filmove gledate. <a href="https://trakt.tv">Saznajte više</a></string>
+    <string name="about_trakt">Trakt vam pomaže pratiti koje serije i filmove gledate.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ocijeni</string>
     <string name="your_rating">Tvoja ocjena</string>
@@ -349,7 +350,6 @@
     <string name="pref_quick_checkin_summary">Ne pitaj za provjeru u poruci</string>
     <!-- Help -->
     <string name="feedback">Pošalji povratne informacije</string>
-    <string name="action_open_in_browser">Otvori u pregledniku</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
     <string name="action_contribute_content">Translate or improve content</string>
@@ -504,10 +504,10 @@
     <string name="subscription_expired">Pretplata istekla</string>
     <string name="subscription_expired_details">Tvoja pretplata na X mogućnosti je istekla.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">Prijavite se na svoj Amazon račun!</string>
-    <string name="subscription_unavailable">Pretplata trenutno nije dostupna.</string>
-    <string name="subscription_failed">Kupnja nije dovršena.</string>
-    <string name="pass_unavailable">X Pass trenutno nije dostupan.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Prijavite se na svoj Amazon račun!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">Pretplata trenutno nije dostupna.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">Kupnja nije dovršena.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">X Pass trenutno nije dostupan.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">Prilagodi proširenja</string>
     <string name="action_extensions_add">Dodavanje proširenja</string>

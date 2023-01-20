@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Main Menu -->
     <string name="shows">سریالها</string>
     <string name="lists">فهرست‌ها</string>
@@ -279,7 +279,6 @@
     <string name="feature_comments">ارسال نظرات</string>
     <string name="feature_sync">همگام‌‌سازی</string>
     <!-- Hexagon -->
-    <string name="hexagon_warning">آزمایشی</string>
     <string name="hexagon_description">SeriesGuide Cloud به همگام‌سازی و پشتیبان‌گیری برنامه‌ها، لیست‌ها و فیلم‌های شما کمک می‌کند</string>
     <string name="hexagon_warning_trakt">هنگام ورود با SeriesGuide Cloud برخی از ویژگی‌های Trakt در دسترس نیست</string>
     <string name="hexagon_signin">ورود</string>
@@ -306,6 +305,7 @@
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
+    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">اتصال به ترکت</string>
     <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
@@ -315,7 +315,8 @@
     <string name="disconnect">قطع کردن</string>
     <string name="use_integrated_browser">استفاده از مرورگر یکپارچه</string>
     <string name="show_library">افزودن نمایش‌ها از ترکت</string>
-    <string name="about_trakt">ترکت کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید. <a href="https://trakt.tv">بیش‌تر بدانید</a></string>
+    <string name="about_trakt">Trakt کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید.</string>
+    <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
     <string name="your_rating">نمرهٔ شما</string>
@@ -341,7 +342,6 @@
     <string name="pref_quick_checkin_summary">برای ثبت پیامی خواسته نشود</string>
     <!-- Help -->
     <string name="feedback">ارسال بازخورد</string>
-    <string name="action_open_in_browser">گشودن در مرورگر</string>
     <!-- Settings -->
     <string name="action_translate">ترجمهٔ این کاره</string>
     <string name="action_contribute_content">ترجمه یا بهبود محتوا</string>
@@ -493,10 +493,10 @@
     <string name="subscription_expired">اشتراک پایان یافت</string>
     <string name="subscription_expired_details">اشتراک سریزگایدتان به پایان رسیده است.</string>
     <!-- Amazon In-App Billing -->
-    <string name="subscription_not_signed_in">به حساب آمازونتان وارد شوید!</string>
-    <string name="subscription_unavailable">در حال حاضر اشتراک موجود نیست.</string>
-    <string name="subscription_failed">خرید کامل نشد.</string>
-    <string name="pass_unavailable">در حال حاضر X Pass موجود نیست.</string>
+    <string name="subscription_not_signed_in" tools:ignore="UnusedResources">به حساب آمازونتان وارد شوید!</string>
+    <string name="subscription_unavailable" tools:ignore="UnusedResources">در حال حاضر اشتراک موجود نیست.</string>
+    <string name="subscription_failed" tools:ignore="UnusedResources">خرید کامل نشد.</string>
+    <string name="pass_unavailable" tools:ignore="UnusedResources">در حال حاضر X Pass موجود نیست.</string>
     <!-- Extensions -->
     <string name="action_extensions_configure">سفارشی سازی افزونه‌ها</string>
     <string name="action_extensions_add">افزودن افزونه‌ها</string>

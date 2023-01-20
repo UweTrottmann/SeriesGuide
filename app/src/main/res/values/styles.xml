@@ -177,20 +177,25 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <!-- AppBar -->
-    <!-- Material3: for now keeping old style with elevation to avoid having to color status bar,
-         also new liftOnScroll flickers on scrolling. -->
-    <style name="Widget.SeriesGuide.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
-        <item name="android:background">?attr/sgColorTopAppBar</item>
+    <!-- Preferences theme overlay to use new switch style, taken from Material Components Catalog example. -->
+    <style name="ThemeOverlay.SeriesGuide.Preference" parent="PreferenceThemeOverlay">
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Catalog</item>
     </style>
 
-    <!-- Transparent background, disable shadow. -->
-    <style name="Widget.SeriesGuide.AppBarLayout.Transparent" parent="">
+    <style name="Preference.SwitchPreferenceCompat.Catalog" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:widgetLayout">@layout/preference_widget_material_switch</item>
+    </style>
+
+    <!-- AppBar -->
+    <!-- Transparent background, disable lift. -->
+    <style name="Widget.SeriesGuide.AppBarLayout.Transparent" parent="Widget.Material3.AppBarLayout">
+        <item name="liftOnScroll">false</item>
         <item name="android:background">@color/transparent</item>
         <item name="elevation">0dp</item>
     </style>
 
     <!-- Toolbar -->
+    <!-- Theme overlay for colored text and icons. -->
     <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.Material3.Toolbar.Surface">
         <item name="colorOnSurface">?attr/colorPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorPrimary</item>
@@ -199,10 +204,6 @@
     <style name="Widget.SeriesGuide.Toolbar" parent="Widget.Material3.Toolbar.OnSurface">
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
         <item name="android:theme">@style/ThemeOverlay.SeriesGuide.Toolbar.Surface</item>
-    </style>
-    <!-- Toolbar which draws its own background. -->
-    <style name="Widget.SeriesGuide.Toolbar.Surface">
-        <item name="android:background">?attr/sgColorTopAppBar</item>
     </style>
 
     <style name="Widget.SeriesGuide.Toolbar.Gradient">
@@ -213,7 +214,7 @@
     </style>
 
     <style name="ThemeOverlay.SeriesGuide.Toolbar.Gradient" parent="ThemeOverlay.Material3.Toolbar.Surface">
-        <item name="colorControlNormal">@color/sg_on_dark_emphasis_medium</item>
+        <item name="colorControlNormal">@color/sg_white</item>
         <item name="colorControlHighlight">@color/sg_ripple_material_dark</item>
         <item name="actionMenuTextColor">@color/sg_on_dark_emphasis_medium</item>
     </style>
@@ -234,8 +235,6 @@
 
     <!-- BottomNavigationView -->
     <style name="Widget.SeriesGuide.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-        <!-- Set different from colorSurface to prevent BottomNavigationView from using color to elevate. -->
-        <item name="android:background">?attr/sgColorTopAppBar</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
     </style>
 
@@ -244,12 +243,6 @@
         <item name="colorSecondaryContainer" tools:ignore="PrivateResource">?attr/colorPrimaryContainer</item>
         <!-- Used for Widget.Material3.BottomNavigationView itemIconTint -->
         <item name="colorOnSecondaryContainer" tools:ignore="PrivateResource">?attr/colorOnPrimaryContainer</item>
-    </style>
-
-    <!-- Inline snackbar -->
-    <!-- Use of CoordinatorLayout shifts layouts down, counter by moving inline snackbar up. -->
-    <style name="Widget.SeriesGuide.InlineSnackbar">
-        <item name="android:layout_marginBottom">?attr/actionBarSize</item>
     </style>
 
     <!-- Dialogs -->
@@ -280,14 +273,6 @@
 
     <!-- Easy layouting -->
     <style name="DefaultPadding" />
-
-    <style name="DefaultPadding.List">
-        <item name="android:paddingTop">@dimen/default_padding</item>
-        <item name="android:paddingBottom">@dimen/default_padding</item>
-        <item name="android:divider">@color/transparent</item>
-        <item name="android:dividerHeight">0dp</item>
-        <item name="android:clipToPadding">false</item>
-    </style>
 
     <style name="DefaultPadding.DialogContent">
         <item name="android:paddingLeft">@dimen/larger_padding</item>

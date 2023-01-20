@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Note: can't use root layout ID as view types are different, would crash on state restore. -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayoutEpisodes"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- This app bar scrolls out of screen when scrolling up. -->
+    <!-- InconsistentLayout: Lint does not see app bar is included in other configurations. -->
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/sgAppBarLayout"
+        style="@style/Widget.SeriesGuide.AppBarLayout.Transparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.SeriesGuide.AppBarLayout.Transparent">
+        android:fitsSystemWindows="true"
+        tools:ignore="InconsistentLayout">
 
-        <include layout="@layout/toolbar" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/sgToolbar"
+            style="@style/Widget.SeriesGuide.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways|snap" />
 
         <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
             android:id="@+id/tabsEpisodes"

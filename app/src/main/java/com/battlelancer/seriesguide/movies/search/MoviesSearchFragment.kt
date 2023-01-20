@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding
 import com.battlelancer.seriesguide.movies.MovieClickListenerImpl
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
@@ -68,6 +69,9 @@ class MoviesSearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding.recyclerViewMoviesSearch)
+        ThemeUtils.applyBottomMarginForNavigationBar(binding.textViewPoweredByMoviesSearch)
+
         binding.swipeRefreshLayoutMoviesSearch.also {
             it.setSwipeableChildren(R.id.scrollViewMoviesSearch, R.id.recyclerViewMoviesSearch)
             it.setOnRefreshListener(onRefreshListener)
@@ -134,6 +138,7 @@ class MoviesSearchFragment : Fragment() {
     private val onRefreshListener = OnRefreshListener { adapter.refresh() }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewMoviesSearch
 
         private const val ARG_ID_LINK = "linkId"
 

@@ -12,14 +12,17 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentPersonBinding
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Person
@@ -44,7 +47,6 @@ class PersonFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         personTmdbId = arguments?.getInt(ARG_PERSON_TMDB_ID) ?: 0
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -61,6 +63,10 @@ class PersonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
+            // Note: this currently does not add top padding when the person is shown
+            // in single pane view in landscape.
+            ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewPerson)
+
             buttonPersonTmdbLink.setOnClickListener {
                 person?.id?.let { TmdbTools.openTmdbPerson(activity, it) }
             }
@@ -77,27 +83,37 @@ class PersonFragment : Fragment() {
         }
 
         setProgressVisibility(true)
-        model.personLiveData.observe(viewLifecycleOwner, {
+        model.personLiveData.observe(viewLifecycleOwner) {
             setProgressVisibility(false)
             populatePersonViews(it)
-        })
-        model.languageCode.value = PeopleSettings.getPersonLanguage(requireContext())
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.person_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_action_person_language) {
-            L10nDialogFragment.show(
-                parentFragmentManager,
-                model.languageCode.value,
-                "person-language-dialog"
-            )
-            return true
         }
-        return super.onOptionsItemSelected(item)
+        model.languageCode.value = PeopleSettings.getPersonLanguage(requireContext())
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+    }
+
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.person_menu, menu)
+        }
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_action_person_language -> {
+                    L10nDialogFragment.show(
+                        parentFragmentManager,
+                        model.languageCode.value,
+                        "person-language-dialog"
+                    )
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onStart() {

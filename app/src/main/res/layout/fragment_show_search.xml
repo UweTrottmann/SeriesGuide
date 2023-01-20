@@ -2,12 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search_fragment"
+    android:id="@+id/rootLayoutSearchShows"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.battlelancer.seriesguide.ui.widgets.EmptyView
-        android:id="@+id/textViewSearchEmpty"
+        android:id="@+id/textViewSearchShowsEmpty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/larger_padding"
@@ -15,7 +15,7 @@
         app:emptyViewMessage="@string/empty_show_search" />
 
     <GridView
-        android:id="@+id/gridViewSearch"
+        android:id="@+id/gridViewSearchShows"
         style="@style/Widget.SeriesGuide.Grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

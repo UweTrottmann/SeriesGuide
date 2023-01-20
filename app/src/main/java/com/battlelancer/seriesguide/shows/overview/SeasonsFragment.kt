@@ -12,8 +12,10 @@ import android.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
@@ -25,6 +27,7 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -55,8 +58,6 @@ class SeasonsFragment() : Fragment() {
         arguments?.run {
             showId = getLong(ARG_LONG_SHOW_ROW_ID)
         } ?: throw IllegalArgumentException("Missing arguments")
-
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -71,6 +72,7 @@ class SeasonsFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ThemeUtils.applyBottomPaddingForNavigationBar(binding!!.recyclerViewSeasons)
 
         adapter = SeasonsAdapter(
             requireContext(),
@@ -99,6 +101,12 @@ class SeasonsFragment() : Fragment() {
         PreferenceManager.getDefaultSharedPreferences(requireContext()).apply {
             registerOnSharedPreferenceChangeListener(onSortOrderChangedListener)
         }
+
+        requireActivity().addMenuProvider(
+            optionsMenuProvider,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     override fun onStart() {
@@ -129,18 +137,21 @@ class SeasonsFragment() : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.seasons_menu, menu)
-    }
+    private val optionsMenuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.seasons_menu, menu)
+        }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        return if (itemId == R.id.menu_sesortby) {
-            showSortDialog()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return when (menuItem.itemId) {
+                R.id.menu_sesortby -> {
+                    showSortDialog()
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
         }
     }
 
@@ -360,6 +371,7 @@ class SeasonsFragment() : Fragment() {
     }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.recyclerViewSeasons
 
         private const val ARG_LONG_SHOW_ROW_ID = "show_id"
 

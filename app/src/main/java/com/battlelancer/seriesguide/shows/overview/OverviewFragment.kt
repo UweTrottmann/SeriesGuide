@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -37,6 +38,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
+import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.SINGLE_PANE
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
@@ -55,6 +57,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
+import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -70,7 +73,11 @@ import timber.log.Timber
 /**
  * Displays general information about a show and, if there is one, the next episode to watch.
  */
-class OverviewFragment : Fragment(), EpisodeActionsContract {
+class OverviewFragment() : Fragment(), EpisodeActionsContract {
+
+    constructor(showRowId: Long) : this() {
+        arguments = buildArgs(showRowId)
+    }
 
     private var binding: FragmentOverviewBinding? = null
 
@@ -104,6 +111,13 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = binding!!
         with(binding) {
+            // On wide pane layouts this fragment is wrapped in a card which itself is inset,
+            // so only inset on single pane layout.
+            val overviewLayoutType = OverviewActivityImpl.getLayoutType(requireContext())
+            if (overviewLayoutType == SINGLE_PANE) {
+                ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewOverview)
+            }
+
             containerOverviewEpisode.visibility = View.GONE
             containerOverviewEmpty.visibility = View.GONE
 
@@ -184,7 +198,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             textDvdNumber.copyTextToClipboardOnLongClick()
 
             // Hide show info if show fragment is visible due to multi-pane layout.
-            val isDisplayShowInfo = resources.getBoolean(R.bool.isOverviewSinglePane)
+            val isDisplayShowInfo = overviewLayoutType == SINGLE_PANE
             containerOverviewShow.visibility = if (isDisplayShowInfo) View.VISIBLE else View.GONE
         }
 
@@ -447,7 +461,7 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
             val dateTime: String = if (isDisplayExactDate(requireContext())) {
                 TimeTools.formatToLocalDateShort(requireContext(), actualRelease)
             } else {
-                TimeTools.formatToLocalRelativeTime(context, actualRelease)
+                TimeTools.formatToLocalRelativeTime(requireContext(), actualRelease)
             }
             getString(
                 R.string.format_date_and_day, dateTime,
@@ -777,20 +791,14 @@ class OverviewFragment : Fragment(), EpisodeActionsContract {
         }
 
     companion object {
+        const val liftOnScrollTargetViewId = R.id.scrollViewOverview
 
         private const val ARG_LONG_SHOW_ROWID = "show_id"
         private const val ARG_EPISODE_ID = "episode_id"
 
-        fun buildArgs(showRowId: Long): Bundle {
-            val args = Bundle()
-            args.putLong(ARG_LONG_SHOW_ROWID, showRowId)
-            return args
-        }
+        fun buildArgs(showRowId: Long): Bundle = bundleOf(
+            ARG_LONG_SHOW_ROWID to showRowId
+        )
 
-        fun newInstance(showRowId: Long): OverviewFragment {
-            return OverviewFragment().apply {
-                arguments = buildArgs(showRowId)
-            }
-        }
     }
 }

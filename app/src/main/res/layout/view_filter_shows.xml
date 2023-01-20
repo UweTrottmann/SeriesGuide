@@ -58,7 +58,7 @@
         app:filterBoxDescription="@string/action_shows_filter_hidden" />
 
     <Button
-        android:id="@+id/button_shows_filter_remove"
+        android:id="@+id/button_shows_filter_reset"
         style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

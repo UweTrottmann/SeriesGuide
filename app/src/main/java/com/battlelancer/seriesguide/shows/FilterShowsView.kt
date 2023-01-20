@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFilterShowsBinding
+import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.util.TextTools
 
 class FilterShowsView @JvmOverloads constructor(
@@ -26,13 +27,9 @@ class FilterShowsView @JvmOverloads constructor(
         binding.checkboxShowsFilterUpcoming.setOnClickListener { updateFilterListener() }
         binding.checkboxShowsFilterHidden.setOnClickListener { updateFilterListener() }
         binding.checkboxShowsFilterContinuing.setOnClickListener { updateFilterListener() }
-        binding.buttonShowsFilterRemove.setOnClickListener {
-            binding.checkboxShowsFilterFavorites.state = null
-            binding.checkboxShowsFilterUnwatched.state = null
-            binding.checkboxShowsFilterUpcoming.state = null
-            binding.checkboxShowsFilterHidden.state = null
-            binding.checkboxShowsFilterContinuing.state = null
-            filterListener?.onFilterUpdate(ShowFilter.allDisabled())
+        binding.buttonShowsFilterReset.setOnClickListener {
+            setInitialFilter(ShowFilter.default(), binding.checkboxShowsFilterNoReleased.isChecked)
+            updateFilterListener()
         }
         binding.buttonShowsFilterAllVisible.setOnClickListener { filterListener?.onMakeAllHiddenVisibleClick() }
         binding.buttonShowsFilterUpcomingRange.setOnClickListener { filterListener?.onConfigureUpcomingRangeClick() }
@@ -71,38 +68,6 @@ class FilterShowsView @JvmOverloads constructor(
 
     fun setFilterListener(filterListener: FilterListener) {
         this.filterListener = filterListener
-    }
-
-    data class ShowFilter(
-        val isFilterFavorites: Boolean?,
-        val isFilterUnwatched: Boolean?,
-        val isFilterUpcoming: Boolean?,
-        val isFilterHidden: Boolean?,
-        val isFilterContinuing: Boolean?
-    ) {
-        fun isAnyFilterEnabled(): Boolean {
-            return isFilterFavorites != null || isFilterUnwatched != null
-                    || isFilterUpcoming != null || isFilterHidden != null
-                    || isFilterContinuing != null
-        }
-
-        companion object {
-            @JvmStatic
-            fun allDisabled(): ShowFilter {
-                return ShowFilter(null, null, null, null, null)
-            }
-
-            @JvmStatic
-            fun fromSettings(context: Context): ShowFilter {
-                return ShowFilter(
-                    ShowsDistillationSettings.isFilteringFavorites(context),
-                    ShowsDistillationSettings.isFilteringUnwatched(context),
-                    ShowsDistillationSettings.isFilteringUpcoming(context),
-                    ShowsDistillationSettings.isFilteringHidden(context),
-                    ShowsDistillationSettings.isFilteringContinuing(context)
-                )
-            }
-        }
     }
 
     interface FilterListener {

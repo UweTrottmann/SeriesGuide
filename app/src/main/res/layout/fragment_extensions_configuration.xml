@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frameLayoutExtensionConfig"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
-        android:id="@+id/listViewExtensionsConfiguration"
+        android:id="@+id/listViewExtensionsConfig"
         style="@style/Page.Centered"
+        android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:drawSelectorOnTop="true"

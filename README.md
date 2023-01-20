@@ -13,13 +13,13 @@ Android app to help you keep track of your favorite TV shows and movies.
 
 <p align="center">
   <a href="https://seriesgui.de">
-    <img src="https://img.shields.io/github/v/release/UweTrottmann/SeriesGuide?style=flat-square">
+    <img src="https://img.shields.io/github/v/release/UweTrottmann/SeriesGuide?style=flat">
   </a>
   <a href="https://github.com/UweTrottmann/SeriesGuide/actions/workflows/assemble-test-lint.yml">
-    <img src="https://img.shields.io/github/workflow/status/UweTrottmann/SeriesGuide/Android%20CI?style=flat-square">
+    <img src="https://img.shields.io/github/actions/workflow/status/UweTrottmann/SeriesGuide/assemble-test-lint.yml?branch=main&style=flat">
   </a>
   <a href="https://twitter.com/SeriesGuide">
-    <img src="https://img.shields.io/twitter/follow/SeriesGuide?label=Follow%20%40SeriesGuide&style=flat-square">
+    <img src="https://img.shields.io/twitter/follow/SeriesGuide?label=Follow%20%40SeriesGuide&style=flat">
   </a>
 </p>
 
