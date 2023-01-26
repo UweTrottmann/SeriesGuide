@@ -21,7 +21,7 @@
             android:layout_weight="1" />
 
         <FrameLayout
-            android:id="@+id/fragment_episodes"
+            android:id="@+id/containerEpisodesList"
             style="@style/EpisodesPane"
             android:layout_width="0dp"
             android:layout_height="match_parent" />

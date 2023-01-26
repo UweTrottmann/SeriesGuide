@@ -57,7 +57,7 @@ class EpisodesActivity : BaseMessageActivity() {
         get() = binding.containerEpisodesPager != null
 
     private val isListGone: Boolean
-        get() = binding.fragmentEpisodes.visibility == View.GONE
+        get() = binding.containerEpisodesList.visibility == View.GONE
 
     private val isViewingSeason: Boolean
         get() = intent.hasExtra(EXTRA_LONG_SEASON_ID)
@@ -149,7 +149,7 @@ class EpisodesActivity : BaseMessageActivity() {
 
     private fun switchView(makeListVisible: Boolean, updateOptionsMenu: Boolean) {
         isListVisibleInSinglePaneView = makeListVisible
-        binding.fragmentEpisodes.visibility = if (makeListVisible) View.VISIBLE else View.GONE
+        binding.containerEpisodesList.visibility = if (makeListVisible) View.VISIBLE else View.GONE
         val visibilityPagerViews = if (makeListVisible) View.GONE else View.VISIBLE
         binding.containerEpisodesPager!!.visibility = visibilityPagerViews
         binding.tabsEpisodes.visibility = visibilityPagerViews
@@ -208,7 +208,7 @@ class EpisodesActivity : BaseMessageActivity() {
                 info.startPosition
             ).also {
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_episodes, it, "episodes")
+                    .add(R.id.containerEpisodesList, it, "episodes")
                     .commit()
             }
         }
