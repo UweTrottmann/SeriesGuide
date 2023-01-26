@@ -15,21 +15,23 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <!-- Weight is added through styles depending on screen -->
-
         <FrameLayout
             android:id="@+id/containerEpisodesList"
-            style="@style/EpisodesPane"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="3"
             tools:ignore="Suspicious0dp" />
 
-        <!-- Weight is added through styles depending on screen -->
-
-        <FrameLayout
-            style="@style/DetailsPane"
+        <!-- In code additional bottom margin is applied to avoid the system navigation bar. -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEpisodes"
+            style="?attr/materialCardViewFilledStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="4"
             tools:ignore="Suspicious0dp">
 
             <ImageView
@@ -57,13 +59,7 @@
                     android:layout_weight="1" />
             </LinearLayout>
 
-            <View
-                android:id="@+id/viewEpisodesShadowStart"
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/sg_shadow_right_left" />
-
-        </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

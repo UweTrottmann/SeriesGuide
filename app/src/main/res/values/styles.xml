@@ -308,15 +308,6 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <!-- Panes -->
-    <style name="EpisodesPane">
-        <item name="android:layout_weight">1</item>
-    </style>
-
-    <style name="DetailsPane">
-        <item name="android:layout_weight">1</item>
-    </style>
-
     <!-- ////////////////////////////////////////////// -->
 
     <!-- Dark styles -->
