@@ -6,66 +6,70 @@
     android:layout_height="match_parent"
     tools:ignore="RtlSymmetry">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutEpisodesToolbar"
-        android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardEpisodesToolbar"
+        style="?attr/materialCardViewFilledStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/keyline_minus_16"
-        android:orientation="horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="?attr/sgColorBackgroundDim"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Icon set in code. -->
-        <ImageView
-            android:id="@+id/imageViewEpisodesWatched"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="12dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@null"
-            android:focusable="true"
-            android:padding="@dimen/padding_button"
-            tools:src="@drawable/ic_watch_all_black_24dp" />
+        <LinearLayout
+            android:id="@+id/linearLayoutEpisodesToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <!-- Icon set in code. -->
-        <ImageView
-            android:id="@+id/imageViewEpisodesCollected"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@null"
-            android:focusable="true"
-            android:padding="@dimen/padding_button"
-            app:layout_constraintStart_toEndOf="@id/imageViewEpisodesWatched"
-            tools:src="@drawable/ic_collect_all_black_24dp" />
+            <!-- Icon set in code. -->
+            <ImageView
+                android:id="@+id/imageViewEpisodesWatched"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@null"
+                android:focusable="true"
+                android:padding="@dimen/padding_button"
+                tools:src="@drawable/ic_watch_all_black_24dp" />
 
-    </LinearLayout>
+            <!-- Icon set in code. -->
+            <ImageView
+                android:id="@+id/imageViewEpisodesCollected"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@null"
+                android:focusable="true"
+                android:padding="@dimen/padding_button"
+                app:layout_constraintStart_toEndOf="@id/imageViewEpisodesWatched"
+                tools:src="@drawable/ic_collect_all_black_24dp" />
 
-    <View
-        android:id="@+id/dividerEpisodesToolbar"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="?attr/sgColorDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEpisodesToolbar" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Enable nested scrolling to work with CoordinatorLayout. -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEpisodes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/keyline_minus_16"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:clipToPadding="false"
         android:nestedScrollingEnabled="true"
-        android:paddingTop="0dp"
+        android:paddingTop="8dp"
         android:paddingBottom="@dimen/default_padding"
         android:theme="@style/ThemeOverlay.SeriesGuide.CheckableList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dividerEpisodesToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/cardEpisodesToolbar"
         tools:listitem="@layout/item_episode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

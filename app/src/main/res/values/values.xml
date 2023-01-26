@@ -2,6 +2,7 @@
 <resources>
 
     <integer name="overviewLayoutType">0</integer>
+    <integer name="episodesLayoutType">0</integer>
     <bool name="isWideCommentsLayout">false</bool>
 
 </resources>

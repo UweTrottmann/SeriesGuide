@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.EpisodesLayoutType.SINGLE_PANE
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
@@ -102,7 +103,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         savedInstanceState: Bundle?
     ): View {
         val bindingRoot = FragmentEpisodeBinding.inflate(inflater, container, false)
-        ThemeUtils.applyBottomPaddingForNavigationBar(bindingRoot.scrollViewEpisode)
+        // In multi-pane layouts this is contained in a card that is bottom padded for the nav bar.
+        if (EpisodesActivity.getLayoutType(requireContext()) == SINGLE_PANE) {
+            ThemeUtils.applyBottomPaddingForNavigationBar(bindingRoot.scrollViewEpisode)
+        }
         binding = bindingRoot.includeEpisode.also { binding ->
             bindingButtons = binding.includeButtons
             bindingRatings = binding.includeRatings

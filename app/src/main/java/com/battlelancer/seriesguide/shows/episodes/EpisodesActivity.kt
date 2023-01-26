@@ -36,7 +36,18 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class EpisodesActivity : BaseMessageActivity() {
 
+    enum class EpisodesLayoutType(val id: Int) {
+        SINGLE_PANE(0),
+        MULTI_PANE_VERTICAL(1),
+        MULTI_PANE_WIDE(2);
+
+        companion object {
+            fun from(id: Int): EpisodesLayoutType = values().first { it.id == id }
+        }
+    }
+
     private lateinit var binding: ActivityEpisodesBinding
+    private lateinit var layoutType: EpisodesLayoutType
 
     private var episodesListFragment: EpisodesFragment? = null
     private var episodeDetailsAdapter: EpisodePagerAdapter? = null
@@ -54,10 +65,10 @@ class EpisodesActivity : BaseMessageActivity() {
      * If list and pager are displayed side-by-side, or toggleable one or the other.
      */
     private val isSinglePaneView: Boolean
-        get() = binding.containerEpisodesPager != null
+        get() = layoutType == EpisodesLayoutType.SINGLE_PANE
 
     private val isListGone: Boolean
-        get() = binding.fragmentEpisodes.visibility == View.GONE
+        get() = binding.containerEpisodesList.visibility == View.GONE
 
     private val isViewingSeason: Boolean
         get() = intent.hasExtra(EXTRA_LONG_SEASON_ID)
@@ -65,6 +76,7 @@ class EpisodesActivity : BaseMessageActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEpisodesBinding.inflate(layoutInflater)
+        layoutType = getLayoutType(this)
         setContentView(binding.root)
         ThemeUtils.configureForEdgeToEdge(binding.root as ViewGroup)
         setupActionBar()
@@ -149,7 +161,7 @@ class EpisodesActivity : BaseMessageActivity() {
 
     private fun switchView(makeListVisible: Boolean, updateOptionsMenu: Boolean) {
         isListVisibleInSinglePaneView = makeListVisible
-        binding.fragmentEpisodes.visibility = if (makeListVisible) View.VISIBLE else View.GONE
+        binding.containerEpisodesList.visibility = if (makeListVisible) View.VISIBLE else View.GONE
         val visibilityPagerViews = if (makeListVisible) View.GONE else View.VISIBLE
         binding.containerEpisodesPager!!.visibility = visibilityPagerViews
         binding.tabsEpisodes.visibility = visibilityPagerViews
@@ -165,6 +177,10 @@ class EpisodesActivity : BaseMessageActivity() {
             binding.sgAppBarLayout?.statusBarForeground =
                 MaterialShapeDrawable.createWithElevationOverlay(this)
             switchView(isListVisibleInSinglePaneView, updateOptionsMenu = false)
+        } else {
+            // Multi-pane layout
+            // Add bottom margin to the card containing episode details.
+            ThemeUtils.applyBottomMarginForNavigationBar(binding.cardEpisodes!!)
         }
 
         // Tabs setup.
@@ -208,7 +224,7 @@ class EpisodesActivity : BaseMessageActivity() {
                 info.startPosition
             ).also {
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_episodes, it, "episodes")
+                    .add(R.id.containerEpisodesList, it, "episodes")
                     .commit()
             }
         }
@@ -371,5 +387,8 @@ class EpisodesActivity : BaseMessageActivity() {
             return Intent(context, EpisodesActivity::class.java)
                 .putExtra(EXTRA_LONG_EPISODE_ID, episodeRowId)
         }
+
+        fun getLayoutType(context: Context): EpisodesLayoutType =
+            EpisodesLayoutType.from(context.resources.getInteger(R.integer.episodesLayoutType))
     }
 }

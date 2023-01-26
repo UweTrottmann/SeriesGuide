@@ -40,7 +40,7 @@
         android:scaleType="centerCrop" />
 
     <FrameLayout
-        android:id="@+id/fragment_episodes"
+        android:id="@+id/containerEpisodesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
