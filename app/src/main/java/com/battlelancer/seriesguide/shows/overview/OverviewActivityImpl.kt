@@ -124,7 +124,7 @@ open class OverviewActivityImpl : BaseMessageActivity() {
         } else {
             // Multi-pane show, overview and seasons fragment
             // Bottom pad the card containing the overview fragment.
-            ThemeUtils.applyBottomPaddingForNavigationBar(findViewById(R.id.wrapperOverview))
+            ThemeUtils.applyBottomMarginForNavigationBar(findViewById(R.id.cardOverview))
 
             // clear up left-over fragments from single-pane layout
             val isSwitchingLayouts = activeFragments.size != 0

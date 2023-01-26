@@ -312,7 +312,7 @@ object ThemeUtils {
     fun applyBottomMarginForNavigationBar(view: View) {
         view.apply {
             // Get the current margin values of the view.
-            val initialPadding = InitialOffset(
+            val initialMargins = InitialOffset(
                 marginStart,
                 marginTop,
                 marginEnd,
@@ -322,7 +322,7 @@ object ThemeUtils {
             // listener with initial margin values of this view.
             // Note: this is based on similar code of the Material Components ViewUtils class.
             ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
-                navigationBarBottomMarginListener.onApplyWindowInsets(v, insets, initialPadding)
+                navigationBarBottomMarginListener.onApplyWindowInsets(v, insets, initialMargins)
             }
         }
     }
