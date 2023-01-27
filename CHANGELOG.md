@@ -15,7 +15,10 @@ Version 67
 ----------
 *in development*
 
+#### 67.0.0 🧪
+*2023-01-27*
 
+* 🔧 Appearance: use card to separate details on large episodes and people screens.
 
 Version 66
 ----------
