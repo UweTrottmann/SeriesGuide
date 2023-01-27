@@ -38,28 +38,27 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- InconsistentLayout: person only shown in wide layout. -->
-        <FrameLayout
-            android:id="@+id/containerPeoplePerson"
+        <!-- In code additional bottom margin is applied to avoid system navigation bar. -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPerson"
+            style="?attr/materialCardViewFilledStyle"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/guidelinePeople"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="InconsistentLayout" />
+            tools:ignore="InconsistentLayout">
 
-        <View
-            android:id="@+id/viewPeopleShadowStart"
-            android:layout_width="4dp"
-            android:layout_height="0dp"
-            android:background="@drawable/sg_shadow_right_left"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/guidelinePeople"
-            app:layout_constraintTop_toTopOf="parent" />
+            <FrameLayout
+                android:id="@+id/containerPeoplePerson"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
