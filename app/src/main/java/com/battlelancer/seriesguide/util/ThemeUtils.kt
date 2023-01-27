@@ -236,7 +236,7 @@ object ThemeUtils {
      * Wrapper around [androidx.core.view.OnApplyWindowInsetsListener] which also passes the
      * initial padding or margin set on the view.
      */
-    private interface OnApplyWindowInsetsInitialPaddingListener {
+    interface OnApplyWindowInsetsInitialPaddingListener {
         /**
          * When [set][View.setOnApplyWindowInsetsListener] on a View, this listener method will be
          * called instead of the view's own [View.onApplyWindowInsets] method. The [initialOffset]
@@ -250,7 +250,7 @@ object ThemeUtils {
     }
 
     /** Simple data object to store the initial padding or margin for a view.  */
-    private data class InitialOffset(
+    data class InitialOffset(
         val start: Int,
         val top: Int,
         val end: Int,
