@@ -12,10 +12,12 @@ import com.battlelancer.seriesguide.databinding.ViewFirstRunBinding
 import com.battlelancer.seriesguide.dataliberation.AutoBackupTools
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.Utils
+import com.uwetrottmann.androidutils.AndroidUtils
 
 class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     FrameLayout(context, attrs) {
@@ -25,6 +27,7 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
         fun onSignInClicked()
         fun onRestoreBackupClicked()
         fun onRestoreAutoBackupClicked()
+        fun onAllowNotificationsClicked()
         fun onDismissClicked()
     }
 
@@ -35,6 +38,12 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+
+        binding.groupAllowNotifications.isGone =
+            !AndroidUtils.isAtLeastTiramisu || NotificationSettings.areNotificationsAllowed(context)
+        binding.buttonAllowNotifications.setOnClickListener {
+            clickListener?.onAllowNotificationsClicked()
+        }
 
         binding.groupAutoBackupDetected.isGone =
             !AutoBackupTools.isAutoBackupMaybeAvailable(context)

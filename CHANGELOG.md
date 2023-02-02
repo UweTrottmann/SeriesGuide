@@ -15,6 +15,9 @@ Version 67
 ----------
 *in development*
 
+* 🔧 On Android 8 and newer, use system settings to configure notification settings.
+* 🔧 On Android 13 and newer, ask to allow notifications.
+
 #### 67.0.0 🧪
 *2023-01-27*
 

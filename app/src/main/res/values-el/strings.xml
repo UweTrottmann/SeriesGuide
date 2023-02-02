@@ -452,6 +452,7 @@
     <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
     <string name="pref_notifications">Ειδοποιήσεις</string>
     <string name="pref_notificationssummary">Ειδοποίηση για νέα επεισόδια</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Ήχος κλήσης</string>
     <string name="pref_vibrate">Δόνηση</string>
     <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
@@ -465,6 +466,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Ειδοποίηση μόνο αν το νέο επιεσόδιο είναι το επόμενο για προβολή</string>
     <string name="pref_notifications_battery_settings">Ρυθμίσεις μπαταρίας</string>
     <string name="pref_notifications_battery_settings_summary">Πηγαίνετε στις Ρυθμίσεις μπαταρίας για να απενεργοποιήσετε τις βελτιστοποιήσεις μπαταρίας για αξιόπιστες ειδοποιήσεις</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>

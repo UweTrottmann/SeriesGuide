@@ -89,11 +89,7 @@ play-services-auth = "com.google.android.gms:play-services-auth:20.4.0"
 retrofit2-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit2" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 # https://github.com/robolectric/robolectric/releases/
-# Note: 4.6.1 pulls in bcprov-jdk15on code targeting newer Java breaking Jetifier
-# Not fixed until Android Plugin 7 release. Ignore listed in gradle.properties.
-# https://github.com/robolectric/robolectric/issues/6521
-# https://issuetracker.google.com/issues/159151549
-robolectric = "org.robolectric:robolectric:4.8.1"
+robolectric = "org.robolectric:robolectric:4.9.2"
 systembartint = "com.readystatesoftware.systembartint:systembartint:1.0.4"
 taptargetview = "com.getkeepsafe.taptargetview:taptargetview:1.13.3"
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.4" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md

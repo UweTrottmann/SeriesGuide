@@ -496,6 +496,7 @@
     <string name="upcoming_display">Dewiswch i arddangos sioeau sydd ar ddod</string>
     <string name="pref_notifications">Hysbysiadau</string>
     <string name="pref_notificationssummary">Hysbysu am benodau newydd</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Sain</string>
     <string name="pref_vibrate">Dirgrynu</string>
     <string name="pref_vibratesummary">Dirgrynu hefyd wrth arddangos hysbysiad</string>
@@ -509,6 +510,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Peidiwch â hysbysu os mai\'r bennod newydd yw\'r un nesaf i\'w gwylio</string>
     <string name="pref_notifications_battery_settings">Gosodiadau batri</string>
     <string name="pref_notifications_battery_settings_summary">Ewch i leoliadau Batri i analluogi optimeiddiadau batri ar gyfer hysbysiadau dibynadwy</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Cuddio penodau gwylio</string>
     <string name="pref_widget_opacity">Cefndir Widget</string>

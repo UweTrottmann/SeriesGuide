@@ -32,6 +32,12 @@ class ShowsAdapter(
 
     var displayFirstRunHeader: Boolean = false
 
+    fun refreshFirstRunHeader() {
+        if (displayFirstRunHeader) {
+            notifyItemChanged(0)
+        }
+    }
+
     override fun submitList(list: MutableList<ShowItem>?) {
         if (displayFirstRunHeader) {
             val modifiedList = list ?: mutableListOf()

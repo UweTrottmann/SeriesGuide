@@ -474,6 +474,7 @@
     <string name="upcoming_display">Выберите, чтобы показать предстоящие передачи</string>
     <string name="pref_notifications">Уведомления</string>
     <string name="pref_notificationssummary">Уведомлять о новых эпизодах</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Звуковое уведомление</string>
     <string name="pref_vibrate">Вибросигнал</string>
     <string name="pref_vibratesummary">Вибрация при уведомлении</string>
@@ -487,6 +488,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Уведомлять только если новая серия следующая для просмотра</string>
     <string name="pref_notifications_battery_settings">Параметры батареи</string>
     <string name="pref_notifications_battery_settings_summary">Перейдите в настройки батареи, чтобы отключить оптимизацию батареи для надежных уведомлений</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>

@@ -474,6 +474,7 @@
     <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
     <string name="pref_notifications">התראות</string>
     <string name="pref_notificationssummary">עדכן אותי על פרקים חדשים</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">רינגטון</string>
     <string name="pref_vibrate">רטט</string>
     <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
@@ -487,6 +488,8 @@
     <string name="pref_notifications_next_episodes_only_summary">התראה רק אם הפרק החדש הוא הבא לצפייה</string>
     <string name="pref_notifications_battery_settings">Battery settings</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">הסתר פרקים שנצפו</string>
     <string name="pref_widget_opacity">רקע ווידג\'ט</string>

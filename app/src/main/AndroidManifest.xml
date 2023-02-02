@@ -22,8 +22,10 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <!-- Show shortcuts -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <!-- To schedule episode release notifications -->
+    <!-- Android 12: to schedule episode release notifications. -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <!-- Android 13: to request notification permission. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <uses-feature
         android:name="android.hardware.touchscreen"

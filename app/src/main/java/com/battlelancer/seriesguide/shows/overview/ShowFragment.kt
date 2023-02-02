@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.shows.overview
 
+import android.Manifest
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
@@ -20,6 +22,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
 import com.battlelancer.seriesguide.people.PeopleListHelper
+import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.MULTI_PANE_VERTICAL
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
@@ -27,6 +30,7 @@ import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.traktapi.RateDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktTools
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
@@ -42,6 +46,8 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
+import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Credits
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -195,11 +201,15 @@ class ShowFragment() : Fragment() {
         binding.textViewFirstRelease.copyTextToClipboardOnLongClick()
 
         model.setShowId(showId)
+        // Only populate show once both show data and user status is loaded.
         model.show.observe(viewLifecycleOwner) { sgShow2 ->
             if (sgShow2 != null) {
                 show = sgShow2
-                populateShow(sgShow2)
+                populateShow(sgShow2, model.hasAccessToX.value)
             }
+        }
+        model.hasAccessToX.observe(viewLifecycleOwner) {
+            populateShow(model.show.value, it)
         }
         model.credits.observe(viewLifecycleOwner) { credits ->
             populateCredits(credits)
@@ -210,6 +220,7 @@ class ShowFragment() : Fragment() {
         super.onStart()
 
         EventBus.getDefault().register(this)
+        model.updateUserStatus()
     }
 
     override fun onStop() {
@@ -223,7 +234,27 @@ class ShowFragment() : Fragment() {
         binding = null
     }
 
-    private fun populateShow(show: SgShow2) {
+    private fun showNotificationsNotAllowedMessage() {
+        (activity as BaseMessageActivity?)?.snackbarParentView
+            ?.let {
+                Snackbar
+                    .make(it, R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
+                    .show()
+            }
+    }
+
+    private val requestNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                // Re-bind show views to update notification button state.
+                populateShow(model.show.value, model.hasAccessToX.value)
+            } else {
+                showNotificationsNotAllowedMessage()
+            }
+        }
+
+    private fun populateShow(show: SgShow2?, hasAccessToX: Boolean?) {
+        if (show == null || hasAccessToX == null) return
         val binding = binding ?: return
 
         // status
@@ -282,8 +313,9 @@ class ShowFragment() : Fragment() {
             }
         }
 
-        // notifications button
-        val notify = show.notify
+        // Notifications button, always show as disabled if user is not a sub.
+        val areNotificationsAllowed = NotificationSettings.areNotificationsAllowed(requireContext())
+        val notify = show.notify && hasAccessToX && areNotificationsAllowed
         binding.buttonNotify.apply {
             contentDescription = getString(
                 if (notify) {
@@ -302,13 +334,19 @@ class ShowFragment() : Fragment() {
             )
             isEnabled = true
             setOnClickListener { v ->
-                if (Utils.hasAccessToX(activity)) {
+                if (!hasAccessToX) {
+                    Utils.advertiseSubscription(activity)
+                } else if (!areNotificationsAllowed) {
+                    if (AndroidUtils.isAtLeastTiramisu) {
+                        requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    } else {
+                        showNotificationsNotAllowedMessage()
+                    }
+                } else {
                     // disable until action is complete
                     v.isEnabled = false
                     SgApp.getServicesComponent(requireContext()).showTools()
                         .storeNotify(showId, !notify)
-                } else {
-                    Utils.advertiseSubscription(activity)
                 }
             }
         }

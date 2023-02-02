@@ -452,6 +452,7 @@
     <string name="upcoming_display">வரவிருக்கும் காட்சிகள் காண்பிக்க தேர்ந்தெடு</string>
     <string name="pref_notifications">அறிவிப்புகள்</string>
     <string name="pref_notificationssummary">புதிய episodes பற்றி</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">ஒலி</string>
     <string name="pref_vibrate">அதிர்வு</string>
     <string name="pref_vibratesummary">மேலும் vibrate அறிவிக்கை காண்பிப்பதில் உள்ள</string>
@@ -465,6 +466,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
     <string name="pref_notifications_battery_settings">Battery settings</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">பார்த்த episodes மறை</string>
     <string name="pref_widget_opacity">விட்ஜெட் பின்னணி</string>
