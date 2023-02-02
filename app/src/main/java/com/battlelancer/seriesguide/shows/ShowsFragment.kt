@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.shows
 
+import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.MenuProvider
@@ -37,11 +39,14 @@ import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.getSortQuery
 import com.battlelancer.seriesguide.shows.SortShowsView.ShowSortOrder
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -297,6 +302,20 @@ class ShowsFragment : Fragment() {
             }
         }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                adapter.refreshFirstRunHeader()
+            } else {
+                (activity as BaseMessageActivity?)?.snackbarParentView
+                    ?.let {
+                        Snackbar
+                            .make(it, R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
+                            .show()
+                    }
+            }
+        }
+
     private val firstRunClickListener = object : FirstRunView.FirstRunClickListener {
         override fun onAddShowClicked() {
             startActivityAddShows()
@@ -316,6 +335,12 @@ class ShowsFragment : Fragment() {
 
         override fun onRestoreAutoBackupClicked() {
             startActivity(DataLiberationActivity.intentToShowAutoBackup(requireActivity()))
+        }
+
+        override fun onAllowNotificationsClicked() {
+            if (AndroidUtils.isAtLeastTiramisu) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
 
         override fun onDismissClicked() {
