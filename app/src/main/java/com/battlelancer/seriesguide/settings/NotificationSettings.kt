@@ -57,11 +57,23 @@ object NotificationSettings {
      */
     fun isNotificationsEnabled(context: Context): Boolean {
         return if (AndroidUtils.isAtLeastOreo) {
-            context.getSystemService<NotificationManager>()?.areNotificationsEnabled()
-                ?: false
+            return areNotificationsAllowed(context)
         } else {
             PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_ENABLED, true)
+        }
+    }
+
+    /**
+     * On Android 8+, returns if notifications are enabled in system settings.
+     * On older versions always returns true.
+     */
+    fun areNotificationsAllowed(context: Context): Boolean {
+        return if (AndroidUtils.isAtLeastOreo) {
+            context.getSystemService<NotificationManager>()?.areNotificationsEnabled()
+                ?: false
+        } else {
+            true
         }
     }
 

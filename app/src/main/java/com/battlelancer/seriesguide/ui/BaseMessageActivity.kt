@@ -88,9 +88,9 @@ abstract class BaseMessageActivity : BaseActivity() {
     }
 
     /**
-     * Return a view to pass to [Snackbar.make], ideally a [CoordinatorLayout].
+     * Return a view to pass to [Snackbar.make], ideally a CoordinatorLayout.
      */
-    protected open val snackbarParentView: View
+    open val snackbarParentView: View
         get() = findViewById(android.R.id.content)
 
     private fun handleServiceActiveEvent(event: ServiceActiveEvent?) {
