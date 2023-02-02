@@ -177,7 +177,11 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             // Android 8+: use system settings to manage notifications.
             val channelsPref: Preference = findPreference(NotificationSettings.KEY_CHANNELS)!!
             if (isSupporter) {
-                channelsPref.summary = null
+                if (NotificationSettings.areNotificationsAllowed(requireContext())) {
+                    channelsPref.summary = null
+                } else {
+                    channelsPref.setSummary(R.string.notifications_allow_reason)
+                }
                 channelsPref.setOnPreferenceClickListener {
                     val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                         .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
