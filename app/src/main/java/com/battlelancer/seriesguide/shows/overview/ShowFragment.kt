@@ -195,11 +195,15 @@ class ShowFragment() : Fragment() {
         binding.textViewFirstRelease.copyTextToClipboardOnLongClick()
 
         model.setShowId(showId)
+        // Only populate show once both show data and user status is loaded.
         model.show.observe(viewLifecycleOwner) { sgShow2 ->
             if (sgShow2 != null) {
                 show = sgShow2
-                populateShow(sgShow2)
+                populateShow(sgShow2, model.hasAccessToX.value)
             }
+        }
+        model.hasAccessToX.observe(viewLifecycleOwner) {
+            populateShow(model.show.value, it)
         }
         model.credits.observe(viewLifecycleOwner) { credits ->
             populateCredits(credits)
@@ -210,6 +214,7 @@ class ShowFragment() : Fragment() {
         super.onStart()
 
         EventBus.getDefault().register(this)
+        model.updateUserStatus()
     }
 
     override fun onStop() {
@@ -223,7 +228,8 @@ class ShowFragment() : Fragment() {
         binding = null
     }
 
-    private fun populateShow(show: SgShow2) {
+    private fun populateShow(show: SgShow2?, hasAccessToX: Boolean?) {
+        if (show == null || hasAccessToX == null) return
         val binding = binding ?: return
 
         // status
@@ -282,8 +288,8 @@ class ShowFragment() : Fragment() {
             }
         }
 
-        // notifications button
-        val notify = show.notify
+        // Notifications button, always show as disabled if user is not a sub.
+        val notify = show.notify && hasAccessToX
         binding.buttonNotify.apply {
             contentDescription = getString(
                 if (notify) {
@@ -302,7 +308,7 @@ class ShowFragment() : Fragment() {
             )
             isEnabled = true
             setOnClickListener { v ->
-                if (Utils.hasAccessToX(activity)) {
+                if (hasAccessToX) {
                     // disable until action is complete
                     v.isEnabled = false
                     SgApp.getServicesComponent(requireContext()).showTools()
