@@ -496,6 +496,7 @@
     <string name="upcoming_display">حدد هذا الخيار لعرض المسلسلات القادمة</string>
     <string name="pref_notifications">التنبيهات</string>
     <string name="pref_notificationssummary">التنبيه عن الحلقات الجديدة</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">نغمة التنبيه</string>
     <string name="pref_vibrate">إهتزاز</string>
     <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
@@ -509,6 +510,8 @@
     <string name="pref_notifications_next_episodes_only_summary">تنبيه فقط اذا الحلقة الجديدة ستشاهد تالياً</string>
     <string name="pref_notifications_battery_settings">إعدادات البطارية</string>
     <string name="pref_notifications_battery_settings_summary">الذهاب إلى إعدادات البطارية لتعطيل تحسينات البطارية للإشعارات الموثوقة</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>

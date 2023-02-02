@@ -474,6 +474,7 @@
     <string name="upcoming_display">Виберіть для відображення найближчих серіалів</string>
     <string name="pref_notifications">Сповіщення</string>
     <string name="pref_notificationssummary">Повідомляти про нові серії</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Рингтон</string>
     <string name="pref_vibrate">Вібрація</string>
     <string name="pref_vibratesummary">Вібрувати при відображенні сповіщення</string>
@@ -487,6 +488,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Сповіщати лише якщо нова серія буде наступною для перегляду</string>
     <string name="pref_notifications_battery_settings">Налаштування акумулятора</string>
     <string name="pref_notifications_battery_settings_summary">Перейдіть до налаштувань акумулятора, щоб вимкнути оптимізацію живлення для надійних сповіщень</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Приховати переглянуті серії</string>
     <string name="pref_widget_opacity">Фон віджета</string>

@@ -474,6 +474,7 @@
     <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
     <string name="pref_notifications">Upozornenia</string>
     <string name="pref_notificationssummary">Upozorňovať na nové epizódy</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Tón upozornenia</string>
     <string name="pref_vibrate">Vibrovať</string>
     <string name="pref_vibratesummary">Pri upozornení vibrovať</string>
@@ -487,6 +488,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Upozorniť len v prípade, že nová epizóda je ďalšia na videnie</string>
     <string name="pref_notifications_battery_settings">Nastavenia batérie</string>
     <string name="pref_notifications_battery_settings_summary">Prejdite na Nastavenia batérie a deaktivujte optimalizáciu batérie pre spoľahlivé oznámenia</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Skryť videné epizódy</string>
     <string name="pref_widget_opacity">Pozadie miniaplikácie</string>

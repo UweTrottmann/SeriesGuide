@@ -452,6 +452,7 @@
     <string name="upcoming_display">گزینش برای نشان دادن نمایش‌های پیش رو</string>
     <string name="pref_notifications">آگاهی‌ها</string>
     <string name="pref_notificationssummary">آگاهی دربارهٔ قسمت‌های جدید</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">صدا</string>
     <string name="pref_vibrate">لرزش</string>
     <string name="pref_vibratesummary">ارزش هنگام نمایش آگهی</string>
@@ -465,6 +466,8 @@
     <string name="pref_notifications_next_episodes_only_summary">آگاهی فقط در صورتی که قسمت جدید، قسمت بعدی‌ایست که باید دیده شود</string>
     <string name="pref_notifications_battery_settings">تنظیمات باتری</string>
     <string name="pref_notifications_battery_settings_summary">به منظور آگاهی‌های قابل اتّکا، برای از کار انداختن بهینه‌سازی‌های باتری به تنظیمات باتری بروید</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">نهفتن قسمت‌های تماشا شده</string>
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>

@@ -441,6 +441,7 @@
     <string name="upcoming_display">Pilih untuk menampilkan acara yang akan datang</string>
     <string name="pref_notifications">Notifikasi</string>
     <string name="pref_notificationssummary">Beritahu tentang episode baru</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Suara</string>
     <string name="pref_vibrate">Getar</string>
     <string name="pref_vibratesummary">Juga bergetar saat menampilkan pemberitahuan</string>
@@ -454,6 +455,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Hanya beri tahu jika episode baru adalah yang berikutnya untuk ditonton</string>
     <string name="pref_notifications_battery_settings">Pengaturan baterai</string>
     <string name="pref_notifications_battery_settings_summary">Buka Pengaturan baterai untuk menonaktifkan pengoptimalan baterai untuk notifikasi yang dapat diandalkan</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Sembunyikan episode yang telah ditonton</string>
     <string name="pref_widget_opacity">Latar belakang widget</string>

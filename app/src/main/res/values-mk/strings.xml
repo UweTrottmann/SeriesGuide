@@ -452,6 +452,7 @@
     <string name="upcoming_display">Селектирај за да се прикажат сериите што следат</string>
     <string name="pref_notifications">Нотификација</string>
     <string name="pref_notificationssummary">Покажи нотификација за нови епизоди</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Звук</string>
     <string name="pref_vibrate">Вибрирање</string>
     <string name="pref_vibratesummary">Исто вибрирај на нотификација на дисплејот</string>
@@ -465,6 +466,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
     <string name="pref_notifications_battery_settings">Battery settings</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Сокриј веќе гледани епизоди</string>
     <string name="pref_widget_opacity">Widget позадина</string>
