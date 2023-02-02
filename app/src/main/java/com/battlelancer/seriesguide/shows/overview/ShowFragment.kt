@@ -164,14 +164,6 @@ class ShowFragment() : Fragment() {
             ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewShow)
         }
 
-        // favorite + notifications + visibility button
-        TooltipCompat.setTooltipText(
-            binding.buttonFavorite,
-            binding.buttonFavorite.contentDescription
-        )
-        TooltipCompat.setTooltipText(binding.buttonNotify, binding.buttonNotify.contentDescription)
-        TooltipCompat.setTooltipText(binding.buttonHidden, binding.buttonHidden.contentDescription)
-
         // language button
         val buttonLanguage = binding.buttonLanguage
         buttonLanguage.setOnClickListener { displayLanguageSettings() }
@@ -273,6 +265,7 @@ class ShowFragment() : Fragment() {
             contentDescription = getString(
                 if (isFavorite) R.string.context_unfavorite else R.string.context_favorite
             )
+            TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
                 if (isFavorite) {
                     R.drawable.ic_star_black_24dp
@@ -299,6 +292,7 @@ class ShowFragment() : Fragment() {
                     R.string.action_episode_notifications_on
                 }
             )
+            TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
                 if (notify) {
                     R.drawable.ic_notifications_active_black_24dp
@@ -328,6 +322,7 @@ class ShowFragment() : Fragment() {
             contentDescription = getString(
                 if (isHidden) R.string.context_unhide else R.string.context_hide
             )
+            TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
                 if (isHidden) {
                     R.drawable.ic_visibility_off_black_24dp
