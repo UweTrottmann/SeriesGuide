@@ -21,7 +21,6 @@ import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.notifications.NotificationService
@@ -147,64 +146,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     }
 
     private fun setupNotificationSettings() {
-        val enabledPref: SwitchPreferenceCompat = findPreference(NotificationSettings.KEY_ENABLED)!!
-        val thresholdPref: Preference = findPreference(NotificationSettings.KEY_THRESHOLD)!!
-        val selectionPref: Preference = findPreference(NotificationSettings.KEY_SELECTION)!!
-        val hiddenPref: Preference = findPreference(NotificationSettings.KEY_IGNORE_HIDDEN)!!
-        val onlyNextPref: Preference = findPreference(NotificationSettings.KEY_ONLY_NEXT_EPISODE)!!
-        // only visible pre-O
-        val vibratePref: Preference? = findPreference(NotificationSettings.KEY_VIBRATE)
-        val ringtonePref: Preference? = findPreference(NotificationSettings.KEY_RINGTONE)
-        // only visible O+
-        val channelsPref: Preference? = findPreference(NotificationSettings.KEY_CHANNELS)
-
-        // allow supporters to enable notifications
-        if (Utils.hasAccessToX(activity)) {
-            enabledPref.setOnPreferenceChangeListener { _, newValue ->
-                val isChecked = newValue as Boolean
-
-                thresholdPref.isEnabled = isChecked
-                selectionPref.isEnabled = isChecked
-                if (AndroidUtils.isAtLeastOreo) {
-                    channelsPref?.isEnabled = isChecked
-                } else {
-                    vibratePref?.isEnabled = isChecked
-                    ringtonePref?.isEnabled = isChecked
-                }
-
-                NotificationService.trigger(requireContext())
-                true
-            }
-            // disable advanced notification settings if notifications are disabled
-            val isNotificationsEnabled = NotificationSettings.isNotificationsEnabled(
-                requireContext()
-            )
-            thresholdPref.isEnabled = isNotificationsEnabled
-            selectionPref.isEnabled = isNotificationsEnabled
-            hiddenPref.isEnabled = isNotificationsEnabled
-            onlyNextPref.isEnabled = isNotificationsEnabled
-            if (AndroidUtils.isAtLeastOreo) {
-                channelsPref?.isEnabled = isNotificationsEnabled
-            } else {
-                vibratePref?.isEnabled = isNotificationsEnabled
-                ringtonePref?.isEnabled = isNotificationsEnabled
-            }
-        } else {
-            enabledPref.onPreferenceChangeListener = sNoOpChangeListener
-            enabledPref.isChecked = false
-            enabledPref.setSummary(R.string.onlyx)
-            thresholdPref.isEnabled = false
-            selectionPref.isEnabled = false
-            hiddenPref.isEnabled = false
-            onlyNextPref.isEnabled = false
-            if (AndroidUtils.isAtLeastOreo) {
-                channelsPref?.isEnabled = false
-            } else {
-                vibratePref?.isEnabled = false
-                ringtonePref?.isEnabled = false
-            }
-        }
-
         findPreference<Preference>(KEY_BATTERY_SETTINGS)?.setOnPreferenceClickListener {
             // Try to open app info where user can configure battery settings.
             var intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -216,13 +157,81 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             }
             true
         }
-
-        updateThresholdSummary(thresholdPref)
-        updateNotificationSettings()
     }
 
     private fun updateNotificationSettings() {
+        updateThresholdSummary(findPreference(NotificationSettings.KEY_THRESHOLD)!!)
         updateSelectionSummary(findPreference(NotificationSettings.KEY_SELECTION)!!)
+
+        val isSupporter = Utils.hasAccessToX(requireContext())
+        if (isSupporter) {
+            // Disable advanced notification settings if notifications are disabled.
+            enableAdvancedNotificationSettings(
+                NotificationSettings.isNotificationsEnabled(requireContext())
+            )
+        } else {
+            enableAdvancedNotificationSettings(false)
+        }
+
+        if (AndroidUtils.isAtLeastOreo) {
+            // Android 8+: use system settings to manage notifications.
+            val channelsPref: Preference = findPreference(NotificationSettings.KEY_CHANNELS)!!
+            if (isSupporter) {
+                channelsPref.summary = null
+                channelsPref.setOnPreferenceClickListener {
+                    val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
+                    // At least NVIDIA Shield (8.0.0) can not handle this, so guard.
+                    Utils.tryStartActivity(activity, intent, true)
+                    true
+                }
+            } else {
+                channelsPref.setSummary(R.string.onlyx)
+                channelsPref.setOnPreferenceClickListener {
+                    Utils.advertiseSubscription(requireContext())
+                    true
+                }
+            }
+        } else {
+            val enabledPref: SwitchPreferenceCompat =
+                findPreference(NotificationSettings.KEY_ENABLED)!!
+            if (isSupporter) {
+                enabledPref.setSummary(R.string.pref_notificationssummary)
+                enabledPref.setOnPreferenceChangeListener { _, newValue ->
+                    val isChecked = newValue as Boolean
+                    enableAdvancedNotificationSettings(isChecked)
+                    // Schedule or remove notification service alarm.
+                    NotificationService.trigger(requireContext())
+                    true
+                }
+            } else {
+                enabledPref.setSummary(R.string.onlyx)
+                enabledPref.setOnPreferenceChangeListener { _, _ ->
+                    Utils.advertiseSubscription(requireContext())
+                    // prevent value from getting saved
+                    false
+                }
+                enabledPref.isChecked = false
+            }
+        }
+    }
+
+    private fun enableAdvancedNotificationSettings(isEnabled: Boolean) {
+        val thresholdPref: Preference = findPreference(NotificationSettings.KEY_THRESHOLD)!!
+        val selectionPref: Preference = findPreference(NotificationSettings.KEY_SELECTION)!!
+        val hiddenPref: Preference = findPreference(NotificationSettings.KEY_IGNORE_HIDDEN)!!
+        val onlyNextPref: Preference = findPreference(NotificationSettings.KEY_ONLY_NEXT_EPISODE)!!
+        thresholdPref.isEnabled = isEnabled
+        selectionPref.isEnabled = isEnabled
+        hiddenPref.isEnabled = isEnabled
+        onlyNextPref.isEnabled = isEnabled
+        if (!AndroidUtils.isAtLeastOreo) {
+            // Pre-Android 8.0 notification settings, managed by system on newer versions.
+            val vibratePref: Preference = findPreference(NotificationSettings.KEY_VIBRATE)!!
+            val ringtonePref: Preference = findPreference(NotificationSettings.KEY_RINGTONE)!!
+            vibratePref.isEnabled = isEnabled
+            ringtonePref.isEnabled = isEnabled
+        }
     }
 
     private fun setupBasicSettings() {
@@ -251,6 +260,9 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         val settings = arguments?.getString(PreferencesActivityImpl.EXTRA_SETTINGS_SCREEN)
         if (settings == null) {
             updateRootSettings()
+        } else if (settings == KEY_SCREEN_NOTIFICATIONS) {
+            // Android 8+: notification settings depend on system settings, update on showing this.
+            updateNotificationSettings()
         }
 
         PreferenceManager.getDefaultSharedPreferences(requireContext()).also {
@@ -337,17 +349,6 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             )
 
             Utils.tryStartActivityForResult(this, intent, REQUEST_CODE_RINGTONE)
-            return true
-        }
-        if (NotificationSettings.KEY_CHANNELS == key) {
-            // launch system settings app at settings for episodes channel
-            if (AndroidUtils.isAtLeastOreo) {
-                val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-                    .putExtra(Settings.EXTRA_CHANNEL_ID, SgApp.NOTIFICATION_CHANNEL_EPISODES)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
-                // at least NVIDIA Shield (8.0.0) can not handle this, so guard
-                Utils.tryStartActivity(activity, intent, true)
-            }
             return true
         }
         if (AppSettings.KEY_USER_DEBUG_MODE_ENBALED == key) {
@@ -547,11 +548,5 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         private const val REQUEST_CODE_RINGTONE = 0
         private const val TAG_LANGUAGE_FALLBACK = "PREF_LANGUAGE_FALLBACK"
 
-        private val sNoOpChangeListener =
-            Preference.OnPreferenceChangeListener { preference: Preference, _: Any ->
-                Utils.advertiseSubscription(preference.context)
-                // prevent value from getting saved
-                false
-            }
     }
 }
