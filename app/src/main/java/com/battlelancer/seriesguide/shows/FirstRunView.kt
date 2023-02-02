@@ -10,29 +10,28 @@ import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFirstRunBinding
 import com.battlelancer.seriesguide.dataliberation.AutoBackupTools
-import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.Utils
-import org.greenrobot.eventbus.EventBus
 
 class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     FrameLayout(context, attrs) {
 
-    enum class ButtonType(val id: Int) {
-        DISMISS(0),
-        ADD_SHOW(1),
-        SIGN_IN(2),
-        RESTORE_BACKUP(3)
+    interface FirstRunClickListener {
+        fun onAddShowClicked()
+        fun onSignInClicked()
+        fun onRestoreBackupClicked()
+        fun onRestoreAutoBackupClicked()
+        fun onDismissClicked()
     }
-
-    class ButtonEvent(val type: ButtonType)
 
     private val binding: ViewFirstRunBinding =
         ViewFirstRunBinding.inflate(LayoutInflater.from(context), this, true)
+
+    var clickListener: FirstRunClickListener? = null
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -40,7 +39,7 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
         binding.groupAutoBackupDetected.isGone =
             !AutoBackupTools.isAutoBackupMaybeAvailable(context)
         binding.buttonRestoreAutoBackup.setOnClickListener {
-            context.startActivity(DataLiberationActivity.intentToShowAutoBackup(context))
+            clickListener?.onRestoreAutoBackupClicked()
         }
 
         binding.containerNoSpoilers.setOnClickListener { v ->
@@ -77,17 +76,17 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
         )
 
         binding.buttonAddShow.setOnClickListener {
-            EventBus.getDefault().post(ButtonEvent(ButtonType.ADD_SHOW))
+            clickListener?.onAddShowClicked()
         }
         binding.buttonSignIn.setOnClickListener {
-            EventBus.getDefault().post(ButtonEvent(ButtonType.SIGN_IN))
+            clickListener?.onSignInClicked()
         }
         binding.buttonRestoreBackup.setOnClickListener {
-            EventBus.getDefault().post(ButtonEvent(ButtonType.RESTORE_BACKUP))
+            clickListener?.onRestoreBackupClicked()
         }
         binding.buttonDismiss.setOnClickListener {
             setFirstRunDismissed()
-            EventBus.getDefault().post(ButtonEvent(ButtonType.DISMISS))
+            clickListener?.onDismissClicked()
         }
 
         binding.containerErrorReports.setOnClickListener {

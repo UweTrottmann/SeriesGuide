@@ -8,15 +8,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.FirstRunView.FirstRunClickListener
+import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 
 class ShowsAdapter(
     private val context: Context,
-    private val onItemClickListener: OnItemClickListener
+    private val onItemClickListener: OnItemClickListener,
+    private val firstRunClickListener: FirstRunClickListener
 ) :
     ListAdapter<ShowsAdapter.ShowItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
@@ -52,7 +54,7 @@ class ShowsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_FIRST_RUN -> FirstRunViewHolder.create(parent)
+            VIEW_TYPE_FIRST_RUN -> FirstRunViewHolder.create(parent, firstRunClickListener)
             VIEW_TYPE_SHOW_ITEM -> ShowsViewHolder.create(parent, onItemClickListener)
             else -> throw IllegalArgumentException("Unknown view type $viewType")
         }
