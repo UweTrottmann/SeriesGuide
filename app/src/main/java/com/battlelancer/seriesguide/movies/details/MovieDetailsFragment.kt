@@ -474,8 +474,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // trakt comments link
         binding.buttonMovieComments.setOnClickListener { v ->
-            val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
-            Utils.startActivityWithAnimation(activity, i, v)
+            val tmdbId = tmdbId
+            if (tmdbId > 0) {
+                val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
+                Utils.startActivityWithAnimation(activity, i, v)
+            }
         }
         binding.buttonMovieComments.isGone = false
 

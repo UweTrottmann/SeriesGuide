@@ -636,9 +636,12 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         // Trakt comments
         bindingBottom.buttonEpisodeComments.setOnClickListener { v: View? ->
-            val intent =
-                TraktCommentsActivity.intentEpisode(requireContext(), episodeTitle, episodeId)
-            Utils.startActivityWithAnimation(requireActivity(), intent, v)
+            val episodeId = episodeId
+            if (episodeId > 0) {
+                val intent =
+                    TraktCommentsActivity.intentEpisode(requireContext(), episodeTitle, episodeId)
+                Utils.startActivityWithAnimation(requireActivity(), intent, v)
+            }
         }
     }
 

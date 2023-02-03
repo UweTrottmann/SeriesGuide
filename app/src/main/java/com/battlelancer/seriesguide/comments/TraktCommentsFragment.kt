@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
 import com.battlelancer.seriesguide.traktapi.TraktTask
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -86,7 +87,14 @@ class TraktCommentsFragment : Fragment() {
             binding.swipeRefreshLayoutShouts
         )
 
-        binding.buttonShouts.setOnClickListener { comment() }
+        binding.buttonShouts.setOnClickListener {
+            try {
+                comment()
+            } catch (e: IllegalArgumentException) {
+                Toast.makeText(requireContext(), R.string.database_error, Toast.LENGTH_LONG).show()
+                Errors.logAndReport("comment", e)
+            }
+        }
 
         // disable comment button by default, enable if comment entered
         binding.buttonShouts.isEnabled = false
@@ -164,7 +172,7 @@ class TraktCommentsFragment : Fragment() {
         }
 
         // if all ids were 0, do nothing
-        throw IllegalArgumentException("comment: did nothing, all possible ids were 0")
+        throw IllegalArgumentException("comment: failed, all IDs 0 ($args)")
     }
 
     override fun onResume() {

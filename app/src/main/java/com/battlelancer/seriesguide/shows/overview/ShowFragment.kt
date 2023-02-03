@@ -458,8 +458,11 @@ class ShowFragment() : Fragment() {
 
         // shout button
         binding.buttonComments.setOnClickListener { v ->
-            val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
-            Utils.startActivityWithAnimation(activity, i, v)
+            val showId = showId
+            if (showId > 0) {
+                val i = TraktCommentsActivity.intentShow(requireContext(), show.title, showId)
+                Utils.startActivityWithAnimation(activity, i, v)
+            }
         }
 
         // poster, full screen poster button

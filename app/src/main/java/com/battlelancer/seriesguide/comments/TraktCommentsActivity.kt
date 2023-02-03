@@ -67,7 +67,6 @@ class TraktCommentsActivity : BaseActivity() {
         /**
          * Display comments of an episode.
          */
-        @JvmStatic
         fun intentEpisode(context: Context, title: String?, episodeId: Long): Intent {
             return Intent(context, TraktCommentsActivity::class.java)
                 .putExtra(TraktCommentsFragment.InitBundle.EPISODE_ID, episodeId)
