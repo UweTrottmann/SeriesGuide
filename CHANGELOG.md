@@ -15,6 +15,9 @@ Version 67
 ----------
 *in development*
 
+#### 67.0.1 🧪
+*2023-02-03*
+
 * 🔧 On Android 8 and newer, use system settings to configure notification settings.
 * 🔧 On Android 13 and newer, ask to allow notifications.
 * 🔨 Do not open comments screen if required data is not available, yet.
