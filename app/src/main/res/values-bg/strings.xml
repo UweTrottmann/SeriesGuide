@@ -452,7 +452,7 @@
     <string name="upcoming_display">Изберете да се показват предстоящи сериали</string>
     <string name="pref_notifications">Известия</string>
     <string name="pref_notificationssummary">Известяване за нови епизоди</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Настройки на известията</string>
     <string name="pref_ringtone">Мелодия</string>
     <string name="pref_vibrate">Вибрация</string>
     <string name="pref_vibratesummary">Също вибриране за показване на известие</string>
@@ -466,8 +466,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Известява само ако новият епизод е следващият за мен</string>
     <string name="pref_notifications_battery_settings">Настройки на батерията</string>
     <string name="pref_notifications_battery_settings_summary">Изключи оптимизациите на батерията от Настройки на батерия за сигурни нотификации</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">Разрешаване на известията</string>
+    <string name="notifications_allow_reason">Известията за епизоди и грешки трябва да бъдат разрешени в меню Настройки.</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрий гледаните епизоди</string>
     <string name="pref_widget_opacity">Фон на уиджета</string>

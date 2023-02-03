@@ -34,7 +34,7 @@
     <string name="action_open">Abrir</string>
     <string name="sync_manually">Sincronizar manualmente</string>
     <string name="sync_and_update">Sincronizar e Atualizar</string>
-    <string name="sync_and_download_all">Sincronizar &amp; Retransferir</string>
+    <string name="sync_and_download_all">Sincronizar e Retransferir</string>
     <string name="action_stream">Comprar ou Ver Online</string>
     <string name="action_stream_info">Informação sobre Comprar ou Ver Online</string>
     <string name="action_select_region">Selecionar região</string>
@@ -46,7 +46,7 @@
     <string name="updated">Atualizado para a última versão.</string>
     <string name="updated_details">Detalhes</string>
     <string name="norating">n/a</string>
-    <string name="unknown">Desconhecido</string>
+    <string name="unknown">Desconhecido(a)</string>
     <string name="offline">Liga-te a uma rede e tenta novamente.</string>
     <string name="app_not_available">Nenhuma aplicação disponível para lidar com isto.</string>
     <string name="people_empty">Ninguém aqui?! Toca no ecrã para atualizar.</string>
@@ -68,7 +68,7 @@
     <string name="comments">Comentários</string>
     <string name="shout_hint">Comente (em inglês, + de 5 palavras)</string>
     <string name="shout_invalid">O teu comentário não está de acordo com as regras!</string>
-    <string name="action_post">Mensagem</string>
+    <string name="action_post">Publicar</string>
     <string name="isspoiler">Alerta de spoilers!</string>
     <string name="no_shouts">Sê o primeiro a comentar!</string>
     <string name="refresh">Atualizar</string>
@@ -100,8 +100,8 @@
     <string name="format_source">Fonte: %s</string>
     <string name="last_updated">Última atualização</string>
     <!-- Date and Time -->
-    <string name="today">hoje</string>
-    <string name="now">agora</string>
+    <string name="today">Hoje</string>
+    <string name="now">Agora</string>
     <string name="daily">Diário</string>
     <string name="runtime_minutes">%s min.</string>
     <!-- Flagging -->
@@ -112,7 +112,7 @@
     <string name="collect_all">Todos adquiridos</string>
     <string name="uncollect_all">Nenhum adquirido</string>
     <string name="action_skip">Ignorar</string>
-    <string name="action_dont_skip">Não avançar</string>
+    <string name="action_dont_skip">Não ignorar</string>
     <string name="action_collection_add">Adicionar à coleção</string>
     <string name="action_collection_remove">Remover da coleção</string>
     <string name="action_watched">Marcar como visto</string>
@@ -165,7 +165,7 @@
     <!-- History -->
     <string name="user_stream">Histórico</string>
     <string name="recently_watched">Visto recentemente</string>
-    <string name="friends_recently">Amigos do trakt</string>
+    <string name="friends_recently">Amigos do Trakt</string>
     <string name="now_empty">Não tenho nada para te mostrar. Vai ver mas é algumas séries!</string>
     <string name="now_movies_empty">Não tenho nada para te mostrar, pá. Não tens filmes para ver?</string>
     <!-- Calendar -->
@@ -302,13 +302,13 @@
     <string name="traktcheckin_wait">Prefiro esperar</string>
     <string name="trakt_success">Submetido com sucesso ao Trakt</string>
     <string name="trakt_error_account_locked">A tua conta Trakt está bloqueada. Contacta o suporte de apoio do Trakt.</string>
-    <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais estão correctas e tenta de novo.</string>
+    <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais do Trakt estão correctas e tenta de novo.</string>
     <string name="trakt_error_not_exists">Não está (ainda) disponível no Trakt. Tenta mais tarde.</string>
     <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>
     <string name="trakt_error_limit_exceeded">A lista está cheia, remove algo primeiro.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Conectar ao Trakt</string>
-    <string name="trakt_reconnect">Conectar SeriesGuide ao trakt</string>
+    <string name="trakt_reconnect">Conectar SeriesGuide ao Trakt</string>
     <string name="trakt_reconnect_details">Verifica as tuas credenciais do Trakt</string>
     <string name="waitplease">Um momento, por favor&#8230;</string>
     <string name="connect">Conectar</string>
@@ -351,8 +351,8 @@
     <string name="pref_onlyfuturesummary">Não mostrar episódios que já tenham estreado</string>
     <string name="pref_onlyseasoneps">Ocultar episódios especiais</string>
     <string name="pref_onlyseasonepssummary">Os episódios especiais serão apenas exibidos na lista de temporadas</string>
-    <string name="pref_exactdates">Exibir datas exactas</string>
-    <string name="pref_exactdates_summary">\"12 de Outubro\" em vez de \"Dentro de 3 dias\"</string>
+    <string name="pref_exactdates">Exibir datas exatas</string>
+    <string name="pref_exactdates_summary">\"31 de Outubro\" em vez de \"Dentro de 3 dias\"</string>
     <string name="pref_nospoilers">Prevenir spoilers</string>
     <string name="pref_nospoilers_summary">Ocultar detalhes até o episódio ter sido visto</string>
     <string name="pref_seasonsorting">Ordenar temporadas por&#8230;</string>
@@ -384,16 +384,16 @@
     <string name="sort">Ordenar por</string>
     <string name="action_sort_ignore_articles">Ignorar artigos definidos</string>
     <!-- Sort orders -->
-    <string name="sort_order_latest_first">Mais recente</string>
+    <string name="sort_order_latest_first">Mais recentes</string>
     <string name="sort_order_oldest_first">Mais antigos</string>
     <string name="sort_order_unwatched_first">Ainda por ver</string>
     <string name="sort_order_alphabetical">A - Z</string>
     <string name="sort_order_top_rated_first">Mais votados</string>
-    <string name="sort_order_latest_first_dvd">Mais recente (DVD)</string>
+    <string name="sort_order_latest_first_dvd">Mais recentes (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Mais antigos (DVD)</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Intervalo para Próximos</string>
-    <string name="upcoming_upto_now">agora</string>
+    <string name="upcoming_upto_now">Agora</string>
     <string name="upcoming_upto_one_day">1 dia</string>
     <string name="upcoming_upto_three_days">3 dias</string>
     <string name="upcoming_upto_one_week">1 semana</string>
@@ -416,7 +416,7 @@
     <string name="backup_summary">Fazer uma cópia de segurança ou restaurar as tuas séries</string>
     <string name="pref_number">Formato numérico</string>
     <string name="pref_offset">Acerto manual do fuso horário</string>
-    <string name="pref_offsetsummary">Acertar o fuso horário da exibição por %d horas</string>
+    <string name="pref_offsetsummary">Ajustar o fuso horário da exibição em %d horas</string>
     <string name="clear_cache">Apagar imagens da Cache</string>
     <string name="clear_cache_summary">Remove todas as imagens em cache do teu dispositivo</string>
     <!-- Backup and Restore -->

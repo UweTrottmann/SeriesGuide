@@ -474,7 +474,7 @@
     <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
     <string name="pref_notifications">Powiadomienia</string>
     <string name="pref_notificationssummary">Informuj o nowych odcinkach</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Ustawienia powiadomień</string>
     <string name="pref_ringtone">Dzwonek</string>
     <string name="pref_vibrate">Wibracja</string>
     <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
@@ -488,8 +488,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Powiadamiaj tylko gdy nowy odcinek jest następnym do obejrzenia</string>
     <string name="pref_notifications_battery_settings">Ustawienia baterii</string>
     <string name="pref_notifications_battery_settings_summary">Przejdź do ustawień baterii, aby wyłączyć jej optymalizację, aby otrzymywać powiadomienia na bieżąco</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">Zezwalaj na powiadomienia</string>
+    <string name="notifications_allow_reason">Aby otrzymywać powiadomienia o odcinkach oraz o błędach, włącz powiadomienia w ustawieniach.</string>
     <!-- List Widget -->
     <string name="hide_watched">Ukryj obejrzane odcinki</string>
     <string name="pref_widget_opacity">Tło widżetu</string>

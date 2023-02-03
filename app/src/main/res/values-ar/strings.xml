@@ -55,7 +55,7 @@
     <string name="api_error_generic">لا يمكن الاتصال بـ %s. الرجاء المحاولة لاحقا.</string>
     <string name="api_failed">فشل: %s</string>
     <string name="copy_to_clipboard">تم النسخ إلى الحافظة</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">المسلسل غير مُضاف إلى بيانات TMDB. بعض الإجراءات تشمل Trakt ومزامنة السحابة قد لا تعمل. ربما عليك البحث عن بديل وإزالة هذا المسلسل. انقر لعرض التفاصيل.</string>
     <!-- Sharing -->
     <string name="share">مشاركة</string>
     <string name="share_show">مشاركة المسلسل</string>
@@ -75,7 +75,7 @@
     <plurals name="replies_plural">
         <item quantity="one">رد %d</item>
         <item quantity="zero">رد %d</item>
-        <item quantity="two">%d ردود</item>
+        <item quantity="two">%d ردان</item>
         <item quantity="few">%d ردود</item>
         <item quantity="many">%d رد</item>
         <item quantity="other">%d رد</item>
@@ -89,20 +89,20 @@
     <string name="show_genres">الأنواع</string>
     <string name="show_contentrating">تقييم المحتوى</string>
     <string name="show_release_times">أوقات العرض</string>
-    <string name="episode_directors">إخراج</string>
+    <string name="episode_directors">المخرجون</string>
     <string name="episode_gueststars">ضيوف الحلقة</string>
-    <string name="episode_writers">تأليف</string>
+    <string name="episode_writers">المؤلفين</string>
     <string name="show_isalive">مستمر</string>
     <string name="show_isnotalive">انتهى</string>
     <string name="show_isUpcoming">القادم</string>
-    <string name="show_status_in_production">في الانتاج</string>
+    <string name="show_status_in_production">قيد الإنتاج</string>
     <string name="show_status_pilot">طيار</string>
     <string name="show_status_canceled">ملغى</string>
     <string name="no_translation">لا يوجد وصف باللغة %1$s متاحة على موقع %2$s.</string>
     <string name="no_translation_title">غير مترجمة</string>
-    <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا الانتقال إلى إعدادات.</string>
+    <string name="no_spoilers">يتم إخفاء بعض التفاصيل لمنع الحرق. لإيقاف هذا انتقل إلى الإعدادات.</string>
     <string name="format_source">المصدر: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">آخر تحديث</string>
     <!-- Date and Time -->
     <string name="today">اليوم</string>
     <string name="now">الآن</string>
@@ -165,7 +165,7 @@
     <string name="context_updateshow">تحديث</string>
     <string name="context_marknext">تم مشاهدة الحلقة، الحلقة التالية</string>
     <string name="action_episodes_switch_view">تغيير طريقة العرض</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">التالي للمشاهدة</string>
     <!-- History -->
     <string name="user_stream">السجل</string>
     <string name="recently_watched">تم مشاهدته مؤخراً</string>
@@ -186,9 +186,9 @@
     <!-- Updating -->
     <string name="update_scheduled">جار التحديث&#8230;</string>
     <string name="update_no_connection">ليتم التحديث اتصل بالإنترنت</string>
-    <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
+    <string name="update_inprogress">التحديث قيد التقدم، حاول مرة أخرى.</string>
     <!-- Seasons -->
-    <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
+    <string name="season_allwatched">تم مشاهدة جميع الحلَقات</string>
     <plurals name="other_episodes_plural">
         <item quantity="zero">%d حلقات أخرى</item>
         <item quantity="one">%d حلقة أخرى</item>
@@ -198,12 +198,12 @@
         <item quantity="other">%d حلقة أخرى</item>
     </plurals>
     <plurals name="not_released_episodes_plural">
-        <item quantity="zero">%d يمكن اطلاقها</item>
-        <item quantity="one">%d يمكن اطلاقها</item>
-        <item quantity="two">%d يمكن اطلاقها</item>
-        <item quantity="few">%d يمكن اطلاقها</item>
-        <item quantity="many">%d يمكن اطلاقها</item>
-        <item quantity="other">%d يمكن اطلاقها</item>
+        <item quantity="zero">%d يمكن إصدارها</item>
+        <item quantity="one">%d يمكن إصدارها</item>
+        <item quantity="two">%d يمكن إصدارهما</item>
+        <item quantity="few">%d يمكن إصدارها</item>
+        <item quantity="many">%d يمكن إصدارها</item>
+        <item quantity="other">%d يمكن إصدارها</item>
     </plurals>
     <plurals name="remaining_episodes_plural">
         <item quantity="zero">%d المتبقية</item>
@@ -214,28 +214,28 @@
         <item quantity="other">%d المتبقية</item>
     </plurals>
     <!-- Add show -->
-    <string name="checkin_searchhint">إبحث عن إسم المسلسل</string>
+    <string name="checkin_searchhint">ابحث عن اسم المسلسل</string>
     <string name="add_empty">لا توجد مسلسلات هنا.</string>
-    <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
+    <string name="no_results">لا نتائج، جرّب كلمات كاملة</string>
     <string name="empty_show_search">غير متوفر في قائمة العرض الخاصة بك</string>
     <string name="action_try_again">حاول مرة أخرى</string>
     <string name="tvdb_error_does_not_exist">هذا المسلسل غير موجود (حتى الآن) على TMDB. حاول مرة أخرى.</string>
-    <string name="add_all">إضافة الكل </string>
-    <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
-    <string name="add_started">%s سوف تظهر في قائمة العرض الخاص بك قريبا.</string>
+    <string name="add_all">إضافة الكل</string>
+    <string name="add_multiple">كافة المسلسلات سوف تظهر في قائمة مسلسلاتك قريبًا</string>
+    <string name="add_started">%s سوف تظهر في قائمة مسلسلاتك قريبًا.</string>
     <string name="add_error">تعذر إضافة %s.</string>
-    <string name="add_already_exists">%s موجود بالفعل في قائمة العرض الخاصة بك.</string>
-    <string name="title_new_episodes">حلقات جديدة</string>
+    <string name="add_already_exists">%s موجود فعلًا في قائمة مسلسلاتك.</string>
+    <string name="title_new_episodes">حلَقات جديدة</string>
     <string name="watched_shows">تمت مشاهدتها</string>
     <string name="shows_collection">مجموعة</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <!-- Similar shows -->
     <string name="empty_no_results">لا توجد نتائج</string>
-    <string name="title_similar_shows">عروض مشابهة</string>
+    <string name="title_similar_shows">مسلسلات مشابهة</string>
     <!-- Lists -->
     <string name="first_list">القائمة الأولى</string>
     <string name="list_add">إضافة قائمة</string>
-    <string name="list_title_hint">اسم القائمة الخاصة بك</string>
+    <string name="list_title_hint">سمي قائمتك</string>
     <string name="list_remove">إزالة القائمة</string>
     <string name="list_manage">إدارة القائمة</string>
     <string name="list_item_manage">إدارة القوائم</string>
@@ -311,65 +311,65 @@
     <string name="hexagon_warning_trakt">عندما تسجل الدخول لسيرايس كلاود سيتم فقد بعض خصائص موقع تراكت.</string>
     <string name="hexagon_signin">تسجيل الدخول</string>
     <string name="hexagon_signout">تسجيل الخروج</string>
-    <string name="hexagon_setup_incomplete">لم يتم إكمال إعداد سحابة تخزين دليل المسلسلات.</string>
+    <string name="hexagon_setup_incomplete">لم يتم إكمال إعداد سحابة SeriesGuide.</string>
     <string name="hexagon_setup_fail_auth">حسابك ليس لديه عنوان بريد إلكتروني</string>
     <string name="hexagon_remove_account">إزالة الحساب</string>
-    <string name="hexagon_remove_account_success">تم إلغاء الحساب.</string>
+    <string name="hexagon_remove_account_success">تم إزالة الحساب.</string>
     <string name="hexagon_remove_account_failure">لم نستطع إزالة حسابك</string>
-    <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك و افلامك من سحابة SeriesGuide. تأكد من إزالته من الأجهزة الأخرى المتصلة أيضا.</string>
-    <string name="hexagon_api_queued">جار الإرسال إلى سحابة دليل المسلسلات.</string>
-    <string name="hexagon_signed_out">تسجيل الخروج من SeriesGuide Cloud.</string>
+    <string name="hexagon_remove_account_confirmation">إزالة حسابك ستؤدي إلى إلغاء كل مسلسلاتك وأفلامك من سحابة SeriesGuide. تحقق من إزالته من الأجهزة الأخرى المتصلة أيضًا.</string>
+    <string name="hexagon_api_queued">جارٍ الإرسال إلى سحابة SeriesGuide.</string>
+    <string name="hexagon_signed_out">تسجيل الخروج من سحابة SeriesGuide.</string>
     <string name="hexagon_signin_fail_format">خطأ في تسجيل الدخول (%s)</string>
     <string name="hexagon_signin_google_only">يتطلب عنوان البريد الإلكتروني تسجيل دخول Google</string>
     <!-- trakt -->
-    <string name="trakt_submitqueued">تقديم إلى تراكت.</string>
-    <string name="checkin_success_trakt">تم فحص %s على التراكت.</string>
+    <string name="trakt_submitqueued">جارٍ الإرسال إلى Trakt.</string>
+    <string name="checkin_success_trakt">تم فحص %s على Trakt.</string>
     <string name="checkin_canceled_success_trakt">تم إلغاء تسجيل الدخول على التراكت.</string>
     <string name="traktcheckin_cancel">تجاهل</string>
     <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
     <string name="traktcheckin_wait">سوف أنتظر</string>
     <string name="trakt_success">تم إرسالها إلى Trakt.</string>
-    <string name="trakt_error_account_locked">حسابك في Trakt مقفل. اتصل في Trakt لالدعم.</string>
-    <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات اعتمادك وحاول مرة أخرى.</string>
+    <string name="trakt_error_account_locked">حسابك في Trakt مقفل. تواصل مع دعم Trakt.</string>
+    <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات Trakt وحاول مرة أخرى.</string>
     <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>
-    <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة trakt بعد.</string>
-    <string name="trakt_error_limit_exceeded">القائمة ممتلئة، إزالة شيء أولاً.</string>
+    <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة Trakt بعد.</string>
+    <string name="trakt_error_limit_exceeded">القائمة ممتلئة، أزل شيئًا ما أولاً.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">الإتصال بموقع Trakt</string>
-    <string name="trakt_reconnect">ربط برنامج دليل المسلسلات بحساب Trak</string>
-    <string name="trakt_reconnect_details">تحقق من بيانات الأعتماد الخاصة بك في trakt</string>
-    <string name="waitplease">لحظات, من فضلك&#8230;</string>
-    <string name="connect">الاتصال</string>
+    <string name="trakt_reconnect">ربط SeriesGuide بحساب Trakt</string>
+    <string name="trakt_reconnect_details">تحقق من بياناتك في Trakt</string>
+    <string name="waitplease">لحظة من فضلك&#8230;</string>
+    <string name="connect">اتصال</string>
     <string name="disconnect">قطع الاتصال</string>
     <string name="use_integrated_browser">استخدام متصفح متكامل</string>
     <string name="show_library">إضافة مسلسلات من Trakt</string>
-    <string name="about_trakt">يساعدك Trakt على حفظ ما تشاهده من أفلام و مسلسلات.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="about_trakt">يساعدك Trakt على حفظ ما تشاهده من أفلام ومسلسلات.</string>
+    <string name="support_trakt">ادعم Trakt بالـVIP</string>
     <!-- trakt ratings -->
-    <string name="action_rate">التقييم</string>
+    <string name="action_rate">قيم</string>
     <string name="your_rating">تقييمك</string>
-    <string name="love">أعجبني!</string>
+    <string name="love">عظيم!</string>
     <string name="hate">لم يعجبني :(</string>
     <string name="rating2">سيء</string>
     <string name="rating3">سيء</string>
     <string name="rating4">ضعيف</string>
-    <string name="rating5">عادي</string>
+    <string name="rating5">لا بآس</string>
     <string name="rating6">مقبول</string>
     <string name="rating7">جيد</string>
     <string name="rating8">ممتاز</string>
     <string name="rating9">رائع</string>
     <plurals name="votes">
-        <item quantity="zero">صوت</item>
-        <item quantity="one">صوتان</item>
-        <item quantity="two">%d أصوات</item>
+        <item quantity="zero">%d صوت واحد</item>
+        <item quantity="one">%d صوت</item>
+        <item quantity="two">%d صوتان</item>
         <item quantity="few">%d أصوات</item>
         <item quantity="many">%d أصوات</item>
         <item quantity="other">%d أصوات</item>
     </plurals>
     <!-- Check Ins -->
-    <string name="checkin">أشاهده الآن</string>
+    <string name="checkin">تحقق</string>
     <string name="checkin_hint">اكتب رسالة (اختياري)</string>
-    <string name="paste_title">إلصق عنوان</string>
+    <string name="paste_title">الصق العنوان</string>
     <string name="pref_quick_checkin">تحقق سريع</string>
     <string name="pref_quick_checkin_summary">لا تسأل عن رسالة التحقق مرة أخرى</string>
     <!-- Help -->
@@ -432,17 +432,17 @@
     <string name="sort_order_oldest_first">الأقدم أولاً</string>
     <string name="sort_order_unwatched_first">غير المُشاهدة أولاً</string>
     <string name="sort_order_alphabetical">A-Z</string>
-    <string name="sort_order_top_rated_first">أعلى تقييم</string>
-    <string name="sort_order_latest_first_dvd">الأحدث أولاً-دي في دي</string>
-    <string name="sort_order_oldest_first_dvd">الأقدم أولاً-دي في دي</string>
+    <string name="sort_order_top_rated_first">أعلى تقييمًا</string>
+    <string name="sort_order_latest_first_dvd">الأحدث أولاً (DVD)</string>
+    <string name="sort_order_oldest_first_dvd">الأقدم أولاً (DVD)</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">الترتيب حسب القادم</string>
     <string name="upcoming_upto_now">الآن</string>
-    <string name="upcoming_upto_one_day">يوم</string>
-    <string name="upcoming_upto_three_days">ثلاثة أيام</string>
-    <string name="upcoming_upto_one_week">أسبوع</string>
+    <string name="upcoming_upto_one_day">يوم واحد</string>
+    <string name="upcoming_upto_three_days">ثلاث أيام</string>
+    <string name="upcoming_upto_one_week">أسبوع واحد</string>
     <string name="upcoming_upto_two_weeks">أسبوعين</string>
-    <string name="upcoming_upto_one_month">شهر</string>
+    <string name="upcoming_upto_one_month">شهر واحد</string>
     <string name="upcoming_all">الكل</string>
     <!-- Appearance settings -->
     <string name="pref_appearance">المظهر</string>
@@ -457,7 +457,7 @@
     <string name="pref_other">أخرى</string>
     <string name="pref_autoupdatesummary">مزامنة وتحديث بيانات SeriesGuide تلقائيا</string>
     <string name="backup">النسخ الإحتياطي / الإستعادة</string>
-    <string name="backup_summary">لعمل نسخ إحتياطي للمسلسلات أو إستعادتها</string>
+    <string name="backup_summary">لعمل نسخ احتياطي للمسلسلات، القوائم والأفلام أو استعادتها</string>
     <string name="pref_number">تنسيق الأرقام</string>
     <string name="pref_offset">تغيير وقت العرض بشكل يدوي</string>
     <string name="pref_offsetsummary">بدء وقت العرض قبل %d ساعات</string>
@@ -496,7 +496,7 @@
     <string name="upcoming_display">حدد هذا الخيار لعرض المسلسلات القادمة</string>
     <string name="pref_notifications">التنبيهات</string>
     <string name="pref_notificationssummary">التنبيه عن الحلقات الجديدة</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">إعدادات الإشعارات</string>
     <string name="pref_ringtone">نغمة التنبيه</string>
     <string name="pref_vibrate">إهتزاز</string>
     <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
@@ -510,7 +510,7 @@
     <string name="pref_notifications_next_episodes_only_summary">تنبيه فقط اذا الحلقة الجديدة ستشاهد تالياً</string>
     <string name="pref_notifications_battery_settings">إعدادات البطارية</string>
     <string name="pref_notifications_battery_settings_summary">الذهاب إلى إعدادات البطارية لتعطيل تحسينات البطارية للإشعارات الموثوقة</string>
-    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow">السماح بالإشعارات</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
