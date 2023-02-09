@@ -41,7 +41,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     // Google Play Billing
-    implementation(libs.billing)
+    api(libs.billing)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)

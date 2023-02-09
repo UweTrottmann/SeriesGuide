@@ -24,18 +24,16 @@ import androidx.room.TypeConverters
 
 @Database(
     entities = [
-        AugmentedSkuDetails::class,
         CachedPurchase::class,
         GoldStatus::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(PurchaseTypeConverter::class)
 abstract class LocalBillingDb : RoomDatabase() {
     abstract fun purchaseDao(): PurchaseDao
     abstract fun entitlementsDao(): EntitlementsDao
-    abstract fun skuDetailsDao(): AugmentedSkuDetailsDao
 
     companion object {
         @Volatile

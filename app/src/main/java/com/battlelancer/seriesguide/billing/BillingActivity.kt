@@ -9,7 +9,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isGone
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.BuildConfig
@@ -22,7 +25,9 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
-import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
+import com.uwetrottmann.seriesguide.billing.SafeAugmentedProductDetails
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class BillingActivity : BaseActivity() {
 
@@ -53,12 +58,19 @@ class BillingActivity : BaseActivity() {
         // Always get subscription SKU info.
         // Users might want to support even if unlock app is installed.
         billingViewModel =
-            ViewModelProvider(this, BillingViewModelFactory(application, SgApp.coroutineScope))
-                .get(BillingViewModel::class.java).also {
-                    it.subsSkuDetailsListLiveData.observe(this) { skuDetails ->
-                        adapter.setSkuDetailsList(skuDetails)
+            ViewModelProvider(
+                this,
+                BillingViewModelFactory(application, SgApp.coroutineScope)
+            )[BillingViewModel::class.java].also { model ->
+                lifecycleScope.launch {
+                    // Only update while views are shown.
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        model.availableProducts.collectLatest {
+                            adapter.setProductDetailsList(it)
+                        }
                     }
                 }
+            }
         billingViewModel.errorEvent.observe(this) { message ->
             message?.let {
                 textViewBillingError.apply {
@@ -73,7 +85,7 @@ class BillingActivity : BaseActivity() {
             updateViewStates(hasUpgrade = true, unlockAppDetected = true)
         } else {
             setWaitMode(true)
-            billingViewModel.goldStatusLiveData.observe(this) { goldStatus ->
+            billingViewModel.subStatusLiveData.observe(this) { goldStatus ->
                 setWaitMode(false)
                 updateViewStates(goldStatus != null && goldStatus.entitled, false)
                 manageSubscriptionUrl =
@@ -103,7 +115,7 @@ class BillingActivity : BaseActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         adapter = object : SkuDetailsAdapter() {
-            override fun onSkuDetailsClicked(item: AugmentedSkuDetails) {
+            override fun onSkuDetailsClicked(item: SafeAugmentedProductDetails) {
                 billingViewModel.makePurchase(this@BillingActivity, item)
             }
         }

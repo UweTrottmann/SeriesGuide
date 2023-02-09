@@ -12,12 +12,10 @@ import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
-import com.android.billingclient.api.SkuDetails
-import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
-import com.android.billingclient.api.querySkuDetails
-import com.uwetrottmann.seriesguide.billing.localdb.AugmentedSkuDetails
 import com.uwetrottmann.seriesguide.billing.localdb.Entitlement
 import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus
 import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb
@@ -25,6 +23,9 @@ import com.uwetrottmann.seriesguide.common.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -71,15 +72,17 @@ class BillingRepository private constructor(
 
     private var disconnectCount = 0
 
+    private val _productDetails = MutableStateFlow(
+        SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.map {
+            AugmentedProductDetails(it, false, null)
+        })
+
     /**
-     * This list tells clients what subscriptions are available for sale.
+     * List of supported products. Updated if they can be purchased after [queryPurchasesAsync] and
+     * if they are available on Google Play after [queryProductDetailsAsync].
+     * See [AugmentedProductDetails].
      */
-    val subsSkuDetailsListLiveData: LiveData<List<AugmentedSkuDetails>> by lazy {
-        if (!::localCacheBillingClient.isInitialized) {
-            localCacheBillingClient = LocalBillingDb.getInstance(applicationContext)
-        }
-        localCacheBillingClient.skuDetailsDao().getSubscriptionSkuDetails()
-    }
+    val productDetails: StateFlow<List<AugmentedProductDetails>> = _productDetails
 
     /**
      * Tracks whether this user is entitled to gold status. This call returns data from the app's
@@ -262,30 +265,28 @@ class BillingRepository private constructor(
 
                 val subStatus =
                     GoldStatus(true, isSub, supportedProductOrNull, purchase.purchaseToken)
-                insert(subStatus)
+                insertSubStatus(subStatus)
 
-                // You can only have one subscription. Prevent re-purchase of active one.
+                // A user must only have one active subscription.
+                // Prevent re-purchase of active one (or the equivalent tier for legacy products),
+                // but allow up/downgrade to others.
                 val purchasedProduct = when (supportedProductOrNull) {
                     SeriesGuideSku.X_SUB_SUPPORTER,
                     SeriesGuideSku.X_SUB_SPONSOR -> supportedProductOrNull
                     else -> {
-                        // Show deprecated subscription SKUs and in-app SKU
-                        // as if they were All Access.
+                        // Map purchase state of the deprecated subscriptions and in-app purchase
+                        // to the base tier subscription. This will allow upgrades.
                         SeriesGuideSku.X_SUB_ALL_ACCESS
                     }
                 }
-                localCacheBillingClient.skuDetailsDao()
-                    .insertOrUpdate(purchasedProduct, subStatus.mayPurchase())
-
-                // Allow up- and downgrading to other subscription tiers.
-                SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { availableProduct ->
-                    if (availableProduct != purchasedProduct) {
-                        localCacheBillingClient.skuDetailsDao()
-                            .insertOrUpdate(availableProduct, !subStatus.mayPurchase())
+                _productDetails.update { productDetails ->
+                    productDetails.map {
+                        it.copy(canPurchase = it.productId != purchasedProduct)
                     }
                 }
             } else {
                 Timber.e("No supported product found: ${purchase.products}")
+                enableAllProductsForPurchase()
             }
 
             // Entitlement processed, remove receipt.
@@ -298,13 +299,11 @@ class BillingRepository private constructor(
             val wasEntitled =
                 localCacheBillingClient.entitlementsDao().getGoldStatus()?.entitled ?: false
 
-            val goldStatus = GoldStatus(false, isSub = true, sku = null, purchaseToken = null)
-            insert(goldStatus)
-            /* Enable all available subscriptions. */
-            SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.forEach { product ->
-                localCacheBillingClient.skuDetailsDao()
-                    .insertOrUpdate(product, goldStatus.mayPurchase())
-            }
+            val subStatus = GoldStatus(false, isSub = true, sku = null, purchaseToken = null)
+            insertSubStatus(subStatus)
+
+            // Enable all available subscriptions.
+            enableAllProductsForPurchase()
 
             // Notify if existing entitlement was revoked.
             if (wasEntitled) {
@@ -314,28 +313,47 @@ class BillingRepository private constructor(
             }
         }
 
+    private fun enableAllProductsForPurchase() {
+        _productDetails.update { currentProducts ->
+            currentProducts.map { it.copy(canPurchase = true) }
+        }
+    }
+
     @WorkerThread
-    private suspend fun insert(entitlement: Entitlement) = withContext(Dispatchers.IO) {
+    private suspend fun insertSubStatus(entitlement: Entitlement) = withContext(Dispatchers.IO) {
         localCacheBillingClient.entitlementsDao().insert(entitlement)
     }
 
     /**
-     * Requests SKU details from Google Play and adds or updates the associated [AugmentedSkuDetails].
+     * Requests product details from Google Play and updates the associated [productDetails].
      */
-    private suspend fun querySkuDetailsAsync() {
-        val skuType = BillingClient.SkuType.SUBS
-        val params = SkuDetailsParams.newBuilder()
-            .setSkusList(SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE)
-            .setType(skuType)
+    private suspend fun queryProductDetailsAsync() {
+        val products = SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.map {
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(it)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build()
+        }
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(products)
             .build()
-        Timber.d("querySkuDetailsAsync for $skuType")
-        val (billingResult, skuDetailsList) = playStoreBillingClient.querySkuDetails(params)
+        Timber.d("queryProductDetailsAsync for ${SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE}")
+
+        val (billingResult, availableProducts) = playStoreBillingClient.queryProductDetails(params)
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                if (skuDetailsList != null && skuDetailsList.isNotEmpty()) {
-                    skuDetailsList.forEach {
-                        coroutineScope.launch(Dispatchers.IO) {
-                            localCacheBillingClient.skuDetailsDao().insertOrUpdate(it)
+                if (availableProducts != null && availableProducts.isNotEmpty()) {
+                    // Update in the background to avoid blocking the main thread.
+                    coroutineScope.launch(Dispatchers.IO) {
+                        _productDetails.update { supportedProducts ->
+                            supportedProducts.map { supportedProduct ->
+                                // Update a supported product with details from Google Play.
+                                // It is also possible, that a supported product is not available
+                                // on Google Play. Then product details will remain null.
+                                availableProducts.find { it.productId == supportedProduct.productId }
+                                    ?.let { supportedProduct.copy(productDetails = it) }
+                                    ?: supportedProduct
+                            }
                         }
                     }
                 }
@@ -354,38 +372,64 @@ class BillingRepository private constructor(
      * launch the Google Play Billing flow. The response to this call is returned in
      * [purchasesUpdatedListener].
      */
-    fun launchBillingFlow(activity: Activity, augmentedSkuDetails: AugmentedSkuDetails) {
-        if (augmentedSkuDetails.originalJson == null) {
-            Timber.e("augmentedSkuDetails.originalJson is null")
+    fun launchBillingFlow(
+        activity: Activity,
+        augmentedProductDetails: SafeAugmentedProductDetails
+    ) {
+        val productId = augmentedProductDetails.productId
+        val productDetails = augmentedProductDetails.productDetails
+        val offers = productDetails.subscriptionOfferDetails
+        if (offers == null || offers.isEmpty()) {
+            Timber.e("No offers for $productId, can not purchase.")
             return
         }
-        val skuDetails = SkuDetails(augmentedSkuDetails.originalJson)
+        // The Billing client sends both offers (as in Play Console) and base plans as offers (as
+        // by this API). So if a base plan has a free trial offer it sends:
+        // - a free trial offer with two (!) pricing phases: free and price of base plan.
+        // - a base plan offer with one pricing phase: price of the base plan.
+
+        // As this app only offers free trials next to the base plan
+        // and the free trial offer is not longer sent by Google Play if it was used before:
+        // getting the offer with the cheapest first pricing phase will get the trial if available,
+        // otherwise the base plan.
+        val cheapestOffer = offers
+            .filter { it.pricingPhases.pricingPhaseList.isNotEmpty() }
+            .minByOrNull { it.pricingPhases.pricingPhaseList[0].priceAmountMicros }
+        if (cheapestOffer == null) {
+            Timber.e("No offer with pricing phase for $productId, can not purchase.")
+            return
+        }
 
         // Check if this is a subscription up- or downgrade.
-        val goldStatusOrNull = localCacheBillingClient.entitlementsDao().getGoldStatus()
-        val oldSku = goldStatusOrNull?.let {
-            if (it.isSub) it.sku else null
-        }
-        val purchaseToken = goldStatusOrNull?.purchaseToken
-
-        val prorationMode = if (
-            oldSku == SeriesGuideSku.X_SUB_SPONSOR
-            || (oldSku == SeriesGuideSku.X_SUB_SUPPORTER && skuDetails.sku == SeriesGuideSku.X_SUB_ALL_ACCESS)
-        ) {
-            // Downgrade immediately, bill new price once renewed.
-            BillingFlowParams.ProrationMode.IMMEDIATE_WITHOUT_PRORATION
-        } else {
-            // Upgrade immediately, credit existing purchase. Or oldSku == null.
-            BillingFlowParams.ProrationMode.IMMEDIATE_WITH_TIME_PRORATION
-        }
+        val subStatusOrNull = localCacheBillingClient.entitlementsDao().getGoldStatus()
+        val oldSubProductId = subStatusOrNull?.let { if (it.isSub) it.sku else null }
+        val oldPurchaseToken = subStatusOrNull?.purchaseToken
 
         val purchaseParams = BillingFlowParams.newBuilder().apply {
-            setSkuDetails(skuDetails)
-            if (oldSku != null && purchaseToken != null) {
+            setProductDetailsParamsList(
+                listOf(
+                    BillingFlowParams.ProductDetailsParams.newBuilder()
+                        .setProductDetails(productDetails)
+                        .setOfferToken(cheapestOffer.offerToken)
+                        .build()
+                )
+            )
+            if (oldSubProductId != null && oldPurchaseToken != null) {
+                val prorationMode = if (
+                    oldSubProductId == SeriesGuideSku.X_SUB_SPONSOR
+                    || (oldSubProductId == SeriesGuideSku.X_SUB_SUPPORTER
+                            && productId == SeriesGuideSku.X_SUB_ALL_ACCESS)
+                ) {
+                    // Downgrade immediately, bill new price once renewed.
+                    BillingFlowParams.ProrationMode.IMMEDIATE_WITHOUT_PRORATION
+                } else {
+                    // Upgrade immediately, credit existing purchase.
+                    BillingFlowParams.ProrationMode.IMMEDIATE_WITH_TIME_PRORATION
+                }
                 setSubscriptionUpdateParams(
                     BillingFlowParams.SubscriptionUpdateParams.newBuilder()
-                        .setOldSkuPurchaseToken(purchaseToken)
-                        .setReplaceSkusProrationMode(prorationMode)
+                        .setOldPurchaseToken(oldPurchaseToken)
+                        .setReplaceProrationMode(prorationMode)
                         .build()
                 )
             }
@@ -447,6 +491,7 @@ class BillingRepository private constructor(
                 }
             }
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
+                // TODO Back-off
                 connectToPlayBillingService()
             }
             BillingClient.BillingResponseCode.USER_CANCELED -> {
@@ -463,8 +508,9 @@ class BillingRepository private constructor(
 
     private val billingClientStateListener = object : BillingClientStateListener {
         /**
-         * This is the callback for when connection to the Play [BillingClient] has been successfully
-         * established. It might make sense to get [SkuDetails] and [Purchases][Purchase] at this point.
+         * The connection to the Play [BillingClient] has been established.
+         * If the connection is OK, get available products, then get purchases.
+         * Otherwise post an error event.
          */
         override fun onBillingSetupFinished(billingResult: BillingResult) {
             disconnectCount = 0
@@ -472,7 +518,7 @@ class BillingRepository private constructor(
                 BillingClient.BillingResponseCode.OK -> {
                     Timber.d("onBillingSetupFinished successfully")
                     coroutineScope.launch {
-                        querySkuDetailsAsync()
+                        queryProductDetailsAsync()
                         queryPurchasesAsync()
                     }
                 }
@@ -532,11 +578,22 @@ class BillingRepository private constructor(
         const val X_SUB_SUPPORTER = "sub_supporter"
         const val X_SUB_SPONSOR = "sub_sponsor"
 
-        val SUBS_SKUS_FOR_PURCHASE = listOf(
-            X_SUB_ALL_ACCESS,
-            X_SUB_SUPPORTER,
-            X_SUB_SPONSOR
-        )
+        const val SUB_TEST = "sub_test"
+
+        val SUBS_SKUS_FOR_PURCHASE = if (BuildConfig.DEBUG) {
+            listOf(
+                X_SUB_ALL_ACCESS,
+                X_SUB_SUPPORTER,
+                X_SUB_SPONSOR,
+                SUB_TEST
+            )
+        } else {
+            listOf(
+                X_SUB_ALL_ACCESS,
+                X_SUB_SUPPORTER,
+                X_SUB_SPONSOR
+            )
+        }
     }
 
 }
