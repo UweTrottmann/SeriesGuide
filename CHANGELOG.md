@@ -15,6 +15,10 @@ Version 67
 ----------
 *in development*
 
+#### 67.0.2 🧪
+*2023-02-16*
+
+* 🔧 Internal changes to ensure compatibility with Play Store billing.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 67.0.1 🧪
