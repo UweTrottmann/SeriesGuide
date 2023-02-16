@@ -531,6 +531,7 @@
     <string name="billing_action_manage_subscriptions">إدارة الإشتراكات</string>
     <string name="billing_action_pass">أحصل على X Pass App</string>
     <string name="billing_duration_format">%1$s/سنة</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">جرب 30 يوماً مجاناً، قم بإلغاء أي وقت.</string>
     <string name="billing_price_pass">الشراء يكون مرة واحدة</string>
     <string name="upgrade_description">كل اشتراك يفتح جميع الميزات ويدعم التحديثات المستقبلية. ليس مطلوب الاشتراك لاستخدام هذا التطبيق.</string>

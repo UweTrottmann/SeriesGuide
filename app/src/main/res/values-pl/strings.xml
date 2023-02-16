@@ -509,6 +509,7 @@
     <string name="billing_action_manage_subscriptions">Zarządzaj subskrypcjami</string>
     <string name="billing_action_pass">Kup X Pass App</string>
     <string name="billing_duration_format">%1$s/rok</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Wypróbuj przez 30 dni. Anuluj w dowolnym momencie.</string>
     <string name="billing_price_pass">jednorazowy zakup</string>
     <string name="upgrade_description">Każda subskrypcja odblokowuje wszystkie funkcje i wspiera kolejne aktualizacje. Subskrypcja nie jest wymagana do korzystania z tej aplikacji.</string>

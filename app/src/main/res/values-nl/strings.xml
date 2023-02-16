@@ -487,6 +487,7 @@
     <string name="billing_action_manage_subscriptions">Abonnementen beheren</string>
     <string name="billing_action_pass">Neem X Pass App</string>
     <string name="billing_duration_format">%1$s/jaar</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">30 dagen gratis proberen, annuleren op elk moment.</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
     <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>

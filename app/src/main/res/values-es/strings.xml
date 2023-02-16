@@ -488,6 +488,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="billing_action_manage_subscriptions">Gestionar suscripciones</string>
     <string name="billing_action_pass">Obtener X Pass App</string>
     <string name="billing_duration_format">%1$s/año</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Pruebe 30 días gratis. Cancela cuando quieras.</string>
     <string name="billing_price_pass">Compra por única vez</string>
     <string name="upgrade_description">Cada suscripción desbloquea todas las funciones y soporta actualizaciones futuras. No se requiere una suscripción para usar esta aplicación.</string>

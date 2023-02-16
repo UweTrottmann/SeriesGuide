@@ -509,6 +509,7 @@
     <string name="billing_action_manage_subscriptions">Spravovat předplatné</string>
     <string name="billing_action_pass">Získejte aplikaci X Pass App</string>
     <string name="billing_duration_format">%1$s/ročně</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Vyzkoušejte na 30 dní zdarma, kdykoliv můžete zrušit.</string>
     <string name="billing_price_pass">jednorázový nákup</string>
     <string name="upgrade_description">Každé předplatné odemyká všechny funkce a podporuje budoucí aktualizace. Ale k používání této aplikace není zapotřebí mít předplatné.</string>

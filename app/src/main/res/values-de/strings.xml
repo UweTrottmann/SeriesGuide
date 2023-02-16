@@ -487,6 +487,7 @@
     <string name="billing_action_manage_subscriptions">Abos verwalten</string>
     <string name="billing_action_pass">X Pass App holen</string>
     <string name="billing_duration_format">%1$s/Jahr</string>
+    <string name="billing_free_trial">Kostenlos testen</string>
     <string name="billing_sub_description">30 Tage testen, jederzeit kündigen.</string>
     <string name="billing_price_pass">einmaliger Kauf</string>
     <string name="upgrade_description">Jedes Abo schaltet alle Funktionen frei und unterstützt zukünftige Updates. Ein Abo wird nicht benötigt um diese App zu nutzen.</string>

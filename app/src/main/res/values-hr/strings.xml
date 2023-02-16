@@ -498,6 +498,7 @@
     <string name="billing_action_manage_subscriptions">Upravljanje pretplatama</string>
     <string name="billing_action_pass">Nabavi X Pass App</string>
     <string name="billing_duration_format">%1$s/godišnje</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="billing_price_pass">Jednokratna kupnja</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
