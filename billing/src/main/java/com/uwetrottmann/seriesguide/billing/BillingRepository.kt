@@ -454,7 +454,6 @@ class BillingRepository private constructor(
             playStoreBillingClient.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS)
         var succeeded = false
         when (billingResult.responseCode) {
-            BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> connectToPlayBillingService()
             BillingClient.BillingResponseCode.OK -> succeeded = true
             else -> {
                 "isSubscriptionSupported failed. ${billingResult.responseCode}: ${billingResult.debugMessage}".let {
@@ -487,10 +486,6 @@ class BillingRepository private constructor(
                 coroutineScope.launch {
                     queryPurchasesAsync()
                 }
-            }
-            BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
-                // TODO Back-off
-                connectToPlayBillingService()
             }
             BillingClient.BillingResponseCode.USER_CANCELED -> {
                 Timber.i("onPurchasesUpdated: User canceled the purchase.")
