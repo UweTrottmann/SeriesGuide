@@ -487,6 +487,7 @@
     <string name="billing_action_manage_subscriptions">Gerenciar assinaturas</string>
     <string name="billing_action_pass">Adquira o X Pass App</string>
     <string name="billing_duration_format">%1$s/ano</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Teste grátis por 30 dias, cancele a qualquer momento</string>
     <string name="billing_price_pass">Compra única</string>
     <string name="upgrade_description">Toda assinatura desbloqueia os recursos e apoia atualizações futuras. Uma assinatura não é necessária para usar o aplicativo.</string>

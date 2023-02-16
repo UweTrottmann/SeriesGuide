@@ -487,6 +487,7 @@
     <string name="billing_action_manage_subscriptions">Gestionar subscripcions</string>
     <string name="billing_action_pass">Obtenir un «X Pass App»</string>
     <string name="billing_duration_format">%1$s l\'any</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Prova 30 dies gratuïtament, cancel·la en qualsevol moment</string>
     <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Cada subscripció allibera totes les característiques i ajuda a futures actualitzacions. No és necessita cap subscripció per fer servir aquesta aplicació.</string>

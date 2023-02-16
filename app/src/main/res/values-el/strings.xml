@@ -487,6 +487,7 @@
     <string name="billing_action_manage_subscriptions">Διαχείριση συνδρομών</string>
     <string name="billing_action_pass">Αποκτήστε το X Pass App</string>
     <string name="billing_duration_format">%1$s/έτος</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε όποτε θέλετε. </string>
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
     <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>

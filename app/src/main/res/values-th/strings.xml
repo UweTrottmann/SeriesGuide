@@ -476,6 +476,7 @@
     <string name="billing_action_manage_subscriptions">จัดการการสมัครสมาชิก​</string>
     <string name="billing_action_pass">รับ X Pass App</string>
     <string name="billing_duration_format">%1$s/ปี</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">ลองใช้ฟรี 30 วัน ยกเลิกได้ทุกเมื่อ</string>
     <string name="billing_price_pass">จ่ายครั้งเดียว</string>
     <string name="upgrade_description">ทุกการสมัครสมาชิกจะปลดล็อกทุกคุณสมบัติและช่วยสนับสนุนอัปเดตในอนาคต ไม่จำเป็นต้องสมัครสมาชิกเพื่อใช้งานแอปนี้</string>

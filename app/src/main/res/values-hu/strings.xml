@@ -487,6 +487,7 @@
     <string name="billing_action_manage_subscriptions">Feliratkozások kezelése</string>
     <string name="billing_action_pass">X Pass App beszerzése</string>
     <string name="billing_duration_format">%1$s/év</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Próbáld ki 30 napig ingyen, bármikor visszavonható.</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>
     <string name="upgrade_description">Minden előfizetés feloldja az összes funkciót és támogatja a jövőbeli frissítéseket. Az alkalmazás használatához előfizetés nem szükséges.</string>
