@@ -494,7 +494,6 @@
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
     <string name="billing_unlock_detected">X Pass uygulaması tespit edildi. Gelecekteki güncellemeleri desteklemek için yine de abone olabilirsiniz.</string>
     <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
-    <string name="subscription_expired">Abonelik sona erdi</string>
     <string name="subscription_expired_details">SeriesGuide aboneliğinizin süresi doldu</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon hesabınızda oturum açın!</string>

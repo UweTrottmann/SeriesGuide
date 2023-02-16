@@ -483,7 +483,6 @@
     <string name="upgrade_success">ขอบคุณสำหรับการสนับสนุน SeriesGuide! คุณสามารถเข้าถึงคุณสมบัติทั้งหมดได้แล้ว</string>
     <string name="billing_unlock_detected">ตรวจพบแอป X Pass คุณยังคงสามารถสมัครสมาชิกเพื่อสนับสนุนการอัปเดตในอนาคต</string>
     <string name="billing_learn_more">ข้อมูลเพิ่มเติมและช่วยเหลือ</string>
-    <string name="subscription_expired">การสมัครสมาชิกหมดอายุแล้ว</string>
     <string name="subscription_expired_details">การสมัครสมาชิก SeriesGuide ของคุณหมดอายุแล้ว</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">เข้าสู่ระบบบัญชี Amazon ของคุณ!</string>

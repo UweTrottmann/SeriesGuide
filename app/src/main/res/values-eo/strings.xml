@@ -494,7 +494,6 @@
     <string name="upgrade_success">Dankon por subteni SeriesGuide! Vi havas atingon por ĉiuj funkcioj.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Pli da informo kaj helpo</string>
-    <string name="subscription_expired">Abono finiĝis</string>
     <string name="subscription_expired_details">Via SeriesGuide abono ĵus finiĝis.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Ensaluti al via Amazona konto</string>

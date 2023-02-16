@@ -494,7 +494,6 @@
     <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Mer informasjon og hjelp</string>
-    <string name="subscription_expired">Abonnement utløpt</string>
     <string name="subscription_expired_details">X Pass-abonnementet har utløpt.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Logg inn på din Amazon-konto!</string>

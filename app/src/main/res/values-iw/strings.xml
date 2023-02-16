@@ -516,7 +516,6 @@
     <string name="upgrade_success">תודה על תמיכתך ב-SeriesGuide! יש לך גישה לכל האפשרויות.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">עוד מידע ועזרה</string>
-    <string name="subscription_expired">פג תוקף המנוי</string>
     <string name="subscription_expired_details">פג מנוי ה-SeriesGuide שלך.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">התחבר לחשבון האמזון שלך!</string>

@@ -483,7 +483,6 @@
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>
     <string name="billing_unlock_detected">Aplikasi X Pass terdeteksi. Anda masih dapat berlangganan untuk mendukung pembaruan di masa mendatang.</string>
     <string name="billing_learn_more">Info lebih lanjut dan bantuan</string>
-    <string name="subscription_expired">Langganan berakhir</string>
     <string name="subscription_expired_details">Langganan SeriesGuide anda telah berakhir.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Masuk ke akun Amazon Anda!</string>

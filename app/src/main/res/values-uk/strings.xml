@@ -516,7 +516,6 @@
     <string name="upgrade_success">Дякую за підтримку SeriesGuide! Тепер ви маєте доступ до всіх функцій.</string>
     <string name="billing_unlock_detected">Виявлено додаток X Pass. Ви все ще можете підписатися на підтримку майбутніх оновлень.</string>
     <string name="billing_learn_more">Додаткова інформація та допомога</string>
-    <string name="subscription_expired">Закінчився термін дії підписки</string>
     <string name="subscription_expired_details">Підписка функцій X минула.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Увійдіть у ваш Amazon аккаунт!</string>

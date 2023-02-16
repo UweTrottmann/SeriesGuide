@@ -452,7 +452,7 @@
     <string name="upcoming_display">Mostra le serie che stanno per essere trasmesse</string>
     <string name="pref_notifications">Notifiche</string>
     <string name="pref_notificationssummary">Notifica nuovi episodi</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Impostazioni notifiche</string>
     <string name="pref_ringtone">Suoneria</string>
     <string name="pref_vibrate">Vibrazione</string>
     <string name="pref_vibratesummary">Vibra alla visualizzazione di una notifica</string>
@@ -466,8 +466,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Notifica solo se il nuovo episodio è il prossimo da guardare</string>
     <string name="pref_notifications_battery_settings">Impostazioni batteria</string>
     <string name="pref_notifications_battery_settings_summary">Vai nelle impostazioni della batteria e disattiva le ottimizzazioni per notifiche più affidabili</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">Consenti notifiche</string>
+    <string name="notifications_allow_reason">Per ricevere notifiche su episodi ed errori, attivale nelle impostazioni.</string>
     <!-- List Widget -->
     <string name="hide_watched">Nascondi episodi già visti</string>
     <string name="pref_widget_opacity">Sfondo widget</string>
@@ -494,7 +494,6 @@
     <string name="upgrade_success">Grazie per il sostegno a SeriesGuide! Hai accesso a tutte le funzionalità.</string>
     <string name="billing_unlock_detected">Rilevata app X Pass. Puoi comunque iscriverti per supportare gli aggiornamenti futuri.</string>
     <string name="billing_learn_more">Più informazioni e aiuto</string>
-    <string name="subscription_expired">Abbonamento scaduto</string>
     <string name="subscription_expired_details">Il tuo abbonamento alle funzioni X è scaduto.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Accedi al tuo account Amazon</string>

@@ -516,7 +516,6 @@
     <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
     <string name="billing_unlock_detected">Wykryto aplikację X Pass. Nadal możesz subskrybować w celu wsparcia przyszłych aktualizacji.</string>
     <string name="billing_learn_more">Więcej informacji i pomoc</string>
-    <string name="subscription_expired">Subskrypcja wygasła</string>
     <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Zaloguj się do konta Amazon!</string>

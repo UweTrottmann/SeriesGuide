@@ -245,7 +245,7 @@
     <string name="movie_crew">工作人员</string>
     <string name="action_movies_sort">排序电影</string>
     <string name="action_movies_sort_title">按片名</string>
-    <string name="action_movies_sort_release">发行日期</string>
+    <string name="action_movies_sort_release">按发行日期</string>
     <string name="action_movies_filter">筛选电影</string>
     <!-- Statistics -->
     <string name="statistics_failed">无法计算统计数据</string>
@@ -340,7 +340,7 @@
     <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>
-    <string name="pref_onlyfuturesummary">不显示已播出的剧集</string>
+    <string name="pref_onlyfuturesummary">一律不显示已播出的剧集</string>
     <string name="pref_onlyseasoneps">隐藏特别篇</string>
     <string name="pref_onlyseasonepssummary">仅在季列表中显示特别篇</string>
     <string name="pref_exactdates">显示具体日期</string>
@@ -441,7 +441,7 @@
     <string name="upcoming_display">点按即可显示即将播出的节目</string>
     <string name="pref_notifications">通知</string>
     <string name="pref_notificationssummary">剧集更新通知</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">通知设置</string>
     <string name="pref_ringtone">铃声</string>
     <string name="pref_vibrate">振动</string>
     <string name="pref_vibratesummary">显示通知时振动</string>
@@ -455,8 +455,8 @@
     <string name="pref_notifications_next_episodes_only_summary">只在新的剧集是接下来要看的一集时通知</string>
     <string name="pref_notifications_battery_settings">电池设置</string>
     <string name="pref_notifications_battery_settings_summary">转到电池设置，停用电池优化以获取可靠稳定的通知</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">允许通知</string>
+    <string name="notifications_allow_reason">要接收剧集和错误通知，请前往设置并允许它们。</string>
     <!-- List Widget -->
     <string name="hide_watched">隐藏看过的剧集</string>
     <string name="pref_widget_opacity">微件背景</string>
@@ -476,14 +476,13 @@
     <string name="billing_action_manage_subscriptions">管理订阅</string>
     <string name="billing_action_pass">购买 X Pass App</string>
     <string name="billing_duration_format">%1$s / 年</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">免费试用</string>
     <string name="billing_sub_description">免费试用 30 天，随时取消。</string>
     <string name="billing_price_pass">一次性买断</string>
     <string name="upgrade_description">每种订阅都能解锁所有功能并支持未来的更新。使用本应用无需订阅。</string>
     <string name="upgrade_success">感谢您对 SeriesGuide 的支持！您可以使用所有功能。</string>
     <string name="billing_unlock_detected">已检测到 X Pass App。您仍可以通过订阅来支持未来的更新。</string>
     <string name="billing_learn_more">更多信息与帮助</string>
-    <string name="subscription_expired">订阅已过期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 订阅已过期</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">登录您的亚马逊帐户</string>

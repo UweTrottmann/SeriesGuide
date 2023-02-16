@@ -15,6 +15,8 @@ Version 67
 ----------
 *in development*
 
+* 📝 Latest user interface translations from Crowdin.
+
 #### 67.0.1 🧪
 *2023-02-03*
 

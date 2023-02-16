@@ -452,7 +452,7 @@
     <string name="upcoming_display">Seleciona para exibir as próximas séries</string>
     <string name="pref_notifications">Notificações</string>
     <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Definições de notificação</string>
     <string name="pref_ringtone">Toque de Notificação</string>
     <string name="pref_vibrate">Vibrar</string>
     <string name="pref_vibratesummary">Também vibrará quando surgir uma notificação</string>
@@ -466,8 +466,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Notificar apenas se o novo episódio for o próximo a ser visto</string>
     <string name="pref_notifications_battery_settings">Definições da Bateria</string>
     <string name="pref_notifications_battery_settings_summary">Vai às Definições da Bateria para desativar a otimização e receber notificações corretamente</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">Permitir notificações</string>
+    <string name="notifications_allow_reason">Para receberes notificações de episódios e de erros, vai às Definições para ativar a permissão.</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episódios vistos</string>
     <string name="pref_widget_opacity">Plano de fundo do widget</string>
@@ -494,7 +494,6 @@
     <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>
     <string name="billing_unlock_detected">A app X Pass foi detetada. Podes voltar a subscrever para suportar futuras atualizações.</string>
     <string name="billing_learn_more">Mais Informações e Ajuda</string>
-    <string name="subscription_expired">Subscrição expirada</string>
     <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Entra na tua conta Amazon!</string>

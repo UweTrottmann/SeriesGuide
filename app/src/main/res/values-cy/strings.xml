@@ -538,7 +538,6 @@
     <string name="upgrade_success">Diolch am gefnogi SeriesGuide! Mae gennych fynediad i\'r holl nodweddion.</string>
     <string name="billing_unlock_detected">Canfod ap X Pass. Efallai y byddwch chi\'n dal i danysgrifio i gefnogi diweddariadau yn y dyfodol.</string>
     <string name="billing_learn_more">Mwy o wybodaeth a help</string>
-    <string name="subscription_expired">Daeth y tanysgrifiad i ben</string>
     <string name="subscription_expired_details">Mae eich tanysgrifiad SeriesGuide wedi dod i ben</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Mewngofnodi i\'ch cyfrif Amazon</string>

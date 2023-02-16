@@ -505,7 +505,6 @@
     <string name="upgrade_success">Хвала што сте подржали SeriesGuide! Омогућен вам је приступ свим опцијама.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired">Претплата је истекла</string>
     <string name="subscription_expired_details">Ваша претплата за Х опције је истекла.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Пријави се на свој Amazon налог!</string>

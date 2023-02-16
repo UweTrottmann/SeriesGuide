@@ -487,14 +487,13 @@
     <string name="billing_action_manage_subscriptions">Abonnementen beheren</string>
     <string name="billing_action_pass">Neem X Pass App</string>
     <string name="billing_duration_format">%1$s/jaar</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Gratis proefversie</string>
     <string name="billing_sub_description">30 dagen gratis proberen, annuleren op elk moment.</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
     <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
     <string name="billing_unlock_detected">X Pass-app gedetecteerd. U kunt zich nog steeds abonneren om toekomstige updates te ondersteunen.</string>
     <string name="billing_learn_more">Meer informatie en ondersteuning</string>
-    <string name="subscription_expired">Abonnement verlopen</string>
     <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Log in bij uw Amazon-account</string>

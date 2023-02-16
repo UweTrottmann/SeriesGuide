@@ -483,7 +483,6 @@
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired">구독 만료되었습니다</string>
     <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon 계정으로 로그인</string>
