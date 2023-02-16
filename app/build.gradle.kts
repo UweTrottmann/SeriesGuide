@@ -227,7 +227,6 @@ dependencies {
     // Firebase Sign-In
     implementation(libs.firebase.ui.auth)
     // Use later play-services-auth than firebase-ui-auth to get latest fixes.
-    // https://developers.google.com/android/guides/releases
     implementation(libs.play.services.auth)
 
     // Amazon flavor specific
