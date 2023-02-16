@@ -29,8 +29,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import kotlin.math.pow
-import kotlin.math.roundToLong
+import kotlin.math.max
 
 class BillingRepository private constructor(
     private val applicationContext: Context,
@@ -70,7 +69,7 @@ class BillingRepository private constructor(
      */
     private lateinit var localCacheBillingClient: LocalBillingDb
 
-    private var disconnectCount = 0
+    private var reconnectBackOffSeconds = RECONNECT_BACK_OFF_DEFAULT_SECONDS
 
     private val _productDetails = MutableStateFlow(
         SeriesGuideSku.SUBS_SKUS_FOR_PURCHASE.map {
@@ -506,7 +505,7 @@ class BillingRepository private constructor(
          * Otherwise post an error event.
          */
         override fun onBillingSetupFinished(billingResult: BillingResult) {
-            disconnectCount = 0
+            reconnectBackOffSeconds = RECONNECT_BACK_OFF_DEFAULT_SECONDS
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
                     Timber.d("onBillingSetupFinished successfully")
@@ -524,25 +523,20 @@ class BillingRepository private constructor(
 
         /**
          * This method is called when the app has inadvertently disconnected from the [BillingClient].
-         * An attempt should be made to reconnect using a retry policy. Note the distinction between
-         * [endConnection][BillingClient.endConnection] and disconnected:
-         * - disconnected means it's okay to try reconnecting.
-         * - endConnection means the [playStoreBillingClient] must be re-instantiated and then start
-         *   a new connection because a [BillingClient] instance is invalid after endConnection has
-         *   been called.
+         * An attempt should be made to reconnect using a retry policy.
+         *
+         * This is a pretty unusual occurrence. It happens primarily if the Google Play Store
+         * self-upgrades or is force closed.
          */
         override fun onBillingServiceDisconnected() {
             Timber.d("onBillingServiceDisconnected")
-            if (disconnectCount > 3) {
-                "Billing service reconnection failed.".let {
-                    Timber.e(it)
-                    errorEvent.postValue(it)
-                }
-                return // Do not try again. Wait until BillingClient is started again.
-            }
-            disconnectCount++
+            // Try to reconnect indefinitely, the app might be running a long time and the user
+            // might not regularly visit the billing activity triggering a reconnect.
+            val backOffSeconds = max(reconnectBackOffSeconds * 2, RECONNECT_BACK_OFF_MAX_SECONDS)
+                .also { reconnectBackOffSeconds = it }
             coroutineScope.launch {
-                delay((2.toDouble().pow(disconnectCount) * 1000).roundToLong())
+                delay(backOffSeconds * 1000L)
+                // Fine to call multiple times, will do nothing if already connected.
                 connectToPlayBillingService()
             }
         }
@@ -552,6 +546,9 @@ class BillingRepository private constructor(
     companion object {
         @Volatile
         private var INSTANCE: BillingRepository? = null
+
+        private const val RECONNECT_BACK_OFF_DEFAULT_SECONDS = 1
+        private const val RECONNECT_BACK_OFF_MAX_SECONDS = 15 * 60 // 15 minutes
 
         fun getInstance(context: Context, coroutineScope: CoroutineScope): BillingRepository =
             INSTANCE ?: synchronized(this) {
