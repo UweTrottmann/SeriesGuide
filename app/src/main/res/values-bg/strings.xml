@@ -494,7 +494,6 @@
     <string name="upgrade_success">Благодаря, че подкрепихте SeriesGuide! Имате достъп до всички фунцкии.</string>
     <string name="billing_unlock_detected">Имате приложението X Pass. Все пак можете да се абонирате, за да ни подкрепите.</string>
     <string name="billing_learn_more">Информация и помощ</string>
-    <string name="subscription_expired">Абонаментът е изтекъл</string>
     <string name="subscription_expired_details">Вашият абонамент за X функциите е изтекъл.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Влезте в профила си в Amazon!</string>

@@ -494,7 +494,6 @@
     <string name="upgrade_success">Gràcies per donar support a SeriesGuide! Tens accés a totes les opcions.</string>
     <string name="billing_unlock_detected">Aplicació X Pass detectada. Encara hauries de subscriure\'t per ajudar a futures actualitzacions.</string>
     <string name="billing_learn_more">Més informació i ajuda</string>
-    <string name="subscription_expired">La subscripció ha caducat</string>
     <string name="subscription_expired_details">La subscripció a les característiques X ha caducat.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Inicia sessió al teu compte Amazon!</string>

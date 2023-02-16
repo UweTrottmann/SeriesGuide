@@ -494,7 +494,6 @@
     <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">اطّلاعات بیش‌تر و راهنمایی</string>
-    <string name="subscription_expired">اشتراک پایان یافت</string>
     <string name="subscription_expired_details">اشتراک سریزگایدتان به پایان رسیده است.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">به حساب آمازونتان وارد شوید!</string>

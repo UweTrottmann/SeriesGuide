@@ -516,7 +516,6 @@
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
     <string name="billing_unlock_detected">X Pass aplikácia detekovaná. Stále sa môžete prihlásiť k odberu pre podporu budúcich aktualizácií.</string>
     <string name="billing_learn_more">Viac info a pomoc</string>
-    <string name="subscription_expired">Predplatné vypršalo</string>
     <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Prihláste sa do svojho účtu Amazon!</string>

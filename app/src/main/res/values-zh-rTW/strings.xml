@@ -483,7 +483,6 @@
     <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired">訂閱已過期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 訂閱已過期。</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">登入你的 Amazon 帳戶</string>

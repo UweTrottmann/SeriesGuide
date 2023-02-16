@@ -494,7 +494,6 @@
     <string name="upgrade_success">Obrigado por apoiares o SeriesGuide! Tens agora acesso a todas as funcionalidades.</string>
     <string name="billing_unlock_detected">A app X Pass foi detetada. Podes voltar a subscrever para suportar futuras atualizações.</string>
     <string name="billing_learn_more">Mais Informações e Ajuda</string>
-    <string name="subscription_expired">Subscrição expirada</string>
     <string name="subscription_expired_details">A tua subscrição no SeriesGuide expirou.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Entra na tua conta Amazon!</string>

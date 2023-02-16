@@ -483,7 +483,6 @@
     <string name="upgrade_success">SeriesGuide のサポートをありがとうございます! すべての機能にアクセスすることができます。</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">詳細情報とヘルプ</string>
-    <string name="subscription_expired">サブスクリプションの有効期限が切れました</string>
     <string name="subscription_expired_details">SeriesGuide サブスクリプションの有効期限が切れています。</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon アカウントにサインイン!</string>

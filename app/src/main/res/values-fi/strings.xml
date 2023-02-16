@@ -494,7 +494,6 @@
     <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
     <string name="billing_unlock_detected">X Pass -sovellus havaittu. Voit silti tilata tukeaksesi kehitystä.</string>
     <string name="billing_learn_more">Lisätietoja ja apua</string>
-    <string name="subscription_expired">Tilaus vanhentunut</string>
     <string name="subscription_expired_details">SeriesGuide-tilauksesi on vanhentunut.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Kirjaudu Amazon-tilillesi</string>

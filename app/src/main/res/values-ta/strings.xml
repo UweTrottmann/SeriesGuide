@@ -494,7 +494,6 @@
     <string name="upgrade_success">SeriesGuide ஆதரவு நன்றி! உங்களுக்கு எல்லா அம்சங்களையும் அனுமதி.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired">சந்தா காலாவதியானது</string>
     <string name="subscription_expired_details">உங்கள் SeriesGuide சந்தா காலாவதியாகிவிட்டது.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">உங்கள் Amazon கணக்கு உள்!</string>

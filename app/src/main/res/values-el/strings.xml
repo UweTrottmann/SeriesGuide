@@ -494,7 +494,6 @@
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
     <string name="billing_unlock_detected">Η εφαρμογή X Pass εντοπίστηκε. Μπορείτε ακόμη να εγγραφείτε για να υποστηρίξετε μελλοντικές ενημερώσεις.</string>
     <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
-    <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Συνδεθείτε στο λογαριασμό σας Amazon!</string>

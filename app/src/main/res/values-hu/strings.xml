@@ -494,7 +494,6 @@
     <string name="upgrade_success">Köszönöm a támogatást. Most már hozzáférsz az összes funkcióhoz.</string>
     <string name="billing_unlock_detected">X Pass alkalmazás felismerve. Feliratkozás szükséges lehet a jövőbeni frissítések támogatásához.</string>
     <string name="billing_learn_more">Továbi információk és segítség</string>
-    <string name="subscription_expired">Lejárt az előfizetés</string>
     <string name="subscription_expired_details">Lejárt a SeriesGuide előfizetésed.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Jelentkezz be az Amazon fiókodba!</string>
