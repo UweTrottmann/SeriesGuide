@@ -470,13 +470,11 @@ class BillingRepository private constructor(
         /**
          * This method is called by the [playStoreBillingClient] when new purchases are detected.
          * The purchase list in this method is not the same as the one in
-         * [queryPurchases][BillingClient.queryPurchases]. Whereas queryPurchases returns everything
-         * this user owns, this only returns the items that were just now purchased or
-         * billed.
+         * [queryPurchasesAsync]. Whereas it returns everything this user owns, this only returns
+         * the items that were just now purchased or billed.
          */
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                // will handle server verification, consumables, and updating the local cache
                 purchases?.also {
                     coroutineScope.launch {
                         processPurchases(it.toSet())
