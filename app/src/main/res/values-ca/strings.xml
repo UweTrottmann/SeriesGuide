@@ -452,7 +452,7 @@
     <string name="upcoming_display">Seleccioneu-ho per veure les sèries que han de sortir</string>
     <string name="pref_notifications">Notificacions</string>
     <string name="pref_notificationssummary">Notifica\'m de tots els episodis nous</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Configuració de les notificacions</string>
     <string name="pref_ringtone">To de notificació</string>
     <string name="pref_vibrate">Vibració</string>
     <string name="pref_vibratesummary">Vibra quan mostris una notificació</string>
@@ -466,8 +466,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Notifiqueu només si el nou episodi és el següent que es pugui veure</string>
     <string name="pref_notifications_battery_settings">Configuració de la bateria</string>
     <string name="pref_notifications_battery_settings_summary">Vés als ajustaments de la bateria per deshabilitar les optimitzacions de bateria per rebre notificacions</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">Permet les notificacions</string>
+    <string name="notifications_allow_reason">Per rebre notificacions d\'episodis i d\'errors, ves a Configuració i dona\'ls-hi permís</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>
@@ -487,7 +487,7 @@
     <string name="billing_action_manage_subscriptions">Gestionar subscripcions</string>
     <string name="billing_action_pass">Obtenir un «X Pass App»</string>
     <string name="billing_duration_format">%1$s l\'any</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Prova gratuïta</string>
     <string name="billing_sub_description">Prova 30 dies gratuïtament, cancel·la en qualsevol moment</string>
     <string name="billing_price_pass">compra única</string>
     <string name="upgrade_description">Cada subscripció allibera totes les característiques i ajuda a futures actualitzacions. No és necessita cap subscripció per fer servir aquesta aplicació.</string>
