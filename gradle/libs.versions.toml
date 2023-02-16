@@ -1,9 +1,9 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-androidx-activity = "1.5.1"
-androidx-core = "1.8.0" # https://developer.android.com/jetpack/androidx/releases/core
-androidx-fragment = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/fragment
+androidx-activity = "1.6.1"
+androidx-core = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/core
+androidx-fragment = "1.5.5" # https://developer.android.com/jetpack/androidx/releases/fragment
 androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-room = "2.4.3" # https://developer.android.com/jetpack/androidx/releases/room
 androidx-test = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/test
@@ -23,11 +23,11 @@ amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.2"
 androidutils = "com.uwetrottmann.androidutils:androidutils:3.1.0" # https://github.com/UweTrottmann/AndroidUtils/releases
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
-androidx-annotation = "androidx.annotation:annotation:1.4.0"
-androidx-appcompat = "androidx.appcompat:appcompat:1.4.2" # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidx-browser = "androidx.browser:browser:1.4.0" # https://developer.android.com/jetpack/androidx/releases/browser
+androidx-annotation = "androidx.annotation:annotation:1.5.0"
+androidx-appcompat = "androidx.appcompat:appcompat:1.6.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
+androidx-browser = "androidx.browser:browser:1.5.0" # https://developer.android.com/jetpack/androidx/releases/browser
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
-androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.1.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
+androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
