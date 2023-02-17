@@ -15,6 +15,8 @@ Version 67
 ----------
 *in development*
 
+* 🔧 Trakt: show default browser in-app when signing in, drop integrated browser option.
+
 #### 67.0.2 🧪
 *2023-02-16*
 

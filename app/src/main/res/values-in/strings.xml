@@ -306,7 +306,6 @@
     <string name="waitplease">Tunggu sebentar&#8230;</string>
     <string name="connect">Sambungkan</string>
     <string name="disconnect">Putuskan</string>
-    <string name="use_integrated_browser">Gunakan browser bawaan</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

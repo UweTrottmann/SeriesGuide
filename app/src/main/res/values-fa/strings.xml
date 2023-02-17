@@ -313,7 +313,6 @@
     <string name="waitplease">یک لحظه، لطفا&#8230;</string>
     <string name="connect">وصل کردن</string>
     <string name="disconnect">قطع کردن</string>
-    <string name="use_integrated_browser">استفاده از مرورگر یکپارچه</string>
     <string name="show_library">افزودن نمایش‌ها از ترکت</string>
     <string name="about_trakt">Trakt کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید.</string>
     <string name="support_trakt">پشتیبانی از ترکت با وی‌آی‌پی</string>

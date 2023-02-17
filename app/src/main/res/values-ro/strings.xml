@@ -320,7 +320,6 @@
     <string name="waitplease">Un moment, vă rugăm&#8230;</string>
     <string name="connect">Conectează-te</string>
     <string name="disconnect">Deconectează-te</string>
-    <string name="use_integrated_browser">Deschide în browser integrat</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

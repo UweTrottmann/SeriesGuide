@@ -313,7 +313,6 @@
     <string name="waitplease">Μια στιγμή, παρακαλώ&#8230;</string>
     <string name="connect">Σύνδεση</string>
     <string name="disconnect">Αποσύνδεση</string>
-    <string name="use_integrated_browser">Χρησιμοποιήστε ενσωματωμένο πρόγραμμα περιήγησης</string>
     <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
     <string name="support_trakt">Υποστήριξη Trakt με VIP</string>

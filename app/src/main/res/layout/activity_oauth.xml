@@ -8,54 +8,36 @@
 
     <include layout="@layout/top_app_bar_fixed" />
 
-    <FrameLayout
-        android:id="@+id/frameLayoutOauth"
+    <!-- Grouped to hide all child views together. -->
+    <LinearLayout
+        android:id="@+id/containerOauthButtons"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
-        <!-- WebView added in-code to avoid crash if inflating it fails. -->
+        <ProgressBar
+            android:id="@+id/progressBarOauth"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:id="@+id/containerOauthButtons"
+        <TextView
+            android:id="@+id/textViewOauthMessage"
+            style="@style/TextAppearance.SeriesGuide.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            tools:ignore="UselessParent">
+            android:maxWidth="@dimen/empty_view_width"
+            tools:text="@string/trakt_error_credentials" />
 
-            <ProgressBar
-                android:id="@+id/progressBarOauth"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/buttonOauthBrowser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/connect_trakt" />
 
-            <TextView
-                android:id="@+id/textViewOauthMessage"
-                style="@style/TextAppearance.SeriesGuide.Body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/empty_view_width"
-                tools:text="@string/trakt_error_credentials" />
-
-            <Button
-                android:id="@+id/buttonOauthBrowser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:text="@string/connect_trakt" />
-
-            <Button
-                android:id="@+id/buttonOauthWebView"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:text="@string/use_integrated_browser"
-                android:textColor="?attr/colorAccent" />
-
-        </LinearLayout>
-
-    </FrameLayout>
+    </LinearLayout>
 
 </LinearLayout>

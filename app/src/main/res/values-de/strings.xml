@@ -313,7 +313,6 @@
     <string name="waitplease">Einen Augenblick, bitte&#8230;</string>
     <string name="connect">Verbinden</string>
     <string name="disconnect">Trennen</string>
-    <string name="use_integrated_browser">Integrierten Browser verwenden</string>
     <string name="show_library">Serien von Trakt hinzufügen</string>
     <string name="about_trakt">Trakt hilft TV-Sendungen und Filme zu speichern, die Sie angesehen haben.</string>
     <string name="support_trakt">Unterstütze Trakt mit VIP</string>

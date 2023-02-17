@@ -327,7 +327,6 @@
     <string name="waitplease">Пожалуйста, подождите&#8230;</string>
     <string name="connect">Подключиться</string>
     <string name="disconnect">Отключиться</string>
-    <string name="use_integrated_browser">Использовать встроенный браузер</string>
     <string name="show_library">Добавить сериалы из Trakt</string>
     <string name="about_trakt">Trakt помогает вести учет, какие сериалы и фильмы Вы смотрите.</string>
     <string name="support_trakt">Поддержка Trakt с VIP</string>

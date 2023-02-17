@@ -341,7 +341,6 @@
     <string name="waitplease">Munud, os gwelwch yn dda&#8230;</string>
     <string name="connect">Cysylltu</string>
     <string name="disconnect">Datgysylltwch</string>
-    <string name="use_integrated_browser">Defnyddiwch borwr integredig</string>
     <string name="show_library">Ychwanegu rhaglenni o Trakt</string>
     <string name="about_trakt">Mae Trakt yn helpu i gadw cofnod o\'r rhaglenni teledu a\'r ffilmiau rydych chi\'n eu gwylio.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

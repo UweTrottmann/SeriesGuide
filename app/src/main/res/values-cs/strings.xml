@@ -327,7 +327,6 @@
     <string name="waitplease">Chvilku strpení&#8230;</string>
     <string name="connect">Připojit</string>
     <string name="disconnect">Odpojit</string>
-    <string name="use_integrated_browser">Použít integrovaný prohlížeč</string>
     <string name="show_library">Přidat seriály z Trakt</string>
     <string name="about_trakt">Trakt pomáhá uchovávat záznamy o televizních seriálech a filmech, které sledujete.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

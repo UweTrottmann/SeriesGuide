@@ -12,8 +12,7 @@ import java.math.BigInteger
 import java.security.SecureRandom
 
 /**
- * Starts a Trakt OAuth 2.0 authorization flow using the default browser
- * or an embedded [android.webkit.WebView] as a fallback.
+ * A [BaseOAuthActivity] for Trakt.
  */
 class TraktAuthActivity : BaseOAuthActivity() {
 
@@ -32,6 +31,11 @@ class TraktAuthActivity : BaseOAuthActivity() {
             // (e.g. if launching external browser dropped us out of memory)
             state = savedInstanceState.getString(KEY_STATE)
         }
+    }
+
+    override fun setupActionBar() {
+        super.setupActionBar()
+        setTitle(R.string.connect_trakt)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
