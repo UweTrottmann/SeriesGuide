@@ -49,6 +49,7 @@ import com.battlelancer.seriesguide.ui.FullscreenImageActivity.Companion.intent
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -620,7 +621,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         }
 
         // IMDb
-        ViewTools.configureImdbButton(
+        ServiceUtils.configureImdbButton(
             bindingBottom.buttonEpisodeImdb,
             lifecycleScope, requireContext(),
             show, episode

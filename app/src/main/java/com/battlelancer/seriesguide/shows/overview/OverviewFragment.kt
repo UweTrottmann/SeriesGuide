@@ -55,6 +55,7 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -538,7 +539,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
         binding.includeServices.includeMore.also {
             // IMDb button
-            ViewTools.configureImdbButton(
+            ServiceUtils.configureImdbButton(
                 it.buttonEpisodeImdb,
                 lifecycleScope, requireContext(),
                 model.show.value, episode
