@@ -48,6 +48,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
@@ -493,7 +494,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         } else {
             val smallImageUrl = (TmdbSettings.getImageBaseUrl(activity)
                     + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path)
-            ServiceUtils.loadWithPicasso(requireContext(), smallImageUrl)
+            ImageTools.loadWithPicasso(requireContext(), smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
                         viewLifecycleOwner.lifecycleScope.launch {

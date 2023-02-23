@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.entities.CastMember;
@@ -155,7 +155,7 @@ public class PeopleListHelper {
         // support keyboard nav
         personView.setFocusable(true);
 
-        ServiceUtils.loadWithPicasso(context, TmdbTools.buildProfileImageUrl(context, profilePath,
+        ImageTools.loadWithPicasso(context, TmdbTools.buildProfileImageUrl(context, profilePath,
                 TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                 .centerCrop()

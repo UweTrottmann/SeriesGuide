@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemDiscoverMovieBinding
 import com.battlelancer.seriesguide.movies.database.SgMovie
-import com.battlelancer.seriesguide.util.ServiceUtils
+import com.battlelancer.seriesguide.util.ImageTools
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import java.text.DateFormat
@@ -52,7 +52,7 @@ internal class MovieViewHolder(
             // poster
             // use fixed size so bitmaps can be re-used on config change
             val context = itemView.context.applicationContext
-            ServiceUtils.loadWithPicasso(context, posterBaseUrl + sgMovie.poster)
+            ImageTools.loadWithPicasso(context, posterBaseUrl + sgMovie.poster)
                 .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
                 .centerCrop()
                 .into(poster)
@@ -79,7 +79,7 @@ internal class MovieViewHolder(
             // use fixed size so bitmaps can be re-used on config change
             val posterUrl = tmdbMovie.poster_path
                 ?.let { posterBaseUrl + it }
-            ServiceUtils.loadWithPicasso(context, posterUrl)
+            ImageTools.loadWithPicasso(context, posterUrl)
                 .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
                 .centerCrop()
                 .into(poster)

@@ -8,9 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.View
 import com.battlelancer.seriesguide.R
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.RequestCreator
 
 /**
  * Helper methods to interact with other apps or websites.
@@ -22,26 +19,6 @@ object ServiceUtils {
     private const val YOUTUBE_BASE_URL = "http://www.youtube.com/watch?v="
     private const val YOUTUBE_SEARCH = "http://www.youtube.com/results?search_query=%s"
     private const val YOUTUBE_PACKAGE = "com.google.android.youtube"
-
-    /**
-     * Build Picasso [com.squareup.picasso.RequestCreator] which respects user requirement of
-     * only loading images over WiFi.
-     *
-     * If [Utils.isAllowedLargeDataConnection] is false, will set [com.squareup.picasso.NetworkPolicy.OFFLINE]
-     * (which will set [okhttp3.CacheControl.FORCE_CACHE] on requests) to skip the network and
-     * accept stale images.
-     *
-     * Always uses [context.getApplicationContext()][Context.getApplicationContext].
-     */
-    @JvmStatic
-    fun loadWithPicasso(context: Context, path: String?): RequestCreator {
-        val requestCreator = Picasso.get().load(path)
-        if (!Utils.isAllowedLargeDataConnection(context.applicationContext)) {
-            // avoid the network, hit the cache immediately + accept stale images.
-            requestCreator.networkPolicy(NetworkPolicy.OFFLINE)
-        }
-        return requestCreator
-    }
 
     /**
      * Displays the IMDb page for the given id (show or episode) in the IMDb app or on the imdb.com

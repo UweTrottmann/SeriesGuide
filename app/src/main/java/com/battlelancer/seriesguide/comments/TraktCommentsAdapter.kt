@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemCommentBinding
 import com.battlelancer.seriesguide.util.CircleTransformation
-import com.battlelancer.seriesguide.util.ServiceUtils
+import com.battlelancer.seriesguide.util.ImageTools
 import com.uwetrottmann.trakt5.entities.Comment
 
 /**
@@ -71,7 +71,7 @@ class CommentViewHolder(
         val user = comment.user
         binding.textViewCommentUsername.text = user?.username
 
-        ServiceUtils.loadWithPicasso(context, user?.images?.avatar?.full)
+        ImageTools.loadWithPicasso(context, user?.images?.avatar?.full)
             .transform(avatarTransform)
             .into(binding.imageViewCommentAvatar)
 

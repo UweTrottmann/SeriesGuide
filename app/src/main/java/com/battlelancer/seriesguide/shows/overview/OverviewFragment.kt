@@ -52,9 +52,9 @@ import com.battlelancer.seriesguide.traktapi.TraktRatingsFetcher.fetchEpisodeRat
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
-import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -620,7 +620,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             imageView.setImageResource(R.drawable.ic_photo_gray_24dp)
         } else {
             // try loading image
-            ServiceUtils.loadWithPicasso(
+            ImageTools.loadWithPicasso(
                 requireContext(),
                 tmdbOrTvdbStillUrl(imagePath, requireContext(), false)
             )

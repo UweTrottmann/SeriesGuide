@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentPersonBinding
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -255,7 +256,7 @@ class PersonFragment : Fragment() {
             )
 
             if (!TextUtils.isEmpty(person.profile_path)) {
-                ServiceUtils.loadWithPicasso(
+                ImageTools.loadWithPicasso(
                     requireContext(),
                     TmdbTools.buildProfileImageUrl(
                         activity, person.profile_path, TmdbTools.ProfileImageSize.H632

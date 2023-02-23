@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
 import com.battlelancer.seriesguide.shows.history.NowAdapter.NowItem
 import com.battlelancer.seriesguide.util.CircleTransformation
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.SgPicassoRequestHandler
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -49,7 +48,7 @@ class HistoryViewHolder(
             binding.textViewHistoryInfo.text = TextTools.dotSeparate(item.username, time)
 
             // user avatar
-            ServiceUtils.loadWithPicasso(context, item.avatar)
+            ImageTools.loadWithPicasso(context, item.avatar)
                 .transform(avatarTransform)
                 .into(binding.imageViewHistoryAvatar)
         }
