@@ -63,7 +63,6 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Credits
-import com.uwetrottmann.tmdb2.entities.Videos
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -86,7 +85,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var movieDetails: MovieDetails? =
         MovieDetails()
     private var movieTitle: String? = null
-    private var trailer: Videos.Video? = null
+    private var trailerYoutubeId: String? = null
     private val model: MovieDetailsModel by viewModels {
         MovieDetailsModelFactory(tmdbId, requireActivity().application)
     }
@@ -106,11 +105,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // trailer button
         binding.buttonMovieTrailer.setOnClickListener {
-            trailer?.let {
-                // FIXME Use type safe data class
-                // key guaranteed not null by loader (future task: replace with null safe data class)
-                ServiceUtils.openYoutube(it.key!!, requireContext())
-            }
+            trailerYoutubeId?.let { ServiceUtils.openYoutube(it, requireContext()) }
         }
         binding.buttonMovieTrailer.isGone = true
         binding.buttonMovieTrailer.isEnabled = false
@@ -759,22 +754,22 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Videos.Video?> {
-        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Videos.Video?> {
+    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<String?> {
+        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<String?> {
             return MovieTrailersLoader(requireContext(), args!!.getInt(ARG_TMDB_ID))
         }
 
         override fun onLoadFinished(
-            trailersLoader: Loader<Videos.Video?>,
-            trailer: Videos.Video?
+            trailersLoader: Loader<String?>,
+            videoId: String?
         ) {
-            if (trailer != null) {
-                this@MovieDetailsFragment.trailer = trailer
+            if (videoId != null) {
+                this@MovieDetailsFragment.trailerYoutubeId = videoId
                 binding.buttonMovieTrailer.isEnabled = true
             }
         }
 
-        override fun onLoaderReset(trailersLoader: Loader<Videos.Video?>) {
+        override fun onLoaderReset(trailersLoader: Loader<String?>) {
             // do nothing
         }
     }

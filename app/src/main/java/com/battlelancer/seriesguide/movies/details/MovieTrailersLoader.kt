@@ -1,7 +1,6 @@
 package com.battlelancer.seriesguide.movies.details
 
 import android.content.Context
-import android.text.TextUtils
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesSettings.getMoviesLanguage
 import com.battlelancer.seriesguide.util.Errors
@@ -15,11 +14,11 @@ import timber.log.Timber
  * English.
  */
 class MovieTrailersLoader(context: Context, private val tmdbId: Int) :
-    GenericSimpleLoader<Videos.Video?>(context) {
+    GenericSimpleLoader<String?>(context) {
 
-    override fun loadInBackground(): Videos.Video? {
+    override fun loadInBackground(): String? {
         // try to get a local trailer
-        val trailer = getTrailer(
+        val trailer = getTrailerVideoId(
             getMoviesLanguage(context), "get local movie trailer"
         )
         if (trailer != null) {
@@ -28,10 +27,10 @@ class MovieTrailersLoader(context: Context, private val tmdbId: Int) :
         Timber.d("Did not find a local movie trailer.")
 
         // fall back to default language trailer
-        return getTrailer(null, "get default movie trailer")
+        return getTrailerVideoId(null, "get default movie trailer")
     }
 
-    private fun getTrailer(language: String?, action: String): Videos.Video? {
+    private fun getTrailerVideoId(language: String?, action: String): String? {
         val moviesService = SgApp.getServicesComponent(context).moviesService()
         try {
             val response = moviesService.videos(tmdbId, language).execute()
@@ -46,17 +45,18 @@ class MovieTrailersLoader(context: Context, private val tmdbId: Int) :
         return null
     }
 
-    private fun extractTrailer(videos: Videos?): Videos.Video? {
+    private fun extractTrailer(videos: Videos?): String? {
         val results = videos?.results
         if (results == null || results.size == 0) {
             return null
         }
 
-        // fish out the first YouTube trailer
+        // Pick the first YouTube trailer
         for (video in results) {
+            val videoId = video.key
             if (video.type == VideoType.TRAILER && "YouTube" == video.site
-                && !TextUtils.isEmpty(video.key)) {
-                return video
+                && !videoId.isNullOrEmpty()) {
+                return videoId
             }
         }
         return null
