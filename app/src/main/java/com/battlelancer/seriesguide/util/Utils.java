@@ -11,10 +11,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -22,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.AnyRes;
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
@@ -294,17 +291,6 @@ public class Utils {
         TypedValue outValue = new TypedValue();
         theme.resolveAttribute(attributeResId, outValue, true);
         return outValue.resourceId;
-    }
-
-    /**
-     * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
-     */
-    public static boolean launchWebsite(@Nullable Context context, @Nullable String url) {
-        if (context == null || TextUtils.isEmpty(url)) {
-            return false;
-        }
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        return openNewDocument(context, intent);
     }
 
     /**

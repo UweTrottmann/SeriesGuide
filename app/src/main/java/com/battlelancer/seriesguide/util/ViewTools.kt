@@ -111,18 +111,20 @@ object ViewTools {
     }
 
     fun openUriOnClick(button: View?, uri: String?) {
-        button?.setOnClickListener { v: View -> Utils.launchWebsite(v.context, uri) }
+        button?.setOnClickListener { v: View ->
+            if (uri != null) WebTools.openAsCustomTab(v.context, uri)
+        }
+    }
+
+    fun openUrlOnClickAndCopyOnLongPress(button: View, uri: String) {
+        openUriOnClick(button, uri)
+        button.copyTextToClipboardOnLongClick(uri)
     }
 
     fun configureNotMigratedWarning(view: View, notMigrated: Boolean) {
         view.visibility = if (notMigrated) View.VISIBLE else View.GONE
         if (notMigrated) {
-            view.setOnClickListener {
-                Utils.launchWebsite(
-                    view.context,
-                    view.context.getString(R.string.url_tmdb_migration)
-                )
-            }
+            openUriOnClick(view, view.context.getString(R.string.url_tmdb_migration))
         }
     }
 

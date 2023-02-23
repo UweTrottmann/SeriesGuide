@@ -615,9 +615,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         // Trakt
         if (episode.tmdbId != null) {
-            val traktLink = TraktTools.buildEpisodeUrl(episode.tmdbId)
-            ViewTools.openUriOnClick(bindingBottom.buttonEpisodeTrakt, traktLink)
-            bindingBottom.buttonEpisodeTrakt.copyTextToClipboardOnLongClick(traktLink)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(
+                bindingBottom.buttonEpisodeTrakt,
+                TraktTools.buildEpisodeUrl(episode.tmdbId)
+            )
         }
 
         // IMDb
@@ -629,10 +630,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         // TMDb
         if (show.tmdbId != null) {
-            val url = TmdbTools
-                .buildEpisodeUrl(show.tmdbId, episode.season, episode.number)
-            ViewTools.openUriOnClick(bindingBottom.buttonEpisodeTmdb, url)
-            bindingBottom.buttonEpisodeTmdb.copyTextToClipboardOnLongClick(url)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(
+                bindingBottom.buttonEpisodeTmdb,
+                TmdbTools.buildEpisodeUrl(show.tmdbId, episode.season, episode.number)
+            )
         }
 
         // Trakt comments

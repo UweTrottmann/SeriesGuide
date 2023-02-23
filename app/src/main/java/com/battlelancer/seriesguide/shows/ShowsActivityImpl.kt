@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.util.AppUpgrade
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -79,7 +80,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             // Let the user know the app has updated.
             Snackbar.make(snackbarParentView, R.string.updated, Snackbar.LENGTH_LONG)
                 .setAction(R.string.updated_details) {
-                    Utils.launchWebsite(
+                    WebTools.openAsCustomTab(
                         this@ShowsActivityImpl,
                         getString(R.string.url_release_notes)
                     )

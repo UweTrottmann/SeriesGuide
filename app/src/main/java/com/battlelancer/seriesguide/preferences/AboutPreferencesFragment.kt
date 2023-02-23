@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentAboutBinding
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.WebTools
 
 /**
  * Displays information about the app, the developer and licence information about content and
@@ -66,6 +67,6 @@ class AboutPreferencesFragment : Fragment() {
     }
 
     private fun viewUrl(@StringRes urlResId: Int) {
-        Utils.launchWebsite(activity, getString(urlResId))
+        WebTools.openAsCustomTab(requireContext(), getString(urlResId))
     }
 }

@@ -63,8 +63,8 @@ object ServiceUtils {
         )
             .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
         if (!Utils.tryStartActivity(context, intent, false)) {
-            // on failure, try launching the web page
-            Utils.launchWebsite(context, imdbLink(imdbId))
+            // If the app is not available, open website instead.
+            WebTools.openAsCustomTab(context, imdbLink(imdbId))
         }
     }
 
@@ -137,7 +137,7 @@ object ServiceUtils {
      * Opens the YouTube app or web page for the given video.
      */
     fun openYoutube(videoId: String, context: Context) {
-        Utils.launchWebsite(context, YOUTUBE_BASE_URL + videoId)
+        WebTools.openAsCustomTab(context, YOUTUBE_BASE_URL + videoId)
     }
 
     /**
