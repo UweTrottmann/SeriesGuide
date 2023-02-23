@@ -60,10 +60,10 @@ class AmazonBillingActivity : BaseActivity() {
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewAmazonBilling)
 
         binding.buttonAmazonBillingSubscribe.isEnabled = false
-        binding.buttonAmazonBillingSubscribe.setOnClickListener { v: View? -> subscribe() }
+        binding.buttonAmazonBillingSubscribe.setOnClickListener { subscribe() }
 
         binding.buttonAmazonBillingGetPass.isEnabled = false
-        binding.buttonAmazonBillingGetPass.setOnClickListener { v: View? -> purchasePass() }
+        binding.buttonAmazonBillingGetPass.setOnClickListener { purchasePass() }
 
         ViewTools.openUriOnClick(
             binding.textViewAmazonBillingMoreInfo,
@@ -92,7 +92,7 @@ class AmazonBillingActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            super.onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
             return true
         }
         return false
