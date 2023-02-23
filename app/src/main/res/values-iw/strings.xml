@@ -327,7 +327,6 @@
     <string name="waitplease">רק רגע, בבקשה</string>
     <string name="connect">התחבר</string>
     <string name="disconnect">התנתק</string>
-    <string name="use_integrated_browser">השתמש בדפדפן המובנה</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt מסייעת לשמור רשימה של אילו תוכניות טלוויזיה וסרטים אתה צופה.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

@@ -313,7 +313,6 @@
     <string name="waitplease">ஒரு பெருக்கலின், தயவுசெய்து&#8230;</string>
     <string name="connect">இணை</string>
     <string name="disconnect">துண்டி</string>
-    <string name="use_integrated_browser">ஒருங்கிணைந்த உலாவியைப் பயன்படுத்து</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt டிவி என்ன காண்பிக்கும் பதிவேட்டை வைத்திருக்க உதவுகிறது மற்றும் திரைப்படங்கள் நீங்கள் வருவதாக.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

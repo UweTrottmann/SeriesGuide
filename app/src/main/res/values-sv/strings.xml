@@ -313,7 +313,6 @@
     <string name="waitplease">Ett ögonblick&#8230;</string>
     <string name="connect">Anslut</string>
     <string name="disconnect">Koppla ner</string>
-    <string name="use_integrated_browser">Använd inbyggd webbläsare</string>
     <string name="show_library">Lägg till serier från Trakt</string>
     <string name="about_trakt">Trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

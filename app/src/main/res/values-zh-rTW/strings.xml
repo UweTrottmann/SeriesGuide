@@ -306,7 +306,6 @@
     <string name="waitplease">請稍候&#8230;</string>
     <string name="connect">連接</string>
     <string name="disconnect">中斷連接</string>
-    <string name="use_integrated_browser">使用內建瀏覽器</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt 能幫你紀錄看了哪些電視節目和電影。</string>
     <string name="support_trakt">Support Trakt with VIP</string>

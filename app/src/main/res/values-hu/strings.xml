@@ -313,7 +313,6 @@
     <string name="waitplease">Kis türelmet&#8230;</string>
     <string name="connect">Kapcsolódás</string>
     <string name="disconnect">Megszakítás</string>
-    <string name="use_integrated_browser">Beépített böngésző használata</string>
     <string name="show_library">Sorozatok hozzáadása innen: Trakt</string>
     <string name="about_trakt">A Trakt segít nyilvántartani a nézett sorozatokat és filmeket.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

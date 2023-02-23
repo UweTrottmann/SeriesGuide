@@ -306,7 +306,6 @@
     <string name="waitplease">しばらくお待ちください&#8230;</string>
     <string name="connect">接続</string>
     <string name="disconnect">切断</string>
-    <string name="use_integrated_browser">統合ブラウザーを使用</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt は、あなたが観ているテレビ番組や映画を記録するのに役立ちます。</string>
     <string name="support_trakt">Support Trakt with VIP</string>

@@ -306,7 +306,6 @@
     <string name="waitplease">请稍候&#8230;&#8230;</string>
     <string name="connect">关联</string>
     <string name="disconnect">断开</string>
-    <string name="use_integrated_browser">使用内置浏览器</string>
     <string name="show_library">从 Trakt 中添加节目</string>
     <string name="about_trakt">Trakt 可帮您记录看过的电影和电视节目。</string>
     <string name="support_trakt">使用 VIP 支持 Trakt</string>

@@ -313,7 +313,6 @@
     <string name="waitplease">Един момент, моля&#8230;</string>
     <string name="connect">Свързване</string>
     <string name="disconnect">Прекъсване на връзката</string>
-    <string name="use_integrated_browser">Използвай вградения четец</string>
     <string name="show_library">Добавяне на сериали от Trakt</string>
     <string name="about_trakt">Trakt записва какви сериали и филми гледате.</string>
     <string name="support_trakt">Подкрепете Trakt с ВИП</string>

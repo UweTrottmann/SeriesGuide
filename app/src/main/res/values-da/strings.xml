@@ -313,7 +313,6 @@
     <string name="waitplease">Vent et øjeblik</string>
     <string name="connect">Forbind</string>
     <string name="disconnect">Afbryd</string>
-    <string name="use_integrated_browser">Brug integreret browser</string>
     <string name="show_library">Tilføj serier fra Trakt</string>
     <string name="about_trakt">Trakt hjælper dig med at holde styr på dine TV-serier.</string>
     <string name="support_trakt">Støt Trakt med VIP</string>

@@ -327,7 +327,6 @@
     <string name="waitplease">Зачекайте хвилинку&#8230;</string>
     <string name="connect">Підключитись</string>
     <string name="disconnect">Від\'єднатись</string>
-    <string name="use_integrated_browser">Використовувати вбудований браузер</string>
     <string name="show_library">Додати серіали чи фільми з Trakt</string>
     <string name="about_trakt">Trakt допомагає зберігати запис про те які телесеріали та фільми ви дивитеся.</string>
     <string name="support_trakt">Підтримати Trakt з VIP</string>

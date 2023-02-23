@@ -313,7 +313,6 @@
     <string name="waitplease">Un momento, por favor&#8230;</string>
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
-    <string name="use_integrated_browser">Empregar navegador integrado</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt axuda a manter un rexistro dos programas de televisión e películas que estás a ver.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

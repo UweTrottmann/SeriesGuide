@@ -320,7 +320,6 @@
     <string name="waitplease">Тренутак, молим&#8230;</string>
     <string name="connect">Повежи</string>
     <string name="disconnect">Прекини везу</string>
-    <string name="use_integrated_browser">Use integrated browser</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt води евиденцију серија и филмова које гледате.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

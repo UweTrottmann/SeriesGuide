@@ -313,7 +313,6 @@
     <string name="waitplease">Момент, Ве молиме&#8230;</string>
     <string name="connect">Конектирај</string>
     <string name="disconnect">Исклучи</string>
-    <string name="use_integrated_browser">Кoристи интегрирaн прелистувaч</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt помага да води евиденција кој ТВ емисии и филмови вие гледате.</string>
     <string name="support_trakt">Support Trakt with VIP</string>

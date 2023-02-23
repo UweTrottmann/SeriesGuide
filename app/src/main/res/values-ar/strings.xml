@@ -341,7 +341,6 @@
     <string name="waitplease">لحظة من فضلك&#8230;</string>
     <string name="connect">اتصال</string>
     <string name="disconnect">قطع الاتصال</string>
-    <string name="use_integrated_browser">استخدام متصفح متكامل</string>
     <string name="show_library">إضافة مسلسلات من Trakt</string>
     <string name="about_trakt">يساعدك Trakt على حفظ ما تشاهده من أفلام ومسلسلات.</string>
     <string name="support_trakt">ادعم Trakt بالـVIP</string>
