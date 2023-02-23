@@ -156,7 +156,12 @@ class PersonFragment : Fragment() {
                 false
             }
             buttonPersonWebSearch.setOnClickListener {
-                person?.let { ServiceUtils.performWebSearch(activity, it.name) }
+                person?.let {
+                    val name = it.name
+                    if (!name.isNullOrEmpty()) {
+                        ServiceUtils.performWebSearch(requireContext(), name)
+                    }
+                }
             }
         }
 
@@ -251,7 +256,7 @@ class PersonFragment : Fragment() {
 
             if (!TextUtils.isEmpty(person.profile_path)) {
                 ServiceUtils.loadWithPicasso(
-                    activity,
+                    requireContext(),
                     TmdbTools.buildProfileImageUrl(
                         activity, person.profile_path, TmdbTools.ProfileImageSize.H632
                     )

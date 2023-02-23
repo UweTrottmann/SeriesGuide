@@ -13,9 +13,9 @@ import androidx.core.content.getSystemService
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgShow2
-import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -135,6 +135,7 @@ object ViewTools {
         }
     }
 
+    // FIXME Move to ServiceUtils
     /**
      * Configures button to open IMDB, if needed fetches ID from network while disabling button.
      */

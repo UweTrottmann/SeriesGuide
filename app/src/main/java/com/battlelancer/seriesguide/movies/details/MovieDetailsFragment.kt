@@ -105,7 +105,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // trailer button
         binding.buttonMovieTrailer.setOnClickListener {
-            trailer?.let { ServiceUtils.openYoutube(it.key, activity) }
+            trailer?.let {
+                // FIXME Use type safe data class
+                // key guaranteed not null by loader (future task: replace with null safe data class)
+                ServiceUtils.openYoutube(it.key!!, requireContext())
+            }
         }
         binding.buttonMovieTrailer.isGone = true
         binding.buttonMovieTrailer.isEnabled = false
@@ -489,7 +493,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         } else {
             val smallImageUrl = (TmdbSettings.getImageBaseUrl(activity)
                     + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path)
-            ServiceUtils.loadWithPicasso(activity, smallImageUrl)
+            ServiceUtils.loadWithPicasso(requireContext(), smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
                         viewLifecycleOwner.lifecycleScope.launch {
