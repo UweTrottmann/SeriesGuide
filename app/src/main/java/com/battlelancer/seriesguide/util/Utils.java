@@ -1,18 +1,13 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
@@ -25,8 +20,6 @@ import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.billing.localdb.GoldStatus;
 import com.uwetrottmann.seriesguide.billing.localdb.LocalBillingDb;
-import java.io.File;
-import timber.log.Timber;
 
 /**
  * Various generic helper methods that do not fit other tool categories.
@@ -88,25 +81,6 @@ public class Utils {
            return new Intent(context, AmazonBillingActivity.class);
         } else {
             return new Intent(context, BillingActivity.class);
-        }
-    }
-
-    /**
-     * Clear all files in files directory on external storage.
-     */
-    public static void clearLegacyExternalFileCache(Context context) {
-        File path = context.getApplicationContext().getExternalFilesDir(null);
-        if (path == null) {
-            Timber.w("Could not clear cache, external storage not available");
-            return;
-        }
-
-        final File[] files = path.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                //noinspection ResultOfMethodCallIgnored
-                file.delete();
-            }
         }
     }
 
@@ -205,14 +179,6 @@ public class Utils {
         );
     }
 
-    public static void startActivityWithTransition(Activity activity, Intent intent, View view,
-            @StringRes int sharedElementNameRes) {
-        // shared element transition on L+
-        Bundle activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity, view,
-                activity.getString(sharedElementNameRes)).toBundle();
-        ActivityCompat.startActivity(activity, intent, activityOptions);
-    }
-
     /**
      * Tries to start the given intent as a new document (e.g. opening a website, other app) so it
      * appears as a new entry in the task switcher using {@link #tryStartActivity}.
@@ -223,15 +189,4 @@ public class Utils {
         return Utils.tryStartActivity(context, intent, true);
     }
 
-    /**
-     * Executes the {@link android.os.AsyncTask} on the {@link android.os.AsyncTask#SERIAL_EXECUTOR},
-     * e.g. one after another.
-     *
-     * <p> This is useful for executing non-blocking operations (e.g. NO network activity, etc.).
-     */
-    @SafeVarargs
-    public static <Params, Progress, Result> void executeInOrder(
-            AsyncTask<Params, Progress, Result> task, Params... args) {
-        task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, args);
-    }
 }

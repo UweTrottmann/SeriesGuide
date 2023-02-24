@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * If necessary, runs upgrade code after an update with a higher version code is installed.
@@ -63,7 +64,7 @@ class AppUpgrade(
         }
 
         if (lastVersion < SgApp.RELEASE_VERSION_16_BETA1) {
-            Utils.clearLegacyExternalFileCache(context)
+            clearLegacyExternalFileCache(context)
         }
 
         if (lastVersion < SgApp.RELEASE_VERSION_23_BETA4) {
@@ -131,6 +132,23 @@ class AppUpgrade(
             // Changed ID of Canceled show status for better sorting.
             SgApp.coroutineScope.launch(Dispatchers.IO) {
                 SgRoomDatabase.getInstance(context).sgShow2Helper().migrateCanceledShowStatus()
+            }
+        }
+    }
+
+    /**
+     * Clear all files in files directory on external storage.
+     */
+    private fun clearLegacyExternalFileCache(context: Context) {
+        val path = context.applicationContext.getExternalFilesDir(null)
+        if (path == null) {
+            Timber.w("Could not clear cache, external storage not available")
+            return
+        }
+        val files = path.listFiles()
+        if (files != null) {
+            for (file in files) {
+                file.delete()
             }
         }
     }
