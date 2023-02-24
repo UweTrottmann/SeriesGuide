@@ -15,7 +15,11 @@ Version 67
 ----------
 *in development*
 
+#### 67.0.3 🧪
+*2023-02-24*
+
 * 🔧 Trakt: show default browser in-app when signing in, drop integrated browser option.
+* 🔧 Use in-app browser (Custom Tab) whenever possible to open websites.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 67.0.2 🧪
