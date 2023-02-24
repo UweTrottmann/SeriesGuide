@@ -12,8 +12,12 @@ object WebTools {
     /**
      * Opens in a Custom Tab if a supporting browser is installed.
      * Otherwise automatically falls back to opening a full browser.
+     *
+     * Returns false (and shows an error toast) if there is no app available to handle the view
+     * intent, see [Utils.tryStartActivity].
      */
-    fun openAsCustomTab(context: Context, url: String) {
+    @JvmStatic
+    fun openAsCustomTab(context: Context, url: String): Boolean {
         val darkParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(
                 ContextCompat.getColor(context, R.color.sg_background_app_bar_dark)
@@ -31,7 +35,7 @@ object WebTools {
             .setDefaultColorSchemeParams(defaultParams)
             .build().intent
             .apply { data = Uri.parse(url) }
-        Utils.tryStartActivity(context, customTabsIntent, true)
+        return Utils.tryStartActivity(context, customTabsIntent, true)
     }
 
 }

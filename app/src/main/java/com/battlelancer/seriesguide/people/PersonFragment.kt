@@ -29,6 +29,7 @@ import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Person
@@ -147,7 +148,9 @@ class PersonFragment : Fragment() {
             }
 
             buttonPersonTmdbLink.setOnClickListener {
-                person?.id?.let { TmdbTools.openTmdbPerson(activity, it) }
+                person?.id?.let {
+                    WebTools.openAsCustomTab(requireContext(), TmdbTools.buildPersonUrl(it))
+                }
             }
             buttonPersonTmdbLink.setOnLongClickListener {
                 person?.id?.let {

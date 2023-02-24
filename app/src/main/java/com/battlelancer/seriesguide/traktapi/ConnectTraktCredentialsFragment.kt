@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.databinding.FragmentConnectTraktCredentialsB
 import com.battlelancer.seriesguide.sync.SyncProgress.SyncEvent
 import com.battlelancer.seriesguide.ui.SearchActivity.Companion.newIntent
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -22,9 +22,9 @@ import org.greenrobot.eventbus.ThreadMode
  * Interface connect or disconnect Trakt, also shows features not supported while Cloud is signed in.
  */
 class ConnectTraktCredentialsFragment : Fragment() {
-    
+
     private var binding: FragmentConnectTraktCredentialsBinding? = null
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,13 +46,15 @@ class ConnectTraktCredentialsFragment : Fragment() {
             startActivity(newIntent(requireContext()))
         }
         // Learn more button
-        binding.buttonTraktWebsite.setOnClickListener {
-            Utils.launchWebsite(requireContext(), getString(R.string.url_trakt))
-        }
+        ViewTools.openUrlOnClickAndCopyOnLongPress(
+            binding.buttonTraktWebsite,
+            getString(R.string.url_trakt)
+        )
         // VIP button
-        binding.buttonTraktSupport.setOnClickListener {
-            Utils.launchWebsite(requireContext(), getString(R.string.url_trakt_vip))
-        }
+        ViewTools.openUrlOnClickAndCopyOnLongPress(
+            binding.buttonTraktSupport,
+            getString(R.string.url_trakt_vip)
+        )
 
         binding.syncStatusTrakt.visibility = View.GONE
 

@@ -58,6 +58,7 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -278,11 +279,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     true
                 }
                 R.id.menu_open_tmdb -> {
-                    TmdbTools.openTmdbMovie(activity, tmdbId)
+                    WebTools.openAsCustomTab(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
                     true
                 }
                 R.id.menu_open_trakt -> {
-                    Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
+                    WebTools.openAsCustomTab(requireContext(), TraktTools.buildMovieUrl(tmdbId))
                     true
                 }
                 else -> false

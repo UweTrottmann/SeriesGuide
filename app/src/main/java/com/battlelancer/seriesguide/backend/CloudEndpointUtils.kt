@@ -2,7 +2,7 @@ package com.battlelancer.seriesguide.backend
 
 import android.content.Context
 import com.battlelancer.seriesguide.BuildConfig
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.PackageTools
 import com.google.api.client.googleapis.services.AbstractGoogleClient
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer
@@ -62,7 +62,7 @@ object CloudEndpointUtils {
             builder.rootUrl = ROOT_URL_STAGING + PATH_API
         }
         // used for user agent
-        builder.applicationName = "SeriesGuide " + Utils.getVersion(context)
+        builder.applicationName = "SeriesGuide " + PackageTools.getVersion(context)
 
         // only enable GZip when connecting to remote server
         val enableGZip = builder.rootUrl.startsWith("https:")

@@ -6,15 +6,9 @@ import android.app.ActivityOptions;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.Signature;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -22,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.AnyRes;
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
@@ -31,7 +24,6 @@ import com.battlelancer.seriesguide.BuildConfig;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.billing.BillingActivity;
 import com.battlelancer.seriesguide.billing.amazon.AmazonBillingActivity;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.settings.UpdateSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -47,30 +39,6 @@ public class Utils {
 
     private Utils() {
         // prevent instantiation
-    }
-
-    public static String getVersion(Context context) {
-        String version;
-        try {
-            version = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0).versionName;
-        } catch (NameNotFoundException e) {
-            version = "UnknownVersion";
-        }
-        return version;
-    }
-
-    /**
-     * Return a version string like "v42 (Database v42)".
-     */
-    public static String getVersionString(Context context) {
-        if (BuildConfig.DEBUG) {
-            return context.getString(R.string.format_version_debug, getVersion(context),
-                    SgRoomDatabase.VERSION, BuildConfig.VERSION_CODE);
-        } else {
-            return context.getString(R.string.format_version, getVersion(context),
-                    SgRoomDatabase.VERSION);
-        }
     }
 
     /**
@@ -98,43 +66,7 @@ public class Utils {
      */
     public static boolean hasXpass(Context context) {
         // dev builds and the SeriesGuide X key app are not handled through the Play store
-        return BuildConfig.DEBUG || hasUnlockKeyInstalled(context);
-    }
-
-    /**
-     * Returns if the user has a valid copy of X Pass installed.
-     */
-    private static boolean hasUnlockKeyInstalled(Context context) {
-        try {
-            // Get our signing key
-            PackageManager manager = context.getPackageManager();
-            @SuppressLint("PackageManagerGetSignatures") PackageInfo appInfoSeriesGuide = manager
-                    .getPackageInfo(
-                            context.getApplicationContext().getPackageName(),
-                            PackageManager.GET_SIGNATURES);
-
-            // Try to find the X signing key
-            @SuppressLint("PackageManagerGetSignatures") PackageInfo appInfoSeriesGuideX = manager
-                    .getPackageInfo(
-                            "com.battlelancer.seriesguide.x",
-                            PackageManager.GET_SIGNATURES);
-
-            Signature[] sgSignatures = appInfoSeriesGuide.signatures;
-            Signature[] xSignatures = appInfoSeriesGuideX.signatures;
-            if (sgSignatures.length == xSignatures.length) {
-                for (int i = 0; i < sgSignatures.length; i++) {
-                    if (!sgSignatures[i].toCharsString().equals(xSignatures[i].toCharsString())) {
-                        return false; // a signature does not match
-                    }
-                }
-                return true;
-            }
-        } catch (NameNotFoundException e) {
-            // Expected exception that occurs if the package is not present.
-            Timber.d("X Pass not found.");
-        }
-
-        return false;
+        return BuildConfig.DEBUG || PackageTools.hasUnlockKeyInstalled(context);
     }
 
     /**
@@ -294,17 +226,6 @@ public class Utils {
         TypedValue outValue = new TypedValue();
         theme.resolveAttribute(attributeResId, outValue, true);
         return outValue.resourceId;
-    }
-
-    /**
-     * Tries to start a new activity to handle the given URL using {@link #openNewDocument}.
-     */
-    public static boolean launchWebsite(@Nullable Context context, @Nullable String url) {
-        if (context == null || TextUtils.isEmpty(url)) {
-            return false;
-        }
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        return openNewDocument(context, intent);
     }
 
     /**

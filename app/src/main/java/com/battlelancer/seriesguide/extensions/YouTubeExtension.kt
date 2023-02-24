@@ -34,7 +34,7 @@ class YouTubeExtension : SeriesGuideExtension("YouTubeExtension") {
     private fun publishYoutubeAction(identifier: Int, searchTerm: String) {
         publishAction(
             Action.Builder(getString(R.string.extension_youtube), identifier)
-                .viewIntent(ServiceUtils.buildYouTubeIntent(applicationContext, searchTerm))
+                .viewIntent(ServiceUtils.buildYouTubeSearchIntent(searchTerm))
                 .build()
         )
     }

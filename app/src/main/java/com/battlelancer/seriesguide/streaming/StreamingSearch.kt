@@ -15,7 +15,7 @@ import androidx.lifecycle.liveData
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import kotlinx.coroutines.Dispatchers
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
@@ -208,9 +208,7 @@ object StreamingSearch {
         val urlOrNull = watchInfo.url
         if (urlOrNull != null) {
             button.isEnabled = true
-            button.setOnClickListener {
-                Utils.launchWebsite(context, watchInfo.url)
-            }
+            ViewTools.openUriOnClick(button, watchInfo.url)
         } else {
             button.isEnabled = false
         }

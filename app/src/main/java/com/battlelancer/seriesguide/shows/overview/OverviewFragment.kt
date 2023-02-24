@@ -62,6 +62,7 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -547,9 +548,10 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
             // trakt button
             if (episode.tmdbId != null) {
-                val traktLink = TraktTools.buildEpisodeUrl(episode.tmdbId)
-                ViewTools.openUriOnClick(it.buttonEpisodeTrakt, traktLink)
-                it.buttonEpisodeTrakt.copyTextToClipboardOnLongClick(traktLink)
+                ViewTools.openUrlOnClickAndCopyOnLongPress(
+                    it.buttonEpisodeTrakt,
+                    TraktTools.buildEpisodeUrl(episode.tmdbId)
+                )
             }
         }
     }
@@ -579,10 +581,10 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         // TMDb button
         val showTmdbId = show.tmdbId
         if (showTmdbId != null) {
-            val url = TmdbTools.buildEpisodeUrl(showTmdbId, episode.season, episode.number)
-            val buttonTmdb = binding.includeServices.includeMore.buttonEpisodeTmdb
-            ViewTools.openUriOnClick(buttonTmdb, url)
-            buttonTmdb.copyTextToClipboardOnLongClick(url)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(
+                binding.includeServices.includeMore.buttonEpisodeTmdb,
+                TmdbTools.buildEpisodeUrl(showTmdbId, episode.season, episode.number)
+            )
         }
     }
 
@@ -732,7 +734,10 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             feedbackView = it
             it.setCallback(object : FeedbackView.Callback {
                 override fun onRate() {
-                    if (Utils.launchWebsite(context, getString(R.string.url_store_page))) {
+                    if (WebTools.openAsCustomTab(
+                            requireContext(),
+                            getString(R.string.url_store_page)
+                        )) {
                         hideFeedbackView()
                     }
                 }

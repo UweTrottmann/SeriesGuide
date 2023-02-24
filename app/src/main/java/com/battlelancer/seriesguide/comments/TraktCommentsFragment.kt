@@ -26,8 +26,8 @@ import com.battlelancer.seriesguide.traktapi.TraktTask
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.WebTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.trakt5.TraktLink
 import org.greenrobot.eventbus.EventBus
@@ -207,7 +207,7 @@ class TraktCommentsFragment : Fragment() {
     private val onItemClickListener =
         object : TraktCommentsAdapter.OnItemClickListener {
             override fun onOpenWebsite(commentId: Int) {
-                Utils.launchWebsite(context, TraktLink.comment(commentId))
+                WebTools.openAsCustomTab(requireContext(), TraktLink.comment(commentId))
             }
         }
 

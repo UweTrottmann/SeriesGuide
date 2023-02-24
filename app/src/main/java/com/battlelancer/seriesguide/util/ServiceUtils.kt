@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.View
 import com.battlelancer.seriesguide.R
@@ -27,7 +26,6 @@ object ServiceUtils {
     private const val IMDB_TITLE_URL = "http://imdb.com/title/"
     private const val YOUTUBE_BASE_URL = "http://www.youtube.com/watch?v="
     private const val YOUTUBE_SEARCH = "http://www.youtube.com/results?search_query=%s"
-    private const val YOUTUBE_PACKAGE = "com.google.android.youtube"
 
     /**
      * Displays the IMDb page for the given id (show or episode) in the IMDb app or on the imdb.com
@@ -63,8 +61,8 @@ object ServiceUtils {
         )
             .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
         if (!Utils.tryStartActivity(context, intent, false)) {
-            // on failure, try launching the web page
-            Utils.launchWebsite(context, imdbLink(imdbId))
+            // If the app is not available, open website instead.
+            WebTools.openAsCustomTab(context, imdbLink(imdbId))
         }
     }
 
@@ -137,34 +135,15 @@ object ServiceUtils {
      * Opens the YouTube app or web page for the given video.
      */
     fun openYoutube(videoId: String, context: Context) {
-        Utils.launchWebsite(context, YOUTUBE_BASE_URL + videoId)
+        WebTools.openAsCustomTab(context, YOUTUBE_BASE_URL + videoId)
     }
 
     /**
-     * Builds a search [android.content.Intent] to open the YouTube application to search for
-     * the [query]. If the YouTube app is unavailable, a view [android.content.Intent]
-     * with the web search URL is returned instead.
+     * Builds an intent to search YouTube for the [query].
      */
-    fun buildYouTubeIntent(context: Context, query: String?): Intent {
-        val pm = context.packageManager
-        val hasYouTube: Boolean = try {
-            pm.getPackageInfo(YOUTUBE_PACKAGE, PackageManager.GET_ACTIVITIES)
-            true
-        } catch (notInstalled: PackageManager.NameNotFoundException) {
-            false
-        }
-
-        val intent: Intent = if (hasYouTube) {
-            // Directly search the YouTube app
-            Intent(Intent.ACTION_SEARCH)
-                .setPackage(YOUTUBE_PACKAGE)
-                .putExtra("query", query)
-        } else {
-            // Launch a web search
-            Intent(Intent.ACTION_VIEW)
+    fun buildYouTubeSearchIntent(query: String?): Intent {
+            return Intent(Intent.ACTION_VIEW)
                 .apply { data = Uri.parse(String.format(YOUTUBE_SEARCH, Uri.encode(query))) }
-        }
-        return intent
     }
 
     /**

@@ -10,7 +10,7 @@ object Metacritic {
      */
     fun searchForMovie(context: Context, title: String) {
         val url = "https://www.metacritic.com/search/movie/${Uri.encode(title)}/results"
-        Utils.launchWebsite(context, url)
+        WebTools.openAsCustomTab(context, url)
     }
 
     /**
@@ -18,7 +18,7 @@ object Metacritic {
      */
     fun searchForTvShow(context: Context, title: String) {
         val url = "https://www.metacritic.com/search/tv/${Uri.encode(title)}/results"
-        Utils.launchWebsite(context, url)
+        WebTools.openAsCustomTab(context, url)
     }
 
 }

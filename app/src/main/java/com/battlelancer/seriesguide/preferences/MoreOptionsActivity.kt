@@ -18,6 +18,7 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -90,7 +91,7 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.buttonMoreAbout.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }
-        binding.textViewMoreVersionInfo.text = Utils.getVersionString(this)
+        binding.textViewMoreVersionInfo.text = PackageTools.getVersionString(this)
         binding.textViewMoreVersionInfo.copyTextToClipboardOnClick()
     }
 
@@ -142,7 +143,7 @@ class MoreOptionsActivity : BaseTopActivity() {
                 // include app version in subject
                 .putExtra(
                     Intent.EXTRA_SUBJECT,
-                    "SeriesGuide ${Utils.getVersion(context)} Feedback"
+                    "SeriesGuide ${PackageTools.getVersion(context)} Feedback"
                 )
                 // and hardware and Android info in body
                 .putExtra(

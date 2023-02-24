@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.settings.UpdateSettings
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.TextTools
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.androidutils.AndroidUtils
 
 class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
@@ -111,10 +111,10 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             R.style.TextAppearance_SeriesGuide_Subtitle1_Secondary
         )
 
-        binding.textViewPolicyLink.setOnClickListener { v ->
-            val context = v.context
-            Utils.launchWebsite(context, context.getString(R.string.url_privacy))
-        }
+        ViewTools.openUriOnClick(
+            binding.textViewPolicyLink,
+            context.getString(R.string.url_privacy)
+        )
     }
 
     private fun setFirstRunDismissed() {

@@ -439,14 +439,16 @@ class ShowFragment() : Fragment() {
 
         show.tmdbId?.also {
             // TMDb button
-            val url = TmdbTools.buildShowUrl(it)
-            ViewTools.openUriOnClick(binding.buttonTmdb, url)
-            binding.buttonTmdb.copyTextToClipboardOnLongClick(url)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(
+                binding.buttonTmdb,
+                TmdbTools.buildShowUrl(it)
+            )
 
             // Trakt button
-            val traktLink = TraktTools.buildShowUrl(it)
-            ViewTools.openUriOnClick(binding.buttonTrakt, traktLink)
-            binding.buttonTrakt.copyTextToClipboardOnLongClick(traktLink)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(
+                binding.buttonTrakt,
+                TraktTools.buildShowUrl(it)
+            )
         }
 
         binding.buttonShowMetacritic.setOnClickListener {

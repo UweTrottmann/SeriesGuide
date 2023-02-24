@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
 import com.uwetrottmann.seriesguide.billing.BillingViewModelFactory
@@ -128,21 +129,18 @@ class BillingActivity : BaseActivity() {
         }
         buttonManageSubs = findViewById<Button>(R.id.buttonBillingManageSubscription).also {
             it.setOnClickListener { v ->
-                Utils.launchWebsite(
-                    v.context,
-                    manageSubscriptionUrl
-                )
+                // URL may change depending on active sub, so get it on demand.
+                WebTools.openAsCustomTab(v.context, manageSubscriptionUrl)
             }
         }
 
         buttonPass = findViewById(R.id.buttonBillingGetPass)
         ViewTools.openUriOnClick(buttonPass, getString(R.string.url_x_pass))
 
-        findViewById<View>(R.id.textViewBillingMoreInfo).setOnClickListener {
-            Utils.launchWebsite(
-                this@BillingActivity, getString(R.string.url_whypay)
-            )
-        }
+        ViewTools.openUriOnClick(
+            findViewById(R.id.textViewBillingMoreInfo),
+            getString(R.string.url_whypay)
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
