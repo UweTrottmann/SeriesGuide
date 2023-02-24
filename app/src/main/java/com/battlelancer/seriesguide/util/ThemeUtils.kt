@@ -3,12 +3,15 @@ package com.battlelancer.seriesguide.util
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.Window
+import androidx.annotation.AnyRes
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -60,11 +63,25 @@ object ThemeUtils {
         }
     }
 
+    /**
+     * Resolves the given attribute to the resource id for the given theme.
+     */
+    @JvmStatic
+    @AnyRes
+    fun resolveAttributeToResourceId(
+        theme: Resources.Theme,
+        @AttrRes attributeResId: Int
+    ): Int {
+        val outValue = TypedValue()
+        theme.resolveAttribute(attributeResId, outValue, true)
+        return outValue.resourceId
+    }
+
     @JvmStatic
     fun getColorFromAttribute(context: Context, @AttrRes attribute: Int): Int {
         return ContextCompat.getColor(
             context,
-            Utils.resolveAttributeToResourceId(context.theme, attribute)
+            resolveAttributeToResourceId(context.theme, attribute)
         )
     }
 

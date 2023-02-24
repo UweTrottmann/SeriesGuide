@@ -6,15 +6,11 @@ import android.app.ActivityOptions;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
-import androidx.annotation.AnyRes;
-import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
@@ -215,17 +211,6 @@ public class Utils {
         Bundle activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity, view,
                 activity.getString(sharedElementNameRes)).toBundle();
         ActivityCompat.startActivity(activity, intent, activityOptions);
-    }
-
-    /**
-     * Resolves the given attribute to the resource id for the given theme.
-     */
-    @AnyRes
-    public static int resolveAttributeToResourceId(Resources.Theme theme,
-            @AttrRes int attributeResId) {
-        TypedValue outValue = new TypedValue();
-        theme.resolveAttribute(attributeResId, outValue, true);
-        return outValue.resourceId;
     }
 
     /**

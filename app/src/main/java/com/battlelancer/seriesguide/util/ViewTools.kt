@@ -94,10 +94,10 @@ object ViewTools {
 
     @JvmStatic
     fun setSwipeRefreshLayoutColors(
-        theme: Resources.Theme?,
+        theme: Resources.Theme,
         swipeRefreshLayout: SwipeRefreshLayout
     ) {
-        val accentColorResId = Utils.resolveAttributeToResourceId(theme, R.attr.colorAccent)
+        val accentColorResId = ThemeUtils.resolveAttributeToResourceId(theme, R.attr.colorAccent)
         swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.sg_color_secondary)
     }
 

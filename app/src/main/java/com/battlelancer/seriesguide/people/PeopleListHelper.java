@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
+import com.battlelancer.seriesguide.util.ImageTools;
+import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.entities.CastMember;
 import com.uwetrottmann.tmdb2.entities.Credits;
@@ -150,7 +151,7 @@ public class PeopleListHelper {
 
         // use clickable instead of activatable background
         personView.setBackgroundResource(
-                Utils.resolveAttributeToResourceId(peopleContainer.getContext().getTheme(),
+                ThemeUtils.resolveAttributeToResourceId(peopleContainer.getContext().getTheme(),
                         R.attr.selectableItemBackground));
         // support keyboard nav
         personView.setFocusable(true);

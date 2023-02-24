@@ -28,7 +28,6 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -111,7 +110,7 @@ class PersonFragment : Fragment() {
                                 // In single pane view in landscape add top padding
                                 // for action bar and status bar.
                                 val actionBarSizePx = resources.getDimensionPixelSize(
-                                    Utils.resolveAttributeToResourceId(
+                                    ThemeUtils.resolveAttributeToResourceId(
                                         view.context.theme,
                                         R.attr.actionBarSize
                                     )

@@ -808,7 +808,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             if (!showOverlay && shouldShowOverlay) {
                 val drawableColor = appBarBackgroundLifted ?: ContextCompat.getColor(
                     v.context,
-                    Utils.resolveAttributeToResourceId(
+                    ThemeUtils.resolveAttributeToResourceId(
                         v.context.theme, R.attr.sgColorStatusBarOverlay
                     )
                 )
