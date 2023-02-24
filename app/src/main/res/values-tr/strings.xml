@@ -486,7 +486,7 @@
     <string name="billing_action_manage_subscriptions">Abonelikleri Yönet</string>
     <string name="billing_action_pass">X Pass App alın</string>
     <string name="billing_duration_format">%1$s/yıl</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Ücretsiz deneme</string>
     <string name="billing_sub_description">30 gün ücretsiz dene, istediğin zaman iptal et</string>
     <string name="billing_price_pass">tek seferlik ödeme</string>
     <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
