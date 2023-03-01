@@ -13,9 +13,14 @@ Releases marked with 🧪 were released on [the beta program](https://github.com
 
 Version 67
 ----------
-*in development*
+*2023-03-01*
 
-#### 67.0.3 🧪
+* 🔧 On Android 8 and newer, use system settings to configure notification settings.
+* 🔧 On Android 13, ask to allow notifications.
+* 🔧 Use in-app browser whenever possible to open websites.
+* 🔧 Appearance: use card to separate details on large episodes and people screens.
+
+#### 67.0.3
 *2023-02-24*
 
 * 🔧 Trakt: show default browser in-app when signing in, drop integrated browser option.
