@@ -6,6 +6,7 @@ import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.util.Errors
+import com.battlelancer.seriesguide.util.PackageTools
 import timber.log.Timber
 
 object AppSettings {
@@ -44,8 +45,7 @@ object AppSettings {
             return false // already asked for feedback
         }
         try {
-            val ourPackageInfo = context.packageManager
-                .getPackageInfo(context.packageName, 0)
+            val ourPackageInfo = PackageTools.getAppPackage(context)
             val installedRecently = System.currentTimeMillis() <
                     ourPackageInfo.firstInstallTime + 30 * DateUtils.DAY_IN_MILLIS
             if (installedRecently) {

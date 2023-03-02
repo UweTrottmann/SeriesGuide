@@ -306,7 +306,6 @@
     <string name="waitplease">Tunggu sebentar&#8230;</string>
     <string name="connect">Sambungkan</string>
     <string name="disconnect">Putuskan</string>
-    <string name="use_integrated_browser">Gunakan browser bawaan</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt membantu menyimpan catatan acara TV dan film apa yang anda tonton.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
@@ -441,6 +440,7 @@
     <string name="upcoming_display">Pilih untuk menampilkan acara yang akan datang</string>
     <string name="pref_notifications">Notifikasi</string>
     <string name="pref_notificationssummary">Beritahu tentang episode baru</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Suara</string>
     <string name="pref_vibrate">Getar</string>
     <string name="pref_vibratesummary">Juga bergetar saat menampilkan pemberitahuan</string>
@@ -454,6 +454,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Hanya beri tahu jika episode baru adalah yang berikutnya untuk ditonton</string>
     <string name="pref_notifications_battery_settings">Pengaturan baterai</string>
     <string name="pref_notifications_battery_settings_summary">Buka Pengaturan baterai untuk menonaktifkan pengoptimalan baterai untuk notifikasi yang dapat diandalkan</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Sembunyikan episode yang telah ditonton</string>
     <string name="pref_widget_opacity">Latar belakang widget</string>
@@ -473,13 +475,13 @@
     <string name="billing_action_manage_subscriptions">Kelola langganan</string>
     <string name="billing_action_pass">Dapatkan X Pass App</string>
     <string name="billing_duration_format">%1$s/tahun</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Coba gratis 30 hari, batalkan kapan saja.</string>
     <string name="billing_price_pass">pembelian satu kali</string>
     <string name="upgrade_description">Setiap langganan membuka semua fitur dan mendukung pembaruan yang akan datang. tidak perlu langganan untuk menggunakan aplikasi ini.</string>
     <string name="upgrade_success">Terima kasih telah mendukung SeriesGuide! Anda memiliki akses ke semua fitur.</string>
     <string name="billing_unlock_detected">Aplikasi X Pass terdeteksi. Anda masih dapat berlangganan untuk mendukung pembaruan di masa mendatang.</string>
     <string name="billing_learn_more">Info lebih lanjut dan bantuan</string>
-    <string name="subscription_expired">Langganan berakhir</string>
     <string name="subscription_expired_details">Langganan SeriesGuide anda telah berakhir.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Masuk ke akun Amazon Anda!</string>

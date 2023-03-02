@@ -1,9 +1,11 @@
 package com.battlelancer.seriesguide.settings
 
+import android.app.NotificationManager
 import android.content.Context
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -46,9 +48,33 @@ object NotificationSettings {
 
     private const val THRESHOLD_DEFAULT_MIN = 10
 
+    /**
+     * On Android 8+, returns if notifications are enabled in system settings.
+     * On older versions, checks if the app preference is true.
+     *
+     * Note that even if enabled, check [com.battlelancer.seriesguide.util.Utils.hasAccessToX] if
+     * the user is eligible to receive convenience notifications (for new episodes).
+     */
     fun isNotificationsEnabled(context: Context): Boolean {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(KEY_ENABLED, true)
+        return if (AndroidUtils.isAtLeastOreo) {
+            return areNotificationsAllowed(context)
+        } else {
+            PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(KEY_ENABLED, true)
+        }
+    }
+
+    /**
+     * On Android 8+, returns if notifications are enabled in system settings.
+     * On older versions always returns true.
+     */
+    fun areNotificationsAllowed(context: Context): Boolean {
+        return if (AndroidUtils.isAtLeastOreo) {
+            context.getSystemService<NotificationManager>()?.areNotificationsEnabled()
+                ?: false
+        } else {
+            true
+        }
     }
 
     /**

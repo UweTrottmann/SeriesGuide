@@ -16,7 +16,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.movies.tools.MovieTools;
 import com.battlelancer.seriesguide.settings.DisplaySettings;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ImageTools;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -99,7 +99,7 @@ class MoviesCursorAdapter extends CursorAdapter {
             // load poster, cache on external storage
             String posterPath = cursor.getString(MoviesQuery.POSTER);
             // use fixed size so bitmaps can be re-used on config change
-            ServiceUtils.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
+            ImageTools.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
                     ? null : tmdbImageBaseUrl + posterPath)
                     .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
                     .centerCrop()

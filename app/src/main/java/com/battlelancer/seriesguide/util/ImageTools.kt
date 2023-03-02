@@ -6,6 +6,9 @@ import android.widget.ImageView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.TmdbSettings
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.RequestCreator
 import timber.log.Timber
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -22,6 +25,26 @@ object ImageTools {
     private var sha256_hmac: Mac? = null
     private val cacheKey: String
         get() = BuildConfig.IMAGE_CACHE_SECRET
+
+    /**
+     * Build Picasso [com.squareup.picasso.RequestCreator] which respects user requirement of
+     * only loading images over WiFi.
+     *
+     * If [Utils.isAllowedLargeDataConnection] is false, will set [com.squareup.picasso.NetworkPolicy.OFFLINE]
+     * (which will set [okhttp3.CacheControl.FORCE_CACHE] on requests) to skip the network and
+     * accept stale images.
+     *
+     * Always uses [context.getApplicationContext()][Context.getApplicationContext].
+     */
+    @JvmStatic
+    fun loadWithPicasso(context: Context, path: String?): RequestCreator {
+        val requestCreator = Picasso.get().load(path)
+        if (!Utils.isAllowedLargeDataConnection(context.applicationContext)) {
+            // avoid the network, hit the cache immediately + accept stale images.
+            requestCreator.networkPolicy(NetworkPolicy.OFFLINE)
+        }
+        return requestCreator
+    }
 
     /**
      * Like [tmdbOrTvdbPosterUrl], only if [imagePath] is empty, will return an URL
@@ -158,7 +181,7 @@ object ImageTools {
         imageView: ImageView,
         posterPath: String?
     ) {
-        ServiceUtils.loadWithPicasso(context, tmdbOrTvdbPosterUrl(posterPath, context))
+        loadWithPicasso(context, tmdbOrTvdbPosterUrl(posterPath, context))
             .noFade()
             .into(imageView)
     }
@@ -200,7 +223,7 @@ object ImageTools {
         imageView: ImageView,
         url: String?
     ) {
-        ServiceUtils.loadWithPicasso(context, url)
+        loadWithPicasso(context, url)
             .resizeDimen(R.dimen.show_poster_width, R.dimen.show_poster_height)
             .centerCrop()
             .error(R.drawable.ic_photo_gray_24dp)
@@ -235,7 +258,7 @@ object ImageTools {
         imageView: ImageView,
         posterUrl: String?
     ) {
-        ServiceUtils.loadWithPicasso(context, posterUrl)
+        loadWithPicasso(context, posterUrl)
             .resizeDimen(R.dimen.show_poster_width_default, R.dimen.show_poster_height_default)
             .centerCrop()
             .error(R.drawable.ic_photo_gray_24dp)
@@ -254,7 +277,7 @@ object ImageTools {
         imageView: ImageView,
         context: Context
     ) {
-        ServiceUtils.loadWithPicasso(context, tmdbOrTvdbPosterUrl(posterPath, context))
+        loadWithPicasso(context, tmdbOrTvdbPosterUrl(posterPath, context))
             .fit()
             .centerCrop()
             .error(R.drawable.ic_photo_gray_24dp)

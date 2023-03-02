@@ -19,7 +19,6 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="@null"
-            app:layout_constraintBottom_toBottomOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_check_circle_green_24dp" />
@@ -29,41 +28,41 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
-            app:layout_constraintBottom_toBottomOf="@id/guideline"
             app:layout_constraintEnd_toStartOf="@+id/sku_price"
             app:layout_constraintStart_toEndOf="@+id/sku_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginStart="0dp"
-            tools:text="This is a Title placeholder." />
+            tools:text="This is a Title placeholder. This is a Title placeholder." />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sku_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold"
-            app:layout_constraintBottom_toBottomOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="12,00 €/year" />
+            tools:text="12,00 €/year\nfree trial" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierSkuHeadline"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.25" />
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="sku_title,sku_price" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sku_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/inline_padding"
-            android:layout_marginRight="@dimen/inline_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="@id/barrierSkuHeadline"
             tools:text="This is a description placeholder, telling users how cool this item is." />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

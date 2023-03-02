@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
 import java.util.List;
 
@@ -54,7 +54,7 @@ class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
         viewHolder.description.setText(person.description);
 
         // load headshot
-        ServiceUtils.loadWithPicasso(getContext(),
+        ImageTools.loadWithPicasso(getContext(),
                 TmdbTools.buildProfileImageUrl(getContext(), person.profilePath,
                         TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)

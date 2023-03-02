@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.billing.amazon.AmazonIapManager.AmazonIapPro
 import com.battlelancer.seriesguide.databinding.ActivityAmazonBillingBinding
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
@@ -60,17 +60,15 @@ class AmazonBillingActivity : BaseActivity() {
         ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewAmazonBilling)
 
         binding.buttonAmazonBillingSubscribe.isEnabled = false
-        binding.buttonAmazonBillingSubscribe.setOnClickListener { v: View? -> subscribe() }
+        binding.buttonAmazonBillingSubscribe.setOnClickListener { subscribe() }
 
         binding.buttonAmazonBillingGetPass.isEnabled = false
-        binding.buttonAmazonBillingGetPass.setOnClickListener { v: View? -> purchasePass() }
+        binding.buttonAmazonBillingGetPass.setOnClickListener { purchasePass() }
 
-        binding.textViewAmazonBillingMoreInfo.setOnClickListener { v: View ->
-            Utils.launchWebsite(
-                v.context,
-                getString(R.string.url_whypay)
-            )
-        }
+        ViewTools.openUriOnClick(
+            binding.textViewAmazonBillingMoreInfo,
+            getString(R.string.url_whypay)
+        )
         binding.progressBarAmazonBilling.visibility = View.VISIBLE
     }
 
@@ -94,7 +92,7 @@ class AmazonBillingActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            super.onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
             return true
         }
         return false

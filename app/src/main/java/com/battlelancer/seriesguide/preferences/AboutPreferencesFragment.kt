@@ -9,8 +9,9 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentAboutBinding
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.WebTools
 
 /**
  * Displays information about the app, the developer and licence information about content and
@@ -38,7 +39,7 @@ class AboutPreferencesFragment : Fragment() {
             ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewAbout)
 
             // display version number and database version
-            textViewAboutVersion.text = Utils.getVersionString(activity)
+            textViewAboutVersion.text = PackageTools.getVersionString(requireContext())
 
             buttonAboutWebsite.setOnClickListener(urlButtonClickListener)
             buttonAboutPrivacy.setOnClickListener(urlButtonClickListener)
@@ -66,6 +67,6 @@ class AboutPreferencesFragment : Fragment() {
     }
 
     private fun viewUrl(@StringRes urlResId: Int) {
-        Utils.launchWebsite(activity, getString(urlResId))
+        WebTools.openAsCustomTab(requireContext(), getString(urlResId))
     }
 }

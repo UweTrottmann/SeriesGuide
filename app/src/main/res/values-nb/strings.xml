@@ -313,7 +313,6 @@
     <string name="waitplease">Vent et øyeblikk&#8230;</string>
     <string name="connect">Koble til</string>
     <string name="disconnect">Koble fra</string>
-    <string name="use_integrated_browser">Bruk integrert nettleser</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt hjelper deg å holde oversikten over hvilke TV-serier og filmer du ser på.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">Velg for å vise kommende serier</string>
     <string name="pref_notifications">Varsler</string>
     <string name="pref_notificationssummary">Varsle om nye episoder</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Ringetone</string>
     <string name="pref_vibrate">Vibrer</string>
     <string name="pref_vibratesummary">Vibrer også ved visning av varsel</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Bare varsle hvis den nye episoden er den neste jeg skal se</string>
     <string name="pref_notifications_battery_settings">Innstillinger for batteri</string>
     <string name="pref_notifications_battery_settings_summary">Gå til Batteriinnstillinger for å deaktivere batterioptimalisering for pålitelige varsler</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sette episoder</string>
     <string name="pref_widget_opacity">Modulbakgrunn</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Behandle abonnement</string>
     <string name="billing_action_pass">Få X Pass App</string>
     <string name="billing_duration_format">%1$s/år</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Prøv 30 dager gratis, avbryt når som helst.</string>
     <string name="billing_price_pass">engangskjøp</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Takk for at du støtter SeriesGuide! Du har nå tilgang til alle funksjonene.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Mer informasjon og hjelp</string>
-    <string name="subscription_expired">Abonnement utløpt</string>
     <string name="subscription_expired_details">X Pass-abonnementet har utløpt.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Logg inn på din Amazon-konto!</string>

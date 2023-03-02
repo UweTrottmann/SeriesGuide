@@ -327,7 +327,6 @@
     <string name="waitplease">Prosím, chvíľku počkajte&#8230;</string>
     <string name="connect">Pripojiť</string>
     <string name="disconnect">Odpojiť</string>
-    <string name="use_integrated_browser">Použiť vstavaný prehliadač</string>
     <string name="show_library">Pridať seriály z Trakt</string>
     <string name="about_trakt">V Trakt zaznamenávate, ktoré seriály a filmy sledujete.</string>
     <string name="support_trakt">Podporte Trakt s VIP</string>
@@ -474,6 +473,7 @@
     <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
     <string name="pref_notifications">Upozornenia</string>
     <string name="pref_notificationssummary">Upozorňovať na nové epizódy</string>
+    <string name="pref_notifications_settings">Nastavenia oznámení</string>
     <string name="pref_ringtone">Tón upozornenia</string>
     <string name="pref_vibrate">Vibrovať</string>
     <string name="pref_vibratesummary">Pri upozornení vibrovať</string>
@@ -487,6 +487,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Upozorniť len v prípade, že nová epizóda je ďalšia na videnie</string>
     <string name="pref_notifications_battery_settings">Nastavenia batérie</string>
     <string name="pref_notifications_battery_settings_summary">Prejdite na Nastavenia batérie a deaktivujte optimalizáciu batérie pre spoľahlivé oznámenia</string>
+    <string name="notifications_allow">Povoliť oznámenia</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Skryť videné epizódy</string>
     <string name="pref_widget_opacity">Pozadie miniaplikácie</string>
@@ -506,13 +508,13 @@
     <string name="billing_action_manage_subscriptions">Správa predplatného</string>
     <string name="billing_action_pass">Získať X Pass App</string>
     <string name="billing_duration_format">%1$s/rok</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Vyskúšajte 30 dní zadarmo, kedykoľvek môžete zrušiť.</string>
     <string name="billing_price_pass">jednorázová platba</string>
     <string name="upgrade_description">Každé predplatné odomkne všetky funkcie a podporuje budúce aktualizácie. Na používanie tejto aplikácie sa nevyžaduje predplatné.</string>
     <string name="upgrade_success">Ďakujeme za podporu SeriesGuide! Máte prístup ku všetkým funkciám.</string>
     <string name="billing_unlock_detected">X Pass aplikácia detekovaná. Stále sa môžete prihlásiť k odberu pre podporu budúcich aktualizácií.</string>
     <string name="billing_learn_more">Viac info a pomoc</string>
-    <string name="subscription_expired">Predplatné vypršalo</string>
     <string name="subscription_expired_details">Vaše predplatné SeriesGuide vypršalo.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Prihláste sa do svojho účtu Amazon!</string>

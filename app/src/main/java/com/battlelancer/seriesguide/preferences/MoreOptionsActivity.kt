@@ -7,11 +7,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
-import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.backend.CloudSetupActivity
@@ -23,9 +18,11 @@ import com.battlelancer.seriesguide.traktapi.ConnectTraktActivity
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseTopActivity
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
+import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnClick
 import com.battlelancer.seriesguide.util.safeShow
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -74,27 +71,7 @@ class MoreOptionsActivity : BaseTopActivity() {
             startActivity(Intent(this, SeriesGuidePreferences::class.java))
         }
         binding.buttonHelp.setOnClickListener {
-            // Opens in a Custom Tab if a supporting browser is installed.
-            // Otherwise automatically falls back to opening a full browser.
-            val darkParams = CustomTabColorSchemeParams.Builder()
-                .setToolbarColor(
-                    ContextCompat.getColor(this, R.color.sg_background_app_bar_dark)
-                )
-                .build()
-            val defaultParams = CustomTabColorSchemeParams.Builder()
-                .setToolbarColor(
-                    ContextCompat.getColor(this, R.color.sg_color_background_light)
-                )
-                .build()
-            val customTabsIntent = CustomTabsIntent.Builder()
-                .setShowTitle(true)
-                .setColorScheme(COLOR_SCHEME_SYSTEM)
-                .setColorSchemeParams(COLOR_SCHEME_DARK, darkParams)
-                .setDefaultColorSchemeParams(defaultParams)
-                .build().intent.apply {
-                    data = Uri.parse(getString(R.string.help_url))
-                }
-            Utils.tryStartActivity(this, customTabsIntent, true)
+            WebTools.openAsCustomTab(this, getString(R.string.help_url))
         }
         ViewTools.openUriOnClick(binding.buttonCommunity, getString(R.string.url_community))
         ViewTools.openUriOnClick(binding.buttonTwitter, getString(R.string.url_twitter))
@@ -114,7 +91,7 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.buttonMoreAbout.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }
-        binding.textViewMoreVersionInfo.text = Utils.getVersionString(this)
+        binding.textViewMoreVersionInfo.text = PackageTools.getVersionString(this)
         binding.textViewMoreVersionInfo.copyTextToClipboardOnClick()
     }
 
@@ -166,7 +143,7 @@ class MoreOptionsActivity : BaseTopActivity() {
                 // include app version in subject
                 .putExtra(
                     Intent.EXTRA_SUBJECT,
-                    "SeriesGuide ${Utils.getVersion(context)} Feedback"
+                    "SeriesGuide ${PackageTools.getVersion(context)} Feedback"
                 )
                 // and hardware and Android info in body
                 .putExtra(

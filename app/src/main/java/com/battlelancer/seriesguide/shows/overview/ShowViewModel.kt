@@ -8,7 +8,9 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
+import com.battlelancer.seriesguide.util.Utils
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ShowViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -26,8 +28,27 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * This currently does not auto-update, it maybe should at some point (add global LiveData).
+     */
+    val hasAccessToX = MutableLiveData<Boolean>()
+
+    init {
+        updateUserStatus()
+    }
+
     fun setShowId(showId: Long) {
         this.showId.value = showId
+    }
+
+    fun updateUserStatus() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentState = hasAccessToX.value
+            val newState = Utils.hasAccessToX(getApplication())
+            if (currentState != newState) {
+                hasAccessToX.postValue(newState)
+            }
+        }
     }
 
 }

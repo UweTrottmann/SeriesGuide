@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide.shows
 
+import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupMenu
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.MenuProvider
@@ -30,8 +32,6 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider.Companion.notif
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.settings.AdvancedSettings
-import com.battlelancer.seriesguide.shows.FirstRunView.ButtonEvent
-import com.battlelancer.seriesguide.shows.FirstRunView.ButtonType
 import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
@@ -39,17 +39,17 @@ import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.getSortQuery
 import com.battlelancer.seriesguide.shows.SortShowsView.ShowSortOrder
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
+import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
 import com.battlelancer.seriesguide.ui.SearchActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.ViewTools
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 import kotlin.random.Random
 
@@ -119,7 +119,7 @@ class ShowsFragment : Fragment() {
         showSortOrder = ShowSortOrder.fromSettings(requireContext())
 
         // prepare view adapter
-        adapter = ShowsAdapter(requireContext(), onItemClickListener)
+        adapter = ShowsAdapter(requireContext(), onItemClickListener, firstRunClickListener)
         if (!FirstRunView.hasSeenFirstRunFragment(requireContext())) {
             adapter.displayFirstRunHeader = true
         }
@@ -216,16 +216,10 @@ class ShowsFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
     override fun onStop() {
         super.onStop()
         // Query update already repeated when STARTED, prevent scheduled update from also running.
         scheduledUpdateJob?.cancel()
-        EventBus.getDefault().unregister(this)
     }
 
     override fun onDestroy() {
@@ -260,29 +254,6 @@ class ShowsFragment : Fragment() {
                     true
                 }
                 else -> false
-            }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventFirstRunButton(event: ButtonEvent) {
-        when (event.type) {
-            ButtonType.ADD_SHOW -> {
-                startActivityAddShows()
-            }
-            ButtonType.SIGN_IN -> {
-                startActivity(Intent(activity, MoreOptionsActivity::class.java))
-                // Launching a top activity, adjust animation to match.
-                requireActivity().overridePendingTransition(
-                    R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg
-                )
-            }
-            ButtonType.RESTORE_BACKUP -> {
-                startActivity(Intent(activity, DataLiberationActivity::class.java))
-            }
-            ButtonType.DISMISS -> {
-                adapter.displayFirstRunHeader = false
-                updateShowsQuery()
             }
         }
     }
@@ -330,6 +301,54 @@ class ShowsFragment : Fragment() {
                 EpisodeTools.episodeWatchedIfNotZero(context, show.nextEpisodeId)
             }
         }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                adapter.refreshFirstRunHeader()
+            } else {
+                (activity as BaseMessageActivity?)?.snackbarParentView
+                    ?.let {
+                        Snackbar
+                            .make(it, R.string.notifications_allow_reason, Snackbar.LENGTH_LONG)
+                            .show()
+                    }
+            }
+        }
+
+    private val firstRunClickListener = object : FirstRunView.FirstRunClickListener {
+        override fun onAddShowClicked() {
+            startActivityAddShows()
+        }
+
+        override fun onSignInClicked() {
+            startActivity(Intent(requireActivity(), MoreOptionsActivity::class.java))
+            // Launching a top activity, adjust animation to match.
+            requireActivity().overridePendingTransition(
+                R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg
+            )
+        }
+
+        override fun onRestoreBackupClicked() {
+            startActivity(Intent(requireActivity(), DataLiberationActivity::class.java))
+        }
+
+        override fun onRestoreAutoBackupClicked() {
+            startActivity(DataLiberationActivity.intentToShowAutoBackup(requireActivity()))
+        }
+
+        override fun onAllowNotificationsClicked() {
+            if (AndroidUtils.isAtLeastTiramisu) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+        override fun onDismissClicked() {
+            adapter.displayFirstRunHeader = false
+            updateShowsQuery()
+        }
+
+    }
 
     private val onPreferenceChangeListener =
         OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String ->

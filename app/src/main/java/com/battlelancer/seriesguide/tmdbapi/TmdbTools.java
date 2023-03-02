@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.tmdbapi;
 
 import android.content.Context;
 import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.tmdb2.entities.Genre;
 import java.util.List;
 
@@ -31,24 +30,6 @@ public class TmdbTools {
     private static final String PATH_TV = "tv/";
     private static final String PATH_MOVIES = "movie/";
     private static final String PATH_PERSON = "person/";
-
-    /**
-     * Tries to display the TMDb website of the given movie through a view intent.
-     */
-    public static void openTmdbMovie(Context context, int movieTmdbId) {
-        openTmdbUrl(context, buildMovieUrl(movieTmdbId));
-    }
-
-    /**
-     * Tries to display the TMDb website of the given person through a view intent.
-     */
-    public static void openTmdbPerson(Context context, int personTmdbId) {
-        openTmdbUrl(context, buildPersonUrl(personTmdbId));
-    }
-
-    private static void openTmdbUrl(Context context, String url) {
-        Utils.launchWebsite(context, url);
-    }
 
     public static String buildEpisodeUrl(int showTmdbId, int season, int episode) {
         return BASE_URL + PATH_TV + showTmdbId + "/season/" + season + "/episode/" + episode;

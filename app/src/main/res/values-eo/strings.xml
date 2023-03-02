@@ -313,7 +313,6 @@
     <string name="waitplease">Momenton, bonvolu&#8230;</string>
     <string name="connect">Konekti</string>
     <string name="disconnect">Malkonekti</string>
-    <string name="use_integrated_browser">Uzi integritan retumilon</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt helps keep a record of what TV shows and movies you are watching.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">Elekti por montri venontajn televidaĵojn</string>
     <string name="pref_notifications">Sciigoj</string>
     <string name="pref_notificationssummary">Sciigi pri novaj epizodoj</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Sono</string>
     <string name="pref_vibrate">Vibri</string>
     <string name="pref_vibratesummary">Ankaŭ vibri dum montrado de sciigo</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Nur sciigi se la nova epizodo estas la sekva por spekti</string>
     <string name="pref_notifications_battery_settings">Agordoj de baterio</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Kaŝi spektitajn epizodojn</string>
     <string name="pref_widget_opacity">Fenestraĵa fono</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Administri abonojn</string>
     <string name="billing_action_pass">Ekhavu X Pass aplikaĵon</string>
     <string name="billing_duration_format">%1$s/jaro</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="billing_price_pass">unu-foja aĉeto</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Dankon por subteni SeriesGuide! Vi havas atingon por ĉiuj funkcioj.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">Pli da informo kaj helpo</string>
-    <string name="subscription_expired">Abono finiĝis</string>
     <string name="subscription_expired_details">Via SeriesGuide abono ĵus finiĝis.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Ensaluti al via Amazona konto</string>

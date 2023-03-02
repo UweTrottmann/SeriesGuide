@@ -38,7 +38,7 @@
     <string name="action_stream">پخش یا خرید</string>
     <string name="action_stream_info">اطّلاعات پخش یا خرید</string>
     <string name="action_select_region">گزینش ناحیه</string>
-    <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_include_any_watch_provider">شامل همه</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -146,8 +146,8 @@
     <string name="action_shows_filter_upcoming">بزودی</string>
     <string name="action_shows_filter_hidden">پنهان شده</string>
     <string name="state_shows_filter_disabled">از کار افتاده</string>
-    <string name="state_shows_filter_included">Included</string>
-    <string name="state_shows_filter_excluded">Excluded</string>
+    <string name="state_shows_filter_included">شامل شده</string>
+    <string name="state_shows_filter_excluded">مستثتی شده</string>
     <string name="action_shows_make_all_visible">آشکارسازی همه‌ی پنهان‌شده‌ها</string>
     <string name="description_make_all_visible_format">آشکارسازی مجدد همه‌ی (%s) برنامه‌ی تلویزیونی?</string>
     <string name="action_shows_sort">چینش آثار نمایشی</string>
@@ -313,10 +313,9 @@
     <string name="waitplease">یک لحظه، لطفا&#8230;</string>
     <string name="connect">وصل کردن</string>
     <string name="disconnect">قطع کردن</string>
-    <string name="use_integrated_browser">استفاده از مرورگر یکپارچه</string>
     <string name="show_library">افزودن نمایش‌ها از ترکت</string>
     <string name="about_trakt">Trakt کمک می‌کند تا حساب نمایش‌های تلویزیونی و فیلم‌هایی که می‌بینید را داشته باشید.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="support_trakt">پشتیبانی از ترکت با وی‌آی‌پی</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
     <string name="your_rating">نمرهٔ شما</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">گزینش برای نشان دادن نمایش‌های پیش رو</string>
     <string name="pref_notifications">آگاهی‌ها</string>
     <string name="pref_notificationssummary">آگاهی دربارهٔ قسمت‌های جدید</string>
+    <string name="pref_notifications_settings">تنظیمات آگاهی</string>
     <string name="pref_ringtone">صدا</string>
     <string name="pref_vibrate">لرزش</string>
     <string name="pref_vibratesummary">ارزش هنگام نمایش آگهی</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">آگاهی فقط در صورتی که قسمت جدید، قسمت بعدی‌ایست که باید دیده شود</string>
     <string name="pref_notifications_battery_settings">تنظیمات باتری</string>
     <string name="pref_notifications_battery_settings_summary">به منظور آگاهی‌های قابل اتّکا، برای از کار انداختن بهینه‌سازی‌های باتری به تنظیمات باتری بروید</string>
+    <string name="notifications_allow">اجازه به آگاهی‌ها</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">نهفتن قسمت‌های تماشا شده</string>
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">مدیریت اشتراک‌ها</string>
     <string name="billing_action_pass">گرفتن X Pass App</string>
     <string name="billing_duration_format">%1$s/سال</string>
+    <string name="billing_free_trial">آزمایش رایگان</string>
     <string name="billing_sub_description">۳۰ روز به رایگان آزموده و هر زمان لغو کنید.</string>
     <string name="billing_price_pass">خرید یک باره</string>
     <string name="upgrade_description">هر اشتراکی، همهٔ ویژگی‌ها را گشوده و از به‌روز رسانی‌های آتی پشیبانی می‌کند. برای استفاده از این کاره نیازی به اشتراک نیست.</string>
     <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">اطّلاعات بیش‌تر و راهنمایی</string>
-    <string name="subscription_expired">اشتراک پایان یافت</string>
     <string name="subscription_expired_details">اشتراک سریزگایدتان به پایان رسیده است.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">به حساب آمازونتان وارد شوید!</string>

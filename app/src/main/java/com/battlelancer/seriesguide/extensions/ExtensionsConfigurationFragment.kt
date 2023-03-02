@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.api.SeriesGuideExtension
 import com.battlelancer.seriesguide.databinding.FragmentExtensionsConfigurationBinding
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.WebTools
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortController
 import com.uwetrottmann.seriesguide.widgets.dragsortview.DragSortListView
 import timber.log.Timber
@@ -258,7 +259,10 @@ class ExtensionsConfigurationFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { item: MenuItem ->
             if (item.itemId == 0) {
                 // special item: search for more extensions
-                onGetMoreExtensions()
+                WebTools.openAsCustomTab(
+                    requireContext(),
+                    getString(R.string.url_extensions_search)
+                )
                 return@setOnMenuItemClickListener true
             }
 
@@ -271,10 +275,6 @@ class ExtensionsConfigurationFragment : Fragment() {
             true
         }
         popupMenu.show()
-    }
-
-    private fun onGetMoreExtensions() {
-        Utils.launchWebsite(activity, getString(R.string.url_extensions_search))
     }
 
     private fun saveExtensions() {

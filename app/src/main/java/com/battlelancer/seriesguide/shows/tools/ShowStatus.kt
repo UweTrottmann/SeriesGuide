@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.util.Utils
+import com.battlelancer.seriesguide.util.ThemeUtils
 
 /**
  * Show status valued as stored in the database in [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.STATUS].
@@ -63,7 +63,8 @@ interface ShowStatus {
             if (encodedStatus == RETURNING) {
                 view.setTextColor(
                     ContextCompat.getColor(
-                        view.context, Utils.resolveAttributeToResourceId(
+                        view.context,
+                        ThemeUtils.resolveAttributeToResourceId(
                             view.context.theme, R.attr.colorSecondary
                         )
                     )
@@ -71,7 +72,8 @@ interface ShowStatus {
             } else {
                 view.setTextColor(
                     ContextCompat.getColor(
-                        view.context, Utils.resolveAttributeToResourceId(
+                        view.context,
+                        ThemeUtils.resolveAttributeToResourceId(
                             view.context.theme, android.R.attr.textColorSecondary
                         )
                     )

@@ -2,9 +2,9 @@
 
 <!-- Note: can't use root layout ID as view types are different, would crash on state restore. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/top_app_bar_fixed" />
@@ -21,15 +21,20 @@
             android:layout_weight="1" />
 
         <FrameLayout
-            android:id="@+id/fragment_episodes"
-            style="@style/EpisodesPane"
+            android:id="@+id/containerEpisodesList"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="3" />
 
-        <FrameLayout
-            style="@style/DetailsPane"
+        <!-- In code additional bottom margin is applied to avoid the system navigation bar. -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEpisodes"
+            style="?attr/materialCardViewFilledStyle"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="4">
 
             <ImageView
                 android:id="@+id/imageViewEpisodesBackground"
@@ -45,9 +50,9 @@
 
                 <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
                     android:id="@+id/tabsEpisodes"
+                    tools:layout_height="48dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:layout_height="48dp" />
+                    android:layout_height="wrap_content" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/pagerEpisodes"
@@ -56,20 +61,7 @@
                     android:layout_weight="1" />
             </LinearLayout>
 
-            <View
-                android:id="@+id/viewEpisodesShadowStart"
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/sg_shadow_right_left" />
-
-            <View
-                android:id="@+id/viewEpisodesShadowEnd"
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:background="@drawable/sg_shadow_left_right" />
-
-        </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <Space
             android:layout_width="0dp"

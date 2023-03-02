@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import timber.log.Timber
@@ -300,7 +299,7 @@ class ListWidgetRemoteViewsFactory(
 
     private fun maybeSetPoster(rv: RemoteViews, posterPath: String?) {
         val poster = try {
-            ServiceUtils.loadWithPicasso(
+            ImageTools.loadWithPicasso(
                 context,
                 ImageTools.tmdbOrTvdbPosterUrl(posterPath, context)
             )

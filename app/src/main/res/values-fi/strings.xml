@@ -313,7 +313,6 @@
     <string name="waitplease">Odota hetki&#8230;</string>
     <string name="connect">Yhdistä</string>
     <string name="disconnect">Katkaise yhteys</string>
-    <string name="use_integrated_browser">Käytä sisäistä selainta</string>
     <string name="show_library">Lisää ohjelmat Traktista</string>
     <string name="about_trakt">Trakt auttaa sinua pysymään kärryillä katsomistasi ohjelmista ja elokuvista.</string>
     <string name="support_trakt">Tue Traktia VIP-tilauksella</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
     <string name="pref_notifications">Ilmoitukset</string>
     <string name="pref_notificationssummary">Ilmoita uusista jaksoista</string>
+    <string name="pref_notifications_settings">Ilmoitusasetukset</string>
     <string name="pref_ringtone">Ääni</string>
     <string name="pref_vibrate">Värinä</string>
     <string name="pref_vibratesummary">Värise ilmoitusta näytettäessä</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Ilmoita vain, jos uusi jakso on seuraava katsottava</string>
     <string name="pref_notifications_battery_settings">Akkuasetukset</string>
     <string name="pref_notifications_battery_settings_summary">Siirry kohtaan Akku-asetukset poistaaksesi käytöstä akkuoptimoinnit luotettavien ilmoitusten saamiseksi</string>
+    <string name="notifications_allow">Salli ilmoitukset</string>
+    <string name="notifications_allow_reason">Jos haluat saada jakso- ja virheilmoituksia, siirry asetuksiin ja salli ne.</string>
     <!-- List Widget -->
     <string name="hide_watched">Piilota katsotut jaksot</string>
     <string name="pref_widget_opacity">Widgetin tausta</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Hallitse tilauksia</string>
     <string name="billing_action_pass">Hanki X Pass App</string>
     <string name="billing_duration_format">%1$s/vuosi</string>
+    <string name="billing_free_trial">Ilmaiskokeilu</string>
     <string name="billing_sub_description">Kokeile 30 päivää ilmaiseksi, peruuta milloin tahansa.</string>
     <string name="billing_price_pass">kertaluontoinen osto</string>
     <string name="upgrade_description">Jokainen tilaus avaa kaikki ominaisuudet ja tukee tulevia päivityksiä. Tilausta ei tarvita tämän sovelluksen käyttämiseksi.</string>
     <string name="upgrade_success">Kiitos SeriesGuiden tukemisesta! Voit käyttää kaikkia ominaisuuksia.</string>
     <string name="billing_unlock_detected">X Pass -sovellus havaittu. Voit silti tilata tukeaksesi kehitystä.</string>
     <string name="billing_learn_more">Lisätietoja ja apua</string>
-    <string name="subscription_expired">Tilaus vanhentunut</string>
     <string name="subscription_expired_details">SeriesGuide-tilauksesi on vanhentunut.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Kirjaudu Amazon-tilillesi</string>

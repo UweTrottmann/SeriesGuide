@@ -313,7 +313,6 @@
     <string name="waitplease">Veuillez patienter&#8230;</string>
     <string name="connect">Se connecter</string>
     <string name="disconnect">Se déconnecter</string>
-    <string name="use_integrated_browser">Utiliser le navigateur intégré</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt vous permet de garder une trace des séries et films que vous regardez.</string>
     <string name="support_trakt">Soutenir Trakt en devenant VIP</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">Afficher les épisodes à venir</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">M\'informer des nouveaux épisodes</string>
+    <string name="pref_notifications_settings">Paramètres de notification</string>
     <string name="pref_ringtone">Sonnerie</string>
     <string name="pref_vibrate">Vibrer</string>
     <string name="pref_vibratesummary">Vibrer aussi lors d\'un notification</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Notifier seulement si le prochain épisode sorti est celui à regarder</string>
     <string name="pref_notifications_battery_settings">Paramètres de batterie</string>
     <string name="pref_notifications_battery_settings_summary">Aller dans les paramètres de batterie pour désactiver l\'optimisation de la batterie afin de recevoir correctement les notifications</string>
+    <string name="notifications_allow">Autoriser les notifications</string>
+    <string name="notifications_allow_reason">Pour recevoir des notifications d\'épisode et d\'erreur, autorisez-les via les paramètres.</string>
     <!-- List Widget -->
     <string name="hide_watched">Masquer les épisodes vus</string>
     <string name="pref_widget_opacity">Arrière-plan du widget</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Gérer les abonnements</string>
     <string name="billing_action_pass">Obtenir X Pass App</string>
     <string name="billing_duration_format">%1$s/an</string>
+    <string name="billing_free_trial">Essai gratuit</string>
     <string name="billing_sub_description">Essayez 30 jours gratuitement, annulez à tout moment.</string>
     <string name="billing_price_pass">Achat à vie</string>
     <string name="upgrade_description">Chaque abonnement débloque toutes les fonctionnalités et prend en charge les mises à jour futures. Un abonnement n\'est pas nécessaire pour utiliser cette application.</string>
     <string name="upgrade_success">Merci de supporter SeriesGuide ! Vous avez maintenant accès à toutes les fonctionnalités.</string>
     <string name="billing_unlock_detected">Application X Pass détectée. Vous pouvez toujours vous abonner pour soutenir les mises à jour à venir.</string>
     <string name="billing_learn_more">Plus d\'infos et d\'aide</string>
-    <string name="subscription_expired">Abonnement expiré</string>
     <string name="subscription_expired_details">Votre abonnement aux fonctionnalités X a expiré.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Connectez-vous à votre compte Amazon !</string>

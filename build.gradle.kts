@@ -9,11 +9,11 @@ plugins {
 buildscript {
     val sgCompileSdk by extra(33) // Android 13 (T)
     val sgMinSdk by extra(21) // Android 5 (L)
-    val sgTargetSdk by extra(31) // Android 12 (S)
+    val sgTargetSdk by extra(33) // Android 13 (T)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106608)
-    val sgVersionName by extra("66.0.7")
+    val sgVersionCode by extra(2106703)
+    val sgVersionName by extra("67.0.3")
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 
@@ -27,7 +27,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.4.0") // libraries, SeriesGuide
+        classpath("com.android.tools.build:gradle:7.4.1") // libraries, SeriesGuide
         classpath(libs.kotlin.gradle)
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics

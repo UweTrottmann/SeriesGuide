@@ -313,7 +313,6 @@
     <string name="waitplease">ஒரு பெருக்கலின், தயவுசெய்து&#8230;</string>
     <string name="connect">இணை</string>
     <string name="disconnect">துண்டி</string>
-    <string name="use_integrated_browser">ஒருங்கிணைந்த உலாவியைப் பயன்படுத்து</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt டிவி என்ன காண்பிக்கும் பதிவேட்டை வைத்திருக்க உதவுகிறது மற்றும் திரைப்படங்கள் நீங்கள் வருவதாக.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">வரவிருக்கும் காட்சிகள் காண்பிக்க தேர்ந்தெடு</string>
     <string name="pref_notifications">அறிவிப்புகள்</string>
     <string name="pref_notificationssummary">புதிய episodes பற்றி</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">ஒலி</string>
     <string name="pref_vibrate">அதிர்வு</string>
     <string name="pref_vibratesummary">மேலும் vibrate அறிவிக்கை காண்பிப்பதில் உள்ள</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
     <string name="pref_notifications_battery_settings">Battery settings</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">பார்த்த episodes மறை</string>
     <string name="pref_widget_opacity">விட்ஜெட் பின்னணி</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Manage subscriptions</string>
     <string name="billing_action_pass">பெறு X Pass App</string>
     <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="billing_price_pass">-முறை வாங்குதல்</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide ஆதரவு நன்றி! உங்களுக்கு எல்லா அம்சங்களையும் அனுமதி.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired">சந்தா காலாவதியானது</string>
     <string name="subscription_expired_details">உங்கள் SeriesGuide சந்தா காலாவதியாகிவிட்டது.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">உங்கள் Amazon கணக்கு உள்!</string>

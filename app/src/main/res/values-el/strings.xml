@@ -313,7 +313,6 @@
     <string name="waitplease">Μια στιγμή, παρακαλώ&#8230;</string>
     <string name="connect">Σύνδεση</string>
     <string name="disconnect">Αποσύνδεση</string>
-    <string name="use_integrated_browser">Χρησιμοποιήστε ενσωματωμένο πρόγραμμα περιήγησης</string>
     <string name="show_library">Προσθήκη σειρών από Trakt</string>
     <string name="about_trakt">Το Trakt βοηθά να καταγράψετε τα τηλεοπτικά προγράμματα και τις ταινίες που βλέπετε.</string>
     <string name="support_trakt">Υποστήριξη Trakt με VIP</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
     <string name="pref_notifications">Ειδοποιήσεις</string>
     <string name="pref_notificationssummary">Ειδοποίηση για νέα επεισόδια</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Ήχος κλήσης</string>
     <string name="pref_vibrate">Δόνηση</string>
     <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Ειδοποίηση μόνο αν το νέο επιεσόδιο είναι το επόμενο για προβολή</string>
     <string name="pref_notifications_battery_settings">Ρυθμίσεις μπαταρίας</string>
     <string name="pref_notifications_battery_settings_summary">Πηγαίνετε στις Ρυθμίσεις μπαταρίας για να απενεργοποιήσετε τις βελτιστοποιήσεις μπαταρίας για αξιόπιστες ειδοποιήσεις</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Διαχείριση συνδρομών</string>
     <string name="billing_action_pass">Αποκτήστε το X Pass App</string>
     <string name="billing_duration_format">%1$s/έτος</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Δοκιμάστε δωρεάν για 30 ημέρες, ακυρώστε όποτε θέλετε. </string>
     <string name="billing_price_pass">εφάπαξ αγοράς</string>
     <string name="upgrade_description">Κάθε συνδρομή ξεκλειδώνει όλες τις δυνατότητες και υποστηρίζει μελλοντικές ενημερώσεις. Η συνδρομή δεν είναι απαραίτητη γιατη χρήση της εφαρμογής.</string>
     <string name="upgrade_success">Ευχαριστούμε για την υποστήριξη του SeriesGuide! Έχετε πρόσβαση σε όλα τα χαρακτηριστικά.</string>
     <string name="billing_unlock_detected">Η εφαρμογή X Pass εντοπίστηκε. Μπορείτε ακόμη να εγγραφείτε για να υποστηρίξετε μελλοντικές ενημερώσεις.</string>
     <string name="billing_learn_more">Περισσότερες πληροφορίες και βοήθεια</string>
-    <string name="subscription_expired">Εγγραφή έληξε</string>
     <string name="subscription_expired_details">Σας X συνδρομή σας έχει λήξει.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Συνδεθείτε στο λογαριασμό σας Amazon!</string>

@@ -1,5 +1,7 @@
 package com.battlelancer.seriesguide.people
 
+import android.content.Context
+import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
@@ -13,6 +15,8 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -20,9 +24,11 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentPersonBinding
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Person
@@ -35,6 +41,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class PersonFragment : Fragment() {
 
+    private var isShownInTwoPaneLayout = false
     private var binding: FragmentPersonBinding? = null
 
     private var personTmdbId: Int = 0
@@ -47,6 +54,11 @@ class PersonFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         personTmdbId = arguments?.getInt(ARG_PERSON_TMDB_ID) ?: 0
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        isShownInTwoPaneLayout = context is PeopleActivity
     }
 
     override fun onCreateView(
@@ -63,12 +75,81 @@ class PersonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
-            // Note: this currently does not add top padding when the person is shown
-            // in single pane view in landscape.
-            ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewPerson)
+            // Note: When shown in two-pane layout, this is contained in a card that already
+            // is adjusted for the navigation bar.
+            if (!isShownInTwoPaneLayout) {
+                // In single pane view in landscape adjust the person name for the navigation bar.
+                val isLandscape =
+                    view.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                if (isLandscape) {
+                    ThemeUtils.applyBottomMarginForNavigationBar(textViewPersonName)
+                }
+
+                scrollViewPerson.apply {
+                    // Get the current padding values of the view.
+                    val initialPadding = ThemeUtils.InitialOffset(
+                        paddingStart,
+                        paddingTop,
+                        paddingEnd,
+                        paddingBottom
+                    )
+
+                    val navigationBarBottomPaddingListener = object :
+                        ThemeUtils.OnApplyWindowInsetsInitialPaddingListener {
+                        override fun onApplyWindowInsets(
+                            view: View,
+                            insets: WindowInsetsCompat,
+                            initialOffset: ThemeUtils.InitialOffset
+                        ): WindowInsetsCompat {
+                            val sysBarInsets = insets.getInsets(
+                                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+                            )
+
+                            val resources = view.resources
+                            if (isLandscape) {
+                                // In single pane view in landscape add top padding
+                                // for action bar and status bar.
+                                val actionBarSizePx = resources.getDimensionPixelSize(
+                                    ThemeUtils.resolveAttributeToResourceId(
+                                        view.context.theme,
+                                        R.attr.actionBarSize
+                                    )
+                                )
+                                initialOffset
+                                    .copy(
+                                        top = initialOffset.top + sysBarInsets.top + actionBarSizePx,
+                                        bottom = initialOffset.bottom + sysBarInsets.bottom
+                                    )
+                                    .applyAsPadding(view)
+                            } else {
+                                initialOffset
+                                    .copy(bottom = initialOffset.bottom + sysBarInsets.bottom)
+                                    .applyAsPadding(view)
+                            }
+
+                            // Do *not* consume or modify insets so any other views receive them
+                            // (only required for pre-R, see View.sBrokenInsetsDispatch).
+                            return insets
+                        }
+                    }
+
+                    // Sets an [androidx.core.view.OnApplyWindowInsetsListener] that calls the custom
+                    // listener with initial padding values of this view.
+                    // Note: this is based on similar code of the Material Components ViewUtils class.
+                    ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+                        navigationBarBottomPaddingListener.onApplyWindowInsets(
+                            v,
+                            insets,
+                            initialPadding
+                        )
+                    }
+                }
+            }
 
             buttonPersonTmdbLink.setOnClickListener {
-                person?.id?.let { TmdbTools.openTmdbPerson(activity, it) }
+                person?.id?.let {
+                    WebTools.openAsCustomTab(requireContext(), TmdbTools.buildPersonUrl(it))
+                }
             }
             buttonPersonTmdbLink.setOnLongClickListener {
                 person?.id?.let {
@@ -78,7 +159,12 @@ class PersonFragment : Fragment() {
                 false
             }
             buttonPersonWebSearch.setOnClickListener {
-                person?.let { ServiceUtils.performWebSearch(activity, it.name) }
+                person?.let {
+                    val name = it.name
+                    if (!name.isNullOrEmpty()) {
+                        ServiceUtils.performWebSearch(requireContext(), name)
+                    }
+                }
             }
         }
 
@@ -172,8 +258,8 @@ class PersonFragment : Fragment() {
             )
 
             if (!TextUtils.isEmpty(person.profile_path)) {
-                ServiceUtils.loadWithPicasso(
-                    activity,
+                ImageTools.loadWithPicasso(
+                    requireContext(),
                     TmdbTools.buildProfileImageUrl(
                         activity, person.profile_path, TmdbTools.ProfileImageSize.H632
                     )

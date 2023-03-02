@@ -306,7 +306,6 @@
     <string name="waitplease">잠시만 기다려주십시오</string>
     <string name="connect">연결</string>
     <string name="disconnect">연결 해제</string>
-    <string name="use_integrated_browser">내부 웹브라우저 사용</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt는 여러분이 시청한 TV 프로그램과 영화를 개록해줍니다.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
@@ -441,6 +440,7 @@
     <string name="upcoming_display">방영 예정인 프로그램을 표시하려면 선택하세요</string>
     <string name="pref_notifications">알림</string>
     <string name="pref_notificationssummary">새로운 에피소드를 알려줍니다.</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">벨소리</string>
     <string name="pref_vibrate">진동</string>
     <string name="pref_vibratesummary">알림 시 진동</string>
@@ -454,6 +454,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
     <string name="pref_notifications_battery_settings">배터리 설정</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">시청한 에피소드 숨기기</string>
     <string name="pref_widget_opacity">위젯 배경</string>
@@ -473,13 +475,13 @@
     <string name="billing_action_manage_subscriptions">구독 관리</string>
     <string name="billing_action_pass">X Pass App 구매</string>
     <string name="billing_duration_format">%1$s/year</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="billing_price_pass">1회 구매로 계속 사용</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">SeriesGuide를 지원해주셔서 감사합니다! 모든 기능을 사용할 수 있습니다.</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired">구독 만료되었습니다</string>
     <string name="subscription_expired_details">X 추가기능 구독 기간이 만료되었습니다.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon 계정으로 로그인</string>

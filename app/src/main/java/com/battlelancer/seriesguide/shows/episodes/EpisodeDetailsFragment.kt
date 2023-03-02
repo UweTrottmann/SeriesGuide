@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.EpisodesLayoutType.SINGLE_PANE
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
@@ -45,6 +46,7 @@ import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceActiveEvent
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity.Companion.intent
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ServiceUtils
@@ -102,7 +104,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         savedInstanceState: Bundle?
     ): View {
         val bindingRoot = FragmentEpisodeBinding.inflate(inflater, container, false)
-        ThemeUtils.applyBottomPaddingForNavigationBar(bindingRoot.scrollViewEpisode)
+        // In multi-pane layouts this is contained in a card that is bottom padded for the nav bar.
+        if (EpisodesActivity.getLayoutType(requireContext()) == SINGLE_PANE) {
+            ThemeUtils.applyBottomPaddingForNavigationBar(bindingRoot.scrollViewEpisode)
+        }
         binding = bindingRoot.includeEpisode.also { binding ->
             bindingButtons = binding.includeButtons
             bindingRatings = binding.includeRatings
@@ -610,13 +615,14 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         // Trakt
         if (episode.tmdbId != null) {
-            val traktLink = TraktTools.buildEpisodeUrl(episode.tmdbId)
-            ViewTools.openUriOnClick(bindingBottom.buttonEpisodeTrakt, traktLink)
-            bindingBottom.buttonEpisodeTrakt.copyTextToClipboardOnLongClick(traktLink)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(
+                bindingBottom.buttonEpisodeTrakt,
+                TraktTools.buildEpisodeUrl(episode.tmdbId)
+            )
         }
 
         // IMDb
-        ViewTools.configureImdbButton(
+        ServiceUtils.configureImdbButton(
             bindingBottom.buttonEpisodeImdb,
             lifecycleScope, requireContext(),
             show, episode
@@ -624,17 +630,20 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         // TMDb
         if (show.tmdbId != null) {
-            val url = TmdbTools
-                .buildEpisodeUrl(show.tmdbId, episode.season, episode.number)
-            ViewTools.openUriOnClick(bindingBottom.buttonEpisodeTmdb, url)
-            bindingBottom.buttonEpisodeTmdb.copyTextToClipboardOnLongClick(url)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(
+                bindingBottom.buttonEpisodeTmdb,
+                TmdbTools.buildEpisodeUrl(show.tmdbId, episode.season, episode.number)
+            )
         }
 
         // Trakt comments
         bindingBottom.buttonEpisodeComments.setOnClickListener { v: View? ->
-            val intent =
-                TraktCommentsActivity.intentEpisode(requireContext(), episodeTitle, episodeId)
-            Utils.startActivityWithAnimation(requireActivity(), intent, v)
+            val episodeId = episodeId
+            if (episodeId > 0) {
+                val intent =
+                    TraktCommentsActivity.intentEpisode(requireContext(), episodeTitle, episodeId)
+                Utils.startActivityWithAnimation(requireActivity(), intent, v)
+            }
         }
     }
 
@@ -683,7 +692,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         } else {
             // try loading image
             binding.containerImage.visibility = View.VISIBLE
-            ServiceUtils.loadWithPicasso(
+            ImageTools.loadWithPicasso(
                 requireContext(),
                 tmdbOrTvdbStillUrl(imagePath, requireContext(), false)
             )

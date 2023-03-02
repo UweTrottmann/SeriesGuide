@@ -48,6 +48,7 @@ import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
@@ -57,12 +58,12 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Credits
-import com.uwetrottmann.tmdb2.entities.Videos
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -85,7 +86,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     private var movieDetails: MovieDetails? =
         MovieDetails()
     private var movieTitle: String? = null
-    private var trailer: Videos.Video? = null
+    private var trailerYoutubeId: String? = null
     private val model: MovieDetailsModel by viewModels {
         MovieDetailsModelFactory(tmdbId, requireActivity().application)
     }
@@ -105,7 +106,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // trailer button
         binding.buttonMovieTrailer.setOnClickListener {
-            trailer?.let { ServiceUtils.openYoutube(it.key, activity) }
+            trailerYoutubeId?.let { ServiceUtils.openYoutube(it, requireContext()) }
         }
         binding.buttonMovieTrailer.isGone = true
         binding.buttonMovieTrailer.isEnabled = false
@@ -278,11 +279,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     true
                 }
                 R.id.menu_open_tmdb -> {
-                    TmdbTools.openTmdbMovie(activity, tmdbId)
+                    WebTools.openAsCustomTab(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
                     true
                 }
                 R.id.menu_open_trakt -> {
-                    Utils.launchWebsite(activity, TraktTools.buildMovieUrl(tmdbId))
+                    WebTools.openAsCustomTab(requireContext(), TraktTools.buildMovieUrl(tmdbId))
                     true
                 }
                 else -> false
@@ -474,8 +475,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // trakt comments link
         binding.buttonMovieComments.setOnClickListener { v ->
-            val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
-            Utils.startActivityWithAnimation(activity, i, v)
+            val tmdbId = tmdbId
+            if (tmdbId > 0) {
+                val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
+                Utils.startActivityWithAnimation(activity, i, v)
+            }
         }
         binding.buttonMovieComments.isGone = false
 
@@ -486,7 +490,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         } else {
             val smallImageUrl = (TmdbSettings.getImageBaseUrl(activity)
                     + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path)
-            ServiceUtils.loadWithPicasso(activity, smallImageUrl)
+            ImageTools.loadWithPicasso(requireContext(), smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
                     override fun onSuccess() {
                         viewLifecycleOwner.lifecycleScope.launch {
@@ -751,22 +755,22 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
     }
 
-    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<Videos.Video?> {
-        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Videos.Video?> {
+    private val trailerLoaderCallbacks = object : LoaderManager.LoaderCallbacks<String?> {
+        override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<String?> {
             return MovieTrailersLoader(requireContext(), args!!.getInt(ARG_TMDB_ID))
         }
 
         override fun onLoadFinished(
-            trailersLoader: Loader<Videos.Video?>,
-            trailer: Videos.Video?
+            trailersLoader: Loader<String?>,
+            videoId: String?
         ) {
-            if (trailer != null) {
-                this@MovieDetailsFragment.trailer = trailer
+            if (videoId != null) {
+                this@MovieDetailsFragment.trailerYoutubeId = videoId
                 binding.buttonMovieTrailer.isEnabled = true
             }
         }
 
-        override fun onLoaderReset(trailersLoader: Loader<Videos.Video?>) {
+        override fun onLoaderReset(trailersLoader: Loader<String?>) {
             // do nothing
         }
     }
@@ -804,7 +808,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             if (!showOverlay && shouldShowOverlay) {
                 val drawableColor = appBarBackgroundLifted ?: ContextCompat.getColor(
                     v.context,
-                    Utils.resolveAttributeToResourceId(
+                    ThemeUtils.resolveAttributeToResourceId(
                         v.context.theme, R.attr.sgColorStatusBarOverlay
                     )
                 )

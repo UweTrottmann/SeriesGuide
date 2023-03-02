@@ -306,7 +306,6 @@
     <string name="waitplease">請稍候&#8230;</string>
     <string name="connect">連接</string>
     <string name="disconnect">中斷連接</string>
-    <string name="use_integrated_browser">使用內建瀏覽器</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt 能幫你紀錄看了哪些電視節目和電影。</string>
     <string name="support_trakt">Support Trakt with VIP</string>
@@ -441,6 +440,7 @@
     <string name="upcoming_display">選擇以顯示即將撥出的節目</string>
     <string name="pref_notifications">提示信息</string>
     <string name="pref_notificationssummary">當有新的集數時進行通知</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">提示音</string>
     <string name="pref_vibrate">震動</string>
     <string name="pref_vibratesummary">顯示通知的同時震動</string>
@@ -454,6 +454,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Only notify if the new episode is the next one to watch</string>
     <string name="pref_notifications_battery_settings">電池用量設定</string>
     <string name="pref_notifications_battery_settings_summary">前往系統設定停用電池效能最佳化以提升通知可靠性</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">隱藏已看過集數</string>
     <string name="pref_widget_opacity">小工具背景</string>
@@ -473,13 +475,13 @@
     <string name="billing_action_manage_subscriptions">管理訂閱</string>
     <string name="billing_action_pass">取得 X Pass App</string>
     <string name="billing_duration_format">%1$s / 年</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="billing_price_pass">一次購買</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">謝謝贊助SeriesGuide ！您可以使用的所有功能。</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired">訂閱已過期</string>
     <string name="subscription_expired_details">您的 SeriesGuide 訂閱已過期。</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">登入你的 Amazon 帳戶</string>

@@ -11,6 +11,41 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 67
+----------
+*2023-03-01*
+
+* 🔧 On Android 8 and newer, use system settings to configure notification settings.
+* 🔧 On Android 13, ask to allow notifications.
+* 🔧 Use in-app browser whenever possible to open websites.
+* 🔧 Appearance: use card to separate details on large episodes and people screens.
+
+#### 67.0.3
+*2023-02-24*
+
+* 🔧 Trakt: show default browser in-app when signing in, drop integrated browser option.
+* 🔧 Use in-app browser (Custom Tab) whenever possible to open websites.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 67.0.2 🧪
+*2023-02-16*
+
+* 🔧 Internal changes to ensure compatibility with Play Store billing.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 67.0.1 🧪
+*2023-02-03*
+
+* 🔧 On Android 8 and newer, use system settings to configure notification settings.
+* 🔧 On Android 13 and newer, ask to allow notifications.
+* 🔨 Do not open comments screen if required data is not available, yet.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 67.0.0 🧪
+*2023-01-27*
+
+* 🔧 Appearance: use card to separate details on large episodes and people screens.
+
 Version 66
 ----------
 *2023-01-19*

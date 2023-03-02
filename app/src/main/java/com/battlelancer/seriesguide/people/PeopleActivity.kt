@@ -49,8 +49,8 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
         binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId =
             PeopleFragment.liftOnScrollTargetViewId
 
-        // If there is a pane shadow, this is using a two pane layout.
-        isTwoPane = binding.viewPeopleShadowStart != null
+        // If there is a details container, this is using a two pane layout.
+        isTwoPane = binding.containerPeoplePerson != null
 
         val peopleFragment: PeopleFragment
         if (savedInstanceState == null) {
@@ -73,11 +73,16 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
                 .add(R.id.containerPeople, peopleFragment, "people-list")
                 .commit()
         } else {
-            peopleFragment =supportFragmentManager.findFragmentById(R.id.containerPeople) as PeopleFragment
+            peopleFragment =
+                supportFragmentManager.findFragmentById(R.id.containerPeople) as PeopleFragment
         }
-        // In two-pane mode, list items should be activated when touched.
         if (isTwoPane) {
+            // In two-pane mode, list items should be activated when touched.
             peopleFragment.setActivateOnItemClick()
+
+            // In two-pane mode, details are displayed in a card that should
+            // be adjusted for the nav bar.
+            ThemeUtils.applyBottomMarginForNavigationBar(binding.cardPerson!!)
         }
     }
 
@@ -121,4 +126,8 @@ class PeopleActivity : BaseActivity(), OnShowPersonListener {
             startActivity(i)
         }
     }
+}
+
+interface PeopleActivityInterface {
+    val isTwoPane: Boolean
 }

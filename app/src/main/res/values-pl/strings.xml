@@ -327,7 +327,6 @@
     <string name="waitplease">Proszę czekać&#8230;</string>
     <string name="connect">Połącz</string>
     <string name="disconnect">Rozłącz</string>
-    <string name="use_integrated_browser">Użyj zintegrowanej przeglądarki</string>
     <string name="show_library">Dodaj seriale z Trakt</string>
     <string name="about_trakt">Trakt pomaga zarządzać jakie seriale i filmy oglądasz.</string>
     <string name="support_trakt">Wspomóż Trakt z VIP</string>
@@ -474,6 +473,7 @@
     <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
     <string name="pref_notifications">Powiadomienia</string>
     <string name="pref_notificationssummary">Informuj o nowych odcinkach</string>
+    <string name="pref_notifications_settings">Ustawienia powiadomień</string>
     <string name="pref_ringtone">Dzwonek</string>
     <string name="pref_vibrate">Wibracja</string>
     <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
@@ -487,6 +487,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Powiadamiaj tylko gdy nowy odcinek jest następnym do obejrzenia</string>
     <string name="pref_notifications_battery_settings">Ustawienia baterii</string>
     <string name="pref_notifications_battery_settings_summary">Przejdź do ustawień baterii, aby wyłączyć jej optymalizację, aby otrzymywać powiadomienia na bieżąco</string>
+    <string name="notifications_allow">Zezwalaj na powiadomienia</string>
+    <string name="notifications_allow_reason">Aby otrzymywać powiadomienia o odcinkach oraz o błędach, włącz powiadomienia w ustawieniach.</string>
     <!-- List Widget -->
     <string name="hide_watched">Ukryj obejrzane odcinki</string>
     <string name="pref_widget_opacity">Tło widżetu</string>
@@ -506,13 +508,13 @@
     <string name="billing_action_manage_subscriptions">Zarządzaj subskrypcjami</string>
     <string name="billing_action_pass">Kup X Pass App</string>
     <string name="billing_duration_format">%1$s/rok</string>
+    <string name="billing_free_trial">Darmowy okres próbny</string>
     <string name="billing_sub_description">Wypróbuj przez 30 dni. Anuluj w dowolnym momencie.</string>
     <string name="billing_price_pass">jednorazowy zakup</string>
     <string name="upgrade_description">Każda subskrypcja odblokowuje wszystkie funkcje i wspiera kolejne aktualizacje. Subskrypcja nie jest wymagana do korzystania z tej aplikacji.</string>
     <string name="upgrade_success">Dziękujemy za wsparcie SeriesGuide! Masz dostęp do wszystkich funkcji.</string>
     <string name="billing_unlock_detected">Wykryto aplikację X Pass. Nadal możesz subskrybować w celu wsparcia przyszłych aktualizacji.</string>
     <string name="billing_learn_more">Więcej informacji i pomoc</string>
-    <string name="subscription_expired">Subskrypcja wygasła</string>
     <string name="subscription_expired_details">Twoje funkcję X wygasły.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Zaloguj się do konta Amazon!</string>

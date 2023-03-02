@@ -3,12 +3,15 @@ package com.battlelancer.seriesguide.util
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.Window
+import androidx.annotation.AnyRes
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -60,11 +63,25 @@ object ThemeUtils {
         }
     }
 
+    /**
+     * Resolves the given attribute to the resource id for the given theme.
+     */
+    @JvmStatic
+    @AnyRes
+    fun resolveAttributeToResourceId(
+        theme: Resources.Theme,
+        @AttrRes attributeResId: Int
+    ): Int {
+        val outValue = TypedValue()
+        theme.resolveAttribute(attributeResId, outValue, true)
+        return outValue.resourceId
+    }
+
     @JvmStatic
     fun getColorFromAttribute(context: Context, @AttrRes attribute: Int): Int {
         return ContextCompat.getColor(
             context,
-            Utils.resolveAttributeToResourceId(context.theme, attribute)
+            resolveAttributeToResourceId(context.theme, attribute)
         )
     }
 
@@ -236,7 +253,7 @@ object ThemeUtils {
      * Wrapper around [androidx.core.view.OnApplyWindowInsetsListener] which also passes the
      * initial padding or margin set on the view.
      */
-    private interface OnApplyWindowInsetsInitialPaddingListener {
+    interface OnApplyWindowInsetsInitialPaddingListener {
         /**
          * When [set][View.setOnApplyWindowInsetsListener] on a View, this listener method will be
          * called instead of the view's own [View.onApplyWindowInsets] method. The [initialOffset]
@@ -250,7 +267,7 @@ object ThemeUtils {
     }
 
     /** Simple data object to store the initial padding or margin for a view.  */
-    private data class InitialOffset(
+    data class InitialOffset(
         val start: Int,
         val top: Int,
         val end: Int,
@@ -312,7 +329,7 @@ object ThemeUtils {
     fun applyBottomMarginForNavigationBar(view: View) {
         view.apply {
             // Get the current margin values of the view.
-            val initialPadding = InitialOffset(
+            val initialMargins = InitialOffset(
                 marginStart,
                 marginTop,
                 marginEnd,
@@ -322,7 +339,7 @@ object ThemeUtils {
             // listener with initial margin values of this view.
             // Note: this is based on similar code of the Material Components ViewUtils class.
             ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
-                navigationBarBottomMarginListener.onApplyWindowInsets(v, insets, initialPadding)
+                navigationBarBottomMarginListener.onApplyWindowInsets(v, insets, initialMargins)
             }
         }
     }

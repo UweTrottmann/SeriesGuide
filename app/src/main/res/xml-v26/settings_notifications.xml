@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:defaultValue="true"
+    <Preference
         app:iconSpaceReserved="false"
-        app:key="com.battlelancer.seriesguide.notifications"
-        app:summary="@string/pref_notificationssummary"
-        app:title="@string/pref_notifications" />
+        app:key="com.battlelancer.seriesguide.notifications.channels"
+        app:title="@string/pref_notifications_settings" />
 
     <Preference
         app:iconSpaceReserved="false"
@@ -31,11 +29,6 @@
         app:key="com.uwetrottmann.seriesguide.notifications.nextonly"
         app:summary="@string/pref_notifications_next_episodes_only_summary"
         app:title="@string/pref_notifications_next_episodes_only" />
-
-    <Preference
-        app:iconSpaceReserved="false"
-        app:key="com.battlelancer.seriesguide.notifications.channels"
-        app:title="@string/preferences" />
 
     <Preference
         app:iconSpaceReserved="false"

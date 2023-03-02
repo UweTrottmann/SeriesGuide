@@ -313,7 +313,6 @@
     <string name="waitplease">Bir dakika lütfen&#8230;</string>
     <string name="connect">Bağlan</string>
     <string name="disconnect">Bağlantıyı Kes</string>
-    <string name="use_integrated_browser">Tarayıcı entegrasyonunu kullan</string>
     <string name="show_library">Trakt\'tan dizileri ekle</string>
     <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.</string>
     <string name="support_trakt">Trakt\'ı VIP olarak destekle</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">Gelecek bölümleri görüntülemek için seçin</string>
     <string name="pref_notifications">Bildirimler</string>
     <string name="pref_notificationssummary">Yeni bölümler için bildirim gönder</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Zil sesi</string>
     <string name="pref_vibrate">Titreşim</string>
     <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Sadece yeni bölüm bir sonraki izlenecek ise uyarı gönder</string>
     <string name="pref_notifications_battery_settings">Pil ayarları</string>
     <string name="pref_notifications_battery_settings_summary">Güvenilir bildirimler almak için Pil ayarlarına giderek, pil optimizasyonlarını devre dışı bırakın</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">İzlenmiş bölümleri gizle</string>
     <string name="pref_widget_opacity">Widget arka planı</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Abonelikleri Yönet</string>
     <string name="billing_action_pass">X Pass App alın</string>
     <string name="billing_duration_format">%1$s/yıl</string>
+    <string name="billing_free_trial">Ücretsiz deneme</string>
     <string name="billing_sub_description">30 gün ücretsiz dene, istediğin zaman iptal et</string>
     <string name="billing_price_pass">tek seferlik ödeme</string>
     <string name="upgrade_description">Her abonelik, tüm özelliklerin kilidini açar ve gelecekteki güncellemeleri destekler. Bu uygulamayı kullanmak için herhangi bir abonelik gerekli değildir.</string>
     <string name="upgrade_success">SeriesGuide\'ı desteklediğiniz için teşekkür ederiz! Tüm özelliklere erişebilirsiniz.</string>
     <string name="billing_unlock_detected">X Pass uygulaması tespit edildi. Gelecekteki güncellemeleri desteklemek için yine de abone olabilirsiniz.</string>
     <string name="billing_learn_more">Daha fazla bilgi ve yardım</string>
-    <string name="subscription_expired">Abonelik sona erdi</string>
     <string name="subscription_expired_details">SeriesGuide aboneliğinizin süresi doldu</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Amazon hesabınızda oturum açın!</string>

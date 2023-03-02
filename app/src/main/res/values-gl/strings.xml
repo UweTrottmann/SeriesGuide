@@ -313,7 +313,6 @@
     <string name="waitplease">Un momento, por favor&#8230;</string>
     <string name="connect">Conectar</string>
     <string name="disconnect">Desconectar</string>
-    <string name="use_integrated_browser">Empregar navegador integrado</string>
     <string name="show_library">Add shows from Trakt</string>
     <string name="about_trakt">Trakt axuda a manter un rexistro dos programas de televisión e películas que estás a ver.</string>
     <string name="support_trakt">Support Trakt with VIP</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notificacións</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>
+    <string name="pref_notifications_settings">Notification settings</string>
     <string name="pref_ringtone">Son</string>
     <string name="pref_vibrate">Vibrar</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Só notificar se o novo episodio é o seguinte a ver</string>
     <string name="pref_notifications_battery_settings">Battery settings</string>
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
+    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Agochar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo do widget</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Xestionar subscricións</string>
     <string name="billing_action_pass">Obter X Pass App</string>
     <string name="billing_duration_format">%1$s/ano</string>
+    <string name="billing_free_trial">Free trial</string>
     <string name="billing_sub_description">Try for 30 days, cancel any time.</string>
     <string name="billing_price_pass">Compra única</string>
     <string name="upgrade_description">Every subscription unlocks all features and supports future updates. A subscription is not required to use this app.</string>
     <string name="upgrade_success">Grazas por soportar SeriesGuide! Tes acceso a todas as funcións</string>
     <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
     <string name="billing_learn_more">More info and help</string>
-    <string name="subscription_expired">A subscripción rematou</string>
     <string name="subscription_expired_details">A túa subscrición de SeriesGuide rematou</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Iniciar sesión coa túa conta de Amazon</string>

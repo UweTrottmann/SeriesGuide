@@ -45,39 +45,32 @@
         app:layout_constraintRight_toLeftOf="@+id/guidelineOverviewVertical"
         app:layout_constraintTop_toBottomOf="@+id/guidelineOverviewHorizontal" />
 
-    <!-- Wraps card, in code bottom padding is applied to avoid system navigation bar. -->
-    <FrameLayout
-        android:id="@+id/wrapperOverview"
+    <!-- In code additional bottom margin is applied to avoid system navigation bar. -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardOverview"
+        style="?attr/materialCardViewFilledStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guidelineOverviewVertical"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sgAppBarLayout">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardOverview"
-            style="?attr/materialCardViewFilledStyle"
+        <ImageView
+            android:id="@+id/imageViewOverviewBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp">
+            android:contentDescription="@null"
+            android:scaleType="centerCrop" />
 
-            <ImageView
-                android:id="@+id/imageViewOverviewBackground"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@null"
-                android:scaleType="centerCrop" />
+        <FrameLayout
+            android:id="@+id/fragment_overview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-            <FrameLayout
-                android:id="@+id/fragment_overview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@ import android.os.Looper
 import android.view.MenuItem
 import android.widget.ImageView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.util.ServiceUtils
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.SystemUiHider
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.github.chrisbanes.photoview.PhotoView
@@ -65,7 +65,7 @@ class FullscreenImageActivity : BaseActivity() {
         if (previewImagePath.isNullOrEmpty()) {
             loadLargeImage(false)
         } else {
-            ServiceUtils.loadWithPicasso(this, previewImagePath)
+            ImageTools.loadWithPicasso(this, previewImagePath)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .into(photoView, object : Callback {
                     override fun onSuccess() {
@@ -96,7 +96,7 @@ class FullscreenImageActivity : BaseActivity() {
             if (it.isEmpty()) null else it
         }
 
-        val requestCreator = ServiceUtils.loadWithPicasso(this, imagePath)
+        val requestCreator = ImageTools.loadWithPicasso(this, imagePath)
         if (hasPreviewImage) {
             // Keep showing preview image if loading full image fails.
             requestCreator.noPlaceholder().into(photoView)

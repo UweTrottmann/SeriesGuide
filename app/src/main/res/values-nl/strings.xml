@@ -313,7 +313,6 @@
     <string name="waitplease">Een ogenblik geduld a.u.b.&#8230;</string>
     <string name="connect">Verbinden</string>
     <string name="disconnect">Verbreken</string>
-    <string name="use_integrated_browser">Gebruik de geïntegreerde browser</string>
     <string name="show_library">Series van Trakt toevoegen</string>
     <string name="about_trakt">Trakt helpt met het bijhouden van welke TV-shows en films u aan het bekijken bent.</string>
     <string name="support_trakt">Trakt ondersteunen met VIP</string>
@@ -452,6 +451,7 @@
     <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
     <string name="pref_notifications">Meldingen</string>
     <string name="pref_notificationssummary">Verwittigen bij nieuwe afleveringen</string>
+    <string name="pref_notifications_settings">Meldingen instellingen</string>
     <string name="pref_ringtone">Geluid</string>
     <string name="pref_vibrate">Trillen</string>
     <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
@@ -465,6 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Meld alleen als de nieuwe aflevering de eerstvolgende is om te kijken</string>
     <string name="pref_notifications_battery_settings">Batterij instellingen</string>
     <string name="pref_notifications_battery_settings_summary">Ga naar Batterij instellingen om batterij optimalisaties uit te schakelen voor betrouwbare meldingen</string>
+    <string name="notifications_allow">Meldingen toestaan</string>
+    <string name="notifications_allow_reason">Om aflevering- en foutmeldingen te ontvangen, ga naar Instellingen en sta ze toe.</string>
     <!-- List Widget -->
     <string name="hide_watched">Bekeken afleveringen verbergen</string>
     <string name="pref_widget_opacity">Widget achtergrond</string>
@@ -484,13 +486,13 @@
     <string name="billing_action_manage_subscriptions">Abonnementen beheren</string>
     <string name="billing_action_pass">Neem X Pass App</string>
     <string name="billing_duration_format">%1$s/jaar</string>
+    <string name="billing_free_trial">Gratis proefversie</string>
     <string name="billing_sub_description">30 dagen gratis proberen, annuleren op elk moment.</string>
     <string name="billing_price_pass">eenmalige aankoop</string>
     <string name="upgrade_description">Elk abonnement ontgrendelt alle functies en ondersteunt toekomstige updates. Een abonnement is niet vereist om deze app te gebruiken.</string>
     <string name="upgrade_success">Bedankt om SeriesGuide te steunen! U heeft toegang tot alle functies.</string>
     <string name="billing_unlock_detected">X Pass-app gedetecteerd. U kunt zich nog steeds abonneren om toekomstige updates te ondersteunen.</string>
     <string name="billing_learn_more">Meer informatie en ondersteuning</string>
-    <string name="subscription_expired">Abonnement verlopen</string>
     <string name="subscription_expired_details">Uw abonnement voor SeriesGuide is verlopen</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Log in bij uw Amazon-account</string>

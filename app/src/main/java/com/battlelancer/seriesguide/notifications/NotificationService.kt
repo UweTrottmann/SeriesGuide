@@ -35,9 +35,9 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity.Companion.in
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.QuickCheckInActivity
 import com.battlelancer.seriesguide.ui.ShowsActivity
+import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbPosterUrl
 import com.battlelancer.seriesguide.util.PendingIntentCompat
-import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
@@ -557,7 +557,7 @@ class NotificationService(context: Context) {
 
     private fun maybeSetPoster(nb: NotificationCompat.Builder, posterPath: String?) {
         try {
-            val poster = ServiceUtils.loadWithPicasso(
+            val poster = ImageTools.loadWithPicasso(
                 context,
                 tmdbOrTvdbPosterUrl(posterPath, context, false)
             )
@@ -568,7 +568,7 @@ class NotificationService(context: Context) {
 
             // add special large resolution background for wearables
             // https://developer.android.com/training/wearables/notifications/creating.html#AddWearableFeatures
-            val posterSquare = ServiceUtils.loadWithPicasso(
+            val posterSquare = ImageTools.loadWithPicasso(
                 context,
                 tmdbOrTvdbPosterUrl(posterPath, context, false)
             )
