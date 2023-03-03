@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.shows.database.SgSeason2Update
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.HEXAGON
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TMDB
-import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TRAKT
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
@@ -67,7 +66,6 @@ class AddUpdateShowTools @Inject constructor(
         IN_DATABASE,
         DOES_NOT_EXIST,
         TMDB_ERROR,
-        TRAKT_ERROR,
         HEXAGON_ERROR,
         DATABASE_ERROR
     }
@@ -709,15 +707,13 @@ class AddUpdateShowTools @Inject constructor(
             else -> when (this.service) {
                 HEXAGON -> throw IllegalStateException("getShowDetails does not use HEXAGON")
                 TMDB -> ShowResult.TMDB_ERROR
-                TRAKT -> ShowResult.TRAKT_ERROR
             }
         }
     }
 
     enum class ShowService(@StringRes val nameResId: Int) {
         HEXAGON(R.string.hexagon),
-        TMDB(R.string.tmdb),
-        TRAKT(R.string.trakt)
+        TMDB(R.string.tmdb)
     }
 
     sealed class UpdateResult {
