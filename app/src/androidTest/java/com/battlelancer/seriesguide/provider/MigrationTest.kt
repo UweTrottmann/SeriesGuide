@@ -5,7 +5,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteConstraintException
 import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -33,8 +32,7 @@ class MigrationTest {
     @get:Rule
     var migrationTestHelper = MigrationTestHelper(
         InstrumentationRegistry.getInstrumentation(),
-        SgRoomDatabase::class.java.canonicalName,
-        FrameworkSQLiteOpenHelperFactory()
+        SgRoomDatabase::class.java
     )
 
     // Helper for creating SQLite database in version 42
@@ -67,7 +65,7 @@ class MigrationTest {
         // provide MIGRATION_42_43 as the migration process.
         val database = migrationTestHelper
             .runMigrationsAndValidate(
-                TEST_DB_NAME, 43,
+                TEST_DB_NAME, SgRoomDatabase.VERSION_43_ROOM,
                 false /* FTS table added manually */,
                 SgRoomDatabase.MIGRATION_42_43
             )
@@ -78,8 +76,9 @@ class MigrationTest {
     fun migrationFrom42To44_containsCorrectData() {
         insertTestDataSqlite()
 
+        val version = SgRoomDatabase.VERSION_44_RECREATE_SERIES_EPISODES
         migrationTestHelper.runMigrationsAndValidate(
-            TEST_DB_NAME, 44,
+            TEST_DB_NAME, version,
             false,
             SgRoomDatabase.MIGRATION_42_43,
             SgRoomDatabase.MIGRATION_43_44
@@ -87,11 +86,13 @@ class MigrationTest {
 
         // MigrationTestHelper automatically verifies the schema changes, but not the data validity
         // Validate that the data was migrated properly.
-        assertTestData_series_seasons_episodes(getMigratedDatabase(44))
+        assertTestData_series_seasons_episodes(getMigratedDatabase(version))
     }
 
+    /**
+     * Create the database with the initial version 42 schema and insert test data.
+     */
     private fun insertTestDataSqlite() {
-        // Create the database with the initial version 42 schema and insert test data
         val db = sqliteTestDbHelper.writableDatabase
         SqliteDatabaseTestHelper.insertShow(SHOW, db)
         SqliteDatabaseTestHelper.insertSeason(SEASON, db)
@@ -221,6 +222,8 @@ class MigrationTest {
     }
 
     /**
+     * Validate test data for version [SgRoomDatabase.VERSION_48_EPISODE_PLAYS] or lower.
+     *
      * MigrationTestHelper automatically verifies the schema changes, but not the data validity.
      * Validate that the data was migrated properly.
      */
