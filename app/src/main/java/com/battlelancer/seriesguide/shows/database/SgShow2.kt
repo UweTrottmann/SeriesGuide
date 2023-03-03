@@ -72,10 +72,19 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.FAVORITE) var favorite: Boolean = false,
     @ColumnInfo(name = SgShow2Columns.HIDDEN) var hidden: Boolean = false,
     @ColumnInfo(name = SgShow2Columns.NOTIFY) var notify: Boolean = true,
-    @ColumnInfo(name = SgShow2Columns.HEXAGON_MERGE_COMPLETE) val hexagonMergeComplete: Boolean = true
+    @ColumnInfo(name = SgShow2Columns.HEXAGON_MERGE_COMPLETE) val hexagonMergeComplete: Boolean = true,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) val customReleaseTime: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) val customReleaseDayOffset: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) val customReleaseTimeZone: String?,
 ) {
     val releaseTimeOrDefault: Int
         get() = releaseTime ?: -1
+    val customReleaseTimeOrDefault: Int
+        get() = customReleaseTime ?: CUSTOM_RELEASE_TIME_NOT_SET
+    val customReleaseDayOffsetOrDefault: Int
+        get() = customReleaseDayOffset ?: CUSTOM_RELEASE_DAY_OFFSET_NOT_SET
+    val customReleaseTimeZoneOrDefault: String
+        get() = customReleaseTimeZone ?: CUSTOM_RELEASE_TIME_ZONE_NOT_SET
     val firstReleaseOrDefault: String
         get() = firstRelease ?: ""
     val releaseWeekDayOrDefault: Int
@@ -94,5 +103,16 @@ data class SgShow2(
          * @see Shows.UNWATCHED_COUNT
          */
         const val UNKNOWN_UNWATCHED_COUNT = -1
+
+        const val CUSTOM_RELEASE_TIME_NOT_SET = -1
+
+        const val CUSTOM_RELEASE_DAY_OFFSET_NOT_SET = 0
+
+        const val CUSTOM_RELEASE_TIME_ZONE_NOT_SET = ""
+
+        /**
+         * Maximum absolute (so positive or negative) value of the [customReleaseDayOffset].
+         */
+        const val MAX_CUSTOM_DAY_OFFSET = 28
     }
 }

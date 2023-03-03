@@ -97,7 +97,7 @@ public class DefaultValuesTest {
         SgShow2 show = showHelper.getShow(showId);
         assertThat(show).isNotNull();
 
-        // Note: compare with SgShow and ShowTools.
+        // Note: compare with SgShow2 and ImportTools.
         assertThat(show.getTvdbId()).isEqualTo(SHOW.tvdb_id);
         assertThat(show.getTitle()).isNotNull();
         assertThat(show.getOverview()).isNotNull();
@@ -122,6 +122,9 @@ public class DefaultValuesTest {
         assertThat(show.getLanguage()).isNotNull();
         assertThat(show.getUnwatchedCount()).isEqualTo(SgShow2.UNKNOWN_UNWATCHED_COUNT);
         assertThat(show.getNotify()).isTrue();
+        assertThat(show.getCustomReleaseTime()).isNull();
+        assertThat(show.getCustomReleaseDayOffset()).isNull();
+        assertThat(show.getCustomReleaseTimeZone()).isNull();
     }
 
     @Test

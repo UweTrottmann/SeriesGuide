@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2;
+import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.shows.tools.ShowStatus;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;
@@ -585,6 +586,37 @@ public class SeriesGuideContract {
          * <p> Previous use: Was added in db version 21 to store the air time in pure text.
          */
         String RELEASE_COUNTRY = "series_country";
+
+        /**
+         * Custom local release time to override the actual one. Encoded as integer (hhmm).
+         * This being set also determines if the other custom release time values (day offset,
+         * time zone) should be used.
+         * <p>
+         * Example: 2035
+         * <p>
+         * Default: {@link SgShow2#CUSTOM_RELEASE_TIME_NOT_SET}
+         * <p>
+         * Added in {@link SgRoomDatabase#VERSION_51_CUSTOM_RELEASE_TIME}.
+         */
+        String CUSTOM_RELEASE_TIME = "series_custom_release_time";
+
+        /**
+         * Positive or negative day offset to shift the release day of episodes by.
+         * <p>
+         * Default: {@link SgShow2#CUSTOM_RELEASE_DAY_OFFSET_NOT_SET}
+         * <p>
+         * Added in {@link SgRoomDatabase#VERSION_51_CUSTOM_RELEASE_TIME}.
+         */
+        String CUSTOM_RELEASE_DAY_OFFSET = "series_custom_day_offset";
+
+        /**
+         * Custom time zone for computing an episode release time.
+         * <p>
+         * Default: {@link SgShow2#CUSTOM_RELEASE_TIME_ZONE_NOT_SET}
+         * <p>
+         * Added in {@link SgRoomDatabase#VERSION_51_CUSTOM_RELEASE_TIME}.
+         */
+        String CUSTOM_RELEASE_TIME_ZONE = "series_custom_timezone";
 
         String IMDBID = "series_imdbid";
 
