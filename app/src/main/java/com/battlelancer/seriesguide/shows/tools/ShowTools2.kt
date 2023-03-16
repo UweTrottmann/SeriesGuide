@@ -8,10 +8,10 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.modules.ApplicationContext
+import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -398,6 +398,62 @@ class ShowTools2 @Inject constructor(
             SgSyncAdapter.requestSyncSingleImmediate(context, false, showId)
         }
 
+        notifyAboutSyncing()
+    }
+
+    /**
+     * Uploads to Cloud and on success saves to local database.
+     * Does not sanitize the given values.
+     */
+    fun storeCustomReleaseTime(
+        showId: Long, customReleaseTime: Int,
+        customReleaseDayOffset: Int,
+        customReleaseTimeZone: String
+    ) = SgApp.coroutineScope.launch {
+        // TODO Send to Cloud.
+//        val isCloudFailed = withContext(Dispatchers.Default) {
+//            if (!HexagonSettings.isEnabled(context)) {
+//                return@withContext false
+//            }
+//            if (isNotConnected(context)) {
+//                return@withContext true
+//            }
+//            val showTmdbId =
+//                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+//            if (showTmdbId == 0) {
+//                return@withContext true
+//            }
+//
+//            val show = SgCloudShow()
+//            show.tmdbId = showTmdbId
+//            // TODO
+//
+//            val success = uploadShowToCloud(show)
+//            return@withContext !success
+//        }
+//        // Do not save to local database if sending to cloud has failed.
+//        if (isCloudFailed) return@launch
+
+        // Save to local database and schedule sync.
+        withContext(Dispatchers.IO) {
+            // Change custom release time values
+            val database = SgRoomDatabase.getInstance(context)
+            database.sgShow2Helper().updateCustomReleaseTime(
+                showId,
+                customReleaseTime,
+                customReleaseDayOffset,
+                customReleaseTimeZone
+            )
+            // reset episode last update time so all get updated
+            database.sgEpisode2Helper().resetLastUpdatedForShow(showId)
+            // trigger update
+            SgSyncAdapter.requestSyncSingleImmediate(context, false, showId)
+        }
+
+        notifyAboutSyncing()
+    }
+
+    private suspend fun notifyAboutSyncing() {
         withContext(Dispatchers.Main) {
             // show immediate feedback, also if offline and sync won't go through
             if (AndroidUtils.isNetworkConnected(context)) {

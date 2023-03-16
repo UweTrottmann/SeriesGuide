@@ -129,6 +129,14 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_hidden = 0 WHERE series_hidden = 1")
     fun makeHiddenVisible(): Int
 
+    @Query("UPDATE sg_show SET series_custom_release_time = :customReleaseTime, series_custom_day_offset = :customReleaseDayOffset, series_custom_timezone = :customReleaseTimeZone WHERE _id = :id")
+    fun updateCustomReleaseTime(
+        id: Long,
+        customReleaseTime: Int,
+        customReleaseDayOffset: Int,
+        customReleaseTimeZone: String
+    )
+
     @Query("UPDATE sg_show SET series_language = :languageCode WHERE _id = :id")
     fun updateLanguage(id: Long, languageCode: String)
 
