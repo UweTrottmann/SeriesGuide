@@ -18,6 +18,9 @@ Version 68
 #### 68.0.1 🧪
 *2023-05-19*
 
+* 🌟 Edit release time of a show: specify time and number of days earlier or later. Currently only 
+  from the details view, tap the pen symbol. Use this for shows that e.g. release later or earlier 
+  in your region.
 * 📝 Latest user interface translations from Crowdin. Many updates to Traditional Chinese used in 
   Taiwan, thanks jackiexyz!
 

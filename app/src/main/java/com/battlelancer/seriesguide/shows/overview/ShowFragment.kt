@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
+import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -98,6 +99,7 @@ class ShowFragment() : Fragment() {
         val buttonFavorite: MaterialButton
         val buttonNotify: MaterialButton
         val buttonHidden: MaterialButton
+        val buttonEditReleaseTime: Button
         val buttonShortcut: Button
         val buttonLanguage: Button
         val buttonRate: View
@@ -135,6 +137,7 @@ class ShowFragment() : Fragment() {
             buttonFavorite = view.findViewById(R.id.buttonShowFavorite)
             buttonNotify = view.findViewById(R.id.buttonShowNotify)
             buttonHidden = view.findViewById(R.id.buttonShowHidden)
+            buttonEditReleaseTime = view.findViewById(R.id.buttonEditReleaseTime)
             buttonShortcut = view.findViewById(R.id.buttonShowShortcut)
             buttonLanguage = view.findViewById(R.id.buttonShowLanguage)
             buttonRate = view.findViewById(R.id.containerRatings)
@@ -169,6 +172,18 @@ class ShowFragment() : Fragment() {
         if (OverviewActivityImpl.getLayoutType(requireContext()) != MULTI_PANE_VERTICAL) {
             ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewShow)
         }
+
+        // Edit release time button
+        binding.buttonEditReleaseTime.setOnClickListener {
+            CustomReleaseTimeDialogFragment(showId).safeShow(
+                parentFragmentManager,
+                "custom-release-time"
+            )
+        }
+        TooltipCompat.setTooltipText(
+            binding.buttonEditReleaseTime,
+            binding.buttonEditReleaseTime.contentDescription
+        )
 
         // language button
         val buttonLanguage = binding.buttonLanguage
