@@ -13,7 +13,6 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.sync.HexagonShowSync
-import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.backend.shows.model.SgCloudShow
 import dagger.Lazy
@@ -390,12 +389,8 @@ class ShowTools2 @Inject constructor(
         // Save to local database and schedule sync.
         withContext(Dispatchers.IO) {
             // change language
-            val database = SgRoomDatabase.getInstance(context)
-            database.sgShow2Helper().updateLanguage(showId, languageCode)
-            // reset episode last update time so all get updated
-            database.sgEpisode2Helper().resetLastUpdatedForShow(showId)
-            // trigger update
-            SgSyncAdapter.requestSyncSingleImmediate(context, false, showId)
+            SgRoomDatabase.getInstance(context).sgShow2Helper().updateLanguage(showId, languageCode)
+            ShowSync.triggerFullSync(context, showId)
         }
 
         notifyAboutSyncing()
@@ -437,17 +432,13 @@ class ShowTools2 @Inject constructor(
         // Save to local database and schedule sync.
         withContext(Dispatchers.IO) {
             // Change custom release time values
-            val database = SgRoomDatabase.getInstance(context)
-            database.sgShow2Helper().updateCustomReleaseTime(
+            SgRoomDatabase.getInstance(context).sgShow2Helper().updateCustomReleaseTime(
                 showId,
                 customReleaseTime,
                 customReleaseDayOffset,
                 customReleaseTimeZone
             )
-            // reset episode last update time so all get updated
-            database.sgEpisode2Helper().resetLastUpdatedForShow(showId)
-            // trigger update
-            SgSyncAdapter.requestSyncSingleImmediate(context, false, showId)
+            ShowSync.triggerFullSync(context, showId)
         }
 
         notifyAboutSyncing()

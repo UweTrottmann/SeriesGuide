@@ -6,9 +6,9 @@ import android.widget.PopupMenu;
 import androidx.fragment.app.FragmentManager;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.sync.SgSyncAdapter;
-import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.lists.ManageListsDialogFragment;
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
+import com.battlelancer.seriesguide.shows.tools.ShowSync;
 import com.battlelancer.seriesguide.shows.tools.ShowTools2;
 
 /**
@@ -53,7 +53,7 @@ public class ShowMenuItemClickListener implements PopupMenu.OnMenuItemClickListe
             ManageListsDialogFragment.show(fragmentManager, showId);
             return true;
         } else if (itemId == R.id.menu_action_shows_update) {
-            SgSyncAdapter.requestSyncSingleImmediate(context, true, showId);
+            ShowSync.triggerDeltaSync(context, showId);
             return true;
         } else if (itemId == R.id.menu_action_shows_remove) {
             RemoveShowDialogFragment.show(showId, fragmentManager, context);
