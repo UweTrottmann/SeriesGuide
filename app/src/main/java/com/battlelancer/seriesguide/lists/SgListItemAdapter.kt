@@ -129,7 +129,7 @@ class SgListItemViewHolder(
             val network = item.network
 
             val releaseTimeShow: Date? = if (time != -1) {
-                TimeTools.getShowReleaseDateTime(
+                TimeTools.getShowReleaseDate(
                     context, time, weekDay, item.releaseTimeZone, item.releaseCountry, network
                 )
             } else {

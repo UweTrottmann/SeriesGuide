@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.streaming.StreamingSearch
@@ -280,7 +279,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         // Next release day and time.
         val timeAndNetworkText = SpannableStringBuilder().apply {
             if (show.releaseTimeOrDefault != -1) {
-                val release = TimeTools.getShowReleaseDateTime(
+                val release = TimeTools.getShowReleaseDate(
                     requireContext(),
                     show.releaseTimeOrDefault,
                     show.releaseWeekDayOrDefault,

@@ -198,7 +198,7 @@ class TimeToolsTest {
         val dateTime = getShowReleaseDateTime(
             LocalTime.of(2, 30), DayOfWeek.SUNDAY.value,
             zoneIdBerlin, GERMANY, "Some Network",
-            fixedClock
+            fixedClock, applyCorrections = true
         )
 
         // time should be "fixed" by moving an hour forward

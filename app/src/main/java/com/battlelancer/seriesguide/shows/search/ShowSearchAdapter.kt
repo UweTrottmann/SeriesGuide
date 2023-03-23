@@ -108,7 +108,7 @@ class ShowSearchAdapter(
             val weekDay = show.releaseWeekDay
             val network = show.network
             val showReleaseTime = if (time != -1) {
-                TimeTools.getShowReleaseDateTime(
+                TimeTools.getShowReleaseDate(
                     context,
                     time,
                     weekDay,

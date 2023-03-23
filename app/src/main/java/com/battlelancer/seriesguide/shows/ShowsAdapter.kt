@@ -135,7 +135,7 @@ class ShowsAdapter(
                 val country = sgShow.releaseCountry
                 val network = sgShow.network
                 val releaseTimeShow = if (time != -1) {
-                    TimeTools.getShowReleaseDateTime(
+                    TimeTools.getShowReleaseDate(
                         context,
                         time,
                         weekDay,

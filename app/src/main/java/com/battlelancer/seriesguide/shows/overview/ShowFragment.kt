@@ -266,7 +266,7 @@ class ShowFragment() : Fragment() {
         val network = show.network
         val time = if (releaseTime != null && releaseTime != -1) {
             val weekDay = show.releaseWeekDayOrDefault
-            val release = TimeTools.getShowReleaseDateTime(
+            val release = TimeTools.getShowReleaseDate(
                 requireContext(),
                 releaseTime,
                 weekDay,

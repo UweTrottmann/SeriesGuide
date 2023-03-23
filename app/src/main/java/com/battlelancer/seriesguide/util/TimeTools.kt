@@ -256,7 +256,7 @@ object TimeTools {
      * @param releaseTime The [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.RELEASE_TIME].
      * @return The date is today or on the next day matching the given week day.
      */
-    fun getShowReleaseDateTime(
+    fun getShowReleaseDate(
         context: Context, releaseTime: Int,
         weekDay: Int, timeZone: String?, country: String?,
         network: String?
