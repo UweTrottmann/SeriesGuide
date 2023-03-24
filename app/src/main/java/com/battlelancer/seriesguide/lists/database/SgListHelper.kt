@@ -60,7 +60,9 @@ interface SgListHelper {
 
 }
 
-// Compare with SeriesGuideDatabase.Tables.LIST_ITEMS_WITH_DETAILS
+/**
+ * Compare with [com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables.LIST_ITEMS_WITH_DETAILS]
+ */
 data class SgListItemWithDetails(
     @ColumnInfo(name = ListItems._ID) val id: Long,
     @ColumnInfo(name = ListItems.LIST_ITEM_ID) val listItemId: String,
@@ -80,6 +82,9 @@ data class SgListItemWithDetails(
     @ColumnInfo(name = SgShow2Columns.RELEASE_WEEKDAY) val releaseWeekDay: Int?,
     @ColumnInfo(name = SgShow2Columns.RELEASE_TIMEZONE) val releaseTimeZone: String?,
     @ColumnInfo(name = SgShow2Columns.RELEASE_COUNTRY) val releaseCountry: String?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
     @ColumnInfo(name = SgShow2Columns.LASTWATCHED_MS) val lastWatchedMs: Long,
     @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int,
     ) {
@@ -88,6 +93,10 @@ data class SgListItemWithDetails(
         get() = releaseTime ?: -1
     val releaseWeekDayOrDefault: Int
         get() = releaseWeekDay ?: -1
+    val customReleaseTimeOrDefault: Int
+        get() = customReleaseTime ?: SgShow2.CUSTOM_RELEASE_TIME_NOT_SET
+    val customReleaseDayOffsetOrDefault: Int
+        get() = customReleaseDayOffset ?: SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET
     val statusOrUnknown: Int
         get() = status ?: ShowStatus.UNKNOWN
 

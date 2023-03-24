@@ -6,9 +6,11 @@ import android.text.format.DateFormat
 import android.text.format.DateUtils
 import androidx.annotation.VisibleForTesting
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.database.SgEpisode2
 import com.battlelancer.seriesguide.shows.database.SgShow2
+import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import org.threeten.bp.Clock
 import org.threeten.bp.DateTimeException
 import org.threeten.bp.DayOfWeek
@@ -149,19 +151,15 @@ object TimeTools {
         }
     }
 
-    fun isSameWeekDay(episodeDateTime: Date, showDateTime: Date?, weekDay: Int): Boolean {
+    fun isSameWeekDay(episodeInstant: Instant, showInstant: Instant?, weekDay: Int): Boolean {
         if (weekDay == RELEASE_WEEKDAY_DAILY) {
             return true
         }
-        if (showDateTime == null || weekDay == RELEASE_WEEKDAY_UNKNOWN) {
+        if (showInstant == null || weekDay == RELEASE_WEEKDAY_UNKNOWN) {
             return false
         }
-
         val zoneId = safeSystemDefaultZoneId()
-        val showInstant = Instant.ofEpochMilli(showDateTime.time)
         val showDayOfWeek = LocalDateTime.ofInstant(showInstant, zoneId).dayOfWeek
-
-        val episodeInstant = Instant.ofEpochMilli(episodeDateTime.time)
         val episodeDayOfWeek = LocalDateTime.ofInstant(episodeInstant, zoneId).dayOfWeek
         return episodeDayOfWeek == showDayOfWeek
     }
@@ -383,8 +381,11 @@ object TimeTools {
         return dateTime
     }
 
+    /**
+     * Builds a release time string for a show formatted like "Tue 20:00".
+     */
     fun getShowReleaseDayAndTime(context: Context, show: SgShow2): String? =
-        getShowReleaseDayAndTime(
+        getShowReleaseDateTime(
             context,
             show.releaseTime,
             show.releaseTimeZone,
@@ -394,12 +395,56 @@ object TimeTools {
             show.customReleaseTimeOrDefault,
             show.customReleaseTimeZone,
             show.customReleaseDayOffsetOrDefault
+        )?.formatWithDeviceZoneToDayAndTime(context, show.releaseWeekDayOrDefault)
+
+    /**
+     * TODO
+     */
+    fun getShowReleaseDateTime(context: Context, show: SgShow2ForLists): ZonedDateTime? =
+        getShowReleaseDateTime(
+            context,
+            show.releaseTime,
+            show.releaseTimeZone,
+            show.releaseWeekDay,
+            show.releaseCountry,
+            show.network,
+            show.customReleaseTimeOrDefault,
+            show.customReleaseTimeZone,
+            show.customReleaseDayOffsetOrDefault
         )
 
     /**
-     * Builds a release time string for a show formatted like "Tue 20:00".
+     * TODO
      */
-    private fun getShowReleaseDayAndTime(
+    fun getShowReleaseDateTime(context: Context, listItem: SgListItemWithDetails): ZonedDateTime? =
+        getShowReleaseDateTime(
+            context,
+            listItem.releaseTime,
+            listItem.releaseTimeZone,
+            listItem.releaseWeekDayOrDefault,
+            listItem.releaseCountry,
+            listItem.network,
+            listItem.customReleaseTimeOrDefault,
+            listItem.customReleaseTimeZone,
+            listItem.customReleaseDayOffsetOrDefault
+        )
+
+    /**
+     * TODO
+     */
+    fun ZonedDateTime.formatWithDeviceZoneToDayAndTime(context: Context, weekDay: Int): String {
+        val withDeviceZone = withZoneSameInstant(safeSystemDefaultZoneId())
+        val dayString = formatToLocalDayOrDaily(context, withDeviceZone, weekDay)
+        val timeString = formatToLocalTime(withDeviceZone)
+        // Like "Mon 08:30"
+        return "$dayString $timeString"
+    }
+
+    /**
+     * Builds a release time string for a show formatted like "Tue 20:00".
+     * TODO
+     */
+    private fun getShowReleaseDateTime(
         context: Context,
         releaseTime: Int?,
         releaseTimeZone: String?,
@@ -409,7 +454,7 @@ object TimeTools {
         customReleaseTime: Int,
         customReleaseTimeZone: String?,
         customReleaseDayOffset: Int
-    ): String? {
+    ): ZonedDateTime? {
         if (customReleaseTime != SgShow2.CUSTOM_RELEASE_TIME_NOT_SET) {
             return getShowReleaseDateTime(
                 context,
@@ -419,7 +464,7 @@ object TimeTools {
                 customReleaseTimeZone,
                 null, null,
                 applyCorrections = false
-            ).withDeviceZoneToDayAndTime(context, weekDay)
+            )
         } else if (releaseTime != null && releaseTime != -1) {
             return getShowReleaseDateTime(
                 context,
@@ -429,18 +474,10 @@ object TimeTools {
                 releaseTimeZone,
                 releaseCountry, network,
                 applyCorrections = true
-            ).withDeviceZoneToDayAndTime(context, weekDay)
+            )
         } else {
             return null
         }
-    }
-
-    private fun ZonedDateTime.withDeviceZoneToDayAndTime(context: Context, weekDay: Int): String {
-        val withDeviceZone = withZoneSameInstant(safeSystemDefaultZoneId())
-        val dayString = formatToLocalDayOrDaily(context, withDeviceZone, weekDay)
-        val timeString = formatToLocalTime(withDeviceZone)
-        // Like "Mon 08:30"
-        return "$dayString $timeString"
     }
 
     /**

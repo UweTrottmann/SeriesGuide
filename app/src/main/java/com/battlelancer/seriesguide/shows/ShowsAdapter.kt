@@ -14,6 +14,8 @@ import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
+import org.threeten.bp.Instant
 
 class ShowsAdapter(
     private val context: Context,
@@ -130,22 +132,8 @@ class ShowsAdapter(
                     TextTools.getRemainingEpisodes(context.resources, sgShow.unwatchedCount)
 
                 val weekDay = sgShow.releaseWeekDay
-                val time = sgShow.releaseTime
-                val timeZone = sgShow.releaseTimeZone
-                val country = sgShow.releaseCountry
                 val network = sgShow.network
-                val releaseTimeShow = if (time != -1) {
-                    TimeTools.getShowReleaseDate(
-                        context,
-                        time,
-                        weekDay,
-                        timeZone,
-                        country,
-                        network
-                    )
-                } else {
-                    null
-                }
+                val releaseTimeShow = TimeTools.getShowReleaseDateTime(context, sgShow)
 
                 // next episode info
                 val episodeTime: String?
@@ -168,8 +156,8 @@ class ShowsAdapter(
                         TimeTools.formatToLocalRelativeTime(context, releaseTimeEpisode)
                     }
                     episodeTime = if (TimeTools.isSameWeekDay(
-                            releaseTimeEpisode,
-                            releaseTimeShow,
+                            Instant.ofEpochMilli(releaseTimeEpisode.time),
+                            releaseTimeShow?.toInstant(),
                             weekDay
                         )
                     ) {
@@ -183,8 +171,10 @@ class ShowsAdapter(
                     }
                 }
 
-                val timeAndNetwork =
-                    TextTools.networkAndTime(context, releaseTimeShow, weekDay, network)
+                val timeAndNetwork = TextTools.dotSeparate(
+                    network,
+                    releaseTimeShow?.formatWithDeviceZoneToDayAndTime(context, weekDay)
+                )
 
                 return ShowItem(
                     sgShow.id,

@@ -14,6 +14,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2SearchResult;
 import com.battlelancer.seriesguide.shows.database.SgShow2;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.EpisodeSearchColumns;
@@ -189,6 +190,9 @@ public class SeriesGuideDatabase {
                 + " ON " + Tables.SG_EPISODE + "." + SgShow2Columns.REF_SHOW_ID
                 + "=" + Qualified.SG_SHOW_ID;
 
+        /**
+         * Compare with {@link SgListItemWithDetails}.
+         */
         String LIST_ITEMS_WITH_DETAILS = "("
                 // new TMDB shows
                 + ItemsQuery.SELECT_ITEMS_AND_SHOWS_COLUMNS + " FROM "
@@ -270,6 +274,9 @@ public class SeriesGuideDatabase {
                 + SgShow2Columns.RELEASE_WEEKDAY + ","
                 + SgShow2Columns.RELEASE_TIMEZONE + ","
                 + SgShow2Columns.RELEASE_COUNTRY + ","
+                + SgShow2Columns.CUSTOM_RELEASE_TIME + ","
+                + SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET + ","
+                + SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE + ","
                 + SgShow2Columns.LASTWATCHED_MS + ","
                 + SgShow2Columns.UNWATCHED_COUNT;
     }

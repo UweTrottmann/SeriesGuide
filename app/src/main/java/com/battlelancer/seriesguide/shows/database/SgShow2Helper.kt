@@ -258,6 +258,9 @@ data class SgShow2ForLists(
     @ColumnInfo(name = SgShow2Columns.RELEASE_WEEKDAY) val releaseWeekDay: Int,
     @ColumnInfo(name = SgShow2Columns.RELEASE_COUNTRY) val releaseCountry: String?,
     @ColumnInfo(name = SgShow2Columns.RELEASE_TIMEZONE) val releaseTimeZone: String?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
     @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String?,
     @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int?,
     @ColumnInfo(name = SgShow2Columns.NEXTEPISODE) val nextEpisode: String?,
@@ -268,7 +271,12 @@ data class SgShow2ForLists(
     @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int,
     @ColumnInfo(name = SgShow2Columns.FAVORITE) val favorite: Boolean,
     @ColumnInfo(name = SgShow2Columns.HIDDEN) val hidden: Boolean
-)
+) {
+    val customReleaseTimeOrDefault: Int
+        get() = customReleaseTime ?: SgShow2.CUSTOM_RELEASE_TIME_NOT_SET
+    val customReleaseDayOffsetOrDefault: Int
+        get() = customReleaseDayOffset ?: SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET
+}
 
 /**
  * Note: using LEFT OUTER JOIN, so episode table values may be null!
