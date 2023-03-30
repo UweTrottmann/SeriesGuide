@@ -257,12 +257,12 @@
     <string name="action_movies_filter">Филтрирати филмове</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije bilo moguće obraditi statistiku</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s завршио гледање</string>
     <string name="shows_with_next">%s са следећим епизодама</string>
     <string name="shows_continuing">%s се наставља</string>
     <string name="episodes_watched">%s погледано</string>
     <string name="movies_on_watchlist">%s у листи</string>
-    <string name="stats_in_collection_format">%d in collection</string>
+    <string name="stats_in_collection_format">%d у колекцији</string>
     <string name="movies_watched_format">%s погледано</string>
     <plurals name="days_plural">
         <item quantity="one">%d dan</item>
@@ -370,19 +370,19 @@
     <string name="pref_updatewifionlysummary">Да би смањио трошкове података, не преузимај преко мобилних мрежа или које се мере</string>
     <string name="pref_error_reports">Пријавите грешке програмеру апликације</string>
     <plurals name="days_before_plural">
-        <item quantity="one">%d day before</item>
-        <item quantity="few">%d days before</item>
-        <item quantity="other">%d days before</item>
+        <item quantity="one">Пре %d дан</item>
+        <item quantity="few">Пре %d дана</item>
+        <item quantity="other">Пре %d дана</item>
     </plurals>
     <plurals name="hours_before_plural">
-        <item quantity="one">%d hour before</item>
-        <item quantity="few">%d hours before</item>
-        <item quantity="other">%d hours before</item>
+        <item quantity="one">Пре %d сат</item>
+        <item quantity="few">Пре %d сата</item>
+        <item quantity="other">Пре %d сата</item>
     </plurals>
     <plurals name="minutes_before_plural">
-        <item quantity="one">%d minute before</item>
-        <item quantity="few">%d minutes before</item>
-        <item quantity="other">%d minutes before</item>
+        <item quantity="one">Пre %d минут</item>
+        <item quantity="few">Пре %d минута</item>
+        <item quantity="other">Пре %d минута</item>
     </plurals>
     <!-- About screen -->
     <string name="privacy_policy">Полиса приватности</string>

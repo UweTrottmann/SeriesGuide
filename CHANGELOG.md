@@ -16,6 +16,7 @@ Version 68
 *in development*
 
 * 🔧 Use in-app browser only for websites related to the app.
+* 📝 Latest user interface translations from Crowdin.
 
 Version 67
 ----------
