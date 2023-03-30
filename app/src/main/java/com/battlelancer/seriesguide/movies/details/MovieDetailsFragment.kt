@@ -279,11 +279,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     true
                 }
                 R.id.menu_open_tmdb -> {
-                    WebTools.openAsCustomTab(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
+                    WebTools.openInApp(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
                     true
                 }
                 R.id.menu_open_trakt -> {
-                    WebTools.openAsCustomTab(requireContext(), TraktTools.buildMovieUrl(tmdbId))
+                    WebTools.openInApp(requireContext(), TraktTools.buildMovieUrl(tmdbId))
                     true
                 }
                 else -> false

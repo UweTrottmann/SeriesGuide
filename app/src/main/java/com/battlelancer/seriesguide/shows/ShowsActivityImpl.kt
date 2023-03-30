@@ -80,7 +80,7 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
             // Let the user know the app has updated.
             Snackbar.make(snackbarParentView, R.string.updated, Snackbar.LENGTH_LONG)
                 .setAction(R.string.updated_details) {
-                    WebTools.openAsCustomTab(
+                    WebTools.openInApp(
                         this@ShowsActivityImpl,
                         getString(R.string.url_release_notes)
                     )
