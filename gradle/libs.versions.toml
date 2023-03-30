@@ -9,7 +9,7 @@ androidx-room = "2.4.3" # https://developer.android.com/jetpack/androidx/release
 androidx-test = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/test
 androidx-test-espresso = "3.4.0"
 coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-dagger = "2.42" # https://github.com/google/dagger/releases
+dagger = "2.45" # https://github.com/google/dagger/releases
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
 # https://github.com/googleapis/google-api-java-client/releases
