@@ -63,7 +63,7 @@ debugdrawer-timber = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawe
 debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-view", version.ref = "debugdrawer" }
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
-firebase = "com.google.firebase:firebase-bom:31.2.2"
+firebase = "com.google.firebase:firebase-bom:31.4.0"
 firebase-crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:2.9.4"
 firebase-google-services = "com.google.gms:google-services:4.3.15"
 firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/firebase/FirebaseUI-Android/releases
