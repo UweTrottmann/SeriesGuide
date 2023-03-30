@@ -15,6 +15,9 @@ Version 68
 ----------
 *in development*
 
+#### 68.0.0 🧪
+*2023-03-30*
+
 * 🔧 Use in-app browser only for websites related to the app.
 * 📝 Latest user interface translations from Crowdin.
 
