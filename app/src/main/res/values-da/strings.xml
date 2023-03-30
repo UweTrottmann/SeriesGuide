@@ -417,7 +417,7 @@
     <string name="pref_offset">Manuel tidsforskydning</string>
     <string name="pref_offsetsummary">Forskyd sendetidspunkter med %d timer</string>
     <string name="clear_cache">Ryd billed-cache</string>
-    <string name="clear_cache_summary">Fjern alle gemte billeder fra din enhed</string>
+    <string name="clear_cache_summary">Gå til Lagringsindstillinger for at fjerne cachelagrede billeder og netværkssvar</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Inkluder beskrivelser, detaljer og bedømmelser</string>
     <string name="backup_failed_file_access">Kan ikke sikkerhedskopiere. En sikkerhedskopieringsfil kan ikke findes eller tilgås.</string>
@@ -434,7 +434,7 @@
     <string name="action_select_file">Vælg fil</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Automatisk sikkerhedskopiering</string>
-    <string name="pref_autobackupsummary">Ugentlig sikkerhedskopiering af dine serier, lister og film</string>
+    <string name="pref_autobackupsummary">Ugentlig sikkerhedskopiering af dine serier, lister og film.</string>
     <string name="autobackup_details">Disse sikkerhedskopier er ikke tilgængelige, hvis appen bliver installeret igen, medmindre sikkerhedskopiering af appdata er slået til for denne enhed (Android 6+). Ellers skal du oprette kopier for at beholde dem.</string>
     <string name="last_auto_backup">Seneste auto-sikkerhedskopiering: %s</string>
     <string name="restore_auto_backup">Gendan auto-sikkerhedskopi</string>
@@ -450,8 +450,8 @@
     <string name="more">%d mere</string>
     <string name="upcoming_display">Vælg for at vise kommende serier</string>
     <string name="pref_notifications">Meddelelser</string>
-    <string name="pref_notificationssummary">Notificér om nye episoder</string>
-    <string name="pref_notifications_settings">Indstillinger for notifikationer</string>
+    <string name="pref_notificationssummary">Underret om nye episoder</string>
+    <string name="pref_notifications_settings">Meddelelsesindstillinger</string>
     <string name="pref_ringtone">Lyd</string>
     <string name="pref_vibrate">Vibrér</string>
     <string name="pref_vibratesummary">Vibrér også ved visning af meddelelse</string>
@@ -465,8 +465,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Underret mig kun, hvis den nye episode er den næste på afspilningslisten</string>
     <string name="pref_notifications_battery_settings">Batteriindstillinger</string>
     <string name="pref_notifications_battery_settings_summary">Gå til Batteriindstillinger for at deaktivere batterioptimeringer for pålidelige meddelelser</string>
-    <string name="notifications_allow">Tillad notifikationer</string>
-    <string name="notifications_allow_reason">For at modtage notifikationer for episoder og fejl, gå til Indstillinger for at tillade dem.</string>
+    <string name="notifications_allow">Tillad meddelelser</string>
+    <string name="notifications_allow_reason">Gå til Indstillinger for at tillade modtagelse af episode- og fejlmeddelelser.</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
     <string name="pref_widget_opacity">Widget-baggrund</string>
