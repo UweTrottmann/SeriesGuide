@@ -110,12 +110,18 @@ object ViewTools {
         }, 200) // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
     }
 
+    /**
+     * Opens URL in external app, see [WebTools.openInApp].
+     */
     fun openUriOnClick(button: View?, uri: String?) {
         button?.setOnClickListener { v: View ->
-            if (uri != null) WebTools.openAsCustomTab(v.context, uri)
+            if (uri != null) WebTools.openInApp(v.context, uri)
         }
     }
 
+    /**
+     * Opens URL in external app, see [WebTools.openInApp].
+     */
     fun openUrlOnClickAndCopyOnLongPress(button: View, uri: String) {
         openUriOnClick(button, uri)
         button.copyTextToClipboardOnLongClick(uri)

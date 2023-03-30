@@ -83,7 +83,7 @@ abstract class BaseOAuthActivity : BaseActivity() {
     private fun launchBrowser() {
         val authorizationUrl = authorizationUrl
         if (authorizationUrl != null) {
-            WebTools.openAsCustomTab(this, authorizationUrl)
+            WebTools.openInCustomTab(this, authorizationUrl)
         }
     }
 

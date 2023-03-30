@@ -734,7 +734,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             feedbackView = it
             it.setCallback(object : FeedbackView.Callback {
                 override fun onRate() {
-                    if (WebTools.openAsCustomTab(
+                    if (WebTools.openInApp(
                             requireContext(),
                             getString(R.string.url_store_page)
                         )) {

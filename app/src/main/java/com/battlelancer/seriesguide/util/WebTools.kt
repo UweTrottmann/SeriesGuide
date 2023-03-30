@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
@@ -15,9 +16,11 @@ object WebTools {
      *
      * Returns false (and shows an error toast) if there is no app available to handle the view
      * intent, see [Utils.tryStartActivity].
+     *
+     * See also [openInApp].
      */
     @JvmStatic
-    fun openAsCustomTab(context: Context, url: String): Boolean {
+    fun openInCustomTab(context: Context, url: String): Boolean {
         val darkParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(
                 ContextCompat.getColor(context, R.color.sg_background_app_bar_dark)
@@ -36,6 +39,23 @@ object WebTools {
             .build().intent
             .apply { data = Uri.parse(url) }
         return Utils.tryStartActivity(context, customTabsIntent, true)
+    }
+
+    /**
+     * Opens in a supporting app, typically a browser or an app registered for a deep link, if one
+     * is installed.
+     *
+     * Returns false (and shows an error toast) if there is no app available to handle the view
+     * intent, see [Utils.tryStartActivity].
+     *
+     * See also [openInCustomTab].
+     */
+    fun openInApp(context: Context, url: String): Boolean {
+        return Utils.tryStartActivity(
+            context,
+            Intent(Intent.ACTION_VIEW, Uri.parse(url)),
+            true
+        )
     }
 
 }

@@ -67,6 +67,6 @@ class AboutPreferencesFragment : Fragment() {
     }
 
     private fun viewUrl(@StringRes urlResId: Int) {
-        WebTools.openAsCustomTab(requireContext(), getString(urlResId))
+        WebTools.openInApp(requireContext(), getString(urlResId))
     }
 }

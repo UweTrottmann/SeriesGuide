@@ -148,7 +148,7 @@ class PersonFragment : Fragment() {
 
             buttonPersonTmdbLink.setOnClickListener {
                 person?.id?.let {
-                    WebTools.openAsCustomTab(requireContext(), TmdbTools.buildPersonUrl(it))
+                    WebTools.openInApp(requireContext(), TmdbTools.buildPersonUrl(it))
                 }
             }
             buttonPersonTmdbLink.setOnLongClickListener {

@@ -11,6 +11,12 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 68
+----------
+*in development*
+
+* 🔧 Use in-app browser only for websites related to the app.
+
 Version 67
 ----------
 *2023-03-01*
