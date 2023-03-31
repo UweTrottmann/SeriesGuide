@@ -20,7 +20,9 @@ import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZoneOffset
 import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
+import org.threeten.bp.format.FormatStyle
 import org.threeten.bp.temporal.ChronoField
 import org.threeten.bp.temporal.ChronoUnit
 import java.text.SimpleDateFormat
@@ -256,10 +258,12 @@ object TimeTools {
         weekDay: Int, timeZone: String?, country: String?,
         network: String?
     ): Date {
+        // FIXME Use custom time and day offset
         return Date(
             getShowReleaseDateTime(
                 context,
                 releaseTime,
+                0,
                 weekDay,
                 timeZone,
                 country,
@@ -279,17 +283,24 @@ object TimeTools {
      * @return The date is today or on the next day matching the given week day.
      */
     fun getShowReleaseDateTime(
-        context: Context, releaseTime: Int,
-        weekDay: Int, timeZone: String?, country: String?,
-        network: String?, applyCorrections: Boolean
+        context: Context,
+        releaseTime: Int,
+        releaseOffsetDays: Int,
+        weekDay: Int,
+        timeZone: String?,
+        country: String?, network: String?,
+        applyCorrections: Boolean
     ): ZonedDateTime {
         // Determine show time zone.
         val showTimeZone = getDateTimeZone(timeZone)
 
         val time = getShowReleaseTime(releaseTime)
         var dateTime = getShowReleaseDateTime(
-            time, weekDay,
-            showTimeZone, country, network, Clock.system(showTimeZone),
+            time,
+            releaseOffsetDays,
+            weekDay,
+            showTimeZone,
+            country, network, Clock.system(showTimeZone),
             applyCorrections
         )
 
@@ -300,16 +311,48 @@ object TimeTools {
     }
 
     /**
+     * Returns the [DayOfWeek] value (1-7) after [officialWeekDay] is moved by the number of
+     * [offsetDays] (positive or negative).
+     *
+     * [offsetDays] absolute value limited to [SgShow2.MAX_CUSTOM_DAY_OFFSET].
+     */
+    @VisibleForTesting
+    fun getWeekDayWithOffset(officialWeekDay: Int, offsetDays: Int): Int {
+        // Offset day from a range of [1, 7] to a range of [0, 6] (so mod works)
+        val dayIndex = officialWeekDay - 1
+
+        // Map offset (may be negative) into range of [0, 6]
+        val dayOffset = offsetDays
+            .coerceIn(-SgShow2.MAX_CUSTOM_DAY_OFFSET, SgShow2.MAX_CUSTOM_DAY_OFFSET)
+            .mod(7)
+            .let { if (it < 0) it + 7 else it }
+
+        // Add the now positive offset, mod to bring back into range of [0, 6]
+        val newDayIndex = (dayIndex + dayOffset).mod(7)
+        // Undo offset to go back to [1, 7] range
+        return newDayIndex + 1
+    }
+
+    /**
      * If [applyCorrections], uses [handleHourPastMidnight] and [applyUnitedStatesCorrections].
      */
     @VisibleForTesting
     fun getShowReleaseDateTime(
-        time: LocalTime, weekDay: Int,
+        time: LocalTime,
+        releaseOffsetDays: Int,
+        officialWeekDay: Int,
         timeZone: ZoneId, country: String?, network: String?,
         clock: Clock, applyCorrections: Boolean
     ): ZonedDateTime {
         // create current date in show time zone, set local show release time
         var localDateTime = LocalDateTime.of(LocalDate.now(clock), time)
+
+        // If not daily (officialWeekDay == 0), change week day based on day offset.
+        val weekDay = if (releaseOffsetDays != 0 && officialWeekDay > 0) {
+            getWeekDayWithOffset(officialWeekDay, releaseOffsetDays)
+        } else {
+            officialWeekDay
+        }
 
         // adjust day of week so datetime is today or within the next week
         // for daily shows (weekDay == 0) just use the current day
@@ -338,6 +381,66 @@ object TimeTools {
         }
 
         return dateTime
+    }
+
+    fun getShowReleaseDayAndTime(context: Context, show: SgShow2): String? =
+        getShowReleaseDayAndTime(
+            context,
+            show.releaseTime,
+            show.releaseTimeZone,
+            show.releaseWeekDayOrDefault,
+            show.releaseCountry,
+            show.network,
+            show.customReleaseTimeOrDefault,
+            show.customReleaseTimeZone,
+            show.customReleaseDayOffsetOrDefault
+        )
+
+    /**
+     * Builds a release time string for a show formatted like "Tue 20:00".
+     */
+    private fun getShowReleaseDayAndTime(
+        context: Context,
+        releaseTime: Int?,
+        releaseTimeZone: String?,
+        weekDay: Int,
+        releaseCountry: String?,
+        network: String?,
+        customReleaseTime: Int,
+        customReleaseTimeZone: String?,
+        customReleaseDayOffset: Int
+    ): String? {
+        if (customReleaseTime != SgShow2.CUSTOM_RELEASE_TIME_NOT_SET) {
+            return getShowReleaseDateTime(
+                context,
+                customReleaseTime,
+                customReleaseDayOffset,
+                weekDay,
+                customReleaseTimeZone,
+                null, null,
+                applyCorrections = false
+            ).withDeviceZoneToDayAndTime(context, weekDay)
+        } else if (releaseTime != null && releaseTime != -1) {
+            return getShowReleaseDateTime(
+                context,
+                releaseTime,
+                0,
+                weekDay,
+                releaseTimeZone,
+                releaseCountry, network,
+                applyCorrections = true
+            ).withDeviceZoneToDayAndTime(context, weekDay)
+        } else {
+            return null
+        }
+    }
+
+    private fun ZonedDateTime.withDeviceZoneToDayAndTime(context: Context, weekDay: Int): String {
+        val withDeviceZone = withZoneSameInstant(safeSystemDefaultZoneId())
+        val dayString = formatToLocalDayOrDaily(context, withDeviceZone, weekDay)
+        val timeString = formatToLocalTime(withDeviceZone)
+        // Like "Mon 08:30"
+        return "$dayString $timeString"
     }
 
     /**
@@ -477,6 +580,14 @@ object TimeTools {
         SimpleDateFormat("E", Locale.getDefault()).format(dateTime)
 
     /**
+     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale.
+     *
+     * This does not auto-convert to the device time zone.
+     */
+    private fun formatToLocalDay(dateTime: ZonedDateTime): String =
+        dateTime.format(DateTimeFormatter.ofPattern("E"))
+
+    /**
      * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale. If the
      * given weekDay is 0, returns the local version of "Daily".
      */
@@ -487,10 +598,34 @@ object TimeTools {
     }
 
     /**
+     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale. If the
+     * given weekDay is 0, returns the local version of "Daily".
+     *
+     * This does not auto-convert to the device time zone.
+     */
+    private fun formatToLocalDayOrDaily(
+        context: Context,
+        dateTime: ZonedDateTime,
+        weekDay: Int
+    ): String {
+        return if (weekDay == RELEASE_WEEKDAY_DAILY) {
+            context.getString(R.string.daily)
+        } else formatToLocalDay(dateTime)
+    }
+
+    /**
      * Formats to absolute time format (e.g. "08:00 PM") as defined by the devices locale.
      */
     fun formatToLocalTime(context: Context, dateTime: Date): String =
         DateFormat.getTimeFormat(context).format(dateTime)
+
+    /**
+     * Formats to absolute time format (e.g. "08:00 PM") as defined by the devices locale.
+     *
+     * This does not auto-convert to the device time zone.
+     */
+    private fun formatToLocalTime(dateTime: ZonedDateTime): String =
+        dateTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
 
     /**
      * Formats to relative time in relation to the current system time (e.g. "in 12 min") as defined

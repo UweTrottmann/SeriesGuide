@@ -97,8 +97,14 @@ class TimeToolsTest {
         }
 
         parseEpisodeReleaseDate(
-            deviceTimeZone, date,
-            SgShow2.MAX_CUSTOM_DAY_OFFSET + 1, time, usa, noNetwork, usPacificTimeZone, noCorrections
+            deviceTimeZone,
+            date,
+            SgShow2.MAX_CUSTOM_DAY_OFFSET + 1,
+            time,
+            usa,
+            noNetwork,
+            usPacificTimeZone,
+            noCorrections
         ).let {
             println("Max days later: " + it + " " + it.atZone(deviceTimeZone))
             assertThat(it).isEqualTo(1688007600000L)
@@ -196,7 +202,7 @@ class TimeToolsTest {
 
         // put show release exactly inside daylight saving gap (02:00-03:00)
         val dateTime = getShowReleaseDateTime(
-            LocalTime.of(2, 30), DayOfWeek.SUNDAY.value,
+            LocalTime.of(2, 30), 0, DayOfWeek.SUNDAY.value,
             zoneIdBerlin, GERMANY, "Some Network",
             fixedClock, applyCorrections = true
         )
@@ -271,6 +277,34 @@ class TimeToolsTest {
             .isEqualTo("Europe/Berlin")
         assertThat(getDateTimeZone(TimeTools.TIMEZONE_ID_US_EASTERN).toString())
             .isEqualTo(TimeTools.TIMEZONE_ID_US_EASTERN)
+    }
+
+    @Test
+    fun getWeekDayWithOffset() {
+        val maxAbsoluteValue = SgShow2.MAX_CUSTOM_DAY_OFFSET + 1 /* exceed max */
+        val offsets = IntRange(-maxAbsoluteValue, maxAbsoluteValue)
+        val offsetsCount = offsets.count()
+
+        for (dayOfWeek in DayOfWeek.values()) {
+            val expectedDays = IntArray(offsetsCount) { i ->
+                when (i) {
+                    0 -> dayOfWeek.value // Value at negative end exceeding max.
+                    offsetsCount - 1 -> dayOfWeek.value// Value at positive end exceeding max.
+                    else -> {
+                        // Starting at i = 1 which is offset = 28 which must be the same week day
+                        // Offset by -1 for 0-based modulo
+                        (dayOfWeek.value - 1 + (i - 1)).mod(7) + 1
+                    }
+                }
+            }
+            val mappedDays = offsets.map { TimeTools.getWeekDayWithOffset(dayOfWeek.value, it) }
+            assertThat(mappedDays).containsExactlyElementsIn(expectedDays.toTypedArray())
+
+            println("Testing for $dayOfWeek (${dayOfWeek.value})")
+            println("offsets = ${offsets.joinToString()}")
+            println("newDay  = ${mappedDays.joinToString()}")
+            println("at zero = ${mappedDays[offsets.indexOf(0)]}")
+        }
     }
 
     companion object {
