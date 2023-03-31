@@ -405,29 +405,31 @@ class ShowTools2 @Inject constructor(
         customReleaseDayOffset: Int,
         customReleaseTimeZone: String
     ) = SgApp.coroutineScope.launch {
-        // TODO Send to Cloud.
-//        val isCloudFailed = withContext(Dispatchers.Default) {
-//            if (!HexagonSettings.isEnabled(context)) {
-//                return@withContext false
-//            }
-//            if (isNotConnected(context)) {
-//                return@withContext true
-//            }
-//            val showTmdbId =
-//                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
-//            if (showTmdbId == 0) {
-//                return@withContext true
-//            }
-//
-//            val show = SgCloudShow()
-//            show.tmdbId = showTmdbId
-//            // TODO
-//
-//            val success = uploadShowToCloud(show)
-//            return@withContext !success
-//        }
-//        // Do not save to local database if sending to cloud has failed.
-//        if (isCloudFailed) return@launch
+        // Send to Cloud.
+        val isCloudFailed = withContext(Dispatchers.Default) {
+            if (!HexagonSettings.isEnabled(context)) {
+                return@withContext false
+            }
+            if (isNotConnected(context)) {
+                return@withContext true
+            }
+            val showTmdbId =
+                SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+            if (showTmdbId == 0) {
+                return@withContext true
+            }
+
+            val show = SgCloudShow()
+            show.tmdbId = showTmdbId
+            show.customReleaseTime = customReleaseTime
+            show.customReleaseDayOffset = customReleaseDayOffset
+            show.customReleaseTimeZone = customReleaseTimeZone
+
+            val success = uploadShowToCloud(show)
+            return@withContext !success
+        }
+        // Do not save to local database if sending to cloud has failed.
+        if (isCloudFailed) return@launch
 
         // Save to local database and schedule sync.
         withContext(Dispatchers.IO) {

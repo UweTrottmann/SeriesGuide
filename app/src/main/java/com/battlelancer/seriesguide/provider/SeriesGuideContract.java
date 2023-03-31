@@ -695,7 +695,9 @@ public class SeriesGuideContract {
         String NEXTAIRDATEMS = "series_nextairdate";
 
         /**
-         * Added in db version 22 to store the last time a show was updated.
+         * Added in db version 22 to store the last time (in milliseconds) a show was updated.
+         * <p>
+         * Default: 0
          */
         String LASTUPDATED = "series_lastupdate";
 

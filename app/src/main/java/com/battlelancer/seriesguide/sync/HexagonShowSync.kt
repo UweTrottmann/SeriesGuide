@@ -284,31 +284,72 @@ class HexagonShowSync @Inject constructor(
                     .sgShow2Helper()
                     .getForCloudUpdate(showIdOrNull)
                 if (update != null) {
+                    // The main use case considered for a merge here is one device not being
+                    // connected to Cloud for some time (credentials expired, explicitly
+                    // disconnected): in this case try to keep changes that have less bad
+                    // side-effects (e.g. do not turn off notifications) and are easy to revert
+                    // (e.g. remove one of a few favorites).
                     var hasUpdates = false
                     if (show.isFavorite != null) {
-                        // when merging, favorite shows, but never unfavorite them
+                        // When merging, add a show to favorites, but never remove it:
+                        // assuming there are only a few favorite shows and many others,
+                        // losing a favorite show is bad and it's easy to remove a few again.
                         if (!mergeValues || show.isFavorite) {
                             update.favorite = show.isFavorite
                             hasUpdates = true
                         }
                     }
                     if (show.notify != null) {
-                        // when merging, enable notifications, but never disable them
+                        // When merging, enable notifications, but never disable them:
+                        // assuming a user does not regularly check the notify setting,
+                        // missing notifications is bad and it's easy to turn them off again.
                         if (!mergeValues || show.notify) {
                             update.notify = show.notify
                             hasUpdates = true
                         }
                     }
                     if (show.isHidden != null) {
-                        // when merging, un-hide shows, but never hide them
+                        // When merging, un-hide shows, but never hide them:
+                        // assuming a user does not regularly check which shows are hidden,
+                        // hiding a show is bad and it's easy to hide one again.
                         if (!mergeValues || !show.isHidden) {
                             update.hidden = show.isHidden
                             hasUpdates = true
                         }
                     }
-                    if (!show.language.isNullOrEmpty()) {
-                        // always overwrite with hexagon language value
+                    // If below properties have changed (new value != old value), should
+                    // trigger a sync for this show.
+                    var scheduleShowUpdate = false
+                    if (!show.language.isNullOrEmpty() && show.language != update.language) {
+                        // Always overwrite with hexagon language value.
+                        // Local shows might use a default value and it's easy to change.
                         update.language = show.language
+                        scheduleShowUpdate = true
+                    }
+                    if (show.customReleaseTime != null
+                        && show.customReleaseTime != update.customReleaseTime) {
+                        // Always overwrite with hexagon custom time value.
+                        // Local shows might use a default value.
+                        update.customReleaseTime = show.customReleaseTime
+                        scheduleShowUpdate = true
+                    }
+                    if (show.customReleaseDayOffset != null
+                        && show.customReleaseDayOffset != update.customReleaseDayOffset) {
+                        // Always overwrite with hexagon custom time value.
+                        // Local shows might use a default value.
+                        update.customReleaseDayOffset = show.customReleaseDayOffset
+                        scheduleShowUpdate = true
+                    }
+                    if (show.customReleaseTimeZone != null
+                        && show.customReleaseTimeZone != update.customReleaseTimeZone) {
+                        // Always overwrite with hexagon custom time value.
+                        // Local shows might use a default value.
+                        update.customReleaseTimeZone = show.customReleaseTimeZone
+                        scheduleShowUpdate = true
+                    }
+                    if (scheduleShowUpdate) {
+                        // Mark the show as never updated so it will be on the next sync.
+                        update.lastUpdatedMs = 0
                         hasUpdates = true
                     }
                     if (hasUpdates) {
@@ -329,15 +370,18 @@ class HexagonShowSync @Inject constructor(
             .sgShow2Helper()
             .getForCloudUpdate()
         val shows: MutableList<SgCloudShow> = LinkedList()
-        for ((_, tmdbId, language, favorite, hidden, notify) in forCloudUpdate) {
-            if (tmdbId == null) continue
-            val show = SgCloudShow()
-            show.tmdbId = tmdbId
-            show.isFavorite = favorite
-            show.notify = notify
-            show.isHidden = hidden
-            show.language = language
-            shows.add(show)
+        for (localShow in forCloudUpdate) {
+            val tmdbId = localShow.tmdbId ?: continue
+            val cloudShow = SgCloudShow()
+            cloudShow.tmdbId = tmdbId
+            cloudShow.isFavorite = localShow.favorite
+            cloudShow.notify = localShow.favorite
+            cloudShow.isHidden = localShow.hidden
+            cloudShow.language = localShow.language
+            cloudShow.customReleaseTime = localShow.customReleaseTime
+            cloudShow.customReleaseDayOffset = localShow.customReleaseDayOffset
+            cloudShow.customReleaseTimeZone = localShow.customReleaseTimeZone
+            shows.add(cloudShow)
         }
         if (shows.size == 0) {
             Timber.d("uploadAll: no shows to upload")

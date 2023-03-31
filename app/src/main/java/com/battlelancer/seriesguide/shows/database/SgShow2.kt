@@ -73,9 +73,9 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.HIDDEN) var hidden: Boolean = false,
     @ColumnInfo(name = SgShow2Columns.NOTIFY) var notify: Boolean = true,
     @ColumnInfo(name = SgShow2Columns.HEXAGON_MERGE_COMPLETE) val hexagonMergeComplete: Boolean = true,
-    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) val customReleaseTime: Int?,
-    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) val customReleaseDayOffset: Int?,
-    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) val customReleaseTimeZone: String?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
 ) {
     val releaseTimeOrDefault: Int
         get() = releaseTime ?: -1

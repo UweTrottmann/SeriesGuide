@@ -110,6 +110,15 @@ class AddUpdateShowTools @Inject constructor(
                 if (hexagonShow.isHidden != null) {
                     show.hidden = hexagonShow.isHidden
                 }
+                if (hexagonShow.customReleaseTime != null) {
+                    show.customReleaseTime = hexagonShow.customReleaseTime
+                }
+                if (hexagonShow.customReleaseDayOffset != null) {
+                    show.customReleaseDayOffset = hexagonShow.customReleaseDayOffset
+                }
+                if (hexagonShow.customReleaseTimeZone != null) {
+                    show.customReleaseTimeZone = hexagonShow.customReleaseTimeZone
+                }
             }
         }
 
@@ -172,7 +181,8 @@ class AddUpdateShowTools @Inject constructor(
             cloudShow.tmdbId = showTmdbId
             cloudShow.language = language
             cloudShow.isRemoved = false
-            // Prevent losing restored properties from a legacy cloud show by always sending them.
+            // Prevent losing restored properties from a legacy Cloud show (see
+            // hexagonTools.get().getShow used above) by always sending them.
             cloudShow.isFavorite = show.favorite
             cloudShow.isHidden = show.hidden
             cloudShow.notify = show.notify
@@ -610,6 +620,9 @@ class AddUpdateShowTools @Inject constructor(
                             it.notify = show.notify
                             it.isHidden = show.hidden
                             it.language = show.language
+                            it.customReleaseTime = show.customReleaseTime
+                            it.customReleaseDayOffset = show.customReleaseDayOffset
+                            it.customReleaseTimeZone = show.customReleaseTimeZone
                             it.isRemoved = false
                         }))
                         if (!uploadSuccess) return@andThen Err(UpdateResult.ApiErrorStop(HEXAGON))
