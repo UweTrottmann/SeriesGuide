@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgSeason2Numbers
 import com.battlelancer.seriesguide.shows.database.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.shows.database.SgSeason2Update
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.HEXAGON
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TMDB
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError
@@ -134,6 +135,9 @@ class AddUpdateShowTools @Inject constructor(
                     ReleaseInfo(
                         show.releaseTimeZone,
                         show.releaseTimeOrDefault,
+                        show.customReleaseTimeZoneOrDefault,
+                        show.customReleaseTimeOrDefault,
+                        show.customReleaseDayOffsetOrDefault,
                         show.releaseCountry,
                         show.network
                     ),
@@ -268,6 +272,9 @@ class AddUpdateShowTools @Inject constructor(
     data class ReleaseInfo(
         val releaseTimeZone: String?,
         val releaseTimeOrDefault: Int,
+        val customReleaseTimeZone: String,
+        val customReleaseTime: Int,
+        val customReleaseDayOffset: Int,
         val releaseCountry: String?,
         val network: String?
     )
@@ -287,8 +294,15 @@ class AddUpdateShowTools @Inject constructor(
         localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?,
         localEpisodesWithoutTmdbIdByNumber: MutableMap<Int, SgEpisode2Ids>?
     ): EpisodeDetails {
-        val showTimeZone = TimeTools.getDateTimeZone(releaseInfo.releaseTimeZone)
-        val showReleaseTime = TimeTools.getShowReleaseTime(releaseInfo.releaseTimeOrDefault)
+        // Only apply release time auto-corrections if not using a custom time.
+        val usingCustomTime = releaseInfo.customReleaseTime != SgShow2.CUSTOM_RELEASE_TIME_NOT_SET
+        // Prefer custom time zone and release time.
+        val showTimeZone = TimeTools.getDateTimeZone(
+            if (usingCustomTime) releaseInfo.customReleaseTimeZone else releaseInfo.releaseTimeZone
+        )
+        val showReleaseTime = TimeTools.getShowReleaseTime(
+            if (usingCustomTime) releaseInfo.customReleaseTime else releaseInfo.releaseTimeOrDefault
+        )
         val deviceTimeZone = TimeZone.getDefault().id
 
         val toInsert = mutableListOf<SgEpisode2>()
@@ -313,10 +327,12 @@ class AddUpdateShowTools @Inject constructor(
             val releaseDateTime = TimeTools.parseEpisodeReleaseDate(
                 showTimeZone,
                 tmdbEpisode.air_date,
+                releaseInfo.customReleaseDayOffset,
                 showReleaseTime,
                 releaseInfo.releaseCountry,
                 releaseInfo.network,
-                deviceTimeZone
+                deviceTimeZone,
+                applyCorrections = usingCustomTime
             )
 
             val guestStars = tmdbEpisode.guest_stars?.mapNotNull { it.name } ?: emptyList()
@@ -448,6 +464,9 @@ class AddUpdateShowTools @Inject constructor(
                 ReleaseInfo(
                     updatedShow.releaseTimeZone,
                     updatedShow.releaseTime,
+                    show.customReleaseTimeZoneOrDefault,
+                    show.customReleaseTimeOrDefault,
+                    show.customReleaseDayOffsetOrDefault,
                     updatedShow.releaseCountry,
                     updatedShow.network
                 ),
