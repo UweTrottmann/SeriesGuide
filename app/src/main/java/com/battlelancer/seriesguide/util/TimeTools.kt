@@ -249,29 +249,6 @@ object TimeTools {
     }
 
     /**
-     * See [getShowReleaseDateTime].
-     */
-    fun getShowReleaseDate(
-        context: Context, releaseTime: Int,
-        weekDay: Int, timeZone: String?, country: String?,
-        network: String?
-    ): Date {
-        // FIXME Use custom time and day offset
-        return Date(
-            getShowReleaseDateTime(
-                context,
-                releaseTime,
-                0,
-                weekDay,
-                timeZone,
-                country,
-                network,
-                applyCorrections = false
-            ).toInstant().toEpochMilli()
-        )
-    }
-
-    /**
      * Calculates the current release date time. Adjusts for time zone effects on release time, e.g.
      * daylight saving time. Adjusts for user-defined offset with [applyUserOffset].
      *
