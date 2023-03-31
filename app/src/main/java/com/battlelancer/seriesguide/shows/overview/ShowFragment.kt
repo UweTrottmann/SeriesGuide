@@ -261,30 +261,11 @@ class ShowFragment() : Fragment() {
         ShowStatus.setStatusAndColor(binding.textViewStatus, show.statusOrUnknown)
 
         // Network, next release day and time, runtime
-        val releaseCountry = show.releaseCountry
-        val releaseTime = show.releaseTime
         val network = show.network
-        val time = if (releaseTime != null && releaseTime != -1) {
-            val weekDay = show.releaseWeekDayOrDefault
-            val release = TimeTools.getShowReleaseDate(
-                requireContext(),
-                releaseTime,
-                weekDay,
-                show.releaseTimeZone,
-                releaseCountry, network
-            )
-            val dayString = TimeTools.formatToLocalDayOrDaily(requireContext(), release, weekDay)
-            val timeString = TimeTools.formatToLocalTime(requireContext(), release)
-            String.format("%s %s", dayString, timeString)
-        } else {
-            null
-        }
-        val runtime = getString(
-            R.string.runtime_minutes,
-            show.runtime.toString()
-        )
+        val timeOrNull = TimeTools.getShowReleaseDayAndTime(requireContext(), show)
+        val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
         val combinedString =
-            TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
+            TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)
         binding.textViewReleaseTime.text = combinedString
 
         // favorite button
@@ -398,7 +379,7 @@ class ShowFragment() : Fragment() {
 
         // country for release time calculation
         // show "unknown" if country is not supported
-        binding.textViewReleaseCountry.text = TimeTools.getCountry(requireContext(), releaseCountry)
+        binding.textViewReleaseCountry.text = TimeTools.getCountry(requireContext(), show.releaseCountry)
 
         // original release
         ViewTools.setValueOrPlaceholder(
