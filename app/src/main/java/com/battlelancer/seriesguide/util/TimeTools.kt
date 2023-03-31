@@ -249,37 +249,64 @@ object TimeTools {
     }
 
     /**
-     * Calculates the current release date time. Adjusts for time zone effects on release time, e.g.
-     * delays between time zones (e.g. in the United States) and DST. Adjusts for user-defined
-     * offset.
-     *
-     * @param releaseTime The [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.RELEASE_TIME].
-     * @return The date is today or on the next day matching the given week day.
+     * See [getShowReleaseDateTime].
      */
     fun getShowReleaseDate(
         context: Context, releaseTime: Int,
         weekDay: Int, timeZone: String?, country: String?,
         network: String?
     ): Date {
+        return Date(
+            getShowReleaseDateTime(
+                context,
+                releaseTime,
+                weekDay,
+                timeZone,
+                country,
+                network,
+                applyCorrections = false
+            ).toInstant().toEpochMilli()
+        )
+    }
+
+    /**
+     * Calculates the current release date time. Adjusts for time zone effects on release time, e.g.
+     * daylight saving time. Adjusts for user-defined offset with [applyUserOffset].
+     *
+     * If [applyCorrections], uses [handleHourPastMidnight] and [applyUnitedStatesCorrections].
+     *
+     * @param releaseTime The [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.RELEASE_TIME].
+     * @return The date is today or on the next day matching the given week day.
+     */
+    fun getShowReleaseDateTime(
+        context: Context, releaseTime: Int,
+        weekDay: Int, timeZone: String?, country: String?,
+        network: String?, applyCorrections: Boolean
+    ): ZonedDateTime {
         // Determine show time zone.
         val showTimeZone = getDateTimeZone(timeZone)
 
         val time = getShowReleaseTime(releaseTime)
         var dateTime = getShowReleaseDateTime(
             time, weekDay,
-            showTimeZone, country, network, Clock.system(showTimeZone)
+            showTimeZone, country, network, Clock.system(showTimeZone),
+            applyCorrections
         )
 
+        // Always apply user offset as it's always applied for episodes.
         dateTime = applyUserOffset(context, dateTime)
 
-        return Date(dateTime.toInstant().toEpochMilli())
+        return dateTime
     }
 
+    /**
+     * If [applyCorrections], uses [handleHourPastMidnight] and [applyUnitedStatesCorrections].
+     */
     @VisibleForTesting
     fun getShowReleaseDateTime(
         time: LocalTime, weekDay: Int,
         timeZone: ZoneId, country: String?, network: String?,
-        clock: Clock
+        clock: Clock, applyCorrections: Boolean
     ): ZonedDateTime {
         // create current date in show time zone, set local show release time
         var localDateTime = LocalDateTime.of(LocalDate.now(clock), time)
@@ -295,15 +322,19 @@ object TimeTools {
             localDateTime = localDateTime.with(ChronoField.DAY_OF_WEEK, weekDay.toLong())
         }
 
-        localDateTime = handleHourPastMidnight(country, network, localDateTime)
+        if (applyCorrections) {
+            localDateTime = handleHourPastMidnight(country, network, localDateTime)
+        }
 
         // get a valid datetime in the show time zone, this auto-forwards time if inside DST gap
         var dateTime = localDateTime.atZone(timeZone)
 
-        // handle time zone effects on release time for US shows (only if device is set to US zone)
-        val localTimeZone = TimeZone.getDefault().id
-        if (localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA)) {
-            dateTime = applyUnitedStatesCorrections(country, localTimeZone, dateTime)
+        if (applyCorrections) {
+            // handle time zone effects on release time for US shows (only if device is set to US zone)
+            val localTimeZone = TimeZone.getDefault().id
+            if (localTimeZone.startsWith(TIMEZONE_ID_PREFIX_AMERICA)) {
+                dateTime = applyUnitedStatesCorrections(country, localTimeZone, dateTime)
+            }
         }
 
         return dateTime
