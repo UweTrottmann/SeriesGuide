@@ -262,7 +262,7 @@ class ShowFragment() : Fragment() {
 
         // Network, next release day and time, runtime
         val network = show.network
-        val timeOrNull = TimeTools.getShowReleaseDayAndTime(requireContext(), show)
+        val timeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
         val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
         val combinedString =
             TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)
@@ -389,7 +389,7 @@ class ShowFragment() : Fragment() {
 
         // When the show was last updated by this app
         binding.textShowLastUpdated.text =
-            TextTools.timeInMillisToDateAndTime(requireContext(), show.lastUpdatedMs)
+            TimeTools.formatToLocalDateAndTime(requireContext(), show.lastUpdatedMs)
 
         // content rating
         ViewTools.setValueOrPlaceholder(binding.textViewContentRating, show.contentRating)

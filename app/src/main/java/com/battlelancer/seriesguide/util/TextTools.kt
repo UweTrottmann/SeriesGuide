@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.format.DateUtils
 import android.text.style.TextAppearanceSpan
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
@@ -13,7 +12,6 @@ import androidx.core.text.toSpannable
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import java.text.NumberFormat
-import java.util.Date
 
 /**
  * Tools to help build text fragments to be used throughout the user interface.
@@ -219,33 +217,6 @@ object TextTools {
             dotString.append(right)
         }
         return dotString.toString()
-    }
-
-    /**
-     * Builds a network + release time string for a show formatted like "Network · Tue 08:00 PM".
-     */
-    fun networkAndTime(
-        context: Context, release: Date?, weekDay: Int,
-        network: String?
-    ): String {
-        return if (release != null) {
-            val dayString = TimeTools.formatToLocalDayOrDaily(context, release, weekDay)
-            val timeString = TimeTools.formatToLocalTime(context, release)
-            dotSeparate(network, "$dayString $timeString")
-        } else {
-            dotSeparate(network, null)
-        }
-    }
-
-    fun timeInMillisToDateAndTime(context: Context, timeInMillis: Long): String {
-        return if (timeInMillis != 0L) {
-            DateUtils.formatDateTime(
-                context, timeInMillis,
-                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
-            )
-        } else {
-            context.getString(R.string.unknown)
-        }
     }
 
     /**

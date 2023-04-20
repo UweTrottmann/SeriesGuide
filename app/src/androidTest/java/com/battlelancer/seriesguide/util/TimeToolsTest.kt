@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.util
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.util.TimeTools.applyUnitedStatesCorrections
 import com.battlelancer.seriesguide.util.TimeTools.getDateTimeZone
-import com.battlelancer.seriesguide.util.TimeTools.getShowReleaseDateTime
+import com.battlelancer.seriesguide.util.TimeTools.getShowReleaseDateTimeImpl
 import com.battlelancer.seriesguide.util.TimeTools.getShowReleaseYear
 import com.battlelancer.seriesguide.util.TimeTools.parseEpisodeReleaseDate
 import com.google.common.truth.Truth
@@ -201,7 +201,7 @@ class TimeToolsTest {
         val fixedClock = Clock.fixed(instantDayOfDstStart, zoneIdBerlin)
 
         // put show release exactly inside daylight saving gap (02:00-03:00)
-        val dateTime = getShowReleaseDateTime(
+        val dateTime = getShowReleaseDateTimeImpl(
             LocalTime.of(2, 30), 0, DayOfWeek.SUNDAY.value,
             zoneIdBerlin, GERMANY, "Some Network",
             fixedClock, applyCorrections = true

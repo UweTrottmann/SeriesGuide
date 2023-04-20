@@ -270,7 +270,7 @@ object TimeTools {
         val showTimeZone = getDateTimeZone(timeZone)
 
         val time = getShowReleaseTime(releaseTime)
-        var dateTime = getShowReleaseDateTime(
+        var dateTime = getShowReleaseDateTimeImpl(
             time,
             releaseOffsetDays,
             weekDay,
@@ -312,7 +312,7 @@ object TimeTools {
      * If [applyCorrections], uses [handleHourPastMidnight] and [applyUnitedStatesCorrections].
      */
     @VisibleForTesting
-    fun getShowReleaseDateTime(
+    fun getShowReleaseDateTimeImpl(
         time: LocalTime,
         releaseOffsetDays: Int,
         officialWeekDay: Int,
@@ -359,10 +359,12 @@ object TimeTools {
     }
 
     /**
-     * Builds a release time string for a show formatted like "Tue 20:00".
+     * Shortcut for [getShowReleaseDateTimeCustomOrNull] and [formatWithDeviceZoneToDayAndTime].
+     *
+     * If the first returns `null`, this returns `null` as well.
      */
-    fun getShowReleaseDayAndTime(context: Context, show: SgShow2): String? =
-        getShowReleaseDateTime(
+    fun getLocalReleaseDayAndTime(context: Context, show: SgShow2): String? =
+        getShowReleaseDateTimeCustomOrNull(
             context,
             show.releaseTime,
             show.releaseTimeZone,
@@ -375,10 +377,10 @@ object TimeTools {
         )?.formatWithDeviceZoneToDayAndTime(context, show.releaseWeekDayOrDefault)
 
     /**
-     * TODO
+     * Shortcut for [getShowReleaseDateTimeCustomOrNull].
      */
-    fun getShowReleaseDateTime(context: Context, show: SgShow2ForLists): ZonedDateTime? =
-        getShowReleaseDateTime(
+    fun getReleaseDateTime(context: Context, show: SgShow2ForLists): ZonedDateTime? =
+        getShowReleaseDateTimeCustomOrNull(
             context,
             show.releaseTime,
             show.releaseTimeZone,
@@ -391,10 +393,10 @@ object TimeTools {
         )
 
     /**
-     * TODO
+     * Shortcut for [getShowReleaseDateTimeCustomOrNull].
      */
-    fun getShowReleaseDateTime(context: Context, listItem: SgListItemWithDetails): ZonedDateTime? =
-        getShowReleaseDateTime(
+    fun getReleaseDateTime(context: Context, listItem: SgListItemWithDetails): ZonedDateTime? =
+        getShowReleaseDateTimeCustomOrNull(
             context,
             listItem.releaseTime,
             listItem.releaseTimeZone,
@@ -407,7 +409,10 @@ object TimeTools {
         )
 
     /**
-     * TODO
+     * Changes the time zone to the device time zone and formats to a day and time string,
+     * like "Mon 20:30".
+     *
+     * If [weekDay] is [RELEASE_WEEKDAY_DAILY] uses local equivalent of "Daily" instead of week day.
      */
     fun ZonedDateTime.formatWithDeviceZoneToDayAndTime(context: Context, weekDay: Int): String {
         val withDeviceZone = withZoneSameInstant(safeSystemDefaultZoneId())
@@ -418,10 +423,13 @@ object TimeTools {
     }
 
     /**
-     * Builds a release time string for a show formatted like "Tue 20:00".
-     * TODO
+     * Takes custom time, or if not set release time, and returns [getReleaseDateTime].
+     *
+     * When using custom time, does not apply corrections.
+     *
+     * If no (custom) release time is set returns `null`.
      */
-    private fun getShowReleaseDateTime(
+    private fun getShowReleaseDateTimeCustomOrNull(
         context: Context,
         releaseTime: Int?,
         releaseTimeZone: String?,
@@ -604,16 +612,6 @@ object TimeTools {
     /**
      * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale. If the
      * given weekDay is 0, returns the local version of "Daily".
-     */
-    fun formatToLocalDayOrDaily(context: Context, dateTime: Date, weekDay: Int): String {
-        return if (weekDay == RELEASE_WEEKDAY_DAILY) {
-            context.getString(R.string.daily)
-        } else formatToLocalDay(dateTime)
-    }
-
-    /**
-     * Formats to the week day abbreviation (e.g. "Mon") as defined by the devices locale. If the
-     * given weekDay is 0, returns the local version of "Daily".
      *
      * This does not auto-convert to the device time zone.
      */
@@ -788,6 +786,22 @@ object TimeTools {
             formatToLocalDay(dateTime)
         }
         return context.getString(R.string.format_date_and_day, date.toString(), day)
+    }
+
+    /**
+     * Format milliseconds to a localized string like "May 4, 2:02 PM".
+     *
+     * If [timeInMillis] is 0, will return the local version of "unknown".
+     */
+    fun formatToLocalDateAndTime(context: Context, timeInMillis: Long): String {
+        return if (timeInMillis != 0L) {
+            DateUtils.formatDateTime(
+                context, timeInMillis,
+                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
+            )
+        } else {
+            context.getString(R.string.unknown)
+        }
     }
 
     /**

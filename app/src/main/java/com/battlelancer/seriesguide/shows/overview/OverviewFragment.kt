@@ -680,7 +680,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
         // Regular network, release time and length.
         val network = show.network
-        val timeOrNull = TimeTools.getShowReleaseDayAndTime(requireContext(), show)
+        val timeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
         val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
         val combinedString =
             TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)

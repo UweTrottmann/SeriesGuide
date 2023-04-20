@@ -133,7 +133,7 @@ class ShowsAdapter(
 
                 val weekDay = sgShow.releaseWeekDay
                 val network = sgShow.network
-                val releaseTimeShow = TimeTools.getShowReleaseDateTime(context, sgShow)
+                val releaseTimeShow = TimeTools.getReleaseDateTime(context, sgShow)
 
                 // next episode info
                 val episodeTime: String?

@@ -128,7 +128,7 @@ class SgListItemViewHolder(
             val weekDay = item.releaseWeekDayOrDefault
             val network = item.network
 
-            val releaseTimeShow = TimeTools.getShowReleaseDateTime(context, item)
+            val releaseTimeShow = TimeTools.getReleaseDateTime(context, item)
 
             binding.textViewShowsTimeAndNetwork.text = TextTools.dotSeparate(
                 network,

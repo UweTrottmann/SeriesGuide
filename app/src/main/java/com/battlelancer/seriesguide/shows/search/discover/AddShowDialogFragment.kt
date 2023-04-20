@@ -278,7 +278,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         // Next release day and time.
         val timeAndNetworkText = SpannableStringBuilder().apply {
-            val dayAndTimeOrNull = TimeTools.getShowReleaseDayAndTime(requireContext(), show)
+            val dayAndTimeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
             if (dayAndTimeOrNull != null) {
                 append(dayAndTimeOrNull)
                 append("\n")
