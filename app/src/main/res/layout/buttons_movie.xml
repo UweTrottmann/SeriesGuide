@@ -82,6 +82,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/buttonMovieStreamingSearch2"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_stream"
+            android:gravity="center_vertical|start"
+            android:text="@string/action_stream"
+            app:icon="@drawable/ic_play_arrow_black_24dp"
+            app:layout_constraintEnd_toStartOf="@+id/buttonMovieStreamingSearchInfo"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/buttonMovieStreamingSearchInfo"
             style="?attr/borderlessButtonStyle"
@@ -94,5 +108,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/buttonStreamFree"
+        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_button"
+        android:layout_marginRight="@dimen/padding_button"
+        android:contentDescription="@string/checkin"
+        android:gravity="center_vertical|start"
+        android:text="@string/stream_free"
+        app:icon="@drawable/ic_play_arrow_black_24dp" />
 
 </LinearLayout>

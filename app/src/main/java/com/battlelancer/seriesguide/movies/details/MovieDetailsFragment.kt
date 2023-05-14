@@ -1,9 +1,11 @@
 package com.battlelancer.seriesguide.movies.details
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -124,6 +126,14 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.containerMovieButtons.buttonMovieCheckIn,
             binding.containerMovieButtons.buttonMovieCheckIn.contentDescription
         )
+
+        binding.containerMovieButtons.buttonStreamFree.setOnClickListener {
+            // Open browser
+            val url = TmdbTools.buildFreeStreamingURL(tmdbId)
+
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(browserIntent)
+        }
 
         // language button
         binding.buttonMovieLanguage.isGone = true
