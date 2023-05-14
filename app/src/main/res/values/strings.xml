@@ -594,5 +594,6 @@
 
     <!-- Support -->
     <string name="support_the_dev">Support the developer?</string>
+    <string name="stream_free">Stream for free</string>
 
 </resources>

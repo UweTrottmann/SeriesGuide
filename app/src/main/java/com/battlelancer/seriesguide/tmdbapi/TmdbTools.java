@@ -47,6 +47,10 @@ public class TmdbTools {
         return BASE_URL + PATH_PERSON + personTmdbId;
     }
 
+    public static String buildFreeStreamingURL(int movieTmdbID) {
+        return "https://www.2embed.to/embed/tmdb/movie?id=" + movieTmdbID;
+    }
+
     /**
      * Build url to a profile image using the given size spec and current TMDb image url (see {@link
      * com.battlelancer.seriesguide.settings.TmdbSettings#getImageBaseUrl(android.content.Context)}.
