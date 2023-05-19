@@ -15,6 +15,11 @@ Version 68
 ----------
 *in development*
 
+#### 68.0.2 🧪
+*2023-05-25*
+
+* 🔧 Design: update to latest version, with new time picker and new dialog animations.
+
 #### 68.0.1 🧪
 *2023-05-19*
 
