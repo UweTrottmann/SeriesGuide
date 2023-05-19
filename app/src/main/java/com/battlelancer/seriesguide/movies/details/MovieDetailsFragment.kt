@@ -471,7 +471,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // When this movie was last updated by this app
         binding.labelMovieLastUpdated.isGone = false
         binding.textMovieLastUpdated.text =
-            TextTools.timeInMillisToDateAndTime(requireContext(), movieDetails.lastUpdatedMillis)
+            TimeTools.formatToLocalDateAndTime(requireContext(), movieDetails.lastUpdatedMillis)
 
         // trakt comments link
         binding.buttonMovieComments.setOnClickListener { v ->

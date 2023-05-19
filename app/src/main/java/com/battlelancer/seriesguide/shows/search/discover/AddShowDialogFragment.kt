@@ -16,9 +16,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -31,7 +31,6 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
-import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
@@ -279,25 +278,11 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
 
         // Next release day and time.
         val timeAndNetworkText = SpannableStringBuilder().apply {
-            if (show.releaseTimeOrDefault != -1) {
-                val release = TimeTools.getShowReleaseDateTime(
-                    requireContext(),
-                    show.releaseTimeOrDefault,
-                    show.releaseWeekDayOrDefault,
-                    show.releaseTimeZone,
-                    show.releaseCountry,
-                    show.network
-                )
-                val day = TimeTools.formatToLocalDayOrDaily(
-                    requireContext(),
-                    release,
-                    show.releaseWeekDayOrDefault
-                )
-                val time = TimeTools.formatToLocalTime(requireContext(), release)
-                append(day).append(" ").append(time)
+            val dayAndTimeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
+            if (dayAndTimeOrNull != null) {
+                append(dayAndTimeOrNull)
                 append("\n")
             }
-
             // Network, runtime.
             append(show.network)
             append("\n")

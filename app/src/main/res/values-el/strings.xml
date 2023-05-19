@@ -39,6 +39,7 @@
     <string name="action_stream_info">Πληροφορίες ροής ή αγοράς</string>
     <string name="action_select_region">Επιλογή περιοχής</string>
     <string name="action_include_any_watch_provider">Συμπερίληψη όλων</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
     <string name="search_hint">Αναζήτηση επεισοδίων</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">Κάποιες λεπτομέρειες είναι μη ορατές ώστε να μην αποκαλυφθούν πληροφορίες για την υπόθεση. Για να το απενεργοποιήσετε πηγαίνετε στις Ρυθμίσεις.</string>
     <string name="format_source">Πηγή: %s</string>
     <string name="last_updated">Last updated</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">Σήμερα</string>
     <string name="now">τώρα</string>

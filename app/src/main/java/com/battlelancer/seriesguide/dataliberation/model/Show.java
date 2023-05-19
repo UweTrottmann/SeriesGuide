@@ -31,6 +31,10 @@ public class Show {
     public String release_timezone;
     public String country;
 
+    @Nullable public Integer custom_release_time;
+    @Nullable public Integer custom_release_day_offset;
+    @Nullable public String custom_release_timezone;
+
     public String poster;
     public String content_rating;
     public String status;

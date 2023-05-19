@@ -10,11 +10,16 @@ import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.DatabaseError
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.DoesNotExist
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.UpdateResult.Success
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.sync.SyncProgress
 import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.pow
 import kotlin.random.Random
@@ -222,9 +227,43 @@ class ShowSync(
                 + 12 * DateUtils.HOUR_IN_MILLIS)
 
         /**
+         * Triggers an update for [showId] with showing an info toast.
+         */
+        @JvmStatic
+        fun triggerDeltaSync(context: Context, showId: Long) {
+            SgSyncAdapter.requestSyncSingleImmediate(context, true, showId)
+        }
+
+        /**
+         * Resets episode last update time so all get updated and triggers an update for [showId]
+         * without showing an info toast.
+         */
+        fun triggerFullSync(context: Context, showId: Long) {
+            SgRoomDatabase.getInstance(context).sgEpisode2Helper().resetLastUpdatedForShow(showId)
+            SgSyncAdapter.requestSyncSingleImmediate(context, false, showId)
+        }
+
+        /**
+         * Schedule an update for the given show. Does not run if this show was just updated,
+         * there is no network connection or auto-sync is turned off.
+         * See [SgSyncAdapter.requestSyncIfConnected].
+         *
+         * Execution is delayed so it won't reduce UI performance (may call this in onCreate).
+         */
+        fun updateDelayed(context: Context, showId: Long, lifecycleScope: CoroutineScope) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                // Delay sync request to avoid slowing down UI.
+                delay(DateUtils.SECOND_IN_MILLIS)
+                if (shouldUpdateShow(context, showId)) {
+                    SgSyncAdapter.requestSyncSingleIfConnected(context, showId)
+                }
+            }
+        }
+
+        /**
          * Returns true if the given show has not been updated in the last 12 hours.
          */
-        fun shouldUpdateShow(context: Context, showId: Long): Boolean {
+        private fun shouldUpdateShow(context: Context, showId: Long): Boolean {
             val lastUpdatedMs = SgRoomDatabase.getInstance(context).sgShow2Helper()
                 .getLastUpdated(showId) ?: return false
             return System.currentTimeMillis() - lastUpdatedMs > DateUtils.HOUR_IN_MILLIS * 12

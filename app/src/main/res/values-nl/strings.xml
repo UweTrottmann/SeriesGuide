@@ -39,6 +39,7 @@
     <string name="action_stream_info">Streaming- of aankoopinformatie</string>
     <string name="action_select_region">Regio selecteren</string>
     <string name="action_include_any_watch_provider">Om het even welke</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
     <string name="search_hint">Afleveringen zoeken</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">Sommige details zijn verborgen om te voorkomen dat u spoilers ziet. Om dit uit te zetten ga naar Instellingen.</string>
     <string name="format_source">Bron: %s</string>
     <string name="last_updated">Laatst bijgewerkt</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">vandaag</string>
     <string name="now">nu</string>

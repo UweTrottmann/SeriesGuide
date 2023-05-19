@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
+import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
@@ -98,6 +99,7 @@ class ShowFragment() : Fragment() {
         val buttonFavorite: MaterialButton
         val buttonNotify: MaterialButton
         val buttonHidden: MaterialButton
+        val buttonEditReleaseTime: Button
         val buttonShortcut: Button
         val buttonLanguage: Button
         val buttonRate: View
@@ -135,6 +137,7 @@ class ShowFragment() : Fragment() {
             buttonFavorite = view.findViewById(R.id.buttonShowFavorite)
             buttonNotify = view.findViewById(R.id.buttonShowNotify)
             buttonHidden = view.findViewById(R.id.buttonShowHidden)
+            buttonEditReleaseTime = view.findViewById(R.id.buttonEditReleaseTime)
             buttonShortcut = view.findViewById(R.id.buttonShowShortcut)
             buttonLanguage = view.findViewById(R.id.buttonShowLanguage)
             buttonRate = view.findViewById(R.id.containerRatings)
@@ -169,6 +172,18 @@ class ShowFragment() : Fragment() {
         if (OverviewActivityImpl.getLayoutType(requireContext()) != MULTI_PANE_VERTICAL) {
             ThemeUtils.applyBottomPaddingForNavigationBar(binding.scrollViewShow)
         }
+
+        // Edit release time button
+        binding.buttonEditReleaseTime.setOnClickListener {
+            CustomReleaseTimeDialogFragment(showId).safeShow(
+                parentFragmentManager,
+                "custom-release-time"
+            )
+        }
+        TooltipCompat.setTooltipText(
+            binding.buttonEditReleaseTime,
+            binding.buttonEditReleaseTime.contentDescription
+        )
 
         // language button
         val buttonLanguage = binding.buttonLanguage
@@ -261,30 +276,11 @@ class ShowFragment() : Fragment() {
         ShowStatus.setStatusAndColor(binding.textViewStatus, show.statusOrUnknown)
 
         // Network, next release day and time, runtime
-        val releaseCountry = show.releaseCountry
-        val releaseTime = show.releaseTime
         val network = show.network
-        val time = if (releaseTime != null && releaseTime != -1) {
-            val weekDay = show.releaseWeekDayOrDefault
-            val release = TimeTools.getShowReleaseDateTime(
-                requireContext(),
-                releaseTime,
-                weekDay,
-                show.releaseTimeZone,
-                releaseCountry, network
-            )
-            val dayString = TimeTools.formatToLocalDayOrDaily(requireContext(), release, weekDay)
-            val timeString = TimeTools.formatToLocalTime(requireContext(), release)
-            String.format("%s %s", dayString, timeString)
-        } else {
-            null
-        }
-        val runtime = getString(
-            R.string.runtime_minutes,
-            show.runtime.toString()
-        )
+        val timeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
+        val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
         val combinedString =
-            TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
+            TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)
         binding.textViewReleaseTime.text = combinedString
 
         // favorite button
@@ -398,7 +394,7 @@ class ShowFragment() : Fragment() {
 
         // country for release time calculation
         // show "unknown" if country is not supported
-        binding.textViewReleaseCountry.text = TimeTools.getCountry(requireContext(), releaseCountry)
+        binding.textViewReleaseCountry.text = TimeTools.getCountry(requireContext(), show.releaseCountry)
 
         // original release
         ViewTools.setValueOrPlaceholder(
@@ -408,7 +404,7 @@ class ShowFragment() : Fragment() {
 
         // When the show was last updated by this app
         binding.textShowLastUpdated.text =
-            TextTools.timeInMillisToDateAndTime(requireContext(), show.lastUpdatedMs)
+            TimeTools.formatToLocalDateAndTime(requireContext(), show.lastUpdatedMs)
 
         // content rating
         ViewTools.setValueOrPlaceholder(binding.textViewContentRating, show.contentRating)

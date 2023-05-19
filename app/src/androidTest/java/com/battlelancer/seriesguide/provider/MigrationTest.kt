@@ -10,8 +10,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.battlelancer.seriesguide.movies.details.MovieDetails
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestEpisode49
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestSeason49
 import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow
+import com.battlelancer.seriesguide.provider.RoomDatabaseTestHelper.TestShow49
 import com.battlelancer.seriesguide.shows.history.ActivityType
 import com.battlelancer.seriesguide.util.ImageTools
 import com.google.common.truth.Truth.assertThat
@@ -22,6 +25,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 
 /**
  * Test Room database migrations.
@@ -355,6 +359,70 @@ class MigrationTest {
         assertThat(constraintException).hasMessageThat().contains("UNIQUE constraint")
     }
 
+    @Test
+    fun migrationFrom50To51_containsCorrectData() {
+        val dbOld = migrationTestHelper
+            .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_50_WATCH_PROVIDERS)
+        val showId = RoomDatabaseTestHelper.insertShow49(SHOW49, dbOld)
+        val seasonId = RoomDatabaseTestHelper.insertSeason49(SEASON49, showId, dbOld)
+        RoomDatabaseTestHelper.insertEpisode49(EPISODE49, showId, seasonId, SEASON49.number, dbOld)
+        dbOld.close()
+
+        val db = getMigratedDatabase(SgRoomDatabase.VERSION_51_CUSTOM_RELEASE_TIME)
+        assertTestData_sg_show_sg_season_sg_episode(showId, seasonId, db)
+
+        // sg_show table has new columns for custom release time.
+        queryAndAssert(
+            db,
+            "SELECT series_custom_release_time, series_custom_day_offset, series_custom_timezone FROM sg_show"
+        ) { dbShow ->
+            // New custom release columns values should default to null.
+            assertThat(dbShow.isNull(0)).isTrue()
+            assertThat(dbShow.isNull(1)).isTrue()
+            assertThat(dbShow.isNull(2)).isTrue()
+        }
+    }
+
+    /**
+     * Validate test data for version [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION] or higher.
+     *
+     * MigrationTestHelper automatically verifies the schema changes, but not the data validity.
+     * Validate that the data was migrated properly.
+     */
+    private fun assertTestData_sg_show_sg_season_sg_episode(
+        showId: Long,
+        seasonId: Long,
+        db: SupportSQLiteDatabase
+    ) {
+        queryAndAssert(
+            db,
+            "SELECT series_tmdb_id, series_title, series_runtime, series_poster FROM sg_show"
+        ) {
+            assertThat(it.getInt(0)).isEqualTo(SHOW49.tmdbId)
+            assertThat(it.getString(1)).isEqualTo(SHOW49.title)
+            assertThat(it.getInt(2)).isEqualTo(SHOW49.runtime)
+            assertThat(it.getString(3)).isEqualTo(SHOW49.poster)
+        }
+        queryAndAssert(db, "SELECT season_tmdb_id, series_id, season_number, season_order FROM sg_season") {
+            assertThat(it.getString(0)).isEqualTo(SEASON49.tmdbId)
+            assertThat(it.getLong(1)).isEqualTo(showId)
+            assertThat(it.getInt(2)).isEqualTo(SEASON49.number)
+            assertThat(it.getInt(3)).isEqualTo(SEASON49.number)
+        }
+        queryAndAssert(
+            db,
+            "SELECT episode_tmdb_id, series_id, season_id, episode_title, episode_number, episode_season_number, episode_order FROM sg_episode"
+        ) {
+            assertThat(it.getInt(0)).isEqualTo(EPISODE49.tmdbId)
+            assertThat(it.getLong(1)).isEqualTo(showId)
+            assertThat(it.getLong(2)).isEqualTo(seasonId)
+            assertThat(it.getString(3)).isEqualTo(EPISODE49.title)
+            assertThat(it.getInt(4)).isEqualTo(EPISODE49.number)
+            assertThat(it.getInt(5)).isEqualTo(SEASON49.number)
+            assertThat(it.getInt(6)).isEqualTo(EPISODE49.number)
+        }
+    }
+
     private fun getMigratedDatabase(version: Int): SupportSQLiteDatabase {
         return migrationTestHelper.runMigrationsAndValidate(
             TEST_DB_NAME, version, false /* FTS table added manually */,
@@ -394,6 +462,22 @@ class MigrationTest {
             2
         )
         private val EPISODE = TestEpisode(
+            21,
+            "Episode Title",
+            1
+        )
+
+        private val SHOW49 = TestShow49(
+            21,
+            "The No Answers Show",
+            45,
+            "example.jpg"
+        )
+        private val SEASON49 = TestSeason49(
+            "21",
+            2
+        )
+        private val EPISODE49 = TestEpisode49(
             21,
             "Episode Title",
             1

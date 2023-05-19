@@ -680,27 +680,10 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
         // Regular network, release time and length.
         val network = show.network
-        var time: String? = null
-        val releaseTime = show.releaseTime
-        if (releaseTime != null && releaseTime != -1) {
-            val weekDay = show.releaseWeekDayOrDefault
-            val release = TimeTools.getShowReleaseDateTime(
-                requireContext(),
-                releaseTime,
-                weekDay,
-                show.releaseTimeZone,
-                show.releaseCountry,
-                network
-            )
-            val dayString = TimeTools.formatToLocalDayOrDaily(requireContext(), release, weekDay)
-            val timeString = TimeTools.formatToLocalTime(requireContext(), release)
-            // "Mon 08:30"
-            time = "$dayString $timeString"
-        }
-        val runtime = getString(
-            R.string.runtime_minutes, show.runtime.toString()
-        )
-        val combinedString = TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
+        val timeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
+        val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
+        val combinedString =
+            TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)
         binding.overviewShowNetworkAndTime.text = combinedString
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         binding.overviewShowNetworkAndTime.copyTextToClipboardOnLongClick()

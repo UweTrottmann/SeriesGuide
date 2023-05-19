@@ -129,6 +129,14 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_hidden = 0 WHERE series_hidden = 1")
     fun makeHiddenVisible(): Int
 
+    @Query("UPDATE sg_show SET series_custom_release_time = :customReleaseTime, series_custom_day_offset = :customReleaseDayOffset, series_custom_timezone = :customReleaseTimeZone WHERE _id = :id")
+    fun updateCustomReleaseTime(
+        id: Long,
+        customReleaseTime: Int,
+        customReleaseDayOffset: Int,
+        customReleaseTimeZone: String
+    )
+
     @Query("UPDATE sg_show SET series_language = :languageCode WHERE _id = :id")
     fun updateLanguage(id: Long, languageCode: String)
 
@@ -153,10 +161,10 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_syncenabled = 1 WHERE _id = :id")
     fun setHexagonMergeCompleted(id: Long)
 
-    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify FROM sg_show WHERE _id = :id")
+    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate FROM sg_show WHERE _id = :id")
     fun getForCloudUpdate(id: Long): SgShow2CloudUpdate?
 
-    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify FROM sg_show")
+    @Query("SELECT _id, series_tmdb_id, series_language, series_favorite, series_hidden, series_notify, series_custom_release_time, series_custom_day_offset, series_custom_timezone, series_lastupdate FROM sg_show")
     fun getForCloudUpdate(): List<SgShow2CloudUpdate>
 
     @Update(entity = SgShow2::class)
@@ -250,6 +258,9 @@ data class SgShow2ForLists(
     @ColumnInfo(name = SgShow2Columns.RELEASE_WEEKDAY) val releaseWeekDay: Int,
     @ColumnInfo(name = SgShow2Columns.RELEASE_COUNTRY) val releaseCountry: String?,
     @ColumnInfo(name = SgShow2Columns.RELEASE_TIMEZONE) val releaseTimeZone: String?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
     @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String?,
     @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int?,
     @ColumnInfo(name = SgShow2Columns.NEXTEPISODE) val nextEpisode: String?,
@@ -260,7 +271,12 @@ data class SgShow2ForLists(
     @ColumnInfo(name = SgShow2Columns.UNWATCHED_COUNT) val unwatchedCount: Int,
     @ColumnInfo(name = SgShow2Columns.FAVORITE) val favorite: Boolean,
     @ColumnInfo(name = SgShow2Columns.HIDDEN) val hidden: Boolean
-)
+) {
+    val customReleaseTimeOrDefault: Int
+        get() = customReleaseTime ?: SgShow2.CUSTOM_RELEASE_TIME_NOT_SET
+    val customReleaseDayOffsetOrDefault: Int
+        get() = customReleaseDayOffset ?: SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET
+}
 
 /**
  * Note: using LEFT OUTER JOIN, so episode table values may be null!
@@ -320,5 +336,9 @@ data class SgShow2CloudUpdate(
     @ColumnInfo(name = SgShow2Columns.LANGUAGE) var language: String?,
     @ColumnInfo(name = SgShow2Columns.FAVORITE) var favorite: Boolean,
     @ColumnInfo(name = SgShow2Columns.HIDDEN) var hidden: Boolean,
-    @ColumnInfo(name = SgShow2Columns.NOTIFY) var notify: Boolean
+    @ColumnInfo(name = SgShow2Columns.NOTIFY) var notify: Boolean,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME) var customReleaseTime: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_DAY_OFFSET) var customReleaseDayOffset: Int?,
+    @ColumnInfo(name = SgShow2Columns.CUSTOM_RELEASE_TIME_ZONE) var customReleaseTimeZone: String?,
+    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) var lastUpdatedMs: Long
 )

@@ -1,17 +1,11 @@
 package com.battlelancer.seriesguide.ui
 
-import android.text.format.DateUtils
-import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.dataliberation.BackupSettings
 import com.battlelancer.seriesguide.shows.tools.AddShowTask.OnShowAddedEvent
-import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.Companion.requestSyncIfTime
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.util.DBUtils.DatabaseErrorEvent
 import com.battlelancer.seriesguide.util.TaskManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -113,18 +107,5 @@ abstract class BaseActivity : BaseThemeActivity() {
         // Do nothing.
     }
 
-    /**
-     * Schedule an update for the given show. Might not run if this show was just updated. Execution
-     * is also delayed so it won't reduce UI setup performance (may call this in [onCreate]).
-     *
-     * See [SgSyncAdapter.requestSyncIfTime].
-     */
-    protected fun updateShowDelayed(showId: Long) {
-        val context = applicationContext
-        lifecycleScope.launch(Dispatchers.IO) {
-            // Delay sync request to avoid slowing down UI.
-            delay(DateUtils.SECOND_IN_MILLIS)
-            requestSyncIfTime(context, showId)
-        }
-    }
+
 }

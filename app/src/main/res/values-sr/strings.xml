@@ -39,6 +39,7 @@
     <string name="action_stream_info">Информације о стримовању или куповини</string>
     <string name="action_select_region">Одабери регион</string>
     <string name="action_include_any_watch_provider">Убаци било који</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
     <string name="search_hint">Тражи епизоде</string>
@@ -100,6 +101,9 @@
     <string name="no_spoilers">Neki od detalja nisu vidljivi da se izbegnu spojleri. Da isključite ovo posetite Settings.</string>
     <string name="format_source">Izvor %s</string>
     <string name="last_updated">Последње ажурирање</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">данас</string>
     <string name="now">сада</string>

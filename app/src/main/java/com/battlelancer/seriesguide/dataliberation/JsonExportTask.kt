@@ -308,6 +308,11 @@ class JsonExportTask(
             show.release_weekday = sgShow.releaseWeekDayOrDefault
             show.release_timezone = sgShow.releaseTimeZone
             show.country = sgShow.releaseCountry
+            // Note: do net set default values for custom time if never configured, set to null
+            // instead. This avoids restoring a backup overwriting values in Cloud on next sync.
+            show.custom_release_time = sgShow.customReleaseTime
+            show.custom_release_day_offset = sgShow.customReleaseDayOffset
+            show.custom_release_timezone = sgShow.customReleaseTimeZone
             show.last_watched_ms = sgShow.lastWatchedMs
             show.poster = sgShow.poster
             show.content_rating = sgShow.contentRating

@@ -39,6 +39,7 @@
     <string name="action_stream_info">Ver en línea o información sobre compra</string>
     <string name="action_select_region">Seleccionar región</string>
     <string name="action_include_any_watch_provider">Incluye cualquier</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">Algunos detalles están ocultos para evitar spoilers. Para cambiarlo, ir a Ajustes > básico.</string>
     <string name="format_source">Fuente: %s</string>
     <string name="last_updated">Última actualización</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>

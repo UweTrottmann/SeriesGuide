@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemShowBinding
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.overview.SeasonTools
@@ -20,7 +20,8 @@ import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import java.util.Date
+import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
+import org.threeten.bp.Instant
 
 class SgListItemAdapter(
     private val context: Context,
@@ -124,20 +125,15 @@ class SgListItemViewHolder(
         // network, regular day and time, or type for legacy season/episode
         if (item.type == ListItemTypes.TMDB_SHOW || item.type == ListItemTypes.TVDB_SHOW) {
             // show details
-            val time = item.releaseTimeOrDefault
             val weekDay = item.releaseWeekDayOrDefault
             val network = item.network
 
-            val releaseTimeShow: Date? = if (time != -1) {
-                TimeTools.getShowReleaseDateTime(
-                    context, time, weekDay, item.releaseTimeZone, item.releaseCountry, network
-                )
-            } else {
-                null
-            }
+            val releaseTimeShow = TimeTools.getReleaseDateTime(context, item)
 
-            binding.textViewShowsTimeAndNetwork.text =
-                TextTools.networkAndTime(context, releaseTimeShow, weekDay, network)
+            binding.textViewShowsTimeAndNetwork.text = TextTools.dotSeparate(
+                network,
+                releaseTimeShow?.formatWithDeviceZoneToDayAndTime(context, weekDay)
+            )
 
             // next episode info
             val fieldValue: String? = item.nextText
@@ -155,7 +151,11 @@ class SgListItemViewHolder(
                 } else {
                     TimeTools.formatToLocalRelativeTime(context, releaseTimeEpisode)
                 }
-                if (TimeTools.isSameWeekDay(releaseTimeEpisode, releaseTimeShow, weekDay)) {
+                if (TimeTools.isSameWeekDay(
+                        Instant.ofEpochMilli(releaseTimeEpisode.time),
+                        releaseTimeShow?.toInstant(),
+                        weekDay
+                    )) {
                     // just display date
                     binding.episodetime.text = dateTime
                 } else {

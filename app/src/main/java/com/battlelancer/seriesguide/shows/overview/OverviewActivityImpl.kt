@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.RemoveShowDialogFragment
 import com.battlelancer.seriesguide.shows.overview.OverviewActivityImpl.OverviewLayoutType.SINGLE_PANE
 import com.battlelancer.seriesguide.shows.search.EpisodeSearchFragment
+import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.SearchActivity
@@ -79,7 +80,7 @@ open class OverviewActivityImpl : BaseMessageActivity() {
 
         setupViews(savedInstanceState)
 
-        updateShowDelayed(showId)
+        ShowSync.updateDelayed(applicationContext, showId, lifecycleScope)
     }
 
     override fun setupActionBar() {

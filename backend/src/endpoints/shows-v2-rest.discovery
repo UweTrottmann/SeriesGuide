@@ -278,6 +278,17 @@
      "format": "date-time",
      "type": "string"
     },
+    "customReleaseDayOffset": {
+     "format": "int32",
+     "type": "integer"
+    },
+    "customReleaseTime": {
+     "format": "int32",
+     "type": "integer"
+    },
+    "customReleaseTimeZone": {
+     "type": "string"
+    },
     "id": {
      "type": "string"
     },

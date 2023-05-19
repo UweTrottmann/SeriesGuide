@@ -276,15 +276,12 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         /**
-         * Schedules a sync for a single show if [ShowSync.shouldUpdateShow] returns true.
+         * Schedules a sync for a single show.
          *
-         * *Note: Runs a content provider op, so you should do this on a background thread.*
+         * @see requestSyncIfConnected
          */
-        @JvmStatic
-        fun requestSyncIfTime(context: Context, showId: Long) {
-            if (ShowSync.shouldUpdateShow(context, showId)) {
-                requestSyncIfConnected(context, SyncType.SINGLE, showId)
-            }
+        fun requestSyncSingleIfConnected(context: Context, showId: Long) {
+            requestSyncIfConnected(context, SyncType.SINGLE, showId)
         }
 
         /**
@@ -318,30 +315,32 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         }
 
         /**
-         * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
-         * connection.
-         *
-         * @param showStatusToast If set, shows a status toast and aborts if offline.
+         * @see requestSyncImmediate
          */
         fun requestSyncDeltaImmediate(context: Context, showStatusToast: Boolean) {
             requestSyncImmediate(context, SyncType.DELTA, 0, showStatusToast)
         }
 
         /**
-         * @see .requestSyncDeltaImmediate
+         * @see requestSyncImmediate
          */
-        @JvmStatic
         fun requestSyncSingleImmediate(context: Context, showStatusToast: Boolean, showId: Long) {
             requestSyncImmediate(context, SyncType.SINGLE, showId, showStatusToast)
         }
 
         /**
-         * @see .requestSyncDeltaImmediate
+         * @see requestSyncImmediate
          */
         fun requestSyncFullImmediate(context: Context, showStatusToast: Boolean) {
             requestSyncImmediate(context, SyncType.FULL, 0, showStatusToast)
         }
 
+        /**
+         * Schedules an immediate sync even if auto-sync is disabled, it runs as soon as there is a
+         * connection.
+         *
+         * @param showStatusToast If set, shows a status toast and aborts if offline.
+         */
         private fun requestSyncImmediate(
             context: Context,
             syncType: SyncType,

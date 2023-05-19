@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
@@ -20,6 +21,7 @@ import com.battlelancer.seriesguide.databinding.ActivityEpisodesBinding
 import com.battlelancer.seriesguide.jobs.episodes.BaseEpisodesJob
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.shows.overview.SeasonTools
+import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
@@ -138,7 +140,11 @@ class EpisodesActivity : BaseMessageActivity() {
 
             updateViews(info)
 
-            updateShowDelayed(info.seasonAndShowInfo.showId)
+            ShowSync.updateDelayed(
+                applicationContext,
+                info.seasonAndShowInfo.showId,
+                lifecycleScope
+            )
         })
     }
 
