@@ -15,6 +15,12 @@ Version 68
 ----------
 *in development*
 
+#### 68.0.1 🧪
+*2023-05-19*
+
+* 📝 Latest user interface translations from Crowdin. Many updates to Traditional Chinese used in 
+  Taiwan, thanks jackiexyz!
+
 #### 68.0.0 🧪
 *2023-03-30*
 

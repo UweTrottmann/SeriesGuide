@@ -337,9 +337,9 @@
     <string name="rating8">Одлично</string>
     <string name="rating9">Фантастично</string>
     <plurals name="votes">
-        <item quantity="one">%d vote</item>
-        <item quantity="few">%d votes</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%d глас</item>
+        <item quantity="few">Гласова: %d</item>
+        <item quantity="other">Гласова: %d</item>
     </plurals>
     <!-- Check Ins -->
     <string name="checkin">Пријави гледање</string>

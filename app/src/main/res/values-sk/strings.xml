@@ -488,7 +488,7 @@
     <string name="pref_notifications_battery_settings">Nastavenia batérie</string>
     <string name="pref_notifications_battery_settings_summary">Prejdite na Nastavenia batérie a deaktivujte optimalizáciu batérie pre spoľahlivé oznámenia</string>
     <string name="notifications_allow">Povoliť oznámenia</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">Ak chcete dostávať upozornenia o epizódach a chybách, prejdite do Nastavenia a povoľte ich.</string>
     <!-- List Widget -->
     <string name="hide_watched">Skryť videné epizódy</string>
     <string name="pref_widget_opacity">Pozadie miniaplikácie</string>
@@ -508,7 +508,7 @@
     <string name="billing_action_manage_subscriptions">Správa predplatného</string>
     <string name="billing_action_pass">Získať X Pass App</string>
     <string name="billing_duration_format">%1$s/rok</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Skúšobná verzia zadarmo</string>
     <string name="billing_sub_description">Vyskúšajte 30 dní zadarmo, kedykoľvek môžete zrušiť.</string>
     <string name="billing_price_pass">jednorázová platba</string>
     <string name="upgrade_description">Každé predplatné odomkne všetky funkcie a podporuje budúce aktualizácie. Na používanie tejto aplikácie sa nevyžaduje predplatné.</string>
