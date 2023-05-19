@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
+import com.battlelancer.seriesguide.util.TimeTools
 
 @Entity(
     tableName = "sg_show",
@@ -88,7 +89,7 @@ data class SgShow2(
     val firstReleaseOrDefault: String
         get() = firstRelease ?: ""
     val releaseWeekDayOrDefault: Int
-        get() = releaseWeekDay ?: -1
+        get() = releaseWeekDay ?: TimeTools.RELEASE_WEEKDAY_UNKNOWN
     val statusOrUnknown: Int
         get() = status ?: ShowStatus.UNKNOWN
     val ratingGlobalOrZero: Double

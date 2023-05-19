@@ -252,6 +252,9 @@ object TimeTools {
      * Calculates the current release date time. Adjusts for time zone effects on release time, e.g.
      * daylight saving time. Adjusts for user-defined offset with [applyUserOffset].
      *
+     * If [weekDay] is given chooses the next date that has this week day before calculating. If set
+     * to [RELEASE_WEEKDAY_DAILY] or [RELEASE_WEEKDAY_UNKNOWN], uses today's date.
+     *
      * If [applyCorrections], uses [handleHourPastMidnight] and [applyUnitedStatesCorrections].
      *
      * @param releaseTime The [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.RELEASE_TIME].
@@ -323,7 +326,7 @@ object TimeTools {
         var localDateTime = LocalDateTime.of(LocalDate.now(clock), time)
 
         // If not daily (officialWeekDay == 0), change week day based on day offset.
-        val weekDay = if (releaseOffsetDays != 0 && officialWeekDay > 0) {
+        val weekDay = if (releaseOffsetDays != RELEASE_WEEKDAY_DAILY && officialWeekDay > 0) {
             getWeekDayWithOffset(officialWeekDay, releaseOffsetDays)
         } else {
             officialWeekDay
