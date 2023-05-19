@@ -39,6 +39,7 @@
     <string name="action_stream_info">Стриминг или покупка</string>
     <string name="action_select_region">Выберите регион</string>
     <string name="action_include_any_watch_provider">Включить любое</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
@@ -101,6 +102,9 @@
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
     <string name="last_updated">Последнее обновление</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">сегодня</string>
     <string name="now">сейчас</string>

@@ -39,6 +39,7 @@
     <string name="action_stream_info">Tonton atau info pembelian</string>
     <string name="action_select_region">Pilih wilayah</string>
     <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
     <string name="search_hint">Cari episode</string>
@@ -98,6 +99,9 @@
     <string name="no_spoilers">Beberapa detail telah disembunyikan untuk mencegah bocoran. Untuk menonaktikan ini pergi ke pengaturan.</string>
     <string name="format_source">Sumber: %s</string>
     <string name="last_updated">Last updated</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">hari ini</string>
     <string name="now">sekarang</string>

@@ -39,6 +39,7 @@
     <string name="action_stream_info">ストリーミング・購入</string>
     <string name="action_select_region">エリアの選択</string>
     <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
     <string name="search_hint">エピソードを検索</string>
@@ -98,6 +99,9 @@
     <string name="no_spoilers">一部の詳細を非表示にして、ネタバレを防ぎます。これを無効にするには設定に移動します。</string>
     <string name="format_source">ソース: %s</string>
     <string name="last_updated">Last updated</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">今日</string>
     <string name="now">今</string>

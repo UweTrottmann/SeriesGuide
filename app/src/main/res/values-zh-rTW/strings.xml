@@ -39,6 +39,7 @@
     <string name="action_stream_info">串流播放或購買資訊</string>
     <string name="action_select_region">選擇地區</string>
     <string name="action_include_any_watch_provider">包括全部</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜尋記錄</string>
     <string name="search_hint">搜尋集數</string>
@@ -98,6 +99,9 @@
     <string name="no_spoilers">一些細節已隱藏起來避免劇透，可前往設定關閉此功能。</string>
     <string name="format_source">來源：%s</string>
     <string name="last_updated">最後更新</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">今天</string>
     <string name="now">目前</string>

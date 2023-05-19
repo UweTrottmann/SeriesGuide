@@ -39,6 +39,7 @@
     <string name="action_stream_info">스트리밍 또 구매</string>
     <string name="action_select_region">Select region</string>
     <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
@@ -98,6 +99,9 @@
     <string name="no_spoilers">일부 내용은 스포일러를 방지하기 위해 숨겨진 상태입니다. 설정에서 이를 해제할 수 있습니다.</string>
     <string name="format_source">소스: %s</string>
     <string name="last_updated">Last updated</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">오늘</string>
     <string name="now">지금</string>
