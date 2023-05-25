@@ -47,57 +47,63 @@
             app:layout_constraintTop_toTopOf="@id/textViewCustomReleaseTimeOfficial"
             tools:text="Sa. 09:00" />
 
+        <!-- Issue: start and end margin have no effect. -->
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowCustomReleaseTimeEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:constraint_referenced_ids="buttonCustomReleaseTimePick,buttonCustomReleaseTimeReset"
+            app:flow_horizontalGap="8dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewCustomReleaseTime" />
+
         <Button
             android:id="@+id/buttonCustomReleaseTimePick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/custom_release_time_edit"
-            app:layout_constraintEnd_toStartOf="@id/buttonCustomReleaseTimeReset"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewCustomReleaseTime" />
+            android:text="@string/custom_release_time_edit" />
 
         <Button
             android:id="@+id/buttonCustomReleaseTimeReset"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_reset"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/buttonCustomReleaseTimePick"
-            app:layout_constraintTop_toTopOf="@id/buttonCustomReleaseTimePick" />
+            android:text="@string/action_reset" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrierCustomReleaseTimeEditTimeButtons"
-            android:layout_width="wrap_content"
+        <!-- Issue: start and end margin have no effect. -->
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowCustomReleaseTimeOffset"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="buttonCustomReleaseTimePick,buttonCustomReleaseTimeReset" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:constraint_referenced_ids="buttonCustomReleaseTimeOffsetDecrease,textViewCustomReleaseTimeOffset,buttonCustomReleaseTimeOffsetIncrease,textViewCustomReleaseTimeOffsetDirection"
+            app:flow_horizontalGap="4dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flowCustomReleaseTimeEdit" />
 
         <Button
             android:id="@+id/buttonCustomReleaseTimeOffsetDecrease"
             style="?attr/materialIconButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:icon="@drawable/ic_remove_black_24dp"
-            app:layout_constraintEnd_toStartOf="@id/textViewCustomReleaseTimeOffset"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrierCustomReleaseTimeEditTimeButtons" />
+            app:icon="@drawable/ic_remove_black_24dp" />
 
         <TextView
             android:id="@+id/textViewCustomReleaseTimeOffset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:textAppearance="?attr/textAppearanceBodyLarge"
-            app:layout_constraintBaseline_toBaselineOf="@id/buttonCustomReleaseTimeOffsetDecrease"
-            app:layout_constraintEnd_toStartOf="@id/buttonCustomReleaseTimeOffsetIncrease"
-            app:layout_constraintStart_toEndOf="@id/buttonCustomReleaseTimeOffsetDecrease"
             tools:text="3 days" />
 
         <Button
@@ -105,21 +111,14 @@
             style="?attr/materialIconButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_add_white_24dp"
-            app:layout_constraintEnd_toStartOf="@id/textViewCustomReleaseTimeOffsetDirection"
-            app:layout_constraintStart_toEndOf="@id/textViewCustomReleaseTimeOffset"
-            app:layout_constraintTop_toTopOf="@id/buttonCustomReleaseTimeOffsetDecrease" />
+            app:icon="@drawable/ic_add_white_24dp" />
 
         <TextView
             android:id="@+id/textViewCustomReleaseTimeOffsetDirection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:text="@string/custom_release_time_later"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            app:layout_constraintBaseline_toBaselineOf="@id/buttonCustomReleaseTimeOffsetDecrease"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/buttonCustomReleaseTimeOffsetIncrease" />
+            android:textAppearance="?attr/textAppearanceBodyLarge" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
