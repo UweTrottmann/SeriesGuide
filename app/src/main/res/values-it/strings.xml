@@ -39,7 +39,7 @@
     <string name="action_stream_info">Streaming o informazioni acquisto</string>
     <string name="action_select_region">Seleziona regione</string>
     <string name="action_include_any_watch_provider">Includi tutti</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">Reimposta</string>
     <!-- Search -->
     <string name="clear_search_history">Cancella la cronologia di ricerca</string>
     <string name="search_hint">Cerca episodi</string>
@@ -100,9 +100,9 @@
     <string name="no_spoilers">Alcuni dettagli sono nascosti per evitare spoiler. Per disattivare questa funzione vai su Impostazioni.</string>
     <string name="format_source">Fonte: %s</string>
     <string name="last_updated">Ultimo aggiornato</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">Modifica data di uscita</string>
+    <string name="custom_release_time_earlier">precedente</string>
+    <string name="custom_release_time_later">successiva</string>
     <!-- Date and Time -->
     <string name="today">oggi</string>
     <string name="now">adesso</string>
@@ -253,7 +253,7 @@
     <string name="movie_crew">Squadra</string>
     <string name="action_movies_sort">Ordina film</string>
     <string name="action_movies_sort_title">Titolo</string>
-    <string name="action_movies_sort_release">Data rilascio</string>
+    <string name="action_movies_sort_release">Data di uscita</string>
     <string name="action_movies_filter">Filtra i film</string>
     <!-- Statistics -->
     <string name="statistics_failed">Impossibile calcolare le statistiche</string>
