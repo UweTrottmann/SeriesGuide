@@ -18,7 +18,7 @@ Version 68
 #### 68.0.2 🧪
 *2023-05-25*
 
-* 🔧 Design: update to latest version, with new time picker and new dialog animations.
+* 🔧 Design: update to latest Material version, with new time picker and new dialog animations.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 68.0.1 🧪
