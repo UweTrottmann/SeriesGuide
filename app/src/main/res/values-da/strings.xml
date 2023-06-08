@@ -39,7 +39,7 @@
     <string name="action_stream_info">Streaming- eller købsinformation</string>
     <string name="action_select_region">Vælg region</string>
     <string name="action_include_any_watch_provider">Inkludér alle</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">Nulstil</string>
     <!-- Search -->
     <string name="clear_search_history">Ryd søgehistorik</string>
     <string name="search_hint">Søg episoder</string>
@@ -100,9 +100,9 @@
     <string name="no_spoilers">Visse detaljer er skjult for at undgå spoilers. Du kan slå dette fra under Indstillinger.</string>
     <string name="format_source">Kilde: %s</string>
     <string name="last_updated">Senest opdateret</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">Rediger udgivelsestidspunkt</string>
+    <string name="custom_release_time_earlier">før</string>
+    <string name="custom_release_time_later">efter</string>
     <!-- Date and Time -->
     <string name="today">i dag</string>
     <string name="now">nu</string>

@@ -39,7 +39,7 @@
     <string name="action_stream_info">Suoratoisto- tai ostotiedot</string>
     <string name="action_select_region">Valitse alue</string>
     <string name="action_include_any_watch_provider">Sisällytä kaikki</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">Nollaa</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
     <string name="search_hint">Hae jaksoja</string>
@@ -100,9 +100,9 @@
     <string name="no_spoilers">Osa tiedoista on piilotettu juonipaljastuksien varalta. Voit poistaa tämän käytöstä asetuksista.</string>
     <string name="format_source">Lähde: %s</string>
     <string name="last_updated">Viimeksi päivitetty</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">Muokkaa julkaisuaikaa</string>
+    <string name="custom_release_time_earlier">aiemmin</string>
+    <string name="custom_release_time_later">myöhemmin</string>
     <!-- Date and Time -->
     <string name="today">tänään</string>
     <string name="now">nyt</string>

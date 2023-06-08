@@ -102,7 +102,7 @@
     <string name="last_updated">Darrera actualització</string>
     <string name="custom_release_time_edit">Edita la data de llançament</string>
     <string name="custom_release_time_earlier">anterior</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_later">Més tard</string>
     <!-- Date and Time -->
     <string name="today">avui</string>
     <string name="now">ara</string>
