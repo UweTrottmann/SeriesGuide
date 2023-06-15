@@ -8,12 +8,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.FilledTonalButton
@@ -38,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import com.battlelancer.seriesguide.util.PackageTools
+import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.ThemeUtils.plus
 import com.battlelancer.seriesguide.util.WebTools
 
 /**
@@ -47,9 +48,7 @@ class AboutActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // FIXME How to do this?
-//        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutAbout))
+        ThemeUtils.configureEdgeToEdge(window)
 
         setContent {
             SeriesGuideTheme {
@@ -121,63 +120,67 @@ class AboutActivity : ComponentActivity() {
             }
         ) { scaffoldPadding ->
             BoxWithConstraints(
-                modifier = Modifier
-                    .padding(scaffoldPadding)
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
-                val scrollAndPadding = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(defaultSpacerSize)
-                Column(
-                    // if 600 dp or wider center align
-                    modifier = if (maxWidth < 600.dp) {
-                        scrollAndPadding
-                    } else {
-                        scrollAndPadding
+                // (Ab)using LazyColumn to easily add content padding that is not clipped
+                // for applying insets.
+                LazyColumn(
+                    // if wider than 600 dp center align
+                    modifier = if (maxWidth > 600.dp) {
+                        Modifier
                             .width(600.dp)
                             .align(Alignment.Center)
-                    }
+                    } else {
+                        Modifier
+                    },
+                    contentPadding = scaffoldPadding + PaddingValues(defaultSpacerSize)
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        style = MaterialTheme.typography.headlineLarge
-                    )
-                    Text(
-                        text = versionString,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    FilledTonalButton(onClick = onOpenWebsite) {
-                        Text(text = stringResource(id = R.string.website))
+                    item {
+                        Text(
+                            text = stringResource(id = R.string.app_name),
+                            style = MaterialTheme.typography.headlineLarge
+                        )
+                        Text(
+                            text = versionString,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        FilledTonalButton(onClick = onOpenWebsite) {
+                            Text(text = stringResource(id = R.string.website))
+                        }
+                        FilledTonalButton(onClick = onOpenPrivacyPolicy) {
+                            Text(text = stringResource(id = R.string.privacy_policy))
+                        }
                     }
-                    FilledTonalButton(onClick = onOpenPrivacyPolicy) {
-                        Text(text = stringResource(id = R.string.privacy_policy))
+                    item {
+                        Text(
+                            text = stringResource(id = R.string.about_open_source),
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                        FilledTonalButton(onClick = onOpenCredits) {
+                            Text(text = stringResource(id = R.string.licences_and_credits))
+                        }
+                        Text(
+                            text = stringResource(id = R.string.licence_themoviedb),
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                        FilledTonalButton(onClick = onOpenTmdbTerms) {
+                            Text(text = stringResource(id = R.string.tmdb_terms))
+                        }
+                        FilledTonalButton(onClick = onOpenTmdbApiTerms) {
+                            Text(text = stringResource(id = R.string.tmdb_api_terms))
+                        }
                     }
-                    Text(
-                        text = stringResource(id = R.string.about_open_source),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                    FilledTonalButton(onClick = onOpenCredits) {
-                        Text(text = stringResource(id = R.string.licences_and_credits))
-                    }
-                    Text(
-                        text = stringResource(id = R.string.licence_themoviedb),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                    FilledTonalButton(onClick = onOpenTmdbTerms) {
-                        Text(text = stringResource(id = R.string.tmdb_terms))
-                    }
-                    FilledTonalButton(onClick = onOpenTmdbApiTerms) {
-                        Text(text = stringResource(id = R.string.tmdb_api_terms))
-                    }
-                    Text(
-                        text = stringResource(id = R.string.licence_trakt),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                    FilledTonalButton(onClick = onOpenTraktTerms) {
-                        Text(text = stringResource(id = R.string.trakt_terms))
+                    item {
+                        Text(
+                            text = stringResource(id = R.string.licence_trakt),
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                        FilledTonalButton(onClick = onOpenTraktTerms) {
+                            Text(text = stringResource(id = R.string.trakt_terms))
+                        }
                     }
                 }
             }
