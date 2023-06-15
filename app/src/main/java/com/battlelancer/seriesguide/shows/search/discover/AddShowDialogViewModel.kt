@@ -5,15 +5,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.shows.database.SgShow2
-import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +38,7 @@ class AddShowDialogViewModel(
         StreamingSearch.initRegionLiveData(application)
 
         this.languageCode.value = initialLanguageCode
-        this.showDetails = Transformations.switchMap(languageCode) { languageCode ->
+        this.showDetails = languageCode.switchMap { languageCode ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 val services = SgApp.getServicesComponent(application)
                 val showTools = services.showTools()

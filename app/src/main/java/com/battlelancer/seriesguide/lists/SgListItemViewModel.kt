@@ -4,14 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.switchMap
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Lists
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
-import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 
 /**
@@ -24,7 +24,7 @@ class SgListItemViewModel(
 
     private val queryString = MutableLiveData<String>()
     val sgListItemLiveData: LiveData<List<SgListItemWithDetails>> =
-        Transformations.switchMap(queryString) { queryString ->
+        queryString.switchMap { queryString ->
             SgRoomDatabase.getInstance(getApplication()).sgListHelper()
                 .getListItemsWithDetails(SimpleSQLiteQuery(queryString, arrayOf(listId)))
         }

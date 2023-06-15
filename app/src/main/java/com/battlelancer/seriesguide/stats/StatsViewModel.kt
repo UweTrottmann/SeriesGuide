@@ -4,8 +4,8 @@ import android.app.Application
 import android.text.format.DateUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.DisplaySettings
@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
     val hideSpecials = MutableLiveData<Boolean>()
-    val statsData = Transformations.switchMap(hideSpecials) { hideSpecials ->
+    val statsData = hideSpecials.switchMap { hideSpecials ->
         loadStats(hideSpecials)
     }
 
