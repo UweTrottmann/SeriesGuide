@@ -64,7 +64,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
-                    android:id="@+id/textViewShowReleaseTime"
+                    android:id="@+id/textViewShowBaseInfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -82,8 +82,8 @@
                     android:layout_marginEnd="12dp"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textViewShowReleaseTime"
-                    app:layout_constraintTop_toBottomOf="@id/textViewShowReleaseTime"
+                    app:layout_constraintStart_toStartOf="@+id/textViewShowBaseInfo"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShowBaseInfo"
                     tools:text="Continuing" />
 
                 <Button
