@@ -63,17 +63,6 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <Button
-                    android:id="@+id/buttonEditReleaseTime"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@null"
-                    app:icon="@drawable/ic_schedule_black_24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/barrierPosterButtonsBottom"
-                    tools:text="Sat 08:00 PM" />
-
                 <TextView
                     android:id="@+id/textViewShowReleaseTime"
                     android:layout_width="0dp"
@@ -82,68 +71,81 @@
                     android:layout_marginEnd="12dp"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/buttonEditReleaseTime"
+                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                    app:layout_constraintTop_toTopOf="@+id/containerShowPoster"
                     tools:text="ABC (US) : 43 min" />
 
                 <TextView
                     android:id="@+id/textViewShowStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="12dp"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewShowReleaseTime"
+                    app:layout_constraintStart_toStartOf="@+id/textViewShowReleaseTime"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShowReleaseTime"
                     tools:text="Continuing" />
 
                 <Button
-                    android:id="@+id/buttonShowFavorite"
+                    android:id="@+id/buttonEditReleaseTime"
                     style="@style/Widget.SeriesGuide.Button.Borderless"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@null"
                     android:gravity="center_vertical|start"
-                    android:insetTop="0dp"
-                    android:text="@string/context_favorite"
-                    app:icon="@drawable/ic_star_black_24dp"
+                    app:icon="@drawable/ic_schedule_black_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
-                    app:layout_constraintTop_toTopOf="@+id/containerShowPoster" />
+                    app:layout_constraintTop_toBottomOf="@id/textViewShowStatus"
+                    tools:text="Sat 08:00 PM" />
 
                 <Button
+                    android:id="@+id/buttonShowFavorite"
+                    style="@style/Widget.SeriesGuide.Button.MediaItem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/context_favorite"
+                    app:icon="@drawable/ic_star_black_24dp"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonShowNotify"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/barrierPosterAndInfoBottom" />
+
+                <!-- Slightly larger weight as this button contains single long word in many languages. -->
+                <Button
                     android:id="@+id/buttonShowNotify"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    style="@style/Widget.SeriesGuide.Button.MediaItem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/action_episode_notifications_off"
-                    android:gravity="center_vertical|start"
+                    android:gravity="start|center_vertical"
                     android:text="@string/pref_notifications"
                     app:icon="@drawable/ic_notifications_active_black_24dp"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonShowHidden"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonShowFavorite" />
 
                 <Button
                     android:id="@+id/buttonShowHidden"
-                    style="@style/Widget.SeriesGuide.Button.Borderless"
+                    style="@style/Widget.SeriesGuide.Button.MediaItem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
+                    android:gravity="start|center_vertical"
                     android:text="@string/context_hide"
                     app:icon="@drawable/ic_visibility_white_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/containerShowPoster"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonShowNotify" />
 
                 <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/barrierPosterButtonsBottom"
+                    android:id="@+id/barrierPosterAndInfoBottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="containerShowPoster,buttonShowHidden" />
+                    app:constraint_referenced_ids="containerShowPoster,buttonEditReleaseTime" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
