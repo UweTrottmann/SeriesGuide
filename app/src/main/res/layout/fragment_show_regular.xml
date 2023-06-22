@@ -56,26 +56,26 @@
 
                 <Button
                     android:id="@+id/buttonEditReleaseTime"
-                    style="?attr/materialIconButtonStyle"
+                    style="@style/Widget.SeriesGuide.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/custom_release_time_edit"
-                    app:icon="@drawable/ic_edit_black_24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/textViewShowReleaseTime"
-                    app:layout_constraintTop_toBottomOf="@id/barrierPosterButtonsBottom" />
+                    android:contentDescription="@null"
+                    app:icon="@drawable/ic_schedule_black_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrierPosterButtonsBottom"
+                    tools:text="Sat 08:00 PM" />
 
                 <TextView
                     android:id="@+id/textViewShowReleaseTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
                     android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
-                    app:layout_constraintEnd_toStartOf="@id/buttonEditReleaseTime"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/barrierPosterButtonsBottom"
-                    tools:text="ABC (US) : Sat 08:00 PM : 43 min" />
+                    app:layout_constraintTop_toBottomOf="@id/buttonEditReleaseTime"
+                    tools:text="ABC (US) : 43 min" />
 
                 <TextView
                     android:id="@+id/textViewShowStatus"

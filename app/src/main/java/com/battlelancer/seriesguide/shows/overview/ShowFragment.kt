@@ -174,16 +174,16 @@ class ShowFragment() : Fragment() {
         }
 
         // Edit release time button
-        binding.buttonEditReleaseTime.setOnClickListener {
-            CustomReleaseTimeDialogFragment(showId).safeShow(
-                parentFragmentManager,
-                "custom-release-time"
-            )
+        binding.buttonEditReleaseTime.apply {
+            contentDescription = getString(R.string.custom_release_time_edit)
+            TooltipCompat.setTooltipText(this, contentDescription)
+            setOnClickListener {
+                CustomReleaseTimeDialogFragment(showId).safeShow(
+                    parentFragmentManager,
+                    "custom-release-time"
+                )
+            }
         }
-        TooltipCompat.setTooltipText(
-            binding.buttonEditReleaseTime,
-            binding.buttonEditReleaseTime.contentDescription
-        )
 
         // language button
         val buttonLanguage = binding.buttonLanguage
@@ -217,14 +217,14 @@ class ShowFragment() : Fragment() {
 
         model.setShowId(showId)
         // Only populate show once both show data and user status is loaded.
-        model.show.observe(viewLifecycleOwner) { sgShow2 ->
-            if (sgShow2 != null) {
-                show = sgShow2
-                populateShow(sgShow2, model.hasAccessToX.value)
+        model.showForUi.observe(viewLifecycleOwner) {
+            if (it != null) {
+                show = it.show
+                populateShow(it, model.hasAccessToX.value)
             }
         }
         model.hasAccessToX.observe(viewLifecycleOwner) {
-            populateShow(model.show.value, it)
+            populateShow(model.showForUi.value, it)
         }
         model.credits.observe(viewLifecycleOwner) { credits ->
             populateCredits(credits)
@@ -262,25 +262,25 @@ class ShowFragment() : Fragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 // Re-bind show views to update notification button state.
-                populateShow(model.show.value, model.hasAccessToX.value)
+                populateShow(model.showForUi.value, model.hasAccessToX.value)
             } else {
                 showNotificationsNotAllowedMessage()
             }
         }
 
-    private fun populateShow(show: SgShow2?, hasAccessToX: Boolean?) {
-        if (show == null || hasAccessToX == null) return
+    private fun populateShow(showForUi: ShowViewModel.ShowForUi?, hasAccessToX: Boolean?) {
+        if (showForUi == null || hasAccessToX == null) return
         val binding = binding ?: return
+        val show = showForUi.show
 
-        // status
+        // Release time and status
+        binding.buttonEditReleaseTime.text = showForUi.releaseTime
         ShowStatus.setStatusAndColor(binding.textViewStatus, show.statusOrUnknown)
 
-        // Network, next release day and time, runtime
+        // Network and runtime
         val network = show.network
-        val timeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
         val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
-        val combinedString =
-            TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)
+        val combinedString = TextTools.dotSeparate(network, runtime)
         binding.textViewReleaseTime.text = combinedString
 
         // favorite button
