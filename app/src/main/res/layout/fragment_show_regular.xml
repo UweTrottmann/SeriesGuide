@@ -144,6 +144,40 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <Button
+            android:id="@+id/buttonShowSimilar"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/title_similar_shows"
+            app:icon="@drawable/ic_search_white_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonShowShare"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/share_show"
+            app:icon="@drawable/ic_share_white_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonShowComments"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/comments"
+            app:icon="@drawable/ic_forum_black_24dp"
+            app:iconGravity="start" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:background="?attr/sgColorDivider" />
+
         <include
             android:id="@+id/containerRatings"
             layout="@layout/ratings_shows" />
