@@ -62,7 +62,7 @@ object CloudEndpointUtils {
             builder.rootUrl = ROOT_URL_STAGING + PATH_API
         }
         // used for user agent
-        builder.applicationName = "SeriesGuide " + PackageTools.getVersion(context)
+        builder.applicationName = "SeriesGuide/" + PackageTools.getVersion(context)
 
         // only enable GZip when connecting to remote server
         val enableGZip = builder.rootUrl.startsWith("https:")
