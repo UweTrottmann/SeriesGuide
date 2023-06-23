@@ -15,6 +15,12 @@ Version 68
 ----------
 *in development*
 
+#### 68.0.3 🧪
+*2023-06-23*
+
+* 🔧 Show details: make release time edit button more obvious, re-arrange some things.
+* 🔧 Overview: add button to edit release time.
+
 #### 68.0.2 🧪
 *2023-05-25*
 
