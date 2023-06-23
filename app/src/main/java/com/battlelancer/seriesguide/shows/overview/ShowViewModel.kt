@@ -57,13 +57,13 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
                     // Release time
                     val timeOrNull = TimeTools.getLocalReleaseDayAndTime(application, show)
 
-                    // Network and runtime
+                    // Basic info
                     val network = show.network
                     val runtime = application.resources.getString(
                         R.string.runtime_minutes,
                         show.runtime.toString()
                     )
-                    val baseInfo = TextTools.dotSeparate(network, runtime)
+                    val baseInfo = "$network\n$runtime"
 
                     // Language data
                     val languageCode = show.language?.let { LanguageTools.mapLegacyShowCode(it) }

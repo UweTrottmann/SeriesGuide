@@ -271,8 +271,8 @@ class ShowFragment() : Fragment() {
 
         // Release time, base info and status
         binding.buttonEditReleaseTime.text = showForUi.releaseTime
-        ShowStatus.setStatusAndColor(binding.textViewStatus, show.statusOrUnknown)
         binding.textViewBaseInfo.text = showForUi.baseInfo
+        binding.textViewStatus.text = ShowStatus.buildYearAndStatus(requireContext(), show)
 
         // favorite button
         val isFavorite = show.favorite
