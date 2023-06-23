@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.shows.overview
 
 import android.Manifest
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,14 +33,11 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
-import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
-import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
@@ -85,7 +81,7 @@ class ShowFragment() : Fragment() {
         val containerPoster: View
         val imageViewPoster: ImageView
         val textViewStatus: TextView
-        val textViewReleaseTime: TextView
+        val textViewBaseInfo: TextView
         val textViewOverview: TextView
         val textViewReleaseCountry: TextView
         val textViewFirstRelease: TextView
@@ -123,7 +119,7 @@ class ShowFragment() : Fragment() {
             containerPoster = view.findViewById(R.id.containerShowPoster)
             imageViewPoster = view.findViewById(R.id.imageViewShowPoster)
             textViewStatus = view.findViewById(R.id.textViewShowStatus)
-            textViewReleaseTime = view.findViewById(R.id.textViewShowReleaseTime)
+            textViewBaseInfo = view.findViewById(R.id.textViewShowBaseInfo)
             textViewOverview = view.findViewById(R.id.textViewShowOverview)
             textViewReleaseCountry = view.findViewById(R.id.textViewShowReleaseCountry)
             textViewFirstRelease = view.findViewById(R.id.textViewShowFirstAirdate)
@@ -174,16 +170,16 @@ class ShowFragment() : Fragment() {
         }
 
         // Edit release time button
-        binding.buttonEditReleaseTime.setOnClickListener {
-            CustomReleaseTimeDialogFragment(showId).safeShow(
-                parentFragmentManager,
-                "custom-release-time"
-            )
+        binding.buttonEditReleaseTime.apply {
+            contentDescription = getString(R.string.custom_release_time_edit)
+            TooltipCompat.setTooltipText(this, contentDescription)
+            setOnClickListener {
+                CustomReleaseTimeDialogFragment(showId).safeShow(
+                    parentFragmentManager,
+                    "custom-release-time"
+                )
+            }
         }
-        TooltipCompat.setTooltipText(
-            binding.buttonEditReleaseTime,
-            binding.buttonEditReleaseTime.contentDescription
-        )
 
         // language button
         val buttonLanguage = binding.buttonLanguage
@@ -217,14 +213,14 @@ class ShowFragment() : Fragment() {
 
         model.setShowId(showId)
         // Only populate show once both show data and user status is loaded.
-        model.show.observe(viewLifecycleOwner) { sgShow2 ->
-            if (sgShow2 != null) {
-                show = sgShow2
-                populateShow(sgShow2, model.hasAccessToX.value)
+        model.showForUi.observe(viewLifecycleOwner) {
+            if (it != null) {
+                show = it.show
+                populateShow(it, model.hasAccessToX.value)
             }
         }
         model.hasAccessToX.observe(viewLifecycleOwner) {
-            populateShow(model.show.value, it)
+            populateShow(model.showForUi.value, it)
         }
         model.credits.observe(viewLifecycleOwner) { credits ->
             populateCredits(credits)
@@ -262,26 +258,21 @@ class ShowFragment() : Fragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 // Re-bind show views to update notification button state.
-                populateShow(model.show.value, model.hasAccessToX.value)
+                populateShow(model.showForUi.value, model.hasAccessToX.value)
             } else {
                 showNotificationsNotAllowedMessage()
             }
         }
 
-    private fun populateShow(show: SgShow2?, hasAccessToX: Boolean?) {
-        if (show == null || hasAccessToX == null) return
+    private fun populateShow(showForUi: ShowViewModel.ShowForUi?, hasAccessToX: Boolean?) {
+        if (showForUi == null || hasAccessToX == null) return
         val binding = binding ?: return
+        val show = showForUi.show
 
-        // status
-        ShowStatus.setStatusAndColor(binding.textViewStatus, show.statusOrUnknown)
-
-        // Network, next release day and time, runtime
-        val network = show.network
-        val timeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
-        val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
-        val combinedString =
-            TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)
-        binding.textViewReleaseTime.text = combinedString
+        // Release time, base info and status
+        binding.buttonEditReleaseTime.text = showForUi.releaseTime
+        binding.textViewBaseInfo.text = showForUi.baseInfo
+        binding.textViewStatus.text = ShowStatus.buildYearAndStatus(requireContext(), show)
 
         // favorite button
         val isFavorite = show.favorite
@@ -374,54 +365,26 @@ class ShowFragment() : Fragment() {
         }
 
         // overview
-        var overview = show.overview
-        val languageCode = show.language?.let { LanguageTools.mapLegacyShowCode(it) }
-        if (TextUtils.isEmpty(overview)) {
-            // no description available, show no translation available message
-            overview = TextTools.textNoTranslation(requireContext(), languageCode)
-        }
-        binding.textViewOverview.text =
-            TextTools.textWithTmdbSource(binding.textViewOverview.context, overview)
+        binding.textViewOverview.text = showForUi.overview
 
         // language preferred for content
-        val languageData = LanguageTools.getShowLanguageDataFor(
-            requireContext(), languageCode
-        )
+        val languageData = showForUi.languageData
         if (languageData != null) {
             this.languageCode = languageData.languageCode
             binding.buttonLanguage.text = languageData.languageString
         }
 
-        // country for release time calculation
-        // show "unknown" if country is not supported
-        binding.textViewReleaseCountry.text = TimeTools.getCountry(requireContext(), show.releaseCountry)
-
-        // original release
-        ViewTools.setValueOrPlaceholder(
-            binding.textViewFirstRelease,
-            TimeTools.getShowReleaseYear(show.firstRelease)
-        )
-
-        // When the show was last updated by this app
-        binding.textShowLastUpdated.text =
-            TimeTools.formatToLocalDateAndTime(requireContext(), show.lastUpdatedMs)
-
-        // content rating
+        // More infos
+        binding.textViewReleaseCountry.text = showForUi.country
+        ViewTools.setValueOrPlaceholder(binding.textViewFirstRelease, showForUi.releaseYear)
+        binding.textShowLastUpdated.text = showForUi.lastUpdated
         ViewTools.setValueOrPlaceholder(binding.textViewContentRating, show.contentRating)
-        // genres
-        ViewTools.setValueOrPlaceholder(
-            binding.textViewGenres,
-            TextTools.splitPipeSeparatedStrings(show.genres)
-        )
+        ViewTools.setValueOrPlaceholder(binding.textViewGenres, showForUi.genres)
 
-        // trakt rating
-        binding.textViewRating.text = TraktTools.buildRatingString(show.ratingGlobal)
-        binding.textViewRatingVotes.text =
-            TraktTools.buildRatingVotesString(activity, show.ratingVotes)
-
-        // user rating
-        binding.textViewRatingUser.text =
-            TraktTools.buildUserRatingString(activity, show.ratingUser)
+        // Trakt rating
+        binding.textViewRating.text = showForUi.traktRating
+        binding.textViewRatingVotes.text = showForUi.traktVotes
+        binding.textViewRatingUser.text = showForUi.traktUserRating
 
         // Similar shows button.
         binding.buttonSimilar.setOnClickListener {

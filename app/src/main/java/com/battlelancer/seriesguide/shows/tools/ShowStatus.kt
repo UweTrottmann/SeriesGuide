@@ -1,10 +1,15 @@
 package com.battlelancer.seriesguide.shows.tools
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.TextAppearanceSpan
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.TimeTools
 
 /**
  * Show status valued as stored in the database in [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.STATUS].
@@ -34,7 +39,7 @@ interface ShowStatus {
         const val CANCELED = -2
 
         /**
-         * Decodes the [ShowTools.Status] and returns the localized text representation.
+         * Decodes the [ShowStatus] and returns the localized text representation.
          * May be `null` if status is unknown.
          */
         fun getStatus(context: Context, encodedStatus: Int): String? {
@@ -78,6 +83,42 @@ interface ShowStatus {
                         )
                     )
                 )
+            }
+        }
+
+        /**
+         * Build a [CharSequence] like "2023 / Continuing" where the status part is colored depending
+         * on the status. May not contain a year or status if not known, so also may be empty.
+         */
+        fun buildYearAndStatus(context: Context, show: SgShow2): CharSequence {
+            return SpannableStringBuilder().also { statusText ->
+                TimeTools.getShowReleaseYear(show.firstRelease)?.let {
+                    statusText.append(it)
+                }
+                // Continuing/ended status.
+                val status = show.statusOrUnknown
+                val statusString = getStatus(context, status)
+                if (statusString != null) {
+                    if (statusText.isNotEmpty()) {
+                        statusText.append(" / ") // Like "2016 / Continuing".
+                    }
+
+                    val currentTextLength = statusText.length
+                    statusText.append(statusString)
+
+                    // If continuing, paint status green.
+                    val style = if (status == RETURNING) {
+                        R.style.ThemeOverlay_SeriesGuide_TextAppearance_Accent
+                    } else {
+                        R.style.ThemeOverlay_SeriesGuide_TextAppearance_Secondary
+                    }
+                    statusText.setSpan(
+                        TextAppearanceSpan(context, style),
+                        currentTextLength,
+                        statusText.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
             }
         }
     }

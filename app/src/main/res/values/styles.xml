@@ -89,6 +89,14 @@
 
     <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.SeriesGuide.Headline6.Dim" />
 
+    <!-- To apply on top of existing text appearance using Spans. -->
+    <style name="ThemeOverlay.SeriesGuide.TextAppearance.Accent" parent="">
+        <item name="android:textColor">@color/sg_text_color_accent</item>
+    </style>
+    <style name="ThemeOverlay.SeriesGuide.TextAppearance.Secondary" parent="">
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
     <!-- Widget styles -->
     <style name="Widget" />
 
