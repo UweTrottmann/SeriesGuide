@@ -195,7 +195,6 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.threetenabp)
     implementation(libs.timber)
-    implementation(libs.systembartint)
 
     // Use latest OkHttp.
     implementation(libs.okhttp)
