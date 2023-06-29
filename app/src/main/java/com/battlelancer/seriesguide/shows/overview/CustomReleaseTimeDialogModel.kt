@@ -14,14 +14,13 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TimeTools.atDeviceZone
-import com.battlelancer.seriesguide.util.TimeTools.formatToDayAndTime
-import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
+import com.battlelancer.seriesguide.util.TimeTools.formatToLocalDayOrDaily
+import com.battlelancer.seriesguide.util.TimeTools.formatToLocalTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import org.threeten.bp.ZonedDateTime
 import java.util.TimeZone
 import kotlin.math.absoluteValue
 
@@ -39,22 +38,20 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
         viewModelScope.launch(Dispatchers.IO) {
             val show = SgRoomDatabase.getInstance(context).sgShow2Helper().getShow(showId)
             if (show != null) {
-                // Note: if there is no official time, uses a reasonable default.
-                val officialTime = TimeTools.getShowReleaseDateTime(
-                    context,
-                    show.releaseTimeOrDefault,
-                    0,
-                    show.releaseWeekDayOrDefault,
-                    show.releaseTimeZone,
-                    show.releaseCountry,
-                    show.network,
-                    applyCorrections = true
-                ).atDeviceZone()
-
                 val customReleaseTime = show.customReleaseTimeOrDefault
                 val customTime = if (customReleaseTime == SgShow2.CUSTOM_RELEASE_TIME_NOT_SET) {
                     // If there is no custom time configured, take the official time.
-                    officialTime.toLocalTime()
+                    // Note: if there is no official time, uses a reasonable default.
+                    TimeTools.getShowReleaseDateTime(
+                        context,
+                        show.releaseTimeOrDefault,
+                        0,
+                        show.releaseWeekDayOrDefault,
+                        show.releaseTimeZone,
+                        show.releaseCountry,
+                        show.network,
+                        applyCorrections = true
+                    ).atDeviceZone().toLocalTime()
                 } else {
                     // As the device time zone may be different from the time zone the custom time
                     // was saved in, always take the saved custom time and time zone and convert it
@@ -66,7 +63,6 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
                 }
                 customTimeDataWithStrings.value = CustomTimeDataWithStrings.make(
                     CustomTimeData(
-                        officialTime,
                         show.releaseWeekDayOrDefault,
                         customTime,
                         show.customReleaseDayOffsetOrDefault
@@ -148,8 +144,6 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
 }
 
 data class CustomTimeData(
-    /** Official time converted to device time zone. */
-    val officialTime: ZonedDateTime,
     val officialWeekDay: Int,
     val customTime: LocalTime,
     val customDayOffset: Int
@@ -177,7 +171,7 @@ data class CustomTimeData(
 
 data class CustomTimeDataWithStrings(
     val customTimeData: CustomTimeData,
-    val officialTimeString: String,
+    val customDayString: String,
     val customTimeString: String,
     val customDayOffsetString: String,
     val customDayOffsetDirectionString: String
@@ -195,21 +189,19 @@ data class CustomTimeDataWithStrings(
                 } else {
                     0
                 }).let { context.resources.getQuantityString(R.plurals.days_plural, it, it) }
+            val customTime = TimeTools.getShowReleaseDateTime(
+                context,
+                data.customTime.hour * 100 + data.customTime.minute,
+                data.customDayOffset,
+                data.officialWeekDay,
+                TimeZone.getDefault().id,
+                null, null,
+                applyCorrections = false
+            )
             return CustomTimeDataWithStrings(
                 data,
-                officialTimeString = data.officialTime.formatToDayAndTime(
-                    context,
-                    weekDayNeverDaily
-                ),
-                customTimeString = TimeTools.getShowReleaseDateTime(
-                    context,
-                    data.customTime.hour * 100 + data.customTime.minute,
-                    data.customDayOffset,
-                    data.officialWeekDay,
-                    TimeZone.getDefault().id,
-                    null, null,
-                    applyCorrections = false
-                ).formatWithDeviceZoneToDayAndTime(context, weekDayNeverDaily),
+                customDayString = customTime.formatToLocalDayOrDaily(context, weekDayNeverDaily),
+                customTimeString = customTime.formatToLocalTime(),
                 customDayOffsetString,
                 customDayOffsetDirectionString = when {
                     data.customDayOffset < 0 -> context.getString(R.string.custom_release_time_earlier)

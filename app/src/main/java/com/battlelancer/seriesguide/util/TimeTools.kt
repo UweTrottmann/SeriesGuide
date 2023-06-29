@@ -417,24 +417,20 @@ object TimeTools {
     fun ZonedDateTime.atDeviceZone(): ZonedDateTime = withZoneSameInstant(safeSystemDefaultZoneId())
 
     /**
-     * Formats to a day and time string, like "Mon 20:30".
+     * Changes the time zone to the device time zone and formats to a day and time string,
+     * like "Mon 20:30".
      *
      * If [weekDay] is [RELEASE_WEEKDAY_DAILY] uses local equivalent of "Daily" instead of week day.
      *
-     * Might want to combing with [atDeviceZone] or use [formatWithDeviceZoneToDayAndTime].
+     * Might want to just use [atDeviceZone].
      */
-    fun ZonedDateTime.formatToDayAndTime(context: Context, weekDay: Int): String {
-        val dayString = formatToLocalDayOrDaily(context, this, weekDay)
-        val timeString = formatToLocalTime(this)
+    fun ZonedDateTime.formatWithDeviceZoneToDayAndTime(context: Context, weekDay: Int): String {
+        val withDeviceZone = atDeviceZone()
+        val dayString = withDeviceZone.formatToLocalDayOrDaily(context, weekDay)
+        val timeString = withDeviceZone.formatToLocalTime()
         // Like "Mon 08:30"
         return "$dayString $timeString"
     }
-
-    /**
-     * Shortcut for [atDeviceZone] and [formatWithDeviceZoneToDayAndTime].
-     */
-    fun ZonedDateTime.formatWithDeviceZoneToDayAndTime(context: Context, weekDay: Int): String =
-        atDeviceZone().formatToDayAndTime(context, weekDay)
 
     /**
      * Takes custom time, or if not set release time, and returns [getReleaseDateTime].
@@ -631,14 +627,13 @@ object TimeTools {
      *
      * This does not auto-convert to the device time zone.
      */
-    private fun formatToLocalDayOrDaily(
+    fun ZonedDateTime.formatToLocalDayOrDaily(
         context: Context,
-        dateTime: ZonedDateTime,
         weekDay: Int
     ): String {
         return if (weekDay == RELEASE_WEEKDAY_DAILY) {
             context.getString(R.string.daily)
-        } else formatToLocalDay(dateTime)
+        } else formatToLocalDay(this)
     }
 
     /**
@@ -652,8 +647,8 @@ object TimeTools {
      *
      * This does not auto-convert to the device time zone.
      */
-    private fun formatToLocalTime(dateTime: ZonedDateTime): String =
-        dateTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+    fun ZonedDateTime.formatToLocalTime(): String =
+        format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
 
     /**
      * Formats to relative time in relation to the current system time (e.g. "in 12 min") as defined

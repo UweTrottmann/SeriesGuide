@@ -76,10 +76,6 @@ class CustomReleaseTimeDialogFragment() : AppCompatDialogFragment() {
             }
             picker.safeShow(parentFragmentManager, "custom-time-picker")
         }
-        binding.buttonCustomReleaseTimeReset.setOnClickListener {
-            model.resetToOfficialAndSave()
-            dismiss()
-        }
         binding.buttonCustomReleaseTimeOffsetDecrease.setOnClickListener {
             model.decreaseDayOffset()
         }
@@ -94,12 +90,15 @@ class CustomReleaseTimeDialogFragment() : AppCompatDialogFragment() {
                 model.saveToDatabase()
             }
             .setNegativeButton(android.R.string.cancel, null /* just dismiss */)
+            .setNeutralButton(R.string.action_reset) { _, _ ->
+                model.resetToOfficialAndSave()
+                dismiss()
+            }
             .create()
     }
 
     private fun DialogCustomReleaseTimeBinding.setViewsEnabled(isEnabled: Boolean) {
         buttonCustomReleaseTimePick.isEnabled = isEnabled
-        buttonCustomReleaseTimeReset.isEnabled = isEnabled
         buttonCustomReleaseTimeOffsetIncrease.isEnabled = isEnabled
         buttonCustomReleaseTimeOffsetDecrease.isEnabled = isEnabled
     }
@@ -112,8 +111,8 @@ class CustomReleaseTimeDialogFragment() : AppCompatDialogFragment() {
         if (dataWithStrings == null) {
             binding.setViewsEnabled(false)
         } else {
-            binding.textViewCustomReleaseTimeOfficial.text = dataWithStrings.officialTimeString
-            binding.textViewCustomReleaseTime.text = dataWithStrings.customTimeString
+            binding.textViewCustomReleaseTimeDay.text = dataWithStrings.customDayString
+            binding.buttonCustomReleaseTimePick.text = dataWithStrings.customTimeString
             binding.textViewCustomReleaseTimeOffset.text = dataWithStrings.customDayOffsetString
             binding.textViewCustomReleaseTimeOffsetDirection.text =
                 dataWithStrings.customDayOffsetDirectionString
