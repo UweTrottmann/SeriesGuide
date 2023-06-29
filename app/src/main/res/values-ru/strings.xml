@@ -39,7 +39,7 @@
     <string name="action_stream_info">Стриминг или покупка</string>
     <string name="action_select_region">Выберите регион</string>
     <string name="action_include_any_watch_provider">Включить любое</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">Сброс</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
     <string name="search_hint">Поиск эпизодов</string>
@@ -102,9 +102,9 @@
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
     <string name="last_updated">Последнее обновление</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">Изменить время релиза</string>
+    <string name="custom_release_time_earlier">Раньше</string>
+    <string name="custom_release_time_later">Позже</string>
     <!-- Date and Time -->
     <string name="today">сегодня</string>
     <string name="now">сейчас</string>
@@ -323,7 +323,7 @@
     <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
     <string name="trakt_error_not_exists">На данный момент недоступен на trakt. Попробуйте позже.</string>
     <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Список отслеживания полон, сначала удалите что-нибудь.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Подключение trakt</string>
     <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>
@@ -477,7 +477,7 @@
     <string name="upcoming_display">Выберите, чтобы показать предстоящие передачи</string>
     <string name="pref_notifications">Уведомления</string>
     <string name="pref_notificationssummary">Уведомлять о новых эпизодах</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Настройки уведомлений</string>
     <string name="pref_ringtone">Звуковое уведомление</string>
     <string name="pref_vibrate">Вибросигнал</string>
     <string name="pref_vibratesummary">Вибрация при уведомлении</string>
@@ -491,8 +491,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Уведомлять только если новая серия следующая для просмотра</string>
     <string name="pref_notifications_battery_settings">Параметры батареи</string>
     <string name="pref_notifications_battery_settings_summary">Перейдите в настройки батареи, чтобы отключить оптимизацию батареи для надежных уведомлений</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">Разрешить уведомления</string>
+    <string name="notifications_allow_reason">Чтобы получать уведомления о выпусках и ошибках, перейдите в настройки и разрешите их.</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>
@@ -512,7 +512,7 @@
     <string name="billing_action_manage_subscriptions">Управление подписками</string>
     <string name="billing_action_pass">Получить X Pass App</string>
     <string name="billing_duration_format">%1$s/год</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Бесплатный пробный период</string>
     <string name="billing_sub_description">Попробуйте 30 дней бесплатно, отмените в любое время.</string>
     <string name="billing_price_pass">Единоразовая покупка</string>
     <string name="upgrade_description">Каждая подписка открывает все функции и поддерживает будущие обновления. Для использования этого приложения подписка не требуется.</string>
