@@ -15,7 +15,8 @@ Version 68
 ----------
 *in development*
 
-* 🔨 Custom time: fix resetting, simplify dialog.
+* 🔨 Custom time: fix resetting, simplify dialog, suggest day offset matching time zone conversion 
+  of official time.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 68.0.3 🧪

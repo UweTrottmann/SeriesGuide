@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
+import org.threeten.bp.temporal.ChronoUnit
 import java.util.TimeZone
 import kotlin.math.absoluteValue
 
@@ -39,10 +40,12 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
             val show = SgRoomDatabase.getInstance(context).sgShow2Helper().getShow(showId)
             if (show != null) {
                 val customReleaseTime = show.customReleaseTimeOrDefault
-                val customTime = if (customReleaseTime == SgShow2.CUSTOM_RELEASE_TIME_NOT_SET) {
+                val customTime: LocalTime
+                val customDayOffset: Int
+                if (customReleaseTime == SgShow2.CUSTOM_RELEASE_TIME_NOT_SET) {
                     // If there is no custom time configured, take the official time.
                     // Note: if there is no official time, uses a reasonable default.
-                    TimeTools.getShowReleaseDateTime(
+                    val officialTime = TimeTools.getShowReleaseDateTime(
                         context,
                         show.releaseTimeOrDefault,
                         0,
@@ -51,21 +54,25 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
                         show.releaseCountry,
                         show.network,
                         applyCorrections = true
-                    ).atDeviceZone().toLocalTime()
+                    )
+                    val officialTimeAtDevice = officialTime.atDeviceZone()
+                    customTime = officialTimeAtDevice.toLocalTime()
+                    // If due to different time zones of the show and the device the date would be
+                    // different when using the official time, suggest a day offset that matches it.
+                    customDayOffset = officialTime.toLocalDate()
+                        .until(officialTimeAtDevice.toLocalDate(), ChronoUnit.DAYS).toInt()
                 } else {
-                    // As the device time zone may be different from the time zone the custom time
-                    // was saved in, always take the saved custom time and time zone and convert it
-                    // to the device time zone.
-                    TimeTools.getShowReleaseTime(customReleaseTime)
+                    customTime = TimeTools.getShowReleaseTime(customReleaseTime)
                         .atDate(LocalDate.now())
                         .atZone(TimeTools.getDateTimeZone(show.customReleaseTimeZone))
                         .atDeviceZone().toLocalTime()
+                    customDayOffset = show.customReleaseDayOffsetOrDefault
                 }
                 customTimeDataWithStrings.value = CustomTimeDataWithStrings.make(
                     CustomTimeData(
                         show.releaseWeekDayOrDefault,
                         customTime,
-                        show.customReleaseDayOffsetOrDefault
+                        customDayOffset
                     ),
                     context
                 )
@@ -109,6 +116,9 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
             customTimeInfo.customTime.hour * 100 + customTimeInfo.customTime.minute
         val customDayOffset = customTimeInfo.customDayOffset
         // Always use the current device time zone.
+        // Could base on the show time zone instead so daylight saving time differs between it and
+        // the device zone the release time would be correct. But as this makes things unnecessarily
+        // more complicated, just always use the current device time zone.
         val customTimeZone = TimeZone.getDefault().id
         SgApp.getServicesComponent(getApplication()).showTools()
             .storeCustomReleaseTime(showId, customReleaseTime, customDayOffset, customTimeZone)
