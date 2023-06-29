@@ -15,6 +15,9 @@ Version 68
 ----------
 *in development*
 
+#### 68.0.4 🧪
+*2023-06-30*
+
 * 🔨 Custom time: fix resetting, simplify dialog, suggest day offset matching time zone conversion 
   of official time.
 * 📝 Latest user interface translations from Crowdin.
