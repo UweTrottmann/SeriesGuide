@@ -77,7 +77,8 @@ class CustomReleaseTimeDialogFragment() : AppCompatDialogFragment() {
             picker.safeShow(parentFragmentManager, "custom-time-picker")
         }
         binding.buttonCustomReleaseTimeReset.setOnClickListener {
-            model.resetToOfficial()
+            model.resetToOfficialAndSave()
+            dismiss()
         }
         binding.buttonCustomReleaseTimeOffsetDecrease.setOnClickListener {
             model.decreaseDayOffset()

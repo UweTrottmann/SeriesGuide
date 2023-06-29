@@ -15,6 +15,7 @@ Version 68
 ----------
 *in development*
 
+* 🔨 Fix resetting custom time, display correct day if no custom time is set.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 68.0.3 🧪

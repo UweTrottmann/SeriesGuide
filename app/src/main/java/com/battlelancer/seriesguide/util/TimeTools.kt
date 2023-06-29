@@ -412,18 +412,29 @@ object TimeTools {
         )
 
     /**
-     * Changes the time zone to the device time zone and formats to a day and time string,
-     * like "Mon 20:30".
+     * Changes the time zone to the device time zone.
+     */
+    fun ZonedDateTime.atDeviceZone(): ZonedDateTime = withZoneSameInstant(safeSystemDefaultZoneId())
+
+    /**
+     * Formats to a day and time string, like "Mon 20:30".
      *
      * If [weekDay] is [RELEASE_WEEKDAY_DAILY] uses local equivalent of "Daily" instead of week day.
+     *
+     * Might want to combing with [atDeviceZone] or use [formatWithDeviceZoneToDayAndTime].
      */
-    fun ZonedDateTime.formatWithDeviceZoneToDayAndTime(context: Context, weekDay: Int): String {
-        val withDeviceZone = withZoneSameInstant(safeSystemDefaultZoneId())
-        val dayString = formatToLocalDayOrDaily(context, withDeviceZone, weekDay)
-        val timeString = formatToLocalTime(withDeviceZone)
+    fun ZonedDateTime.formatToDayAndTime(context: Context, weekDay: Int): String {
+        val dayString = formatToLocalDayOrDaily(context, this, weekDay)
+        val timeString = formatToLocalTime(this)
         // Like "Mon 08:30"
         return "$dayString $timeString"
     }
+
+    /**
+     * Shortcut for [atDeviceZone] and [formatWithDeviceZoneToDayAndTime].
+     */
+    fun ZonedDateTime.formatWithDeviceZoneToDayAndTime(context: Context, weekDay: Int): String =
+        atDeviceZone().formatToDayAndTime(context, weekDay)
 
     /**
      * Takes custom time, or if not set release time, and returns [getReleaseDateTime].
@@ -560,12 +571,14 @@ object TimeTools {
                 // MST UTC−7:00, MDT UTC−6:00
                 offset += 1
             }
+
             TIMEZONE_ID_US_ARIZONA -> {
                 // is always UTC-07:00, so like Mountain, but no DST
                 val dstInEastern = ZoneId.of(TIMEZONE_ID_US_EASTERN).rules
                     .isDaylightSavings(dateTime.toInstant())
                 offset += (if (dstInEastern) 2 else 1)
             }
+
             TIMEZONE_ID_US_PACIFIC -> {
                 // PST UTC−8:00 or PDT UTC−7:00
                 offset += 3

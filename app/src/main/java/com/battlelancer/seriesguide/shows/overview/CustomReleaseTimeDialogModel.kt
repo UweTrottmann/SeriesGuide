@@ -13,6 +13,8 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.TimeTools.atDeviceZone
+import com.battlelancer.seriesguide.util.TimeTools.formatToDayAndTime
 import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,13 +49,12 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
                     show.releaseCountry,
                     show.network,
                     applyCorrections = true
-                )
+                ).atDeviceZone()
 
                 val customReleaseTime = show.customReleaseTimeOrDefault
                 val customTime = if (customReleaseTime == SgShow2.CUSTOM_RELEASE_TIME_NOT_SET) {
-                    // If there is no custom time configured, take the official time and convert it
-                    // to the device time zone.
-                    officialTime.atDeviceZoneToLocalTime()
+                    // If there is no custom time configured, take the official time.
+                    officialTime.toLocalTime()
                 } else {
                     // As the device time zone may be different from the time zone the custom time
                     // was saved in, always take the saved custom time and time zone and convert it
@@ -61,7 +62,7 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
                     TimeTools.getShowReleaseTime(customReleaseTime)
                         .atDate(LocalDate.now())
                         .atZone(TimeTools.getDateTimeZone(show.customReleaseTimeZone))
-                        .atDeviceZoneToLocalTime()
+                        .atDeviceZone().toLocalTime()
                 }
                 customTimeDataWithStrings.value = CustomTimeDataWithStrings.make(
                     CustomTimeData(
@@ -80,12 +81,6 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
     fun updateTime(hour: Int, minute: Int) {
         updateCustomTimeIfNotNull {
             it.updateTime(hour, minute)
-        }
-    }
-
-    fun resetToOfficial() {
-        updateCustomTimeIfNotNull {
-            it.resetToOfficial()
         }
     }
 
@@ -123,6 +118,16 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
             .storeCustomReleaseTime(showId, customReleaseTime, customDayOffset, customTimeZone)
     }
 
+    fun resetToOfficialAndSave() {
+        SgApp.getServicesComponent(getApplication()).showTools()
+            .storeCustomReleaseTime(
+                showId,
+                SgShow2.CUSTOM_RELEASE_TIME_NOT_SET,
+                SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET,
+                SgShow2.CUSTOM_RELEASE_TIME_ZONE_NOT_SET
+            )
+    }
+
     companion object {
 
         val SHOW_ID_KEY = object : CreationExtras.Key<Long> {}
@@ -142,10 +147,8 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
     }
 }
 
-private fun ZonedDateTime.atDeviceZoneToLocalTime(): LocalTime =
-    withZoneSameInstant(TimeTools.safeSystemDefaultZoneId()).toLocalTime()
-
 data class CustomTimeData(
+    /** Official time converted to device time zone. */
     val officialTime: ZonedDateTime,
     val officialWeekDay: Int,
     val customTime: LocalTime,
@@ -154,13 +157,6 @@ data class CustomTimeData(
     fun updateTime(hour: Int, minute: Int): CustomTimeData {
         return copy(
             customTime = LocalTime.of(hour, minute)
-        )
-    }
-
-    fun resetToOfficial(): CustomTimeData {
-        return copy(
-            customTime = officialTime.atDeviceZoneToLocalTime(),
-            customDayOffset = SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET
         )
     }
 
@@ -193,9 +189,15 @@ data class CustomTimeDataWithStrings(
                 if (data.officialWeekDay == TimeTools.RELEASE_WEEKDAY_DAILY) {
                     -1
                 } else data.officialWeekDay
+            val customDayOffsetString =
+                (if (data.customDayOffset != SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET) {
+                    data.customDayOffset.absoluteValue
+                } else {
+                    0
+                }).let { context.resources.getQuantityString(R.plurals.days_plural, it, it) }
             return CustomTimeDataWithStrings(
                 data,
-                officialTimeString = data.officialTime.formatWithDeviceZoneToDayAndTime(
+                officialTimeString = data.officialTime.formatToDayAndTime(
                     context,
                     weekDayNeverDaily
                 ),
@@ -208,11 +210,7 @@ data class CustomTimeDataWithStrings(
                     null, null,
                     applyCorrections = false
                 ).formatWithDeviceZoneToDayAndTime(context, weekDayNeverDaily),
-                customDayOffsetString = context.resources.getQuantityString(
-                    R.plurals.days_plural,
-                    data.customDayOffset.absoluteValue,
-                    data.customDayOffset.absoluteValue
-                ),
+                customDayOffsetString,
                 customDayOffsetDirectionString = when {
                     data.customDayOffset < 0 -> context.getString(R.string.custom_release_time_earlier)
                     else -> context.getString(R.string.custom_release_time_later)

@@ -25,8 +25,7 @@ class CustomReleaseTimeTest {
         val customTimeData = CustomTimeData(
             officialTime = officialTime,
             officialWeekDay = -1, // Not tested, use default.
-            customTime = officialTime.withZoneSameInstant(TimeTools.safeSystemDefaultZoneId())
-                .toLocalTime(),
+            customTime = officialTime.toLocalTime(),
             customDayOffset = 0
         )
 
@@ -34,10 +33,6 @@ class CustomReleaseTimeTest {
         val at10 = customTimeData.updateTime(10, 11)
         assertThat(at10.customTime)
             .isEqualTo(LocalTime.of(10, 11))
-
-        // Resets to official time
-        assertThat(at10.resetToOfficial().customTime)
-            .isEqualTo(LocalTime.of(9, 0))
 
         // Increases by 1
         assertThat(customTimeData.increaseDayOffset().customDayOffset)
