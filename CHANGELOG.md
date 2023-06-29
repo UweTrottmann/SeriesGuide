@@ -13,9 +13,13 @@ Releases marked with 🧪 were released on [the beta program](https://github.com
 
 Version 68
 ----------
-*in development*
+*2023-07-06*
 
-#### 68.0.4 🧪
+* 🌟 Shows: support setting custom release time and day offset.
+* 🔧 Use in-app browser only for websites related to the app.
+* 🔧 Design: update to latest Material version.
+
+#### 68.0.4
 *2023-06-30*
 
 * 🔨 Custom time: fix resetting, simplify dialog, suggest day offset matching time zone conversion 
