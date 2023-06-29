@@ -92,7 +92,7 @@ retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofi
 robolectric = "org.robolectric:robolectric:4.9.2"
 systembartint = "com.readystatesoftware.systembartint:systembartint:1.0.4"
 taptargetview = "com.getkeepsafe.taptargetview:taptargetview:1.13.3"
-threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.5" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
+threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 timber = "com.jakewharton.timber:timber:5.0.1" # https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.8.1" # https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
 trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.11.2" # https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
