@@ -12,41 +12,6 @@
         android:minWidth="@dimen/dialog_min_width"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewCustomReleaseTimeOfficial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            app:layout_constraintEnd_toStartOf="@id/imageViewCustomReleaseTimeArrow"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Fr. 19:00" />
-
-        <ImageView
-            android:id="@+id/imageViewCustomReleaseTimeArrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_arrow_forward_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@id/textViewCustomReleaseTimeOfficial"
-            app:layout_constraintEnd_toStartOf="@id/textViewCustomReleaseTime"
-            app:layout_constraintStart_toEndOf="@id/textViewCustomReleaseTimeOfficial"
-            app:layout_constraintTop_toTopOf="@id/textViewCustomReleaseTimeOfficial" />
-
-        <TextView
-            android:id="@+id/textViewCustomReleaseTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageViewCustomReleaseTimeArrow"
-            app:layout_constraintTop_toTopOf="@id/textViewCustomReleaseTimeOfficial"
-            tools:text="Sa. 09:00" />
-
         <!-- Issue: start and end margin have no effect. -->
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flowCustomReleaseTimeEdit"
@@ -55,26 +20,34 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            app:constraint_referenced_ids="buttonCustomReleaseTimePick,buttonCustomReleaseTimeReset"
+            app:constraint_referenced_ids="imageViewCustomReleaseTimeIcon,textViewCustomReleaseTimeDay,buttonCustomReleaseTimePick"
             app:flow_horizontalGap="8dp"
             app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewCustomReleaseTime" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewCustomReleaseTimeIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_schedule_black_24dp" />
+
+        <TextView
+            android:id="@+id/textViewCustomReleaseTimeDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            tools:text="Sa." />
 
         <Button
             android:id="@+id/buttonCustomReleaseTimePick"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/custom_release_time_edit" />
-
-        <Button
-            android:id="@+id/buttonCustomReleaseTimeReset"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_reset" />
+            tools:text="09:00 PM" />
 
         <!-- Issue: start and end margin have no effect. -->
         <androidx.constraintlayout.helper.widget.Flow

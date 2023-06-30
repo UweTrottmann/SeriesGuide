@@ -18,15 +18,13 @@ class CustomReleaseTimeTest {
 
     @Test
     fun customTimeInfo() {
-        val officialTime = LocalDate.of(2023, 5, 5)
+        val customTime = LocalDate.of(2023, 5, 5)
             .atTime(9, 0)
             .atZone(TimeTools.safeSystemDefaultZoneId())
 
         val customTimeData = CustomTimeData(
-            officialTime = officialTime,
             officialWeekDay = -1, // Not tested, use default.
-            customTime = officialTime.withZoneSameInstant(TimeTools.safeSystemDefaultZoneId())
-                .toLocalTime(),
+            customTime = customTime.toLocalTime(),
             customDayOffset = 0
         )
 
@@ -34,10 +32,6 @@ class CustomReleaseTimeTest {
         val at10 = customTimeData.updateTime(10, 11)
         assertThat(at10.customTime)
             .isEqualTo(LocalTime.of(10, 11))
-
-        // Resets to official time
-        assertThat(at10.resetToOfficial().customTime)
-            .isEqualTo(LocalTime.of(9, 0))
 
         // Increases by 1
         assertThat(customTimeData.increaseDayOffset().customDayOffset)

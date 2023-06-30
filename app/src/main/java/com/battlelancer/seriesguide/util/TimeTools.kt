@@ -412,15 +412,22 @@ object TimeTools {
         )
 
     /**
+     * Changes the time zone to the device time zone.
+     */
+    fun ZonedDateTime.atDeviceZone(): ZonedDateTime = withZoneSameInstant(safeSystemDefaultZoneId())
+
+    /**
      * Changes the time zone to the device time zone and formats to a day and time string,
      * like "Mon 20:30".
      *
      * If [weekDay] is [RELEASE_WEEKDAY_DAILY] uses local equivalent of "Daily" instead of week day.
+     *
+     * Might want to just use [atDeviceZone].
      */
     fun ZonedDateTime.formatWithDeviceZoneToDayAndTime(context: Context, weekDay: Int): String {
-        val withDeviceZone = withZoneSameInstant(safeSystemDefaultZoneId())
-        val dayString = formatToLocalDayOrDaily(context, withDeviceZone, weekDay)
-        val timeString = formatToLocalTime(withDeviceZone)
+        val withDeviceZone = atDeviceZone()
+        val dayString = withDeviceZone.formatToLocalDayOrDaily(context, weekDay)
+        val timeString = withDeviceZone.formatToLocalTime()
         // Like "Mon 08:30"
         return "$dayString $timeString"
     }
@@ -560,12 +567,14 @@ object TimeTools {
                 // MST UTC−7:00, MDT UTC−6:00
                 offset += 1
             }
+
             TIMEZONE_ID_US_ARIZONA -> {
                 // is always UTC-07:00, so like Mountain, but no DST
                 val dstInEastern = ZoneId.of(TIMEZONE_ID_US_EASTERN).rules
                     .isDaylightSavings(dateTime.toInstant())
                 offset += (if (dstInEastern) 2 else 1)
             }
+
             TIMEZONE_ID_US_PACIFIC -> {
                 // PST UTC−8:00 or PDT UTC−7:00
                 offset += 3
@@ -618,14 +627,13 @@ object TimeTools {
      *
      * This does not auto-convert to the device time zone.
      */
-    private fun formatToLocalDayOrDaily(
+    fun ZonedDateTime.formatToLocalDayOrDaily(
         context: Context,
-        dateTime: ZonedDateTime,
         weekDay: Int
     ): String {
         return if (weekDay == RELEASE_WEEKDAY_DAILY) {
             context.getString(R.string.daily)
-        } else formatToLocalDay(dateTime)
+        } else formatToLocalDay(this)
     }
 
     /**
@@ -639,8 +647,8 @@ object TimeTools {
      *
      * This does not auto-convert to the device time zone.
      */
-    private fun formatToLocalTime(dateTime: ZonedDateTime): String =
-        dateTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+    fun ZonedDateTime.formatToLocalTime(): String =
+        format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
 
     /**
      * Formats to relative time in relation to the current system time (e.g. "in 12 min") as defined
