@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.battlelancer.seriesguide.R
@@ -54,7 +55,7 @@ class L10nDialogFragment : AppCompatDialogFragment() {
         }
 
         return MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.pref_language)
+                .setTitle(requireArguments().getInt(ARG_RES_ID_TITLE))
                 .setSingleChoiceItems(
                         sortedLanguages,
                         currentLanguageIndex
@@ -86,6 +87,7 @@ class L10nDialogFragment : AppCompatDialogFragment() {
 
         private const val ARG_SELECTED_LANGUAGE_CODE = "selectedLanguageCode"
         private const val ARG_RES_ID_LANGUAGE_CODES = "resIdLanguageCodes"
+        private const val ARG_RES_ID_TITLE = "resIdTitle"
 
         /**
          * @param selectedLanguageCode two letter ISO 639-1 language code
@@ -94,12 +96,14 @@ class L10nDialogFragment : AppCompatDialogFragment() {
         fun show(
             fragmentManager: FragmentManager,
             selectedLanguageCode: String?,
-            tag: String
+            tag: String,
+            @StringRes titleRes: Int = R.string.pref_language
         ) {
             L10nDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode)
                     putInt(ARG_RES_ID_LANGUAGE_CODES, R.array.content_languages)
+                    putInt(ARG_RES_ID_TITLE, titleRes)
                 }
             }.safeShow(fragmentManager, tag)
         }
