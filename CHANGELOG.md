@@ -11,6 +11,12 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 69
+----------
+*in development*
+
+* 🔨 Movies: when removing movie from watchlist or collection actually remove it visually.
+
 Version 68
 ----------
 *2023-07-06*
