@@ -249,7 +249,8 @@ class SgPreferencesFragment : BasePreferencesFragment(),
                 L10nDialogFragment.show(
                     parentFragmentManager,
                     ShowsSettings.getShowsLanguageFallback(requireContext()),
-                    TAG_LANGUAGE_FALLBACK
+                    TAG_LANGUAGE_FALLBACK,
+                    titleRes = R.string.pref_language_fallback
                 )
                 true
             }
