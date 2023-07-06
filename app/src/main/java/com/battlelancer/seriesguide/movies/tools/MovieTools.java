@@ -10,12 +10,12 @@ import com.battlelancer.seriesguide.jobs.FlagJobExecutor;
 import com.battlelancer.seriesguide.jobs.movies.MovieCollectionJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchedJob;
 import com.battlelancer.seriesguide.jobs.movies.MovieWatchlistJob;
-import com.battlelancer.seriesguide.movies.database.SgMovieFlags;
 import com.battlelancer.seriesguide.modules.ApplicationContext;
 import com.battlelancer.seriesguide.movies.MoviesSettings;
-import com.battlelancer.seriesguide.movies.details.MovieDetails;
 import com.battlelancer.seriesguide.movies.database.MovieHelper;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
+import com.battlelancer.seriesguide.movies.database.SgMovieFlags;
+import com.battlelancer.seriesguide.movies.details.MovieDetails;
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.traktapi.TraktSettings;
 import com.battlelancer.seriesguide.traktapi.TraktTools;
@@ -52,9 +52,9 @@ public class MovieTools {
     }
 
     public enum Lists {
-        COLLECTION(SeriesGuideContract.Movies.IN_COLLECTION),
-        WATCHLIST(SeriesGuideContract.Movies.IN_WATCHLIST),
-        WATCHED(SeriesGuideContract.Movies.WATCHED);
+        COLLECTION(Movies.IN_COLLECTION),
+        WATCHLIST(Movies.IN_WATCHLIST),
+        WATCHED(Movies.WATCHED);
 
         public final String databaseColumn;
 
@@ -90,7 +90,7 @@ public class MovieTools {
 
     /**
      * Return release date or null if unknown from millisecond value stored in the database as
-     * {@link com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies#RELEASED_UTC_MS}.
+     * {@link Movies#RELEASED_UTC_MS}.
      */
     @Nullable
     public static Date movieReleaseDateFrom(long releaseDateMs) {
@@ -102,10 +102,10 @@ public class MovieTools {
      */
     public static void deleteUnusedMovies(Context context) {
         int rowsDeleted = context.getContentResolver()
-                .delete(SeriesGuideContract.Movies.CONTENT_URI,
-                        SeriesGuideContract.Movies.SELECTION_UNWATCHED
-                                + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_COLLECTION
-                                + " AND " + SeriesGuideContract.Movies.SELECTION_NOT_WATCHLIST,
+                .delete(Movies.CONTENT_URI,
+                        Movies.SELECTION_UNWATCHED
+                                + " AND " + Movies.SELECTION_NOT_COLLECTION
+                                + " AND " + Movies.SELECTION_NOT_WATCHLIST,
                         null);
         Timber.d("deleteUnusedMovies: removed %s movies", rowsDeleted);
     }
@@ -215,8 +215,8 @@ public class MovieTools {
     public static HashSet<Integer> getMovieTmdbIdsAsSet(Context context) {
         HashSet<Integer> localMoviesIds = new HashSet<>();
 
-        Cursor movies = context.getContentResolver().query(SeriesGuideContract.Movies.CONTENT_URI,
-                new String[]{SeriesGuideContract.Movies.TMDB_ID},
+        Cursor movies = context.getContentResolver().query(Movies.CONTENT_URI,
+                new String[]{Movies.TMDB_ID},
                 null, null, null);
         if (movies == null) {
             return null;
@@ -248,7 +248,7 @@ public class MovieTools {
         ContentValues values = details.toContentValuesInsert();
 
         // add to database
-        context.getContentResolver().insert(SeriesGuideContract.Movies.CONTENT_URI, values);
+        context.getContentResolver().insert(Movies.CONTENT_URI, values);
 
         // ensure ratings for new movie are downloaded on next sync
         TraktSettings.resetMoviesLastRatedAt(context);
@@ -298,9 +298,9 @@ public class MovieTools {
             return; // nothing to update, downloading probably failed :(
         }
 
-        values.put(SeriesGuideContract.Movies.LAST_UPDATED, System.currentTimeMillis());
+        values.put(Movies.LAST_UPDATED, System.currentTimeMillis());
 
-        context.getContentResolver().update(SeriesGuideContract.Movies.buildMovieUri(tmdbId),
+        context.getContentResolver().update(Movies.buildMovieUri(tmdbId),
                 values, null, null);
     }
 
@@ -317,8 +317,8 @@ public class MovieTools {
     /**
      * Adds new movies to the database.
      *
-     * @param newCollectionMovies Movie TMDB ids to add to the collection.
-     * @param newWatchlistMovies Movie TMDB ids to add to the watchlist.
+     * @param newCollectionMovies     Movie TMDB ids to add to the collection.
+     * @param newWatchlistMovies      Movie TMDB ids to add to the watchlist.
      * @param newWatchedMoviesToPlays Movie TMDB ids to set watched mapped to play count.
      */
     public boolean addMovies(
@@ -371,7 +371,7 @@ public class MovieTools {
 
             // Already add to the database if we have 10 movies so UI can already update.
             if (movies.size() == 10) {
-                context.getContentResolver().bulkInsert(SeriesGuideContract.Movies.CONTENT_URI,
+                context.getContentResolver().bulkInsert(Movies.CONTENT_URI,
                         buildMoviesContentValues(movies));
                 movies.clear(); // Start a new batch.
             }
@@ -379,7 +379,7 @@ public class MovieTools {
 
         // Insert remaining new movies into the database.
         if (!movies.isEmpty()) {
-            context.getContentResolver().bulkInsert(SeriesGuideContract.Movies.CONTENT_URI,
+            context.getContentResolver().bulkInsert(Movies.CONTENT_URI,
                     buildMoviesContentValues(movies));
         }
 
@@ -392,7 +392,7 @@ public class MovieTools {
      * and {@link MoviesSettings#getMoviesRegion(Context)}.
      *
      * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
-     * looking up the trakt id first, so skip if not necessary.
+     *                       looking up the trakt id first, so skip if not necessary.
      */
     public MovieDetails getMovieDetails(int movieTmdbId, boolean getTraktRating) {
         String languageCode = MoviesSettings.getMoviesLanguage(context);
@@ -404,7 +404,7 @@ public class MovieTools {
      * Download movie data from TMDB (and trakt).
      *
      * @param getTraktRating Rating from TMDB is always fetched. Fetching trakt rating involves
-     * looking up the trakt id first, so skip if not necessary.
+     *                       looking up the trakt id first, so skip if not necessary.
      */
     public MovieDetails getMovieDetails(String languageCode, String regionCode, int movieTmdbId,
             boolean getTraktRating) {
