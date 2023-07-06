@@ -89,10 +89,7 @@ publishing {
 }
 
 signing {
-    if (!rootProject.hasProperty("signing.keyId")
-        || !rootProject.hasProperty("signing.password")
-        || !rootProject.hasProperty("signing.secretKeyRingFile")) {
-        println("WARNING: Signing properties missing, published artifacts will not be signed.")
-    }
+    // https://docs.gradle.org/current/userguide/signing_plugin.html#sec:using_gpg_agent
+    useGpgCmd()
     sign(publishing.publications["central"])
 }

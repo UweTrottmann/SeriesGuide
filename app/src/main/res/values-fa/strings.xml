@@ -39,6 +39,7 @@
     <string name="action_stream_info">اطّلاعات پخش یا خرید</string>
     <string name="action_select_region">گزینش ناحیه</string>
     <string name="action_include_any_watch_provider">شامل همه</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -55,7 +56,7 @@
     <string name="api_error_generic">نمی‌توان با %s صحبت کرد. بعداً دوباره تلاش کنید.</string>
     <string name="api_failed">%s انجام نشد</string>
     <string name="copy_to_clipboard">کپی شد</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">نمایش به TMDB مهاجرت داده نشده. ممکن است برخی کنش‌ها شامل هم‌گام سازی ابری و ترکت کار نکنند. برای جایگزین جست‌وجو کرده و این نمایش را حذف کنید. برای جزییات بیش‌تر بزنید.</string>
     <!-- Sharing -->
     <string name="share">هم‌رسانی</string>
     <string name="share_show">هم‌رسانی نمایش</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
     <string name="format_source">منبع: %s</string>
     <string name="last_updated">آخرین به‌روز رسانی</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">امروز</string>
     <string name="now">اکنون</string>
@@ -235,7 +239,7 @@
     <string name="title_disc_releases">منتشر شده روی دیسک</string>
     <string name="movies_in_theatres">در سینماها</string>
     <string name="movies_collection">مجموعه</string>
-    <string name="movies_watchlist">فهرست تماشا</string>
+    <string name="movies_watchlist">سیاههٔ تماشا</string>
     <string name="movies_watched">تماشا شده</string>
     <string name="watchlist_add">افزودن به فهرست تماشا</string>
     <string name="watchlist_remove">حذف از فهرست تماشا</string>
@@ -253,7 +257,7 @@
     <string name="action_movies_filter">پالایش فیلم‌ها</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
-    <string name="shows_finished">%s finished watching</string>
+    <string name="shows_finished">%s تماشا پایان یافته</string>
     <string name="shows_with_next">%s با قسمت‌های بعدی</string>
     <string name="shows_continuing">%s ادامه دار</string>
     <string name="episodes_watched">%s تماشا شده</string>
@@ -305,7 +309,7 @@
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">سیاههٔ نمایش پر است. نخست چیزی را بردارید.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">اتصال به ترکت</string>
     <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
@@ -466,7 +470,7 @@
     <string name="pref_notifications_battery_settings">تنظیمات باتری</string>
     <string name="pref_notifications_battery_settings_summary">به منظور آگاهی‌های قابل اتّکا، برای از کار انداختن بهینه‌سازی‌های باتری به تنظیمات باتری بروید</string>
     <string name="notifications_allow">اجازه به آگاهی‌ها</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow_reason">برای گرفتن آگاهی‌های خطا و قسمت‌ها به تنظمیات رفته و اجازه بدهید.</string>
     <!-- List Widget -->
     <string name="hide_watched">نهفتن قسمت‌های تماشا شده</string>
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>
@@ -491,7 +495,7 @@
     <string name="billing_price_pass">خرید یک باره</string>
     <string name="upgrade_description">هر اشتراکی، همهٔ ویژگی‌ها را گشوده و از به‌روز رسانی‌های آتی پشیبانی می‌کند. برای استفاده از این کاره نیازی به اشتراک نیست.</string>
     <string name="upgrade_success">تشکّر برای حمایت از سریزگاید! شما به تمام ویژگی‌ها دسترسی دارید.</string>
-    <string name="billing_unlock_detected">X Pass app detected. You may still subscribe to support future updates.</string>
+    <string name="billing_unlock_detected">کارهٔ X Pass پیدا شد. برای پشتیبانی از به‌روز رسانی‌های آینده باید همچنان مشترک شوید.</string>
     <string name="billing_learn_more">اطّلاعات بیش‌تر و راهنمایی</string>
     <string name="subscription_expired_details">اشتراک سریزگایدتان به پایان رسیده است.</string>
     <!-- Amazon In-App Billing -->

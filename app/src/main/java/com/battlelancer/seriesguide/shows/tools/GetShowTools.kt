@@ -7,7 +7,6 @@ import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.database.SgShow2Update
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TMDB
-import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TRAKT
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowStop
@@ -15,9 +14,6 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbError
 import com.battlelancer.seriesguide.tmdbapi.TmdbRetry
 import com.battlelancer.seriesguide.tmdbapi.TmdbStop
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
-import com.battlelancer.seriesguide.traktapi.TraktError
-import com.battlelancer.seriesguide.traktapi.TraktRetry
-import com.battlelancer.seriesguide.traktapi.TraktStop
 import com.battlelancer.seriesguide.traktapi.TraktTools2
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -182,6 +178,9 @@ class GetShowTools @Inject constructor(
                     releaseWeekDay = traktDetails.releaseWeekDay,
                     releaseCountry = traktDetails.releaseCountry,
                     releaseTimeZone = traktDetails.releaseTimeZone,
+                    customReleaseTime = SgShow2.CUSTOM_RELEASE_TIME_NOT_SET,
+                    customReleaseDayOffset = SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET,
+                    customReleaseTimeZone = SgShow2.CUSTOM_RELEASE_TIME_ZONE_NOT_SET,
                     firstRelease = traktDetails.firstRelease,
                     ratingGlobal = traktDetails.rating,
                     ratingVotes = traktDetails.votes,
@@ -238,13 +237,6 @@ class GetShowTools @Inject constructor(
         return when (this) {
             TmdbRetry -> GetShowRetry(TMDB)
             TmdbStop -> GetShowStop(TMDB)
-        }
-    }
-
-    private fun TraktError.toGetShowError(): GetShowError {
-        return when (this) {
-            TraktRetry -> GetShowRetry(TRAKT)
-            TraktStop -> GetShowStop(TRAKT)
         }
     }
 

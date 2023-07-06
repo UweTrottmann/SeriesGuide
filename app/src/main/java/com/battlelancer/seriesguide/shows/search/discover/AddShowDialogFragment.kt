@@ -3,9 +3,7 @@ package com.battlelancer.seriesguide.shows.search.discover
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.style.TextAppearanceSpan
 import android.view.View
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.appcompat.widget.TooltipCompat
@@ -16,9 +14,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogAddshowBinding
-import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
+import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -31,7 +29,6 @@ import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.copyTextToClipboard
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import com.battlelancer.seriesguide.util.safeShow
-import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uwetrottmann.androidutils.AndroidUtils
 import org.greenrobot.eventbus.EventBus
@@ -152,7 +149,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 this.binding?.textViewAddDescription?.isGone = false
                 populateShowViews(show)
             }
-            model.watchProvider.observe(this, { watchInfo ->
+            model.watchProvider.observe(this) { watchInfo ->
                 this.binding?.buttonAddStreamingSearch?.let {
                     val providerInfo = StreamingSearch.configureButton(it, watchInfo, false)
                     this.binding?.textViewAddStreamingSearch?.apply {
@@ -160,7 +157,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                         isGone = providerInfo == null
                     }
                 }
-            })
+            }
         }
 
         return MaterialAlertDialogBuilder(requireContext())
@@ -245,59 +242,16 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         binding.textViewAddTitle.text = show.title
         binding.textViewAddDescription.text = show.overview
 
-        // Release year.
-        val statusText = SpannableStringBuilder().also { statusText ->
-            TimeTools.getShowReleaseYear(show.firstRelease)?.let {
-                statusText.append(it)
-            }
-            // Continuing/ended status.
-            val status = show.statusOrUnknown
-            val statusString = ShowStatus.getStatus(requireContext(), status)
-            if (statusString != null) {
-                if (statusText.isNotEmpty()) {
-                    statusText.append(" / ") // Like "2016 / Continuing".
-                }
-
-                val currentTextLength = statusText.length
-                statusText.append(statusString)
-
-                // If continuing, paint status green.
-                val style = if (status == ShowStatus.RETURNING) {
-                    R.style.TextAppearance_SeriesGuide_Body2_Accent
-                } else {
-                    R.style.TextAppearance_SeriesGuide_Body2_Secondary
-                }
-                statusText.setSpan(
-                    TextAppearanceSpan(activity, style),
-                    currentTextLength,
-                    statusText.length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-        }
-        binding.textViewAddReleased.text = statusText
+        // Release year and status.
+        binding.textViewAddReleased.text = ShowStatus.buildYearAndStatus(requireContext(), show)
 
         // Next release day and time.
         val timeAndNetworkText = SpannableStringBuilder().apply {
-            if (show.releaseTimeOrDefault != -1) {
-                val release = TimeTools.getShowReleaseDateTime(
-                    requireContext(),
-                    show.releaseTimeOrDefault,
-                    show.releaseWeekDayOrDefault,
-                    show.releaseTimeZone,
-                    show.releaseCountry,
-                    show.network
-                )
-                val day = TimeTools.formatToLocalDayOrDaily(
-                    requireContext(),
-                    release,
-                    show.releaseWeekDayOrDefault
-                )
-                val time = TimeTools.formatToLocalTime(requireContext(), release)
-                append(day).append(" ").append(time)
+            val dayAndTimeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
+            if (dayAndTimeOrNull != null) {
+                append(dayAndTimeOrNull)
                 append("\n")
             }
-
             // Network, runtime.
             append(show.network)
             append("\n")

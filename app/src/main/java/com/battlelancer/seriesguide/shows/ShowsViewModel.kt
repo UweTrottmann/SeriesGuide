@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
@@ -24,7 +24,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
     private val sgShowsLiveData: LiveData<MutableList<SgShow2ForLists>> =
-        Transformations.switchMap(queryString) { queryString ->
+        queryString.switchMap { queryString ->
             SgRoomDatabase.getInstance(getApplication()).sgShow2Helper()
                 .getShowsLiveData(SimpleSQLiteQuery(queryString, null))
         }

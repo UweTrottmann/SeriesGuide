@@ -259,7 +259,7 @@ class ExtensionsConfigurationFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { item: MenuItem ->
             if (item.itemId == 0) {
                 // special item: search for more extensions
-                WebTools.openAsCustomTab(
+                WebTools.openInApp(
                     requireContext(),
                     getString(R.string.url_extensions_search)
                 )

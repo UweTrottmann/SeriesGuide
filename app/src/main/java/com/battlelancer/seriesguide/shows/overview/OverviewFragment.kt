@@ -64,6 +64,7 @@ import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
+import com.battlelancer.seriesguide.util.safeShow
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Job
@@ -123,6 +124,16 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             containerOverviewEpisode.visibility = View.GONE
             containerOverviewEmpty.visibility = View.GONE
 
+            buttonOverviewEditReleaseTime.apply {
+                contentDescription = getString(R.string.custom_release_time_edit)
+                TooltipCompat.setTooltipText(this, contentDescription)
+                setOnClickListener {
+                    CustomReleaseTimeDialogFragment(showId).safeShow(
+                        parentFragmentManager,
+                        "custom-release-time"
+                    )
+                }
+            }
             buttonOverviewFavoriteShow.setOnClickListener { onButtonFavoriteClick() }
 
             containerOverviewEpisodeCard.setOnClickListener { v: View? ->
@@ -680,27 +691,10 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
         // Regular network, release time and length.
         val network = show.network
-        var time: String? = null
-        val releaseTime = show.releaseTime
-        if (releaseTime != null && releaseTime != -1) {
-            val weekDay = show.releaseWeekDayOrDefault
-            val release = TimeTools.getShowReleaseDateTime(
-                requireContext(),
-                releaseTime,
-                weekDay,
-                show.releaseTimeZone,
-                show.releaseCountry,
-                network
-            )
-            val dayString = TimeTools.formatToLocalDayOrDaily(requireContext(), release, weekDay)
-            val timeString = TimeTools.formatToLocalTime(requireContext(), release)
-            // "Mon 08:30"
-            time = "$dayString $timeString"
-        }
-        val runtime = getString(
-            R.string.runtime_minutes, show.runtime.toString()
-        )
-        val combinedString = TextTools.dotSeparate(TextTools.dotSeparate(network, time), runtime)
+        val timeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
+        val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
+        val combinedString =
+            TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)
         binding.overviewShowNetworkAndTime.text = combinedString
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
         binding.overviewShowNetworkAndTime.copyTextToClipboardOnLongClick()
@@ -734,7 +728,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             feedbackView = it
             it.setCallback(object : FeedbackView.Callback {
                 override fun onRate() {
-                    if (WebTools.openAsCustomTab(
+                    if (WebTools.openInApp(
                             requireContext(),
                             getString(R.string.url_store_page)
                         )) {

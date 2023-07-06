@@ -279,11 +279,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     true
                 }
                 R.id.menu_open_tmdb -> {
-                    WebTools.openAsCustomTab(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
+                    WebTools.openInApp(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
                     true
                 }
                 R.id.menu_open_trakt -> {
-                    WebTools.openAsCustomTab(requireContext(), TraktTools.buildMovieUrl(tmdbId))
+                    WebTools.openInApp(requireContext(), TraktTools.buildMovieUrl(tmdbId))
                     true
                 }
                 else -> false
@@ -471,7 +471,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // When this movie was last updated by this app
         binding.labelMovieLastUpdated.isGone = false
         binding.textMovieLastUpdated.text =
-            TextTools.timeInMillisToDateAndTime(requireContext(), movieDetails.lastUpdatedMillis)
+            TimeTools.formatToLocalDateAndTime(requireContext(), movieDetails.lastUpdatedMillis)
 
         // trakt comments link
         binding.buttonMovieComments.setOnClickListener { v ->

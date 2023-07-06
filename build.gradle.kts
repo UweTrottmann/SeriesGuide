@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     // https://github.com/ben-manes/gradle-versions-plugin/releases
-    id("com.github.ben-manes.versions") version "0.43.0"
+    id("com.github.ben-manes.versions") version "0.47.0"
     // https://github.com/gradle-nexus/publish-plugin/releases
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // api
 }
@@ -12,8 +12,8 @@ buildscript {
     val sgTargetSdk by extra(33) // Android 13 (T)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106703)
-    val sgVersionName by extra("67.0.3")
+    val sgVersionCode by extra(2106805)
+    val sgVersionName by extra("68.0.4")
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 
@@ -27,7 +27,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.4.1") // libraries, SeriesGuide
+        classpath("com.android.tools.build:gradle:7.4.2") // libraries, SeriesGuide
         classpath(libs.kotlin.gradle)
         classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
         // Firebase Crashlytics

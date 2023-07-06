@@ -1,0 +1,16 @@
+# https://developer.crowdin.com/configuration-file/
+
+# Credentials (project_id, api_token, base_path, base_url) are stored in ~/.crowdin.yml
+
+# Drop folder hierarchy when uploading
+"preserve_hierarchy": false
+
+files: [
+  {
+    # Translation source file
+    "source": "/app/src/main/res/values/strings.xml",
+
+    # Path of the translation file in the downloaded ZIP (see source file settings on Crowdin)
+    "translation": "/temp/values-%android_code%/%original_file_name%",
+  }
+]

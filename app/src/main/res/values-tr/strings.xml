@@ -39,6 +39,7 @@
     <string name="action_stream_info">Online izleme veya satın alma bilgisi</string>
     <string name="action_select_region">Bölge seçin</string>
     <string name="action_include_any_watch_provider">Herhangi biri</string>
+    <string name="action_reset">Sıfırla</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
     <string name="search_hint">Bölüm ara</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">Bazı detaylar spoiler önlemek için gizli kalır. Bunu kapatmak için ayarlara gidiniz.</string>
     <string name="format_source">Kaynak: %s</string>
     <string name="last_updated">Son güncelleme</string>
+    <string name="custom_release_time_edit">Yayın zamanını düzenle</string>
+    <string name="custom_release_time_earlier">önce</string>
+    <string name="custom_release_time_later">sonra</string>
     <!-- Date and Time -->
     <string name="today">bugün</string>
     <string name="now">şimdi</string>
@@ -451,7 +455,7 @@
     <string name="upcoming_display">Gelecek bölümleri görüntülemek için seçin</string>
     <string name="pref_notifications">Bildirimler</string>
     <string name="pref_notificationssummary">Yeni bölümler için bildirim gönder</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Bildirim ayarları</string>
     <string name="pref_ringtone">Zil sesi</string>
     <string name="pref_vibrate">Titreşim</string>
     <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
@@ -465,8 +469,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Sadece yeni bölüm bir sonraki izlenecek ise uyarı gönder</string>
     <string name="pref_notifications_battery_settings">Pil ayarları</string>
     <string name="pref_notifications_battery_settings_summary">Güvenilir bildirimler almak için Pil ayarlarına giderek, pil optimizasyonlarını devre dışı bırakın</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">Bildirimlere izin ver</string>
+    <string name="notifications_allow_reason">Bölüm ve hata bildirimleri almak için Ayarlar\'a gidin ve onlara izin verin.</string>
     <!-- List Widget -->
     <string name="hide_watched">İzlenmiş bölümleri gizle</string>
     <string name="pref_widget_opacity">Widget arka planı</string>

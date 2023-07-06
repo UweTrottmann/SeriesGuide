@@ -3,9 +3,9 @@ package com.battlelancer.seriesguide.shows.episodes
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.StreamingSearch
@@ -23,7 +23,7 @@ class EpisodeDetailsViewModel(
     val episode = SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper()
         .getEpisodeLiveData(episodeId)
     val showId = MutableLiveData<Long>()
-    val show = Transformations.switchMap(showId) {
+    val show = showId.switchMap {
         SgRoomDatabase.getInstance(getApplication()).sgShow2Helper()
             .getShowLiveData(it)
     }

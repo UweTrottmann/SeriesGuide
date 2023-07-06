@@ -130,17 +130,16 @@ class BillingActivity : BaseActivity() {
         buttonManageSubs = findViewById<Button>(R.id.buttonBillingManageSubscription).also {
             it.setOnClickListener { v ->
                 // URL may change depending on active sub, so get it on demand.
-                WebTools.openAsCustomTab(v.context, manageSubscriptionUrl)
+                WebTools.openInApp(v.context, manageSubscriptionUrl)
             }
         }
 
         buttonPass = findViewById(R.id.buttonBillingGetPass)
         ViewTools.openUriOnClick(buttonPass, getString(R.string.url_x_pass))
 
-        ViewTools.openUriOnClick(
-            findViewById(R.id.textViewBillingMoreInfo),
-            getString(R.string.url_whypay)
-        )
+        findViewById<View>(R.id.textViewBillingMoreInfo).setOnClickListener {
+            WebTools.openInCustomTab(this, getString(R.string.url_whypay))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

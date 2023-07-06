@@ -39,6 +39,7 @@
     <string name="action_stream_info">Інформація про трансляцію або покупку</string>
     <string name="action_select_region">Виберіть регіон</string>
     <string name="action_include_any_watch_provider">Включаючи будь-які</string>
+    <string name="action_reset">Скинути</string>
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
     <string name="search_hint">Пошук серій</string>
@@ -101,6 +102,9 @@
     <string name="no_spoilers">Деякі деталі приховані для запобігання спойлерам. Щоб вимкнути це використовуйте Налаштування.</string>
     <string name="format_source">Джерело: %s</string>
     <string name="last_updated">Востаннє оновлено</string>
+    <string name="custom_release_time_edit">Змінити час релізу</string>
+    <string name="custom_release_time_earlier">раніше</string>
+    <string name="custom_release_time_later">пізніше</string>
     <!-- Date and Time -->
     <string name="today">сьогодні</string>
     <string name="now">Сьогодні</string>
@@ -508,7 +512,7 @@
     <string name="billing_action_manage_subscriptions">Впорядкувати підписки</string>
     <string name="billing_action_pass">Отримати X Pass App</string>
     <string name="billing_duration_format">%1$s/рік</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Безкоштовна пробна версія</string>
     <string name="billing_sub_description">Спробуйте 30 днів безкоштовно, скасуйте у будь-який час.</string>
     <string name="billing_price_pass">Одноразове замовлення</string>
     <string name="upgrade_description">Кожна підписка розблоковує всі функції та підтримує майбутні оновлення. Підписка не обов\'язкова для використання цього додатка.</string>

@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import com.battlelancer.seriesguide.util.TimeTools.formatWithDeviceZoneToDayAndTime
 
 /**
  * Display show search results.
@@ -104,23 +105,11 @@ class ShowSearchAdapter(
             setFavoriteState(favorited, isFavorited)
 
             // network, day and time
-            val time = show.releaseTime
-            val weekDay = show.releaseWeekDay
-            val network = show.network
-            val showReleaseTime = if (time != -1) {
-                TimeTools.getShowReleaseDateTime(
-                    context,
-                    time,
-                    weekDay,
-                    show.releaseTimeZone,
-                    show.releaseCountry,
-                    network
-                )
-            } else {
-                null
-            }
-            timeAndNetwork.text =
-                TextTools.networkAndTime(context, showReleaseTime, weekDay, network)
+            timeAndNetwork.text = TextTools.dotSeparate(
+                show.network,
+                TimeTools.getReleaseDateTime(context, show)
+                    ?.formatWithDeviceZoneToDayAndTime(context, show.releaseWeekDay)
+            )
             remainingCount.visibility = View.GONE // unused
 
             // poster

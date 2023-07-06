@@ -71,7 +71,7 @@ class MoreOptionsActivity : BaseTopActivity() {
             startActivity(Intent(this, SeriesGuidePreferences::class.java))
         }
         binding.buttonHelp.setOnClickListener {
-            WebTools.openAsCustomTab(this, getString(R.string.help_url))
+            WebTools.openInCustomTab(this, getString(R.string.help_url))
         }
         ViewTools.openUriOnClick(binding.buttonCommunity, getString(R.string.url_community))
         ViewTools.openUriOnClick(binding.buttonTwitter, getString(R.string.url_twitter))

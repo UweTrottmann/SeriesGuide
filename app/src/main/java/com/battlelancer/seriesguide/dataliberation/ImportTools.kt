@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
+import kotlin.math.absoluteValue
 
 object ImportTools {
 
@@ -26,6 +27,11 @@ object ImportTools {
             releaseWeekDay = if (release_weekday >= -1 && release_weekday <= 7) release_weekday else TimeTools.RELEASE_WEEKDAY_UNKNOWN,
             releaseCountry = country,
             releaseTimeZone = release_timezone,
+            // Note: do net set default values for custom time, set to null instead. This avoids
+            // restoring an old backup overwriting values in Cloud on next sync.
+            customReleaseTime = custom_release_time?.takeIf { it in 0..2359 },
+            customReleaseDayOffset = custom_release_day_offset?.takeIf { it.absoluteValue <= SgShow2.MAX_CUSTOM_DAY_OFFSET },
+            customReleaseTimeZone = custom_release_timezone,
             firstRelease = first_aired,
             ratingGlobal = if (rating in 0.0..10.0) rating else 0.0,
             ratingVotes = if (rating_votes >= 0) rating_votes else 0,

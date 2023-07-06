@@ -4,7 +4,7 @@ import android.app.Application
 import android.text.format.DateUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.switchMap
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
@@ -14,7 +14,7 @@ import com.battlelancer.seriesguide.util.TimeTools
 class ShowSearchViewModel(application: Application) : AndroidViewModel(application) {
 
     val searchTerm = MutableLiveData<String?>()
-    val shows = Transformations.switchMap(searchTerm) { searchTerm ->
+    val shows = searchTerm.switchMap { searchTerm ->
         val database = SgRoomDatabase.getInstance(getApplication())
         val query = if (searchTerm.isNullOrBlank()) {
             SimpleSQLiteQuery(

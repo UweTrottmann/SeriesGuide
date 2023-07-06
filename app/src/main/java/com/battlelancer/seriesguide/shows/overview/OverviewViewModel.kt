@@ -3,9 +3,9 @@ package com.battlelancer.seriesguide.shows.overview
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.StreamingSearch
@@ -25,7 +25,7 @@ class OverviewViewModel(
     }
     private val episodeId = MutableLiveData<Long>()
     val episode by lazy {
-        Transformations.switchMap(episodeId) {
+        episodeId.switchMap {
             SgRoomDatabase.getInstance(getApplication()).sgEpisode2Helper().getEpisodeLiveData(it)
         }
     }

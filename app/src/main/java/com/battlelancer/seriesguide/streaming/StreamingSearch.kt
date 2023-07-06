@@ -10,8 +10,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
@@ -163,7 +163,7 @@ object StreamingSearch {
         context: Context,
         isMovie: Boolean = false
     ): LiveData<TmdbTools2.WatchInfo> {
-        return Transformations.switchMap(watchInfo) {
+        return watchInfo.switchMap {
             liveData(context = viewModelContext + Dispatchers.IO) {
                 if (it.tmdbId != null && it.region != null) {
                     val tmdbTools = TmdbTools2()

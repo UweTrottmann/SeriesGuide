@@ -39,6 +39,7 @@
     <string name="action_stream_info">Veure en línia o informació de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
     <string name="action_include_any_watch_provider">Inclou qualsevol</string>
+    <string name="action_reset">Restablir</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
     <string name="search_hint">Cerca episodis</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">Alguns detalls estan amagats per evitar spoilers. Per desactivar aquesta opció aneu a Configuració.</string>
     <string name="format_source">Font: %s</string>
     <string name="last_updated">Darrera actualització</string>
+    <string name="custom_release_time_edit">Edita la data de llançament</string>
+    <string name="custom_release_time_earlier">anterior</string>
+    <string name="custom_release_time_later">Més tard</string>
     <!-- Date and Time -->
     <string name="today">avui</string>
     <string name="now">ara</string>

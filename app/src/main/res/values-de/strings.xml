@@ -39,6 +39,7 @@
     <string name="action_stream_info">Streamen oder Kaufen Info</string>
     <string name="action_select_region">Region auswählen</string>
     <string name="action_include_any_watch_provider">Alle einbeziehen</string>
+    <string name="action_reset">Zurücksetzen</string>
     <!-- Search -->
     <string name="clear_search_history">Suchverlauf löschen</string>
     <string name="search_hint">Suche Folgen</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">Einige Details werden ausgeblendet um Spoiler zu vermeiden. Dies kann in den Einstellungen ausgeschaltet werden.</string>
     <string name="format_source">Quelle: %s</string>
     <string name="last_updated">Zuletzt aktualisiert</string>
+    <string name="custom_release_time_edit">Zeit bearbeiten</string>
+    <string name="custom_release_time_earlier">früher</string>
+    <string name="custom_release_time_later">später</string>
     <!-- Date and Time -->
     <string name="today">heute</string>
     <string name="now">jetzt</string>
@@ -161,7 +165,7 @@
     <string name="context_updateshow">Aktualisieren</string>
     <string name="context_marknext">Nächste Folge angesehen</string>
     <string name="action_episodes_switch_view">Ansicht wechseln</string>
-    <string name="next_to_watch">Als nächstes Ansehen</string>
+    <string name="next_to_watch">Als nächstes ansehen</string>
     <!-- History -->
     <string name="user_stream">Verlauf</string>
     <string name="recently_watched">Vor kurzem angesehen</string>

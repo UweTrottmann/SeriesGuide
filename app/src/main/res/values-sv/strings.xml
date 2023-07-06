@@ -39,6 +39,7 @@
     <string name="action_stream_info">Stream- eller köpinfo</string>
     <string name="action_select_region">Välj region</string>
     <string name="action_include_any_watch_provider">Inkludera alla</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">Vissa detaljer är dolda för att undvika spoilers. För att stänga av detta, gå till inställningar.</string>
     <string name="format_source">Källa: %s</string>
     <string name="last_updated">Senast uppdaterad</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">idag</string>
     <string name="now">nu</string>
@@ -305,7 +309,7 @@
     <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
     <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
     <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>
-    <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
+    <string name="trakt_error_limit_exceeded">Bevakningslistan är full, ta bort något först.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Anslut till trakt</string>
     <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>
@@ -315,7 +319,7 @@
     <string name="disconnect">Koppla ner</string>
     <string name="show_library">Lägg till serier från Trakt</string>
     <string name="about_trakt">Trakt hjälper till att hålla ett register över vilka TV-serier och filmer du ser på.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="support_trakt">Stöd Trakt med VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
     <string name="your_rating">Ditt betyg</string>
@@ -451,7 +455,7 @@
     <string name="upcoming_display">Välj för att visa kommande serier</string>
     <string name="pref_notifications">Aviseringar</string>
     <string name="pref_notificationssummary">Meddela om nya avsnitt</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Aviseringsinställningar</string>
     <string name="pref_ringtone">Ringsignal</string>
     <string name="pref_vibrate">Vibrera</string>
     <string name="pref_vibratesummary">Vibrerar även när aviseringar visas</string>
@@ -465,8 +469,8 @@
     <string name="pref_notifications_next_episodes_only_summary">Meddela bara om det nya avsnittet är det nästa att titta på</string>
     <string name="pref_notifications_battery_settings">Batteriinställningar</string>
     <string name="pref_notifications_battery_settings_summary">Gå till Batteriinställningar för att inaktivera batterioptimeringar för tillförlitliga aviseringar</string>
-    <string name="notifications_allow">Allow notifications</string>
-    <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="notifications_allow">Tillåt aviseringar</string>
+    <string name="notifications_allow_reason">För att ta emot avsnitts- och felmeddelanden, gå till Inställningar och tillåt dem.</string>
     <!-- List Widget -->
     <string name="hide_watched">Dölj sedda avsnitt</string>
     <string name="pref_widget_opacity">Widgetbakgrund</string>
@@ -486,7 +490,7 @@
     <string name="billing_action_manage_subscriptions">Hantera prenumerationer</string>
     <string name="billing_action_pass">Skaffa X Pass App</string>
     <string name="billing_duration_format">%1$s/år</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Gratis provperiod</string>
     <string name="billing_sub_description">Prova 30 dagar gratis, avbryt när som helst.</string>
     <string name="billing_price_pass">engångsköp</string>
     <string name="upgrade_description">Varje prenumeration låser upp alla funktioner och stöder framtida uppdateringar. En prenumeration krävs inte för att använda den här appen.</string>

@@ -11,6 +11,48 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 68
+----------
+*2023-07-06*
+
+* 🌟 Shows: support setting custom release time and day offset.
+* 🔧 Use in-app browser only for websites related to the app.
+* 🔧 Design: update to latest Material version.
+
+#### 68.0.4
+*2023-06-30*
+
+* 🔨 Custom time: fix resetting, simplify dialog, suggest day offset matching time zone conversion 
+  of official time.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 68.0.3 🧪
+*2023-06-23*
+
+* 🔧 Show details: make release time edit button more obvious, re-arrange some things.
+* 🔧 Overview: add button to edit release time.
+
+#### 68.0.2 🧪
+*2023-05-25*
+
+* 🔧 Design: update to latest Material version, with new time picker and new dialog animations.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 68.0.1 🧪
+*2023-05-19*
+
+* 🌟 Edit release time of a show: specify time and number of days earlier or later. Currently only 
+  from the details view, tap the pen symbol. Use this for shows that e.g. release later or earlier 
+  in your region.
+* 📝 Latest user interface translations from Crowdin. Many updates to Traditional Chinese used in 
+  Taiwan, thanks jackiexyz!
+
+#### 68.0.0 🧪
+*2023-03-30*
+
+* 🔧 Use in-app browser only for websites related to the app.
+* 📝 Latest user interface translations from Crowdin.
+
 Version 67
 ----------
 *2023-03-01*

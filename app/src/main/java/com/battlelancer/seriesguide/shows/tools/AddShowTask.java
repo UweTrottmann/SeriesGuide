@@ -88,7 +88,6 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
     private static final int PROGRESS_ERROR = 2;
     private static final int PROGRESS_ERROR_TVDB = 3;
     private static final int PROGRESS_ERROR_TVDB_NOT_EXISTS = 4;
-    private static final int PROGRESS_ERROR_TRAKT = 5;
     private static final int PROGRESS_ERROR_HEXAGON = 6;
     private static final int PROGRESS_ERROR_DATA = 7;
     private static final int RESULT_OFFLINE = 8;
@@ -232,9 +231,6 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
                     case TMDB_ERROR:
                         result = PROGRESS_ERROR_TVDB;
                         break;
-                    case TRAKT_ERROR:
-                        result = PROGRESS_ERROR_TRAKT;
-                        break;
                     case HEXAGON_ERROR:
                         result = PROGRESS_ERROR_HEXAGON;
                         break;
@@ -307,11 +303,6 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
             case PROGRESS_ERROR_TVDB_NOT_EXISTS:
                 event = OnShowAddedEvent.failedDetails(context, showTmdbId, showTitle,
                         context.getString(R.string.tvdb_error_does_not_exist));
-                break;
-            case PROGRESS_ERROR_TRAKT:
-                event = OnShowAddedEvent.failedDetails(context, showTmdbId, showTitle,
-                        context.getString(R.string.api_error_generic,
-                                context.getString(R.string.trakt)));
                 break;
             case PROGRESS_ERROR_HEXAGON:
                 event = OnShowAddedEvent.failedDetails(context, showTmdbId, showTitle,

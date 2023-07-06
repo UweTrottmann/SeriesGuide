@@ -19,9 +19,9 @@ import com.battlelancer.seriesguide.shows.database.SgSeason2
 import com.battlelancer.seriesguide.shows.database.SgSeason2Numbers
 import com.battlelancer.seriesguide.shows.database.SgSeason2TmdbIdUpdate
 import com.battlelancer.seriesguide.shows.database.SgSeason2Update
+import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.HEXAGON
 import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TMDB
-import com.battlelancer.seriesguide.shows.tools.AddUpdateShowTools.ShowService.TRAKT
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
@@ -67,7 +67,6 @@ class AddUpdateShowTools @Inject constructor(
         IN_DATABASE,
         DOES_NOT_EXIST,
         TMDB_ERROR,
-        TRAKT_ERROR,
         HEXAGON_ERROR,
         DATABASE_ERROR
     }
@@ -111,6 +110,15 @@ class AddUpdateShowTools @Inject constructor(
                 if (hexagonShow.isHidden != null) {
                     show.hidden = hexagonShow.isHidden
                 }
+                if (hexagonShow.customReleaseTime != null) {
+                    show.customReleaseTime = hexagonShow.customReleaseTime
+                }
+                if (hexagonShow.customReleaseDayOffset != null) {
+                    show.customReleaseDayOffset = hexagonShow.customReleaseDayOffset
+                }
+                if (hexagonShow.customReleaseTimeZone != null) {
+                    show.customReleaseTimeZone = hexagonShow.customReleaseTimeZone
+                }
             }
         }
 
@@ -136,6 +144,9 @@ class AddUpdateShowTools @Inject constructor(
                     ReleaseInfo(
                         show.releaseTimeZone,
                         show.releaseTimeOrDefault,
+                        show.customReleaseTimeZoneOrDefault,
+                        show.customReleaseTimeOrDefault,
+                        show.customReleaseDayOffsetOrDefault,
                         show.releaseCountry,
                         show.network
                     ),
@@ -170,7 +181,8 @@ class AddUpdateShowTools @Inject constructor(
             cloudShow.tmdbId = showTmdbId
             cloudShow.language = language
             cloudShow.isRemoved = false
-            // Prevent losing restored properties from a legacy cloud show by always sending them.
+            // Prevent losing restored properties from a legacy Cloud show (see
+            // hexagonTools.get().getShow used above) by always sending them.
             cloudShow.isFavorite = show.favorite
             cloudShow.isHidden = show.hidden
             cloudShow.notify = show.notify
@@ -270,6 +282,9 @@ class AddUpdateShowTools @Inject constructor(
     data class ReleaseInfo(
         val releaseTimeZone: String?,
         val releaseTimeOrDefault: Int,
+        val customReleaseTimeZone: String,
+        val customReleaseTime: Int,
+        val customReleaseDayOffset: Int,
         val releaseCountry: String?,
         val network: String?
     )
@@ -289,8 +304,15 @@ class AddUpdateShowTools @Inject constructor(
         localEpisodesByTmdbId: MutableMap<Int, SgEpisode2Ids>?,
         localEpisodesWithoutTmdbIdByNumber: MutableMap<Int, SgEpisode2Ids>?
     ): EpisodeDetails {
-        val showTimeZone = TimeTools.getDateTimeZone(releaseInfo.releaseTimeZone)
-        val showReleaseTime = TimeTools.getShowReleaseTime(releaseInfo.releaseTimeOrDefault)
+        // Only apply release time auto-corrections if not using a custom time.
+        val usingCustomTime = releaseInfo.customReleaseTime != SgShow2.CUSTOM_RELEASE_TIME_NOT_SET
+        // Prefer custom time zone and release time.
+        val showTimeZone = TimeTools.getDateTimeZone(
+            if (usingCustomTime) releaseInfo.customReleaseTimeZone else releaseInfo.releaseTimeZone
+        )
+        val showReleaseTime = TimeTools.getShowReleaseTime(
+            if (usingCustomTime) releaseInfo.customReleaseTime else releaseInfo.releaseTimeOrDefault
+        )
         val deviceTimeZone = TimeZone.getDefault().id
 
         val toInsert = mutableListOf<SgEpisode2>()
@@ -315,10 +337,12 @@ class AddUpdateShowTools @Inject constructor(
             val releaseDateTime = TimeTools.parseEpisodeReleaseDate(
                 showTimeZone,
                 tmdbEpisode.air_date,
+                releaseInfo.customReleaseDayOffset,
                 showReleaseTime,
                 releaseInfo.releaseCountry,
                 releaseInfo.network,
-                deviceTimeZone
+                deviceTimeZone,
+                applyCorrections = usingCustomTime
             )
 
             val guestStars = tmdbEpisode.guest_stars?.mapNotNull { it.name } ?: emptyList()
@@ -450,6 +474,9 @@ class AddUpdateShowTools @Inject constructor(
                 ReleaseInfo(
                     updatedShow.releaseTimeZone,
                     updatedShow.releaseTime,
+                    show.customReleaseTimeZoneOrDefault,
+                    show.customReleaseTimeOrDefault,
+                    show.customReleaseDayOffsetOrDefault,
                     updatedShow.releaseCountry,
                     updatedShow.network
                 ),
@@ -593,6 +620,9 @@ class AddUpdateShowTools @Inject constructor(
                             it.notify = show.notify
                             it.isHidden = show.hidden
                             it.language = show.language
+                            it.customReleaseTime = show.customReleaseTime
+                            it.customReleaseDayOffset = show.customReleaseDayOffset
+                            it.customReleaseTimeZone = show.customReleaseTimeZone
                             it.isRemoved = false
                         }))
                         if (!uploadSuccess) return@andThen Err(UpdateResult.ApiErrorStop(HEXAGON))
@@ -709,15 +739,13 @@ class AddUpdateShowTools @Inject constructor(
             else -> when (this.service) {
                 HEXAGON -> throw IllegalStateException("getShowDetails does not use HEXAGON")
                 TMDB -> ShowResult.TMDB_ERROR
-                TRAKT -> ShowResult.TRAKT_ERROR
             }
         }
     }
 
     enum class ShowService(@StringRes val nameResId: Int) {
         HEXAGON(R.string.hexagon),
-        TMDB(R.string.tmdb),
-        TRAKT(R.string.trakt)
+        TMDB(R.string.tmdb)
     }
 
     sealed class UpdateResult {

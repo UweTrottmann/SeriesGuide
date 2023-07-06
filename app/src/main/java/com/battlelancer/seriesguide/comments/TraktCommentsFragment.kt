@@ -207,7 +207,7 @@ class TraktCommentsFragment : Fragment() {
     private val onItemClickListener =
         object : TraktCommentsAdapter.OnItemClickListener {
             override fun onOpenWebsite(commentId: Int) {
-                WebTools.openAsCustomTab(requireContext(), TraktLink.comment(commentId))
+                WebTools.openInApp(requireContext(), TraktLink.comment(commentId))
             }
         }
 

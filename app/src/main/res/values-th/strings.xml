@@ -39,6 +39,7 @@
     <string name="action_stream_info">ข้อมูลการสตรีมหรือซื้อ</string>
     <string name="action_select_region">เลือกภูมิภาค</string>
     <string name="action_include_any_watch_provider">รวมอะไรก็ได้</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="search_hint">ค้นหาตอน</string>
@@ -98,6 +99,9 @@
     <string name="no_spoilers">รายละเอียดบางอย่างถูกซ่อนเพื่อป้องกันการสปอยล์ ปิดการป้องกันนี้ได้ในการตั้งค่า</string>
     <string name="format_source">ที่มา: %s</string>
     <string name="last_updated">อัปเดตล่าสุด</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">วันนี้</string>
     <string name="now">ขณะนี้</string>

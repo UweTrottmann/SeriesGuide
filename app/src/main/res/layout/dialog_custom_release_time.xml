@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewCustomReleaseTime"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/dialog_min_width"
+        android:orientation="vertical">
+
+        <!-- Issue: start and end margin have no effect. -->
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowCustomReleaseTimeEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:constraint_referenced_ids="imageViewCustomReleaseTimeIcon,textViewCustomReleaseTimeDay,buttonCustomReleaseTimePick"
+            app:flow_horizontalGap="8dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewCustomReleaseTimeIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_schedule_black_24dp" />
+
+        <TextView
+            android:id="@+id/textViewCustomReleaseTimeDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            tools:text="Sa." />
+
+        <Button
+            android:id="@+id/buttonCustomReleaseTimePick"
+            style="@style/Widget.SeriesGuide.Button.Outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="09:00 PM" />
+
+        <!-- Issue: start and end margin have no effect. -->
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowCustomReleaseTimeOffset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:constraint_referenced_ids="buttonCustomReleaseTimeOffsetDecrease,textViewCustomReleaseTimeOffset,buttonCustomReleaseTimeOffsetIncrease,textViewCustomReleaseTimeOffsetDirection"
+            app:flow_horizontalGap="4dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flowCustomReleaseTimeEdit" />
+
+        <Button
+            android:id="@+id/buttonCustomReleaseTimeOffsetDecrease"
+            style="?attr/materialIconButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_remove_black_24dp" />
+
+        <TextView
+            android:id="@+id/textViewCustomReleaseTimeOffset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            tools:text="3 days" />
+
+        <Button
+            android:id="@+id/buttonCustomReleaseTimeOffsetIncrease"
+            style="?attr/materialIconButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_add_white_24dp" />
+
+        <TextView
+            android:id="@+id/textViewCustomReleaseTimeOffsetDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_release_time_later"
+            android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

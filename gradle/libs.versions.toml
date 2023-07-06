@@ -4,22 +4,22 @@
 androidx-activity = "1.6.1"
 androidx-core = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/core
 androidx-fragment = "1.5.5" # https://developer.android.com/jetpack/androidx/releases/fragment
-androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
-androidx-room = "2.4.3" # https://developer.android.com/jetpack/androidx/releases/room
+androidx-lifecycle = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidx-room = "2.5.0" # https://developer.android.com/jetpack/androidx/releases/room
 androidx-test = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/test
 androidx-test-espresso = "3.4.0"
 coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-dagger = "2.42" # https://github.com/google/dagger/releases
+dagger = "2.45" # https://github.com/google/dagger/releases
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
 # https://github.com/googleapis/google-api-java-client/releases
 # Note: can't use 2.x.x because generated backend code requires 1.x.x.
 google-api-client = "1.34.1"
-kotlin = "1.7.22" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "1.8.10" # https://kotlinlang.org/docs/releases.html#release-details
 retrofit2 = "2.9.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.md
 
 [libraries]
-amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.2"
+amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.4" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
 androidutils = "com.uwetrottmann.androidutils:androidutils:3.1.0" # https://github.com/UweTrottmann/AndroidUtils/releases
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
@@ -53,7 +53,7 @@ androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
 androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta01" # https://developer.android.com/jetpack/androidx/releases/viewpager2
-billing = "com.android.billingclient:billing-ktx:5.1.0" # https://developer.android.com/google/play/billing/billing_library_releases_notes
+billing = "com.android.billingclient:billing-ktx:5.2.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 debugdrawer-actions = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-actions", version.ref = "debugdrawer" }
@@ -63,7 +63,7 @@ debugdrawer-timber = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawe
 debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-view", version.ref = "debugdrawer" }
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
-firebase = "com.google.firebase:firebase-bom:31.2.2"
+firebase = "com.google.firebase:firebase-bom:31.4.0"
 firebase-crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:2.9.4"
 firebase-google-services = "com.google.gms:google-services:4.3.15"
 firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/firebase/FirebaseUI-Android/releases
@@ -80,7 +80,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16" # https://github.com/michaelbull/kotlin-result/releases
-material = "com.google.android.material:material:1.7.0" # https://github.com/material-components/material-components-android/releases
+material = "com.google.android.material:material:1.9.0" # https://github.com/material-components/material-components-android/releases
 mockito = "org.mockito:mockito-core:4.5.1"
 okhttp = "com.squareup.okhttp3:okhttp:4.10.0" # https://github.com/square/okhttp/blob/master/CHANGELOG.md
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
@@ -90,10 +90,8 @@ retrofit2-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 # https://github.com/robolectric/robolectric/releases/
 robolectric = "org.robolectric:robolectric:4.9.2"
-systembartint = "com.readystatesoftware.systembartint:systembartint:1.0.4"
 taptargetview = "com.getkeepsafe.taptargetview:taptargetview:1.13.3"
-threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.4" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
-threetenbp = "org.threeten:threetenbp:1.6.5"
+threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6" # https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
 timber = "com.jakewharton.timber:timber:5.0.1" # https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.8.1" # https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
 trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.11.2" # https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md

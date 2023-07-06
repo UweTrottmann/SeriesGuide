@@ -39,6 +39,7 @@
     <string name="action_stream_info">Stream vagy vásárlási információk</string>
     <string name="action_select_region">Válassz régiót</string>
     <string name="action_include_any_watch_provider">Include any</string>
+    <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
@@ -99,6 +100,9 @@
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
     <string name="format_source">Forrás: %s</string>
     <string name="last_updated">Utoljára frissítve</string>
+    <string name="custom_release_time_edit">Edit release time</string>
+    <string name="custom_release_time_earlier">earlier</string>
+    <string name="custom_release_time_later">later</string>
     <!-- Date and Time -->
     <string name="today">ma</string>
     <string name="now">most</string>
