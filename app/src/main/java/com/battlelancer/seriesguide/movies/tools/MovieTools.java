@@ -286,6 +286,9 @@ public class MovieTools {
                 throw new IllegalArgumentException("Unsupported Lists type " + list);
         }
 
+        // As some movie lists still use the old ContentProvider, notify the movie URI.
+        context.getContentResolver().notifyChange(Movies.CONTENT_URI, null);
+
         return rowsUpdated > 0;
     }
 
@@ -311,6 +314,10 @@ public class MovieTools {
         int rowsDeleted = SgRoomDatabase.getInstance(context).movieHelper()
                 .deleteMovie(movieTmdbId);
         Timber.d("deleteMovie: deleted %s movies", rowsDeleted);
+
+        // As some movie lists still use the old ContentProvider, notify the movie URI.
+        context.getContentResolver().notifyChange(Movies.CONTENT_URI, null);
+
         return rowsDeleted > 0;
     }
 
