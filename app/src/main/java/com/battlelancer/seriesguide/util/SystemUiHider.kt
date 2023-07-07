@@ -131,6 +131,7 @@ class SystemUiHider private constructor(
 
     private val systemUiVisibilityChangeListener: OnSystemUiVisibilityChangeListener =
         object : OnSystemUiVisibilityChangeListener {
+            @Deprecated("Deprecated in Java")
             override fun onSystemUiVisibilityChange(vis: Int) {
                 // Test against testFlags to see if the system UI is visible.
                 val supportActionBar = activity.supportActionBar
