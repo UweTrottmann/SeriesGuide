@@ -15,6 +15,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.GridLayoutManager
@@ -31,6 +32,8 @@ import com.battlelancer.seriesguide.shows.search.discover.AddShowDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.util.ViewTools
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -202,7 +205,7 @@ class ShowsNowFragment : Fragment() {
         }
     }
 
-    private fun refreshStream() {
+    private fun refreshStream(includeFriends: Boolean = true) {
         showProgressBar(true)
         showError(null)
 
@@ -218,11 +221,13 @@ class ShowsNowFragment : Fragment() {
                 ShowsActivityImpl.NOW_TRAKT_USER_LOADER_ID, null,
                 recentlyTraktCallbacks
             )
-            isLoadingFriends = true
-            loaderManager.restartLoader(
-                ShowsActivityImpl.NOW_TRAKT_FRIENDS_LOADER_ID, null,
-                traktFriendsHistoryCallbacks
-            )
+            if (includeFriends) {
+                isLoadingFriends = true
+                loaderManager.restartLoader(
+                    ShowsActivityImpl.NOW_TRAKT_FRIENDS_LOADER_ID, null,
+                    traktFriendsHistoryCallbacks
+                )
+            }
         } else {
             // destroy trakt loaders and remove any shown error message
             destroyLoaderIfExists(ShowsActivityImpl.NOW_TRAKT_USER_LOADER_ID)
@@ -309,15 +314,15 @@ class ShowsNowFragment : Fragment() {
             return  // no longer added to activity
         }
         // reload recently watched if user set or unset an episode watched
-        // however, if connected to trakt do not show local history
-        if (event.flagJob is EpisodeWatchedJob
-            && !TraktCredentials.get(requireContext()).hasCredentials()) {
-            isLoadingRecentlyWatched = true
-            LoaderManager.getInstance(this)
-                .restartLoader(
-                    ShowsActivityImpl.NOW_RECENTLY_LOADER_ID, null,
-                    recentlyLocalCallbacks
-                )
+        if (event.flagJob is EpisodeWatchedJob) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                // If connected to Trakt the request needs some time to be sent and processed,
+                // so delay refreshing a while.
+                if (TraktCredentials.get(requireContext()).hasCredentials()) {
+                    delay(3000)
+                }
+                refreshStream(includeFriends = false)
+            }
         }
     }
 
@@ -416,6 +421,6 @@ class ShowsNowFragment : Fragment() {
         }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewNow
+        val liftOnScrollTargetViewId = R.id.recyclerViewNow
     }
 }
