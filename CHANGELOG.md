@@ -11,12 +11,6 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
-Version 69
-----------
-*in development*
-
-* 🔨 Movies: when removing movie from watchlist or collection actually remove it visually.
-
 Version 68
 ----------
 *2023-07-06*
@@ -24,6 +18,13 @@ Version 68
 * 🌟 Shows: support setting custom release time and day offset.
 * 🔧 Use in-app browser only for websites related to the app.
 * 🔧 Design: update to latest Material version.
+
+#### 68.0.5
+*2023-07-07*
+
+* 🔨 Movies: when removing movie from watchlist or collection actually remove it visually.
+* 🔧 History: try to refresh watched episodes from Trakt after setting watched in other tabs.
+* 🔧 History: display Trakt logo if history is fetched from there.
 
 #### 68.0.4
 *2023-06-30*
