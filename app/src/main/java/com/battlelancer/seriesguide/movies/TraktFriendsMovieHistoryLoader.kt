@@ -40,7 +40,7 @@ internal class TraktFriendsMovieHistoryLoader(context: Context) :
 
         // add header
         items.add(
-            NowItem().header(context.getString(R.string.friends_recently))
+            NowItem().header(context.getString(R.string.friends_recently), true)
         )
 
         // add last watched movie for each friend

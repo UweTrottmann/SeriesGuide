@@ -153,7 +153,7 @@ class ShowsDiscoverAdapter(
             if (link != TraktShowsLink.POPULAR) {
                 ViewTools.setVectorDrawableLeft(
                     binding.textViewGridLink,
-                    R.drawable.ic_trakt_icon_primary
+                    R.drawable.ic_trakt_icon_primary_24dp
                 )
             } else {
                 binding.textViewGridLink.setCompoundDrawables(null, null, null, null)

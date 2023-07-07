@@ -47,7 +47,7 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
 
         // add header
         items.add(
-            NowItem().header(context.getString(R.string.friends_recently))
+            NowItem().header(context.getString(R.string.friends_recently), true)
         )
 
         // add last watched episode for each friend
