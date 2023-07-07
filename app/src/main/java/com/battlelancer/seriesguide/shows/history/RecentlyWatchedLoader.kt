@@ -67,7 +67,7 @@ class RecentlyWatchedLoader(
 
         // add header
         if (items.size > 0) {
-            items.add(0, NowItem().header(context.getString(R.string.recently_watched)))
+            items.add(0, NowItem().header(context.getString(R.string.recently_watched), false))
         }
 
         return items
