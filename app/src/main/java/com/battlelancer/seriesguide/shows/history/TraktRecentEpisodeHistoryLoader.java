@@ -87,7 +87,7 @@ public class TraktRecentEpisodeHistoryLoader
         // add header
         List<NowAdapter.NowItem> items = new ArrayList<>();
         items.add(new NowAdapter.NowItem().header(
-                getContext().getString(R.string.recently_watched)));
+                getContext().getString(R.string.recently_watched), true));
         // add items
         addItems(items, history);
         // add link to more history
