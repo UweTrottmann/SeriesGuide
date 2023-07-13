@@ -19,6 +19,13 @@ Version 68
 * 🔧 Use in-app browser only for websites related to the app.
 * 🔧 Design: update to latest Material version.
 
+#### 68.0.5
+*2023-07-07*
+
+* 🔨 Movies: when removing movie from watchlist or collection actually remove it visually.
+* 🔧 History: try to refresh watched episodes from Trakt after setting watched in other tabs.
+* 🔧 History: display Trakt logo if history is fetched from there.
+
 #### 68.0.4
 *2023-06-30*
 

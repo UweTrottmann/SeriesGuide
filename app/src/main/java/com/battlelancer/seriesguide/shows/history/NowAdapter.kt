@@ -11,6 +11,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemHistoryBinding
+import com.battlelancer.seriesguide.util.ViewTools
 
 /**
  * Sectioned adapter displaying recently watched episodes and episodes recently watched by
@@ -25,12 +26,13 @@ open class NowAdapter(
         fun onItemClick(view: View, position: Int)
     }
 
-    internal class MoreViewHolder(itemView: View, listener: ItemClickListener) :
-        RecyclerView.ViewHolder(itemView) {
-        var title: TextView
+    class MoreViewHolder(parent: ViewGroup, listener: ItemClickListener) : RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_now_more, parent, false)
+    ) {
+        val title: TextView = itemView.findViewById(R.id.textViewNowMoreText)
 
         init {
-            title = itemView.findViewById(R.id.textViewNowMoreText)
             itemView.setOnClickListener { v: View ->
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -40,11 +42,22 @@ open class NowAdapter(
         }
     }
 
-    internal class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var title: TextView
+    class HeaderViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_grid_header, parent, false)
+    ) {
+        private val textViewGridHeader: TextView = itemView.findViewById(R.id.textViewGridHeader)
 
-        init {
-            title = itemView.findViewById(R.id.textViewGridHeader)
+        fun bind(title: String?, showTraktLogo: Boolean) {
+            textViewGridHeader.text = title
+            if (showTraktLogo) {
+                ViewTools.setVectorDrawableLeft(
+                    textViewGridHeader,
+                    R.drawable.ic_trakt_icon_primary_20dp
+                )
+            } else {
+                textViewGridHeader.setCompoundDrawables(null, null, null, null)
+            }
         }
     }
 
@@ -75,6 +88,7 @@ open class NowAdapter(
         var movieTmdbId: Int? = null
         var timestamp: Long = 0
         var title: String? = null
+        var showTraktLogo: Boolean = false
         var description: String? = null
         var network: String? = null
         var posterUrl: String? = null
@@ -135,9 +149,10 @@ open class NowAdapter(
             return this
         }
 
-        fun header(title: String): NowItem {
+        fun header(title: String, showTraktLogo: Boolean): NowItem {
             this.type = ItemType.HEADER
             this.title = title
+            this.showTraktLogo = showTraktLogo
             return this
         }
     }
@@ -158,18 +173,17 @@ open class NowAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ViewType.HEADER -> {
-                val v = LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.item_grid_header, viewGroup, false)
-                HeaderViewHolder(v)
+                HeaderViewHolder(viewGroup)
             }
+
             ViewType.MORE_LINK -> {
-                val v = LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.item_now_more, viewGroup, false)
-                MoreViewHolder(v, listener)
+                MoreViewHolder(viewGroup, listener)
             }
+
             ViewType.HISTORY -> {
                 getHistoryViewHolder(viewGroup, listener)
             }
+
             else -> {
                 throw IllegalArgumentException("Using unrecognized view type.")
             }
@@ -191,12 +205,12 @@ open class NowAdapter(
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         when (viewHolder) {
-            is HeaderViewHolder -> {
-                viewHolder.title.text = item.title
-            }
+            is HeaderViewHolder -> viewHolder.bind(item.title, item.showTraktLogo)
+
             is MoreViewHolder -> {
                 viewHolder.title.text = item.title
             }
+
             is HistoryViewHolder -> {
                 viewHolder.bindToShow(context, item, drawableWatched, drawableCheckin)
             }
