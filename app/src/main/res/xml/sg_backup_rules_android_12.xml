@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Configures auto-backup for Android 12+. -->
+<!-- https://developer.android.com/guide/topics/data/autobackup -->
+<data-extraction-rules>
+    <cloud-backup disableIfNoEncryptionCapabilities="false">
+        <!-- Including the database, it likely won't exceed the 25 MB limit for Cloud. -->
+        <!-- E.g. 2000 episodes (~15 shows) consume around 2 MB. -->
+        <include domain="database" />
+
+        <!-- Include all settings files (app, extensions, widget, Trakt),
+        might include some unnecessary ones (Crashlytics) but all are < 1 KB. -->
+        <include domain="sharedpref" />
+
+        <!-- Do not include automatic backups to keep below 25 MB limit for CLoud. -->
+    </cloud-backup>
+    <device-transfer>
+        <!-- Include as much as possible as device-to-device transfer has a 2 GB limit. -->
+        <include domain="database" />
+
+        <!-- Include all settings files (app, extensions, widget, Trakt),
+        might include some unnecessary ones (Crashlytics) but all are < 1 KB. -->
+        <include domain="sharedpref" />
+
+        <!-- Include automatic backup files. -->
+        <include
+            domain="external"
+            path="Backups/" />
+    </device-transfer>
+</data-extraction-rules>
