@@ -3,7 +3,7 @@ plugins {
     // https://github.com/ben-manes/gradle-versions-plugin/releases
     id("com.github.ben-manes.versions") version "0.47.0"
     // https://github.com/gradle-nexus/publish-plugin/releases
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // api
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0" // api
 }
 
 buildscript {
@@ -37,7 +37,7 @@ buildscript {
 }
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase().contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
@@ -50,7 +50,7 @@ tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 nexusPublishing {
     packageGroup.set("com.uwetrottmann")
-    repositories {
+    this.repositories {
         sonatype {
             if (rootProject.hasProperty("SONATYPE_NEXUS_USERNAME")
                 && rootProject.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
