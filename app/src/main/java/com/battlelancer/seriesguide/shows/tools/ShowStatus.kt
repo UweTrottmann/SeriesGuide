@@ -70,7 +70,7 @@ interface ShowStatus {
                     ContextCompat.getColor(
                         view.context,
                         ThemeUtils.resolveAttributeToResourceId(
-                            view.context.theme, R.attr.colorSecondary
+                            view.context.theme, com.google.android.material.R.attr.colorSecondary
                         )
                     )
                 )

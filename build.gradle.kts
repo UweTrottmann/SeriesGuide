@@ -1,9 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    // https://github.com/ben-manes/gradle-versions-plugin/releases
-    id("com.github.ben-manes.versions") version "0.47.0"
-    // https://github.com/gradle-nexus/publish-plugin/releases
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0" // api
+    alias(libs.plugins.versions)
+    // app, libraries
+    alias(libs.plugins.android) apply false
+    alias(libs.plugins.kotlin) apply false
+    // Firebase Crashlytics
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    // Cloud Endpoints
+    alias(libs.plugins.endpoints) apply false
+    // api
+    alias(libs.plugins.publish)
 }
 
 buildscript {
@@ -25,19 +32,10 @@ buildscript {
             project.extra.set(property.key as String, property.value)
         }
     }
-
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.4.2") // libraries, SeriesGuide
-        classpath(libs.kotlin.gradle)
-        classpath("com.google.cloud.tools:endpoints-framework-gradle-plugin:2.1.0") // SeriesGuide
-        // Firebase Crashlytics
-        classpath(libs.firebase.google.services)
-        classpath(libs.firebase.crashlytics.gradle)
-    }
 }
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase().contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
@@ -50,7 +48,7 @@ tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 nexusPublishing {
     packageGroup.set("com.uwetrottmann")
-    repositories {
+    this.repositories {
         sonatype {
             if (rootProject.hasProperty("SONATYPE_NEXUS_USERNAME")
                 && rootProject.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
@@ -59,11 +57,6 @@ nexusPublishing {
             }
         }
     }
-}
-
-tasks.register("clean", Delete::class) {
-    group = "build"
-    delete(rootProject.buildDir)
 }
 
 tasks.wrapper {

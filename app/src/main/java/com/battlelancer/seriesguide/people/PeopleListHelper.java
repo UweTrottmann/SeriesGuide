@@ -152,7 +152,7 @@ public class PeopleListHelper {
         // use clickable instead of activatable background
         personView.setBackgroundResource(
                 ThemeUtils.resolveAttributeToResourceId(peopleContainer.getContext().getTheme(),
-                        R.attr.selectableItemBackground));
+                        androidx.appcompat.R.attr.selectableItemBackground));
         // support keyboard nav
         personView.setFocusable(true);
 
