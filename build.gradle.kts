@@ -4,8 +4,6 @@ plugins {
     // app, libraries
     alias(libs.plugins.android) apply false
     alias(libs.plugins.kotlin) apply false
-    // billing
-    alias(libs.plugins.ksp) apply false
     // Firebase Crashlytics
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
