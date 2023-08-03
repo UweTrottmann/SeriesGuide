@@ -11,6 +11,8 @@ import java.util.Calendar
 
 object AutoBackupTools {
 
+    private const val BACKUP_FOLDER_NAME = "Backups"
+
     @Throws(AutoBackupException::class)
     fun getBackupDirectory(context: Context): File {
         val storage = context.getExternalFilesDir(null)
@@ -20,7 +22,7 @@ object AutoBackupTools {
             throw AutoBackupException("Storage not mounted.")
         }
 
-        return File(storage, "Backups")
+        return File(storage, BACKUP_FOLDER_NAME)
     }
 
     fun deleteOldBackups(context: Context) {
