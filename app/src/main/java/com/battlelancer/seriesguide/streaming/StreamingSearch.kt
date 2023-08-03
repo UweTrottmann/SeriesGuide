@@ -33,24 +33,31 @@ object StreamingSearch {
         "AD", // Andorra
         "AE", // United Arab Emirates
         "AL", // Albania
+        "AO", // Angola
         "AR", // Argentina
         "AT", // Austria
         "AU", // Australia
+        "AZ", // Azerbaijan
         "BA", // Bosnia and Herzegovina
         "BE", // Belgium
+        "BF", // Burkina Faso
         "BG", // Bulgaria
         "BH", // Bahrain
         "BM", // Bermuda
         "BO", // Bolivia
         "BR", // Brazil
+        "BY", // Belarus
+        "BZ", // Belize
         "CA", // Canada
         "CH", // Switzerland
         "CI", // Ivory Coast
         "CL", // Chile
+        "CM", // Cameroon
         "CO", // Colombia
         "CR", // Costa Rica
         "CV", // Cape Verde
-        "CZ", // Czeck Republic
+        "CY", // Cyprus
+        "CZ", // Czech Republic
         "DE", // Germany
         "DK", // Denmark
         "DZ", // Algeria
@@ -69,6 +76,7 @@ object StreamingSearch {
         "GQ", // Equatorial Guinea
         "GR", // Greece
         "GT", // Guatemala
+        "GY", // Guyana
         "HK", // Hong Kong
         "HN", // Honduras
         "HR", // Croatia
@@ -88,19 +96,25 @@ object StreamingSearch {
         "LB", // Lebanon
         "LI", // Liechtenstein
         "LT", // Lithuania
+        "LU", // Luxembourg
         "LV", // Latvia
         "LY", // Libya
         "MA", // Morocco
         "MC", // Monaco
         "MD", // Moldova
+        "ME", // Montenegro
+        "MG", // Madagascar
         "MK", // Macedonia
+        "ML", // Mali
         "MT", // Malta
         "MU", // Mauritius
+        "MW", // Malawi
         "MX", // Mexico
         "MY", // Malaysia
         "MZ", // Mozambique
         "NE", // Niger
         "NG", // Nigeria
+        "NI", // Nicaragua
         "NL", // Netherlands
         "NO", // Norway
         "NZ", // New Zealand
@@ -108,6 +122,7 @@ object StreamingSearch {
         "PA", // Panama
         "PE", // Peru
         "PF", // French Polynesia
+        "PG", // Papua New Guinea
         "PH", // Philippines
         "PK", // Pakistan
         "PL", // Poland
@@ -127,10 +142,13 @@ object StreamingSearch {
         "SM", // San Marino
         "SN", // Senegal
         "SV", // El Salvador
+        "TD", // Chad
         "TH", // Thailand
         "TN", // Tunisia
         "TR", // Türkiye
         "TW", // Taiwan
+        "TZ", // Tanzania
+        "UA", // Ukraine
         "UG", // Uganda
 //        "UK", // TMDB (correctly) uses GB instead of UK
         "UY", // Uruguay
@@ -141,6 +159,7 @@ object StreamingSearch {
         "YE", // Yemen
         "ZA", // South Africa
         "ZM", // Zambia
+        "ZW", // Zimbabwe
     )
 
     fun initRegionLiveData(context: Context) {

@@ -15,7 +15,7 @@ Version 69
 ----------
 *in development*
 
-* 🔨 Movies: when removing movie from watchlist or collection actually remove it visually.
+* 🔧 Streaming search: add latest supported countries.
 
 Version 68
 ----------
