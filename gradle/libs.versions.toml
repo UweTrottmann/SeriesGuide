@@ -15,7 +15,6 @@ eventbus = "3.3.1"
 # https://github.com/googleapis/google-api-java-client/releases
 # Note: can't use 2.x.x because generated backend code requires 1.x.x.
 google-api-client = "1.34.1"
-kotlin = "1.8.10" # https://kotlinlang.org/docs/releases.html#release-details
 retrofit2 = "2.9.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.md
 
 [libraries]
@@ -64,8 +63,6 @@ debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
 firebase = "com.google.firebase:firebase-bom:31.4.0"
-firebase-crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:2.9.4"
-firebase-google-services = "com.google.gms:google-services:4.3.15"
 firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/firebase/FirebaseUI-Android/releases
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "google-api-client" }
@@ -75,7 +72,6 @@ greenrobot-eventbus = { module = "org.greenrobot:eventbus", version.ref = "event
 greenrobot-eventbus-processor = { module = "org.greenrobot:eventbus-annotation-processor", version.ref = "eventbus" }
 gson = "com.google.code.gson:gson:2.9.1" # https://github.com/google/gson/blob/master/CHANGELOG.md
 junit = "junit:junit:4.13.2"
-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
@@ -96,3 +92,17 @@ timber = "com.jakewharton.timber:timber:5.0.1" # https://github.com/JakeWharton/
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.8.1" # https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
 trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.11.2" # https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
 truth = "com.google.truth:truth:1.1.3" # https://github.com/google/truth/releases
+
+[plugins]
+# https://developer.android.com/build/releases/gradle-plugin
+android = { id = "com.android.application", version = "8.1.0" }
+# https://kotlinlang.org/docs/releases.html#release-details
+kotlin = { id = "org.jetbrains.kotlin.android", version = "1.8.10" }
+# https://github.com/ben-manes/gradle-versions-plugin/releases
+versions = { id = "com.github.ben-manes.versions", version = "0.47.0" }
+# https://github.com/gradle-nexus/publish-plugin/releases
+publish = { id = "io.github.gradle-nexus.publish-plugin", version = "1.3.0" }
+google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.4" }
+# For endpoints plugin, version is actually set in settings.gradle.kts!
+endpoints = { id = "com.google.cloud.tools.endpoints-framework-gradle-plugin", version = "2.1.0" }
