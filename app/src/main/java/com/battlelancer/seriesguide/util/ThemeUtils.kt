@@ -88,7 +88,9 @@ object ThemeUtils {
     @JvmStatic
     fun SlidingTabLayout.setDefaultStyle() {
         setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem)
-        setSelectedIndicatorColors(getColorFromAttribute(context, R.attr.colorPrimary))
+        setSelectedIndicatorColors(
+            getColorFromAttribute(context, androidx.appcompat.R.attr.colorPrimary)
+        )
         setUnderlineColor(getColorFromAttribute(context, R.attr.sgColorDivider))
     }
 

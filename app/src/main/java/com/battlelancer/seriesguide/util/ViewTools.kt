@@ -97,7 +97,8 @@ object ViewTools {
         theme: Resources.Theme,
         swipeRefreshLayout: SwipeRefreshLayout
     ) {
-        val accentColorResId = ThemeUtils.resolveAttributeToResourceId(theme, R.attr.colorAccent)
+        val accentColorResId =
+            ThemeUtils.resolveAttributeToResourceId(theme, androidx.appcompat.R.attr.colorAccent)
         swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.sg_color_secondary)
     }
 

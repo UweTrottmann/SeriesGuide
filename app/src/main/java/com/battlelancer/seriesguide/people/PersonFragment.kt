@@ -112,7 +112,7 @@ class PersonFragment : Fragment() {
                                 val actionBarSizePx = resources.getDimensionPixelSize(
                                     ThemeUtils.resolveAttributeToResourceId(
                                         view.context.theme,
-                                        R.attr.actionBarSize
+                                        androidx.appcompat.R.attr.actionBarSize
                                     )
                                 )
                                 initialOffset
