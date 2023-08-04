@@ -16,6 +16,7 @@ Version 69
 *in development*
 
 * 🔧 Streaming search: add latest supported countries.
+* 🔧 Cloud: do not automatically sign in (if e.g. signed in previously or on other devices).
 * 📝 Latest user interface translations from Crowdin.
 
 Version 68
