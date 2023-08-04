@@ -20,6 +20,8 @@ Version 69
 
 * 🔧 Streaming search: add latest supported countries.
 * 🔧 Cloud: do not automatically sign in (if e.g. signed in previously or on other devices).
+* 🔧 Device backup: include the database when backing up to e.g. Google One. Only include auto 
+  backup files for device-to-device transfer (Android 12 and newer).
 * 📝 Latest user interface translations from Crowdin.
 
 Version 68
