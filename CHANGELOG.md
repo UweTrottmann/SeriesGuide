@@ -16,6 +16,7 @@ Version 69
 *in development*
 
 * 🔧 Streaming search: add latest supported countries.
+* 📝 Latest user interface translations from Crowdin.
 
 Version 68
 ----------

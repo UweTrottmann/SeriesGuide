@@ -39,7 +39,7 @@
     <string name="action_stream_info">Stream- eller köpinfo</string>
     <string name="action_select_region">Välj region</string>
     <string name="action_include_any_watch_provider">Inkludera alla</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">Återställ</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
     <string name="search_hint">Sök avsnitt</string>
@@ -100,9 +100,9 @@
     <string name="no_spoilers">Vissa detaljer är dolda för att undvika spoilers. För att stänga av detta, gå till inställningar.</string>
     <string name="format_source">Källa: %s</string>
     <string name="last_updated">Senast uppdaterad</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">Redigera sändningstid</string>
+    <string name="custom_release_time_earlier">tidigare</string>
+    <string name="custom_release_time_later">senare</string>
     <!-- Date and Time -->
     <string name="today">idag</string>
     <string name="now">nu</string>
