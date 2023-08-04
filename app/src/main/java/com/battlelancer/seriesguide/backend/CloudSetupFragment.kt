@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -223,12 +224,20 @@ class CloudSetupFragment : Fragment() {
         }
 
     private fun signIn() {
+        // Note: no need to provide a layout when just email sign-in is available
+        // as Firebase UI will just directly proceed without asking for the provider.
+        val authPickerLayout = AuthMethodPickerLayout.Builder(R.layout.auth_picker_email_google)
+            .setEmailButtonId(R.id.buttonAuthSignInEmail)
+            .setGoogleButtonId(R.id.buttonAuthSignInGoogle)
+            .build()
+
         // Create and launch sign-in intent
         val intent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(hexagonTools.firebaseSignInProviders)
             .setIsSmartLockEnabled(hexagonTools.isGoogleSignInAvailable)
             .setTheme(SeriesGuidePreferences.THEME)
+            .setAuthMethodPickerLayout(authPickerLayout)
             .build()
 
         signInWithFirebase.launch(intent)
