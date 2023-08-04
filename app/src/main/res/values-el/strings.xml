@@ -297,6 +297,7 @@
     <string name="hexagon_signed_out">Αποσυνδεθείτε από το SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Σφάλμα με την είσοδο (%s)</string>
     <string name="hexagon_signin_google_only">Η διεύθυνση ηλεκτρονικού ταχυδρομείου απαιτεί είσοδο στο Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
     <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>

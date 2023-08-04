@@ -297,6 +297,7 @@
     <string name="hexagon_signed_out">Von SeriesGuide Cloud abgemeldet</string>
     <string name="hexagon_signin_fail_format">Fehler beim Anmelden (%s)</string>
     <string name="hexagon_signin_google_only">E-Mail-Adresse erfordert Anmeldung mit Google</string>
+    <string name="hexagon_signin_choose">Wählen Sie E-Mail zum Anmelden wenn Sie SeriesGuide auf anderen Geräten verwenden die keine Anmeldung mit Google unterstützen.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sende an Trakt.</string>
     <string name="checkin_success_trakt">Auf Trakt in %s eingecheckt</string>

@@ -304,6 +304,7 @@
     <string name="hexagon_signed_out">Izlogovan iz SeriesGuide Cloud-a</string>
     <string name="hexagon_signin_fail_format">Грешка са пријавом (%s)</string>
     <string name="hexagon_signin_google_only">Имејл захтева пријављивање на Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Послато на тракт.</string>
     <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>

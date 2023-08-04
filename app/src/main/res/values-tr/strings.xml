@@ -297,6 +297,7 @@
     <string name="hexagon_signed_out">SeriesGuide Bulut servisinden çıkış yapıldı.</string>
     <string name="hexagon_signin_fail_format">%s ile girişte hata oluştu</string>
     <string name="hexagon_signin_google_only">E-posta adresi, Google ile Oturum Açmayı gerektirir</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trakt\'a gönderiliyor.</string>
     <string name="checkin_success_trakt">%s Trakt üzerinde \"izliyorum\" yapıldı</string>

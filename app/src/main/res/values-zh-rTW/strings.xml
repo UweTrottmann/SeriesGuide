@@ -290,6 +290,7 @@
     <string name="hexagon_signed_out">已登出 SeriesGuide Cloud</string>
     <string name="hexagon_signin_fail_format">登錄錯誤 (%s)</string>
     <string name="hexagon_signin_google_only">電郵地址需要 Google 登錄</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">正發送至trakt。</string>
     <string name="checkin_success_trakt">在trakt上打卡%s</string>

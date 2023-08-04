@@ -311,6 +311,7 @@
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Ошибка входа в систему (%s)</string>
     <string name="hexagon_signin_google_only">Адрес электронной почты требует авторизации Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>

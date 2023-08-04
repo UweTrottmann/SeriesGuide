@@ -297,6 +297,7 @@
     <string name="hexagon_signed_out">Одлогирај од SeriesGuide Cloud</string>
     <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
     <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Испраќање на trakt.</string>
     <string name="checkin_success_trakt">Провери во %s на trakt.</string>

@@ -290,6 +290,7 @@
     <string name="hexagon_signed_out">Keluar dari SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Error dengan masuk (%s)</string>
     <string name="hexagon_signin_google_only">Alamat email membutuhkan masuk dengan Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Mengirim ke trakt.</string>
     <string name="checkin_success_trakt">Check-in %s pada trakt.</string>
