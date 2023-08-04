@@ -297,6 +297,7 @@
     <string name="hexagon_signed_out">از فضای ابری SeriesGuide خارج شدید.</string>
     <string name="hexagon_signin_fail_format">خطا در ورود (%s)</string>
     <string name="hexagon_signin_google_only">نشانی رایانامه نیازمند ورود گوگلی است</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">ارسال به trakt.</string>
     <string name="checkin_success_trakt">%s روی trakt ثبت شد.</string>

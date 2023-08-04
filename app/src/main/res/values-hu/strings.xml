@@ -297,6 +297,7 @@
     <string name="hexagon_signed_out">Kijelentkezett a SeriesGuide felhő tárhelyről.</string>
     <string name="hexagon_signin_fail_format">Hiba történt a Bejelentkezéssel (%s)</string>
     <string name="hexagon_signin_google_only">E-mail címhez Google bejelentkezés szükséges</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Elküldés a traktnak.</string>
     <string name="checkin_success_trakt">Bejelentkezve trakttal ide: %s.</string>

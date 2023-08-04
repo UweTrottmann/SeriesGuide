@@ -22,12 +22,11 @@ import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.safeShow
+import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import org.greenrobot.eventbus.EventBus
@@ -37,7 +36,8 @@ import timber.log.Timber
 
 /**
  * Manages signing in and out with Cloud and account removal.
- * Tries to silent sign-in when started. Enables Cloud on sign-in.
+ * Does not auto/silent sign-in when started so users need to explicitly sign in.
+ * Enables Cloud on sign-in.
  * If Cloud is still enabled, but the account requires validation
  * enables to retry sign-in or to sign out (actually just disable Cloud).
  */
@@ -101,7 +101,7 @@ class CloudSetupFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        trySilentSignIn()
+        checkSignedIn()
     }
 
     override fun onResume() {
@@ -136,45 +136,13 @@ class CloudSetupFragment : Fragment() {
         binding?.syncStatusCloud?.setProgress(event)
     }
 
-    private fun trySilentSignIn() {
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
-        if (firebaseUser != null) {
-            changeAccount(firebaseUser, null)
-            return
-        }
-
-        // check if the user is still signed in
-        val signInTask = AuthUI.getInstance()
-            .silentSignIn(requireContext(), hexagonTools.firebaseSignInProviders)
-        if (signInTask.isSuccessful) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            Timber.d("Got cached sign-in")
-            handleSilentSignInResult(signInTask)
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-            Timber.d("Trying async sign-in")
-            signInTask.addOnCompleteListener { task ->
-                if (isAdded) {
-                    handleSilentSignInResult(task)
-                }
-            }
-        }
-    }
-
     /**
-     * @param task A completed sign-in task.
+     * If there is a signed in account, displays it.
      */
-    private fun handleSilentSignInResult(task: Task<AuthResult>) {
-        val account = if (task.isSuccessful) {
-            task.result?.user
-        } else {
-            null
-        }
-        // Note: Do not show error message if silent sign-in fails, just update UI.
-        changeAccount(account, null)
+    private fun checkSignedIn() {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        // If not signed in account will be null.
+        changeAccount(firebaseUser, null)
     }
 
     /**
@@ -256,12 +224,20 @@ class CloudSetupFragment : Fragment() {
         }
 
     private fun signIn() {
+        // Note: no need to provide a layout when just email sign-in is available
+        // as Firebase UI will just directly proceed without asking for the provider.
+        val authPickerLayout = AuthMethodPickerLayout.Builder(R.layout.auth_picker_email_google)
+            .setEmailButtonId(R.id.buttonAuthSignInEmail)
+            .setGoogleButtonId(R.id.buttonAuthSignInGoogle)
+            .build()
+
         // Create and launch sign-in intent
         val intent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(hexagonTools.firebaseSignInProviders)
             .setIsSmartLockEnabled(hexagonTools.isGoogleSignInAvailable)
             .setTheme(SeriesGuidePreferences.THEME)
+            .setAuthMethodPickerLayout(authPickerLayout)
             .build()
 
         signInWithFirebase.launch(intent)

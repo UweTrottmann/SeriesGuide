@@ -325,6 +325,7 @@
     <string name="hexagon_signed_out">تسجيل الخروج من سحابة SeriesGuide.</string>
     <string name="hexagon_signin_fail_format">خطأ في تسجيل الدخول (%s)</string>
     <string name="hexagon_signin_google_only">يتطلب عنوان البريد الإلكتروني تسجيل دخول Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">جارٍ الإرسال إلى Trakt.</string>
     <string name="checkin_success_trakt">تم فحص %s على Trakt.</string>

@@ -297,6 +297,7 @@
     <string name="hexagon_signed_out">Излизане от облака SeriesGuide.</string>
     <string name="hexagon_signin_fail_format">Грешка при влизане с (%s)</string>
     <string name="hexagon_signin_google_only">Email адресът изисква Google Sign-In</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Подаване към trakt.</string>
     <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
