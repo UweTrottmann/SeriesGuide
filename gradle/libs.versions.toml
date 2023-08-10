@@ -12,9 +12,7 @@ coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/blob/master/
 dagger = "2.45" # https://github.com/google/dagger/releases
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
-# https://github.com/googleapis/google-api-java-client/releases
-# Note: can't use 2.x.x because generated backend code requires 1.x.x.
-google-api-client = "1.34.1"
+google-api-client = "2.2.0" # https://github.com/googleapis/google-api-java-client/releases
 retrofit2 = "2.9.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.md
 
 [libraries]
@@ -67,7 +65,7 @@ firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "google-api-client" }
 google-api-client-android = { module = "com.google.api-client:google-api-client-android", version.ref = "google-api-client" }
-google-http-client = "com.google.http-client:google-http-client-gson:1.41.8" # https://github.com/googleapis/google-http-java-client/releases
+google-http-client = "com.google.http-client:google-http-client-gson:1.43.3" # https://github.com/googleapis/google-http-java-client/releases
 greenrobot-eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
 greenrobot-eventbus-processor = { module = "org.greenrobot:eventbus-annotation-processor", version.ref = "eventbus" }
 gson = "com.google.code.gson:gson:2.9.1" # https://github.com/google/gson/blob/master/CHANGELOG.md
