@@ -15,8 +15,12 @@ Version 69
 ----------
 *in development*
 
-* 🔨 Do not apply corrections (e.g. for US timezones) on episodes when a custom time is set and the 
+#### 69.0.1 🧪
+*2023-08-10*
+
+* 🔨 Do not apply corrections (e.g. for US time zones) on episodes when a custom time is set and the 
   other way around.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 69.0.0 🧪
 *2023-08-04*
