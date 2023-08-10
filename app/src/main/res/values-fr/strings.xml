@@ -297,7 +297,7 @@
     <string name="hexagon_signed_out">Déconnecté du cloud SeriesGuide.</string>
     <string name="hexagon_signin_fail_format">Erreur lors de la connexion (%s)</string>
     <string name="hexagon_signin_google_only">L\'adresse e-mail nécessite une connexion à Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Choisissez l\'e-mail pour vous connecter si vous utilisez SeriesGuide sur d\'autres appareils qui ne prennent pas en charge la connexion Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Envoi vers trakt.</string>
     <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>

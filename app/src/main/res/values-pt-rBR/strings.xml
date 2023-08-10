@@ -297,7 +297,7 @@
     <string name="hexagon_signed_out">Desconectado do SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Erro no login (%s)</string>
     <string name="hexagon_signin_google_only">O endereço de e-mail requer login do Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Escolha o e-mail para entrar se você estiver usando o SeriesGuide em outros dispositivos que não suportam o login do Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando ao trakt.</string>
     <string name="checkin_success_trakt">Feito check-in de %s no trakt.</string>

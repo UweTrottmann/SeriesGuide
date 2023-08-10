@@ -39,7 +39,7 @@
     <string name="action_stream_info">Stream vagy vásárlási információk</string>
     <string name="action_select_region">Válassz régiót</string>
     <string name="action_include_any_watch_provider">Include any</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">Visszaállítás</string>
     <!-- Search -->
     <string name="clear_search_history">Keresési előzmények törlése</string>
     <string name="search_hint">Epizódok keresése</string>
@@ -100,9 +100,9 @@
     <string name="no_spoilers">Néhány részlet elrejtésre kerül a spoilerek megakadályozása miatt. A kikapcsoláshoz menj a Beállításokba.</string>
     <string name="format_source">Forrás: %s</string>
     <string name="last_updated">Utoljára frissítve</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">Kiadási idő szerkesztése</string>
+    <string name="custom_release_time_earlier">korábban</string>
+    <string name="custom_release_time_later">később</string>
     <!-- Date and Time -->
     <string name="today">ma</string>
     <string name="now">most</string>
@@ -150,7 +150,7 @@
     <string name="action_shows_filter_upcoming">Következő</string>
     <string name="action_shows_filter_hidden">Rejtett</string>
     <string name="state_shows_filter_disabled">Letiltva</string>
-    <string name="state_shows_filter_included">Included</string>
+    <string name="state_shows_filter_included">Engedélyezve</string>
     <string name="state_shows_filter_excluded">Kizárva</string>
     <string name="action_shows_make_all_visible">Elrejtett szöveg mutatása</string>
     <string name="description_make_all_visible_format">Az összes elrejtett sorozat (%s) mutatása?</string>
@@ -320,7 +320,7 @@
     <string name="disconnect">Megszakítás</string>
     <string name="show_library">Sorozatok hozzáadása innen: Trakt</string>
     <string name="about_trakt">A Trakt segít nyilvántartani a nézett sorozatokat és filmeket.</string>
-    <string name="support_trakt">Support Trakt with VIP</string>
+    <string name="support_trakt">Trakt támogatása VIP vásárlással</string>
     <!-- trakt ratings -->
     <string name="action_rate">Értékelj</string>
     <string name="your_rating">Saját értékelésed</string>
@@ -456,7 +456,7 @@
     <string name="upcoming_display">Válassza ki a közelgő műsorok megjelenítéséhez</string>
     <string name="pref_notifications">Értesítések</string>
     <string name="pref_notificationssummary">Értesítés új epizódoknál</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Értesítési beállítások</string>
     <string name="pref_ringtone">Értesítési hang</string>
     <string name="pref_vibrate">Rezgés</string>
     <string name="pref_vibratesummary">Rezgés értesítések megjelenítésekor</string>
@@ -470,7 +470,7 @@
     <string name="pref_notifications_next_episodes_only_summary">Csak akkor értesítsen, ha az új epizód a következő, amelyet meg kell nézni</string>
     <string name="pref_notifications_battery_settings">Akkumulátor beállítások</string>
     <string name="pref_notifications_battery_settings_summary">Lépjen az Akkumulátorbeállítások elemre, és tiltsa le az akkumulátoroptimalizálást a megbízható értesítésekért</string>
-    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow">Értesítések engedélyezése</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Megnézett epizódok elrejtése</string>
@@ -491,7 +491,7 @@
     <string name="billing_action_manage_subscriptions">Feliratkozások kezelése</string>
     <string name="billing_action_pass">X Pass App beszerzése</string>
     <string name="billing_duration_format">%1$s/év</string>
-    <string name="billing_free_trial">Free trial</string>
+    <string name="billing_free_trial">Próbaverzió</string>
     <string name="billing_sub_description">Próbáld ki 30 napig ingyen, bármikor visszavonható.</string>
     <string name="billing_price_pass">Egyszeri fizetés</string>
     <string name="upgrade_description">Minden előfizetés feloldja az összes funkciót és támogatja a jövőbeli frissítéseket. Az alkalmazás használatához előfizetés nem szükséges.</string>

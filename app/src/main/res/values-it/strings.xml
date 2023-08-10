@@ -100,9 +100,9 @@
     <string name="no_spoilers">Alcuni dettagli sono nascosti per evitare spoiler. Per disattivare questa funzione vai su Impostazioni.</string>
     <string name="format_source">Fonte: %s</string>
     <string name="last_updated">Ultimo aggiornato</string>
-    <string name="custom_release_time_edit">Modifica data di uscita</string>
-    <string name="custom_release_time_earlier">precedente</string>
-    <string name="custom_release_time_later">successiva</string>
+    <string name="custom_release_time_edit">Modifica data uscita</string>
+    <string name="custom_release_time_earlier">prima</string>
+    <string name="custom_release_time_later">dopo</string>
     <!-- Date and Time -->
     <string name="today">oggi</string>
     <string name="now">adesso</string>
@@ -297,7 +297,7 @@
     <string name="hexagon_signed_out">Disconnesso da SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Errore di accesso (%s)</string>
     <string name="hexagon_signin_google_only">L\' indirizzo e-mail richiede l\'accesso a Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Scegli l\'email per accedere se stai usando SeriesGuide su altri dispositivi che non supportano l\'autenticazione Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Invio a trakt.</string>
     <string name="checkin_success_trakt">Check-in di %s su trakt riuscito.</string>

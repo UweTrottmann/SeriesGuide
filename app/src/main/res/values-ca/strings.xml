@@ -297,7 +297,7 @@
     <string name="hexagon_signed_out">Has desconnectat de SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Error amb l\'inici de sessió (%s)</string>
     <string name="hexagon_signin_google_only">L\'adreça de correu electrònic requereix iniciar sessió amb Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Trieu el correu electrònic per iniciar sessió en cas que s\'utilitzi SeriesGuide en altres dispositius que no permetin l\'inici de sessió amb Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
     <string name="checkin_success_trakt">S\'ha enregistrat a %s de trakt.</string>

@@ -297,7 +297,7 @@
     <string name="hexagon_signed_out">Logget ud af SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Fejl i login (%s)</string>
     <string name="hexagon_signin_google_only">E-mail-adresse kræver Google Sign-In</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Vælg e-mail til login, hvis du bruger SeriesGuide på andre enheder, der ikke understøtter Google-login.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sender til trakt.</string>
     <string name="checkin_success_trakt">%s tjekket ind på trakt.</string>
