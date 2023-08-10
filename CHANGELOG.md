@@ -15,6 +15,9 @@ Version 69
 ----------
 *in development*
 
+* 🔨 Do not apply corrections (e.g. for US timezones) on episodes when a custom time is set and the 
+  other way around.
+
 #### 69.0.0 🧪
 *2023-08-04*
 
