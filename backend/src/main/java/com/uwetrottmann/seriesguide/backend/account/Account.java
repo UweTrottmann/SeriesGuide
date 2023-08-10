@@ -41,16 +41,6 @@ package com.uwetrottmann.seriesguide.backend.account;
 @SuppressWarnings("javadoc")
 public class Account extends com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient {
 
-  // Note: Leave this static initializer at the top of the file.
-  static {
-    com.google.api.client.util.Preconditions.checkState(
-        com.google.api.client.googleapis.GoogleUtils.MAJOR_VERSION == 1 &&
-        com.google.api.client.googleapis.GoogleUtils.MINOR_VERSION >= 15,
-        "You are currently running with version %s of google-api-client. " +
-        "You need at least version 1.15 of google-api-client to run version " +
-        "1.25.0 of the account library.", com.google.api.client.googleapis.GoogleUtils.VERSION);
-  }
-
   /**
    * The default encoded root URL of the service. This is determined when the library is generated
    * and normally should not be changed.
