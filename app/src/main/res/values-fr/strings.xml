@@ -472,6 +472,8 @@
     <string name="pref_notifications_battery_settings_summary">Aller dans les paramètres de batterie pour désactiver l\'optimisation de la batterie afin de recevoir correctement les notifications</string>
     <string name="notifications_allow">Autoriser les notifications</string>
     <string name="notifications_allow_reason">Pour recevoir des notifications d\'épisode et d\'erreur, autorisez-les via les paramètres.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Masquer les épisodes vus</string>
     <string name="pref_widget_opacity">Arrière-plan du widget</string>

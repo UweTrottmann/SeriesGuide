@@ -516,6 +516,8 @@
     <string name="pref_notifications_battery_settings_summary">Ewch i leoliadau Batri i analluogi optimeiddiadau batri ar gyfer hysbysiadau dibynadwy</string>
     <string name="notifications_allow">Allow notifications</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Cuddio penodau gwylio</string>
     <string name="pref_widget_opacity">Cefndir Widget</string>
