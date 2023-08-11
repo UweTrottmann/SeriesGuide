@@ -342,7 +342,7 @@ class AddUpdateShowTools @Inject constructor(
                 releaseInfo.releaseCountry,
                 releaseInfo.network,
                 deviceTimeZone,
-                applyCorrections = usingCustomTime
+                applyCorrections = !usingCustomTime
             )
 
             val guestStars = tmdbEpisode.guest_stars?.mapNotNull { it.name } ?: emptyList()
