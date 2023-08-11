@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.appwidget.ListWidgetProvider.Companion.notif
 import com.battlelancer.seriesguide.dataliberation.DataLiberationActivity
 import com.battlelancer.seriesguide.preferences.MoreOptionsActivity
 import com.battlelancer.seriesguide.settings.AdvancedSettings
+import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
@@ -235,12 +236,12 @@ class ShowsFragment : Fragment() {
             // set filter icon state
             menu.findItem(R.id.menu_action_shows_filter)
                 .setIcon(
-                if (showFilter.isAnyFilterEnabled()) {
-                    R.drawable.ic_filter_selected_white_24dp
-                } else {
-                    R.drawable.ic_filter_white_24dp
-                }
-            )
+                    if (showFilter.isAnyFilterEnabled()) {
+                        R.drawable.ic_filter_selected_white_24dp
+                    } else {
+                        R.drawable.ic_filter_white_24dp
+                    }
+                )
         }
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -249,10 +250,12 @@ class ShowsFragment : Fragment() {
                     startActivityAddShows()
                     true
                 }
+
                 R.id.menu_action_shows_filter -> {
                     show(parentFragmentManager)
                     true
                 }
+
                 else -> false
             }
         }
@@ -302,7 +305,7 @@ class ShowsFragment : Fragment() {
             }
         }
 
-    private val requestPermissionLauncher =
+    private val requestNotificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 adapter.refreshFirstRunHeader()
@@ -314,6 +317,12 @@ class ShowsFragment : Fragment() {
                             .show()
                     }
             }
+        }
+
+    private val requestPreciseNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+            // Regardless if granted or not, refresh to reflect current state.
+            adapter.refreshFirstRunHeader()
         }
 
     private val firstRunClickListener = object : FirstRunView.FirstRunClickListener {
@@ -339,7 +348,15 @@ class ShowsFragment : Fragment() {
 
         override fun onAllowNotificationsClicked() {
             if (AndroidUtils.isAtLeastTiramisu) {
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+        override fun onAllowPreciseNotificationsClicked() {
+            if (AndroidUtils.isAtLeastS) {
+                requestPreciseNotificationPermissionLauncher.launch(
+                    NotificationSettings.buildRequestExactAlarmSettingsIntent(requireContext())
+                )
             }
         }
 

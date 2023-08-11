@@ -28,6 +28,7 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
         fun onRestoreBackupClicked()
         fun onRestoreAutoBackupClicked()
         fun onAllowNotificationsClicked()
+        fun onAllowPreciseNotificationsClicked()
         fun onDismissClicked()
     }
 
@@ -43,6 +44,12 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             !AndroidUtils.isAtLeastTiramisu || NotificationSettings.areNotificationsAllowed(context)
         binding.buttonAllowNotifications.setOnClickListener {
             clickListener?.onAllowNotificationsClicked()
+        }
+
+        binding.groupAllowPreciseNotifications.isGone =
+            NotificationSettings.canScheduleExactAlarms(context)
+        binding.buttonAllowPreciseNotifications.setOnClickListener {
+            clickListener?.onAllowPreciseNotificationsClicked()
         }
 
         binding.groupAutoBackupDetected.isGone =

@@ -257,15 +257,6 @@ class NotificationService(context: Context) {
         return true
     }
 
-    private fun AlarmManager.canScheduleExactAlarmsCompat(): Boolean {
-        // https://developer.android.com/training/scheduling/alarms#exact-permission-check
-        return if (AndroidUtils.isAtLeastS) {
-            canScheduleExactAlarms()
-        } else {
-            true
-        }
-    }
-
     /**
      * Get episodes which released 12 hours ago until in 14 days (to avoid
      * loading too much data), excludes some episodes based on user settings.
@@ -631,6 +622,20 @@ class NotificationService(context: Context) {
                 // Never show the cleared episode(s) again
                 Timber.d("Notification cleared, setting last cleared episode time: %d", clearedTime)
                 NotificationSettings.setLastCleared(context, clearedTime)
+            }
+        }
+
+        // Note: do not move to NotificationSettings as ScheduleExactAlarm Lint check will fail.
+        /**
+         * On Android 12+, returns if scheduling of exact alarms is allowed.
+         * On older versions always returns true.
+         */
+        fun AlarmManager.canScheduleExactAlarmsCompat(): Boolean {
+            // https://developer.android.com/training/scheduling/alarms#exact-permission-check
+            return if (AndroidUtils.isAtLeastS) {
+                canScheduleExactAlarms()
+            } else {
+                true
             }
         }
 
