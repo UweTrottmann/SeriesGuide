@@ -39,6 +39,12 @@ Version 68
 * 🔧 Use in-app browser only for websites related to the app.
 * 🔧 Design: update to latest Material version.
 
+#### 68.0.6
+*2023-08-11*
+
+* 🔨 Do not apply corrections (e.g. for US timezones) on episodes when a custom time is set and the
+  other way around.
+
 #### 68.0.5
 *2023-07-07*
 
