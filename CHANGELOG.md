@@ -15,6 +15,8 @@ Version 69
 ----------
 *in development*
 
+* 🔧 Calendar: change calendar settings symbol from eye to a filter to hopefully be more intuitive.
+
 #### 69.0.1 🧪
 *2023-08-10*
 
