@@ -472,6 +472,8 @@
     <string name="pref_notifications_battery_settings_summary">Gå til Batteriindstillinger for at deaktivere batterioptimeringer for pålidelige meddelelser</string>
     <string name="notifications_allow">Tillad meddelelser</string>
     <string name="notifications_allow_reason">Gå til Indstillinger for at tillade modtagelse af episode- og fejlmeddelelser.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
     <string name="pref_widget_opacity">Widget-baggrund</string>

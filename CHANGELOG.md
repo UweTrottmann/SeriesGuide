@@ -16,6 +16,7 @@ Version 69
 *in development*
 
 * 🔧 Calendar: change calendar settings symbol from eye to a filter to hopefully be more intuitive.
+* 🔧 Notifications: on Android 12 and newer, ask for permission to set precise alarm.
 
 #### 69.0.1 🧪
 *2023-08-10*
