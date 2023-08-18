@@ -2,7 +2,6 @@
 
 [versions]
 androidx-lifecycle = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
 google-api-client = "2.2.0" # https://github.com/googleapis/google-api-java-client/releases
@@ -78,9 +77,10 @@ greenrobot-eventbus-processor = { module = "org.greenrobot:eventbus-annotation-p
 # https://github.com/google/gson/blob/master/CHANGELOG.md
 gson = "com.google.code.gson:gson:2.10.1"
 junit = "junit:junit:4.13.2"
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+# https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
 # https://github.com/michaelbull/kotlin-result/releases
 kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 material = "com.google.android.material:material:1.9.0" # https://github.com/material-components/material-components-android/releases
@@ -105,7 +105,7 @@ truth = "com.google.truth:truth:1.1.5" # https://github.com/google/truth/release
 # https://developer.android.com/build/releases/gradle-plugin
 android = { id = "com.android.application", version = "8.1.0" }
 # https://kotlinlang.org/docs/releases.html#release-details
-kotlin = { id = "org.jetbrains.kotlin.android", version = "1.8.10" }
+kotlin = { id = "org.jetbrains.kotlin.android", version = "1.8.22" }
 # https://github.com/ben-manes/gradle-versions-plugin/releases
 versions = { id = "com.github.ben-manes.versions", version = "0.47.0" }
 # https://github.com/gradle-nexus/publish-plugin/releases
