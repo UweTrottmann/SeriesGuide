@@ -15,6 +15,9 @@ Version 69
 ----------
 *in development*
 
+#### 69.0.2 🧪
+*2023-08-18*
+
 * 🔧 Calendar: change calendar settings symbol from eye to a filter to hopefully be more intuitive.
 * 🔧 Notifications: on Android 12 and newer, ask for permission to set precise alarm.
 * 📝 Latest user interface translations from Crowdin.
