@@ -3,7 +3,6 @@
 [versions]
 androidx-lifecycle = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-dagger = "2.45" # https://github.com/google/dagger/releases
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
 google-api-client = "2.2.0" # https://github.com/googleapis/google-api-java-client/releases
@@ -58,8 +57,9 @@ androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
 androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta02"
 billing = "com.android.billingclient:billing-ktx:5.2.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+# https://github.com/google/dagger/releases
+dagger = "com.google.dagger:dagger:2.47"
+dagger-compiler = "com.google.dagger:dagger-compiler:2.47"
 debugdrawer-actions = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-actions", version.ref = "debugdrawer" }
 debugdrawer-base = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-base", version.ref = "debugdrawer" }
 debugdrawer-commons = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-commons", version.ref = "debugdrawer" }
