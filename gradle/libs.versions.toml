@@ -76,7 +76,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16" # https://github.com/michaelbull/kotlin-result/releases
 material = "com.google.android.material:material:1.9.0" # https://github.com/material-components/material-components-android/releases
 mockito = "org.mockito:mockito-core:4.5.1"
-okhttp = "com.squareup.okhttp3:okhttp:4.10.0" # https://github.com/square/okhttp/blob/master/CHANGELOG.md
+okhttp = "com.squareup.okhttp3:okhttp:4.11.0" # https://github.com/square/okhttp/blob/master/CHANGELOG.md
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
 play-services-auth = "com.google.android.gms:play-services-auth:20.4.1" # https://developers.google.com/android/guides/releases
