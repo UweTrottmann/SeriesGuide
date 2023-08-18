@@ -6,7 +6,6 @@ plugins {
 
 val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
-val sgTargetSdk: Int by rootProject.extra
 
 android {
     namespace = "com.uwetrottmann.seriesguide.backend"
@@ -14,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = sgMinSdk
-        targetSdk = sgTargetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
