@@ -472,8 +472,8 @@
     <string name="pref_notifications_battery_settings_summary">Gå til Batteriindstillinger for at deaktivere batterioptimeringer for pålidelige meddelelser</string>
     <string name="notifications_allow">Tillad meddelelser</string>
     <string name="notifications_allow_reason">Gå til Indstillinger for at tillade modtagelse af episode- og fejlmeddelelser.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Tillad præcise meddelelser</string>
+    <string name="precise_notifications_allow_reason">Gå til Indstillinger for at tillade præcise episodemeddelelser.</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
     <string name="pref_widget_opacity">Widget-baggrund</string>
@@ -500,7 +500,7 @@
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>
     <string name="billing_unlock_detected">X Pass app fundet. Du kan stadig abonnere for at supportere fremtidige opdateringer.</string>
     <string name="billing_learn_more">Flere oplysninger og hjælp</string>
-    <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
+    <string name="subscription_expired_details">Dit SeriesGuide-abonnement er udløbet.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Log ind på din Amazon-konto!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Abonnementet er i øjeblikket ikke tilgængeligt.</string>

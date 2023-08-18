@@ -483,8 +483,8 @@
     <string name="pref_notifications_battery_settings_summary">За поуздана обавештења, идите на Подешавања батерије да бисте онемогућили оптимизацију батерије</string>
     <string name="notifications_allow">Дозволи обавештавања</string>
     <string name="notifications_allow_reason">Да бисте примали обавештења о епизодама и грешкама, идите у Подешавања и дозволите их.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Дозволи прецизна обавештавања</string>
+    <string name="precise_notifications_allow_reason">Да бисте примали прецизна обавештења о епизодама, идите у Подешавања и дозволите их.</string>
     <!-- List Widget -->
     <string name="hide_watched">Сакриј одгледане епизоде</string>
     <string name="pref_widget_opacity">Позадина виџета</string>

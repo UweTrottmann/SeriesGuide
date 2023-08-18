@@ -461,8 +461,8 @@
     <string name="pref_notifications_battery_settings_summary">转到电池设置，停用电池优化以获取可靠稳定的通知</string>
     <string name="notifications_allow">允许通知</string>
     <string name="notifications_allow_reason">要接收剧集和错误通知，请前往设置并允许它们。</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">允许精准通知</string>
+    <string name="precise_notifications_allow_reason">要接收精准的剧集通知，请前往设置并允许它们。</string>
     <!-- List Widget -->
     <string name="hide_watched">隐藏看过的剧集</string>
     <string name="pref_widget_opacity">微件背景</string>
