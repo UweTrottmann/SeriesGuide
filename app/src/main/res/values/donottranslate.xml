@@ -10,7 +10,6 @@
     <string name="trakt">Trakt</string>
     <string name="ontrakt">(Trakt)</string>
     <string name="metacritic">Metacritic</string>
-    <string name="twitter">Twitter</string>
     <string name="powered_by_trakt">powered by Trakt</string>
     <string name="powered_by_tmdb">powered by TMDB</string>
     <string name="powered_by_justwatch">powered by JustWatch</string>
@@ -38,7 +37,6 @@
     <string name="url_terms_trakt">https://trakt.tv/terms</string>
     <string name="url_community">https://discuss.seriesgui.de</string>
     <string name="url_release_notes">https://discuss.seriesgui.de/c/announcements</string>
-    <string name="url_twitter">https://twitter.com/SeriesGuide</string>
     <string name="url_translations">https://crowdin.com/project/seriesguide-translations</string>
     <string name="url_contribute_content">https://seriesgui.de/help#sources</string>
     <string name="url_tmdb_migration">https://discuss.seriesgui.de/t/tmdb-migration-issues-and-questions/1158</string>
