@@ -49,7 +49,7 @@ androidx-test-ext-truth = "androidx.test.ext:truth:1.4.0"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
-androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta01" # https://developer.android.com/jetpack/androidx/releases/viewpager2
+androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta02" # https://developer.android.com/jetpack/androidx/releases/viewpager2
 billing = "com.android.billingclient:billing-ktx:5.2.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }

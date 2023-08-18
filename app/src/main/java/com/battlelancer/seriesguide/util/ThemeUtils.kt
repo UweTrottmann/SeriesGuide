@@ -24,7 +24,6 @@ import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
-import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
@@ -223,21 +222,6 @@ object ThemeUtils {
             }
             // Do *not* consume or modify insets so any other views receive them
             // (only required for pre-R, see View.sBrokenInsetsDispatch).
-            insets
-        }
-    }
-
-    /**
-     * This ensures ViewPager2 does not consume insets and insets are passed on to other views.
-     *
-     * Since ViewPager2 1.1.0-beta01 it does custom inset handling in onApplyWindowInsets which
-     * consumes insets to prevent child views modifying or consuming insets (which is possible pre-R
-     * due to how system insets work, see View.sBrokenInsetsDispatch). However, this prevents other
-     * views, like BottomNavigationView, to receive them. As long as no child views part of pages
-     * consume or modify insets use this to restore the default behavior.
-     */
-    fun restoreDefaultWindowInsetsBehavior(viewPager2: ViewPager2) {
-        ViewCompat.setOnApplyWindowInsetsListener(viewPager2) { _, insets ->
             insets
         }
     }
