@@ -558,7 +558,7 @@ class ShowFragment() : Fragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.scrollViewShow
+        val liftOnScrollTargetViewId = R.id.scrollViewShow
 
         private const val ARG_SHOW_ROWID = "show_id"
 

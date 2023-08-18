@@ -96,7 +96,7 @@ class EpisodeSearchFragment : BaseSearchFragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.gridViewSearchEpisodes
+        val liftOnScrollTargetViewId = R.id.gridViewSearchEpisodes
 
         const val ARG_SHOW_TITLE = "title"
     }

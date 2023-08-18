@@ -31,7 +31,7 @@ class UpcomingFragment : CalendarFragment2() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewCalendarUpcoming
+        val liftOnScrollTargetViewId = R.id.recyclerViewCalendarUpcoming
     }
 
 }

@@ -371,7 +371,7 @@ class SeasonsFragment() : Fragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewSeasons
+        val liftOnScrollTargetViewId = R.id.recyclerViewSeasons
 
         private const val ARG_LONG_SHOW_ROW_ID = "show_id"
 

@@ -284,7 +284,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewShowsDiscover
+        val liftOnScrollTargetViewId = R.id.recyclerViewShowsDiscover
 
         private const val KEY_QUERY = "searchQuery"
     }

@@ -377,6 +377,6 @@ class ShowsFragment : Fragment() {
         }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewShows
+        val liftOnScrollTargetViewId = R.id.recyclerViewShows
     }
 }

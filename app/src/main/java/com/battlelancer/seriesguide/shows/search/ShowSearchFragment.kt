@@ -144,6 +144,6 @@ class ShowSearchFragment : BaseSearchFragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.gridViewSearchShows
+        val liftOnScrollTargetViewId = R.id.gridViewSearchShows
     }
 }

@@ -145,7 +145,7 @@ class SimilarShowsFragment : BaseAddShowsFragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewShowsSimilar
+        val liftOnScrollTargetViewId = R.id.recyclerViewShowsSimilar
 
         private const val ARG_SHOW_TMDB_ID = "ARG_SHOW_TMDB_ID"
         private const val ARG_SHOW_TITLE = "ARG_SHOW_TITLE"

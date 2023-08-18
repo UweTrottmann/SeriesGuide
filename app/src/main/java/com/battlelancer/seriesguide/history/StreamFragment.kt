@@ -169,6 +169,6 @@ abstract class StreamFragment : Fragment() {
     companion object {
         private const val TRAKT_HISTORY_URL = "https://trakt.tv/users/me/history/"
 
-        const val liftOnScrollTargetViewId = R.id.recyclerViewStream
+        val liftOnScrollTargetViewId = R.id.recyclerViewStream
     }
 }

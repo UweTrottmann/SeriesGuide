@@ -174,6 +174,6 @@ class MoviesDiscoverFragment : Fragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewMoviesDiscover
+        val liftOnScrollTargetViewId = R.id.recyclerViewMoviesDiscover
     }
 }

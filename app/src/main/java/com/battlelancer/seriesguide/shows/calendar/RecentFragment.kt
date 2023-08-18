@@ -31,7 +31,7 @@ class RecentFragment : CalendarFragment2() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewCalendarRecent
+        val liftOnScrollTargetViewId = R.id.recyclerViewCalendarRecent
     }
 
 }
