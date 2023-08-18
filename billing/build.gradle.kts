@@ -12,6 +12,10 @@ android {
     namespace = "com.uwetrottmann.seriesguide.billing"
     compileSdk = sgCompileSdk
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdk = sgMinSdk
         targetSdk = sgTargetSdk

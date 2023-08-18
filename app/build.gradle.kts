@@ -28,6 +28,7 @@ android {
     useLibrary("android.test.base")
 
     buildFeatures {
+        buildConfig = true
         // https://firebase.google.com/support/release-notes/android
         viewBinding = true
     }
