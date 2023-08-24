@@ -119,7 +119,8 @@ androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-
 # https://developer.android.com/build/releases/gradle-plugin
 android = { id = "com.android.application", version = "8.2.0" }
 # https://kotlinlang.org/docs/releases.html#release-details
-kotlin = { id = "org.jetbrains.kotlin.android", version = "1.8.22" }
+# When updating, must also update kotlinCompilerExtensionVersion in app/build.gradle
+kotlin = { id = "org.jetbrains.kotlin.android", version = "1.9.22" }
 # https://github.com/ben-manes/gradle-versions-plugin/releases
 versions = { id = "com.github.ben-manes.versions", version = "0.50.0" }
 # https://github.com/gradle-nexus/publish-plugin/releases
