@@ -224,6 +224,7 @@ open class OverviewActivityImpl : BaseMessageActivity() {
 
     private var fragments: MutableList<WeakReference<Fragment>> = ArrayList()
 
+    @Deprecated("Deprecated in Java")
     override fun onAttachFragment(fragment: Fragment) {
         /*
          * View pager fragments have tags set by the pager, we can use this to

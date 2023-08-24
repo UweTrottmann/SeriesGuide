@@ -377,6 +377,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         return super.onPreferenceTreeClick(preference)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (REQUEST_CODE_RINGTONE == requestCode) {
             if (data != null) {
