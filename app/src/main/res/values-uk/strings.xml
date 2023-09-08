@@ -108,7 +108,6 @@
     <!-- Date and Time -->
     <string name="today">сьогодні</string>
     <string name="now">Сьогодні</string>
-    <string name="daily">Щодня</string>
     <string name="runtime_minutes">%s хвилин</string>
     <!-- Flagging -->
     <string name="mark_all">Всі переглянуті</string>

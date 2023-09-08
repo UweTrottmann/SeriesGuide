@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">i dag</string>
     <string name="now">nå</string>
-    <string name="daily">Daglig</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Sett alle</string>

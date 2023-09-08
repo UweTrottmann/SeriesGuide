@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">ma</string>
     <string name="now">most</string>
-    <string name="daily">Napi</string>
     <string name="runtime_minutes">%s perc</string>
     <!-- Flagging -->
     <string name="mark_all">Mind megnézve</string>

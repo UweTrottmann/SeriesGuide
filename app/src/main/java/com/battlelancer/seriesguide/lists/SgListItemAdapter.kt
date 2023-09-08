@@ -132,7 +132,7 @@ class SgListItemViewHolder(
 
             binding.textViewShowsTimeAndNetwork.text = TextTools.dotSeparate(
                 network,
-                releaseTimeShow?.formatWithDeviceZoneToDayAndTime(context, weekDay)
+                releaseTimeShow?.formatWithDeviceZoneToDayAndTime()
             )
 
             // next episode info

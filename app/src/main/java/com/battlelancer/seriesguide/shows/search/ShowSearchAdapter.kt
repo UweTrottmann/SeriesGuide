@@ -108,7 +108,7 @@ class ShowSearchAdapter(
             timeAndNetwork.text = TextTools.dotSeparate(
                 show.network,
                 TimeTools.getReleaseDateTime(context, show)
-                    ?.formatWithDeviceZoneToDayAndTime(context, show.releaseWeekDay)
+                    ?.formatWithDeviceZoneToDayAndTime()
             )
             remainingCount.visibility = View.GONE // unused
 

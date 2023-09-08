@@ -105,7 +105,6 @@
     <!-- Date and Time -->
     <string name="today">วันนี้</string>
     <string name="now">ขณะนี้</string>
-    <string name="daily">ทุกวัน</string>
     <string name="runtime_minutes">%s นาที</string>
     <!-- Flagging -->
     <string name="mark_all">ดูทั้งหมดแล้ว</string>

@@ -110,7 +110,6 @@
     <!-- Date and Time -->
     <string name="today">heddiw</string>
     <string name="now">nawr</string>
-    <string name="daily">Yn ddyddiol</string>
     <string name="runtime_minutes">%s munud</string>
     <!-- Flagging -->
     <string name="mark_all">Wedi gwylio popeth</string>

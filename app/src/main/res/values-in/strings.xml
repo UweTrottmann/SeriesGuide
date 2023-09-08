@@ -105,7 +105,6 @@
     <!-- Date and Time -->
     <string name="today">hari ini</string>
     <string name="now">sekarang</string>
-    <string name="daily">Harian</string>
     <string name="runtime_minutes">%s menit</string>
     <!-- Flagging -->
     <string name="mark_all">Ditonton semua</string>

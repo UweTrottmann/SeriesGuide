@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>
-    <string name="daily">Diariamente</string>
     <string name="runtime_minutes">%s minutos</string>
     <!-- Flagging -->
     <string name="mark_all">Todos vistos</string>

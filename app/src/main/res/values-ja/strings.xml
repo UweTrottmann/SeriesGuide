@@ -105,7 +105,6 @@
     <!-- Date and Time -->
     <string name="today">今日</string>
     <string name="now">今</string>
-    <string name="daily">毎日</string>
     <string name="runtime_minutes">%s 分</string>
     <!-- Flagging -->
     <string name="mark_all">すべて視聴済</string>

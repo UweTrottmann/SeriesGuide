@@ -108,7 +108,6 @@
     <!-- Date and Time -->
     <string name="today">dziś</string>
     <string name="now">teraz</string>
-    <string name="daily">codziennie</string>
     <string name="runtime_minutes">%s minut</string>
     <!-- Flagging -->
     <string name="mark_all">Oznacz jako obejrzane</string>

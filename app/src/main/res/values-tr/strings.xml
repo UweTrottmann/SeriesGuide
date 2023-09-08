@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">bugün</string>
     <string name="now">şimdi</string>
-    <string name="daily">Günlük</string>
     <string name="runtime_minutes">%s dakika</string>
     <!-- Flagging -->
     <string name="mark_all">Tümü izlendi</string>

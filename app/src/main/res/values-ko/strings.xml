@@ -105,7 +105,6 @@
     <!-- Date and Time -->
     <string name="today">오늘</string>
     <string name="now">지금</string>
-    <string name="daily">매일</string>
     <string name="runtime_minutes">%s분</string>
     <!-- Flagging -->
     <string name="mark_all">모두 시청 완료</string>

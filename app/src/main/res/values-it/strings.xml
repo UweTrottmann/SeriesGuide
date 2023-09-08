@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">oggi</string>
     <string name="now">adesso</string>
-    <string name="daily">Giornaliero</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Visti tutti</string>

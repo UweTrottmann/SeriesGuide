@@ -110,7 +110,6 @@
     <!-- Date and Time -->
     <string name="today">اليوم</string>
     <string name="now">الآن</string>
-    <string name="daily">يومي</string>
     <string name="runtime_minutes">%s دقيقة</string>
     <!-- Flagging -->
     <string name="mark_all">تعيين الجميع بمشاهد</string>

@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">денес</string>
     <string name="now">сега</string>
-    <string name="daily">Дневно</string>
     <string name="runtime_minutes">%s мин</string>
     <!-- Flagging -->
     <string name="mark_all">Се изгледано</string>

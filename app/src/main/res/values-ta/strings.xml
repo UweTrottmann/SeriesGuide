@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">இன்று</string>
     <string name="now">இப்போது</string>
-    <string name="daily">தினசரி</string>
     <string name="runtime_minutes">%s நிமிடம்</string>
     <!-- Flagging -->
     <string name="mark_all">எல்லாம் பார்த்த</string>

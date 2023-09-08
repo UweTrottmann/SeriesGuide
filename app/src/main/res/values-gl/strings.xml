@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">hoxe</string>
     <string name="now">agora</string>
-    <string name="daily">Diario</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Todas vistas</string>

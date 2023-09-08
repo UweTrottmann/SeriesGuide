@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">vandaag</string>
     <string name="now">nu</string>
-    <string name="daily">Dagelijks</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Alles bekeken</string>

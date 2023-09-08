@@ -120,7 +120,6 @@
     <!-- Date and Time -->
     <string name="today">today</string>
     <string name="now">now</string>
-    <string name="daily">Daily</string>
     <string name="runtime_minutes">%s min</string>
 
     <!-- Flagging -->

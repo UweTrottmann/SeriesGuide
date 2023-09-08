@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.sync.SgSyncAdapter.UpdateResult
 import com.battlelancer.seriesguide.sync.SyncOptions.SyncType
 import com.battlelancer.seriesguide.sync.SyncProgress
-import com.battlelancer.seriesguide.util.TimeTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -201,11 +200,8 @@ class ShowSync(
             .sgShow2Helper().getShowsUpdateInfo()
 
         val updatableShowIds: MutableList<Long> = ArrayList()
-        for ((id, lastUpdatedTime, releaseWeekDay) in shows) {
-            val isDailyShow = releaseWeekDay == TimeTools.RELEASE_WEEKDAY_DAILY
-            // update daily shows more frequently than weekly shows
-            if (currentTime - lastUpdatedTime >
-                (if (isDailyShow) UPDATE_THRESHOLD_DAILYS_MS else UPDATE_THRESHOLD_WEEKLYS_MS)) {
+        for ((id, lastUpdatedTime) in shows) {
+            if (currentTime - lastUpdatedTime > UPDATE_THRESHOLD_MS) {
                 // add shows that are due for updating
                 updatableShowIds.add(id)
             }
@@ -221,10 +217,8 @@ class ShowSync(
 
     companion object {
         // Values based on the assumption that sync runs about every 24 hours
-        private const val UPDATE_THRESHOLD_WEEKLYS_MS = 6 * DateUtils.DAY_IN_MILLIS +
+        private const val UPDATE_THRESHOLD_MS = 6 * DateUtils.DAY_IN_MILLIS +
                 12 * DateUtils.HOUR_IN_MILLIS
-        private const val UPDATE_THRESHOLD_DAILYS_MS = (DateUtils.DAY_IN_MILLIS
-                + 12 * DateUtils.HOUR_IN_MILLIS)
 
         /**
          * Triggers an update for [showId] with showing an info toast.

@@ -108,7 +108,6 @@
     <!-- Date and Time -->
     <string name="today">היום</string>
     <string name="now">עכשיו</string>
-    <string name="daily">יומי</string>
     <string name="runtime_minutes">%s דקות</string>
     <!-- Flagging -->
     <string name="mark_all">הכל נצפה</string>

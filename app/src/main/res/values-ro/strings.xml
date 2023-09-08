@@ -107,7 +107,6 @@
     <!-- Date and Time -->
     <string name="today">astăzi</string>
     <string name="now">acum</string>
-    <string name="daily">Zilnic</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Toate au fost vizionate</string>
