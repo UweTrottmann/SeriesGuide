@@ -55,6 +55,10 @@ class ConnectTraktCredentialsFragment : Fragment() {
             binding.buttonTraktSupport,
             getString(R.string.url_trakt_vip)
         )
+        ViewTools.openUrlOnClickAndCopyOnLongPress(
+            binding.buttonTraktDeleteAccount,
+            getString(R.string.url_trakt_delete_account)
+        )
 
         binding.syncStatusTrakt.visibility = View.GONE
 
