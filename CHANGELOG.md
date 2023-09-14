@@ -15,6 +15,9 @@ Version 69
 ----------
 *in development*
 
+* 🔨 Appearance: to get a matching navigation bar color on Samsung devices use a non-transparent
+  background on all devices.
+
 #### 69.0.2 🧪
 *2023-08-18*
 

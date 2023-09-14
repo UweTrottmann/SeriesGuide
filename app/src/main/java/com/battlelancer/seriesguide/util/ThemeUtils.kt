@@ -30,6 +30,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
@@ -177,7 +178,15 @@ object ThemeUtils {
                 MaterialColors.getColor(context, android.R.attr.navigationBarColor, Color.BLACK)
             ColorUtils.setAlphaComponent(opaqueNavBarColor, EDGE_TO_EDGE_BAR_ALPHA)
         } else {
-            Color.TRANSPARENT
+            // Samsung One UI does not support transparent navigation bars like stock Android,
+            // the navigation bar will always have a scrim.
+            // https://eu.community.samsung.com/t5/galaxy-s23-serie/navigation-bar-isn-t-transparent-while-using-gesture-navigation/td-p/7495977
+            // As those are the majority of used devices, use an opaque color with alpha matching
+            // the navigation bar instead.
+//            Color.TRANSPARENT
+            // Widget.Material3.BottomNavigationView elevation is m3_sys_elevation_level2
+            val opaqueNavBarColor = SurfaceColors.SURFACE_2.getColor(context)
+            ColorUtils.setAlphaComponent(opaqueNavBarColor, 192)
         }
     }
 
