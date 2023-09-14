@@ -18,6 +18,7 @@ Version 69
 * 🔨 Appearance: to get a matching navigation bar color on Samsung devices use a non-transparent
   background on all devices.
 * 🔨 Appearance: adjust light theme highlight color to be less washed out.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 69.0.2 🧪
 *2023-08-18*

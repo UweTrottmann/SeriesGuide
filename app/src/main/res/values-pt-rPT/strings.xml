@@ -296,7 +296,7 @@
     <string name="hexagon_signed_out">Desconectado do SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Erro ao iniciar sessão (%s)</string>
     <string name="hexagon_signin_google_only">O endereço de e-mail requer Início de Sessão da Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Escolhe o e-mail para te conectares se estiveres a usar o SeriesGuide em outros dispositivos que não suportem o início de sessão da Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">A submeter ao Trakt.</string>
     <string name="checkin_success_trakt">Deu entrada a %s no Trakt</string>
@@ -471,8 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Vai às Definições da Bateria para desativar a otimização e receber notificações corretamente</string>
     <string name="notifications_allow">Permitir notificações</string>
     <string name="notifications_allow_reason">Para receberes notificações de episódios e de erros, vai às Definições para ativar a permissão.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Permitir notificações detalhadas</string>
+    <string name="precise_notifications_allow_reason">Para receberes notificações detalhadas de episódios, vai às Definições para ativar a permissão.</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episódios vistos</string>
     <string name="pref_widget_opacity">Plano de fundo do widget</string>

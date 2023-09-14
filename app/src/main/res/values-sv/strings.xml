@@ -296,7 +296,7 @@
     <string name="hexagon_signed_out">Loggat ut från SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Fel med inloggning (%s)</string>
     <string name="hexagon_signin_google_only">E-postadress kräver Google-inloggning</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Välj e-post att logga in med om du använder SeriesGuide på andra enheter som inte har stöd för Google-inloggning.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Skickar till trakt.</string>
     <string name="checkin_success_trakt">Checkat in %s på trakt.</string>
@@ -471,8 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Gå till Batteriinställningar för att inaktivera batterioptimeringar för tillförlitliga aviseringar</string>
     <string name="notifications_allow">Tillåt aviseringar</string>
     <string name="notifications_allow_reason">För att ta emot avsnitts- och felmeddelanden, gå till Inställningar och tillåt dem.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Tillåt exakta aviseringar</string>
+    <string name="precise_notifications_allow_reason">För att ta emot exakta episodaviseringar, gå till Inställningar och tillåt dem.</string>
     <!-- List Widget -->
     <string name="hide_watched">Dölj sedda avsnitt</string>
     <string name="pref_widget_opacity">Widgetbakgrund</string>
