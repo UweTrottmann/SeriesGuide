@@ -1,6 +1,5 @@
 package com.battlelancer.seriesguide.jobs.episodes;
 
-import android.content.ContentValues;
 import android.content.Context;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
@@ -9,8 +8,7 @@ import com.battlelancer.seriesguide.jobs.BaseFlagJob;
 import com.battlelancer.seriesguide.jobs.EpisodeInfo;
 import com.battlelancer.seriesguide.jobs.SgJobInfo;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
 import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask;
@@ -75,8 +73,6 @@ public abstract class BaseEpisodesJob extends BaseFlagJob {
 
         // notify some other URIs about updates
         context.getContentResolver()
-                .notifyChange(Episodes.CONTENT_URI, null);
-        context.getContentResolver()
                 .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
 
         return true;
@@ -131,16 +127,9 @@ public abstract class BaseEpisodesJob extends BaseFlagJob {
     protected final void updateLastWatched(Context context,
             long lastWatchedEpisodeId, boolean setLastWatchedToNow) {
         if (lastWatchedEpisodeId != -1 || setLastWatchedToNow) {
-            ContentValues values = new ContentValues();
-            if (lastWatchedEpisodeId != -1) {
-                values.put(SgShow2Columns.LASTWATCHEDID, lastWatchedEpisodeId);
-            }
-            if (setLastWatchedToNow) {
-                values.put(SgShow2Columns.LASTWATCHED_MS, System.currentTimeMillis());
-            }
-            context.getContentResolver().update(
-                    SgShow2Columns.buildIdUri(getShowId()),
-                    values, null, null);
+            SgRoomDatabase.getInstance(context).sgShow2Helper()
+                    .updateLastWatchedEpisodeIdAndTime(getShowId(), lastWatchedEpisodeId,
+                            setLastWatchedToNow);
         }
         LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, getShowId());
     }

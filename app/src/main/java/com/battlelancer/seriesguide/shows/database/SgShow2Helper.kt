@@ -11,7 +11,6 @@ import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.sync.ShowLastWatchedInfo
 
@@ -198,6 +197,25 @@ interface SgShow2Helper {
             if (episodeIdOrZero != 0L) {
                 updateLastWatchedEpisodeId(it.key, episodeIdOrZero)
             }
+        }
+    }
+
+    /**
+     * @param lastWatchedEpisodeId The last watched episode for a show to save to the database.
+     * Or -1 to not update it.
+     * @param setLastWatchedToNow Whether to set the last watched time of a show to the current time.
+     */
+    @Transaction
+    fun updateLastWatchedEpisodeIdAndTime(
+        id: Long,
+        lastWatchedEpisodeId: Long,
+        setLastWatchedToNow: Boolean
+    ) {
+        if (lastWatchedEpisodeId != -1L) {
+            updateLastWatchedEpisodeId(id, lastWatchedEpisodeId)
+        }
+        if (setLastWatchedToNow) {
+            updateLastWatchedMsIfLater(id, System.currentTimeMillis())
         }
     }
 

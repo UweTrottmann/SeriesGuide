@@ -4,7 +4,6 @@ import android.database.sqlite.SQLiteException
 import android.util.Log
 import com.battlelancer.seriesguide.util.Errors
 import com.google.gson.JsonParseException
-import org.threeten.bp.format.DateTimeParseException
 import timber.log.Timber.DebugTree
 
 /**
@@ -38,8 +37,7 @@ class AnalyticsTree : DebugTree() {
         // track some non-fatal exceptions with crashlytics
         if (priority == Log.ERROR) {
             if (t is SQLiteException /* Content provider */
-                || t is JsonParseException /* Retrofit */
-                || t is DateTimeParseException /* TheTVDB */) {
+                || t is JsonParseException /* Retrofit, Export/Import */) {
                 Errors.getReporter()?.recordException(t)
             }
         }

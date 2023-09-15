@@ -1,9 +1,8 @@
-package com.battlelancer.seriesguide.thetvdbapi
+package com.battlelancer.seriesguide.util
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.battlelancer.seriesguide.EmptyTestApplication
-import com.battlelancer.seriesguide.util.ImageTools
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
