@@ -289,6 +289,6 @@ class TraktCommentsFragment : Fragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.listViewShouts
+        val liftOnScrollTargetViewId = R.id.listViewShouts
     }
 }

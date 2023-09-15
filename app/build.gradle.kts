@@ -28,6 +28,7 @@ android {
     useLibrary("android.test.base")
 
     buildFeatures {
+        buildConfig = true
         // https://firebase.google.com/support/release-notes/android
         viewBinding = true
     }
@@ -63,7 +64,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
         // Using experimental flatMapLatest for Paging 3
         freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
     }
@@ -144,6 +145,12 @@ kapt {
         arg("room.schemaLocation", "$projectDir/schemas")
         arg("room.incremental", "true")
     }
+}
+
+// Manually set JVM target of kapt https://youtrack.jetbrains.com/issue/KT-55947/Unable-to-set-kapt-jvm-target-version
+// Matches target version set in android block.
+tasks.withType(org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask::class).configureEach {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
 }
 
 dependencies {

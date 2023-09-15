@@ -14,7 +14,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.TimeTools.atDeviceZone
-import com.battlelancer.seriesguide.util.TimeTools.formatToLocalDayOrDaily
+import com.battlelancer.seriesguide.util.TimeTools.formatToLocalDay
 import com.battlelancer.seriesguide.util.TimeTools.formatToLocalTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -188,11 +188,6 @@ data class CustomTimeDataWithStrings(
 ) {
     companion object {
         fun make(data: CustomTimeData, context: Context): CustomTimeDataWithStrings {
-            // For formatting, never use "daily" but always use the current day.
-            val weekDayNeverDaily =
-                if (data.officialWeekDay == TimeTools.RELEASE_WEEKDAY_DAILY) {
-                    -1
-                } else data.officialWeekDay
             val customDayOffsetString =
                 (if (data.customDayOffset != SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET) {
                     data.customDayOffset.absoluteValue
@@ -210,7 +205,7 @@ data class CustomTimeDataWithStrings(
             )
             return CustomTimeDataWithStrings(
                 data,
-                customDayString = customTime.formatToLocalDayOrDaily(context, weekDayNeverDaily),
+                customDayString = customTime.formatToLocalDay(),
                 customTimeString = customTime.formatToLocalTime(),
                 customDayOffsetString,
                 customDayOffsetDirectionString = when {

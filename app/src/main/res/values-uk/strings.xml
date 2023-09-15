@@ -108,7 +108,6 @@
     <!-- Date and Time -->
     <string name="today">сьогодні</string>
     <string name="now">Сьогодні</string>
-    <string name="daily">Щодня</string>
     <string name="runtime_minutes">%s хвилин</string>
     <!-- Flagging -->
     <string name="mark_all">Всі переглянуті</string>
@@ -311,6 +310,7 @@
     <string name="hexagon_signed_out">Вихід з SeriesGuide хмари.</string>
     <string name="hexagon_signin_fail_format">Помилка входу (%s)</string>
     <string name="hexagon_signin_google_only">Адреса електронної скриньки вимагає авторизації Google</string>
+    <string name="hexagon_signin_choose">Виберіть адресу електронної скриньки для входу, якщо ви використовуєте SeriesGuide на інших пристроях, які не підтримують вхід через обліковий запис Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Надсилання до trakt.</string>
     <string name="checkin_success_trakt">Відзначено %s на trakt.</string>
@@ -493,6 +493,8 @@
     <string name="pref_notifications_battery_settings_summary">Перейдіть до налаштувань акумулятора, щоб вимкнути оптимізацію живлення для надійних сповіщень</string>
     <string name="notifications_allow">Дозволити сповіщення</string>
     <string name="notifications_allow_reason">Щоб отримувати повідомлення про епізоди та помилки, перейдіть до Налаштувань та дозвольте їх.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Приховати переглянуті серії</string>
     <string name="pref_widget_opacity">Фон віджета</string>

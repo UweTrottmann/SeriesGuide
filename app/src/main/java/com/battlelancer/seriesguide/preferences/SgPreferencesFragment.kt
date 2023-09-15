@@ -157,6 +157,18 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             }
             true
         }
+        findPreference<Preference>(KEY_PRECISE_NOTIFICATION_SETTINGS)?.setOnPreferenceClickListener {
+            // Note: the preference is only shown on Android 12+.
+            if (AndroidUtils.isAtLeastS) {
+                // Try to open the exact alarm settings.
+                Utils.tryStartActivity(
+                    activity,
+                    NotificationSettings.buildRequestExactAlarmSettingsIntent(requireContext()),
+                    true
+                )
+            }
+            true
+        }
     }
 
     private fun updateNotificationSettings() {
@@ -365,6 +377,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         return super.onPreferenceTreeClick(preference)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (REQUEST_CODE_RINGTONE == requestCode) {
             if (data != null) {
@@ -541,6 +554,8 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         //    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
         private const val KEY_BATTERY_SETTINGS =
             "com.battlelancer.seriesguide.notifications.battery"
+        private const val KEY_PRECISE_NOTIFICATION_SETTINGS =
+            "com.battlelancer.seriesguide.notifications.notifications.precise"
 
         // links
         private const val LINK_BASE_KEY = "com.battlelancer.seriesguide.settings."

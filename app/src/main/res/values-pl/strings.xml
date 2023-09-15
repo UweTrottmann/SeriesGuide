@@ -108,7 +108,6 @@
     <!-- Date and Time -->
     <string name="today">dziś</string>
     <string name="now">teraz</string>
-    <string name="daily">codziennie</string>
     <string name="runtime_minutes">%s minut</string>
     <!-- Flagging -->
     <string name="mark_all">Oznacz jako obejrzane</string>
@@ -311,6 +310,7 @@
     <string name="hexagon_signed_out">Wylogowano z SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Błąd podczas logowania (%s)</string>
     <string name="hexagon_signin_google_only">Adres e-mail wymaga logowania Google</string>
+    <string name="hexagon_signin_choose">Wybierz adres e-mail do zalogowania, jeśli używasz SeriesGuide na innych urządzeniach, które nie obsługują logowania Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Wysyłanie do trakt.</string>
     <string name="checkin_success_trakt">%s oznaczono jako oglądane na trakt.</string>
@@ -493,6 +493,8 @@
     <string name="pref_notifications_battery_settings_summary">Przejdź do ustawień baterii, aby wyłączyć jej optymalizację, aby otrzymywać powiadomienia na bieżąco</string>
     <string name="notifications_allow">Zezwalaj na powiadomienia</string>
     <string name="notifications_allow_reason">Aby otrzymywać powiadomienia o odcinkach oraz o błędach, włącz powiadomienia w ustawieniach.</string>
+    <string name="precise_notifications_allow">Zezwalaj na precyzyjne powiadomienia</string>
+    <string name="precise_notifications_allow_reason">Aby otrzymywać precyzyjne powiadomienia o odcinkach, przejdź do ustawień i zezwól na nie.</string>
     <!-- List Widget -->
     <string name="hide_watched">Ukryj obejrzane odcinki</string>
     <string name="pref_widget_opacity">Tło widżetu</string>

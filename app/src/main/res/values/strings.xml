@@ -120,7 +120,6 @@
     <!-- Date and Time -->
     <string name="today">today</string>
     <string name="now">now</string>
-    <string name="daily">Daily</string>
     <string name="runtime_minutes">%s min</string>
 
     <!-- Flagging -->
@@ -337,6 +336,7 @@
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
     <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
     <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
 
     <!-- trakt -->
     <string name="trakt_submitqueued">Sending to Trakt.</string>
@@ -532,6 +532,8 @@
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <string name="notifications_allow">Allow notifications</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
 
     <!-- List Widget -->
     <string name="hide_watched">Hide watched episodes</string>

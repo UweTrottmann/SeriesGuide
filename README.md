@@ -8,7 +8,7 @@ Android app to help you keep track of your favorite TV shows and movies.
   <a href="https://seriesgui.de">Download</a> •
   <a href="https://seriesgui.de/whypay">Support the dev</a> •
   <a href="CONTRIBUTING.md">Contributing</a> •
-  <a href="https://discuss.seriesgui.de/">Help & Ideas</a>
+  <a href="https://discuss.seriesgui.de/">Announcements & Help</a>
 </p>
 
 <p align="center">
@@ -17,9 +17,6 @@ Android app to help you keep track of your favorite TV shows and movies.
   </a>
   <a href="https://github.com/UweTrottmann/SeriesGuide/actions/workflows/assemble-test-lint.yml">
     <img src="https://img.shields.io/github/actions/workflow/status/UweTrottmann/SeriesGuide/assemble-test-lint.yml?branch=main&style=flat">
-  </a>
-  <a href="https://twitter.com/SeriesGuide">
-    <img src="https://img.shields.io/twitter/follow/SeriesGuide?label=Follow%20%40SeriesGuide&style=flat">
   </a>
 </p>
 

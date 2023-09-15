@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">avui</string>
     <string name="now">ara</string>
-    <string name="daily">Diàriament</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Tots vists</string>
@@ -297,6 +296,7 @@
     <string name="hexagon_signed_out">Has desconnectat de SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Error amb l\'inici de sessió (%s)</string>
     <string name="hexagon_signin_google_only">L\'adreça de correu electrònic requereix iniciar sessió amb Google</string>
+    <string name="hexagon_signin_choose">Trieu el correu electrònic per iniciar sessió en cas que s\'utilitzi SeriesGuide en altres dispositius que no permetin l\'inici de sessió amb Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">S\'està enviant a trakt.</string>
     <string name="checkin_success_trakt">S\'ha enregistrat a %s de trakt.</string>
@@ -471,6 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Vés als ajustaments de la bateria per deshabilitar les optimitzacions de bateria per rebre notificacions</string>
     <string name="notifications_allow">Permet les notificacions</string>
     <string name="notifications_allow_reason">Per rebre notificacions d\'episodis i d\'errors, ves a Configuració i dona\'ls-hi permís</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>

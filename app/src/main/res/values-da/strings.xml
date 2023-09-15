@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">i dag</string>
     <string name="now">nu</string>
-    <string name="daily">Dagligt</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Alle set</string>
@@ -297,6 +296,7 @@
     <string name="hexagon_signed_out">Logget ud af SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Fejl i login (%s)</string>
     <string name="hexagon_signin_google_only">E-mail-adresse kræver Google Sign-In</string>
+    <string name="hexagon_signin_choose">Vælg e-mail til login, hvis du bruger SeriesGuide på andre enheder, der ikke understøtter Google-login.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sender til trakt.</string>
     <string name="checkin_success_trakt">%s tjekket ind på trakt.</string>
@@ -471,6 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Gå til Batteriindstillinger for at deaktivere batterioptimeringer for pålidelige meddelelser</string>
     <string name="notifications_allow">Tillad meddelelser</string>
     <string name="notifications_allow_reason">Gå til Indstillinger for at tillade modtagelse af episode- og fejlmeddelelser.</string>
+    <string name="precise_notifications_allow">Tillad præcise meddelelser</string>
+    <string name="precise_notifications_allow_reason">Gå til Indstillinger for at tillade præcise episodemeddelelser.</string>
     <!-- List Widget -->
     <string name="hide_watched">Skjul sete episoder</string>
     <string name="pref_widget_opacity">Widget-baggrund</string>
@@ -497,7 +499,7 @@
     <string name="upgrade_success">Tak for din støtte til SeriesGuide! Du har nu adgang til alle funktioner.</string>
     <string name="billing_unlock_detected">X Pass app fundet. Du kan stadig abonnere for at supportere fremtidige opdateringer.</string>
     <string name="billing_learn_more">Flere oplysninger og hjælp</string>
-    <string name="subscription_expired_details">Dit abonnement på X funktioner er udløbet.</string>
+    <string name="subscription_expired_details">Dit SeriesGuide-abonnement er udløbet.</string>
     <!-- Amazon In-App Billing -->
     <string name="subscription_not_signed_in" tools:ignore="UnusedResources">Log ind på din Amazon-konto!</string>
     <string name="subscription_unavailable" tools:ignore="UnusedResources">Abonnementet er i øjeblikket ikke tilgængeligt.</string>

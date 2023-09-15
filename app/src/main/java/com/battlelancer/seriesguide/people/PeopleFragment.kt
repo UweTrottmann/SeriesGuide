@@ -191,7 +191,7 @@ class PeopleFragment : Fragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.listViewPeople
+        val liftOnScrollTargetViewId = R.id.listViewPeople
 
         /**
          * The serialization (saved instance state) Bundle key representing the activated item position.

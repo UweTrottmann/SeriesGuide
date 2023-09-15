@@ -11,6 +11,47 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 69
+----------
+*2023-09-15*
+
+* 🔧 Streaming search: add latest supported countries.
+* 🔧 Notifications: on Android 12 and newer, ask for permission to set precise alarm.
+* 🔧 Trakt: add link to delete account.
+* 🔧 Appearance: small adjustments.
+
+#### 69.0.3
+*2023-09-14*
+
+* 🔨 Appearance: to get a matching navigation bar color on Samsung devices use a non-transparent
+  background on all devices.
+* 🔧 Appearance: adjust light theme highlight color to be less washed out.
+* 🔧 Trakt: add link to delete account.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 69.0.2 🧪
+*2023-08-18*
+
+* 🔧 Calendar: change calendar settings symbol from eye to a filter to hopefully be more intuitive.
+* 🔧 Notifications: on Android 12 and newer, ask for permission to set precise alarm.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 69.0.1 🧪
+*2023-08-10*
+
+* 🔨 Do not apply corrections (e.g. for US time zones) on episodes when a custom time is set and the 
+  other way around.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 69.0.0 🧪
+*2023-08-04*
+
+* 🔧 Streaming search: add latest supported countries.
+* 🔧 Cloud: do not automatically sign in (if e.g. signed in previously or on other devices).
+* 🔧 Device backup: include the database when backing up to e.g. Google One. Only include auto 
+  backup files for device-to-device transfer (Android 12 and newer).
+* 📝 Latest user interface translations from Crowdin.
+
 Version 68
 ----------
 *2023-07-06*

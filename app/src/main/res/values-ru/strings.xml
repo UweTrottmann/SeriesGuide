@@ -108,7 +108,6 @@
     <!-- Date and Time -->
     <string name="today">сегодня</string>
     <string name="now">сейчас</string>
-    <string name="daily">Ежедневно</string>
     <string name="runtime_minutes">%s минут</string>
     <!-- Flagging -->
     <string name="mark_all">Просмотрено всё</string>
@@ -311,6 +310,7 @@
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Ошибка входа в систему (%s)</string>
     <string name="hexagon_signin_google_only">Адрес электронной почты требует авторизации Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
@@ -493,6 +493,8 @@
     <string name="pref_notifications_battery_settings_summary">Перейдите в настройки батареи, чтобы отключить оптимизацию батареи для надежных уведомлений</string>
     <string name="notifications_allow">Разрешить уведомления</string>
     <string name="notifications_allow_reason">Чтобы получать уведомления о выпусках и ошибках, перейдите в настройки и разрешите их.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>

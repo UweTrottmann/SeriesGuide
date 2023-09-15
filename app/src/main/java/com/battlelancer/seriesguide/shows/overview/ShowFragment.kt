@@ -1,6 +1,7 @@
 package com.battlelancer.seriesguide.shows.overview
 
 import android.Manifest
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import androidx.lifecycle.whenStarted
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
+import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -264,6 +266,15 @@ class ShowFragment() : Fragment() {
             }
         }
 
+    private val requestPreciseNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            // RESULT_OK = permission enabled
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Re-schedule with exact alarm (if this shows episode is next)
+                NotificationService.trigger(requireContext())
+            }
+        }
+
     private fun populateShow(showForUi: ShowViewModel.ShowForUi?, hasAccessToX: Boolean?) {
         if (showForUi == null || hasAccessToX == null) return
         val binding = binding ?: return
@@ -330,6 +341,14 @@ class ShowFragment() : Fragment() {
                         showNotificationsNotAllowedMessage()
                     }
                 } else {
+                    // On Android 12+, ask for exact alarm permission, but still enable
+                    // notifications right away. If granted, will just re-run notifications service.
+                    if (!notify && !NotificationSettings.canScheduleExactAlarms(requireContext())) {
+                        requestPreciseNotificationPermissionLauncher.launch(
+                            @Suppress("NewApi") // Can never be here if not Android 12+
+                            NotificationSettings.buildRequestExactAlarmSettingsIntent(requireContext())
+                        )
+                    }
                     // disable until action is complete
                     v.isEnabled = false
                     SgApp.getServicesComponent(requireContext()).showTools()
@@ -539,7 +558,7 @@ class ShowFragment() : Fragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.scrollViewShow
+        val liftOnScrollTargetViewId = R.id.scrollViewShow
 
         private const val ARG_SHOW_ROWID = "show_id"
 

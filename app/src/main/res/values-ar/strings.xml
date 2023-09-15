@@ -110,7 +110,6 @@
     <!-- Date and Time -->
     <string name="today">اليوم</string>
     <string name="now">الآن</string>
-    <string name="daily">يومي</string>
     <string name="runtime_minutes">%s دقيقة</string>
     <!-- Flagging -->
     <string name="mark_all">تعيين الجميع بمشاهد</string>
@@ -325,6 +324,7 @@
     <string name="hexagon_signed_out">تسجيل الخروج من سحابة SeriesGuide.</string>
     <string name="hexagon_signin_fail_format">خطأ في تسجيل الدخول (%s)</string>
     <string name="hexagon_signin_google_only">يتطلب عنوان البريد الإلكتروني تسجيل دخول Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">جارٍ الإرسال إلى Trakt.</string>
     <string name="checkin_success_trakt">تم فحص %s على Trakt.</string>
@@ -515,6 +515,8 @@
     <string name="pref_notifications_battery_settings_summary">الذهاب إلى إعدادات البطارية لتعطيل تحسينات البطارية للإشعارات الموثوقة</string>
     <string name="notifications_allow">السماح بالإشعارات</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
     <string name="pref_widget_opacity">خلفية القطعة العائمة</string>

@@ -234,7 +234,7 @@ class TraktAddFragment : AddFragment() {
          */
         private const val ARG_TYPE = "traktListType"
 
-        const val liftOnScrollTargetViewId = R.id.gridViewAdd
+        val liftOnScrollTargetViewId = R.id.gridViewAdd
 
         fun newInstance(link: TraktShowsLink): TraktAddFragment {
             val f = TraktAddFragment()

@@ -61,6 +61,6 @@ class MoviesWatchListFragment : MoviesBaseFragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.gridViewMoviesWatchlist
+        val liftOnScrollTargetViewId = R.id.gridViewMoviesWatchlist
     }
 }

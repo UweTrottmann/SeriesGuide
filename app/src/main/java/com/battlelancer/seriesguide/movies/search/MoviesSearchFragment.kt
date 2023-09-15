@@ -138,7 +138,7 @@ class MoviesSearchFragment : Fragment() {
     private val onRefreshListener = OnRefreshListener { adapter.refresh() }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewMoviesSearch
+        val liftOnScrollTargetViewId = R.id.recyclerViewMoviesSearch
 
         private const val ARG_ID_LINK = "linkId"
 

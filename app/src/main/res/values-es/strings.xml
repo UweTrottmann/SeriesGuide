@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>
-    <string name="daily">Diariamente</string>
     <string name="runtime_minutes">%s minutos</string>
     <!-- Flagging -->
     <string name="mark_all">Todos vistos</string>
@@ -298,6 +297,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="hexagon_signed_out">Desconectado de SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Error al iniciar sesión (%s)</string>
     <string name="hexagon_signin_google_only">La dirección de correo electrónico requiere inicio de sesión de Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Enviando a trakt.</string>
     <string name="checkin_success_trakt">Registrado en %s en trakt.</string>
@@ -472,6 +472,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_notifications_battery_settings_summary">Ir a la configuración de la batería para desactivar las optimizaciones de la batería para obtener notificaciones fiables</string>
     <string name="notifications_allow">Allow notifications</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Ocultar episodios vistos</string>
     <string name="pref_widget_opacity">Fondo de widget</string>

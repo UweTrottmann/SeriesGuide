@@ -133,7 +133,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewShowsPopular
+        val liftOnScrollTargetViewId = R.id.recyclerViewShowsPopular
     }
 
 }

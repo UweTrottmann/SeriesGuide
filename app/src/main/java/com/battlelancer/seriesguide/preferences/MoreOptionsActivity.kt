@@ -74,7 +74,6 @@ class MoreOptionsActivity : BaseTopActivity() {
             WebTools.openInCustomTab(this, getString(R.string.help_url))
         }
         ViewTools.openUriOnClick(binding.buttonCommunity, getString(R.string.url_community))
-        ViewTools.openUriOnClick(binding.buttonTwitter, getString(R.string.url_twitter))
         binding.buttonFeedback.setOnClickListener {
             startActivity(getFeedbackEmailIntent(this))
         }

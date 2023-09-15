@@ -66,7 +66,6 @@ open class ShowsActivityImpl : BaseTopActivity(), AddShowDialogFragment.OnAddSho
         }
         setContentView(R.layout.activity_shows)
         ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutShows))
-        ThemeUtils.restoreDefaultWindowInsetsBehavior(findViewById(R.id.viewPagerTabs))
         ThemeUtils.configureAppBarForContentBelow(this)
         setupActionBar()
         setupBottomNavigation(R.id.navigation_item_shows)

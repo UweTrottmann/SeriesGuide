@@ -48,7 +48,7 @@ interface SgShow2Helper {
     @Query("SELECT _id FROM sg_show")
     fun getShowIdsLong(): List<Long>
 
-    @Query("SELECT _id, series_lastupdate, series_airsdayofweek FROM sg_show")
+    @Query("SELECT _id, series_lastupdate FROM sg_show")
     fun getShowsUpdateInfo(): List<SgShow2UpdateInfo>
 
     @Query("SELECT _id FROM sg_show WHERE series_tmdb_id=:tmdbId")
@@ -232,8 +232,7 @@ data class SgShow2Ids(
 
 data class SgShow2UpdateInfo(
     @ColumnInfo(name = SgShow2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long,
-    @ColumnInfo(name = SgShow2Columns.RELEASE_WEEKDAY) val releaseWeekDay: Int,
+    @ColumnInfo(name = SgShow2Columns.LASTUPDATED) val lastUpdatedMs: Long
 )
 
 data class SgShow2Minimal(

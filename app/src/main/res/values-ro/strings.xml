@@ -107,7 +107,6 @@
     <!-- Date and Time -->
     <string name="today">astăzi</string>
     <string name="now">acum</string>
-    <string name="daily">Zilnic</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Toate au fost vizionate</string>
@@ -304,6 +303,7 @@
     <string name="hexagon_signed_out">Deconectat de pe SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
     <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trimite pe trakt.</string>
     <string name="checkin_success_trakt">%s verificat pe trakt.</string>
@@ -482,6 +482,8 @@
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <string name="notifications_allow">Allow notifications</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Ascundeți episoadele vizionate</string>
     <string name="pref_widget_opacity">Widget fundal</string>

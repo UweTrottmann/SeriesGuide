@@ -1,13 +1,19 @@
 package com.battlelancer.seriesguide.settings
 
+import android.app.AlarmManager
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.notifications.NotificationService.Companion.canScheduleExactAlarmsCompat
 import com.uwetrottmann.androidutils.AndroidUtils
 import timber.log.Timber
 
@@ -76,6 +82,29 @@ object NotificationSettings {
             true
         }
     }
+
+    /**
+     * On Android 12+, returns if scheduling of exact alarms is allowed.
+     * On older versions always returns true.
+     */
+    fun canScheduleExactAlarms(context: Context): Boolean {
+        // https://developer.android.com/training/scheduling/alarms
+        return if (AndroidUtils.isAtLeastS) {
+            context.getSystemService<AlarmManager>()?.canScheduleExactAlarmsCompat() == true
+        } else {
+            true
+        }
+    }
+
+    /**
+     * For Android 12+, builds an intent to open the settings screen to allow alarms and reminders.
+     * See [Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM].
+     */
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun buildRequestExactAlarmSettingsIntent(context: Context) =
+        Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            .setData(Uri.parse("package:" + context.packageName))
+
 
     /**
      * How far into the future to include upcoming episodes in minutes.

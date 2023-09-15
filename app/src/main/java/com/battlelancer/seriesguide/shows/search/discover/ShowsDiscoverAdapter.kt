@@ -240,8 +240,8 @@ class ShowsDiscoverAdapter(
     }
 
     companion object {
-        const val VIEW_TYPE_LINK = R.layout.item_grid_link
-        const val VIEW_TYPE_HEADER = R.layout.item_grid_header
-        const val VIEW_TYPE_SHOW = R.layout.item_addshow
+        val VIEW_TYPE_LINK = R.layout.item_grid_link
+        val VIEW_TYPE_HEADER = R.layout.item_grid_header
+        val VIEW_TYPE_SHOW = R.layout.item_addshow
     }
 }

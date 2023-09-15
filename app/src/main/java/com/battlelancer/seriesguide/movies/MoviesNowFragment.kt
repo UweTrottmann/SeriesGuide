@@ -305,6 +305,6 @@ class MoviesNowFragment : Fragment() {
         }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewNow
+        val liftOnScrollTargetViewId = R.id.recyclerViewNow
     }
 }

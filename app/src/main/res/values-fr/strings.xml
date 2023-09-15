@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">aujourd\'hui</string>
     <string name="now">maintenant</string>
-    <string name="daily">Quotidiennement</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Tous vus</string>
@@ -297,6 +296,7 @@
     <string name="hexagon_signed_out">Déconnecté du cloud SeriesGuide.</string>
     <string name="hexagon_signin_fail_format">Erreur lors de la connexion (%s)</string>
     <string name="hexagon_signin_google_only">L\'adresse e-mail nécessite une connexion à Google</string>
+    <string name="hexagon_signin_choose">Choisissez l\'e-mail pour vous connecter si vous utilisez SeriesGuide sur d\'autres appareils qui ne prennent pas en charge la connexion Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Envoi vers trakt.</string>
     <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>
@@ -471,6 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Aller dans les paramètres de batterie pour désactiver l\'optimisation de la batterie afin de recevoir correctement les notifications</string>
     <string name="notifications_allow">Autoriser les notifications</string>
     <string name="notifications_allow_reason">Pour recevoir des notifications d\'épisode et d\'erreur, autorisez-les via les paramètres.</string>
+    <string name="precise_notifications_allow">Autoriser les notifications détaillées</string>
+    <string name="precise_notifications_allow_reason">Pour recevoir des notifications détaillées d\'épisode, autorisez-les via les paramètres.</string>
     <!-- List Widget -->
     <string name="hide_watched">Masquer les épisodes vus</string>
     <string name="pref_widget_opacity">Arrière-plan du widget</string>

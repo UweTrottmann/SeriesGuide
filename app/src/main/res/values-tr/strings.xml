@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">bugün</string>
     <string name="now">şimdi</string>
-    <string name="daily">Günlük</string>
     <string name="runtime_minutes">%s dakika</string>
     <!-- Flagging -->
     <string name="mark_all">Tümü izlendi</string>
@@ -297,6 +296,7 @@
     <string name="hexagon_signed_out">SeriesGuide Bulut servisinden çıkış yapıldı.</string>
     <string name="hexagon_signin_fail_format">%s ile girişte hata oluştu</string>
     <string name="hexagon_signin_google_only">E-posta adresi, Google ile Oturum Açmayı gerektirir</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trakt\'a gönderiliyor.</string>
     <string name="checkin_success_trakt">%s Trakt üzerinde \"izliyorum\" yapıldı</string>
@@ -471,6 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Güvenilir bildirimler almak için Pil ayarlarına giderek, pil optimizasyonlarını devre dışı bırakın</string>
     <string name="notifications_allow">Bildirimlere izin ver</string>
     <string name="notifications_allow_reason">Bölüm ve hata bildirimleri almak için Ayarlar\'a gidin ve onlara izin verin.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">İzlenmiş bölümleri gizle</string>
     <string name="pref_widget_opacity">Widget arka planı</string>

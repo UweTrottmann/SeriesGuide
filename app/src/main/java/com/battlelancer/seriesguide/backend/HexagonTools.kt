@@ -6,8 +6,8 @@ import android.text.format.DateUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.CloudEndpointUtils.updateBuilder
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
-import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
+import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.Errors.Companion.logAndReportHexagon
 import com.battlelancer.seriesguide.util.isRetryError
@@ -227,7 +227,8 @@ class HexagonTools @Inject constructor(
             // still signed in
             httpRequestInitializer.firebaseUser = account
         } else {
-            // try to silently sign in
+            // Try to silently sign in. This is fine as Cloud was enabled by the user
+            // and they reasonably expect to stay signed in.
             val signInTask = AuthUI.getInstance().silentSignIn(context, firebaseSignInProviders)
             try {
                 val authResult = Tasks.await(signInTask)

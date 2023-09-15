@@ -173,7 +173,7 @@ class ShowsAdapter(
 
                 val timeAndNetwork = TextTools.dotSeparate(
                     network,
-                    releaseTimeShow?.formatWithDeviceZoneToDayAndTime(context, weekDay)
+                    releaseTimeShow?.formatWithDeviceZoneToDayAndTime()
                 )
 
                 return ShowItem(

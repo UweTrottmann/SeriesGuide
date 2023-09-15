@@ -107,7 +107,6 @@
     <!-- Date and Time -->
     <string name="today">данас</string>
     <string name="now">сада</string>
-    <string name="daily">Дневно</string>
     <string name="runtime_minutes">%s мин</string>
     <!-- Flagging -->
     <string name="mark_all">Све одгледано</string>
@@ -304,6 +303,7 @@
     <string name="hexagon_signed_out">Izlogovan iz SeriesGuide Cloud-a</string>
     <string name="hexagon_signin_fail_format">Грешка са пријавом (%s)</string>
     <string name="hexagon_signin_google_only">Имејл захтева пријављивање на Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Послато на тракт.</string>
     <string name="checkin_success_trakt">Пријављено гледање %s на trakt.</string>
@@ -482,6 +482,8 @@
     <string name="pref_notifications_battery_settings_summary">За поуздана обавештења, идите на Подешавања батерије да бисте онемогућили оптимизацију батерије</string>
     <string name="notifications_allow">Дозволи обавештавања</string>
     <string name="notifications_allow_reason">Да бисте примали обавештења о епизодама и грешкама, идите у Подешавања и дозволите их.</string>
+    <string name="precise_notifications_allow">Дозволи прецизна обавештавања</string>
+    <string name="precise_notifications_allow_reason">Да бисте примали прецизна обавештења о епизодама, идите у Подешавања и дозволите их.</string>
     <!-- List Widget -->
     <string name="hide_watched">Сакриј одгледане епизоде</string>
     <string name="pref_widget_opacity">Позадина виџета</string>

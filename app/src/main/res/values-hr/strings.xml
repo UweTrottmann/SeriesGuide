@@ -107,7 +107,6 @@
     <!-- Date and Time -->
     <string name="today">danas</string>
     <string name="now">sada</string>
-    <string name="daily">Dnevno</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Sve pogledano</string>
@@ -304,6 +303,7 @@
     <string name="hexagon_signed_out">Odjavljeni ste sa SeriesGuide oblaka.</string>
     <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
     <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Poslano na trakt.</string>
     <string name="checkin_success_trakt">Prijavljen u %s na traktu.</string>
@@ -482,6 +482,8 @@
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <string name="notifications_allow">Allow notifications</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Sakrij pogledane epizode</string>
     <string name="pref_widget_opacity">Pozadina widgeta</string>

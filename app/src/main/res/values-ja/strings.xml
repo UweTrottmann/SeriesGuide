@@ -105,7 +105,6 @@
     <!-- Date and Time -->
     <string name="today">今日</string>
     <string name="now">今</string>
-    <string name="daily">毎日</string>
     <string name="runtime_minutes">%s 分</string>
     <!-- Flagging -->
     <string name="mark_all">すべて視聴済</string>
@@ -290,6 +289,7 @@
     <string name="hexagon_signed_out">SeriesGuide クラウドからサインアウトします。</string>
     <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
     <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Trakt に送信しています</string>
     <string name="checkin_success_trakt">Trakt で %s にチェックインしました</string>
@@ -460,6 +460,8 @@
     <string name="pref_notifications_battery_settings_summary">バッテリー設定に移動して、バッテリーの最適化を無効にし、信頼性の高い通知を表示します</string>
     <string name="notifications_allow">Allow notifications</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">視聴済のエピソードを非表示</string>
     <string name="pref_widget_opacity">ウィジェットの背景</string>

@@ -1,61 +1,64 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-androidx-activity = "1.6.1"
-androidx-core = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/core
-androidx-fragment = "1.5.5" # https://developer.android.com/jetpack/androidx/releases/fragment
 androidx-lifecycle = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
-androidx-room = "2.5.0" # https://developer.android.com/jetpack/androidx/releases/room
-androidx-test = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/test
-androidx-test-espresso = "3.4.0"
-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
-dagger = "2.45" # https://github.com/google/dagger/releases
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
-# https://github.com/googleapis/google-api-java-client/releases
-# Note: can't use 2.x.x because generated backend code requires 1.x.x.
-google-api-client = "1.34.1"
-kotlin = "1.8.10" # https://kotlinlang.org/docs/releases.html#release-details
+google-api-client = "2.2.0" # https://github.com/googleapis/google-api-java-client/releases
 retrofit2 = "2.9.0" # https://github.com/square/retrofit/blob/master/CHANGELOG.md
 
 [libraries]
 amazon-appstore-sdk = "com.amazon.device:amazon-appstore-sdk:3.0.4" # https://developer.amazon.com/docs/in-app-purchasing/iap-whats-new.html
 androidutils = "com.uwetrottmann.androidutils:androidutils:3.1.0" # https://github.com/UweTrottmann/AndroidUtils/releases
-androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
-androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
-androidx-annotation = "androidx.annotation:annotation:1.5.0"
-androidx-appcompat = "androidx.appcompat:appcompat:1.6.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidx-browser = "androidx.browser:browser:1.5.0" # https://developer.android.com/jetpack/androidx/releases/browser
+# https://developer.android.com/jetpack/androidx/releases/activity
+androidx-activity = "androidx.activity:activity:1.7.2"
+androidx-activity-ktx = "androidx.activity:activity-ktx:1.7.2"
+androidx-annotation = "androidx.annotation:annotation:1.6.0"
+# https://developer.android.com/jetpack/androidx/releases/appcompat
+androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
+# https://developer.android.com/jetpack/androidx/releases/browser
+# Note: 1.6.0 requires SDK 34
+androidx-browser = "androidx.browser:browser:1.5.0"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
-androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
-androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
-androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
+# https://developer.android.com/jetpack/androidx/releases/core
+androidx-core = "androidx.core:core:1.10.1"
+androidx-core-ktx = "androidx.core:core-ktx:1.10.1"
+# https://developer.android.com/jetpack/androidx/releases/fragment
+androidx-fragment = "androidx.fragment:fragment-ktx:1.6.1"
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
-androidx-paging = "androidx.paging:paging-runtime-ktx:3.1.1" # https://developer.android.com/jetpack/androidx/releases/paging
+# https://developer.android.com/jetpack/androidx/releases/paging
+androidx-paging = "androidx.paging:paging-runtime-ktx:3.2.0"
 androidx-palette = "androidx.palette:palette-ktx:1.0.0"
-androidx-preference = "androidx.preference:preference-ktx:1.2.0" # https://developer.android.com/jetpack/androidx/releases/preference
-androidx-recyclerview = "androidx.recyclerview:recyclerview:1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
-androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "androidx-room" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
-androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "androidx-room" }
-androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0" # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
-androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
-androidx-test-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "androidx-test-espresso" }
-androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
-androidx-test-ext-junit = "androidx.test.ext:junit:1.1.3"
-androidx-test-ext-truth = "androidx.test.ext:truth:1.4.0"
-androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
-androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
+# https://developer.android.com/jetpack/androidx/releases/preference
+androidx-preference = "androidx.preference:preference-ktx:1.2.1"
+# https://developer.android.com/jetpack/androidx/releases/recyclerview
+androidx-recyclerview = "androidx.recyclerview:recyclerview:1.3.1"
+# https://developer.android.com/jetpack/androidx/releases/room
+androidx-room-compiler = "androidx.room:room-compiler:2.5.2"
+androidx-room-ktx = "androidx.room:room-ktx:2.5.2"
+androidx-room-paging = "androidx.room:room-paging:2.5.2"
+androidx-room-runtime = "androidx.room:room-runtime:2.5.2"
+androidx-room-testing = "androidx.room:room-testing:2.5.2"
+# https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
+androidx-swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+# https://developer.android.com/jetpack/androidx/releases/test
+androidx-test-core = "androidx.test:core:1.5.0"
+androidx-test-espresso-contrib = "androidx.test.espresso:espresso-contrib:3.5.1"
+androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.5.1"
+androidx-test-ext-junit = "androidx.test.ext:junit:1.1.5"
+androidx-test-ext-truth = "androidx.test.ext:truth:1.5.0"
+androidx-test-rules = "androidx.test:rules:1.5.0"
+androidx-test-runner = "androidx.test:runner:1.5.2"
 androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
-androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta01" # https://developer.android.com/jetpack/androidx/releases/viewpager2
+# https://developer.android.com/jetpack/androidx/releases/viewpager2
+androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta02"
 billing = "com.android.billingclient:billing-ktx:5.2.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+# https://github.com/google/dagger/releases
+dagger = "com.google.dagger:dagger:2.47"
+dagger-compiler = "com.google.dagger:dagger-compiler:2.47"
 debugdrawer-actions = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-actions", version.ref = "debugdrawer" }
 debugdrawer-base = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-base", version.ref = "debugdrawer" }
 debugdrawer-commons = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-commons", version.ref = "debugdrawer" }
@@ -63,29 +66,30 @@ debugdrawer-timber = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawe
 debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-view", version.ref = "debugdrawer" }
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
-firebase = "com.google.firebase:firebase-bom:31.4.0"
-firebase-crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:2.9.4"
-firebase-google-services = "com.google.gms:google-services:4.3.15"
+firebase = "com.google.firebase:firebase-bom:32.2.2"
 firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/firebase/FirebaseUI-Android/releases
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "google-api-client" }
 google-api-client-android = { module = "com.google.api-client:google-api-client-android", version.ref = "google-api-client" }
-google-http-client = "com.google.http-client:google-http-client-gson:1.41.8" # https://github.com/googleapis/google-http-java-client/releases
+google-http-client = "com.google.http-client:google-http-client-gson:1.43.3" # https://github.com/googleapis/google-http-java-client/releases
 greenrobot-eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
 greenrobot-eventbus-processor = { module = "org.greenrobot:eventbus-annotation-processor", version.ref = "eventbus" }
-gson = "com.google.code.gson:gson:2.9.1" # https://github.com/google/gson/blob/master/CHANGELOG.md
+# https://github.com/google/gson/blob/master/CHANGELOG.md
+gson = "com.google.code.gson:gson:2.10.1"
 junit = "junit:junit:4.13.2"
-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16" # https://github.com/michaelbull/kotlin-result/releases
+# https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
+# https://github.com/michaelbull/kotlin-result/releases
+kotlinx-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 material = "com.google.android.material:material:1.9.0" # https://github.com/material-components/material-components-android/releases
 mockito = "org.mockito:mockito-core:4.5.1"
-okhttp = "com.squareup.okhttp3:okhttp:4.10.0" # https://github.com/square/okhttp/blob/master/CHANGELOG.md
+okhttp = "com.squareup.okhttp3:okhttp:4.11.0" # https://github.com/square/okhttp/blob/master/CHANGELOG.md
 photoview = "com.github.chrisbanes:PhotoView:2.3.0"
 picasso = "com.squareup.picasso:picasso:2.8" # https://github.com/square/picasso/releases
-play-services-auth = "com.google.android.gms:play-services-auth:20.4.1" # https://developers.google.com/android/guides/releases
+# https://developers.google.com/android/guides/releases
+play-services-auth = "com.google.android.gms:play-services-auth:20.6.0"
 retrofit2-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit2" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit2" }
 # https://github.com/robolectric/robolectric/releases/
@@ -95,4 +99,18 @@ threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6" # https://github.c
 timber = "com.jakewharton.timber:timber:5.0.1" # https://github.com/JakeWharton/timber/blob/master/CHANGELOG.md
 tmdb-java = "com.uwetrottmann.tmdb2:tmdb-java:2.8.1" # https://github.com/UweTrottmann/tmdb-java/blob/master/CHANGELOG.md
 trakt-java = "com.uwetrottmann.trakt5:trakt-java:6.11.2" # https://github.com/UweTrottmann/trakt-java/blob/master/CHANGELOG.md
-truth = "com.google.truth:truth:1.1.3" # https://github.com/google/truth/releases
+truth = "com.google.truth:truth:1.1.5" # https://github.com/google/truth/releases
+
+[plugins]
+# https://developer.android.com/build/releases/gradle-plugin
+android = { id = "com.android.application", version = "8.1.0" }
+# https://kotlinlang.org/docs/releases.html#release-details
+kotlin = { id = "org.jetbrains.kotlin.android", version = "1.8.22" }
+# https://github.com/ben-manes/gradle-versions-plugin/releases
+versions = { id = "com.github.ben-manes.versions", version = "0.47.0" }
+# https://github.com/gradle-nexus/publish-plugin/releases
+publish = { id = "io.github.gradle-nexus.publish-plugin", version = "1.3.0" }
+google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.8" }
+# For endpoints plugin, version is actually set in settings.gradle.kts!
+endpoints = { id = "com.google.cloud.tools.endpoints-framework-gradle-plugin", version = "2.1.0" }

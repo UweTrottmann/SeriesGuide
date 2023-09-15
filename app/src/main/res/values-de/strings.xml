@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">heute</string>
     <string name="now">jetzt</string>
-    <string name="daily">Täglich</string>
     <string name="runtime_minutes">%s min</string>
     <!-- Flagging -->
     <string name="mark_all">Alle angesehen</string>
@@ -297,6 +296,7 @@
     <string name="hexagon_signed_out">Von SeriesGuide Cloud abgemeldet</string>
     <string name="hexagon_signin_fail_format">Fehler beim Anmelden (%s)</string>
     <string name="hexagon_signin_google_only">E-Mail-Adresse erfordert Anmeldung mit Google</string>
+    <string name="hexagon_signin_choose">Wählen Sie E-Mail zum Anmelden wenn Sie SeriesGuide auf anderen Geräten verwenden die keine Anmeldung mit Google unterstützen.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Sende an Trakt.</string>
     <string name="checkin_success_trakt">Auf Trakt in %s eingecheckt</string>
@@ -471,6 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Zu Akku-Einstellungen gehen um Akkuverbrauch optimieren für zuverlässige Benachrichtigungen auszuschalten</string>
     <string name="notifications_allow">Benachrichtigungen erlauben</string>
     <string name="notifications_allow_reason">Um Benachrichtigungen für Folgen oder Fehler zu erhalten, erlauben Sie diese in den Einstellungen.</string>
+    <string name="precise_notifications_allow">Präzise Benachrichtigungen erlauben</string>
+    <string name="precise_notifications_allow_reason">Um präzise Benachrichtigungen für Folgen zu erhalten, erlauben Sie diese in den Einstellungen.</string>
     <!-- List Widget -->
     <string name="hide_watched">Angesehene Folgen verstecken</string>
     <string name="pref_widget_opacity">Widget-Hintergrund</string>

@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">днес</string>
     <string name="now">сега</string>
-    <string name="daily">Ежедневно</string>
     <string name="runtime_minutes">%s мин.</string>
     <!-- Flagging -->
     <string name="mark_all">Всички са гледани</string>
@@ -297,6 +296,7 @@
     <string name="hexagon_signed_out">Излизане от облака SeriesGuide.</string>
     <string name="hexagon_signin_fail_format">Грешка при влизане с (%s)</string>
     <string name="hexagon_signin_google_only">Email адресът изисква Google Sign-In</string>
+    <string name="hexagon_signin_choose">Изберете имейл за вход, ако използвате SeriesGuide на устройства, които не поддържат Google акаунти.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Подаване към trakt.</string>
     <string name="checkin_success_trakt">Отметнато %s в trakt.</string>
@@ -471,6 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Изключи оптимизациите на батерията от Настройки на батерия за сигурни нотификации</string>
     <string name="notifications_allow">Разрешаване на известията</string>
     <string name="notifications_allow_reason">Известията за епизоди и грешки трябва да бъдат разрешени в меню Настройки.</string>
+    <string name="precise_notifications_allow">Известия за конкретни епизоди</string>
+    <string name="precise_notifications_allow_reason">За получаване на известия за конкретни епизоди, трябва да ги разрешите в Настройките.</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрий гледаните епизоди</string>
     <string name="pref_widget_opacity">Фон на уиджета</string>

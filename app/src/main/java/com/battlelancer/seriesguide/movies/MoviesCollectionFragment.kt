@@ -56,6 +56,6 @@ class MoviesCollectionFragment : MoviesBaseFragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.gridViewMoviesCollection
+        val liftOnScrollTargetViewId = R.id.gridViewMoviesCollection
     }
 }

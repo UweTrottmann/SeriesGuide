@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Android 12+: precise notification setting. -->
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="com.battlelancer.seriesguide.notifications.channels"
+        app:title="@string/pref_notifications_settings" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="com.battlelancer.seriesguide.notifications.threshold"
+        app:title="@string/pref_notifications_treshold" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="com.battlelancer.seriesguide.notifications.shows"
+        app:title="@string/pref_notifications_select_shows" />
+
+    <CheckBoxPreference
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="@string/pref_key_notifications_hidden"
+        app:summary="@string/pref_notifications_hidden_summary"
+        app:title="@string/pref_notifications_hidden" />
+
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:iconSpaceReserved="false"
+        app:key="com.uwetrottmann.seriesguide.notifications.nextonly"
+        app:summary="@string/pref_notifications_next_episodes_only_summary"
+        app:title="@string/pref_notifications_next_episodes_only" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="com.battlelancer.seriesguide.notifications.notifications.precise"
+        app:summary="@string/precise_notifications_allow_reason"
+        app:title="@string/precise_notifications_allow" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="com.battlelancer.seriesguide.notifications.battery"
+        app:summary="@string/pref_notifications_battery_settings_summary"
+        app:title="@string/pref_notifications_battery_settings" />
+
+</androidx.preference.PreferenceScreen>

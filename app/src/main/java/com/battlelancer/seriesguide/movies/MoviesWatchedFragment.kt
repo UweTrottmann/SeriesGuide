@@ -108,7 +108,7 @@ class MoviesWatchedFragment : Fragment() {
     }
 
     companion object {
-        const val liftOnScrollTargetViewId = R.id.recyclerViewMoviesWatched
+        val liftOnScrollTargetViewId = R.id.recyclerViewMoviesWatched
 
         fun newInstance() = MoviesWatchedFragment()
     }

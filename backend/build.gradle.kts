@@ -1,12 +1,11 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.cloud.tools.endpoints-framework-client")
+//    id("com.google.cloud.tools.endpoints-framework-client")
 }
 
 val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
-val sgTargetSdk: Int by rootProject.extra
 
 android {
     namespace = "com.uwetrottmann.seriesguide.backend"
@@ -14,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = sgMinSdk
-        targetSdk = sgTargetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -44,14 +42,14 @@ dependencies {
     }
 }
 
-endpointsClient {
-    setDiscoveryDocs(
-        listOf(
-            "src/endpoints/account-v2-rest.discovery",
-            "src/endpoints/episodes-v2-rest.discovery",
-            "src/endpoints/lists-v2-rest.discovery",
-            "src/endpoints/movies-v2-rest.discovery",
-            "src/endpoints/shows-v2-rest.discovery"
-        )
-    )
-}
+//endpointsClient {
+//    setDiscoveryDocs(
+//        listOf(
+//            "src/endpoints/account-v2-rest.discovery",
+//            "src/endpoints/episodes-v2-rest.discovery",
+//            "src/endpoints/lists-v2-rest.discovery",
+//            "src/endpoints/movies-v2-rest.discovery",
+//            "src/endpoints/shows-v2-rest.discovery"
+//        )
+//    )
+//}

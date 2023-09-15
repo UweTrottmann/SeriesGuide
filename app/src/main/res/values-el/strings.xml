@@ -106,7 +106,6 @@
     <!-- Date and Time -->
     <string name="today">Σήμερα</string>
     <string name="now">τώρα</string>
-    <string name="daily">Καθημερινή</string>
     <string name="runtime_minutes">%s λεπτά</string>
     <!-- Flagging -->
     <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
@@ -297,6 +296,7 @@
     <string name="hexagon_signed_out">Αποσυνδεθείτε από το SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Σφάλμα με την είσοδο (%s)</string>
     <string name="hexagon_signin_google_only">Η διεύθυνση ηλεκτρονικού ταχυδρομείου απαιτεί είσοδο στο Google</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Υποβολή στο trakt.</string>
     <string name="checkin_success_trakt">Ελέγχεται σε %s στο trakt.</string>
@@ -471,6 +471,8 @@
     <string name="pref_notifications_battery_settings_summary">Πηγαίνετε στις Ρυθμίσεις μπαταρίας για να απενεργοποιήσετε τις βελτιστοποιήσεις μπαταρίας για αξιόπιστες ειδοποιήσεις</string>
     <string name="notifications_allow">Allow notifications</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
     <string name="pref_widget_opacity">Φόντο widget</string>

@@ -24,13 +24,13 @@ import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
-import androidx.viewpager2.widget.ViewPager2
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
@@ -88,7 +88,9 @@ object ThemeUtils {
     @JvmStatic
     fun SlidingTabLayout.setDefaultStyle() {
         setCustomTabView(R.layout.tabstrip_item_transparent, R.id.textViewTabStripItem)
-        setSelectedIndicatorColors(getColorFromAttribute(context, R.attr.colorPrimary))
+        setSelectedIndicatorColors(
+            getColorFromAttribute(context, androidx.appcompat.R.attr.colorPrimary)
+        )
         setUnderlineColor(getColorFromAttribute(context, R.attr.sgColorDivider))
     }
 
@@ -176,7 +178,15 @@ object ThemeUtils {
                 MaterialColors.getColor(context, android.R.attr.navigationBarColor, Color.BLACK)
             ColorUtils.setAlphaComponent(opaqueNavBarColor, EDGE_TO_EDGE_BAR_ALPHA)
         } else {
-            Color.TRANSPARENT
+            // Samsung One UI does not support transparent navigation bars like stock Android,
+            // the navigation bar will always have a scrim.
+            // https://eu.community.samsung.com/t5/galaxy-s23-serie/navigation-bar-isn-t-transparent-while-using-gesture-navigation/td-p/7495977
+            // As those are the majority of used devices, use an opaque color with alpha matching
+            // the navigation bar instead.
+//            Color.TRANSPARENT
+            // Widget.Material3.BottomNavigationView elevation is m3_sys_elevation_level2
+            val opaqueNavBarColor = SurfaceColors.SURFACE_2.getColor(context)
+            ColorUtils.setAlphaComponent(opaqueNavBarColor, 192)
         }
     }
 
@@ -221,21 +231,6 @@ object ThemeUtils {
             }
             // Do *not* consume or modify insets so any other views receive them
             // (only required for pre-R, see View.sBrokenInsetsDispatch).
-            insets
-        }
-    }
-
-    /**
-     * This ensures ViewPager2 does not consume insets and insets are passed on to other views.
-     *
-     * Since ViewPager2 1.1.0-beta01 it does custom inset handling in onApplyWindowInsets which
-     * consumes insets to prevent child views modifying or consuming insets (which is possible pre-R
-     * due to how system insets work, see View.sBrokenInsetsDispatch). However, this prevents other
-     * views, like BottomNavigationView, to receive them. As long as no child views part of pages
-     * consume or modify insets use this to restore the default behavior.
-     */
-    fun restoreDefaultWindowInsetsBehavior(viewPager2: ViewPager2) {
-        ViewCompat.setOnApplyWindowInsetsListener(viewPager2) { _, insets ->
             insets
         }
     }

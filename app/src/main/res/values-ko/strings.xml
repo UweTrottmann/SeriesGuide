@@ -105,7 +105,6 @@
     <!-- Date and Time -->
     <string name="today">오늘</string>
     <string name="now">지금</string>
-    <string name="daily">매일</string>
     <string name="runtime_minutes">%s분</string>
     <!-- Flagging -->
     <string name="mark_all">모두 시청 완료</string>
@@ -290,6 +289,7 @@
     <string name="hexagon_signed_out">SeriesGuide Cloud에서 로그아웃함</string>
     <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
     <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
+    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">trakt에 전송하고 있습니다.</string>
     <string name="checkin_success_trakt">%s을(를) trakt에 체크인하였습니다.</string>
@@ -460,6 +460,8 @@
     <string name="pref_notifications_battery_settings_summary">Go to Battery settings to disable battery optimizations for reliable notifications</string>
     <string name="notifications_allow">Allow notifications</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Allow precise notifications</string>
+    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
     <!-- List Widget -->
     <string name="hide_watched">시청한 에피소드 숨기기</string>
     <string name="pref_widget_opacity">위젯 배경</string>

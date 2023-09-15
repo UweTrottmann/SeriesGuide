@@ -6,15 +6,17 @@ plugins {
 
 val sgCompileSdk: Int by rootProject.extra
 val sgMinSdk: Int by rootProject.extra
-val sgTargetSdk: Int by rootProject.extra
 
 android {
     namespace = "com.uwetrottmann.seriesguide.billing"
     compileSdk = sgCompileSdk
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdk = sgMinSdk
-        targetSdk = sgTargetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -31,9 +33,15 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+}
+
+// Manually set JVM target of kapt https://youtrack.jetbrains.com/issue/KT-55947/Unable-to-set-kapt-jvm-target-version
+// Matches target version set in android block.
+tasks.withType(org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask::class).configureEach {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
 }
 
 dependencies {
