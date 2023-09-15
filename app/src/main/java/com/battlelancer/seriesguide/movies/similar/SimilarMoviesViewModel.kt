@@ -38,7 +38,7 @@ class SimilarMoviesViewModel(
             val page = try {
                 val response = SgApp.getServicesComponent(getApplication()).tmdb()
                     .moviesService()
-                    .similar(movieTmdbId, null, languageCode)
+                    .recommendations(movieTmdbId, null, languageCode)
                     .awaitResponse()
                 if (response.isSuccessful) {
                     response.body()

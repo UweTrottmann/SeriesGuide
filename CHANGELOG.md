@@ -16,6 +16,7 @@ Version 70
 *in development*
 
 * 🌟 Movies: support displaying similar movies.
+* 🔧 Switch to TMDBs recommendations when looking for similar shows or movies.
 
 Version 69
 ----------

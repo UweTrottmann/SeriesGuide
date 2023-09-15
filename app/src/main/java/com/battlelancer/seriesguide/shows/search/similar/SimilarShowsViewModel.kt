@@ -38,7 +38,7 @@ class SimilarShowsViewModel(
             val page = try {
                 val response = SgApp.getServicesComponent(getApplication()).tmdb()
                     .tvService()
-                    .similar(showTmdbId, null, languageCode)
+                    .recommendations(showTmdbId, null, languageCode)
                     .awaitResponse()
                 if (response.isSuccessful) {
                     response.body()
