@@ -13,9 +13,14 @@ Releases marked with 🧪 were released on [the beta program](https://github.com
 
 Version 69
 ----------
-*in development*
+*2023-09-15*
 
-#### 69.0.3 🧪
+* 🔧 Streaming search: add latest supported countries.
+* 🔧 Notifications: on Android 12 and newer, ask for permission to set precise alarm.
+* 🔧 Trakt: add link to delete account.
+* 🔧 Appearance: small adjustments.
+
+#### 69.0.3
 *2023-09-14*
 
 * 🔨 Appearance: to get a matching navigation bar color on Samsung devices use a non-transparent
