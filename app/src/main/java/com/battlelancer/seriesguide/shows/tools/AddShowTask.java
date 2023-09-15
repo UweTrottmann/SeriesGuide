@@ -86,8 +86,8 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
     private static final int PROGRESS_EXISTS = 0;
     private static final int PROGRESS_SUCCESS = 1;
     private static final int PROGRESS_ERROR = 2;
-    private static final int PROGRESS_ERROR_TVDB = 3;
-    private static final int PROGRESS_ERROR_TVDB_NOT_EXISTS = 4;
+    private static final int PROGRESS_ERROR_TMDB = 3;
+    private static final int PROGRESS_ERROR_DOES_NOT_EXIST = 4;
     private static final int PROGRESS_ERROR_HEXAGON = 6;
     private static final int PROGRESS_ERROR_DATA = 7;
     private static final int RESULT_OFFLINE = 8;
@@ -226,10 +226,10 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
 
                 switch (addResult) {
                     case DOES_NOT_EXIST:
-                        result = PROGRESS_ERROR_TVDB_NOT_EXISTS;
+                        result = PROGRESS_ERROR_DOES_NOT_EXIST;
                         break;
                     case TMDB_ERROR:
-                        result = PROGRESS_ERROR_TVDB;
+                        result = PROGRESS_ERROR_TMDB;
                         break;
                     case HEXAGON_ERROR:
                         result = PROGRESS_ERROR_HEXAGON;
@@ -295,12 +295,12 @@ public class AddShowTask extends AsyncTask<Void, String, Void> {
             case PROGRESS_ERROR:
                 event = OnShowAddedEvent.failed(context, showTmdbId, showTitle);
                 break;
-            case PROGRESS_ERROR_TVDB:
+            case PROGRESS_ERROR_TMDB:
                 event = OnShowAddedEvent.failedDetails(context, showTmdbId, showTitle,
                         context.getString(R.string.api_error_generic,
-                                context.getString(R.string.tvdb)));
+                                context.getString(R.string.tmdb)));
                 break;
-            case PROGRESS_ERROR_TVDB_NOT_EXISTS:
+            case PROGRESS_ERROR_DOES_NOT_EXIST:
                 event = OnShowAddedEvent.failedDetails(context, showTmdbId, showTitle,
                         context.getString(R.string.tvdb_error_does_not_exist));
                 break;
