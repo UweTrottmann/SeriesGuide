@@ -223,8 +223,7 @@ object TimeTools {
     }
 
     /**
-     * Creates the show release time from a [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.RELEASE_TIME]
-     * encoded value.
+     * Creates the show release time from a [SgShow2.releaseTime] encoded value.
      *
      * If the encoded time passed is not from 0 to 2359 or the encoded minute is larger than 59,
      * a sensible default is returned.
@@ -251,7 +250,7 @@ object TimeTools {
      *
      * If [applyCorrections], uses [handleHourPastMidnight] and [applyUnitedStatesCorrections].
      *
-     * @param releaseTime The [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.RELEASE_TIME].
+     * @param releaseTime The [SgShow2.releaseTime].
      * @return The date is today or on the next day matching the given week day.
      */
     fun getShowReleaseDateTime(

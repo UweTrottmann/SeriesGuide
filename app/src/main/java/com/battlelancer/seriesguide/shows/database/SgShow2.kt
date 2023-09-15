@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows
 import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.util.TimeTools
@@ -101,7 +100,7 @@ data class SgShow2(
         /**
          * Used if the number of remaining episodes to watch for a show is not (yet) known.
          *
-         * @see Shows.UNWATCHED_COUNT
+         * @see SgShow2Columns.UNWATCHED_COUNT
          */
         const val UNKNOWN_UNWATCHED_COUNT = -1
 

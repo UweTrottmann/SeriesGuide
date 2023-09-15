@@ -13,6 +13,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
+/**
+ * Legacy episode entity kept for migration of legacy data. See {@link SgEpisode2}.
+ */
 @Entity(
         tableName = Tables.EPISODES,
         foreignKeys = {

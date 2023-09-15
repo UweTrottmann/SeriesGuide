@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.TimeTools
 
 /**
- * Show status valued as stored in the database in [com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows.STATUS].
+ * Show status valued as stored in the database in [SgShow2.status].
  */
 // Compare with https://www.themoviedb.org/bible/tv#59f7403f9251416e7100002b
 // Note: used to order shows by status, so ensure similar are next to each other.

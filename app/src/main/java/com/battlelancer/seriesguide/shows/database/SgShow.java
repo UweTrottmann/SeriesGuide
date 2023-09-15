@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
+/**
+ * Legacy show entity kept for migration of legacy data. See {@link SgShow2}.
+ */
 @Entity(tableName = Tables.SHOWS)
 public class SgShow {
 

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Activity
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 
 /**
@@ -12,16 +12,16 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
  */
 @Entity(
     tableName = Tables.ACTIVITY,
-    indices = [Index(value = [Activity.EPISODE_TVDB_OR_TMDB_ID, "activity_type"], unique = true)]
+    indices = [Index(value = [ActivityColumns.EPISODE_TVDB_OR_TMDB_ID, "activity_type"], unique = true)]
 )
 data class SgActivity (
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Activity._ID) val id: Long?,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = ActivityColumns._ID) val id: Long?,
     /**
      * Unique string identifier.
      */
-    @ColumnInfo(name = Activity.EPISODE_TVDB_OR_TMDB_ID) val episodeTvdbOrTmdbId: String,
-    @ColumnInfo(name = Activity.SHOW_TVDB_OR_TMDB_ID) val showTvdbOrTmdbId: String,
-    @ColumnInfo(name = Activity.TIMESTAMP_MS) val timestampMs: Long,
+    @ColumnInfo(name = ActivityColumns.EPISODE_TVDB_OR_TMDB_ID) val episodeTvdbOrTmdbId: String,
+    @ColumnInfo(name = ActivityColumns.SHOW_TVDB_OR_TMDB_ID) val showTvdbOrTmdbId: String,
+    @ColumnInfo(name = ActivityColumns.TIMESTAMP_MS) val timestampMs: Long,
     /**
      * One of [ActivityType].
      */
