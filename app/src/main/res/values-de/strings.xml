@@ -219,6 +219,7 @@
     <!-- Similar shows -->
     <string name="empty_no_results">Keine Ergebnisse</string>
     <string name="title_similar_shows">Ähnliche Serien</string>
+    <string name="title_similar_movies">Ähnliche Filme</string>
     <!-- Lists -->
     <string name="first_list">Erste Liste</string>
     <string name="list_add">Liste hinzufügen</string>

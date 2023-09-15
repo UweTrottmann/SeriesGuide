@@ -15,7 +15,7 @@ Version 70
 ----------
 *in development*
 
-
+* 🌟 Movies: support displaying similar movies.
 
 Version 69
 ----------
