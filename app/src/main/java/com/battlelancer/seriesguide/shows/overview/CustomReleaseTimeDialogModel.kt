@@ -3,11 +3,11 @@ package com.battlelancer.seriesguide.shows.overview
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -138,16 +138,11 @@ class CustomReleaseTimeDialogModel(application: Application, private val showId:
 
         val SHOW_ID_KEY = object : CreationExtras.Key<Long> {}
 
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                val application = extras[APPLICATION_KEY]!!
-                val showId = extras[SHOW_ID_KEY]!!
-
-                return CustomReleaseTimeDialogModel(application, showId) as T
+        val Factory = viewModelFactory {
+            initializer {
+                val application = this[APPLICATION_KEY]!!
+                val showId = this[SHOW_ID_KEY]!!
+                CustomReleaseTimeDialogModel(application, showId)
             }
         }
     }

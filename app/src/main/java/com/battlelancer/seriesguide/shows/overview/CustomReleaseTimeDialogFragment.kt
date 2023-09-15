@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.MutableCreationExtras
@@ -34,8 +33,7 @@ class CustomReleaseTimeDialogFragment() : AppCompatDialogFragment() {
 
     private val model: CustomReleaseTimeDialogModel by viewModels(
         extrasProducer = {
-            MutableCreationExtras().apply {
-                set(APPLICATION_KEY, requireActivity().application)
+            MutableCreationExtras(defaultViewModelCreationExtras).apply {
                 set(
                     CustomReleaseTimeDialogModel.SHOW_ID_KEY,
                     requireArguments().getLong(ARG_SHOW_ID)
