@@ -307,7 +307,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         /**
          * Display a [AddShowDialogFragment] for the given show.
          *
-         * Use if there is no actual search result, but just a TheTVDB id available. Uses the search
+         * Use if there is no actual search result but just an id available. Uses the search
          * or fall back language.
          */
         @JvmStatic

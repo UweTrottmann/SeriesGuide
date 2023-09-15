@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
 /**
- * Loads similar shows from TMDB and maps the results to standard search results with TheTVDB id.
+ * Loads similar shows from TMDB and maps the results to standard search results.
  */
 class SimilarShowsViewModel(
     application: Application,
