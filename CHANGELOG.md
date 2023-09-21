@@ -11,6 +11,12 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 70
+----------
+*in development*
+
+
+
 Version 69
 ----------
 *2023-09-15*
