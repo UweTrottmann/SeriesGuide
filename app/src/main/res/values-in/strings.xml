@@ -250,6 +250,7 @@
     <string name="action_movies_sort_title">Judul</string>
     <string name="action_movies_sort_release">Tanggal rilis</string>
     <string name="action_movies_filter">Filter movies</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tidak dapat menghitung statistik.</string>
     <string name="shows_finished">%s selesai ditonton</string>

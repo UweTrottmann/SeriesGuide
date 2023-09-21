@@ -219,7 +219,6 @@
     <!-- Similar shows -->
     <string name="empty_no_results">Keine Ergebnisse</string>
     <string name="title_similar_shows">Ähnliche Serien</string>
-    <string name="title_similar_movies">Ähnliche Filme</string>
     <!-- Lists -->
     <string name="first_list">Erste Liste</string>
     <string name="list_add">Liste hinzufügen</string>
@@ -255,6 +254,7 @@
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Erscheinungsdatum</string>
     <string name="action_movies_filter">Filme filtern</string>
+    <string name="title_similar_movies">Ähnliche Filme</string>
     <!-- Statistics -->
     <string name="statistics_failed">Statistik konnte nicht berechnet werden</string>
     <string name="shows_finished">%s komplett angesehen</string>

@@ -270,6 +270,7 @@
     <string name="action_movies_sort_title">Teitl</string>
     <string name="action_movies_sort_release">Dyddiad rhyddhau</string>
     <string name="action_movies_filter">hidlo ffilmiau</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Methu cyfrifo ystadegau</string>
     <string name="shows_finished">%s gorffen gwylio</string>

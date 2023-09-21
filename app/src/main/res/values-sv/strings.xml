@@ -254,6 +254,7 @@
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Utgivningsdatum</string>
     <string name="action_movies_filter">Filtrera filmer</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Gick inte att beräkna statistik.</string>
     <string name="shows_finished">%s färdigtittade</string>

@@ -254,6 +254,7 @@
     <string name="action_movies_sort_title">عنوان</string>
     <string name="action_movies_sort_release">تاریخ انتشار</string>
     <string name="action_movies_filter">پالایش فیلم‌ها</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
     <string name="shows_finished">%s تماشا پایان یافته</string>
