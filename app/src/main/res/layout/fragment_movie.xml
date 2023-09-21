@@ -87,10 +87,22 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewMovieDate"
                     android:layout_marginRight="@dimen/large_padding"
-                    android:layout_marginBottom="@dimen/large_padding"
                     android:layout_toRightOf="@id/frameLayoutMoviePoster"
                     android:text="@string/trailer"
                     app:icon="@drawable/ic_movie_white_24dp"
+                    app:iconGravity="start" />
+
+                <Button
+                    android:id="@+id/buttonMovieSimilar"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttonMovieTrailer"
+                    android:layout_marginRight="@dimen/large_padding"
+                    android:layout_marginBottom="@dimen/large_padding"
+                    android:layout_toRightOf="@id/frameLayoutMoviePoster"
+                    android:text="@string/title_similar_movies"
+                    app:icon="@drawable/ic_search_white_24dp"
                     app:iconGravity="start" />
 
             </RelativeLayout>

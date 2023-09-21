@@ -262,6 +262,7 @@
     <string name="action_movies_sort_title">Tytuł</string>
     <string name="action_movies_sort_release">Data premiery</string>
     <string name="action_movies_filter">Filtruj filmy</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nie można obliczyć statystyk.</string>
     <string name="shows_finished">Zakończono oglądanie %s</string>

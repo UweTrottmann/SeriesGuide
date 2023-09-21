@@ -262,6 +262,7 @@
     <string name="action_movies_sort_title">Название</string>
     <string name="action_movies_sort_release">Дата выпуска</string>
     <string name="action_movies_filter">Фильтр фильмов</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не удалось рассчитать статистику.</string>
     <string name="shows_finished">%s Просмотрено</string>

@@ -14,7 +14,7 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie
 internal class MoviesSearchAdapter(
     private val context: Context,
     private val itemClickListener: MovieClickListener
-) : PagingDataAdapter<BaseMovie, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+) : PagingDataAdapter<BaseMovie, RecyclerView.ViewHolder>(MovieViewHolder.DIFF_CALLBACK_BASE_MOVIE) {
 
     private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()
     private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
@@ -27,16 +27,6 @@ internal class MoviesSearchAdapter(
         (holder as MovieViewHolder).bindTo(
             getItem(position), context, dateFormatMovieReleaseDate, posterBaseUrl
         )
-    }
-
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<BaseMovie>() {
-            override fun areItemsTheSame(oldItem: BaseMovie, newItem: BaseMovie) =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: BaseMovie, newItem: BaseMovie): Boolean =
-                MovieViewHolder.areContentsTheSame(oldItem, newItem)
-        }
     }
 
 }

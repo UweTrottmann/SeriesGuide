@@ -254,6 +254,7 @@
     <string name="action_movies_sort_title">Nimi</string>
     <string name="action_movies_sort_release">Julkaisupäivä</string>
     <string name="action_movies_filter">Suodata elokuvat</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tilastojen laskeminen ei onnistunut.</string>
     <string name="shows_finished">%s katsottu loppuun</string>

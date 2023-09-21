@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.extensions.MovieActionsContract
 import com.battlelancer.seriesguide.movies.MovieLoader
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.movies.similar.SimilarMoviesActivity
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.settings.TmdbSettings
@@ -110,6 +111,16 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
         binding.buttonMovieTrailer.isGone = true
         binding.buttonMovieTrailer.isEnabled = false
+
+        // similar movies button
+        binding.buttonMovieSimilar.apply {
+            setOnClickListener {
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let { startActivity(SimilarMoviesActivity.intent(requireContext(), tmdbId, it)) }
+            }
+            isGone = true
+        }
 
         // important action buttons
         binding.containerMovieButtons.root.isGone = true
@@ -266,11 +277,13 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                         ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
                     true
                 }
+
                 R.id.menu_open_imdb -> {
                     movieDetails?.tmdbMovie()
                         ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
                     true
                 }
+
                 R.id.menu_open_metacritic -> {
                     // Metacritic only has English titles, so using the original title is the best bet.
                     val titleOrNull = movieDetails?.tmdbMovie()
@@ -278,14 +291,17 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                     titleOrNull?.let { Metacritic.searchForMovie(requireContext(), it) }
                     true
                 }
+
                 R.id.menu_open_tmdb -> {
                     WebTools.openInApp(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
                     true
                 }
+
                 R.id.menu_open_trakt -> {
                     WebTools.openInApp(requireContext(), TraktTools.buildMovieUrl(tmdbId))
                     true
                 }
+
                 else -> false
             }
         }
@@ -325,6 +341,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // show trailer button (but trailer is loaded separately, just for animation)
         binding.buttonMovieTrailer.isGone = false
+        // movie title should be available now, can show similar movies button
+        binding.buttonMovieSimilar.isGone = false
 
         // hide check-in if not connected to trakt or hexagon is enabled
         val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
@@ -564,6 +582,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 } else {
                     Utils.advertiseSubscription(context)
                 }
+
                 R.id.watched_popup_menu_set_not_watched -> MovieTools.unwatchedMovie(
                     context,
                     movieTmdbId
