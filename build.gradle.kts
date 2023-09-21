@@ -19,8 +19,8 @@ buildscript {
     val sgTargetSdk by extra(33) // Android 13 (T)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106903)
-    val sgVersionName by extra("69.0.3")
+    val sgVersionCode by extra(2107000)
+    val sgVersionName by extra("70.0.0")
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 
