@@ -11,6 +11,9 @@ https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-
 # update gems
 bundle update
 
+# look for outdated gems (notably github-pages)
+gem outdated
+
 # test locally
 bundle exec jekyll serve
 ```
