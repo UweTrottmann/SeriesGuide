@@ -55,7 +55,7 @@ androidx-test-runner = "androidx.test:runner:1.5.2"
 androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
 androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta02"
-billing = "com.android.billingclient:billing-ktx:5.2.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
+billing = "com.android.billingclient:billing-ktx:6.0.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
 # https://github.com/google/dagger/releases
 dagger = "com.google.dagger:dagger:2.47"
 dagger-compiler = "com.google.dagger:dagger-compiler:2.47"
