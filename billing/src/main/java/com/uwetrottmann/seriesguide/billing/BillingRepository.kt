@@ -341,7 +341,7 @@ class BillingRepository private constructor(
         val (billingResult, availableProducts) = playStoreBillingClient.queryProductDetails(params)
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                if (availableProducts != null && availableProducts.isNotEmpty()) {
+                if (!availableProducts.isNullOrEmpty()) {
                     // Update in the background to avoid blocking the main thread.
                     coroutineScope.launch(Dispatchers.IO) {
                         _productDetails.update { supportedProducts ->
@@ -378,7 +378,7 @@ class BillingRepository private constructor(
         val productId = augmentedProductDetails.productId
         val productDetails = augmentedProductDetails.productDetails
         val offers = productDetails.subscriptionOfferDetails
-        if (offers == null || offers.isEmpty()) {
+        if (offers.isNullOrEmpty()) {
             Timber.e("No offers for $productId, can not purchase.")
             return
         }
@@ -420,15 +420,15 @@ class BillingRepository private constructor(
                             && productId == SeriesGuideSku.X_SUB_ALL_ACCESS)
                 ) {
                     // Downgrade immediately, bill new price once renewed.
-                    BillingFlowParams.ProrationMode.IMMEDIATE_WITHOUT_PRORATION
+                    BillingFlowParams.SubscriptionUpdateParams.ReplacementMode.WITHOUT_PRORATION
                 } else {
                     // Upgrade immediately, credit existing purchase.
-                    BillingFlowParams.ProrationMode.IMMEDIATE_WITH_TIME_PRORATION
+                    BillingFlowParams.SubscriptionUpdateParams.ReplacementMode.WITH_TIME_PRORATION
                 }
                 setSubscriptionUpdateParams(
                     BillingFlowParams.SubscriptionUpdateParams.newBuilder()
                         .setOldPurchaseToken(oldPurchaseToken)
-                        .setReplaceProrationMode(prorationMode)
+                        .setSubscriptionReplacementMode(prorationMode)
                         .build()
                 )
             }
