@@ -23,7 +23,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.whenStateAtLeast
+import androidx.lifecycle.withStarted
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -139,11 +139,11 @@ class ShowsFragment : Fragment() {
             // release time has passed).
             scheduledUpdateJob?.cancel()
             scheduledUpdateJob = viewLifecycleOwner.lifecycleScope.launch {
+                Timber.d("Scheduled query update.")
+                delay(DateUtils.MINUTE_IN_MILLIS + Random.nextLong(DateUtils.SECOND_IN_MILLIS))
                 // Use STARTED as in multi-window this might be visible, but not RESUMED.
                 // On the downside this runs even if the tab is not visible (tied to RESUMED).
-                viewLifecycleOwner.lifecycle.whenStateAtLeast(Lifecycle.State.STARTED) {
-                    Timber.d("Scheduled query update")
-                    delay(DateUtils.MINUTE_IN_MILLIS + Random.nextLong(DateUtils.SECOND_IN_MILLIS))
+                viewLifecycleOwner.lifecycle.withStarted {
                     updateShowsQuery()
                 }
             }
