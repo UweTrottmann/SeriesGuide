@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.databinding.DialogRemoveBinding
@@ -17,6 +19,7 @@ import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
@@ -43,27 +46,30 @@ class RemoveShowDialogFragment : AppCompatDialogFragment() {
         binding.buttonNegative.setOnClickListener { dismiss() }
         binding.buttonPositive.setText(R.string.delete_show)
 
-        lifecycleScope.launchWhenStarted {
-            val titleOrNull = withContext(Dispatchers.IO) {
-                SgRoomDatabase.getInstance(requireContext()).sgShow2Helper().getShowTitle(showId)
-            }
-            withContext(Dispatchers.Main) {
-                if (titleOrNull == null) {
-                    // Failed to find show.
-                    Toast.makeText(context, R.string.delete_error, Toast.LENGTH_LONG).show()
-                    dismiss()
-                    return@withContext
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                val titleOrNull = withContext(Dispatchers.IO) {
+                    SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
+                        .getShowTitle(showId)
                 }
-                binding.also {
-                    it.textViewRemove.text = getString(R.string.confirm_delete, titleOrNull)
-                    it.buttonPositive.setOnClickListener {
-                        if (!SgSyncAdapter.isSyncActive(requireContext(), true)) {
-                            SgApp.getServicesComponent(requireContext()).showTools()
-                                .removeShow(showId)
-                            dismiss()
-                        }
+                withContext(Dispatchers.Main) {
+                    if (titleOrNull == null) {
+                        // Failed to find show.
+                        Toast.makeText(context, R.string.delete_error, Toast.LENGTH_LONG).show()
+                        dismiss()
+                        return@withContext
                     }
-                    showProgressBar(false)
+                    binding.also {
+                        it.textViewRemove.text = getString(R.string.confirm_delete, titleOrNull)
+                        it.buttonPositive.setOnClickListener {
+                            if (!SgSyncAdapter.isSyncActive(requireContext(), true)) {
+                                SgApp.getServicesComponent(requireContext()).showTools()
+                                    .removeShow(showId)
+                                dismiss()
+                            }
+                        }
+                        showProgressBar(false)
+                    }
                 }
             }
         }
