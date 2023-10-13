@@ -4,12 +4,15 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogListManageBinding
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 /**
  * Dialog to rename or remove a list.
@@ -52,8 +55,11 @@ class ListManageDialogFragment : AppCompatDialogFragment() {
             dismiss()
         }
 
-        lifecycleScope.launchWhenCreated {
-            configureViews()
+        // Delay loading data for views to after this function
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                configureViews()
+            }
         }
 
         return MaterialAlertDialogBuilder(requireContext())
