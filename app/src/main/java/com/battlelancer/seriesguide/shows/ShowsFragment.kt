@@ -368,7 +368,7 @@ class ShowsFragment : Fragment() {
     }
 
     private val onPreferenceChangeListener =
-        OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String ->
+        OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String? ->
             if (key == AdvancedSettings.KEY_UPCOMING_LIMIT) {
                 updateShowsQuery()
                 // refresh all list widgets
