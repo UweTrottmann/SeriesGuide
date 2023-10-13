@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.squareup.picasso.MemoryPolicy
@@ -14,6 +17,7 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
@@ -34,14 +38,17 @@ class ShortcutCreator(
 
     /**
      * Prepares the bitmap for the shortcut on [Dispatchers.IO],
-     * when ready suggest to (O+) or pins the shortcut.
+     * when ready suggest to (O+) or pins the shortcut if [lifecycleOwner]
+     * is at least in state STARTED.
      */
-    suspend fun prepareAndPinShortcut() {
-        val bitmap = withContext(Dispatchers.IO) {
-            createBitmap()
-        }
-        withContext(Dispatchers.Main) {
-            pinShortcut(bitmap)
+    fun prepareAndPinShortcut(lifecycleOwner: LifecycleOwner) {
+        lifecycleOwner.lifecycleScope.launch {
+            val bitmap = withContext(Dispatchers.IO) {
+                createBitmap()
+            }
+            if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                pinShortcut(bitmap)
+            }
         }
     }
 
@@ -133,7 +140,6 @@ class ShortcutCreator(
             Toast.makeText(context, R.string.app_not_available, Toast.LENGTH_LONG).show()
         }
     }
-
 
 
 }

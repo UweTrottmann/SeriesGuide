@@ -144,7 +144,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         HighlightTools.highlightSgToolbarItem(
             HighlightTools.Feature.SHOW_FILTER,
             this,
-            lifecycleScope,
+            lifecycle,
             R.id.menu_action_shows_search_filter,
             R.string.action_shows_filter
         ) {

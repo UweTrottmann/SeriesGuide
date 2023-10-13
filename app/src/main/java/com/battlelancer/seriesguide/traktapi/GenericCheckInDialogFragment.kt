@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withStarted
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.DialogCheckinBinding
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktCheckInBlockedEvent
 import com.battlelancer.seriesguide.util.Utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import kotlin.math.max
@@ -57,14 +59,20 @@ abstract class GenericCheckInDialogFragment : AppCompatDialogFragment() {
 
         setProgressLock(false)
 
-        lifecycleScope.launchWhenStarted {
-            // immediately start to check-in if the user has opted to skip entering a check-in message
+        lifecycleScope.launch {
+            // Proceed to check in if the user has opted to skip entering a message
             if (TraktSettings.useQuickCheckin(requireContext())) {
-                checkIn()
+                // Wait until STARTED (or cancel if DESTROYED)
+                withStarted {
+                    checkIn()
+                }
             }
         }
 
-        return MaterialAlertDialogBuilder(requireContext(), R.style.Theme_SeriesGuide_Dialog_CheckIn)
+        return MaterialAlertDialogBuilder(
+            requireContext(),
+            R.style.Theme_SeriesGuide_Dialog_CheckIn
+        )
             .setView(binding.root)
             .create()
     }
