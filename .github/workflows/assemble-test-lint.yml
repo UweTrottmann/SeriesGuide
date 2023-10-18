@@ -33,8 +33,10 @@ jobs:
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
+        # https://github.com/EnricoMi/publish-unit-test-result-action#configuration
         if: always() # also run if build step failed
         with:
+          comment_mode: off # do not create comment on pull requests
           junit_files: app/build/test-results/**/*.xml
 
   lint:
