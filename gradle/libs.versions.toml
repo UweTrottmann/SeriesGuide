@@ -103,7 +103,7 @@ truth = "com.google.truth:truth:1.1.5" # https://github.com/google/truth/release
 
 [plugins]
 # https://developer.android.com/build/releases/gradle-plugin
-android = { id = "com.android.application", version = "8.1.0" }
+android = { id = "com.android.application", version = "8.1.2" }
 # https://kotlinlang.org/docs/releases.html#release-details
 kotlin = { id = "org.jetbrains.kotlin.android", version = "1.8.22" }
 # https://github.com/ben-manes/gradle-versions-plugin/releases

@@ -403,7 +403,10 @@ class SgPreferencesFragment : BasePreferencesFragment(),
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == null) {
+            return // Preferences were cleared, do nothing.
+        }
         val pref: Preference? = findPreference(key)
         if (pref != null) {
             BackupManager(pref.context).dataChanged()

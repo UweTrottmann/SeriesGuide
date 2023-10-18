@@ -333,6 +333,7 @@ class ShowsFragment : Fragment() {
         override fun onSignInClicked() {
             startActivity(Intent(requireActivity(), MoreOptionsActivity::class.java))
             // Launching a top activity, adjust animation to match.
+            @Suppress("DEPRECATION") // just deprecated for predictive back
             requireActivity().overridePendingTransition(
                 R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg
             )
@@ -368,7 +369,7 @@ class ShowsFragment : Fragment() {
     }
 
     private val onPreferenceChangeListener =
-        OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String ->
+        OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String? ->
             if (key == AdvancedSettings.KEY_UPCOMING_LIMIT) {
                 updateShowsQuery()
                 // refresh all list widgets
