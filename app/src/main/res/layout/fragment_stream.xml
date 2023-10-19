@@ -27,6 +27,7 @@
         </ScrollView>
 
         <!-- Add large bottom padding to make room for FAB if scrolled to bottom. -->
+        <!-- Setting fast scroller in code. -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewStream"
             android:layout_width="match_parent"

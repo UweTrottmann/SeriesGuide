@@ -50,10 +50,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewManageLists"
+            style="@style/Widget.SeriesGuide.RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:scrollbars="vertical"
             tools:listitem="@layout/item_list_checked" />
 
     </LinearLayout>

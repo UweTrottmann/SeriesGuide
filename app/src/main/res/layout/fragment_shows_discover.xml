@@ -33,13 +33,12 @@
         <!-- Add enough bottom padding so last item is above powered by text. -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewShowsDiscover"
+            style="@style/Widget.SeriesGuide.RecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="40dp"
-            android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
