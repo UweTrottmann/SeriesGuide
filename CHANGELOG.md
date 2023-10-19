@@ -15,6 +15,8 @@ Version 70
 ----------
 *in development*
 
+* 🔨 Get started: allow notification button now stays hidden after granting notification permission.
+
 #### 70.0.0 🧪
 *2023-09-21*
 
