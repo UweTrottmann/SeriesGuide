@@ -16,6 +16,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentContainerMovie"
+        style="@style/Widget.SeriesGuide.NestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false">

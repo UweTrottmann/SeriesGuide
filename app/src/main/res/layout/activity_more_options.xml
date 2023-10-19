@@ -16,6 +16,7 @@
         <include layout="@layout/top_app_bar_elevating" />
 
         <androidx.core.widget.NestedScrollView
+            style="@style/Widget.SeriesGuide.NestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
