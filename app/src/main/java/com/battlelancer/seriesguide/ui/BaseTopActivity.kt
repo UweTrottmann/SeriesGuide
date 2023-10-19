@@ -71,6 +71,8 @@ abstract class BaseTopActivity : BaseMessageActivity() {
     fun setupBottomNavigation(@IdRes selectedItemId: Int) {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.selectedItemId = selectedItemId
+        // Disable hideous bold font for active item.
+        bottomNav.setItemTextAppearanceActiveBoldEnabled(false)
         bottomNav.setOnItemSelectedListener {  item ->
             onNavItemClick(item.itemId)
             false // Do not change selected item.
