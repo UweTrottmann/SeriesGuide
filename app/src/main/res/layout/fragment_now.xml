@@ -32,8 +32,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:scrollbarStyle="outsideOverlay" />
+            android:paddingBottom="8dp" />
 
         <!-- Use of CoordinatorLayout shifts layouts down, counter by moving inline snackbar up. -->
         <include

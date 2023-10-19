@@ -288,6 +288,7 @@
     <style name="Widget.SeriesGuide.RecyclerView">
         <!-- Scrollbars on View can not be enabled via code (initializeScrollbars is not called). -->
         <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
     </style>
 
     <!-- Easy layouting -->

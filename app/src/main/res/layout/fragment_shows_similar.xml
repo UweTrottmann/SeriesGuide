@@ -39,7 +39,6 @@
             android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="40dp"
-            android:scrollbarStyle="outsideOverlay"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

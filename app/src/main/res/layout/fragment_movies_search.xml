@@ -37,7 +37,6 @@
             android:paddingTop="@dimen/grid_item_margin_vertical"
             android:paddingRight="@dimen/grid_item_margin_horizontal"
             android:paddingBottom="40dp"
-            android:scrollbarStyle="outsideOverlay"
             tools:listitem="@layout/item_discover_movie" />
 
         <TextView
