@@ -15,6 +15,7 @@
         android:text="@string/now_movies_empty"
         android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
 
+    <!-- Setting fast scroller in code. -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMoviesWatched"
         android:layout_width="match_parent"

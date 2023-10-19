@@ -55,6 +55,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <!-- Enable nested scrolling to work with CoordinatorLayout. -->
+    <!-- Setting fast scroller in code. -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEpisodes"
         android:layout_width="0dp"

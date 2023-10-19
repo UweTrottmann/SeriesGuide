@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".shows.calendar.UpcomingFragment">
 
+    <!-- Setting fast scroller in code. -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCalendarUpcoming"
         android:layout_width="match_parent"
