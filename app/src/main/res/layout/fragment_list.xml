@@ -17,6 +17,7 @@
         tools:drawableTint="?attr/sgColorIcon"
         tools:drawableTop="@drawable/ic_list_white_24dp" />
 
+    <!-- Setting fast scroller in code. -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewListItems"
         android:layout_width="match_parent"

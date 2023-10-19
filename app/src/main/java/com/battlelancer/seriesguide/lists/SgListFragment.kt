@@ -19,6 +19,7 @@ import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
 import org.greenrobot.eventbus.EventBus
@@ -57,6 +58,7 @@ class SgListFragment : Fragment() {
         val adapter = SgListItemAdapter(requireContext(), onItemClickListener)
 
         val recyclerView = binding.recyclerViewListItems.also {
+            SgFastScroller(requireContext(), it)
             it.setHasFixedSize(true)
             it.layoutManager =
                 AutoGridLayoutManager(
