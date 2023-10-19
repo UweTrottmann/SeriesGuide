@@ -27,13 +27,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewNow"
+            style="@style/Widget.SeriesGuide.RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical" />
+            android:scrollbarStyle="outsideOverlay" />
 
         <!-- Use of CoordinatorLayout shifts layouts down, counter by moving inline snackbar up. -->
         <include

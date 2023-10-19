@@ -18,12 +18,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSelection"
+        style="@style/Widget.SeriesGuide.RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/default_padding"
         android:paddingTop="@dimen/default_padding"
-        android:scrollbars="vertical"
         tools:listitem="@layout/item_notification_selection" />
 
 </LinearLayout>

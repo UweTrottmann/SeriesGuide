@@ -29,6 +29,7 @@
         <!-- Add enough bottom padding so last item is above powered by text. -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMoviesSearch"
+            style="@style/Widget.SeriesGuide.RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -37,7 +38,6 @@
             android:paddingRight="@dimen/grid_item_margin_horizontal"
             android:paddingBottom="40dp"
             android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical"
             tools:listitem="@layout/item_discover_movie" />
 
         <TextView

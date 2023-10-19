@@ -285,6 +285,11 @@
         <item name="android:scrollbars">vertical</item>
     </style>
 
+    <style name="Widget.SeriesGuide.RecyclerView">
+        <!-- Scrollbars on View can not be enabled via code (initializeScrollbars is not called). -->
+        <item name="android:scrollbars">vertical</item>
+    </style>
+
     <!-- Easy layouting -->
     <style name="DefaultPadding" />
 
