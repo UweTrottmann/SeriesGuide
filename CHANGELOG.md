@@ -17,6 +17,7 @@ Version 70
 
 * 🔨 Get started: allow notification button now stays hidden after granting notification permission.
 * 🔨 User interface: restore scrollbars wherever they were missing.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 70.0.0 🧪
 *2023-09-21*

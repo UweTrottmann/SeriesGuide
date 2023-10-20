@@ -258,7 +258,7 @@
     <string name="action_movies_sort_title">Наслов</string>
     <string name="action_movies_sort_release">Датум емитовања</string>
     <string name="action_movies_filter">Филтрирати филмове</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Слични филмови</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nije bilo moguće obraditi statistiku</string>
     <string name="shows_finished">%s завршио гледање</string>

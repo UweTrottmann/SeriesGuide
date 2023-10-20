@@ -254,7 +254,7 @@
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Data de estreia</string>
     <string name="action_movies_filter">Filtrar filmes</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Filmes semelhantes</string>
     <!-- Statistics -->
     <string name="statistics_failed">Não foi possível calcular as estatísticas.</string>
     <string name="shows_finished">%s vistas completamente</string>
