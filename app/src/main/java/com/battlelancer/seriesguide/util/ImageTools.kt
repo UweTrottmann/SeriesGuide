@@ -85,6 +85,7 @@ object ImageTools {
                 imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
                     "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
                 }
+
                 imagePath.startsWith("/") -> {
                     // TMDB images have no path at all, but always start with /.
                     // Use small size based on density, or original size (as large as possible).
@@ -94,6 +95,7 @@ object ImageTools {
                         "${TmdbSettings.getPosterBaseUrl(context)}$imagePath"
                     }
                 }
+
                 else -> {
                     "${TVDB_MIRROR_BANNERS}$imagePath"
                 }
@@ -120,6 +122,7 @@ object ImageTools {
                 imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
                     "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
                 }
+
                 imagePath.startsWith("/") -> {
                     // TMDB images have no path at all, but always start with /.
                     // Use small size based on density, or original size (as large as possible).
@@ -129,6 +132,7 @@ object ImageTools {
                         TmdbSettings.getStillUrl(context, imagePath)
                     }
                 }
+
                 else -> {
                     "${TVDB_MIRROR_BANNERS}$imagePath"
                 }
