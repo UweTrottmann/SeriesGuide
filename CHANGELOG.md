@@ -15,6 +15,8 @@ Version 70
 ----------
 *in development*
 
+* 🔨 Android 14: fix automatic syncing.
+
 #### 70.0.1 🧪
 *2023-10-20*
 
