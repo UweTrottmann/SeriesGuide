@@ -7,6 +7,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SyncResult
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.widget.Toast
@@ -265,11 +266,28 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         fun requestSyncIfTime(context: Context) {
             // guard against scheduling too many sync requests
             val account = AccountUtils.getAccount(context)
-            if (account == null ||
-                ContentResolver.isSyncPending(account, SgApp.CONTENT_AUTHORITY)) {
+            if (account == null) {
+                Timber.d("Requesting sync: no account, skip.")
                 return
             }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                // On Android 14 (API 34) the sync is always returned as pending
+                // after setSyncAutomatically true was called (and remains so even if a sync was
+                // completed or setSyncAutomatically false is called).
+                // The next best thing to avoid scheduling too many syncs is checking if one
+                // is active instead of pending.
+                if (ContentResolver.isSyncActive(account, SgApp.CONTENT_AUTHORITY)) {
+                    Timber.d("Requesting sync: sync active, skip.")
+                    return
+                }
+            } else {
+                if (ContentResolver.isSyncPending(account, SgApp.CONTENT_AUTHORITY)) {
+                    Timber.d("Requesting sync: sync pending, skip.")
+                    return
+                }
+            }
             if (!isTimeForSync(context, System.currentTimeMillis())) {
+                Timber.d("Requesting sync: did sync recently, skip.")
                 return
             }
             requestSyncIfConnected(context, SyncType.DELTA, 0)
@@ -293,6 +311,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         private fun requestSyncIfConnected(context: Context, syncType: SyncType, showId: Long) {
             if (!AndroidUtils.isNetworkConnected(context) || !isSyncAutomatically(context)) {
                 // offline or auto-sync disabled: abort
+                Timber.d(("Requesting sync: offline or disabled, skip."))
                 return
             }
             val args = Bundle()
@@ -375,6 +394,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
          */
         private fun requestSync(context: Context, args: Bundle) {
             val account = AccountUtils.getAccount(context) ?: return
+            Timber.d("Requesting sync: queueing request!")
             ContentResolver.requestSync(account, SgApp.CONTENT_AUTHORITY, args)
         }
 
