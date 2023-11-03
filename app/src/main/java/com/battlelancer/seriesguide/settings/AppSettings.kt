@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.settings
 import android.content.Context
 import android.content.pm.PackageManager
 import android.text.format.DateUtils
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.util.Errors
@@ -21,6 +22,7 @@ object AppSettings {
     const val KEY_ASKED_FOR_FEEDBACK = "askedForFeedback"
     const val KEY_SEND_ERROR_REPORTS = "com.battlelancer.seriesguide.sendErrorReports"
     const val KEY_USER_DEBUG_MODE_ENBALED = "com.battlelancer.seriesguide.userDebugModeEnabled"
+    const val KEY_DEMO_MODE_ENABLED = "com.uwetrottmann.seriesguide.demoMode"
 
     /**
      * Returns the version code of the previously installed version. Is the current version on fresh
@@ -89,5 +91,23 @@ object AppSettings {
     fun isUserDebugModeEnabled(context: Context): Boolean {
         return BuildConfig.DEBUG || PreferenceManager.getDefaultSharedPreferences(context)
             .getBoolean(KEY_USER_DEBUG_MODE_ENBALED, false)
+    }
+
+    fun setDemoModeState(context: Context, isEnabled: Boolean) {
+        if (!BuildConfig.DEBUG) {
+            return // Prevent enabling on release builds.
+        }
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(KEY_DEMO_MODE_ENABLED, isEnabled)
+        }
+    }
+
+    /**
+     * Returns if demo mode should be enabled (e.g. enables fetching of demo images).
+     * Only works on debug builds.
+     */
+    fun isDemoModeEnabled(context: Context): Boolean {
+        return BuildConfig.DEBUG && PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(KEY_DEMO_MODE_ENABLED, false)
     }
 }
