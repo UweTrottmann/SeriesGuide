@@ -16,6 +16,7 @@ Version 70
 *in development*
 
 * 🔨 Android 14: fix automatic syncing.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 70.0.1 🧪
 *2023-10-20*
