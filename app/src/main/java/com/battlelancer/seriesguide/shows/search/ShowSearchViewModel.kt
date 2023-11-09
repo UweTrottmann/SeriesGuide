@@ -1,4 +1,5 @@
-// Copyright 2023 Uwe Trottmann
+// Copyright 2021-2023 Uwe Trottmann
+// Copyright 2018 Thouseef Hameed
 // SPDX-License-Identifier: Apache-2.0
 
 package com.battlelancer.seriesguide.shows.search
