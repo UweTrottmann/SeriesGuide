@@ -1,3 +1,6 @@
+// Copyright 2014-2019 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.api;
 
 import static com.battlelancer.seriesguide.api.constants.IncomingConstants.ACTION_SUBSCRIBE;

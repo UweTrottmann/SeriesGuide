@@ -1,3 +1,6 @@
+// Copyright 2019, 2020, 2021, 2023 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.uwetrottmann.seriesguide.billing
 
 import android.app.Activity

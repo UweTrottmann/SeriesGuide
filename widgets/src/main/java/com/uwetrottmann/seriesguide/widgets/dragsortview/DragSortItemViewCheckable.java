@@ -1,3 +1,6 @@
+// Copyright 2014, 2015, 2017, 2019 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.uwetrottmann.seriesguide.widgets.dragsortview;
 
 import android.content.Context;

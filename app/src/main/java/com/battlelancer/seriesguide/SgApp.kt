@@ -1,3 +1,7 @@
+// Copyright 2011-2022 Uwe Trottmann
+// Copyright 2013 Andrew Neal
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide
 
 import android.app.Application

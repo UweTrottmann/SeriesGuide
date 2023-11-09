@@ -1,3 +1,6 @@
+// Copyright 2023 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.extensions;
 
 import static com.battlelancer.seriesguide.api.constants.OutgoingConstants.ACTION_TYPE_EPISODE;
