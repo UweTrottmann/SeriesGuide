@@ -19,6 +19,9 @@ import java.lang.annotation.RetentionPolicy;
 @SuppressWarnings("WeakerAccess")
 public class SeriesGuideContract {
 
+    /**
+     * Legacy show columns, kept for migration of legacy data. See {@link SgShow2Columns}.
+     */
     public interface ShowsColumns {
 
         /**
@@ -283,6 +286,9 @@ public class SeriesGuideContract {
         String UNWATCHED_COUNT = "series_unwatched_count";
     }
 
+    /**
+     * Legacy season columns, kept for migration of legacy data. See {@link SgSeason2Columns}.
+     */
     public interface SeasonsColumns {
 
         /**
@@ -321,6 +327,9 @@ public class SeriesGuideContract {
         String TAGS = "seasonposter";
     }
 
+    /**
+     * Legacy episode columns, kept for migration of legacy data. See {@link SgEpisode2Columns}.
+     */
     interface EpisodesColumns {
 
         /**
@@ -432,24 +441,6 @@ public class SeriesGuideContract {
     public interface SgShow2Columns extends BaseColumns {
 
         /**
-         * SgShow2 table.
-         * See {@link SeriesGuideProvider#SG_SHOW} and {@link SeriesGuideProvider#SG_SHOW_ID}.
-         */
-        Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_SG_SHOW)
-                .build();
-
-        /**
-         * Use if multiple items get returned
-         */
-        String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.sgshow";
-
-        /**
-         * Use if a single item is returned
-         */
-        String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.sgshow";
-
-        /**
          * This column is NOT in this table, it is for reference purposes only.
          */
         String REF_SHOW_ID = "series_id";
@@ -466,8 +457,10 @@ public class SeriesGuideContract {
         String TVDB_ID = "series_tvdb_id";
 
         /**
-         * TheTVDB slug for this show to build URLs. Always a string, but may be a number string if
+         * Slug for this show to build URLs. Always a string, but may be a number string if
          * no slug is set (still safe to build URL with). May be null or empty.
+         * <p>
+         * Currently not used.
          */
         String SLUG = "series_slug";
 
@@ -702,7 +695,9 @@ public class SeriesGuideContract {
         String LASTUPDATED = "series_lastupdate";
 
         /**
-         * Last time show was edited on theTVDb.com (lastupdated field). Added in db version 27.
+         * Last time show was edited. Added in db version 27.
+         * <p>
+         * Currently not used.
          */
         String LASTEDIT = "series_lastedit";
 
@@ -713,7 +708,8 @@ public class SeriesGuideContract {
         String LASTWATCHEDID = "series_lastwatchedid";
 
         /**
-         * Store the time an episode was last watched for this show. Added in
+         * Store the time an episode was last watched for this show.
+         * Added with {@link SeriesGuideDatabase#DBVER_39_SHOW_LAST_WATCHED}.
          */
         String LASTWATCHED_MS = "series_lastwatched_ms";
 
@@ -769,38 +765,9 @@ public class SeriesGuideContract {
         String SORT_STATUS = STATUS + " DESC";
         String SORT_LATEST_EPISODE_THEN_STATUS = NEXTAIRDATEMS + " DESC," + SORT_STATUS;
 
-        static Uri buildIdUri(long rowId) {
-            return CONTENT_URI.buildUpon().appendPath(String.valueOf(rowId)).build();
-        }
-
-        static long getId(Uri uri) {
-            String lastPathSegment = uri.getLastPathSegment();
-            if (lastPathSegment == null) {
-                throw new IllegalArgumentException("Path of URI is empty: " + uri);
-            }
-            return Long.parseLong(lastPathSegment);
-        }
     }
 
     public interface SgSeason2Columns extends BaseColumns {
-
-        /**
-         * SgSeason2 table.
-         * See {@link SeriesGuideProvider#SG_SEASON} and {@link SeriesGuideProvider#SG_SEASON_ID}.
-         */
-        Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_SG_SEASON)
-                .build();
-
-        /**
-         * Use if multiple items get returned
-         */
-        String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.sgseason";
-
-        /**
-         * Use if a single item is returned
-         */
-        String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.sgseason";
 
         /**
          * This column is NOT in this table, it is for reference purposes only.
@@ -857,35 +824,9 @@ public class SeriesGuideContract {
          * Integer to order seasons by, typically equal to the season number.
          */
         String ORDER = "season_order";
-
-        static long getId(Uri uri) {
-            String lastPathSegment = uri.getLastPathSegment();
-            if (lastPathSegment == null) {
-                throw new IllegalArgumentException("Path of URI is empty: " + uri);
-            }
-            return Long.parseLong(lastPathSegment);
-        }
     }
 
     public interface SgEpisode2Columns extends BaseColumns {
-
-        /**
-         * SgEpisode2 table.
-         * See {@link SeriesGuideProvider#SG_EPISODE} and {@link SeriesGuideProvider#SG_EPISODE_ID}.
-         */
-        Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_SG_EPISODE)
-                .build();
-
-        /**
-         * Use if multiple items get returned
-         */
-        String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.sgepisode";
-
-        /**
-         * Use if a single item is returned
-         */
-        String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.sgepisode";
 
         /**
          * The TMDB ID of an episode, may be null for existing shows
@@ -983,7 +924,7 @@ public class SeriesGuideContract {
         /**
          * Note: currently unused, TMDB does not provide this info.
          * See {@link ShowTools2}.
-         *
+         * <p>
          * Last time episode was edited (lastupdated field) in Unix time (seconds).
          * Added in {@link SeriesGuideDatabase#DBVER_27_IMDBIDSLASTEDIT}.
          *
@@ -997,7 +938,7 @@ public class SeriesGuideContract {
         /**
          * Note: currently last updated value is unused, all episodes are always updated.
          * See {@link ShowTools2}.
-         *
+         * <p>
          * Stores the last edited time after fetching full episode data from TVDB.
          * Added in {@link SeriesGuideDatabase#DBVER_41_EPISODE_LAST_UPDATED}.
          *
@@ -1164,7 +1105,7 @@ public class SeriesGuideContract {
         String LAST_UPDATED = "movies_last_updated";
     }
 
-    interface ActivityColumns {
+    public interface ActivityColumns extends BaseColumns {
 
         String TIMESTAMP_MS = "activity_time";
         /**
@@ -1186,129 +1127,32 @@ public class SeriesGuideContract {
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
             + SgApp.CONTENT_AUTHORITY);
 
-    public static final String PATH_CLOSE = "close";
-
-    public static final String PATH_SHOWS = "shows";
-
-    public static final String PATH_SEASONS = "seasons";
-
-    public static final String PATH_EPISODES = "episodes";
-
-    public static final String PATH_SG_SHOW = "sg_show";
-    public static final String PATH_SG_SEASON = "sg_season";
-    public static final String PATH_SG_EPISODE = "sg_episode";
-
-    public static final String PATH_OFSHOW = "ofshow";
-
-    public static final String PATH_OFSEASON = "ofseason";
-
-    public static final String PATH_WITHSHOW = "withshow";
-
-    public static final String PATH_FILTER = "filter";
-
     public static final String PATH_LISTS = "lists";
 
     public static final String PATH_LIST_ITEMS = "listitems";
 
     public static final String PATH_WITH_DETAILS = "with_details";
 
-    public static final String PATH_WITH_NEXT_EPISODE = "with-next-episode";
-
-    public static final String PATH_WITH_LAST_EPISODE = "with-last-episode";
-
     public static final String PATH_MOVIES = "movies";
-
-    public static final String PATH_ACTIVITY = "activity";
 
     public static final String PATH_JOBS = "jobs";
 
+    /**
+     * Legacy show columns, kept for migration of legacy data. See {@link SgShow2Columns}.
+     */
     public static class Shows implements ShowsColumns, BaseColumns {
-
-        /**
-         * Shows table.
-         * See {@link SeriesGuideProvider#SHOWS} and {@link SeriesGuideProvider#SHOWS_ID}.
-         */
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_SHOWS)
-                .build();
-
-        /**
-         * Use if multiple items get returned
-         */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.show";
-
-        /**
-         * Use if a single item is returned
-         */
-        public static final String CONTENT_ITEM_TYPE
-                = "vnd.android.cursor.item/vnd.seriesguide.show";
-
-        public static Uri buildShowUri(String showId) {
-            return CONTENT_URI.buildUpon().appendPath(showId).build();
-        }
-
-        public static String getShowId(Uri uri) {
-            return uri.getLastPathSegment();
-        }
     }
 
+    /**
+     * Legacy episode columns, kept for migration of legacy data. See {@link SgEpisode2Columns}.
+     */
     public static class Episodes implements EpisodesColumns, BaseColumns {
-
-        /**
-         * Episodes table.
-         * See {@link SeriesGuideProvider#EPISODES} and {@link SeriesGuideProvider#EPISODES_ID}.
-         */
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_EPISODES).build();
-
-        /**
-         * Use if multiple items get returned
-         */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.episode";
-
-        /**
-         * Use if a single item is returned
-         */
-        public static final String CONTENT_ITEM_TYPE
-                = "vnd.android.cursor.item/vnd.seriesguide.episode";
-
-        public static Uri buildEpisodeUri(String episodeId) {
-            return CONTENT_URI.buildUpon().appendPath(episodeId).build();
-        }
-
-        public static String getEpisodeId(Uri uri) {
-            return uri.getLastPathSegment();
-        }
     }
 
+    /**
+     * Legacy season columns, kept for migration of legacy data. See {@link SgSeason2Columns}.
+     */
     public static class Seasons implements SeasonsColumns, BaseColumns {
-
-        /**
-         * Seasons table.
-         * See {@link SeriesGuideProvider#SEASONS} and {@link SeriesGuideProvider#SEASONS_ID}.
-         */
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SEASONS)
-                .build();
-
-        /**
-         * Use if multiple items get returned
-         */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.season";
-
-        /**
-         * Use if a single item is returned
-         */
-        public static final String CONTENT_ITEM_TYPE
-                = "vnd.android.cursor.item/vnd.seriesguide.season";
-
-        public static Uri buildSeasonUri(String seasonTvdbId) {
-            return CONTENT_URI.buildUpon().appendPath(seasonTvdbId).build();
-        }
-
-        public static String getSeasonId(Uri uri) {
-            return uri.getLastPathSegment();
-        }
-
     }
 
     public static class Lists implements ListsColumns, BaseColumns {
@@ -1407,11 +1251,6 @@ public class SeriesGuideContract {
             return generateListItemId(String.valueOf(itemStableId), type, listId);
         }
 
-        public static String generateListItemIdWildcard(int itemStableId, int type) {
-            // The SQL % wildcard is added by the content provider
-            return itemStableId + "-" + type + "-";
-        }
-
         /**
          * Splits the id into the parts used to create it with {@link #generateListItemId(int, int,
          * String)}.
@@ -1496,26 +1335,6 @@ public class SeriesGuideContract {
 
         public static String getId(Uri uri) {
             return uri.getPathSegments().get(1);
-        }
-    }
-
-    public static class Activity implements ActivityColumns, BaseColumns {
-
-        /**
-         * Activity table.
-         * See {@link SeriesGuideProvider#ACTIVITY}.
-         */
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_ACTIVITY)
-                .build();
-
-        /**
-         * Use if multiple items get returned
-         */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.activity";
-
-        public static Uri buildActivityUri(String episodeTvdbId) {
-            return CONTENT_URI.buildUpon().appendPath(episodeTvdbId).build();
         }
     }
 

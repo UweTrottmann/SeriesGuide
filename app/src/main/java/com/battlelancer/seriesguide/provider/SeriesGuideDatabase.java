@@ -439,6 +439,7 @@ public class SeriesGuideDatabase {
             // by default only ASCII characters are case folded (so searching 'a' is like 'A').
             // Using 'remove_diacritics=0' so e.g. 'ö' does not match 'o'.
             // https://www.sqlite.org/fts3.html#tokenizer
+            // Note: remove_diacritics=2 is not supported until https://sqlite.org/releaselog/3_27_0.html (Android 11/API 30).
             + Tables.EPISODES_SEARCH + " USING fts4(tokenize=unicode61 'remove_diacritics=0',"
 
             // set episodes table as external content table

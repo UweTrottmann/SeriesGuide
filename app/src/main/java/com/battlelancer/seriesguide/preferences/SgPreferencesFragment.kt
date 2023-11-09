@@ -381,7 +381,8 @@ class SgPreferencesFragment : BasePreferencesFragment(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (REQUEST_CODE_RINGTONE == requestCode) {
             if (data != null) {
-                var ringtoneUri: Uri? = data.getParcelableExtra(
+                // Ringtone preference only used before Android 8.0, no need to use new API.
+                @Suppress("DEPRECATION") var ringtoneUri: Uri? = data.getParcelableExtra(
                     RingtoneManager.EXTRA_RINGTONE_PICKED_URI
                 )
                 if (AndroidUtils.isNougatOrHigher) {
@@ -398,10 +399,14 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             }
             return
         }
+        @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == null) {
+            return // Preferences were cleared, do nothing.
+        }
         val pref: Preference? = findPreference(key)
         if (pref != null) {
             BackupManager(pref.context).dataChanged()

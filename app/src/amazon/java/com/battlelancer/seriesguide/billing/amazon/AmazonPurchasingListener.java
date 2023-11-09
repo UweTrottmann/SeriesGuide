@@ -76,7 +76,7 @@ public class AmazonPurchasingListener implements PurchasingListener {
 
     /**
      * Callback for {@link PurchasingService#getPurchaseUpdates}.
-     *
+     * <p>
      * You will receive receipts for all possible purchase history from this callback.
      */
     @Override

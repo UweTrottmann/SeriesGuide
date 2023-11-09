@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
 /**
- * Loads similar shows from TMDB and maps the results to standard search results with TheTVDB id.
+ * Loads similar shows from TMDB and maps the results to standard search results.
  */
 class SimilarShowsViewModel(
     application: Application,
@@ -38,7 +38,7 @@ class SimilarShowsViewModel(
             val page = try {
                 val response = SgApp.getServicesComponent(getApplication()).tmdb()
                     .tvService()
-                    .similar(showTmdbId, null, languageCode)
+                    .recommendations(showTmdbId, null, languageCode)
                     .awaitResponse()
                 if (response.isSuccessful) {
                     response.body()

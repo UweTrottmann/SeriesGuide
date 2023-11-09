@@ -54,6 +54,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
             // Use a custom animation when navigating away from a top activity
             // but not when exiting the app (use the default system animations).
             if (!isTaskRoot) {
+                @Suppress("DEPRECATION") // just deprecated for predictive back
                 overridePendingTransition(
                     R.anim.activity_fade_enter_sg,
                     R.anim.activity_fade_exit_sg
@@ -70,6 +71,8 @@ abstract class BaseTopActivity : BaseMessageActivity() {
     fun setupBottomNavigation(@IdRes selectedItemId: Int) {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.selectedItemId = selectedItemId
+        // Disable hideous bold font for active item.
+        bottomNav.setItemTextAppearanceActiveBoldEnabled(false)
         bottomNav.setOnItemSelectedListener {  item ->
             onNavItemClick(item.itemId)
             false // Do not change selected item.
@@ -126,6 +129,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
         }
         if (launchIntent != null) {
             startActivity(launchIntent)
+            @Suppress("DEPRECATION") // just deprecated for predictive back
             overridePendingTransition(R.anim.activity_fade_enter_sg, R.anim.activity_fade_exit_sg)
         }
     }

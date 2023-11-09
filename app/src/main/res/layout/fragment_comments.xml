@@ -35,6 +35,7 @@
             </ScrollView>
 
             <!-- Add enough bottom padding so last item is above powered by text. -->
+            <!-- Setting fast scroller in code. -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewComments"
                 android:layout_width="match_parent"

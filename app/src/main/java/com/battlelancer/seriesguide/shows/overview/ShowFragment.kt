@@ -16,8 +16,6 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenStarted
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
@@ -48,7 +46,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.entities.Credits
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -536,17 +533,12 @@ class ShowFragment() : Fragment() {
         // create the shortcut
         show?.also { show ->
             if (show.tmdbId != null && show.posterSmall != null) {
-                val shortcutLiveData = ShortcutCreator(
+                ShortcutCreator(
                     requireContext(),
                     show.title,
                     show.posterSmall,
                     show.tmdbId
-                )
-                viewLifecycleOwner.lifecycleScope.launch {
-                    whenStarted {
-                        shortcutLiveData.prepareAndPinShortcut()
-                    }
-                }
+                ).prepareAndPinShortcut(viewLifecycleOwner)
             }
         }
     }

@@ -70,7 +70,7 @@ class ShowsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is FirstRunViewHolder -> return // do nothing
+            is FirstRunViewHolder -> holder.bind() // do nothing
             is ShowsViewHolder -> holder.bind(getItem(position), context)
             else -> throw IllegalArgumentException("Unknown view holder type")
         }

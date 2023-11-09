@@ -24,6 +24,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/contentContainerMovie"
+            style="@style/Widget.SeriesGuide.NestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false">
@@ -66,10 +67,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/padding_button"
                         android:text="@string/trailer"
                         app:icon="@drawable/ic_movie_white_24dp"
+                        app:iconGravity="start" />
+
+                    <Button
+                        android:id="@+id/buttonMovieSimilar"
+                        style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="@dimen/padding_button"
+                        android:layout_below="@id/buttonMovieTrailer"
+                        android:text="@string/title_similar_movies"
+                        app:icon="@drawable/ic_search_white_24dp"
                         app:iconGravity="start" />
 
                     <TextView
@@ -80,7 +92,7 @@
                         android:layout_marginTop="@dimen/inline_padding"
                         android:layout_marginRight="@dimen/inline_padding"
                         android:layout_toRightOf="@id/frameLayoutMoviePoster"
-                        android:layout_toLeftOf="@id/buttonMovieTrailer"
+                        android:layout_toLeftOf="@id/buttonMovieSimilar"
                         android:background="?attr/selectableItemBackground"
                         android:focusable="true"
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
@@ -104,7 +116,7 @@
                         layout="@layout/buttons_movie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewMovieDate"
+                        android:layout_below="@+id/buttonMovieSimilar"
                         android:layout_toRightOf="@id/frameLayoutMoviePoster" />
 
                 </RelativeLayout>

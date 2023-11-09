@@ -11,6 +11,33 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 70
+----------
+*2023-11-09*
+
+* 🌟 Movies: support displaying similar movies.
+* 🔧 Switch to TMDBs recommendations when looking for similar shows or movies.
+* 🔨 Android 14: fix automatic syncing.
+
+#### 70.0.2
+*2023-11-03*
+
+* 🔨 Android 14: fix automatic syncing.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 70.0.1 🧪
+*2023-10-20*
+
+* 🔨 Get started: allow notification button now stays hidden after granting notification permission.
+* 🔨 User interface: restore scrollbars wherever they were missing. Add fast scroller for lists and comments.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 70.0.0 🧪
+*2023-09-21*
+
+* 🌟 Movies: support displaying similar movies.
+* 🔧 Switch to TMDBs recommendations when looking for similar shows or movies.
+
 Version 69
 ----------
 *2023-09-15*

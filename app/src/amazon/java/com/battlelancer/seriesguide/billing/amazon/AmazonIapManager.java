@@ -79,7 +79,7 @@ public class AmazonIapManager implements AmazonIapManagerInterface {
 
     /**
      * Sets up Amazon IAP.
-     *
+     * <p>
      * Ensure to call this in `onCreate` of any activity before making calls to any other methods.
      */
     @Override
@@ -88,8 +88,7 @@ public class AmazonIapManager implements AmazonIapManagerInterface {
         // if no instance exists, so safe to call multiple times.
         // Purchase listener is always updated.
         PurchasingService.registerListener(context, getPurchasingListener());
-        // Note: Documented getAppstoreSDKMode() API is not available.
-        // Timber.i("IAP sandbox mode is: %s", PurchasingService.IS_SANDBOX_MODE);
+//        Timber.i("IAP sandbox mode is: %s", LicensingService.getAppstoreSDKMode());
     }
 
     private AmazonPurchasingListener getPurchasingListener() {

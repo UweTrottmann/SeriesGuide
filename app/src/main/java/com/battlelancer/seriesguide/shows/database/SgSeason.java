@@ -10,6 +10,9 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ShowsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
+/**
+ * Legacy season entity kept for migration of legacy data. See {@link SgSeason2}.
+ */
 @Entity(
         tableName = Tables.SEASONS,
         foreignKeys = @ForeignKey(entity = SgShow.class,

@@ -7,6 +7,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMoviesDiscover"
+        style="@style/Widget.SeriesGuide.RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -14,8 +15,6 @@
         android:paddingLeft="@dimen/grid_item_margin_horizontal"
         android:paddingRight="@dimen/grid_item_margin_horizontal"
         android:paddingTop="@dimen/grid_item_margin_vertical"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical"
         tools:listitem="@layout/item_discover_movie" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

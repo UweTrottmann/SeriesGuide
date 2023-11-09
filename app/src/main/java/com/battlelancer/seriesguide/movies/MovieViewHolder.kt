@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.movies
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemDiscoverMovieBinding
@@ -12,7 +13,7 @@ import com.squareup.picasso.Picasso
 import com.uwetrottmann.tmdb2.entities.BaseMovie
 import java.text.DateFormat
 
-internal class MovieViewHolder(
+class MovieViewHolder(
     val binding: ItemDiscoverMovieBinding,
     itemClickListener: MovieClickListener?
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -89,6 +90,17 @@ internal class MovieViewHolder(
     }
 
     companion object {
+
+        val DIFF_CALLBACK_BASE_MOVIE = object : DiffUtil.ItemCallback<BaseMovie>() {
+            override fun areItemsTheSame(oldItem: BaseMovie, newItem: BaseMovie): Boolean =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: BaseMovie, newItem: BaseMovie): Boolean =
+                oldItem.title == newItem.title
+                        && oldItem.release_date == newItem.release_date
+                        && oldItem.poster_path == newItem.poster_path
+        }
+
         @JvmStatic
         fun inflate(parent: ViewGroup, itemClickListener: MovieClickListener?): MovieViewHolder {
             return MovieViewHolder(
@@ -99,9 +111,5 @@ internal class MovieViewHolder(
             )
         }
 
-        fun areContentsTheSame(oldItem: BaseMovie, newItem: BaseMovie): Boolean =
-            oldItem.title == newItem.title
-                    && oldItem.release_date == newItem.release_date
-                    && oldItem.poster_path == newItem.poster_path
     }
 }

@@ -11,6 +11,10 @@ import com.battlelancer.seriesguide.shows.FirstRunView.FirstRunClickListener
  */
 class FirstRunViewHolder(itemView: FirstRunView) : RecyclerView.ViewHolder(itemView) {
 
+    fun bind() {
+        (itemView as FirstRunView).bind()
+    }
+
     companion object {
 
         fun create(parent: ViewGroup, firstRunClickListener: FirstRunClickListener): FirstRunViewHolder {

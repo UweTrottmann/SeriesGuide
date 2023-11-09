@@ -134,7 +134,7 @@ class MoviesDiscoverFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventLanguageChanged(event: LocalizationChangedEvent?) {
+    fun onEventLanguageChanged(@Suppress("UNUSED_PARAMETER") event: LocalizationChangedEvent?) {
         LoaderManager.getInstance(this).restartLoader(0, null, nowPlayingLoaderCallbacks)
     }
 

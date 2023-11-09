@@ -206,7 +206,7 @@
     <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
     <string name="empty_show_search">Ei löytynyt ohjelmalistastasi</string>
     <string name="action_try_again">Yritä uudelleen</string>
-    <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TheTVDB:ssä. Yritä myöhemmin uudelleen.</string>
+    <string name="tvdb_error_does_not_exist">Ohjelma ei ole (vielä) TMDB:ssä. Yritä myöhemmin uudelleen.</string>
     <string name="add_all">Lisää kaikki</string>
     <string name="add_multiple">Kaikki ohjelmat ilmestyvät pian ohjelmalistaasi</string>
     <string name="add_started">%s ilmestyy pian ohjelmalistallesi</string>
@@ -254,6 +254,7 @@
     <string name="action_movies_sort_title">Nimi</string>
     <string name="action_movies_sort_release">Julkaisupäivä</string>
     <string name="action_movies_filter">Suodata elokuvat</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tilastojen laskeminen ei onnistunut.</string>
     <string name="shows_finished">%s katsottu loppuun</string>

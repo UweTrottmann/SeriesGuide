@@ -262,6 +262,7 @@
     <string name="action_movies_sort_title">Назвою</string>
     <string name="action_movies_sort_release">Датою виходу</string>
     <string name="action_movies_filter">Фільтрувати фільми</string>
+    <string name="title_similar_movies">Схожі фільми</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не вдалося підрахувати статистику</string>
     <string name="shows_finished">%s завершених переглядів</string>
@@ -493,8 +494,8 @@
     <string name="pref_notifications_battery_settings_summary">Перейдіть до налаштувань акумулятора, щоб вимкнути оптимізацію живлення для надійних сповіщень</string>
     <string name="notifications_allow">Дозволити сповіщення</string>
     <string name="notifications_allow_reason">Щоб отримувати повідомлення про епізоди та помилки, перейдіть до Налаштувань та дозвольте їх.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Дозволити точні сповіщення</string>
+    <string name="precise_notifications_allow_reason">Щоб отримувати точні сповіщення про епізоди, перейдіть до Налаштувань та увімкніть їх.</string>
     <!-- List Widget -->
     <string name="hide_watched">Приховати переглянуті серії</string>
     <string name="pref_widget_opacity">Фон віджета</string>

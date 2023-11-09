@@ -2,6 +2,7 @@ package com.battlelancer.seriesguide.shows.search.discover
 
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.enums.NetworkResult
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -10,6 +11,7 @@ import com.battlelancer.seriesguide.shows.tools.ShowTools2
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.TaskManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -66,12 +68,14 @@ abstract class BaseAddShowsFragment : Fragment() {
             if (item.state != SearchResult.STATE_ADDING) {
                 if (item.state == SearchResult.STATE_ADDED) {
                     // Already in library, open it.
-                    lifecycleScope.launchWhenStarted {
+                    lifecycleScope.launch {
                         val showId = withContext(Dispatchers.IO) {
                             SgRoomDatabase.getInstance(requireContext()).sgShow2Helper()
                                 .getShowIdByTmdbId(item.tmdbId)
                         }
-                        startActivity(OverviewActivity.intentShow(requireContext(), showId))
+                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                            startActivity(OverviewActivity.intentShow(requireContext(), showId))
+                        }
                     }
                 } else {
                     // Display more details in a dialog.

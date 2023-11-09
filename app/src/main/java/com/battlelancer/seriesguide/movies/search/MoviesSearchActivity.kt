@@ -10,7 +10,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
-import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesSearchBinding
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
@@ -81,7 +80,7 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
         HighlightTools.highlightSgToolbarItem(
             HighlightTools.Feature.MOVIE_FILTER,
             this,
-            lifecycleScope,
+            lifecycle,
             R.id.menu_action_movies_search_filter,
             R.string.action_movies_filter
         ) {

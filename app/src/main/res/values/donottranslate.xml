@@ -5,7 +5,6 @@
     <string name="app_name">SeriesGuide</string>
     <string name="hexagon">SeriesGuide Cloud</string>
     <string name="imdb">IMDb</string>
-    <string name="tvdb">TheTVDB</string>
     <string name="tmdb">TMDB</string>
     <string name="trakt">Trakt</string>
     <string name="ontrakt">(Trakt)</string>

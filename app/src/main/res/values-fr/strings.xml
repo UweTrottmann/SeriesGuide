@@ -206,7 +206,7 @@
     <string name="no_results">Pas de résultats, reformulez votre requête.</string>
     <string name="empty_show_search">Pas trouvé dans votre liste de séries</string>
     <string name="action_try_again">Réessayer</string>
-    <string name="tvdb_error_does_not_exist">La série n’existe pas (encore) sur TheTVDB. Réessayez plus tard.</string>
+    <string name="tvdb_error_does_not_exist">La série n’existe pas (encore) sur TMDB. Réessayez plus tard.</string>
     <string name="add_all">Tout ajouter</string>
     <string name="add_multiple">Toutes les séries apparaîtront dans votre liste sous peu.</string>
     <string name="add_started">%s apparaîtra dans votre liste de séries sous peu.</string>
@@ -254,6 +254,7 @@
     <string name="action_movies_sort_title">Titre</string>
     <string name="action_movies_sort_release">Date de parution</string>
     <string name="action_movies_filter">Filtrer les films</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">Impossible de calculer les statistiques.</string>
     <string name="shows_finished">%s visionnées en entier</string>

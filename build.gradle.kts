@@ -14,13 +14,13 @@ plugins {
 }
 
 buildscript {
-    val sgCompileSdk by extra(33) // Android 13 (T)
+    val sgCompileSdk by extra(34) // Android 14 (U)
     val sgMinSdk by extra(21) // Android 5 (L)
     val sgTargetSdk by extra(33) // Android 13 (T)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2106903)
-    val sgVersionName by extra("69.0.3")
+    val sgVersionCode by extra(2107002)
+    val sgVersionName by extra("70.0.2")
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 

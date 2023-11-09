@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
 import com.battlelancer.seriesguide.traktapi.TraktTask
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
+import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -108,6 +109,7 @@ class TraktCommentsFragment : Fragment() {
         })
 
         // set initial view states
+        SgFastScroller(requireContext(), binding.recyclerViewComments)
         binding.recyclerViewComments.isGone = false
         binding.textViewShoutsEmpty.isGone = true
         showProgressBar(true)

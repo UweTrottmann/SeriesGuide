@@ -566,6 +566,10 @@ class NotificationService(context: Context) {
                 .centerCrop()
                 .resize(400, 400)
                 .get()
+
+            // Note: background may not be supported on newer Wear devices,
+            // but keep supporting the old ones.
+            @Suppress("DEPRECATION")
             val wearableExtender = NotificationCompat.WearableExtender()
                 .setBackground(posterSquare)
             nb.extend(wearableExtender)

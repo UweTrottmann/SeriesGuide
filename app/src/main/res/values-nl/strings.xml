@@ -254,6 +254,7 @@
     <string name="action_movies_sort_title">Titel</string>
     <string name="action_movies_sort_release">Releasedatum</string>
     <string name="action_movies_filter">Films filteren</string>
+    <string name="title_similar_movies">Vergelijkbare films</string>
     <!-- Statistics -->
     <string name="statistics_failed">Kon statistieken niet berekenen.</string>
     <string name="shows_finished">%s klaar met kijken</string>

@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide.util
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.getSystemService
@@ -12,10 +11,8 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.extensions.ExtensionManager
-import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
-import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,20 +46,6 @@ class AppUpgrade(
     private fun doUpgrades() {
         // Run some required tasks after updating to certain versions.
         // NOTE: see version codes for upgrade description.
-        if (lastVersion < SgApp.RELEASE_VERSION_12_BETA5) {
-            // flag all episodes as outdated
-            val values = ContentValues()
-            values.put(SeriesGuideContract.Episodes.LAST_UPDATED, 0)
-            context.contentResolver.update(
-                SeriesGuideContract.Episodes.CONTENT_URI,
-                values,
-                null,
-                null
-            )
-            // sync is triggered in last condition
-            // (if we are in here we will definitely hit the ones below)
-        }
-
         if (lastVersion < SgApp.RELEASE_VERSION_16_BETA1) {
             clearLegacyExternalFileCache(context)
         }
@@ -71,25 +54,6 @@ class AppUpgrade(
             // make next trakt sync download watched movies
             TraktSettings.resetMoviesLastWatchedAt(context)
         }
-
-        if (lastVersion < SgApp.RELEASE_VERSION_26_BETA3) {
-            // flag all shows outdated so delta sync will pick up, if full sync gets aborted
-            val values = ContentValues()
-            values.put(SeriesGuideContract.Shows.LASTUPDATED, 0)
-            context.contentResolver.update(
-                SeriesGuideContract.Shows.CONTENT_URI,
-                values,
-                null,
-                null
-            )
-            // force a sync
-            SgSyncAdapter.requestSyncFullImmediate(context, true)
-        }
-
-        // This was never doing anything (ops batch never applied), so removed.
-//            if (lastVersion < SgApp.RELEASE_VERSION_34_BETA4) {
-//                 ActivityTools.populateShowsLastWatchedTime(this)
-//            }
 
         if (lastVersion < SgApp.RELEASE_VERSION_36_BETA2) {
             // used account name to determine sign-in state before switch to Google Sign-In

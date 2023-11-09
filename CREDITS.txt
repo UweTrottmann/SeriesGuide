@@ -117,9 +117,6 @@ Copyright 2013 Square, Inc.
 TapTargetView (https://github.com/KeepSafe/TapTargetView)
 Copyright 2016 Keepsafe Software Inc.
 
-thetvdb-java (https://github.com/UweTrottmann/thetvdb-java)
-Copyright 2013 Uwe Trottmann
-
 threetenabp (https://github.com/JakeWharton/ThreeTenABP)
 Copyright (C) 2015 Jake Wharton
 

@@ -40,20 +40,14 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        binding.groupAllowNotifications.isGone =
-            !AndroidUtils.isAtLeastTiramisu || NotificationSettings.areNotificationsAllowed(context)
         binding.buttonAllowNotifications.setOnClickListener {
             clickListener?.onAllowNotificationsClicked()
         }
 
-        binding.groupAllowPreciseNotifications.isGone =
-            NotificationSettings.canScheduleExactAlarms(context)
         binding.buttonAllowPreciseNotifications.setOnClickListener {
             clickListener?.onAllowPreciseNotificationsClicked()
         }
 
-        binding.groupAutoBackupDetected.isGone =
-            !AutoBackupTools.isAutoBackupMaybeAvailable(context)
         binding.buttonRestoreAutoBackup.setOnClickListener {
             clickListener?.onRestoreAutoBackupClicked()
         }
@@ -70,7 +64,6 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             // show
             binding.checkboxNoSpoilers.isChecked = noSpoilers
         }
-        binding.checkboxNoSpoilers.isChecked = DisplaySettings.preventSpoilers(context)
         binding.checkboxNoSpoilers.text = TextTools.buildTitleAndSummary(
             context,
             R.string.pref_nospoilers,
@@ -84,7 +77,6 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             }
             binding.checkboxDataSaver.isChecked = isSaveData
         }
-        binding.checkboxDataSaver.isChecked = UpdateSettings.isLargeDataOverWifiOnly(context)
         binding.checkboxDataSaver.text = TextTools.buildTitleAndSummary(
             context,
             R.string.pref_updatewifionly,
@@ -111,7 +103,6 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
             AppSettings.setSendErrorReports(context, isSendErrorReports, true)
             binding.checkboxErrorReports.isChecked = isSendErrorReports
         }
-        binding.checkboxErrorReports.isChecked = AppSettings.isSendErrorReports(context)
         binding.checkboxErrorReports.text = TextTools.buildTextAppearanceSpan(
             context,
             R.string.pref_error_reports,
@@ -121,6 +112,21 @@ class FirstRunView @JvmOverloads constructor(context: Context, attrs: AttributeS
         binding.textViewPolicyLink.setOnClickListener {
             WebTools.openInCustomTab(context, context.getString(R.string.url_privacy))
         }
+    }
+
+    fun bind() {
+        binding.groupAllowNotifications.isGone =
+            !AndroidUtils.isAtLeastTiramisu || NotificationSettings.areNotificationsAllowed(context)
+
+        binding.groupAllowPreciseNotifications.isGone =
+            NotificationSettings.canScheduleExactAlarms(context)
+
+        binding.groupAutoBackupDetected.isGone =
+            !AutoBackupTools.isAutoBackupMaybeAvailable(context)
+
+        binding.checkboxNoSpoilers.isChecked = DisplaySettings.preventSpoilers(context)
+        binding.checkboxDataSaver.isChecked = UpdateSettings.isLargeDataOverWifiOnly(context)
+        binding.checkboxErrorReports.isChecked = AppSettings.isSendErrorReports(context)
     }
 
     private fun setFirstRunDismissed() {

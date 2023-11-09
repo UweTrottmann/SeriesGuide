@@ -98,7 +98,7 @@
     <string name="no_translation_title">번역되지 않음</string>
     <string name="no_spoilers">일부 내용은 스포일러를 방지하기 위해 숨겨진 상태입니다. 설정에서 이를 해제할 수 있습니다.</string>
     <string name="format_source">소스: %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">최근 업데이트됨</string>
     <string name="custom_release_time_edit">Edit release time</string>
     <string name="custom_release_time_earlier">earlier</string>
     <string name="custom_release_time_later">later</string>
@@ -250,6 +250,7 @@
     <string name="action_movies_sort_title">제목</string>
     <string name="action_movies_sort_release">개봉일</string>
     <string name="action_movies_filter">Filter movies</string>
+    <string name="title_similar_movies">Similar movies</string>
     <!-- Statistics -->
     <string name="statistics_failed">통계를 계산할 수 없습니다.</string>
     <string name="shows_finished">%s finished watching</string>
