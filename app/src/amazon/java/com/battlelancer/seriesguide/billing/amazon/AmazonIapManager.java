@@ -1,3 +1,6 @@
+// Copyright 2014 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.billing.amazon;
 
 import android.app.Activity;
