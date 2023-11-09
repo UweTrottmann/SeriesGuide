@@ -1,3 +1,6 @@
+// Copyright 2023 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.util;
 
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_NONE;

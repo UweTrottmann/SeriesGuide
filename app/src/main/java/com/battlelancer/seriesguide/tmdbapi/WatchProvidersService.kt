@@ -1,3 +1,6 @@
+// Copyright 2023 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.tmdbapi
 
 import com.uwetrottmann.tmdb2.entities.WatchProviders
