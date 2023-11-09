@@ -13,9 +13,13 @@ Releases marked with 🧪 were released on [the beta program](https://github.com
 
 Version 70
 ----------
-*in development*
+*2023-11-09*
 
-#### 70.0.2 🧪
+* 🌟 Movies: support displaying similar movies.
+* 🔧 Switch to TMDBs recommendations when looking for similar shows or movies.
+* 🔨 Android 14: fix automatic syncing.
+
+#### 70.0.2
 *2023-11-03*
 
 * 🔨 Android 14: fix automatic syncing.
