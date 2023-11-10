@@ -1,3 +1,6 @@
+// Copyright 2023 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.shows.tools
 
 import androidx.test.ext.junit.runners.AndroidJUnit4

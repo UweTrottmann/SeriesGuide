@@ -1,3 +1,6 @@
+// Copyright 2023 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.movies
 
 import android.content.Context
@@ -207,16 +210,11 @@ class TmdbMoviesDataSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, BaseMovie>): Int? {
-        // Try to find the page key of the closest page to anchorPosition, from
-        // either the prevKey or the nextKey, but you need to handle nullability
-        // here:
-        //  * prevKey == null -> anchorPage is the first page.
-        //  * nextKey == null -> anchorPage is the last page.
-        //  * both prevKey and nextKey null -> anchorPage is the initial page, so
-        //    just return null.
+        // Always start loading at the previous page.
+        // As refresh is currently only triggered by swipe-to-refresh will always be the first
+        // page (prevKey == null).
         return state.anchorPosition?.let { anchorPosition ->
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+            state.closestPageToPosition(anchorPosition)?.prevKey
         }
     }
 

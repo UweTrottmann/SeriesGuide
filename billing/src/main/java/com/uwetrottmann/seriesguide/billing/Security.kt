@@ -1,3 +1,6 @@
+// Copyright 2019 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.uwetrottmann.seriesguide.billing
 
 import android.text.TextUtils

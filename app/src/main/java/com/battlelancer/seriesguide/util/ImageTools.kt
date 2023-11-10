@@ -1,3 +1,6 @@
+// Copyright 2023 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
@@ -5,6 +8,7 @@ import android.util.Base64
 import android.widget.ImageView
 import com.battlelancer.seriesguide.BuildConfig
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -76,6 +80,10 @@ object ImageTools {
         return if (imagePath.isNullOrEmpty()) {
             null
         } else {
+            if (AppSettings.isDemoModeEnabled(context)) {
+                return pickDemoPosterUrl(imagePath)
+            }
+
             // If the path contains the legacy TVDB cache prefix, use the www subdomain as it has
             // a redirect to the new thumbnail URL set up (artworks subdomain + file name postfix).
             // E.g. https://www.thetvdb.com/banners/_cache/posters/example.jpg redirects to
@@ -85,6 +93,7 @@ object ImageTools {
                 imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
                     "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
                 }
+
                 imagePath.startsWith("/") -> {
                     // TMDB images have no path at all, but always start with /.
                     // Use small size based on density, or original size (as large as possible).
@@ -94,12 +103,31 @@ object ImageTools {
                         "${TmdbSettings.getPosterBaseUrl(context)}$imagePath"
                     }
                 }
+
                 else -> {
                     "${TVDB_MIRROR_BANNERS}$imagePath"
                 }
             }
             buildImageCacheUrl(imageUrl)
         }
+    }
+
+    private val demoPosterUrls = listOf(
+        "https://seriesgui.de/demo/anime.jpg",
+        "https://seriesgui.de/demo/crime.jpg",
+        "https://seriesgui.de/demo/fantasy-2.jpg",
+        "https://seriesgui.de/demo/fantasy.jpg",
+        "https://seriesgui.de/demo/medical.jpg",
+        "https://seriesgui.de/demo/scifi-3.jpg",
+        "https://seriesgui.de/demo/scifi.jpg",
+        "https://seriesgui.de/demo/sitcom.jpg",
+    )
+
+    private val demoStillUrl = "https://seriesgui.de/demo/episode-anime.jpg"
+
+    private fun pickDemoPosterUrl(imagePath: String): String {
+        // Map an image path always to the same image
+        return demoPosterUrls[imagePath.hashCode().mod(demoPosterUrls.size)]
     }
 
     @JvmStatic
@@ -111,6 +139,10 @@ object ImageTools {
         return if (imagePath.isNullOrEmpty()) {
             null
         } else {
+            if (AppSettings.isDemoModeEnabled(context)) {
+                return demoStillUrl
+            }
+
             // If the path contains the legacy TVDB cache prefix, use the www subdomain as it has
             // a redirect to the new thumbnail URL set up (artworks subdomain + file name postfix).
             // E.g. https://www.thetvdb.com/banners/_cache/posters/example.jpg redirects to
@@ -120,6 +152,7 @@ object ImageTools {
                 imagePath.contains(TVDB_LEGACY_CACHE_PREFIX, false) -> {
                     "${TVDB_LEGACY_MIRROR_BANNERS}$imagePath"
                 }
+
                 imagePath.startsWith("/") -> {
                     // TMDB images have no path at all, but always start with /.
                     // Use small size based on density, or original size (as large as possible).
@@ -129,6 +162,7 @@ object ImageTools {
                         TmdbSettings.getStillUrl(context, imagePath)
                     }
                 }
+
                 else -> {
                     "${TVDB_MIRROR_BANNERS}$imagePath"
                 }

@@ -1,3 +1,6 @@
+// Copyright 2023 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.preferences
 
 
@@ -5,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +16,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.settings.AppSettings
 import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
@@ -74,18 +79,29 @@ class DebugViewFragment : AppCompatDialogFragment() {
             SgSyncAdapter.requestSyncJobsImmediate(requireContext())
         }
 
+        val buttonDemoMode = ButtonAction("Toggle demo mode") {
+            toggleDemoMode()
+        }
+
         debugView.modules(
-            ActionsModule("Notifications",
+            ActionsModule(
+                "Notifications",
                 showTestNotification1,
                 showTestNotification3
             ),
-            ActionsModule("Trakt",
+            ActionsModule(
+                "Trakt",
                 buttonClearTraktRefreshToken,
                 buttonInvalidateTraktAccessToken,
                 buttonInvalidateTraktRefreshToken
             ),
-            ActionsModule("Jobs",
+            ActionsModule(
+                "Jobs",
                 buttonTriggerJobProcessor
+            ),
+            ActionsModule(
+                "Demo mode",
+                buttonDemoMode
             ),
             TimberModule("${requireContext().packageName}.fileprovider"),
             DeviceModule()
@@ -105,6 +121,13 @@ class DebugViewFragment : AppCompatDialogFragment() {
                 0 // not stored
             )
         }
+    }
+
+    private fun toggleDemoMode() {
+        val isEnabledOld = AppSettings.isDemoModeEnabled(requireContext())
+        AppSettings.setDemoModeState(requireContext(), !isEnabledOld)
+        val isEnabledNew = AppSettings.isDemoModeEnabled(requireContext())
+        Toast.makeText(requireContext(), "Demo mode: $isEnabledNew", Toast.LENGTH_LONG).show()
     }
 
 }

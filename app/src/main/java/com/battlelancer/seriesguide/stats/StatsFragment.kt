@@ -1,3 +1,7 @@
+// Copyright 2019-2022 Uwe Trottmann
+// Copyright 2021 Andre Ippisch
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.stats
 
 import android.os.Bundle

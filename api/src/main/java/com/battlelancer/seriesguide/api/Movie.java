@@ -1,3 +1,6 @@
+// Copyright 2016 Uwe Trottmann
+// SPDX-License-Identifier: Apache-2.0
+
 package com.battlelancer.seriesguide.api;
 
 import android.os.Bundle;
