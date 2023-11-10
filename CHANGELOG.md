@@ -19,6 +19,11 @@ Version 70
 * 🔧 Switch to TMDBs recommendations when looking for similar shows or movies.
 * 🔨 Android 14: fix automatic syncing.
 
+#### 70.0.3
+*2023-11-10*
+
+* 🔨 Movies: do not skip items when refreshing search results, popular, released or upcoming movies.
+
 #### 70.0.2
 *2023-11-03*
 
