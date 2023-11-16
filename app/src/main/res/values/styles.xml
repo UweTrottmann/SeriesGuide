@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2023 Uwe Trottmann -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Text styles -->
@@ -243,6 +246,11 @@
 
     <!-- BottomNavigationView -->
     <style name="Widget.SeriesGuide.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
+    </style>
+
+    <!-- NavigationRailView -->
+    <style name="Widget.SeriesGuide.NavigationRailView" parent="Widget.Material3.NavigationRailView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
     </style>
 

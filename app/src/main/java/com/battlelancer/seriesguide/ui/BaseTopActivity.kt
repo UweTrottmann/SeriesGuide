@@ -30,7 +30,7 @@ import com.battlelancer.seriesguide.ui.ShowsActivity
 import com.battlelancer.seriesguide.util.SupportTheDev
 import com.battlelancer.seriesguide.util.SupportTheDev.buildSnackbar
 import com.battlelancer.seriesguide.util.Utils
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
@@ -72,7 +72,7 @@ abstract class BaseTopActivity : BaseMessageActivity() {
     }
 
     fun setupBottomNavigation(@IdRes selectedItemId: Int) {
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        val bottomNav = findViewById<NavigationBarView>(R.id.bottomNavigation)
         bottomNav.selectedItemId = selectedItemId
         // Disable hideous bold font for active item.
         bottomNav.setItemTextAppearanceActiveBoldEnabled(false)

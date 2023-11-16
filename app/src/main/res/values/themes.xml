@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2023 Uwe Trottmann -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- ####################################### -->
@@ -71,6 +74,7 @@
         <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
 
         <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
+        <item name="navigationRailStyle">@style/Widget.SeriesGuide.NavigationRailView</item>
 
         <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
 
@@ -143,6 +147,7 @@
         <item name="preferenceTheme">@style/ThemeOverlay.SeriesGuide.Preference</item>
 
         <item name="bottomNavigationStyle">@style/Widget.SeriesGuide.BottomNavigationView</item>
+        <item name="navigationRailStyle">@style/Widget.SeriesGuide.NavigationRailView</item>
 
         <item name="textAppearanceButton">@style/TextAppearance.SeriesGuide.Button</item>
 
