@@ -5,6 +5,7 @@ package com.battlelancer.seriesguide.tmdbapi
 
 import android.content.Context
 import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.isRetryError
@@ -26,16 +27,19 @@ import com.uwetrottmann.tmdb2.entities.TmdbDate
 import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvShow
 import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
+import com.uwetrottmann.tmdb2.entities.Videos
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import com.uwetrottmann.tmdb2.enumerations.AppendToResponseItem
 import com.uwetrottmann.tmdb2.enumerations.ExternalSource
 import com.uwetrottmann.tmdb2.enumerations.SortBy
+import com.uwetrottmann.tmdb2.enumerations.VideoType
 import com.uwetrottmann.tmdb2.services.PeopleService
 import com.uwetrottmann.tmdb2.services.TvEpisodesService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 import retrofit2.create
+import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 
@@ -220,6 +224,95 @@ class TmdbTools2 {
             }
         } catch (e: Exception) {
             Errors.logAndReport("load popular shows", e)
+        }
+        return null
+    }
+
+    fun getShowTrailerYoutubeId(
+        context: Context,
+        showTmdbId: Int,
+        languageCode: String
+    ): Result<String?, TmdbError> {
+        val action = "get show trailer"
+        val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
+        return runCatching {
+            tmdb.tvService()
+                .videos(showTmdbId, languageCode)
+                .execute()
+        }.mapError {
+            Errors.logAndReport(action, it)
+            if (it.isRetryError()) TmdbRetry else TmdbStop
+        }.andThen {
+            if (it.isSuccessful) {
+                val results = it.body()?.results
+                if (results != null) {
+                    return@andThen Ok(extractTrailer(it.body()))
+                } else {
+                    Errors.logAndReport(action, it, "results is null")
+                }
+            } else {
+                Errors.logAndReport(action, it)
+            }
+            return@andThen Err(TmdbStop)
+        }
+    }
+
+    /**
+     * Loads a YouTube movie trailer from TMDb. Tries to get a local trailer, if not falls back to
+     * English.
+     */
+    fun getMovieTrailerYoutubeId(
+        context: Context,
+        movieTmdbId: Int
+    ): String? {
+        // try to get a local trailer
+        val trailer = getMovieTrailerYoutubeId(
+            context, movieTmdbId, MoviesSettings.getMoviesLanguage(context), "get local movie trailer"
+        )
+        if (trailer != null) {
+            return trailer
+        }
+        Timber.d("Did not find a local movie trailer.")
+
+        // fall back to default language trailer
+        return getMovieTrailerYoutubeId(
+            context, movieTmdbId, null, "get default movie trailer"
+        )
+    }
+
+    private fun getMovieTrailerYoutubeId(
+        context: Context,
+        movieTmdbId: Int,
+        languageCode: String?,
+        action: String
+    ): String? {
+        val moviesService = SgApp.getServicesComponent(context).moviesService()
+        try {
+            val response = moviesService.videos(movieTmdbId, languageCode).execute()
+            if (response.isSuccessful) {
+                return extractTrailer(response.body())
+            } else {
+                Errors.logAndReport(action, response)
+            }
+        } catch (e: Exception) {
+            Errors.logAndReport(action, e)
+        }
+        return null
+    }
+
+    private fun extractTrailer(videos: Videos?): String? {
+        val results = videos?.results
+        if (results == null || results.size == 0) {
+            return null
+        }
+
+        // Pick the first YouTube trailer
+        for (video in results) {
+            val videoId = video.key
+            if (video.type == VideoType.TRAILER && "YouTube" == video.site
+                && !videoId.isNullOrEmpty()) {
+                return videoId
+            }
         }
         return null
     }
