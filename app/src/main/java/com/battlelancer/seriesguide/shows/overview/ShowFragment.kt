@@ -102,6 +102,7 @@ class ShowFragment() : Fragment() {
         val buttonShortcut: Button
         val buttonLanguage: Button
         val buttonRate: View
+        val buttonTrailer: Button
         val buttonSimilar: Button
         val buttonImdb: Button
         val buttonShowMetacritic: Button
@@ -140,6 +141,7 @@ class ShowFragment() : Fragment() {
             buttonShortcut = view.findViewById(R.id.buttonShowShortcut)
             buttonLanguage = view.findViewById(R.id.buttonShowLanguage)
             buttonRate = view.findViewById(R.id.containerRatings)
+            buttonTrailer = view.findViewById(R.id.buttonShowTrailer)
             buttonSimilar = view.findViewById(R.id.buttonShowSimilar)
             buttonImdb = view.findViewById(R.id.buttonShowImdb)
             buttonShowMetacritic = view.findViewById(R.id.buttonShowMetacritic)
@@ -405,6 +407,19 @@ class ShowFragment() : Fragment() {
         binding.textViewRating.text = showForUi.traktRating
         binding.textViewRatingVotes.text = showForUi.traktVotes
         binding.textViewRatingUser.text = showForUi.traktUserRating
+
+        // Trailer button
+        binding.buttonTrailer.apply {
+            if (showForUi.trailerVideoId != null) {
+                setOnClickListener {
+                    ServiceUtils.openYoutube(showForUi.trailerVideoId, requireContext())
+                }
+                isEnabled = true
+            } else {
+                setOnClickListener(null)
+                isEnabled = false
+            }
+        }
 
         // Similar shows button.
         binding.buttonSimilar.setOnClickListener {

@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +36,7 @@ class AddShowDialogViewModel(
 
     val languageCode = MutableLiveData<String>()
     val showDetails: LiveData<ShowDetails>
+    val trailer: LiveData<String?>
 
     init {
         // Set original value for region.
@@ -64,6 +66,12 @@ class AddShowDialogViewModel(
                             )
                         )
                     }
+            }
+        }
+        this.trailer = languageCode.switchMap { languageCode ->
+            liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+                TmdbTools2().getShowTrailerYoutubeId(application, showTmdbId, languageCode)
+                    .onSuccess { emit(it) }
             }
         }
     }

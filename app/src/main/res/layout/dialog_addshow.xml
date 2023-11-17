@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Copyright 2023 Uwe Trottmann -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -77,11 +81,24 @@
             </RelativeLayout>
 
             <Button
+                android:id="@+id/buttonAddTrailer"
+                style="@style/Widget.SeriesGuide.Button.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/containerShowInfo"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:text="@string/trailer"
+                app:icon="@drawable/ic_movie_white_24dp"
+                app:iconGravity="start" />
+
+            <Button
                 android:id="@+id/buttonAddLanguage"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/containerShowInfo"
+                android:layout_below="@+id/buttonAddTrailer"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
@@ -178,9 +195,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonAddDisplaySimilar"
-                android:maxWidth="@dimen/max_width_text_size_body"
                 android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginEnd="@dimen/default_padding">
+                android:layout_marginEnd="@dimen/default_padding"
+                android:maxWidth="@dimen/max_width_text_size_body">
 
                 <!-- MaterialButton ignores line breaks here (wtf?), so use separate TextView. -->
                 <Button
