@@ -244,8 +244,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 this.binding?.let {
                     StreamingSearch.configureButton(
                         it.includeButtons.buttonEpisodeStreamingSearch,
-                        watchInfo,
-                        true
+                        watchInfo
                     )
                 }
             }

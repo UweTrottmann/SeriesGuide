@@ -193,8 +193,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             if (watchInfo != null && b != null) {
                 StreamingSearch.configureButton(
                     b.includeButtons.buttonEpisodeStreamingSearch,
-                    watchInfo,
-                    true
+                    watchInfo
                 )
             }
         })
