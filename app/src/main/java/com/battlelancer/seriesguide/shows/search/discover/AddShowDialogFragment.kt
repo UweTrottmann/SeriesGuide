@@ -98,7 +98,6 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             StreamingSearch.initButtons(
                 buttonAddStreamingSearch, buttonAddStreamingSearchInfo, parentFragmentManager
             )
-            textViewAddStreamingSearch.isGone = true
             buttonNegative.apply {
                 setText(R.string.dismiss)
                 setOnClickListener { dismiss() }
@@ -166,11 +165,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
             model.watchProvider.observe(this) { watchInfo ->
                 this.binding?.buttonAddStreamingSearch?.let {
-                    val providerInfo = StreamingSearch.configureButton(it, watchInfo, false)
-                    this.binding?.textViewAddStreamingSearch?.apply {
-                        text = providerInfo
-                        isGone = providerInfo == null
-                    }
+                    StreamingSearch.configureButton(it, watchInfo, true)
                 }
             }
         }
