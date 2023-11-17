@@ -108,13 +108,23 @@
     <!-- Buttons -->
     <style name="Widget.SeriesGuide.Button" parent="Widget.Material3.Button" />
     <style name="Widget.SeriesGuide.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton" />
+
+    <!-- With less bright outline. -->
     <style name="Widget.SeriesGuide.Button.Outlined.Icon" parent="Widget.Material3.Button.OutlinedButton.Icon">
         <!-- Parent style decreases only left margin which looks off, so reduce both. -->
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>
     </style>
 
-    <style name="Widget.SeriesGuide.Button.IconButton.Outlined" parent="Widget.Material3.Button.IconButton.Outlined" />
+    <style name="Widget.SeriesGuide.Button.IconButton.Outlined" parent="Widget.Material3.Button.IconButton.Outlined">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>
+    </style>
+
+    <style name="ThemeOverlay.SeriesGuide.Button.Outlined" parent="ThemeOverlay.Material3.Button.TextButton">
+        <item name="colorOutline">?attr/sgColorOutlineLighter</item>
+        <item name="colorOnContainer">?attr/colorOnSurfaceVariant</item>
+    </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless" parent="Widget.Material3.Button.TextButton">
         <item name="android:maxLines">2</item>
