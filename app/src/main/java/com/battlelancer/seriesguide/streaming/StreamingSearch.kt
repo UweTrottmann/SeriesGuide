@@ -219,13 +219,17 @@ object StreamingSearch {
         }
     }
 
+    /**
+     * Set [replaceButtonText] to instead of appending on a new line replace button text with
+     * watch provider info.
+     */
     @SuppressLint("SetTextI18n")
     @JvmStatic
     fun configureButton(
         button: Button,
         watchInfo: TmdbTools2.WatchInfo,
-        addToButtonText: Boolean = true
-    ): String? {
+        replaceButtonText: Boolean = false
+    ) {
         val context = button.context
         val urlOrNull = watchInfo.url
         if (urlOrNull != null) {
@@ -240,14 +244,14 @@ object StreamingSearch {
                 " + " + context.getString(R.string.more, watchInfo.countMore)
             } else ""
             val providerText = (providerOrNull.provider_name ?: "") + moreText
-            if (addToButtonText) {
+            if (replaceButtonText) {
+                button.text = providerText
+            } else {
                 button.text = context.getString(R.string.action_stream) +
                         "\n" + providerText
             }
-            providerText
         } else {
             button.setText(R.string.action_stream)
-            null
         }
     }
 

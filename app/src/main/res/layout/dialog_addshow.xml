@@ -80,27 +80,82 @@
 
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/buttonAddTrailer"
-                style="@style/Widget.SeriesGuide.Button.Outlined"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutAddButtons"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/containerShowInfo"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:text="@string/trailer"
-                app:icon="@drawable/ic_movie_white_24dp"
-                app:iconGravity="start" />
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp">
+
+                <androidx.constraintlayout.helper.widget.Flow
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="buttonAddTrailer,buttonAddDisplaySimilar,containerAddStreamingSearch"
+                    app:flow_horizontalBias="0"
+                    app:flow_horizontalGap="4dp"
+                    app:flow_horizontalStyle="packed"
+                    app:flow_wrapMode="chain"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonAddTrailer"
+                    style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trailer"
+                    app:icon="@drawable/ic_movie_white_24dp"
+                    app:iconGravity="start" />
+
+                <Button
+                    android:id="@+id/buttonAddDisplaySimilar"
+                    style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/default_padding"
+                    android:text="@string/title_similar_shows"
+                    app:icon="@drawable/ic_search_white_24dp"
+                    app:iconGravity="start" />
+
+                <!-- To keep config button close, wrap in LinearLayout. -->
+                <LinearLayout
+                    android:id="@+id/containerAddStreamingSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonAddStreamingSearch"
+                        style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/action_stream"
+                        android:text="@string/action_stream"
+                        app:icon="@drawable/ic_play_arrow_black_24dp" />
+
+                    <Button
+                        android:id="@+id/buttonAddStreamingSearchInfo"
+                        style="@style/Widget.SeriesGuide.Button.IconButton.Outlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/action_stream_info"
+                        app:icon="@drawable/ic_settings_control_24dp" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/buttonAddLanguage"
                 style="@style/Widget.SeriesGuide.Button.Borderless.Default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonAddTrailer"
+                android:layout_below="@+id/constraintLayoutAddButtons"
                 android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 app:icon="@drawable/ic_language_white_24dp"
                 app:iconGravity="start"
@@ -175,68 +230,6 @@
                 android:layout_marginTop="-4dp"
                 android:text="@string/trakt"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
-
-            <Button
-                android:id="@+id/buttonAddDisplaySimilar"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddRatingLabel"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:drawablePadding="@dimen/default_padding"
-                android:text="@string/title_similar_shows"
-                app:icon="@drawable/ic_search_white_24dp"
-                app:iconGravity="start" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/containerAddStreamingSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonAddDisplaySimilar"
-                android:layout_marginStart="@dimen/default_padding"
-                android:layout_marginEnd="@dimen/default_padding"
-                android:maxWidth="@dimen/max_width_text_size_body">
-
-                <!-- MaterialButton ignores line breaks here (wtf?), so use separate TextView. -->
-                <Button
-                    android:id="@+id/buttonAddStreamingSearch"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/action_stream"
-                    android:gravity="center_vertical|start"
-                    android:text="@string/action_stream"
-                    app:icon="@drawable/ic_play_arrow_black_24dp"
-                    app:layout_constraintEnd_toStartOf="@+id/buttonAddStreamingSearchInfo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewAddStreamingSearch"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="36dp"
-                    android:contentDescription="@string/action_stream"
-                    android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
-                    app:layout_constraintEnd_toStartOf="@+id/buttonAddStreamingSearchInfo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonAddStreamingSearch"
-                    tools:text="Watch provider + 1 more" />
-
-                <ImageButton
-                    android:id="@+id/buttonAddStreamingSearchInfo"
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/action_stream_info"
-                    android:src="@drawable/ic_info_control_24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
     </ScrollView>
