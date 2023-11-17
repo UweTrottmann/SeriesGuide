@@ -107,7 +107,7 @@
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_stream_info"
-            android:src="@drawable/ic_info_control_24dp"
+            android:src="@drawable/ic_settings_control_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
