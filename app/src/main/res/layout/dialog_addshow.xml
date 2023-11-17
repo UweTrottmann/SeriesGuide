@@ -92,7 +92,7 @@
                 <androidx.constraintlayout.helper.widget.Flow
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="buttonAddTrailer,buttonAddDisplaySimilar,containerAddStreamingSearch"
+                    app:constraint_referenced_ids="buttonAddTrailer,buttonAddDisplaySimilar,buttonAddStreamingSearch,buttonAddStreamingSearchInfo"
                     app:flow_horizontalBias="0"
                     app:flow_horizontalGap="4dp"
                     app:flow_horizontalStyle="packed"
@@ -121,31 +121,27 @@
                     app:icon="@drawable/ic_search_white_24dp"
                     app:iconGravity="start" />
 
-                <!-- To keep config button close, wrap in LinearLayout. -->
-                <LinearLayout
-                    android:id="@+id/containerAddStreamingSearch"
+                <Button
+                    android:id="@+id/buttonAddStreamingSearch"
+                    style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:contentDescription="@string/action_stream"
+                    android:text="@string/action_stream"
+                    app:icon="@drawable/ic_play_arrow_black_24dp" />
 
-                    <Button
-                        android:id="@+id/buttonAddStreamingSearch"
-                        style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/action_stream"
-                        android:text="@string/action_stream"
-                        app:icon="@drawable/ic_play_arrow_black_24dp" />
-
-                    <Button
-                        android:id="@+id/buttonAddStreamingSearchInfo"
-                        style="@style/Widget.SeriesGuide.Button.IconButton.Outlined"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/action_stream_info"
-                        app:icon="@drawable/ic_settings_control_24dp" />
-
-                </LinearLayout>
+                <!-- Note: can not wrap in LinearLayout to keep close to search button as it would
+                     grow out of bounds if long. -->
+                <Button
+                    android:id="@+id/buttonAddStreamingSearchInfo"
+                    style="@style/Widget.SeriesGuide.Button.IconButton.Outlined"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:contentDescription="@string/action_stream_info"
+                    android:insetLeft="0dp"
+                    android:insetRight="8dp"
+                    app:icon="@drawable/ic_settings_control_24dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
