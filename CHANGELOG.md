@@ -11,6 +11,15 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 71
+----------
+*in development*
+
+#### 71.0.0 🧪
+*2023-11-17*
+
+* 🌟 Shows: support opening show trailer when adding a show and in details.
+
 Version 70
 ----------
 *2023-11-09*
