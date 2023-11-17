@@ -91,7 +91,7 @@ object LanguageTools {
         return null
     }
 
-    data class LanguageData(val languageCode: String?, val languageString: String)
+    data class LanguageData(val languageCode: String, val languageString: String)
 
     /**
      * Based on the first two letters gets the language display name. Except for
