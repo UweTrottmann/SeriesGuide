@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
+import com.github.michaelbull.result.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -45,7 +46,8 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
         val genres: String,
         val traktRating: String,
         val traktVotes: String,
-        val traktUserRating: String
+        val traktUserRating: String,
+        val trailerVideoId: String?
     )
 
     // Mediator to compute some additional data for the UI in the background.
@@ -99,20 +101,38 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
                     val traktUserRating =
                         TraktTools.buildUserRatingString(application, show.ratingUser)
 
+                    val databaseValues = ShowForUi(
+                        show,
+                        timeOrNull,
+                        baseInfo,
+                        overviewStyled,
+                        languageData,
+                        country,
+                        releaseYear,
+                        lastUpdated,
+                        genres,
+                        traktRating, traktVotes, traktUserRating,
+                        null
+                    )
+
                     withContext(Dispatchers.Main) {
-                        showForUi.value =
-                            ShowForUi(
-                                show,
-                                timeOrNull,
-                                baseInfo,
-                                overviewStyled,
-                                languageData,
-                                country,
-                                releaseYear,
-                                lastUpdated,
-                                genres,
-                                traktRating, traktVotes, traktUserRating
-                            )
+                        showForUi.value = databaseValues
+                    }
+
+                    // Do network request after returning data from the database
+                    val showTmdbId = show.tmdbId
+                    if (showTmdbId != null && languageData != null) {
+                        TmdbTools2().getShowTrailerYoutubeId(
+                            application,
+                            show.tmdbId,
+                            languageData.languageCode
+                        ).onSuccess {
+                            if (it != null) {
+                                withContext(Dispatchers.Main) {
+                                    showForUi.value = databaseValues.copy(trailerVideoId = it)
+                                }
+                            }
+                        }
                     }
                 }
             }
