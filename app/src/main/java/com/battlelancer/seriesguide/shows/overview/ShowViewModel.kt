@@ -38,7 +38,7 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
         val show: SgShow2,
         val releaseTime: String?,
         val baseInfo: String,
-        val overview: CharSequence,
+        val overview: String?,
         val languageData: LanguageTools.LanguageData?,
         val country: String,
         val releaseYear: String?,
@@ -81,7 +81,6 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
                         // no description available, show no translation available message
                         overview = TextTools.textNoTranslation(application, languageCode)
                     }
-                    val overviewStyled = TextTools.textWithTmdbSource(application, overview)
 
                     // country for release time calculation
                     // show "unknown" if country is not supported
@@ -105,7 +104,7 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
                         show,
                         timeOrNull,
                         baseInfo,
-                        overviewStyled,
+                        overview,
                         languageData,
                         country,
                         releaseYear,

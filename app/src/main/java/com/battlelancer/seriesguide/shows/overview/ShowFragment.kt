@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
+import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -387,7 +388,9 @@ class ShowFragment() : Fragment() {
         }
 
         // overview
-        binding.textViewOverview.text = showForUi.overview
+        // Source text requires styling, so needs UI context
+        binding.textViewOverview.text =
+            TextTools.textWithTmdbSource(requireContext(), showForUi.overview)
 
         // language preferred for content
         val languageData = showForUi.languageData
