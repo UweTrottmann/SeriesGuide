@@ -32,13 +32,13 @@ jobs:
       - name: Build and run unit tests
         run: ./gradlew :app:testPureDebugUnitTest
 
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@ca89ad036b5fcd524c1017287fb01b5139908408 # v2.11.0
-        # https://github.com/EnricoMi/publish-unit-test-result-action#configuration
+      - name: Test Report
+        uses: dorny/test-reporter@afe6793191b75b608954023a46831a3fe10048d4 # v1.7.0
         if: always() # also run if tests failed
         with:
-          comment_mode: off # do not create comment on pull requests
-          junit_files: app/build/test-results/**/*.xml
+          name: JUnit Report
+          path: app/build/test-results/**/*.xml
+          reporter: java-junit
 
   lint:
     name: Lint
