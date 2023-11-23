@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -120,7 +120,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             setOnClickListener {
                 movieDetails?.tmdbMovie()
                     ?.title
-                    ?.let { startActivity(SimilarMoviesActivity.intent(requireContext(), tmdbId, it)) }
+                    ?.let {
+                        startActivity(SimilarMoviesActivity.intent(requireContext(), tmdbId, it))
+                    }
             }
             isGone = true
         }
@@ -602,9 +604,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             return
         }
 
+        val peopleListHelper = PeopleListHelper()
         // cast members
         if (credits.cast?.size != 0
-            && PeopleListHelper.populateMovieCast(
+            && peopleListHelper.populateMovieCast(
                 activity,
                 binding.moviePeople.containerCast,
                 credits
@@ -616,7 +619,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // crew members
         if (credits.crew?.size != 0
-            && PeopleListHelper.populateMovieCrew(
+            && peopleListHelper.populateMovieCrew(
                 activity,
                 binding.moviePeople.containerCrew,
                 credits

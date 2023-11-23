@@ -1,6 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
 // Copyright 2013-2023 Uwe Trottmann
 // Copyright 2013 Andrew Neal
-// SPDX-License-Identifier: Apache-2.0
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -494,15 +494,16 @@ class ShowFragment() : Fragment() {
             return
         }
 
+        val peopleListHelper = PeopleListHelper()
         if (credits.cast?.size != 0
-            && PeopleListHelper.populateShowCast(activity, binding.castContainer, credits)) {
+            && peopleListHelper.populateShowCast(activity, binding.castContainer, credits)) {
             setCastVisibility(binding, true)
         } else {
             setCastVisibility(binding, false)
         }
 
         if (credits.crew?.size != 0
-            && PeopleListHelper.populateShowCrew(activity, binding.crewContainer, credits)) {
+            && peopleListHelper.populateShowCrew(activity, binding.crewContainer, credits)) {
             setCrewVisibility(binding, true)
         } else {
             setCrewVisibility(binding, false)
