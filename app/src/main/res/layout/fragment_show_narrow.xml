@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Copyright 2023 Uwe Trottmann -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2014-2018, 2020-2023 Uwe Trottmann -->
 
 <!-- Enable nested scrolling to scroll app bar, fix fling to top registering. -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -235,21 +235,7 @@
 
         <include layout="@layout/fragment_show_meta" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/large_padding"
-            android:background="?attr/sgColorDivider" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
-            android:orientation="vertical">
-
-            <include layout="@layout/buttons_show_bottom" />
-
-        </LinearLayout>
+        <include layout="@layout/buttons_show_bottom" />
 
     </LinearLayout>
 
