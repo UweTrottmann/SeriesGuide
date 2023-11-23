@@ -214,6 +214,7 @@
     <string name="watchlist">待看清單</string>
     <!-- Similar shows -->
     <string name="empty_no_results">無結果</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似節目</string>
     <!-- Lists -->
     <string name="first_list">第一個清單</string>

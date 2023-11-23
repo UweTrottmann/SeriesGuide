@@ -218,6 +218,7 @@
     <string name="watchlist">فهرست تماشا</string>
     <!-- Similar shows -->
     <string name="empty_no_results">بدون نتیجه</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">سریال‌های مشابه</string>
     <!-- Lists -->
     <string name="first_list">فهرست نخست</string>

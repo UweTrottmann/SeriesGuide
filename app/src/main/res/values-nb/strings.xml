@@ -218,6 +218,7 @@
     <string name="watchlist">Overvåkningsliste</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Ingen resultater</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Lignende serier</string>
     <!-- Lists -->
     <string name="first_list">Første liste</string>

@@ -197,7 +197,7 @@
                 style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_similar_shows"
+                android:text="@string/action_similar"
                 app:icon="@drawable/ic_search_white_24dp"
                 app:iconGravity="start" />
 
@@ -206,7 +206,7 @@
                 style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/share_show"
+                android:text="@string/share"
                 app:icon="@drawable/ic_share_white_24dp"
                 app:iconGravity="start" />
 

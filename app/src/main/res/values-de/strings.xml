@@ -218,6 +218,7 @@
     <string name="watchlist">Merkliste</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Keine Ergebnisse</string>
+    <string name="action_similar">Ähnliche</string>
     <string name="title_similar_shows">Ähnliche Serien</string>
     <!-- Lists -->
     <string name="first_list">Erste Liste</string>

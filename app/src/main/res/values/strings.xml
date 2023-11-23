@@ -240,6 +240,7 @@
 
     <!-- Similar shows -->
     <string name="empty_no_results">No results</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
 
     <!-- Lists -->

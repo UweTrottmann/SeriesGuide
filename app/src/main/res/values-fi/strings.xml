@@ -218,6 +218,7 @@
     <string name="watchlist">Seurantalista</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Ei tuloksia</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Samankaltaisia sarjoja</string>
     <!-- Lists -->
     <string name="first_list">Ensimmäinen lista</string>

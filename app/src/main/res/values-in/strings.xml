@@ -214,6 +214,7 @@
     <string name="watchlist">Daftar tontonan</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Tidak ada hasil</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Acara Serupa</string>
     <!-- Lists -->
     <string name="first_list">Daftar pertama</string>
