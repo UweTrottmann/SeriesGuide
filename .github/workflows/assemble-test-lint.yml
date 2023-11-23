@@ -15,7 +15,8 @@ jobs:
       checks: write # to publish unit test results
 
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Check out
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Set up JDK 17
         uses: actions/setup-java@0ab4596768b603586c0de567f2430c30f5b0d2b0 # v3.13.0
         with:
@@ -23,20 +24,18 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Gradle Info
+      - name: Gradle info
         run: ./gradlew -version
 
-      - name: Assemble Debug Variant
-        run: ./gradlew assembleDebug
-
       # Note: Currently no difference between flavors or debug and release
-      - name: Run Unit Tests
+      # Note: running tests will also compile
+      - name: Build and run unit tests
         run: ./gradlew :app:testPureDebugUnitTest
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@ca89ad036b5fcd524c1017287fb01b5139908408 # v2.11.0
         # https://github.com/EnricoMi/publish-unit-test-result-action#configuration
-        if: always() # also run if build step failed
+        if: always() # also run if tests failed
         with:
           comment_mode: off # do not create comment on pull requests
           junit_files: app/build/test-results/**/*.xml
@@ -46,7 +45,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Check out
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Set up JDK 17
         uses: actions/setup-java@0ab4596768b603586c0de567f2430c30f5b0d2b0 # v3.13.0
         with:
@@ -57,10 +57,16 @@ jobs:
       # To speed up lint check only run for release variant and only on app module
       # Note: the app module has lintOptions.checkDependencies true, so submodules will be checked
       # Source: https://groups.google.com/forum/#!topic/lint-dev/RGTvK_uHQGQ
-      - name: Lint Release Variants
-        run: ./gradlew :app:lintPureRelease :app:lintAmazonRelease
+      # Note: running lint will also compile
+      - name: Lint goog release
+        run: ./gradlew :app:lintPureRelease
 
-      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
+      - name: Lint amzn release
+        if: ${{ contains(github.ref, 'release') }}
+        run: ./gradlew :app:lintAmazonRelease
+
+      - name: Upload lint reports
+        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
         if: ${{ always() }} # also upload of lint errors
         with:
           name: Lint reports
