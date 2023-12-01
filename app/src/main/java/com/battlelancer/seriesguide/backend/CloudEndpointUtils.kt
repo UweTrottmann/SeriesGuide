@@ -25,10 +25,10 @@ object CloudEndpointUtils {
     /**
      * Change this to 'true' if you're running your backend locally using the DevAppServer.
      */
-    @Suppress("SimplifyBooleanWithConstants")
+    @Suppress("SimplifyBooleanWithConstants", "KotlinConstantConditions")
     private val USE_LOCAL_VERSION = false && BuildConfig.DEBUG
 
-    @Suppress("SimplifyBooleanWithConstants")
+    @Suppress("SimplifyBooleanWithConstants", "KotlinConstantConditions")
     private val USE_STAGING_VERSION = false && BuildConfig.DEBUG
 
     private const val ROOT_URL_STAGING = "https://staging-dot-optical-hexagon-364.appspot.com"
