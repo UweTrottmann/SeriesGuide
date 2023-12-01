@@ -33,6 +33,7 @@ import timber.log.Timber;
 
 public class HexagonEpisodeSync {
 
+    // See API documentation on list size limit.
     public static final int MAX_BATCH_SIZE = 500;
 
     private final Context context;

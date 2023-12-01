@@ -11,9 +11,9 @@ import android.text.TextUtils
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
+import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
-import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.util.DBUtils
 import com.battlelancer.seriesguide.util.Errors
 import com.google.api.client.util.DateTime
@@ -22,7 +22,6 @@ import com.uwetrottmann.seriesguide.backend.movies.model.Movie
 import com.uwetrottmann.seriesguide.backend.movies.model.MovieList
 import timber.log.Timber
 import java.io.IOException
-import java.util.ArrayList
 
 internal class HexagonMovieSync(
     private val context: Context,
@@ -222,14 +221,10 @@ internal class HexagonMovieSync(
             return true
         }
 
-        // Upload in small batches
-        val wrapper = MovieList()
-        while (movies.isNotEmpty()) {
-            wrapper.movies = ArrayList()
-            while (movies.isNotEmpty() && wrapper.movies.size < MAX_BATCH_SIZE) {
-                wrapper.movies.add(movies.removeFirst())
-            }
-
+        // Upload in batches
+        movies.chunked(MAX_BATCH_SIZE).forEach { chunk ->
+            val wrapper = MovieList()
+            wrapper.movies = chunk
             try {
                 // get service each time to check if auth was removed
                 val moviesService = hexagonTools.moviesService ?: return false
@@ -265,6 +260,7 @@ internal class HexagonMovieSync(
     }
 
     companion object {
+        // See API documentation on list size limit.
         private const val MAX_BATCH_SIZE = 500
     }
 

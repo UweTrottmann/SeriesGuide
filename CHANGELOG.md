@@ -15,6 +15,8 @@ Version 71
 ----------
 *in development*
 
+* 🔨 Cloud: do not fail when uploading more than 500 new shows.
+
 #### 71.0.0 🧪
 *2023-11-17*
 
