@@ -218,7 +218,7 @@
     <string name="watchlist">Seurantalista</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Ei tuloksia</string>
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Samankaltaiset</string>
     <string name="title_similar_shows">Samankaltaisia sarjoja</string>
     <!-- Lists -->
     <string name="first_list">Ensimmäinen lista</string>
@@ -255,7 +255,7 @@
     <string name="action_movies_sort_title">Nimi</string>
     <string name="action_movies_sort_release">Julkaisupäivä</string>
     <string name="action_movies_filter">Suodata elokuvat</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Samankaltaisia elokuvia</string>
     <!-- Statistics -->
     <string name="statistics_failed">Tilastojen laskeminen ei onnistunut.</string>
     <string name="shows_finished">%s katsottu loppuun</string>

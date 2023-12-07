@@ -99,7 +99,7 @@
     <string name="no_translation_title">Non traduit</string>
     <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>
     <string name="format_source">Source : %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Dernière mise à jour</string>
     <string name="custom_release_time_edit">Modifier l\'heure de sortie</string>
     <string name="custom_release_time_earlier">Plus tôt</string>
     <string name="custom_release_time_later">Plus tard</string>
@@ -164,7 +164,7 @@
     <string name="context_updateshow">Mettre à jour</string>
     <string name="context_marknext">Prochain épisode vu</string>
     <string name="action_episodes_switch_view">Basculer l’affichage</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Prochain à voir</string>
     <!-- History -->
     <string name="user_stream">Historique</string>
     <string name="recently_watched">Vu récemment</string>
@@ -218,7 +218,7 @@
     <string name="watchlist">Liste à voir</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Aucun résultat</string>
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Similaires</string>
     <string name="title_similar_shows">Séries similaires</string>
     <!-- Lists -->
     <string name="first_list">Première liste</string>
@@ -255,7 +255,7 @@
     <string name="action_movies_sort_title">Titre</string>
     <string name="action_movies_sort_release">Date de parution</string>
     <string name="action_movies_filter">Filtrer les films</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Films similaires</string>
     <!-- Statistics -->
     <string name="statistics_failed">Impossible de calculer les statistiques.</string>
     <string name="shows_finished">%s visionnées en entier</string>
@@ -319,7 +319,7 @@
     <string name="waitplease">Veuillez patienter&#8230;</string>
     <string name="connect">Se connecter</string>
     <string name="disconnect">Se déconnecter</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Ajouter des séries de Trakt</string>
     <string name="about_trakt">Trakt vous permet de garder une trace des séries et films que vous regardez.</string>
     <string name="support_trakt">Soutenir Trakt en devenant VIP</string>
     <!-- trakt ratings -->

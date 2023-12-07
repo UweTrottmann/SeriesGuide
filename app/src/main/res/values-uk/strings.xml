@@ -226,7 +226,7 @@
     <string name="watchlist">Список перегляду</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Немає результатів</string>
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Схожі</string>
     <string name="title_similar_shows">Подібні серіали</string>
     <!-- Lists -->
     <string name="first_list">Перший список</string>

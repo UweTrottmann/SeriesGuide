@@ -226,7 +226,7 @@
     <string name="watchlist">Do obejrzenia</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Brak wyników</string>
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Podobne</string>
     <string name="title_similar_shows">Podobne seriale</string>
     <!-- Lists -->
     <string name="first_list">Pierwsza lista</string>

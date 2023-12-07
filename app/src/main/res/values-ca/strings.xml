@@ -218,7 +218,7 @@
     <string name="watchlist">Llista de seguiment</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Cap resultat</string>
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Semblants</string>
     <string name="title_similar_shows">Sèries similars</string>
     <!-- Lists -->
     <string name="first_list">Primera llista</string>
