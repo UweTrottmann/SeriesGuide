@@ -15,7 +15,14 @@ Version 71
 ----------
 *in development*
 
+#### 71.0.1 🧪
+*2023-12-07*
+
+* 🔧 Shows/Movies: move more secondary actions to the top, organize them in a chain.
+* 🔧 People: use rounded images and placeholders.
 * 🔨 Cloud: do not fail when uploading more than 500 new shows.
+* 🔨 Show details: color source info with a readable color again.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 71.0.0 🧪
 *2023-11-17*
