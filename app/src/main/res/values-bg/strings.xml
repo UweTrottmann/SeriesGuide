@@ -218,6 +218,7 @@
     <string name="watchlist">Списък за гледане</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Няма резултати</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Подобни сериали</string>
     <!-- Lists -->
     <string name="first_list">Първи списък</string>

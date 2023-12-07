@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2016-2018, 2020, 2022, 2023 Uwe Trottmann -->
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -36,7 +40,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="370dp"
+                    android:layout_width="380dp"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
                     android:paddingTop="@dimen/large_padding"
@@ -78,7 +82,7 @@
                             android:layout_toRightOf="@id/frameLayoutMoviePoster"
                             android:background="?attr/selectableItemBackground"
                             android:focusable="true"
-                            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
+                            android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
                             tools:text="Awesome Movie Title" />
 
                         <TextView
@@ -94,31 +98,6 @@
                             android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
                             tools:text="20 Oct 2013" />
 
-                        <Button
-                            android:id="@+id/buttonMovieTrailer"
-                            style="@style/Widget.SeriesGuide.Button.Borderless.Default"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/textViewMovieDate"
-                            android:layout_marginRight="@dimen/large_padding"
-                            android:layout_toRightOf="@id/frameLayoutMoviePoster"
-                            android:text="@string/trailer"
-                            app:icon="@drawable/ic_movie_white_24dp"
-                            app:iconGravity="start" />
-
-                        <Button
-                            android:id="@+id/buttonMovieSimilar"
-                            style="@style/Widget.SeriesGuide.Button.Borderless.Default"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/buttonMovieTrailer"
-                            android:layout_marginRight="@dimen/large_padding"
-                            android:layout_marginBottom="@dimen/large_padding"
-                            android:layout_toRightOf="@id/frameLayoutMoviePoster"
-                            android:text="@string/title_similar_movies"
-                            app:icon="@drawable/ic_search_white_24dp"
-                            app:iconGravity="start" />
-
                     </RelativeLayout>
 
                     <include
@@ -128,28 +107,18 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/containerMovieHeader" />
 
-                    <View
-                        android:id="@+id/dividerMovie1"
+                    <LinearLayout
+                        android:id="@+id/containerMovieActions"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@id/containerMovieButtons"
-                        android:layout_marginLeft="@dimen/large_padding"
-                        android:layout_marginRight="@dimen/large_padding"
-                        android:background="?attr/sgColorDivider"
-                        tools:ignore="UnknownIdInLayout" />
-
-                    <include
-                        android:id="@+id/containerRatings"
-                        layout="@layout/ratings_movies"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/dividerMovie1"
-                        android:layout_centerHorizontal="true" />
+                        android:layout_below="@id/containerMovieButtons"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="370dp"
+                    android:layout_width="360dp"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/large_padding"
                     android:paddingBottom="@dimen/large_padding">
@@ -176,12 +145,40 @@
                         android:textAppearance="?attr/textAppearanceBody2"
                         tools:text="Description for a super awesome movie..." />
 
+                    <View
+                        android:id="@+id/dividerMovie1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/textViewMovieDescription"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginTop="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:background="?attr/sgColorDivider" />
+
+                    <include
+                        android:id="@+id/containerRatings"
+                        layout="@layout/ratings_movies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dividerMovie1"
+                        android:layout_centerHorizontal="true" />
+
+                    <View
+                        android:id="@+id/dividerMovie2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/containerRatings"
+                        android:layout_marginLeft="@dimen/large_padding"
+                        android:layout_marginRight="@dimen/large_padding"
+                        android:background="?attr/sgColorDivider"
+                        tools:ignore="UnknownIdInLayout" />
+
                     <TextView
                         android:id="@+id/textViewMovieGenresLabel"
                         style="@style/Block.WithTopMargin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewMovieDescription"
+                        android:layout_below="@+id/dividerMovie2"
                         android:text="@string/show_genres"
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Bold" />
 
@@ -213,45 +210,6 @@
                         android:layout_below="@+id/labelMovieLastUpdated"
                         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                         tools:text="July 17, 21:48" />
-
-                    <View
-                        android:id="@+id/dividerMovie2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@id/textMovieLastUpdated"
-                        android:layout_marginLeft="@dimen/large_padding"
-                        android:layout_marginTop="@dimen/large_padding"
-                        android:layout_marginRight="@dimen/large_padding"
-                        android:layout_marginBottom="@dimen/default_padding"
-                        android:background="?attr/sgColorDivider" />
-
-                    <Button
-                        android:id="@+id/buttonMovieComments"
-                        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dividerMovie2"
-                        android:text="@string/comments"
-                        app:icon="@drawable/ic_forum_black_24dp"
-                        app:iconGravity="start" />
-
-                    <View
-                        android:id="@+id/dividerMovie3"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/buttonMovieComments"
-                        android:layout_marginLeft="72dp"
-                        android:layout_marginTop="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/large_padding"
-                        android:layout_marginBottom="@dimen/default_padding"
-                        android:background="?attr/sgColorDivider" />
-
-                    <LinearLayout
-                        android:id="@+id/containerMovieActions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/dividerMovie3"
-                        android:orientation="vertical" />
 
                 </RelativeLayout>
 

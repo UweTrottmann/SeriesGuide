@@ -218,6 +218,7 @@
     <string name="watchlist">Figyelőlista</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Nincs találat</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Hasonló sorozatok</string>
     <!-- Lists -->
     <string name="first_list">Első lista</string>

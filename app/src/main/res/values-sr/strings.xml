@@ -222,6 +222,7 @@
     <string name="watchlist">Листа за гледање</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Нема резултата</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Сличне емисије</string>
     <!-- Lists -->
     <string name="first_list">Прва листа</string>

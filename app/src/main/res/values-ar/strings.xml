@@ -234,6 +234,7 @@
     <string name="watchlist">قائمة المشاهدة</string>
     <!-- Similar shows -->
     <string name="empty_no_results">لا توجد نتائج</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">مسلسلات مشابهة</string>
     <!-- Lists -->
     <string name="first_list">القائمة الأولى</string>

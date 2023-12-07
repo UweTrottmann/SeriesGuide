@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Copyright 2023 Uwe Trottmann -->
+<!-- Copyright 2014-2018, 2020-2023 Uwe Trottmann -->
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 
 <!-- Enable nested scrolling to scroll app bar, fix fling to top registering. -->
@@ -190,7 +190,7 @@
                 style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_similar_shows"
+                android:text="@string/action_similar"
                 app:icon="@drawable/ic_search_white_24dp"
                 app:iconGravity="start" />
 
@@ -199,7 +199,7 @@
                 style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/share_show"
+                android:text="@string/share"
                 app:icon="@drawable/ic_share_white_24dp"
                 app:iconGravity="start" />
 
@@ -228,19 +228,7 @@
 
         <include layout="@layout/fragment_show_meta" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/large_padding"
-            android:background="?attr/sgColorDivider" />
+        <include layout="@layout/buttons_show_bottom" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_padding"
-            android:orientation="vertical">
-
-            <include layout="@layout/buttons_show_bottom" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

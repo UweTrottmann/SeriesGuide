@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2014-2018, 2020, 2021, 2023 Uwe Trottmann -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -42,56 +46,86 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/dividerMovieButtons"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
-        android:background="?attr/sgColorDivider" />
-
-    <Button
-        android:id="@+id/buttonMovieCheckIn"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/padding_button"
-        android:layout_marginRight="@dimen/padding_button"
-        android:contentDescription="@string/checkin"
-        android:gravity="center_vertical|start"
-        android:text="@string/checkin"
-        app:icon="@drawable/ic_checkin_black_24dp" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerMovieStreamingSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_button"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="@dimen/padding_button">
 
-        <Button
-            android:id="@+id/buttonMovieStreamingSearch"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+        <androidx.constraintlayout.helper.widget.Flow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/action_stream"
-            android:gravity="center_vertical|start"
-            android:text="@string/action_stream"
-            app:icon="@drawable/ic_play_arrow_black_24dp"
-            app:layout_constraintEnd_toStartOf="@+id/buttonMovieStreamingSearchInfo"
+            app:constraint_referenced_ids="buttonMovieTrailer,buttonMovieSimilar,buttonMovieComments,buttonMovieCheckIn,buttonMovieStreamingSearch,buttonMovieStreamingSearchInfo"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="4dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <Button
+            android:id="@+id/buttonMovieTrailer"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trailer"
+            app:icon="@drawable/ic_movie_white_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonMovieSimilar"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/default_padding"
+            android:text="@string/action_similar"
+            app:icon="@drawable/ic_search_white_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonMovieComments"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comments"
+            app:icon="@drawable/ic_forum_black_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonMovieCheckIn"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/checkin"
+            android:text="@string/checkin"
+            app:icon="@drawable/ic_checkin_black_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonMovieStreamingSearch"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_stream"
+            android:text="@string/action_stream"
+            app:icon="@drawable/ic_play_arrow_black_24dp" />
+
+        <!-- Note: can not wrap in LinearLayout to keep close to search button as it would
+             grow out of bounds if long. -->
+        <Button
             android:id="@+id/buttonMovieStreamingSearchInfo"
-            style="?attr/borderlessButtonStyle"
+            style="@style/Widget.SeriesGuide.Button.IconButton.Outlined"
             android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
             android:contentDescription="@string/action_stream_info"
-            android:src="@drawable/ic_settings_control_24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:insetLeft="0dp"
+            android:insetRight="8dp"
+            app:icon="@drawable/ic_settings_control_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

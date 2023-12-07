@@ -218,6 +218,7 @@
     <string name="watchlist">Bevakningslista</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Inga resultat</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Liknande program</string>
     <!-- Lists -->
     <string name="first_list">Första listan</string>

@@ -234,6 +234,7 @@
     <string name="watchlist">Rhestr wylio</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Dim canlyniadau</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Sioeau tebyg</string>
     <!-- Lists -->
     <string name="first_list">Rhestr gyntaf</string>

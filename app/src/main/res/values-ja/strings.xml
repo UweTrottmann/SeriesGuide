@@ -214,6 +214,7 @@
     <string name="watchlist">ウォッチリスト</string>
     <!-- Similar shows -->
     <string name="empty_no_results">検索結果はありません</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似の番組</string>
     <!-- Lists -->
     <string name="first_list">最初のリスト</string>

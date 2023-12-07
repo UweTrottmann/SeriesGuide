@@ -214,6 +214,7 @@
     <string name="watchlist">อยากดู</string>
     <!-- Similar shows -->
     <string name="empty_no_results">ไม่มีผลลัพธ์</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">ซีรีส์ที่คล้ายกัน</string>
     <!-- Lists -->
     <string name="first_list">รายการแรก</string>

@@ -218,6 +218,7 @@
     <string name="watchlist">İzlenecekler listesi</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Sonuç bulunamadı</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Benzer diziler</string>
     <!-- Lists -->
     <string name="first_list">İlk liste</string>

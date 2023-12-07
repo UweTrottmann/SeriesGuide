@@ -62,7 +62,7 @@
     <string name="share_show">Serie teilen</string>
     <string name="share_episode">Folge teilen</string>
     <string name="share_movie">Film teilen</string>
-    <string name="addtocalendar">Zum Kalender hinzufügen</string>
+    <string name="addtocalendar">Termin erstellen</string>
     <string name="addtocalendar_failed">Kalender-Termin kann nicht erstellt werden</string>
     <string name="links">Links</string>
     <!-- Comments -->
@@ -218,6 +218,7 @@
     <string name="watchlist">Merkliste</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Keine Ergebnisse</string>
+    <string name="action_similar">Ähnliche</string>
     <string name="title_similar_shows">Ähnliche Serien</string>
     <!-- Lists -->
     <string name="first_list">Erste Liste</string>

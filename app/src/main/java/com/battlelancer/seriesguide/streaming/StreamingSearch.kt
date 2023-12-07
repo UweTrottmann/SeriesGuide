@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.ViewTools
 import kotlinx.coroutines.Dispatchers
+import java.text.NumberFormat
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 
@@ -241,7 +242,7 @@ object StreamingSearch {
         val providerOrNull = watchInfo.provider
         return if (providerOrNull != null) {
             val moreText = if (watchInfo.countMore > 0) {
-                " + " + context.getString(R.string.more, watchInfo.countMore)
+                " + " + NumberFormat.getIntegerInstance().format(watchInfo.countMore)
             } else ""
             val providerText = (providerOrNull.provider_name ?: "") + moreText
             if (replaceButtonText) {

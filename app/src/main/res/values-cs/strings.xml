@@ -226,6 +226,7 @@
     <string name="watchlist">Chci vidět</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Nenalezeno</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Podobné seriály</string>
     <!-- Lists -->
     <string name="first_list">První seznam</string>

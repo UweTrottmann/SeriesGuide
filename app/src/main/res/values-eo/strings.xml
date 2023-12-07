@@ -218,6 +218,7 @@
     <string name="watchlist">Spektolisto</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Ne estas rezultoj</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similaj televidaĵoj</string>
     <!-- Lists -->
     <string name="first_list">Unua listo</string>
