@@ -166,7 +166,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         binding.textviewReleaseDate.copyTextToClipboardOnLongClick()
 
         // Once episode is loaded, trigger show loading: so set show observer first.
-        model.show.observe(viewLifecycleOwner, { show: SgShow2? ->
+        model.show.observe(viewLifecycleOwner) { show: SgShow2? ->
             if (show != null) {
                 if (show.tmdbId != null) {
                     model.setShowTmdbId(show.tmdbId)
@@ -179,16 +179,16 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             }
             // no data to display
             binding.root.visibility = View.GONE
-        })
-        model.episode.observe(viewLifecycleOwner, { sgEpisode2: SgEpisode2? ->
+        }
+        model.episode.observe(viewLifecycleOwner) { sgEpisode2: SgEpisode2? ->
             if (sgEpisode2 != null) {
                 model.showId.postValue(sgEpisode2.showId)
             } else {
                 // no data to display
                 binding.root.visibility = View.GONE
             }
-        })
-        model.watchProvider.observe(viewLifecycleOwner, { watchInfo: TmdbTools2.WatchInfo? ->
+        }
+        model.watchProvider.observe(viewLifecycleOwner) { watchInfo: TmdbTools2.WatchInfo? ->
             val b = this.binding
             if (watchInfo != null && b != null) {
                 StreamingSearch.configureButton(
@@ -196,7 +196,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                     watchInfo
                 )
             }
-        })
+        }
     }
 
     override fun onResume() {
