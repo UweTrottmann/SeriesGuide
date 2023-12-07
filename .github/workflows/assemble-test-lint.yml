@@ -1,11 +1,14 @@
 name: Android CI
 
+# Avoid running this on the gh-pages branch
 on:
   push:
-    branches: [ main, dev ]
+    branches-ignore:
+      - "gh-pages"
   pull_request:
-    branches: [ main, dev ]
-  workflow_dispatch:
+    branches-ignore:
+      - "gh-pages"
+  workflow_dispatch: # Allow running manually from web UI
 
 jobs:
   build:
