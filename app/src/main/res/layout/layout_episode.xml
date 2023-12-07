@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2015-2018, 2020-2023 Uwe Trottmann -->
+
 <!-- Need to define root ID in include tag or view binding breaks. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

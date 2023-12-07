@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
