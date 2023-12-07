@@ -409,19 +409,20 @@ class HexagonShowSync @Inject constructor(
         // https://github.com/UweTrottmann/SeriesGuide/issues/781
         Timber.i("upload: %d shows", shows.size)
 
-        // wrap into helper object
-        val showList = SgCloudShowList()
-        showList.shows = shows
-
-        // upload shows
-        try {
-            // get service each time to check if auth was removed
-            val showsService = hexagonTools.showsService ?: return false
-            showsService.saveSgShows(showList).execute()
-        } catch (e: IOException) {
-            logAndReportHexagon("save shows", e)
-            return false
+        // Upload in batches
+        shows.chunked(MAX_BATCH_SIZE).forEach { chunk ->
+            val wrapper = SgCloudShowList()
+            wrapper.shows = chunk
+            try {
+                // get service each time to check if auth was removed
+                val showsService = hexagonTools.showsService ?: return false
+                showsService.saveSgShows(wrapper).execute()
+            } catch (e: IOException) {
+                logAndReportHexagon("save shows", e)
+                return false
+            }
         }
+
         return true
     }
 
@@ -429,6 +430,11 @@ class HexagonShowSync @Inject constructor(
         return withContext(Dispatchers.IO) {
             upload(listOf(show))
         }
+    }
+
+    companion object {
+        // See API documentation on list size limit.
+        const val MAX_BATCH_SIZE = 500
     }
 
 }
