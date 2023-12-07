@@ -1,66 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2014-2021, 2023 Uwe Trottmann -->
+
 <!-- Need to define root ID in include tag or view binding breaks. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     tools:showIn="@layout/buttons_services">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowButtonsEpisodeMoreLinks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="buttonEpisodeTmdb,buttonEpisodeTrakt,buttonEpisodeImdb"
+        app:flow_horizontalBias="0"
+        app:flow_horizontalGap="4dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_wrapMode="chain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonEpisodeTmdb"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/tmdb"
         app:icon="@drawable/ic_link_black_24dp"
         app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonEpisodeTrakt"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/trakt"
         app:icon="@drawable/ic_link_black_24dp"
         app:iconGravity="start" />
 
     <Button
         android:id="@+id/buttonEpisodeImdb"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/imdb"
         app:icon="@drawable/ic_link_black_24dp"
         app:iconGravity="start" />
 
-    <Button
-        android:id="@+id/buttonEpisodeShare"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/share_episode"
-        app:icon="@drawable/ic_share_white_24dp"
-        app:iconGravity="start" />
-
-    <Button
-        android:id="@+id/buttonEpisodeCalendar"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/addtocalendar"
-        app:icon="@drawable/ic_event_white_24dp"
-        app:iconGravity="start" />
-
-    <Button
-        android:id="@+id/buttonEpisodeComments"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/comments"
-        app:icon="@drawable/ic_forum_black_24dp"
-        app:iconGravity="start" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

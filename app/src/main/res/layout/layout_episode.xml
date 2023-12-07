@@ -28,8 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
         android:layout_marginTop="12dp"
+        android:layout_marginRight="@dimen/large_padding"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
         android:nextFocusDown="@+id/textViewEpisodeReleaseTime"
@@ -45,8 +45,8 @@
         android:layout_marginBottom="@dimen/large_padding"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
-        android:nextFocusDown="@+id/containerEpisodeImage"
         android:nextFocusUp="@+id/textViewEpisodeTitle"
+        android:nextFocusDown="@+id/containerEpisodeImage"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
         tools:text="OCT 15, 2013 (TUE) · 52" />
 
@@ -88,19 +88,12 @@
         android:id="@+id/include_buttons"
         layout="@layout/buttons_episode" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/large_padding"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
-        android:background="?attr/sgColorDivider" />
-
     <TextView
         android:id="@+id/textview_description"
         style="@style/Block.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="@dimen/large_padding"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
@@ -214,12 +207,6 @@
         android:focusable="true"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
         tools:text="2014/07/25 CEST (Fri)" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/large_padding"
-        android:background="?attr/sgColorDivider" />
 
     <include
         android:id="@+id/include_services"

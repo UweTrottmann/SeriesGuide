@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2014-2021, 2023 Uwe Trottmann -->
+
 <!-- Will never be a root layout, overdraw is expected -->
 <!-- Need to define root ID in include tag or view binding breaks. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -47,69 +50,97 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/dividerEpisodeButtons"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
-        android:background="?attr/sgColorDivider" />
-
-    <Button
-        android:id="@+id/buttonEpisodeCheckin"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/padding_button"
-        android:layout_marginRight="@dimen/padding_button"
-        android:contentDescription="@string/checkin"
-        android:gravity="center_vertical|start"
-        android:nextFocusUp="@+id/buttonEpisodeWatched"
-        android:text="@string/checkin"
-        app:icon="@drawable/ic_checkin_black_24dp" />
-
-    <Button
-        android:id="@+id/buttonEpisodeWatchedUpTo"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/padding_button"
-        android:layout_marginRight="@dimen/padding_button"
-        android:contentDescription="@string/action_watched_up_to"
-        android:gravity="center_vertical|start"
-        android:text="@string/action_watched_up_to"
-        app:icon="@drawable/ic_watch_all_black_24dp" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerEpisodeStreamingSearch"
+        android:id="@+id/constraintLayoutEpisodeButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding_button"
-        android:layout_marginEnd="@dimen/padding_button">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp">
 
-        <Button
-            android:id="@+id/buttonEpisodeStreamingSearch"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Caption"
+        <androidx.constraintlayout.helper.widget.Flow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/action_stream"
-            android:gravity="center_vertical|start"
-            android:text="@string/action_stream"
-            app:icon="@drawable/ic_play_arrow_black_24dp"
-            app:layout_constraintEnd_toStartOf="@+id/buttonEpisodeStreamingSearchInfo"
+            app:constraint_referenced_ids="buttonEpisodeCheckin,buttonEpisodeWatchedUpTo,buttonEpisodeShare,buttonEpisodeCalendar,buttonEpisodeComments,buttonEpisodeStreamingSearch,buttonEpisodeStreamingSearchInfo"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="4dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <Button
+            android:id="@+id/buttonEpisodeCheckin"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/checkin"
+            android:nextFocusUp="@+id/buttonEpisodeWatched"
+            android:text="@string/checkin"
+            app:icon="@drawable/ic_checkin_black_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonEpisodeWatchedUpTo"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_watched_up_to"
+            android:text="@string/action_watched_up_to"
+            app:icon="@drawable/ic_watch_all_black_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonEpisodeShare"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share"
+            app:icon="@drawable/ic_share_white_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonEpisodeCalendar"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addtocalendar"
+            app:icon="@drawable/ic_event_white_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonEpisodeComments"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comments"
+            app:icon="@drawable/ic_forum_black_24dp"
+            app:iconGravity="start" />
+
+        <Button
+            android:id="@+id/buttonEpisodeStreamingSearch"
+            style="@style/Widget.SeriesGuide.Button.Outlined.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_stream"
+            android:text="@string/action_stream"
+            app:icon="@drawable/ic_play_arrow_black_24dp"
+            app:iconGravity="start" />
+
+        <!-- Note: can not wrap in LinearLayout to keep close to search button as it would
+             grow out of bounds if long. -->
+        <Button
             android:id="@+id/buttonEpisodeStreamingSearchInfo"
-            style="?attr/borderlessButtonStyle"
+            style="@style/Widget.SeriesGuide.Button.IconButton.Outlined"
             android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
             android:contentDescription="@string/action_stream_info"
-            android:src="@drawable/ic_settings_control_24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:insetLeft="0dp"
+            android:insetRight="8dp"
+            app:icon="@drawable/ic_settings_control_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
