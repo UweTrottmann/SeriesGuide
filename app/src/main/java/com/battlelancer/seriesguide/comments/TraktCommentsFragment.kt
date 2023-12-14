@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.comments
 
@@ -156,6 +156,7 @@ class TraktCommentsFragment : Fragment() {
         // comment for an episode?
         val episodeId = args.getLong(InitBundle.EPISODE_ID)
         if (episodeId != 0L) {
+            @Suppress("DEPRECATION") // AsyncTask
             TraktTask(context).commentEpisode(episodeId, comment, isSpoiler)
                 .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
             return
@@ -164,6 +165,7 @@ class TraktCommentsFragment : Fragment() {
         // comment for a movie?
         val movieTmdbId = args.getInt(InitBundle.MOVIE_TMDB_ID)
         if (movieTmdbId != 0) {
+            @Suppress("DEPRECATION") // AsyncTask
             TraktTask(context).commentMovie(movieTmdbId, comment, isSpoiler)
                 .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
             return
@@ -172,6 +174,7 @@ class TraktCommentsFragment : Fragment() {
         // comment for a show?
         val showId = args.getLong(InitBundle.SHOW_ID)
         if (showId != 0L) {
+            @Suppress("DEPRECATION") // AsyncTask
             TraktTask(context).commentShow(showId, comment, isSpoiler)
                 .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
