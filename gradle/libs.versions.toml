@@ -13,7 +13,7 @@ androidutils = "com.uwetrottmann.androidutils:androidutils:4.0.0" # https://gith
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidx-activity = "androidx.activity:activity:1.8.2"
 # https://developer.android.com/jetpack/androidx/releases/annotation
-androidx-annotation = "androidx.annotation:annotation:1.6.0"
+androidx-annotation = "androidx.annotation:annotation:1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
 # https://developer.android.com/jetpack/androidx/releases/browser
