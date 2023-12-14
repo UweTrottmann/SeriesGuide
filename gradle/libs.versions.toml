@@ -22,8 +22,8 @@ androidx-browser = "androidx.browser:browser:1.5.0"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 # https://developer.android.com/jetpack/androidx/releases/core
-androidx-core = "androidx.core:core:1.10.1"
-androidx-core-ktx = "androidx.core:core-ktx:1.10.1"
+androidx-core = "androidx.core:core:1.12.0"
+androidx-core-ktx = "androidx.core:core-ktx:1.12.0"
 # https://developer.android.com/jetpack/androidx/releases/fragment
 androidx-fragment = "androidx.fragment:fragment-ktx:1.6.1"
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
