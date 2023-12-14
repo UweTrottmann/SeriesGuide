@@ -191,7 +191,7 @@ class TraktAddFragment : AddFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: ShowChangedEvent?) {
+    fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: ShowChangedEvent?) {
         if (listType == TraktShowsLink.WATCHLIST) {
             // reload watchlist if a show was removed
             LoaderManager.getInstance(this)
