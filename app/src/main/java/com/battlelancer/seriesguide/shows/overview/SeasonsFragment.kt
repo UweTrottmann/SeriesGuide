@@ -277,12 +277,12 @@ class SeasonsFragment() : Fragment() {
         val unwatched = result.unwatchedEpisodes
         binding.textViewSeasonsRemaining.text =
             TextTools.getRemainingEpisodes(requireContext().resources, unwatched)
-        setWatchedToggleState(unwatched)
-        setCollectedToggleState(result.uncollectedEpisodes)
+        setWatchedToggleState(unwatched == 0)
+        setCollectedToggleState(result.collectedAllEpisodes)
     }
 
-    private fun setWatchedToggleState(unwatchedEpisodes: Int) {
-        watchedAllEpisodes = unwatchedEpisodes == 0
+    private fun setWatchedToggleState(watchedAllEpisodes: Boolean) {
+        this.watchedAllEpisodes = watchedAllEpisodes
         binding?.imageViewSeasonsWatchedToggle?.apply {
             // using vectors is safe because it will be an AppCompatImageView
             contentDescription = if (watchedAllEpisodes) {
@@ -319,8 +319,8 @@ class SeasonsFragment() : Fragment() {
         }.show()
     }
 
-    private fun setCollectedToggleState(uncollectedEpisodes: Int) {
-        collectedAllEpisodes = uncollectedEpisodes == 0
+    private fun setCollectedToggleState(collectedAllEpisodes: Boolean) {
+        this.collectedAllEpisodes = collectedAllEpisodes
         binding?.imageViewSeasonsCollectedToggle?.apply {
             // using vectors is safe because it will be an AppCompatImageView
             contentDescription = if (collectedAllEpisodes) {

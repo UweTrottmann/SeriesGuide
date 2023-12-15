@@ -15,7 +15,8 @@ import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 
 /**
- * Calculates the number of unwatched and not collected episodes of a show.
+ * Calculates the number of unwatched episodes and if all episodes are collected
+ * (excluding specials) for a show.
  */
 class RemainingCountLiveData(
     val context: Context,
@@ -25,8 +26,8 @@ class RemainingCountLiveData(
     private val semaphore = Semaphore(1)
 
     data class Result(
-            val unwatchedEpisodes: Int,
-            val uncollectedEpisodes: Int
+        val unwatchedEpisodes: Int,
+        val collectedAllEpisodes: Boolean
     )
 
     fun load(showRowId: Long) {
@@ -45,8 +46,10 @@ class RemainingCountLiveData(
         val helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         val currentTime = TimeTools.getCurrentTime(context)
         val unwatchedEpisodes = helper.countNotWatchedEpisodesOfShow(showRowId, currentTime)
-        val uncollectedEpisodes = helper.countNotCollectedEpisodesOfShow(showRowId, currentTime)
-        postValue(Result(unwatchedEpisodes, uncollectedEpisodes))
+        // Only consider all collected if there is at least one collected
+        val collectedAllEpisodes = !helper.hasEpisodesToCollect(showRowId)
+                && helper.hasCollectedEpisodes(showRowId)
+        postValue(Result(unwatchedEpisodes, collectedAllEpisodes))
     }
 
 }

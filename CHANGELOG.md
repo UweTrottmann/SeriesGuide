@@ -15,6 +15,10 @@ Version 71
 ----------
 *in development*
 
+* 🔨 Shows: do not consider all episodes collected, if there are none collected. Also consider all
+  episodes, not just released ones. This now matches with what episodes the collect all or none
+  buttons change.
+
 #### 71.0.1 🧪
 *2023-12-07*
 
