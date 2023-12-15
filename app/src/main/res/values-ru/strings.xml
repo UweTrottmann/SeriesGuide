@@ -226,7 +226,7 @@
     <string name="watchlist">Список просмотра</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Нет результатов</string>
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Похожие</string>
     <string name="title_similar_shows">Похожие сериалы</string>
     <!-- Lists -->
     <string name="first_list">Первый список</string>
@@ -263,7 +263,7 @@
     <string name="action_movies_sort_title">Название</string>
     <string name="action_movies_sort_release">Дата выпуска</string>
     <string name="action_movies_filter">Фильтр фильмов</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Похожие фильмы</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не удалось рассчитать статистику.</string>
     <string name="shows_finished">%s Просмотрено</string>
@@ -312,7 +312,7 @@
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Ошибка входа в систему (%s)</string>
     <string name="hexagon_signin_google_only">Адрес электронной почты требует авторизации Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Введите электронную почту для входа, если вы используете SeriesGuide на других устройствах, которые не поддерживают вход в систему Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
@@ -463,7 +463,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматическое резервное копирование</string>
     <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
-    <string name="autobackup_details">Эти резервные копии будут недоступны, наши приложение будет повторно установлено, разве что для этого устройства будет включено резервное копирование данных приложения (Андроид 6 и выше). В таком случае, для сохранения данных, создавайте из копии.</string>
+    <string name="autobackup_details">Эти резервные копии будут недоступны, если приложение будет удалено и повторно установлено, разве что для этого устройства будет включено резервное копирование данных приложения (Андроид 6 и выше). В таком случае, для сохранения данных, создавайте из копии.</string>
     <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
     <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>
     <string name="autobackup_failed">Последний автоматический бэкап не удался</string>
