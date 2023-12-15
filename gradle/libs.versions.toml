@@ -56,8 +56,8 @@ androidx-viewpager = "androidx.viewpager:viewpager:1.0.0"
 androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-beta02"
 billing = "com.android.billingclient:billing-ktx:6.0.1" # https://developer.android.com/google/play/billing/billing_library_releases_notes
 # https://github.com/google/dagger/releases
-dagger = "com.google.dagger:dagger:2.47"
-dagger-compiler = "com.google.dagger:dagger-compiler:2.47"
+dagger = "com.google.dagger:dagger:2.49"
+dagger-compiler = "com.google.dagger:dagger-compiler:2.49"
 debugdrawer-actions = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-actions", version.ref = "debugdrawer" }
 debugdrawer-base = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-base", version.ref = "debugdrawer" }
 debugdrawer-commons = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-commons", version.ref = "debugdrawer" }
