@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -114,6 +114,7 @@ class EpisodesActivity : BaseMessageActivity() {
         }
 
         val episodeRowId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
+        @Suppress("DEPRECATION") // For backwards-compat
         val episodeTvdbId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, 0)
         val seasonId = intent.getLongExtra(EXTRA_LONG_SEASON_ID, 0)
 

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -140,11 +140,13 @@ class TraktAddFragment : AddFragment() {
         override fun onMenuItemClick(item: MenuItem): Boolean {
             val itemId = item.itemId
             if (itemId == R.id.menu_action_show_watchlist_add) {
+                @Suppress("DEPRECATION") // AsyncTask
                 AddShowToWatchlistTask(context, showTmdbId)
                     .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
                 return true
             }
             if (itemId == R.id.menu_action_show_watchlist_remove) {
+                @Suppress("DEPRECATION") // AsyncTask
                 RemoveShowFromWatchlistTask(context, showTmdbId)
                     .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
                 return true
@@ -189,7 +191,7 @@ class TraktAddFragment : AddFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventMainThread(event: ShowChangedEvent?) {
+    fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: ShowChangedEvent?) {
         if (listType == TraktShowsLink.WATCHLIST) {
             // reload watchlist if a show was removed
             LoaderManager.getInstance(this)
