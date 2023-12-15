@@ -17,8 +17,7 @@ androidx-annotation = "androidx.annotation:annotation:1.7.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
 # https://developer.android.com/jetpack/androidx/releases/browser
-# Note: 1.6.0 requires SDK 34
-androidx-browser = "androidx.browser:browser:1.5.0"
+androidx-browser = "androidx.browser:browser:1.7.0"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 # https://developer.android.com/jetpack/androidx/releases/core
