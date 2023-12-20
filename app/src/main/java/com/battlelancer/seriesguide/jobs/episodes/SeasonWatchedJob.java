@@ -1,18 +1,16 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017, 2018, 2020-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.util.TextTools;
 import java.util.List;
 
 /**
@@ -113,22 +111,5 @@ public class SeasonWatchedJob extends SeasonBaseJob {
             default:
                 throw new IllegalArgumentException("Flag value not supported");
         }
-    }
-
-    @NonNull
-    @Override
-    public String getConfirmationText(@NonNull Context context) {
-        int actionResId;
-        int flagValue = getFlagValue();
-        if (EpisodeTools.isSkipped(flagValue)) {
-            actionResId = R.string.action_skip;
-        } else if (EpisodeTools.isWatched(flagValue)) {
-            actionResId = R.string.action_watched;
-        } else {
-            actionResId = R.string.action_unwatched;
-        }
-        // format like '6x · Set watched'
-        String number = TextTools.getEpisodeNumber(context, getSeason().getNumber(), -1);
-        return TextTools.dotSeparate(number, context.getString(actionResId));
     }
 }

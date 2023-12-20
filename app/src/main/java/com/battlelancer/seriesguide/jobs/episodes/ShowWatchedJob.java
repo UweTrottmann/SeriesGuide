@@ -1,16 +1,15 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017, 2018, 2020-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider;
+import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Helper;
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags;
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
 import java.util.List;
@@ -94,20 +93,5 @@ public class ShowWatchedJob extends ShowBaseJob {
                 // Note: Skip not supported for whole show.
                 throw new IllegalArgumentException("Flag value not supported");
         }
-    }
-
-    @NonNull
-    @Override
-    public String getConfirmationText(Context context) {
-        int actionResId;
-        int flagValue = getFlagValue();
-        if (EpisodeTools.isSkipped(flagValue)) {
-            actionResId = R.string.action_skip;
-        } else if (EpisodeTools.isWatched(flagValue)) {
-            actionResId = R.string.action_watched;
-        } else {
-            actionResId = R.string.action_unwatched;
-        }
-        return context.getString(actionResId);
     }
 }

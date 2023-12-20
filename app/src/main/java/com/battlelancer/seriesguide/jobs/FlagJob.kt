@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017, 2018, 2022, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs
 
@@ -19,8 +19,4 @@ interface FlagJob {
      */
     fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean
 
-    /**
-     * A message to be shown to the user that an action has completed (locally).
-     */
-    fun getConfirmationText(context: Context): String
 }

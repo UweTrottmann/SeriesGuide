@@ -1,10 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019, 2020, 2022, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs.movies
 
 import android.content.Context
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.jobs.episodes.JobAction
 import com.battlelancer.seriesguide.movies.tools.MovieTools
@@ -26,11 +25,5 @@ class MovieWatchedJob(
         } else {
             MovieTools.removeFromList(context, movieTmdbId, MovieTools.Lists.WATCHED)
         }
-    }
-
-    override fun getConfirmationText(context: Context): String {
-        return context.getString(
-            if (isWatched) R.string.action_watched else R.string.action_unwatched
-        )
     }
 }

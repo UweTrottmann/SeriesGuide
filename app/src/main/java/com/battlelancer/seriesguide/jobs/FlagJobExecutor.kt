@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs
 
@@ -49,13 +49,11 @@ object FlagJobExecutor {
                     BaseMessageActivity.ServiceActiveEvent::class.java
                 )
 
-                val message = if (isSuccessful) {
-                    job.getConfirmationText(appContext)
-                } else {
-                    appContext.getString(R.string.database_error)
-                }
+                // all actions execute immediately, no need to acknowledge them, so only show errors
+                val errorMessageOrNull =
+                    if (!isSuccessful) appContext.getString(R.string.database_error) else null
                 EventBus.getDefault().post(
-                    BaseMessageActivity.ServiceCompletedEvent(message, isSuccessful, job)
+                    BaseMessageActivity.ServiceCompletedEvent(errorMessageOrNull, isSuccessful, job)
                 )
 
                 if (requiresNetworkJob) {
