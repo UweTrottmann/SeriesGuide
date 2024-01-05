@@ -218,7 +218,7 @@
     <string name="watchlist">Figyelőlista</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Nincs találat</string>
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Hasonló</string>
     <string name="title_similar_shows">Hasonló sorozatok</string>
     <!-- Lists -->
     <string name="first_list">Első lista</string>
@@ -255,7 +255,7 @@
     <string name="action_movies_sort_title">Cím</string>
     <string name="action_movies_sort_release">Első adás</string>
     <string name="action_movies_filter">Filmek szűrése</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Hasonló filmek</string>
     <!-- Statistics -->
     <string name="statistics_failed">Nem sikerült kiszámítani a statisztikát.</string>
     <string name="shows_finished">%s teljesen megnézve</string>
