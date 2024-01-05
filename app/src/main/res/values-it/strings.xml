@@ -306,7 +306,6 @@
     <string name="traktcheckin_cancel">Sovrascrivi</string>
     <string name="traktcheckin_inprogress">Check-in già effettuato in un altro episodio o film. Sovrascrivere il precedente check-in o attendere %s e riprovare.</string>
     <string name="traktcheckin_wait">Aspetterò</string>
-    <string name="trakt_success">Inviato a trakt.</string>
     <string name="trakt_error_account_locked">Il tuo account Trakt è bloccato. Contatta Trakt per ricevere supporto.</string>
     <string name="trakt_error_credentials">Qualcosa è andato storto. Per favore verifica le credenziali e riprova.</string>
     <string name="trakt_error_not_exists">Non (ancora) disponibile su trakt. Riprova più tardi.</string>

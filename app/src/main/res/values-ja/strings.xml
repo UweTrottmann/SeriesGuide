@@ -299,7 +299,6 @@
     <string name="traktcheckin_cancel">上書き</string>
     <string name="traktcheckin_inprogress">すでに別のエピソードや映画にチェックインしています。以前のチェックインを上書きするか、 %s まで待ってもう一度やり直してください。</string>
     <string name="traktcheckin_wait">待つ</string>
-    <string name="trakt_success">Trakt に送信しました</string>
     <string name="trakt_error_account_locked">Trakt アカウントがロックされています。Trakt サポートにお問い合わせください。</string>
     <string name="trakt_error_credentials">問題が起きました。Trakt の認証情報を確認して、もう一度やり直してください。</string>
     <string name="trakt_error_not_exists">Trakt では利用できません。後でもう一度やり直してください。</string>

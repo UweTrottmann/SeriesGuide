@@ -306,7 +306,6 @@
     <string name="traktcheckin_cancel">Korvaa</string>
     <string name="traktcheckin_inprogress">Olet jo kuitannut. Korvaa kuittaus tai odota %s ja yritä uudelleen.</string>
     <string name="traktcheckin_wait">Odotetaan</string>
-    <string name="trakt_success">Lähetetty Traktiin</string>
     <string name="trakt_error_account_locked">Trakt-tilisi on lukittu. Ota yhteyttä Traktin tukeen.</string>
     <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista Trakt-tunnuksesi ja yritä uudelleen.</string>
     <string name="trakt_error_not_exists">Ei (vielä) saatavilla Traktissa. Yritä myöhemmin uudelleen.</string>

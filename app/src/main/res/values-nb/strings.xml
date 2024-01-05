@@ -306,7 +306,6 @@
     <string name="traktcheckin_cancel">Overstyr</string>
     <string name="traktcheckin_inprogress">Du er allerede innsjekket i en episode eller film. Du kan enten overstyre tidligere innsjekking eller vente %s og prøve igjen.</string>
     <string name="traktcheckin_wait">Jeg venter</string>
-    <string name="trakt_success">Sendt til Trakt.</string>
     <string name="trakt_error_account_locked">Din Trakt konto er låst. Kontakt Trakt kundestøtte.</string>
     <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
     <string name="trakt_error_not_exists">Ikke tilgjengelig på trakt. Prøv igjen senere.</string>

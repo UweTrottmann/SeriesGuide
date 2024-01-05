@@ -306,7 +306,6 @@
     <string name="traktcheckin_cancel">Annuler</string>
     <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
     <string name="traktcheckin_wait">J\'attends</string>
-    <string name="trakt_success">Envoyé à trakt.</string>
     <string name="trakt_error_account_locked">Votre compte Trakt est verrouillé. Veuillez contacter l\'assistance Trakt.</string>
     <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
     <string name="trakt_error_not_exists">Pas (encore) disponible sur trakt. Réessayez plus tard.</string>

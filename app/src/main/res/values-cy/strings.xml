@@ -334,7 +334,6 @@
     <string name="traktcheckin_cancel">Diystyru</string>
     <string name="traktcheckin_inprogress">Rydych chi eisoes wedi gwirio i mewn. Diystyru\'r mewngofnodi neu aros %s a rhoi cynnig arall arni.</string>
     <string name="traktcheckin_wait">Arhosaf</string>
-    <string name="trakt_success">Anfonwyd at Trakt</string>
     <string name="trakt_error_account_locked">Mae eich cyfrif Trakt wedi\'i gloi. Cysylltwch â chefnogaeth Trakt.</string>
     <string name="trakt_error_credentials">Aeth rhywbeth o\'i le. Gwiriwch eich cymwysterau Trakt a rhoi cynnig arall arni.</string>
     <string name="trakt_error_not_exists">Ddim (eto) ar gael ar Trakt. Rhowch gynnig arall arni yn nes ymlaen.</string>

@@ -334,7 +334,6 @@
     <string name="traktcheckin_cancel">تجاهل</string>
     <string name="traktcheckin_inprogress">أنت بالفعل تشاهد حلقة أو فيلم. إما أن تتجاوز ما تشاهده الآن أو تنتظر %s وتحاول مرة أخرى.</string>
     <string name="traktcheckin_wait">سوف أنتظر</string>
-    <string name="trakt_success">تم إرسالها إلى Trakt.</string>
     <string name="trakt_error_account_locked">حسابك في Trakt مقفل. تواصل مع دعم Trakt.</string>
     <string name="trakt_error_credentials">حدث خطأ ما. يرجى التحقق من بيانات Trakt وحاول مرة أخرى.</string>
     <string name="trakt_error_not_exists">غير متوفر (حتى الآن) على trakt. حاول مرة أخرى.</string>

@@ -320,7 +320,6 @@
     <string name="traktcheckin_cancel">Přepsat</string>
     <string name="traktcheckin_inprogress">Již jste se ohlásil u jiné epizody nebo filmu. Buď přepište předchozí ohlášení, nebo počkejte %s a zkuste to znovu.</string>
     <string name="traktcheckin_wait">Budu čekat</string>
-    <string name="trakt_success">Odesláno do Trakt</string>
     <string name="trakt_error_account_locked">Váš Trakt účet je uzamčen. Obraťte se na Trakt podporu.</string>
     <string name="trakt_error_credentials">Nastala chyba. Zkontrolujte vaše přihlašovací údaje pro Trakt a zkuste to znovu.</string>
     <string name="trakt_error_not_exists">Na Traktu není (zatím) k dispozici. Zkuste to později.</string>

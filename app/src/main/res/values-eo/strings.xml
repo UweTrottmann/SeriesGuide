@@ -306,7 +306,6 @@
     <string name="traktcheckin_cancel">Anstataŭigi</string>
     <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">Mi atendos</string>
-    <string name="trakt_success">Sendita al Trakt.</string>
     <string name="trakt_error_account_locked">Via Trakta konto estas ŝlosita. Kontaktu Traktan helparon.</string>
     <string name="trakt_error_credentials">Io misokazis. Kontrolu viajn identigilojn de Trakt kaj reprovu.</string>
     <string name="trakt_error_not_exists">Ne (ankoraŭ) disponebla je Trakt. Reprovu poste.</string>

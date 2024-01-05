@@ -313,7 +313,6 @@
     <string name="traktcheckin_cancel">Прескочи пријаву</string>
     <string name="traktcheckin_inprogress">Пријављени сте да гледате другу епизоду или филм. Замените претходну пријаву, или чекајте %s и покушајте поново.</string>
     <string name="traktcheckin_wait">Сачекаћу</string>
-    <string name="trakt_success">Пошаљу на Trakt.</string>
     <string name="trakt_error_account_locked">Ваш Trakt налог је блокиран. Контактирајте подршку Trakt-а.</string>
     <string name="trakt_error_credentials">Нешто није у реду. Молимо проверите Ваше акредитиве и покушајте поново.</string>
     <string name="trakt_error_not_exists">Није (још) доступно на Trakt-у. Покушајте поново касније.</string>

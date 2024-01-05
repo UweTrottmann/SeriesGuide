@@ -306,7 +306,6 @@
     <string name="traktcheckin_cancel">Geçersiz Kıl</string>
     <string name="traktcheckin_inprogress">Zaten \"şu anda izliyorum\" demiştiniz. Ya önceki girişi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
     <string name="traktcheckin_wait">Bekle</string>
-    <string name="trakt_success">Trakt\'a gönder.</string>
     <string name="trakt_error_account_locked">Trakt hesabınız kilitlenmiş. Trakt destek ekibi ile iletişime geçin.</string>
     <string name="trakt_error_credentials">Bir şeyler yanlış gitti. Trakt giriş bilgilerinizi kontrol edin ve tekrar deneyin.</string>
     <string name="trakt_error_not_exists">Trakt\'ta (henüz) mevcut değil. Daha sonra tekrar deneyin.</string>

@@ -320,7 +320,6 @@
     <string name="traktcheckin_cancel">Перевизначити</string>
     <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
     <string name="traktcheckin_wait">Я зачекаю</string>
-    <string name="trakt_success">Надіслано до trakt.</string>
     <string name="trakt_error_account_locked">Ваш акаунт в Trakt заблоковано. Зверніться в службу підтримки.</string>
     <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
     <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>

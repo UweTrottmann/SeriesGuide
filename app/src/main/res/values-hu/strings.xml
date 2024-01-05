@@ -306,7 +306,6 @@
     <string name="traktcheckin_cancel">Felülbírál</string>
     <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik epizódba, vagy filmbe. Bíráld felül a korábbi bejelentkezést, vagy várj %s és próbáld újra.</string>
     <string name="traktcheckin_wait">Várok</string>
-    <string name="trakt_success">Továbbítva a trakt felé.</string>
     <string name="trakt_error_account_locked">A Trakt profilod le van zárva. Vedd fel a kapcsolatot a Trakt ügyfélszolgálattal.</string>
     <string name="trakt_error_credentials">Hiba történt. Ellenőrizd a megadott adatokat és próbáld újra.</string>
     <string name="trakt_error_not_exists">(Még) nem található a trakton. Próbálkozz később.</string>

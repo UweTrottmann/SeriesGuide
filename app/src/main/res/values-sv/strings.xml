@@ -306,7 +306,6 @@
     <string name="traktcheckin_cancel">Hoppa över</string>
     <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
     <string name="traktcheckin_wait">Jag väntar</string>
-    <string name="trakt_success">Skickat till trakt.</string>
     <string name="trakt_error_account_locked">Ditt Trakt-konto är låst. Kontakta Trakt-support.</string>
     <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
     <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>

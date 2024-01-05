@@ -299,7 +299,6 @@
     <string name="traktcheckin_cancel">替换</string>
     <string name="traktcheckin_inprogress">您已经为另一个剧集或电影签到了，请等待 %s 后重新签到或替换掉之前的签到状态。</string>
     <string name="traktcheckin_wait">等待</string>
-    <string name="trakt_success">已同步至 Trakt</string>
     <string name="trakt_error_account_locked">您的 Trakt 帐户已被锁定。请联系 Trakt 支持。</string>
     <string name="trakt_error_credentials">嗯～出了点小状况。请检查您的 Trakt 凭据后重试。</string>
     <string name="trakt_error_not_exists">Trakt 上（尚）无相关信息。请稍后重试。</string>
