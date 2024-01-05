@@ -246,14 +246,20 @@
     <!-- Lists -->
     <string name="first_list">First list</string>
     <string name="list_add">Add list</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Name your list</string>
     <string name="list_remove">Remove list</string>
     <string name="list_manage">Manage list</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Manage lists</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Remove from list</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sort lists</string>
     <string name="action_lists_reorder">Reorder lists</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">A list with this name already exists</string>
 
     <!-- Movies -->

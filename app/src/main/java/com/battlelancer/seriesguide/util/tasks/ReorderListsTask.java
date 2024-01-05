@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2019, 2021, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util.tasks;
 
@@ -7,6 +7,7 @@ import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import androidx.annotation.NonNull;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SgApp;
 import com.battlelancer.seriesguide.backend.HexagonTools;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
@@ -103,6 +104,10 @@ public class ReorderListsTask extends BaseActionTask {
 
     @Override
     protected int getSuccessTextResId() {
-        return 0; // display no success message
+        if (isSendingToHexagon()) {
+            return R.string.ack_lists_reordered;
+        } else {
+            return 0;
+        }
     }
 }

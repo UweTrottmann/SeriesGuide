@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2018, 2021, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util.tasks;
 
@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 
 /**
@@ -47,6 +48,10 @@ public class RenameListTask extends AddListTask {
 
     @Override
     protected int getSuccessTextResId() {
-        return 0; // display no success message
+        if (isSendingToHexagon()) {
+            return R.string.ack_list_renamed;
+        } else {
+            return 0;
+        }
     }
 }

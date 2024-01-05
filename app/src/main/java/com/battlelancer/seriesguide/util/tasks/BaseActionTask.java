@@ -180,6 +180,11 @@ public abstract class BaseActionTask extends AsyncTask<Void, Void, Integer> {
         return context;
     }
 
+    /**
+     * String resource for message to display to the user on success (recommended if a network
+     * request is required), or 0 to display no message (if doing just a database update and there
+     * is immediate UI feedback).
+     */
     protected abstract int getSuccessTextResId();
 
     /**
