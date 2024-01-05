@@ -21,6 +21,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             app:constraint_referenced_ids="imageViewCustomReleaseTimeIcon,textViewCustomReleaseTimeDay,buttonCustomReleaseTimePick"
+            app:flow_horizontalBias="0"
             app:flow_horizontalGap="8dp"
             app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
@@ -42,12 +43,42 @@
             android:textAppearance="?attr/textAppearanceBodyLarge"
             tools:text="Sa." />
 
-        <Button
+        <com.google.android.material.chip.Chip
             android:id="@+id/buttonCustomReleaseTimePick"
-            style="@style/Widget.SeriesGuide.Button.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="09:00 PM" />
+
+        <View
+            android:id="@+id/dividerCustomReleaseTimeEdit"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?attr/sgColorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flowCustomReleaseTimeEdit" />
+
+        <Button
+            android:id="@+id/buttonCustomReleaseTimeOffsetIncrease"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="24dp"
+            app:icon="@drawable/ic_add_white_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerCustomReleaseTimeEdit" />
+
+        <Button
+            android:id="@+id/buttonCustomReleaseTimeOffsetDecrease"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            app:icon="@drawable/ic_remove_black_24dp"
+            app:layout_constraintEnd_toStartOf="@id/buttonCustomReleaseTimeOffsetIncrease"
+            app:layout_constraintTop_toBottomOf="@id/dividerCustomReleaseTimeEdit" />
 
         <!-- Issue: start and end margin have no effect. -->
         <androidx.constraintlayout.helper.widget.Flow
@@ -55,22 +86,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="24dp"
-            app:constraint_referenced_ids="buttonCustomReleaseTimeOffsetDecrease,textViewCustomReleaseTimeOffset,buttonCustomReleaseTimeOffsetIncrease,textViewCustomReleaseTimeOffsetDirection"
+            app:constraint_referenced_ids="textViewCustomReleaseTimeOffset,textViewCustomReleaseTimeOffsetDirection"
+            app:flow_horizontalBias="0"
             app:flow_horizontalGap="4dp"
             app:flow_horizontalStyle="packed"
             app:flow_wrapMode="chain"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonCustomReleaseTimeOffsetDecrease"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/flowCustomReleaseTimeEdit" />
-
-        <Button
-            android:id="@+id/buttonCustomReleaseTimeOffsetDecrease"
-            style="?attr/materialIconButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_remove_black_24dp" />
+            app:layout_constraintTop_toBottomOf="@id/dividerCustomReleaseTimeEdit" />
 
         <TextView
             android:id="@+id/textViewCustomReleaseTimeOffset"
@@ -79,19 +104,22 @@
             android:textAppearance="?attr/textAppearanceBodyLarge"
             tools:text="3 days" />
 
-        <Button
-            android:id="@+id/buttonCustomReleaseTimeOffsetIncrease"
-            style="?attr/materialIconButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_add_white_24dp" />
-
         <TextView
             android:id="@+id/textViewCustomReleaseTimeOffsetDirection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/custom_release_time_later"
             android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+        <View
+            android:id="@+id/dividerCustomReleaseTimeOffset"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="?attr/sgColorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flowCustomReleaseTimeOffset" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -15,6 +15,7 @@ Version 71
 ----------
 *in development*
 
+* 🔧 Shows: adjust edit time dialog to avoid buttons moving around when changing values.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 71.0.2 🧪
