@@ -28,7 +28,6 @@ import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -244,17 +243,18 @@ class EpisodesActivity : BaseMessageActivity() {
         val tabsEpisodes = binding.tabsEpisodes
         val adapter = episodeDetailsAdapter
         if (adapter == null) {
-            episodeDetailsAdapter = EpisodePagerAdapter(this)
-                .also { it.updateItems(info.episodes) }
+            episodeDetailsAdapter = EpisodePagerAdapter(
+                this,
+                supportFragmentManager
+            ).also {
+                it.updateEpisodeList(info.episodes)
+            }
             pagerEpisodes.adapter = episodeDetailsAdapter
         } else {
-            adapter.updateItems(info.episodes)
+            adapter.updateEpisodeList(info.episodes)
         }
         // Refresh pager tab decoration.
-        tabsEpisodes.setViewPager2(pagerEpisodes) { position ->
-            val episode = info.episodes[position]
-            TextTools.getEpisodeNumber(this, episode.season, episode.episodenumber)
-        }
+        tabsEpisodes.setViewPager(pagerEpisodes)
 
         // Remove page change listener to avoid changing checked episode on sort order changes.
         tabsEpisodes.setOnPageChangeListener(null)

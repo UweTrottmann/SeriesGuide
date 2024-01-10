@@ -16,6 +16,7 @@ Version 71
 *in development*
 
 * 🔧 Shows: adjust edit time dialog to avoid buttons moving around when changing values.
+* 🔧 Shows: faster scrolling between episode pages, again.
 * 🔧 Add acknowledgement messages for actions that may take longer (that do network requests), drop
   them for actions that complete immediately (e.g. set watched).
 * 🔨 Update Metacritic search links.
