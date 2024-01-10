@@ -231,14 +231,20 @@
     <!-- Lists -->
     <string name="first_list">Первый список</string>
     <string name="list_add">Добавить список</string>
+    <string name="ack_list_added">Список добавлен</string>
     <string name="list_title_hint">Название списка</string>
     <string name="list_remove">Удалить список</string>
     <string name="list_manage">Управление списком</string>
+    <string name="ack_list_renamed">Список переименован</string>
+    <string name="ack_list_removed">Список удален</string>
     <string name="list_item_manage">Управление списками</string>
+    <string name="ack_list_item_manage">Список обновлён</string>
     <string name="list_item_remove">Удалить из списка</string>
+    <string name="ack_list_item_removed">Удалено из списка</string>
     <string name="list_empty">Вы можете добавить сериалы в этот список</string>
     <string name="action_lists_sort">Отсортировать списки</string>
     <string name="action_lists_reorder">Сортировка списков</string>
+    <string name="ack_lists_reordered">Списки переупорядочены</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
     <!-- Movies -->
     <string name="title_discover">Подборка</string>
@@ -320,7 +326,6 @@
     <string name="traktcheckin_cancel">Отменить</string>
     <string name="traktcheckin_inprogress">Вы уже зарегистрировались в другом эпизоде или фильме. Вы можете заменить предыдущую регистрацию или подождать %s и попробовать снова.</string>
     <string name="traktcheckin_wait">Я подожду</string>
-    <string name="trakt_success">Отправлено в trakt.</string>
     <string name="trakt_error_account_locked">Ваша учетная запись в Trakt заблокирована. Обратитесь в службу поддержки.</string>
     <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
     <string name="trakt_error_not_exists">Недоступно (пока) на Trakt. Попробуйте позже.</string>
@@ -338,6 +343,7 @@
     <string name="support_trakt">Поддержка Trakt с VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oценить</string>
+    <string name="ack_rated">Оценка отправлена</string>
     <string name="your_rating">Ваша оценка</string>
     <string name="love">Супер!</string>
     <string name="hate">Фиг знает :(</string>

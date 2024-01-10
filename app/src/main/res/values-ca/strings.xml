@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">Primera llista</string>
     <string name="list_add">Afegeix llista</string>
+    <string name="ack_list_added">Llista afegida</string>
     <string name="list_title_hint">Anomena la teva llista</string>
     <string name="list_remove">Elimina llista</string>
     <string name="list_manage">Gestiona llista</string>
+    <string name="ack_list_renamed">Llista reanomenada</string>
+    <string name="ack_list_removed">Llista eliminada</string>
     <string name="list_item_manage">Gestiona llistes</string>
+    <string name="ack_list_item_manage">Llistes actualitzades</string>
     <string name="list_item_remove">Esborra de la llista</string>
+    <string name="ack_list_item_removed">Eliminada de la llista</string>
     <string name="list_empty">Pots afegir sèries a aquesta llista</string>
     <string name="action_lists_sort">Ordena les llistes</string>
     <string name="action_lists_reorder">Reordenar les llistes</string>
+    <string name="ack_lists_reordered">Llistes reordenades</string>
     <string name="error_name_already_exists">Ja existeix una llista amb aquest nom</string>
     <!-- Movies -->
     <string name="title_discover">Descobrir</string>
@@ -306,7 +312,6 @@
     <string name="traktcheckin_cancel">Substitueix</string>
     <string name="traktcheckin_inprogress">Ja us heu registrat a un altre episodi o peŀlícula. O bé substituïu el darrer registre o bé us espereu %s i ho torneu a provar.</string>
     <string name="traktcheckin_wait">Esperaré</string>
-    <string name="trakt_success">Enviat a trakt.</string>
     <string name="trakt_error_account_locked">El teu compte de Trakt està bloquejat. Contacta amb el suport de Trakt.</string>
     <string name="trakt_error_credentials">Alguna cosa no ha funcionat. Torneu a introduir les vostres credencials i proveu-ho una altra vegada.</string>
     <string name="trakt_error_not_exists">No disponible (encara) a trakt. Prova més tard.</string>
@@ -324,6 +329,7 @@
     <string name="support_trakt">Ajuda a Trakt amb VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Puntua</string>
+    <string name="ack_rated">Valoració enviada</string>
     <string name="your_rating">La vostra valoració</string>
     <string name="love">Una passada!</string>
     <string name="hate">Horrible</string>

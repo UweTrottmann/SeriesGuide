@@ -54,8 +54,4 @@ class EpisodeWatchedUpToJob(
     override fun getPlaysForNetworkJob(plays: Int): Int {
         return plays + 1
     }
-
-    override fun getConfirmationText(context: Context): String {
-        return context.getString(R.string.action_watched_up_to)
-    }
 }

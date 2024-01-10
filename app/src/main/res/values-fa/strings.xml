@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">فهرست نخست</string>
     <string name="list_add">افزودن فهرست</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">نام گذاری فهرستتان</string>
     <string name="list_remove">برداشتن فهرست</string>
     <string name="list_manage">مدیریت فهرست</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">مدیریت فهرست‌ها</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">برداشتن از فهرست</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">می‌توانید نمایش‌ها را به این فهرست بیفزایید</string>
     <string name="action_lists_sort">چینش فهرست‌ها</string>
     <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
     <!-- Movies -->
     <string name="title_discover">کشف</string>
@@ -306,7 +312,6 @@
     <string name="traktcheckin_cancel">باطل کردن</string>
     <string name="traktcheckin_inprogress">شما به تازگی قسمت یا فیلمی دیگر را ثبت کرده‌اید. ثبت پیشین را باطل کنید یا %s منتظر شده و دوباره تلاش کنید.</string>
     <string name="traktcheckin_wait">منتظر میمانم</string>
-    <string name="trakt_success">به trakt ارسال شد.</string>
     <string name="trakt_error_account_locked">حساب ترکتتان قفل است. با پشتیبانی ترکت تماس بگیرید.</string>
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
@@ -324,6 +329,7 @@
     <string name="support_trakt">پشتیبانی از ترکت با وی‌آی‌پی</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">نمرهٔ شما</string>
     <string name="love">محشر!</string>
     <string name="hate">افتضاح :(</string>

@@ -219,14 +219,20 @@
     <!-- Lists -->
     <string name="first_list">第一個清單</string>
     <string name="list_add">新增清單</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">命名您的清單</string>
     <string name="list_remove">移除清單</string>
     <string name="list_manage">管理清單</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">管理清單</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">從清單中移除</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">您可以新增節目到此列表</string>
     <string name="action_lists_sort">排序清單</string>
     <string name="action_lists_reorder">重新排序清單</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">此名稱的清單已存在。</string>
     <!-- Movies -->
     <string name="title_discover">探索</string>
@@ -299,7 +305,6 @@
     <string name="traktcheckin_cancel">覆寫</string>
     <string name="traktcheckin_inprogress">你已經在其他影集或電影打卡過了，請覆蓋前一個打卡記錄或者等待%s後再試一次。</string>
     <string name="traktcheckin_wait">等待</string>
-    <string name="trakt_success">已發送至trakt。</string>
     <string name="trakt_error_account_locked">您的 Trakt 帳戶已被鎖定。請聯絡 Trakt 協助。</string>
     <string name="trakt_error_credentials">發生錯誤，請檢查您的trakt憑證並重試。</string>
     <string name="trakt_error_not_exists">Trakt 上沒有或尚未提供。請稍後再試。</string>
@@ -317,6 +322,7 @@
     <string name="support_trakt">加入 VIP 支持 Trakt</string>
     <!-- trakt ratings -->
     <string name="action_rate">評分</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">您的評分</string>
     <string name="love">太讚啦!</string>
     <string name="hate">太弱了:(</string>

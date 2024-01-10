@@ -239,14 +239,20 @@
     <!-- Lists -->
     <string name="first_list">Rhestr gyntaf</string>
     <string name="list_add">Ychwanegu rhestr</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Enwch eich rhestr</string>
     <string name="list_remove">Dileu\'r rhestr</string>
     <string name="list_manage">Rheoli rhestr</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Rheoli rhestrau</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Tynnu o\'r rhestr</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Gallwch ychwanegu sioeau at y rhestr hon</string>
     <string name="action_lists_sort">Trefnu rhestrau</string>
     <string name="action_lists_reorder">Rhestrau ail-archebu</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Mae rhestr gyda\'r enw hwn eisoes yn bodoli</string>
     <!-- Movies -->
     <string name="title_discover">Darganfod</string>
@@ -334,7 +340,6 @@
     <string name="traktcheckin_cancel">Diystyru</string>
     <string name="traktcheckin_inprogress">Rydych chi eisoes wedi gwirio i mewn. Diystyru\'r mewngofnodi neu aros %s a rhoi cynnig arall arni.</string>
     <string name="traktcheckin_wait">Arhosaf</string>
-    <string name="trakt_success">Anfonwyd at Trakt</string>
     <string name="trakt_error_account_locked">Mae eich cyfrif Trakt wedi\'i gloi. Cysylltwch â chefnogaeth Trakt.</string>
     <string name="trakt_error_credentials">Aeth rhywbeth o\'i le. Gwiriwch eich cymwysterau Trakt a rhoi cynnig arall arni.</string>
     <string name="trakt_error_not_exists">Ddim (eto) ar gael ar Trakt. Rhowch gynnig arall arni yn nes ymlaen.</string>
@@ -352,6 +357,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Cyfradd</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Eich sgôr</string>
     <string name="love">Hollol ninja!</string>
     <string name="hate">Saws Gwan :(</string>

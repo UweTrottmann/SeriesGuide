@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">Първи списък</string>
     <string name="list_add">Добави списък</string>
+    <string name="ack_list_added">Списъкът е добавен</string>
     <string name="list_title_hint">Дайте име за списъка</string>
     <string name="list_remove">Премахване на списъка</string>
     <string name="list_manage">Управление на списъка</string>
+    <string name="ack_list_renamed">Списъкът е преименуван</string>
+    <string name="ack_list_removed">Списъкът е премахнат</string>
     <string name="list_item_manage">Управление на списъци</string>
+    <string name="ack_list_item_manage">Списъкът е обновен</string>
     <string name="list_item_remove">Премахване от списъка</string>
+    <string name="ack_list_item_removed">Премахнато от списъка</string>
     <string name="list_empty">Добавете сериали в този списък</string>
     <string name="action_lists_sort">Подреждане на списъка</string>
     <string name="action_lists_reorder">Пренареждане на списъците</string>
+    <string name="ack_lists_reordered">Списъците са подредени</string>
     <string name="error_name_already_exists">Списък с това име вече съществува</string>
     <!-- Movies -->
     <string name="title_discover">Открийте</string>
@@ -306,7 +312,6 @@
     <string name="traktcheckin_cancel">Замени</string>
     <string name="traktcheckin_inprogress">Вие вече отметнахте друг епизод или филм. Или заместете предишното отмятане или изчакайте %s и опитайте отново.</string>
     <string name="traktcheckin_wait">Ще изчакам</string>
-    <string name="trakt_success">Изпратено към trakt.</string>
     <string name="trakt_error_account_locked">Вашият акаунт в Trakt е заключен. Свържете се с поддръжката на Trakt.</string>
     <string name="trakt_error_credentials">Нещо се обърка. Проверете идентификационните си данни и опитайте отново.</string>
     <string name="trakt_error_not_exists">Няма (все още) в trakt. Опитайте отново по-късно.</string>
@@ -324,6 +329,7 @@
     <string name="support_trakt">Подкрепете Trakt с ВИП</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
+    <string name="ack_rated">Рейтингът е изпратен</string>
     <string name="your_rating">Вашата оценка</string>
     <string name="love">Върховно!</string>
     <string name="hate">Слаба работа :(</string>

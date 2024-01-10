@@ -79,7 +79,7 @@ public abstract class BaseRateItemTask extends BaseActionTask {
 
     @Override
     protected int getSuccessTextResId() {
-        return R.string.trakt_success;
+        return R.string.ack_rated;
     }
 
     @NonNull

@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">Første liste</string>
     <string name="list_add">Legg til liste</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Navngi liste</string>
     <string name="list_remove">Fjern liste</string>
     <string name="list_manage">Behandle liste</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Behandle lister</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Fjern fra liste</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Du kan legge til serier i denne listen</string>
     <string name="action_lists_sort">Sorter lister</string>
     <string name="action_lists_reorder">Omorganiser lister</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">En liste med dette navnet finnes allerede</string>
     <!-- Movies -->
     <string name="title_discover">Oppdag</string>
@@ -306,7 +312,6 @@
     <string name="traktcheckin_cancel">Overstyr</string>
     <string name="traktcheckin_inprogress">Du er allerede innsjekket i en episode eller film. Du kan enten overstyre tidligere innsjekking eller vente %s og prøve igjen.</string>
     <string name="traktcheckin_wait">Jeg venter</string>
-    <string name="trakt_success">Sendt til Trakt.</string>
     <string name="trakt_error_account_locked">Din Trakt konto er låst. Kontakt Trakt kundestøtte.</string>
     <string name="trakt_error_credentials">Noe gikk galt. Kontroller påloggingsinformasjonen, og prøv på nytt.</string>
     <string name="trakt_error_not_exists">Ikke tilgjengelig på trakt. Prøv igjen senere.</string>
@@ -324,6 +329,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Din vurdering</string>
     <string name="love">Helt ninja!</string>
     <string name="hate">Svak saus :(</string>

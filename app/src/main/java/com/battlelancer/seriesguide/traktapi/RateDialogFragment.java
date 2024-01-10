@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2018, 2020-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi;
 
@@ -25,9 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Displays a 10 value rating scale. If a rating is clicked it will be stored to the database and
- * sent to trakt (if the user is connected).
- * Should show dialog using {@link #safeShow(Context, FragmentManager)}.
+ * If connected to Trakt, allows rating a show, episode or movie on a 10 value rating scale.
+ * If not connected, asks the user to connect Trakt.
+ * <p>
+ * Use via {@link #safeShow(Context, FragmentManager)}.
  */
 public class RateDialogFragment extends AppCompatDialogFragment {
 

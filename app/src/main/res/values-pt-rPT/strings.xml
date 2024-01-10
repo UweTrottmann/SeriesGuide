@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">Lista Pessoal</string>
     <string name="list_add">Adicionar lista</string>
+    <string name="ack_list_added">Lista adicionada</string>
     <string name="list_title_hint">Renomeia a tua lista</string>
     <string name="list_remove">Remover lista</string>
     <string name="list_manage">Renomear/Remover lista</string>
+    <string name="ack_list_renamed">Lista renomeada</string>
+    <string name="ack_list_removed">Lista removida</string>
     <string name="list_item_manage">Adicionar às listas</string>
+    <string name="ack_list_item_manage">Listas atualizadas</string>
     <string name="list_item_remove">Remover da lista</string>
+    <string name="ack_list_item_removed">Removido da lista</string>
     <string name="list_empty">Podes adicionar séries à esta lista</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
+    <string name="ack_lists_reordered">Listas reordenadas</string>
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>
     <!-- Movies -->
     <string name="title_discover">Explorar</string>
@@ -306,7 +312,6 @@
     <string name="traktcheckin_cancel">Substituir</string>
     <string name="traktcheckin_inprogress">Já deste entrada a outro episódio ou filme. Podes substituir a entrada anterior ou esperar %s e tentar novamente.</string>
     <string name="traktcheckin_wait">Prefiro esperar</string>
-    <string name="trakt_success">Submetido com sucesso ao Trakt</string>
     <string name="trakt_error_account_locked">A tua conta Trakt está bloqueada. Contacta o suporte de apoio do Trakt.</string>
     <string name="trakt_error_credentials">Algo está errado. Certifica-te, por favor, que as tuas credenciais do Trakt estão correctas e tenta de novo.</string>
     <string name="trakt_error_not_exists">Não está (ainda) disponível no Trakt. Tenta mais tarde.</string>
@@ -324,6 +329,7 @@
     <string name="support_trakt">Apoia o Trakt tornando-te VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Classificar</string>
+    <string name="ack_rated">Classificação enviada</string>
     <string name="your_rating">A minha classificação</string>
     <string name="love">Fora de série!</string>
     <string name="hate">Mas que porcaria :(</string>

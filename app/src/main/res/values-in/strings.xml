@@ -219,14 +219,20 @@
     <!-- Lists -->
     <string name="first_list">Daftar pertama</string>
     <string name="list_add">Tambah daftar</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Beri nama daftar anda</string>
     <string name="list_remove">Hapus daftar</string>
     <string name="list_manage">Kelola daftar</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Kelola daftar</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Hapus dari daftar</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Kau bisa menambahkan acara ke daftar ini</string>
     <string name="action_lists_sort">Urutkan daftar</string>
     <string name="action_lists_reorder">Susun ulang daftar</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Daftar dengan nama ini sudah ada</string>
     <!-- Movies -->
     <string name="title_discover">Jelajahi</string>
@@ -299,7 +305,6 @@
     <string name="traktcheckin_cancel">Timpa</string>
     <string name="traktcheckin_inprogress">Anda sudah check-in ke episode atau film yang lain. Timpa check-in sebelumnya atau tunggu %s dan coba lagi.</string>
     <string name="traktcheckin_wait">Aku akan menunggu</string>
-    <string name="trakt_success">Dikirim ke trakt.</string>
     <string name="trakt_error_account_locked">Akun Trakt anda dikunci. Kontak layanan bantuan Trakt.</string>
     <string name="trakt_error_credentials">Sesuatu tidak beres. Periksa kredensial trakt anda dan coba lagi.</string>
     <string name="trakt_error_not_exists">Tidak (belum) tersedia pada trakt. Coba lagi nanti.</string>
@@ -317,6 +322,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Beri nilai</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Nilai anda</string>
     <string name="love">Benar-benar ninja!</string>
     <string name="hate">Payah :(</string>

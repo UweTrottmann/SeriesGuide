@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">Ensimmäinen lista</string>
     <string name="list_add">Lisää lista</string>
+    <string name="ack_list_added">Lista lisättiin</string>
     <string name="list_title_hint">Nimeä listasi</string>
     <string name="list_remove">Poista lista</string>
     <string name="list_manage">Hallitse listaa</string>
+    <string name="ack_list_renamed">Lista uudelleennimettiin</string>
+    <string name="ack_list_removed">Lista poistettiin</string>
     <string name="list_item_manage">Hallitse listoja</string>
+    <string name="ack_list_item_manage">Listat päivitettiin</string>
     <string name="list_item_remove">Poista listalta</string>
+    <string name="ack_list_item_removed">Poistettiin listasta</string>
     <string name="list_empty">Voit lisätä ohjelmia tähän listaan</string>
     <string name="action_lists_sort">Lajittele listat</string>
     <string name="action_lists_reorder">Järjestä listat uudelleen</string>
+    <string name="ack_lists_reordered">Listat uudelleenjärjestettiin</string>
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
     <!-- Movies -->
     <string name="title_discover">Tutustu</string>
@@ -306,7 +312,6 @@
     <string name="traktcheckin_cancel">Korvaa</string>
     <string name="traktcheckin_inprogress">Olet jo kuitannut. Korvaa kuittaus tai odota %s ja yritä uudelleen.</string>
     <string name="traktcheckin_wait">Odotetaan</string>
-    <string name="trakt_success">Lähetetty Traktiin</string>
     <string name="trakt_error_account_locked">Trakt-tilisi on lukittu. Ota yhteyttä Traktin tukeen.</string>
     <string name="trakt_error_credentials">Jokin meni pieleen. Tarkista Trakt-tunnuksesi ja yritä uudelleen.</string>
     <string name="trakt_error_not_exists">Ei (vielä) saatavilla Traktissa. Yritä myöhemmin uudelleen.</string>
@@ -324,6 +329,7 @@
     <string name="support_trakt">Tue Traktia VIP-tilauksella</string>
     <!-- trakt ratings -->
     <string name="action_rate">Arvostele</string>
+    <string name="ack_rated">Arvosana lähetettiin</string>
     <string name="your_rating">Arvosanasi</string>
     <string name="love">Maailman parasta!</string>
     <string name="hate">Ei sytyttänyt :(</string>

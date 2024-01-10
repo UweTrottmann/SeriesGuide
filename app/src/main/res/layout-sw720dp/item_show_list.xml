@@ -32,7 +32,7 @@
             android:id="@+id/favoritedLabel"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:contentDescription="@string/favorited"
+            android:contentDescription="@string/state_favorite"
             app:srcCompat="@drawable/ic_star_edge_24px" />
 
     </com.google.android.material.card.MaterialCardView>

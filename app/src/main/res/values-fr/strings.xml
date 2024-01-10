@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">Première liste</string>
     <string name="list_add">Ajouter une liste</string>
+    <string name="ack_list_added">Liste ajoutée</string>
     <string name="list_title_hint">Nommez votre liste</string>
     <string name="list_remove">Supprimer la liste</string>
     <string name="list_manage">Gérer la liste</string>
+    <string name="ack_list_renamed">Liste renommée</string>
+    <string name="ack_list_removed">Liste supprimée</string>
     <string name="list_item_manage">Gérer les listes</string>
+    <string name="ack_list_item_manage">Listes mises à jour</string>
     <string name="list_item_remove">Retirer de la liste</string>
+    <string name="ack_list_item_removed">Retiré de la liste</string>
     <string name="list_empty">Vous pouvez ajouter des séries à cette liste.</string>
     <string name="action_lists_sort">Trier les listes</string>
     <string name="action_lists_reorder">Réorganiser les listes</string>
+    <string name="ack_lists_reordered">Listes réordonnées</string>
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
     <!-- Movies -->
     <string name="title_discover">A découvrir</string>
@@ -306,7 +312,6 @@
     <string name="traktcheckin_cancel">Annuler</string>
     <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
     <string name="traktcheckin_wait">J\'attends</string>
-    <string name="trakt_success">Envoyé à trakt.</string>
     <string name="trakt_error_account_locked">Votre compte Trakt est verrouillé. Veuillez contacter l\'assistance Trakt.</string>
     <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
     <string name="trakt_error_not_exists">Pas (encore) disponible sur trakt. Réessayez plus tard.</string>
@@ -324,6 +329,7 @@
     <string name="support_trakt">Soutenir Trakt en devenant VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Noter</string>
+    <string name="ack_rated">Note envoyée</string>
     <string name="your_rating">Votre note</string>
     <string name="love">Totalement ninja !</string>
     <string name="hate">Un peu fade :(</string>
