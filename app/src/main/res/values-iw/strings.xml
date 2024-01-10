@@ -231,14 +231,20 @@
     <!-- Lists -->
     <string name="first_list">הרשימה הראשונה</string>
     <string name="list_add">הוסף רשימה</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">תן שם לרשימה</string>
     <string name="list_remove">הסר רשימה</string>
     <string name="list_manage">נהל רשימה</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">נהל רשימות</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">הסר מהרשימה</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">מיין רשימה</string>
     <string name="action_lists_reorder">סדר מחדש רשימות</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">רשימה עם השם הזה כבר קיימת</string>
     <!-- Movies -->
     <string name="title_discover">גלו עוד</string>
@@ -337,6 +343,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">דרג</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">הדירוג שלך</string>
     <string name="love">לגמרי נינג\'ה!</string>
     <string name="hate">על הפנים ):</string>

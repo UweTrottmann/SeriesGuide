@@ -231,14 +231,20 @@
     <!-- Lists -->
     <string name="first_list">Перший список</string>
     <string name="list_add">Додати список</string>
+    <string name="ack_list_added">Список додано</string>
     <string name="list_title_hint">Назвіть ваш список</string>
     <string name="list_remove">Видалити список</string>
     <string name="list_manage">Керувати списком</string>
+    <string name="ack_list_renamed">Список перейменовано</string>
+    <string name="ack_list_removed">Список усунено</string>
     <string name="list_item_manage">Керувати списками</string>
+    <string name="ack_list_item_manage">Список оновлено</string>
     <string name="list_item_remove">Видалити зі списку</string>
+    <string name="ack_list_item_removed">Усунено зі списку</string>
     <string name="list_empty">Ви можете додати серіали в цей список</string>
     <string name="action_lists_sort">Сортувати списки</string>
     <string name="action_lists_reorder">Впорядкувати список</string>
+    <string name="ack_lists_reordered">Список перевпорядковано</string>
     <string name="error_name_already_exists">Список з таким іменем вже існує</string>
     <!-- Movies -->
     <string name="title_discover">Дослідити</string>
@@ -337,6 +343,7 @@
     <string name="support_trakt">Підтримати Trakt з VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Рейтинг</string>
+    <string name="ack_rated">Рейтинг відправлено</string>
     <string name="your_rating">Ваш рейтинг</string>
     <string name="love">Супер!</string>
     <string name="hate">Слабо :(</string>

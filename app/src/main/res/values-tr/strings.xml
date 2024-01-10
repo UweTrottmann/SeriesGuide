@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">İlk liste</string>
     <string name="list_add">Yeni liste</string>
+    <string name="ack_list_added">Liste eklendi</string>
     <string name="list_title_hint">Listene isim ver</string>
     <string name="list_remove">Listeyi kaldır</string>
     <string name="list_manage">Listeyi yönet</string>
+    <string name="ack_list_renamed">Liste yeniden adlandırıldı</string>
+    <string name="ack_list_removed">Liste kaldırıldı</string>
     <string name="list_item_manage">Listeleri yönet</string>
+    <string name="ack_list_item_manage">Listeler güncellendi</string>
     <string name="list_item_remove">Listeden kaldır</string>
+    <string name="ack_list_item_removed">Listeden kaldırıldı</string>
     <string name="list_empty">Bu listeye dizi ekleyebilirsiniz</string>
     <string name="action_lists_sort">Listeyi sırala</string>
     <string name="action_lists_reorder">Listeleri tekrar sırala</string>
+    <string name="ack_lists_reordered">Listeler yeniden sıralandı</string>
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
     <!-- Movies -->
     <string name="title_discover">Keşfet</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Trakt\'ı VIP olarak destekle</string>
     <!-- trakt ratings -->
     <string name="action_rate">Derecelendir</string>
+    <string name="ack_rated">Değerlendirme gönderildi</string>
     <string name="your_rating">Sizin değerlendirmeniz</string>
     <string name="love">Harikulade!</string>
     <string name="hate">Eh işte :(</string>

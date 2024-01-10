@@ -231,14 +231,20 @@
     <!-- Lists -->
     <string name="first_list">Prvý zoznam</string>
     <string name="list_add">Pridať zoznam</string>
+    <string name="ack_list_added">Zoznam pridaný</string>
     <string name="list_title_hint">Názov zoznamu</string>
     <string name="list_remove">Odstrániť zoznam</string>
     <string name="list_manage">Spravovať zoznam</string>
+    <string name="ack_list_renamed">Zoznam premenovaný</string>
+    <string name="ack_list_removed">Zoznam odstránený</string>
     <string name="list_item_manage">Spravovať zoznamy</string>
+    <string name="ack_list_item_manage">Zoznam aktualizovaný</string>
     <string name="list_item_remove">Odstrániť zo zoznamu</string>
+    <string name="ack_list_item_removed">Odstránené zo zoznamu</string>
     <string name="list_empty">Môžete pridať seriály do tohto zoznamu</string>
     <string name="action_lists_sort">Zoradiť zoznamy</string>
     <string name="action_lists_reorder">Zoradiť zoznamy</string>
+    <string name="ack_lists_reordered">Poradie zoznamov zmenené</string>
     <string name="error_name_already_exists">Zoznam s týmto názvom už existuje</string>
     <!-- Movies -->
     <string name="title_discover">Objaviť</string>
@@ -337,6 +343,7 @@
     <string name="support_trakt">Podporte Trakt s VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>
+    <string name="ack_rated">Hodnotenie odoslané</string>
     <string name="your_rating">Vaše hodnotenie</string>
     <string name="love">Totálna pecka!</string>
     <string name="hate">Odpad :(</string>

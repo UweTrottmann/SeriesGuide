@@ -231,14 +231,20 @@
     <!-- Lists -->
     <string name="first_list">První seznam</string>
     <string name="list_add">Přidat seznam</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Pojmenovat seznam</string>
     <string name="list_remove">Odstranit seznam</string>
     <string name="list_manage">Upravit seznam</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Vybrat seznamy</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Odebrat ze seznamu</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Můžete přidat seriály do tohoto seznamu</string>
     <string name="action_lists_sort">Třídit seznamy</string>
     <string name="action_lists_reorder">Uspořádat seznamy</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Seznam s tímto názvem již existuje</string>
     <!-- Movies -->
     <string name="title_discover">Objevujte</string>
@@ -337,6 +343,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Ohodnotit</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Vaše hodnocení</string>
     <string name="love">Úplný ninja!</string>
     <string name="hate">Odpad</string>

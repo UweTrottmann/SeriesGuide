@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">Unua listo</string>
     <string name="list_add">Aldoni liston</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Nomu vian liston</string>
     <string name="list_remove">Forigi liston</string>
     <string name="list_manage">Administri liston</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Administri listojn</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Forigi el listo</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Vi povas aldoni televidaĵojn al ĉi tiu listo</string>
     <string name="action_lists_sort">Ordigi listojn</string>
     <string name="action_lists_reorder">Reordigi listojn</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Listo kun ĉi tiu nomo jam ekzistas</string>
     <!-- Movies -->
     <string name="title_discover">Esplori</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Taksi</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Via takso</string>
     <string name="love">Imponega</string>
     <string name="hate">Perdis tempon :(</string>

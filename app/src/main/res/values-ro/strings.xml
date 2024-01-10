@@ -227,14 +227,20 @@
     <!-- Lists -->
     <string name="first_list">Prima listă</string>
     <string name="list_add">Adăugați listă</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Numiți lista</string>
     <string name="list_remove">Şterge listă</string>
     <string name="list_manage">Gestionați lista</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Gestionați listele</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Șterge din listă</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sortează lista</string>
     <string name="action_lists_reorder">Reordonaţi lista</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">O listă cu acest nume deja există</string>
     <!-- Movies -->
     <string name="title_discover">Descoperă</string>
@@ -330,6 +336,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Evaluare</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Nota ta</string>
     <string name="love">Super tare!</string>
     <string name="hate">Slab :(</string>

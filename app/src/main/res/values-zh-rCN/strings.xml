@@ -219,14 +219,20 @@
     <!-- Lists -->
     <string name="first_list">默认列表</string>
     <string name="list_add">新建列表</string>
+    <string name="ack_list_added">列表已添加</string>
     <string name="list_title_hint">为列表命名</string>
     <string name="list_remove">删除此列表</string>
     <string name="list_manage">管理列表</string>
+    <string name="ack_list_renamed">列表已重命名</string>
+    <string name="ack_list_removed">列表已删除</string>
     <string name="list_item_manage">管理列表</string>
+    <string name="ack_list_item_manage">列表已更新</string>
     <string name="list_item_remove">从列表中移除</string>
+    <string name="ack_list_item_removed">已从列表中删除</string>
     <string name="list_empty">您可以添加节目到此列表</string>
     <string name="action_lists_sort">排序列表</string>
     <string name="action_lists_reorder">对列表重新排序</string>
+    <string name="ack_lists_reordered">列表已重新排序</string>
     <string name="error_name_already_exists">已存在同名列表</string>
     <!-- Movies -->
     <string name="title_discover">发现</string>
@@ -316,6 +322,7 @@
     <string name="support_trakt">购买 VIP 支持 Trakt</string>
     <!-- trakt ratings -->
     <string name="action_rate">评分</string>
+    <string name="ack_rated">评分已发送</string>
     <string name="your_rating">您的评分</string>
     <string name="love">神作！</string>
     <string name="hate">垃圾 :(</string>

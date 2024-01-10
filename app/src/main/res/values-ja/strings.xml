@@ -219,14 +219,20 @@
     <!-- Lists -->
     <string name="first_list">最初のリスト</string>
     <string name="list_add">リストを追加</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">リストに名前を付けます</string>
     <string name="list_remove">リストを削除</string>
     <string name="list_manage">リストを管理</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">リストを管理</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">リストから削除</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">リストの並べ替え</string>
     <string name="action_lists_reorder">リストの再並べ替え</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
     <!-- Movies -->
     <string name="title_discover">見つける</string>
@@ -316,6 +322,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">作品を評価</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">あなたの評価</string>
     <string name="love">完全に忍者!</string>
     <string name="hate">つまらない :(</string>

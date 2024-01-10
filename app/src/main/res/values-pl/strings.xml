@@ -231,14 +231,20 @@
     <!-- Lists -->
     <string name="first_list">Pierwsza lista</string>
     <string name="list_add">Dodaj listę</string>
+    <string name="ack_list_added">Lista dodana</string>
     <string name="list_title_hint">Nazwij listę</string>
     <string name="list_remove">Usuń listę</string>
     <string name="list_manage">Zarządzaj listą</string>
+    <string name="ack_list_renamed">Zmieniono nazwę listy</string>
+    <string name="ack_list_removed">Lista usunięta</string>
     <string name="list_item_manage">Zarządzaj listami</string>
+    <string name="ack_list_item_manage">Lista zaktualizowana</string>
     <string name="list_item_remove">Usuń z listy</string>
+    <string name="ack_list_item_removed">Usunięto z listy</string>
     <string name="list_empty">Możesz dodać seriale do tej listy</string>
     <string name="action_lists_sort">Sortowanie list</string>
     <string name="action_lists_reorder">Zmień kolejność list</string>
+    <string name="ack_lists_reordered">Lista przeorganizowana</string>
     <string name="error_name_already_exists">Lista o tej nazwie już istnieje</string>
     <!-- Movies -->
     <string name="title_discover">Odkrywaj</string>
@@ -337,6 +343,7 @@
     <string name="support_trakt">Wspomóż Trakt z VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oceń</string>
+    <string name="ack_rated">Ocena wysłana</string>
     <string name="your_rating">Twoja ocena</string>
     <string name="love">Uwielbiam to!</string>
     <string name="hate">Słaby :(</string>

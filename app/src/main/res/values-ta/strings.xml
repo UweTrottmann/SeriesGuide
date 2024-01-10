@@ -223,14 +223,20 @@
     <!-- Lists -->
     <string name="first_list">முதல் பட்டியல்</string>
     <string name="list_add">பட்டியல் சேர்</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">உங்கள் பட்டியலில் பெயர்</string>
     <string name="list_remove">பட்டியலை நீக்கு</string>
     <string name="list_manage">பட்டியலை நிர்வகி</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">பட்டியல்களை நிர்வகி</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">பட்டியலில் இருந்து அகற்று</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">அடுக்கு பட்டியல்கள்</string>
     <string name="action_lists_reorder">பட்டியல்களை மறு வரிசையாக்க இழுத்து</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
     <!-- Movies -->
     <string name="title_discover">Discover</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">விகிதம்</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">உங்கள் தரமதிப்பு</string>
     <string name="love">Ninja முற்றிலும்!</string>
     <string name="hate">நன்மைக்கான பாகு :(</string>

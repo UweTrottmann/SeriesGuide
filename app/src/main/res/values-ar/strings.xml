@@ -239,14 +239,20 @@
     <!-- Lists -->
     <string name="first_list">القائمة الأولى</string>
     <string name="list_add">إضافة قائمة</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">سمي قائمتك</string>
     <string name="list_remove">إزالة القائمة</string>
     <string name="list_manage">إدارة القائمة</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">إدارة القوائم</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">إزالة من القائمة</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">يمكنك إضافة مسلسلات إلى هذه القائمة</string>
     <string name="action_lists_sort">ترتيب القوائم</string>
     <string name="action_lists_reorder">إعادة ترتيب القوائم</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
     <!-- Movies -->
     <string name="title_discover">استكشاف</string>
@@ -351,6 +357,7 @@
     <string name="support_trakt">ادعم Trakt بالـVIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">قيم</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">تقييمك</string>
     <string name="love">عظيم!</string>
     <string name="hate">لم يعجبني :(</string>
