@@ -29,6 +29,8 @@ android {
 
     buildFeatures {
         buildConfig = true
+        // https://developer.android.com/jetpack/compose/interop/adding
+        compose = true
         // https://firebase.google.com/support/release-notes/android
         viewBinding = true
     }
@@ -63,10 +65,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    composeOptions {
+        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+        kotlinCompilerExtensionVersion = "1.4.8" // For Kotlin 1.8.22
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         // Using experimental flatMapLatest for Paging 3
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
     }
 
     lint {
@@ -177,6 +184,18 @@ dependencies {
     implementation(libs.androidx.coordinatorlayout)
     implementation(libs.androidx.preference)
     implementation(libs.androidx.swiperefreshlayout)
+
+    // Compose
+    implementation(platform(libs.compose))
+    androidTestImplementation(platform(libs.compose))
+    implementation(libs.compose.material3)
+    // Android Studio Preview support
+    implementation(libs.compose.tooling.preview)
+    debugImplementation(libs.compose.tooling)
+    // Optional - Integration with activities
+    implementation(libs.androidx.activity.compose)
+    // Optional - Integration with ViewModels
+    implementation( libs.androidx.lifecycle.compose)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
