@@ -1,38 +1,192 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.preferences
 
 import android.os.Bundle
-import android.view.MenuItem
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.ui.BaseThemeActivity
-import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
+import com.battlelancer.seriesguide.util.PackageTools
+import com.battlelancer.seriesguide.util.WebTools
 
 /**
- * Just hosts a [AboutPreferencesFragment].
+ * Displays details about the app version, links to credits and terms.
  */
-class AboutActivity : BaseThemeActivity() {
+class AboutActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
-        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutAbout))
-        setupActionBar()
-    }
 
-    override fun setupActionBar() {
-        super.setupActionBar()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
+        // FIXME How to do this?
+//        ThemeUtils.configureForEdgeToEdge(findViewById(R.id.rootLayoutAbout))
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
+        setContent {
+            SeriesGuideTheme {
+                About(
+                    versionString = PackageTools.getVersionString(this),
+                    onBackPressed = { onBackPressedDispatcher.onBackPressed() },
+                    onOpenWebsite = { viewUrl(R.string.url_website) },
+                    onOpenPrivacyPolicy = { viewUrl(R.string.url_privacy) },
+                    onOpenCredits = { viewUrl(R.string.url_credits) },
+                    onOpenTmdbTerms = { viewUrl(R.string.url_terms_tmdb) },
+                    onOpenTmdbApiTerms = { viewUrl(R.string.url_terms_tmdb_api) },
+                    onOpenTraktTerms = { viewUrl(R.string.url_terms_trakt) }
+                )
             }
-            else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private val defaultSpacerSize = 16.dp
+
+    @Composable
+    fun SgTopAppBar(
+        titleStringRes: Int,
+        onBackPressed: () -> Unit
+    ) {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(id = titleStringRes),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
+            navigationIcon = {
+                IconButton(onClick = onBackPressed) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.navigate_back)
+                    )
+                }
+            }
+        )
+    }
+
+    @Composable
+    fun About(
+        versionString: String,
+        onBackPressed: () -> Unit,
+        onOpenWebsite: () -> Unit,
+        onOpenPrivacyPolicy: () -> Unit,
+        onOpenCredits: () -> Unit,
+        onOpenTmdbTerms: () -> Unit,
+        onOpenTmdbApiTerms: () -> Unit,
+        onOpenTraktTerms: () -> Unit
+    ) {
+        Scaffold(
+            topBar = {
+                SgTopAppBar(R.string.prefs_category_about, onBackPressed)
+            }
+        ) { scaffoldPadding ->
+            BoxWithConstraints(
+                modifier = Modifier
+                    .padding(scaffoldPadding)
+                    .fillMaxWidth()
+            ) {
+                val scrollAndPadding = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(defaultSpacerSize)
+                Column(
+                    // if 600 dp or wider center align
+                    modifier = if (maxWidth < 600.dp) {
+                        scrollAndPadding
+                    } else {
+                        scrollAndPadding
+                            .width(600.dp)
+                            .align(Alignment.Center)
+                    }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                    Text(
+                        text = versionString,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    FilledTonalButton(onClick = onOpenWebsite) {
+                        Text(text = stringResource(id = R.string.website))
+                    }
+                    FilledTonalButton(onClick = onOpenPrivacyPolicy) {
+                        Text(text = stringResource(id = R.string.privacy_policy))
+                    }
+                    Text(
+                        text = stringResource(id = R.string.about_open_source),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+                    FilledTonalButton(onClick = onOpenCredits) {
+                        Text(text = stringResource(id = R.string.licences_and_credits))
+                    }
+                    Text(
+                        text = stringResource(id = R.string.licence_themoviedb),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+                    FilledTonalButton(onClick = onOpenTmdbTerms) {
+                        Text(text = stringResource(id = R.string.tmdb_terms))
+                    }
+                    FilledTonalButton(onClick = onOpenTmdbApiTerms) {
+                        Text(text = stringResource(id = R.string.tmdb_api_terms))
+                    }
+                    Text(
+                        text = stringResource(id = R.string.licence_trakt),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+                    FilledTonalButton(onClick = onOpenTraktTerms) {
+                        Text(text = stringResource(id = R.string.trakt_terms))
+                    }
+                }
+            }
+        }
+    }
+
+    @Preview()
+    @Preview(device = Devices.PIXEL_C)
+    @Composable
+    fun AboutPreview() {
+        About(
+            "v42 (Database v42)",
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+        )
+    }
+
+    private fun viewUrl(@StringRes urlResId: Int) {
+        WebTools.openInApp(this, getString(urlResId))
     }
 
 }
