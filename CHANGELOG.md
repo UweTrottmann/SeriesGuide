@@ -18,6 +18,7 @@ Version 71
 * 🔧 Shows: adjust edit time dialog to avoid buttons moving around when changing values.
 * 🔧 Add acknowledgement messages for actions that may take longer (that do network requests), drop
   them for actions that complete immediately (e.g. set watched).
+* 🔨 Update Metacritic search links.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 71.0.2 🧪
