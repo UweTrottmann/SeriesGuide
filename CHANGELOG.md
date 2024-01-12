@@ -15,11 +15,14 @@ Version 71
 ----------
 *in development*
 
+#### 71.0.3 🧪
+*2024-01-12*
+
 * 🔧 Shows: adjust edit time dialog to avoid buttons moving around when changing values.
-* 🔧 Shows: faster scrolling between episode pages, again.
+* 🔧 Shows: make switching between episode pages fast again.
+* 🔨 Update Metacritic search links.
 * 🔧 Add acknowledgement messages for actions that may take longer (that do network requests), drop
   them for actions that complete immediately (e.g. set watched).
-* 🔨 Update Metacritic search links.
 * 📝 Latest user interface translations from Crowdin.
 
 #### 71.0.2 🧪
