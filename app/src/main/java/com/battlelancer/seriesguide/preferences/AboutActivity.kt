@@ -23,9 +23,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
@@ -68,7 +72,8 @@ class AboutActivity : ComponentActivity() {
     @Composable
     fun SgTopAppBar(
         titleStringRes: Int,
-        onBackPressed: () -> Unit
+        onBackPressed: () -> Unit,
+        scrollBehavior: TopAppBarScrollBehavior
     ) {
         TopAppBar(
             title = {
@@ -85,7 +90,8 @@ class AboutActivity : ComponentActivity() {
                         contentDescription = stringResource(id = R.string.navigate_back)
                     )
                 }
-            }
+            },
+            scrollBehavior = scrollBehavior
         )
     }
 
@@ -100,9 +106,12 @@ class AboutActivity : ComponentActivity() {
         onOpenTmdbApiTerms: () -> Unit,
         onOpenTraktTerms: () -> Unit
     ) {
+        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+
         Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
-                SgTopAppBar(R.string.prefs_category_about, onBackPressed)
+                SgTopAppBar(R.string.prefs_category_about, onBackPressed, scrollBehavior)
             }
         ) { scaffoldPadding ->
             BoxWithConstraints(
