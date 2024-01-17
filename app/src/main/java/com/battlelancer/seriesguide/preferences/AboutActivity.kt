@@ -91,6 +91,12 @@ class AboutActivity : ComponentActivity() {
                     )
                 }
             },
+            // Colored text and icons
+            colors = TopAppBarDefaults.topAppBarColors(
+                actionIconContentColor = MaterialTheme.colorScheme.primary,
+                navigationIconContentColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.primary
+            ),
             scrollBehavior = scrollBehavior
         )
     }
