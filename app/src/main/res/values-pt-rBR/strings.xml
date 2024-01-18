@@ -218,18 +218,25 @@
     <string name="watchlist">Lista</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Sem resultados</string>
+    <string name="action_similar">Semelhantes</string>
     <string name="title_similar_shows">Séries similares</string>
     <!-- Lists -->
     <string name="first_list">Primeira lista</string>
     <string name="list_add">Adicionar lista</string>
+    <string name="ack_list_added">Lista adicionada</string>
     <string name="list_title_hint">Nomeie sua lista</string>
     <string name="list_remove">Remover lista</string>
     <string name="list_manage">Gerenciar lista</string>
+    <string name="ack_list_renamed">Lista renomeada</string>
+    <string name="ack_list_removed">Lista removida</string>
     <string name="list_item_manage">Gerenciar listas</string>
+    <string name="ack_list_item_manage">Listas atualizadas</string>
     <string name="list_item_remove">Remover da lista</string>
+    <string name="ack_list_item_removed">Removido da lista</string>
     <string name="list_empty">Você pode adicionar séries à lista</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
+    <string name="ack_lists_reordered">Listas reordenadas</string>
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>
     <!-- Movies -->
     <string name="title_discover">Descubra</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">Substituir</string>
     <string name="traktcheckin_inprogress">Você já fez check-in em outro episódio ou filme. Substitua o check-in anterior ou aguarde %s e tente novamente.</string>
     <string name="traktcheckin_wait">Vou esperar</string>
-    <string name="trakt_success">Enviado ao trakt.</string>
     <string name="trakt_error_account_locked">Sua conta Trakt está bloqueada. Contate o suporte do Trakt.</string>
     <string name="trakt_error_credentials">Alguma coisa deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
     <string name="trakt_error_not_exists">Não disponível (ainda) no trakt. Tente novamente mais tarde.</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Apoie o Trakt com VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Avaliar</string>
+    <string name="ack_rated">Avaliação enviada</string>
     <string name="your_rating">Sua classificação</string>
     <string name="love">Muito show!</string>
     <string name="hate">Horrível :(</string>

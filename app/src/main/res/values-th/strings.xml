@@ -214,18 +214,25 @@
     <string name="watchlist">อยากดู</string>
     <!-- Similar shows -->
     <string name="empty_no_results">ไม่มีผลลัพธ์</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">ซีรีส์ที่คล้ายกัน</string>
     <!-- Lists -->
     <string name="first_list">รายการแรก</string>
     <string name="list_add">เพิ่มรายการ</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">ตั้งชื่อรายการของคุณ</string>
     <string name="list_remove">ลบรายการ</string>
     <string name="list_manage">จัดการรายการ</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">จัดการรายการ</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">ลบออกจากรายการ</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">คุณสามารถเพิ่มซีรีส์นี้ไปยังรายการ</string>
     <string name="action_lists_sort">เรียงรายการ</string>
     <string name="action_lists_reorder">เรียงรายการใหม่</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
     <!-- Movies -->
     <string name="title_discover">สำรวจ</string>
@@ -298,7 +305,6 @@
     <string name="traktcheckin_cancel">เขียนทับ</string>
     <string name="traktcheckin_inprogress">คุณเช็กอินในตอนหรือภาพยนตร์อื่นไปแล้ว แทนที่เช็กอินก่อนหน้านี้ หรือรอ %s และลองอีกครั้ง</string>
     <string name="traktcheckin_wait">ฉันจะรอ</string>
-    <string name="trakt_success">ส่งไปยัง trakt</string>
     <string name="trakt_error_account_locked">บัญชี Trakt ของคุณถูกล็อก ติดต่อฝ่ายสนับสนุน Trakt</string>
     <string name="trakt_error_credentials">มีบางอย่างผิดพลาด ตรวจสอบข้อมูล trakt ของคุณและลองอีกครั้ง</string>
     <string name="trakt_error_not_exists">(ยัง)ไม่พร้อมใช้งานบน trakt ลองอีกครั้งในภายหลัง</string>
@@ -316,6 +322,7 @@
     <string name="support_trakt">สนับสนุน Trakt ด้วย VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">ให้คะแนน</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">คะแนนของคุณ</string>
     <string name="love">สุดยอดไปเลย!</string>
     <string name="hate">แย่ที่สุด :(</string>

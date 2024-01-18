@@ -1,13 +1,11 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017, 2018, 2020-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs.episodes;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.util.TextTools;
 
 public class EpisodeCollectedJob extends EpisodeBaseJob {
 
@@ -28,14 +26,5 @@ public class EpisodeCollectedJob extends EpisodeBaseJob {
     @Override
     protected int getPlaysForNetworkJob(int plays) {
         return plays; // Collected change does not change plays.
-    }
-
-    @NonNull
-    @Override
-    public String getConfirmationText(Context context) {
-        String number = TextTools.getEpisodeNumber(context, getEpisode().getSeason(),
-                getEpisode().getEpisodenumber());
-        return TextTools.dotSeparate(number, context.getString(isCollected
-                ? R.string.action_collection_add : R.string.action_collection_remove));
     }
 }

@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.ViewTools
@@ -97,7 +98,6 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             StreamingSearch.initButtons(
                 buttonAddStreamingSearch, buttonAddStreamingSearchInfo, parentFragmentManager
             )
-            textViewAddStreamingSearch.isGone = true
             buttonNegative.apply {
                 setText(R.string.dismiss)
                 setOnClickListener { dismiss() }
@@ -152,13 +152,20 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
                 this.binding?.textViewAddDescription?.isGone = false
                 populateShowViews(show)
             }
+            model.trailer.observe(this) { videoId ->
+                this.binding?.buttonAddTrailer?.apply {
+                    if (videoId != null) {
+                        setOnClickListener { ServiceUtils.openYoutube(videoId, requireContext()) }
+                        isEnabled = true
+                    } else {
+                        setOnClickListener(null)
+                        isEnabled = false
+                    }
+                }
+            }
             model.watchProvider.observe(this) { watchInfo ->
                 this.binding?.buttonAddStreamingSearch?.let {
-                    val providerInfo = StreamingSearch.configureButton(it, watchInfo, false)
-                    this.binding?.textViewAddStreamingSearch?.apply {
-                        text = providerInfo
-                        isGone = providerInfo == null
-                    }
+                    StreamingSearch.configureButton(it, watchInfo, true)
                 }
             }
         }

@@ -218,18 +218,25 @@
     <string name="watchlist">Bevakningslista</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Inga resultat</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Liknande program</string>
     <!-- Lists -->
     <string name="first_list">Första listan</string>
     <string name="list_add">Lägg till lista</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Namnge din lista</string>
     <string name="list_remove">Ta bort lista</string>
     <string name="list_manage">Hantera lista</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Hantera listor</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Ta bort från lista</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Du kan lägga till serier i denna lista</string>
     <string name="action_lists_sort">Sortera listor</string>
     <string name="action_lists_reorder">Sortera om listor</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">En lista med detta namn finns redan</string>
     <!-- Movies -->
     <string name="title_discover">Upptäck</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">Hoppa över</string>
     <string name="traktcheckin_inprogress">Du är redan incheckad på ett annat avsnitt eller film. Antingen hoppar du över föregående incheckning eller vänta %s och försök igen.</string>
     <string name="traktcheckin_wait">Jag väntar</string>
-    <string name="trakt_success">Skickat till trakt.</string>
     <string name="trakt_error_account_locked">Ditt Trakt-konto är låst. Kontakta Trakt-support.</string>
     <string name="trakt_error_credentials">Något gick fel. Vänligen kontrollera dina uppgifter och försök igen.</string>
     <string name="trakt_error_not_exists">Inte (än) tillgänglig på trakt. Försök igen senare.</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Stöd Trakt med VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Betygsätt</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Ditt betyg</string>
     <string name="love">Helt ninja!</string>
     <string name="hate">Svag sås :(</string>

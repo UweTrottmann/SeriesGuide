@@ -1,5 +1,8 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2019, 2022, 2023 Uwe Trottmann
+
+@file:Suppress("DEPRECATION")
+// Not using WindowInsetsControllerCompat due to bugs, see note in FullscreenImageActivity
 
 package com.battlelancer.seriesguide.util
 

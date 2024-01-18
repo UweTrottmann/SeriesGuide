@@ -218,18 +218,25 @@
     <string name="watchlist">Spektolisto</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Ne estas rezultoj</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similaj televidaĵoj</string>
     <!-- Lists -->
     <string name="first_list">Unua listo</string>
     <string name="list_add">Aldoni liston</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Nomu vian liston</string>
     <string name="list_remove">Forigi liston</string>
     <string name="list_manage">Administri liston</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Administri listojn</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Forigi el listo</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Vi povas aldoni televidaĵojn al ĉi tiu listo</string>
     <string name="action_lists_sort">Ordigi listojn</string>
     <string name="action_lists_reorder">Reordigi listojn</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Listo kun ĉi tiu nomo jam ekzistas</string>
     <!-- Movies -->
     <string name="title_discover">Esplori</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">Anstataŭigi</string>
     <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">Mi atendos</string>
-    <string name="trakt_success">Sendita al Trakt.</string>
     <string name="trakt_error_account_locked">Via Trakta konto estas ŝlosita. Kontaktu Traktan helparon.</string>
     <string name="trakt_error_credentials">Io misokazis. Kontrolu viajn identigilojn de Trakt kaj reprovu.</string>
     <string name="trakt_error_not_exists">Ne (ankoraŭ) disponebla je Trakt. Reprovu poste.</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Taksi</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Via takso</string>
     <string name="love">Imponega</string>
     <string name="hate">Perdis tempon :(</string>

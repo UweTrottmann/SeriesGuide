@@ -11,7 +11,7 @@ patches or translations make sure you have read it and agree with it.
 2. See the notes about [building](#building) the app below.
 3. Create a new branch ([using GitHub](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/)
    or the command `git checkout -b descriptive-branch-name dev`).
-4. Make [great commits](http://robots.thoughtbot.com/post/48933156625/5-useful-tips-for-a-better-commit-message).
+4. Make [great commits](http://robots.thoughtbot.com/post/48933156625/5-useful-tips-for-a-better-commit-message). For non-trivial changes, add a copyright line at the top of the files you edited.
 5. [Start a pull request](https://github.com/UweTrottmann/SeriesGuide/compare) and reference [issues](https://github.com/UweTrottmann/SeriesGuide/issues) if needed.
 
 #### No code!

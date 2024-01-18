@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013, 2014, 2016-2018, 2022, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
@@ -15,6 +15,7 @@ import com.battlelancer.seriesguide.util.safeShow
 class MovieCheckInDialogFragment : GenericCheckInDialogFragment() {
 
     override fun checkInTrakt(message: String) {
+        @Suppress("DEPRECATION") // AsyncTask
         TraktTask(context).checkInMovie(
             requireArguments().getInt(ARG_MOVIE_TMDB_ID),
             requireArguments().getString(ARG_ITEM_TITLE),

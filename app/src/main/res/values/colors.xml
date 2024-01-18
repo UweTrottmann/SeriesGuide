@@ -39,6 +39,8 @@
 
     <!-- 38% primary, not using color state list as using theme-dependant attribute is API 23+. -->
     <color name="sg_color_control_activated">#606545a0</color>
+    <color name="sg_color_outline_dark">#58535D</color>
+    <color name="sg_color_outline_light">#A5A2A8</color>
 
     <color name="sg_background_gradient_start">#aaffffff</color>
     <color name="sg_background_gradient_end">#ffffffff</color>

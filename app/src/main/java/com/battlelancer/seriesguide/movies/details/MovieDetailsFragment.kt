@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -108,36 +108,45 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.textViewMovieGenresLabel.isGone = true
         binding.labelMovieLastUpdated.isGone = true
 
-        // trailer button
-        binding.buttonMovieTrailer.setOnClickListener {
-            trailerYoutubeId?.let { ServiceUtils.openYoutube(it, requireContext()) }
-        }
-        binding.buttonMovieTrailer.isGone = true
-        binding.buttonMovieTrailer.isEnabled = false
-
-        // similar movies button
-        binding.buttonMovieSimilar.apply {
-            setOnClickListener {
-                movieDetails?.tmdbMovie()
-                    ?.title
-                    ?.let { startActivity(SimilarMoviesActivity.intent(requireContext(), tmdbId, it)) }
+        // some action buttons
+        binding.containerMovieButtons.apply {
+            root.isGone = true
+            // trailer button
+            buttonMovieTrailer.apply {
+                setOnClickListener {
+                    trailerYoutubeId?.let { ServiceUtils.openYoutube(it, requireContext()) }
+                }
+                isEnabled = false
             }
-            isGone = true
+            // similar movies button
+            buttonMovieSimilar.apply {
+                setOnClickListener {
+                    movieDetails?.tmdbMovie()
+                        ?.title
+                        ?.let {
+                            startActivity(
+                                SimilarMoviesActivity.intent(
+                                    requireContext(),
+                                    tmdbId,
+                                    it
+                                )
+                            )
+                        }
+                }
+            }
+            buttonMovieCheckIn.setOnClickListener { onButtonCheckInClick() }
+            TooltipCompat.setTooltipText(
+                buttonMovieCheckIn,
+                buttonMovieCheckIn.contentDescription
+            )
+            StreamingSearch.initButtons(
+                buttonMovieStreamingSearch,
+                buttonMovieStreamingSearchInfo,
+                parentFragmentManager
+            )
         }
-
-        // important action buttons
-        binding.containerMovieButtons.root.isGone = true
-        binding.containerMovieButtons.buttonMovieCheckIn.setOnClickListener { onButtonCheckInClick() }
-        StreamingSearch.initButtons(
-            binding.containerMovieButtons.buttonMovieStreamingSearch,
-            binding.containerMovieButtons.buttonMovieStreamingSearchInfo,
-            parentFragmentManager
-        )
+        // ratings
         binding.containerRatings.root.isGone = true
-        TooltipCompat.setTooltipText(
-            binding.containerMovieButtons.buttonMovieCheckIn,
-            binding.containerMovieButtons.buttonMovieCheckIn.contentDescription
-        )
 
         // language button
         binding.buttonMovieLanguage.isGone = true
@@ -148,9 +157,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.buttonMovieLanguage.setOnClickListener {
             MovieLocalizationDialogFragment.show(parentFragmentManager)
         }
-
-        // comments button
-        binding.buttonMovieComments.isGone = true
 
         // cast and crew
         setCastVisibility(false)
@@ -190,7 +196,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         model.watchProvider.observe(viewLifecycleOwner) { watchInfo ->
             StreamingSearch.configureButton(
                 binding.containerMovieButtons.buttonMovieStreamingSearch,
-                watchInfo
+                watchInfo, true
             )
         }
 
@@ -342,11 +348,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
         binding.textViewMovieDate.text = releaseAndRuntime.toString()
 
-        // show trailer button (but trailer is loaded separately, just for animation)
-        binding.buttonMovieTrailer.isGone = false
-        // movie title should be available now, can show similar movies button
-        binding.buttonMovieSimilar.isGone = false
-
         // hide check-in if not connected to trakt or hexagon is enabled
         val isConnectedToTrakt = TraktCredentials.get(requireContext()).hasCredentials()
         val hideCheckIn = !isConnectedToTrakt || HexagonSettings.isEnabled(requireContext())
@@ -435,7 +436,18 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             }
         }
 
-        // show button bar
+        // trakt comments link
+        binding.containerMovieButtons.buttonMovieComments.apply {
+            setOnClickListener { v ->
+                val tmdbId = tmdbId
+                if (tmdbId > 0) {
+                    val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
+                    Utils.startActivityWithAnimation(activity, i, v)
+                }
+            }
+        }
+
+        // show buttons after configuring them
         binding.containerMovieButtons.root.isGone = false
 
         // language button
@@ -493,16 +505,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.labelMovieLastUpdated.isGone = false
         binding.textMovieLastUpdated.text =
             TimeTools.formatToLocalDateAndTime(requireContext(), movieDetails.lastUpdatedMillis)
-
-        // trakt comments link
-        binding.buttonMovieComments.setOnClickListener { v ->
-            val tmdbId = tmdbId
-            if (tmdbId > 0) {
-                val i = TraktCommentsActivity.intentMovie(requireContext(), movieTitle, tmdbId)
-                Utils.startActivityWithAnimation(activity, i, v)
-            }
-        }
-        binding.buttonMovieComments.isGone = false
 
         // load poster, cache on external storage
         if (tmdbMovie.poster_path.isNullOrEmpty()) {
@@ -602,9 +604,10 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             return
         }
 
+        val peopleListHelper = PeopleListHelper()
         // cast members
         if (credits.cast?.size != 0
-            && PeopleListHelper.populateMovieCast(
+            && peopleListHelper.populateMovieCast(
                 activity,
                 binding.moviePeople.containerCast,
                 credits
@@ -616,7 +619,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         // crew members
         if (credits.crew?.size != 0
-            && PeopleListHelper.populateMovieCrew(
+            && peopleListHelper.populateMovieCrew(
                 activity,
                 binding.moviePeople.containerCrew,
                 credits
@@ -788,7 +791,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         ) {
             if (videoId != null) {
                 this@MovieDetailsFragment.trailerYoutubeId = videoId
-                binding.buttonMovieTrailer.isEnabled = true
+                binding.containerMovieButtons.buttonMovieTrailer.isEnabled = true
             }
         }
 

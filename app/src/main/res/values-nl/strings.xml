@@ -218,18 +218,25 @@
     <string name="watchlist">Watchlist</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Geen resultaten</string>
+    <string name="action_similar">Soortgelijk</string>
     <string name="title_similar_shows">Soortgelijke shows</string>
     <!-- Lists -->
     <string name="first_list">Eerste lijst</string>
     <string name="list_add">Lijst toevoegen</string>
+    <string name="ack_list_added">Lijst toegevoegd</string>
     <string name="list_title_hint">Lijst een naam geven</string>
     <string name="list_remove">Lijst verwijderen</string>
     <string name="list_manage">Lijst beheren</string>
+    <string name="ack_list_renamed">Lijst hernoemd</string>
+    <string name="ack_list_removed">Lijst verwijderd</string>
     <string name="list_item_manage">Lijsten beheren</string>
+    <string name="ack_list_item_manage">Lijsten bijgewerkt</string>
     <string name="list_item_remove">Verwijderen uit lijst</string>
+    <string name="ack_list_item_removed">Verwijderd uit lijst</string>
     <string name="list_empty">U kunt series toevoegen aan deze lijst</string>
     <string name="action_lists_sort">Lijst sorteren</string>
     <string name="action_lists_reorder">Lijsten opnieuw ordenen</string>
+    <string name="ack_lists_reordered">Lijsten gerangschikt</string>
     <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
     <!-- Movies -->
     <string name="title_discover">Ontdekken</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">Overschrijven</string>
     <string name="traktcheckin_inprogress">U bent al ingecheckt. Overschrijf de vorige check-in of wacht %s en probeer het opnieuw.</string>
     <string name="traktcheckin_wait">Ik zal wachten</string>
-    <string name="trakt_success">Verzonden naar Trakt.</string>
     <string name="trakt_error_account_locked">Uw Trakt-account is vergrendeld. Neem contact op met Trakt-ondersteuning.</string>
     <string name="trakt_error_credentials">Er ging iets fout. Controleer uw inlog gegevens en probeer het opnieuw.</string>
     <string name="trakt_error_not_exists">Nog (niet) beschikbaar op trakt. Probeer het later nog eens.</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Trakt ondersteunen met VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Beoordelen</string>
+    <string name="ack_rated">Beoordeling verstuurd</string>
     <string name="your_rating">Uw beoordeling</string>
     <string name="love">Zeer goed!</string>
     <string name="hate">Slappe hap :(</string>

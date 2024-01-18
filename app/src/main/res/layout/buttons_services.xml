@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2014-2018, 2020, 2023 Uwe Trottmann -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="@dimen/default_padding"
-    android:paddingBottom="@dimen/large_padding">
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
     <include
         android:id="@+id/include_more"
-        layout="@layout/buttons_episode_more" />
-
-    <View
+        layout="@layout/buttons_episode_more"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginTop="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:background="?attr/sgColorDivider" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
 
     <LinearLayout
         android:id="@+id/containerEpisodeActions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding"
         android:orientation="vertical" />
 
 </LinearLayout>

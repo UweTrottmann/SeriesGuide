@@ -214,18 +214,25 @@
     <string name="watchlist">ウォッチリスト</string>
     <!-- Similar shows -->
     <string name="empty_no_results">検索結果はありません</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似の番組</string>
     <!-- Lists -->
     <string name="first_list">最初のリスト</string>
     <string name="list_add">リストを追加</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">リストに名前を付けます</string>
     <string name="list_remove">リストを削除</string>
     <string name="list_manage">リストを管理</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">リストを管理</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">リストから削除</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">リストの並べ替え</string>
     <string name="action_lists_reorder">リストの再並べ替え</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
     <!-- Movies -->
     <string name="title_discover">見つける</string>
@@ -298,7 +305,6 @@
     <string name="traktcheckin_cancel">上書き</string>
     <string name="traktcheckin_inprogress">すでに別のエピソードや映画にチェックインしています。以前のチェックインを上書きするか、 %s まで待ってもう一度やり直してください。</string>
     <string name="traktcheckin_wait">待つ</string>
-    <string name="trakt_success">Trakt に送信しました</string>
     <string name="trakt_error_account_locked">Trakt アカウントがロックされています。Trakt サポートにお問い合わせください。</string>
     <string name="trakt_error_credentials">問題が起きました。Trakt の認証情報を確認して、もう一度やり直してください。</string>
     <string name="trakt_error_not_exists">Trakt では利用できません。後でもう一度やり直してください。</string>
@@ -316,6 +322,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">作品を評価</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">あなたの評価</string>
     <string name="love">完全に忍者!</string>
     <string name="hate">つまらない :(</string>

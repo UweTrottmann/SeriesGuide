@@ -62,7 +62,7 @@
     <string name="share_show">Serie teilen</string>
     <string name="share_episode">Folge teilen</string>
     <string name="share_movie">Film teilen</string>
-    <string name="addtocalendar">Zum Kalender hinzufügen</string>
+    <string name="addtocalendar">Termin erstellen</string>
     <string name="addtocalendar_failed">Kalender-Termin kann nicht erstellt werden</string>
     <string name="links">Links</string>
     <!-- Comments -->
@@ -218,18 +218,25 @@
     <string name="watchlist">Merkliste</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Keine Ergebnisse</string>
+    <string name="action_similar">Ähnliche</string>
     <string name="title_similar_shows">Ähnliche Serien</string>
     <!-- Lists -->
     <string name="first_list">Erste Liste</string>
     <string name="list_add">Liste hinzufügen</string>
+    <string name="ack_list_added">Liste hinzugefügt</string>
     <string name="list_title_hint">Liste benennen</string>
     <string name="list_remove">Liste entfernen</string>
     <string name="list_manage">Liste verwalten</string>
+    <string name="ack_list_renamed">Liste umbenannt</string>
+    <string name="ack_list_removed">Liste entfernt</string>
     <string name="list_item_manage">Listen verwalten</string>
+    <string name="ack_list_item_manage">Liste aktualisiert</string>
     <string name="list_item_remove">Von Liste entfernen</string>
+    <string name="ack_list_item_removed">Von Liste entfernt</string>
     <string name="list_empty">Sie können Serien zu dieser Liste hinzufügen</string>
     <string name="action_lists_sort">Listen sortieren</string>
     <string name="action_lists_reorder">Listen anordnen</string>
+    <string name="ack_lists_reordered">Listen neu angeordnet</string>
     <string name="error_name_already_exists">Eine Liste mit diesem Namen ist bereits vorhanden</string>
     <!-- Movies -->
     <string name="title_discover">Entdecken</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">Überschreiben</string>
     <string name="traktcheckin_inprogress">Sie sind bereits eingecheckt. Überschreiben Sie den Check-in oder warten Sie %s und versuchen es erneut.</string>
     <string name="traktcheckin_wait">Ich warte</string>
-    <string name="trakt_success">An Trakt übermittelt</string>
     <string name="trakt_error_account_locked">Ihr Trakt-Konto ist gesperrt. Kontaktieren Sie den Trakt Support.</string>
     <string name="trakt_error_credentials">Etwas lief schief. Bitte prüfen Sie Ihre Trakt-Zugangsdaten und versuchen Sie es erneut.</string>
     <string name="trakt_error_not_exists">(Noch) nicht bei Trakt verfügbar. Versuchen Sie es später erneut.</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Unterstütze Trakt mit VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bewerten</string>
+    <string name="ack_rated">Bewertung übermittelt</string>
     <string name="your_rating">Ihre Bewertung</string>
     <string name="love">Absolut top!</string>
     <string name="hate">Totaler Flop :(</string>

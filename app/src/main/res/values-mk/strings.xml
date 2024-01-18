@@ -218,18 +218,25 @@
     <string name="watchlist">Листа за гледање</string>
     <!-- Similar shows -->
     <string name="empty_no_results">No results</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
     <!-- Lists -->
     <string name="first_list">Прва листа</string>
     <string name="list_add">Додај листа</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Изберете име за листа</string>
     <string name="list_remove">Избриши листа</string>
     <string name="list_manage">Уреди листа</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Уреду листи</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Избриши од листа</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Листа за сортирање</string>
     <string name="action_lists_reorder">Поново сортирајте листа</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Една група со ова име веќе постои</string>
     <!-- Movies -->
     <string name="title_discover">Откриј</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">Замени</string>
     <string name="traktcheckin_inprogress">Веќе сте пријавени во уште една епизода или филм. Или да ја замени претходната проверка или почекајте %s и обидете се повторно.</string>
     <string name="traktcheckin_wait">Ќе почекам</string>
-    <string name="trakt_success">Прати на trakt.</string>
     <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Нешто тргна наопаку. Проверете ја вашата trakt сметка и обидете се повторно.</string>
     <string name="trakt_error_not_exists">Не е (сеуште) достапно на trakt. Пробајте подоцна.</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Support Trakt with VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Твоја оцена</string>
     <string name="love">Супер!</string>
     <string name="hate">Слаба работа :(</string>

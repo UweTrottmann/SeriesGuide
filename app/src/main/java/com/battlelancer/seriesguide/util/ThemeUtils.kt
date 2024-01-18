@@ -145,20 +145,20 @@ object ThemeUtils {
         // For transparent status bars (M+), check if the background has a light color;
         // for colored status bars check if itself has a light color.
         // If a light color, tell the system to color icons accordingly.
-        setLightStatusBar(
-            window,
+        val isLightStatusBar =
             if (forceDarkStatusBars) {
                 false
             } else {
                 isUsingLightSystemBar(statusBarColor, isLightBackground)
             }
-        )
         // Do the same check for nav bars
         // (only difference: transparent nav bars supported since O_MR1+).
-        setLightNavigationBar(
-            window,
-            isUsingLightSystemBar(navigationBarColor, isLightBackground)
-        )
+        val isLightNavigationBar = isUsingLightSystemBar(navigationBarColor, isLightBackground)
+
+        WindowCompat.getInsetsController(window, window.decorView).run {
+            isAppearanceLightStatusBars = isLightStatusBar
+            isAppearanceLightNavigationBars = isLightNavigationBar
+        }
     }
 
     private fun getStatusBarColor(context: Context): Int {
@@ -191,16 +191,6 @@ object ThemeUtils {
             val opaqueNavBarColor = SurfaceColors.SURFACE_2.getColor(context)
             ColorUtils.setAlphaComponent(opaqueNavBarColor, 192)
         }
-    }
-
-    private fun setLightStatusBar(window: Window, isLight: Boolean) {
-        WindowCompat.getInsetsController(window, window.decorView)
-            .isAppearanceLightStatusBars = isLight
-    }
-
-    private fun setLightNavigationBar(window: Window, isLight: Boolean) {
-        WindowCompat.getInsetsController(window, window.decorView)
-            .isAppearanceLightNavigationBars = isLight
     }
 
     private fun isUsingLightSystemBar(

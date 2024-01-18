@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2018, 2022, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people;
 
@@ -12,8 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
+import com.battlelancer.seriesguide.util.CircleTransformation;
+import com.battlelancer.seriesguide.util.ImageTools;
 import java.util.List;
 
 /**
@@ -22,6 +23,8 @@ import java.util.List;
 class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
 
     private static int LAYOUT = R.layout.item_person;
+
+    private final CircleTransformation personImageTransform = new CircleTransformation();
 
     PeopleAdapter(Context context) {
         super(context, LAYOUT);
@@ -62,7 +65,8 @@ class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
                         TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                 .centerCrop()
-                .error(R.color.protection_dark)
+                .transform(personImageTransform)
+                .error(R.drawable.ic_account_circle_black_24dp)
                 .into(viewHolder.headshot);
 
         return convertView;

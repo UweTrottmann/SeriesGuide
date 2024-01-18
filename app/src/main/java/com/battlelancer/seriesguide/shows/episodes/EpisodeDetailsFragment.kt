@@ -128,31 +128,32 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         bindingRatings!!.textViewRatingsRange.text = getString(R.string.format_rating_range, 10)
 
-        StreamingSearch.initButtons(
-            bindingButtons!!.buttonEpisodeStreamingSearch,
-            bindingButtons!!.buttonEpisodeStreamingSearchInfo,
-            parentFragmentManager
-        )
-
-        // other bottom buttons
-        bindingBottom!!.buttonEpisodeShare.setOnClickListener { shareEpisode() }
-        bindingBottom!!.buttonEpisodeCalendar.setOnClickListener {
-            val show = show
-            val episode = episode
-            if (show != null && episode != null) {
-                ShareUtils.suggestCalendarEvent(
-                    requireContext(),
-                    show.title,
-                    TextTools.getNextEpisodeString(
+        // Episode action buttons
+        bindingButtons!!.apply {
+            buttonEpisodeShare.setOnClickListener { shareEpisode() }
+            buttonEpisodeCalendar.setOnClickListener {
+                val show = show
+                val episode = episode
+                if (show != null && episode != null) {
+                    ShareUtils.suggestCalendarEvent(
                         requireContext(),
-                        episode.season,
-                        episode.number,
-                        episodeTitle
-                    ),
-                    episode.firstReleasedMs,
-                    show.runtime
-                )
+                        show.title,
+                        TextTools.getNextEpisodeString(
+                            requireContext(),
+                            episode.season,
+                            episode.number,
+                            episodeTitle
+                        ),
+                        episode.firstReleasedMs,
+                        show.runtime
+                    )
+                }
             }
+            StreamingSearch.initButtons(
+                buttonEpisodeStreamingSearch,
+                buttonEpisodeStreamingSearchInfo,
+                parentFragmentManager
+            )
         }
 
         // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
@@ -166,7 +167,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         binding.textviewReleaseDate.copyTextToClipboardOnLongClick()
 
         // Once episode is loaded, trigger show loading: so set show observer first.
-        model.show.observe(viewLifecycleOwner, { show: SgShow2? ->
+        model.show.observe(viewLifecycleOwner) { show: SgShow2? ->
             if (show != null) {
                 if (show.tmdbId != null) {
                     model.setShowTmdbId(show.tmdbId)
@@ -179,25 +180,24 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             }
             // no data to display
             binding.root.visibility = View.GONE
-        })
-        model.episode.observe(viewLifecycleOwner, { sgEpisode2: SgEpisode2? ->
+        }
+        model.episode.observe(viewLifecycleOwner) { sgEpisode2: SgEpisode2? ->
             if (sgEpisode2 != null) {
                 model.showId.postValue(sgEpisode2.showId)
             } else {
                 // no data to display
                 binding.root.visibility = View.GONE
             }
-        })
-        model.watchProvider.observe(viewLifecycleOwner, { watchInfo: TmdbTools2.WatchInfo? ->
+        }
+        model.watchProvider.observe(viewLifecycleOwner) { watchInfo: TmdbTools2.WatchInfo? ->
             val b = this.binding
             if (watchInfo != null && b != null) {
                 StreamingSearch.configureButton(
                     b.includeButtons.buttonEpisodeStreamingSearch,
-                    watchInfo,
-                    true
+                    watchInfo, replaceButtonText = true
                 )
             }
-        })
+        }
     }
 
     override fun onResume() {
@@ -612,6 +612,16 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 )
             )
         }
+
+        // Trakt comments
+        bindingButtons.buttonEpisodeComments.setOnClickListener { v: View? ->
+            val episodeId = episodeId
+            if (episodeId > 0) {
+                val intent =
+                    TraktCommentsActivity.intentEpisode(requireContext(), episodeTitle, episodeId)
+                Utils.startActivityWithAnimation(requireActivity(), intent, v)
+            }
+        }
     }
 
     private fun updateSecondaryButtons(episode: SgEpisode2, show: SgShow2) {
@@ -638,16 +648,6 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
                 bindingBottom.buttonEpisodeTmdb,
                 TmdbTools.buildEpisodeUrl(show.tmdbId, episode.season, episode.number)
             )
-        }
-
-        // Trakt comments
-        bindingBottom.buttonEpisodeComments.setOnClickListener { v: View? ->
-            val episodeId = episodeId
-            if (episodeId > 0) {
-                val intent =
-                    TraktCommentsActivity.intentEpisode(requireContext(), episodeTitle, episodeId)
-                Utils.startActivityWithAnimation(requireActivity(), intent, v)
-            }
         }
     }
 

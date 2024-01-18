@@ -97,7 +97,7 @@
     <string name="show_status_in_production">В производстве</string>
     <string name="show_status_pilot">Пилот</string>
     <string name="show_status_canceled">Отменён</string>
-    <string name="no_translation">Перевод описания с %1$s недоступно для %2$s.</string>
+    <string name="no_translation">Перевод описания на %1$s недоступно для %2$s.</string>
     <string name="no_translation_title">Не переведено</string>
     <string name="no_spoilers">Некоторые детали скрыты, чтобы предотвратить спойлеры. Чтобы отключить эту функцию, перейдите в Настройки.</string>
     <string name="format_source">Источник: %s</string>
@@ -226,18 +226,25 @@
     <string name="watchlist">Список просмотра</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Нет результатов</string>
+    <string name="action_similar">Похожие</string>
     <string name="title_similar_shows">Похожие сериалы</string>
     <!-- Lists -->
     <string name="first_list">Первый список</string>
     <string name="list_add">Добавить список</string>
+    <string name="ack_list_added">Список добавлен</string>
     <string name="list_title_hint">Название списка</string>
     <string name="list_remove">Удалить список</string>
     <string name="list_manage">Управление списком</string>
+    <string name="ack_list_renamed">Список переименован</string>
+    <string name="ack_list_removed">Список удален</string>
     <string name="list_item_manage">Управление списками</string>
+    <string name="ack_list_item_manage">Список обновлён</string>
     <string name="list_item_remove">Удалить из списка</string>
+    <string name="ack_list_item_removed">Удалено из списка</string>
     <string name="list_empty">Вы можете добавить сериалы в этот список</string>
     <string name="action_lists_sort">Отсортировать списки</string>
     <string name="action_lists_reorder">Сортировка списков</string>
+    <string name="ack_lists_reordered">Списки переупорядочены</string>
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
     <!-- Movies -->
     <string name="title_discover">Подборка</string>
@@ -250,8 +257,8 @@
     <string name="movies_watched">Просмотрено</string>
     <string name="watchlist_add">Добавить в список просмотра</string>
     <string name="watchlist_remove">Удалить из списка просмотра</string>
-    <string name="watchlist_added">Добавлены в список просмотра</string>
-    <string name="watchlist_removed">Удалить из списка просмотра</string>
+    <string name="watchlist_added">Добавлено в список просмотра</string>
+    <string name="watchlist_removed">Удалено из списка просмотра</string>
     <string name="movies_search_hint">Введите название фильма</string>
     <string name="movies_collection_empty">Вы не добавили фильмы в вашу коллекцию.</string>
     <string name="movies_watchlist_empty">Вы не добавили фильмы в список просмотра.</string>
@@ -262,7 +269,7 @@
     <string name="action_movies_sort_title">Название</string>
     <string name="action_movies_sort_release">Дата выпуска</string>
     <string name="action_movies_filter">Фильтр фильмов</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Похожие фильмы</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не удалось рассчитать статистику.</string>
     <string name="shows_finished">%s Просмотрено</string>
@@ -311,7 +318,7 @@
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
     <string name="hexagon_signin_fail_format">Ошибка входа в систему (%s)</string>
     <string name="hexagon_signin_google_only">Адрес электронной почты требует авторизации Google</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">Введите электронную почту для входа, если вы используете SeriesGuide на других устройствах, которые не поддерживают вход в систему Google.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">Отправка в trakt.</string>
     <string name="checkin_success_trakt">Отмечено в %s на trakt.</string>
@@ -319,11 +326,10 @@
     <string name="traktcheckin_cancel">Отменить</string>
     <string name="traktcheckin_inprogress">Вы уже зарегистрировались в другом эпизоде или фильме. Вы можете заменить предыдущую регистрацию или подождать %s и попробовать снова.</string>
     <string name="traktcheckin_wait">Я подожду</string>
-    <string name="trakt_success">Отправлено в trakt.</string>
     <string name="trakt_error_account_locked">Ваша учетная запись в Trakt заблокирована. Обратитесь в службу поддержки.</string>
     <string name="trakt_error_credentials">Что-то пошло не так. Пожалуйста, проверьте ваши учётные данные и повторите попытку.</string>
-    <string name="trakt_error_not_exists">На данный момент недоступен на trakt. Попробуйте позже.</string>
-    <string name="trakt_notice_not_exists">На данный не может быть отслежен с помощью trakt.</string>
+    <string name="trakt_error_not_exists">Недоступно (пока) на Trakt. Попробуйте позже.</string>
+    <string name="trakt_notice_not_exists">Невозможно (пока) отследить с помощью Trakt</string>
     <string name="trakt_error_limit_exceeded">Список отслеживания полон, сначала удалите что-нибудь.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Подключение trakt</string>
@@ -337,6 +343,7 @@
     <string name="support_trakt">Поддержка Trakt с VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Oценить</string>
+    <string name="ack_rated">Оценка отправлена</string>
     <string name="your_rating">Ваша оценка</string>
     <string name="love">Супер!</string>
     <string name="hate">Фиг знает :(</string>
@@ -418,7 +425,7 @@
     <string name="sort_order_latest_first_dvd">Сначала последние (DVD)</string>
     <string name="sort_order_oldest_first_dvd">Сначала старые (DVD)</string>
     <!-- Upcoming thresholds -->
-    <string name="pref_upcominglimit">Диапазон Предстоящих</string>
+    <string name="pref_upcominglimit">Диапазон предстоящих</string>
     <string name="upcoming_upto_now">сейчас</string>
     <string name="upcoming_upto_one_day">1 день</string>
     <string name="upcoming_upto_three_days">3 дня</string>
@@ -462,7 +469,7 @@
     <!-- Auto backup -->
     <string name="pref_autobackup">Автоматическое резервное копирование</string>
     <string name="pref_autobackupsummary">Еженедельное резервное копирование ваших сериалов, списков и фильмов</string>
-    <string name="autobackup_details">Эти резервные копии будут недоступны, наши приложение будет повторно установлено, разве что для этого устройства будет включено резервное копирование данных приложения (Андроид 6 и выше). В таком случае, для сохранения данных, создавайте из копии.</string>
+    <string name="autobackup_details">Эти резервные копии будут недоступны, если приложение будет повторно установлено. В таком случае, для сохранения данных, создавайте копии.</string>
     <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
     <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>
     <string name="autobackup_failed">Последний автоматический бэкап не удался</string>
@@ -494,8 +501,8 @@
     <string name="pref_notifications_battery_settings_summary">Перейдите в настройки батареи, чтобы отключить оптимизацию батареи для надежных уведомлений</string>
     <string name="notifications_allow">Разрешить уведомления</string>
     <string name="notifications_allow_reason">Чтобы получать уведомления о выпусках и ошибках, перейдите в настройки и разрешите их.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Разрешить уведомления</string>
+    <string name="precise_notifications_allow_reason">Чтобы получать уведомления о новых эпизодах, перейдите в «Настройки» и разрешите их.</string>
     <!-- List Widget -->
     <string name="hide_watched">Скрывать просмотренные эпизоды</string>
     <string name="pref_widget_opacity">Фон виджета</string>

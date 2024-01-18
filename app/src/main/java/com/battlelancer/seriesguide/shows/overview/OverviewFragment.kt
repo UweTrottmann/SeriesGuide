@@ -172,6 +172,15 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 buttonEpisodeWatched.setOnClickListener { onButtonWatchedClick() }
                 buttonEpisodeCollected.setOnClickListener { onButtonCollectedClick() }
                 buttonEpisodeSkip.setOnClickListener { onButtonSkipClicked() }
+                buttonEpisodeShare.setOnClickListener { shareEpisode() }
+                buttonEpisodeCalendar.setOnClickListener { createCalendarEvent() }
+                buttonEpisodeComments.setOnClickListener {
+                    onButtonCommentsClick(buttonEpisodeComments)
+                }
+                initButtons(
+                    buttonEpisodeStreamingSearch, buttonEpisodeStreamingSearchInfo,
+                    parentFragmentManager
+                )
 
                 TooltipCompat.setTooltipText(
                     buttonEpisodeCheckin,
@@ -185,10 +194,6 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                     buttonEpisodeSkip,
                     buttonEpisodeSkip.contentDescription
                 )
-                initButtons(
-                    buttonEpisodeStreamingSearch, buttonEpisodeStreamingSearchInfo,
-                    parentFragmentManager
-                )
             }
 
             // ratings
@@ -199,14 +204,6 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                     root.context.getString(R.string.action_rate)
                 )
                 textViewRatingsRange.text = getString(R.string.format_rating_range, 10)
-            }
-
-            with(includeServices.includeMore) {
-                buttonEpisodeShare.setOnClickListener { shareEpisode() }
-                buttonEpisodeCalendar.setOnClickListener { createCalendarEvent() }
-                buttonEpisodeComments.setOnClickListener {
-                    onButtonCommentsClick(buttonEpisodeComments)
-                }
             }
 
             // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
@@ -244,8 +241,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 this.binding?.let {
                     StreamingSearch.configureButton(
                         it.includeButtons.buttonEpisodeStreamingSearch,
-                        watchInfo,
-                        true
+                        watchInfo, replaceButtonText = true
                     )
                 }
             }
@@ -528,18 +524,15 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         }
 
         // dvd number
-        var isShowingMeta = ViewTools.setLabelValueOrHide(
+        ViewTools.setLabelValueOrHide(
             binding.labelDvdNumber, binding.textDvdNumber, episode.dvdNumber
         )
         // guest stars
-        isShowingMeta = isShowingMeta or ViewTools.setLabelValueOrHide(
+        ViewTools.setLabelValueOrHide(
             binding.labelGuestStars,
             binding.textGuestStars,
             TextTools.splitPipeSeparatedStrings(episode.guestStars)
         )
-        // hide divider if no meta is visible
-        binding.dividerOverviewEpisodeDetails.visibility =
-            if (isShowingMeta) View.VISIBLE else View.GONE
 
         // Trakt rating
         binding.includeRatings.also {

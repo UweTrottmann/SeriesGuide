@@ -39,7 +39,7 @@
     <string name="action_stream_info">اطّلاعات پخش یا خرید</string>
     <string name="action_select_region">گزینش ناحیه</string>
     <string name="action_include_any_watch_provider">شامل همه</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">بازنشانی</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
     <string name="search_hint">جست‌وجوی قسمت‌ها</string>
@@ -100,9 +100,9 @@
     <string name="no_spoilers">به‌منظور جلوگیری از لو رفتن، برخی جزئیات نهفته‌اند. برای خاموش کردن این ویژگی به تنظیمات بروید.</string>
     <string name="format_source">منبع: %s</string>
     <string name="last_updated">آخرین به‌روز رسانی</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">ویرایش زمان ارائه</string>
+    <string name="custom_release_time_earlier">زودتر</string>
+    <string name="custom_release_time_later">دیرتر</string>
     <!-- Date and Time -->
     <string name="today">امروز</string>
     <string name="now">اکنون</string>
@@ -218,18 +218,25 @@
     <string name="watchlist">فهرست تماشا</string>
     <!-- Similar shows -->
     <string name="empty_no_results">بدون نتیجه</string>
+    <string name="action_similar">مشابه</string>
     <string name="title_similar_shows">سریال‌های مشابه</string>
     <!-- Lists -->
     <string name="first_list">فهرست نخست</string>
     <string name="list_add">افزودن فهرست</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">نام گذاری فهرستتان</string>
     <string name="list_remove">برداشتن فهرست</string>
     <string name="list_manage">مدیریت فهرست</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">مدیریت فهرست‌ها</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">برداشتن از فهرست</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">می‌توانید نمایش‌ها را به این فهرست بیفزایید</string>
     <string name="action_lists_sort">چینش فهرست‌ها</string>
     <string name="action_lists_reorder">بازچینی فهرست‌ها</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
     <!-- Movies -->
     <string name="title_discover">کشف</string>
@@ -254,7 +261,7 @@
     <string name="action_movies_sort_title">عنوان</string>
     <string name="action_movies_sort_release">تاریخ انتشار</string>
     <string name="action_movies_filter">پالایش فیلم‌ها</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">فیلم‌های مشابه</string>
     <!-- Statistics -->
     <string name="statistics_failed">نمی‌توان آمار را محاسبه کرد.</string>
     <string name="shows_finished">%s تماشا پایان یافته</string>
@@ -297,7 +304,7 @@
     <string name="hexagon_signed_out">از فضای ابری SeriesGuide خارج شدید.</string>
     <string name="hexagon_signin_fail_format">خطا در ورود (%s)</string>
     <string name="hexagon_signin_google_only">نشانی رایانامه نیازمند ورود گوگلی است</string>
-    <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
+    <string name="hexagon_signin_choose">اگر روی افزاره‌ای دیگر که از ورود گوگل پشتیبانی نمی‌کند از سریزگاید استفاده می‌کنید رایانامه را برای ورود برگزینید.</string>
     <!-- trakt -->
     <string name="trakt_submitqueued">ارسال به trakt.</string>
     <string name="checkin_success_trakt">%s روی trakt ثبت شد.</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">باطل کردن</string>
     <string name="traktcheckin_inprogress">شما به تازگی قسمت یا فیلمی دیگر را ثبت کرده‌اید. ثبت پیشین را باطل کنید یا %s منتظر شده و دوباره تلاش کنید.</string>
     <string name="traktcheckin_wait">منتظر میمانم</string>
-    <string name="trakt_success">به trakt ارسال شد.</string>
     <string name="trakt_error_account_locked">حساب ترکتتان قفل است. با پشتیبانی ترکت تماس بگیرید.</string>
     <string name="trakt_error_credentials">اشتباهی رخ داد. اطلاعات کاربری trakt خود را بررسی کنید و دوباره امتحان کنید.</string>
     <string name="trakt_error_not_exists">(هنوز) روی trakt موجود نیست. بعداً دوباره تلاش کنید.</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">پشتیبانی از ترکت با وی‌آی‌پی</string>
     <!-- trakt ratings -->
     <string name="action_rate">نمره</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">نمرهٔ شما</string>
     <string name="love">محشر!</string>
     <string name="hate">افتضاح :(</string>
@@ -472,8 +479,8 @@
     <string name="pref_notifications_battery_settings_summary">به منظور آگاهی‌های قابل اتّکا، برای از کار انداختن بهینه‌سازی‌های باتری به تنظیمات باتری بروید</string>
     <string name="notifications_allow">اجازه به آگاهی‌ها</string>
     <string name="notifications_allow_reason">برای گرفتن آگاهی‌های خطا و قسمت‌ها به تنظمیات رفته و اجازه بدهید.</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">اجازه به آگاهی‌های دقیق</string>
+    <string name="precise_notifications_allow_reason">برای گرفتن آگاهی‌های دقیق قسمت‌ها به تنظمیات رفته و اجازه بدهید.</string>
     <!-- List Widget -->
     <string name="hide_watched">نهفتن قسمت‌های تماشا شده</string>
     <string name="pref_widget_opacity">پس‌زمینهٔ ابزارک</string>

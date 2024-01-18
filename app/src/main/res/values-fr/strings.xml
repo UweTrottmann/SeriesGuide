@@ -99,7 +99,7 @@
     <string name="no_translation_title">Non traduit</string>
     <string name="no_spoilers">Certains détails sont masqués afin d’éviter les spoilers. Pour modifier ceci allez dans paramètres.</string>
     <string name="format_source">Source : %s</string>
-    <string name="last_updated">Last updated</string>
+    <string name="last_updated">Dernière mise à jour</string>
     <string name="custom_release_time_edit">Modifier l\'heure de sortie</string>
     <string name="custom_release_time_earlier">Plus tôt</string>
     <string name="custom_release_time_later">Plus tard</string>
@@ -164,7 +164,7 @@
     <string name="context_updateshow">Mettre à jour</string>
     <string name="context_marknext">Prochain épisode vu</string>
     <string name="action_episodes_switch_view">Basculer l’affichage</string>
-    <string name="next_to_watch">Next to watch</string>
+    <string name="next_to_watch">Prochain à voir</string>
     <!-- History -->
     <string name="user_stream">Historique</string>
     <string name="recently_watched">Vu récemment</string>
@@ -218,18 +218,25 @@
     <string name="watchlist">Liste à voir</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Aucun résultat</string>
+    <string name="action_similar">Similaires</string>
     <string name="title_similar_shows">Séries similaires</string>
     <!-- Lists -->
     <string name="first_list">Première liste</string>
     <string name="list_add">Ajouter une liste</string>
+    <string name="ack_list_added">Liste ajoutée</string>
     <string name="list_title_hint">Nommez votre liste</string>
     <string name="list_remove">Supprimer la liste</string>
     <string name="list_manage">Gérer la liste</string>
+    <string name="ack_list_renamed">Liste renommée</string>
+    <string name="ack_list_removed">Liste supprimée</string>
     <string name="list_item_manage">Gérer les listes</string>
+    <string name="ack_list_item_manage">Listes mises à jour</string>
     <string name="list_item_remove">Retirer de la liste</string>
+    <string name="ack_list_item_removed">Retiré de la liste</string>
     <string name="list_empty">Vous pouvez ajouter des séries à cette liste.</string>
     <string name="action_lists_sort">Trier les listes</string>
     <string name="action_lists_reorder">Réorganiser les listes</string>
+    <string name="ack_lists_reordered">Listes réordonnées</string>
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
     <!-- Movies -->
     <string name="title_discover">A découvrir</string>
@@ -254,7 +261,7 @@
     <string name="action_movies_sort_title">Titre</string>
     <string name="action_movies_sort_release">Date de parution</string>
     <string name="action_movies_filter">Filtrer les films</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Films similaires</string>
     <!-- Statistics -->
     <string name="statistics_failed">Impossible de calculer les statistiques.</string>
     <string name="shows_finished">%s visionnées en entier</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">Annuler</string>
     <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
     <string name="traktcheckin_wait">J\'attends</string>
-    <string name="trakt_success">Envoyé à trakt.</string>
     <string name="trakt_error_account_locked">Votre compte Trakt est verrouillé. Veuillez contacter l\'assistance Trakt.</string>
     <string name="trakt_error_credentials">Un problème est survenu. Merci de vérifier vos identifiants et d\'essayer de nouveau.</string>
     <string name="trakt_error_not_exists">Pas (encore) disponible sur trakt. Réessayez plus tard.</string>
@@ -318,11 +324,12 @@
     <string name="waitplease">Veuillez patienter&#8230;</string>
     <string name="connect">Se connecter</string>
     <string name="disconnect">Se déconnecter</string>
-    <string name="show_library">Add shows from Trakt</string>
+    <string name="show_library">Ajouter des séries de Trakt</string>
     <string name="about_trakt">Trakt vous permet de garder une trace des séries et films que vous regardez.</string>
     <string name="support_trakt">Soutenir Trakt en devenant VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Noter</string>
+    <string name="ack_rated">Note envoyée</string>
     <string name="your_rating">Votre note</string>
     <string name="love">Totalement ninja !</string>
     <string name="hate">Un peu fade :(</string>

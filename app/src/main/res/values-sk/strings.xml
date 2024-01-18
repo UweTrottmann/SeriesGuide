@@ -226,18 +226,25 @@
     <string name="watchlist">Chcem vidieť</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Žiadne výsledky</string>
+    <string name="action_similar">Podobné</string>
     <string name="title_similar_shows">Podobné relácie</string>
     <!-- Lists -->
     <string name="first_list">Prvý zoznam</string>
     <string name="list_add">Pridať zoznam</string>
+    <string name="ack_list_added">Zoznam pridaný</string>
     <string name="list_title_hint">Názov zoznamu</string>
     <string name="list_remove">Odstrániť zoznam</string>
     <string name="list_manage">Spravovať zoznam</string>
+    <string name="ack_list_renamed">Zoznam premenovaný</string>
+    <string name="ack_list_removed">Zoznam odstránený</string>
     <string name="list_item_manage">Spravovať zoznamy</string>
+    <string name="ack_list_item_manage">Zoznam aktualizovaný</string>
     <string name="list_item_remove">Odstrániť zo zoznamu</string>
+    <string name="ack_list_item_removed">Odstránené zo zoznamu</string>
     <string name="list_empty">Môžete pridať seriály do tohto zoznamu</string>
     <string name="action_lists_sort">Zoradiť zoznamy</string>
     <string name="action_lists_reorder">Zoradiť zoznamy</string>
+    <string name="ack_lists_reordered">Poradie zoznamov zmenené</string>
     <string name="error_name_already_exists">Zoznam s týmto názvom už existuje</string>
     <!-- Movies -->
     <string name="title_discover">Objaviť</string>
@@ -319,7 +326,6 @@
     <string name="traktcheckin_cancel">Zmeniť</string>
     <string name="traktcheckin_inprogress">Už ste prihlásený k inej epizóde alebo filmu. Buď prepíšte predchádzajúce prihlásenie alebo počkajte %s a skúste znova.</string>
     <string name="traktcheckin_wait">Počkám</string>
-    <string name="trakt_success">Odoslané do trakt.</string>
     <string name="trakt_error_account_locked">Váš Trakt účet je zamknutý. Kontaktujte Trakt podporu.</string>
     <string name="trakt_error_credentials">Chyba. Skontrolujte užívateľské meno/heslo na trakt a skúste to znova.</string>
     <string name="trakt_error_not_exists">Nie je (zatiaľ) dostupné na trakt. Skúste to znova neskôr.</string>
@@ -337,6 +343,7 @@
     <string name="support_trakt">Podporte Trakt s VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Hodnotiť</string>
+    <string name="ack_rated">Hodnotenie odoslané</string>
     <string name="your_rating">Vaše hodnotenie</string>
     <string name="love">Totálna pecka!</string>
     <string name="hate">Odpad :(</string>

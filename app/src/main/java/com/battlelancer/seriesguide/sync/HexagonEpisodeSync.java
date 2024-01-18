@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync;
 
@@ -33,6 +33,7 @@ import timber.log.Timber;
 
 public class HexagonEpisodeSync {
 
+    // See API documentation on list size limit.
     public static final int MAX_BATCH_SIZE = 500;
 
     private final Context context;

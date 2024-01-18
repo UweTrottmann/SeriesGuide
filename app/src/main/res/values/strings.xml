@@ -69,7 +69,7 @@
     <string name="share_show">Share show</string>
     <string name="share_episode">Share episode</string>
     <string name="share_movie">Share movie</string>
-    <string name="addtocalendar">Add to calendar</string>
+    <string name="addtocalendar">Create event</string>
     <string name="addtocalendar_failed">Can not create a calendar event</string>
     <string name="links">Links</string>
 
@@ -240,19 +240,26 @@
 
     <!-- Similar shows -->
     <string name="empty_no_results">No results</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
 
     <!-- Lists -->
     <string name="first_list">First list</string>
     <string name="list_add">Add list</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Name your list</string>
     <string name="list_remove">Remove list</string>
     <string name="list_manage">Manage list</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Manage lists</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Remove from list</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">You can add shows to this list</string>
     <string name="action_lists_sort">Sort lists</string>
     <string name="action_lists_reorder">Reorder lists</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">A list with this name already exists</string>
 
     <!-- Movies -->
@@ -333,20 +340,19 @@
     <string name="hexagon_remove_account_success">Account deleted</string>
     <string name="hexagon_remove_account_failure">Could not delete account</string>
     <string name="hexagon_remove_account_confirmation">This will delete your shows, lists and movies from SeriesGuide Cloud</string>
-    <string name="hexagon_api_queued">Sending to SeriesGuide Cloud.</string>
+    <string name="hexagon_api_queued">Sending to SeriesGuide Cloud</string>
     <string name="hexagon_signed_out">Signed out of SeriesGuide Cloud</string>
     <string name="hexagon_signin_fail_format">Error with sign-in (%s)</string>
     <string name="hexagon_signin_google_only">Email address requires Google Sign-In</string>
     <string name="hexagon_signin_choose">Choose email to sign in if you are using SeriesGuide on other devices that do not support Google sign-in.</string>
 
     <!-- trakt -->
-    <string name="trakt_submitqueued">Sending to Trakt.</string>
+    <string name="trakt_submitqueued">Sending to Trakt</string>
     <string name="checkin_success_trakt">Checked into %s on Trakt</string>
     <string name="checkin_canceled_success_trakt">Cancelled check-in on Trakt</string>
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked in. Override the check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="trakt_success">Sent to Trakt</string>
     <string name="trakt_error_account_locked">Your Trakt account is locked. Contact Trakt support.</string>
     <string name="trakt_error_credentials">Something went wrong. Check your Trakt credentials and try again.</string>
     <string name="trakt_error_not_exists">Not (yet) available on Trakt. Try again later.</string>
@@ -366,6 +372,7 @@
 
     <!-- trakt ratings -->
     <string name="action_rate">Rate</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Your rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>

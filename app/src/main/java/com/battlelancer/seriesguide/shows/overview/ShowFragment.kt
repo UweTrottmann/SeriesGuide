@@ -1,6 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
 // Copyright 2013-2023 Uwe Trottmann
 // Copyright 2013 Andrew Neal
-// SPDX-License-Identifier: Apache-2.0
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -41,6 +41,7 @@ import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
+import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -102,6 +103,7 @@ class ShowFragment() : Fragment() {
         val buttonShortcut: Button
         val buttonLanguage: Button
         val buttonRate: View
+        val buttonTrailer: Button
         val buttonSimilar: Button
         val buttonImdb: Button
         val buttonShowMetacritic: Button
@@ -140,6 +142,7 @@ class ShowFragment() : Fragment() {
             buttonShortcut = view.findViewById(R.id.buttonShowShortcut)
             buttonLanguage = view.findViewById(R.id.buttonShowLanguage)
             buttonRate = view.findViewById(R.id.containerRatings)
+            buttonTrailer = view.findViewById(R.id.buttonShowTrailer)
             buttonSimilar = view.findViewById(R.id.buttonShowSimilar)
             buttonImdb = view.findViewById(R.id.buttonShowImdb)
             buttonShowMetacritic = view.findViewById(R.id.buttonShowMetacritic)
@@ -385,7 +388,9 @@ class ShowFragment() : Fragment() {
         }
 
         // overview
-        binding.textViewOverview.text = showForUi.overview
+        // Source text requires styling, so needs UI context
+        binding.textViewOverview.text =
+            TextTools.textWithTmdbSource(requireContext(), showForUi.overview)
 
         // language preferred for content
         val languageData = showForUi.languageData
@@ -405,6 +410,19 @@ class ShowFragment() : Fragment() {
         binding.textViewRating.text = showForUi.traktRating
         binding.textViewRatingVotes.text = showForUi.traktVotes
         binding.textViewRatingUser.text = showForUi.traktUserRating
+
+        // Trailer button
+        binding.buttonTrailer.apply {
+            if (showForUi.trailerVideoId != null) {
+                setOnClickListener {
+                    ServiceUtils.openYoutube(showForUi.trailerVideoId, requireContext())
+                }
+                isEnabled = true
+            } else {
+                setOnClickListener(null)
+                isEnabled = false
+            }
+        }
 
         // Similar shows button.
         binding.buttonSimilar.setOnClickListener {
@@ -479,15 +497,16 @@ class ShowFragment() : Fragment() {
             return
         }
 
+        val peopleListHelper = PeopleListHelper()
         if (credits.cast?.size != 0
-            && PeopleListHelper.populateShowCast(activity, binding.castContainer, credits)) {
+            && peopleListHelper.populateShowCast(activity, binding.castContainer, credits)) {
             setCastVisibility(binding, true)
         } else {
             setCastVisibility(binding, false)
         }
 
         if (credits.crew?.size != 0
-            && PeopleListHelper.populateShowCrew(activity, binding.crewContainer, credits)) {
+            && peopleListHelper.populateShowCrew(activity, binding.crewContainer, credits)) {
             setCrewVisibility(binding, true)
         } else {
             setCrewVisibility(binding, false)

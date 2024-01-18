@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.episodes
 
@@ -28,7 +28,6 @@ import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.util.ImageTools
-import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -114,6 +113,7 @@ class EpisodesActivity : BaseMessageActivity() {
         }
 
         val episodeRowId = intent.getLongExtra(EXTRA_LONG_EPISODE_ID, 0)
+        @Suppress("DEPRECATION") // For backwards-compat
         val episodeTvdbId = intent.getIntExtra(EXTRA_EPISODE_TVDBID, 0)
         val seasonId = intent.getLongExtra(EXTRA_LONG_SEASON_ID, 0)
 
@@ -243,17 +243,18 @@ class EpisodesActivity : BaseMessageActivity() {
         val tabsEpisodes = binding.tabsEpisodes
         val adapter = episodeDetailsAdapter
         if (adapter == null) {
-            episodeDetailsAdapter = EpisodePagerAdapter(this)
-                .also { it.updateItems(info.episodes) }
+            episodeDetailsAdapter = EpisodePagerAdapter(
+                this,
+                supportFragmentManager
+            ).also {
+                it.updateEpisodeList(info.episodes)
+            }
             pagerEpisodes.adapter = episodeDetailsAdapter
         } else {
-            adapter.updateItems(info.episodes)
+            adapter.updateEpisodeList(info.episodes)
         }
         // Refresh pager tab decoration.
-        tabsEpisodes.setViewPager2(pagerEpisodes) { position ->
-            val episode = info.episodes[position]
-            TextTools.getEpisodeNumber(this, episode.season, episode.episodenumber)
-        }
+        tabsEpisodes.setViewPager(pagerEpisodes)
 
         // Remove page change listener to avoid changing checked episode on sort order changes.
         tabsEpisodes.setOnPageChangeListener(null)

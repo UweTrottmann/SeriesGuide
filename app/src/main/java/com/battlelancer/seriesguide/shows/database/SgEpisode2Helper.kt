@@ -235,11 +235,17 @@ interface SgEpisode2Helper {
     fun countWatchedEpisodesOfShowWithoutSpecials(showId: Long): Int
 
     /**
-     * Returns how many episodes of a show are left to collect. Only considers regular, released
-     * episodes (no specials, must have a release date in the past).
+     * Returns if at least one episode of the show is collected. Excludes specials.
      */
-    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 0 AND episode_season_number != 0 AND episode_firstairedms != ${SgEpisode2.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
-    fun countNotCollectedEpisodesOfShow(showId: Long, currentTimeToolsTime: Long): Int
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 1 AND episode_season_number != 0 LIMIT 1")
+    fun hasCollectedEpisodes(showId: Long): Boolean
+
+    /**
+     * Returns if at least one episode of a show is left to collect. Excludes specials.
+     * Should match with what [updateCollectedOfShowExcludeSpecials] changes.
+     */
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 0 AND episode_season_number != 0 LIMIT 1")
+    fun hasEpisodesToCollect(showId: Long): Boolean
 
     /**
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive

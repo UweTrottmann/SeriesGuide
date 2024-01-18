@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2018, 2022, 2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people;
 
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
+import com.battlelancer.seriesguide.util.CircleTransformation;
 import com.battlelancer.seriesguide.util.ImageTools;
 import com.battlelancer.seriesguide.util.ThemeUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -28,22 +29,24 @@ import timber.log.Timber;
  */
 public class PeopleListHelper {
 
-    public static boolean populateShowCast(Activity activity,
+    private final CircleTransformation personImageTransform = new CircleTransformation();
+
+    public boolean populateShowCast(Activity activity,
             ViewGroup peopleContainer, Credits credits) {
         return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW);
     }
 
-    public static boolean populateShowCrew(Activity activity,
+    public boolean populateShowCrew(Activity activity,
             ViewGroup peopleContainer, Credits credits) {
         return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW);
     }
 
-    public static boolean populateMovieCast(Activity activity,
+    public boolean populateMovieCast(Activity activity,
             ViewGroup peopleContainer, Credits credits) {
         return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE);
     }
 
-    public static boolean populateMovieCrew(Activity activity,
+    public boolean populateMovieCrew(Activity activity,
             ViewGroup peopleContainer, Credits credits) {
         return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE);
     }
@@ -52,7 +55,7 @@ public class PeopleListHelper {
      * Add views for at most three cast members to the given {@link android.view.ViewGroup} and a
      * "Show all" link if there are more.
      */
-    private static boolean populateCast(Activity activity, ViewGroup peopleContainer,
+    private boolean populateCast(Activity activity, ViewGroup peopleContainer,
             Credits credits, PeopleActivity.MediaType mediaType) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
@@ -102,7 +105,7 @@ public class PeopleListHelper {
      * Add views for at most three crew members to the given {@link android.view.ViewGroup} and a
      * "Show all" link if there are more.
      */
-    private static boolean populateCrew(Activity activity, ViewGroup peopleContainer,
+    private boolean populateCrew(Activity activity, ViewGroup peopleContainer,
             Credits credits, PeopleActivity.MediaType mediaType) {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
@@ -148,7 +151,7 @@ public class PeopleListHelper {
         return added > 0;
     }
 
-    private static View createPersonView(Context context, LayoutInflater inflater,
+    private View createPersonView(Context context, LayoutInflater inflater,
             ViewGroup peopleContainer, String name, String description, String profilePath) {
         View personView = inflater.inflate(R.layout.item_person, peopleContainer, false);
 
@@ -163,7 +166,8 @@ public class PeopleListHelper {
                 TmdbTools.ProfileImageSize.W185))
                 .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
                 .centerCrop()
-                .error(R.color.protection_dark)
+                .transform(personImageTransform)
+                .error(R.drawable.ic_account_circle_black_24dp)
                 .into((ImageView) personView.findViewById(R.id.imageViewPerson));
 
         TextView nameView = personView.findViewById(R.id.textViewPerson);

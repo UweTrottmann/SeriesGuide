@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.streaming
 
@@ -20,6 +20,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.ViewTools
 import kotlinx.coroutines.Dispatchers
+import java.text.NumberFormat
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 
@@ -219,13 +220,17 @@ object StreamingSearch {
         }
     }
 
+    /**
+     * Set [replaceButtonText] to instead of appending on a new line replace button text with
+     * watch provider info.
+     */
     @SuppressLint("SetTextI18n")
     @JvmStatic
     fun configureButton(
         button: Button,
         watchInfo: TmdbTools2.WatchInfo,
-        addToButtonText: Boolean = true
-    ): String? {
+        replaceButtonText: Boolean = false
+    ) {
         val context = button.context
         val urlOrNull = watchInfo.url
         if (urlOrNull != null) {
@@ -237,17 +242,17 @@ object StreamingSearch {
         val providerOrNull = watchInfo.provider
         return if (providerOrNull != null) {
             val moreText = if (watchInfo.countMore > 0) {
-                " + " + context.getString(R.string.more, watchInfo.countMore)
+                " + " + NumberFormat.getIntegerInstance().format(watchInfo.countMore)
             } else ""
             val providerText = (providerOrNull.provider_name ?: "") + moreText
-            if (addToButtonText) {
+            if (replaceButtonText) {
+                button.text = providerText
+            } else {
                 button.text = context.getString(R.string.action_stream) +
                         "\n" + providerText
             }
-            providerText
         } else {
             button.setText(R.string.action_stream)
-            null
         }
     }
 

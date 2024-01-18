@@ -218,18 +218,25 @@
     <string name="watchlist">Lista de visualización</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Sin resultados</string>
+    <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Series parecidas</string>
     <!-- Lists -->
     <string name="first_list">Primera lista</string>
     <string name="list_add">Añadir lista</string>
+    <string name="ack_list_added">List added</string>
     <string name="list_title_hint">Nombrar tu lista</string>
     <string name="list_remove">Eliminar lista</string>
     <string name="list_manage">Gestionar lista</string>
+    <string name="ack_list_renamed">List renamed</string>
+    <string name="ack_list_removed">List removed</string>
     <string name="list_item_manage">Gestionar listas</string>
+    <string name="ack_list_item_manage">Lists updated</string>
     <string name="list_item_remove">Eliminar de la lista</string>
+    <string name="ack_list_item_removed">Removed from list</string>
     <string name="list_empty">Puedes añadir series a esta lista</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
+    <string name="ack_lists_reordered">Lists reordered</string>
     <string name="error_name_already_exists">Ya existe una lista con este nombre</string>
     <!-- Movies -->
     <string name="title_discover">Descubrir</string>
@@ -306,7 +313,6 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="traktcheckin_cancel">Reemplazar</string>
     <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
     <string name="traktcheckin_wait">Voy a esperar</string>
-    <string name="trakt_success">Enviado a trakt.</string>
     <string name="trakt_error_account_locked">Tu cuenta de Trakt está bloqueada. Contacta con el soporte de Trakt.</string>
     <string name="trakt_error_credentials">Algo salió mal. Por favor comprueba tus credenciales y vuelve a intentarlo.</string>
     <string name="trakt_error_not_exists">No disponible (todavía) en trakt. Prueba más tarde.</string>
@@ -324,6 +330,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="support_trakt">Ayuda a Trakt con VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Calificar</string>
+    <string name="ack_rated">Rating sent</string>
     <string name="your_rating">Tu calificación</string>
     <string name="love">¡Una pasada!</string>
     <string name="hate">¡Apesta!</string>

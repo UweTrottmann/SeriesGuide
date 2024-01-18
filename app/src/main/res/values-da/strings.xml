@@ -218,18 +218,25 @@
     <string name="watchlist">Overvågningsliste</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Ingen resultater</string>
+    <string name="action_similar">Lignende</string>
     <string name="title_similar_shows">Lignende serier</string>
     <!-- Lists -->
     <string name="first_list">Første liste</string>
     <string name="list_add">Tilføj liste</string>
+    <string name="ack_list_added">Liste tilføjet</string>
     <string name="list_title_hint">Navngiv din liste</string>
     <string name="list_remove">Fjern liste</string>
     <string name="list_manage">Administrer liste</string>
+    <string name="ack_list_renamed">Liste omdøbt</string>
+    <string name="ack_list_removed">Liste fjernet</string>
     <string name="list_item_manage">Administrer lister</string>
+    <string name="ack_list_item_manage">Lister opdateret</string>
     <string name="list_item_remove">Fjern fra liste</string>
+    <string name="ack_list_item_removed">Fjernet fra listen</string>
     <string name="list_empty">Du kan tilføje serier til denne liste</string>
     <string name="action_lists_sort">Sortér lister</string>
     <string name="action_lists_reorder">Omarrangér lister</string>
+    <string name="ack_lists_reordered">Lister omarrangeret</string>
     <string name="error_name_already_exists">En liste med dette navn findes allerede</string>
     <!-- Movies -->
     <string name="title_discover">Opdag</string>
@@ -305,7 +312,6 @@
     <string name="traktcheckin_cancel">Tilsidesæt</string>
     <string name="traktcheckin_inprogress">Du er allerede tjekket ind på en anden episode eller film. Tilsidesæt nuværende indtjekning eller vent %s, og forsøg igen.</string>
     <string name="traktcheckin_wait">Jeg venter</string>
-    <string name="trakt_success">Sendt til trakt.</string>
     <string name="trakt_error_account_locked">Din Trakt-konto er låst. Kontakt Trakt Kundeservice.</string>
     <string name="trakt_error_credentials">Noget gik galt. Kontrollér dine trakt-brugeroplysninger, og prøv igen.</string>
     <string name="trakt_error_not_exists">Ikke tilgængelig på trakt (endnu). Prøv igen senere.</string>
@@ -323,6 +329,7 @@
     <string name="support_trakt">Støt Trakt med VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Bedøm</string>
+    <string name="ack_rated">Bedømmelse sendt</string>
     <string name="your_rating">Din bedømmelse</string>
     <string name="love">Totalt ninja!</string>
     <string name="hate">Svag sovs :(</string>

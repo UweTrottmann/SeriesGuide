@@ -11,6 +11,48 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 71
+----------
+*2024-01-18*
+
+* 🌟 Shows: link to trailers, if available.
+* 🔨 Shows/Movies: repair Metacritic search links.
+* 🔨 Shows: do not display all episodes are collected, if there are none collected. Also consider all
+  episodes, not just released ones. This now matches with what episodes the collect all or none
+  buttons change.
+
+#### 71.0.3
+*2024-01-12*
+
+* 🔧 Shows: adjust edit time dialog to avoid buttons moving around when changing values.
+* 🔧 Shows: make switching between episode pages fast again.
+* 🔨 Update Metacritic search links.
+* 🔧 Add acknowledgement messages for actions that may take longer (that do network requests), drop
+  them for actions that complete immediately (e.g. set watched).
+* 📝 Latest user interface translations from Crowdin.
+
+#### 71.0.2 🧪
+*2023-12-15*
+
+* 🔨 Shows: do not consider all episodes collected, if there are none collected. Also consider all
+  episodes, not just released ones. This now matches with what episodes the collect all or none
+  buttons change.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 71.0.1 🧪
+*2023-12-07*
+
+* 🔧 Shows/Movies: move more secondary actions to the top, organize them in a chain.
+* 🔧 People: use rounded images and placeholders.
+* 🔨 Cloud: do not fail when uploading more than 500 new shows.
+* 🔨 Show details: color source info with a readable color again.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 71.0.0 🧪
+*2023-11-17*
+
+* 🌟 Shows: support opening show trailer when adding a show and in details.
+
 Version 70
 ----------
 *2023-11-09*
