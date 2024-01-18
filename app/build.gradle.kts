@@ -229,7 +229,7 @@ dependencies {
     // Import the Firebase BoM
     implementation(platform(libs.firebase))
     // Crashlytics
-    implementation("com.google.firebase:firebase-crashlytics")
+    implementation(libs.firebase.crashlytics)
     // Firebase Sign-In
     implementation(libs.firebase.ui.auth)
     // Use later play-services-auth than firebase-ui-auth to get latest fixes.

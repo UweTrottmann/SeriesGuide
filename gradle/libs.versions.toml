@@ -66,6 +66,7 @@ debugdrawer-view = { module = "com.github.lenguyenthanh.debugdrawer:debugdrawer-
 findbugs-jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 # https://firebase.google.com/support/release-notes/android
 firebase = "com.google.firebase:firebase-bom:32.7.0"
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-ui-auth = "com.firebaseui:firebase-ui-auth:8.0.2" # https://github.com/firebase/FirebaseUI-Android/releases
 flatbuffers = "com.google.flatbuffers:flatbuffers-java:1.12.0"
 google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "google-api-client" }
