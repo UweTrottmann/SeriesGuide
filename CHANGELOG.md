@@ -13,9 +13,15 @@ Releases marked with 🧪 were released on [the beta program](https://github.com
 
 Version 71
 ----------
-*in development*
+*2024-01-18*
 
-#### 71.0.3 🧪
+* 🌟 Shows: link to trailers, if available.
+* 🔨 Shows/Movies: repair Metacritic search links.
+* 🔨 Shows: do not display all episodes are collected, if there are none collected. Also consider all
+  episodes, not just released ones. This now matches with what episodes the collect all or none
+  buttons change.
+
+#### 71.0.3
 *2024-01-12*
 
 * 🔧 Shows: adjust edit time dialog to avoid buttons moving around when changing values.
