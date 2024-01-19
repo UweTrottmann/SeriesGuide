@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.shows.history.SgActivity
 import com.battlelancer.seriesguide.shows.history.SgActivityHelper
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.SgWatchProviderHelper
+import com.battlelancer.seriesguide.streaming.SgWatchProviderShowMapping
 import timber.log.Timber
 
 @Database(
@@ -50,13 +51,18 @@ import timber.log.Timber
         SgMovie::class,
         SgActivity::class,
         SgJob::class,
-        SgWatchProvider::class
+        SgWatchProvider::class,
+        SgWatchProviderShowMapping::class,
     ],
     version = SgRoomDatabase.VERSION,
     autoMigrations = [
         AutoMigration(
             from = SgRoomDatabase.VERSION_50_WATCH_PROVIDERS,
             to = SgRoomDatabase.VERSION_51_CUSTOM_RELEASE_TIME
+        ),
+        AutoMigration(
+            from = SgRoomDatabase.VERSION_51_CUSTOM_RELEASE_TIME,
+            to = SgRoomDatabase.VERSION_52_PROVIDER_AND_GENRE_FILTERS
         )
     ]
 )
@@ -117,7 +123,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
          * Add custom release time, day offset and time zone to shows.
          */
         const val VERSION_51_CUSTOM_RELEASE_TIME = 51
-        const val VERSION = VERSION_51_CUSTOM_RELEASE_TIME
+        const val VERSION_52_PROVIDER_AND_GENRE_FILTERS = 52
+        const val VERSION = VERSION_52_PROVIDER_AND_GENRE_FILTERS
 
         @Volatile
         private var instance: SgRoomDatabase? = null
