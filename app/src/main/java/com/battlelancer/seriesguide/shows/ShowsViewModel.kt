@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
+import timber.log.Timber
 
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -41,6 +42,9 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                 // Use Semaphore with 1 permit to ensure results are delivered in order and never
                 // processed in parallel.
                 showItemsLiveDataSemaphore.withPermit {
+                    // TODO Try filtering here instead
+
+
                     val mapped = sgShows?.mapTo(ArrayList(sgShows.size)) {
                         ShowsAdapter.ShowItem.map(it, getApplication())
                     }
@@ -169,7 +173,20 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         queryString.value = if (selection.isNotEmpty()) {
-            "SELECT * FROM ${Tables.SG_SHOW} WHERE $selection ORDER BY $orderClause"
+            // TODO filter by watch provider ID
+            // TODO Alternative: filter in code?
+            // Issues:
+            // - duplicate rows if multiple providers match
+            val query = "SELECT * FROM ${Tables.SG_SHOW}" +
+                    " JOIN sg_watch_provider_show_mappings ON _id=sg_watch_provider_show_mappings.show_id" +
+                    // " JOIN sg_genre_show_mappings ON _id=sg_genre_show_mappings.show_id" +
+                    " WHERE (provider_id=9 OR provider_id=531) AND $selection" +
+                    " GROUP BY _id" +
+                    " ORDER BY $orderClause"
+
+            Timber.d(query)
+//            "SELECT * FROM ${Tables.SG_SHOW} WHERE $selection ORDER BY $orderClause"
+            query
         } else {
             "SELECT * FROM ${Tables.SG_SHOW} ORDER BY $orderClause"
         }
