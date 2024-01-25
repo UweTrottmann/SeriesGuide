@@ -11,9 +11,9 @@ import androidx.room.Entity
 )
 data class SgWatchProviderShowMapping(
     /**
-     * The row ID of a [SgWatchProvider]. Safe in case the external provider ID changes.
+     * The provider ID of a [SgWatchProvider].
      */
-    val provider_id: Long,
+    val provider_id: Int,
     /**
      * The row ID of a [SgShow2].
      */

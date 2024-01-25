@@ -29,6 +29,8 @@ import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowStop
+import com.battlelancer.seriesguide.streaming.SgWatchProviderShowMapping
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync
@@ -50,6 +52,7 @@ import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
 import dagger.Lazy
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.TimeZone
 import javax.inject.Inject
@@ -445,6 +448,7 @@ class AddUpdateShowTools @Inject constructor(
                             helper.setLastUpdated(showId, System.currentTimeMillis())
                             UpdateResult.Success
                         }
+
                         else -> it // Failure.
                     }
                 }
@@ -502,6 +506,32 @@ class AddUpdateShowTools @Inject constructor(
         // Remove legacy seasons and episodes that only have a TVDB ID
 //        episodeHelper.deleteEpisodesWithoutTmdbId(showId)
 //        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
+
+        // FIXME for testing
+        // Download and store watch provider mappings
+        val region = StreamingSearch.getCurrentRegionOrNull(context)
+        if (region != null) {
+            runBlocking {
+                val providerHelper = SgRoomDatabase.getInstance(context).sgWatchProviderHelper()
+                providerHelper.deleteShowMappings(showId)
+
+                val providers = TmdbTools2().getWatchProvidersForShow(showTmdbId, region, context)
+                if (providers != null) {
+                    // TODO other provider types
+                    providers.flatrate
+                        .mapNotNull { it.provider_id }
+//                        .mapNotNull {
+//                            providerHelper.getByExternalProviderId(
+//                                it, SgWatchProvider.Type.SHOWS.id
+//                            )
+//                        }
+                        .map { SgWatchProviderShowMapping(it, showId) }
+                        .also {
+                            if (it.isNotEmpty()) providerHelper.addShowMappings(it)
+                        }
+                }
+            }
+        }
 
         // At last store shows update (sets last updated timestamp).
         val updated = database.sgShow2Helper().updateShow(updatedShow)
