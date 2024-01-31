@@ -66,8 +66,6 @@ class AboutActivity : ComponentActivity() {
         }
     }
 
-    private val defaultSpacerSize = 16.dp
-
     @Composable
     fun SgTopAppBar(
         titleStringRes: Int,
@@ -133,7 +131,7 @@ class AboutActivity : ComponentActivity() {
                     } else {
                         Modifier
                     },
-                    contentPadding = scaffoldPadding + PaddingValues(defaultSpacerSize)
+                    contentPadding = scaffoldPadding + PaddingValues(16.dp)
                 ) {
                     item {
                         Text(
