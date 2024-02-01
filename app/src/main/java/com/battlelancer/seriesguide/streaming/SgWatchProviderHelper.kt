@@ -43,6 +43,9 @@ interface SgWatchProviderHelper {
     @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY display_priority ASC, provider_name ASC")
     fun allWatchProvidersPagingSource(type: Int): PagingSource<Int, SgWatchProvider>
 
+    @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY display_priority ASC, provider_name ASC")
+    fun allWatchProvidersFlow(type: Int): Flow<List<SgWatchProvider>>
+
     @Query("SELECT provider_id FROM sg_watch_provider WHERE type=:type AND enabled=1")
     fun getEnabledWatchProviderIds(type: Int): LiveData<List<Int>>
 
@@ -55,6 +58,7 @@ interface SgWatchProviderHelper {
     @Query("UPDATE sg_watch_provider SET enabled=0 WHERE type=:type")
     fun setAllDisabled(type: Int)
 
+    // TODO remove if unused
 //    @Query("SELECT _id FROM sg_watch_provider WHERE provider_id=:providerId AND type=:type")
 //    fun getByExternalProviderId(providerId: Int, type: Int): Long?
 

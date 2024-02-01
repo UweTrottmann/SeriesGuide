@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
@@ -26,6 +27,7 @@ import com.battlelancer.seriesguide.util.safeShow
 
 class ShowsDistillationFragment : AppCompatDialogFragment() {
 
+    private val model: ShowsDistillationViewModel by viewModels()
     private var binding: DialogShowsDistillationBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +50,8 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             ShowFilter.fromSettings(requireContext()),
             filterListener,
             SortShowsView.ShowSortOrder.fromSettings(requireContext()),
-            sortOrderListener
+            sortOrderListener,
+            model.showsDistillationUiState
         )
         val viewPager = binding.viewPagerShowsDistillation
         viewPager.adapter = tabsAdapter

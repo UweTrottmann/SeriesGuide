@@ -8,16 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
+import androidx.compose.ui.platform.ComposeView
 import androidx.viewpager.widget.PagerAdapter
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import kotlinx.coroutines.flow.StateFlow
 
 class ShowsDistillationPageAdapter(
     private val context: Context,
     private val initialShowFilter: ShowsDistillationSettings.ShowFilter,
     private val filterListener: FilterShowsView.FilterListener,
     private val initialShowSortOrder: SortShowsView.ShowSortOrder,
-    private val sortOrderListener: SortShowsView.SortOrderListener
+    private val sortOrderListener: SortShowsView.SortOrderListener,
+    private val showsDistillationUiState: StateFlow<ShowsDistillationUiState>
 ) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -37,6 +40,16 @@ class ShowsDistillationPageAdapter(
                     setFilterListener(filterListener)
                 }
             }
+
+            DistillationPages.FILTER_WATCH_PROVIDERS -> {
+                ComposeView(context).apply {
+                    this.layoutParams = layoutParams
+                    setContent {
+                        WatchProviderFilter(showsDistillationUiState)
+                    }
+                }
+            }
+
             DistillationPages.SORT -> {
                 SortShowsView(context).apply {
                     this.layoutParams = layoutParams
@@ -68,6 +81,7 @@ class ShowsDistillationPageAdapter(
 
     enum class DistillationPages(@StringRes val titleRes: Int) {
         FILTER(R.string.action_shows_filter),
+        FILTER_WATCH_PROVIDERS(R.string.action_stream),
         SORT(R.string.action_shows_sort)
     }
 }
