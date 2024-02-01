@@ -17,6 +17,9 @@ import android.view.Window
 import androidx.annotation.AnyRes
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
@@ -352,4 +355,22 @@ object ThemeUtils {
         }
     }
 
+    // Easily add two [PaddingValues] if using a Modifier (with multiple padding calls) is not possible.
+    operator fun PaddingValues.plus(that: PaddingValues): PaddingValues = object : PaddingValues {
+        override fun calculateBottomPadding(): Dp =
+            this@plus.calculateBottomPadding() + that.calculateBottomPadding()
+
+        override fun calculateLeftPadding(layoutDirection: LayoutDirection): Dp =
+            this@plus.calculateLeftPadding(layoutDirection) + that.calculateLeftPadding(
+                layoutDirection
+            )
+
+        override fun calculateRightPadding(layoutDirection: LayoutDirection): Dp =
+            this@plus.calculateRightPadding(layoutDirection) + that.calculateRightPadding(
+                layoutDirection
+            )
+
+        override fun calculateTopPadding(): Dp =
+            this@plus.calculateTopPadding() + that.calculateTopPadding()
+    }
 }
