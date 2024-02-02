@@ -43,8 +43,11 @@ interface SgWatchProviderHelper {
     @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY display_priority ASC, provider_name ASC")
     fun allWatchProvidersPagingSource(type: Int): PagingSource<Int, SgWatchProvider>
 
-    @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY display_priority ASC, provider_name ASC")
-    fun allWatchProvidersFlow(type: Int): Flow<List<SgWatchProvider>>
+    /**
+     * Watch providers of all shows sorted by name.
+     */
+    @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type GROUP BY _id ORDER BY provider_name ASC")
+    fun usedShowWatchProvidersFlow(type: Int): Flow<List<SgWatchProvider>>
 
     @Query("SELECT provider_id FROM sg_watch_provider WHERE type=:type AND enabled=1")
     fun getEnabledWatchProviderIds(type: Int): LiveData<List<Int>>

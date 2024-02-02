@@ -17,7 +17,7 @@ class ShowsDistillationViewModel(application: Application) : AndroidViewModel(ap
 
     val showsDistillationUiState: StateFlow<ShowsDistillationUiState> =
         SgRoomDatabase.getInstance(application).sgWatchProviderHelper()
-            .allWatchProvidersFlow(SgWatchProvider.Type.SHOWS.id)
+            .usedShowWatchProvidersFlow(SgWatchProvider.Type.SHOWS.id)
             .map { ShowsDistillationUiState(it) }
             .stateIn(
                 scope = viewModelScope,
