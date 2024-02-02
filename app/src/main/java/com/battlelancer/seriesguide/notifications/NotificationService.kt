@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2023 Uwe Trottmann
 
 package com.battlelancer.seriesguide.notifications
 
@@ -347,205 +347,281 @@ class NotificationService(context: Context) {
         notifyPositions: List<Int>,
         latestAirtime: Long
     ) {
-        val contentTitle: CharSequence
-        val contentText: CharSequence
-        val contentIntent: PendingIntent
         // base intent for task stack
         val showsIntent = ShowsActivity.newIntent(context, ShowsActivityImpl.Tab.UPCOMING.index)
 
         val count = notifyPositions.size
-        if (count == 1) {
-            // notify in detail about one episode
-            val (id, _, episodenumber, season, episode_firstairedms, _, _, _, showTitle, network) = upcomingEpisodes[notifyPositions[0]]
+        val hasMultiple = count > 1
+        val notificationsById = buildMap {
+            // Create a notification for each episode to notify about.
+            // Note: if a whole season is released at once, this might be many notifications. But
+            // letting the Android System deal with that (for example dropping some).
+            val episodes = buildList {
+                for (displayIndex in 0..<count) {
+                    add(upcomingEpisodes[notifyPositions[displayIndex]])
+                }
+            }
+            for (episode in episodes) {
+                // To have an (almost) unique ID for each notification use the episode ID and to
+                // avoid exceeding the Int range map it to large blocks. As a block is very large
+                // that should make it unlikely for episode notification IDs to ever collide.
+                val notificationId =
+                    SgApp.BASE_NOTIFICATION_ID_EPISODES + episode.id.mod(100_000)
+                buildEpisodeNotification(
+                    notificationId,
+                    episode,
+                    latestAirtime,
+                    showsIntent,
+                    addToGroup = hasMultiple
+                ).also { put(notificationId, it) }
+            }
+            if (hasMultiple) {
+                // Add summary notification
+                buildEpisodeSummaryNotification(latestAirtime, showsIntent, episodes)
+                    .also { put(SgApp.NOTIFICATION_EPISODE_ID, it) }
+            }
+        }
 
-            // show title and number, like 'Show 1x01'
-            contentTitle = TextTools.getShowWithEpisodeNumber(
-                context,
-                showTitle,
-                season,
-                episodenumber
+        val nm = NotificationManagerCompat.from(context)
+        notificationsById.forEach { (id, notification) ->
+            nm.notify(id, notification)
+        }
+
+        Timber.d(
+            "Notification: count=%d, delete=%s",
+            count,
+            Instant.ofEpochMilli(latestAirtime)
+        )
+    }
+
+    private fun buildEpisodeNotification(
+        notificationId: Int,
+        episode: SgEpisode2WithShow,
+        latestAirtime: Long,
+        showsIntent: Intent,
+        addToGroup: Boolean
+    ): Notification {
+        val nb = NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_EPISODES)
+
+        val (id, episodetitle, episodenumber, season, episode_firstairedms, _, _, episodeSummary, showTitle, network, series_poster_small) = episode
+
+        maybeSetPoster(nb, series_poster_small)
+
+        // show title and number, like 'Show 1x01'
+        nb.setContentTitle(
+            TextTools.getShowWithEpisodeNumber(context, showTitle, season, episodenumber)
+        )
+
+        // "8:00 PM Network"
+        val time = TimeTools.formatToLocalTime(
+            context,
+            TimeTools.applyUserOffset(context, episode_firstairedms)
+        )
+        val contentText = TextTools.dotSeparate(time, network) // switch on purpose
+        nb.setContentText(contentText)
+
+        if (!DisplaySettings.preventSpoilers(context)) {
+            val episodeTitle = TextTools.getEpisodeTitle(context, episodetitle, episodenumber)
+
+            val bigText = SpannableStringBuilder()
+            bigText.append(episodeTitle)
+            bigText.setSpan(StyleSpan(Typeface.BOLD), 0, bigText.length, 0)
+            if (!TextUtils.isEmpty(episodeSummary)) {
+                bigText.append("\n").append(episodeSummary)
+            }
+
+            nb.setStyle(
+                NotificationCompat.BigTextStyle().bigText(bigText)
+                    .setSummaryText(contentText)
             )
+        }
 
-            // "8:00 PM Network"
-            val time = TimeTools.formatToLocalTime(
-                context,
-                TimeTools.applyUserOffset(context, episode_firstairedms)
-            )
-            contentText = TextTools.dotSeparate(time, network) // switch on purpose
+        // Set unique data for this notifications intents to ensure each notification can have its
+        // own PendingIntents (extras that include the episode ID are not considered when creating
+        // a PendingIntent).
+        val uniqueData = Uri.parse("content://episodes/$id")
 
-            val episodeDetailsIntent = intentEpisode(id, context)
-            episodeDetailsIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
-
-            contentIntent = TaskStackBuilder.create(context)
+        // click intent
+        val episodeDetailsIntent = intentEpisode(id, context).apply {
+            data = uniqueData
+            // data to handle delete
+            putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
+        }
+        nb.setContentIntent(
+            TaskStackBuilder.create(context)
                 .addNextIntent(showsIntent)
                 .addNextIntent(episodeDetailsIntent)
                 .getPendingIntent(
                     REQUEST_CODE_SINGLE_EPISODE,
-                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
+                    // Use FLAG_UPDATE_CURRENT so intent of a previous notification for this episode
+                    // is updated, but continues to work.
+                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
                 )!!
-        } else {
-            // notify about multiple episodes
-            contentTitle = context.getString(
-                R.string.upcoming_episodes_number,
-                NumberFormat.getIntegerInstance().format(count.toLong())
-            )
-            contentText = context.getString(R.string.upcoming_display)
+        )
 
-            contentIntent = TaskStackBuilder.create(context)
+        // Action button to check in
+        val checkInActionIntent = QuickCheckInActivity.intent(id, context).apply {
+            data = uniqueData
+            // data to handle delete
+            putExtra(EXTRA_NOTIFICATION_ID, notificationId)
+            putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
+        }
+        val checkInIntent = PendingIntent.getActivity(
+            context,
+            REQUEST_CODE_ACTION_CHECKIN,
+            checkInActionIntent,
+            // Use FLAG_UPDATE_CURRENT so intent of a previous notification for this episode
+            // is updated, but continues to work.
+            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
+        // note: Wear and Galaxy Watch devices do typically not support vector icons
+        nb.addAction(
+            R.drawable.ic_action_checkin, context.getString(R.string.checkin),
+            checkInIntent
+        )
+
+        // Action button to set watched
+        val setWatchedIntent = NotificationActionReceiver.intent(id, context).apply {
+            data = uniqueData
+            // data to handle delete
+            putExtra(EXTRA_NOTIFICATION_ID, notificationId)
+            putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
+        }
+        val setWatchedPendingIntent = PendingIntent.getBroadcast(
+            context,
+            REQUEST_CODE_ACTION_SET_WATCHED,
+            setWatchedIntent,
+            // Use FLAG_UPDATE_CURRENT so intent of a previous notification for this episode
+            // is updated, but continues to work.
+            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
+        // note: Wear and Galaxy Watch devices do typically not support vector icons
+        nb.addAction(
+            R.drawable.ic_action_tick, context.getString(R.string.action_watched),
+            setWatchedPendingIntent
+        )
+
+        // delete intent
+        // When displayed in a group, will always receive the delete intent of the summary
+        // notification when the last notification of a group was (or the whole group is) dismissed.
+        if (!addToGroup) {
+            nb.setDeleteIntent(createDeleteIntent(latestAirtime))
+        }
+
+        if (addToGroup) {
+            nb.setGroup(SgApp.NOTIFICATION_GROUP_EPISODES)
+            // As posting the notifications all at once, only sound/vibrate once
+            // (for the summary notification).
+            nb.setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_SUMMARY)
+        }
+
+        return nb
+            .setSgDefaults()
+            .build()
+    }
+
+    private fun buildEpisodeSummaryNotification(
+        latestAirtime: Long,
+        showsIntent: Intent,
+        episodes: List<SgEpisode2WithShow>
+    ): Notification {
+        val nb = NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_EPISODES)
+
+        // notify about multiple episodes
+        nb.setContentTitle(
+            context.getString(
+                R.string.upcoming_episodes_number,
+                NumberFormat.getIntegerInstance().format(episodes.size.toLong())
+            )
+        )
+        val contentText = context.getString(R.string.upcoming_display)
+        nb.setContentText(contentText)
+
+        nb.setContentIntent(
+            TaskStackBuilder.create(context)
                 .addNextIntent(showsIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime))
                 .getPendingIntent(
                     REQUEST_CODE_MULTIPLE_EPISODES,
-                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
+                    // Use FLAG_UPDATE_CURRENT so intent of a previous summary notification
+                    // is updated, but continues to work.
+                    PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
                 )!!
+        )
+        nb.setDeleteIntent(createDeleteIntent(latestAirtime))
+
+        // multiple episodes
+        val inboxStyle = NotificationCompat.InboxStyle()
+        for (episode in episodes) {
+            val (_, _, episodenumber, season, episode_firstairedms, _, _, _, seriestitle, network) = episode
+
+            val lineText = SpannableStringBuilder()
+            // show title and number, like 'Show 1x01'
+            val title = TextTools.getShowWithEpisodeNumber(
+                context,
+                seriestitle,
+                season,
+                episodenumber
+            )
+            lineText.append(title)
+            lineText.setSpan(StyleSpan(Typeface.BOLD), 0, lineText.length, 0)
+            lineText.append(" ")
+            // "8:00 PM Network", switch on purpose
+            val time = TimeTools.formatToLocalTime(
+                context, TimeTools.applyUserOffset(context, episode_firstairedms)
+            )
+            lineText.append(TextTools.dotSeparate(time, network))
+            inboxStyle.addLine(lineText)
         }
 
-        val nb = NotificationCompat.Builder(context, SgApp.NOTIFICATION_CHANNEL_EPISODES)
+        nb.setStyle(inboxStyle)
+        nb.setNumber(episodes.size)
 
-        // JELLY BEAN and above
-        if (count == 1) {
-            // single episode
-            val (id, episodetitle, episodenumber, _, _, _, _, episodeSummary, _, _, series_poster_small) = upcomingEpisodes[notifyPositions[0]]
-            maybeSetPoster(nb, series_poster_small)
+        return nb
+            .setGroup(SgApp.NOTIFICATION_GROUP_EPISODES)
+            .setGroupSummary(true)
+            .setSgDefaults()
+            .build()
+    }
 
-            if (!DisplaySettings.preventSpoilers(context)) {
-                val episodeTitle = TextTools.getEpisodeTitle(
-                    context,
-                    episodetitle,
-                    episodenumber
-                )
-
-                val bigText = SpannableStringBuilder()
-                bigText.append(episodeTitle)
-                bigText.setSpan(StyleSpan(Typeface.BOLD), 0, bigText.length, 0)
-                if (!TextUtils.isEmpty(episodeSummary)) {
-                    bigText.append("\n").append(episodeSummary)
-                }
-
-                nb.setStyle(
-                    NotificationCompat.BigTextStyle().bigText(bigText)
-                        .setSummaryText(contentText)
-                )
-            }
-
-            // Action button to check in
-            val checkInActionIntent = QuickCheckInActivity.intent(id, context)
-            checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
-            val checkInIntent = PendingIntent.getActivity(
-                context,
-                REQUEST_CODE_ACTION_CHECKIN,
-                checkInActionIntent,
-                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
-            )
-            // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
-            // note: Wear and Galaxy Watch devices do typically not support vector icons
-            nb.addAction(
-                R.drawable.ic_action_checkin, context.getString(R.string.checkin),
-                checkInIntent
-            )
-
-            // Action button to set watched
-            val setWatchedIntent = NotificationActionReceiver.intent(id, context)
-            // data to handle delete
-            checkInActionIntent.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
-            val setWatchedPendingIntent = PendingIntent.getBroadcast(
-                context,
-                REQUEST_CODE_ACTION_SET_WATCHED,
-                setWatchedIntent,
-                PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
-            )
-            // icon only shown on Wear and 4.1 (API 16) to 6.0 (API 23)
-            // note: Wear and Galaxy Watch devices do typically not support vector icons
-            nb.addAction(
-                R.drawable.ic_action_tick, context.getString(R.string.action_watched),
-                setWatchedPendingIntent
-            )
-            nb.setNumber(1)
-        } else {
-            // multiple episodes
-            val inboxStyle = NotificationCompat.InboxStyle()
-
-            // display at most the first five
-            for (displayIndex in 0 until count.coerceAtMost(5)) {
-                val (_, _, episodenumber, season, episode_firstairedms, _, _, _, seriestitle, network) = upcomingEpisodes[notifyPositions[displayIndex]]
-
-                val lineText = SpannableStringBuilder()
-
-                // show title and number, like 'Show 1x01'
-                val title = TextTools.getShowWithEpisodeNumber(
-                    context,
-                    seriestitle,
-                    season,
-                    episodenumber
-                )
-                lineText.append(title)
-                lineText.setSpan(StyleSpan(Typeface.BOLD), 0, lineText.length, 0)
-
-                lineText.append(" ")
-
-                // "8:00 PM Network", switch on purpose
-                val time = TimeTools.formatToLocalTime(
-                    context, TimeTools.applyUserOffset(context, episode_firstairedms)
-                )
-                lineText.append(TextTools.dotSeparate(time, network))
-
-                inboxStyle.addLine(lineText)
-            }
-
-            // tell if we could not display all episodes
-            if (count > 5) {
-                inboxStyle.setSummaryText(context.getString(R.string.more, count - 5))
-            }
-
-            nb.setStyle(inboxStyle)
-            nb.setNumber(count)
-        }
-
+    private fun NotificationCompat.Builder.setSgDefaults(): NotificationCompat.Builder {
         // notification sound
         val ringtoneUri = NotificationSettings.getNotificationsRingtone(context)
         // If the string is empty, the user chose silent...
         val hasSound = ringtoneUri.isNotEmpty()
         if (hasSound) {
             // ...otherwise set the specified ringtone
-            nb.setSound(Uri.parse(ringtoneUri))
+            setSound(Uri.parse(ringtoneUri))
         }
         // vibration
         val vibrates = NotificationSettings.isNotificationVibrating(context)
         if (vibrates) {
-            nb.setVibrate(VIBRATION_PATTERN)
+            setVibrate(VIBRATION_PATTERN)
         }
-        nb.setDefaults(Notification.DEFAULT_LIGHTS)
-        nb.setWhen(System.currentTimeMillis())
-        nb.setAutoCancel(true)
-        nb.setContentTitle(contentTitle)
-        nb.setContentText(contentText)
-        nb.setContentIntent(contentIntent)
-        nb.setSmallIcon(R.drawable.ic_notification)
-        nb.color = ContextCompat.getColor(context, R.color.sg_color_primary)
-        nb.priority = NotificationCompat.PRIORITY_DEFAULT
+        setDefaults(Notification.DEFAULT_LIGHTS)
+        setWhen(System.currentTimeMillis())
+        setAutoCancel(true)
+        setSmallIcon(R.drawable.ic_notification)
+        color = ContextCompat.getColor(context, R.color.sg_color_primary)
+        priority = NotificationCompat.PRIORITY_DEFAULT
+        return this
+    }
 
-        val i = Intent(context, NotificationActionReceiver::class.java)
-        i.action = ACTION_CLEARED
-        i.putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
-        val deleteIntent = PendingIntent.getBroadcast(
+    private fun createDeleteIntent(latestAirtime: Long): PendingIntent {
+        val deleteIntent = Intent(context, NotificationActionReceiver::class.java).apply {
+            action = ACTION_CLEARED
+            // Set unique data to make this PendingIntent unique (extras are not considered) to
+            // avoid breaking it for previous notifications.
+            data = Uri.parse("content://$latestAirtime")
+            putExtra(EXTRA_EPISODE_CLEARED_TIME, latestAirtime)
+        }
+        return PendingIntent.getBroadcast(
             context, REQUEST_CODE_DELETE_INTENT,
-            i,
-            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_CANCEL_CURRENT
-        )
-        nb.setDeleteIntent(deleteIntent)
-
-        // build the notification
-        val notification = nb.build()
-
-        // use a unique id within the app
-        val nm = NotificationManagerCompat.from(context)
-        nm.notify(SgApp.NOTIFICATION_EPISODE_ID, notification)
-
-        Timber.d(
-            "Notification: count=%d, sound=%s, vibrate=%s, delete=%s",
-            count,
-            if (hasSound) "YES" else "NO",
-            if (vibrates) "YES" else "NO",
-            Instant.ofEpochMilli(latestAirtime)
+            deleteIntent,
+            // Use FLAG_UPDATE_CURRENT in case another notification with the same latest time is
+            // posted so its intent is not cancelled, but just updated.
+            PendingIntentCompat.flagImmutable or PendingIntent.FLAG_UPDATE_CURRENT
         )
     }
 
@@ -584,7 +660,9 @@ class NotificationService(context: Context) {
     companion object {
         const val ACTION_CLEARED = "seriesguide.intent.action.CLEARED"
         private const val EXTRA_EPISODE_CLEARED_TIME =
-            "com.battlelancer.seriesguide.episode_cleared_time"
+            "com.uwetrottmann.seriesguide.episode_cleared_time"
+        private const val EXTRA_NOTIFICATION_ID =
+            "com.uwetrottmann.seriesguide.notification_id"
 
         private const val DEBUG = false
 
@@ -592,7 +670,7 @@ class NotificationService(context: Context) {
         private const val REQUEST_CODE_SINGLE_EPISODE = 2
         private const val REQUEST_CODE_MULTIPLE_EPISODES = 3
         private const val REQUEST_CODE_ACTION_CHECKIN = 4
-        private const val REQUEST_CODE_ACTION_SET_WATCHED = 4
+        private const val REQUEST_CODE_ACTION_SET_WATCHED = 5
 
         val VIBRATION_PATTERN = longArrayOf(
             0, 100, 200, 100, 100, 100
@@ -617,6 +695,16 @@ class NotificationService(context: Context) {
             context.sendBroadcast(NotificationAlarmReceiver.intent(context))
         }
 
+        fun deleteNotification(context: Context, intent: Intent) {
+            val manager = NotificationManagerCompat.from(context)
+            val notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0)
+            if (notificationId > 0) {
+                manager.cancel(notificationId)
+                // replicate delete intent
+                handleDeleteIntent(context, intent)
+            }
+        }
+
         /**
          * Extracts the last cleared time and stores it in settings.
          */
@@ -624,6 +712,7 @@ class NotificationService(context: Context) {
             if (intent == null) {
                 return
             }
+            Timber.d("Notification cleared, received delete intent $intent")
             val clearedTime = intent.getLongExtra(EXTRA_EPISODE_CLEARED_TIME, 0)
             if (clearedTime != 0L) {
                 // Never show the cleared episode(s) again

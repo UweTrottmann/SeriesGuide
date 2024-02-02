@@ -1,6 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
 // Copyright 2011-2022 Uwe Trottmann
 // Copyright 2013 Andrew Neal
-// SPDX-License-Identifier: Apache-2.0
 
 package com.battlelancer.seriesguide
 
@@ -41,7 +41,6 @@ import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.EventBusException
 import timber.log.Timber
-import java.util.ArrayList
 import java.util.concurrent.Executors
 
 /**
@@ -58,6 +57,7 @@ class SgApp : Application() {
         const val JOB_ID_EXTENSION_YOUTUBE = 1005
         const val JOB_ID_EXTENSION_ACTIONS_SERVICE = 1006
 
+        const val BASE_NOTIFICATION_ID_EPISODES = 100
         const val NOTIFICATION_EPISODE_ID = 1
         const val NOTIFICATION_SUBSCRIPTION_ID = 2
         const val NOTIFICATION_TRAKT_AUTH_ID = 3
@@ -65,6 +65,8 @@ class SgApp : Application() {
 
         const val NOTIFICATION_CHANNEL_EPISODES = "episodes"
         const val NOTIFICATION_CHANNEL_ERRORS = "errors"
+
+        const val NOTIFICATION_GROUP_EPISODES = "com.uwetrottmann.seriesguide.EPISODES"
 
         /**
          * Time calculation has changed, all episodes need re-calculation.
