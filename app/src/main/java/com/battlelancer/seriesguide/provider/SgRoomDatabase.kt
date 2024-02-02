@@ -62,7 +62,7 @@ import timber.log.Timber
         ),
         AutoMigration(
             from = SgRoomDatabase.VERSION_51_CUSTOM_RELEASE_TIME,
-            to = SgRoomDatabase.VERSION_52_PROVIDER_AND_GENRE_FILTERS
+            to = SgRoomDatabase.VERSION_52_WATCH_PROVIDER_FILTERS
         )
     ]
 )
@@ -123,8 +123,13 @@ abstract class SgRoomDatabase : RoomDatabase() {
          * Add custom release time, day offset and time zone to shows.
          */
         const val VERSION_51_CUSTOM_RELEASE_TIME = 51
-        const val VERSION_52_PROVIDER_AND_GENRE_FILTERS = 52
-        const val VERSION = VERSION_52_PROVIDER_AND_GENRE_FILTERS
+
+        /**
+         * - Add [SgWatchProviderShowMapping]
+         * - Add [SgWatchProvider.filter_local]
+         */
+        const val VERSION_52_WATCH_PROVIDER_FILTERS = 52
+        const val VERSION = VERSION_52_WATCH_PROVIDER_FILTERS
 
         @Volatile
         private var instance: SgRoomDatabase? = null
