@@ -3,18 +3,24 @@
 
 package com.battlelancer.seriesguide.shows
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Switch
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
@@ -40,18 +46,16 @@ fun WatchProviderList(
     watchProviders: List<SgWatchProvider>,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit
 ) {
-
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .height(400.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+        contentPadding = PaddingValues(vertical = 4.dp)
     ) {
         items(items = watchProviders, key = { it._id }) {
             WatchProviderFilterItem(it, onProviderFilterChange)
         }
     }
-
 }
 
 @Composable
@@ -59,11 +63,29 @@ fun WatchProviderFilterItem(
     item: SgWatchProvider,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit
 ) {
-    Row(Modifier.fillMaxWidth()) {
-        Text(text = item.provider_name)
-        Switch(checked = item.filter_local, onCheckedChange = {
-            onProviderFilterChange(item, it)
-        })
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .defaultMinSize(minHeight = 56.dp)
+            .toggleable(
+                value = item.filter_local,
+                role = Role.Checkbox,
+                onValueChange = { onProviderFilterChange(item, it) }
+            )
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = item.provider_name,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 16.dp)
+        )
+        Checkbox(
+            checked = item.filter_local,
+            onCheckedChange = null, // null recommended for accessibility with screenreaders
+        )
     }
 }
 
@@ -78,7 +100,8 @@ fun WatchProviderFilterPreview() {
                     provider_id = it,
                     provider_name = "Watch Provider $it",
                     display_priority = 0,
-                    enabled = it.mod(2) == 0,
+                    enabled = false,
+                    filter_local = it.mod(2) == 0,
                     logo_path = "",
                     type = SgWatchProvider.Type.SHOWS.id
                 )
