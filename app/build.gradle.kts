@@ -67,7 +67,7 @@ android {
 
     composeOptions {
         // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-        kotlinCompilerExtensionVersion = "1.4.8" // For Kotlin 1.8.22
+        kotlinCompilerExtensionVersion = "1.5.8" // For Kotlin 1.9.22
     }
 
     kotlinOptions {
@@ -152,12 +152,6 @@ kapt {
         arg("room.schemaLocation", "$projectDir/schemas")
         arg("room.incremental", "true")
     }
-}
-
-// Manually set JVM target of kapt https://youtrack.jetbrains.com/issue/KT-55947/Unable-to-set-kapt-jvm-target-version
-// Matches target version set in android block.
-tasks.withType(org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask::class).configureEach {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
 }
 
 dependencies {
