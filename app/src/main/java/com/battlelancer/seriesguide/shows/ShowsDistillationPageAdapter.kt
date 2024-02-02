@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.viewpager.widget.PagerAdapter
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
-import kotlinx.coroutines.flow.StateFlow
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
 
 class ShowsDistillationPageAdapter(
     private val context: Context,
@@ -20,7 +20,7 @@ class ShowsDistillationPageAdapter(
     private val filterListener: FilterShowsView.FilterListener,
     private val initialShowSortOrder: SortShowsView.ShowSortOrder,
     private val sortOrderListener: SortShowsView.SortOrderListener,
-    private val showsDistillationUiState: StateFlow<ShowsDistillationUiState>
+    private val showsDistillationViewModel: ShowsDistillationViewModel
 ) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -45,7 +45,14 @@ class ShowsDistillationPageAdapter(
                 ComposeView(context).apply {
                     this.layoutParams = layoutParams
                     setContent {
-                        WatchProviderFilter(showsDistillationUiState)
+                        WatchProviderFilter(
+                            showsDistillationUiState = showsDistillationViewModel.showsDistillationUiState,
+                            onProviderFilterChange = { provider: SgWatchProvider, checked: Boolean ->
+                                showsDistillationViewModel.changeWatchProviderFilter(
+                                    provider,
+                                    checked
+                                )
+                            })
                     }
                 }
             }

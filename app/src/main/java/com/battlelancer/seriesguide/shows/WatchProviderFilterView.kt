@@ -22,15 +22,24 @@ import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun WatchProviderFilter(showsDistillationUiState: StateFlow<ShowsDistillationUiState>) {
+fun WatchProviderFilter(
+    showsDistillationUiState: StateFlow<ShowsDistillationUiState>,
+    onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit
+) {
     val uiState by showsDistillationUiState.collectAsState()
     SeriesGuideTheme {
-        WatchProviderList(watchProviders = uiState.watchProviders)
+        WatchProviderList(
+            watchProviders = uiState.watchProviders,
+            onProviderFilterChange
+        )
     }
 }
 
 @Composable
-fun WatchProviderList(watchProviders: List<SgWatchProvider>) {
+fun WatchProviderList(
+    watchProviders: List<SgWatchProvider>,
+    onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit
+) {
 
     LazyColumn(
         modifier = Modifier
@@ -39,18 +48,21 @@ fun WatchProviderList(watchProviders: List<SgWatchProvider>) {
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         items(items = watchProviders, key = { it._id }) {
-            WatchProviderFilterItem(it)
+            WatchProviderFilterItem(it, onProviderFilterChange)
         }
     }
 
 }
 
 @Composable
-fun WatchProviderFilterItem(item: SgWatchProvider, modifier: Modifier = Modifier) {
-    Row(modifier.fillMaxWidth()) {
+fun WatchProviderFilterItem(
+    item: SgWatchProvider,
+    onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit
+) {
+    Row(Modifier.fillMaxWidth()) {
         Text(text = item.provider_name)
-        Switch(checked = item.enabled, onCheckedChange = {
-//            checked = it
+        Switch(checked = item.filter_local, onCheckedChange = {
+            onProviderFilterChange(item, it)
         })
     }
 }
@@ -59,16 +71,18 @@ fun WatchProviderFilterItem(item: SgWatchProvider, modifier: Modifier = Modifier
 @Composable
 fun WatchProviderFilterPreview() {
     SeriesGuideTheme {
-        WatchProviderList(watchProviders = List(20) {
-            SgWatchProvider(
-                _id = it,
-                provider_id = it,
-                provider_name = "Watch Provider $it",
-                display_priority = 0,
-                enabled = it.mod(2) == 0,
-                logo_path = "",
-                type = SgWatchProvider.Type.SHOWS.id
-            )
-        })
+        WatchProviderList(
+            watchProviders = List(20) {
+                SgWatchProvider(
+                    _id = it,
+                    provider_id = it,
+                    provider_name = "Watch Provider $it",
+                    display_priority = 0,
+                    enabled = it.mod(2) == 0,
+                    logo_path = "",
+                    type = SgWatchProvider.Type.SHOWS.id
+                )
+            },
+            onProviderFilterChange = { _: SgWatchProvider, _: Boolean -> })
     }
 }

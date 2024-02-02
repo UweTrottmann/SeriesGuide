@@ -58,6 +58,9 @@ interface SgWatchProviderHelper {
     @Query("UPDATE sg_watch_provider SET enabled=:enabled WHERE _id=:id")
     fun setEnabled(id: Int, enabled: Boolean)
 
+    @Query("UPDATE sg_watch_provider SET filter_local=:enabled WHERE _id=:id")
+    suspend fun setFilterLocal(id: Int, enabled: Boolean)
+
     @Query("UPDATE sg_watch_provider SET enabled=0 WHERE type=:type")
     fun setAllDisabled(type: Int)
 

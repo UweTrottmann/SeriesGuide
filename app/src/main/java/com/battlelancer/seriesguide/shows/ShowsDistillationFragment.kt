@@ -51,7 +51,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             filterListener,
             SortShowsView.ShowSortOrder.fromSettings(requireContext()),
             sortOrderListener,
-            model.showsDistillationUiState
+            model
         )
         val viewPager = binding.viewPagerShowsDistillation
         viewPager.adapter = tabsAdapter
