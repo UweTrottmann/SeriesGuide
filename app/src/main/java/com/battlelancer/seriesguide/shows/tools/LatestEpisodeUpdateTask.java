@@ -5,9 +5,12 @@ package com.battlelancer.seriesguide.shows.tools;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import com.battlelancer.seriesguide.provider.SeriesGuideContract;
 import com.battlelancer.seriesguide.util.TaskManager;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import timber.log.Timber;
 
 /**
@@ -16,23 +19,33 @@ import timber.log.Timber;
  *
  * <p><b>Do NOT run in parallel as this task is memory intensive.</b>
  */
-public class LatestEpisodeUpdateTask extends AsyncTask<Integer, Void, Void> {
+public class LatestEpisodeUpdateTask{
 
     @SuppressLint("StaticFieldLeak") private final Context context;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    Future futureResult;
 
     public LatestEpisodeUpdateTask(Context context) {
         this.context = context.getApplicationContext();
     }
 
-    @Override
-    protected Void doInBackground(Integer... params) {
-        updateLatestEpisodeFor(context, null);
-        return null;
+    public void performBackgroundTask() {
+         futureResult = executor.submit(new Callable<String>() {
+            @Override
+            public String call() {
+
+                //background task...
+                updateLatestEpisodeFor(context, null);
+                return null;
+            }
+        });
+
+        // do post task activities here
+        TaskManager.getInstance().releaseNextEpisodeUpdateTaskRef();
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        TaskManager.getInstance().releaseNextEpisodeUpdateTaskRef();
+    public Boolean getStatus(){
+        return futureResult.isDone();
     }
 
     public static void updateLatestEpisodeFor(Context context, Long showId) {

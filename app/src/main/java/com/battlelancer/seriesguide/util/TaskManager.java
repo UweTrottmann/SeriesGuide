@@ -110,9 +110,9 @@ public class TaskManager {
     @MainThread
     public synchronized void tryNextEpisodeUpdateTask(Context context) {
         if (nextEpisodeUpdateTask == null
-                || nextEpisodeUpdateTask.getStatus() == AsyncTask.Status.FINISHED) {
+                || nextEpisodeUpdateTask.getStatus()) {
             nextEpisodeUpdateTask = new LatestEpisodeUpdateTask(context);
-            nextEpisodeUpdateTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            nextEpisodeUpdateTask.performBackgroundTask();
         }
     }
 
