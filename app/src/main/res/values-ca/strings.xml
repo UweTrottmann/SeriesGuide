@@ -459,7 +459,6 @@
     <string name="dismiss">Omet</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s episodis nous</string>
-    <string name="more">%d més</string>
     <string name="upcoming_display">Seleccioneu-ho per veure les sèries que han de sortir</string>
     <string name="pref_notifications">Notificacions</string>
     <string name="pref_notificationssummary">Notifica\'m de tots els episodis nous</string>

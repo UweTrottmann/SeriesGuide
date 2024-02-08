@@ -459,7 +459,6 @@
     <string name="dismiss">Rexeitar</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s novos episodios</string>
-    <string name="more">%d máis</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notificacións</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>

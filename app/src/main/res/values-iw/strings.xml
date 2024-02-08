@@ -481,7 +481,6 @@
     <string name="dismiss">סגור</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">פרקים חדשים %s</string>
-    <string name="more">עוד %d</string>
     <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
     <string name="pref_notifications">התראות</string>
     <string name="pref_notificationssummary">עדכן אותי על פרקים חדשים</string>
