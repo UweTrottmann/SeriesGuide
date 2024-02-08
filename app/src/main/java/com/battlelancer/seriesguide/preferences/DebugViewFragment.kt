@@ -112,7 +112,8 @@ class DebugViewFragment : AppCompatDialogFragment() {
 
     private fun showTestNotification(episodeCount: Int) {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            val query = ("${SgEpisode2WithShow.SELECT} LIMIT $episodeCount")
+            // To use different episodes for one vs. multiple just use OFFSET
+            val query = ("${SgEpisode2WithShow.SELECT} LIMIT $episodeCount OFFSET $episodeCount")
             val episodes = SgRoomDatabase.getInstance(requireContext()).sgEpisode2Helper()
                 .getEpisodesWithShow(SimpleSQLiteQuery(query, null))
             NotificationService(requireContext()).notifyAbout(

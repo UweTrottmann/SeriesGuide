@@ -11,6 +11,13 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 72
+----------
+*in development*
+
+* 🔧 Display a separate notification for each episode, including title and description if available
+  and its own actions.
+
 Version 71
 ----------
 *2024-01-18*

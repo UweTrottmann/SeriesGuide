@@ -459,7 +459,6 @@
     <string name="dismiss">Отхвърли</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s нови епизоди</string>
-    <string name="more">%d още</string>
     <string name="upcoming_display">Изберете да се показват предстоящи сериали</string>
     <string name="pref_notifications">Известия</string>
     <string name="pref_notificationssummary">Известяване за нови епизоди</string>
