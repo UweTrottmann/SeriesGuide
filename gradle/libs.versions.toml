@@ -1,7 +1,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-androidx-lifecycle = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidx-lifecycle = "2.7.0" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 debugdrawer = "0.9.0" # https://github.com/lenguyenthanh/DebugDrawer
 eventbus = "3.3.1"
 google-api-client = "2.2.0" # https://github.com/googleapis/google-api-java-client/releases
