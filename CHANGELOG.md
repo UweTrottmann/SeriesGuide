@@ -15,6 +15,9 @@ Version 72
 ----------
 *in development*
 
+#### 72.0.0 🧪
+*2024-02-09*
+
 * 🔧 Display a separate notification for each episode, including title and description if available
   and its own actions.
 * 📝 Latest user interface translations from Crowdin.
