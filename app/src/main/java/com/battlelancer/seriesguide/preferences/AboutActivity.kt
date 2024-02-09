@@ -84,7 +84,7 @@ class AboutActivity : ComponentActivity() {
                 IconButton(onClick = onBackPressed) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(id = R.string.navigate_back)
+                        contentDescription = stringResource(id = R.string.navigate_up)
                     )
                 }
             },

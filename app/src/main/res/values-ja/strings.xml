@@ -20,6 +20,7 @@
     <string name="specialseason">特別編</string>
     <string name="ratings">評価</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">概要</string>
     <string name="description_poster">ポスターを表示</string>
     <string name="description_image">エピソードの画像</string>

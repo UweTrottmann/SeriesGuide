@@ -20,6 +20,7 @@
     <string name="specialseason">Специјални епизоди</string>
     <string name="ratings">Оцени</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Преглед</string>
     <string name="description_poster">Прикажи постер</string>
     <string name="description_image">Слика на епизода</string>

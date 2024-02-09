@@ -20,6 +20,7 @@
     <string name="specialseason">Specials</string>
     <string name="ratings">Bewertungen</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Nach oben</string>
     <string name="description_overview">Übersicht</string>
     <string name="description_poster">Serien-Poster</string>
     <string name="description_image">Bild der Folge</string>

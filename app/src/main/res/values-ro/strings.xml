@@ -20,6 +20,7 @@
     <string name="specialseason">Episoade speciale</string>
     <string name="ratings">Evaluări</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Prezentare generală</string>
     <string name="description_poster">Posterul emisiunii</string>
     <string name="description_image">Imaginea episodului</string>

@@ -20,6 +20,7 @@
     <string name="specialseason">Bonusové Epizody</string>
     <string name="ratings">Hodnocení</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Přehled</string>
     <string name="description_poster">Zobrazit plakát</string>
     <string name="description_image">Obrázek epizody</string>

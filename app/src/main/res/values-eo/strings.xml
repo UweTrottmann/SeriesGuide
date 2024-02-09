@@ -20,6 +20,7 @@
     <string name="specialseason">Specialaj Epizodoj</string>
     <string name="ratings">Taksoj</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Priskribo</string>
     <string name="description_poster">Montri afiŝon</string>
     <string name="description_image">Epizoda bildo</string>

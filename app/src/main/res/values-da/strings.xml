@@ -20,6 +20,7 @@
     <string name="specialseason">Særlige episoder</string>
     <string name="ratings">Bedømmelser</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Oversigt</string>
     <string name="description_poster">Vis plakat</string>
     <string name="description_image">Episodebillede</string>

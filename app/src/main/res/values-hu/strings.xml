@@ -20,6 +20,7 @@
     <string name="specialseason">Extra epizódok</string>
     <string name="ratings">Értékelések</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Tartalom</string>
     <string name="description_poster">Borító mutatása</string>
     <string name="description_image">Epizód kép</string>

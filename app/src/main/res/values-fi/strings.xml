@@ -20,6 +20,7 @@
     <string name="specialseason">Erikoisjaksot</string>
     <string name="ratings">Arvosanat</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Yleiskatsaus</string>
     <string name="description_poster">Näytä juliste</string>
     <string name="description_image">Jaksokuva</string>

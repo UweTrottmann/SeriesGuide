@@ -20,6 +20,7 @@
     <string name="specialseason">Episodis especials</string>
     <string name="ratings">Valoracions</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Visió general</string>
     <string name="description_poster">Mostra el cartell</string>
     <string name="description_image">Imatge de l\'episodi</string>

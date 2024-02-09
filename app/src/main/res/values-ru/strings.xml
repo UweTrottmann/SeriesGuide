@@ -20,6 +20,7 @@
     <string name="specialseason">Особые выпуски</string>
     <string name="ratings">Оценки</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Обзор</string>
     <string name="description_poster">Показать постер</string>
     <string name="description_image">Кадр из эпизода</string>

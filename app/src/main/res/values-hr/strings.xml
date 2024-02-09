@@ -20,6 +20,7 @@
     <string name="specialseason">Posebne epizode</string>
     <string name="ratings">Ocjene</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Pregled</string>
     <string name="description_poster">Pokaži poster</string>
     <string name="description_image">Slika epizode</string>

@@ -20,6 +20,7 @@
     <string name="specialseason">Episodios Especiais</string>
     <string name="ratings">Clasificacións</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Resumo</string>
     <string name="description_poster">Amosar cartaz</string>
     <string name="description_image">Imaxe do episodio</string>

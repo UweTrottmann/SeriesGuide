@@ -20,6 +20,7 @@
     <string name="specialseason">சிறப்பு Episodes</string>
     <string name="ratings">மதிப்பீடு</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">மேற்பார்வை</string>
     <string name="description_poster">சுவரொட்டி காண்பி</string>
     <string name="description_image">சம்பவம் உருவம்</string>

@@ -20,6 +20,7 @@
     <string name="specialseason">פרקים מיוחדים</string>
     <string name="ratings">דירוגים</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">תקציר</string>
     <string name="description_poster">הצג פוסטר</string>
     <string name="description_image">תמונת הפרק</string>

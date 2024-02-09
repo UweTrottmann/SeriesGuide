@@ -20,6 +20,7 @@
     <string name="specialseason">Episode Khusus</string>
     <string name="ratings">Peringkat</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Tinjauan</string>
     <string name="description_poster">Poster acara</string>
     <string name="description_image">Gambar episode</string>

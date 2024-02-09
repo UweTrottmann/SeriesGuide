@@ -20,6 +20,7 @@
     <string name="specialseason">قسمت‌های ویژه</string>
     <string name="ratings">Ratings</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">بررسی اجمالی</string>
     <string name="description_poster">پوستر نمایش</string>
     <string name="description_image">تصویر قسمت</string>

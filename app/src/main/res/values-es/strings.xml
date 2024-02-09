@@ -20,6 +20,7 @@
     <string name="specialseason">Episodios especiales</string>
     <string name="ratings">Valoraciones</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Sinopsis</string>
     <string name="description_poster">Mostrar póster</string>
     <string name="description_image">Imagen del episodio</string>

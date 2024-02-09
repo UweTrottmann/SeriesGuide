@@ -20,6 +20,7 @@
     <string name="specialseason">Episodau Arbennig</string>
     <string name="ratings">Sgoriau</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Trosolwg</string>
     <string name="description_poster">Dangos poster</string>
     <string name="description_image">Delwedd y bennod</string>

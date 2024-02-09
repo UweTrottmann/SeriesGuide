@@ -20,6 +20,7 @@
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">개요</string>
     <string name="description_poster">포스터 보기</string>
     <string name="description_image">에피소드 이미지</string>

@@ -20,6 +20,7 @@
     <string name="specialseason">特别篇</string>
     <string name="ratings">评分</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">概览</string>
     <string name="description_poster">节目海报</string>
     <string name="description_image">剧集图片</string>
