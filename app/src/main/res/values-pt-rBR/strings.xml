@@ -219,7 +219,7 @@
     <string name="watchlist">Lista</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Sem resultados</string>
-    <string name="action_similar">Semelhantes</string>
+    <string name="action_similar">Similares</string>
     <string name="title_similar_shows">Séries similares</string>
     <!-- Lists -->
     <string name="first_list">Primeira lista</string>

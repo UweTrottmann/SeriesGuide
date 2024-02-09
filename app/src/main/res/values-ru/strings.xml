@@ -187,7 +187,7 @@
     <string name="pref_infinite_scrolling">Бесконечный календарь</string>
     <!-- Updating -->
     <string name="update_scheduled">Обновление&#8230;</string>
-    <string name="update_no_connection">Для обновления подключитесь к Интернет.</string>
+    <string name="update_no_connection">Для обновления, подключитесь к интернету</string>
     <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
     <!-- Seasons -->
     <string name="season_allwatched">Все эпизоды просмотрены</string>
@@ -455,12 +455,12 @@
     <string name="clear_cache_summary">Удалить все кэшированные изображения с Вашего устройства</string>
     <!-- Backup and Restore -->
     <string name="backup_full_dump">Вкл. описания, детали, рейтинги</string>
-    <string name="backup_failed_file_access">Не могу произвести резервное копирование. Файл резервной копии не может быть найден или к нему нет доступа.</string>
+    <string name="backup_failed_file_access">Не могу сделать резервную копию. Файл резервной копии не найден или к нему нет доступа.</string>
     <string name="backup_success">Резервное копирование прошло успешно.</string>
     <string name="backup_failed">Не удалось выполнить резервное копирование.</string>
     <string name="import_failed_nosd">Не удается восстановить резервную копию. Папка резервного копирования не доступна.</string>
-    <string name="import_failed_nofile">Существует не читаемый файл резервной копии.</string>
-    <string name="import_success">Резервное копирование успешно восстановлено.</string>
+    <string name="import_failed_nofile">Нет читаемого файла резервной копии.</string>
+    <string name="import_success">Резервная копия успешно восстановлено</string>
     <string name="import_failed">Восстановление резервной копии не удалось.</string>
     <string name="backup_button">Резервное копирование</string>
     <string name="import_button">Восстановление</string>

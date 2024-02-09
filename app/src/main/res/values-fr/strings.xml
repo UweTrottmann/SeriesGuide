@@ -57,7 +57,7 @@
     <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
     <string name="api_failed">Échec : %s</string>
     <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Affichage non migré vers les données de TMDB. Certaines actions, y compris la synchronisation Trakt et Cloud, pourraient ne pas fonctionner. Peut-être chercher un remplacement et supprimer cet affichage. Appuyez pour afficher les détails.</string>
     <!-- Sharing -->
     <string name="share">Partager</string>
     <string name="share_show">Partager la série</string>

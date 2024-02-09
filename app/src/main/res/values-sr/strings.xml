@@ -228,20 +228,20 @@
     <!-- Lists -->
     <string name="first_list">Прва листа</string>
     <string name="list_add">Додај листу</string>
-    <string name="ack_list_added">List added</string>
+    <string name="ack_list_added">Листа додата</string>
     <string name="list_title_hint">Именуј листу</string>
     <string name="list_remove">Уклони листу</string>
     <string name="list_manage">Уреди листу</string>
-    <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_renamed">Листа преименована</string>
+    <string name="ack_list_removed">Листа уклоњена</string>
     <string name="list_item_manage">Управљање листама</string>
-    <string name="ack_list_item_manage">Lists updated</string>
+    <string name="ack_list_item_manage">Листа ажурирана</string>
     <string name="list_item_remove">Уклони са листе</string>
-    <string name="ack_list_item_removed">Removed from list</string>
+    <string name="ack_list_item_removed">Уклоњено са листе</string>
     <string name="list_empty">Можете додати емисије на ову листу</string>
     <string name="action_lists_sort">Листе за сортирање</string>
     <string name="action_lists_reorder">Поново сортирајте листе</string>
-    <string name="ack_lists_reordered">Lists reordered</string>
+    <string name="ack_lists_reordered">Листе су преуређене</string>
     <string name="error_name_already_exists">Lista sa ovim imenom već postoji</string>
     <!-- Movies -->
     <string name="title_discover">Otkrijte</string>
@@ -337,7 +337,7 @@
     <string name="support_trakt">Подежите Trakt са VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
-    <string name="ack_rated">Rating sent</string>
+    <string name="ack_rated">Оцена послата</string>
     <string name="your_rating">Твоја оцена</string>
     <string name="love">Врхунски!</string>
     <string name="hate">Очајно :(</string>

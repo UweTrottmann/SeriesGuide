@@ -17,6 +17,7 @@ Version 72
 
 * 🔧 Display a separate notification for each episode, including title and description if available
   and its own actions.
+* 📝 Latest user interface translations from Crowdin.
 
 Version 71
 ----------
