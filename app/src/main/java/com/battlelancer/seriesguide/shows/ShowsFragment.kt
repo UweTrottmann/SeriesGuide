@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.getSortQuery2
 import com.battlelancer.seriesguide.shows.SortShowsView.ShowSortOrder
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.OverviewActivity.Companion.intentShow
@@ -54,6 +55,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.random.Random
@@ -64,8 +66,10 @@ import kotlin.random.Random
  */
 class ShowsFragment : Fragment() {
 
+    // TODO These should be in the view model?
     private lateinit var showSortOrder: ShowSortOrder
     private lateinit var showFilter: ShowFilter
+    private lateinit var watchProvidersFilter: List<SgWatchProvider>
 
     private lateinit var adapter: ShowsAdapter
     private lateinit var recyclerView: RecyclerView
@@ -121,6 +125,7 @@ class ShowsFragment : Fragment() {
 
         // get settings
         showFilter = ShowFilter.fromSettings(requireContext())
+        watchProvidersFilter = emptyList()
         showSortOrder = ShowSortOrder.fromSettings(requireContext())
 
         // prepare view adapter
@@ -178,6 +183,17 @@ class ShowsFragment : Fragment() {
                 requireActivity().invalidateOptionsMenu()
             }
 
+        // watch for watch provider filter changes
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.watchProvidersFilter.collectLatest {
+                watchProvidersFilter = it
+                // re-run query
+                updateShowsQuery()
+                // refresh filter menu icon state
+                requireActivity().invalidateOptionsMenu()
+            }
+        }
+
         // hide floating action button when scrolling shows
         val buttonAddShow: FloatingActionButton =
             requireActivity().findViewById(R.id.buttonShowsAdd)
@@ -198,7 +214,9 @@ class ShowsFragment : Fragment() {
     private fun updateShowsQuery() {
         Timber.d("Running query update.")
         model.updateQuery(
-            showFilter, getSortQuery2(
+            showFilter,
+            watchProvidersFilter,
+            getSortQuery2(
                 showSortOrder.sortOrderId, showSortOrder.isSortFavoritesFirst,
                 showSortOrder.isSortIgnoreArticles
             )
@@ -240,7 +258,7 @@ class ShowsFragment : Fragment() {
             // set filter icon state
             menu.findItem(R.id.menu_action_shows_filter)
                 .setIcon(
-                    if (showFilter.isAnyFilterEnabled()) {
+                    if (showFilter.isAnyFilterEnabled() || watchProvidersFilter.isNotEmpty()) {
                         R.drawable.ic_filter_selected_white_24dp
                     } else {
                         R.drawable.ic_filter_white_24dp

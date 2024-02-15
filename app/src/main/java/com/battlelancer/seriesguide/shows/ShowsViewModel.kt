@@ -20,8 +20,9 @@ import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import timber.log.Timber
@@ -36,6 +37,14 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
     val showItemsLiveData = MediatorLiveData<MutableList<ShowsAdapter.ShowItem>?>()
     private val showItemsLiveDataSemaphore = Semaphore(1)
+
+    val watchProvidersFilter = SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
+        .filterLocalWatchProviders(SgWatchProvider.Type.SHOWS.id)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = emptyList()
+        )
 
     init {
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
@@ -69,6 +78,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateQuery(
         filter: ShowsDistillationSettings.ShowFilter,
+        watchProvidersFilter: List<SgWatchProvider>,
         orderClause: String
     ) {
         val selection = StringBuilder()
@@ -172,14 +182,8 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         // Add watch provider filter last as it needs to add a GROUP BY
-        // TODO Observe changes
-        val watchProvidersToFilter =
-            SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-                .filterLocalWatchProviders(SgWatchProvider.Type.SHOWS.id)
-        val watchProvidersCondition = runBlocking {
-            watchProvidersToFilter.joinToString(separator = " OR ") {
-                "provider_id=${it.provider_id}"
-            }
+        val watchProvidersCondition = watchProvidersFilter.joinToString(separator = " OR ") {
+            "provider_id=${it.provider_id}"
         }
         if (watchProvidersCondition.isNotEmpty()) {
             if (selection.isNotEmpty()) {
@@ -195,7 +199,8 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
         val whereAndGroupBy = if (selection.isNotEmpty()) "WHERE $selection" else ""
 
-        val query = "SELECT sg_show.* FROM ${Tables.SG_SHOW} $joins $whereAndGroupBy ORDER BY $orderClause"
+        val query =
+            "SELECT sg_show.* FROM ${Tables.SG_SHOW} $joins $whereAndGroupBy ORDER BY $orderClause"
         Timber.d(query)
         queryString.value = query
     }

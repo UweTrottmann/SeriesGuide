@@ -50,7 +50,7 @@ interface SgWatchProviderHelper {
     fun usedWatchProvidersFlow(type: Int): Flow<List<SgWatchProvider>>
 
     @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type AND filter_local=1 GROUP BY _id")
-    fun filterLocalWatchProviders(type: Int): List<SgWatchProvider>
+    fun filterLocalWatchProviders(type: Int): Flow<List<SgWatchProvider>>
 
     @Query("SELECT provider_id FROM sg_watch_provider WHERE type=:type AND enabled=1")
     fun getEnabledWatchProviderIds(type: Int): LiveData<List<Int>>
