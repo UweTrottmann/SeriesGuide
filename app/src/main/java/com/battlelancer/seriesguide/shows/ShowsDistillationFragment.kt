@@ -128,7 +128,7 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
             }
 
             // broadcast new sort order
-            ShowsDistillationSettings.sortOrderLiveData.postValue(showSortOrder)
+            ShowsDistillationSettings.sortOrder.value = showSortOrder
 
             if (showSortOrder.changedIgnoreArticles) {
                 // refresh all list widgets

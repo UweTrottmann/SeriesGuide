@@ -9,7 +9,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -83,7 +82,8 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         // watch for sort order changes
         viewModelScope.launch {
-            ShowsDistillationSettings.sortOrderLiveData.asFlow().collect {
+            ShowsDistillationSettings.sortOrder.collect {
+                if (it == null) return@collect
                 uiState.value = uiState.value.copy(showSortOrder = it)
                 updateQuery()
             }
@@ -91,7 +91,8 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         // watch for filter changes
         viewModelScope.launch {
-            ShowsDistillationSettings.filterLiveData.asFlow().collect {
+            ShowsDistillationSettings.showFilter.collect {
+                if (it == null) return@collect
                 uiState.value = uiState.value.copy(showFilter = it)
                 updateQuery()
             }
