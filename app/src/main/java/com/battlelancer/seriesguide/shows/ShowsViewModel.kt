@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -17,9 +17,11 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import timber.log.Timber
@@ -42,9 +44,6 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                 // Use Semaphore with 1 permit to ensure results are delivered in order and never
                 // processed in parallel.
                 showItemsLiveDataSemaphore.withPermit {
-                    // TODO Try filtering here instead
-
-
                     val mapped = sgShows?.mapTo(ArrayList(sgShows.size)) {
                         ShowsAdapter.ShowItem.map(it, getApplication())
                     }
@@ -172,24 +171,33 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             selection.append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(timeInAnHour)
         }
 
-        queryString.value = if (selection.isNotEmpty()) {
-            // TODO filter by watch provider ID
-            // TODO Alternative: filter in code?
-            // Issues:
-            // - duplicate rows if multiple providers match
-            val query = "SELECT * FROM ${Tables.SG_SHOW}" +
-                    " JOIN sg_watch_provider_show_mappings ON _id=sg_watch_provider_show_mappings.show_id" +
-                    // " JOIN sg_genre_show_mappings ON _id=sg_genre_show_mappings.show_id" +
-                    " WHERE (provider_id=9 OR provider_id=531) AND $selection" +
-                    " GROUP BY _id" +
-                    " ORDER BY $orderClause"
-
-            Timber.d(query)
-//            "SELECT * FROM ${Tables.SG_SHOW} WHERE $selection ORDER BY $orderClause"
-            query
-        } else {
-            "SELECT * FROM ${Tables.SG_SHOW} ORDER BY $orderClause"
+        // Add watch provider filter last as it needs to add a GROUP BY
+        // TODO Observe changes
+        val watchProvidersToFilter =
+            SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
+                .filterLocalWatchProviders(SgWatchProvider.Type.SHOWS.id)
+        val watchProvidersCondition = runBlocking {
+            watchProvidersToFilter.joinToString(separator = " OR ") {
+                "provider_id=${it.provider_id}"
+            }
         }
+        if (watchProvidersCondition.isNotEmpty()) {
+            if (selection.isNotEmpty()) {
+                selection.append(" AND ")
+            }
+            selection.append("(").append(watchProvidersCondition).append(")")
+                .append(" GROUP BY _id")
+        }
+
+        val joins = StringBuilder()
+        if (watchProvidersCondition.isNotEmpty()) {
+            joins.append("JOIN sg_watch_provider_show_mappings ON _id=sg_watch_provider_show_mappings.show_id")
+        }
+        val whereAndGroupBy = if (selection.isNotEmpty()) "WHERE $selection" else ""
+
+        val query = "SELECT sg_show.* FROM ${Tables.SG_SHOW} $joins $whereAndGroupBy ORDER BY $orderClause"
+        Timber.d(query)
+        queryString.value = query
     }
 
 }
