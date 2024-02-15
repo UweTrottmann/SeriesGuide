@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -20,6 +21,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -28,6 +30,15 @@ import kotlinx.coroutines.sync.withPermit
 import timber.log.Timber
 
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
+
+    data class ShowsViewUiState(
+        val showFilter: ShowsDistillationSettings.ShowFilter,
+        val watchProvidersFilter: List<SgWatchProvider>,
+        val showSortOrder: SortShowsView.ShowSortOrder
+    ) {
+        val isFiltersActive: Boolean
+            get() = showFilter.isAnyFilterEnabled() || watchProvidersFilter.isNotEmpty()
+    }
 
     private val queryString = MutableLiveData<String>()
     private val sgShowsLiveData: LiveData<MutableList<SgShow2ForLists>> =
@@ -38,13 +49,22 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
     val showItemsLiveData = MediatorLiveData<MutableList<ShowsAdapter.ShowItem>?>()
     private val showItemsLiveDataSemaphore = Semaphore(1)
 
-    val watchProvidersFilter = SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
-        .filterLocalWatchProviders(SgWatchProvider.Type.SHOWS.id)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = emptyList()
+    private val watchProvidersFilterSource =
+        SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
+            .filterLocalWatchProviders(SgWatchProvider.Type.SHOWS.id)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(),
+                initialValue = emptyList()
+            )
+
+    val uiState = MutableStateFlow(
+        ShowsViewUiState(
+            showFilter = ShowsDistillationSettings.ShowFilter.fromSettings(getApplication()),
+            watchProvidersFilter = watchProvidersFilterSource.value,
+            showSortOrder = SortShowsView.ShowSortOrder.fromSettings(getApplication())
         )
+    )
 
     init {
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
@@ -58,6 +78,30 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                     }
                     showItemsLiveData.postValue(mapped)
                 }
+            }
+        }
+
+        // watch for sort order changes
+        viewModelScope.launch {
+            ShowsDistillationSettings.sortOrderLiveData.asFlow().collect {
+                uiState.value = uiState.value.copy(showSortOrder = it)
+                updateQuery()
+            }
+        }
+
+        // watch for filter changes
+        viewModelScope.launch {
+            ShowsDistillationSettings.filterLiveData.asFlow().collect {
+                uiState.value = uiState.value.copy(showFilter = it)
+                updateQuery()
+            }
+        }
+
+        // watch for watch provider filter changes
+        viewModelScope.launch {
+            watchProvidersFilterSource.collect {
+                uiState.value = uiState.value.copy(watchProvidersFilter = it)
+                updateQuery()
             }
         }
     }
@@ -76,7 +120,22 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         return !this
     }
 
-    fun updateQuery(
+    fun updateQuery() {
+        Timber.d("Running query update.")
+        // TODO Debounce this, notably when initially displaying to wait for all input values
+        uiState.value.also {
+            updateQuery(
+                it.showFilter,
+                it.watchProvidersFilter,
+                ShowsDistillationSettings.getSortQuery2(
+                    it.showSortOrder.sortOrderId, it.showSortOrder.isSortFavoritesFirst,
+                    it.showSortOrder.isSortIgnoreArticles
+                )
+            )
+        }
+    }
+
+    private fun updateQuery(
         filter: ShowsDistillationSettings.ShowFilter,
         watchProvidersFilter: List<SgWatchProvider>,
         orderClause: String
@@ -201,7 +260,6 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         val query =
             "SELECT sg_show.* FROM ${Tables.SG_SHOW} $joins $whereAndGroupBy ORDER BY $orderClause"
-        Timber.d(query)
         queryString.value = query
     }
 

@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
  */
 object ShowsDistillationSettings {
 
+    // TODO Migrate to MutableStateFlow
     @JvmField
     val filterLiveData = MutableLiveData<ShowFilter>()
     @JvmField
