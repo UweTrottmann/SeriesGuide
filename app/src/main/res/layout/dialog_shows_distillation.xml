@@ -1,29 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayoutShowsDistillation"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutShowsDistillation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/sgColorDivider"
-        tools:layout_height="40dp" />
+        app:tabMode="scrollable">
 
-    <ScrollView
-        android:id="@+id/scrollViewShowsDistillation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.uwetrottmann.seriesguide.widgets.WrappingViewPager
-            android:id="@+id/viewPagerShowsDistillation"
-            android:layout_width="match_parent"
+        <!-- Note: can not use IDs as the TabItems below are just informational for TabLayout
+        which removes them once tabs are created. -->
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_height="300dp" />
+            android:text="@string/action_shows_filter" />
 
-    </ScrollView>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_stream" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_shows_sort" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <com.battlelancer.seriesguide.shows.FilterShowsView
+        android:id="@+id/filterShowsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/watchProvidersFilterView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.battlelancer.seriesguide.shows.SortShowsView
+        android:id="@+id/sortShowsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

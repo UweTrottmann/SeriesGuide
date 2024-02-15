@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.edit
+import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
@@ -20,10 +22,12 @@ import com.battlelancer.seriesguide.databinding.DialogShowsDistillationBinding
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.TaskManager
-import com.battlelancer.seriesguide.util.ThemeUtils.setDefaultStyle
 import com.battlelancer.seriesguide.util.safeShow
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 class ShowsDistillationFragment : AppCompatDialogFragment() {
 
@@ -45,24 +49,55 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
 
         val binding = DialogShowsDistillationBinding.inflate(inflater, container, false)
 
-        val tabsAdapter = ShowsDistillationPageAdapter(
-            requireContext(),
-            ShowFilter.fromSettings(requireContext()),
-            filterListener,
-            SortShowsView.ShowSortOrder.fromSettings(requireContext()),
-            sortOrderListener,
-            model
-        )
-        val viewPager = binding.viewPagerShowsDistillation
-        viewPager.adapter = tabsAdapter
-        binding.tabLayoutShowsDistillation.setDefaultStyle()
-        binding.tabLayoutShowsDistillation.setViewPager(viewPager)
+        val initialShowFilter = ShowFilter.fromSettings(requireContext())
+        val initialShowSortOrder = SortShowsView.ShowSortOrder.fromSettings(requireContext())
 
-        // ensure size matches children in any case
-        // (on some devices did not resize correctly, Android layouting change?)
-        viewPager.post {
-            @Suppress("UNNECESSARY_SAFE_CALL") // view might already been unbound
-            viewPager?.requestLayout()
+        binding.apply {
+            filterShowsView.isGone = false
+            watchProvidersFilterView.isGone = true
+            sortShowsView.isGone = true
+
+            tabLayoutShowsDistillation.addOnTabSelectedListener(object : OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    val position = tab?.position ?: return
+                    filterShowsView.isGone = position != 0
+                    watchProvidersFilterView.isGone = position != 1
+                    sortShowsView.isGone = position != 2
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                }
+
+            })
+
+            filterShowsView.apply {
+                setInitialFilter(
+                    initialShowFilter,
+                    DisplaySettings.isNoReleasedEpisodes(context)
+                )
+                setFilterListener(filterListener)
+            }
+            watchProvidersFilterView.apply {
+                // ComposeView in a fragment: dispose already when fragment is destroyed
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                setContent {
+                    WatchProviderFilter(
+                        showsDistillationUiState = model.showsDistillationUiState,
+                        onProviderFilterChange = { provider: SgWatchProvider, checked: Boolean ->
+                            model.changeWatchProviderFilter(
+                                provider,
+                                checked
+                            )
+                        })
+                }
+            }
+            sortShowsView.apply {
+                setInitialSort(initialShowSortOrder)
+                setSortOrderListener(sortOrderListener)
+            }
         }
 
         return binding.root

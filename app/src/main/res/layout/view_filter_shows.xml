@@ -2,81 +2,94 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:orientation="vertical"
-    tools:parentTag="android.widget.LinearLayout">
+    tools:parentTag="android.widget.FrameLayout">
 
-    <com.battlelancer.seriesguide.ui.widgets.FilterBox
-        android:id="@+id/checkbox_shows_filter_unwatched"
-        style="@style/Widget.SeriesGuide.FilterBox"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewFilterShows"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:filterBoxDescription="@string/action_shows_filter_unwatched" />
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <com.battlelancer.seriesguide.ui.widgets.FilterBox
-            android:id="@+id/checkbox_shows_filter_upcoming"
-            style="@style/Widget.SeriesGuide.FilterBox"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:filterBoxDescription="@string/action_shows_filter_upcoming" />
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/button_shows_filter_upcoming_range"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/pref_upcominglimit"
-            android:src="@drawable/ic_settings_control_24dp" />
+            <com.battlelancer.seriesguide.ui.widgets.FilterBox
+                android:id="@+id/checkbox_shows_filter_unwatched"
+                style="@style/Widget.SeriesGuide.FilterBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:filterBoxDescription="@string/action_shows_filter_unwatched" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <com.battlelancer.seriesguide.ui.widgets.FilterBox
-        android:id="@+id/checkbox_shows_filter_continuing"
-        style="@style/Widget.SeriesGuide.FilterBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:filterBoxDescription="@string/show_isalive" />
+                <com.battlelancer.seriesguide.ui.widgets.FilterBox
+                    android:id="@+id/checkbox_shows_filter_upcoming"
+                    style="@style/Widget.SeriesGuide.FilterBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:filterBoxDescription="@string/action_shows_filter_upcoming" />
 
-    <com.battlelancer.seriesguide.ui.widgets.FilterBox
-        android:id="@+id/checkbox_shows_filter_favorites"
-        style="@style/Widget.SeriesGuide.FilterBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:filterBoxDescription="@string/action_shows_filter_favorites" />
+                <ImageButton
+                    android:id="@+id/button_shows_filter_upcoming_range"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/pref_upcominglimit"
+                    android:src="@drawable/ic_settings_control_24dp" />
 
-    <com.battlelancer.seriesguide.ui.widgets.FilterBox
-        android:id="@+id/checkbox_shows_filter_hidden"
-        style="@style/Widget.SeriesGuide.FilterBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:filterBoxDescription="@string/action_shows_filter_hidden" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/button_shows_filter_reset"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/empty_filter" />
+            <com.battlelancer.seriesguide.ui.widgets.FilterBox
+                android:id="@+id/checkbox_shows_filter_continuing"
+                style="@style/Widget.SeriesGuide.FilterBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:filterBoxDescription="@string/show_isalive" />
 
-    <Button
-        android:id="@+id/button_shows_filter_all_visible"
-        style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/action_shows_make_all_visible" />
+            <com.battlelancer.seriesguide.ui.widgets.FilterBox
+                android:id="@+id/checkbox_shows_filter_favorites"
+                style="@style/Widget.SeriesGuide.FilterBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:filterBoxDescription="@string/action_shows_filter_favorites" />
 
-    <CheckBox
-        android:id="@+id/checkbox_shows_filter_no_released"
-        style="@style/Widget.SeriesGuide.DistillationItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding"
-        tools:text="@string/pref_onlyfuture" />
+            <com.battlelancer.seriesguide.ui.widgets.FilterBox
+                android:id="@+id/checkbox_shows_filter_hidden"
+                style="@style/Widget.SeriesGuide.FilterBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:filterBoxDescription="@string/action_shows_filter_hidden" />
+
+            <Button
+                android:id="@+id/button_shows_filter_reset"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_filter" />
+
+            <Button
+                android:id="@+id/button_shows_filter_all_visible"
+                style="@style/Widget.SeriesGuide.Button.Borderless.Sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_shows_make_all_visible" />
+
+            <CheckBox
+                android:id="@+id/checkbox_shows_filter_no_released"
+                style="@style/Widget.SeriesGuide.DistillationItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_padding"
+                tools:text="@string/pref_onlyfuture" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </merge>

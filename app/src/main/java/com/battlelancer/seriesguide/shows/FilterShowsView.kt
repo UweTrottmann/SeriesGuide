@@ -6,7 +6,7 @@ package com.battlelancer.seriesguide.shows
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
+import android.widget.FrameLayout
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ViewFilterShowsBinding
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
@@ -16,12 +16,11 @@ class FilterShowsView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     val binding: ViewFilterShowsBinding
 
     init {
-        orientation = VERTICAL
         // can't do in onFinishInflate as that is only called when inflating from XML
         binding = ViewFilterShowsBinding.inflate(LayoutInflater.from(context), this)
 

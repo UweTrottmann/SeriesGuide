@@ -3,11 +3,12 @@
 
 package com.battlelancer.seriesguide.shows
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,9 +21,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import kotlinx.coroutines.flow.StateFlow
@@ -46,15 +49,23 @@ fun WatchProviderList(
     watchProviders: List<SgWatchProvider>,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(400.dp),
-        contentPadding = PaddingValues(vertical = 4.dp)
+    Column(
+        modifier = Modifier.heightIn(112.dp, 400.dp)
     ) {
-        items(items = watchProviders, key = { it._id }) {
-            WatchProviderFilterItem(it, onProviderFilterChange)
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            contentPadding = PaddingValues(vertical = 4.dp)
+        ) {
+            items(items = watchProviders, key = { it._id }) {
+                WatchProviderFilterItem(it, onProviderFilterChange)
+            }
         }
+        Text(
+            text = stringResource(id = R.string.action_include_any_watch_provider),
+            modifier = Modifier.padding(16.dp)
+        )
     }
 }
 
