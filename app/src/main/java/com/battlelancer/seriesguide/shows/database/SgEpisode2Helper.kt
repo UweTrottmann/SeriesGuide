@@ -538,7 +538,7 @@ interface SgEpisode2Helper {
     }
 
     @Query("DELETE FROM sg_episode WHERE series_id = :showId")
-    fun deleteEpisodesOfShow(showId: Long): Int
+    suspend fun deleteEpisodesOfShow(showId: Long): Int
 }
 
 data class SgEpisode2WithShow(
