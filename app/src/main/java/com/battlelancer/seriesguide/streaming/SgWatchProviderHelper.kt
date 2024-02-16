@@ -45,8 +45,12 @@ interface SgWatchProviderHelper {
 
     /**
      * Watch providers of all shows sorted by name.
+     *
+     * Android provides the UNICODE collator,
+     * use to correctly order characters with e.g. accents and ignore case.
+     * https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
      */
-    @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type GROUP BY _id ORDER BY provider_name ASC")
+    @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type GROUP BY _id ORDER BY provider_name COLLATE UNICODE ASC")
     fun usedWatchProvidersFlow(type: Int): Flow<List<SgWatchProvider>>
 
     @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type AND filter_local=1 GROUP BY _id")
