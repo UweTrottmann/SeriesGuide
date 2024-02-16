@@ -214,6 +214,8 @@ class AddUpdateShowTools @Inject constructor(
             }
         }
 
+        updateWatchProviderMappings(showId, showTmdbId)
+
         // Calculate next episode
         NextEpisodeUpdater(context).updateForShows(showId)
 
@@ -507,31 +509,7 @@ class AddUpdateShowTools @Inject constructor(
 //        episodeHelper.deleteEpisodesWithoutTmdbId(showId)
 //        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
 
-        // FIXME for testing
-        // Download and store watch provider mappings
-        val region = StreamingSearch.getCurrentRegionOrNull(context)
-        if (region != null) {
-            runBlocking {
-                val providerHelper = SgRoomDatabase.getInstance(context).sgWatchProviderHelper()
-                providerHelper.deleteShowMappings(showId)
-
-                val providers = TmdbTools2().getWatchProvidersForShow(showTmdbId, region, context)
-                if (providers != null) {
-                    // TODO other provider types
-                    providers.flatrate
-                        .mapNotNull { it.provider_id }
-//                        .mapNotNull {
-//                            providerHelper.getByExternalProviderId(
-//                                it, SgWatchProvider.Type.SHOWS.id
-//                            )
-//                        }
-                        .map { SgWatchProviderShowMapping(it, showId) }
-                        .also {
-                            if (it.isNotEmpty()) providerHelper.addShowMappings(it)
-                        }
-                }
-            }
-        }
+        updateWatchProviderMappings(showId, showTmdbId)
 
         // At last store shows update (sets last updated timestamp).
         val updated = database.sgShow2Helper().updateShow(updatedShow)
@@ -539,6 +517,31 @@ class AddUpdateShowTools @Inject constructor(
             UpdateResult.Success
         } else {
             UpdateResult.DatabaseError
+        }
+    }
+
+    /**
+     * Download and store watch provider mappings if a streaming search region is configured.
+     */
+    private fun updateWatchProviderMappings(showId: Long, showTmdbId: Int) {
+        val region = StreamingSearch.getCurrentRegionOrNull(context) ?: return
+        runBlocking {
+            val providers = TmdbTools2().getWatchProvidersForShow(showTmdbId, region, context)
+            if (providers != null) {
+                // Just take all possible options
+                (providers.flatrate + providers.free + providers.ads + providers.buy)
+                    .mapNotNull { it.provider_id }
+                    .distinct()
+                    .map { SgWatchProviderShowMapping(it, showId) }
+                    .also {
+                        val providerHelper =
+                            SgRoomDatabase.getInstance(context).sgWatchProviderHelper()
+                        providerHelper.deleteShowMappings(showId)
+                        // If providers are added that don't exist in the providers table,
+                        // not an issue as they just won't be displayed (join will fail).
+                        if (it.isNotEmpty()) providerHelper.addShowMappings(it)
+                    }
+            }
         }
     }
 

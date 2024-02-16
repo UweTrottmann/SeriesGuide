@@ -67,13 +67,9 @@ interface SgWatchProviderHelper {
     @Query("UPDATE sg_watch_provider SET enabled=0 WHERE type=:type")
     fun setAllDisabled(type: Int)
 
-    // TODO remove if unused
-//    @Query("SELECT _id FROM sg_watch_provider WHERE provider_id=:providerId AND type=:type")
-//    fun getByExternalProviderId(providerId: Int, type: Int): Long?
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addShowMappings(mappings: List<SgWatchProviderShowMapping>)
+    suspend fun addShowMappings(mappings: List<SgWatchProviderShowMapping>)
 
     @Query("DELETE FROM sg_watch_provider_show_mappings WHERE show_id=:showId")
-    fun deleteShowMappings(showId: Long)
+    suspend fun deleteShowMappings(showId: Long)
 }
