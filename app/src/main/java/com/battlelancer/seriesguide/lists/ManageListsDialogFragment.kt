@@ -117,8 +117,8 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
     }
 
     private val onItemClickListener = object : ListsWithItemAdapter.ItemClickListener {
-        override fun onItemClick(v: View, listId: String, isChecked: Boolean) {
-            model.setIsItemOnList(listId, !isChecked)
+        override fun onItemClick(v: View, listItem: ListWithItem) {
+            model.setIsItemOnList(listItem.listId, !listItem.isItemOnList)
         }
     }
 
@@ -129,7 +129,7 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
     ) {
 
         interface ItemClickListener {
-            fun onItemClick(v: View, listId: String, isChecked: Boolean)
+            fun onItemClick(v: View, listItem: ListWithItem)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListWithItemViewHolder =
@@ -145,21 +145,17 @@ class ManageListsDialogFragment : AppCompatDialogFragment() {
             private var listWithItem: ListWithItem? = null
 
             init {
-                binding.checkedTextViewList.setOnClickListener { view ->
+                binding.root.setOnClickListener { view ->
                     listWithItem?.also {
-                        itemClickListener.onItemClick(
-                            view,
-                            it.listId,
-                            binding.checkedTextViewList.isChecked
-                        )
+                        itemClickListener.onItemClick(view, it)
                     }
                 }
             }
 
             fun bindTo(listWithItem: ListWithItem?) {
                 this.listWithItem = listWithItem
-                binding.checkedTextViewList.text = listWithItem?.listName ?: ""
-                binding.checkedTextViewList.isChecked = listWithItem?.isItemOnList ?: false
+                binding.textViewListItem.text = listWithItem?.listName ?: ""
+                binding.checkBoxListItem.isChecked = listWithItem?.isItemOnList ?: false
             }
 
             companion object {
