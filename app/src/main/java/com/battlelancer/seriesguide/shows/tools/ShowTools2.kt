@@ -162,6 +162,8 @@ class ShowTools2 @Inject constructor(
             rowsUpdated = database.sgShow2Helper().deleteShow(showId)
             if (rowsUpdated == -1) return@withContext SgResult.ERROR
 
+            database.sgWatchProviderHelper().deleteShowMappings(showId)
+
             SeriesGuideDatabase.rebuildFtsTable(context)
             SgResult.SUCCESS
         }
