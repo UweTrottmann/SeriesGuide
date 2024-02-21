@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.shows
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,13 +35,15 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun WatchProviderFilter(
     showsDistillationUiState: StateFlow<ShowsDistillationUiState>,
-    onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit
+    onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit,
+    onProviderIncludeAny: () -> Unit
 ) {
     val uiState by showsDistillationUiState.collectAsState()
     SeriesGuideTheme {
         WatchProviderList(
             watchProviders = uiState.watchProviders,
-            onProviderFilterChange
+            onProviderFilterChange,
+            onProviderIncludeAny
         )
     }
 }
@@ -47,7 +51,8 @@ fun WatchProviderFilter(
 @Composable
 fun WatchProviderList(
     watchProviders: List<SgWatchProvider>,
-    onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit
+    onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit,
+    onProviderIncludeAny: () -> Unit
 ) {
     Column(
         modifier = Modifier.heightIn(112.dp, 400.dp)
@@ -56,16 +61,26 @@ fun WatchProviderList(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            contentPadding = PaddingValues(vertical = 4.dp)
+            contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             items(items = watchProviders, key = { it._id }) {
                 WatchProviderFilterItem(it, onProviderFilterChange)
             }
         }
-        Text(
-            text = stringResource(id = R.string.action_include_any_watch_provider),
-            modifier = Modifier.padding(16.dp)
-        )
+        Divider()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    role = Role.Button,
+                    onClick = { onProviderIncludeAny() }
+                )
+                .padding(16.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.action_include_any_watch_provider)
+            )
+        }
     }
 }
 
@@ -117,6 +132,8 @@ fun WatchProviderFilterPreview() {
                     type = SgWatchProvider.Type.SHOWS.id
                 )
             },
-            onProviderFilterChange = { _: SgWatchProvider, _: Boolean -> })
+            onProviderFilterChange = { _: SgWatchProvider, _: Boolean -> },
+            onProviderIncludeAny = {}
+        )
     }
 }

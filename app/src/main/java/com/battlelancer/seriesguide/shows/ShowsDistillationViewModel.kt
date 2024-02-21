@@ -34,6 +34,13 @@ class ShowsDistillationViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
+    fun removeWatchProviderFilter() {
+        viewModelScope.launch(Dispatchers.IO) {
+            SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
+                .setFilterLocalFalseAll(SgWatchProvider.Type.SHOWS.id)
+        }
+    }
+
 }
 
 data class ShowsDistillationUiState(

@@ -86,6 +86,7 @@ class ShowsFragment : Fragment() {
         ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
         emptyViewFilter.setOnClickListener {
             ShowsDistillationSettings.saveFilter(requireContext(), ShowFilter.default())
+            // Note: not removing watch provider filters as it is ensured they always have matches
         }
         return v
     }

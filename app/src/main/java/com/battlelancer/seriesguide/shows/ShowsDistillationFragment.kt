@@ -91,7 +91,9 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
                                 provider,
                                 checked
                             )
-                        })
+                        },
+                        onProviderIncludeAny = { model.removeWatchProviderFilter() }
+                    )
                 }
             }
             sortShowsView.apply {
