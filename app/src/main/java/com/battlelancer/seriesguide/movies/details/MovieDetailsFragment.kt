@@ -511,7 +511,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.isClickable = false
             binding.frameLayoutMoviePoster.isFocusable = false
         } else {
-            val smallImageUrl = (TmdbSettings.getImageBaseUrl(activity)
+            val smallImageUrl = (TmdbSettings.getImageBaseUrl(requireContext())
                     + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path)
             ImageTools.loadWithPicasso(requireContext(), smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
@@ -558,8 +558,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.also {
                 it.isFocusable = true
                 it.setOnClickListener { view ->
+                    val posterPath = tmdbMovie.poster_path ?: return@setOnClickListener
                     val largeImageUrl =
-                        TmdbSettings.getImageOriginalUrl(activity, tmdbMovie.poster_path)
+                        TmdbSettings.getImageOriginalUrl(requireContext(), posterPath)
                     val intent = FullscreenImageActivity.intent(
                         requireActivity(),
                         smallImageUrl,
