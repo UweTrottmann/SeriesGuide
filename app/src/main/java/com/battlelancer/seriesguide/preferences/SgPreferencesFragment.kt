@@ -339,9 +339,7 @@ class SgPreferencesFragment : BasePreferencesFragment(),
             return true
         }
         if (StreamingSearch.KEY_SETTING_REGION == key) {
-            StreamingSearchConfigureDialog().safeShow(
-                supportFragmentManager, "streaming-service"
-            )
+            StreamingSearchConfigureDialog.show(supportFragmentManager)
             return true
         }
         if (DisplaySettings.KEY_SHOWS_TIME_OFFSET == key) {
