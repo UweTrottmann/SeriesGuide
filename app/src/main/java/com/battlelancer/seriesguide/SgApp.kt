@@ -109,6 +109,11 @@ class SgApp : Application() {
         const val RELEASE_VERSION_59_BETA1 = 2105900
 
         /**
+         * Added show watch provider mapping table.
+         */
+        const val RELEASE_VERSION_72_0_1 = 2107201
+
+        /**
          * The content authority used to identify the SeriesGuide [android.content.ContentProvider].
          */
         const val CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".provider"

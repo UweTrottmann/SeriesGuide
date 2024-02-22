@@ -226,6 +226,9 @@ interface SgShow2Helper {
     @Query("UPDATE sg_show SET series_lastupdate = :lastUpdatedMs WHERE _id = :id")
     fun setLastUpdated(id: Long, lastUpdatedMs: Long)
 
+    @Query("UPDATE sg_show SET series_lastupdate = 0")
+    suspend fun resetLastUpdated()
+
     @Query("SELECT series_lastupdate FROM sg_show WHERE _id = :id")
     fun getLastUpdated(id: Long): Long?
 
