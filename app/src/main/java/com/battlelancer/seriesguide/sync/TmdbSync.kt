@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2020, 2022, 2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
@@ -11,9 +11,12 @@ import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.TmdbSettings
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.util.Errors
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.tmdb2.services.ConfigurationService
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 class TmdbSync internal constructor(
@@ -22,10 +25,41 @@ class TmdbSync internal constructor(
     private val movieTools: MovieTools
 ) {
 
+    fun updateConfigurationAndWatchProviders(progress: SyncProgress, prefs: SharedPreferences) {
+        if (TmdbSettings.isConfigurationUpToDate(context)) {
+            return
+        }
+        // No need to abort on failure, can use default or last fetched config.
+        var hadError = false
+
+        // Image URL configuration
+        if (!updateConfiguration(prefs)) {
+            hadError = true
+        }
+
+        // Show watch providers
+        StreamingSearch.getCurrentRegionOrNull(context)?.also {
+            // Note: only updating for shows to keep local watch provider filter up-to-date
+            val providersUpdated = runBlocking {
+                StreamingSearch
+                    .updateWatchProviders(context, SgWatchProvider.Type.SHOWS, it)
+            }
+            if (!providersUpdated) {
+                hadError = true
+            }
+        }
+
+        if (hadError) {
+            progress.recordError()
+        } else {
+            TmdbSettings.setConfigurationLastUpdatedNow(context)
+        }
+    }
+
     /**
      * Downloads and stores the latest image url configuration from themoviedb.org.
      */
-    fun updateConfiguration(prefs: SharedPreferences): Boolean {
+    private fun updateConfiguration(prefs: SharedPreferences): Boolean {
         try {
             val response = configurationService.configuration().execute()
             if (response.isSuccessful) {

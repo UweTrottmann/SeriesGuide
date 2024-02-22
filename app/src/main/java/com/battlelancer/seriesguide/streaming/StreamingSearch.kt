@@ -296,7 +296,7 @@ object StreamingSearch {
         context: Context,
         type: SgWatchProvider.Type,
         watchRegion: String
-    ) = withContext(Dispatchers.IO) {
+    ): Boolean = withContext(Dispatchers.IO) {
         val tmdb = SgApp.getServicesComponent(context).tmdb()
         val language = when (type) {
             SgWatchProvider.Type.SHOWS -> ShowsSettings.getShowsSearchLanguage(context)
@@ -317,7 +317,9 @@ object StreamingSearch {
             val diff = calculateProviderDiff(newProviders, oldProviders, type)
 
             dbHelper.updateWatchProviders(diff.inserts, diff.updates, diff.deletes)
+            return@withContext true
         }
+        return@withContext false
     }
 
     data class ProviderDiff(

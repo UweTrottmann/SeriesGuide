@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.sync
 
@@ -105,12 +105,9 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         progress.publish(SyncProgress.Step.TMDB)
 
         // Get latest TMDb configuration.
-        // No need to abort on failure, can use default or last fetched config.
         val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        if (!tmdbSync.updateConfiguration(prefs)) {
-            progress.recordError()
-        }
+        tmdbSync.updateConfigurationAndWatchProviders(progress, prefs)
 
         // Update show data.
         // If failed for at least one show, do not proceed with other sync steps to avoid
