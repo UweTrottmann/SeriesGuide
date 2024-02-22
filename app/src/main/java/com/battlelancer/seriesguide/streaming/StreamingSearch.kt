@@ -21,11 +21,13 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.ShowsSettings
+import com.battlelancer.seriesguide.sync.SgSyncAdapter
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
@@ -285,8 +287,14 @@ object StreamingSearch {
         regionLiveData.postValue(region)
         // In case changed in quick succession, do not run in parallel to avoid breaking diff
         SgApp.coroutineScope.launch(SgApp.SINGLE) {
+            // Update providers for new region
             updateWatchProviders(context, SgWatchProvider.Type.SHOWS, region)
             updateWatchProviders(context, SgWatchProvider.Type.MOVIES, region)
+            // Schedule shows to update mappings for new region
+            SgRoomDatabase.getInstance(context).sgShow2Helper().resetLastUpdated()
+            withContext(Dispatchers.Main) {
+                SgSyncAdapter.requestSyncDeltaImmediate(context, true)
+            }
         }
     }
 
