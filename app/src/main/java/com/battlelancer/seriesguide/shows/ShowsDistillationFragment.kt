@@ -87,7 +87,6 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
                 setContent {
                     WatchProviderFilter(
                         watchProvidersFlow = model.watchProvidersFlow,
-                        watchProvidersRegionFlow = model.watchProviderRegionFlow,
                         onProviderFilterChange = { provider: SgWatchProvider, checked: Boolean ->
                             model.changeWatchProviderFilter(
                                 provider,

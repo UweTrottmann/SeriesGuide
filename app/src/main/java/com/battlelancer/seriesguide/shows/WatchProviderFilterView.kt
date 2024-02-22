@@ -14,9 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material3.AssistChip
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,17 +39,14 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun WatchProviderFilter(
     watchProvidersFlow: StateFlow<List<SgWatchProvider>>,
-    watchProvidersRegionFlow: StateFlow<String>,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit,
     onProviderIncludeAny: () -> Unit,
     onSelectRegion: () -> Unit
 ) {
     val watchProviders by watchProvidersFlow.collectAsState()
-    val watchProvidersRegion by watchProvidersRegionFlow.collectAsState()
     SeriesGuideTheme {
         WatchProviderList(
             watchProviders,
-            watchProvidersRegion,
             onProviderFilterChange,
             onProviderIncludeAny,
             onSelectRegion
@@ -57,7 +57,6 @@ fun WatchProviderFilter(
 @Composable
 fun WatchProviderList(
     watchProviders: List<SgWatchProvider>,
-    watchProvidersRegion: String,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit,
     onProviderIncludeAny: () -> Unit,
     onSelectRegion: () -> Unit
@@ -88,11 +87,15 @@ fun WatchProviderList(
             ) {
                 Text(stringResource(id = R.string.action_include_any_watch_provider))
             }
-            AssistChip(
-                modifier = Modifier.padding(start = 8.dp, top = 2.dp, end = 16.dp),
-                onClick = onSelectRegion,
-                label = { Text(watchProvidersRegion) }
-            )
+            IconButton(
+                modifier = Modifier.padding(top = 2.dp, start = 4.dp, end = 4.dp),
+                onClick = onSelectRegion
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Settings,
+                    contentDescription = stringResource(id = R.string.action_stream_info)
+                )
+            }
         }
     }
 }
@@ -145,7 +148,6 @@ fun WatchProviderFilterPreview() {
                     type = SgWatchProvider.Type.SHOWS.id
                 )
             },
-            watchProvidersRegion = "United States",
             onProviderFilterChange = { _: SgWatchProvider, _: Boolean -> },
             onProviderIncludeAny = {},
             onSelectRegion = {}
