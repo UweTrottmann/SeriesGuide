@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2023 Uwe Trottmann
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.streaming
 
@@ -17,9 +17,15 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp
+import com.battlelancer.seriesguide.movies.MoviesSettings
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.ViewTools
+import com.uwetrottmann.tmdb2.entities.WatchProviders
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
@@ -284,6 +290,88 @@ object StreamingSearch {
             null -> context.getString(R.string.action_select_region)
             else -> getServiceDisplayName(serviceOrEmptyOrNull)
         }
+    }
+
+    suspend fun updateWatchProviders(
+        context: Context,
+        type: SgWatchProvider.Type,
+        watchRegion: String
+    ) = withContext(Dispatchers.IO) {
+        val tmdb = SgApp.getServicesComponent(context).tmdb()
+        val language = when (type) {
+            SgWatchProvider.Type.SHOWS -> ShowsSettings.getShowsSearchLanguage(context)
+            SgWatchProvider.Type.MOVIES -> MoviesSettings.getMoviesLanguage(context)
+        }
+        val newProviders = when (type) {
+            SgWatchProvider.Type.SHOWS -> TmdbTools2()
+                .getShowWatchProviders(tmdb, language, watchRegion)
+
+            SgWatchProvider.Type.MOVIES -> TmdbTools2()
+                .getMovieWatchProviders(tmdb, language, watchRegion)
+        }
+        if (newProviders != null) {
+            val dbHelper =
+                SgRoomDatabase.getInstance(context).sgWatchProviderHelper()
+            val oldProviders = dbHelper.getAllWatchProviders(type.id).toMutableList()
+
+            val diff = calculateProviderDiff(newProviders, oldProviders, type)
+
+            dbHelper.updateWatchProviders(diff.inserts, diff.updates, diff.deletes)
+        }
+    }
+
+    data class ProviderDiff(
+        val inserts: List<SgWatchProvider>,
+        val updates: List<SgWatchProvider>,
+        val deletes: List<SgWatchProvider>
+    )
+
+    /**
+     * Create inserts, updates and deletes to minimize database writes
+     * at the cost of CPU and memory. Only pass providers of one type.
+     */
+    fun calculateProviderDiff(
+        newProviders: List<WatchProviders.WatchProvider>,
+        oldProviders: List<SgWatchProvider>,
+        type: SgWatchProvider.Type
+    ): ProviderDiff {
+        val inserts = mutableListOf<SgWatchProvider>()
+        val updates = mutableListOf<SgWatchProvider>()
+        val deletes = oldProviders.associateByTo(mutableMapOf()) { it.provider_id }
+
+        newProviders.forEach { newProvider ->
+            val providerId = newProvider.provider_id
+            val providerName = newProvider.provider_name
+            if (providerId != null && providerName != null) {
+                // Do not delete this provider
+                deletes.remove(providerId)
+                val existingProvider =
+                    oldProviders.find { it.provider_id == providerId }
+                if (existingProvider != null) {
+                    // Only update if different
+                    val update = existingProvider.copy(
+                        provider_name = providerName,
+                        display_priority = newProvider.display_priority ?: 0,
+                        logo_path = newProvider.logo_path ?: "",
+                        type = type.id
+                    )
+                    if (update != existingProvider) updates.add(update)
+                } else {
+                    inserts.add(
+                        SgWatchProvider(
+                            provider_id = providerId,
+                            provider_name = providerName,
+                            display_priority = newProvider.display_priority ?: 0,
+                            logo_path = newProvider.logo_path ?: "",
+                            type = type.id,
+                            enabled = false
+                        )
+                    )
+                }
+            }
+        }
+
+        return ProviderDiff(inserts, updates, deletes.values.toList())
     }
 
 }
