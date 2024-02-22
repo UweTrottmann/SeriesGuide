@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -34,16 +35,21 @@ import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun WatchProviderFilter(
-    showsDistillationUiState: StateFlow<ShowsDistillationUiState>,
+    watchProvidersFlow: StateFlow<List<SgWatchProvider>>,
+    watchProvidersRegionFlow: StateFlow<String>,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit,
-    onProviderIncludeAny: () -> Unit
+    onProviderIncludeAny: () -> Unit,
+    onSelectRegion: () -> Unit
 ) {
-    val uiState by showsDistillationUiState.collectAsState()
+    val watchProviders by watchProvidersFlow.collectAsState()
+    val watchProvidersRegion by watchProvidersRegionFlow.collectAsState()
     SeriesGuideTheme {
         WatchProviderList(
-            watchProviders = uiState.watchProviders,
+            watchProviders,
+            watchProvidersRegion,
             onProviderFilterChange,
-            onProviderIncludeAny
+            onProviderIncludeAny,
+            onSelectRegion
         )
     }
 }
@@ -51,8 +57,10 @@ fun WatchProviderFilter(
 @Composable
 fun WatchProviderList(
     watchProviders: List<SgWatchProvider>,
+    watchProvidersRegion: String,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit,
-    onProviderIncludeAny: () -> Unit
+    onProviderIncludeAny: () -> Unit,
+    onSelectRegion: () -> Unit
 ) {
     Column(
         modifier = Modifier.heightIn(112.dp, 400.dp)
@@ -68,17 +76,22 @@ fun WatchProviderList(
             }
         }
         Divider()
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(
-                    role = Role.Button,
-                    onClick = { onProviderIncludeAny() }
-                )
-                .padding(16.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.action_include_any_watch_provider)
+        Row {
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable(
+                        role = Role.Button,
+                        onClick = onProviderIncludeAny
+                    )
+                    .padding(16.dp)
+            ) {
+                Text(stringResource(id = R.string.action_include_any_watch_provider))
+            }
+            AssistChip(
+                modifier = Modifier.padding(start = 8.dp, top = 2.dp, end = 16.dp),
+                onClick = onSelectRegion,
+                label = { Text(watchProvidersRegion) }
             )
         }
     }
@@ -132,8 +145,10 @@ fun WatchProviderFilterPreview() {
                     type = SgWatchProvider.Type.SHOWS.id
                 )
             },
+            watchProvidersRegion = "United States",
             onProviderFilterChange = { _: SgWatchProvider, _: Boolean -> },
-            onProviderIncludeAny = {}
+            onProviderIncludeAny = {},
+            onSelectRegion = {}
         )
     }
 }

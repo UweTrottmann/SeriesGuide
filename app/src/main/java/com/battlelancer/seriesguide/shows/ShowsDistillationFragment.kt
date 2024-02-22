@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
+import com.battlelancer.seriesguide.streaming.StreamingSearchInfoDialog
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.safeShow
@@ -85,14 +86,16 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 setContent {
                     WatchProviderFilter(
-                        showsDistillationUiState = model.showsDistillationUiState,
+                        watchProvidersFlow = model.watchProvidersFlow,
+                        watchProvidersRegionFlow = model.watchProviderRegionFlow,
                         onProviderFilterChange = { provider: SgWatchProvider, checked: Boolean ->
                             model.changeWatchProviderFilter(
                                 provider,
                                 checked
                             )
                         },
-                        onProviderIncludeAny = { model.removeWatchProviderFilter() }
+                        onProviderIncludeAny = { model.removeWatchProviderFilter() },
+                        onSelectRegion = { StreamingSearchInfoDialog.show(parentFragmentManager) }
                     )
                 }
             }

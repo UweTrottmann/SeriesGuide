@@ -5,9 +5,11 @@ package com.battlelancer.seriesguide.shows
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,15 +19,25 @@ import kotlinx.coroutines.launch
 
 class ShowsDistillationViewModel(application: Application) : AndroidViewModel(application) {
 
-    val showsDistillationUiState: StateFlow<ShowsDistillationUiState> =
+    val watchProvidersFlow: StateFlow<List<SgWatchProvider>> =
         SgRoomDatabase.getInstance(application).sgWatchProviderHelper()
             .usedWatchProvidersFlow(SgWatchProvider.Type.SHOWS.id)
-            .map { ShowsDistillationUiState(it) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(),
-                initialValue = ShowsDistillationUiState()
+                initialValue = listOf()
             )
+
+    val watchProviderRegionFlow: StateFlow<String> = StreamingSearch.regionLiveData.asFlow()
+        .map {
+            // Simpler to just use the existing API that reads from SharedPreferences
+            StreamingSearch.getCurrentRegionOrSelectString(application)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = StreamingSearch.getCurrentRegionOrSelectString(application)
+        )
 
     fun changeWatchProviderFilter(watchProvider: SgWatchProvider, filter: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -42,7 +54,3 @@ class ShowsDistillationViewModel(application: Application) : AndroidViewModel(ap
     }
 
 }
-
-data class ShowsDistillationUiState(
-    val watchProviders: List<SgWatchProvider> = listOf()
-)
