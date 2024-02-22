@@ -107,7 +107,7 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
         // Get latest TMDb configuration.
         val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        tmdbSync.updateConfigurationAndWatchProviders(progress, prefs)
+        tmdbSync.updateConfigurationAndWatchProviders(progress)
 
         // Update show data.
         // If failed for at least one show, do not proceed with other sync steps to avoid

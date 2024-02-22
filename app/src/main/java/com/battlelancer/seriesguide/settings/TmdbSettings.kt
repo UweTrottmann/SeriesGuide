@@ -18,12 +18,12 @@ object TmdbSettings {
      week, updating weekly should be fine. */
     private const val UPDATE_INTERVAL_MS = 7 * DateUtils.DAY_IN_MILLIS
 
-    const val KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl"
+    private const val KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl"
     const val POSTER_SIZE_SPEC_W154 = "w154"
     const val POSTER_SIZE_SPEC_W342 = "w342"
     private const val STILL_SIZE_SPEC_W300 = "w300"
-    const val IMAGE_SIZE_SPEC_ORIGINAL = "original"
-    private const val DEFAULT_BASE_URL = "https://image.tmdb.org/t/p/"
+    private const val IMAGE_SIZE_SPEC_ORIGINAL = "original"
+    const val DEFAULT_BASE_URL = "https://image.tmdb.org/t/p/"
 
     fun isConfigurationUpToDate(context: Context): Boolean {
         val lastUpdatedMs =
@@ -34,6 +34,16 @@ object TmdbSettings {
     fun setConfigurationLastUpdatedNow(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putLong(KEY_LAST_UPDATED, System.currentTimeMillis())
+        }
+    }
+
+    /**
+     * Saves the base URL, unless it's empty or blank.
+     */
+    fun setImageBaseUrl(context: Context, url: String) {
+        if (url.isEmpty() || url.isBlank()) return
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putString(KEY_TMDB_BASE_URL, url)
         }
     }
 

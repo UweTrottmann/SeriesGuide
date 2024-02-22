@@ -4,9 +4,7 @@
 package com.battlelancer.seriesguide.sync
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.text.format.DateUtils
-import androidx.core.content.edit
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -25,7 +23,7 @@ class TmdbSync internal constructor(
     private val movieTools: MovieTools
 ) {
 
-    fun updateConfigurationAndWatchProviders(progress: SyncProgress, prefs: SharedPreferences) {
+    fun updateConfigurationAndWatchProviders(progress: SyncProgress) {
         if (TmdbSettings.isConfigurationUpToDate(context)) {
             return
         }
@@ -33,7 +31,7 @@ class TmdbSync internal constructor(
         var hadError = false
 
         // Image URL configuration
-        if (!updateConfiguration(prefs)) {
+        if (!updateConfiguration()) {
             hadError = true
         }
 
@@ -59,15 +57,14 @@ class TmdbSync internal constructor(
     /**
      * Downloads and stores the latest image url configuration from themoviedb.org.
      */
-    private fun updateConfiguration(prefs: SharedPreferences): Boolean {
+    private fun updateConfiguration(): Boolean {
         try {
             val response = configurationService.configuration().execute()
             if (response.isSuccessful) {
                 val config = response.body()
-                if (!config?.images?.secure_base_url.isNullOrEmpty()) {
-                    prefs.edit {
-                        putString(TmdbSettings.KEY_TMDB_BASE_URL, config!!.images!!.secure_base_url)
-                    }
+                val baseUrl = config?.images?.secure_base_url
+                if (baseUrl != null) {
+                    TmdbSettings.setImageBaseUrl(context, baseUrl)
                     return true
                 }
             } else {

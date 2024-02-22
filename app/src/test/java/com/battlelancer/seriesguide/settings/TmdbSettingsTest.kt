@@ -26,4 +26,19 @@ class TmdbSettingsTest {
         assertThat(TmdbSettings.isConfigurationUpToDate(context)).isTrue()
     }
 
+    @Test
+    fun getImageBaseUrl() {
+        assertThat(TmdbSettings.getImageBaseUrl(context)).isEqualTo(TmdbSettings.DEFAULT_BASE_URL)
+
+        TmdbSettings.setImageBaseUrl(context, "")
+        assertThat(TmdbSettings.getImageBaseUrl(context)).isEqualTo(TmdbSettings.DEFAULT_BASE_URL)
+
+        TmdbSettings.setImageBaseUrl(context, "   ")
+        assertThat(TmdbSettings.getImageBaseUrl(context)).isEqualTo(TmdbSettings.DEFAULT_BASE_URL)
+
+        val testValue = "placeholder"
+        TmdbSettings.setImageBaseUrl(context, testValue)
+        assertThat(TmdbSettings.getImageBaseUrl(context)).isEqualTo(testValue)
+    }
+
 }
