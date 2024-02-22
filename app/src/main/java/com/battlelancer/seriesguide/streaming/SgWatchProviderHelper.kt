@@ -18,16 +18,16 @@ import kotlinx.coroutines.flow.Flow
 interface SgWatchProviderHelper {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOrReplace(providers: List<SgWatchProvider>)
+    suspend fun insertOrReplace(providers: List<SgWatchProvider>)
 
     @Update
-    fun update(providers: List<SgWatchProvider>)
+    suspend fun update(providers: List<SgWatchProvider>)
 
     @Delete
-    fun delete(providers: List<SgWatchProvider>)
+    suspend fun delete(providers: List<SgWatchProvider>)
 
     @Transaction
-    fun updateWatchProviders(
+    suspend fun updateWatchProviders(
         inserts: List<SgWatchProvider>,
         updates: List<SgWatchProvider>,
         deletes: List<SgWatchProvider>
@@ -38,7 +38,7 @@ interface SgWatchProviderHelper {
     }
 
     @Query("SELECT * FROM sg_watch_provider WHERE type=:type")
-    fun getAllWatchProviders(type: Int): List<SgWatchProvider>
+    suspend fun getAllWatchProviders(type: Int): List<SgWatchProvider>
 
     @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY display_priority ASC, provider_name ASC")
     fun allWatchProvidersPagingSource(type: Int): PagingSource<Int, SgWatchProvider>

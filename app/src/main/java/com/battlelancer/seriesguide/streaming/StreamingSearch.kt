@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.util.ViewTools
 import com.uwetrottmann.tmdb2.entities.WatchProviders
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
@@ -283,6 +283,11 @@ object StreamingSearch {
             putString(KEY_SETTING_REGION, region)
         }
         regionLiveData.postValue(region)
+        // In case changed in quick succession, do not run in parallel to avoid breaking diff
+        SgApp.coroutineScope.launch(SgApp.SINGLE) {
+            updateWatchProviders(context, SgWatchProvider.Type.SHOWS, region)
+            updateWatchProviders(context, SgWatchProvider.Type.MOVIES, region)
+        }
     }
 
     fun getCurrentRegionOrSelectString(context: Context): String {
@@ -296,7 +301,7 @@ object StreamingSearch {
         context: Context,
         type: SgWatchProvider.Type,
         watchRegion: String
-    ): Boolean = withContext(Dispatchers.IO) {
+    ): Boolean {
         val tmdb = SgApp.getServicesComponent(context).tmdb()
         val language = when (type) {
             SgWatchProvider.Type.SHOWS -> ShowsSettings.getShowsSearchLanguage(context)
@@ -317,9 +322,9 @@ object StreamingSearch {
             val diff = calculateProviderDiff(newProviders, oldProviders, type)
 
             dbHelper.updateWatchProviders(diff.inserts, diff.updates, diff.deletes)
-            return@withContext true
+            return true
         }
-        return@withContext false
+        return false
     }
 
     data class ProviderDiff(

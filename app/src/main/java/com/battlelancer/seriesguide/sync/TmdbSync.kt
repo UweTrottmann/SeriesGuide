@@ -5,6 +5,7 @@ package com.battlelancer.seriesguide.sync
 
 import android.content.Context
 import android.text.format.DateUtils
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.movies.MoviesSettings
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -38,7 +39,7 @@ class TmdbSync internal constructor(
         // Show watch providers
         StreamingSearch.getCurrentRegionOrNull(context)?.also {
             // Note: only updating for shows to keep local watch provider filter up-to-date
-            val providersUpdated = runBlocking {
+            val providersUpdated = runBlocking(SgApp.SINGLE) {
                 StreamingSearch
                     .updateWatchProviders(context, SgWatchProvider.Type.SHOWS, it)
             }

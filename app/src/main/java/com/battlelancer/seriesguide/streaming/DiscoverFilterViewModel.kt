@@ -13,7 +13,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.SgWatchProvider.Type
-import kotlinx.coroutines.launch
 
 class DiscoverFilterViewModel(
     application: Application,
@@ -29,19 +28,6 @@ class DiscoverFilterViewModel(
             .allWatchProvidersPagingSource(type.id)
     }.flow
         .cachedIn(viewModelScope)
-
-    init {
-        val watchRegion = StreamingSearch.getCurrentRegionOrNull(getApplication())
-        if (watchRegion != null) {
-            updateWatchProviders(watchRegion)
-        }
-    }
-
-    fun updateWatchProviders(watchRegion: String) {
-        viewModelScope.launch {
-            StreamingSearch.updateWatchProviders(getApplication(), type, watchRegion)
-        }
-    }
 
 }
 
