@@ -20,7 +20,7 @@
     <string name="specialseason">Особые выпуски</string>
     <string name="ratings">Оценки</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Перейти назад</string>
     <string name="description_overview">Обзор</string>
     <string name="description_poster">Показать постер</string>
     <string name="description_image">Кадр из эпизода</string>
@@ -88,7 +88,7 @@
     <string name="original_release">Оригинальное издание</string>
     <string name="show_genres">Жанры</string>
     <string name="show_contentrating">Возрастные ограничения</string>
-    <string name="show_release_times">Время выпуска</string>
+    <string name="show_release_times">Страна</string>
     <string name="episode_directors">Режиссёры</string>
     <string name="episode_gueststars">Приглашенные звёзды</string>
     <string name="episode_writers">Сценаристы</string>
@@ -460,7 +460,7 @@
     <string name="backup_failed">Не удалось выполнить резервное копирование.</string>
     <string name="import_failed_nosd">Не удается восстановить резервную копию. Папка резервного копирования не доступна.</string>
     <string name="import_failed_nofile">Нет читаемого файла резервной копии.</string>
-    <string name="import_success">Резервная копия успешно восстановлено</string>
+    <string name="import_success">Резервная копия успешно восстановлена</string>
     <string name="import_failed">Восстановление резервной копии не удалось.</string>
     <string name="backup_button">Резервное копирование</string>
     <string name="import_button">Восстановление</string>
@@ -474,7 +474,7 @@
     <string name="last_auto_backup">Последнее автоматическое резервное копирование: %s</string>
     <string name="restore_auto_backup">Восстановить автоматическую резервную копию</string>
     <string name="autobackup_failed">Последний автоматический бэкап не удался</string>
-    <string name="autobackup_files_missing">Чтобы использовать автоматическое резервное копирование, выберите допустимые файлы резервных копий.</string>
+    <string name="autobackup_files_missing">Чтобы использовать автоматическое резервное копирование, выберите допустимые файлы резервных копий</string>
     <string name="autobackup_create_user_copy">Создавать копию после каждого бэкапа</string>
     <string name="autobackup_restore_available">Автоматическое резервное копирование доступно для восстановления.</string>
     <!-- Welcome dialog -->

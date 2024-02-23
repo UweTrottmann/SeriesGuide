@@ -11,16 +11,16 @@
     <string name="help">Допомога</string>
     <string name="no_more_updates">SeriesGuide не буде отримувати більше оновлень для цієї версії Android.</string>
     <!-- Media items -->
-    <string name="show_details">Подробиці</string>
+    <string name="show_details">Деталі</string>
     <string name="episode">Серія</string>
     <string name="episode_number">Серія %d</string>
     <string name="episodes">Серії</string>
     <string name="season">Сезон</string>
     <string name="season_number">Сезон %d</string>
     <string name="specialseason">Спец. епізоди</string>
-    <string name="ratings">Рейтинг</string>
+    <string name="ratings">Рейтинги</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Перейти назад</string>
     <string name="description_overview">Огляд</string>
     <string name="description_poster">Показати постер</string>
     <string name="description_image">Зображення Серії</string>
@@ -33,9 +33,9 @@
     <string name="web_search">Веб пошук</string>
     <string name="add_to_homescreen">Додати на Домашній екран</string>
     <string name="action_open">Відкрити</string>
-    <string name="sync_manually">Синхронізація вручну</string>
+    <string name="sync_manually">Синхронізовувати вручну</string>
     <string name="sync_and_update">Синхронізація та Оновлення</string>
-    <string name="sync_and_download_all">Синхронізація; Завантажити все</string>
+    <string name="sync_and_download_all">Синхронізація&amp; Завантажити все</string>
     <string name="action_stream">Переглянути або замовити</string>
     <string name="action_stream_info">Інформація про трансляцію або покупку</string>
     <string name="action_select_region">Виберіть регіон</string>
@@ -160,7 +160,7 @@
     <string name="action_shows_sort_title">Назвою</string>
     <string name="action_shows_sort_latest_episode">Найновішою серією</string>
     <string name="action_shows_sort_oldest_episode">Найстарішою серією</string>
-    <string name="action_shows_sort_last_watched">Останнім переглядом</string>
+    <string name="action_shows_sort_last_watched">Останнім переглянутим</string>
     <string name="action_shows_sort_remaining">Залишилося серій</string>
     <string name="action_shows_sort_status">Статус</string>
     <string name="action_shows_sort_favorites">Улюблене спочатку</string>
@@ -331,7 +331,7 @@
     <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
     <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>
     <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
-    <string name="trakt_error_limit_exceeded">Список переповнений, спершу мусите щось видалити.</string>
+    <string name="trakt_error_limit_exceeded">Список перегляду переповнений, спочатку щось видаліть.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Підключитись до trakt</string>
     <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>
