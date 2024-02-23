@@ -15,6 +15,8 @@ Version 72
 ----------
 *in development*
 
+* 🌟 Movies: option to create a calendar event for to be released movies.
+
 #### 72.0.0 🧪
 *2024-02-09*
 

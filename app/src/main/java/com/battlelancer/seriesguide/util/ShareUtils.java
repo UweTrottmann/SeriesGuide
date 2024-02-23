@@ -16,6 +16,7 @@ import androidx.core.app.ShareCompat;
 import androidx.core.app.ShareCompat.IntentBuilder;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Contains helpers to share a show, episode (share intent, calendar event) or movie.
@@ -25,7 +26,8 @@ public class ShareUtils {
     public static void shareEpisode(Activity activity, int showTmdbId, int seasonNumber,
             int episodeNumber, String showTitle, String episodeTitle) {
         String message = showTitle + " - "
-                + TextTools.getNextEpisodeString(activity, seasonNumber, episodeNumber, episodeTitle)
+                + TextTools.getNextEpisodeString(activity, seasonNumber, episodeNumber,
+                episodeTitle)
                 + " "
                 + TmdbTools.buildEpisodeUrl(showTmdbId, seasonNumber, episodeNumber);
         startShareIntentChooser(activity, message, R.string.share_episode);
@@ -74,6 +76,24 @@ public class ShareUtils {
         long endTime = beginTime + showRunTime * DateUtils.MINUTE_IN_MILLIS;
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime);
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime);
+
+        if (!Utils.tryStartActivity(context, intent, false)) {
+            Toast.makeText(context, context.getString(R.string.addtocalendar_failed),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void suggestAllDayCalendarEvent(Context context, String eventTitle,
+            long eventTimeMs) {
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, eventTitle)
+                // For all day events start at midnight and end at midnight of next day
+                // (end time treated as non-inclusive).
+                .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, eventTimeMs)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
+                        eventTimeMs + TimeUnit.DAYS.toMillis(1));
 
         if (!Utils.tryStartActivity(context, intent, false)) {
             Toast.makeText(context, context.getString(R.string.addtocalendar_failed),
