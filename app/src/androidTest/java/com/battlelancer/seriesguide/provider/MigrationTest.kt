@@ -386,6 +386,26 @@ class MigrationTest {
         }
     }
 
+    @Test
+    fun migrationFrom51To52_newWatchProviderColumn() {
+        val dbOld = migrationTestHelper
+            .createDatabase(TEST_DB_NAME, SgRoomDatabase.VERSION_51_CUSTOM_RELEASE_TIME)
+        dbOld.execSQL(
+            "INSERT INTO sg_watch_provider " +
+                    "(provider_id, provider_name, display_priority, logo_path, type, enabled) " +
+                    "VALUES " +
+                    "(1, 'Test provider', 1, 'logo-path', 1, 1)"
+        )
+        dbOld.close()
+
+        val db = getMigratedDatabase(SgRoomDatabase.VERSION_52_WATCH_PROVIDER_FILTERS)
+        queryAndAssert(db, "SELECT filter_local FROM sg_watch_provider") { provider ->
+            // New filter_local column value should default to false (0)
+            assertThat(provider.isNull(0)).isFalse()
+            assertThat(provider.getInt(0)).isEqualTo(0)
+        }
+    }
+
     /**
      * Validate test data for version [SgRoomDatabase.VERSION_49_AUTO_ID_MIGRATION] or higher.
      *
@@ -406,7 +426,10 @@ class MigrationTest {
             assertThat(it.getInt(2)).isEqualTo(SHOW49.runtime)
             assertThat(it.getString(3)).isEqualTo(SHOW49.poster)
         }
-        queryAndAssert(db, "SELECT season_tmdb_id, series_id, season_number, season_order FROM sg_season") {
+        queryAndAssert(
+            db,
+            "SELECT season_tmdb_id, series_id, season_number, season_order FROM sg_season"
+        ) {
             assertThat(it.getString(0)).isEqualTo(SEASON49.tmdbId)
             assertThat(it.getLong(1)).isEqualTo(showId)
             assertThat(it.getInt(2)).isEqualTo(SEASON49.number)

@@ -1,23 +1,27 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
 import android.content.Context
 import androidx.core.content.edit
-import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Provides settings used to filter and sort displayed shows in [ShowsFragment].
  */
 object ShowsDistillationSettings {
 
-    @JvmField
-    val filterLiveData = MutableLiveData<ShowFilter>()
-    @JvmField
-    val sortOrderLiveData = MutableLiveData<SortShowsView.ShowSortOrder>()
+    /**
+     * Initially `null`, only emits if a filter is changed.
+     */
+    val showFilter = MutableStateFlow<ShowFilter?>(null)
+    /**
+     * Initially `null`, only emits if sort order is changed.
+     */
+    val sortOrder = MutableStateFlow<SortShowsView.ShowSortOrder?>(null)
 
     internal const val KEY_SORT_ORDER = "com.battlelancer.seriesguide.sort.order"
     internal const val KEY_SORT_FAVORITES_FIRST = "com.battlelancer.seriesguide.sort.favoritesfirst"
@@ -117,7 +121,7 @@ object ShowsDistillationSettings {
             putInt(KEY_FILTER_CONTINUING, showFilter.isFilterContinuing.mapFilterState())
         }
         // Broadcast new value
-        filterLiveData.postValue(showFilter)
+        this.showFilter.value = showFilter
     }
 
     private const val FILTER_INCLUDE = 1

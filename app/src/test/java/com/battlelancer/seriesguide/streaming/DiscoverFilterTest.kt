@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.streaming
 
@@ -23,7 +23,7 @@ class DiscoverFilterTest {
             SgWatchProvider(12, 4, "To Delete", 1, "Path", Type.SHOWS.id, true)
         )
 
-        val diff = DiscoverFilterViewModel.calculateProviderDiff(newProviders, oldProviders, Type.SHOWS)
+        val diff = StreamingSearch.calculateProviderDiff(newProviders, oldProviders, Type.SHOWS)
         assertThat(diff.inserts).containsExactly(
             SgWatchProvider(0, 1, "Insert", 1, "path", Type.SHOWS.id, false)
         )
