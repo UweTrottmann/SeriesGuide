@@ -134,6 +134,11 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                         )
                     }
             }
+            buttonMovieShare.setOnClickListener {
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
+            }
             buttonMovieCalendar.setOnClickListener {
                 movieDetails?.tmdbMovie()?.also {
                     val title = it.title
@@ -274,10 +279,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
                 // enable/disable actions
                 val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
-                menu.findItem(R.id.menu_movie_share).apply {
-                    isEnabled = hasTitle
-                    isVisible = hasTitle
-                }
                 menu.findItem(R.id.menu_open_metacritic).apply {
                     isEnabled = hasTitle
                     isVisible = hasTitle
@@ -293,13 +294,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
-                R.id.menu_movie_share -> {
-                    movieDetails?.tmdbMovie()
-                        ?.title
-                        ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
-                    true
-                }
-
                 R.id.menu_open_imdb -> {
                     movieDetails?.tmdbMovie()
                         ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
@@ -349,6 +343,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.textViewMovieDescription.context,
             tmdbMovie.overview
         )
+
+        binding.containerMovieButtons.buttonMovieShare.isEnabled = movieTitle != null
 
         // release date and runtime: "July 17, 2009 | 95 min"
         val releaseAndRuntime = StringBuilder()
