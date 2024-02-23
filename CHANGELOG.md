@@ -15,6 +15,12 @@ Version 72
 ----------
 *in development*
 
+#### 72.0.1 🧪
+*2024-02-23*
+
+* 🌟 Add stream and purchase filter for shows: see which shows are available on a service.
+  After updating it may take a day or so for filter options to appear.
+* 🔧 Discover: use check boxes for stream and purchase filter.
 * 🌟 Movies: option to create a calendar event for to be released movies.
 
 #### 72.0.0 🧪
