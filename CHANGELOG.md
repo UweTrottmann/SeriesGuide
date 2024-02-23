@@ -15,6 +15,8 @@ Version 72
 ----------
 *in development*
 
+* 🔨 Stream and purchase filter: make it readable in dark mode.
+
 #### 72.0.1 🧪
 *2024-02-23*
 

@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.shows
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,6 +22,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -61,40 +63,42 @@ fun WatchProviderList(
     onProviderIncludeAny: () -> Unit,
     onSelectRegion: () -> Unit
 ) {
-    Column(
-        modifier = Modifier.heightIn(112.dp, 400.dp)
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            contentPadding = PaddingValues(vertical = 8.dp)
+    Surface {
+        Column(
+            modifier = Modifier.heightIn(112.dp, 400.dp)
         ) {
-            items(items = watchProviders, key = { it._id }) {
-                WatchProviderFilterItem(it, onProviderFilterChange)
-            }
-        }
-        Divider()
-        Row {
-            Row(
+            LazyColumn(
                 modifier = Modifier
-                    .weight(1f)
-                    .clickable(
-                        role = Role.Button,
-                        onClick = onProviderIncludeAny
-                    )
-                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentPadding = PaddingValues(vertical = 8.dp)
             ) {
-                Text(stringResource(id = R.string.action_include_any_watch_provider))
+                items(items = watchProviders, key = { it._id }) {
+                    WatchProviderFilterItem(it, onProviderFilterChange)
+                }
             }
-            IconButton(
-                modifier = Modifier.padding(top = 2.dp, start = 4.dp, end = 4.dp),
-                onClick = onSelectRegion
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Settings,
-                    contentDescription = stringResource(id = R.string.action_stream_info)
-                )
+            Divider()
+            Row {
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable(
+                            role = Role.Button,
+                            onClick = onProviderIncludeAny
+                        )
+                        .padding(16.dp)
+                ) {
+                    Text(stringResource(id = R.string.action_include_any_watch_provider))
+                }
+                IconButton(
+                    modifier = Modifier.padding(top = 2.dp, start = 4.dp, end = 4.dp),
+                    onClick = onSelectRegion
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Settings,
+                        contentDescription = stringResource(id = R.string.action_stream_info)
+                    )
+                }
             }
         }
     }
@@ -131,7 +135,8 @@ fun WatchProviderFilterItem(
     }
 }
 
-@Preview()
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun WatchProviderFilterPreview() {
     SeriesGuideTheme {
