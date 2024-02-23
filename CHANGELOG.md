@@ -15,6 +15,9 @@ Version 72
 ----------
 *in development*
 
+#### 72.0.2 🧪
+*2024-02-23*
+
 * 🔨 Stream and purchase filter: make it readable in dark mode.
 * 📝 Latest user interface translations from Crowdin.
 
