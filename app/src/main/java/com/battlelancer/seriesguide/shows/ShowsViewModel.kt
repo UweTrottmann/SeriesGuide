@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -20,6 +21,8 @@ import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -64,6 +67,8 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             showSortOrder = SortShowsView.ShowSortOrder.fromSettings(getApplication())
         )
     )
+
+    private var waitingQueryJob: Job? = null
 
     init {
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
@@ -122,17 +127,22 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun updateQuery() {
-        Timber.d("Running query update.")
-        // TODO Debounce this, notably when initially displaying to wait for all input values
-        uiState.value.also {
-            updateQuery(
-                it.showFilter,
-                it.watchProvidersFilter,
-                ShowsDistillationSettings.getSortQuery2(
-                    it.showSortOrder.sortOrderId, it.showSortOrder.isSortFavoritesFirst,
-                    it.showSortOrder.isSortIgnoreArticles
+        // Debounce this, notably when initially displaying to wait for all input values
+        waitingQueryJob?.cancel()
+        waitingQueryJob = viewModelScope.launch(SgApp.SINGLE) {
+            delay(200) // below 300ms to not be perceived as lag
+            waitingQueryJob = null
+            Timber.d("Running query update.")
+            uiState.value.also {
+                updateQuery(
+                    it.showFilter,
+                    it.watchProvidersFilter,
+                    ShowsDistillationSettings.getSortQuery2(
+                        it.showSortOrder.sortOrderId, it.showSortOrder.isSortFavoritesFirst,
+                        it.showSortOrder.isSortIgnoreArticles
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -261,7 +271,7 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
 
         val query =
             "SELECT sg_show.* FROM ${Tables.SG_SHOW} $joins $whereAndGroupBy ORDER BY $orderClause"
-        queryString.value = query
+        queryString.postValue(query)
     }
 
 }
