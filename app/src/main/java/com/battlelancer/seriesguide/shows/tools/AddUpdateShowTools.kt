@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -421,7 +421,11 @@ class AddUpdateShowTools @Inject constructor(
 
     /**
      * Updates a show. Adds new, updates changed and removes orphaned episodes.
+     *
+     * This runs coroutines blocking the current thread (see [updateWatchProviderMappings]).
+     * If it is interrupted, [InterruptedException] is thrown.
      */
+    @Throws(InterruptedException::class)
     fun updateShow(showId: Long): UpdateResult {
         val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
         val show = helper.getShow(showId)
@@ -523,6 +527,7 @@ class AddUpdateShowTools @Inject constructor(
     /**
      * Download and store watch provider mappings if a streaming search region is configured.
      */
+    @Throws(InterruptedException::class)
     private fun updateWatchProviderMappings(showId: Long, showTmdbId: Int) {
         val region = StreamingSearch.getCurrentRegionOrNull(context) ?: return
         runBlocking {

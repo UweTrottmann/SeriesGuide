@@ -37,7 +37,7 @@ public class SyncProgress {
     public static class SyncEvent {
         @Nullable private final Step step;
         @NonNull private final List<Step> stepsWithError;
-        @Nullable private String importantErrorOrNull;
+        @Nullable private final String importantErrorOrNull;
 
         SyncEvent(
                 @Nullable Step step,

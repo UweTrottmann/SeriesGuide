@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -49,6 +49,7 @@ class ShowSync(
      * On network errors retries a few times to update a show before failing.
      */
     @SuppressLint("TimberExceptionLogging")
+    @Throws(InterruptedException::class)
     fun sync(
         context: Context,
         currentTime: Long,
@@ -70,12 +71,15 @@ class ShowSync(
                     return UpdateResult.INCOMPLETE
                 }
 
+                if (Thread.interrupted()) throw InterruptedException()
+
                 // This can fail due to
                 // - network error (not connected, unknown host, time out) => abort and try again
                 // - API error (parsing error, other error) => abort, report and try again later
                 // - show does no longer exist => ignore and continue
                 // - database error => abort, report and try again later
                 // Note: reporting is done where the exception occurs.
+                // If this thread is interrupted throws InterruptedException
                 result = showTools.updateShow(showId)
 
                 if (result is ApiErrorRetry) {
@@ -89,22 +93,14 @@ class ShowSync(
                         return UpdateResult.INCOMPLETE
                     } else {
                         // Back off, then try again.
-                        try {
-                            // Wait for 2^n seconds + random milliseconds,
-                            // with n starting at 0 (so 1 s + random ms)
-                            val n = networkErrors - 1
-                            Thread.sleep(
-                                (2.0.pow(n)).toLong() * DateUtils.SECOND_IN_MILLIS
-                                        + Random.nextInt(0, 1000)
-                            )
-                        } catch (e: InterruptedException) {
-                            // This can happen if the system has decided to interrupt the sync
-                            // thread (see AbstractThreadedSyncAdapter class documentation),
-                            // just try again later.
-                            Timber.v("Wait for retry interrupted by system, trying again later.")
-                            progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
-                            return UpdateResult.INCOMPLETE
-                        }
+                        // Wait for 2^n seconds + random milliseconds,
+                        // with n starting at 0 (so 1 s + random ms)
+                        val n = networkErrors - 1
+                        // If this thread is interrupted throws InterruptedException
+                        Thread.sleep(
+                            (2.0.pow(n)).toLong() * DateUtils.SECOND_IN_MILLIS
+                                    + Random.nextInt(0, 1000)
+                        )
                     }
                 } else if (networkErrors > 0) {
                     // Reduce counter on each successful update.
@@ -127,6 +123,7 @@ class ShowSync(
                         "Show '%s' removed from TMDB (id %s), maybe search for a replacement and remove it."
                     )
                 }
+
                 is ApiErrorRetry -> throw IllegalStateException("Should retry and not handle result.")
                 is ApiErrorStop -> {
                     // API error, do not continue and try again later.
@@ -140,6 +137,7 @@ class ShowSync(
                     )
                     return UpdateResult.INCOMPLETE
                 }
+
                 DatabaseError -> {
                     // Database error, do not continue and try again later.
                     setImportantMessageIfNone(
@@ -185,10 +183,12 @@ class ShowSync(
                 }
                 listOf(showId)
             }
+
             SyncType.FULL -> {
                 // get all show IDs for a full update
                 SgRoomDatabase.getInstance(context).sgShow2Helper().getShowIdsLong()
             }
+
             SyncType.DELTA -> getShowsToDeltaUpdate(context, currentTime)
             else -> throw IllegalArgumentException("Sync type $syncType is not supported.")
         }

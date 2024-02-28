@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.backend.HexagonTools
 import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.jobs.NetworkJobProcessor
-import com.battlelancer.seriesguide.lists.ListsTools2.migrateTvdbShowListItemsToTmdbIds
+import com.battlelancer.seriesguide.lists.ListsTools2
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -102,94 +102,128 @@ class SgSyncAdapter(context: Context) : AbstractThreadedSyncAdapter(context, tru
 
         // from here on we need more sophisticated abort handling, so keep track of errors
         val progress = SyncProgress()
+        try {
+            sync(showSync, currentTime, progress)
+        } catch (e: InterruptedException) {
+            // This can happen if the system has decided to interrupt the sync
+            // thread (see AbstractThreadedSyncAdapter class documentation),
+            // just try again later.
+            Timber.d("Sync interrupted by system, trying again later.")
+            progress.recordError()
+            progress.setImportantErrorIfNone("Interrupted by system, trying again later.")
+        }
+        progress.publishFinished()
+    }
+
+    @Throws(InterruptedException::class)
+    private fun sync(showSync: ShowSync, currentTime: Long, progress: SyncProgress) {
         progress.publish(SyncProgress.Step.TMDB)
 
         // Get latest TMDb configuration.
         val tmdbSync = TmdbSync(context, tmdbConfigService.get(), movieTools.get())
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         tmdbSync.updateConfigurationAndWatchProviders(progress)
+
+        if (Thread.interrupted()) throw InterruptedException()
 
         // Update show data.
         // If failed for at least one show, do not proceed with other sync steps to avoid
-        // syncing with outdated show data.
-        // Note: it is still NOT guaranteed show data is up-to-date before syncing because a show
-        // does not get updated if it was recently (see ShowSync selecting which shows to update).
-        var resultCode = showSync.sync(context, currentTime, progress)
-        Timber.d("Syncing: TMDB shows...DONE")
-        if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
-            progress.recordError()
-            progress.publishFinished()
+        // syncing with outdated show data. However, renew the search table and trigger the
+        // notification service if at least one show was updated.
+        // Note: it is still NOT guaranteed show data is up-to-date before syncing with Cloud/Trakt
+        // because a show does not get updated if it was recently (see ShowSync selecting which
+        // shows to update).
+        var hasAddedShows = false
+        try {
+            var resultCode = showSync.sync(context, currentTime, progress)
+            Timber.d("Syncing: TMDB shows...DONE")
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            if (resultCode == null || resultCode == UpdateResult.INCOMPLETE) {
+                progress.recordError()
+                if (showSync.isSyncMultiple) {
+                    updateTimeAndFailedCounter(prefs, resultCode)
+                }
+                return // Try again later.
+            }
+
+            // do some more things if this is not a quick update
             if (showSync.isSyncMultiple) {
+                if (Thread.interrupted()) throw InterruptedException()
+
+                // update data of to be released movies
+                if (!tmdbSync.updateMovies(progress)) {
+                    progress.recordError()
+                }
+                Timber.d("Syncing: TMDB...DONE")
+
+                if (Thread.interrupted()) throw InterruptedException()
+
+                // sync with hexagon
+                val isHexagonEnabled = HexagonSettings.isEnabled(context)
+                if (isHexagonEnabled) {
+                    val resultHexagonSync = HexagonSync(
+                        context,
+                        hexagonTools.get(), movieTools.get(), progress
+                    ).sync()
+                    hasAddedShows = resultHexagonSync.hasAddedShows
+                    // don't overwrite failure
+                    if (resultCode == UpdateResult.SUCCESS) {
+                        resultCode = if (resultHexagonSync.success) {
+                            UpdateResult.SUCCESS
+                        } else {
+                            UpdateResult.INCOMPLETE
+                        }
+                    }
+                    Timber.d("Syncing: Hexagon...DONE")
+                } else {
+                    Timber.d("Syncing: Hexagon...SKIP")
+                }
+
+                if (Thread.interrupted()) throw InterruptedException()
+
+                // Migrate legacy list items
+                // Note: might send to Hexagon, so make sure to sync lists with Hexagon before
+                ListsTools2.migrateTvdbShowListItemsToTmdbIds(context)
+
+                if (Thread.interrupted()) throw InterruptedException()
+
+                // sync with trakt (only ratings if hexagon is enabled)
+                if (TraktCredentials.get(context).hasCredentials()) {
+                    val resultTraktSync = TraktSync(
+                        context, movieTools.get(),
+                        traktSync.get(), progress
+                    ).sync(currentTime, isHexagonEnabled)
+                    // don't overwrite failure
+                    if (resultCode == UpdateResult.SUCCESS) {
+                        resultCode = resultTraktSync
+                    }
+                    Timber.d("Syncing: trakt...DONE")
+                } else {
+                    Timber.d("Syncing: trakt...SKIP")
+                }
+
+                if (Thread.interrupted()) throw InterruptedException()
+
+                // update next episodes for all shows
+                TaskManager.getInstance().tryNextEpisodeUpdateTask(context)
+
                 updateTimeAndFailedCounter(prefs, resultCode)
             }
-            return // Try again later.
-        }
 
-        // do some more things if this is not a quick update
-        if (showSync.isSyncMultiple) {
-            // update data of to be released movies
-            if (!tmdbSync.updateMovies(progress)) {
-                progress.recordError()
-            }
-            Timber.d("Syncing: TMDB...DONE")
+            Timber.i("Syncing: %s", resultCode.toString())
+        } finally {
+            // Finish some things even if interrupted
 
-            // sync with hexagon
-            var hasAddedShows = false
-            val isHexagonEnabled = HexagonSettings.isEnabled(context)
-            if (isHexagonEnabled) {
-                val resultHexagonSync = HexagonSync(
-                    context,
-                    hexagonTools.get(), movieTools.get(), progress
-                ).sync()
-                hasAddedShows = resultHexagonSync.hasAddedShows
-                // don't overwrite failure
-                if (resultCode == UpdateResult.SUCCESS) {
-                    resultCode = if (resultHexagonSync.success) {
-                        UpdateResult.SUCCESS
-                    } else {
-                        UpdateResult.INCOMPLETE
-                    }
-                }
-                Timber.d("Syncing: Hexagon...DONE")
-            } else {
-                Timber.d("Syncing: Hexagon...SKIP")
-            }
-
-            // Migrate legacy list items
-            // Note: might send to Hexagon, so make sure to sync lists with Hexagon before
-            migrateTvdbShowListItemsToTmdbIds(context)
-
-            // sync with trakt (only ratings if hexagon is enabled)
-            if (TraktCredentials.get(context).hasCredentials()) {
-                val resultTraktSync = TraktSync(
-                    context, movieTools.get(),
-                    traktSync.get(), progress
-                ).sync(currentTime, isHexagonEnabled)
-                // don't overwrite failure
-                if (resultCode == UpdateResult.SUCCESS) {
-                    resultCode = resultTraktSync
-                }
-                Timber.d("Syncing: trakt...DONE")
-            } else {
-                Timber.d("Syncing: trakt...SKIP")
-            }
-
-            // renew search table if shows were updated and it will not be renewed by add task
-            if (showSync.hasUpdatedShows() && !hasAddedShows) {
+            // Renew search table if shows were updated and it will not be renewed by add task,
+            // but as this is a little costly only do it when doing the less frequent multiple
+            // shows sync.
+            if (showSync.isSyncMultiple && showSync.hasUpdatedShows() && !hasAddedShows) {
                 SeriesGuideDatabase.rebuildFtsTable(context)
             }
-
-            // update next episodes for all shows
-            TaskManager.getInstance().tryNextEpisodeUpdateTask(context)
-
-            updateTimeAndFailedCounter(prefs, resultCode)
+            // There could have been new episodes added after an update
+            if (showSync.hasUpdatedShows()) {
+                NotificationService.trigger(context)
+            }
         }
-
-        // There could have been new episodes added after an update
-        NotificationService.trigger(context)
-
-        Timber.i("Syncing: %s", resultCode.toString())
-        progress.publishFinished()
     }
 
     private fun updateTimeAndFailedCounter(
