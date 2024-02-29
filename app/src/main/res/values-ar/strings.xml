@@ -388,7 +388,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">ترجم هذا التطبيق</string>
-    <string name="action_contribute_content">ترجمة أو تحسين المحتوى</string>
     <string name="prefs_category_advanced">متقدم</string>
     <string name="prefs_category_about">حول</string>
     <string name="pref_onlyfuture">عدم إظهار الحلقات التي تم عرضها</string>

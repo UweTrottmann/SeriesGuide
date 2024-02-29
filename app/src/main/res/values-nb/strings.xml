@@ -356,7 +356,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Oversett denne applikasjonen</string>
-    <string name="action_contribute_content">Oversett eller forbedre innhold</string>
     <string name="prefs_category_advanced">Avansert</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>

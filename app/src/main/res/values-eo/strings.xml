@@ -356,7 +356,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Traduki tiun aplikaĵon</string>
-    <string name="action_contribute_content">Traduki aŭ plibonigi enhavon</string>
     <string name="prefs_category_advanced">Altnivela</string>
     <string name="prefs_category_about">Pri</string>
     <string name="pref_onlyfuture">Sen dissenditaj epizodoj</string>

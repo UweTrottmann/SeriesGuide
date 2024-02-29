@@ -356,7 +356,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Превеждане на приложението</string>
-    <string name="action_contribute_content">Превод или корекции на съдържанието</string>
     <string name="prefs_category_advanced">Разширени</string>
     <string name="prefs_category_about">Относно</string>
     <string name="pref_onlyfuture">Няма излъчени епизоди</string>

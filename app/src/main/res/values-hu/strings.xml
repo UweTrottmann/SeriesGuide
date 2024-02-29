@@ -356,7 +356,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Alkalmazás fordítása</string>
-    <string name="action_contribute_content">Tartalom fordítása vagy javítása</string>
     <string name="prefs_category_advanced">Haladó beállítások</string>
     <string name="prefs_category_about">A programról</string>
     <string name="pref_onlyfuture">Leadott epizódok nélkül</string>

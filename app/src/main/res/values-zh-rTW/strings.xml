@@ -348,7 +348,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">翻譯本應用程式</string>
-    <string name="action_contribute_content">翻譯或改善影劇資料</string>
     <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於</string>
     <string name="pref_onlyfuture">無已播出集數</string>

@@ -356,7 +356,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Översätt appen</string>
-    <string name="action_contribute_content">Översätt eller förbättra innehållet</string>
     <string name="prefs_category_advanced">Avancerat</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Inga sända avsnitt</string>

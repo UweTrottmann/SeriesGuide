@@ -388,7 +388,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Cyfieithwch yr app hon</string>
-    <string name="action_contribute_content">Cyfieithu neu wella cynnwys</string>
     <string name="prefs_category_advanced">Uwch</string>
     <string name="prefs_category_about">Am</string>
     <string name="pref_onlyfuture">Dim penodau wedi\'u darlledu</string>

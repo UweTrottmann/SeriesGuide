@@ -356,7 +356,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">ترجمهٔ این کاره</string>
-    <string name="action_contribute_content">ترجمه یا بهبود محتوا</string>
     <string name="prefs_category_advanced">پیش‌رفته</string>
     <string name="prefs_category_about">درباره ما</string>
     <string name="pref_onlyfuture">نادیده گرفتن قسمت‌های پخش شده</string>

@@ -348,7 +348,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">翻译本应用</string>
-    <string name="action_contribute_content">翻译或改进影视资料</string>
     <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>

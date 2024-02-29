@@ -348,7 +348,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Terjemahkan aplikasi ini</string>
-    <string name="action_contribute_content">Terjemahkan atau tingkatkan konten</string>
     <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>

@@ -372,7 +372,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">תרגם את האפליקציה</string>
-    <string name="action_contribute_content">תרגום או שיפור תוכן</string>
     <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>

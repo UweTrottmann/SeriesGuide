@@ -348,7 +348,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">このアプリを翻訳</string>
-    <string name="action_contribute_content">コンテンツを翻訳または改善する</string>
     <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>

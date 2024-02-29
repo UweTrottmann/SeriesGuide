@@ -82,10 +82,6 @@ class MoreOptionsActivity : BaseTopActivity() {
             startActivity(getFeedbackEmailIntent(this))
         }
         ViewTools.openUriOnClick(binding.buttonTranslations, getString(R.string.url_translations))
-        ViewTools.openUriOnClick(
-            binding.buttonContributeContent,
-            getString(R.string.url_contribute_content)
-        )
         binding.buttonDebugView.setOnClickListener {
             if (AppSettings.isUserDebugModeEnabled(this)) {
                 DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")

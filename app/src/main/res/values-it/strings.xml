@@ -356,7 +356,6 @@
     <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Traduci l\'app</string>
-    <string name="action_contribute_content">Traduci o migliora i contenuti</string>
     <string name="prefs_category_advanced">Avanzate</string>
     <string name="prefs_category_about">Info su</string>
     <string name="pref_onlyfuture">Nessun episodio in onda</string>
