@@ -170,6 +170,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.collection) // For SparseArrayCompat
     implementation(libs.androidx.fragment)
     implementation(libs.material)
     implementation(libs.androidx.palette)

@@ -484,7 +484,7 @@ class ShowTools2 @Inject constructor(
         val map = SparseArrayCompat<String>()
         shows.forEach {
             if (it.tmdbId != null && it.tmdbId != 0) {
-                map.put(it.tmdbId, it.posterSmall)
+                map.put(it.tmdbId, it.posterSmall ?: "")
             }
         }
         return map

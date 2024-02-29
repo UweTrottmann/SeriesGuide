@@ -18,6 +18,8 @@ androidx-annotation = "androidx.annotation:annotation:1.7.1"
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidx-browser = "androidx.browser:browser:1.7.0"
+# https://developer.android.com/jetpack/androidx/releases/collection#1.4.0
+androidx-collection = "androidx.collection:collection:1.4.0"
 androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.2.0" # https://developer.android.com/jetpack/androidx/releases/coordinatorlayout
 # https://developer.android.com/jetpack/androidx/releases/core
