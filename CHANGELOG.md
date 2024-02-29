@@ -15,6 +15,11 @@ Version 72
 ----------
 *in development*
 
+#### 72.0.3 🧪
+*2024-02-29*
+
+* 🔨 Sync: properly handle interruptions by the system again.
+
 #### 72.0.2 🧪
 *2024-02-23*
 
