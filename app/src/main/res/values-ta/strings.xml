@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">நீட்டிப்புகள் விருப்பமாக்கு</string>
     <string name="action_extensions_add">நீட்டிப்பு சேர்</string>
     <string name="action_extensions_search">மேலும் நீட்டிப்புகள் பெற</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">நீக்கு</string>
     <string name="extension_amazon">Amazon தேடல்</string>
     <string name="description_extension_amazon">உங்கள் உள்ளூர் Amazon தளத்தை தேடு</string>

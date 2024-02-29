@@ -538,6 +538,7 @@
     <string name="action_extensions_configure">Upraviť rozšírenia</string>
     <string name="action_extensions_add">Pridať rozšírenie</string>
     <string name="action_extensions_search">Získať viac rozšírení</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Odstrániť</string>
     <string name="extension_amazon">Hľadať na Amazon</string>
     <string name="description_extension_amazon">Hľadať na Amazone</string>

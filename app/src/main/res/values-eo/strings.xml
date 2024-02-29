@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Adapti aldonaĵoj</string>
     <string name="action_extensions_add">Aldoni aldonaĵon</string>
     <string name="action_extensions_search">Akiri pli da aldonaĵoj</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Forigi</string>
     <string name="extension_amazon">Serĉi je Amazon</string>
     <string name="description_extension_amazon">Traserĉi vian lokalan Amazonan retejon.</string>

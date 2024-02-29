@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Прилагоди екстензија</string>
     <string name="action_extensions_add">Додај екстензија</string>
     <string name="action_extensions_search">Земи повеќе екстензии</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Избриши</string>
     <string name="extension_amazon">Amazon search</string>
     <string name="description_extension_amazon">Пребарај локален Amazon сајт</string>

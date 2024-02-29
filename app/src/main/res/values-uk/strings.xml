@@ -538,6 +538,7 @@
     <string name="action_extensions_configure">Змінити розширення</string>
     <string name="action_extensions_add">Додати розширення</string>
     <string name="action_extensions_search">Отримати більше розширеннь</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Видалити</string>
     <string name="extension_amazon">Пошук Amazon</string>
     <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>

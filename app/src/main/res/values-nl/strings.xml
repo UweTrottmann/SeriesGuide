@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Extensies aanpassen</string>
     <string name="action_extensions_add">Extensie toevoegen</string>
     <string name="action_extensions_search">Meer extensies zoeken</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Verwijderen</string>
     <string name="extension_amazon">Zoeken op Amazon</string>
     <string name="description_extension_amazon">Zoek op uw lokale Amazon-site</string>

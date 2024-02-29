@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Eklentileri özelleştir</string>
     <string name="action_extensions_add">Eklenti ekle</string>
     <string name="action_extensions_search">Daha fazla eklenti edin</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Kaldır</string>
     <string name="extension_amazon">Amazon\'da ara</string>
     <string name="description_extension_amazon">Yerel Amazon sitesinde arama yap</string>

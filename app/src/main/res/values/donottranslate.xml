@@ -43,6 +43,7 @@
     <string name="url_trakt_short">trakt.tv</string>
     <string name="url_trakt_vip">https://trakt.tv/vip</string>
     <string name="url_trakt_delete_account">https://trakt.tv/settings</string>
+    <string name="url_extensions_develop">https://seriesgui.de/api</string>
 
     <!-- About screen -->
     <string name="website">seriesgui.de</string>

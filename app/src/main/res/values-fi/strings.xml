@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Muokkaa laajennuksia</string>
     <string name="action_extensions_add">Lisää laajennus</string>
     <string name="action_extensions_search">Hanki lisää laajennuksia</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Poista</string>
     <string name="extension_amazon">Amazon-haku</string>
     <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>

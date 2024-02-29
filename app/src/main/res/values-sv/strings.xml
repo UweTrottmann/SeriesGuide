@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Anpassa tillägg</string>
     <string name="action_extensions_add">Lägg till tillägg</string>
     <string name="action_extensions_search">Skaffa fler tillägg</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Ta bort</string>
     <string name="extension_amazon">Amazon sökning</string>
     <string name="description_extension_amazon">Sök på din lokala Amazon\'s webbplats</string>

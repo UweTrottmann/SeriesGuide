@@ -505,6 +505,7 @@
     <string name="action_extensions_configure">Sesuaikan ekstensi</string>
     <string name="action_extensions_add">Tambah ekstensi</string>
     <string name="action_extensions_search">Dapatkan ekstensi lainnya</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Hapus</string>
     <string name="extension_amazon">Pencarian amazon</string>
     <string name="description_extension_amazon">Cari di situs Amazon lokal anda</string>

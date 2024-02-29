@@ -527,6 +527,7 @@
     <string name="action_extensions_configure">Personalizează extensile</string>
     <string name="action_extensions_add">Adaugă extensie</string>
     <string name="action_extensions_search">Optineți mai multe extensii</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Ștergeți</string>
     <string name="extension_amazon">Căutare pe Amazon</string>
     <string name="description_extension_amazon">Căutați pe site-ul local Amazon</string>

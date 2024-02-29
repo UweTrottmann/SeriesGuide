@@ -505,6 +505,7 @@
     <string name="action_extensions_configure">自訂擴充套件</string>
     <string name="action_extensions_add">新增擴充套件</string>
     <string name="action_extensions_search">取得更多擴充套件</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">移除</string>
     <string name="extension_amazon">Amazon 搜尋</string>
     <string name="description_extension_amazon">在當地的 Amazon 網站搜尋</string>

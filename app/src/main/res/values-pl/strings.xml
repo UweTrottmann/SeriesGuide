@@ -538,6 +538,7 @@
     <string name="action_extensions_configure">Dostosuj rozszerzenia</string>
     <string name="action_extensions_add">Dodaj rozszerzenia</string>
     <string name="action_extensions_search">Pobierz więcej rozszerzeń</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Usuń</string>
     <string name="extension_amazon">Wyszukiwanie na Amazon</string>
     <string name="description_extension_amazon">Szukaj na lokalnej witrynie Amazon</string>

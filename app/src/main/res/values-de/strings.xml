@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Erweiterungen anpassen</string>
     <string name="action_extensions_add">Erweiterung hinzufügen</string>
     <string name="action_extensions_search">Mehr Erweiterungen</string>
+    <string name="action_extensions_develop">Erweiterung entwickeln</string>
     <string name="action_extension_remove">Entfernen</string>
     <string name="extension_amazon">Amazon-Suche</string>
     <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>

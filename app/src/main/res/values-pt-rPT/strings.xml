@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Personalizar extensões</string>
     <string name="action_extensions_add">Adicionar extensão</string>
     <string name="action_extensions_search">Obter mais extensões</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Remover</string>
     <string name="extension_amazon">Pesquisa na Amazon</string>
     <string name="description_extension_amazon">Pesquisa na Amazon do teu país</string>

@@ -538,6 +538,7 @@
     <string name="action_extensions_configure">התאמת תוספים</string>
     <string name="action_extensions_add">הוספת תוסף</string>
     <string name="action_extensions_search">חפש תוספים נוספים</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">הסר</string>
     <string name="extension_amazon">חפש באמזון</string>
     <string name="description_extension_amazon">חפש באתר אמזון המקומי שלך</string>

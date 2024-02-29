@@ -527,6 +527,7 @@
     <string name="action_extensions_configure">Подеси додатке</string>
     <string name="action_extensions_add">Додај додатак</string>
     <string name="action_extensions_search">Набави још додатака</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Уклони</string>
     <string name="extension_amazon">Претрага на Amazon-у</string>
     <string name="description_extension_amazon">Претражи локални Аmazon сајт</string>

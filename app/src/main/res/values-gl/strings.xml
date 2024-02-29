@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Personalizar extensións</string>
     <string name="action_extensions_add">Engadir extensión</string>
     <string name="action_extensions_search">Obter máis extensións</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Eliminar</string>
     <string name="extension_amazon">Buscar en Amazon</string>
     <string name="description_extension_amazon">Buscar na túa páxina local de Amazon</string>

@@ -252,13 +252,14 @@ class ExtensionsConfigurationFragment : Fragment() {
         // list of installed, but disabled extensions
         for (i in disabledExtensions.indices) {
             val extension = disabledExtensions[i]
-            menu.add(Menu.NONE, i + 1, Menu.NONE, extension.label)
+            menu.add(Menu.NONE, i + 2, Menu.NONE, extension.label)
         }
         // no third-party extensions supported on Amazon app store for now
         if (!Utils.isAmazonVersion()) {
             // link to get more extensions
             menu.add(Menu.NONE, 0, Menu.NONE, R.string.action_extensions_search)
         }
+        menu.add(Menu.NONE, 1, Menu.NONE, R.string.action_extensions_develop)
         popupMenu.setOnMenuItemClickListener { item: MenuItem ->
             if (item.itemId == 0) {
                 // special item: search for more extensions
@@ -268,9 +269,17 @@ class ExtensionsConfigurationFragment : Fragment() {
                 )
                 return@setOnMenuItemClickListener true
             }
+            if (item.itemId == 1) {
+                // special item: develop an extension link
+                WebTools.openInApp(
+                    requireContext(),
+                    getString(R.string.url_extensions_develop)
+                )
+                return@setOnMenuItemClickListener true
+            }
 
             // add to enabled extensions
-            val extension = disabledExtensions[item.itemId - 1]
+            val extension = disabledExtensions[item.itemId - 2]
             enabledNames?.add(extension.componentName)
             saveExtensions()
             // scroll to end of list

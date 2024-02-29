@@ -527,6 +527,7 @@
     <string name="action_extensions_configure">Prilagodi proširenja</string>
     <string name="action_extensions_add">Dodavanje proširenja</string>
     <string name="action_extensions_search">Nabavi više proširenja</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Izbriši</string>
     <string name="extension_amazon">Amazon pretraživanje</string>
     <string name="description_extension_amazon">Pretraži lokalnu Amazon stranicu</string>

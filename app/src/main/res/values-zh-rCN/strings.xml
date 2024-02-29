@@ -505,6 +505,7 @@
     <string name="action_extensions_configure">自定义扩展</string>
     <string name="action_extensions_add">添加扩展组件</string>
     <string name="action_extensions_search">获取更多扩展</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">移除</string>
     <string name="extension_amazon">亚马逊搜索</string>
     <string name="description_extension_amazon">在本地 Amazon 中搜索</string>

@@ -516,6 +516,7 @@
     <string name="action_extensions_configure">Kiegészítők testreszabása</string>
     <string name="action_extensions_add">Kiegészítő hozzáadása</string>
     <string name="action_extensions_search">További bővítmények</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Törlés</string>
     <string name="extension_amazon">Keresés az Amazonon</string>
     <string name="description_extension_amazon">Keresés az Amazon helyi oldalán</string>
