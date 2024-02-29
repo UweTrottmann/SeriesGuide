@@ -15,6 +15,11 @@ Version 72
 ----------
 *in development*
 
+#### 72.0.4 🧪
+*2024-02-29*
+
+* 🔧 Help: add link to new Discord server, make actions more understandable (like "Send email" 
+  instead of "Send feedback").
 * 🔨 Stream and purchase filter: support using system colors on Android 12 and newer.
 
 #### 72.0.3 🧪
