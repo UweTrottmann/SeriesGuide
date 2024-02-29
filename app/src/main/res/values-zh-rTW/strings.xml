@@ -345,7 +345,7 @@
     <string name="pref_quick_checkin">快速打卡</string>
     <string name="pref_quick_checkin_summary">免輸入打卡訊息</string>
     <!-- Help -->
-    <string name="feedback">提供意見</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">翻譯本應用程式</string>
     <string name="action_contribute_content">翻譯或改善影劇資料</string>

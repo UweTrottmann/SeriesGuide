@@ -361,7 +361,7 @@
     <string name="pref_quick_checkin">Brza provjera</string>
     <string name="pref_quick_checkin_summary">Ne pitaj za provjeru u poruci</string>
     <!-- Help -->
-    <string name="feedback">Pošalji povratne informacije</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
     <string name="action_contribute_content">Translate or improve content</string>

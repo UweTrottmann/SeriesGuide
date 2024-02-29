@@ -345,7 +345,7 @@
     <string name="pref_quick_checkin">เช็กอินด่วน</string>
     <string name="pref_quick_checkin_summary">ไม่ต้องถามข้อความเช็กอิน</string>
     <!-- Help -->
-    <string name="feedback">ส่งความคิดเห็น</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">แปลแอปนี้</string>
     <string name="action_contribute_content">แปลหรือปรับปรุงเนื้อหาให้ดีขึ้น</string>

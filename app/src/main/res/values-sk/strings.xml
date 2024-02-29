@@ -369,7 +369,7 @@
     <string name="pref_quick_checkin">Rýchle Práve pozeráte</string>
     <string name="pref_quick_checkin_summary">Nepýtať sa na správu pri Práve pozeráte</string>
     <!-- Help -->
-    <string name="feedback">Poslať reakciu</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Preložiť túto aplikáciu</string>
     <string name="action_contribute_content">Preložiť alebo vylepšiť obsah</string>

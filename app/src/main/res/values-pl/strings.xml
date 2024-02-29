@@ -369,7 +369,7 @@
     <string name="pref_quick_checkin">Szybkie ustawianie opcji \"oglądam\"</string>
     <string name="pref_quick_checkin_summary">Nie wyświetlaj okna dialogowego \"oglądam\"</string>
     <!-- Help -->
-    <string name="feedback">Wyślij opinię</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Przetłumacz aplikację</string>
     <string name="action_contribute_content">Przetłumacz lub ulepsz tłumaczenie</string>

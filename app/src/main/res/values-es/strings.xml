@@ -354,7 +354,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_quick_checkin">Check in rápido</string>
     <string name="pref_quick_checkin_summary">No preguntar por un mensaje de check in</string>
     <!-- Help -->
-    <string name="feedback">Enviar comentarios</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Traducir esta aplicación</string>
     <string name="action_contribute_content">Traducir o mejorar el contenido</string>

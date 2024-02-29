@@ -369,7 +369,7 @@
     <string name="pref_quick_checkin">סימון מהיר</string>
     <string name="pref_quick_checkin_summary">אל תשאל להודעת סימון</string>
     <!-- Help -->
-    <string name="feedback">שלח משוב</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">תרגם את האפליקציה</string>
     <string name="action_contribute_content">תרגום או שיפור תוכן</string>

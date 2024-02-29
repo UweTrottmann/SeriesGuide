@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">ثبت سریع</string>
     <string name="pref_quick_checkin_summary">برای ثبت پیامی خواسته نشود</string>
     <!-- Help -->
-    <string name="feedback">ارسال بازخورد</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">ترجمهٔ این کاره</string>
     <string name="action_contribute_content">ترجمه یا بهبود محتوا</string>

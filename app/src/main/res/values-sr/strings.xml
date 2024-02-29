@@ -361,7 +361,7 @@
     <string name="pref_quick_checkin">Брзо пријављивање</string>
     <string name="pref_quick_checkin_summary">Не тражите поруку за пријаву</string>
     <!-- Help -->
-    <string name="feedback">Пошаљи повратне информације</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Преведите апликацију</string>
     <string name="action_contribute_content">Преведите или побољшајте садржај</string>

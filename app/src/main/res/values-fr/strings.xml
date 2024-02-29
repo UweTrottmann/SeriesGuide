@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Check-in rapide</string>
     <string name="pref_quick_checkin_summary">Ne plus demander de message pour le Check in</string>
     <!-- Help -->
-    <string name="feedback">Envoyez vos commentaires</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Traduisez cette application</string>
     <string name="action_contribute_content">Traduisez et améliorerez le contenu</string>

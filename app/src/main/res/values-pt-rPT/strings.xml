@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Dar entrada rápida</string>
     <string name="pref_quick_checkin_summary">Dar entrada automaticamente sem pedir nenhuma mensagem</string>
     <!-- Help -->
-    <string name="feedback">Enviar comentários</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Traduz esta App</string>
     <string name="action_contribute_content">Traduz ou melhora o conteúdo</string>

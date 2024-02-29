@@ -369,7 +369,7 @@
     <string name="pref_quick_checkin">Быстрая отметка</string>
     <string name="pref_quick_checkin_summary">Больше не спрашивать об отметке</string>
     <!-- Help -->
-    <string name="feedback">Отправить отзыв</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Помочь с переводом</string>
     <string name="action_contribute_content">Перевести или улучшить контент</string>

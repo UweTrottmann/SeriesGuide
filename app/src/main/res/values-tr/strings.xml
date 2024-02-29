@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Hızlıca \"izliyorum\" yap</string>
     <string name="pref_quick_checkin_summary">\"Şu anda izliyorum\" mesajı gösterme</string>
     <!-- Help -->
-    <string name="feedback">Geribildirim Gönder</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Bu uygulamayı tercüme et</string>
     <string name="action_contribute_content">Tercüme et veya içeriği geliştir</string>

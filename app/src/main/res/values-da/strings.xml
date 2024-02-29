@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Hurtig indtjekning</string>
     <string name="pref_quick_checkin_summary">Spørg ikke om en indtjekningsbesked</string>
     <!-- Help -->
-    <string name="feedback">Send feedback</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Oversæt denne app</string>
     <string name="action_contribute_content">Oversæt eller forbedr indhold</string>

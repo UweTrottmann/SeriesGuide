@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">துரித குறியீட்டு உள்ள</string>
     <string name="pref_quick_checkin_summary">இல்லை செய்தியில் குறியீட்டு கேளுங்கள்</string>
     <!-- Help -->
-    <string name="feedback">பின்னூட்டங்களை அனுப்பு</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
     <string name="action_contribute_content">Translate or improve content</string>

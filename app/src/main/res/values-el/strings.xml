@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Γρήγορο check in</string>
     <string name="pref_quick_checkin_summary">Να μη ζητείται check in</string>
     <!-- Help -->
-    <string name="feedback">Αποστολή σχολίων</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Μετάφραση αυτής της εφαρμογής</string>
     <string name="action_contribute_content">Μετάφραση ή βελτίωση περιεχομένου</string>

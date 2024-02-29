@@ -345,7 +345,7 @@
     <string name="pref_quick_checkin">빠른 체크인</string>
     <string name="pref_quick_checkin_summary">체크인 메세지 묻지 않기</string>
     <!-- Help -->
-    <string name="feedback">사용자 의견 보내기</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
     <string name="action_contribute_content">Translate or improve content</string>

@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Snabb incheckning</string>
     <string name="pref_quick_checkin_summary">Fråga inte efter meddelande vid incheckning</string>
     <!-- Help -->
-    <string name="feedback">Skicka feedback</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Översätt appen</string>
     <string name="action_contribute_content">Översätt eller förbättra innehållet</string>

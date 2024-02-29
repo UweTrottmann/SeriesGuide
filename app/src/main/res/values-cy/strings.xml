@@ -385,7 +385,7 @@
     <string name="pref_quick_checkin">Gwiriwch yn gyflym</string>
     <string name="pref_quick_checkin_summary">Peidiwch â gofyn am wiriad mewn neges</string>
     <!-- Help -->
-    <string name="feedback">Anfon adborth</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Cyfieithwch yr app hon</string>
     <string name="action_contribute_content">Cyfieithu neu wella cynnwys</string>

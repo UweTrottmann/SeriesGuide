@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Gyors bejelentkezés</string>
     <string name="pref_quick_checkin_summary">Nincs bejelentkezési üzenetet</string>
     <!-- Help -->
-    <string name="feedback">Visszajelzés küldése</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Alkalmazás fordítása</string>
     <string name="action_contribute_content">Tartalom fordítása vagy javítása</string>

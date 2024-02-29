@@ -345,7 +345,7 @@
     <string name="pref_quick_checkin">クイックチェックイン</string>
     <string name="pref_quick_checkin_summary">チェックインのメッセージを求めません</string>
     <!-- Help -->
-    <string name="feedback">フィードバックを送信</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">このアプリを翻訳</string>
     <string name="action_contribute_content">コンテンツを翻訳または改善する</string>

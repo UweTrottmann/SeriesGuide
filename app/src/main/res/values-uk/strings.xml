@@ -369,7 +369,7 @@
     <string name="pref_quick_checkin">Швидке логування</string>
     <string name="pref_quick_checkin_summary">Не запитувати в повідомленні про логування</string>
     <!-- Help -->
-    <string name="feedback">Відправити відгук</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Перекласти додаток</string>
     <string name="action_contribute_content">Перекласти або поліпшити вміст</string>

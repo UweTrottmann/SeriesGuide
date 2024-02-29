@@ -385,7 +385,7 @@
     <string name="pref_quick_checkin">تحقق سريع</string>
     <string name="pref_quick_checkin_summary">لا تسأل عن رسالة التحقق مرة أخرى</string>
     <!-- Help -->
-    <string name="feedback">أرسل ملاحظاتك</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">ترجم هذا التطبيق</string>
     <string name="action_contribute_content">ترجمة أو تحسين المحتوى</string>

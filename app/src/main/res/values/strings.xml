@@ -402,7 +402,7 @@
     <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
 
     <!-- Help -->
-    <string name="feedback">Send feedback</string>
+    <string name="feedback">Send email</string>
 
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>

@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Registre immediat</string>
     <string name="pref_quick_checkin_summary">No demanis un missatge de registre</string>
     <!-- Help -->
-    <string name="feedback">Envia comentaris</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Traduïr l\'applicació</string>
     <string name="action_contribute_content">Tradueïx o millora el contingut</string>

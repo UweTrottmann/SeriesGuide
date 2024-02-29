@@ -345,7 +345,7 @@
     <string name="pref_quick_checkin">快速签到</string>
     <string name="pref_quick_checkin_summary">不再询问签到内容</string>
     <!-- Help -->
-    <string name="feedback">发送反馈</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">翻译本应用</string>
     <string name="action_contribute_content">翻译或改进影视资料</string>
