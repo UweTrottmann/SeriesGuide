@@ -1,8 +1,7 @@
 community: https://discuss.seriesgui.de
-community-search: https://discuss.seriesgui.de/search
-community-categories: https://discuss.seriesgui.de/categories
 crowdin: https://crowdin.com/project/seriesguide-translations
 github: https://github.com/UweTrottmann/SeriesGuide/
+release-notes: https://github.com/UweTrottmann/SeriesGuide/blob/dev/CHANGELOG.md
 thetvdb: https://www.thetvdb.com/
 tmdb: https://www.themoviedb.org/
 trakt: https://trakt.tv/
@@ -10,3 +9,4 @@ play: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
 playx: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide.x
 mastodon: https://mastodon.social/@SeriesGuide
 x: https://twitter.com/SeriesGuide
+discord: https://discord.gg/sMt5rBUVkD

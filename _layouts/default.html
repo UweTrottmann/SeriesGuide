@@ -19,20 +19,27 @@
           <li class="nav-item {% if "/whypay.html" == page.url %}active{% endif %}">
             <a class="nav-link" href="/whypay">Support the app</a>
           </li>
-  			  <li class="nav-item {% if "/help.html" == page.url %}active{% endif %}">
+  			  
+          <li class="nav-item {% if "/help.html" == page.url %}active{% endif %}">
             <a class="nav-link" href="/help">Help</a>
           </li>
+
   			  <li class="nav-item d-sm-none d-lg-block {% if "/privacy.html" == page.url %}active{% endif %}">
             <a class="nav-link" href="/privacy">Privacy</a>
           </li>
+
   			  <li class="nav-item d-sm-none d-lg-block {% if "/api/" == page.url %}active{% endif %}">
             <a class="nav-link" href="/api">Extensions API</a>
-  			  <li>
-            <a class="nav-link d-sm-none d-lg-block" href="{{ site.data.links.community }}">Community</a>
           </li>
+
           <li class="nav-item d-sm-none d-lg-block">
-            <a class="nav-link" href="{{ site.data.links.github }}">GitHub</a>
+            <a class="nav-link" href="{{ site.data.links.discord }}">Discord</a>
           </li>
+
+          <li class="nav-item d-sm-none d-lg-block">
+            <a class="nav-link" href="{{ site.data.links.community }}">Forum</a>
+          </li>
+          
           <li class="nav-item dropdown d-none d-sm-block d-lg-none">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               More
@@ -40,8 +47,8 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
               <a class="nav-link" href="/privacy">Privacy</a>
               <a class="nav-link" href="/api">Extensions API</a>
-              <a class="nav-link" href="{{ site.data.links.community }}">Community</a>
-              <a class="nav-link" href="{{ site.data.links.github }}">GitHub</a>
+              <a class="nav-link" href="{{ site.data.links.discord }}">Discord</a>
+              <a class="nav-link" href="{{ site.data.links.community }}">Forum</a>
             </div>
           </li>
   			</ul>
