@@ -129,8 +129,6 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.syncStatus.setProgress(event)
     }
 
-
-
     companion object {
         private const val SUPPORT_MAIL = "support@seriesgui.de"
 
@@ -147,7 +145,7 @@ class MoreOptionsActivity : BaseTopActivity() {
                 // and hardware and Android info in body
                 .putExtra(
                     Intent.EXTRA_TEXT,
-                    "${Build.MANUFACTURER.uppercase(Locale.US)} ${Build.MODEL}, Android ${Build.VERSION.RELEASE}\n\n"
+                    "My device: ${Build.MANUFACTURER.uppercase(Locale.US)} ${Build.MODEL}, Android ${Build.VERSION.RELEASE}\n\n"
                 )
             return Intent.createChooser(intent, context.getString(R.string.feedback))
         }
