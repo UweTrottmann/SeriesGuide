@@ -43,10 +43,11 @@ fun WatchProviderFilter(
     watchProvidersFlow: StateFlow<List<SgWatchProvider>>,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit,
     onProviderIncludeAny: () -> Unit,
-    onSelectRegion: () -> Unit
+    onSelectRegion: () -> Unit,
+    useDynamicColor: Boolean
 ) {
     val watchProviders by watchProvidersFlow.collectAsState()
-    SeriesGuideTheme {
+    SeriesGuideTheme(useDynamicColor = useDynamicColor) {
         WatchProviderList(
             watchProviders,
             onProviderFilterChange,

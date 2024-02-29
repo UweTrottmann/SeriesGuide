@@ -94,7 +94,8 @@ class ShowsDistillationFragment : AppCompatDialogFragment() {
                             )
                         },
                         onProviderIncludeAny = { model.removeWatchProviderFilter() },
-                        onSelectRegion = { StreamingSearchInfoDialog.show(parentFragmentManager) }
+                        onSelectRegion = { StreamingSearchInfoDialog.show(parentFragmentManager) },
+                        useDynamicColor = DisplaySettings.isDynamicColorsEnabled(context)
                     )
                 }
             }

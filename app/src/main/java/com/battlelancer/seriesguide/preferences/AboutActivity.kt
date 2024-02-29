@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.ui.theme.SeriesGuideTheme
 import com.battlelancer.seriesguide.util.PackageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -51,7 +52,7 @@ class AboutActivity : ComponentActivity() {
         ThemeUtils.configureEdgeToEdge(window)
 
         setContent {
-            SeriesGuideTheme {
+            SeriesGuideTheme(useDynamicColor = DisplaySettings.isDynamicColorsEnabled(this)) {
                 About(
                     versionString = PackageTools.getVersionString(this),
                     onBackPressed = { onBackPressedDispatcher.onBackPressed() },
@@ -189,16 +190,18 @@ class AboutActivity : ComponentActivity() {
     @Preview(device = Devices.PIXEL_C)
     @Composable
     fun AboutPreview() {
-        About(
-            "v42 (Database v42)",
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {}
-        )
+        SeriesGuideTheme {
+            About(
+                "v42 (Database v42)",
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            )
+        }
     }
 
     private fun viewUrl(@StringRes urlResId: Int) {
