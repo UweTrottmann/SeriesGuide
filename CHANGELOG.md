@@ -15,6 +15,8 @@ Version 72
 ----------
 *in development*
 
+* 🔨 Stream and purchase filter: support using system colors on Android 12 and newer.
+
 #### 72.0.3 🧪
 *2024-02-29*
 

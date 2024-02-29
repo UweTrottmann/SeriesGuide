@@ -1,10 +1,14 @@
 package com.battlelancer.seriesguide.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 
 
 private val LightColors = lightColorScheme(
@@ -37,6 +41,13 @@ private val LightColors = lightColorScheme(
     surfaceTint = md_theme_light_surfaceTint,
     outlineVariant = md_theme_light_outlineVariant,
     scrim = md_theme_light_scrim,
+    surfaceDim = surfaceDimLight,
+    surfaceBright = surfaceBrightLight,
+    surfaceContainerLowest = surfaceContainerLowestLight,
+    surfaceContainerLow = surfaceContainerLowLight,
+    surfaceContainer = surfaceContainerLight,
+    surfaceContainerHigh = surfaceContainerHighLight,
+    surfaceContainerHighest = surfaceContainerHighestLight,
 )
 
 
@@ -70,17 +81,28 @@ private val DarkColors = darkColorScheme(
     surfaceTint = md_theme_dark_surfaceTint,
     outlineVariant = md_theme_dark_outlineVariant,
     scrim = md_theme_dark_scrim,
+    surfaceDim = surfaceDimDark,
+    surfaceBright = surfaceBrightDark,
+    surfaceContainerLowest = surfaceContainerLowestDark,
+    surfaceContainerLow = surfaceContainerLowDark,
+    surfaceContainer = surfaceContainerDark,
+    surfaceContainerHigh = surfaceContainerHighDark,
+    surfaceContainerHighest = surfaceContainerHighestDark,
 )
 
 @Composable
 fun SeriesGuideTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    useDynamicColor: Boolean = false,
+    content: @Composable () -> Unit
 ) {
-    val colors = if (!useDarkTheme) {
-        LightColors
-    } else {
-        DarkColors
+    // Dynamic color is available on Android 12+
+    val dynamicColor = useDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val colors = when {
+        dynamicColor && useDarkTheme -> dynamicDarkColorScheme(LocalContext.current)
+        dynamicColor && !useDarkTheme -> dynamicLightColorScheme(LocalContext.current)
+        useDarkTheme -> DarkColors
+        else -> LightColors
     }
 
     MaterialTheme(

@@ -18,7 +18,7 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,10 +43,11 @@ fun WatchProviderFilter(
     watchProvidersFlow: StateFlow<List<SgWatchProvider>>,
     onProviderFilterChange: (SgWatchProvider, Boolean) -> Unit,
     onProviderIncludeAny: () -> Unit,
-    onSelectRegion: () -> Unit
+    onSelectRegion: () -> Unit,
+    useDynamicColor: Boolean
 ) {
     val watchProviders by watchProvidersFlow.collectAsState()
-    SeriesGuideTheme {
+    SeriesGuideTheme(useDynamicColor = useDynamicColor) {
         WatchProviderList(
             watchProviders,
             onProviderFilterChange,
@@ -77,7 +78,7 @@ fun WatchProviderList(
                     WatchProviderFilterItem(it, onProviderFilterChange)
                 }
             }
-            Divider()
+            HorizontalDivider()
             Row {
                 Row(
                     modifier = Modifier
