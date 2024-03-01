@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
 
     <!-- XML Material 3 colors, should match the Compose colors in com/battlelancer/seriesguide/ui/theme/Color.kt -->
-    <!-- Exported using https://m3.material.io/theme-builder and base color #6545a0 -->
+    <!-- Generated using https://material-foundation.github.io/material-theme-builder/ and base color #6545a0 -->
     <!-- https://m3.material.io/styles/color/the-color-system/color-roles -->
 
     <color name="md_theme_light_primaryContainer">#b69df8</color>
@@ -23,6 +23,13 @@
     <color name="md_theme_light_inverseOnSurface">#F5EFF4</color>
     <color name="md_theme_light_inverseSurface">#323033</color>
     <color name="md_theme_light_primaryInverse">#D5BBFF</color>
+    <color name="md_theme_light_surfaceDim">#DED8E0</color>
+    <color name="md_theme_light_surfaceBright">#FEF7FF</color>
+    <color name="md_theme_light_surfaceContainerLowest">#FFFFFF</color>
+    <color name="md_theme_light_surfaceContainerLow">#F8F1FA</color>
+    <color name="md_theme_light_surfaceContainer">#F2ECF4</color>
+    <color name="md_theme_light_surfaceContainerHigh">#EDE6EF</color>
+    <color name="md_theme_light_surfaceContainerHighest">#E7E0E9</color>
 
     <color name="md_theme_dark_onPrimary">#3D1976</color>
     <color name="md_theme_dark_primaryContainer">#54348E</color>
@@ -44,6 +51,13 @@
     <color name="md_theme_dark_onSurfaceVariant">#CBC4CF</color>
     <color name="md_theme_dark_outline">#948E99</color>
     <color name="md_theme_dark_primaryInverse">#6C4CA7</color>
+    <color name="md_theme_dark_surfaceDim">#151218</color>
+    <color name="md_theme_dark_surfaceBright">#3B383F</color>
+    <color name="md_theme_dark_surfaceContainerLowest">#0F0D13</color>
+    <color name="md_theme_dark_surfaceContainerLow">#1D1A21</color>
+    <color name="md_theme_dark_surfaceContainer">#211E25</color>
+    <color name="md_theme_dark_surfaceContainerHigh">#2C292F</color>
+    <color name="md_theme_dark_surfaceContainerHighest">#37333A</color>
 
     <color name="seed">#6545A0</color>
     <color name="error">#BA1B1B</color>

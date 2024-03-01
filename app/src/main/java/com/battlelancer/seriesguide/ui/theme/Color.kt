@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.theme
 import androidx.compose.ui.graphics.Color
 
 // Compose Material 3 colors, should match the XML colors in colors_md.xml
+// Generated using https://material-foundation.github.io/material-theme-builder/
 
 val seed = Color(0xFF6545A0)
 val white = Color(0xFFFFFFFF)
