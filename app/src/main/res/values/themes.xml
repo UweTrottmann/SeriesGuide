@@ -71,7 +71,6 @@
         <item name="sgColorDivider">@color/sg_white_15</item>
         <item name="sgColorShadow">@color/sg_black_40</item>
         <item name="sgColorStatusBarOverlay">@color/sg_black_87</item>
-        <item name="sgColorTopAppBar">@color/sg_background_app_bar_dark</item>
         <item name="sgColorOutlineLighter">@color/sg_color_outline_dark</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
@@ -151,7 +150,6 @@
         <item name="sgColorDivider">@color/sg_black_10</item>
         <item name="sgColorShadow">@color/sg_black_7</item>
         <item name="sgColorStatusBarOverlay">@color/sg_white_87</item>
-        <item name="sgColorTopAppBar">@color/sg_color_background</item>
         <item name="sgColorOutlineLighter">@color/sg_color_outline_light</item>
 
         <!-- dialogTheme is used by AppCompatDialogFragment. -->
