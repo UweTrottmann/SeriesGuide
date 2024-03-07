@@ -15,6 +15,8 @@ Version 72
 ----------
 *in development*
 
+* 🔨 Android 5: use correct color for show status and stream search configure button.
+
 #### 72.0.4 🧪
 *2024-02-29*
 

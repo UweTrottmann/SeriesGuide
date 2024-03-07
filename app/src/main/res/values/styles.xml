@@ -93,8 +93,10 @@
     <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.SeriesGuide.Headline6.Dim" />
 
     <!-- To apply on top of existing text appearance using Spans. -->
+    <!-- Because pre API 23 does not support theme dependent color attributes in XML,
+     using ?attr/colorSecondary directly instead of sg_text_color_accent.xml. -->
     <style name="ThemeOverlay.SeriesGuide.TextAppearance.Accent" parent="">
-        <item name="android:textColor">@color/sg_text_color_accent</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
     </style>
     <style name="ThemeOverlay.SeriesGuide.TextAppearance.Secondary" parent="">
         <item name="android:textColor">?android:textColorSecondary</item>
@@ -118,6 +120,8 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.IconButton.Outlined" parent="Widget.Material3.Button.IconButton.Outlined">
+        <!-- Pre API 23 does not support theme-dependent color in referenced style, so set iconTint directly. -->
+        <item name="iconTint">?attr/colorOnSurfaceVariant</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>
     </style>
 
