@@ -1,122 +1,104 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017, 2018, 2020-2024 Uwe Trottmann
+package com.battlelancer.seriesguide.jobs.episodes
 
-package com.battlelancer.seriesguide.jobs.episodes;
+import android.content.Context
+import androidx.annotation.CallSuper
+import com.battlelancer.seriesguide.jobs.BaseFlagJob
+import com.battlelancer.seriesguide.jobs.EpisodeInfo
+import com.battlelancer.seriesguide.jobs.SgJobInfo
+import com.battlelancer.seriesguide.provider.SeriesGuideContract
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask
+import com.google.flatbuffers.FlatBufferBuilder
 
-import android.content.Context;
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.jobs.BaseFlagJob;
-import com.battlelancer.seriesguide.jobs.EpisodeInfo;
-import com.battlelancer.seriesguide.jobs.SgJobInfo;
-import com.battlelancer.seriesguide.provider.SeriesGuideContract;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers;
-import com.battlelancer.seriesguide.shows.episodes.EpisodeTools;
-import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask;
-import com.google.flatbuffers.FlatBufferBuilder;
-import java.util.List;
+abstract class BaseEpisodesJob(
+    protected val flagValue: Int,
+    action: JobAction
+) : BaseFlagJob(action) {
 
-public abstract class BaseEpisodesJob extends BaseFlagJob {
+    protected abstract val showId: Long
 
-    private final int flagValue;
-
-    public BaseEpisodesJob(int flagValue, JobAction action) {
-        super(action);
-        this.flagValue = flagValue;
+    override fun supportsHexagon(): Boolean {
+        return true
     }
 
-    @Override
-    public boolean supportsHexagon() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsTrakt() {
+    override fun supportsTrakt(): Boolean {
         /* No need to create network job for skipped episodes, not supported by trakt.
         Note that a network job might still be created if hexagon is connected. */
-        return !EpisodeTools.isSkipped(flagValue);
+        return !EpisodeTools.isSkipped(flagValue)
     }
-
-    protected int getFlagValue() {
-        return flagValue;
-    }
-
-    protected abstract long getShowId();
 
     /**
      * Builds and executes the database op required to flag episodes in the local database,
      * notifies affected URIs, may update the list widget.
      */
-    @Override
     @CallSuper
-    public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
+    override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
         // prepare network job
-        byte[] networkJobInfo = null;
+        var networkJobInfo: ByteArray? = null
         if (requiresNetworkJob) {
-            networkJobInfo = prepareNetworkJob(context);
+            networkJobInfo = prepareNetworkJob(context)
             if (networkJobInfo == null) {
-                return false;
+                return false
             }
         }
 
         // apply local updates
-        boolean updated = applyDatabaseChanges(context);
+        val updated = applyDatabaseChanges(context)
         if (!updated) {
-            return false;
+            return false
         }
 
         // persist network job after successful local updates
         if (requiresNetworkJob) {
-            if (!persistNetworkJob(context, networkJobInfo)) {
-                return false;
+            if (!persistNetworkJob(context, networkJobInfo!!)) {
+                return false
             }
         }
 
         // notify some other URIs about updates
-        context.getContentResolver()
-                .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null);
+        context.contentResolver
+            .notifyChange(SeriesGuideContract.ListItems.CONTENT_WITH_DETAILS_URI, null)
 
-        return true;
+        return true
     }
 
-    protected abstract boolean applyDatabaseChanges(@NonNull Context context);
+    protected abstract fun applyDatabaseChanges(context: Context): Boolean
 
     /**
      * Note: Ensure episodes are ordered by season number (lowest first),
      * then episode number (lowest first).
      */
-    @NonNull
-    protected abstract List<SgEpisode2Numbers> getEpisodesForNetworkJob(@NonNull Context context);
+    protected abstract fun getEpisodesForNetworkJob(context: Context): List<SgEpisode2Numbers>
 
     /**
      * Returns the number of plays to upload to Cloud (Trakt currently not supported)
-     * based on the current number of plays (before {@link #applyLocalChanges(Context, boolean)}.
+     * based on the current number of plays (before [.applyLocalChanges].
      */
-    protected abstract int getPlaysForNetworkJob(int plays);
+    protected abstract fun getPlaysForNetworkJob(plays: Int): Int
 
-    @Nullable
-    private byte[] prepareNetworkJob(Context context) {
+    private fun prepareNetworkJob(context: Context): ByteArray? {
         // store affected episodes for network part
-        List<SgEpisode2Numbers> episodes = getEpisodesForNetworkJob(context);
+        val episodes = getEpisodesForNetworkJob(context)
 
-        FlatBufferBuilder builder = new FlatBufferBuilder(0);
+        val builder = FlatBufferBuilder(0)
 
-        int[] episodeInfos = new int[episodes.size()];
-        for (int i = 0; i < episodes.size(); i++) {
-            SgEpisode2Numbers episode = episodes.get(i);
-            int plays = getPlaysForNetworkJob(episode.getPlays());
+        val episodeInfos = IntArray(episodes.size)
+        for (i in episodes.indices) {
+            val episode = episodes[i]
+            val newPlays = getPlaysForNetworkJob(episode.plays)
             episodeInfos[i] = EpisodeInfo
-                    .createEpisodeInfo(builder, episode.getSeason(), episode.getEpisodenumber(),
-                            plays);
+                .createEpisodeInfo(builder, episode.season, episode.episodenumber, newPlays)
         }
 
-        int episodesVector = SgJobInfo.createEpisodesVector(builder, episodeInfos);
-        int jobInfo = SgJobInfo.createSgJobInfo(builder, flagValue, episodesVector, 0, 0, getShowId());
+        val episodesVector = SgJobInfo.createEpisodesVector(builder, episodeInfos)
+        val jobInfo = SgJobInfo.createSgJobInfo(builder, flagValue, episodesVector, 0, 0, showId)
 
-        builder.finish(jobInfo);
-        return builder.sizedByteArray();
+        builder.finish(jobInfo)
+        return builder.sizedByteArray()
     }
 
     /**
@@ -127,13 +109,17 @@ public abstract class BaseEpisodesJob extends BaseFlagJob {
      * for no-op.
      * @param setLastWatchedToNow Whether to set the last watched time of a show to now.
      */
-    protected final void updateLastWatched(Context context,
-            long lastWatchedEpisodeId, boolean setLastWatchedToNow) {
-        if (lastWatchedEpisodeId != -1 || setLastWatchedToNow) {
+    protected fun updateLastWatched(
+        context: Context,
+        lastWatchedEpisodeId: Long, setLastWatchedToNow: Boolean
+    ) {
+        if (lastWatchedEpisodeId != -1L || setLastWatchedToNow) {
             SgRoomDatabase.getInstance(context).sgShow2Helper()
-                    .updateLastWatchedEpisodeIdAndTime(getShowId(), lastWatchedEpisodeId,
-                            setLastWatchedToNow);
+                .updateLastWatchedEpisodeIdAndTime(
+                    showId, lastWatchedEpisodeId,
+                    setLastWatchedToNow
+                )
         }
-        LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, getShowId());
+        LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, showId)
     }
 }

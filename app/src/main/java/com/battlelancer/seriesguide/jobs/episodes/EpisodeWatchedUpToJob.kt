@@ -1,27 +1,22 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.jobs.episodes
 
 import android.content.Context
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.appwidget.ListWidgetProvider
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 
 /**
  * Set episodes watched up to (== including) a specific one excluding those with no release date.
  */
 class EpisodeWatchedUpToJob(
-    private val showId: Long,
+    override val showId: Long,
     private val episodeFirstAired: Long,
     private val episodeNumber: Int
 ) : BaseEpisodesJob(EpisodeFlags.WATCHED, JobAction.EPISODE_WATCHED_FLAG) {
-
-    override fun getShowId(): Long {
-        return showId
-    }
 
     override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
         if (!super.applyLocalChanges(context, requiresNetworkJob)) {

@@ -1,49 +1,32 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017, 2018, 2021-2024 Uwe Trottmann
+package com.battlelancer.seriesguide.jobs.episodes
 
-package com.battlelancer.seriesguide.jobs.episodes;
-
-import android.content.Context;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.provider.SgRoomDatabase;
-import com.battlelancer.seriesguide.shows.database.SgSeason2Numbers;
+import android.content.Context
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgSeason2Numbers
 
 /**
  * Flagging whole seasons watched or collected.
  */
-public abstract class SeasonBaseJob extends BaseEpisodesJob {
+abstract class SeasonBaseJob(
+    val seasonId: Long,
+    flagValue: Int,
+    action: JobAction
+) : BaseEpisodesJob(flagValue, action) {
 
-    protected final long seasonId;
-    private SgSeason2Numbers season;
-
-    public SeasonBaseJob(long seasonId, int flagValue, JobAction action) {
-        super(flagValue, action);
-        this.seasonId = seasonId;
+    private lateinit var season: SgSeason2Numbers
+    override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
+        val season = SgRoomDatabase.getInstance(context).sgSeason2Helper()
+            .getSeasonNumbers(seasonId) ?: return false
+        this.season = season
+        return super.applyLocalChanges(context, requiresNetworkJob)
     }
 
-    @Override
-    public boolean applyLocalChanges(Context context, boolean requiresNetworkJob) {
-        SgSeason2Numbers season = SgRoomDatabase.getInstance(context).sgSeason2Helper()
-                .getSeasonNumbers(seasonId);
-        if (season == null) {
-            return false;
-        }
-        this.season = season;
-
-        return super.applyLocalChanges(context, requiresNetworkJob);
+    fun getSeason(): SgSeason2Numbers {
+        return season
     }
 
-    @NonNull
-    public SgSeason2Numbers getSeason() {
-        return season;
-    }
-
-    @Override
-    protected long getShowId() {
-        return getSeason().getShowId();
-    }
-
-    public long getSeasonId() {
-        return seasonId;
-    }
+    override val showId: Long
+        get() = getSeason().showId
 }
