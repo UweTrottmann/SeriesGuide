@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018, 2020-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -15,7 +15,7 @@ import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 
 /**
- * Calculates the number of unwatched episodes and if all episodes are collected
+ * Calculates the number of unwatched and total episodes and if all episodes are collected
  * (excluding specials) for a show.
  */
 class RemainingCountLiveData(
@@ -27,6 +27,7 @@ class RemainingCountLiveData(
 
     data class Result(
         val unwatchedEpisodes: Int,
+        val totalEpisodes: Int,
         val collectedAllEpisodes: Boolean
     )
 
@@ -46,10 +47,11 @@ class RemainingCountLiveData(
         val helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         val currentTime = TimeTools.getCurrentTime(context)
         val unwatchedEpisodes = helper.countNotWatchedEpisodesOfShow(showRowId, currentTime)
+        val totalEpisodes = helper.countEpisodesOfShow(showRowId)
         // Only consider all collected if there is at least one collected
         val collectedAllEpisodes = !helper.hasEpisodesToCollect(showRowId)
                 && helper.hasCollectedEpisodes(showRowId)
-        postValue(Result(unwatchedEpisodes, collectedAllEpisodes))
+        postValue(Result(unwatchedEpisodes, totalEpisodes, collectedAllEpisodes))
     }
 
 }

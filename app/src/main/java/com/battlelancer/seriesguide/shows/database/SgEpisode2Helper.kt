@@ -228,6 +228,12 @@ interface SgEpisode2Helper {
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_watched == ${EpisodeFlags.WATCHED} AND episode_season_number != 0")
     fun countWatchedEpisodesWithoutSpecials(): Int
 
+    /**
+     * Count episodes of a show excluding specials, but including those without a release date.
+     */
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0")
+    suspend fun countEpisodesOfShow(showId: Long): Int
+
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.WATCHED}")
     fun countWatchedEpisodesOfShow(showId: Long): Int
 
@@ -238,14 +244,14 @@ interface SgEpisode2Helper {
      * Returns if at least one episode of the show is collected. Excludes specials.
      */
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 1 AND episode_season_number != 0 LIMIT 1")
-    fun hasCollectedEpisodes(showId: Long): Boolean
+    suspend fun hasCollectedEpisodes(showId: Long): Boolean
 
     /**
      * Returns if at least one episode of a show is left to collect. Excludes specials.
      * Should match with what [updateCollectedOfShowExcludeSpecials] changes.
      */
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 0 AND episode_season_number != 0 LIMIT 1")
-    fun hasEpisodesToCollect(showId: Long): Boolean
+    suspend fun hasEpisodesToCollect(showId: Long): Boolean
 
     /**
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
