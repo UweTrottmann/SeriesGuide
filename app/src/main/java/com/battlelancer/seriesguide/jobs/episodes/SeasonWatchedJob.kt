@@ -36,7 +36,10 @@ class SeasonWatchedJob(seasonId: Long, episodeFlags: Int) :
         }
     }
 
-    override fun applyDatabaseChanges(context: Context): Boolean {
+    override fun applyDatabaseChanges(
+        context: Context,
+        episodes: List<SgEpisode2Numbers>
+    ): Boolean {
         val database = SgRoomDatabase.getInstance(context)
         val helper = database.sgEpisode2Helper()
         val rowsUpdated = when (flagValue) {
@@ -45,18 +48,23 @@ class SeasonWatchedJob(seasonId: Long, episodeFlags: Int) :
             EpisodeFlags.UNWATCHED -> helper.setSeasonNotWatchedAndRemovePlays(seasonId)
             else -> throw IllegalArgumentException("Flag value not supported")
         }
+        val isSuccessful = rowsUpdated >= 0 // -1 means error.
 
-        // set a new last watched episode
-        // set last watched time to now if marking as watched or skipped
-        val unwatched = EpisodeTools.isUnwatched(flagValue)
-        updateLastWatched(context, getLastWatchedEpisodeId(context), !unwatched)
+        if (isSuccessful) {
+            // set a new last watched episode
+            // set last watched time to now if marking as watched or skipped
+            val unwatched = EpisodeTools.isUnwatched(flagValue)
+            updateLastWatched(context, getLastWatchedEpisodeId(context), !unwatched)
 
-        ListWidgetProvider.notifyDataChanged(context)
+            // Add or remove activity entries
+            updateActivity(context, episodes)
 
-        return rowsUpdated >= 0 // -1 means error.
+            ListWidgetProvider.notifyDataChanged(context)
+        }
+        return isSuccessful
     }
 
-    override fun getEpisodesForNetworkJob(context: Context): List<SgEpisode2Numbers> {
+    override fun getAffectedEpisodes(context: Context): List<SgEpisode2Numbers> {
         val helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         return if (EpisodeTools.isUnwatched(flagValue)) {
             // set unwatched

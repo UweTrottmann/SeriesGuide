@@ -18,27 +18,28 @@ class EpisodeWatchedUpToJob(
     private val episodeNumber: Int
 ) : BaseEpisodesJob(EpisodeFlags.WATCHED, JobAction.EPISODE_WATCHED_FLAG) {
 
-    override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
-        if (!super.applyLocalChanges(context, requiresNetworkJob)) {
-            return false
-        }
-
-        // we don't care about the last watched episode value
-        // always update last watched time, this type only marks as watched
-        updateLastWatched(context, -1, true)
-
-        ListWidgetProvider.notifyDataChanged(context)
-
-        return true
-    }
-
-    override fun applyDatabaseChanges(context: Context): Boolean {
+    override fun applyDatabaseChanges(
+        context: Context,
+        episodes: List<SgEpisode2Numbers>
+    ): Boolean {
         val rowsUpdated = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
             .setWatchedUpToAndAddPlay(showId, episodeFirstAired, episodeNumber)
-        return rowsUpdated >= 0 // -1 means error
+        val isSuccessful = rowsUpdated >= 0 // -1 means error
+
+        if (isSuccessful) {
+            // we don't care about the last watched episode value
+            // always update last watched time, this type only marks as watched
+            updateLastWatched(context, -1, true)
+
+            // Add or remove activity entries
+            updateActivity(context, episodes)
+
+            ListWidgetProvider.notifyDataChanged(context)
+        }
+        return isSuccessful
     }
 
-    override fun getEpisodesForNetworkJob(context: Context): List<SgEpisode2Numbers> {
+    override fun getAffectedEpisodes(context: Context): List<SgEpisode2Numbers> {
         return SgRoomDatabase.getInstance(context).sgEpisode2Helper()
             .getEpisodeNumbersForWatchedUpTo(showId, episodeFirstAired, episodeNumber)
     }

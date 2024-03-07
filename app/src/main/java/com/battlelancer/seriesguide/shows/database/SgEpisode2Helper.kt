@@ -90,7 +90,7 @@ interface SgEpisode2Helper {
     @Query("SELECT episode_tmdb_id FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeTmdbId(episodeId: Long): Int
 
-    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE _id = :episodeId")
+    @Query("SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeNumbers(episodeId: Long): SgEpisode2Numbers?
 
     @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE _id = :episodeId")
@@ -166,7 +166,7 @@ interface SgEpisode2Helper {
     /**
      * Also serves as compile time validation of [SgEpisode2Numbers.buildQuery]
      */
-    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_season_number ASC, episode_number ASC")
+    @Query("SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfSeason(seasonId: Long): List<SgEpisode2Numbers>
 
     @RawQuery(observedEntities = [SgEpisode2::class])
@@ -175,7 +175,7 @@ interface SgEpisode2Helper {
     /**
      * Excludes specials.
      */
-    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
+    @Query("SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfShow(showId: Long): List<SgEpisode2Numbers>
 
     @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_tmdb_id > 0 AND (episode_watched != ${EpisodeFlags.UNWATCHED} OR episode_collected = 1)")
@@ -305,7 +305,7 @@ interface SgEpisode2Helper {
     /**
      * See [setWatchedUpToAndAddPlay] for which episodes are returned.
      */
-    @Query("""SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId 
+    @Query("""SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId 
             AND (
             episode_firstairedms < :episodeFirstAired
             OR (episode_firstairedms = :episodeFirstAired AND episode_number <= :episodeNumber)
@@ -319,7 +319,7 @@ interface SgEpisode2Helper {
      * Note: keep in sync with [setSeasonNotWatchedAndRemovePlays].
      */
     @Query(
-        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.UNWATCHED}
         ORDER BY episode_season_number ASC, episode_number ASC"""
     )
@@ -368,7 +368,7 @@ interface SgEpisode2Helper {
      * Note: keep in sync with [setSeasonSkipped] and [setSeasonWatchedAndAddPlay].
      */
     @Query(
-        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.WATCHED}
         ORDER BY episode_season_number ASC, episode_number ASC"""
     )
@@ -405,7 +405,7 @@ interface SgEpisode2Helper {
      * Note: keep in sync with [setShowNotWatchedAndRemovePlays].
      */
     @Query(
-        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED}
         AND episode_season_number != 0
         ORDER BY episode_season_number ASC, episode_number ASC"""
@@ -428,7 +428,7 @@ interface SgEpisode2Helper {
      * Note: keep in sync with [setShowWatchedAndAddPlay].
      */
     @Query(
-        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.WATCHED}
         AND episode_firstairedms <= :currentTimePlusOneHour AND episode_firstairedms != -1
         AND episode_season_number != 0
@@ -687,6 +687,7 @@ data class SgEpisode2Ids(
 
 data class SgEpisode2Numbers(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?,
     @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
     @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
@@ -701,7 +702,7 @@ data class SgEpisode2Numbers(
         fun buildQuery(seasonId: Long, order: EpisodesSettings.EpisodeSorting): SimpleSQLiteQuery {
             val orderClause = order.query()
             return SimpleSQLiteQuery(
-                "SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
+                "SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
             )
         }
     }

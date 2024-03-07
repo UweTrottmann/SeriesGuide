@@ -25,23 +25,16 @@ class ShowWatchedJob(
         if (!super.applyLocalChanges(context, requiresNetworkJob)) {
             return false
         }
-        val lastWatchedEpisodeId =
-            if (EpisodeTools.isUnwatched(flagValue)) {
-                0L /* just reset */
-            } else {
-                -1L /* we don't care */
-            }
 
-        // set a new last watched episode
-        // set last watched time to now if marking as watched or skipped
-        updateLastWatched(context, lastWatchedEpisodeId, !EpisodeTools.isUnwatched(flagValue))
 
-        ListWidgetProvider.notifyDataChanged(context)
 
         return true
     }
 
-    override fun applyDatabaseChanges(context: Context): Boolean {
+    override fun applyDatabaseChanges(
+        context: Context,
+        episodes: List<SgEpisode2Numbers>
+    ): Boolean {
         val helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         val rowsUpdated: Int = when (flagValue) {
             EpisodeFlags.UNWATCHED -> helper.setShowNotWatchedAndRemovePlays(showId)
@@ -51,10 +44,29 @@ class ShowWatchedJob(
                 throw IllegalArgumentException("Flag value not supported")
             }
         }
-        return rowsUpdated >= 0 // -1 means error.
+        val isSuccessful = rowsUpdated >= 0 // -1 means error
+
+        if (isSuccessful) {
+            val lastWatchedEpisodeId =
+                if (EpisodeTools.isUnwatched(flagValue)) {
+                    0L /* just reset */
+                } else {
+                    -1L /* we don't care */
+                }
+
+            // set a new last watched episode
+            // set last watched time to now if marking as watched or skipped
+            updateLastWatched(context, lastWatchedEpisodeId, !EpisodeTools.isUnwatched(flagValue))
+
+            // Add or remove activity entries
+            updateActivity(context, episodes)
+
+            ListWidgetProvider.notifyDataChanged(context)
+        }
+        return isSuccessful
     }
 
-    override fun getEpisodesForNetworkJob(context: Context): List<SgEpisode2Numbers> {
+    override fun getAffectedEpisodes(context: Context): List<SgEpisode2Numbers> {
         val helper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         return if (EpisodeTools.isUnwatched(flagValue)) {
             // set unwatched
