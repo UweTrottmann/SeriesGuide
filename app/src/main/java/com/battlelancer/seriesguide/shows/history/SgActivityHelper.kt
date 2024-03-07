@@ -41,7 +41,7 @@ interface SgActivityHelper {
     fun getActivityByLatest(): List<SgActivity>
 
     companion object {
-        private const val HISTORY_THRESHOLD = 30 * DateUtils.DAY_IN_MILLIS
+        private const val HISTORY_THRESHOLD = 90 * DateUtils.DAY_IN_MILLIS
 
         /**
          * Adds activity entries for the given episode TMDB IDs with the current time as timestamp.
