@@ -26,12 +26,12 @@ object WebTools {
     fun openInCustomTab(context: Context, url: String): Boolean {
         val darkParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(
-                ContextCompat.getColor(context, R.color.sg_background_app_bar_dark)
+                ContextCompat.getColor(context, R.color.md_theme_dark_surfaceContainer)
             )
             .build()
         val defaultParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(
-                ContextCompat.getColor(context, R.color.sg_color_background_light)
+                ContextCompat.getColor(context, R.color.md_theme_light_surfaceContainer)
             )
             .build()
         val customTabsIntent = CustomTabsIntent.Builder()

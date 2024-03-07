@@ -36,7 +36,6 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
@@ -190,8 +189,12 @@ object ThemeUtils {
             // As those are the majority of used devices, use an opaque color with alpha matching
             // the navigation bar instead.
 //            Color.TRANSPARENT
-            // Widget.Material3.BottomNavigationView elevation is m3_sys_elevation_level2
-            val opaqueNavBarColor = SurfaceColors.SURFACE_2.getColor(context)
+            // Widget.Material3.BottomNavigationView background is ?attr/colorSurfaceContainer
+            val opaqueNavBarColor = MaterialColors.getColor(
+                context,
+                com.google.android.material.R.attr.colorSurfaceContainer,
+                Color.BLACK
+            )
             ColorUtils.setAlphaComponent(opaqueNavBarColor, 192)
         }
     }

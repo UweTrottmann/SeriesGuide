@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui.theme
 import androidx.compose.ui.graphics.Color
 
 // Compose Material 3 colors, should match the XML colors in colors_md.xml
+// Generated using https://material-foundation.github.io/material-theme-builder/
 
 val seed = Color(0xFF6545A0)
 val white = Color(0xFFFFFFFF)
@@ -41,10 +42,10 @@ val md_theme_light_scrim = Color(0xFF000000)
 val surfaceDimLight = Color(0xFFDED8E0)
 val surfaceBrightLight = Color(0xFFFEF7FF)
 val surfaceContainerLowestLight = Color(0xFFFFFFFF)
-val surfaceContainerLowLight = Color(0xFFF8F1FA)
-val surfaceContainerLight = Color(0xFFF2ECF4)
-val surfaceContainerHighLight = Color(0xFFEDE6EF)
-val surfaceContainerHighestLight = Color(0xFFE7E0E9)
+val surfaceContainerLowLight = Color(0xFFE3E0E6) // Buttons, cards
+val surfaceContainerLight = Color(0xFFDEDBE3) // App bars
+val surfaceContainerHighLight = Color(0xFFDCD9E3) // Dialogs
+val surfaceContainerHighestLight = md_theme_light_surfaceVariant // Text input, switch
 
 val md_theme_dark_primary = Color(0xFF927bbc)
 val md_theme_dark_onPrimary = Color(0xFF3D1976)
@@ -78,7 +79,7 @@ val md_theme_dark_scrim = Color(0xFF000000)
 val surfaceDimDark = Color(0xFF151218)
 val surfaceBrightDark = Color(0xFF3B383F)
 val surfaceContainerLowestDark = Color(0xFF0F0D13)
-val surfaceContainerLowDark = Color(0xFF1D1A21)
-val surfaceContainerDark = Color(0xFF211E25)
-val surfaceContainerHighDark = Color(0xFF2C292F)
-val surfaceContainerHighestDark = Color(0xFF37333A)
+val surfaceContainerLowDark = Color(0xFF1F1B26) // Buttons, cards
+val surfaceContainerDark = Color(0xFF221E2B) // App bars
+val surfaceContainerHighDark = Color(0xFF25202E) // Dialogs
+val surfaceContainerHighestDark = md_theme_dark_surfaceVariant // Text input, switch
