@@ -11,13 +11,16 @@ class ShowCollectedJob(
     private val isCollected: Boolean
 ) : ShowBaseJob(showId, if (isCollected) 1 else 0, JobAction.EPISODE_COLLECTION) {
 
-    override fun applyDatabaseChanges(context: Context): Boolean {
+    override fun applyDatabaseChanges(
+        context: Context,
+        episodes: List<SgEpisode2Numbers>
+    ): Boolean {
         val rowsUpdated = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
             .updateCollectedOfShowExcludeSpecials(showId, isCollected)
         return rowsUpdated >= 0 // -1 means error.
     }
 
-    override fun getEpisodesForNetworkJob(context: Context): List<SgEpisode2Numbers> {
+    override fun getAffectedEpisodes(context: Context): List<SgEpisode2Numbers> {
         return SgRoomDatabase.getInstance(context).sgEpisode2Helper()
             .getEpisodeNumbersOfShow(showId)
     }

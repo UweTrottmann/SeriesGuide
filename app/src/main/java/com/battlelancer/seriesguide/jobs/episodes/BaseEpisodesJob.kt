@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgEpisode2Numbers
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.history.SgActivityHelper
 import com.battlelancer.seriesguide.shows.tools.LatestEpisodeUpdateTask
 import com.google.flatbuffers.FlatBufferBuilder
 
@@ -37,17 +38,19 @@ abstract class BaseEpisodesJob(
      */
     @CallSuper
     override fun applyLocalChanges(context: Context, requiresNetworkJob: Boolean): Boolean {
+        val episodes: List<SgEpisode2Numbers> = getAffectedEpisodes(context)
+
         // prepare network job
         var networkJobInfo: ByteArray? = null
         if (requiresNetworkJob) {
-            networkJobInfo = prepareNetworkJob(context)
+            networkJobInfo = prepareNetworkJob(episodes)
             if (networkJobInfo == null) {
                 return false
             }
         }
 
         // apply local updates
-        val updated = applyDatabaseChanges(context)
+        val updated = applyDatabaseChanges(context, episodes)
         if (!updated) {
             return false
         }
@@ -66,13 +69,16 @@ abstract class BaseEpisodesJob(
         return true
     }
 
-    protected abstract fun applyDatabaseChanges(context: Context): Boolean
+    protected abstract fun applyDatabaseChanges(
+        context: Context,
+        episodes: List<SgEpisode2Numbers>
+    ): Boolean
 
     /**
      * Note: Ensure episodes are ordered by season number (lowest first),
      * then episode number (lowest first).
      */
-    protected abstract fun getEpisodesForNetworkJob(context: Context): List<SgEpisode2Numbers>
+    protected abstract fun getAffectedEpisodes(context: Context): List<SgEpisode2Numbers>
 
     /**
      * Returns the number of plays to upload to Cloud (Trakt currently not supported)
@@ -80,10 +86,10 @@ abstract class BaseEpisodesJob(
      */
     protected abstract fun getPlaysForNetworkJob(plays: Int): Int
 
-    private fun prepareNetworkJob(context: Context): ByteArray? {
-        // store affected episodes for network part
-        val episodes = getEpisodesForNetworkJob(context)
-
+    /**
+     * Store affected episodes for network job.
+     */
+    private fun prepareNetworkJob(episodes: List<SgEpisode2Numbers>): ByteArray? {
         val builder = FlatBufferBuilder(0)
 
         val episodeInfos = IntArray(episodes.size)
@@ -121,5 +127,22 @@ abstract class BaseEpisodesJob(
                 )
         }
         LatestEpisodeUpdateTask.updateLatestEpisodeFor(context, showId)
+    }
+
+    /**
+     * Add or remove watch activity entries for episodes. Only used for watch jobs.
+     */
+    protected fun updateActivity(context: Context, episodes: List<SgEpisode2Numbers>) {
+        val showTmdbIdOrZero =
+            SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+        val episodeTmdbIds = episodes.mapNotNull { it.tmdbId }
+
+        if (showTmdbIdOrZero == 0 && episodeTmdbIds.isEmpty()) return
+
+        if (EpisodeTools.isWatched(flagValue)) {
+            SgActivityHelper.addActivitiesForEpisodes(context, showTmdbIdOrZero, episodeTmdbIds)
+        } else if (EpisodeTools.isUnwatched(flagValue)) {
+            SgActivityHelper.removeActivitiesForEpisodes(context, episodeTmdbIds)
+        }
     }
 }
