@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -36,12 +36,4 @@ data class SgSeason2(
 ) {
     val number: Int
         get() = numberOrNull ?: 0 // == Specials, but should ignore seasons without number.
-    val notWatchedReleased: Int
-        get() = notWatchedReleasedOrNull ?: 0
-    val notWatchedToBeReleased: Int
-        get() = notWatchedToBeReleasedOrNull ?: 0
-    val notWatchedNoRelease: Int
-        get() = notWatchedNoReleaseOrNull ?: 0
-    val total: Int
-        get() = totalOrNull ?: 0
 }

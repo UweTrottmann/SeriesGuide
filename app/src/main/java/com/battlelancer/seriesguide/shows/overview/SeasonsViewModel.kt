@@ -9,12 +9,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgSeason2
+import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class SeasonsViewModel(
     application: Application,
@@ -22,6 +26,20 @@ class SeasonsViewModel(
 ) : AndroidViewModel(application) {
 
     private val order = MutableStateFlow(SeasonsSettings.getSeasonSortOrder(getApplication()))
+
+    data class SeasonStats(
+        val total: Int,
+        val notWatchedReleased: Int,
+        val notWatchedToBeReleased: Int,
+        val notWatchedNoRelease: Int
+    )
+
+    data class SgSeasonWithStats(
+        val season: SgSeason2,
+        val stats: SeasonStats
+    )
+
+    private val seasonStats = MutableStateFlow(mapOf<Long, SeasonStats>())
 
     val seasonsWithStats = order
         .flatMapLatest {
@@ -32,10 +50,13 @@ class SeasonsViewModel(
                 helper.getSeasonsOfShowOldestFirst(showId)
             }
         }
+        .combine(seasonStats) { seasons, stats ->
+            seasons.map { SgSeasonWithStats(it, stats[it.id] ?: SeasonStats(0, 0, 0, 0)) }
+        }
         .flowOn(Dispatchers.IO)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = listOf()
         )
 
@@ -43,6 +64,42 @@ class SeasonsViewModel(
 
     fun updateOrder() {
         order.value = SeasonsSettings.getSeasonSortOrder(getApplication())
+    }
+
+    /**
+     * Updates episode counts for a specific [seasonIdToUpdate] or all seasons if null.
+     */
+    fun updateSeasonStats(seasonIdToUpdate: Long?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val database = SgRoomDatabase.getInstance(getApplication())
+
+            val seasonIds = if (seasonIdToUpdate != null) {
+                listOf(seasonIdToUpdate)
+            } else {
+                database.sgSeason2Helper().getSeasonIdsOfShow(showId)
+            }
+
+            val newMap = seasonStats.value.toMutableMap()
+            val helper = database.sgEpisode2Helper()
+            val currentTime = TimeTools.getCurrentTime(getApplication())
+            for (seasonId in seasonIds) {
+                newMap[seasonId] = SeasonStats(
+                    total = helper.countEpisodesOfSeason(seasonId),
+                    notWatchedReleased = helper.countNotWatchedReleasedEpisodesOfSeason(
+                        seasonId,
+                        currentTime
+                    ),
+                    notWatchedToBeReleased = helper.countNotWatchedToBeReleasedEpisodesOfSeason(
+                        seasonId,
+                        currentTime
+                    ),
+                    notWatchedNoRelease = helper.countNotWatchedNoReleaseEpisodesOfSeason(
+                        seasonId
+                    ),
+                )
+            }
+            seasonStats.value = newMap
+        }
     }
 
 }

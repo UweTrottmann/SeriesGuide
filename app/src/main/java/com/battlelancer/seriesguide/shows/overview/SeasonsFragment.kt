@@ -225,11 +225,7 @@ class SeasonsFragment() : Fragment() {
         model.remainingCountData.load(showId)
         if (event.flagJob is SeasonWatchedJob) {
             // If we can narrow it down to just one season...
-            UnwatchedUpdateWorker.updateUnwatchedCountFor(
-                requireContext(),
-                showId,
-                event.flagJob.seasonId
-            )
+            model.updateSeasonStats(event.flagJob.seasonId)
         } else {
             updateUnwatchedCounts()
         }
@@ -278,7 +274,7 @@ class SeasonsFragment() : Fragment() {
      * notifies provider causing the loader to reload.
      */
     private fun updateUnwatchedCounts() {
-        UnwatchedUpdateWorker.updateUnwatchedCountFor(requireContext(), showId)
+        model.updateSeasonStats(null)
     }
 
     private fun handleRemainingCountUpdate(result: RemainingCountLiveData.Result?) {

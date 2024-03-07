@@ -80,9 +80,6 @@ interface SgSeason2Helper {
     @Query("SELECT * FROM sg_season WHERE series_id = :showId ORDER BY season_number ASC")
     fun getSeasonsForExport(showId: Long): List<SgSeason2>
 
-    @Update(entity = SgSeason2::class)
-    fun updateSeasonCounters(seasonCountUpdate: SgSeason2CountUpdate)
-
     @Query("DELETE FROM sg_season WHERE series_id = :showId")
     suspend fun deleteSeasonsOfShow(showId: Long): Int
 }
@@ -97,15 +94,6 @@ data class SgSeason2Numbers(
     val number: Int
         get() = numberOrNull ?: 0 // == Specials, but should ignore seasons without number.
 }
-
-data class SgSeason2CountUpdate(
-    @ColumnInfo(name = SgSeason2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgSeason2Columns.WATCHCOUNT) val notWatchedReleasedCount: Int,
-    @ColumnInfo(name = SgSeason2Columns.UNAIREDCOUNT) val notWatchedToBeReleasedCount: Int,
-    @ColumnInfo(name = SgSeason2Columns.NOAIRDATECOUNT) val notWatchedNoReleaseCount: Int,
-    @ColumnInfo(name = SgSeason2Columns.TOTALCOUNT) val totalCount: Int,
-    @ColumnInfo(name = SgSeason2Columns.TAGS) val tags: String
-)
 
 data class SgSeason2Update(
     @ColumnInfo(name = SgSeason2Columns._ID) val id: Long,
