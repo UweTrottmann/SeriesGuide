@@ -84,8 +84,11 @@ class SeasonsAdapter(
                 res.getString(R.string.format_progress_and_total, progress, max)
             }
 
-            // Skipped indicator
-            binding.imageViewSeasonSkipped.isGone = !SeasonTools.hasSkippedTag(season.tags)
+            // Skipped and collected indicator
+            val skipped = stats.skipped
+            val collected = stats.collected
+            binding.imageViewSeasonSkipped.isGone = skipped == 0
+            binding.imageViewSeasonCollected.isGone = collected == 0
 
             // Status text
             val countText = StringBuilder()
@@ -130,10 +133,25 @@ class SeasonsAdapter(
                     )
                 )
             }
+            if (skipped > 0) {
+                if (countText.isNotEmpty()) countText.append(" · ")
+                countText.append(
+                    res.getQuantityString(
+                        R.plurals.skipped_episodes_plural,
+                        skipped, skipped
+                    )
+                )
+            }
+            if (collected > 0) {
+                if (countText.isNotEmpty()) countText.append(" · ")
+                countText.append(
+                    res.getQuantityString(
+                        R.plurals.collected_episodes_plural,
+                        collected, collected
+                    )
+                )
+            }
             binding.textViewSeasonWatchCount.text = countText
-
-            // Context menu
-
         }
 
         companion object {

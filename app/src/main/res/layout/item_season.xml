@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2011-2018, 2020-2022, 2024 Uwe Trottmann -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -60,15 +64,25 @@
         android:contentDescription="@null"
         app:srcCompat="@drawable/ic_skipped_24dp" />
 
+    <ImageView
+        android:id="@+id/imageViewSeasonCollected"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_below="@id/progressBarSeason"
+        android:layout_marginRight="4dp"
+        android:layout_toRightOf="@id/imageViewSeasonSkipped"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_collected_24dp" />
+
     <TextView
         android:id="@+id/textViewSeasonWatchCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBarSeason"
         android:layout_toLeftOf="@id/imageViewContextMenu"
-        android:layout_toRightOf="@id/imageViewSeasonSkipped"
+        android:layout_toRightOf="@id/imageViewSeasonCollected"
         android:paddingBottom="@dimen/large_padding"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
-        tools:text="10 episodes not watched yet" />
+        tools:text="77 remaining - 7 skipped - 7 in collection" />
 
 </RelativeLayout>

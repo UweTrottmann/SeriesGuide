@@ -31,8 +31,12 @@ class SeasonsViewModel(
         val total: Int,
         val notWatchedReleased: Int,
         val notWatchedToBeReleased: Int,
-        val notWatchedNoRelease: Int
-    )
+        val notWatchedNoRelease: Int,
+        val skipped: Int,
+        val collected: Int
+    ) {
+        constructor() : this(0, 0, 0, 0, 0, 0)
+    }
 
     data class SgSeasonWithStats(
         val season: SgSeason2,
@@ -51,7 +55,7 @@ class SeasonsViewModel(
             }
         }
         .combine(seasonStats) { seasons, stats ->
-            seasons.map { SgSeasonWithStats(it, stats[it.id] ?: SeasonStats(0, 0, 0, 0)) }
+            seasons.map { SgSeasonWithStats(it, stats[it.id] ?: SeasonStats()) }
         }
         .flowOn(Dispatchers.IO)
         .stateIn(
@@ -83,19 +87,16 @@ class SeasonsViewModel(
             val helper = database.sgEpisode2Helper()
             val currentTime = TimeTools.getCurrentTime(getApplication())
             for (seasonId in seasonIds) {
+                val total = helper.countEpisodesOfSeason(seasonId)
                 newMap[seasonId] = SeasonStats(
-                    total = helper.countEpisodesOfSeason(seasonId),
-                    notWatchedReleased = helper.countNotWatchedReleasedEpisodesOfSeason(
-                        seasonId,
-                        currentTime
-                    ),
-                    notWatchedToBeReleased = helper.countNotWatchedToBeReleasedEpisodesOfSeason(
-                        seasonId,
-                        currentTime
-                    ),
-                    notWatchedNoRelease = helper.countNotWatchedNoReleaseEpisodesOfSeason(
-                        seasonId
-                    ),
+                    total = total,
+                    notWatchedReleased = helper
+                        .countNotWatchedReleasedEpisodesOfSeason(seasonId, currentTime),
+                    notWatchedToBeReleased = helper
+                        .countNotWatchedToBeReleasedEpisodesOfSeason(seasonId, currentTime),
+                    notWatchedNoRelease = helper.countNotWatchedNoReleaseEpisodesOfSeason(seasonId),
+                    skipped = helper.countSkippedEpisodesOfSeason(seasonId),
+                    collected = total - helper.countNotCollectedEpisodesOfSeason(seasonId)
                 )
             }
             seasonStats.value = newMap

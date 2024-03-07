@@ -10,6 +10,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.shows.overview.SeasonsViewModel
 
 @Entity(
     tableName = "sg_season",
@@ -28,10 +29,25 @@ data class SgSeason2(
     @ColumnInfo(name = SgSeason2Columns.COMBINED) val numberOrNull: Int?,
     @ColumnInfo(name = SgSeason2Columns.NAME) val name: String?,
     @ColumnInfo(name = SgSeason2Columns.ORDER) val order: Int,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.WATCHCOUNT) val notWatchedReleasedOrNull: Int? = 0,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.UNAIREDCOUNT) val notWatchedToBeReleasedOrNull: Int? = 0,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.NOAIRDATECOUNT) val notWatchedNoReleaseOrNull: Int? = 0,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.TOTALCOUNT) val totalOrNull: Int? = 0,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.TAGS) val tags: String? = ""
 ) {
     val number: Int

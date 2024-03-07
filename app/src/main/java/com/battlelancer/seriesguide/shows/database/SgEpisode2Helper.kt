@@ -273,10 +273,10 @@ interface SgEpisode2Helper {
     suspend fun countNotWatchedNoReleaseEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.SKIPPED}")
-    fun countSkippedEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countSkippedEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_collected = 0")
-    fun countNotCollectedEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countNotCollectedEpisodesOfSeason(seasonId: Long): Int
 
     @Query("UPDATE sg_episode SET episode_watched = 0, episode_plays = 0 WHERE _id = :episodeId")
     fun setNotWatchedAndRemovePlays(episodeId: Long): Int
