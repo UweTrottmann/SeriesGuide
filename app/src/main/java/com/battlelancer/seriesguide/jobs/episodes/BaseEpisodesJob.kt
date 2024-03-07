@@ -131,16 +131,23 @@ abstract class BaseEpisodesJob(
 
     /**
      * Add or remove watch activity entries for episodes. Only used for watch jobs.
+     *
+     * Reverses order from [getAffectedEpisodes] to have highest number and season appear first.
      */
     protected fun updateActivity(context: Context, episodes: List<SgEpisode2Numbers>) {
         val showTmdbIdOrZero =
             SgRoomDatabase.getInstance(context).sgShow2Helper().getShowTmdbId(showId)
+
         val episodeTmdbIds = episodes.mapNotNull { it.tmdbId }
 
         if (showTmdbIdOrZero == 0 && episodeTmdbIds.isEmpty()) return
 
         if (EpisodeTools.isWatched(flagValue)) {
-            SgActivityHelper.addActivitiesForEpisodes(context, showTmdbIdOrZero, episodeTmdbIds)
+            SgActivityHelper.addActivitiesForEpisodes(
+                context,
+                showTmdbIdOrZero,
+                episodeTmdbIds.reversed()
+            )
         } else if (EpisodeTools.isUnwatched(flagValue)) {
             SgActivityHelper.removeActivitiesForEpisodes(context, episodeTmdbIds)
         }
