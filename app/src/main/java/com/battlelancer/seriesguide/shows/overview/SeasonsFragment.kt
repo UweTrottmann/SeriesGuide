@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -19,6 +19,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
@@ -30,6 +31,8 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
 import com.battlelancer.seriesguide.util.ThemeUtils
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -92,8 +95,10 @@ class SeasonsFragment() : Fragment() {
             }
         }
 
-        model.seasons.observe(viewLifecycleOwner) { seasons ->
-            adapter.submitList(seasons)
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.seasonsWithStats.collectLatest {
+                adapter.submitList(it)
+            }
         }
         model.remainingCountData.observe(viewLifecycleOwner) { result ->
             handleRemainingCountUpdate(result)

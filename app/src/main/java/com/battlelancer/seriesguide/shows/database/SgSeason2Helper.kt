@@ -1,9 +1,8 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
@@ -12,6 +11,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.battlelancer.seriesguide.provider.SeriesGuideContract
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SgSeason2Helper {
@@ -66,13 +66,13 @@ interface SgSeason2Helper {
      * Excludes seasons where total episode count is 0.
      */
     @Query("SELECT * FROM sg_season WHERE series_id = :showId AND season_totalcount != 0 ORDER BY season_number DESC")
-    fun getSeasonsOfShowLatestFirst(showId: Long): LiveData<List<SgSeason2>>
+    fun getSeasonsOfShowLatestFirst(showId: Long): Flow<List<SgSeason2>>
 
     /**
      * Excludes seasons where total episode count is 0.
      */
     @Query("SELECT * FROM sg_season WHERE series_id = :showId AND season_totalcount != 0 ORDER BY season_number ASC")
-    fun getSeasonsOfShowOldestFirst(showId: Long): LiveData<List<SgSeason2>>
+    fun getSeasonsOfShowOldestFirst(showId: Long): Flow<List<SgSeason2>>
 
     /**
      * Note: does not exclude seasons based on season_totalcount because it might not be up-to-date.

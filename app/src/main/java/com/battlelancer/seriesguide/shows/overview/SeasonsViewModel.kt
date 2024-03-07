@@ -1,36 +1,45 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018, 2020-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 
 class SeasonsViewModel(
     application: Application,
     private val showId: Long
-): AndroidViewModel(application) {
+) : AndroidViewModel(application) {
 
-    private val order = MutableLiveData<SeasonsSettings.SeasonSorting>()
-    val seasons = order.switchMap {
-        val helper = SgRoomDatabase.getInstance(application).sgSeason2Helper()
-        if (it == SeasonsSettings.SeasonSorting.LATEST_FIRST) {
-            helper.getSeasonsOfShowLatestFirst(showId)
-        } else {
-            helper.getSeasonsOfShowOldestFirst(showId)
+    private val order = MutableStateFlow(SeasonsSettings.getSeasonSortOrder(getApplication()))
+
+    val seasonsWithStats = order
+        .flatMapLatest {
+            val helper = SgRoomDatabase.getInstance(application).sgSeason2Helper()
+            if (it == SeasonsSettings.SeasonSorting.LATEST_FIRST) {
+                helper.getSeasonsOfShowLatestFirst(showId)
+            } else {
+                helper.getSeasonsOfShowOldestFirst(showId)
+            }
         }
-    }
-    val remainingCountData = RemainingCountLiveData(application, viewModelScope)
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = listOf()
+        )
 
-    init {
-        updateOrder()
-    }
+    val remainingCountData = RemainingCountLiveData(application, viewModelScope)
 
     fun updateOrder() {
         order.value = SeasonsSettings.getSeasonSortOrder(getApplication())
