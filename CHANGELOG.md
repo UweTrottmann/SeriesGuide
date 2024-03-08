@@ -15,10 +15,14 @@ Version 72
 ----------
 *in development*
 
+#### 72.0.5 🧪
+*2024-03-08*
+
 * 🔧 Seasons: show total number of episodes (excluding specials), show indicator if episodes are in
   collection, show count of skipped and in collection.
 * 🔧 Add history entry when marking multiple episodes as watched.
 * 🔨 Android 5: use correct color for show status and stream search configure button.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 72.0.4 🧪
 *2024-02-29*
