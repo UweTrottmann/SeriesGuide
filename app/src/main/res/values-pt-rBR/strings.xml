@@ -20,7 +20,7 @@
     <string name="specialseason">Episódios Especiais</string>
     <string name="ratings">Classificações</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Voltar</string>
     <string name="description_overview">Resumo</string>
     <string name="description_poster">Exibir cartaz</string>
     <string name="description_image">Imagem do Episódio</string>
@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Check-in rápido</string>
     <string name="pref_quick_checkin_summary">Ignorar perguntas para uma mensagem de check-in</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Enviar e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Traduza este aplicativo</string>
     <string name="prefs_category_advanced">Avançado</string>
@@ -516,7 +516,7 @@
     <string name="action_extensions_configure">Personalizar extensões</string>
     <string name="action_extensions_add">Adicionar extensão</string>
     <string name="action_extensions_search">Obtenha mais extensões</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Desenvolva uma extensão</string>
     <string name="action_extension_remove">Remover</string>
     <string name="extension_amazon">Pesquisar na Amazon</string>
     <string name="description_extension_amazon">Pesquisar na Amazon local</string>

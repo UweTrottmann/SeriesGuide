@@ -30,7 +30,7 @@
     <string name="discard">Cancelar</string>
     <string name="save_selection">Guardar opções selecionadas</string>
     <string name="action_display_all">Mostrar tudo</string>
-    <string name="web_search">Pesquisa na Internet</string>
+    <string name="web_search">Pesquisar na Internet</string>
     <string name="add_to_homescreen">Adicionar ao Ecrã inicial</string>
     <string name="action_open">Abrir</string>
     <string name="sync_manually">Sincronizar manualmente</string>
@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Dar entrada rápida</string>
     <string name="pref_quick_checkin_summary">Dar entrada automaticamente sem pedir nenhuma mensagem</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Enviar e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Traduz esta App</string>
     <string name="prefs_category_advanced">Avançado</string>
@@ -516,15 +516,15 @@
     <string name="action_extensions_configure">Personalizar extensões</string>
     <string name="action_extensions_add">Adicionar extensão</string>
     <string name="action_extensions_search">Obter mais extensões</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Criar uma extensão</string>
     <string name="action_extension_remove">Remover</string>
-    <string name="extension_amazon">Pesquisa na Amazon</string>
+    <string name="extension_amazon">Pesquisar na Amazon</string>
     <string name="description_extension_amazon">Pesquisa na Amazon do teu país</string>
     <string name="pref_amazon_domain">Site da Amazon</string>
-    <string name="extension_google_play">Pesquisa na Google Play</string>
+    <string name="extension_google_play">Pesquisar na Google Play</string>
     <string name="description_extension_google_play">Pesquisa na Google Play Store</string>
-    <string name="extension_youtube">Pesquisa no YouTube</string>
-    <string name="description_extension_youtube">Pesquisa no YouTube por alguns vídeos</string>
+    <string name="extension_youtube">Pesquisar no YouTube</string>
+    <string name="description_extension_youtube">Pesquisa vídeos no YouTube</string>
     <string name="description_extension_web_search">Pesquisa por sites e imagens</string>
     <!-- People -->
     <string name="person_biography">Biografia</string>

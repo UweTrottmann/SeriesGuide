@@ -345,7 +345,7 @@
     <string name="pref_quick_checkin">快速签到</string>
     <string name="pref_quick_checkin_summary">不再询问签到内容</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">发送电子邮件</string>
     <!-- Settings -->
     <string name="action_translate">翻译本应用</string>
     <string name="prefs_category_advanced">高级</string>
@@ -505,7 +505,7 @@
     <string name="action_extensions_configure">自定义扩展</string>
     <string name="action_extensions_add">添加扩展组件</string>
     <string name="action_extensions_search">获取更多扩展</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">开发扩展</string>
     <string name="action_extension_remove">移除</string>
     <string name="extension_amazon">亚马逊搜索</string>
     <string name="description_extension_amazon">在本地 Amazon 中搜索</string>

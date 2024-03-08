@@ -20,7 +20,7 @@
     <string name="specialseason">Episodios especiales</string>
     <string name="ratings">Valoraciones</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Desplazarse hacia arriba</string>
     <string name="description_overview">Sinopsis</string>
     <string name="description_poster">Mostrar póster</string>
     <string name="description_image">Imagen del episodio</string>
@@ -40,7 +40,7 @@
     <string name="action_stream_info">Ver en línea o información sobre compra</string>
     <string name="action_select_region">Seleccionar región</string>
     <string name="action_include_any_watch_provider">Incluye cualquier</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">Restablecer</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
     <string name="search_hint">Buscar episodios</string>
@@ -101,9 +101,9 @@
     <string name="no_spoilers">Algunos detalles están ocultos para evitar spoilers. Para cambiarlo, ir a Ajustes > básico.</string>
     <string name="format_source">Fuente: %s</string>
     <string name="last_updated">Última actualización</string>
-    <string name="custom_release_time_edit">Edit release time</string>
-    <string name="custom_release_time_earlier">earlier</string>
-    <string name="custom_release_time_later">later</string>
+    <string name="custom_release_time_edit">Editar fecha de emisión</string>
+    <string name="custom_release_time_earlier">antes</string>
+    <string name="custom_release_time_later">después</string>
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>
@@ -219,25 +219,25 @@
     <string name="watchlist">Lista de visualización</string>
     <!-- Similar shows -->
     <string name="empty_no_results">Sin resultados</string>
-    <string name="action_similar">Similar</string>
+    <string name="action_similar">Similares</string>
     <string name="title_similar_shows">Series parecidas</string>
     <!-- Lists -->
     <string name="first_list">Primera lista</string>
     <string name="list_add">Añadir lista</string>
-    <string name="ack_list_added">List added</string>
+    <string name="ack_list_added">Lista añadida</string>
     <string name="list_title_hint">Nombrar tu lista</string>
     <string name="list_remove">Eliminar lista</string>
     <string name="list_manage">Gestionar lista</string>
-    <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_renamed">Lista renombrada</string>
+    <string name="ack_list_removed">Lista eliminada</string>
     <string name="list_item_manage">Gestionar listas</string>
-    <string name="ack_list_item_manage">Lists updated</string>
+    <string name="ack_list_item_manage">Listas actualizadas</string>
     <string name="list_item_remove">Eliminar de la lista</string>
-    <string name="ack_list_item_removed">Removed from list</string>
+    <string name="ack_list_item_removed">Eliminado de la lista</string>
     <string name="list_empty">Puedes añadir series a esta lista</string>
     <string name="action_lists_sort">Ordenar listas</string>
     <string name="action_lists_reorder">Reordenar listas</string>
-    <string name="ack_lists_reordered">Lists reordered</string>
+    <string name="ack_lists_reordered">Listas reordenadas</string>
     <string name="error_name_already_exists">Ya existe una lista con este nombre</string>
     <!-- Movies -->
     <string name="title_discover">Descubrir</string>
@@ -262,7 +262,7 @@
     <string name="action_movies_sort_title">Título</string>
     <string name="action_movies_sort_release">Fecha de estreno</string>
     <string name="action_movies_filter">Filtrar películas</string>
-    <string name="title_similar_movies">Similar movies</string>
+    <string name="title_similar_movies">Películas similares</string>
     <!-- Statistics -->
     <string name="statistics_failed">No se pudieron calcular las estadísticas.</string>
     <string name="shows_finished">%s vistos completamente</string>
@@ -331,7 +331,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="support_trakt">Ayuda a Trakt con VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Calificar</string>
-    <string name="ack_rated">Rating sent</string>
+    <string name="ack_rated">Valoración enviada</string>
     <string name="your_rating">Tu calificación</string>
     <string name="love">¡Una pasada!</string>
     <string name="hate">¡Apesta!</string>
@@ -354,7 +354,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_quick_checkin">Check in rápido</string>
     <string name="pref_quick_checkin_summary">No preguntar por un mensaje de check in</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Enviar email</string>
     <!-- Settings -->
     <string name="action_translate">Traducir esta aplicación</string>
     <string name="prefs_category_advanced">Avanzado</string>
@@ -463,7 +463,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="upcoming_display">Seleccione esta opción para mostrar las series que vienen</string>
     <string name="pref_notifications">Notificaciones</string>
     <string name="pref_notificationssummary">Notificar sobre nuevos episodios</string>
-    <string name="pref_notifications_settings">Notification settings</string>
+    <string name="pref_notifications_settings">Configuración de notificaciones</string>
     <string name="pref_ringtone">Ringtone</string>
     <string name="pref_vibrate">Vibrar</string>
     <string name="pref_vibratesummary">También vibrar al mostrar una notificación</string>
@@ -477,7 +477,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="pref_notifications_next_episodes_only_summary">Solo notificar si el nuevo episodio es el siguiente para ver</string>
     <string name="pref_notifications_battery_settings">Ajustes de batería</string>
     <string name="pref_notifications_battery_settings_summary">Ir a la configuración de la batería para desactivar las optimizaciones de la batería para obtener notificaciones fiables</string>
-    <string name="notifications_allow">Allow notifications</string>
+    <string name="notifications_allow">Permitir notificaciones</string>
     <string name="notifications_allow_reason">To receive episode and error notifications, go to Settings and allow them.</string>
     <string name="precise_notifications_allow">Allow precise notifications</string>
     <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>

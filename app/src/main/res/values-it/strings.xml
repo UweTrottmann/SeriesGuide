@@ -353,7 +353,7 @@
     <string name="pref_quick_checkin">Check-in rapido</string>
     <string name="pref_quick_checkin_summary">Non richiedere messaggio di check-in</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Invia e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Traduci l\'app</string>
     <string name="prefs_category_advanced">Avanzate</string>
@@ -516,7 +516,7 @@
     <string name="action_extensions_configure">Personalizza le estensioni</string>
     <string name="action_extensions_add">Aggiungi estensione</string>
     <string name="action_extensions_search">Ottieni più estensioni</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Sviluppa un\'estensione</string>
     <string name="action_extension_remove">Rimuovi</string>
     <string name="extension_amazon">Ricerca su Amazon</string>
     <string name="description_extension_amazon">Cerca sul sito Amazon</string>
