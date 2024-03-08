@@ -201,6 +201,18 @@
         <item quantity="one">%d verbleibend</item>
         <item quantity="other">%d verbleibend</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d von %2$d verbleibend</item>
+        <item quantity="other">%1$d von %2$d verbleibend</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d übersprungen</item>
+        <item quantity="other">%d übersprungen</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in Sammlung</item>
+        <item quantity="other">%d in Sammlung</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Serientitel eingeben</string>
     <string name="add_empty">Keine Serien gefunden</string>
