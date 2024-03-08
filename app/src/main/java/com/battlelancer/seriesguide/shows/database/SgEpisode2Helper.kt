@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -228,6 +228,12 @@ interface SgEpisode2Helper {
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_watched == ${EpisodeFlags.WATCHED} AND episode_season_number != 0")
     fun countWatchedEpisodesWithoutSpecials(): Int
 
+    /**
+     * Count episodes of a show excluding specials, but including those without a release date.
+     */
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0")
+    suspend fun countEpisodesOfShow(showId: Long): Int
+
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.WATCHED}")
     fun countWatchedEpisodesOfShow(showId: Long): Int
 
@@ -238,14 +244,14 @@ interface SgEpisode2Helper {
      * Returns if at least one episode of the show is collected. Excludes specials.
      */
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 1 AND episode_season_number != 0 LIMIT 1")
-    fun hasCollectedEpisodes(showId: Long): Boolean
+    suspend fun hasCollectedEpisodes(showId: Long): Boolean
 
     /**
      * Returns if at least one episode of a show is left to collect. Excludes specials.
      * Should match with what [updateCollectedOfShowExcludeSpecials] changes.
      */
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 0 AND episode_season_number != 0 LIMIT 1")
-    fun hasEpisodesToCollect(showId: Long): Boolean
+    suspend fun hasEpisodesToCollect(showId: Long): Boolean
 
     /**
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
@@ -255,22 +261,22 @@ interface SgEpisode2Helper {
     fun countNotWatchedEpisodesOfShow(showId: Long, currentTimeToolsTime: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId")
-    fun countEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms != ${SgEpisode2.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
-    fun countNotWatchedReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
+    suspend fun countNotWatchedReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms > :currentTimeToolsTime")
-    fun countNotWatchedToBeReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
+    suspend fun countNotWatchedToBeReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms = ${SgEpisode2.EPISODE_UNKNOWN_RELEASE}")
-    fun countNotWatchedNoReleaseEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countNotWatchedNoReleaseEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.SKIPPED}")
-    fun countSkippedEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countSkippedEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_collected = 0")
-    fun countNotCollectedEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countNotCollectedEpisodesOfSeason(seasonId: Long): Int
 
     @Query("UPDATE sg_episode SET episode_watched = 0, episode_plays = 0 WHERE _id = :episodeId")
     fun setNotWatchedAndRemovePlays(episodeId: Long): Int

@@ -15,6 +15,8 @@ Version 72
 ----------
 *in development*
 
+* 🔧 Seasons: show total number of episodes (excluding specials), show indicator if episodes are in
+  collection, show count of skipped and in collection.
 * 🔧 Add history entry when marking multiple episodes as watched.
 * 🔨 Android 5: use correct color for show status and stream search configure button.
 

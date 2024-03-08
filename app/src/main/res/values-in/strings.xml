@@ -197,6 +197,15 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="other">%d tersisa</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Ketik nama acara</string>
     <string name="add_empty">Tidak ada acara disini.</string>

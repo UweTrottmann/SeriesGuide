@@ -197,6 +197,15 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="other">剩餘 %d 集</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">輸入節目名稱</string>
     <string name="add_empty">無此節目</string>
