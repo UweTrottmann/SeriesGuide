@@ -15,6 +15,8 @@ Version 72
 ----------
 *in development*
 
+* 🔧 Seasons: different indicators if only some or all episodes are skipped or in collection.
+
 #### 72.0.5 🧪
 *2024-03-08*
 

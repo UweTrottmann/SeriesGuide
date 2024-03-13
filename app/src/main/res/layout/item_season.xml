@@ -62,6 +62,16 @@
         android:layout_alignParentLeft="true"
         android:layout_marginRight="4dp"
         android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_skip_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageViewSeasonSkippedAll"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_below="@id/progressBarSeason"
+        android:layout_marginRight="4dp"
+        android:layout_toRightOf="@id/imageViewSeasonSkipped"
+        android:contentDescription="@null"
         app:srcCompat="@drawable/ic_skipped_24dp" />
 
     <ImageView
@@ -70,7 +80,17 @@
         android:layout_height="16dp"
         android:layout_below="@id/progressBarSeason"
         android:layout_marginRight="4dp"
-        android:layout_toRightOf="@id/imageViewSeasonSkipped"
+        android:layout_toRightOf="@id/imageViewSeasonSkippedAll"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_collect_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageViewSeasonCollectedAll"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_below="@id/progressBarSeason"
+        android:layout_marginRight="4dp"
+        android:layout_toRightOf="@id/imageViewSeasonCollected"
         android:contentDescription="@null"
         app:srcCompat="@drawable/ic_collected_24dp" />
 
@@ -80,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBarSeason"
         android:layout_toLeftOf="@id/imageViewContextMenu"
-        android:layout_toRightOf="@id/imageViewSeasonCollected"
+        android:layout_toRightOf="@id/imageViewSeasonCollectedAll"
         android:paddingBottom="@dimen/large_padding"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Narrow"
         tools:text="77 remaining - 7 skipped - 7 in collection" />

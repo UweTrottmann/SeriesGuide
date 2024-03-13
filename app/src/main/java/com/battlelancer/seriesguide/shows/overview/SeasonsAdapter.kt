@@ -7,7 +7,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -87,8 +87,10 @@ class SeasonsAdapter(
             // Skipped and collected indicator
             val skipped = stats.skipped
             val collected = stats.collected
-            binding.imageViewSeasonSkipped.isGone = skipped == 0
-            binding.imageViewSeasonCollected.isGone = collected == 0
+            binding.imageViewSeasonSkipped.isVisible = skipped in 1..<max
+            binding.imageViewSeasonSkippedAll.isVisible = skipped > 0 && skipped == max
+            binding.imageViewSeasonCollected.isVisible = collected in 1..<max
+            binding.imageViewSeasonCollectedAll.isVisible = collected > 0 && collected == max
 
             // Status text
             val countText = StringBuilder()
