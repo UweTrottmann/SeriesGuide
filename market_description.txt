@@ -10,20 +10,11 @@ With SeriesGuide you can find shows and movies to watch, keep track of your watc
 
 <b>Integrates with Trakt.</b> Connect your Trakt account to access your watchlist and collection, check in, rate and comment. Sync watched episodes and movies between apps and media centers supported by Trakt.
 
-<b>Extensions.</b> Add an extension button provided by a third-party app or build your own: https://seriesgui.de/api
-
-<b>Small business. Open source.</b>
+<b>Extensions.</b> Add an extension button provided by a third-party app or build your own.
 
 <b>Get the subscription to unlock all features and support SeriesGuide!</b> You will get more list widget options, notifications for new episodes and more. You also support continued fixes and new features.
 
-https://seriesgui.de/whypay
-
 NOTE: You can not watch episodes or movies. For episodes only the release date on the original network is listed.
-
-This product uses the TMDB API but is not endorsed or certified by TMDB. https://www.themoviedb.org/terms-of-use https://www.themoviedb.org/documentation/api/terms-of-use
-This app uses data and images by Trakt. https://trakt.tv/terms
-
-Example shows by Das Erste/ARD (https://www.ard.de) and ZDF (https://www.zdf.de).
 
 SeriesGuide X Unlock Key
 
