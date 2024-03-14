@@ -16,6 +16,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -522,6 +523,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 )
             )
         }
+
+        // skip button: hide if watched (may happen when rewatching) to avoid removing plays
+        // use invisible to avoid buttons from moving positions
+        binding.includeButtons.buttonEpisodeSkip.isInvisible =
+            EpisodeTools.isWatched(episode.watched)
 
         // dvd number
         ViewTools.setLabelValueOrHide(
