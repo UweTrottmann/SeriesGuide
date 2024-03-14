@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists.database
 
@@ -103,4 +103,7 @@ data class SgListItemWithDetails(
         get() = customReleaseDayOffset ?: SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET
     val statusOrUnknown: Int
         get() = status ?: ShowStatus.UNKNOWN
+
+    val nextEpisodeId: Long
+        get() = nextEpisode?.toLongOrNull() ?: 0
 }
