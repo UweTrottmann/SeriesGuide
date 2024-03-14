@@ -292,17 +292,6 @@
         <item name="android:scrollbarStyle">outsideOverlay</item>
     </style>
 
-    <!-- Grid views with cards, with space between items.  -->
-    <!-- Note: Ripple breaks when setting selector on item instead of the List/GridView. -->
-    <style name="Widget.SeriesGuide.Grid.Cards">
-        <item name="android:paddingTop">@dimen/grid_topbottom_padding</item>
-        <item name="android:paddingBottom">@dimen/grid_topbottom_padding</item>
-        <item name="android:paddingLeft">@dimen/grid_leftright_padding</item>
-        <item name="android:paddingRight">@dimen/grid_leftright_padding</item>
-        <item name="android:horizontalSpacing">@dimen/grid_horizontal_spacing</item>
-        <item name="android:verticalSpacing">@dimen/grid_vertical_spacing</item>
-    </style>
-
     <!-- NestedScrollView -->
     <style name="Widget.SeriesGuide.NestedScrollView">
         <!-- Scrollbars on View can not be enabled via code (initializeScrollbars is not called). -->

@@ -25,8 +25,6 @@
     <integer name="grid_column_count">1</integer>
     <dimen name="grid_topbottom_padding">8dp</dimen>
     <dimen name="grid_leftright_padding">8dp</dimen>
-    <dimen name="grid_vertical_spacing">8dp</dimen>
-    <dimen name="grid_horizontal_spacing">8dp</dimen>
     <dimen name="grid_item_margin_vertical">4dp</dimen>
     <dimen name="grid_item_margin_horizontal">4dp</dimen>
 
