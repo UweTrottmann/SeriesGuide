@@ -273,7 +273,7 @@ class ShowsFragment : Fragment() {
                 menu.findItem(R.id.menu_action_shows_unhide).isVisible = show.isHidden
                 popupMenu.setOnMenuItemClickListener(
                     ShowMenuItemClickListener(
-                        context, parentFragmentManager,
+                        requireContext(), parentFragmentManager,
                         show.rowId, show.nextEpisodeId
                     )
                 )
