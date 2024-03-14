@@ -458,7 +458,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
         // number
         val infoText = StringBuilder()
-        infoText.append(getString(R.string.season_number, season))
+        if (season == 0) {
+            infoText.append(getString(R.string.specialseason))
+        } else {
+            infoText.append(getString(R.string.season_number, season))
+        }
         infoText.append(" ")
         infoText.append(getString(R.string.episode_number, number))
         val episodeAbsoluteNumber = episode.absoluteNumber

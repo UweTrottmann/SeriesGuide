@@ -20,6 +20,7 @@ Version 72
 * 🔧 Lists: replace favorite with set next watched button to match Shows section.
 * 🔨 Overview: prevent skipping already watched episodes which would remove existing number of times watched.
 * 🔨 Episodes: allow to re-watch from episode list, integrate all options into watched button.
+* 🔧 Overview: display "Special Episodes" instead of "Season 0" for the next episode as well.
 
 #### 72.0.5 🧪
 *2024-03-08*
