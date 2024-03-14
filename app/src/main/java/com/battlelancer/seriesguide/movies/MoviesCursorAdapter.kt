@@ -1,128 +1,130 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2020, 2022-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.movies;
+package com.battlelancer.seriesguide.movies
 
-import static com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.database.Cursor
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cursoradapter.widget.CursorAdapter
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
+import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.settings.TmdbSettings
+import com.battlelancer.seriesguide.util.ImageTools
+import java.text.DateFormat
+import java.util.Date
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.database.Cursor;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.cursoradapter.widget.CursorAdapter;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.movies.tools.MovieTools;
-import com.battlelancer.seriesguide.settings.DisplaySettings;
-import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.battlelancer.seriesguide.util.ImageTools;
-import java.text.DateFormat;
-import java.util.Date;
+class MoviesCursorAdapter(
+    context: Context,
+    private val movieClickListener: MovieClickListenerImpl,
+    private val uniqueId: Int
+) : CursorAdapter(context, null, 0) {
 
-class MoviesCursorAdapter extends CursorAdapter {
+    private val tmdbImageBaseUrl: String
+    private val dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat()
 
-    private final int uniqueId;
-    private final String tmdbImageBaseUrl;
-
-    private final DateFormat dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
-
-    private final MovieClickListenerImpl movieClickListener;
-
-    MoviesCursorAdapter(Context context, MovieClickListenerImpl movieClickListener, int uniqueId) {
-        super(context, null, 0);
-        this.movieClickListener = movieClickListener;
-        this.uniqueId = uniqueId;
-
+    init {
         // figure out which size of posters to load based on screen density
-        if (DisplaySettings.isVeryHighDensityScreen(context)) {
-            tmdbImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
-                    + TmdbSettings.POSTER_SIZE_SPEC_W342;
+        val baseUrl = TmdbSettings.getImageBaseUrl(context)
+        tmdbImageBaseUrl = if (DisplaySettings.isVeryHighDensityScreen(context)) {
+            "$baseUrl${TmdbSettings.POSTER_SIZE_SPEC_W342}"
         } else {
-            tmdbImageBaseUrl = TmdbSettings.getImageBaseUrl(context)
-                    + TmdbSettings.POSTER_SIZE_SPEC_W154;
+            "$baseUrl${TmdbSettings.POSTER_SIZE_SPEC_W154}"
         }
     }
 
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+    override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
         // do not use parent layout params to avoid padding issues
-        @SuppressLint("InflateParams") View v =
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, null);
-        new ViewHolder(v, movieClickListener);
-        return v;
+        @SuppressLint("InflateParams") val v =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_movie, null)
+        ViewHolder(v, movieClickListener)
+        return v
     }
 
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        ViewHolder holder = (ViewHolder) view.getTag();
-        holder.bind(context, cursor, dateFormatMovieReleaseDate, tmdbImageBaseUrl, uniqueId);
+    override fun bindView(view: View, context: Context, cursor: Cursor) {
+        val holder = view.tag as ViewHolder
+        holder.bind(context, cursor, dateFormatMovieReleaseDate, tmdbImageBaseUrl, uniqueId)
     }
 
-    public static class ViewHolder {
-        public TextView title;
-        public TextView releaseDate;
-        public ImageView poster;
-        public View contextMenu;
+    class ViewHolder(itemView: View, clickListener: MovieClickListenerImpl) {
+        var title: TextView
+        var releaseDate: TextView
+        var poster: ImageView
+        var contextMenu: View
+        private var movieTmdbId = 0
 
-        private int movieTmdbId;
+        init {
+            itemView.tag = this
 
-        public ViewHolder(View itemView, MovieClickListenerImpl clickListener) {
-            itemView.setTag(this);
+            title = itemView.findViewById(R.id.textViewMovieTitle)
+            releaseDate = itemView.findViewById(R.id.textViewMovieDate)
+            poster = itemView.findViewById(R.id.imageViewMoviePoster)
+            contextMenu = itemView.findViewById(R.id.imageViewMovieItemContextMenu)
 
-            this.title = itemView.findViewById(R.id.textViewMovieTitle);
-            this.releaseDate = itemView.findViewById(R.id.textViewMovieDate);
-            this.poster = itemView.findViewById(R.id.imageViewMoviePoster);
-            this.contextMenu = itemView.findViewById(R.id.imageViewMovieItemContextMenu);
-
-            itemView.setOnClickListener(v -> clickListener.onClickMovie(movieTmdbId, poster));
+            itemView.setOnClickListener {
+                clickListener.onClickMovie(movieTmdbId, poster)
+            }
             // context menu
-            contextMenu
-                    .setOnClickListener(v -> clickListener.onClickMovieMoreOptions(movieTmdbId, v));
+            contextMenu.setOnClickListener { v: View? ->
+                clickListener.onClickMovieMoreOptions(movieTmdbId, v!!)
+            }
         }
 
-        public void bind(Context context, Cursor cursor, DateFormat dateFormat,
-                String tmdbImageBaseUrl, int uniqueId) {
-            this.movieTmdbId = cursor.getInt(MoviesQuery.TMDB_ID);
+        fun bind(
+            context: Context, cursor: Cursor, dateFormat: DateFormat,
+            tmdbImageBaseUrl: String, uniqueId: Int
+        ) {
+            movieTmdbId = cursor.getInt(MoviesQuery.TMDB_ID)
 
             // title
-            title.setText(cursor.getString(MoviesQuery.TITLE));
+            title.text = cursor.getString(MoviesQuery.TITLE)
 
             // release date
-            long released = cursor.getLong(MoviesQuery.RELEASED_UTC_MS);
+            val released = cursor.getLong(MoviesQuery.RELEASED_UTC_MS)
             if (released != Long.MAX_VALUE) {
-                releaseDate.setText(dateFormat.format(new Date(released)));
+                releaseDate.text = dateFormat.format(Date(released))
             } else {
-                releaseDate.setText("");
+                releaseDate.text = ""
             }
 
             // load poster, cache on external storage
-            String posterPath = cursor.getString(MoviesQuery.POSTER);
+            val posterPath = cursor.getString(MoviesQuery.POSTER)
             // use fixed size so bitmaps can be re-used on config change
-            ImageTools.loadWithPicasso(context, TextUtils.isEmpty(posterPath)
-                    ? null : tmdbImageBaseUrl + posterPath)
-                    .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
-                    .centerCrop()
-                    .into(poster);
+            ImageTools.loadWithPicasso(
+                context,
+                if (TextUtils.isEmpty(posterPath)) null else tmdbImageBaseUrl + posterPath
+            )
+                .resizeDimen(R.dimen.movie_poster_width, R.dimen.movie_poster_height)
+                .centerCrop()
+                .into(poster)
 
             // set unique transition names
-            poster.setTransitionName(
-                    "moviesCursorAdapterPoster_" + uniqueId + "_" + movieTmdbId);
+            poster.transitionName = "moviesCursorAdapterPoster_${uniqueId}_$movieTmdbId"
         }
     }
 
-    public interface MoviesQuery {
-
-        String[] PROJECTION = { Movies._ID, Movies.TMDB_ID, Movies.TITLE, Movies.POSTER,
-                Movies.RELEASED_UTC_MS };
-
-        int ID = 0;
-        int TMDB_ID = 1;
-        int TITLE = 2;
-        int POSTER = 3;
-        int RELEASED_UTC_MS = 4;
+    interface MoviesQuery {
+        companion object {
+            val PROJECTION = arrayOf(
+                Movies._ID,
+                Movies.TMDB_ID,
+                Movies.TITLE,
+                Movies.POSTER,
+                Movies.RELEASED_UTC_MS
+            )
+            const val ID = 0
+            const val TMDB_ID = 1
+            const val TITLE = 2
+            const val POSTER = 3
+            const val RELEASED_UTC_MS = 4
+        }
     }
 }
