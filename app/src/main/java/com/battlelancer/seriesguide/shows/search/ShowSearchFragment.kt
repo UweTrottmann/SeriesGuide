@@ -1,5 +1,5 @@
-// Copyright 2018, 2020-2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018, 2020-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search
 
@@ -131,7 +131,7 @@ class ShowSearchFragment : BaseSearchFragment() {
                 }
                 setOnMenuItemClickListener(
                     ShowMenuItemClickListener(
-                        context,
+                        requireContext(),
                         parentFragmentManager,
                         viewHolder.showId,
                         0

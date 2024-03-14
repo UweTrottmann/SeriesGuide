@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists.database
 
@@ -81,6 +81,7 @@ data class SgListItemWithDetails(
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val posterSmall: String?,
     @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String?,
     @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int?,
+    @ColumnInfo(name = SgShow2Columns.NEXTEPISODE) val nextEpisode: String?,
     @ColumnInfo(name = SgShow2Columns.FAVORITE) var favorite: Boolean,
     @ColumnInfo(name = SgShow2Columns.RELEASE_WEEKDAY) val releaseWeekDay: Int?,
     @ColumnInfo(name = SgShow2Columns.RELEASE_TIMEZONE) val releaseTimeZone: String?,
@@ -103,23 +104,6 @@ data class SgListItemWithDetails(
     val statusOrUnknown: Int
         get() = status ?: ShowStatus.UNKNOWN
 
-    companion object {
-        const val SELECT = "SELECT ${ListItems._ID}," +
-                "${ListItems.LIST_ITEM_ID}," +
-                "${ListItems.ITEM_REF_ID}," +
-                "${ListItems.TYPE}," +
-                "${SgShow2Columns.REF_SHOW_ID}," +
-                "${SgShow2Columns.TITLE}," +
-                "${SgShow2Columns.POSTER_SMALL}," +
-                "${SgShow2Columns.NETWORK}," +
-                "${SgShow2Columns.RELEASE_TIME}," +
-                "${SgShow2Columns.RELEASE_WEEKDAY}," +
-                "${SgShow2Columns.RELEASE_TIMEZONE}," +
-                "${SgShow2Columns.RELEASE_COUNTRY}," +
-                "${SgShow2Columns.STATUS}," +
-                "${SgShow2Columns.NEXTTEXT}," +
-                "${SgShow2Columns.NEXTAIRDATEMS}," +
-                "${SgShow2Columns.FAVORITE}," +
-                SgShow2Columns.UNWATCHED_COUNT
-    }
+    val nextEpisodeId: Long
+        get() = nextEpisode?.toLongOrNull() ?: 0
 }

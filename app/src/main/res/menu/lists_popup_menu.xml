@@ -3,6 +3,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_action_lists_watched_next"
+        android:title="@string/context_marknext" />
+    <item
+        android:id="@+id/menu_action_lists_favorites_add"
+        android:title="@string/context_favorite" />
+    <item
+        android:id="@+id/menu_action_lists_favorites_remove"
+        android:title="@string/context_unfavorite" />
+    <item
+        android:id="@+id/menu_action_lists_update"
+        android:title="@string/context_updateshow" />
+    <item
         android:id="@+id/menu_action_lists_manage"
         android:title="@string/list_item_manage" />
     <item
