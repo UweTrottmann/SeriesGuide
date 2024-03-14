@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayoutMoviesCollection"
     android:layout_width="match_parent"
@@ -9,20 +9,21 @@
         android:id="@+id/textViewMoviesCollectionEmpty"
         android:layout_width="@dimen/empty_view_width"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState"
-        android:visibility="gone" />
+        android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
 
-    <GridView
-        android:id="@+id/gridViewMoviesCollection"
-        style="@style/Widget.SeriesGuide.Grid.Cards"
+    <!-- Setting fast scroller in code. -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMoviesCollection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="@dimen/movie_grid_columnWidth"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/grid_item_margin_horizontal"
+        android:paddingTop="@dimen/grid_item_margin_vertical"
+        android:paddingRight="@dimen/grid_item_margin_horizontal"
+        android:paddingBottom="@dimen/grid_item_margin_vertical"
         tools:listitem="@layout/item_movie" />
 
-</RelativeLayout>
+</FrameLayout>

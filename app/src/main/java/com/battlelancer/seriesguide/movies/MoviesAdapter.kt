@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -12,7 +12,10 @@ import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.settings.TmdbSettings
 import java.text.DateFormat
 
-internal class MoviesWatchedAdapter(
+/**
+ * Binds pages of [SgMovie] to [MovieViewHolder].
+ */
+class MoviesAdapter(
     context: Context,
     val itemClickListener: MovieClickListener
 ) : PagingDataAdapter<SgMovie, MovieViewHolder>(DIFF_CALLBACK) {

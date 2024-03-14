@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.database
 
@@ -41,7 +41,7 @@ interface MovieHelper {
     ): List<SgMovieTmdbId>
 
     @RawQuery(observedEntities = [SgMovie::class])
-    fun getWatchedMovies(query: SupportSQLiteQuery): PagingSource<Int, SgMovie>
+    fun getMovies(query: SupportSQLiteQuery): PagingSource<Int, SgMovie>
 
     @Query(
         """SELECT movies_tmdbid, movies_incollection, movies_inwatchlist, movies_watched, movies_plays
