@@ -1,6 +1,6 @@
-// Copyright 2013-2023 Uwe Trottmann
-// Copyright 2017 Christophe Beyls
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
+// Copyright 2017 Christophe Beyls
 
 package com.battlelancer.seriesguide.movies
 
@@ -172,11 +172,8 @@ open class MoviesActivityImpl : BaseTopActivity() {
     }
 
     companion object {
-        //        const val SEARCH_LOADER_ID = 100
         const val NOW_TRAKT_USER_LOADER_ID = 101
         const val NOW_TRAKT_FRIENDS_LOADER_ID = 102
-        const val WATCHLIST_LOADER_ID = 103
-        const val COLLECTION_LOADER_ID = 104
 
         const val TAB_POSITION_DISCOVER = 0
         const val TAB_POSITION_WATCHLIST_DEFAULT = 1

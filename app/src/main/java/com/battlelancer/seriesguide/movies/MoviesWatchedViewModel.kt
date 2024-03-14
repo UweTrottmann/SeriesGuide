@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019, 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-class MoviesWatchedViewModel(application: Application) :
+open class MoviesWatchedViewModel(application: Application) :
     AndroidViewModel(application) {
 
     private val queryString = MutableLiveData<String>()
@@ -30,7 +30,7 @@ class MoviesWatchedViewModel(application: Application) :
         ) {
             SgRoomDatabase.getInstance(getApplication())
                 .movieHelper()
-                .getWatchedMovies(SimpleSQLiteQuery(it))
+                .getMovies(SimpleSQLiteQuery(it))
         }.flow
     }.cachedIn(viewModelScope)
 
@@ -38,8 +38,10 @@ class MoviesWatchedViewModel(application: Application) :
         updateQueryString()
     }
 
+    open val selection: String
+        get() = SeriesGuideContract.Movies.SELECTION_WATCHED
+
     fun updateQueryString() {
-        val selection = SeriesGuideContract.Movies.SELECTION_WATCHED
         val order = MoviesDistillationSettings.getSortQuery(getApplication())
         queryString.value =
             "SELECT * FROM ${SeriesGuideDatabase.Tables.MOVIES} WHERE $selection ORDER BY $order"

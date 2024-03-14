@@ -1,32 +1,32 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2020, 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
-import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
 import android.widget.TextView
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesWatchlistBinding
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.Movies
 
 /**
  * Displays the users movie watchlist.
  */
 class MoviesWatchListFragment : MoviesBaseFragment() {
 
-    override val loaderId: Int = MoviesActivityImpl.WATCHLIST_LOADER_ID
-
     override val emptyViewTextResId = R.string.movies_watchlist_empty
 
-    override val gridView: GridView
-        get() = binding!!.gridViewMoviesWatchlist
+    private val _model by viewModels<MoviesWatchListViewModel>()
+
+    override val model: MoviesWatchedViewModel
+        get() = _model
+
+    override val recyclerView: RecyclerView
+        get() = binding!!.recyclerViewMoviesWatchlist
 
     override val emptyView: TextView
         get() = binding!!.textViewMoviesWatchlistEmpty
@@ -40,14 +40,6 @@ class MoviesWatchListFragment : MoviesBaseFragment() {
         return FragmentMoviesWatchlistBinding.inflate(inflater, container, false)
             .also { binding = it }
             .root
-    }
-
-    override fun onCreateLoader(loaderId: Int, args: Bundle?): Loader<Cursor> {
-        return CursorLoader(
-            requireContext(), Movies.CONTENT_URI,
-            MoviesCursorAdapter.MoviesQuery.PROJECTION, Movies.SELECTION_WATCHLIST, null,
-            MoviesDistillationSettings.getSortQuery(context)
-        )
     }
 
     override fun getTabPosition(showingNowTab: Boolean): Int {
@@ -64,6 +56,6 @@ class MoviesWatchListFragment : MoviesBaseFragment() {
     }
 
     companion object {
-        val liftOnScrollTargetViewId = R.id.gridViewMoviesWatchlist
+        val liftOnScrollTargetViewId = R.id.recyclerViewMoviesWatchlist
     }
 }
