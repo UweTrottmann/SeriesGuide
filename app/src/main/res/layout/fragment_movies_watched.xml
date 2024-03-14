@@ -24,6 +24,6 @@
         android:paddingTop="@dimen/grid_item_margin_vertical"
         android:paddingRight="@dimen/grid_item_margin_horizontal"
         android:paddingBottom="@dimen/grid_item_margin_vertical"
-        tools:listitem="@layout/item_discover_movie" />
+        tools:listitem="@layout/item_movie" />
 
 </FrameLayout>

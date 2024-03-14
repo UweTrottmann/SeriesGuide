@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class MoviesBaseFragment : Fragment() {
 
-    private lateinit var adapter: MoviesWatchedAdapter
+    private lateinit var adapter: MoviesAdapter
 
     abstract val model: MoviesWatchedViewModel
 
@@ -51,7 +51,7 @@ abstract class MoviesBaseFragment : Fragment() {
 
         emptyView.setText(emptyViewTextResId)
 
-        adapter = MoviesWatchedAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
+        adapter = MoviesAdapter(requireContext(), MovieClickListenerImpl(requireContext()))
 
         recyclerView.also {
             it.setHasFixedSize(true)
