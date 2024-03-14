@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemEpisodeBinding
-import com.battlelancer.seriesguide.shows.database.SgEpisode2Info
 import com.battlelancer.seriesguide.settings.DisplaySettings.isDisplayExactDate
 import com.battlelancer.seriesguide.settings.DisplaySettings.preventSpoilers
+import com.battlelancer.seriesguide.shows.database.SgEpisode2Info
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import java.text.NumberFormat
@@ -66,7 +66,6 @@ class EpisodesAdapter(
 
     interface ClickListener {
         fun onItemClick(position: Int)
-        fun onWatchedBoxClick(episodeId: Long, isWatched: Boolean)
         fun onPopupMenuClick(
             v: View, episodeId: Long, episodeNumber: Int,
             releaseTimeMs: Long, watchedFlag: Int, isCollected: Boolean
@@ -97,19 +96,8 @@ class EpisodeViewHolder(
         }
         binding.watchedBoxEpisode.setOnClickListener { view ->
             episode?.let {
-                val box = view as WatchedBox
-                // disable button, will be re-enabled on data reload once action completes
-                box.isEnabled = false
-                clickListener.onWatchedBoxClick(it.id, !EpisodeTools.isWatched(
-                    box.episodeFlag
-                )
-                )
-            }
-        }
-        binding.imageViewContextMenu.setOnClickListener { v ->
-            episode?.let {
                 clickListener.onPopupMenuClick(
-                    v,
+                    view,
                     it.id,
                     it.episodenumber,
                     it.firstReleasedMs,
