@@ -167,8 +167,12 @@ class EpisodeViewHolder(
         val dvdNumberText: String? = if (dvdNumber > 0) {
             "${context.getString(R.string.episode_number_disk)} $dvdNumber"
         } else null
+        val watchedCounter = if (episode.plays > 1) {
+            TextTools.getWatchedButtonText(context, true, episode.plays)
+        } else null
         binding.textViewEpisodeAlternativeNumbers.text =
-            TextTools.dotSeparate(absoluteNumberText, dvdNumberText)
+            TextTools.dotSeparate(watchedCounter,
+                TextTools.dotSeparate(absoluteNumberText, dvdNumberText))
 
         // release time
         val isReleased: Boolean

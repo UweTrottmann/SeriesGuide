@@ -73,7 +73,7 @@
             android:paddingTop="@dimen/inline_padding"
             android:paddingBottom="@dimen/large_padding"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
-            tools:text="42 · DVD 2.0" />
+            tools:text="Watched (2) · 42 · DVD 2.0" />
 
         <ImageView
             android:id="@+id/imageViewCollected"

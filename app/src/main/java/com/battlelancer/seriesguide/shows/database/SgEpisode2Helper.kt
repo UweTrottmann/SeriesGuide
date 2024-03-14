@@ -93,7 +93,7 @@ interface SgEpisode2Helper {
     @Query("SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeNumbers(episodeId: Long): SgEpisode2Numbers?
 
-    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE _id = :episodeId")
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeInfo(episodeId: Long): SgEpisode2Info?
 
     @RawQuery
@@ -127,7 +127,7 @@ interface SgEpisode2Helper {
      * Get the watched or skipped episode with the latest release date, if multiple highest season,
      * if multiple highest number. Or null if none found.
      */
-    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED} ORDER BY episode_firstairedms DESC, episode_season_number DESC, episode_number DESC LIMIT 1")
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED} ORDER BY episode_firstairedms DESC, episode_season_number DESC, episode_number DESC LIMIT 1")
     fun getNewestWatchedEpisodeOfShow(showId: Long): SgEpisode2Info?
 
     @Query(
@@ -199,7 +199,7 @@ interface SgEpisode2Helper {
     /**
      * WAIT, just for compile time validation of [SgEpisode2Info.buildQuery]
      */
-    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE season_id = :seasonId")
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id = :seasonId")
     fun dummyToValidateSgEpisode2Info(seasonId: Long): List<SgEpisode2Info>
 
     @RawQuery(observedEntities = [SgEpisode2::class])
@@ -668,6 +668,7 @@ data class SgEpisode2Info(
     @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
     @ColumnInfo(name = SgEpisode2Columns.DVDNUMBER) val dvdNumber: Double,
     @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
+    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
     @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean = false,
     @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val firstReleasedMs: Long
 ) {
@@ -679,7 +680,7 @@ data class SgEpisode2Info(
         fun buildQuery(seasonId: Long, order: EpisodesSettings.EpisodeSorting): SimpleSQLiteQuery {
             val orderClause = order.query()
             return SimpleSQLiteQuery(
-                "SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
+                "SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
             )
         }
     }
