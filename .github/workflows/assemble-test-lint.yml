@@ -14,6 +14,8 @@ jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
+    # Only run on pushes or if pull request from fork
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     permissions:
       checks: write # to publish unit test results
 
@@ -46,6 +48,8 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    # Only run on pushes or if pull request from fork
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
 
     steps:
       - name: Check out
