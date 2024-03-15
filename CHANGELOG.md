@@ -15,6 +15,9 @@ Version 72
 ----------
 *in development*
 
+#### 72.0.6 🧪
+*2024-03-15*
+
 * 🔧 Seasons: different indicators if only some or all episodes are skipped or in collection.
 * 🔧 Lists: add option to watch next episode, update to shows more options menu.
 * 🔧 Lists: replace favorite with set next watched button to match Shows section.
