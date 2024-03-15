@@ -270,6 +270,11 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
     </style>
 
+    <!-- NavigationRailView -->
+    <style name="Widget.SeriesGuide.NavigationRailView" parent="Widget.Material3.NavigationRailView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.BottomNavigationView</item>
+    </style>
+
     <style name="ThemeOverlay.SeriesGuide.BottomNavigationView" parent="">
         <!-- Used for Widget.Material3.BottomNavigationView.ActiveIndicator color -->
         <item name="colorSecondaryContainer" tools:ignore="PrivateResource">?attr/colorPrimaryContainer</item>
