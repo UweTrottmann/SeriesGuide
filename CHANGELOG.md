@@ -15,6 +15,8 @@ Version 72
 ----------
 *in development*
 
+* 🔨 Do not show copied to clipboard notification if Android already does.
+
 #### 72.0.6 🧪
 *2024-03-15*
 
