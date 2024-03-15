@@ -210,22 +210,22 @@
         <item quantity="other">Залишилось %d епізодів</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="few">%1$d of %2$d remaining</item>
-        <item quantity="many">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d з %2$d лишилась</item>
+        <item quantity="few">%1$d з %2$d лишились</item>
+        <item quantity="many">%1$d з %2$d лишилось</item>
+        <item quantity="other">%1$d з %2$d лишилось</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="few">%d skipped</item>
-        <item quantity="many">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d пропущена</item>
+        <item quantity="few">%d пропущено</item>
+        <item quantity="many">%d пропущені</item>
+        <item quantity="other">%d пропущено</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="few">%d in collection</item>
-        <item quantity="many">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d у колекції</item>
+        <item quantity="few">%d у колекції</item>
+        <item quantity="many">%d у колекції</item>
+        <item quantity="other">%d у колекції</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Напишіть назву серіалу</string>

@@ -202,16 +202,16 @@
         <item quantity="other">%d jäljellä</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d/%2$d jäljellä</item>
+        <item quantity="other">%1$d/%2$d jäljellä</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d ohitettu</item>
+        <item quantity="other">%d ohitettu</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d kokoelmassa</item>
+        <item quantity="other">%d kokoelmassa</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>

@@ -202,16 +202,16 @@
         <item quantity="other">%d tilbageværende</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d af %2$d tilbage</item>
+        <item quantity="other">%1$d af %2$d tilbage</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d sprunget over</item>
+        <item quantity="other">%d sprunget over</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d i samling</item>
+        <item quantity="other">%d i samling</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Angiv et serienavn</string>

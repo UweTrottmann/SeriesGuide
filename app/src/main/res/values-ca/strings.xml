@@ -202,15 +202,15 @@
         <item quantity="other">%d restants</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d of %2$d restant</item>
         <item quantity="other">%1$d of %2$d remaining</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d omès</item>
+        <item quantity="other">%d omès</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
+        <item quantity="one">%d a la col·lecció</item>
         <item quantity="other">%d in collection</item>
     </plurals>
     <!-- Add show -->
@@ -528,7 +528,7 @@
     <string name="action_extensions_configure">Personalitzeu extensions</string>
     <string name="action_extensions_add">Afegeix extensió</string>
     <string name="action_extensions_search">Obtén més extensions</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Desenvolupa una extensió</string>
     <string name="action_extension_remove">Elimina</string>
     <string name="extension_amazon">Cerca a Amazon</string>
     <string name="description_extension_amazon">Cerqueu al vostre Amazon local</string>

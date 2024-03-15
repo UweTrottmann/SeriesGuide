@@ -21,6 +21,7 @@ Version 72
 * 🔨 Overview: prevent skipping already watched episodes which would remove existing number of times watched.
 * 🔨 Episodes: allow to re-watch from episode list, integrate all options into watched button.
 * 🔧 Overview: display "Special Episodes" instead of "Season 0" for the next episode as well.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 72.0.5 🧪
 *2024-03-08*

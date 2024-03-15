@@ -202,16 +202,16 @@
         <item quantity="other">%d por ver</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d de %2$d por ver</item>
+        <item quantity="other">%1$d de %2$d por ver</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d ignorado</item>
+        <item quantity="other">%d ignorados</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d na coleção</item>
+        <item quantity="other">%d na coleção</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Título da série</string>
@@ -367,7 +367,7 @@
     <!-- Help -->
     <string name="feedback">Enviar e-mail</string>
     <!-- Settings -->
-    <string name="action_translate">Traduz esta App</string>
+    <string name="action_translate">Traduzir esta aplicação</string>
     <string name="prefs_category_advanced">Avançado</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Nenhum episódio em exibição</string>

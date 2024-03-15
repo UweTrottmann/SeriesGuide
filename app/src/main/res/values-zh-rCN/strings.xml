@@ -198,13 +198,13 @@
         <item quantity="other">还有 %d 集没看</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="other">%2$d 集中还有 %1$d 集没看</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="other">%d skipped</item>
+        <item quantity="other">已跳过 %d 集</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="other">%d in collection</item>
+        <item quantity="other">收藏了 %d 集</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">输入节目名称</string>

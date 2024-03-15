@@ -210,19 +210,19 @@
         <item quantity="other">%d pozostałych</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="one">pozostało: %1$d z %2$d</item>
         <item quantity="few">%1$d of %2$d remaining</item>
         <item quantity="many">%1$d of %2$d remaining</item>
         <item quantity="other">%1$d of %2$d remaining</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
+        <item quantity="one">pominięto: %d</item>
         <item quantity="few">%d skipped</item>
         <item quantity="many">%d skipped</item>
         <item quantity="other">%d skipped</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
+        <item quantity="one">w kolekcji: %d</item>
         <item quantity="few">%d in collection</item>
         <item quantity="many">%d in collection</item>
         <item quantity="other">%d in collection</item>
