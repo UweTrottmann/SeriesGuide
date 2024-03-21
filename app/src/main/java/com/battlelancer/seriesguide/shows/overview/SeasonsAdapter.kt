@@ -109,8 +109,9 @@ class SeasonsAdapter(
                     binding.textViewSeasonWatchCount,
                     R.style.TextAppearance_SeriesGuide_Caption_Narrow_Dim
                 )
-                // ensure at least 1 watched episode by comparing amount of unwatched to total
-                if (toBeReleased + noRelease != max) {
+                // Ensure there are no episodes to watch not just because all of them are not
+                // watchable or skipped.
+                if (toBeReleased + noRelease + skipped != max) {
                     // all watched
                     countText.append(context.getString(R.string.season_allwatched))
                 }
