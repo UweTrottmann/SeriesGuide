@@ -21,6 +21,8 @@ import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.findDialog
+import com.battlelancer.seriesguide.util.safeShow
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -36,9 +38,17 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     private var binding: FragmentShowsPopularBinding? = null
 
     private lateinit var snackbar: Snackbar
+    private var yearPicker: YearPickerDialogFragment? = null
 
     private val model: ShowsPopularViewModel by viewModels()
     private lateinit var adapter: ShowsPopularAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        yearPicker = findDialog<YearPickerDialogFragment>(parentFragmentManager, TAG_YEAR_PICKER)
+            ?.also { it.onPickedListener = onYearPickedListener }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,11 +111,13 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
                 }
         }
 
-        bindingActivity.chipTraktShowsFirstReleaseYear.isVisible = false
+        bindingActivity.chipTraktShowsFirstReleaseYear.setOnClickListener {
+            val picker = YearPickerDialogFragment.create(model.filters.value.firstReleaseYear)
+                .also { yearPicker = it }
+            picker.onPickedListener = onYearPickedListener
+            picker.safeShow(parentFragmentManager, TAG_YEAR_PICKER)
+        }
         bindingActivity.chipTraktShowsOriginalLanguage.isVisible = false
-//        bindingActivity.chipTraktShowsFirstReleaseYear.setOnClickListener {
-//
-//        }
 //        bindingActivity.chipTraktShowsOriginalLanguage.setOnClickListener {
 //
 //        }
@@ -115,7 +127,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             model.filters.collectLatest {
                 bindingActivity.chipTraktShowsFirstReleaseYear.apply {
-                    val hasYear = it.originalLanguage != null
+                    val hasYear = it.firstReleaseYear != null
                     isChipIconVisible = hasYear
                     text = if (hasYear) {
                         it.firstReleaseYear.toString()
@@ -142,6 +154,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        yearPicker?.onPickedListener = null
     }
 
     override fun setAllPendingNotAdded() {
@@ -152,8 +165,16 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
         adapter.setStateForTmdbId(showTmdbId, newState)
     }
 
+    private val onYearPickedListener = object : YearPickerDialogFragment.OnPickedListener {
+        override fun onPicked(year: Int?) {
+            model.updateYear(year)
+        }
+    }
+
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsPopular
+
+        private const val TAG_YEAR_PICKER = "yearPicker"
     }
 
 }
