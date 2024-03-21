@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2023 Uwe Trottmann -->
+
 <!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2011-2024 Uwe Trottmann -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
@@ -196,6 +197,10 @@
         <item name="android:paddingStart">@dimen/large_padding</item>
         <item name="android:paddingEnd">@dimen/large_padding</item>
         <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Chip.Filter" parent="Widget.Material3.Chip.Assist">
+        <item name="chipIcon">@drawable/ic_watch_16dp</item>
     </style>
 
     <!-- TextView -->
