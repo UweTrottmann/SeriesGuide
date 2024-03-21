@@ -125,7 +125,7 @@
     <string name="state_watched_multiple_format">Visto (%d)</string>
     <string name="state_skipped">Ignorado</string>
     <string name="state_in_collection">Na Coleção</string>
-    <string name="state_on_watchlist">Na Lista dos que Desejo Ver</string>
+    <string name="state_on_watchlist">Na lista dos que desejo ver</string>
     <string name="state_favorite">Favorito</string>
     <!-- Shows -->
     <string name="confirm_delete">Tens a certeza que desejas remover %s?</string>

@@ -38,9 +38,9 @@
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
     <string name="action_stream">스트리밍 or 구매</string>
     <string name="action_stream_info">스트리밍 또 구매</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_select_region">국가 선택</string>
     <string name="action_include_any_watch_provider">Include any</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">재설정</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>

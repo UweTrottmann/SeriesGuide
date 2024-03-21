@@ -211,21 +211,21 @@
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
         <item quantity="one">%1$d из %2$d осталось</item>
-        <item quantity="few">%1$d of %2$d remaining</item>
-        <item quantity="many">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="few">%1$d из %2$d осталось</item>
+        <item quantity="many">%1$d из %2$d осталось</item>
+        <item quantity="other">%1$d из %2$d осталось</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
         <item quantity="one">%d пропущено</item>
         <item quantity="few">%d пропущено</item>
-        <item quantity="many">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="many">%d пропущено</item>
+        <item quantity="other">%d пропущено</item>
     </plurals>
     <plurals name="collected_episodes_plural">
         <item quantity="one">%d в коллекции</item>
-        <item quantity="few">%d in collection</item>
-        <item quantity="many">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="few">%d в коллекции</item>
+        <item quantity="many">%d в коллекции</item>
+        <item quantity="other">%d в коллекции</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Введите название сериала</string>
@@ -291,7 +291,7 @@
     <string name="title_similar_movies">Похожие фильмы</string>
     <!-- Statistics -->
     <string name="statistics_failed">Не удалось рассчитать статистику.</string>
-    <string name="shows_finished">%s Просмотрено</string>
+    <string name="shows_finished">%s завершенных просмотров</string>
     <string name="shows_with_next">%s новых эпизодов</string>
     <string name="shows_continuing">%s продолжается</string>
     <string name="episodes_watched">%s просмотрено</string>

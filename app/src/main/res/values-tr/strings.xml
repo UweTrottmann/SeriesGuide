@@ -203,7 +203,7 @@
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
         <item quantity="one">%2$d bölümden %1$d kaldı</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="other">%2$d bölümden %1$d kaldı</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
         <item quantity="one">%d skipped</item>
