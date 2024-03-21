@@ -87,4 +87,8 @@ class ShowsPopularViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    fun updateYear(year: Int?) {
+        firstReleaseYear.value = year
+    }
+
 }
