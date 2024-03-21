@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.tmdbapi
 
@@ -202,6 +202,8 @@ class TmdbTools2 {
         tmdb: Tmdb,
         language: String,
         page: Int,
+        firstReleaseYear: Int?,
+        originalLanguage: String?,
         watchProviderIds: List<Int>?,
         watchRegion: String?
     ): TvShowResultsPage? {
@@ -209,12 +211,17 @@ class TmdbTools2 {
             .language(language)
             .sort_by(SortBy.POPULARITY_DESC)
             .page(page)
+        if (firstReleaseYear != null) {
+            builder.first_air_date_year(firstReleaseYear)
+        }
+        if (originalLanguage != null) {
+            builder.with_original_language(originalLanguage)
+        }
         if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
             builder
                 .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
                 .watch_region(watchRegion)
         }
-
         try {
             val response = builder.build().awaitResponse()
             if (response.isSuccessful) {

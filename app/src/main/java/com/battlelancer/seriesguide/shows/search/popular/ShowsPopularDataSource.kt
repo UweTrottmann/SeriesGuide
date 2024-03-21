@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.popular
 
@@ -22,6 +22,8 @@ class ShowsPopularDataSource(
     private val context: Context,
     private val tmdb: Tmdb,
     private val languageCode: String,
+    private val firstReleaseYear: Int?,
+    private val originalLanguage: String?,
     private val watchProviderIds: List<Int>?,
     private val watchRegion: String?
 ) : PagingSource<Int, SearchResult>() {
@@ -33,6 +35,8 @@ class ShowsPopularDataSource(
             tmdb,
             languageCode,
             pageNumber,
+            firstReleaseYear,
+            originalLanguage,
             watchProviderIds,
             watchRegion
         )
