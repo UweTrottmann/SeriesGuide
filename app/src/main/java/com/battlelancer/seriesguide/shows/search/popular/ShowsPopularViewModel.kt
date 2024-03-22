@@ -91,4 +91,12 @@ class ShowsPopularViewModel(application: Application) : AndroidViewModel(applica
         firstReleaseYear.value = year
     }
 
+    fun updateLanguage(languageCode: String?) {
+        originalLanguage.value = languageCode
+    }
+
+    fun getLanguage(): String? {
+        return originalLanguage.value
+    }
+
 }
