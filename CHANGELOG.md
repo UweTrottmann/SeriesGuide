@@ -15,8 +15,12 @@ Version 72
 ----------
 *in development*
 
+#### 72.0.7 🧪
+*2024-03-22*
+
 * 🔨 Do not show copied to clipboard notification if Android already does.
 * 🔨 Seasons: do not say all episodes are watched if all are skipped.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 72.0.6 🧪
 *2024-03-15*
