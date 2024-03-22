@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -39,16 +38,10 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
 
     private lateinit var snackbar: Snackbar
     private var yearPicker: YearPickerDialogFragment? = null
+    private var languagePicker: LanguagePickerDialogFragment? = null
 
     private val model: ShowsPopularViewModel by viewModels()
     private lateinit var adapter: ShowsPopularAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        yearPicker = findDialog<YearPickerDialogFragment>(parentFragmentManager, TAG_YEAR_PICKER)
-            ?.also { it.onPickedListener = onYearPickedListener }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -111,16 +104,25 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
                 }
         }
 
+        // Re-attach listeners to any showing dialogs
+        yearPicker = findDialog<YearPickerDialogFragment>(parentFragmentManager, TAG_YEAR_PICKER)
+            ?.also { it.onPickedListener = onYearPickedListener }
+        languagePicker =
+            findDialog<LanguagePickerDialogFragment>(parentFragmentManager, TAG_LANGUAGE_PICKER)
+                ?.also { it.onPickedListener = onLanguagePickedListener }
+
         bindingActivity.chipTraktShowsFirstReleaseYear.setOnClickListener {
-            val picker = YearPickerDialogFragment.create(model.filters.value.firstReleaseYear)
+            YearPickerDialogFragment.create(model.filters.value.firstReleaseYear)
                 .also { yearPicker = it }
-            picker.onPickedListener = onYearPickedListener
-            picker.safeShow(parentFragmentManager, TAG_YEAR_PICKER)
+                .apply { onPickedListener = onYearPickedListener }
+                .safeShow(parentFragmentManager, TAG_YEAR_PICKER)
         }
-        bindingActivity.chipTraktShowsOriginalLanguage.isVisible = false
-//        bindingActivity.chipTraktShowsOriginalLanguage.setOnClickListener {
-//
-//        }
+        bindingActivity.chipTraktShowsOriginalLanguage.setOnClickListener {
+            LanguagePickerDialogFragment.create(model.filters.value.originalLanguage)
+                .also { languagePicker = it }
+                .apply { onPickedListener = onLanguagePickedListener }
+                .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)
+        }
         bindingActivity.chipTraktShowsWatchProviders.setOnClickListener {
             DiscoverFilterFragment.showForShows(parentFragmentManager)
         }
@@ -155,6 +157,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
         super.onDestroyView()
         binding = null
         yearPicker?.onPickedListener = null
+        languagePicker?.onPickedListener = null
     }
 
     override fun setAllPendingNotAdded() {
@@ -171,10 +174,17 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
         }
     }
 
+    private val onLanguagePickedListener = object : LanguagePickerDialogFragment.OnPickedListener {
+        override fun onPicked(languageCode: String?) {
+            model.updateLanguage(languageCode)
+        }
+    }
+
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewShowsPopular
 
         private const val TAG_YEAR_PICKER = "yearPicker"
+        private const val TAG_LANGUAGE_PICKER = "languagePicker"
     }
 
 }
