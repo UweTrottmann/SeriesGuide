@@ -31,3 +31,8 @@ fun DialogFragment.safeShow(fragmentManager: FragmentManager,
     show(fragmentTransaction, tag)
     return true
 }
+
+@Suppress("UNCHECKED_CAST")
+fun <T : DialogFragment> findDialog(fragmentManager: FragmentManager, tag: String): T? {
+    return fragmentManager.findFragmentByTag(tag) as T?
+}

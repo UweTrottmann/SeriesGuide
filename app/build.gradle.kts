@@ -73,6 +73,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         // Using experimental flatMapLatest for Paging 3
+        // Using experimental Material 3 compose APIs
         freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
     }
 
