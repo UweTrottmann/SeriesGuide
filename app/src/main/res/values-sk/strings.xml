@@ -20,6 +20,7 @@
     <string name="specialseason">Bonusové epizódy</string>
     <string name="ratings">Hodnotenia</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Prehľad</string>
     <string name="description_poster">Zobraziť plagát</string>
     <string name="description_image">Obrázok z epizódy</string>
@@ -208,6 +209,24 @@
         <item quantity="many">Zostáva %d</item>
         <item quantity="other">Zostáva %d</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="few">%1$d of %2$d remaining</item>
+        <item quantity="many">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="few">%d skipped</item>
+        <item quantity="many">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="few">%d in collection</item>
+        <item quantity="many">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Napíšte názov seriálu</string>
     <string name="add_empty">Nie sú tu žiadne seriály.</string>
@@ -368,10 +387,9 @@
     <string name="pref_quick_checkin">Rýchle Práve pozeráte</string>
     <string name="pref_quick_checkin_summary">Nepýtať sa na správu pri Práve pozeráte</string>
     <!-- Help -->
-    <string name="feedback">Poslať reakciu</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Preložiť túto aplikáciu</string>
-    <string name="action_contribute_content">Preložiť alebo vylepšiť obsah</string>
     <string name="prefs_category_advanced">Pokročilé</string>
     <string name="prefs_category_about">O aplikácii</string>
     <string name="pref_onlyfuture">Nezobrazovať odvysielané epizódy</string>
@@ -481,7 +499,6 @@
     <string name="dismiss">Zatvoriť</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s nových epizód</string>
-    <string name="more">%d ďalších</string>
     <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
     <string name="pref_notifications">Upozornenia</string>
     <string name="pref_notificationssummary">Upozorňovať na nové epizódy</string>
@@ -539,6 +556,7 @@
     <string name="action_extensions_configure">Upraviť rozšírenia</string>
     <string name="action_extensions_add">Pridať rozšírenie</string>
     <string name="action_extensions_search">Získať viac rozšírení</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Odstrániť</string>
     <string name="extension_amazon">Hľadať na Amazon</string>
     <string name="description_extension_amazon">Hľadať na Amazone</string>

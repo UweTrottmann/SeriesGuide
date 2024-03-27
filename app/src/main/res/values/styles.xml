@@ -93,8 +93,10 @@
     <style name="TextAppearance.SeriesGuide.EmptyState" parent="TextAppearance.SeriesGuide.Headline6.Dim" />
 
     <!-- To apply on top of existing text appearance using Spans. -->
+    <!-- Because pre API 23 does not support theme dependent color attributes in XML,
+     using ?attr/colorSecondary directly instead of sg_text_color_accent.xml. -->
     <style name="ThemeOverlay.SeriesGuide.TextAppearance.Accent" parent="">
-        <item name="android:textColor">@color/sg_text_color_accent</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
     </style>
     <style name="ThemeOverlay.SeriesGuide.TextAppearance.Secondary" parent="">
         <item name="android:textColor">?android:textColorSecondary</item>
@@ -118,6 +120,8 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.IconButton.Outlined" parent="Widget.Material3.Button.IconButton.Outlined">
+        <!-- Pre API 23 does not support theme-dependent color in referenced style, so set iconTint directly. -->
+        <item name="iconTint">?attr/colorOnSurfaceVariant</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.SeriesGuide.Button.Outlined</item>
     </style>
 
@@ -286,17 +290,6 @@
         <item name="android:paddingBottom">8dp</item>
         <item name="android:clipToPadding">false</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
-    </style>
-
-    <!-- Grid views with cards, with space between items.  -->
-    <!-- Note: Ripple breaks when setting selector on item instead of the List/GridView. -->
-    <style name="Widget.SeriesGuide.Grid.Cards">
-        <item name="android:paddingTop">@dimen/grid_topbottom_padding</item>
-        <item name="android:paddingBottom">@dimen/grid_topbottom_padding</item>
-        <item name="android:paddingLeft">@dimen/grid_leftright_padding</item>
-        <item name="android:paddingRight">@dimen/grid_leftright_padding</item>
-        <item name="android:horizontalSpacing">@dimen/grid_horizontal_spacing</item>
-        <item name="android:verticalSpacing">@dimen/grid_vertical_spacing</item>
     </style>
 
     <!-- NestedScrollView -->

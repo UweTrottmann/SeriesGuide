@@ -11,6 +11,79 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 72
+----------
+*2024-03-27*
+
+* 🌟 Shows: stream or purchase filter. See which shows are available on a service.
+  After updating it may take a day or so for filter options to appear.
+* 🔧 Seasons: show total number of episodes (excluding specials), show indicator if episodes are in
+  collection, show count of skipped and in collection.
+* 🔧 Lists: quickly set next episode watched.
+* 🔧 Episodes: allow to re-watch from episode list.
+* 🔨 Overview: prevent skipping already watched episodes.
+* 🔨 History: add entries when marking multiple episodes as watched.
+
+#### 72.0.7
+*2024-03-22*
+
+* 🔨 Do not show copied to clipboard notification if Android already does.
+* 🔨 Seasons: do not say all episodes are watched if all are skipped.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 72.0.6 🧪
+*2024-03-15*
+
+* 🔧 Seasons: different indicators if only some or all episodes are skipped or in collection.
+* 🔧 Lists: add option to watch next episode, update to shows more options menu.
+* 🔧 Lists: replace favorite with set next watched button to match Shows section.
+* 🔨 Overview: prevent skipping already watched episodes which would remove existing number of times watched.
+* 🔧 Episodes: allow to re-watch from episode list, integrate all options into watched button.
+* 🔧 Overview: display "Special Episodes" instead of "Season 0" for the next episode as well.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 72.0.5 🧪
+*2024-03-08*
+
+* 🔧 Seasons: show total number of episodes (excluding specials), show indicator if episodes are in
+  collection, show count of skipped and in collection.
+* 🔧 Add history entry when marking multiple episodes as watched.
+* 🔨 Android 5: use correct color for show status and stream search configure button.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 72.0.4 🧪
+*2024-02-29*
+
+* 🔧 Help: add link to new Discord server, make actions more understandable (like "Send email" 
+  instead of "Send feedback").
+* 🔨 Stream or purchase filter: support using system colors on Android 12 and newer.
+
+#### 72.0.3 🧪
+*2024-02-29*
+
+* 🔨 Sync: properly handle interruptions by the system again.
+
+#### 72.0.2 🧪
+*2024-02-23*
+
+* 🔨 Stream or purchase filter: make it readable in dark mode.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 72.0.1 🧪
+*2024-02-23*
+
+* 🌟 Add stream or purchase filter for shows: see which shows are available on a service.
+  After updating it may take a day or so for filter options to appear.
+* 🔧 Discover: use check boxes for stream or purchase filter.
+* 🌟 Movies: option to create a calendar event for to be released movies.
+
+#### 72.0.0 🧪
+*2024-02-09*
+
+* 🔧 Display a separate notification for each episode, including title and description if available
+  and its own actions.
+* 📝 Latest user interface translations from Crowdin.
+
 Version 71
 ----------
 *2024-01-18*

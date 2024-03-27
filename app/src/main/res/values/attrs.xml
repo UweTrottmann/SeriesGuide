@@ -14,7 +14,6 @@
     <attr name="sgColorDivider" format="reference|color" />
     <attr name="sgColorShadow" format="reference|color" />
     <attr name="sgColorStatusBarOverlay" format="reference|color" />
-    <attr name="sgColorTopAppBar" format="reference|color" />
     <attr name="sgColorOutlineLighter" format="reference|color" />
 
     <!-- Custom view attributes -->

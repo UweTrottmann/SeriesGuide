@@ -20,6 +20,7 @@
     <string name="specialseason">Speciale afleveringen</string>
     <string name="ratings">Beoordelingen</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Terug navigeren</string>
     <string name="description_overview">Overzicht</string>
     <string name="description_poster">Affiche weergeven</string>
     <string name="description_image">Afleveringsafbeelding</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d resterend</item>
         <item quantity="other">%d resterend</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d van %2$d resterend</item>
+        <item quantity="other">%1$d van %2$d resterend</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d overgeslagen</item>
+        <item quantity="other">%d overgeslagen</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collectie</item>
+        <item quantity="other">%d in collectie</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Voer de naam van een serie in</string>
     <string name="add_empty">Er zijn hier geen series</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Snelle check-in</string>
     <string name="pref_quick_checkin_summary">Vraag niet om een check-in-bericht</string>
     <!-- Help -->
-    <string name="feedback">Reactie verzenden</string>
+    <string name="feedback">E-mail verzenden</string>
     <!-- Settings -->
     <string name="action_translate">Deze app vertalen</string>
-    <string name="action_contribute_content">Inhoud vertalen of verbeteren</string>
     <string name="prefs_category_advanced">Geavanceerd</string>
     <string name="prefs_category_about">Over</string>
     <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Afwijzen</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s nieuwe afleveringen</string>
-    <string name="more">%d meer</string>
     <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
     <string name="pref_notifications">Meldingen</string>
     <string name="pref_notificationssummary">Verwittigen bij nieuwe afleveringen</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Extensies aanpassen</string>
     <string name="action_extensions_add">Extensie toevoegen</string>
     <string name="action_extensions_search">Meer extensies zoeken</string>
+    <string name="action_extensions_develop">Een uitbreiding ontwikkelen</string>
     <string name="action_extension_remove">Verwijderen</string>
     <string name="extension_amazon">Zoeken op Amazon</string>
     <string name="description_extension_amazon">Zoek op uw lokale Amazon-site</string>

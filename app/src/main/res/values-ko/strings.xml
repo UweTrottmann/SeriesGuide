@@ -20,6 +20,7 @@
     <string name="specialseason">스페셜 에피소드</string>
     <string name="ratings">평점</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">개요</string>
     <string name="description_poster">포스터 보기</string>
     <string name="description_image">에피소드 이미지</string>
@@ -37,9 +38,9 @@
     <string name="sync_and_download_all">동기화하고 모두 다운로드</string>
     <string name="action_stream">스트리밍 or 구매</string>
     <string name="action_stream_info">스트리밍 또 구매</string>
-    <string name="action_select_region">Select region</string>
+    <string name="action_select_region">국가 선택</string>
     <string name="action_include_any_watch_provider">Include any</string>
-    <string name="action_reset">Reset</string>
+    <string name="action_reset">재설정</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
     <string name="search_hint">에피소드 검색</string>
@@ -196,6 +197,15 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="other">%d편 남음</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">검색할 프로그램을 입력하세요</string>
     <string name="add_empty">검색 결과가 없습니다.</string>
@@ -344,10 +354,9 @@
     <string name="pref_quick_checkin">빠른 체크인</string>
     <string name="pref_quick_checkin_summary">체크인 메세지 묻지 않기</string>
     <!-- Help -->
-    <string name="feedback">사용자 의견 보내기</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">고급</string>
     <string name="prefs_category_about">정보</string>
     <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>
@@ -448,7 +457,6 @@
     <string name="dismiss">취소</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s 개의 새로운 에피소드</string>
-    <string name="more">%d개의 에피소드 정보 더 있음</string>
     <string name="upcoming_display">방영 예정인 프로그램을 표시하려면 선택하세요</string>
     <string name="pref_notifications">알림</string>
     <string name="pref_notificationssummary">새로운 에피소드를 알려줍니다.</string>
@@ -506,6 +514,7 @@
     <string name="action_extensions_configure">확장프로그램 커스터마이즈</string>
     <string name="action_extensions_add">확장프로그램 추가</string>
     <string name="action_extensions_search">더 많은 확장프로그램 획득</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">삭제</string>
     <string name="extension_amazon">아마존 검색</string>
     <string name="description_extension_amazon">로컬 아마존 사이트 검색</string>

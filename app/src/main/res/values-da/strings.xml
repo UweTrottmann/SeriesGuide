@@ -20,6 +20,7 @@
     <string name="specialseason">Særlige episoder</string>
     <string name="ratings">Bedømmelser</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Naviger op</string>
     <string name="description_overview">Oversigt</string>
     <string name="description_poster">Vis plakat</string>
     <string name="description_image">Episodebillede</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d tilbageværende</item>
         <item quantity="other">%d tilbageværende</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d af %2$d tilbage</item>
+        <item quantity="other">%1$d af %2$d tilbage</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d sprunget over</item>
+        <item quantity="other">%d sprunget over</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d i samling</item>
+        <item quantity="other">%d i samling</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Angiv et serienavn</string>
     <string name="add_empty">Der er ingen serier her.</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Hurtig indtjekning</string>
     <string name="pref_quick_checkin_summary">Spørg ikke om en indtjekningsbesked</string>
     <!-- Help -->
-    <string name="feedback">Send feedback</string>
+    <string name="feedback">Send e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Oversæt denne app</string>
-    <string name="action_contribute_content">Oversæt eller forbedr indhold</string>
     <string name="prefs_category_advanced">Avanceret</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Ingen sendte episoder</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Ignorér</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s nye episoder</string>
-    <string name="more">%d mere</string>
     <string name="upcoming_display">Vælg for at vise kommende serier</string>
     <string name="pref_notifications">Meddelelser</string>
     <string name="pref_notificationssummary">Underret om nye episoder</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Tilpas udvidelser</string>
     <string name="action_extensions_add">Tilføj udvidelse</string>
     <string name="action_extensions_search">Hent flere udvidelser</string>
+    <string name="action_extensions_develop">Udvikl en udvidelse</string>
     <string name="action_extension_remove">Fjern</string>
     <string name="extension_amazon">Amazon-søgning</string>
     <string name="description_extension_amazon">Søg på dit lokale Amazon-websted</string>

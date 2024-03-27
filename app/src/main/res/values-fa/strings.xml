@@ -20,6 +20,7 @@
     <string name="specialseason">قسمت‌های ویژه</string>
     <string name="ratings">Ratings</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">بررسی اجمالی</string>
     <string name="description_poster">پوستر نمایش</string>
     <string name="description_image">تصویر قسمت</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d باقی مانده</item>
         <item quantity="other">%d قسمت مانده</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">نام یک اثر نمایشی را بنویسید</string>
     <string name="add_empty">این‌جا هیچ سریالی نیست.</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">ثبت سریع</string>
     <string name="pref_quick_checkin_summary">برای ثبت پیامی خواسته نشود</string>
     <!-- Help -->
-    <string name="feedback">ارسال بازخورد</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">ترجمهٔ این کاره</string>
-    <string name="action_contribute_content">ترجمه یا بهبود محتوا</string>
     <string name="prefs_category_advanced">پیش‌رفته</string>
     <string name="prefs_category_about">درباره ما</string>
     <string name="pref_onlyfuture">نادیده گرفتن قسمت‌های پخش شده</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">رد کردن</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">‫%s قسمت جدید</string>
-    <string name="more">%d بیشتر</string>
     <string name="upcoming_display">گزینش برای نشان دادن نمایش‌های پیش رو</string>
     <string name="pref_notifications">آگاهی‌ها</string>
     <string name="pref_notificationssummary">آگاهی دربارهٔ قسمت‌های جدید</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">سفارشی سازی افزونه‌ها</string>
     <string name="action_extensions_add">افزودن افزونه‌ها</string>
     <string name="action_extensions_search">گرفتن افزونه‌های بیش‌تر</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">حدف</string>
     <string name="extension_amazon">جست‌وجوی آمازون</string>
     <string name="description_extension_amazon">جست‌وجو در پایگاه آمازون محلّی‌تان</string>

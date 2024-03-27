@@ -20,6 +20,7 @@
     <string name="specialseason">Episodios Especiais</string>
     <string name="ratings">Clasificacións</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Resumo</string>
     <string name="description_poster">Amosar cartaz</string>
     <string name="description_image">Imaxe do episodio</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d restante</item>
         <item quantity="other">%d restantes</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Escribe o nome da serie</string>
     <string name="add_empty">Non hai series</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Check in rápido</string>
     <string name="pref_quick_checkin_summary">Non preguntar por mensaxes de check in</string>
     <!-- Help -->
-    <string name="feedback">Enviar comentarios</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Traduce esta aplicación</string>
-    <string name="action_contribute_content">Traduza ou mellora o contido</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Ocultar episodios exibidos</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Rexeitar</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s novos episodios</string>
-    <string name="more">%d máis</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notificacións</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Personalizar extensións</string>
     <string name="action_extensions_add">Engadir extensión</string>
     <string name="action_extensions_search">Obter máis extensións</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Eliminar</string>
     <string name="extension_amazon">Buscar en Amazon</string>
     <string name="description_extension_amazon">Buscar na túa páxina local de Amazon</string>

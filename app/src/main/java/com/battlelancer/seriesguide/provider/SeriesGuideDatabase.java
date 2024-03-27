@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.provider;
 
@@ -273,6 +273,7 @@ public class SeriesGuideDatabase {
                 + SgShow2Columns.POSTER_SMALL + ","
                 + SgShow2Columns.NETWORK + ","
                 + SgShow2Columns.STATUS + ","
+                + SgShow2Columns.NEXTEPISODE + ","
                 + SgShow2Columns.FAVORITE + ","
                 + SgShow2Columns.RELEASE_WEEKDAY + ","
                 + SgShow2Columns.RELEASE_TIMEZONE + ","

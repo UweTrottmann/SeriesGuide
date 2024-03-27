@@ -20,6 +20,7 @@
     <string name="specialseason">ตอนพิเศษ</string>
     <string name="ratings">คะแนน</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">ภาพรวม</string>
     <string name="description_poster">ใบปิดซีรีส์</string>
     <string name="description_image">ภาพตอน</string>
@@ -196,6 +197,15 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="other">เหลืออีก %d ตอน</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">พิมพ์ชื่อซีรีส์</string>
     <string name="add_empty">ไม่มีซีรีส์ที่นี่</string>
@@ -344,10 +354,9 @@
     <string name="pref_quick_checkin">เช็กอินด่วน</string>
     <string name="pref_quick_checkin_summary">ไม่ต้องถามข้อความเช็กอิน</string>
     <!-- Help -->
-    <string name="feedback">ส่งความคิดเห็น</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">แปลแอปนี้</string>
-    <string name="action_contribute_content">แปลหรือปรับปรุงเนื้อหาให้ดีขึ้น</string>
     <string name="prefs_category_advanced">ขั้นสูง</string>
     <string name="prefs_category_about">เกี่ยวกับ</string>
     <string name="pref_onlyfuture">ซ่อนตอนที่ออกอากาศแล้ว</string>
@@ -448,7 +457,6 @@
     <string name="dismiss">ปิด</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s ตอนใหม่</string>
-    <string name="more">อื่นๆ อีก %d</string>
     <string name="upcoming_display">เลือกเพื่อแสดงซีรีส์ที่กำลังมา</string>
     <string name="pref_notifications">การแจ้งเตือน</string>
     <string name="pref_notificationssummary">แจ้งเตือนเกี่ยวกับตอนใหม่</string>
@@ -506,6 +514,7 @@
     <string name="action_extensions_configure">ปรับแต่งส่วนเสริม</string>
     <string name="action_extensions_add">เพิ่มส่วนเสริม</string>
     <string name="action_extensions_search">รับส่วนเสริมเพิ่มเติม</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">ลบ</string>
     <string name="extension_amazon">ค้นหาใน Amazon</string>
     <string name="description_extension_amazon">ค้นหาในเว็บไซต์ Amazon ท้องถิ่นของคุณ</string>

@@ -17,6 +17,9 @@ import android.view.Window
 import androidx.annotation.AnyRes
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
@@ -33,7 +36,6 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.uwetrottmann.androidutils.AndroidUtils
 import com.uwetrottmann.seriesguide.widgets.SlidingTabLayout
@@ -187,8 +189,12 @@ object ThemeUtils {
             // As those are the majority of used devices, use an opaque color with alpha matching
             // the navigation bar instead.
 //            Color.TRANSPARENT
-            // Widget.Material3.BottomNavigationView elevation is m3_sys_elevation_level2
-            val opaqueNavBarColor = SurfaceColors.SURFACE_2.getColor(context)
+            // Widget.Material3.BottomNavigationView background is ?attr/colorSurfaceContainer
+            val opaqueNavBarColor = MaterialColors.getColor(
+                context,
+                com.google.android.material.R.attr.colorSurfaceContainer,
+                Color.BLACK
+            )
             ColorUtils.setAlphaComponent(opaqueNavBarColor, 192)
         }
     }
@@ -352,4 +358,22 @@ object ThemeUtils {
         }
     }
 
+    // Easily add two [PaddingValues] if using a Modifier (with multiple padding calls) is not possible.
+    operator fun PaddingValues.plus(that: PaddingValues): PaddingValues = object : PaddingValues {
+        override fun calculateBottomPadding(): Dp =
+            this@plus.calculateBottomPadding() + that.calculateBottomPadding()
+
+        override fun calculateLeftPadding(layoutDirection: LayoutDirection): Dp =
+            this@plus.calculateLeftPadding(layoutDirection) + that.calculateLeftPadding(
+                layoutDirection
+            )
+
+        override fun calculateRightPadding(layoutDirection: LayoutDirection): Dp =
+            this@plus.calculateRightPadding(layoutDirection) + that.calculateRightPadding(
+                layoutDirection
+            )
+
+        override fun calculateTopPadding(): Dp =
+            this@plus.calculateTopPadding() + that.calculateTopPadding()
+    }
 }

@@ -11,15 +11,16 @@
     <string name="help">Допомога</string>
     <string name="no_more_updates">SeriesGuide не буде отримувати більше оновлень для цієї версії Android.</string>
     <!-- Media items -->
-    <string name="show_details">Подробиці</string>
+    <string name="show_details">Деталі</string>
     <string name="episode">Серія</string>
     <string name="episode_number">Серія %d</string>
     <string name="episodes">Серії</string>
     <string name="season">Сезон</string>
     <string name="season_number">Сезон %d</string>
     <string name="specialseason">Спец. епізоди</string>
-    <string name="ratings">Рейтинг</string>
+    <string name="ratings">Рейтинги</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Перейти назад</string>
     <string name="description_overview">Огляд</string>
     <string name="description_poster">Показати постер</string>
     <string name="description_image">Зображення Серії</string>
@@ -32,9 +33,9 @@
     <string name="web_search">Веб пошук</string>
     <string name="add_to_homescreen">Додати на Домашній екран</string>
     <string name="action_open">Відкрити</string>
-    <string name="sync_manually">Синхронізація вручну</string>
+    <string name="sync_manually">Синхронізовувати вручну</string>
     <string name="sync_and_update">Синхронізація та Оновлення</string>
-    <string name="sync_and_download_all">Синхронізація; Завантажити все</string>
+    <string name="sync_and_download_all">Синхронізація&amp; Завантажити все</string>
     <string name="action_stream">Переглянути або замовити</string>
     <string name="action_stream_info">Інформація про трансляцію або покупку</string>
     <string name="action_select_region">Виберіть регіон</string>
@@ -159,7 +160,7 @@
     <string name="action_shows_sort_title">Назвою</string>
     <string name="action_shows_sort_latest_episode">Найновішою серією</string>
     <string name="action_shows_sort_oldest_episode">Найстарішою серією</string>
-    <string name="action_shows_sort_last_watched">Останнім переглядом</string>
+    <string name="action_shows_sort_last_watched">Останнім переглянутим</string>
     <string name="action_shows_sort_remaining">Залишилося серій</string>
     <string name="action_shows_sort_status">Статус</string>
     <string name="action_shows_sort_favorites">Улюблене спочатку</string>
@@ -207,6 +208,24 @@
         <item quantity="few">Залишилось %d епізоди</item>
         <item quantity="many">%d залишилось</item>
         <item quantity="other">Залишилось %d епізодів</item>
+    </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d з %2$d лишилась</item>
+        <item quantity="few">%1$d з %2$d лишились</item>
+        <item quantity="many">%1$d з %2$d лишилось</item>
+        <item quantity="other">%1$d з %2$d лишилось</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d пропущена</item>
+        <item quantity="few">%d пропущено</item>
+        <item quantity="many">%d пропущені</item>
+        <item quantity="other">%d пропущено</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d у колекції</item>
+        <item quantity="few">%d у колекції</item>
+        <item quantity="many">%d у колекції</item>
+        <item quantity="other">%d у колекції</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Напишіть назву серіалу</string>
@@ -330,7 +349,7 @@
     <string name="trakt_error_credentials">Щось пішло не так. Перевірте ваші облікові дані та повторіть спробу.</string>
     <string name="trakt_error_not_exists">Не доступно (поки що) на trakt. Спробуйте пізніше.</string>
     <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
-    <string name="trakt_error_limit_exceeded">Список переповнений, спершу мусите щось видалити.</string>
+    <string name="trakt_error_limit_exceeded">Список перегляду переповнений, спочатку щось видаліть.</string>
     <!-- Connect trakt -->
     <string name="connect_trakt">Підключитись до trakt</string>
     <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>
@@ -368,10 +387,9 @@
     <string name="pref_quick_checkin">Швидке логування</string>
     <string name="pref_quick_checkin_summary">Не запитувати в повідомленні про логування</string>
     <!-- Help -->
-    <string name="feedback">Відправити відгук</string>
+    <string name="feedback">Надіслати ел. листа</string>
     <!-- Settings -->
     <string name="action_translate">Перекласти додаток</string>
-    <string name="action_contribute_content">Перекласти або поліпшити вміст</string>
     <string name="prefs_category_advanced">Додатково</string>
     <string name="prefs_category_about">Про</string>
     <string name="pref_onlyfuture">Немає серій що вийшли</string>
@@ -481,7 +499,6 @@
     <string name="dismiss">Відхилити</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s нових серій</string>
-    <string name="more">%d більше</string>
     <string name="upcoming_display">Виберіть для відображення найближчих серіалів</string>
     <string name="pref_notifications">Сповіщення</string>
     <string name="pref_notificationssummary">Повідомляти про нові серії</string>
@@ -539,6 +556,7 @@
     <string name="action_extensions_configure">Змінити розширення</string>
     <string name="action_extensions_add">Додати розширення</string>
     <string name="action_extensions_search">Отримати більше розширеннь</string>
+    <string name="action_extensions_develop">Розробити розширення</string>
     <string name="action_extension_remove">Видалити</string>
     <string name="extension_amazon">Пошук Amazon</string>
     <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>

@@ -20,6 +20,7 @@
     <string name="specialseason">פרקים מיוחדים</string>
     <string name="ratings">דירוגים</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">תקציר</string>
     <string name="description_poster">הצג פוסטר</string>
     <string name="description_image">תמונת הפרק</string>
@@ -208,6 +209,24 @@
         <item quantity="many">%d נותרו</item>
         <item quantity="other">%d נותרו</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="two">%1$d of %2$d remaining</item>
+        <item quantity="many">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="two">%d skipped</item>
+        <item quantity="many">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="two">%d in collection</item>
+        <item quantity="many">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">הקלד שם סדרה</string>
     <string name="add_empty">אין סדרות כאן.</string>
@@ -368,10 +387,9 @@
     <string name="pref_quick_checkin">סימון מהיר</string>
     <string name="pref_quick_checkin_summary">אל תשאל להודעת סימון</string>
     <!-- Help -->
-    <string name="feedback">שלח משוב</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">תרגם את האפליקציה</string>
-    <string name="action_contribute_content">תרגום או שיפור תוכן</string>
     <string name="prefs_category_advanced">מתקדם</string>
     <string name="prefs_category_about">אודות</string>
     <string name="pref_onlyfuture">אין פרקים ששודרו</string>
@@ -481,7 +499,6 @@
     <string name="dismiss">סגור</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">פרקים חדשים %s</string>
-    <string name="more">עוד %d</string>
     <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
     <string name="pref_notifications">התראות</string>
     <string name="pref_notificationssummary">עדכן אותי על פרקים חדשים</string>
@@ -539,6 +556,7 @@
     <string name="action_extensions_configure">התאמת תוספים</string>
     <string name="action_extensions_add">הוספת תוסף</string>
     <string name="action_extensions_search">חפש תוספים נוספים</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">הסר</string>
     <string name="extension_amazon">חפש באמזון</string>
     <string name="description_extension_amazon">חפש באתר אמזון המקומי שלך</string>

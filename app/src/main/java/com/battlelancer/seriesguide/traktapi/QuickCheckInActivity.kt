@@ -1,14 +1,12 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2018, 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.traktapi
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.app.NotificationManagerCompat
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.traktapi.GenericCheckInDialogFragment.CheckInDialogDismissedEvent
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
@@ -71,10 +69,7 @@ class QuickCheckInActivity : BaseThemeActivity() {
 
         // dismiss notification on successful check-in
         if (event.wasSuccessful) {
-            val manager = NotificationManagerCompat.from(applicationContext)
-            manager.cancel(SgApp.NOTIFICATION_EPISODE_ID)
-            // replicate delete intent
-            NotificationService.handleDeleteIntent(this, intent)
+            NotificationService.deleteNotification(applicationContext, intent)
         }
     }
 

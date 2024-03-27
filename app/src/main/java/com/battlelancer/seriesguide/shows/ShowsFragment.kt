@@ -1,6 +1,6 @@
-// Copyright 2012-2023 Uwe Trottmann
-// Copyright 2013 Andrew Neal
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2024 Uwe Trottmann
+// Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows
 
@@ -40,8 +40,6 @@ import com.battlelancer.seriesguide.settings.NotificationSettings
 import com.battlelancer.seriesguide.shows.ShowsAdapter.ShowItem
 import com.battlelancer.seriesguide.shows.ShowsDistillationFragment.Companion.show
 import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.ShowFilter
-import com.battlelancer.seriesguide.shows.ShowsDistillationSettings.getSortQuery2
-import com.battlelancer.seriesguide.shows.SortShowsView.ShowSortOrder
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
@@ -54,6 +52,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.androidutils.AndroidUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.random.Random
@@ -63,9 +62,6 @@ import kotlin.random.Random
  * main view of the app.
  */
 class ShowsFragment : Fragment() {
-
-    private lateinit var showSortOrder: ShowSortOrder
-    private lateinit var showFilter: ShowFilter
 
     private lateinit var adapter: ShowsAdapter
     private lateinit var recyclerView: RecyclerView
@@ -90,6 +86,7 @@ class ShowsFragment : Fragment() {
         ViewTools.setVectorDrawableTop(emptyViewFilter, R.drawable.ic_filter_white_24dp)
         emptyViewFilter.setOnClickListener {
             ShowsDistillationSettings.saveFilter(requireContext(), ShowFilter.default())
+            // Note: not removing watch provider filters as it is ensured they always have matches
         }
         return v
     }
@@ -118,10 +115,6 @@ class ShowsFragment : Fragment() {
                 recyclerView.smoothScrollToPosition(0)
             }
         }
-
-        // get settings
-        showFilter = ShowFilter.fromSettings(requireContext())
-        showSortOrder = ShowSortOrder.fromSettings(requireContext())
 
         // prepare view adapter
         adapter = ShowsAdapter(requireContext(), onItemClickListener, firstRunClickListener)
@@ -153,30 +146,19 @@ class ShowsFragment : Fragment() {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.uiState.collectLatest {
+                // refresh filter menu icon state
+                requireActivity().invalidateOptionsMenu()
+            }
+        }
+
         // Run initial query and refresh query immediately each time when STARTED.
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 updateShowsQuery()
             }
         }
-
-        // watch for sort order changes
-        ShowsDistillationSettings.sortOrderLiveData
-            .observe(viewLifecycleOwner) { showSortOrder: ShowSortOrder ->
-                this.showSortOrder = showSortOrder
-                // re-run query
-                updateShowsQuery()
-            }
-
-        // watch for filter changes
-        ShowsDistillationSettings.filterLiveData
-            .observe(viewLifecycleOwner) { showFilter: ShowFilter ->
-                this.showFilter = showFilter
-                // re-run query
-                updateShowsQuery()
-                // refresh filter menu icon state
-                requireActivity().invalidateOptionsMenu()
-            }
 
         // hide floating action button when scrolling shows
         val buttonAddShow: FloatingActionButton =
@@ -196,19 +178,13 @@ class ShowsFragment : Fragment() {
     }
 
     private fun updateShowsQuery() {
-        Timber.d("Running query update.")
-        model.updateQuery(
-            showFilter, getSortQuery2(
-                showSortOrder.sortOrderId, showSortOrder.isSortFavoritesFirst,
-                showSortOrder.isSortIgnoreArticles
-            )
-        )
+        model.updateQuery()
     }
 
     private fun updateEmptyView(isEmpty: Boolean) {
         recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
         if (isEmpty) {
-            if (showFilter.isAnyFilterEnabled()) {
+            if (model.uiState.value.isFiltersActive) {
                 emptyViewFilter.visibility = View.VISIBLE
                 emptyView.visibility = View.GONE
             } else {
@@ -240,7 +216,7 @@ class ShowsFragment : Fragment() {
             // set filter icon state
             menu.findItem(R.id.menu_action_shows_filter)
                 .setIcon(
-                    if (showFilter.isAnyFilterEnabled()) {
+                    if (model.uiState.value.isFiltersActive) {
                         R.drawable.ic_filter_selected_white_24dp
                     } else {
                         R.drawable.ic_filter_white_24dp
@@ -297,7 +273,7 @@ class ShowsFragment : Fragment() {
                 menu.findItem(R.id.menu_action_shows_unhide).isVisible = show.isHidden
                 popupMenu.setOnMenuItemClickListener(
                     ShowMenuItemClickListener(
-                        context, parentFragmentManager,
+                        requireContext(), parentFragmentManager,
                         show.rowId, show.nextEpisodeId
                     )
                 )

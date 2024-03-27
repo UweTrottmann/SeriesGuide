@@ -162,6 +162,8 @@ class ShowTools2 @Inject constructor(
             rowsUpdated = database.sgShow2Helper().deleteShow(showId)
             if (rowsUpdated == -1) return@withContext SgResult.ERROR
 
+            database.sgWatchProviderHelper().deleteShowMappings(showId)
+
             SeriesGuideDatabase.rebuildFtsTable(context)
             SgResult.SUCCESS
         }
@@ -482,7 +484,7 @@ class ShowTools2 @Inject constructor(
         val map = SparseArrayCompat<String>()
         shows.forEach {
             if (it.tmdbId != null && it.tmdbId != 0) {
-                map.put(it.tmdbId, it.posterSmall)
+                map.put(it.tmdbId, it.posterSmall ?: "")
             }
         }
         return map

@@ -20,6 +20,7 @@
     <string name="specialseason">特別編</string>
     <string name="ratings">評価</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">概要</string>
     <string name="description_poster">ポスターを表示</string>
     <string name="description_image">エピソードの画像</string>
@@ -196,6 +197,15 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="other">%d 残り</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">番組名を入力</string>
     <string name="add_empty">番組がありません</string>
@@ -344,10 +354,9 @@
     <string name="pref_quick_checkin">クイックチェックイン</string>
     <string name="pref_quick_checkin_summary">チェックインのメッセージを求めません</string>
     <!-- Help -->
-    <string name="feedback">フィードバックを送信</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">このアプリを翻訳</string>
-    <string name="action_contribute_content">コンテンツを翻訳または改善する</string>
     <string name="prefs_category_advanced">高度</string>
     <string name="prefs_category_about">について</string>
     <string name="pref_onlyfuture">未放映のエピソード</string>
@@ -448,7 +457,6 @@
     <string name="dismiss">中止</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s 新しいエピソード</string>
-    <string name="more">%d さらに</string>
     <string name="upcoming_display">表示する今後の番組を選択</string>
     <string name="pref_notifications">通知</string>
     <string name="pref_notificationssummary">新しいエピソードについて通知します</string>
@@ -506,6 +514,7 @@
     <string name="action_extensions_configure">拡張機能をカスタマイズ</string>
     <string name="action_extensions_add">拡張機能を追加</string>
     <string name="action_extensions_search">さらに拡張機能を入手</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">削除</string>
     <string name="extension_amazon">Amazon 検索</string>
     <string name="description_extension_amazon">ローカルの Amazon サイトを検索します</string>

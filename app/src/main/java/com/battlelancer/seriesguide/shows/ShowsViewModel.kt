@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows
 
@@ -12,18 +12,35 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AdvancedSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
+import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
+import timber.log.Timber
 
 class ShowsViewModel(application: Application) : AndroidViewModel(application) {
+
+    data class ShowsViewUiState(
+        val showFilter: ShowsDistillationSettings.ShowFilter,
+        val watchProvidersFilter: List<SgWatchProvider>,
+        val showSortOrder: SortShowsView.ShowSortOrder
+    ) {
+        val isFiltersActive: Boolean
+            get() = showFilter.isAnyFilterEnabled() || watchProvidersFilter.isNotEmpty()
+    }
 
     private val queryString = MutableLiveData<String>()
     private val sgShowsLiveData: LiveData<MutableList<SgShow2ForLists>> =
@@ -33,6 +50,25 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         }
     val showItemsLiveData = MediatorLiveData<MutableList<ShowsAdapter.ShowItem>?>()
     private val showItemsLiveDataSemaphore = Semaphore(1)
+
+    private val watchProvidersFilterSource =
+        SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
+            .filterLocalWatchProviders(SgWatchProvider.Type.SHOWS.id)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(),
+                initialValue = emptyList()
+            )
+
+    val uiState = MutableStateFlow(
+        ShowsViewUiState(
+            showFilter = ShowsDistillationSettings.ShowFilter.fromSettings(getApplication()),
+            watchProvidersFilter = watchProvidersFilterSource.value,
+            showSortOrder = SortShowsView.ShowSortOrder.fromSettings(getApplication())
+        )
+    )
+
+    private var waitingQueryJob: Job? = null
 
     init {
         showItemsLiveData.addSource(sgShowsLiveData) { sgShows ->
@@ -46,6 +82,32 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
                     }
                     showItemsLiveData.postValue(mapped)
                 }
+            }
+        }
+
+        // watch for sort order changes
+        viewModelScope.launch {
+            ShowsDistillationSettings.sortOrder.collect {
+                if (it == null) return@collect
+                uiState.value = uiState.value.copy(showSortOrder = it)
+                updateQuery()
+            }
+        }
+
+        // watch for filter changes
+        viewModelScope.launch {
+            ShowsDistillationSettings.showFilter.collect {
+                if (it == null) return@collect
+                uiState.value = uiState.value.copy(showFilter = it)
+                updateQuery()
+            }
+        }
+
+        // watch for watch provider filter changes
+        viewModelScope.launch {
+            watchProvidersFilterSource.collect {
+                uiState.value = uiState.value.copy(watchProvidersFilter = it)
+                updateQuery()
             }
         }
     }
@@ -64,8 +126,29 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
         return !this
     }
 
-    fun updateQuery(
+    fun updateQuery() {
+        // Debounce this, notably when initially displaying to wait for all input values
+        waitingQueryJob?.cancel()
+        waitingQueryJob = viewModelScope.launch(SgApp.SINGLE) {
+            delay(200) // below 300ms to not be perceived as lag
+            waitingQueryJob = null
+            Timber.d("Running query update.")
+            uiState.value.also {
+                updateQuery(
+                    it.showFilter,
+                    it.watchProvidersFilter,
+                    ShowsDistillationSettings.getSortQuery2(
+                        it.showSortOrder.sortOrderId, it.showSortOrder.isSortFavoritesFirst,
+                        it.showSortOrder.isSortIgnoreArticles
+                    )
+                )
+            }
+        }
+    }
+
+    private fun updateQuery(
         filter: ShowsDistillationSettings.ShowFilter,
+        watchProvidersFilter: List<SgWatchProvider>,
         orderClause: String
     ) {
         val selection = StringBuilder()
@@ -168,11 +251,27 @@ class ShowsViewModel(application: Application) : AndroidViewModel(application) {
             selection.append(SgShow2Columns.NEXTAIRDATEMS).append("<=").append(timeInAnHour)
         }
 
-        queryString.value = if (selection.isNotEmpty()) {
-            "SELECT * FROM ${Tables.SG_SHOW} WHERE $selection ORDER BY $orderClause"
-        } else {
-            "SELECT * FROM ${Tables.SG_SHOW} ORDER BY $orderClause"
+        // Add watch provider filter last as it needs to add a GROUP BY
+        val watchProvidersCondition = watchProvidersFilter.joinToString(separator = " OR ") {
+            "provider_id=${it.provider_id}"
         }
+        if (watchProvidersCondition.isNotEmpty()) {
+            if (selection.isNotEmpty()) {
+                selection.append(" AND ")
+            }
+            selection.append("(").append(watchProvidersCondition).append(")")
+                .append(" GROUP BY _id")
+        }
+
+        val joins = StringBuilder()
+        if (watchProvidersCondition.isNotEmpty()) {
+            joins.append("JOIN sg_watch_provider_show_mappings ON _id=sg_watch_provider_show_mappings.show_id")
+        }
+        val whereAndGroupBy = if (selection.isNotEmpty()) "WHERE $selection" else ""
+
+        val query =
+            "SELECT sg_show.* FROM ${Tables.SG_SHOW} $joins $whereAndGroupBy ORDER BY $orderClause"
+        queryString.postValue(query)
     }
 
 }

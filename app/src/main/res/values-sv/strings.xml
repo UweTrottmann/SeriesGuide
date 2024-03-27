@@ -20,6 +20,7 @@
     <string name="specialseason">Specialavsnitt</string>
     <string name="ratings">Betyg</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Översikt</string>
     <string name="description_poster">Visa affisch</string>
     <string name="description_image">Bild från avsnittet</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d återstående</item>
         <item quantity="other">%d återstående</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Skriv ett serienamn</string>
     <string name="add_empty">Det finns inga serier här.</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Snabb incheckning</string>
     <string name="pref_quick_checkin_summary">Fråga inte efter meddelande vid incheckning</string>
     <!-- Help -->
-    <string name="feedback">Skicka feedback</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Översätt appen</string>
-    <string name="action_contribute_content">Översätt eller förbättra innehållet</string>
     <string name="prefs_category_advanced">Avancerat</string>
     <string name="prefs_category_about">Om</string>
     <string name="pref_onlyfuture">Inga sända avsnitt</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Avfärda</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s nya avsnitt</string>
-    <string name="more">%d fler</string>
     <string name="upcoming_display">Välj för att visa kommande serier</string>
     <string name="pref_notifications">Aviseringar</string>
     <string name="pref_notificationssummary">Meddela om nya avsnitt</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Anpassa tillägg</string>
     <string name="action_extensions_add">Lägg till tillägg</string>
     <string name="action_extensions_search">Skaffa fler tillägg</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Ta bort</string>
     <string name="extension_amazon">Amazon sökning</string>
     <string name="description_extension_amazon">Sök på din lokala Amazon\'s webbplats</string>

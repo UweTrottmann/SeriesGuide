@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.backend.settings.HexagonSettings
 import com.battlelancer.seriesguide.extensions.ExtensionManager
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.settings.AppSettings
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.traktapi.TraktSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -99,6 +100,15 @@ class AppUpgrade(
             // Changed ID of Canceled show status for better sorting.
             SgApp.coroutineScope.launch(Dispatchers.IO) {
                 SgRoomDatabase.getInstance(context).sgShow2Helper().migrateCanceledShowStatus()
+            }
+        }
+
+        if (lastVersion < SgApp.RELEASE_VERSION_72_0_1) {
+            // Schedule all shows for updating to quickly populate watch provider mappings
+            if (StreamingSearch.getCurrentRegionOrNull(context) != null) {
+                SgApp.coroutineScope.launch(Dispatchers.IO) {
+                    SgRoomDatabase.getInstance(context).sgShow2Helper().resetLastUpdated()
+                }
             }
         }
     }

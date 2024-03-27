@@ -20,6 +20,7 @@
     <string name="specialseason">Специјалне епизоде</string>
     <string name="ratings">Rejtinzi</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Кретање нагоре</string>
     <string name="description_overview">Преглед</string>
     <string name="description_poster">Прикажи постер</string>
     <string name="description_image">Слика епизоде</string>
@@ -204,6 +205,21 @@
         <item quantity="few">%d preostalih</item>
         <item quantity="other">%d preostalih</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="few">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="few">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="few">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Унеси име серије</string>
     <string name="add_empty">Овде нема серија.</string>
@@ -227,20 +243,20 @@
     <!-- Lists -->
     <string name="first_list">Прва листа</string>
     <string name="list_add">Додај листу</string>
-    <string name="ack_list_added">List added</string>
+    <string name="ack_list_added">Листа додата</string>
     <string name="list_title_hint">Именуј листу</string>
     <string name="list_remove">Уклони листу</string>
     <string name="list_manage">Уреди листу</string>
-    <string name="ack_list_renamed">List renamed</string>
-    <string name="ack_list_removed">List removed</string>
+    <string name="ack_list_renamed">Листа преименована</string>
+    <string name="ack_list_removed">Листа уклоњена</string>
     <string name="list_item_manage">Управљање листама</string>
-    <string name="ack_list_item_manage">Lists updated</string>
+    <string name="ack_list_item_manage">Листа ажурирана</string>
     <string name="list_item_remove">Уклони са листе</string>
-    <string name="ack_list_item_removed">Removed from list</string>
+    <string name="ack_list_item_removed">Уклоњено са листе</string>
     <string name="list_empty">Можете додати емисије на ову листу</string>
     <string name="action_lists_sort">Листе за сортирање</string>
     <string name="action_lists_reorder">Поново сортирајте листе</string>
-    <string name="ack_lists_reordered">Lists reordered</string>
+    <string name="ack_lists_reordered">Листе су преуређене</string>
     <string name="error_name_already_exists">Lista sa ovim imenom već postoji</string>
     <!-- Movies -->
     <string name="title_discover">Otkrijte</string>
@@ -336,7 +352,7 @@
     <string name="support_trakt">Подежите Trakt са VIP</string>
     <!-- trakt ratings -->
     <string name="action_rate">Оцени</string>
-    <string name="ack_rated">Rating sent</string>
+    <string name="ack_rated">Оцена послата</string>
     <string name="your_rating">Твоја оцена</string>
     <string name="love">Врхунски!</string>
     <string name="hate">Очајно :(</string>
@@ -360,10 +376,9 @@
     <string name="pref_quick_checkin">Брзо пријављивање</string>
     <string name="pref_quick_checkin_summary">Не тражите поруку за пријаву</string>
     <!-- Help -->
-    <string name="feedback">Пошаљи повратне информације</string>
+    <string name="feedback">Шаљи имејл</string>
     <!-- Settings -->
     <string name="action_translate">Преведите апликацију</string>
-    <string name="action_contribute_content">Преведите или побољшајте садржај</string>
     <string name="prefs_category_advanced">Напредно</string>
     <string name="prefs_category_about">О апликацији</string>
     <string name="pref_onlyfuture">Нема емитованих епизода</string>
@@ -470,7 +485,6 @@
     <string name="dismiss">Одбаци</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s нових епизода</string>
-    <string name="more">%d више</string>
     <string name="upcoming_display">Одабери долазеће серије за приказивање</string>
     <string name="pref_notifications">Обавештења</string>
     <string name="pref_notificationssummary">Обавести ме само о новим епизодама</string>
@@ -528,6 +542,7 @@
     <string name="action_extensions_configure">Подеси додатке</string>
     <string name="action_extensions_add">Додај додатак</string>
     <string name="action_extensions_search">Набави још додатака</string>
+    <string name="action_extensions_develop">Развијте проширење</string>
     <string name="action_extension_remove">Уклони</string>
     <string name="extension_amazon">Претрага на Amazon-у</string>
     <string name="description_extension_amazon">Претражи локални Аmazon сајт</string>

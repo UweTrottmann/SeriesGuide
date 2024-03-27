@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- UnusedAttribute: foreground only available on API 23+, that's fine. -->
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!-- Not using CheckedTextView, it does not use Material theming -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/checkedTextViewList"
-    style="@style/Widget.SeriesGuide.TextView.SingleLine"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-    android:ellipsize="end"
-    android:foreground="?attr/selectableItemBackground"
-    android:gravity="center_vertical"
+    android:background="?attr/selectableItemBackground"
     android:minHeight="48dp"
-    android:paddingLeft="@dimen/larger_padding"
-    android:paddingTop="@dimen/default_padding"
-    android:paddingRight="@dimen/larger_padding"
-    android:paddingBottom="@dimen/default_padding"
-    android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-    tools:text="Example List"
-    tools:ignore="UnusedAttribute" />
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/textViewListItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Body1"
+        tools:text="Streaming service" />
+
+    <!-- Prevent changing state from box, only via parent. Remove ripple effect. -->
+    <CheckBox
+        android:id="@+id/checkBoxListItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:clickable="false"
+        android:focusable="false"
+        android:paddingEnd="24dp" />
+
+</LinearLayout>

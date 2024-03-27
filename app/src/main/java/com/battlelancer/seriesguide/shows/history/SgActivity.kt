@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.history
 
@@ -11,6 +11,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideContract.ActivityColumns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables
 
 /**
+ * Episode watched activity. Uses stable TMDB IDs to work when a show is removed and re-added.
+ *
  * Note: ensure to use CONFLICT_REPLACE when inserting to mimic SQLite UNIQUE x ON CONFLICT REPLACE.
  */
 @Entity(
@@ -32,6 +34,9 @@ data class SgActivity (
 )
 
 object ActivityType {
+    /**
+     * Only used for reading, new entries only added if a TMDB ID exists.
+     */
     const val TVDB_ID = 1
     const val TMDB_ID = 2
 }

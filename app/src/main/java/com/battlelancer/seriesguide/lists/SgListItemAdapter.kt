@@ -1,19 +1,19 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.ItemShowBinding
+import com.battlelancer.seriesguide.databinding.ItemShowListBinding
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
@@ -28,24 +28,11 @@ import org.threeten.bp.Instant
 
 class SgListItemAdapter(
     private val context: Context,
-    private val onItemClickListener: OnItemClickListener
+    private val onItemClickListener: SgListItemViewHolder.OnItemClickListener
 ) : ListAdapter<SgListItemWithDetails, SgListItemViewHolder>(DIFF_CALLBACK) {
 
-    private val drawableStar = VectorDrawableCompat
-        .create(context.resources, R.drawable.ic_star_black_24dp, context.theme)!!
-    private val drawableStarZero = VectorDrawableCompat
-        .create(context.resources, R.drawable.ic_star_border_black_24dp, context.theme)!!
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SgListItemViewHolder {
-        return SgListItemViewHolder(
-            ItemShowBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ), onItemClickListener,
-            drawableStar,
-            drawableStarZero
-        )
+        return SgListItemViewHolder.create(onItemClickListener, parent)
     }
 
     override fun onBindViewHolder(holder: SgListItemViewHolder, position: Int) {
@@ -66,20 +53,18 @@ class SgListItemAdapter(
         }
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(anchor: View, item: SgListItemWithDetails)
-        fun onMenuClick(anchor: View, item: SgListItemWithDetails)
-        fun onFavoriteClick(showId: Long, isFavorite: Boolean)
-    }
-
 }
 
 class SgListItemViewHolder(
-    private val binding: ItemShowBinding,
-    onItemClickListener: SgListItemAdapter.OnItemClickListener,
-    private val drawableStar: Drawable,
-    private val drawableStarZero: Drawable
+    private val binding: ItemShowListBinding,
+    onItemClickListener: OnItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
+
+    interface OnItemClickListener {
+        fun onItemClick(anchor: View, item: SgListItemWithDetails)
+        fun onMenuClick(anchor: View, item: SgListItemWithDetails)
+        fun onItemSetWatchedClick(item: SgListItemWithDetails)
+    }
 
     var item: SgListItemWithDetails? = null
 
@@ -88,13 +73,19 @@ class SgListItemViewHolder(
         binding.root.setOnClickListener { view ->
             item?.let { onItemClickListener.onItemClick(view, it) }
         }
-        // favorite star
-        binding.favoritedLabel.setOnClickListener {
-            item?.let { onItemClickListener.onFavoriteClick(it.showId, !it.favorite) }
+        // set watched button
+        binding.imageViewShowsSetWatched.apply {
+            TooltipCompat.setTooltipText(this, this.contentDescription)
+            setOnClickListener {
+                item?.let { onItemClickListener.onItemSetWatchedClick(it) }
+            }
         }
         // context menu
-        binding.imageViewShowsContextMenu.setOnClickListener { view ->
-            item?.let { onItemClickListener.onMenuClick(view, it) }
+        binding.imageViewShowsContextMenu.apply {
+            TooltipCompat.setTooltipText(this, this.contentDescription)
+            setOnClickListener { view ->
+                item?.let { onItemClickListener.onMenuClick(view, it) }
+            }
         }
     }
 
@@ -103,30 +94,19 @@ class SgListItemViewHolder(
 
         if (item == null) {
             binding.seriesname.text = null
-            binding.favoritedLabel.setImageDrawable(null)
             return
         }
 
-        // show title
         binding.seriesname.text = item.title
-
-        // favorite label
-        binding.favoritedLabel.apply {
-            setImageDrawable(if (item.favorite) drawableStar else drawableStarZero)
-            contentDescription = context.getString(
-                if (item.favorite) {
-                    R.string.context_unfavorite
-                } else {
-                    R.string.context_favorite
-                }
-            )
-        }
-
-        // poster
+        binding.favoritedLabel.isVisible = item.favorite
         ImageTools.loadShowPosterResizeCrop(context, binding.showposter, item.posterSmall)
 
+        val isShow = item.type == ListItemTypes.TMDB_SHOW || item.type == ListItemTypes.TVDB_SHOW
+        // Hide set watched button for legacy season and episode items
+        binding.imageViewShowsSetWatched.isVisible = isShow
+
         // network, regular day and time, or type for legacy season/episode
-        if (item.type == ListItemTypes.TMDB_SHOW || item.type == ListItemTypes.TVDB_SHOW) {
+        if (isShow) {
             // show details
             val weekDay = item.releaseWeekDayOrDefault
             val network = item.network
@@ -233,6 +213,20 @@ class SgListItemViewHolder(
         } else {
             textView.visibility = View.GONE
         }
+    }
+
+    companion object {
+        fun create(
+            onItemClickListener: OnItemClickListener,
+            parent: ViewGroup
+        ): SgListItemViewHolder = SgListItemViewHolder(
+            ItemShowListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ),
+            onItemClickListener
+        )
     }
 
 }

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013, 2014, 2016, 2018, 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -7,10 +7,6 @@ import android.content.Context
 import com.battlelancer.seriesguide.R
 
 object SeasonTools {
-
-    fun hasSkippedTag(tags: String?): Boolean {
-        return SeasonTags.SKIPPED == tags
-    }
 
     /**
      * Builds a localized string like "Season 5" or if the number is 0 "Special Episodes".

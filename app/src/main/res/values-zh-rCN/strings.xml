@@ -20,6 +20,7 @@
     <string name="specialseason">特别篇</string>
     <string name="ratings">评分</string>
     <!-- Descriptions -->
+    <string name="navigate_up">转到上一层级</string>
     <string name="description_overview">概览</string>
     <string name="description_poster">节目海报</string>
     <string name="description_image">剧集图片</string>
@@ -196,6 +197,15 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="other">还有 %d 集没看</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="other">%2$d 集中还有 %1$d 集没看</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="other">跳过了 %d 集</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="other">收藏了 %d 集</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">输入节目名称</string>
     <string name="add_empty">什么都没有</string>
@@ -344,10 +354,9 @@
     <string name="pref_quick_checkin">快速签到</string>
     <string name="pref_quick_checkin_summary">不再询问签到内容</string>
     <!-- Help -->
-    <string name="feedback">发送反馈</string>
+    <string name="feedback">发送电子邮件</string>
     <!-- Settings -->
     <string name="action_translate">翻译本应用</string>
-    <string name="action_contribute_content">翻译或改进影视资料</string>
     <string name="prefs_category_advanced">高级</string>
     <string name="prefs_category_about">关于</string>
     <string name="pref_onlyfuture">不显示已播剧集</string>
@@ -448,7 +457,6 @@
     <string name="dismiss">关闭</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">有 %s 集新的剧集</string>
-    <string name="more">另外 %d 个</string>
     <string name="upcoming_display">点按即可显示即将播出的节目</string>
     <string name="pref_notifications">通知</string>
     <string name="pref_notificationssummary">剧集更新通知</string>
@@ -506,6 +514,7 @@
     <string name="action_extensions_configure">自定义扩展</string>
     <string name="action_extensions_add">添加扩展组件</string>
     <string name="action_extensions_search">获取更多扩展</string>
+    <string name="action_extensions_develop">开发扩展</string>
     <string name="action_extension_remove">移除</string>
     <string name="extension_amazon">亚马逊搜索</string>
     <string name="description_extension_amazon">在本地 Amazon 中搜索</string>

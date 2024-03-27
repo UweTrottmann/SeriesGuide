@@ -183,10 +183,6 @@ class EpisodesFragment : Fragment() {
             showDetails(position)
         }
 
-        override fun onWatchedBoxClick(episodeId: Long, isWatched: Boolean) {
-            onFlagEpisodeWatched(episodeId, isWatched)
-        }
-
         override fun onPopupMenuClick(
             v: View,
             episodeId: Long,
@@ -204,7 +200,7 @@ class EpisodesFragment : Fragment() {
                         EpisodeTools.isWatched(
                             watchedFlag
                         )
-                    findItem(R.id.menu_action_episodes_watched).isVisible = !isWatched
+                    // To allow re-watching set watched is always visible
                     findItem(R.id.menu_action_episodes_not_watched).isVisible = isWatched
                     findItem(R.id.menu_action_episodes_watched_up_to).isVisible = !isWatched
                     val isSkipped =

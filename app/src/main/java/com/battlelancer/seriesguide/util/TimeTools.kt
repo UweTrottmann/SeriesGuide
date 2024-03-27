@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2019, 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
@@ -72,7 +72,7 @@ object TimeTools {
      *
      * Note: this may seem harsh, but is equal to how "to be released" are calculated for seasons.
      *
-     * @see com.battlelancer.seriesguide.shows.overview.UnwatchedUpdateWorker
+     * @see com.battlelancer.seriesguide.shows.overview.SeasonsViewModel.updateSeasonStats
      */
     fun isReleased(actualRelease: Date): Boolean {
         return actualRelease.before(Date(System.currentTimeMillis()))

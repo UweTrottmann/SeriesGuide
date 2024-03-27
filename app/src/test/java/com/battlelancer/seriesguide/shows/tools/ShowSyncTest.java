@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools;
 
@@ -42,7 +42,7 @@ public class ShowSyncTest {
     }
 
     @Test
-    public void test_singleNoId() {
+    public void test_singleNoId() throws InterruptedException {
         SyncOptions.SyncType syncType = SyncOptions.SyncType.SINGLE;
 
         ShowSync showSync = new ShowSync(syncType, 0);
@@ -52,7 +52,7 @@ public class ShowSyncTest {
     }
 
     @Test
-    public void test_fullNoShows() {
+    public void test_fullNoShows() throws InterruptedException {
         SyncOptions.SyncType syncType = SyncOptions.SyncType.FULL;
 
         ShowSync showSync = new ShowSync(syncType, 0);
@@ -62,7 +62,7 @@ public class ShowSyncTest {
     }
 
     @Test
-    public void test_deltaNoShows() {
+    public void test_deltaNoShows() throws InterruptedException {
         SyncOptions.SyncType syncType = SyncOptions.SyncType.DELTA;
 
         ShowSync showSync = new ShowSync(syncType, 0);
@@ -72,7 +72,7 @@ public class ShowSyncTest {
     }
 
     @Nullable
-    private SgSyncAdapter.UpdateResult sync(ShowSync showSync) {
+    private SgSyncAdapter.UpdateResult sync(ShowSync showSync) throws InterruptedException {
         return showSync.sync(ApplicationProvider.getApplicationContext(),
                 System.currentTimeMillis(), new SyncProgress());
     }

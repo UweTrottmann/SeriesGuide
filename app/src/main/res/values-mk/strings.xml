@@ -20,6 +20,7 @@
     <string name="specialseason">Специјални епизоди</string>
     <string name="ratings">Оцени</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Преглед</string>
     <string name="description_poster">Прикажи постер</string>
     <string name="description_image">Слика на епизода</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d преостанато</item>
         <item quantity="other">%d преостанати</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Внеси име серија</string>
     <string name="add_empty">Овде нема серија.</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Брзa нaјaвa</string>
     <string name="pref_quick_checkin_summary">Не прашувај за чекирање на порака</string>
     <!-- Help -->
-    <string name="feedback">Прати повратна информација</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Напредно</string>
     <string name="prefs_category_about">За</string>
     <string name="pref_onlyfuture">Не емитувани епизоди</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Откажи</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s нови епизоди</string>
-    <string name="more">%d повеќе</string>
     <string name="upcoming_display">Селектирај за да се прикажат сериите што следат</string>
     <string name="pref_notifications">Нотификација</string>
     <string name="pref_notificationssummary">Покажи нотификација за нови епизоди</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Прилагоди екстензија</string>
     <string name="action_extensions_add">Додај екстензија</string>
     <string name="action_extensions_search">Земи повеќе екстензии</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Избриши</string>
     <string name="extension_amazon">Amazon search</string>
     <string name="description_extension_amazon">Пребарај локален Amazon сајт</string>

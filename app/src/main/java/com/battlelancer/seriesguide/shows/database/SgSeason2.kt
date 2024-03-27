@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -10,6 +10,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.shows.overview.SeasonsViewModel
 
 @Entity(
     tableName = "sg_season",
@@ -28,20 +29,27 @@ data class SgSeason2(
     @ColumnInfo(name = SgSeason2Columns.COMBINED) val numberOrNull: Int?,
     @ColumnInfo(name = SgSeason2Columns.NAME) val name: String?,
     @ColumnInfo(name = SgSeason2Columns.ORDER) val order: Int,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.WATCHCOUNT) val notWatchedReleasedOrNull: Int? = 0,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.UNAIREDCOUNT) val notWatchedToBeReleasedOrNull: Int? = 0,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.NOAIRDATECOUNT) val notWatchedNoReleaseOrNull: Int? = 0,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.TOTALCOUNT) val totalOrNull: Int? = 0,
+    /**
+     * Deprecated. Stats are now calculated dynamically in [SeasonsViewModel].
+     */
     @ColumnInfo(name = SgSeason2Columns.TAGS) val tags: String? = ""
 ) {
     val number: Int
         get() = numberOrNull ?: 0 // == Specials, but should ignore seasons without number.
-    val notWatchedReleased: Int
-        get() = notWatchedReleasedOrNull ?: 0
-    val notWatchedToBeReleased: Int
-        get() = notWatchedToBeReleasedOrNull ?: 0
-    val notWatchedNoRelease: Int
-        get() = notWatchedNoReleaseOrNull ?: 0
-    val total: Int
-        get() = totalOrNull ?: 0
 }

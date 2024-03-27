@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.databinding.ItemWatchProviderBinding
+import com.battlelancer.seriesguide.databinding.ItemListCheckedBinding
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 
 class ShowsDiscoverFilterAdapter(
@@ -22,7 +22,7 @@ class ShowsDiscoverFilterAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SgWatchProviderViewHolder {
         return SgWatchProviderViewHolder(
-            ItemWatchProviderBinding.inflate(
+            ItemListCheckedBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -45,14 +45,14 @@ object SgWatchProviderDiffCallback : DiffUtil.ItemCallback<SgWatchProvider>() {
 }
 
 class SgWatchProviderViewHolder(
-    private val binding: ItemWatchProviderBinding,
+    private val binding: ItemListCheckedBinding,
     clickListener: ShowsDiscoverFilterAdapter.ClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var watchProvider: SgWatchProvider? = null
 
     init {
-        binding.switchWatchProvider.setOnClickListener {
+        binding.root.setOnClickListener {
             watchProvider?.let {
                 clickListener.onClick(it)
             }
@@ -62,14 +62,14 @@ class SgWatchProviderViewHolder(
     fun bindTo(watchProvider: SgWatchProvider?) {
         this.watchProvider = watchProvider
         if (watchProvider == null) {
-            binding.switchWatchProvider.apply {
-                text = null
+            binding.textViewListItem.text = null
+            binding.checkBoxListItem.apply {
                 isChecked = false
                 isEnabled = false
             }
         } else {
-            binding.switchWatchProvider.apply {
-                text = watchProvider.provider_name
+            binding.textViewListItem.text = watchProvider.provider_name
+            binding.checkBoxListItem.apply {
                 isChecked = watchProvider.enabled
                 isEnabled = true
             }

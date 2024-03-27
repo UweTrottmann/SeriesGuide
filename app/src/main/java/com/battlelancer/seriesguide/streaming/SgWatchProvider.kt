@@ -3,6 +3,7 @@
 
 package com.battlelancer.seriesguide.streaming
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -29,7 +30,17 @@ data class SgWatchProvider(
      * to duplicates, but allows a different enabled set for shows than for movies.
      */
     val type: Int,
-    val enabled: Boolean
+    /**
+     * If discover results should be filtered by this provider.
+     */
+    val enabled: Boolean,
+    /**
+     * If local shows or movies should be filtered by this provider.
+     *
+     * Added with [com.battlelancer.seriesguide.provider.SgRoomDatabase.VERSION_52_WATCH_PROVIDER_FILTERS].
+     */
+    @ColumnInfo(defaultValue = "false")
+    val filter_local: Boolean = false
 ) {
     enum class Type(val id: Int) {
         SHOWS(1),

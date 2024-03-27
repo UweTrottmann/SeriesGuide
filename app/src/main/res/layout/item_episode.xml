@@ -73,7 +73,7 @@
             android:paddingTop="@dimen/inline_padding"
             android:paddingBottom="@dimen/large_padding"
             android:textAppearance="@style/TextAppearance.SeriesGuide.Caption.Dim"
-            tools:text="42 · DVD 2.0" />
+            tools:text="Watched (2) · 42 · DVD 2.0" />
 
         <ImageView
             android:id="@+id/imageViewCollected"
@@ -83,19 +83,6 @@
             android:layout_marginLeft="29dp"
             android:contentDescription="@string/state_in_collection"
             app:srcCompat="@drawable/ic_collected_24dp" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageViewContextMenu"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/description_menu_overflow"
-            android:paddingLeft="@dimen/default_padding"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_more_vert_black_20dp"
-            tools:ignore="RtlSymmetry" />
     </RelativeLayout>
 
 </FrameLayout>

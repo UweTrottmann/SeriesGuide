@@ -150,7 +150,7 @@ interface SgShow2Helper {
     fun deleteAllShows()
 
     @Query("DELETE FROM sg_show WHERE _id = :showId")
-    fun deleteShow(showId: Long): Int
+    suspend fun deleteShow(showId: Long): Int
 
     @Query("SELECT _id, series_tmdb_id, series_tvdb_id FROM sg_show WHERE series_syncenabled = 0")
     fun getHexagonMergeNotCompleted(): List<SgShow2Ids>
@@ -225,6 +225,9 @@ interface SgShow2Helper {
 
     @Query("UPDATE sg_show SET series_lastupdate = :lastUpdatedMs WHERE _id = :id")
     fun setLastUpdated(id: Long, lastUpdatedMs: Long)
+
+    @Query("UPDATE sg_show SET series_lastupdate = 0")
+    suspend fun resetLastUpdated()
 
     @Query("SELECT series_lastupdate FROM sg_show WHERE _id = :id")
     fun getLastUpdated(id: Long): Long?

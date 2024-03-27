@@ -20,6 +20,7 @@
     <string name="specialseason">Épisodes Spéciaux</string>
     <string name="ratings">Notes</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Retour</string>
     <string name="description_overview">Aperçu</string>
     <string name="description_poster">Affiche de la série</string>
     <string name="description_image">Image de l\'épisode</string>
@@ -56,7 +57,7 @@
     <string name="api_error_generic">Impossible de communiquer avec %s. Réessayez ultérieurement.</string>
     <string name="api_failed">Échec : %s</string>
     <string name="copy_to_clipboard">Copié dans le presse-papiers</string>
-    <string name="not_migrated">Show not migrated to TMDB data. Some actions incl. Trakt and Cloud sync might not work. Maybe search for a replacement and remove this show. Tap to view details.</string>
+    <string name="not_migrated">Affichage non migré vers les données de TMDB. Certaines actions, y compris la synchronisation Trakt et Cloud, pourraient ne pas fonctionner. Peut-être chercher un remplacement et supprimer cet affichage. Appuyez pour afficher les détails.</string>
     <!-- Sharing -->
     <string name="share">Partager</string>
     <string name="share_show">Partager la série</string>
@@ -199,6 +200,18 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="one">%d restants</item>
         <item quantity="other">%d restants</item>
+    </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d restant sur %2$d</item>
+        <item quantity="other">%1$d restants sur %2$d</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="other">%d in collection</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Entrez un nom de série</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Check-in rapide</string>
     <string name="pref_quick_checkin_summary">Ne plus demander de message pour le Check in</string>
     <!-- Help -->
-    <string name="feedback">Envoyez vos commentaires</string>
+    <string name="feedback">Envoyer un e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Traduisez cette application</string>
-    <string name="action_contribute_content">Traduisez et améliorerez le contenu</string>
     <string name="prefs_category_advanced">Avancé</string>
     <string name="prefs_category_about">A propos</string>
     <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Passer</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s nouveaux épisodes</string>
-    <string name="more">%d en plus</string>
     <string name="upcoming_display">Afficher les épisodes à venir</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">M\'informer des nouveaux épisodes</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Personnaliser les extensions</string>
     <string name="action_extensions_add">Ajouter une extension</string>
     <string name="action_extensions_search">Obtenir plus d\'extensions</string>
+    <string name="action_extensions_develop">Développer une extension</string>
     <string name="action_extension_remove">Supprimer</string>
     <string name="extension_amazon">Recherche Amazon</string>
     <string name="description_extension_amazon">Rechercher sur votre site Amazon local</string>

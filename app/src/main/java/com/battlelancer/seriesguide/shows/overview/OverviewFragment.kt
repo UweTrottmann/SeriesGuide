@@ -16,6 +16,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -457,7 +458,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
         // number
         val infoText = StringBuilder()
-        infoText.append(getString(R.string.season_number, season))
+        if (season == 0) {
+            infoText.append(getString(R.string.specialseason))
+        } else {
+            infoText.append(getString(R.string.season_number, season))
+        }
         infoText.append(" ")
         infoText.append(getString(R.string.episode_number, number))
         val episodeAbsoluteNumber = episode.absoluteNumber
@@ -522,6 +527,11 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 )
             )
         }
+
+        // skip button: hide if watched (may happen when rewatching) to avoid removing plays
+        // use invisible to avoid buttons from moving positions
+        binding.includeButtons.buttonEpisodeSkip.isInvisible =
+            EpisodeTools.isWatched(episode.watched)
 
         // dvd number
         ViewTools.setLabelValueOrHide(

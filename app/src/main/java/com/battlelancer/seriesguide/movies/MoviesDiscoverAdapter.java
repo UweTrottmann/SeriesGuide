@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies;
 
@@ -24,7 +24,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     static final int VIEW_TYPE_LINK = R.layout.item_discover_link;
     static final int VIEW_TYPE_HEADER = R.layout.item_discover_header;
-    static final int VIEW_TYPE_MOVIE = R.layout.item_discover_movie;
+    static final int VIEW_TYPE_MOVIE = R.layout.item_movie;
 
     interface ItemClickListener extends MovieClickListener {
         void onClickLink(MoviesDiscoverLink link, View anchor);

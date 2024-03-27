@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2013-2015, 2017, 2018, 2020-2024 Uwe Trottmann -->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -63,7 +67,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imageViewSeasonsCollectedToggle"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="199 remaining" />
+                tools:text="199 of 4777 remaining" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

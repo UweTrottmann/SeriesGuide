@@ -1,6 +1,3 @@
-// Copyright 2023 Uwe Trottmann
-// SPDX-License-Identifier: Apache-2.0
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.versions)
@@ -22,8 +19,8 @@ buildscript {
     val sgTargetSdk by extra(33) // Android 13 (T)
 
     // version 21xxxyy -> min SDK 21, release xxx, build yy
-    val sgVersionCode by extra(2107104)
-    val sgVersionName by extra("71.0.3")
+    val sgVersionCode by extra(2107207)
+    val sgVersionName by extra("72.0.7")
 
     val isCiBuild by extra { System.getenv("CI") == "true" }
 

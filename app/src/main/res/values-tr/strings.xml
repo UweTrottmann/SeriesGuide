@@ -20,6 +20,7 @@
     <string name="specialseason">Özel Bölümler</string>
     <string name="ratings">Puanlar</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Geri git</string>
     <string name="description_overview">Genel Bakış</string>
     <string name="description_poster">Afişi göster</string>
     <string name="description_image">Bölüm resmi</string>
@@ -168,7 +169,7 @@
     <!-- History -->
     <string name="user_stream">Geçmiş</string>
     <string name="recently_watched">Yakın zamanda izlenen</string>
-    <string name="friends_recently">trakt arkadaşların</string>
+    <string name="friends_recently">Trakt arkadaşların</string>
     <string name="now_empty">Buralar boş. Biraz dizi izle!</string>
     <string name="now_movies_empty">Buralar boş. Biraz film izle!</string>
     <!-- Calendar -->
@@ -199,6 +200,18 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="one">%d bölüm kaldı</item>
         <item quantity="other">%d bölüm kaldı</item>
+    </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%2$d bölümden %1$d kaldı</item>
+        <item quantity="other">%2$d bölümden %1$d kaldı</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d koleksiyonda</item>
+        <item quantity="other">%d in collection</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Bir dizi adı yazın</string>
@@ -328,11 +341,11 @@
     <string name="about_trakt">Trakt, izlediğiniz dizi ve filmlerin kaydını tutmanıza yardımcı olur.</string>
     <string name="support_trakt">Trakt\'ı VIP olarak destekle</string>
     <!-- trakt ratings -->
-    <string name="action_rate">Derecelendir</string>
-    <string name="ack_rated">Değerlendirme gönderildi</string>
-    <string name="your_rating">Sizin değerlendirmeniz</string>
-    <string name="love">Harikulade!</string>
-    <string name="hate">Eh işte :(</string>
+    <string name="action_rate">Puan ver</string>
+    <string name="ack_rated">Puan gönderildi</string>
+    <string name="your_rating">Sizin puanınız</string>
+    <string name="love">Şaheser!</string>
+    <string name="hate">Rezalet :(</string>
     <string name="rating2">Berbat</string>
     <string name="rating3">Kötü</string>
     <string name="rating4">Zayıf</string>
@@ -340,7 +353,7 @@
     <string name="rating6">İdare Eder</string>
     <string name="rating7">İyi</string>
     <string name="rating8">Harika</string>
-    <string name="rating9">Süper</string>
+    <string name="rating9">Muhteşem</string>
     <plurals name="votes">
         <item quantity="one">%d oy</item>
         <item quantity="other">%d oy</item>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Hızlıca \"izliyorum\" yap</string>
     <string name="pref_quick_checkin_summary">\"Şu anda izliyorum\" mesajı gösterme</string>
     <!-- Help -->
-    <string name="feedback">Geribildirim Gönder</string>
+    <string name="feedback">E-posta gönder</string>
     <!-- Settings -->
     <string name="action_translate">Bu uygulamayı tercüme et</string>
-    <string name="action_contribute_content">Tercüme et veya içeriği geliştir</string>
     <string name="prefs_category_advanced">Gelişmiş</string>
     <string name="prefs_category_about">Hakkında</string>
     <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
@@ -395,13 +407,13 @@
     <string name="sort">Sırala</string>
     <string name="action_sort_ignore_articles">Sıfatları yoksay (the/a/an)</string>
     <!-- Sort orders -->
-    <string name="sort_order_latest_first">Önce en yenisi</string>
-    <string name="sort_order_oldest_first">Önce en eskisi</string>
+    <string name="sort_order_latest_first">Önce en yeni</string>
+    <string name="sort_order_oldest_first">Önce en eski</string>
     <string name="sort_order_unwatched_first">Önce izlenmeyen</string>
     <string name="sort_order_alphabetical">A - Z</string>
-    <string name="sort_order_top_rated_first">En çok oy alanlar</string>
-    <string name="sort_order_latest_first_dvd">Önce en yenisi (DVD)</string>
-    <string name="sort_order_oldest_first_dvd">Önce en eskisi (DVD)</string>
+    <string name="sort_order_top_rated_first">En çok oy alan</string>
+    <string name="sort_order_latest_first_dvd">Önce en yeni (DVD)</string>
+    <string name="sort_order_oldest_first_dvd">Önce en eski (DVD)</string>
     <!-- Upcoming thresholds -->
     <string name="pref_upcominglimit">Yaklaşan aralığı</string>
     <string name="upcoming_upto_now">şimdi</string>
@@ -424,14 +436,14 @@
     <string name="pref_other">Diğer</string>
     <string name="pref_autoupdatesummary">İçeriği otomatik olarak senkronize et ve güncelle</string>
     <string name="backup">Yedekle/Geri Yükle</string>
-    <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
+    <string name="backup_summary">Dizilerinizi, listelerinizi ve filmlerinizi yedekleyin veya geri yükleyin</string>
     <string name="pref_number">Sayı biçimi</string>
     <string name="pref_offset">El ile saat farkı</string>
     <string name="pref_offsetsummary">Yayınlanma süresini %d saat ötele</string>
     <string name="clear_cache">Resim önbelleğini temizle</string>
     <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
     <!-- Backup and Restore -->
-    <string name="backup_full_dump">Açıklamalar, ayrıntılar ve değerlendirmeler dahil</string>
+    <string name="backup_full_dump">Açıklamalar, ayrıntılar ve puanlar dahil</string>
     <string name="backup_failed_file_access">Yedekleme başarısız. Bir yedek dosyası bulunamadı ya da dosyaya erişilemedi.</string>
     <string name="backup_success">Yedekleme başarılı.</string>
     <string name="backup_failed">Yedekleme başarısız oldu.</string>
@@ -446,8 +458,8 @@
     <string name="action_select_file">Dosya seçin</string>
     <!-- Auto backup -->
     <string name="pref_autobackup">Otomatik Yedekle</string>
-    <string name="pref_autobackupsummary">Haftalık olarak diziler, listeler ve filmler cihaz belleğine yedeklenir.</string>
-    <string name="autobackup_details">Eğer data yedekleme açık değilse (Android 6+) ve uygulama yeniden yüklenirse, bu yedekler kayıp olur. Yedeklerin kopyasını oluşturarak koruyabilirsiniz.</string>
+    <string name="pref_autobackupsummary">Dizileriniz, listeleriniz ve filmleriniz cihazın depolama alanına haftalık olarak yedeklenir.</string>
+    <string name="autobackup_details">Uygulama yeniden yüklenirse bu yedekler kullanılamaz. Yedeklerin kopyasını oluşturarak onları koruyabilirsiniz.</string>
     <string name="last_auto_backup">Son Otomatik Yedek: %s</string>
     <string name="restore_auto_backup">Otomatik Yedeklemeyi Geri Yükle</string>
     <string name="autobackup_failed">Son otomatik yedekleme başarısız oldu</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Kapat</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s yeni bölüm</string>
-    <string name="more">%d daha fazla</string>
     <string name="upcoming_display">Gelecek bölümleri görüntülemek için seçin</string>
     <string name="pref_notifications">Bildirimler</string>
     <string name="pref_notificationssummary">Yeni bölümler için bildirim gönder</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Eklentileri özelleştir</string>
     <string name="action_extensions_add">Eklenti ekle</string>
     <string name="action_extensions_search">Daha fazla eklenti edin</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Kaldır</string>
     <string name="extension_amazon">Amazon\'da ara</string>
     <string name="description_extension_amazon">Yerel Amazon sitesinde arama yap</string>
@@ -532,8 +544,8 @@
     <string name="feedback_question_enjoy">SeriesGuide hoşunuza gidiyor mu?</string>
     <string name="feedback_action_yes">Evet!</string>
     <string name="feedback_action_notreally">Pek sayılmaz</string>
-    <string name="feedback_question_rate_google">Google Play\'de değerlendirin?</string>
-    <string name="feedback_question_rate_amazon">Amazon\'da değerlendirin?</string>
+    <string name="feedback_question_rate_google">Google Play\'de puan ver?</string>
+    <string name="feedback_question_rate_amazon">Amazon\'da puan ver?</string>
     <string name="feedback_question_feedback">Nasıl geliştirileceğini göster?</string>
     <string name="feedback_action_ok">TAMAM, tabi ki</string>
     <string name="feedback_action_nothanks">Hayır, teşekkürler</string>

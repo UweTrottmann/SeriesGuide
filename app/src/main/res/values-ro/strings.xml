@@ -20,6 +20,7 @@
     <string name="specialseason">Episoade speciale</string>
     <string name="ratings">Evaluări</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Prezentare generală</string>
     <string name="description_poster">Posterul emisiunii</string>
     <string name="description_image">Imaginea episodului</string>
@@ -204,6 +205,21 @@
         <item quantity="few">%d rămase</item>
         <item quantity="other">%d rămase</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="few">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="few">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="few">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Scrieți un nume de emisiune</string>
     <string name="add_empty">Nu există emisiuni aici.</string>
@@ -360,10 +376,9 @@
     <string name="pref_quick_checkin">Raportare rapidă</string>
     <string name="pref_quick_checkin_summary">Nu cere un mesaj de raportare</string>
     <!-- Help -->
-    <string name="feedback">Trimiteţi feedback</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Avansate</string>
     <string name="prefs_category_about">Despre</string>
     <string name="pref_onlyfuture">Nici un episod difuzat</string>
@@ -470,7 +485,6 @@
     <string name="dismiss">Respingeți</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s episoade noi</string>
-    <string name="more">%d mai mult</string>
     <string name="upcoming_display">Selectați să se afișeze serialele următoare</string>
     <string name="pref_notifications">Notificări</string>
     <string name="pref_notificationssummary">Anunță-mă despre episoadele noi</string>
@@ -528,6 +542,7 @@
     <string name="action_extensions_configure">Personalizează extensile</string>
     <string name="action_extensions_add">Adaugă extensie</string>
     <string name="action_extensions_search">Optineți mai multe extensii</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Ștergeți</string>
     <string name="extension_amazon">Căutare pe Amazon</string>
     <string name="description_extension_amazon">Căutați pe site-ul local Amazon</string>

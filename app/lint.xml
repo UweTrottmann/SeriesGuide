@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="ValidFragment" severity="ignore" />
-    <!-- Lint (incorrectly?) requires many quantity for French, since Android Plugin 7.1.0 -->
-    <issue id="MissingQuantity">
-        <ignore path="src/main/res/values-fr/strings.xml" />
-    </issue>
+    <!-- Let Crowdin take care of that -->
+    <issue id="MissingQuantity" severity="ignore" />
+    <!-- Shipping (somewhat) incomplete translations on purpose -->
+    <issue id="MissingTranslation" severity="ignore" />
     <!-- Leaving that to translators and feedback -->
     <issue id="Typos" severity="ignore" />
     <!-- Mostly due to adding selectableItemBackground -->
     <issue id="Overdraw" severity="ignore" />
     <!-- Not supplying drawable-hdpi, drawable-mdpi PNGs: only used in notifications. -->
     <issue id="IconMissingDensityFolder" severity="ignore" />
+    <!-- Using Gradle versions plugin and in-IDE warnings instead -->
+    <issue id="GradleDependency" severity="ignore" />
+    <!-- Google HTTP client has SslUtils.trustAllSSLContext which is not used by SeriesGuide -->
+    <issue id="TrustAllX509TrustManager">
+        <ignore regexp="google-http-client"/>
+    </issue>
 </lint>

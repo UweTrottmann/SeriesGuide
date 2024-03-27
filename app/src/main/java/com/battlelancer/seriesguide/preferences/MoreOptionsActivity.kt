@@ -77,14 +77,11 @@ class MoreOptionsActivity : BaseTopActivity() {
             WebTools.openInCustomTab(this, getString(R.string.help_url))
         }
         ViewTools.openUriOnClick(binding.buttonCommunity, getString(R.string.url_community))
+        ViewTools.openUriOnClick(binding.buttonDiscord, getString(R.string.url_discord))
         binding.buttonFeedback.setOnClickListener {
             startActivity(getFeedbackEmailIntent(this))
         }
         ViewTools.openUriOnClick(binding.buttonTranslations, getString(R.string.url_translations))
-        ViewTools.openUriOnClick(
-            binding.buttonContributeContent,
-            getString(R.string.url_contribute_content)
-        )
         binding.buttonDebugView.setOnClickListener {
             if (AppSettings.isUserDebugModeEnabled(this)) {
                 DebugViewFragment().safeShow(supportFragmentManager, "debugViewDialog")
@@ -132,8 +129,6 @@ class MoreOptionsActivity : BaseTopActivity() {
         binding.syncStatus.setProgress(event)
     }
 
-
-
     companion object {
         private const val SUPPORT_MAIL = "support@seriesgui.de"
 
@@ -150,7 +145,7 @@ class MoreOptionsActivity : BaseTopActivity() {
                 // and hardware and Android info in body
                 .putExtra(
                     Intent.EXTRA_TEXT,
-                    "${Build.MANUFACTURER.uppercase(Locale.US)} ${Build.MODEL}, Android ${Build.VERSION.RELEASE}\n\n"
+                    "My device: ${Build.MANUFACTURER.uppercase(Locale.US)} ${Build.MODEL}, Android ${Build.VERSION.RELEASE}\n\n"
                 )
             return Intent.createChooser(intent, context.getString(R.string.feedback))
         }

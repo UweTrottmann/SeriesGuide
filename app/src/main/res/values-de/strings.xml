@@ -20,6 +20,7 @@
     <string name="specialseason">Specials</string>
     <string name="ratings">Bewertungen</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Nach oben</string>
     <string name="description_overview">Übersicht</string>
     <string name="description_poster">Serien-Poster</string>
     <string name="description_image">Bild der Folge</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d verbleibend</item>
         <item quantity="other">%d verbleibend</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d von %2$d verbleibend</item>
+        <item quantity="other">%1$d von %2$d verbleibend</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d übersprungen</item>
+        <item quantity="other">%d übersprungen</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in Sammlung</item>
+        <item quantity="other">%d in Sammlung</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Serientitel eingeben</string>
     <string name="add_empty">Keine Serien gefunden</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Schneller Check In</string>
     <string name="pref_quick_checkin_summary">Nicht nach einer Check In Nachricht fragen</string>
     <!-- Help -->
-    <string name="feedback">Feedback senden</string>
+    <string name="feedback">E-Mail senden</string>
     <!-- Settings -->
     <string name="action_translate">Diese App übersetzen</string>
-    <string name="action_contribute_content">Inhalte übersetzen oder verbessern</string>
     <string name="prefs_category_advanced">Weiteres</string>
     <string name="prefs_category_about">Über</string>
     <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Schließen</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s neue Folgen</string>
-    <string name="more">%d mehr</string>
     <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
     <string name="pref_notifications">Benachrichtigungen</string>
     <string name="pref_notificationssummary">Benachrichtigung bei neuen Folgen</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Erweiterungen anpassen</string>
     <string name="action_extensions_add">Erweiterung hinzufügen</string>
     <string name="action_extensions_search">Mehr Erweiterungen</string>
+    <string name="action_extensions_develop">Erweiterung entwickeln</string>
     <string name="action_extension_remove">Entfernen</string>
     <string name="extension_amazon">Amazon-Suche</string>
     <string name="description_extension_amazon">Suchen Sie auf Ihrer lokalen Amazon-Seite</string>

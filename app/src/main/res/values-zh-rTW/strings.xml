@@ -20,6 +20,7 @@
     <string name="specialseason">特集</string>
     <string name="ratings">評分</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">簡介</string>
     <string name="description_poster">顯示海報</string>
     <string name="description_image">影集圖片</string>
@@ -196,6 +197,15 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="other">剩餘 %d 集</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">輸入節目名稱</string>
     <string name="add_empty">無此節目</string>
@@ -344,10 +354,9 @@
     <string name="pref_quick_checkin">快速打卡</string>
     <string name="pref_quick_checkin_summary">免輸入打卡訊息</string>
     <!-- Help -->
-    <string name="feedback">提供意見</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">翻譯本應用程式</string>
-    <string name="action_contribute_content">翻譯或改善影劇資料</string>
     <string name="prefs_category_advanced">進階</string>
     <string name="prefs_category_about">關於</string>
     <string name="pref_onlyfuture">無已播出集數</string>
@@ -448,7 +457,6 @@
     <string name="dismiss">關閉</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s新集數</string>
-    <string name="more">另外 %d 個</string>
     <string name="upcoming_display">選擇以顯示即將撥出的節目</string>
     <string name="pref_notifications">提示信息</string>
     <string name="pref_notificationssummary">當有新的集數時進行通知</string>
@@ -506,6 +514,7 @@
     <string name="action_extensions_configure">自訂擴充套件</string>
     <string name="action_extensions_add">新增擴充套件</string>
     <string name="action_extensions_search">取得更多擴充套件</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">移除</string>
     <string name="extension_amazon">Amazon 搜尋</string>
     <string name="description_extension_amazon">在當地的 Amazon 網站搜尋</string>

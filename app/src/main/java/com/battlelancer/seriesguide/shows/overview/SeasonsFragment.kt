@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -19,6 +19,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
@@ -29,8 +30,9 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 import com.battlelancer.seriesguide.shows.episodes.EpisodesActivity
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.ui.dialogs.SingleChoiceDialogFragment
-import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.ThemeUtils
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -93,8 +95,10 @@ class SeasonsFragment() : Fragment() {
             }
         }
 
-        model.seasons.observe(viewLifecycleOwner) { seasons ->
-            adapter.submitList(seasons)
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.seasonsWithStats.collectLatest {
+                adapter.submitList(it)
+            }
         }
         model.remainingCountData.observe(viewLifecycleOwner) { result ->
             handleRemainingCountUpdate(result)
@@ -151,6 +155,7 @@ class SeasonsFragment() : Fragment() {
                     showSortDialog()
                     true
                 }
+
                 else -> {
                     false
                 }
@@ -161,10 +166,12 @@ class SeasonsFragment() : Fragment() {
     private val listOnItemClickListener = object : SeasonsAdapter.ItemClickListener {
         override fun onItemClick(v: View, seasonRowId: Long) {
             val intent = EpisodesActivity.intentSeason(seasonRowId, requireActivity())
-            ActivityCompat.startActivity(requireActivity(), intent,
+            ActivityCompat.startActivity(
+                requireActivity(), intent,
                 ActivityOptionsCompat
                     .makeScaleUpAnimation(v, 0, 0, v.width, v.height)
-                    .toBundle())
+                    .toBundle()
+            )
         }
 
         override fun onPopupMenuClick(v: View, seasonRowId: Long) {
@@ -176,22 +183,27 @@ class SeasonsFragment() : Fragment() {
                             onFlagSeasonWatched(seasonRowId, true)
                             true
                         }
+
                         R.id.menu_action_seasons_watched_none -> {
                             onFlagSeasonWatched(seasonRowId, false)
                             true
                         }
+
                         R.id.menu_action_seasons_collection_add -> {
                             onFlagSeasonCollected(seasonRowId, true)
                             true
                         }
+
                         R.id.menu_action_seasons_collection_remove -> {
                             onFlagSeasonCollected(seasonRowId, false)
                             true
                         }
+
                         R.id.menu_action_seasons_skip -> {
                             onFlagSeasonSkipped(seasonRowId)
                             true
                         }
+
                         else -> false
                     }
                 }
@@ -213,11 +225,7 @@ class SeasonsFragment() : Fragment() {
         model.remainingCountData.load(showId)
         if (event.flagJob is SeasonWatchedJob) {
             // If we can narrow it down to just one season...
-            UnwatchedUpdateWorker.updateUnwatchedCountFor(
-                requireContext(),
-                showId,
-                event.flagJob.seasonId
-            )
+            model.updateSeasonStats(event.flagJob.seasonId)
         } else {
             updateUnwatchedCounts()
         }
@@ -266,7 +274,7 @@ class SeasonsFragment() : Fragment() {
      * notifies provider causing the loader to reload.
      */
     private fun updateUnwatchedCounts() {
-        UnwatchedUpdateWorker.updateUnwatchedCountFor(requireContext(), showId)
+        model.updateSeasonStats(null)
     }
 
     private fun handleRemainingCountUpdate(result: RemainingCountLiveData.Result?) {
@@ -276,7 +284,12 @@ class SeasonsFragment() : Fragment() {
         val binding = binding ?: return
         val unwatched = result.unwatchedEpisodes
         binding.textViewSeasonsRemaining.text =
-            TextTools.getRemainingEpisodes(requireContext().resources, unwatched)
+            resources.getQuantityString(
+                R.plurals.remaining_of_total_episodes_plural,
+                unwatched,
+                unwatched,
+                result.totalEpisodes
+            )
         setWatchedToggleState(unwatched == 0)
         setCollectedToggleState(result.collectedAllEpisodes)
     }
@@ -309,10 +322,12 @@ class SeasonsFragment() : Fragment() {
                         onFlagShowWatched(true)
                         true
                     }
+
                     CONTEXT_WATCHED_SHOW_NONE_ID -> {
                         onFlagShowWatched(false)
                         true
                     }
+
                     else -> false
                 }
             }
@@ -347,10 +362,12 @@ class SeasonsFragment() : Fragment() {
                         onFlagShowCollected(true)
                         true
                     }
+
                     CONTEXT_COLLECTED_SHOW_NONE_ID -> {
                         onFlagShowCollected(false)
                         true
                     }
+
                     else -> false
                 }
             }
@@ -359,11 +376,13 @@ class SeasonsFragment() : Fragment() {
 
     private fun showSortDialog() {
         val sortOrder = SeasonsSettings.getSeasonSortOrder(requireContext())
-        SingleChoiceDialogFragment.show(parentFragmentManager,
-                R.array.sesorting,
-                R.array.sesortingData, sortOrder.index,
+        SingleChoiceDialogFragment.show(
+            parentFragmentManager,
+            R.array.sesorting,
+            R.array.sesortingData, sortOrder.index,
             SeasonsSettings.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting,
-                "seasonSortOrderDialog")
+            "seasonSortOrderDialog"
+        )
     }
 
     private val onSortOrderChangedListener = OnSharedPreferenceChangeListener { _, key ->

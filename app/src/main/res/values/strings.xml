@@ -23,6 +23,7 @@
     <string name="ratings">Ratings</string>
 
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Overview</string>
     <string name="description_poster">Show poster</string>
     <string name="description_image">Episode image</string>
@@ -220,6 +221,18 @@
         <item quantity="one">%d remaining</item>
         <item quantity="other">%d remaining</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
 
     <!-- Add show -->
     <string name="checkin_searchhint">Type a show name</string>
@@ -401,11 +414,10 @@
     <string name="pref_quick_checkin_summary">Do not ask for a check in message</string>
 
     <!-- Help -->
-    <string name="feedback">Send feedback</string>
+    <string name="feedback">Send email</string>
 
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
     <string name="pref_onlyfuture">No aired episodes</string>
@@ -520,7 +532,6 @@
 
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s new episodes</string>
-    <string name="more">%d more</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about new episodes</string>
@@ -583,12 +594,14 @@
     <string name="action_extensions_configure">Customize extensions</string>
     <string name="action_extensions_add">Add extension</string>
     <string name="action_extensions_search">Get more extensions</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Remove</string>
     <string name="extension_amazon">Amazon search</string>
     <string name="description_extension_amazon">Search your local Amazon site</string>
     <string name="pref_amazon_domain">Amazon site</string>
     <string name="extension_google_play">Google Play search</string>
-    <string name="description_extension_google_play">Search the Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Search the Google Play Store</string>
     <string name="extension_youtube">YouTube search</string>
     <string name="description_extension_youtube">Search YouTube for videos</string>
     <string name="description_extension_web_search">Search for websites and images</string>

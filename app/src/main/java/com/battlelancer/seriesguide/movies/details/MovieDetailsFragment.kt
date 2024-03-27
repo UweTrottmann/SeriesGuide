@@ -76,6 +76,8 @@ import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.threeten.bp.Instant
+import org.threeten.bp.ZonedDateTime
 import timber.log.Timber
 
 /**
@@ -119,19 +121,35 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 isEnabled = false
             }
             // similar movies button
-            buttonMovieSimilar.apply {
-                setOnClickListener {
-                    movieDetails?.tmdbMovie()
-                        ?.title
-                        ?.let {
-                            startActivity(
-                                SimilarMoviesActivity.intent(
-                                    requireContext(),
-                                    tmdbId,
-                                    it
-                                )
+            buttonMovieSimilar.setOnClickListener {
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let {
+                        startActivity(
+                            SimilarMoviesActivity.intent(
+                                requireContext(),
+                                tmdbId,
+                                it
                             )
-                        }
+                        )
+                    }
+            }
+            buttonMovieShare.setOnClickListener {
+                movieDetails?.tmdbMovie()
+                    ?.title
+                    ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
+            }
+            buttonMovieCalendar.setOnClickListener {
+                movieDetails?.tmdbMovie()?.also {
+                    val title = it.title
+                    val releaseTimeMs = it.release_date?.time
+                    if (title != null && releaseTimeMs != null) {
+                        ShareUtils.suggestAllDayCalendarEvent(
+                            requireContext(),
+                            title,
+                            releaseTimeMs
+                        )
+                    }
                 }
             }
             buttonMovieCheckIn.setOnClickListener { onButtonCheckInClick() }
@@ -261,10 +279,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
                 // enable/disable actions
                 val hasTitle = !it.tmdbMovie()?.title.isNullOrEmpty()
-                menu.findItem(R.id.menu_movie_share).apply {
-                    isEnabled = hasTitle
-                    isVisible = hasTitle
-                }
                 menu.findItem(R.id.menu_open_metacritic).apply {
                     isEnabled = hasTitle
                     isVisible = hasTitle
@@ -280,13 +294,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
-                R.id.menu_movie_share -> {
-                    movieDetails?.tmdbMovie()
-                        ?.title
-                        ?.let { ShareUtils.shareMovie(activity, tmdbId, it) }
-                    true
-                }
-
                 R.id.menu_open_imdb -> {
                     movieDetails?.tmdbMovie()
                         ?.let { ServiceUtils.openImdb(it.imdb_id, activity) }
@@ -337,12 +344,19 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             tmdbMovie.overview
         )
 
+        binding.containerMovieButtons.buttonMovieShare.isEnabled = movieTitle != null
+
         // release date and runtime: "July 17, 2009 | 95 min"
         val releaseAndRuntime = StringBuilder()
-        tmdbMovie.release_date?.let {
+        val releaseDate = tmdbMovie.release_date
+        releaseDate?.let {
             releaseAndRuntime.append(TimeTools.formatToLocalDate(context, it))
             releaseAndRuntime.append(" | ")
         }
+        // hide create event button if release date is yesterday or older
+        binding.containerMovieButtons.buttonMovieCalendar.isGone =
+            releaseDate == null || Instant.ofEpochMilli(releaseDate.time)
+                .isBefore(ZonedDateTime.now().minusDays(1).toInstant())
         tmdbMovie.runtime?.let {
             releaseAndRuntime.append(getString(R.string.runtime_minutes, it.toString()))
         }
@@ -511,7 +525,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.isClickable = false
             binding.frameLayoutMoviePoster.isFocusable = false
         } else {
-            val smallImageUrl = (TmdbSettings.getImageBaseUrl(activity)
+            val smallImageUrl = (TmdbSettings.getImageBaseUrl(requireContext())
                     + TmdbSettings.POSTER_SIZE_SPEC_W342 + tmdbMovie.poster_path)
             ImageTools.loadWithPicasso(requireContext(), smallImageUrl)
                 .into(binding.imageViewMoviePoster, object : Callback.EmptyCallback() {
@@ -558,8 +572,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             binding.frameLayoutMoviePoster.also {
                 it.isFocusable = true
                 it.setOnClickListener { view ->
+                    val posterPath = tmdbMovie.poster_path ?: return@setOnClickListener
                     val largeImageUrl =
-                        TmdbSettings.getImageOriginalUrl(activity, tmdbMovie.poster_path)
+                        TmdbSettings.getImageOriginalUrl(requireContext(), posterPath)
                     val intent = FullscreenImageActivity.intent(
                         requireActivity(),
                         smallImageUrl,

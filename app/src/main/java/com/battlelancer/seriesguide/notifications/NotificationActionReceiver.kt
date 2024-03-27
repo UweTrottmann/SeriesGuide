@@ -1,13 +1,11 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2016-2018, 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.notifications
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.core.app.NotificationManagerCompat
-import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
 
@@ -30,10 +28,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
         EpisodeTools.episodeWatched(context, episodeId, EpisodeFlags.WATCHED)
 
         // dismiss the notification
-        val manager = NotificationManagerCompat.from(context)
-        manager.cancel(SgApp.NOTIFICATION_EPISODE_ID)
-        // replicate delete intent
-        NotificationService.handleDeleteIntent(context, intent)
+        NotificationService.deleteNotification(context, intent)
     }
 
     companion object {

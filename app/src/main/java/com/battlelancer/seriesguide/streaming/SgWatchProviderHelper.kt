@@ -18,16 +18,16 @@ import kotlinx.coroutines.flow.Flow
 interface SgWatchProviderHelper {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOrReplace(providers: List<SgWatchProvider>)
+    suspend fun insertOrReplace(providers: List<SgWatchProvider>)
 
     @Update
-    fun update(providers: List<SgWatchProvider>)
+    suspend fun update(providers: List<SgWatchProvider>)
 
     @Delete
-    fun delete(providers: List<SgWatchProvider>)
+    suspend fun delete(providers: List<SgWatchProvider>)
 
     @Transaction
-    fun updateWatchProviders(
+    suspend fun updateWatchProviders(
         inserts: List<SgWatchProvider>,
         updates: List<SgWatchProvider>,
         deletes: List<SgWatchProvider>
@@ -38,10 +38,25 @@ interface SgWatchProviderHelper {
     }
 
     @Query("SELECT * FROM sg_watch_provider WHERE type=:type")
-    fun getAllWatchProviders(type: Int): List<SgWatchProvider>
+    suspend fun getAllWatchProviders(type: Int): List<SgWatchProvider>
 
     @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY display_priority ASC, provider_name ASC")
     fun allWatchProvidersPagingSource(type: Int): PagingSource<Int, SgWatchProvider>
+
+    /**
+     * Watch providers of all shows sorted by name.
+     *
+     * Android provides the UNICODE collator,
+     * use to correctly order characters with e.g. accents and ignore case.
+     * https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
+     */
+    @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type GROUP BY _id ORDER BY provider_name COLLATE UNICODE ASC")
+    fun usedWatchProvidersFlow(type: Int): Flow<List<SgWatchProvider>>
+
+    /* Note: never just get those with filter_local=1 as once a show does not longer use a provider
+     it is not longer shown in the filter UI, so it can not be disabled. */
+    @Query("SELECT sg_watch_provider.* FROM sg_watch_provider JOIN sg_watch_provider_show_mappings ON sg_watch_provider.provider_id=sg_watch_provider_show_mappings.provider_id WHERE type=:type AND filter_local=1 GROUP BY _id")
+    fun filterLocalWatchProviders(type: Int): Flow<List<SgWatchProvider>>
 
     @Query("SELECT provider_id FROM sg_watch_provider WHERE type=:type AND enabled=1")
     fun getEnabledWatchProviderIds(type: Int): LiveData<List<Int>>
@@ -52,7 +67,18 @@ interface SgWatchProviderHelper {
     @Query("UPDATE sg_watch_provider SET enabled=:enabled WHERE _id=:id")
     fun setEnabled(id: Int, enabled: Boolean)
 
+    @Query("UPDATE sg_watch_provider SET filter_local=:enabled WHERE _id=:id")
+    suspend fun setFilterLocal(id: Int, enabled: Boolean)
+
+    @Query("UPDATE sg_watch_provider SET filter_local=0 WHERE type=:type")
+    suspend fun setFilterLocalFalseAll(type: Int)
+
     @Query("UPDATE sg_watch_provider SET enabled=0 WHERE type=:type")
     fun setAllDisabled(type: Int)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addShowMappings(mappings: List<SgWatchProviderShowMapping>)
+
+    @Query("DELETE FROM sg_watch_provider_show_mappings WHERE show_id=:showId")
+    suspend fun deleteShowMappings(showId: Long)
 }

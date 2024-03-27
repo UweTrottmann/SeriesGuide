@@ -20,6 +20,7 @@
     <string name="specialseason">Odcinki specjalne</string>
     <string name="ratings">Oceny</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Przejdź do góry</string>
     <string name="description_overview">Opis</string>
     <string name="description_poster">Pokaż plakat</string>
     <string name="description_image">Obraz odcinka</string>
@@ -208,6 +209,24 @@
         <item quantity="many">%d pozostałych</item>
         <item quantity="other">%d pozostałych</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">pozostało %1$d z %2$d</item>
+        <item quantity="few">pozostało %1$d z %2$d</item>
+        <item quantity="many">pozostało %1$d z %2$d</item>
+        <item quantity="other">pozostało %1$d z %2$d</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d pominięty</item>
+        <item quantity="few">%d pominięte</item>
+        <item quantity="many">%d pominiętych</item>
+        <item quantity="other">pominiętych %d</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d w kolekcji</item>
+        <item quantity="few">%d w kolekcji</item>
+        <item quantity="many">%d w kolekcji</item>
+        <item quantity="other">%d w kolekcji</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Wpisz nazwę serialu</string>
     <string name="add_empty">Brak seriali.</string>
@@ -368,10 +387,9 @@
     <string name="pref_quick_checkin">Szybkie ustawianie opcji \"oglądam\"</string>
     <string name="pref_quick_checkin_summary">Nie wyświetlaj okna dialogowego \"oglądam\"</string>
     <!-- Help -->
-    <string name="feedback">Wyślij opinię</string>
+    <string name="feedback">Wyślij e-mail</string>
     <!-- Settings -->
     <string name="action_translate">Przetłumacz aplikację</string>
-    <string name="action_contribute_content">Przetłumacz lub ulepsz tłumaczenie</string>
     <string name="prefs_category_advanced">Zaawansowane</string>
     <string name="prefs_category_about">O programie</string>
     <string name="pref_onlyfuture">Bez wyemitowanych</string>
@@ -481,7 +499,6 @@
     <string name="dismiss">Zamknij</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s nowych odcinków</string>
-    <string name="more">%d więcej</string>
     <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
     <string name="pref_notifications">Powiadomienia</string>
     <string name="pref_notificationssummary">Informuj o nowych odcinkach</string>
@@ -539,6 +556,7 @@
     <string name="action_extensions_configure">Dostosuj rozszerzenia</string>
     <string name="action_extensions_add">Dodaj rozszerzenia</string>
     <string name="action_extensions_search">Pobierz więcej rozszerzeń</string>
+    <string name="action_extensions_develop">Jak utworzyć rozszerzenie?</string>
     <string name="action_extension_remove">Usuń</string>
     <string name="extension_amazon">Wyszukiwanie na Amazon</string>
     <string name="description_extension_amazon">Szukaj na lokalnej witrynie Amazon</string>

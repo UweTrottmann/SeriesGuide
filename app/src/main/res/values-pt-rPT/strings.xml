@@ -20,6 +20,7 @@
     <string name="specialseason">Episódios Especiais</string>
     <string name="ratings">Classificações</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Retroceder</string>
     <string name="description_overview">Visão geral</string>
     <string name="description_poster">Visualizar cartaz</string>
     <string name="description_image">Imagem do Episódio</string>
@@ -29,7 +30,7 @@
     <string name="discard">Cancelar</string>
     <string name="save_selection">Guardar opções selecionadas</string>
     <string name="action_display_all">Mostrar tudo</string>
-    <string name="web_search">Pesquisa na Internet</string>
+    <string name="web_search">Pesquisar na Internet</string>
     <string name="add_to_homescreen">Adicionar ao Ecrã inicial</string>
     <string name="action_open">Abrir</string>
     <string name="sync_manually">Sincronizar manualmente</string>
@@ -124,7 +125,7 @@
     <string name="state_watched_multiple_format">Visto (%d)</string>
     <string name="state_skipped">Ignorado</string>
     <string name="state_in_collection">Na Coleção</string>
-    <string name="state_on_watchlist">Na Lista dos que Desejo Ver</string>
+    <string name="state_on_watchlist">Na lista dos que desejo ver</string>
     <string name="state_favorite">Favorito</string>
     <!-- Shows -->
     <string name="confirm_delete">Tens a certeza que desejas remover %s?</string>
@@ -199,6 +200,18 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="one">%d por ver</item>
         <item quantity="other">%d por ver</item>
+    </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d de %2$d por ver</item>
+        <item quantity="other">%1$d de %2$d por ver</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d ignorado</item>
+        <item quantity="other">%d ignorados</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d na coleção</item>
+        <item quantity="other">%d na coleção</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Título da série</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Dar entrada rápida</string>
     <string name="pref_quick_checkin_summary">Dar entrada automaticamente sem pedir nenhuma mensagem</string>
     <!-- Help -->
-    <string name="feedback">Enviar comentários</string>
+    <string name="feedback">Enviar e-mail</string>
     <!-- Settings -->
-    <string name="action_translate">Traduz esta App</string>
-    <string name="action_contribute_content">Traduz ou melhora o conteúdo</string>
+    <string name="action_translate">Traduzir esta aplicação</string>
     <string name="prefs_category_advanced">Avançado</string>
     <string name="prefs_category_about">Sobre</string>
     <string name="pref_onlyfuture">Nenhum episódio em exibição</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Dispensar</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s novos episódios</string>
-    <string name="more">e outros %d</string>
     <string name="upcoming_display">Seleciona para exibir as próximas séries</string>
     <string name="pref_notifications">Notificações</string>
     <string name="pref_notificationssummary">Notificar sobre novos episódios</string>
@@ -517,14 +528,15 @@
     <string name="action_extensions_configure">Personalizar extensões</string>
     <string name="action_extensions_add">Adicionar extensão</string>
     <string name="action_extensions_search">Obter mais extensões</string>
+    <string name="action_extensions_develop">Criar uma extensão</string>
     <string name="action_extension_remove">Remover</string>
-    <string name="extension_amazon">Pesquisa na Amazon</string>
+    <string name="extension_amazon">Pesquisar na Amazon</string>
     <string name="description_extension_amazon">Pesquisa na Amazon do teu país</string>
     <string name="pref_amazon_domain">Site da Amazon</string>
-    <string name="extension_google_play">Pesquisa na Google Play</string>
+    <string name="extension_google_play">Pesquisar na Google Play</string>
     <string name="description_extension_google_play">Pesquisa na Google Play Store</string>
-    <string name="extension_youtube">Pesquisa no YouTube</string>
-    <string name="description_extension_youtube">Pesquisa no YouTube por alguns vídeos</string>
+    <string name="extension_youtube">Pesquisar no YouTube</string>
+    <string name="description_extension_youtube">Pesquisa vídeos no YouTube</string>
     <string name="description_extension_web_search">Pesquisa por sites e imagens</string>
     <!-- People -->
     <string name="person_biography">Biografia</string>

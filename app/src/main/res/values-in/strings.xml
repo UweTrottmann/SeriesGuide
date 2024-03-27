@@ -20,6 +20,7 @@
     <string name="specialseason">Episode Khusus</string>
     <string name="ratings">Peringkat</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Tinjauan</string>
     <string name="description_poster">Poster acara</string>
     <string name="description_image">Gambar episode</string>
@@ -196,6 +197,15 @@
     <plurals name="remaining_episodes_plural">
         <item quantity="other">%d tersisa</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Ketik nama acara</string>
     <string name="add_empty">Tidak ada acara disini.</string>
@@ -344,10 +354,9 @@
     <string name="pref_quick_checkin">Check-in cepat</string>
     <string name="pref_quick_checkin_summary">Jangan tanya untuk pesan check-in</string>
     <!-- Help -->
-    <string name="feedback">Kirim tanggapan</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Terjemahkan aplikasi ini</string>
-    <string name="action_contribute_content">Terjemahkan atau tingkatkan konten</string>
     <string name="prefs_category_advanced">Tingkat Lanjut</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="pref_onlyfuture">Tidak Ada episode yang sudah ditayangkan</string>
@@ -448,7 +457,6 @@
     <string name="dismiss">Bubar</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s episode baru</string>
-    <string name="more">%d lagi</string>
     <string name="upcoming_display">Pilih untuk menampilkan acara yang akan datang</string>
     <string name="pref_notifications">Notifikasi</string>
     <string name="pref_notificationssummary">Beritahu tentang episode baru</string>
@@ -506,6 +514,7 @@
     <string name="action_extensions_configure">Sesuaikan ekstensi</string>
     <string name="action_extensions_add">Tambah ekstensi</string>
     <string name="action_extensions_search">Dapatkan ekstensi lainnya</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Hapus</string>
     <string name="extension_amazon">Pencarian amazon</string>
     <string name="description_extension_amazon">Cari di situs Amazon lokal anda</string>

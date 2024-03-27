@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayoutMoviesWatched"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.movies.MoviesWatchedFragment">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textViewEmptyMoviesWatched"
@@ -12,7 +12,6 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/now_movies_empty"
         android:textAppearance="@style/TextAppearance.SeriesGuide.EmptyState" />
 
     <!-- Setting fast scroller in code. -->
@@ -25,6 +24,6 @@
         android:paddingTop="@dimen/grid_item_margin_vertical"
         android:paddingRight="@dimen/grid_item_margin_horizontal"
         android:paddingBottom="@dimen/grid_item_margin_vertical"
-        tools:listitem="@layout/item_discover_movie" />
+        tools:listitem="@layout/item_movie" />
 
 </FrameLayout>

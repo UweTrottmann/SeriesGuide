@@ -20,6 +20,7 @@
     <string name="specialseason">Erikoisjaksot</string>
     <string name="ratings">Arvosanat</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Siirry ylös</string>
     <string name="description_overview">Yleiskatsaus</string>
     <string name="description_poster">Näytä juliste</string>
     <string name="description_image">Jaksokuva</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d jäljellä</item>
         <item quantity="other">%d jäljellä</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d/%2$d jäljellä</item>
+        <item quantity="other">%1$d/%2$d jäljellä</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d ohitettu</item>
+        <item quantity="other">%d ohitettu</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d kokoelmassa</item>
+        <item quantity="other">%d kokoelmassa</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
     <string name="add_empty">Täällä ei ole yhtään ohjelmaa</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Nopea kuittaus</string>
     <string name="pref_quick_checkin_summary">Älä kysy kuittausviestiä</string>
     <!-- Help -->
-    <string name="feedback">Lähetä palautetta</string>
+    <string name="feedback">Lähetä sähköposti</string>
     <!-- Settings -->
     <string name="action_translate">Käännä tämä sovellus</string>
-    <string name="action_contribute_content">Käännä tai paranna sisältöä</string>
     <string name="prefs_category_advanced">Edistyneet</string>
     <string name="prefs_category_about">Tietoja</string>
     <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Hylkää</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s uutta jaksoa</string>
-    <string name="more">%d lisää</string>
     <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
     <string name="pref_notifications">Ilmoitukset</string>
     <string name="pref_notificationssummary">Ilmoita uusista jaksoista</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Muokkaa laajennuksia</string>
     <string name="action_extensions_add">Lisää laajennus</string>
     <string name="action_extensions_search">Hanki lisää laajennuksia</string>
+    <string name="action_extensions_develop">Kehitä laajennus</string>
     <string name="action_extension_remove">Poista</string>
     <string name="extension_amazon">Amazon-haku</string>
     <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>

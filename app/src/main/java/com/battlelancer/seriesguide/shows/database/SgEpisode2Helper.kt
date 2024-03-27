@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -90,10 +90,10 @@ interface SgEpisode2Helper {
     @Query("SELECT episode_tmdb_id FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeTmdbId(episodeId: Long): Int
 
-    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE _id = :episodeId")
+    @Query("SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeNumbers(episodeId: Long): SgEpisode2Numbers?
 
-    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE _id = :episodeId")
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE _id = :episodeId")
     fun getEpisodeInfo(episodeId: Long): SgEpisode2Info?
 
     @RawQuery
@@ -127,7 +127,7 @@ interface SgEpisode2Helper {
      * Get the watched or skipped episode with the latest release date, if multiple highest season,
      * if multiple highest number. Or null if none found.
      */
-    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED} ORDER BY episode_firstairedms DESC, episode_season_number DESC, episode_number DESC LIMIT 1")
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED} ORDER BY episode_firstairedms DESC, episode_season_number DESC, episode_number DESC LIMIT 1")
     fun getNewestWatchedEpisodeOfShow(showId: Long): SgEpisode2Info?
 
     @Query(
@@ -166,7 +166,7 @@ interface SgEpisode2Helper {
     /**
      * Also serves as compile time validation of [SgEpisode2Numbers.buildQuery]
      */
-    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_season_number ASC, episode_number ASC")
+    @Query("SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = :seasonId ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfSeason(seasonId: Long): List<SgEpisode2Numbers>
 
     @RawQuery(observedEntities = [SgEpisode2::class])
@@ -175,7 +175,7 @@ interface SgEpisode2Helper {
     /**
      * Excludes specials.
      */
-    @Query("SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
+    @Query("SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0 ORDER BY episode_season_number ASC, episode_number ASC")
     fun getEpisodeNumbersOfShow(showId: Long): List<SgEpisode2Numbers>
 
     @Query("SELECT _id, episode_number, episode_season_number, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE series_id = :showId AND episode_tmdb_id > 0 AND (episode_watched != ${EpisodeFlags.UNWATCHED} OR episode_collected = 1)")
@@ -199,7 +199,7 @@ interface SgEpisode2Helper {
     /**
      * WAIT, just for compile time validation of [SgEpisode2Info.buildQuery]
      */
-    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE season_id = :seasonId")
+    @Query("SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id = :seasonId")
     fun dummyToValidateSgEpisode2Info(seasonId: Long): List<SgEpisode2Info>
 
     @RawQuery(observedEntities = [SgEpisode2::class])
@@ -228,6 +228,12 @@ interface SgEpisode2Helper {
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE episode_watched == ${EpisodeFlags.WATCHED} AND episode_season_number != 0")
     fun countWatchedEpisodesWithoutSpecials(): Int
 
+    /**
+     * Count episodes of a show excluding specials, but including those without a release date.
+     */
+    @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_season_number != 0")
+    suspend fun countEpisodesOfShow(showId: Long): Int
+
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_watched = ${EpisodeFlags.WATCHED}")
     fun countWatchedEpisodesOfShow(showId: Long): Int
 
@@ -238,14 +244,14 @@ interface SgEpisode2Helper {
      * Returns if at least one episode of the show is collected. Excludes specials.
      */
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 1 AND episode_season_number != 0 LIMIT 1")
-    fun hasCollectedEpisodes(showId: Long): Boolean
+    suspend fun hasCollectedEpisodes(showId: Long): Boolean
 
     /**
      * Returns if at least one episode of a show is left to collect. Excludes specials.
      * Should match with what [updateCollectedOfShowExcludeSpecials] changes.
      */
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE series_id = :showId AND episode_collected = 0 AND episode_season_number != 0 LIMIT 1")
-    fun hasEpisodesToCollect(showId: Long): Boolean
+    suspend fun hasEpisodesToCollect(showId: Long): Boolean
 
     /**
      * Returns how many episodes of a show are left to watch (only aired and not watched, exclusive
@@ -255,22 +261,22 @@ interface SgEpisode2Helper {
     fun countNotWatchedEpisodesOfShow(showId: Long, currentTimeToolsTime: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId")
-    fun countEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms != ${SgEpisode2.EPISODE_UNKNOWN_RELEASE} AND episode_firstairedms <= :currentTimeToolsTime")
-    fun countNotWatchedReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
+    suspend fun countNotWatchedReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms > :currentTimeToolsTime")
-    fun countNotWatchedToBeReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
+    suspend fun countNotWatchedToBeReleasedEpisodesOfSeason(seasonId: Long, currentTimeToolsTime: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.UNWATCHED} AND episode_firstairedms = ${SgEpisode2.EPISODE_UNKNOWN_RELEASE}")
-    fun countNotWatchedNoReleaseEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countNotWatchedNoReleaseEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_watched = ${EpisodeFlags.SKIPPED}")
-    fun countSkippedEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countSkippedEpisodesOfSeason(seasonId: Long): Int
 
     @Query("SELECT COUNT(_id) FROM sg_episode WHERE season_id = :seasonId AND episode_collected = 0")
-    fun countNotCollectedEpisodesOfSeason(seasonId: Long): Int
+    suspend fun countNotCollectedEpisodesOfSeason(seasonId: Long): Int
 
     @Query("UPDATE sg_episode SET episode_watched = 0, episode_plays = 0 WHERE _id = :episodeId")
     fun setNotWatchedAndRemovePlays(episodeId: Long): Int
@@ -305,7 +311,7 @@ interface SgEpisode2Helper {
     /**
      * See [setWatchedUpToAndAddPlay] for which episodes are returned.
      */
-    @Query("""SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId 
+    @Query("""SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE series_id = :showId 
             AND (
             episode_firstairedms < :episodeFirstAired
             OR (episode_firstairedms = :episodeFirstAired AND episode_number <= :episodeNumber)
@@ -319,7 +325,7 @@ interface SgEpisode2Helper {
      * Note: keep in sync with [setSeasonNotWatchedAndRemovePlays].
      */
     @Query(
-        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.UNWATCHED}
         ORDER BY episode_season_number ASC, episode_number ASC"""
     )
@@ -368,7 +374,7 @@ interface SgEpisode2Helper {
      * Note: keep in sync with [setSeasonSkipped] and [setSeasonWatchedAndAddPlay].
      */
     @Query(
-        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE season_id = :seasonId AND episode_watched != ${EpisodeFlags.WATCHED}
         ORDER BY episode_season_number ASC, episode_number ASC"""
     )
@@ -405,7 +411,7 @@ interface SgEpisode2Helper {
      * Note: keep in sync with [setShowNotWatchedAndRemovePlays].
      */
     @Query(
-        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.UNWATCHED}
         AND episode_season_number != 0
         ORDER BY episode_season_number ASC, episode_number ASC"""
@@ -428,7 +434,7 @@ interface SgEpisode2Helper {
      * Note: keep in sync with [setShowWatchedAndAddPlay].
      */
     @Query(
-        """SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
+        """SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode 
         WHERE series_id = :showId AND episode_watched != ${EpisodeFlags.WATCHED}
         AND episode_firstairedms <= :currentTimePlusOneHour AND episode_firstairedms != -1
         AND episode_season_number != 0
@@ -538,7 +544,7 @@ interface SgEpisode2Helper {
     }
 
     @Query("DELETE FROM sg_episode WHERE series_id = :showId")
-    fun deleteEpisodesOfShow(showId: Long): Int
+    suspend fun deleteEpisodesOfShow(showId: Long): Int
 }
 
 data class SgEpisode2WithShow(
@@ -662,6 +668,7 @@ data class SgEpisode2Info(
     @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
     @ColumnInfo(name = SgEpisode2Columns.DVDNUMBER) val dvdNumber: Double,
     @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
+    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
     @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean = false,
     @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val firstReleasedMs: Long
 ) {
@@ -673,7 +680,7 @@ data class SgEpisode2Info(
         fun buildQuery(seasonId: Long, order: EpisodesSettings.EpisodeSorting): SimpleSQLiteQuery {
             val orderClause = order.query()
             return SimpleSQLiteQuery(
-                "SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_collected FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
+                "SELECT _id, season_id, series_id, episode_tvdb_id, episode_title, episode_number, episode_absolute_number, episode_season_number, episode_dvd_number, episode_firstairedms, episode_watched, episode_plays, episode_collected FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
             )
         }
     }
@@ -687,6 +694,7 @@ data class SgEpisode2Ids(
 
 data class SgEpisode2Numbers(
     @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?,
     @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
     @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
@@ -701,7 +709,7 @@ data class SgEpisode2Numbers(
         fun buildQuery(seasonId: Long, order: EpisodesSettings.EpisodeSorting): SimpleSQLiteQuery {
             val orderClause = order.query()
             return SimpleSQLiteQuery(
-                "SELECT _id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
+                "SELECT _id, episode_tmdb_id, season_id, series_id, episode_number, episode_season_number, episode_plays FROM sg_episode WHERE season_id = $seasonId ORDER BY $orderClause"
             )
         }
     }

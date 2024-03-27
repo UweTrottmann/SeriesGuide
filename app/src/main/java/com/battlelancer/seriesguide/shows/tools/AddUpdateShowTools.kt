@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -29,6 +29,8 @@ import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowDoesNotExist
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowRetry
 import com.battlelancer.seriesguide.shows.tools.GetShowTools.GetShowError.GetShowStop
+import com.battlelancer.seriesguide.streaming.SgWatchProviderShowMapping
+import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.battlelancer.seriesguide.sync.HexagonEpisodeSync
 import com.battlelancer.seriesguide.sync.HexagonShowSync
 import com.battlelancer.seriesguide.sync.TraktEpisodeSync
@@ -50,6 +52,7 @@ import com.uwetrottmann.tmdb2.entities.TvEpisode
 import com.uwetrottmann.tmdb2.entities.TvSeason
 import com.uwetrottmann.trakt5.entities.BaseShow
 import dagger.Lazy
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.TimeZone
 import javax.inject.Inject
@@ -210,6 +213,8 @@ class AddUpdateShowTools @Inject constructor(
                 return ShowResult.DATABASE_ERROR
             }
         }
+
+        updateWatchProviderMappings(showId, showTmdbId)
 
         // Calculate next episode
         NextEpisodeUpdater(context).updateForShows(showId)
@@ -416,7 +421,11 @@ class AddUpdateShowTools @Inject constructor(
 
     /**
      * Updates a show. Adds new, updates changed and removes orphaned episodes.
+     *
+     * This runs coroutines blocking the current thread (see [updateWatchProviderMappings]).
+     * If it is interrupted, [InterruptedException] is thrown.
      */
+    @Throws(InterruptedException::class)
     fun updateShow(showId: Long): UpdateResult {
         val helper = SgRoomDatabase.getInstance(context).sgShow2Helper()
         val show = helper.getShow(showId)
@@ -445,6 +454,7 @@ class AddUpdateShowTools @Inject constructor(
                             helper.setLastUpdated(showId, System.currentTimeMillis())
                             UpdateResult.Success
                         }
+
                         else -> it // Failure.
                     }
                 }
@@ -503,12 +513,40 @@ class AddUpdateShowTools @Inject constructor(
 //        episodeHelper.deleteEpisodesWithoutTmdbId(showId)
 //        database.sgSeason2Helper().deleteSeasonsWithoutTmdbId(showId)
 
+        updateWatchProviderMappings(showId, showTmdbId)
+
         // At last store shows update (sets last updated timestamp).
         val updated = database.sgShow2Helper().updateShow(updatedShow)
         return if (updated == 1) {
             UpdateResult.Success
         } else {
             UpdateResult.DatabaseError
+        }
+    }
+
+    /**
+     * Download and store watch provider mappings if a streaming search region is configured.
+     */
+    @Throws(InterruptedException::class)
+    private fun updateWatchProviderMappings(showId: Long, showTmdbId: Int) {
+        val region = StreamingSearch.getCurrentRegionOrNull(context) ?: return
+        runBlocking {
+            val providers = TmdbTools2().getWatchProvidersForShow(showTmdbId, region, context)
+            if (providers != null) {
+                // Just take all possible options
+                (providers.flatrate + providers.free + providers.ads + providers.buy)
+                    .mapNotNull { it.provider_id }
+                    .distinct()
+                    .map { SgWatchProviderShowMapping(it, showId) }
+                    .also {
+                        val providerHelper =
+                            SgRoomDatabase.getInstance(context).sgWatchProviderHelper()
+                        providerHelper.deleteShowMappings(showId)
+                        // If providers are added that don't exist in the providers table,
+                        // not an issue as they just won't be displayed (join will fail).
+                        if (it.isNotEmpty()) providerHelper.addShowMappings(it)
+                    }
+            }
         }
     }
 

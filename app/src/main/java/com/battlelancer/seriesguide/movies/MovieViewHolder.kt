@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.ItemDiscoverMovieBinding
+import com.battlelancer.seriesguide.databinding.ItemMovieBinding
 import com.battlelancer.seriesguide.movies.database.SgMovie
 import com.battlelancer.seriesguide.util.ImageTools
 import com.squareup.picasso.Picasso
@@ -17,7 +17,7 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie
 import java.text.DateFormat
 
 class MovieViewHolder(
-    val binding: ItemDiscoverMovieBinding,
+    val binding: ItemMovieBinding,
     itemClickListener: MovieClickListener?
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -107,7 +107,7 @@ class MovieViewHolder(
         @JvmStatic
         fun inflate(parent: ViewGroup, itemClickListener: MovieClickListener?): MovieViewHolder {
             return MovieViewHolder(
-                ItemDiscoverMovieBinding.inflate(
+                ItemMovieBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 ),
                 itemClickListener

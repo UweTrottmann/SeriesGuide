@@ -29,6 +29,8 @@ android {
 
     buildFeatures {
         buildConfig = true
+        // https://developer.android.com/jetpack/compose/interop/adding
+        compose = true
         // https://firebase.google.com/support/release-notes/android
         viewBinding = true
     }
@@ -63,10 +65,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    composeOptions {
+        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+        kotlinCompilerExtensionVersion = "1.5.8" // For Kotlin 1.9.22
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         // Using experimental flatMapLatest for Paging 3
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi,androidx.compose.material3.ExperimentalMaterial3Api"
     }
 
     lint {
@@ -147,12 +154,6 @@ kapt {
     }
 }
 
-// Manually set JVM target of kapt https://youtrack.jetbrains.com/issue/KT-55947/Unable-to-set-kapt-jvm-target-version
-// Matches target version set in android block.
-tasks.withType(org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask::class).configureEach {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
-}
-
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
@@ -169,6 +170,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.collection) // For SparseArrayCompat
     implementation(libs.androidx.fragment)
     implementation(libs.material)
     implementation(libs.androidx.palette)
@@ -177,6 +179,18 @@ dependencies {
     implementation(libs.androidx.coordinatorlayout)
     implementation(libs.androidx.preference)
     implementation(libs.androidx.swiperefreshlayout)
+
+    // Compose
+    implementation(platform(libs.compose))
+    androidTestImplementation(platform(libs.compose))
+    implementation(libs.compose.material3)
+    // Android Studio Preview support
+    implementation(libs.compose.tooling.preview)
+    debugImplementation(libs.compose.tooling)
+    // Optional - Integration with activities
+    implementation(libs.androidx.activity.compose)
+    // Optional - Integration with ViewModels
+    implementation( libs.androidx.lifecycle.compose)
 
     // ViewModel and LiveData
     implementation(libs.androidx.lifecycle.livedata)
@@ -229,7 +243,7 @@ dependencies {
     // Import the Firebase BoM
     implementation(platform(libs.firebase))
     // Crashlytics
-    implementation("com.google.firebase:firebase-crashlytics")
+    implementation(libs.firebase.crashlytics)
     // Firebase Sign-In
     implementation(libs.firebase.ui.auth)
     // Use later play-services-auth than firebase-ui-auth to get latest fixes.

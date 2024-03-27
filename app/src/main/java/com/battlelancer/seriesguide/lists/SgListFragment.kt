@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2012-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.lists
 
@@ -20,6 +20,8 @@ import com.battlelancer.seriesguide.databinding.FragmentListBinding
 import com.battlelancer.seriesguide.lists.ListsDistillationSettings.ListsSortOrderChangedEvent
 import com.battlelancer.seriesguide.lists.database.SgListItemWithDetails
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.ListItemTypes
+import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.tools.ShowSync
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
@@ -107,8 +109,8 @@ class SgListFragment : Fragment() {
         model.updateQuery()
     }
 
-    private val onItemClickListener: SgListItemAdapter.OnItemClickListener =
-        object : SgListItemAdapter.OnItemClickListener {
+    private val onItemClickListener: SgListItemViewHolder.OnItemClickListener =
+        object : SgListItemViewHolder.OnItemClickListener {
             override fun onItemClick(anchor: View, item: SgListItemWithDetails) {
                 Utils.startActivityWithAnimation(
                     requireActivity(),
@@ -120,10 +122,19 @@ class SgListFragment : Fragment() {
             override fun onMenuClick(anchor: View, item: SgListItemWithDetails) {
                 val popupMenu = PopupMenu(anchor.context, anchor)
                 popupMenu.inflate(R.menu.lists_popup_menu)
+                val menu = popupMenu.menu
+                // Hide some options that only make sense for shows (for legacy non-show items)
+                val isShow =
+                    item.type == ListItemTypes.TMDB_SHOW || item.type == ListItemTypes.TVDB_SHOW
+                menu.findItem(R.id.menu_action_lists_watched_next).isVisible = isShow
+                menu.findItem(R.id.menu_action_lists_favorites_add).isVisible =
+                    isShow && !item.favorite
+                menu.findItem(R.id.menu_action_lists_favorites_remove).isVisible =
+                    isShow && item.favorite
                 popupMenu.setOnMenuItemClickListener(
                     PopupMenuItemClickListener(
                         requireContext(), parentFragmentManager,
-                        item.listItemId, item.showId
+                        item.listItemId, item.showId, item.nextEpisodeId
                     )
                 )
                 // Hide manage lists option for legacy show items, only allow removal.
@@ -133,10 +144,8 @@ class SgListFragment : Fragment() {
                 popupMenu.show()
             }
 
-
-            override fun onFavoriteClick(showId: Long, isFavorite: Boolean) {
-                SgApp.getServicesComponent(requireContext()).showTools()
-                    .storeIsFavorite(showId, isFavorite)
+            override fun onItemSetWatchedClick(item: SgListItemWithDetails) {
+                EpisodeTools.episodeWatchedIfNotZero(context, item.nextEpisodeId)
             }
         }
 
@@ -144,18 +153,46 @@ class SgListFragment : Fragment() {
         private val context: Context,
         private val fragmentManager: FragmentManager,
         private val itemId: String,
-        private val showId: Long
+        private val showId: Long,
+        private val nextEpisodeId: Long
     ) : PopupMenu.OnMenuItemClickListener {
+
+        private val showTools = SgApp.getServicesComponent(context).showTools()
+
         override fun onMenuItemClick(item: MenuItem): Boolean {
-            val id = item.itemId
-            if (id == R.id.menu_action_lists_manage) {
-                ManageListsDialogFragment.show(fragmentManager, showId)
-                return true
-            } else if (id == R.id.menu_action_lists_remove) {
-                ListsTools.removeListItem(context, itemId)
-                return true
+            when (item.itemId) {
+                R.id.menu_action_lists_watched_next -> {
+                    EpisodeTools.episodeWatchedIfNotZero(context, nextEpisodeId)
+                    return true
+                }
+
+                R.id.menu_action_lists_favorites_add -> {
+                    showTools.storeIsFavorite(showId, true)
+                    return true
+                }
+
+                R.id.menu_action_lists_favorites_remove -> {
+                    showTools.storeIsFavorite(showId, false)
+                    return true
+                }
+
+                R.id.menu_action_lists_manage -> {
+                    ManageListsDialogFragment.show(fragmentManager, showId)
+                    return true
+                }
+
+                R.id.menu_action_lists_update -> {
+                    ShowSync.triggerDeltaSync(context, showId)
+                    return true
+                }
+
+                R.id.menu_action_lists_remove -> {
+                    ListsTools.removeListItem(context, itemId)
+                    return true
+                }
+
+                else -> return false
             }
-            return false
         }
     }
 

@@ -20,6 +20,7 @@
     <string name="specialseason">Posebne epizode</string>
     <string name="ratings">Ocjene</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Pregled</string>
     <string name="description_poster">Pokaži poster</string>
     <string name="description_image">Slika epizode</string>
@@ -204,6 +205,21 @@
         <item quantity="few">%d preostalo</item>
         <item quantity="other">%d preostalo</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="few">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="few">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="few">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Upiši naziv serije</string>
     <string name="add_empty">Ovdje ne postoje serije.</string>
@@ -360,10 +376,9 @@
     <string name="pref_quick_checkin">Brza provjera</string>
     <string name="pref_quick_checkin_summary">Ne pitaj za provjeru u poruci</string>
     <!-- Help -->
-    <string name="feedback">Pošalji povratne informacije</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Translate this app</string>
-    <string name="action_contribute_content">Translate or improve content</string>
     <string name="prefs_category_advanced">Napredno</string>
     <string name="prefs_category_about">O aplikaciji</string>
     <string name="pref_onlyfuture">Nema emitiranih epizoda</string>
@@ -470,7 +485,6 @@
     <string name="dismiss">Odbaci</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s novih epizoda</string>
-    <string name="more">%d više</string>
     <string name="upcoming_display">Odaberite za prikaz nadolazećih emisija</string>
     <string name="pref_notifications">Obavijesti</string>
     <string name="pref_notificationssummary">Obavijesti o novim epizodama</string>
@@ -528,6 +542,7 @@
     <string name="action_extensions_configure">Prilagodi proširenja</string>
     <string name="action_extensions_add">Dodavanje proširenja</string>
     <string name="action_extensions_search">Nabavi više proširenja</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Izbriši</string>
     <string name="extension_amazon">Amazon pretraživanje</string>
     <string name="description_extension_amazon">Pretraži lokalnu Amazon stranicu</string>

@@ -20,6 +20,7 @@
     <string name="specialseason">Specialaj Epizodoj</string>
     <string name="ratings">Taksoj</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Navigate up</string>
     <string name="description_overview">Priskribo</string>
     <string name="description_poster">Montri afiŝon</string>
     <string name="description_image">Epizoda bildo</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d restanta</item>
         <item quantity="other">%d restantaj</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d remaining</item>
+        <item quantity="other">%1$d of %2$d remaining</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d skipped</item>
+        <item quantity="other">%d skipped</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d in collection</item>
+        <item quantity="other">%d in collection</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Tajpu televidaĵan nomon</string>
     <string name="add_empty">Estas neniu televidaĵo ĉi tie</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Rapide marki</string>
     <string name="pref_quick_checkin_summary">Ne demandi por kontrola mesaĝo</string>
     <!-- Help -->
-    <string name="feedback">Sendi prikomentado</string>
+    <string name="feedback">Send email</string>
     <!-- Settings -->
     <string name="action_translate">Traduki tiun aplikaĵon</string>
-    <string name="action_contribute_content">Traduki aŭ plibonigi enhavon</string>
     <string name="prefs_category_advanced">Altnivela</string>
     <string name="prefs_category_about">Pri</string>
     <string name="pref_onlyfuture">Sen dissenditaj epizodoj</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Rezigni</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s novaj epizodoj</string>
-    <string name="more">%d pli</string>
     <string name="upcoming_display">Elekti por montri venontajn televidaĵojn</string>
     <string name="pref_notifications">Sciigoj</string>
     <string name="pref_notificationssummary">Sciigi pri novaj epizodoj</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Adapti aldonaĵoj</string>
     <string name="action_extensions_add">Aldoni aldonaĵon</string>
     <string name="action_extensions_search">Akiri pli da aldonaĵoj</string>
+    <string name="action_extensions_develop">Develop an extension</string>
     <string name="action_extension_remove">Forigi</string>
     <string name="extension_amazon">Serĉi je Amazon</string>
     <string name="description_extension_amazon">Traserĉi vian lokalan Amazonan retejon.</string>

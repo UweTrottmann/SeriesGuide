@@ -20,6 +20,7 @@
     <string name="specialseason">Episodis especials</string>
     <string name="ratings">Valoracions</string>
     <!-- Descriptions -->
+    <string name="navigate_up">Torna enrere</string>
     <string name="description_overview">Visió general</string>
     <string name="description_poster">Mostra el cartell</string>
     <string name="description_image">Imatge de l\'episodi</string>
@@ -200,6 +201,18 @@
         <item quantity="one">%d restant</item>
         <item quantity="other">%d restants</item>
     </plurals>
+    <plurals name="remaining_of_total_episodes_plural">
+        <item quantity="one">%1$d of %2$d restant</item>
+        <item quantity="other">%1$d de %2$d restants</item>
+    </plurals>
+    <plurals name="skipped_episodes_plural">
+        <item quantity="one">%d omès</item>
+        <item quantity="other">%d omès</item>
+    </plurals>
+    <plurals name="collected_episodes_plural">
+        <item quantity="one">%d a la col·lecció</item>
+        <item quantity="other">%d a les col·leccions</item>
+    </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Escriviu el nom d\'una sèrie</string>
     <string name="add_empty">Aquí no hi ha series.</string>
@@ -352,10 +365,9 @@
     <string name="pref_quick_checkin">Registre immediat</string>
     <string name="pref_quick_checkin_summary">No demanis un missatge de registre</string>
     <!-- Help -->
-    <string name="feedback">Envia comentaris</string>
+    <string name="feedback">Enviar correu</string>
     <!-- Settings -->
     <string name="action_translate">Traduïr l\'applicació</string>
-    <string name="action_contribute_content">Tradueïx o millora el contingut</string>
     <string name="prefs_category_advanced">Avançat</string>
     <string name="prefs_category_about">Quant a</string>
     <string name="pref_onlyfuture">Amaga episodis emesos</string>
@@ -459,7 +471,6 @@
     <string name="dismiss">Omet</string>
     <!-- Notifications -->
     <string name="upcoming_episodes_number">%s episodis nous</string>
-    <string name="more">%d més</string>
     <string name="upcoming_display">Seleccioneu-ho per veure les sèries que han de sortir</string>
     <string name="pref_notifications">Notificacions</string>
     <string name="pref_notificationssummary">Notifica\'m de tots els episodis nous</string>
@@ -479,8 +490,8 @@
     <string name="pref_notifications_battery_settings_summary">Vés als ajustaments de la bateria per deshabilitar les optimitzacions de bateria per rebre notificacions</string>
     <string name="notifications_allow">Permet les notificacions</string>
     <string name="notifications_allow_reason">Per rebre notificacions d\'episodis i d\'errors, ves a Configuració i dona\'ls-hi permís</string>
-    <string name="precise_notifications_allow">Allow precise notifications</string>
-    <string name="precise_notifications_allow_reason">To receive precise episode notifications, go to Settings and allow them.</string>
+    <string name="precise_notifications_allow">Permet notificacions en l\'hora exacte</string>
+    <string name="precise_notifications_allow_reason">Per rebre notificacions en l\'hora exacte d\'episodis, ves a Configuració i dona\'ls-hi permís</string>
     <!-- List Widget -->
     <string name="hide_watched">Amaga els episodis vistos</string>
     <string name="pref_widget_opacity">Fons del widget</string>
@@ -517,6 +528,7 @@
     <string name="action_extensions_configure">Personalitzeu extensions</string>
     <string name="action_extensions_add">Afegeix extensió</string>
     <string name="action_extensions_search">Obtén més extensions</string>
+    <string name="action_extensions_develop">Desenvolupa una extensió</string>
     <string name="action_extension_remove">Elimina</string>
     <string name="extension_amazon">Cerca a Amazon</string>
     <string name="description_extension_amazon">Cerqueu al vostre Amazon local</string>
