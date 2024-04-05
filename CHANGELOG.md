@@ -15,6 +15,8 @@ Version 73
 ----------
 *in development*
 
+* 🌟 Year and original language filter for popular shows screen.
+
 Version 72
 ----------
 *2024-03-27*
