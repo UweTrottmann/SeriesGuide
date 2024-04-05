@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">Ψάξτε στον τοπικό σας ιστότοπο Amazon</string>
     <string name="pref_amazon_domain">Ιστοσελίδα Amazon</string>
     <string name="extension_google_play">Αναζήτηση στο Google Play</string>
-    <string name="description_extension_google_play">Αναζήτηση στο Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Αναζήτηση στο Google Play Store</string>
     <string name="extension_youtube">Αναζήτηση στο YouTube</string>
     <string name="description_extension_youtube">Αναζήτηση για βίντεος στο YouTube</string>
     <string name="description_extension_web_search">Αναζήτηση για ιστοσελίδες και εικόνες</string>

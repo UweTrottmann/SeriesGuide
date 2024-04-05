@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">Traserĉi vian lokalan Amazonan retejon.</string>
     <string name="pref_amazon_domain">Amazon -a retejo</string>
     <string name="extension_google_play">Serĉi je Google Play</string>
-    <string name="description_extension_google_play">Serĉi je la Google Play Butiko</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Serĉi je la Google Play Butiko</string>
     <string name="extension_youtube">Jutuba serĉo</string>
     <string name="description_extension_youtube">Serĉi Jutubon por filmetoj</string>
     <string name="description_extension_web_search">Serĉi retejojn kaj bildojn</string>

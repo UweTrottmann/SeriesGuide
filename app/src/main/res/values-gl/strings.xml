@@ -535,7 +535,8 @@
     <string name="pref_amazon_domain">Pág
 Páxina de Amazon</string>
     <string name="extension_google_play">Buscar en Google Play</string>
-    <string name="description_extension_google_play">Buscar en Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Buscar en Google Play Store</string>
     <string name="extension_youtube">Buscar en YouTube</string>
     <string name="description_extension_youtube">Buscar vídeos en YouTube</string>
     <string name="description_extension_web_search">Buscar sitios web e imaxes</string>

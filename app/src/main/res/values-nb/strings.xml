@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">Søk på din lokale Amazon nettside</string>
     <string name="pref_amazon_domain">Amazons nettside</string>
     <string name="extension_google_play">Google Play søk</string>
-    <string name="description_extension_google_play">Søk på Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Søk på Google Play Store</string>
     <string name="extension_youtube">YouTube søk</string>
     <string name="description_extension_youtube">Søk etter YouTube videoer</string>
     <string name="description_extension_web_search">Søk etter nettsider og bilder</string>

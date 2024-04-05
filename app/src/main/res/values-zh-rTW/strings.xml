@@ -520,7 +520,8 @@
     <string name="description_extension_amazon">在當地的 Amazon 網站搜尋</string>
     <string name="pref_amazon_domain">Amazon 網站</string>
     <string name="extension_google_play">Google Play 搜尋</string>
-    <string name="description_extension_google_play">在 Google Play 商店裡搜尋</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">在 Google Play 商店裡搜尋</string>
     <string name="extension_youtube">YouTube 搜尋</string>
     <string name="description_extension_youtube">搜尋 YouTube 上的相關影片</string>
     <string name="description_extension_web_search">搜尋相關的網站及圖片</string>

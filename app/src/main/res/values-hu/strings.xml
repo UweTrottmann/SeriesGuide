@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">Keresés az Amazon helyi oldalán</string>
     <string name="pref_amazon_domain">Amazon oldala</string>
     <string name="extension_google_play">Google Play keresés</string>
-    <string name="description_extension_google_play">Keresés a Google Play Áruházban</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Keresés a Google Play Áruházban</string>
     <string name="extension_youtube">YouTube-keresés</string>
     <string name="description_extension_youtube">Keresés YouTube videók között</string>
     <string name="description_extension_web_search">Weboldalak és képek keresése</string>

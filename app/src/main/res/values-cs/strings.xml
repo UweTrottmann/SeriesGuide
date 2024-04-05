@@ -562,7 +562,8 @@
     <string name="description_extension_amazon">Vyhledávání na místní síti Amazonu</string>
     <string name="pref_amazon_domain">Síť Amazon</string>
     <string name="extension_google_play">Vyhledat na Google Play</string>
-    <string name="description_extension_google_play">Vyhledá na obchodě Google Play</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Vyhledá na obchodě Google Play</string>
     <string name="extension_youtube">Vyhledat na Youtube</string>
     <string name="description_extension_youtube">Vyhledá videa na Youtube</string>
     <string name="description_extension_web_search">Vyhledá odkazy na stránky a obrázky</string>

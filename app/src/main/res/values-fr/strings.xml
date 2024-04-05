@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">Rechercher sur votre site Amazon local</string>
     <string name="pref_amazon_domain">Site Amazon</string>
     <string name="extension_google_play">Recherche Google Play</string>
-    <string name="description_extension_google_play">Rechercher sur le Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Rechercher sur le Play Store</string>
     <string name="extension_youtube">Recherche Youtube</string>
     <string name="description_extension_youtube">Recherche des vidéos sur Youtube</string>
     <string name="description_extension_web_search">Rechercher des sites web et des images</string>

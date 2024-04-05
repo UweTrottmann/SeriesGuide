@@ -520,7 +520,8 @@
     <string name="description_extension_amazon">在本地 Amazon 中搜索</string>
     <string name="pref_amazon_domain">偏好的 Amazon 站点</string>
     <string name="extension_google_play">Google Play 搜索</string>
-    <string name="description_extension_google_play">在 Google Play 商店中搜索</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">在 Google Play 商店中搜索</string>
     <string name="extension_youtube">YouTube 搜索</string>
     <string name="description_extension_youtube">在 YouTube 上搜索视频</string>
     <string name="description_extension_web_search">搜索相关网站或图片</string>

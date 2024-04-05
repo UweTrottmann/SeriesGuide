@@ -590,7 +590,8 @@
     <string name="description_extension_amazon">البحث المحلي بواسطة موقع أمازون</string>
     <string name="pref_amazon_domain">موقع أمازون</string>
     <string name="extension_google_play">البحث في متجر قوقل</string>
-    <string name="description_extension_google_play">البحث في متجر قوقل</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">البحث في متجر قوقل</string>
     <string name="extension_youtube">البحث في اليوتيوب</string>
     <string name="description_extension_youtube">بحث اليوتيوب لمقاطع الفيديو</string>
     <string name="description_extension_web_search">البحث عن المواقع و الصور</string>

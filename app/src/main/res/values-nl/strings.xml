@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">Zoek op uw lokale Amazon-site</string>
     <string name="pref_amazon_domain">Amazon-site</string>
     <string name="extension_google_play">Zoeken op Google Play</string>
-    <string name="description_extension_google_play">Zoeken op de Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Zoeken op de Google Play Store</string>
     <string name="extension_youtube">Zoeken op YouTube</string>
     <string name="description_extension_youtube">Zoek op YouTube naar video\'s</string>
     <string name="description_extension_web_search">Zoeken naar websites en afbeeldingen</string>

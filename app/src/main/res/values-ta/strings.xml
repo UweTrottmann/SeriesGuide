@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">உங்கள் உள்ளூர் Amazon தளத்தை தேடு</string>
     <string name="pref_amazon_domain">Amazon தளத்தை</string>
     <string name="extension_google_play">Google இயக்கு தேடல்</string>
-    <string name="description_extension_google_play">Google இயக்கு ஸ்டோர் தேடு</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Google இயக்கு ஸ்டோர் தேடு</string>
     <string name="extension_youtube">YouTube தேடல்</string>
     <string name="description_extension_youtube">YouTube-வீடியோக்களை தேடல்</string>
     <string name="description_extension_web_search">வலைத்தளங்கள் மற்றும் படிமங்கள் தேடவும்</string>

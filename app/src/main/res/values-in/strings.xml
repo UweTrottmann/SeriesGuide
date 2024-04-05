@@ -520,7 +520,8 @@
     <string name="description_extension_amazon">Cari di situs Amazon lokal anda</string>
     <string name="pref_amazon_domain">Situs Amazon</string>
     <string name="extension_google_play">Pencarian Google play</string>
-    <string name="description_extension_google_play">Cari di Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Cari di Google Play Store</string>
     <string name="extension_youtube">Penelusuran YouTube</string>
     <string name="description_extension_youtube">Cari video di YouTube</string>
     <string name="description_extension_web_search">Cari situs web dan gambar</string>

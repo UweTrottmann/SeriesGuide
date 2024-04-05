@@ -331,7 +331,7 @@
     <string name="hexagon_setup_fail_auth">К вашему аккаунту не привязан адрес электронной почты.</string>
     <string name="hexagon_remove_account">Удалить аккаунт</string>
     <string name="hexagon_remove_account_success">Аккаунт уничтожен.</string>
-    <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
+    <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт</string>
     <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
     <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
@@ -562,7 +562,8 @@
     <string name="description_extension_amazon">Поиск в локальной версии Amazon</string>
     <string name="pref_amazon_domain">Сайт Amazon</string>
     <string name="extension_google_play">Поиск Google Play</string>
-    <string name="description_extension_google_play">Поиск Google Play store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Поиск Google Play store</string>
     <string name="extension_youtube">Поиск YouTube</string>
     <string name="description_extension_youtube">Поиск YouTube для видео</string>
     <string name="description_extension_web_search">Поиск веб-сайтов и изображений</string>

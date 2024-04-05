@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">Търси във вашия локален Amazon сайт</string>
     <string name="pref_amazon_domain">Amazon сайт</string>
     <string name="extension_google_play">Търсене в Google Play</string>
-    <string name="description_extension_google_play">Търси в Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Търси в Google Play Store</string>
     <string name="extension_youtube">Търсене в YouTube</string>
     <string name="description_extension_youtube">Търси видеа в Youtube</string>
     <string name="description_extension_web_search">Търси за уебсайтове и снимки</string>

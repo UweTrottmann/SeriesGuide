@@ -548,7 +548,8 @@
     <string name="description_extension_amazon">Căutați pe site-ul local Amazon</string>
     <string name="pref_amazon_domain">Site-ul Amazon</string>
     <string name="extension_google_play">Căutare pe Google Play</string>
-    <string name="description_extension_google_play">Căutați pe Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Căutați pe Google Play Store</string>
     <string name="extension_youtube">Căutați pe YouTube</string>
     <string name="description_extension_youtube">Căutați videoclipuri pe YouTube</string>
     <string name="description_extension_web_search">Caută site-uri și imagini</string>

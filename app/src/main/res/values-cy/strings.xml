@@ -590,7 +590,8 @@
     <string name="description_extension_amazon">Chwiliwch eich gwefan Amazon leol</string>
     <string name="pref_amazon_domain">Gwefan Amazon</string>
     <string name="extension_google_play">Chwiliad Google Play</string>
-    <string name="description_extension_google_play">Chwiliwch Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Chwiliwch Google Play Store</string>
     <string name="extension_youtube">Chwiliad YouTube</string>
     <string name="description_extension_youtube">Chwilio YouTube am fideos</string>
     <string name="description_extension_web_search">Chwilio am wefannau a delweddau</string>

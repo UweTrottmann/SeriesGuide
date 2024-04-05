@@ -562,7 +562,8 @@
     <string name="description_extension_amazon">Hľadať na Amazone</string>
     <string name="pref_amazon_domain">Amazon</string>
     <string name="extension_google_play">Hľadať v Google Play</string>
-    <string name="description_extension_google_play">Hľadať v Obchode Google Play</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Hľadať v Obchode Google Play</string>
     <string name="extension_youtube">Hľadať na YouTube</string>
     <string name="description_extension_youtube">Hľadať videá na YouTube</string>
     <string name="description_extension_web_search">Hľadať webstránky a obrázky</string>

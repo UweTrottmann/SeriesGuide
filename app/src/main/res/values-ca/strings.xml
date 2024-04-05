@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">Cerqueu al vostre Amazon local</string>
     <string name="pref_amazon_domain">Web Amazon</string>
     <string name="extension_google_play">Cerca a Google Play</string>
-    <string name="description_extension_google_play">Cerca a Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Cerca a Google Play Store</string>
     <string name="extension_youtube">Cerca a YouTube</string>
     <string name="description_extension_youtube">Cerca vídeos a YouTube</string>
     <string name="description_extension_web_search">Cerca llocs web i imatges</string>

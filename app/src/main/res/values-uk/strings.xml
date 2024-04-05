@@ -562,7 +562,8 @@
     <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>
     <string name="pref_amazon_domain">Сайт Amazon</string>
     <string name="extension_google_play">Пошук у Google Play</string>
-    <string name="description_extension_google_play">Шукати у магазині Google Play</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Шукати у магазині Google Play</string>
     <string name="extension_youtube">Пошук YouTube</string>
     <string name="description_extension_youtube">Шукати у  YouTube відео</string>
     <string name="description_extension_web_search">Шукати вебсайти та зображення</string>

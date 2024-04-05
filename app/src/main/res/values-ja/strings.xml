@@ -520,7 +520,8 @@
     <string name="description_extension_amazon">ローカルの Amazon サイトを検索します</string>
     <string name="pref_amazon_domain">Amazon サイト</string>
     <string name="extension_google_play">Google Play 検索</string>
-    <string name="description_extension_google_play">Google Play ストアを検索します</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Google Play ストアを検索します</string>
     <string name="extension_youtube">YouTube 検索</string>
     <string name="description_extension_youtube">YouTube のビデオを検索します</string>
     <string name="description_extension_web_search">ウェブサイトや画像の検索</string>

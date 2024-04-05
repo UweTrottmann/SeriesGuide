@@ -548,7 +548,8 @@
     <string name="description_extension_amazon">Pretraži lokalnu Amazon stranicu</string>
     <string name="pref_amazon_domain">Amazon stranica</string>
     <string name="extension_google_play">Google Play pretraživanje</string>
-    <string name="description_extension_google_play">Pretraži Google Play Trgovinu</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Pretraži Google Play Trgovinu</string>
     <string name="extension_youtube">Pretraži YouTube</string>
     <string name="description_extension_youtube">Pretraga YouTube videa</string>
     <string name="description_extension_web_search">Traži za web stranice i slike</string>

@@ -535,7 +535,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="description_extension_amazon">Buscar en la pagina local de Amazon</string>
     <string name="pref_amazon_domain">Página de Amazon</string>
     <string name="extension_google_play">Búsqueda en Google Play</string>
-    <string name="description_extension_google_play">Buscar en Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Buscar en Google Play Store</string>
     <string name="extension_youtube">Búsqueda en YouTube</string>
     <string name="description_extension_youtube">Buscar vídeos en YouTube</string>
     <string name="description_extension_web_search">Buscar imágenes y sitios web</string>

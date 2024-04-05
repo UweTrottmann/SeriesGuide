@@ -534,7 +534,8 @@
     <string name="description_extension_amazon">جست‌وجو در پایگاه آمازون محلّی‌تان</string>
     <string name="pref_amazon_domain">پایگاه آمازون</string>
     <string name="extension_google_play">جست‌وجوی گوگل پلی</string>
-    <string name="description_extension_google_play">جست‌وجو در فروشگاه گوگل پلی</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">جست‌وجو در فروشگاه گوگل پلی</string>
     <string name="extension_youtube">جست‌وجوی یوتوب</string>
     <string name="description_extension_youtube">جست‌وجو در یوتوب برای ویدیوها</string>
     <string name="description_extension_web_search">جست‌وجو برای پایگاه‌های وب و تصویرها</string>
