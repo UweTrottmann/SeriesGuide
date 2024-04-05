@@ -247,6 +247,10 @@
     <string name="empty_no_results">אין תוצאות</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">סדרות דומות</string>
+    <!-- Popular -->
+    <string name="title_popular">פופולרי</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">הרשימה הראשונה</string>
     <string name="list_add">הוסף רשימה</string>
@@ -267,7 +271,6 @@
     <string name="error_name_already_exists">רשימה עם השם הזה כבר קיימת</string>
     <!-- Movies -->
     <string name="title_discover">גלו עוד</string>
-    <string name="title_popular">פופולרי</string>
     <string name="title_digital_releases">שיחרור דיגיטלי</string>
     <string name="title_disc_releases">שיחרור מדיסק</string>
     <string name="movies_in_theatres">בבתי הקולנוע</string>

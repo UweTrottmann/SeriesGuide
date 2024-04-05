@@ -1,11 +1,12 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.isVisible
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityTraktShowsBinding
 import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularFragment
@@ -17,9 +18,11 @@ import com.battlelancer.seriesguide.util.ThemeUtils
 
 class TraktShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
 
+    lateinit var binding: ActivityTraktShowsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityTraktShowsBinding.inflate(layoutInflater)
+        binding = ActivityTraktShowsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ThemeUtils.configureForEdgeToEdge(binding.root)
 
@@ -27,10 +30,12 @@ class TraktShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
 
         // Change the scrolling view the AppBarLayout should use to determine if it should lift.
         // This is required so the AppBarLayout does not flicker its background when scrolling.
-        binding.sgAppBarLayout.sgAppBarLayout.liftOnScrollTargetViewId = when (link) {
+        binding.sgAppBarLayout.liftOnScrollTargetViewId = when (link) {
             TraktShowsLink.POPULAR -> ShowsPopularFragment.liftOnScrollTargetViewId
             else -> TraktAddFragment.liftOnScrollTargetViewId
         }
+        // Filters currently only supported for the popular screen
+        binding.scrollViewTraktShowsChips.isVisible = link == TraktShowsLink.POPULAR
         setupActionBar(link)
 
         if (savedInstanceState == null) {

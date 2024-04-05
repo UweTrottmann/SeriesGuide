@@ -240,6 +240,10 @@
     <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
+    <!-- Popular -->
+    <string name="title_popular">Popular</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Prima listă</string>
     <string name="list_add">Adăugați listă</string>
@@ -260,7 +264,6 @@
     <string name="error_name_already_exists">O listă cu acest nume deja există</string>
     <!-- Movies -->
     <string name="title_discover">Descoperă</string>
-    <string name="title_popular">Popular</string>
     <string name="title_digital_releases">Lansări digitale</string>
     <string name="title_disc_releases">Lansări pe disc</string>
     <string name="movies_in_theatres">În cinematografe</string>

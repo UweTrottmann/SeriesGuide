@@ -233,6 +233,10 @@
     <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
+    <!-- Popular -->
+    <string name="title_popular">பிரபலமானவை</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">முதல் பட்டியல்</string>
     <string name="list_add">பட்டியல் சேர்</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
     <!-- Movies -->
     <string name="title_discover">Discover</string>
-    <string name="title_popular">பிரபலமானவை</string>
     <string name="title_digital_releases">Digital releases</string>
     <string name="title_disc_releases">Disc releases</string>
     <string name="movies_in_theatres">In theaters</string>

@@ -233,6 +233,10 @@
     <string name="empty_no_results">Geen resultaten</string>
     <string name="action_similar">Soortgelijk</string>
     <string name="title_similar_shows">Soortgelijke shows</string>
+    <!-- Popular -->
+    <string name="title_popular">Populair</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Eerste lijst</string>
     <string name="list_add">Lijst toevoegen</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
     <!-- Movies -->
     <string name="title_discover">Ontdekken</string>
-    <string name="title_popular">Populair</string>
     <string name="title_digital_releases">Digitale releases</string>
     <string name="title_disc_releases">Releases op schijf</string>
     <string name="movies_in_theatres">In de bioscoop</string>

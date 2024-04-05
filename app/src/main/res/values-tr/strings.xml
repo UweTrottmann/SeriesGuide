@@ -233,6 +233,10 @@
     <string name="empty_no_results">Sonuç bulunamadı</string>
     <string name="action_similar">Benzerleri</string>
     <string name="title_similar_shows">Benzer diziler</string>
+    <!-- Popular -->
+    <string name="title_popular">Popüler</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">İlk liste</string>
     <string name="list_add">Yeni liste</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
     <!-- Movies -->
     <string name="title_discover">Keşfet</string>
-    <string name="title_popular">Popüler</string>
     <string name="title_digital_releases">Dijital Yayınlanan</string>
     <string name="title_disc_releases">Disk\'i Yayınlanan</string>
     <string name="movies_in_theatres">Vizyonda</string>
