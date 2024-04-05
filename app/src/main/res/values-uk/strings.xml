@@ -247,6 +247,10 @@
     <string name="empty_no_results">Немає результатів</string>
     <string name="action_similar">Схожі</string>
     <string name="title_similar_shows">Подібні серіали</string>
+    <!-- Popular -->
+    <string name="title_popular">Популярне</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Перший список</string>
     <string name="list_add">Додати список</string>
@@ -267,7 +271,6 @@
     <string name="error_name_already_exists">Список з таким іменем вже існує</string>
     <!-- Movies -->
     <string name="title_discover">Дослідити</string>
-    <string name="title_popular">Популярне</string>
     <string name="title_digital_releases">Цифрові видання</string>
     <string name="title_disc_releases">Видання на диску</string>
     <string name="movies_in_theatres">В театрах</string>

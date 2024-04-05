@@ -233,6 +233,10 @@
     <string name="empty_no_results">Inga resultat</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Liknande program</string>
+    <!-- Popular -->
+    <string name="title_popular">Populärt</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Första listan</string>
     <string name="list_add">Lägg till lista</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">En lista med detta namn finns redan</string>
     <!-- Movies -->
     <string name="title_discover">Upptäck</string>
-    <string name="title_popular">Populärt</string>
     <string name="title_digital_releases">Digitala utgivningar</string>
     <string name="title_disc_releases">Utgivningar på skiva</string>
     <string name="movies_in_theatres">På bio</string>

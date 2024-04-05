@@ -261,6 +261,10 @@
     <string name="empty_no_results">لا توجد نتائج</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">مسلسلات مشابهة</string>
+    <!-- Popular -->
+    <string name="title_popular">الأكثر شعبية</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">القائمة الأولى</string>
     <string name="list_add">إضافة قائمة</string>
@@ -281,7 +285,6 @@
     <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
     <!-- Movies -->
     <string name="title_discover">استكشاف</string>
-    <string name="title_popular">الأكثر شعبية</string>
     <string name="title_digital_releases">الإصدارات الرقمية</string>
     <string name="title_disc_releases">إصدارات القرص</string>
     <string name="movies_in_theatres">حاليا في السينما</string>

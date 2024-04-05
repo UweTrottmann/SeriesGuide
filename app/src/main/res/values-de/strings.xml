@@ -233,6 +233,10 @@
     <string name="empty_no_results">Keine Ergebnisse</string>
     <string name="action_similar">Ähnliche</string>
     <string name="title_similar_shows">Ähnliche Serien</string>
+    <!-- Popular -->
+    <string name="title_popular">Beliebt</string>
+    <string name="filter_year">Jahr</string>
+    <string name="filter_language">Sprache</string>
     <!-- Lists -->
     <string name="first_list">Erste Liste</string>
     <string name="list_add">Liste hinzufügen</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Eine Liste mit diesem Namen ist bereits vorhanden</string>
     <!-- Movies -->
     <string name="title_discover">Entdecken</string>
-    <string name="title_popular">Beliebt</string>
     <string name="title_digital_releases">Neues in Digital</string>
     <string name="title_disc_releases">Neues auf Disc</string>
     <string name="movies_in_theatres">Im Kino</string>

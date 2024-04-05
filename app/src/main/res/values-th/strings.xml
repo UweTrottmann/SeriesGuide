@@ -226,6 +226,10 @@
     <string name="empty_no_results">ไม่มีผลลัพธ์</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">ซีรีส์ที่คล้ายกัน</string>
+    <!-- Popular -->
+    <string name="title_popular">ยอดนิยม</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">รายการแรก</string>
     <string name="list_add">เพิ่มรายการ</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
     <!-- Movies -->
     <string name="title_discover">สำรวจ</string>
-    <string name="title_popular">ยอดนิยม</string>
     <string name="title_digital_releases">ออกเป็นดิจิทัล</string>
     <string name="title_disc_releases">ออกเป็นแผ่น</string>
     <string name="movies_in_theatres">ในโรง</string>

@@ -226,6 +226,10 @@
     <string name="empty_no_results">検索結果はありません</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似の番組</string>
+    <!-- Popular -->
+    <string name="title_popular">人気</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">最初のリスト</string>
     <string name="list_add">リストを追加</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
     <!-- Movies -->
     <string name="title_discover">見つける</string>
-    <string name="title_popular">人気</string>
     <string name="title_digital_releases">デジタル リリース</string>
     <string name="title_disc_releases">ディスク リリース</string>
     <string name="movies_in_theatres">上映中</string>

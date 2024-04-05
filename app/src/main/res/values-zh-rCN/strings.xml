@@ -226,6 +226,10 @@
     <string name="empty_no_results">无结果</string>
     <string name="action_similar">相似</string>
     <string name="title_similar_shows">相似节目</string>
+    <!-- Popular -->
+    <string name="title_popular">热门</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">默认列表</string>
     <string name="list_add">新建列表</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">已存在同名列表</string>
     <!-- Movies -->
     <string name="title_discover">发现</string>
-    <string name="title_popular">热门</string>
     <string name="title_digital_releases">数字发行</string>
     <string name="title_disc_releases">光盘发行</string>
     <string name="movies_in_theatres">上映中</string>

@@ -240,6 +240,10 @@
     <string name="empty_no_results">Nema rezultata</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Slične serije</string>
+    <!-- Popular -->
+    <string name="title_popular">Popularno</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Prvi popis</string>
     <string name="list_add">Dodaj popis</string>
@@ -260,7 +264,6 @@
     <string name="error_name_already_exists">Popis sa ovim nazivom već postoji</string>
     <!-- Movies -->
     <string name="title_discover">Otkrij</string>
-    <string name="title_popular">Popularno</string>
     <string name="title_digital_releases">Digitalna izdanja</string>
     <string name="title_disc_releases">Disk izdanja</string>
     <string name="movies_in_theatres">U kinima</string>

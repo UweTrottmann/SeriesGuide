@@ -226,6 +226,10 @@
     <string name="empty_no_results">Tidak ada hasil</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Acara Serupa</string>
+    <!-- Popular -->
+    <string name="title_popular">Populer</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Daftar pertama</string>
     <string name="list_add">Tambah daftar</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">Daftar dengan nama ini sudah ada</string>
     <!-- Movies -->
     <string name="title_discover">Jelajahi</string>
-    <string name="title_popular">Populer</string>
     <string name="title_digital_releases">Rilisan digital</string>
     <string name="title_disc_releases">Rilisan cakram</string>
     <string name="movies_in_theatres">Di bioskop</string>

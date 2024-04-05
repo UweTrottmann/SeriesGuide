@@ -233,6 +233,10 @@
     <string name="empty_no_results">Ei tuloksia</string>
     <string name="action_similar">Samankaltaiset</string>
     <string name="title_similar_shows">Samankaltaisia sarjoja</string>
+    <!-- Popular -->
+    <string name="title_popular">Suositut</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Ensimmäinen lista</string>
     <string name="list_add">Lisää lista</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
     <!-- Movies -->
     <string name="title_discover">Tutustu</string>
-    <string name="title_popular">Suositut</string>
     <string name="title_digital_releases">Digitaaliset julkaisut</string>
     <string name="title_disc_releases">Levyjulkaisut</string>
     <string name="movies_in_theatres">Teattereissa</string>

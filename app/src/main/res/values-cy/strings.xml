@@ -261,6 +261,10 @@
     <string name="empty_no_results">Dim canlyniadau</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Sioeau tebyg</string>
+    <!-- Popular -->
+    <string name="title_popular">Poblogaidd</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Rhestr gyntaf</string>
     <string name="list_add">Ychwanegu rhestr</string>
@@ -281,7 +285,6 @@
     <string name="error_name_already_exists">Mae rhestr gyda\'r enw hwn eisoes yn bodoli</string>
     <!-- Movies -->
     <string name="title_discover">Darganfod</string>
-    <string name="title_popular">Poblogaidd</string>
     <string name="title_digital_releases">Datganiadau digidol</string>
     <string name="title_disc_releases">Datganiadau disg</string>
     <string name="movies_in_theatres">Mewn sinemâu</string>
