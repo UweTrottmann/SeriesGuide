@@ -38,15 +38,8 @@ internal class TraktFriendsMovieHistoryLoader(context: Context) :
             return null // no friends, done.
         }
 
-        // estimate list size
-        val items: MutableList<NowItem> = ArrayList(size + 1)
-
-        // add header
-        items.add(
-            NowItem().header(context.getString(R.string.friends_recently), true)
-        )
-
         // add last watched movie for each friend
+        val movies = mutableListOf<NowItem>()
         for (i in 0 until size) {
             val friend = friends[i]
 
@@ -86,12 +79,22 @@ internal class TraktFriendsMovieHistoryLoader(context: Context) :
             )
                 .tmdbId(movie.ids?.tmdb)
                 .friend(user.username, avatar, entry.action)
-            items.add(nowItem)
+            movies.add(nowItem)
         }
 
-        // only have a header? return nothing
-        return if (items.size == 1) {
+        return if (movies.isEmpty()) {
             emptyList()
-        } else items
+        } else {
+            // estimate list size
+            val items: MutableList<NowItem> = ArrayList(movies.size + 1)
+            // add header
+            items.add(
+                NowItem().header(context.getString(R.string.friends_recently), true)
+            )
+            // add latest first
+            movies.sortByDescending { it.timestamp }
+            items.addAll(movies)
+            items
+        }
     }
 }

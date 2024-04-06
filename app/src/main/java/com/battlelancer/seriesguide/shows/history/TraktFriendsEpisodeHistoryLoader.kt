@@ -45,15 +45,8 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
             return null // no friends, done.
         }
 
-        // estimate list size
-        val items: MutableList<NowItem> = ArrayList(size + 1)
-
-        // add header
-        items.add(
-            NowItem().header(context.getString(R.string.friends_recently), true)
-        )
-
         // add last watched episode for each friend
+        val episodes = mutableListOf<NowItem>()
         val tmdbIdsToPoster = services.showTools().getTmdbIdsToPoster()
         val episodeHelper = SgRoomDatabase.getInstance(context).sgEpisode2Helper()
         val hideTitle = DisplaySettings.preventSpoilers(context)
@@ -124,12 +117,22 @@ internal class TraktFriendsEpisodeHistoryLoader(context: Context) :
                 )
                 .episodeIds(localEpisodeIdOrZero, showTmdbId ?: 0)
                 .friend(user.username, avatar, entry.action)
-            items.add(nowItem)
+            episodes.add(nowItem)
         }
 
-        // only have a header? return nothing
-        return if (items.size == 1) {
+        return if (episodes.isEmpty()) {
             emptyList()
-        } else items
+        } else {
+            // estimate list size
+            val items: MutableList<NowItem> = ArrayList(episodes.size + 1)
+            // add header
+            items.add(
+                NowItem().header(context.getString(R.string.friends_recently), true)
+            )
+            // add latest first
+            episodes.sortByDescending { it.timestamp }
+            items.addAll(episodes)
+            items
+        }
     }
 }

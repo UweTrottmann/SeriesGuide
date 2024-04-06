@@ -15,6 +15,8 @@ Version 73
 ----------
 *in development*
 
+* 🔧 History: sort Trakt friends by latest activity first.
+
 #### 73.0.1 🧪
 *2024-04-12*
 
