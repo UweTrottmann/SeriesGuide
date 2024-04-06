@@ -16,6 +16,7 @@ import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.get
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
+import com.uwetrottmann.tmdb2.DiscoverTvBuilder
 import com.uwetrottmann.tmdb2.Tmdb
 import com.uwetrottmann.tmdb2.entities.AppendToResponse
 import com.uwetrottmann.tmdb2.entities.BaseTvShow
@@ -155,6 +156,32 @@ class TmdbTools2 {
         return null
     }
 
+    private fun discoverTvBuilder(
+        tmdb: Tmdb,
+        language: String,
+        page: Int,
+        firstReleaseYear: Int?,
+        originalLanguage: String?,
+        watchProviderIds: List<Int>?,
+        watchRegion: String?
+    ): DiscoverTvBuilder {
+        val builder = tmdb.discoverTv()
+            .language(language)
+            .page(page)
+        if (firstReleaseYear != null) {
+            builder.first_air_date_year(firstReleaseYear)
+        }
+        if (originalLanguage != null) {
+            builder.with_original_language(originalLanguage)
+        }
+        if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
+            builder
+                .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
+                .watch_region(watchRegion)
+        }
+        return builder
+    }
+
     private val dateNow: TmdbDate
         get() = TmdbDate(Date())
 
@@ -171,24 +198,27 @@ class TmdbTools2 {
     suspend fun getShowsWithNewEpisodes(
         tmdb: Tmdb,
         language: String,
+        page: Int,
+        firstReleaseYear: Int?,
+        originalLanguage: String?,
         watchProviderIds: List<Int>?,
         watchRegion: String?
-    ): List<BaseTvShow>? {
-        val builder = tmdb.discoverTv()
+    ): TvShowResultsPage? {
+        val builder = discoverTvBuilder(
+            tmdb,
+            language,
+            page,
+            firstReleaseYear,
+            originalLanguage,
+            watchProviderIds,
+            watchRegion
+        )
             .air_date_lte(dateNow)
             .air_date_gte(dateOneWeekAgo)
-            .language(language)
-        if (!watchProviderIds.isNullOrEmpty() && watchRegion != null) {
-            builder
-                .with_watch_providers(DiscoverFilter(OR, *watchProviderIds.toTypedArray()))
-                .watch_region(watchRegion)
-        }
-
         try {
             val response = builder.build().awaitResponse()
             if (response.isSuccessful) {
-                val results = response.body()?.results
-                if (results != null) return results
+                return response.body()
             } else {
                 Errors.logAndReport("get shows w new episodes", response)
             }
@@ -207,10 +237,16 @@ class TmdbTools2 {
         watchProviderIds: List<Int>?,
         watchRegion: String?
     ): TvShowResultsPage? {
-        val builder = tmdb.discoverTv()
-            .language(language)
+        val builder = discoverTvBuilder(
+            tmdb,
+            language,
+            page,
+            firstReleaseYear,
+            originalLanguage,
+            watchProviderIds,
+            watchRegion
+        )
             .sort_by(SortBy.POPULARITY_DESC)
-            .page(page)
         if (firstReleaseYear != null) {
             builder.first_air_date_year(firstReleaseYear)
         }

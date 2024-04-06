@@ -16,7 +16,7 @@ import com.uwetrottmann.tmdb2.entities.TvShowResultsPage
 import java.io.IOException
 
 /**
- * Loads popular shows in pages from TMDB.
+ * Loads shows in pages from TMDB.
  */
 abstract class BaseDiscoverShowDataSource(
     private val context: Context,
