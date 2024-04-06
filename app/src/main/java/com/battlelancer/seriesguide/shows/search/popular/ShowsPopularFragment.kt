@@ -11,10 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.ActivityTraktShowsBinding
+import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
-import com.battlelancer.seriesguide.shows.search.discover.TraktShowsActivity
+import com.battlelancer.seriesguide.shows.search.discover.DiscoverShowsActivity
 import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.LanguageTools
@@ -33,7 +33,7 @@ import timber.log.Timber
  */
 class ShowsPopularFragment : BaseAddShowsFragment() {
 
-    private lateinit var bindingActivity: ActivityTraktShowsBinding
+    private lateinit var bindingActivity: ActivityDiscoverShowsBinding
     private var binding: FragmentShowsPopularBinding? = null
 
     private lateinit var snackbar: Snackbar
@@ -47,7 +47,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bindingActivity = (requireActivity() as TraktShowsActivity).binding
+        bindingActivity = (requireActivity() as DiscoverShowsActivity).binding
         return FragmentShowsPopularBinding.inflate(inflater, container, false)
             .also { binding = it }
             .root

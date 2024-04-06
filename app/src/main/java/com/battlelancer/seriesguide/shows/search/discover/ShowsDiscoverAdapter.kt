@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -29,15 +29,15 @@ class ShowsDiscoverAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val searchResults = mutableListOf<SearchResult>()
-    private val links: MutableList<TraktShowsLink> = mutableListOf()
+    private val links: MutableList<DiscoverShowsLink> = mutableListOf()
     private var showOnlyResults = false
 
     init {
-        links.add(TraktShowsLink.POPULAR)
+        links.add(DiscoverShowsLink.POPULAR)
         if (TraktCredentials.get(context).hasCredentials()) {
-            links.add(TraktShowsLink.WATCHED)
-            links.add(TraktShowsLink.COLLECTION)
-            links.add(TraktShowsLink.WATCHLIST)
+            links.add(DiscoverShowsLink.WATCHED)
+            links.add(DiscoverShowsLink.COLLECTION)
+            links.add(DiscoverShowsLink.WATCHLIST)
         }
     }
 
@@ -128,7 +128,7 @@ class ShowsDiscoverAdapter(
     }
 
     interface OnItemClickListener {
-        fun onLinkClick(anchor: View, link: TraktShowsLink)
+        fun onLinkClick(anchor: View, link: DiscoverShowsLink)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
         fun onMenuWatchlistClick(view: View, showTmdbId: Int)
@@ -139,7 +139,7 @@ class ShowsDiscoverAdapter(
         onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private var link: TraktShowsLink? = null
+        private var link: DiscoverShowsLink? = null
 
         init {
             itemView.setOnClickListener {
@@ -149,11 +149,11 @@ class ShowsDiscoverAdapter(
             }
         }
 
-        fun bindTo(context: Context, link: TraktShowsLink) {
+        fun bindTo(context: Context, link: DiscoverShowsLink) {
             this.link = link
             binding.textViewGridLink.text = context.getString(link.titleRes)
             // Add Trakt icon to highlight Trakt profile specific links.
-            if (link != TraktShowsLink.POPULAR) {
+            if (link != DiscoverShowsLink.POPULAR) {
                 ViewTools.setVectorDrawableLeft(
                     binding.textViewGridLink,
                     R.drawable.ic_trakt_icon_primary_24dp
