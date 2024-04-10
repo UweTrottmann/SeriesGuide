@@ -107,7 +107,8 @@
     <!-- Date and Time -->
     <string name="today">tänään</string>
     <string name="now">nyt</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Kaikki katsottu</string>
     <string name="unmark_all">Kaikki katsomattomia</string>

@@ -107,7 +107,8 @@
     <!-- Date and Time -->
     <string name="today">vandaag</string>
     <string name="now">nu</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Alles bekeken</string>
     <string name="unmark_all">Niets bekeken</string>

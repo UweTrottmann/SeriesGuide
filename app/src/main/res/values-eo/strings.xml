@@ -107,7 +107,8 @@
     <!-- Date and Time -->
     <string name="today">hodiaŭ</string>
     <string name="now">nun</string>
-    <string name="runtime_minutes">%s minutoj</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Ĉiuj spektitaj</string>
     <string name="unmark_all">Neniu spektita</string>

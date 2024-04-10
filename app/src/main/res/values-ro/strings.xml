@@ -108,7 +108,8 @@
     <!-- Date and Time -->
     <string name="today">astăzi</string>
     <string name="now">acum</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Toate au fost vizionate</string>
     <string name="unmark_all">Nici unul nu a fost vizionat</string>

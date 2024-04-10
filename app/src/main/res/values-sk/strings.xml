@@ -109,7 +109,8 @@
     <!-- Date and Time -->
     <string name="today">dnes</string>
     <string name="now">teraz</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Videné všetky</string>
     <string name="unmark_all">Nevidená žiadna</string>

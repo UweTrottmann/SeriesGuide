@@ -106,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">今天</string>
     <string name="now">现在</string>
-    <string name="runtime_minutes">%s 分钟</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">全部标记为看过</string>
     <string name="unmark_all">全部标记为未观看</string>

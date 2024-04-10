@@ -111,7 +111,8 @@
     <!-- Date and Time -->
     <string name="today">heddiw</string>
     <string name="now">nawr</string>
-    <string name="runtime_minutes">%s munud</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Wedi gwylio popeth</string>
     <string name="unmark_all">Gwylio dim</string>
