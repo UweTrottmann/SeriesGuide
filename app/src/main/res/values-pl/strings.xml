@@ -249,8 +249,8 @@
     <string name="title_similar_shows">Podobne seriale</string>
     <!-- Popular -->
     <string name="title_popular">Popularne</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">Rok</string>
+    <string name="filter_language">Język</string>
     <!-- Lists -->
     <string name="first_list">Pierwsza lista</string>
     <string name="list_add">Dodaj listę</string>

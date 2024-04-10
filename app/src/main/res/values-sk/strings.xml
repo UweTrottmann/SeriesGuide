@@ -20,7 +20,7 @@
     <string name="specialseason">Bonusové epizódy</string>
     <string name="ratings">Hodnotenia</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Prejsť hore</string>
     <string name="description_overview">Prehľad</string>
     <string name="description_poster">Zobraziť plagát</string>
     <string name="description_image">Obrázok z epizódy</string>
@@ -249,8 +249,8 @@
     <string name="title_similar_shows">Podobné relácie</string>
     <!-- Popular -->
     <string name="title_popular">Populárne</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">Rok</string>
+    <string name="filter_language">Jazyk</string>
     <!-- Lists -->
     <string name="first_list">Prvý zoznam</string>
     <string name="list_add">Pridať zoznam</string>
@@ -390,7 +390,7 @@
     <string name="pref_quick_checkin">Rýchle Práve pozeráte</string>
     <string name="pref_quick_checkin_summary">Nepýtať sa na správu pri Práve pozeráte</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Poslať email</string>
     <!-- Settings -->
     <string name="action_translate">Preložiť túto aplikáciu</string>
     <string name="prefs_category_advanced">Pokročilé</string>

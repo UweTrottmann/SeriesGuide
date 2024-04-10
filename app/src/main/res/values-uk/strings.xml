@@ -249,8 +249,8 @@
     <string name="title_similar_shows">Подібні серіали</string>
     <!-- Popular -->
     <string name="title_popular">Популярне</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">Рік</string>
+    <string name="filter_language">Мова</string>
     <!-- Lists -->
     <string name="first_list">Перший список</string>
     <string name="list_add">Додати список</string>

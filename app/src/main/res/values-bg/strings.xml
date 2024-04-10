@@ -20,7 +20,7 @@
     <string name="specialseason">Специални епизоди</string>
     <string name="ratings">Рейтинги</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Назад</string>
     <string name="description_overview">Общ преглед</string>
     <string name="description_poster">Обложка</string>
     <string name="description_image">Снимкa нa епизодa</string>
@@ -202,16 +202,16 @@
         <item quantity="other">%d оставащи</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d от %2$d оставащите</item>
+        <item quantity="other">%1$d от %2$d оставащите</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d пропуснати</item>
+        <item quantity="other">%d пропуснати</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d в колекцията</item>
+        <item quantity="other">%d в колекцията</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Въведете име на сериала</string>
@@ -235,8 +235,8 @@
     <string name="title_similar_shows">Подобни сериали</string>
     <!-- Popular -->
     <string name="title_popular">Популярни</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">Година</string>
+    <string name="filter_language">Език</string>
     <!-- Lists -->
     <string name="first_list">Първи списък</string>
     <string name="list_add">Добави списък</string>
@@ -368,7 +368,7 @@
     <string name="pref_quick_checkin">Бързо отбелязване</string>
     <string name="pref_quick_checkin_summary">Не питай за проверка в съобщенията</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Изпратете имейл</string>
     <!-- Settings -->
     <string name="action_translate">Превеждане на приложението</string>
     <string name="prefs_category_advanced">Разширени</string>
@@ -531,7 +531,7 @@
     <string name="action_extensions_configure">Персонализиране на разширения</string>
     <string name="action_extensions_add">Добави разширение</string>
     <string name="action_extensions_search">Вземи още разширения</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Разработване на разширение</string>
     <string name="action_extension_remove">Премахване</string>
     <string name="extension_amazon">Търсене в Amazon</string>
     <string name="description_extension_amazon">Търси във вашия локален Amazon сайт</string>

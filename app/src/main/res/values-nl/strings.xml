@@ -235,8 +235,8 @@
     <string name="title_similar_shows">Soortgelijke shows</string>
     <!-- Popular -->
     <string name="title_popular">Populair</string>
-    <string name="filter_year">Year</string>
-    <string name="filter_language">Language</string>
+    <string name="filter_year">Jaar</string>
+    <string name="filter_language">Taal</string>
     <!-- Lists -->
     <string name="first_list">Eerste lijst</string>
     <string name="list_add">Lijst toevoegen</string>
