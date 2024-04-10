@@ -840,4 +840,48 @@ object TimeTools {
         }
     }
 
+    fun formatToDaysHoursAndMinutes(resources: Resources, durationMillis: Long): String {
+        var durationCalc = durationMillis
+        val days = durationCalc / DateUtils.DAY_IN_MILLIS
+        durationCalc %= DateUtils.DAY_IN_MILLIS
+        val hours = durationCalc / DateUtils.HOUR_IN_MILLIS
+        durationCalc %= DateUtils.HOUR_IN_MILLIS
+        val minutes = durationCalc / DateUtils.MINUTE_IN_MILLIS
+
+        val result = StringBuilder()
+        if (days != 0L) {
+            result.append(
+                resources.getQuantityString(
+                    R.plurals.days_plural, days.toInt(),
+                    days.toInt()
+                )
+            )
+        }
+        if (hours != 0L) {
+            if (days != 0L) {
+                result.append(" ")
+            }
+            result.append(
+                resources.getQuantityString(
+                    R.plurals.hours_plural, hours.toInt(),
+                    hours.toInt()
+                )
+            )
+        }
+        if (minutes != 0L || days == 0L && hours == 0L) {
+            if (days != 0L || hours != 0L) {
+                result.append(" ")
+            }
+            result.append(
+                resources.getQuantityString(
+                    R.plurals.minutes_plural,
+                    minutes.toInt(),
+                    minutes.toInt()
+                )
+            )
+        }
+
+        return result.toString()
+    }
+
 }

@@ -1,11 +1,10 @@
-// Copyright 2019-2022 Uwe Trottmann
-// Copyright 2021 Andre Ippisch
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
+// Copyright 2021 Andre Ippisch
 
 package com.battlelancer.seriesguide.stats
 
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,6 +21,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentStatsBinding
 import com.battlelancer.seriesguide.settings.DisplaySettings
 import com.battlelancer.seriesguide.util.ShareUtils
+import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.copyTextToClipboardOnLongClick
 import java.text.NumberFormat
 
@@ -117,6 +117,7 @@ class StatsFragment : Fragment() {
                     shareStats()
                     return true
                 }
+
                 R.id.menu_action_stats_filter_specials -> {
                     PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                         .putBoolean(DisplaySettings.KEY_HIDE_SPECIALS, !menuItem.isChecked)
@@ -126,6 +127,7 @@ class StatsFragment : Fragment() {
                     loadStats()
                     return true
                 }
+
                 else -> return false
             }
         }
@@ -216,7 +218,8 @@ class StatsFragment : Fragment() {
         binding.textViewEpisodesWatched.visibility = View.VISIBLE
 
         // episode runtime
-        var watchedDuration = getTimeDuration(stats.episodesWatchedRuntime)
+        var watchedDuration =
+            TimeTools.formatToDaysHoursAndMinutes(resources, stats.episodesWatchedRuntime)
         if (!hasFinalValues) {
             // showing minimum (= not the final value)
             watchedDuration = "> $watchedDuration"
@@ -245,7 +248,7 @@ class StatsFragment : Fragment() {
             visibility = View.VISIBLE
         }
         binding.textViewMoviesWatchedRuntime.apply {
-            text = getTimeDuration(stats.moviesWatchedRuntime)
+            text = TimeTools.formatToDaysHoursAndMinutes(resources, stats.moviesWatchedRuntime)
             visibility = View.VISIBLE
         }
 
@@ -258,7 +261,7 @@ class StatsFragment : Fragment() {
             visibility = View.VISIBLE
         }
         binding.textViewMoviesWatchlistRuntime.apply {
-            text = getTimeDuration(stats.moviesWatchlistRuntime)
+            text = TimeTools.formatToDaysHoursAndMinutes(resources, stats.moviesWatchlistRuntime)
             visibility = View.VISIBLE
         }
 
@@ -273,53 +276,9 @@ class StatsFragment : Fragment() {
             visibility = View.VISIBLE
         }
         binding.textViewMoviesCollectionRuntime.apply {
-            text = getTimeDuration(stats.moviesCollectionRuntime)
+            text = TimeTools.formatToDaysHoursAndMinutes(resources, stats.moviesCollectionRuntime)
             visibility = View.VISIBLE
         }
-    }
-
-    private fun getTimeDuration(duration: Long): String {
-        var durationCalc = duration
-        val days = durationCalc / DateUtils.DAY_IN_MILLIS
-        durationCalc %= DateUtils.DAY_IN_MILLIS
-        val hours = durationCalc / DateUtils.HOUR_IN_MILLIS
-        durationCalc %= DateUtils.HOUR_IN_MILLIS
-        val minutes = durationCalc / DateUtils.MINUTE_IN_MILLIS
-
-        val result = StringBuilder()
-        if (days != 0L) {
-            result.append(
-                resources.getQuantityString(
-                    R.plurals.days_plural, days.toInt(),
-                    days.toInt()
-                )
-            )
-        }
-        if (hours != 0L) {
-            if (days != 0L) {
-                result.append(" ")
-            }
-            result.append(
-                resources.getQuantityString(
-                    R.plurals.hours_plural, hours.toInt(),
-                    hours.toInt()
-                )
-            )
-        }
-        if (minutes != 0L || days == 0L && hours == 0L) {
-            if (days != 0L || hours != 0L) {
-                result.append(" ")
-            }
-            result.append(
-                resources.getQuantityString(
-                    R.plurals.minutes_plural,
-                    minutes.toInt(),
-                    minutes.toInt()
-                )
-            )
-        }
-
-        return result.toString()
     }
 
     private fun shareStats() {
@@ -360,7 +319,10 @@ class StatsFragment : Fragment() {
 
         val statsString = StringBuilder(showStats)
         if (currentStats.episodesWatchedRuntime != 0L) {
-            var watchedDuration = getTimeDuration(currentStats.episodesWatchedRuntime)
+            var watchedDuration = TimeTools.formatToDaysHoursAndMinutes(
+                resources,
+                currentStats.episodesWatchedRuntime
+            )
             if (!hasFinalValues) {
                 // showing minimum (= not the final value)
                 watchedDuration = "> $watchedDuration"
@@ -384,9 +346,12 @@ class StatsFragment : Fragment() {
             R.string.stats_in_collection_format,
             currentStats.moviesCollection
         )
-        val moviesWatchlistRuntime = getTimeDuration(currentStats.moviesWatchlistRuntime)
-        val moviesWatchedRuntime = getTimeDuration(currentStats.moviesWatchedRuntime)
-        val moviesCollectionRuntime = getTimeDuration(currentStats.moviesCollectionRuntime)
+        val moviesWatchlistRuntime =
+            TimeTools.formatToDaysHoursAndMinutes(resources, currentStats.moviesWatchlistRuntime)
+        val moviesWatchedRuntime =
+            TimeTools.formatToDaysHoursAndMinutes(resources, currentStats.moviesWatchedRuntime)
+        val moviesCollectionRuntime =
+            TimeTools.formatToDaysHoursAndMinutes(resources, currentStats.moviesCollectionRuntime)
 
         val movieStats = "${getString(R.string.movies)}\n" +
                 "$movies\n" +
