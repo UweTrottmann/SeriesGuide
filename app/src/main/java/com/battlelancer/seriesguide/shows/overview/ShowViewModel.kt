@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -11,7 +11,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
@@ -64,10 +63,9 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
 
                     // Basic info
                     val network = show.network
-                    val runtime = application.resources.getString(
-                        R.string.runtime_minutes,
-                        show.runtime.toString()
-                    )
+                    val runtime = show.runtime?.let {
+                        TimeTools.formatToHoursAndMinutes(application.resources, it)
+                    } ?: ""
                     val baseInfo = "$network\n$runtime"
 
                     // Language data

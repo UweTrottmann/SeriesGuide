@@ -15,6 +15,8 @@ Version 73
 ----------
 *in development*
 
+* 🔧 Display run time in hours and minutes.
+
 #### 73.0.0 🧪
 *2024-04-05*
 

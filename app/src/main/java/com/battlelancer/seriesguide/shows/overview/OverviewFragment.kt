@@ -1,6 +1,6 @@
-// Copyright 2011-2023 Uwe Trottmann
-// Copyright 2013 Andrew Neal
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
+// Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows.overview
 
@@ -699,7 +699,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         // Regular network, release time and length.
         val network = show.network
         val timeOrNull = TimeTools.getLocalReleaseDayAndTime(requireContext(), show)
-        val runtime = getString(R.string.runtime_minutes, show.runtime.toString())
+        val runtime = show.runtime?.let { TimeTools.formatToHoursAndMinutes(resources, it) }
         val combinedString =
             TextTools.dotSeparate(TextTools.dotSeparate(network, timeOrNull), runtime)
         binding.overviewShowNetworkAndTime.text = combinedString

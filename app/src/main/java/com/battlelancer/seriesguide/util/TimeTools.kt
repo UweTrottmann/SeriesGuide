@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
+import android.content.res.Resources
 import android.text.TextUtils
 import android.text.format.DateFormat
 import android.text.format.DateUtils
@@ -17,6 +18,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import org.threeten.bp.Clock
 import org.threeten.bp.DateTimeException
 import org.threeten.bp.DayOfWeek
+import org.threeten.bp.Duration
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -883,5 +885,17 @@ object TimeTools {
 
         return result.toString()
     }
+
+    fun formatToHoursAndMinutes(resources: Resources, durationMinutes: Int): String {
+        val duration = Duration.ofMinutes(durationMinutes.toLong())
+        val hours = duration.toHours()
+        val minutes = duration.toMinutesPart()
+        return if (hours > 0) {
+            resources.getString(R.string.runtime_hours_minutes_format, hours, minutes)
+        } else {
+            resources.getString(R.string.runtime_minutes_format, minutes)
+        }
+    }
+
 
 }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2023 Uwe Trottmann
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -358,7 +358,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             releaseDate == null || Instant.ofEpochMilli(releaseDate.time)
                 .isBefore(ZonedDateTime.now().minusDays(1).toInstant())
         tmdbMovie.runtime?.let {
-            releaseAndRuntime.append(getString(R.string.runtime_minutes, it.toString()))
+            releaseAndRuntime.append(TimeTools.formatToHoursAndMinutes(resources, it))
         }
         binding.textViewMovieDate.text = releaseAndRuntime.toString()
 
