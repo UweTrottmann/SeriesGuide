@@ -107,7 +107,8 @@
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>
-    <string name="runtime_minutes">%s minutos</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Todos vistos</string>
     <string name="unmark_all">Ninguno visto</string>

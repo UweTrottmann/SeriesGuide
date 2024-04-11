@@ -106,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">오늘</string>
     <string name="now">지금</string>
-    <string name="runtime_minutes">%s분</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">모두 시청 완료</string>
     <string name="unmark_all">한 편도 안 본 것으로 설정</string>

@@ -109,7 +109,8 @@
     <!-- Date and Time -->
     <string name="today">сьогодні</string>
     <string name="now">Сьогодні</string>
-    <string name="runtime_minutes">%s хвилин</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Всі переглянуті</string>
     <string name="unmark_all">Жодна не переглянута</string>

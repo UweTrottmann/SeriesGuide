@@ -107,7 +107,8 @@
     <!-- Date and Time -->
     <string name="today">இன்று</string>
     <string name="now">இப்போது</string>
-    <string name="runtime_minutes">%s நிமிடம்</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">எல்லாம் பார்த்த</string>
     <string name="unmark_all">இல்லை பார்த்த</string>

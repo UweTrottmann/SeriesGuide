@@ -108,7 +108,8 @@
     <!-- Date and Time -->
     <string name="today">danas</string>
     <string name="now">sada</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Sve pogledano</string>
     <string name="unmark_all">Ništa nije pogledano</string>

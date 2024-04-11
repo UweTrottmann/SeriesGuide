@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -264,8 +264,10 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
             // Network, runtime.
             append(show.network)
-            append("\n")
-            append(getString(R.string.runtime_minutes, show.runtime.toString()))
+            show.runtime?.also {
+                append("\n")
+                append(TimeTools.formatToHoursAndMinutes(resources, it))
+            }
         }
         binding.textViewAddShowMeta.text = timeAndNetworkText
 
