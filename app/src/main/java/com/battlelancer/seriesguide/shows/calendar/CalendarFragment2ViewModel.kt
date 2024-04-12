@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.calendar
 
@@ -15,8 +15,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.util.TimeTools
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,8 +31,9 @@ class CalendarFragment2ViewModel(application: Application) : AndroidViewModel(ap
     private val queryLiveData = MutableLiveData<String>()
 
     private val calendarItemPagingConfig = PagingConfig(
-        pageSize = 50,
-        enablePlaceholders = false /* some items may have a header, so their height differs */
+        pageSize = 25,
+        enablePlaceholders = true, /* To properly restore scroll position on refresh */
+        jumpThreshold = 50 /* For fast scrolling to avoid ANRs */
     )
     val items: Flow<PagingData<CalendarItem>> =
         queryLiveData.asFlow().flatMapLatest {

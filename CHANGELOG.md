@@ -21,6 +21,7 @@ Version 73
 *2024-04-05*
 
 * 🌟 Year and original language filter for popular shows screen.
+* 🔧 Calendar: avoid changing scroll position after viewing details or refreshing data.
 
 Version 72
 ----------
