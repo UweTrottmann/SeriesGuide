@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.calendar
 
@@ -83,7 +83,9 @@ abstract class CalendarFragment2 : Fragment() {
             .observe(viewLifecycleOwner) { position: Int? ->
                 if (position != null) {
                     if (position == tabPosition) {
-                        recyclerView.smoothScrollToPosition(0)
+                        // The calendar list can get rather long,
+                        // so do not use smooth scrolling as it can take quite some time.
+                        recyclerView.scrollToPosition(0)
                     }
                 }
             }

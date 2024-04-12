@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.calendar
 
@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.shows.calendar.CalendarFragment2ViewModel.CalendarItem
+import com.battlelancer.seriesguide.shows.database.SgEpisode2WithShow
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 
 class CalendarAdapter2(
@@ -32,7 +32,7 @@ class CalendarAdapter2(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val currentItem = getItem(position)!! // not using placeholders
+        val currentItem = getItem(position)
         val previousPosition = position - 1
         val previousItem = if (previousPosition >= 0) getItem(previousPosition) else null
         when (holder) {
