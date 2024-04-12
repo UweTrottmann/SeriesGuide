@@ -16,12 +16,13 @@ Version 73
 *in development*
 
 * 🔧 Display run time in hours and minutes.
+* 🔧 Calendar: avoid changing scroll position after viewing details or refreshing data.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 73.0.0 🧪
 *2024-04-05*
 
 * 🌟 Year and original language filter for popular shows screen.
-* 🔧 Calendar: avoid changing scroll position after viewing details or refreshing data.
 
 Version 72
 ----------

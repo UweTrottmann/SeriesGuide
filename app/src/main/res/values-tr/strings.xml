@@ -107,8 +107,8 @@
     <!-- Date and Time -->
     <string name="today">bugün</string>
     <string name="now">şimdi</string>
-    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
-    <string name="runtime_minutes_format">%d min</string>
+    <string name="runtime_hours_minutes_format">%1$d saat %2$d dk</string>
+    <string name="runtime_minutes_format">%d dk</string>
     <!-- Flagging -->
     <string name="mark_all">Tümü izlendi</string>
     <string name="unmark_all">Hiçbiri izlenmedi</string>

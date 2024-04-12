@@ -107,7 +107,7 @@
     <!-- Date and Time -->
     <string name="today">i dag</string>
     <string name="now">nu</string>
-    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_hours_minutes_format">%1$d t %2$d min</string>
     <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Alle set</string>
