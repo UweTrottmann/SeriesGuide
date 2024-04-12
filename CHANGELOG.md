@@ -15,6 +15,9 @@ Version 73
 ----------
 *in development*
 
+#### 73.0.1 🧪
+*2024-04-12*
+
 * 🔧 Display run time in hours and minutes.
 * 🔧 Calendar: avoid changing scroll position after viewing details or refreshing data.
 * 📝 Latest user interface translations from Crowdin.
