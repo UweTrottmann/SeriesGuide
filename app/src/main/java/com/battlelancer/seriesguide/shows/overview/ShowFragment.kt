@@ -99,7 +99,7 @@ class ShowFragment() : Fragment() {
         val buttonNotify: MaterialButton
         val buttonHidden: MaterialButton
         val buttonEditReleaseTime: Button
-        val buttonShortcut: Button
+        val buttonShortcut: MaterialButton
         val buttonLanguage: Button
         val buttonTrailer: Button
         val buttonSimilar: Button
@@ -195,9 +195,6 @@ class ShowFragment() : Fragment() {
 
         // share button
         binding.buttonShare.setOnClickListener { shareShow() }
-
-        // shortcut button
-        binding.buttonShortcut.setOnClickListener { createShortcut() }
 
         setCastVisibility(binding, false)
         setCrewVisibility(binding, false)
@@ -320,7 +317,9 @@ class ShowFragment() : Fragment() {
             )
             TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
-                if (notify) {
+                if (!hasAccessToX) {
+                    R.drawable.ic_awesome_black_24dp
+                } else if (notify) {
                     R.drawable.ic_notifications_active_black_24dp
                 } else {
                     R.drawable.ic_notifications_off_black_24dp
@@ -444,6 +443,12 @@ class ShowFragment() : Fragment() {
             if (show.title.isNotEmpty()) Metacritic.searchForTvShow(requireContext(), show.title)
         }
 
+        // shortcut button
+        binding.buttonShortcut.apply {
+            setIconResource(if (hasAccessToX) R.drawable.ic_add_to_home_screen_black_24dp else R.drawable.ic_awesome_black_24dp)
+            setOnClickListener { createShortcut(hasAccessToX) }
+        }
+
         // web search button
         ServiceUtils.setUpWebSearchButton(show.title, binding.buttonWebSearch)
 
@@ -531,8 +536,8 @@ class ShowFragment() : Fragment() {
         changeShowLanguage(event.selectedLanguageCode)
     }
 
-    private fun createShortcut() {
-        if (!Utils.hasAccessToX(activity)) {
+    private fun createShortcut(hasAccessToX: Boolean) {
+        if (!hasAccessToX) {
             Utils.advertiseSubscription(activity)
             return
         }
