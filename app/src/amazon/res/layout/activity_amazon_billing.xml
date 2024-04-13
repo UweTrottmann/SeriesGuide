@@ -76,36 +76,14 @@
                 android:maxWidth="250dp"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Italic"
                 android:textStyle="italic"
-                tools:text="1.99 €/year\ntry for 30 days" />
-
-            <Button
-                android:id="@+id/buttonAmazonBillingGetPass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingSubPrice"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/large_padding"
-                android:enabled="false"
-                android:text="@string/billing_action_pass" />
-
-            <TextView
-                android:id="@+id/textViewAmazonBillingPricePass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonAmazonBillingGetPass"
-                android:layout_centerHorizontal="true"
-                android:gravity="center_horizontal"
-                android:maxWidth="250dp"
-                android:text="@string/billing_price_pass"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Body2.Italic"
-                android:textStyle="italic" />
+                tools:text="6.99 €/year\ntry for 30 days" />
 
             <Button
                 android:id="@+id/textViewAmazonBillingMoreInfo"
                 style="@style/Widget.SeriesGuide.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAmazonBillingPricePass"
+                android:layout_below="@+id/textViewAmazonBillingSubPrice"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/billing_learn_more" />
