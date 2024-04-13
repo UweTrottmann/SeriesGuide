@@ -22,18 +22,20 @@
 
             <TextView
                 android:id="@+id/textViewAmazonBillingTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:paddingBottom="@dimen/inline_padding"
+                android:drawablePadding="4dp"
                 android:text="@string/action_upgrade"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5" />
+                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline5"
+                app:drawableStartCompat="@drawable/ic_awesome_black_24dp" />
 
             <TextView
                 android:id="@+id/textViewAmazonBillingDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAmazonBillingTitle"
+                android:layout_marginTop="4dp"
                 android:text="@string/upgrade_description"
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2" />
 
