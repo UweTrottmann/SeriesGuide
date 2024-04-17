@@ -325,6 +325,7 @@
     <string name="trakt_notice_not_exists">無法或尚未能以 Trakt 追蹤</string>
     <string name="trakt_error_limit_exceeded">列表已滿，請先移除某些內容。</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">連接 trakt</string>
     <string name="trakt_reconnect">連結SeriesGuide與trakt</string>
     <string name="trakt_reconnect_details">檢查您的 trakt 憑證</string>

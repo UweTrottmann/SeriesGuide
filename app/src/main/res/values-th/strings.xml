@@ -325,6 +325,7 @@
     <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
     <string name="trakt_error_limit_exceeded">รายการเต็ม, ลบบางอย่างออกก่อน</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">เชื่อมต่อ trakt</string>
     <string name="trakt_reconnect">เชื่อมต่อ SeriesGuide กับ trakt</string>
     <string name="trakt_reconnect_details">ตรวจสอบข้อมูล trakt ของคุณ</string>

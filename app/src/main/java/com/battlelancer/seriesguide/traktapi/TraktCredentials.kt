@@ -10,6 +10,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
@@ -241,7 +242,7 @@ class TraktCredentials private constructor(context: Context) {
         }
 
         /**
-         * Checks for existing trakt credentials. If there aren't any valid ones, launches the trakt
+         * Checks for existing Trakt credentials. If there aren't any valid ones, launches the Trakt
          * connect flow.
          *
          * @return **true** if credentials are valid, **false** if invalid and launching trakt
@@ -251,6 +252,7 @@ class TraktCredentials private constructor(context: Context) {
         fun ensureCredentials(context: Context): Boolean {
             if (!get(context).hasCredentials()) {
                 // launch trakt connect flow
+                Toast.makeText(context, R.string.trakt_required, Toast.LENGTH_LONG).show()
                 context.startActivity(Intent(context, ConnectTraktActivity::class.java))
                 return false
             }

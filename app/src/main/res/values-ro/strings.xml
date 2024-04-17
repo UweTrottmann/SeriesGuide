@@ -345,6 +345,7 @@
     <string name="trakt_notice_not_exists">Nu poate (încă) fi urmărit cu trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Conectaţi trakt</string>
     <string name="trakt_reconnect">Conectează SeriesGuide cu trakt</string>
     <string name="trakt_reconnect_details">Verifică certificările trakt</string>

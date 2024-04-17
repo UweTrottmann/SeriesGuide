@@ -335,6 +335,7 @@
     <string name="trakt_notice_not_exists">Ne povas (jam) sekvi Trakton</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Konekti Trakt -on</string>
     <string name="trakt_reconnect">Konekti SeriesGuide al Trakt</string>
     <string name="trakt_reconnect_details">Kontrolu viajn indentigilojn de Trakt</string>

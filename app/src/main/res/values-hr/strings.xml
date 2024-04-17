@@ -345,6 +345,7 @@
     <string name="trakt_notice_not_exists">Nije moguće povezivanje sa trakt-om (još).</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Poveži trakt</string>
     <string name="trakt_reconnect">Poveži SeriesGuide sa trakt-om</string>
     <string name="trakt_reconnect_details">Provjerite svoje trakt podatke</string>

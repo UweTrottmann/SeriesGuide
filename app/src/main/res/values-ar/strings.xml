@@ -375,6 +375,7 @@
     <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة Trakt بعد.</string>
     <string name="trakt_error_limit_exceeded">القائمة ممتلئة، أزل شيئًا ما أولاً.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">الإتصال بموقع Trakt</string>
     <string name="trakt_reconnect">ربط SeriesGuide بحساب Trakt</string>
     <string name="trakt_reconnect_details">تحقق من بياناتك في Trakt</string>
