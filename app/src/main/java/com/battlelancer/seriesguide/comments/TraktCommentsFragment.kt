@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTask
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
@@ -138,6 +139,10 @@ class TraktCommentsFragment : Fragment() {
         // prevent empty comments
         val comment = binding.textFieldComments.editText!!.text.toString()
         if (TextUtils.isEmpty(comment)) {
+            return
+        }
+
+        if (!TraktCredentials.ensureCredentials(requireContext())) {
             return
         }
 
