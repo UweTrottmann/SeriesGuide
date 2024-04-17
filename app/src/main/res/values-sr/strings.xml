@@ -108,8 +108,8 @@
     <!-- Date and Time -->
     <string name="today">данас</string>
     <string name="now">сада</string>
-    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
-    <string name="runtime_minutes_format">%d min</string>
+    <string name="runtime_hours_minutes_format">%1$d х %2$d мин</string>
+    <string name="runtime_minutes_format">%d мин</string>
     <!-- Flagging -->
     <string name="mark_all">Све одгледано</string>
     <string name="unmark_all">Неодгледано</string>

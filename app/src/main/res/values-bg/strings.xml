@@ -107,8 +107,8 @@
     <!-- Date and Time -->
     <string name="today">днес</string>
     <string name="now">сега</string>
-    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
-    <string name="runtime_minutes_format">%d min</string>
+    <string name="runtime_hours_minutes_format">%1$d ч %2$d мин</string>
+    <string name="runtime_minutes_format">%d мин</string>
     <!-- Flagging -->
     <string name="mark_all">Всички са гледани</string>
     <string name="unmark_all">Никой не е гледан</string>
