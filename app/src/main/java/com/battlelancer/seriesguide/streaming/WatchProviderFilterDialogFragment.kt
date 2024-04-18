@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.streaming
 
@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverFilterBinding
+import com.battlelancer.seriesguide.databinding.DialogWatchProviderFilterBinding
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFilterAdapter
 import com.battlelancer.seriesguide.streaming.SgWatchProvider.Type
@@ -26,13 +26,13 @@ import kotlinx.coroutines.launch
  * Dialog to configure watch provider list in a specific region only to filter by,
  * stores different list for shows or movies.
  */
-class DiscoverFilterFragment : AppCompatDialogFragment() {
+class WatchProviderFilterDialogFragment : AppCompatDialogFragment() {
 
     private lateinit var type: Type
-    private val model: DiscoverFilterViewModel by viewModels {
-        DiscoverFilterViewModelFactory(requireActivity().application, type)
+    private val model: WatchProviderFilterViewModel by viewModels {
+        WatchProviderFilterViewModelFactory(requireActivity().application, type)
     }
-    private var binding: FragmentShowsDiscoverFilterBinding? = null
+    private var binding: DialogWatchProviderFilterBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class DiscoverFilterFragment : AppCompatDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = FragmentShowsDiscoverFilterBinding.inflate(layoutInflater)
+        val binding = DialogWatchProviderFilterBinding.inflate(layoutInflater)
             .also { binding = it }
 
         // watch region button
@@ -105,12 +105,12 @@ class DiscoverFilterFragment : AppCompatDialogFragment() {
         private const val ARG_TYPE = "type"
 
         fun showForShows(fragmentManager: FragmentManager) =
-            DiscoverFilterFragment()
+            WatchProviderFilterDialogFragment()
                 .apply { arguments = bundleOf(ARG_TYPE to Type.SHOWS.id) }
                 .safeShow(fragmentManager, "shows-discover-filter")
 
         fun showForMovies(fragmentManager: FragmentManager) =
-            DiscoverFilterFragment()
+            WatchProviderFilterDialogFragment()
                 .apply { arguments = bundleOf(ARG_TYPE to Type.MOVIES.id) }
                 .safeShow(fragmentManager, "movies-discover-filter")
     }

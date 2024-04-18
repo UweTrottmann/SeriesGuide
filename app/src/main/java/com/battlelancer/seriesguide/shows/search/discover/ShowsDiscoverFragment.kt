@@ -20,7 +20,7 @@ import com.battlelancer.seriesguide.databinding.FragmentShowsDiscoverBinding
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.SearchActivityImpl
 import com.battlelancer.seriesguide.shows.search.discover.AddFragment.OnAddingShowEvent
-import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
+import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.ui.OverviewActivity
@@ -224,7 +224,7 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
                     true
                 }
                 R.id.menu_action_shows_search_filter -> {
-                    DiscoverFilterFragment.showForShows(parentFragmentManager)
+                    WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
                     true
                 }
                 R.id.menu_action_shows_search_change_language -> {

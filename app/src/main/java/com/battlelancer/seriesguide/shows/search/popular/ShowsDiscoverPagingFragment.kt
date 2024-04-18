@@ -14,7 +14,7 @@ import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
 import com.battlelancer.seriesguide.databinding.FragmentShowsPopularBinding
 import com.battlelancer.seriesguide.shows.search.discover.BaseAddShowsFragment
 import com.battlelancer.seriesguide.shows.search.discover.DiscoverShowsActivity
-import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
+import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -125,7 +125,7 @@ abstract class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                 .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)
         }
         bindingActivity.chipTraktShowsWatchProviders.setOnClickListener {
-            DiscoverFilterFragment.showForShows(parentFragmentManager)
+            WatchProviderFilterDialogFragment.showForShows(parentFragmentManager)
         }
         viewLifecycleOwner.lifecycleScope.launch {
             model.filters.collectLatest {
