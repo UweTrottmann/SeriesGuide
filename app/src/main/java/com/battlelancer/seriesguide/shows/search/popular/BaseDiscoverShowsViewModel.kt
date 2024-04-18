@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
-class ShowsPopularViewModel(application: Application) : AndroidViewModel(application) {
+open class BaseDiscoverShowsViewModel(application: Application) : AndroidViewModel(application) {
 
     data class Filters(
         val firstReleaseYear: Int?,
