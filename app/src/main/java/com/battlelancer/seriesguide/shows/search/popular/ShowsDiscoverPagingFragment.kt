@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.battlelancer.seriesguide.R
@@ -29,9 +28,12 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
- * Displays a list of popular shows to add that are paged in from the network.
+ * Displays shows provided by a [BaseDiscoverShowsViewModel], expects to be hosted
+ * in [DiscoverShowsActivity] which provides the filter UI.
  */
-class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
+abstract class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
+
+    abstract val model: BaseDiscoverShowsViewModel
 
     private lateinit var bindingActivity: ActivityDiscoverShowsBinding
     private var binding: FragmentShowsPopularBinding? = null
@@ -40,7 +42,6 @@ class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
     private var yearPicker: YearPickerDialogFragment? = null
     private var languagePicker: LanguagePickerDialogFragment? = null
 
-    private val model: ShowsPopularViewModel by viewModels()
     private lateinit var adapter: ShowsPagingAdapter
 
     override fun onCreateView(
