@@ -21,6 +21,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Dialog to configure watch provider list in a specific region only to filter by,
@@ -58,14 +59,6 @@ class WatchProviderFilterDialogFragment : AppCompatDialogFragment() {
                 StreamingSearch.getCurrentRegionOrSelectString(requireContext())
         }
 
-        // disable all button
-        binding.buttonDisableAllProviders.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                SgRoomDatabase.getInstance(requireContext()).sgWatchProviderHelper()
-                    .setAllDisabled(type.id)
-            }
-        }
-
         // watch provider list
         val adapter = ShowsDiscoverFilterAdapter(watchProviderClickListener)
         binding.recyclerViewWatchProviders.also {
@@ -88,7 +81,20 @@ class WatchProviderFilterDialogFragment : AppCompatDialogFragment() {
             .setTitle(titleRes)
             .setView(binding.root)
             .setPositiveButton(R.string.dismiss, null)
+            .setNegativeButton(R.string.action_include_any_watch_provider) { _, _ ->
+                includeAnyAndDismiss()
+            }
             .create()
+    }
+
+    private fun includeAnyAndDismiss() {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                SgRoomDatabase.getInstance(requireContext()).sgWatchProviderHelper()
+                    .setAllDisabled(type.id)
+            }
+            dismiss()
+        }
     }
 
     private val watchProviderClickListener = object : ShowsDiscoverFilterAdapter.ClickListener {
