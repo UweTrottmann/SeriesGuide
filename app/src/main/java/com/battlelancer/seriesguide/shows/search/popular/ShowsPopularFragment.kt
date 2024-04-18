@@ -41,7 +41,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
     private var languagePicker: LanguagePickerDialogFragment? = null
 
     private val model: ShowsPopularViewModel by viewModels()
-    private lateinit var adapter: ShowsPopularAdapter
+    private lateinit var adapter: ShowsPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +79,7 @@ class ShowsPopularFragment : BaseAddShowsFragment() {
                 )
         }
 
-        adapter = ShowsPopularAdapter(itemClickListener)
+        adapter = ShowsPagingAdapter(itemClickListener)
         binding.recyclerViewShowsPopular.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
