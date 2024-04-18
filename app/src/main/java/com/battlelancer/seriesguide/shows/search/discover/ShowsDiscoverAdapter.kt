@@ -12,8 +12,8 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsLinkBinding
 import com.battlelancer.seriesguide.databinding.ItemGridHeaderBinding
-import com.battlelancer.seriesguide.databinding.ItemGridLinkBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
@@ -135,7 +135,7 @@ class ShowsDiscoverAdapter(
     }
 
     class LinkViewHolder(
-        private val binding: ItemGridLinkBinding,
+        private val binding: ItemDiscoverShowsLinkBinding,
         onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -166,7 +166,7 @@ class ShowsDiscoverAdapter(
         companion object {
             fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
                 LinkViewHolder(
-                    ItemGridLinkBinding.inflate(
+                    ItemDiscoverShowsLinkBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
@@ -243,7 +243,7 @@ class ShowsDiscoverAdapter(
     }
 
     companion object {
-        val VIEW_TYPE_LINK = R.layout.item_grid_link
+        val VIEW_TYPE_LINK = R.layout.item_discover_shows_link
         val VIEW_TYPE_HEADER = R.layout.item_grid_header
         val VIEW_TYPE_SHOW = R.layout.item_addshow
     }
