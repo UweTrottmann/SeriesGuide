@@ -325,6 +325,7 @@
     <string name="trakt_notice_not_exists">Trakt では追跡できません。</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Trakt に接続</string>
     <string name="trakt_reconnect">SeriesGuide を Trakt に接続</string>
     <string name="trakt_reconnect_details">Trakt の認証情報を確認してください</string>

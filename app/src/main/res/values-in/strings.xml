@@ -325,6 +325,7 @@
     <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Sambungkan trakt</string>
     <string name="trakt_reconnect">Sambungkan SeriesGuide ke trakt</string>
     <string name="trakt_reconnect_details">Periksa kredensial trakt Anda</string>

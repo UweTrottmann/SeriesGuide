@@ -345,6 +345,7 @@
     <string name="trakt_notice_not_exists">Не може се (још) пратити са Trakt</string>
     <string name="trakt_error_limit_exceeded">Листа за гледање је пуна, прво уклоните нешто.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Повежи trakt</string>
     <string name="trakt_reconnect">Повезати SeriesGuide са Trakt</string>
     <string name="trakt_reconnect_details">Проверите акредитиве Trakt-а</string>

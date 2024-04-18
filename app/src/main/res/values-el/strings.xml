@@ -335,6 +335,7 @@
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Σύνδεση trakt</string>
     <string name="trakt_reconnect">Σύνδεση του SeriesGuide με το trakt</string>
     <string name="trakt_reconnect_details">Έλεγχος διαπιστευτηρίων trakt</string>

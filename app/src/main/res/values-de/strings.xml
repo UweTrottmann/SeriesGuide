@@ -335,6 +335,7 @@
     <string name="trakt_notice_not_exists">Kann (noch) nicht mit Trakt verwaltet werden</string>
     <string name="trakt_error_limit_exceeded">Merkliste ist voll, entferne Sie zuerst etwas.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Um dies zu nutzen, mit Trakt verbinden</string>
     <string name="connect_trakt">Mit Trakt verbinden</string>
     <string name="trakt_reconnect">SeriesGuide mit Trakt verbinden</string>
     <string name="trakt_reconnect_details">Überprüfen Sie Ihre Trakt-Zugangsdaten</string>

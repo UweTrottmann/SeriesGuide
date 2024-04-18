@@ -355,6 +355,7 @@
     <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
     <string name="trakt_error_limit_exceeded">Список перегляду переповнений, спочатку щось видаліть.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Підключитись до trakt</string>
     <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>
     <string name="trakt_reconnect_details">Перевірте свої облікові дані на trakt</string>

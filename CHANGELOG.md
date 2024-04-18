@@ -16,6 +16,7 @@ Version 73
 *in development*
 
 * 🔧 History: sort Trakt friends by latest activity first.
+* 🔨 Comments: do not display misleading "Could not modify data" message when commenting on a show.
 
 #### 73.0.1 🧪
 *2024-04-12*

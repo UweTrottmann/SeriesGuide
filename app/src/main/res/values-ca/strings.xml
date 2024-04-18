@@ -335,6 +335,7 @@
     <string name="trakt_notice_not_exists">No pot ser registrada (encara) a Trakt.</string>
     <string name="trakt_error_limit_exceeded">La llista és plena, esborra alguna cosa primer.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Connecta\'t al Trakt</string>
     <string name="trakt_reconnect">Connecta SeriesGuide a Trakt</string>
     <string name="trakt_reconnect_details">Comprova les credencials de Trakt</string>

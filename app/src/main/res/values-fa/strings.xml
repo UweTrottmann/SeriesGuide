@@ -335,6 +335,7 @@
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
     <string name="trakt_error_limit_exceeded">سیاههٔ نمایش پر است. نخست چیزی را بردارید.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">اتصال به ترکت</string>
     <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
     <string name="trakt_reconnect_details">اعتبارنامهٔ trakt را بررسی کنید</string>

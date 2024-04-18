@@ -335,6 +335,7 @@
     <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
     <string name="trakt_error_limit_exceeded">Списъкът е пълен, първо изтрийте нещо.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Свържете се с trakt</string>
     <string name="trakt_reconnect">Свържете SeriesGuide с trakt</string>
     <string name="trakt_reconnect_details">Проверете идентификацията си в trakt</string>
