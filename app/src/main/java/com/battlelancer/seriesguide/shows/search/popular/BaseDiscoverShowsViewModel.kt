@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearch
+import com.uwetrottmann.tmdb2.Tmdb
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +25,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
-open class BaseDiscoverShowsViewModel(application: Application) : AndroidViewModel(application) {
+abstract class BaseDiscoverShowsViewModel(application: Application) :
+    AndroidViewModel(application) {
 
     data class Filters(
         val firstReleaseYear: Int?,
@@ -35,7 +37,7 @@ open class BaseDiscoverShowsViewModel(application: Application) : AndroidViewMod
     val filters = MutableStateFlow(Filters(null, null, null))
 
     private val watchProviderIds =
-        SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
+        SgRoomDatabase.getInstance(application).sgWatchProviderHelper()
             .getEnabledWatchProviderIdsFlow(SgWatchProvider.Type.SHOWS.id)
 
     private val firstReleaseYear = MutableStateFlow<Int?>(null)
@@ -53,8 +55,7 @@ open class BaseDiscoverShowsViewModel(application: Application) : AndroidViewMod
                 ) {
                     val languageCode = ShowsSettings.getShowsSearchLanguage(application)
                     val watchRegion = StreamingSearch.getCurrentRegionOrNull(application)
-                    ShowsPopularDataSource(
-                        application,
+                    buildDataSource(
                         tmdb,
                         languageCode,
                         it.firstReleaseYear,
@@ -83,6 +84,14 @@ open class BaseDiscoverShowsViewModel(application: Application) : AndroidViewMod
             }
         }
     }
+
+    abstract fun buildDataSource(
+        tmdb: Tmdb, languageCode: String,
+        firstReleaseYear: Int?,
+        originalLanguageCode: String?,
+        watchProviderIds: List<Int>?,
+        watchRegion: String?
+    ): BaseDiscoverShowDataSource
 
     fun updateYear(year: Int?) {
         firstReleaseYear.value = year
