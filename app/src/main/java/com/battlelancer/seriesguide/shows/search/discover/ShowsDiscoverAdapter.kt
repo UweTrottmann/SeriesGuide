@@ -12,8 +12,8 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsHeaderBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsLinkBinding
-import com.battlelancer.seriesguide.databinding.ItemGridHeaderBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
@@ -106,7 +106,7 @@ class ShowsDiscoverAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_LINK -> LinkViewHolder.inflate(parent, itemClickListener)
-            VIEW_TYPE_HEADER -> HeaderViewHolder.inflate(parent)
+            VIEW_TYPE_HEADER -> HeaderViewHolder.inflate(parent, itemClickListener)
             VIEW_TYPE_SHOW -> ShowViewHolder.inflate(parent, itemClickListener)
             else -> throw IllegalArgumentException("View type $viewType is unknown")
         }
@@ -117,9 +117,11 @@ class ShowsDiscoverAdapter(
             is LinkViewHolder -> {
                 holder.bindTo(context, links[position])
             }
+
             is HeaderViewHolder -> {
-                holder.bindTo(R.string.title_new_episodes)
+                holder.bindTo(R.string.title_new_episodes, DiscoverShowsLink.NEW_EPISODES)
             }
+
             is ShowViewHolder -> {
                 val item = getSearchResultFor(position)
                 holder.bindTo(context, item, showMenuWatchlist, hideMenuWatchlistIfAdded)
@@ -176,16 +178,36 @@ class ShowsDiscoverAdapter(
         }
     }
 
-    class HeaderViewHolder(private val binding: ItemGridHeaderBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bindTo(@StringRes text: Int) {
+    class HeaderViewHolder(
+        private val binding: ItemDiscoverShowsHeaderBinding,
+        onItemClickListener: OnItemClickListener
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        private var link: DiscoverShowsLink? = null
+
+        init {
+            itemView.setOnClickListener {
+                link?.let {
+                    onItemClickListener.onLinkClick(itemView, it)
+                }
+            }
+        }
+
+        fun bindTo(@StringRes text: Int, link: DiscoverShowsLink) {
             binding.textViewGridHeader.setText(text)
+            this.link = link
         }
 
         companion object {
-            fun inflate(parent: ViewGroup) = HeaderViewHolder(
-                ItemGridHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            )
+            fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
+                HeaderViewHolder(
+                    ItemDiscoverShowsHeaderBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    ),
+                    onItemClickListener
+                )
         }
     }
 
@@ -208,7 +230,12 @@ class ShowsDiscoverAdapter(
             }
         }
 
-        fun bindTo(context: Context, item: SearchResult, showMenuWatchlist: Boolean, hideMenuWatchlistIfAdded: Boolean) {
+        fun bindTo(
+            context: Context,
+            item: SearchResult,
+            showMenuWatchlist: Boolean,
+            hideMenuWatchlistIfAdded: Boolean
+        ) {
             this.item = item
 
             // hide watchlist menu if not useful
@@ -230,7 +257,11 @@ class ShowsDiscoverAdapter(
             binding.textViewAddTitle.text = showTitle
             binding.textViewAddDescription.text = item.overview
 
-            ImageTools.loadShowPosterResizeCrop(context, binding.imageViewAddPoster, item.posterPath)
+            ImageTools.loadShowPosterResizeCrop(
+                context,
+                binding.imageViewAddPoster,
+                item.posterPath
+            )
         }
 
         companion object {

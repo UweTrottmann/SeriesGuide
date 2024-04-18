@@ -9,9 +9,10 @@ import com.battlelancer.seriesguide.R;
 
 public enum DiscoverShowsLink {
     POPULAR(0, R.string.title_popular),
-    WATCHED(1, R.string.watched_shows),
-    COLLECTION(2, R.string.shows_collection),
-    WATCHLIST(3, R.string.watchlist);
+    NEW_EPISODES(1, R.string.title_new_episodes),
+    WATCHED(2, R.string.watched_shows),
+    COLLECTION(3, R.string.shows_collection),
+    WATCHLIST(4, R.string.watchlist);
 
     final int id;
     final int titleRes;

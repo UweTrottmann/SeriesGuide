@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/textViewGridHeader"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingLeft="@dimen/default_padding"
+    android:paddingTop="@dimen/default_padding"
+    android:paddingRight="@dimen/default_padding"
+    android:paddingBottom="0dp"
+    android:textAppearance="@style/TextAppearance.SeriesGuide.TitleLarge.Bold"
+    app:drawableEndCompat="@drawable/ic_chevron_right_black_24dp"
+    app:drawableTint="?android:attr/textColorPrimary"
+    tools:text="New episodes" />

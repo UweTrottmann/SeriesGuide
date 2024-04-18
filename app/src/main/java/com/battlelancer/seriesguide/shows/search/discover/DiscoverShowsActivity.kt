@@ -9,6 +9,7 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
+import com.battlelancer.seriesguide.shows.search.newepisodes.ShowsNewEpisodesFragment
 import com.battlelancer.seriesguide.shows.search.popular.ShowsDiscoverPagingFragment
 import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularFragment
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
@@ -32,22 +33,24 @@ class DiscoverShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAdd
         // Change the scrolling view the AppBarLayout should use to determine if it should lift.
         // This is required so the AppBarLayout does not flicker its background when scrolling.
         binding.sgAppBarLayout.liftOnScrollTargetViewId = when (link) {
-            DiscoverShowsLink.POPULAR -> ShowsDiscoverPagingFragment.liftOnScrollTargetViewId
+            DiscoverShowsLink.POPULAR, DiscoverShowsLink.NEW_EPISODES -> ShowsDiscoverPagingFragment.liftOnScrollTargetViewId
             else -> TraktAddFragment.liftOnScrollTargetViewId
         }
-        // Filters currently only supported for the popular screen
-        binding.scrollViewTraktShowsChips.isVisible = link == DiscoverShowsLink.POPULAR
+        // Filters only supported on TMDB provided lists
+        binding.scrollViewTraktShowsChips.isVisible =
+            link == DiscoverShowsLink.POPULAR || link == DiscoverShowsLink.NEW_EPISODES
         setupActionBar(link)
 
         if (savedInstanceState == null) {
             val fragment = when (link) {
                 DiscoverShowsLink.POPULAR -> ShowsPopularFragment()
+                DiscoverShowsLink.NEW_EPISODES -> ShowsNewEpisodesFragment()
                 else -> TraktAddFragment.newInstance(link)
             }
             supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.containerTraktShowsFragment, fragment)
-                    .commit()
+                .beginTransaction()
+                .add(R.id.containerTraktShowsFragment, fragment)
+                .commit()
         }
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {
