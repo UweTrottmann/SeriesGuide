@@ -8,7 +8,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.isVisible
 import com.battlelancer.seriesguide.R
-import com.battlelancer.seriesguide.databinding.ActivityTraktShowsBinding
+import com.battlelancer.seriesguide.databinding.ActivityDiscoverShowsBinding
+import com.battlelancer.seriesguide.shows.search.newepisodes.ShowsNewEpisodesFragment
+import com.battlelancer.seriesguide.shows.search.popular.ShowsDiscoverPagingFragment
 import com.battlelancer.seriesguide.shows.search.popular.ShowsPopularFragment
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsActivity
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
@@ -16,37 +18,39 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 
-class TraktShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
+class DiscoverShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddShowListener {
 
-    lateinit var binding: ActivityTraktShowsBinding
+    lateinit var binding: ActivityDiscoverShowsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTraktShowsBinding.inflate(layoutInflater)
+        binding = ActivityDiscoverShowsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ThemeUtils.configureForEdgeToEdge(binding.root)
 
-        val link = TraktShowsLink.fromId(intent.getIntExtra(EXTRA_LINK, -1))
+        val link = DiscoverShowsLink.fromId(intent.getIntExtra(EXTRA_LINK, -1))
 
         // Change the scrolling view the AppBarLayout should use to determine if it should lift.
         // This is required so the AppBarLayout does not flicker its background when scrolling.
         binding.sgAppBarLayout.liftOnScrollTargetViewId = when (link) {
-            TraktShowsLink.POPULAR -> ShowsPopularFragment.liftOnScrollTargetViewId
+            DiscoverShowsLink.POPULAR, DiscoverShowsLink.NEW_EPISODES -> ShowsDiscoverPagingFragment.liftOnScrollTargetViewId
             else -> TraktAddFragment.liftOnScrollTargetViewId
         }
-        // Filters currently only supported for the popular screen
-        binding.scrollViewTraktShowsChips.isVisible = link == TraktShowsLink.POPULAR
+        // Filters only supported on TMDB provided lists
+        binding.scrollViewTraktShowsChips.isVisible =
+            link == DiscoverShowsLink.POPULAR || link == DiscoverShowsLink.NEW_EPISODES
         setupActionBar(link)
 
         if (savedInstanceState == null) {
             val fragment = when (link) {
-                TraktShowsLink.POPULAR -> ShowsPopularFragment()
+                DiscoverShowsLink.POPULAR -> ShowsPopularFragment()
+                DiscoverShowsLink.NEW_EPISODES -> ShowsNewEpisodesFragment()
                 else -> TraktAddFragment.newInstance(link)
             }
             supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.containerTraktShowsFragment, fragment)
-                    .commit()
+                .beginTransaction()
+                .add(R.id.containerTraktShowsFragment, fragment)
+                .commit()
         }
 
         SimilarShowsFragment.displaySimilarShowsEventLiveData.observe(this) {
@@ -54,7 +58,7 @@ class TraktShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
         }
     }
 
-    fun setupActionBar(link: TraktShowsLink) {
+    fun setupActionBar(link: DiscoverShowsLink) {
         setupActionBar()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitle(link.titleRes)
@@ -68,8 +72,8 @@ class TraktShowsActivity : BaseMessageActivity(), AddShowDialogFragment.OnAddSho
         const val EXTRA_LINK = "LINK"
 
         @JvmStatic
-        fun intent(context: Context, link: TraktShowsLink): Intent {
-            return Intent(context, TraktShowsActivity::class.java).putExtra(EXTRA_LINK, link.id)
+        fun intent(context: Context, link: DiscoverShowsLink): Intent {
+            return Intent(context, DiscoverShowsActivity::class.java).putExtra(EXTRA_LINK, link.id)
         }
     }
 

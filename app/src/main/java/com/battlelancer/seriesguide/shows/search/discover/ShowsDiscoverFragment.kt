@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -138,10 +138,10 @@ class ShowsDiscoverFragment : BaseAddShowsFragment() {
     }
 
     private val discoverItemClickListener = object : ShowsDiscoverAdapter.OnItemClickListener {
-        override fun onLinkClick(anchor: View, link: TraktShowsLink) {
+        override fun onLinkClick(anchor: View, link: DiscoverShowsLink) {
             Utils.startActivityWithAnimation(
                 activity,
-                TraktShowsActivity.intent(requireContext(), link),
+                DiscoverShowsActivity.intent(requireContext(), link),
                 anchor
             )
         }

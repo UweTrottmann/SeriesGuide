@@ -22,8 +22,8 @@ import java.util.List;
 
 public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    static final int VIEW_TYPE_LINK = R.layout.item_discover_link;
-    static final int VIEW_TYPE_HEADER = R.layout.item_discover_header;
+    static final int VIEW_TYPE_LINK = R.layout.item_discover_movies_link;
+    static final int VIEW_TYPE_HEADER = R.layout.item_discover_movies_header;
     static final int VIEW_TYPE_MOVIE = R.layout.item_movie;
 
     interface ItemClickListener extends MovieClickListener {
@@ -137,7 +137,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public static HeaderViewHolder inflate(ViewGroup parent) {
             return new HeaderViewHolder(
                     LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.item_discover_header, parent, false)
+                            .inflate(R.layout.item_discover_movies_header, parent, false)
             );
         }
     }
@@ -163,7 +163,7 @@ public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ) {
             return new LinkViewHolder(
                     LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.item_discover_link, parent, false),
+                            .inflate(R.layout.item_discover_movies_link, parent, false),
                     itemClickListener
             );
         }

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.popular
 
@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.shows.search.discover.SearchResult
 import com.battlelancer.seriesguide.shows.search.discover.SearchResultDiffCallback
 import com.battlelancer.seriesguide.shows.search.discover.SearchResultViewHolder
 
-class ShowsPopularAdapter(
+class ShowsPagingAdapter(
     val onItemClickListener: AddFragment.AddAdapter.OnItemClickListener
 ) : PagingDataAdapter<SearchResult, RecyclerView.ViewHolder>(
     SearchResultDiffCallback()

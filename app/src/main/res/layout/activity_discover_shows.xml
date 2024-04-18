@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".shows.search.discover.TraktShowsActivity">
+    tools:context=".shows.search.discover.DiscoverShowsActivity">
 
     <!-- This app bar elevates if content scrolls behind it, but stays otherwise in place. -->
     <com.google.android.material.appbar.AppBarLayout

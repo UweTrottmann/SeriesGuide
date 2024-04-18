@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -12,8 +12,8 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
-import com.battlelancer.seriesguide.databinding.ItemGridHeaderBinding
-import com.battlelancer.seriesguide.databinding.ItemGridLinkBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsHeaderBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsLinkBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
@@ -29,15 +29,15 @@ class ShowsDiscoverAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val searchResults = mutableListOf<SearchResult>()
-    private val links: MutableList<TraktShowsLink> = mutableListOf()
+    private val links: MutableList<DiscoverShowsLink> = mutableListOf()
     private var showOnlyResults = false
 
     init {
-        links.add(TraktShowsLink.POPULAR)
+        links.add(DiscoverShowsLink.POPULAR)
         if (TraktCredentials.get(context).hasCredentials()) {
-            links.add(TraktShowsLink.WATCHED)
-            links.add(TraktShowsLink.COLLECTION)
-            links.add(TraktShowsLink.WATCHLIST)
+            links.add(DiscoverShowsLink.WATCHED)
+            links.add(DiscoverShowsLink.COLLECTION)
+            links.add(DiscoverShowsLink.WATCHLIST)
         }
     }
 
@@ -106,7 +106,7 @@ class ShowsDiscoverAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_LINK -> LinkViewHolder.inflate(parent, itemClickListener)
-            VIEW_TYPE_HEADER -> HeaderViewHolder.inflate(parent)
+            VIEW_TYPE_HEADER -> HeaderViewHolder.inflate(parent, itemClickListener)
             VIEW_TYPE_SHOW -> ShowViewHolder.inflate(parent, itemClickListener)
             else -> throw IllegalArgumentException("View type $viewType is unknown")
         }
@@ -117,9 +117,11 @@ class ShowsDiscoverAdapter(
             is LinkViewHolder -> {
                 holder.bindTo(context, links[position])
             }
+
             is HeaderViewHolder -> {
-                holder.bindTo(R.string.title_new_episodes)
+                holder.bindTo(R.string.title_new_episodes, DiscoverShowsLink.NEW_EPISODES)
             }
+
             is ShowViewHolder -> {
                 val item = getSearchResultFor(position)
                 holder.bindTo(context, item, showMenuWatchlist, hideMenuWatchlistIfAdded)
@@ -128,18 +130,18 @@ class ShowsDiscoverAdapter(
     }
 
     interface OnItemClickListener {
-        fun onLinkClick(anchor: View, link: TraktShowsLink)
+        fun onLinkClick(anchor: View, link: DiscoverShowsLink)
         fun onItemClick(item: SearchResult)
         fun onAddClick(item: SearchResult)
         fun onMenuWatchlistClick(view: View, showTmdbId: Int)
     }
 
     class LinkViewHolder(
-        private val binding: ItemGridLinkBinding,
+        private val binding: ItemDiscoverShowsLinkBinding,
         onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private var link: TraktShowsLink? = null
+        private var link: DiscoverShowsLink? = null
 
         init {
             itemView.setOnClickListener {
@@ -149,11 +151,11 @@ class ShowsDiscoverAdapter(
             }
         }
 
-        fun bindTo(context: Context, link: TraktShowsLink) {
+        fun bindTo(context: Context, link: DiscoverShowsLink) {
             this.link = link
             binding.textViewGridLink.text = context.getString(link.titleRes)
             // Add Trakt icon to highlight Trakt profile specific links.
-            if (link != TraktShowsLink.POPULAR) {
+            if (link != DiscoverShowsLink.POPULAR) {
                 ViewTools.setVectorDrawableLeft(
                     binding.textViewGridLink,
                     R.drawable.ic_trakt_icon_primary_24dp
@@ -166,7 +168,7 @@ class ShowsDiscoverAdapter(
         companion object {
             fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
                 LinkViewHolder(
-                    ItemGridLinkBinding.inflate(
+                    ItemDiscoverShowsLinkBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
@@ -176,16 +178,36 @@ class ShowsDiscoverAdapter(
         }
     }
 
-    class HeaderViewHolder(private val binding: ItemGridHeaderBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bindTo(@StringRes text: Int) {
+    class HeaderViewHolder(
+        private val binding: ItemDiscoverShowsHeaderBinding,
+        onItemClickListener: OnItemClickListener
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        private var link: DiscoverShowsLink? = null
+
+        init {
+            itemView.setOnClickListener {
+                link?.let {
+                    onItemClickListener.onLinkClick(itemView, it)
+                }
+            }
+        }
+
+        fun bindTo(@StringRes text: Int, link: DiscoverShowsLink) {
             binding.textViewGridHeader.setText(text)
+            this.link = link
         }
 
         companion object {
-            fun inflate(parent: ViewGroup) = HeaderViewHolder(
-                ItemGridHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            )
+            fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
+                HeaderViewHolder(
+                    ItemDiscoverShowsHeaderBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    ),
+                    onItemClickListener
+                )
         }
     }
 
@@ -208,7 +230,12 @@ class ShowsDiscoverAdapter(
             }
         }
 
-        fun bindTo(context: Context, item: SearchResult, showMenuWatchlist: Boolean, hideMenuWatchlistIfAdded: Boolean) {
+        fun bindTo(
+            context: Context,
+            item: SearchResult,
+            showMenuWatchlist: Boolean,
+            hideMenuWatchlistIfAdded: Boolean
+        ) {
             this.item = item
 
             // hide watchlist menu if not useful
@@ -230,7 +257,11 @@ class ShowsDiscoverAdapter(
             binding.textViewAddTitle.text = showTitle
             binding.textViewAddDescription.text = item.overview
 
-            ImageTools.loadShowPosterResizeCrop(context, binding.imageViewAddPoster, item.posterPath)
+            ImageTools.loadShowPosterResizeCrop(
+                context,
+                binding.imageViewAddPoster,
+                item.posterPath
+            )
         }
 
         companion object {
@@ -243,7 +274,7 @@ class ShowsDiscoverAdapter(
     }
 
     companion object {
-        val VIEW_TYPE_LINK = R.layout.item_grid_link
+        val VIEW_TYPE_LINK = R.layout.item_discover_shows_link
         val VIEW_TYPE_HEADER = R.layout.item_grid_header
         val VIEW_TYPE_SHOW = R.layout.item_addshow
     }

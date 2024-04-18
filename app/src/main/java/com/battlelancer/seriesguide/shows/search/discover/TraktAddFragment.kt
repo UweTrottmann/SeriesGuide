@@ -40,12 +40,12 @@ import java.util.LinkedList
 class TraktAddFragment : AddFragment() {
 
     private var binding: FragmentAddshowTraktBinding? = null
-    private lateinit var listType: TraktShowsLink
+    private lateinit var listType: DiscoverShowsLink
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val args = arguments
-        listType = TraktShowsLink.fromId(args?.getInt(ARG_TYPE) ?: -1)
+        listType = DiscoverShowsLink.fromId(args?.getInt(ARG_TYPE) ?: -1)
     }
 
     override fun onCreateView(
@@ -79,7 +79,7 @@ class TraktAddFragment : AddFragment() {
         // setup adapter, enable context menu only for watchlist
         adapter = AddAdapter(
             requireActivity(), ArrayList(), itemClickListener,
-            listType == TraktShowsLink.WATCHLIST
+            listType == DiscoverShowsLink.WATCHLIST
         )
 
         // load data
@@ -123,7 +123,7 @@ class TraktAddFragment : AddFragment() {
                 popupMenu.inflate(R.menu.add_dialog_popup_menu)
 
                 // prevent adding shows to watchlist already on watchlist
-                if (listType == TraktShowsLink.WATCHLIST) {
+                if (listType == DiscoverShowsLink.WATCHLIST) {
                     popupMenu.menu.findItem(R.id.menu_action_show_watchlist_add).isVisible = false
                 }
                 popupMenu.setOnMenuItemClickListener(
@@ -192,7 +192,7 @@ class TraktAddFragment : AddFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(@Suppress("UNUSED_PARAMETER") event: ShowChangedEvent?) {
-        if (listType == TraktShowsLink.WATCHLIST) {
+        if (listType == DiscoverShowsLink.WATCHLIST) {
             // reload watchlist if a show was removed
             LoaderManager.getInstance(this)
                 .restartLoader(
@@ -235,13 +235,13 @@ class TraktAddFragment : AddFragment() {
 
     companion object {
         /**
-         * Which trakt list should be shown. One of [TraktShowsLink].
+         * Which trakt list should be shown. One of [DiscoverShowsLink].
          */
         private const val ARG_TYPE = "traktListType"
 
         val liftOnScrollTargetViewId = R.id.gridViewAdd
 
-        fun newInstance(link: TraktShowsLink): TraktAddFragment {
+        fun newInstance(link: DiscoverShowsLink): TraktAddFragment {
             val f = TraktAddFragment()
             val args = Bundle()
             args.putInt(ARG_TYPE, link.id)
