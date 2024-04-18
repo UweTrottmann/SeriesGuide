@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2018-2023 Uwe Trottmann
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.popular
 
@@ -31,7 +31,7 @@ import timber.log.Timber
 /**
  * Displays a list of popular shows to add that are paged in from the network.
  */
-class ShowsPopularFragment : BaseAddShowsFragment() {
+class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
 
     private lateinit var bindingActivity: ActivityDiscoverShowsBinding
     private var binding: FragmentShowsPopularBinding? = null
