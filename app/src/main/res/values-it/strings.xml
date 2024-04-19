@@ -334,7 +334,7 @@
     <string name="trakt_notice_not_exists">Non è (ancora) possibile monitorarlo con trakt.</string>
     <string name="trakt_error_limit_exceeded">La lista è piena, prima rimuovi qualcosa.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">Per usare questo, connettiti a Trakt</string>
     <string name="connect_trakt">Collegati a trakt</string>
     <string name="trakt_reconnect">Collega SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Controlla le tue credenziali trakt</string>

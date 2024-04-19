@@ -354,7 +354,7 @@
     <string name="trakt_notice_not_exists">Nie może być jeszcze śledzone na trakt.</string>
     <string name="trakt_error_limit_exceeded">Lista jest pełna. Należy najpierw coś z niej usunąć.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">Aby użyć tej funkcji, połącz z Trakt</string>
     <string name="connect_trakt">Połącz z trakt</string>
     <string name="trakt_reconnect">Połącz SeriesGuide z trakt</string>
     <string name="trakt_reconnect_details">Sprawdź swoje poświadczenia trakt</string>

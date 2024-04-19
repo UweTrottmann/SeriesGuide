@@ -334,7 +334,7 @@
     <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>
     <string name="trakt_error_limit_exceeded">A lista está cheia, remove algo primeiro.</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">Para utilizar esta opção, conecta-te ao Trakt</string>
     <string name="connect_trakt">Conectar ao Trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide ao Trakt</string>
     <string name="trakt_reconnect_details">Verifica as tuas credenciais do Trakt</string>

@@ -19,6 +19,7 @@ Version 73
 * 🔧 Stream and purchase filter: sort providers by name.
 * 🔧 History: sort Trakt friends by latest activity first.
 * 🔨 Comments: do not display misleading "Could not modify data" message when commenting on a show.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 73.0.1 🧪
 *2024-04-12*
