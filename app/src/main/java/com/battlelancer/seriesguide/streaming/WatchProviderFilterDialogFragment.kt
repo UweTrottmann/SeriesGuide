@@ -49,6 +49,12 @@ class WatchProviderFilterDialogFragment : AppCompatDialogFragment() {
         val binding = DialogWatchProviderFilterBinding.inflate(layoutInflater)
             .also { binding = it }
 
+        val titleRes = when (type) {
+            Type.SHOWS -> R.string.action_shows_filter
+            Type.MOVIES -> R.string.action_movies_filter
+        }
+        binding.textViewTitle.setText(titleRes)
+
         // watch region button
         binding.buttonWatchRegion.apply {
             text = StreamingSearch.getCurrentRegionOrSelectString(requireContext())
@@ -73,12 +79,7 @@ class WatchProviderFilterDialogFragment : AppCompatDialogFragment() {
             }
         }
 
-        val titleRes = when (type) {
-            Type.SHOWS -> R.string.action_shows_filter
-            Type.MOVIES -> R.string.action_movies_filter
-        }
         return MaterialAlertDialogBuilder(requireContext())
-            .setTitle(titleRes)
             .setView(binding.root)
             .setPositiveButton(R.string.dismiss, null)
             .setNegativeButton(R.string.action_reset) { _, _ ->
