@@ -89,7 +89,7 @@ fun WatchProviderList(
                         )
                         .padding(16.dp)
                 ) {
-                    Text(stringResource(id = R.string.action_include_any_watch_provider))
+                    Text(stringResource(id = R.string.action_reset))
                 }
                 IconButton(
                     modifier = Modifier.padding(top = 2.dp, start = 4.dp, end = 4.dp),

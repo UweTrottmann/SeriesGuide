@@ -81,7 +81,7 @@ class WatchProviderFilterDialogFragment : AppCompatDialogFragment() {
             .setTitle(titleRes)
             .setView(binding.root)
             .setPositiveButton(R.string.dismiss, null)
-            .setNegativeButton(R.string.action_include_any_watch_provider) { _, _ ->
+            .setNegativeButton(R.string.action_reset) { _, _ ->
                 includeAnyAndDismiss()
             }
             .create()

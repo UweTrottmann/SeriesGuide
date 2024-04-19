@@ -46,7 +46,7 @@ class LanguagePickerDialogFragment : AppCompatDialogFragment() {
                 onPickedListener?.onPicked(this.languageCodes[selectedLanguagePosition])
                 dismiss()
             }
-            .setNegativeButton(R.string.clear) { _, _ ->
+            .setNegativeButton(R.string.action_reset) { _, _ ->
                 onPickedListener?.onPicked(null)
             }
             .create()
