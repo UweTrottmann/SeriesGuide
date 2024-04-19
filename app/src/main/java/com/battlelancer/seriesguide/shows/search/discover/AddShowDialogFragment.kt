@@ -104,7 +104,11 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
             buttonPositive.isGone = true
 
-            textViewAddRatingRange.text = getString(R.string.format_rating_range, 10)
+            containerRatings.apply {
+                textViewRatingsTmdbRange.text = getString(R.string.format_rating_range, 10)
+                textViewRatingsTraktRange.text = getString(R.string.format_rating_range, 10)
+                groupRatingsUser.isGone = true
+            }
 
             // Set up long-press to copy text to clipboard (d-pad friendly vs text selection).
             containerShowInfo.setOnLongClickListener {
@@ -271,8 +275,15 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         }
         binding.textViewAddShowMeta.text = timeAndNetworkText
 
-        // Rating.
-        binding.textViewAddRatingValue.text = TraktTools.buildRatingString(show.ratingTrakt)
+        // Ratings
+        binding.containerRatings.apply {
+            textViewRatingsTmdbValue.text = TraktTools.buildRatingString(show.ratingTmdb)
+            textViewRatingsTmdbVotes.text =
+                TraktTools.buildRatingVotesString(requireContext(), show.ratingTmdbVotes)
+            textViewRatingsTraktValue.text = TraktTools.buildRatingString(show.ratingTrakt)
+            textViewRatingsTraktVotes.text =
+                TraktTools.buildRatingVotesString(requireContext(), show.ratingTraktVotes)
+        }
 
         // Genres.
         ViewTools.setValueOrPlaceholder(
