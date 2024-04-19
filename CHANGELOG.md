@@ -15,6 +15,9 @@ Version 73
 ----------
 *in development*
 
+#### 73.0.2 🧪
+*2024-04-19*
+
 * 🌟 Discover: add new episodes screen with year and language filters, similar to popular shows screen.
 * 🔧 Stream and purchase filter: sort providers by name.
 * 🔧 History: sort Trakt friends by latest activity first.
