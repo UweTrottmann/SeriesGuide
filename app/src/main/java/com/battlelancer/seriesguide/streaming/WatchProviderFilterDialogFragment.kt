@@ -3,11 +3,9 @@
 
 package com.battlelancer.seriesguide.streaming
 
-import android.content.res.Configuration
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
@@ -19,17 +17,17 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.search.discover.ShowsDiscoverFilterAdapter
 import com.battlelancer.seriesguide.streaming.SgWatchProvider.Type
 import com.battlelancer.seriesguide.util.safeShow
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Dialog to configure watch provider list in a specific region only to filter by,
  * stores different list for shows or movies.
  */
-class WatchProviderFilterDialogFragment : BottomSheetDialogFragment() {
+class WatchProviderFilterDialogFragment : AppCompatDialogFragment() {
 
     private lateinit var type: Type
     private val model: WatchProviderFilterViewModel by viewModels {
@@ -47,29 +45,9 @@ class WatchProviderFilterDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return DialogWatchProviderFilterBinding.inflate(layoutInflater)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogWatchProviderFilterBinding.inflate(layoutInflater)
             .also { binding = it }
-            .root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // FIXME In landscape only peeks a tiny amount
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            (dialog as BottomSheetDialog).behavior.peekHeight = 600
-        }
-
-        val binding = binding!!
-
-        val titleRes = when (type) {
-            Type.SHOWS -> R.string.action_shows_filter
-            Type.MOVIES -> R.string.action_movies_filter
-        }
-        binding.textViewTitle.setText(titleRes)
 
         // watch region button
         binding.buttonWatchRegion.apply {
@@ -79,14 +57,6 @@ class WatchProviderFilterDialogFragment : BottomSheetDialogFragment() {
         StreamingSearch.regionLiveData.observe(this) {
             this.binding?.buttonWatchRegion?.text =
                 StreamingSearch.getCurrentRegionOrSelectString(requireContext())
-        }
-
-        // disable all button
-        binding.buttonDisableAllProviders.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                SgRoomDatabase.getInstance(requireContext()).sgWatchProviderHelper()
-                    .setAllDisabled(type.id)
-            }
         }
 
         // watch provider list
@@ -101,6 +71,29 @@ class WatchProviderFilterDialogFragment : BottomSheetDialogFragment() {
             model.allWatchProvidersFlow.collectLatest {
                 adapter.submitData(it)
             }
+        }
+
+        val titleRes = when (type) {
+            Type.SHOWS -> R.string.action_shows_filter
+            Type.MOVIES -> R.string.action_movies_filter
+        }
+        return MaterialAlertDialogBuilder(requireContext())
+            .setTitle(titleRes)
+            .setView(binding.root)
+            .setPositiveButton(R.string.dismiss, null)
+            .setNegativeButton(R.string.action_include_any_watch_provider) { _, _ ->
+                includeAnyAndDismiss()
+            }
+            .create()
+    }
+
+    private fun includeAnyAndDismiss() {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                SgRoomDatabase.getInstance(requireContext()).sgWatchProviderHelper()
+                    .setAllDisabled(type.id)
+            }
+            dismiss()
         }
     }
 
