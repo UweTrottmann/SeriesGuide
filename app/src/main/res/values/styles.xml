@@ -243,6 +243,11 @@
         <item name="colorOnSurface">?attr/colorPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorPrimary</item>
     </style>
+    <!-- Theme overlay to restore non-colored text and icons. -->
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface.NoColor" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="colorOnSurface">@color/sg_color_background_dark</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+    </style>
     <!-- Using OnSurface as toolbar typically used within AppBar which handles the background color. -->
     <style name="Widget.SeriesGuide.Toolbar" parent="Widget.Material3.Toolbar.OnSurface">
         <!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
