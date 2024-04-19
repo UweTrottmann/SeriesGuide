@@ -39,7 +39,6 @@
     <string name="action_stream">Strimuj ili kupi</string>
     <string name="action_stream_info">Информације о стримовању или куповини</string>
     <string name="action_select_region">Одабери регион</string>
-    <string name="action_include_any_watch_provider">Убаци било који</string>
     <string name="action_reset">Ресетуј</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
