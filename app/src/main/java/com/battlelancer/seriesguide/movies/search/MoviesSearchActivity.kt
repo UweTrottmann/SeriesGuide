@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.search
 
@@ -19,7 +19,7 @@ import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesDiscoverAdapter
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
-import com.battlelancer.seriesguide.streaming.DiscoverFilterFragment
+import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
 import com.battlelancer.seriesguide.util.HighlightTools
 import com.battlelancer.seriesguide.util.SearchHistory
@@ -162,7 +162,7 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
                 return true
             }
             R.id.menu_action_movies_search_filter -> {
-                DiscoverFilterFragment.showForMovies(supportFragmentManager)
+                WatchProviderFilterDialogFragment.showForMovies(supportFragmentManager)
                 return true
             }
             R.id.menu_action_movies_search_clear_history -> {

@@ -39,7 +39,6 @@
     <string name="action_stream">Streaming o acquisto</string>
     <string name="action_stream_info">Streaming o informazioni acquisto</string>
     <string name="action_select_region">Seleziona regione</string>
-    <string name="action_include_any_watch_provider">Includi tutti</string>
     <string name="action_reset">Reimposta</string>
     <!-- Search -->
     <string name="clear_search_history">Cancella la cronologia di ricerca</string>

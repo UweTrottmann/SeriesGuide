@@ -39,7 +39,6 @@
     <string name="action_stream">สตรีมหรือซื้อ</string>
     <string name="action_stream_info">ข้อมูลการสตรีมหรือซื้อ</string>
     <string name="action_select_region">เลือกภูมิภาค</string>
-    <string name="action_include_any_watch_provider">รวมอะไรก็ได้</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>

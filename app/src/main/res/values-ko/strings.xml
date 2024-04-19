@@ -39,7 +39,6 @@
     <string name="action_stream">스트리밍 or 구매</string>
     <string name="action_stream_info">스트리밍 또 구매</string>
     <string name="action_select_region">국가 선택</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">재설정</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>

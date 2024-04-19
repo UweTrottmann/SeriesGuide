@@ -43,7 +43,7 @@ class YearPickerDialogFragment : AppCompatDialogFragment() {
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 onPickedListener?.onPicked(binding.numberPickerYear.value)
             }
-            .setNegativeButton(R.string.clear) { _, _ ->
+            .setNegativeButton(R.string.action_reset) { _, _ ->
                 onPickedListener?.onPicked(null)
             }
             .create()

@@ -39,7 +39,6 @@
     <string name="action_stream">Streamování nebo nákup</string>
     <string name="action_stream_info">Informace o streamování nebo nákupu</string>
     <string name="action_select_region">Vyberte region</string>
-    <string name="action_include_any_watch_provider">Zahrnout vše</string>
     <string name="action_reset">Obnovit</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>

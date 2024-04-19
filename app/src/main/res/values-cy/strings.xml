@@ -39,7 +39,6 @@
     <string name="action_stream">Ffrwd neu brynu</string>
     <string name="action_stream_info">Ffrydio neu brynu gwybodaeth</string>
     <string name="action_select_region">Dewis rhanbarth</string>
-    <string name="action_include_any_watch_provider">cynhwyswch unrhyw</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Hanes chwilio clir</string>

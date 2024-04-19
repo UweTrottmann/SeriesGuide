@@ -39,7 +39,6 @@
     <string name="action_stream">Kup lub strumieniuj</string>
     <string name="action_stream_info">Informacja o zakupie lub strumieniowaniu</string>
     <string name="action_select_region">Wybierz region</string>
-    <string name="action_include_any_watch_provider">Uwzględnij dowolne</string>
     <string name="action_reset">Przywróć</string>
     <!-- Search -->
     <string name="clear_search_history">Wyczyść historię wyszukiwania</string>
