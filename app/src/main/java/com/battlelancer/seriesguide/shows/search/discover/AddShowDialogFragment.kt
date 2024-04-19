@@ -272,7 +272,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         binding.textViewAddShowMeta.text = timeAndNetworkText
 
         // Rating.
-        binding.textViewAddRatingValue.text = TraktTools.buildRatingString(show.ratingGlobal)
+        binding.textViewAddRatingValue.text = TraktTools.buildRatingString(show.ratingTrakt)
 
         // Genres.
         ViewTools.setValueOrPlaceholder(

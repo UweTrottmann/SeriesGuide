@@ -36,8 +36,11 @@ object ImportTools {
             customReleaseDayOffset = custom_release_day_offset?.takeIf { it.absoluteValue <= SgShow2.MAX_CUSTOM_DAY_OFFSET },
             customReleaseTimeZone = custom_release_timezone,
             firstRelease = first_aired,
-            ratingGlobal = if (rating in 0.0..10.0) rating else 0.0,
-            ratingVotes = if (rating_votes >= 0) rating_votes else 0,
+            // TODO Should this be exported? Some other non-user-specific info is?
+            ratingTmdb = 0.0,
+            ratingTmdbVotes = 0,
+            ratingTrakt = if (rating in 0.0..10.0) rating else 0.0,
+            ratingTraktVotes = if (rating_votes >= 0) rating_votes else 0,
             genres = genres ?: "",
             network = network ?: "",
             imdbId = imdb_id ?: "",

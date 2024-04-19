@@ -92,9 +92,9 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
 
                     val genres = TextTools.splitPipeSeparatedStrings(show.genres)
 
-                    val traktRating = TraktTools.buildRatingString(show.ratingGlobal)
+                    val traktRating = TraktTools.buildRatingString(show.ratingTrakt)
                     val traktVotes =
-                        TraktTools.buildRatingVotesString(application, show.ratingVotes)
+                        TraktTools.buildRatingVotesString(application, show.ratingTraktVotes)
                     val traktUserRating =
                         TraktTools.buildUserRatingString(application, show.ratingUser)
 

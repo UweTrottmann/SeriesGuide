@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -8,6 +8,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.tools.NextEpisodeUpdater
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.util.TimeTools
@@ -55,8 +56,28 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.GENRES) val genres: String? = "",
     @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String? = "",
     @ColumnInfo(name = SgShow2Columns.IMDBID) val imdbId: String? = "",
-    @ColumnInfo(name = SgShow2Columns.RATING_GLOBAL) val ratingGlobal: Double?,
-    @ColumnInfo(name = SgShow2Columns.RATING_VOTES) val ratingVotes: Int?,
+    /**
+     * TMDB rating. Encoded as double.
+     * <pre>
+     * Range:   0.0-10.0
+     * Default: 0.0
+     * </pre>
+     *
+     * Added with [SgRoomDatabase.VERSION_53_SHOW_TMDB_RATINGS].
+     */
+    @ColumnInfo(name = SgShow2Columns.RATING_TMDB) val ratingTmdb: Double?,
+    /**
+     * TMDB rating number of votes.
+     * <pre>
+     * Example: 42
+     * Default: 0
+     * </pre>
+     *
+     * Added with [SgRoomDatabase.VERSION_53_SHOW_TMDB_RATINGS].
+     */
+    @ColumnInfo(name = SgShow2Columns.RATING_TMDB_VOTES) val ratingTmdbVotes: Int?,
+    @ColumnInfo(name = SgShow2Columns.RATING_TRAKT) val ratingTrakt: Double?,
+    @ColumnInfo(name = SgShow2Columns.RATING_TRAKT_VOTES) val ratingTraktVotes: Int?,
     @ColumnInfo(name = SgShow2Columns.RATING_USER) val ratingUser: Int? = 0,
     @ColumnInfo(name = SgShow2Columns.RUNTIME) val runtime: Int? = 0,
     @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int? = ShowStatus.UNKNOWN,
@@ -94,10 +115,10 @@ data class SgShow2(
         get() = releaseWeekDay ?: TimeTools.RELEASE_WEEKDAY_UNKNOWN
     val statusOrUnknown: Int
         get() = status ?: ShowStatus.UNKNOWN
-    val ratingGlobalOrZero: Double
-        get() = ratingGlobal ?: 0.0
-    val ratingVotesOrZero: Int
-        get() = ratingVotes ?: 0
+    val ratingTraktOrZero: Double
+        get() = ratingTrakt ?: 0.0
+    val ratingTraktVotesOrZero: Int
+        get() = ratingTraktVotes ?: 0
 
     companion object {
         /**

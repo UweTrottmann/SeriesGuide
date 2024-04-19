@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -98,8 +98,8 @@ class GetShowTools @Inject constructor(
                         releaseCountry = existingShow.releaseCountry,
                         releaseTimeZone = existingShow.releaseTimeZone,
                         firstRelease = existingShow.firstReleaseOrDefault,
-                        rating = existingShow.ratingGlobalOrZero,
-                        votes = existingShow.ratingVotesOrZero
+                        rating = existingShow.ratingTraktOrZero,
+                        votes = existingShow.ratingTraktVotesOrZero
                     )
                 }
             }
@@ -139,6 +139,8 @@ class GetShowTools @Inject constructor(
             else -> ShowStatus.UNKNOWN
         }
         val poster = tmdbShow.poster_path ?: ""
+        val ratingTmdb = tmdbShow.vote_average ?: 0.0
+        val ratingTmdbVotes = tmdbShow.vote_count ?: 0
 
         val showDetails = if (existingShow != null) {
             // For updating existing show.
@@ -154,8 +156,10 @@ class GetShowTools @Inject constructor(
                     releaseCountry = traktDetails.releaseCountry,
                     releaseTimeZone = traktDetails.releaseTimeZone,
                     firstRelease = traktDetails.firstRelease,
-                    ratingGlobal = traktDetails.rating,
-                    ratingVotes = traktDetails.votes,
+                    ratingTmdb = ratingTmdb,
+                    ratingTmdbVotes = ratingTmdbVotes,
+                    ratingTrakt = traktDetails.rating,
+                    ratingTraktVotes = traktDetails.votes,
                     genres = genres,
                     network = network,
                     imdbId = imdbId,
@@ -185,8 +189,10 @@ class GetShowTools @Inject constructor(
                     customReleaseDayOffset = SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET,
                     customReleaseTimeZone = SgShow2.CUSTOM_RELEASE_TIME_ZONE_NOT_SET,
                     firstRelease = traktDetails.firstRelease,
-                    ratingGlobal = traktDetails.rating,
-                    ratingVotes = traktDetails.votes,
+                    ratingTmdb = ratingTmdb,
+                    ratingTmdbVotes = ratingTmdbVotes,
+                    ratingTrakt = traktDetails.rating,
+                    ratingTraktVotes = traktDetails.votes,
                     genres = genres,
                     network = network,
                     imdbId = imdbId,

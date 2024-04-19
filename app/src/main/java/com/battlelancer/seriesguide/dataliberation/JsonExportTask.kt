@@ -328,8 +328,8 @@ class JsonExportTask(
             show.rating_user = sgShow.ratingUser
             if (isFullDump) {
                 show.overview = sgShow.overview
-                show.rating = sgShow.ratingGlobalOrZero
-                show.rating_votes = sgShow.ratingVotesOrZero
+                show.rating = sgShow.ratingTraktOrZero
+                show.rating_votes = sgShow.ratingTraktVotesOrZero
                 show.genres = sgShow.genres
             }
 
