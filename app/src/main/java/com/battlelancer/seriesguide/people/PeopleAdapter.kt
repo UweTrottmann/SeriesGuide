@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools
 import com.battlelancer.seriesguide.util.CircleTransformation
 import com.battlelancer.seriesguide.util.ImageTools
+import com.squareup.picasso.Transformation
 
 /**
  * Shows a list of people in rows with headshots, name and description.
@@ -28,39 +29,15 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person?>(context, 
         if (convertView == null) {
             view = LayoutInflater.from(parent.context)
                 .inflate(LAYOUT, parent, false)
-
-            viewHolder = ViewHolder()
-            viewHolder.name = view.findViewById(R.id.textViewPerson)
-            viewHolder.description = view.findViewById(
-                R.id.textViewPersonDescription
-            )
-            viewHolder.headshot = view.findViewById(R.id.imageViewPerson)
+            viewHolder = ViewHolder(view)
             view.tag = viewHolder
         } else {
             view = convertView
             viewHolder = convertView.tag as ViewHolder
         }
 
-        val person = getItem(position) ?: return view
-
-        // name and description
-        viewHolder.name!!.text = person.name
-        viewHolder.description!!.text = person.description
-
-        // load headshot
-        ImageTools.loadWithPicasso(
-            context,
-            TmdbTools.buildProfileImageUrl(
-                context, person.profilePath,
-                TmdbTools.ProfileImageSize.W185
-            )
-        )
-            .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
-            .centerCrop()
-            .transform(personImageTransform)
-            .error(R.drawable.ic_account_circle_black_24dp)
-            .into(viewHolder.headshot)
-
+        val person = getItem(position)
+        viewHolder.bind(context, personImageTransform, person)
         return view
     }
 
@@ -72,10 +49,38 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person?>(context, 
         data?.let { addAll(it) }
     }
 
-    internal class ViewHolder {
-        var name: TextView? = null
-        var description: TextView? = null
-        var headshot: ImageView? = null
+    class ViewHolder(view: View) {
+        private val name: TextView
+        private val description: TextView
+        private val picture: ImageView
+
+        init {
+            name = view.findViewById(R.id.textViewPerson)
+            description = view.findViewById(R.id.textViewPersonDescription)
+            picture = view.findViewById(R.id.imageViewPerson)
+        }
+
+        fun bind(context: Context, personImageTransform: Transformation, person: Person?) {
+            // name and description
+            name.text = person?.name ?: ""
+            description.text = person?.description ?: ""
+
+            // load profile picture
+            if (person != null) {
+                ImageTools.loadWithPicasso(
+                    context,
+                    TmdbTools.buildProfileImageUrl(
+                        context, person.profilePath,
+                        TmdbTools.ProfileImageSize.W185
+                    )
+                )
+                    .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
+                    .centerCrop()
+                    .transform(personImageTransform)
+                    .error(R.drawable.ic_account_circle_black_24dp)
+                    .into(picture)
+            }
+        }
     }
 
     companion object {
