@@ -1,90 +1,84 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2018, 2022, 2023 Uwe Trottmann
+// Copyright 2014-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.people;
+package com.battlelancer.seriesguide.people
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
-import com.battlelancer.seriesguide.util.CircleTransformation;
-import com.battlelancer.seriesguide.util.ImageTools;
-import java.util.List;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
+import com.battlelancer.seriesguide.util.CircleTransformation
+import com.battlelancer.seriesguide.util.ImageTools
 
 /**
  * Shows a list of people in rows with headshots, name and description.
  */
-class PeopleAdapter extends ArrayAdapter<PeopleListHelper.Person> {
+internal class PeopleAdapter(context: Context) : ArrayAdapter<Person?>(context, LAYOUT) {
 
-    private static int LAYOUT = R.layout.item_person;
+    private val personImageTransform = CircleTransformation()
 
-    private final CircleTransformation personImageTransform = new CircleTransformation();
-
-    PeopleAdapter(Context context) {
-        super(context, LAYOUT);
-    }
-
-    @NonNull
-    @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder;
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view: View
+        val viewHolder: ViewHolder
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(LAYOUT, parent, false);
+            view = LayoutInflater.from(parent.context)
+                .inflate(LAYOUT, parent, false)
 
-            viewHolder = new ViewHolder();
-
-            viewHolder.name = convertView.findViewById(R.id.textViewPerson);
-            viewHolder.description = convertView.findViewById(
-                    R.id.textViewPersonDescription);
-            viewHolder.headshot = convertView.findViewById(R.id.imageViewPerson);
-
-            convertView.setTag(viewHolder);
+            viewHolder = ViewHolder()
+            viewHolder.name = view.findViewById(R.id.textViewPerson)
+            viewHolder.description = view.findViewById(
+                R.id.textViewPersonDescription
+            )
+            viewHolder.headshot = view.findViewById(R.id.imageViewPerson)
+            view.tag = viewHolder
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            view = convertView
+            viewHolder = convertView.tag as ViewHolder
         }
 
-        PeopleListHelper.Person person = getItem(position);
-        if (person == null) {
-            return convertView;
-        }
+        val person = getItem(position) ?: return view
 
         // name and description
-        viewHolder.name.setText(person.name);
-        viewHolder.description.setText(person.description);
+        viewHolder.name!!.text = person.name
+        viewHolder.description!!.text = person.description
 
         // load headshot
-        ImageTools.loadWithPicasso(getContext(),
-                TmdbTools.buildProfileImageUrl(getContext(), person.profilePath,
-                        TmdbTools.ProfileImageSize.W185))
-                .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
-                .centerCrop()
-                .transform(personImageTransform)
-                .error(R.drawable.ic_account_circle_black_24dp)
-                .into(viewHolder.headshot);
+        ImageTools.loadWithPicasso(
+            context,
+            TmdbTools.buildProfileImageUrl(
+                context, person.profilePath,
+                TmdbTools.ProfileImageSize.W185
+            )
+        )
+            .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
+            .centerCrop()
+            .transform(personImageTransform)
+            .error(R.drawable.ic_account_circle_black_24dp)
+            .into(viewHolder.headshot)
 
-        return convertView;
+        return view
     }
 
     /**
-     * Replace the data in this {@link android.widget.ArrayAdapter} with the given list.
+     * Replace the data in this [android.widget.ArrayAdapter] with the given list.
      */
-    void setData(List<PeopleListHelper.Person> data) {
-        clear();
-        if (data != null) {
-            addAll(data);
-        }
+    fun setData(data: List<Person?>?) {
+        clear()
+        data?.let { addAll(it) }
     }
 
-    static class ViewHolder {
-        public TextView name;
-        public TextView description;
-        public ImageView headshot;
+    internal class ViewHolder {
+        var name: TextView? = null
+        var description: TextView? = null
+        var headshot: ImageView? = null
+    }
+
+    companion object {
+        private val LAYOUT = R.layout.item_person
     }
 }

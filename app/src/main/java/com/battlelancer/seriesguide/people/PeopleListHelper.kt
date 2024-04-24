@@ -1,266 +1,261 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2014-2018, 2022, 2023 Uwe Trottmann
+// Copyright 2014-2024 Uwe Trottmann
 
-package com.battlelancer.seriesguide.people;
+package com.battlelancer.seriesguide.people
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.tmdbapi.TmdbTools;
-import com.battlelancer.seriesguide.util.CircleTransformation;
-import com.battlelancer.seriesguide.util.ImageTools;
-import com.battlelancer.seriesguide.util.ThemeUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.tmdb2.entities.CastMember;
-import com.uwetrottmann.tmdb2.entities.Credits;
-import com.uwetrottmann.tmdb2.entities.CrewMember;
-import java.util.ArrayList;
-import java.util.List;
-import timber.log.Timber;
+import android.content.Context
+import android.content.Intent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.people.PeopleActivity.PeopleType
+import com.battlelancer.seriesguide.tmdbapi.TmdbTools
+import com.battlelancer.seriesguide.util.CircleTransformation
+import com.battlelancer.seriesguide.util.ImageTools
+import com.battlelancer.seriesguide.util.ThemeUtils
+import com.battlelancer.seriesguide.util.Utils
+import com.uwetrottmann.tmdb2.entities.Credits
+import timber.log.Timber
 
 /**
  * Helps load a fixed number of people into a static layout.
  */
-public class PeopleListHelper {
+class PeopleListHelper {
 
-    private final CircleTransformation personImageTransform = new CircleTransformation();
+    private val personImageTransform = CircleTransformation()
 
-    public boolean populateShowCast(Activity activity,
-            ViewGroup peopleContainer, Credits credits) {
-        return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW);
+    fun populateShowCast(
+        context: Context,
+        peopleContainer: ViewGroup?,
+        credits: Credits
+    ): Boolean {
+        return populateCast(context, peopleContainer, credits, PeopleActivity.MediaType.SHOW)
     }
 
-    public boolean populateShowCrew(Activity activity,
-            ViewGroup peopleContainer, Credits credits) {
-        return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.SHOW);
+    fun populateShowCrew(
+        context: Context,
+        peopleContainer: ViewGroup?,
+        credits: Credits
+    ): Boolean {
+        return populateCrew(context, peopleContainer, credits, PeopleActivity.MediaType.SHOW)
     }
 
-    public boolean populateMovieCast(Activity activity,
-            ViewGroup peopleContainer, Credits credits) {
-        return populateCast(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE);
+    fun populateMovieCast(
+        context: Context,
+        peopleContainer: ViewGroup?,
+        credits: Credits
+    ): Boolean {
+        return populateCast(context, peopleContainer, credits, PeopleActivity.MediaType.MOVIE)
     }
 
-    public boolean populateMovieCrew(Activity activity,
-            ViewGroup peopleContainer, Credits credits) {
-        return populateCrew(activity, peopleContainer, credits, PeopleActivity.MediaType.MOVIE);
+    fun populateMovieCrew(
+        context: Context,
+        peopleContainer: ViewGroup?,
+        credits: Credits
+    ): Boolean {
+        return populateCrew(context, peopleContainer, credits, PeopleActivity.MediaType.MOVIE)
     }
 
     /**
-     * Add views for at most three cast members to the given {@link android.view.ViewGroup} and a
+     * Add views for at most three cast members to the given [android.view.ViewGroup] and a
      * "Show all" link if there are more.
      */
-    private boolean populateCast(Activity activity, ViewGroup peopleContainer,
-            Credits credits, PeopleActivity.MediaType mediaType) {
+    private fun populateCast(
+        context: Context,
+        peopleContainer: ViewGroup?,
+        credits: Credits,
+        mediaType: PeopleActivity.MediaType
+    ): Boolean {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
-            Timber.d("populateCast: container reference gone, aborting");
-            return false;
+            Timber.d("populateCast: container reference gone, aborting")
+            return false
         }
         if (credits.id == null) {
-            return false; // missing required values
+            return false // missing required values
         }
 
-        peopleContainer.removeAllViews();
+        peopleContainer.removeAllViews()
 
         // show at most 3 cast members
-        LayoutInflater inflater = LayoutInflater.from(peopleContainer.getContext());
-        List<CastMember> cast = credits.cast;
-        int added = 0;
-        for (CastMember castMember : cast) {
+        val inflater = LayoutInflater.from(peopleContainer.context)
+        val cast = credits.cast
+        var added = 0
+        for (castMember in cast) {
             if (added == 3) {
-                break; // not more than 3
+                break // not more than 3
             }
             if (castMember.id == null) {
-                continue; // missing required values
+                continue  // missing required values
             }
 
-            View personView = createPersonView(activity, inflater, peopleContainer, castMember.name,
-                    castMember.character, castMember.profile_path);
+            val personView = createPersonView(
+                context,
+                inflater,
+                peopleContainer,
+                castMember.name,
+                castMember.character,
+                castMember.profile_path
+            )
             personView.setOnClickListener(
-                    new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CAST, castMember.id)
-            );
-
-            peopleContainer.addView(personView);
-            added++;
+                OnPersonClickListener(
+                    context,
+                    mediaType,
+                    credits.id,
+                    PeopleType.CAST,
+                    castMember.id
+                )
+            )
+            peopleContainer.addView(personView)
+            added++
         }
-
-        if (cast.size() > 3) {
-            addShowAllView(inflater, peopleContainer,
-                    new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CAST)
-            );
+        if (cast.size > 3) {
+            addShowAllView(
+                inflater, peopleContainer,
+                OnPersonClickListener(context, mediaType, credits.id, PeopleType.CAST)
+            )
         }
-
-        return added > 0;
+        return added > 0
     }
 
     /**
-     * Add views for at most three crew members to the given {@link android.view.ViewGroup} and a
+     * Add views for at most three crew members to the given [android.view.ViewGroup] and a
      * "Show all" link if there are more.
      */
-    private boolean populateCrew(Activity activity, ViewGroup peopleContainer,
-            Credits credits, PeopleActivity.MediaType mediaType) {
+    private fun populateCrew(
+        context: Context,
+        peopleContainer: ViewGroup?,
+        credits: Credits,
+        mediaType: PeopleActivity.MediaType
+    ): Boolean {
         if (peopleContainer == null) {
             // nothing we can do, view is already gone
-            Timber.d("populateCrew: container reference gone, aborting");
-            return false;
+            Timber.d("populateCrew: container reference gone, aborting")
+            return false
         }
         if (credits.id == null) {
-            return false; // missing required values
+            return false // missing required values
         }
 
-        peopleContainer.removeAllViews();
+        peopleContainer.removeAllViews()
 
         // show at most 3 crew members
-        LayoutInflater inflater = LayoutInflater.from(peopleContainer.getContext());
-        List<CrewMember> crew = credits.crew;
-        int added = 0;
-        for (CrewMember crewMember : crew) {
+        val inflater = LayoutInflater.from(peopleContainer.context)
+        val crew = credits.crew
+        var added = 0
+        for (crewMember in crew) {
             if (added == 3) {
-                break; // not more than 3
+                break // not more than 3
             }
             if (crewMember.id == null) {
-                continue; // missing required values
+                continue  // missing required values
+            }
+            val personView = createPersonView(
+                context,
+                inflater,
+                peopleContainer,
+                crewMember.name,
+                crewMember.job,
+                crewMember.profile_path
+            )
+            personView.setOnClickListener(
+                OnPersonClickListener(
+                    context,
+                    mediaType,
+                    credits.id,
+                    PeopleType.CREW,
+                    crewMember.id
+                )
+            )
+            peopleContainer.addView(personView)
+            added++
+        }
+
+        if (crew.size > 3) {
+            addShowAllView(
+                inflater, peopleContainer,
+                OnPersonClickListener(context, mediaType, credits.id, PeopleType.CREW)
+            )
+        }
+        return added > 0
+    }
+
+    private fun createPersonView(
+        context: Context,
+        inflater: LayoutInflater,
+        peopleContainer: ViewGroup,
+        name: String,
+        description: String,
+        profilePath: String
+    ): View {
+        val personView = inflater.inflate(R.layout.item_person, peopleContainer, false)
+            .apply {
+                // use clickable instead of activatable background
+                setBackgroundResource(
+                    ThemeUtils.resolveAttributeToResourceId(
+                        peopleContainer.context.theme,
+                        androidx.appcompat.R.attr.selectableItemBackground
+                    )
+                )
+                // support keyboard nav
+                isFocusable = true
             }
 
-            View personView = createPersonView(activity, inflater, peopleContainer, crewMember.name,
-                    crewMember.job, crewMember.profile_path);
-            personView.setOnClickListener(
-                    new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CREW, crewMember.id)
-            );
+        ImageTools.loadWithPicasso(
+            context, TmdbTools.buildProfileImageUrl(
+                context, profilePath,
+                TmdbTools.ProfileImageSize.W185
+            )
+        )
+            .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
+            .centerCrop()
+            .transform(personImageTransform)
+            .error(R.drawable.ic_account_circle_black_24dp)
+            .into(personView.findViewById<View>(R.id.imageViewPerson) as ImageView)
 
-            peopleContainer.addView(personView);
-            added++;
-        }
-
-        if (crew.size() > 3) {
-            addShowAllView(inflater, peopleContainer,
-                    new OnPersonClickListener(activity, mediaType, credits.id,
-                            PeopleActivity.PeopleType.CREW)
-            );
-        }
-
-        return added > 0;
+        personView.findViewById<TextView>(R.id.textViewPerson).text = name
+        personView.findViewById<TextView>(R.id.textViewPersonDescription).text = description
+        return personView
     }
 
-    private View createPersonView(Context context, LayoutInflater inflater,
-            ViewGroup peopleContainer, String name, String description, String profilePath) {
-        View personView = inflater.inflate(R.layout.item_person, peopleContainer, false);
-
-        // use clickable instead of activatable background
-        personView.setBackgroundResource(
-                ThemeUtils.resolveAttributeToResourceId(peopleContainer.getContext().getTheme(),
-                        androidx.appcompat.R.attr.selectableItemBackground));
-        // support keyboard nav
-        personView.setFocusable(true);
-
-        ImageTools.loadWithPicasso(context, TmdbTools.buildProfileImageUrl(context, profilePath,
-                TmdbTools.ProfileImageSize.W185))
-                .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
-                .centerCrop()
-                .transform(personImageTransform)
-                .error(R.drawable.ic_account_circle_black_24dp)
-                .into((ImageView) personView.findViewById(R.id.imageViewPerson));
-
-        TextView nameView = personView.findViewById(R.id.textViewPerson);
-        nameView.setText(name);
-
-        TextView descriptionView = personView.findViewById(R.id.textViewPersonDescription);
-        descriptionView.setText(description);
-
-        return personView;
+    private fun addShowAllView(
+        inflater: LayoutInflater,
+        peopleContainer: ViewGroup,
+        clickListener: View.OnClickListener
+    ) {
+        val showAllView =
+            inflater.inflate(R.layout.item_action_add, peopleContainer, false) as TextView
+        showAllView.setText(R.string.action_display_all)
+        showAllView.setOnClickListener(clickListener)
+        peopleContainer.addView(showAllView)
     }
 
-    private static class OnPersonClickListener implements View.OnClickListener {
+    /**
+     * Listener that will show cast or crew members for the given TMDb entity.
+     *
+     * Set [personTmdbId] to pre-select a specific cast or crew member.
+     */
+    private class OnPersonClickListener(
+        private val context: Context,
+        private val mediaType: PeopleActivity.MediaType,
+        private val itemTmdbId: Int,
+        private val peopleType: PeopleType,
+        private val personTmdbId: Int = -1
+    ) : View.OnClickListener {
 
-        private final Activity activity;
-        private final int itemTmdbId;
-        private final int personTmdbId;
-        private final PeopleActivity.PeopleType peopleType;
-        private final PeopleActivity.MediaType mediaType;
-
-        /**
-         * Listener that will show cast or crew members for the given TMDb entity.
-         */
-        public OnPersonClickListener(Activity activity, PeopleActivity.MediaType mediaType,
-                int mediaTmdbId, PeopleActivity.PeopleType peopleType) {
-            this(activity, mediaType, mediaTmdbId, peopleType, -1);
-        }
-
-        /**
-         * Listener that will show cast or crew members for the given TMDb entity and pre-selects a
-         * specific cast or crew member.
-         */
-        public OnPersonClickListener(Activity activity, PeopleActivity.MediaType mediaType,
-                int mediaTmdbId, PeopleActivity.PeopleType peopleType, int personTmdbId) {
-            this.activity = activity;
-            this.itemTmdbId = mediaTmdbId;
-            this.peopleType = peopleType;
-            this.mediaType = mediaType;
-            this.personTmdbId = personTmdbId;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent i = new Intent(v.getContext(), PeopleActivity.class);
-            i.putExtra(PeopleActivity.InitBundle.ITEM_TMDB_ID, itemTmdbId);
-            i.putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE, peopleType.toString());
-            i.putExtra(PeopleActivity.InitBundle.MEDIA_TYPE, mediaType.toString());
+        override fun onClick(v: View) {
+            val i = Intent(v.context, PeopleActivity::class.java)
+            i.putExtra(PeopleActivity.InitBundle.ITEM_TMDB_ID, itemTmdbId)
+            i.putExtra(PeopleActivity.InitBundle.PEOPLE_TYPE, peopleType.toString())
+            i.putExtra(PeopleActivity.InitBundle.MEDIA_TYPE, mediaType.toString())
             if (personTmdbId != -1) {
                 // showing a specific person
-                i.putExtra(PersonFragment.ARG_PERSON_TMDB_ID, personTmdbId);
+                i.putExtra(PersonFragment.ARG_PERSON_TMDB_ID, personTmdbId)
             }
-            Utils.startActivityWithAnimation(activity, i, v);
+            Utils.startActivityWithAnimation(context, i, v)
         }
-    }
-
-    private static void addShowAllView(LayoutInflater inflater, ViewGroup peopleContainer,
-            View.OnClickListener clickListener) {
-        TextView showAllView = (TextView) inflater.inflate(R.layout.item_action_add,
-                peopleContainer, false);
-        showAllView.setText(R.string.action_display_all);
-        showAllView.setOnClickListener(clickListener);
-        peopleContainer.addView(showAllView);
-    }
-
-    public static List<Person> transformCastToPersonList(List<CastMember> cast) {
-        List<Person> people = new ArrayList<>();
-        for (CastMember castMember : cast) {
-            Person person = new Person();
-            person.tmdbId = castMember.id;
-            person.name = castMember.name;
-            person.description = castMember.character;
-            person.profilePath = castMember.profile_path;
-            people.add(person);
-        }
-        return people;
-    }
-
-    public static List<Person> transformCrewToPersonList(List<CrewMember> crew) {
-        List<Person> people = new ArrayList<>();
-        for (CrewMember crewMember : crew) {
-            Person person = new Person();
-            person.tmdbId = crewMember.id;
-            person.name = crewMember.name;
-            person.description = crewMember.job;
-            person.profilePath = crewMember.profile_path;
-            people.add(person);
-        }
-        return people;
-    }
-
-    public static class Person {
-        public int tmdbId;
-        public String name;
-        public String description;
-        public String profilePath;
     }
 }

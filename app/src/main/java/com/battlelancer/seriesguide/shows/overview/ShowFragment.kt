@@ -499,14 +499,14 @@ class ShowFragment() : Fragment() {
 
         val peopleListHelper = PeopleListHelper()
         if (credits.cast?.size != 0
-            && peopleListHelper.populateShowCast(activity, binding.castContainer, credits)) {
+            && peopleListHelper.populateShowCast(requireContext(), binding.castContainer, credits)) {
             setCastVisibility(binding, true)
         } else {
             setCastVisibility(binding, false)
         }
 
         if (credits.crew?.size != 0
-            && peopleListHelper.populateShowCrew(activity, binding.crewContainer, credits)) {
+            && peopleListHelper.populateShowCrew(requireContext(), binding.crewContainer, credits)) {
             setCrewVisibility(binding, true)
         } else {
             setCrewVisibility(binding, false)

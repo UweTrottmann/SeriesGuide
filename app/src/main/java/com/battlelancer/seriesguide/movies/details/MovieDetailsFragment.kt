@@ -623,7 +623,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // cast members
         if (credits.cast?.size != 0
             && peopleListHelper.populateMovieCast(
-                activity,
+                requireContext(),
                 binding.moviePeople.containerCast,
                 credits
             )) {
@@ -635,7 +635,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         // crew members
         if (credits.crew?.size != 0
             && peopleListHelper.populateMovieCrew(
-                activity,
+                requireContext(),
                 binding.moviePeople.containerCrew,
                 credits
             )) {

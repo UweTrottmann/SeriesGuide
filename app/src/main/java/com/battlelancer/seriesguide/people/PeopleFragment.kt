@@ -104,7 +104,7 @@ class PeopleFragment : Fragment() {
 
         emptyView.setButtonClickListener { refresh() }
 
-        adapter = PeopleAdapter(context)
+        adapter = PeopleAdapter(requireContext())
         listView.adapter = adapter
 
         model.credits.observe(viewLifecycleOwner, Observer {
@@ -116,9 +116,9 @@ class PeopleFragment : Fragment() {
                 return@Observer
             }
             if (peopleType == PeopleActivity.PeopleType.CAST) {
-                adapter.setData(PeopleListHelper.transformCastToPersonList(it.cast))
+                adapter.setData(Person.transformCastToPersonList(it.cast))
             } else {
-                adapter.setData(PeopleListHelper.transformCrewToPersonList(it.crew))
+                adapter.setData(Person.transformCrewToPersonList(it.crew))
             }
         })
     }
