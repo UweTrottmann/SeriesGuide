@@ -3,8 +3,7 @@
 
 package com.battlelancer.seriesguide.people
 
-import com.uwetrottmann.tmdb2.entities.CastMember
-import com.uwetrottmann.tmdb2.entities.CrewMember
+import com.uwetrottmann.tmdb2.entities.Credits
 
 class Person {
     var tmdbId = 0
@@ -13,27 +12,37 @@ class Person {
     var profilePath: String? = null
 
     companion object {
-        fun transformCastToPersonList(cast: List<CastMember>): List<Person> {
+        fun transformCastToPersonList(credits: Credits?): List<Person> {
+            if (credits == null) return emptyList()
+            val cast = credits.cast ?: return emptyList()
             val people: MutableList<Person> = ArrayList()
-            for (castMember in cast) {
+            for (member in cast) {
+                val id = member.id ?: continue
+                val name = member.name ?: continue
+
                 val person = Person()
-                person.tmdbId = castMember.id
-                person.name = castMember.name
-                person.description = castMember.character
-                person.profilePath = castMember.profile_path
+                person.tmdbId = id
+                person.name = name
+                person.description = member.character
+                person.profilePath = member.profile_path
                 people.add(person)
             }
             return people
         }
 
-        fun transformCrewToPersonList(crew: List<CrewMember>): List<Person> {
+        fun transformCrewToPersonList(credits: Credits?): List<Person> {
+            if (credits == null) return emptyList()
+            val crew = credits.crew ?: return emptyList()
             val people: MutableList<Person> = ArrayList()
-            for (crewMember in crew) {
+            for (member in crew) {
+                val id = member.id ?: continue
+                val name = member.name ?: continue
+
                 val person = Person()
-                person.tmdbId = crewMember.id
-                person.name = crewMember.name
-                person.description = crewMember.job
-                person.profilePath = crewMember.profile_path
+                person.tmdbId = id
+                person.name = name
+                person.description = member.job
+                person.profilePath = member.profile_path
                 people.add(person)
             }
             return people

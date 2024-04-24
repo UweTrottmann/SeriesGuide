@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
 
@@ -111,14 +111,10 @@ class PeopleFragment : Fragment() {
             setProgressVisibility(false)
             setEmptyMessage()
 
-            if (it == null) {
-                adapter.setData(null)
-                return@Observer
-            }
             if (peopleType == PeopleActivity.PeopleType.CAST) {
-                adapter.setData(Person.transformCastToPersonList(it.cast))
+                adapter.setData(Person.transformCastToPersonList(it))
             } else {
-                adapter.setData(Person.transformCrewToPersonList(it.crew))
+                adapter.setData(Person.transformCrewToPersonList(it))
             }
         })
     }

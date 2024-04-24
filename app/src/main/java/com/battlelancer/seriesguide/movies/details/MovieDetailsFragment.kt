@@ -613,16 +613,9 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
     }
 
     private fun populateMovieCreditsViews(credits: Credits?) {
-        if (credits == null) {
-            setCastVisibility(false)
-            setCrewVisibility(false)
-            return
-        }
-
         val peopleListHelper = PeopleListHelper()
         // cast members
-        if (credits.cast?.size != 0
-            && peopleListHelper.populateMovieCast(
+        if (peopleListHelper.populateMovieCast(
                 requireContext(),
                 binding.moviePeople.containerCast,
                 credits
@@ -633,8 +626,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // crew members
-        if (credits.crew?.size != 0
-            && peopleListHelper.populateMovieCrew(
+        if (peopleListHelper.populateMovieCrew(
                 requireContext(),
                 binding.moviePeople.containerCrew,
                 credits

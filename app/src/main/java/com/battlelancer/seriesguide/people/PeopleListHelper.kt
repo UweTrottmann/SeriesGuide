@@ -27,34 +27,46 @@ class PeopleListHelper {
 
     private val personImageTransform = CircleTransformation()
 
+    /**
+     * @see populateCast
+     */
     fun populateShowCast(
         context: Context,
         peopleContainer: ViewGroup?,
-        credits: Credits
+        credits: Credits?
     ): Boolean {
         return populateCast(context, peopleContainer, credits, PeopleActivity.MediaType.SHOW)
     }
 
+    /**
+     * @see populateCrew
+     */
     fun populateShowCrew(
         context: Context,
         peopleContainer: ViewGroup?,
-        credits: Credits
+        credits: Credits?
     ): Boolean {
         return populateCrew(context, peopleContainer, credits, PeopleActivity.MediaType.SHOW)
     }
 
+    /**
+     * @see populateCast
+     */
     fun populateMovieCast(
         context: Context,
         peopleContainer: ViewGroup?,
-        credits: Credits
+        credits: Credits?
     ): Boolean {
         return populateCast(context, peopleContainer, credits, PeopleActivity.MediaType.MOVIE)
     }
 
+    /**
+     * @see populateCrew
+     */
     fun populateMovieCrew(
         context: Context,
         peopleContainer: ViewGroup?,
-        credits: Credits
+        credits: Credits?
     ): Boolean {
         return populateCrew(context, peopleContainer, credits, PeopleActivity.MediaType.MOVIE)
     }
@@ -62,11 +74,13 @@ class PeopleListHelper {
     /**
      * Add views for at most three cast members to the given [android.view.ViewGroup] and a
      * "Show all" link if there are more.
+     *
+     * @return `false` if no views were added to the [peopleContainer].
      */
     private fun populateCast(
         context: Context,
         peopleContainer: ViewGroup?,
-        credits: Credits,
+        credits: Credits?,
         mediaType: PeopleActivity.MediaType
     ): Boolean {
         if (peopleContainer == null) {
@@ -74,39 +88,38 @@ class PeopleListHelper {
             Timber.d("populateCast: container reference gone, aborting")
             return false
         }
-        if (credits.id == null) {
-            return false // missing required values
-        }
+        if (credits == null) return false
+        val itemTmdbId = credits.id ?: return false
+        val cast = credits.cast
+        if (cast.isNullOrEmpty()) return false
 
         peopleContainer.removeAllViews()
-
-        // show at most 3 cast members
         val inflater = LayoutInflater.from(peopleContainer.context)
-        val cast = credits.cast
         var added = 0
-        for (castMember in cast) {
+        for (person in cast) {
             if (added == 3) {
-                break // not more than 3
+                break // show at most 3
             }
-            if (castMember.id == null) {
-                continue  // missing required values
-            }
+            val personId = person.id
+                ?: continue // missing required values
+            val name = person.name
+                ?: continue // missing required values
 
             val personView = createPersonView(
                 context,
                 inflater,
                 peopleContainer,
-                castMember.name,
-                castMember.character,
-                castMember.profile_path
+                name,
+                person.character,
+                person.profile_path
             )
             personView.setOnClickListener(
                 OnPersonClickListener(
                     context,
                     mediaType,
-                    credits.id,
+                    itemTmdbId,
                     PeopleType.CAST,
-                    castMember.id
+                    personId
                 )
             )
             peopleContainer.addView(personView)
@@ -115,7 +128,7 @@ class PeopleListHelper {
         if (cast.size > 3) {
             addShowAllView(
                 inflater, peopleContainer,
-                OnPersonClickListener(context, mediaType, credits.id, PeopleType.CAST)
+                OnPersonClickListener(context, mediaType, itemTmdbId, PeopleType.CAST)
             )
         }
         return added > 0
@@ -124,11 +137,13 @@ class PeopleListHelper {
     /**
      * Add views for at most three crew members to the given [android.view.ViewGroup] and a
      * "Show all" link if there are more.
+     *
+     * @return `false` if no views were added to the [peopleContainer].
      */
     private fun populateCrew(
         context: Context,
         peopleContainer: ViewGroup?,
-        credits: Credits,
+        credits: Credits?,
         mediaType: PeopleActivity.MediaType
     ): Boolean {
         if (peopleContainer == null) {
@@ -136,38 +151,40 @@ class PeopleListHelper {
             Timber.d("populateCrew: container reference gone, aborting")
             return false
         }
-        if (credits.id == null) {
-            return false // missing required values
-        }
+        if (credits == null) return false
+        val itemTmdbId = credits.id ?: return false
+        val crew = credits.crew
+        if (crew.isNullOrEmpty()) return false
 
         peopleContainer.removeAllViews()
 
         // show at most 3 crew members
         val inflater = LayoutInflater.from(peopleContainer.context)
-        val crew = credits.crew
         var added = 0
-        for (crewMember in crew) {
+        for (person in crew) {
             if (added == 3) {
-                break // not more than 3
+                break // show at most 3
             }
-            if (crewMember.id == null) {
-                continue  // missing required values
-            }
+            val personId = person.id
+                ?: continue // missing required values
+            val name = person.name
+                ?: continue // missing required values
+
             val personView = createPersonView(
                 context,
                 inflater,
                 peopleContainer,
-                crewMember.name,
-                crewMember.job,
-                crewMember.profile_path
+                name,
+                person.job,
+                person.profile_path
             )
             personView.setOnClickListener(
                 OnPersonClickListener(
                     context,
                     mediaType,
-                    credits.id,
+                    itemTmdbId,
                     PeopleType.CREW,
-                    crewMember.id
+                    personId
                 )
             )
             peopleContainer.addView(personView)
@@ -177,7 +194,7 @@ class PeopleListHelper {
         if (crew.size > 3) {
             addShowAllView(
                 inflater, peopleContainer,
-                OnPersonClickListener(context, mediaType, credits.id, PeopleType.CREW)
+                OnPersonClickListener(context, mediaType, itemTmdbId, PeopleType.CREW)
             )
         }
         return added > 0
@@ -188,8 +205,8 @@ class PeopleListHelper {
         inflater: LayoutInflater,
         peopleContainer: ViewGroup,
         name: String,
-        description: String,
-        profilePath: String
+        description: String?,
+        profilePath: String?
     ): View {
         val personView = inflater.inflate(R.layout.item_person, peopleContainer, false)
             .apply {
@@ -205,10 +222,8 @@ class PeopleListHelper {
             }
 
         ImageTools.loadWithPicasso(
-            context, TmdbTools.buildProfileImageUrl(
-                context, profilePath,
-                TmdbTools.ProfileImageSize.W185
-            )
+            context,
+            TmdbTools.buildProfileImageUrl(context, profilePath, TmdbTools.ProfileImageSize.W185)
         )
             .resizeDimen(R.dimen.person_headshot_size, R.dimen.person_headshot_size)
             .centerCrop()
@@ -217,7 +232,7 @@ class PeopleListHelper {
             .into(personView.findViewById<View>(R.id.imageViewPerson) as ImageView)
 
         personView.findViewById<TextView>(R.id.textViewPerson).text = name
-        personView.findViewById<TextView>(R.id.textViewPersonDescription).text = description
+        personView.findViewById<TextView>(R.id.textViewPersonDescription).text = description ?: ""
         return personView
     }
 

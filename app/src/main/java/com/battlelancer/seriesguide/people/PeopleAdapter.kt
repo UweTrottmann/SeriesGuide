@@ -19,7 +19,7 @@ import com.squareup.picasso.Transformation
 /**
  * Shows a list of people in rows with headshots, name and description.
  */
-internal class PeopleAdapter(context: Context) : ArrayAdapter<Person?>(context, LAYOUT) {
+internal class PeopleAdapter(context: Context) : ArrayAdapter<Person>(context, LAYOUT) {
 
     private val personImageTransform = CircleTransformation()
 
@@ -44,9 +44,9 @@ internal class PeopleAdapter(context: Context) : ArrayAdapter<Person?>(context, 
     /**
      * Replace the data in this [android.widget.ArrayAdapter] with the given list.
      */
-    fun setData(data: List<Person?>?) {
+    fun setData(data: List<Person>) {
         clear()
-        data?.let { addAll(it) }
+        addAll(data)
     }
 
     class ViewHolder(view: View) {
