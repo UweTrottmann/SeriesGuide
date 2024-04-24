@@ -24,6 +24,11 @@ Version 72
 * 🔨 Overview: prevent skipping already watched episodes.
 * 🔨 History: add entries when marking multiple episodes as watched.
 
+#### 72.0.8
+*2024-04-24*
+
+* 🔨 Resolve crash when viewing show or movie details and cast or crew members failed to load.
+
 #### 72.0.7
 *2024-03-22*
 
