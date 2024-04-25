@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024 Uwe Trottmann
+
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
@@ -46,7 +49,7 @@ object RatingsTools {
     /**
      * Builds a localized string like "x votes".
      */
-    private fun buildRatingVotesString(context: Context, votes: Int?): String {
+    fun buildRatingVotesString(context: Context, votes: Int?): String {
         return votes
             .let { if (it == null || it < 0) 0 else it }
             .let { context.resources.getQuantityString(R.plurals.votes, it, it) }
