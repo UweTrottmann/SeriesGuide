@@ -162,6 +162,6 @@
         android:id="@+id/groupRatingsUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="textViewRatingsUser,textViewRatingsUserLabel" />
+        app:constraint_referenced_ids="textViewRatingsUser,textViewRatingsUserLabel,viewClickTargetRatingUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

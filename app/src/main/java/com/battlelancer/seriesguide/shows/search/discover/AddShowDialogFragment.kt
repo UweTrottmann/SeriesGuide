@@ -21,11 +21,12 @@ import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.RatingsTools.setRangeValues
+import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -105,9 +106,8 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             buttonPositive.isGone = true
 
             containerRatings.apply {
-                textViewRatingsTmdbRange.text = getString(R.string.format_rating_range, 10)
-                textViewRatingsTraktRange.text = getString(R.string.format_rating_range, 10)
                 groupRatingsUser.isGone = true
+                setRangeValues()
             }
 
             // Set up long-press to copy text to clipboard (d-pad friendly vs text selection).
@@ -276,14 +276,12 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
         binding.textViewAddShowMeta.text = timeAndNetworkText
 
         // Ratings
-        binding.containerRatings.apply {
-            textViewRatingsTmdbValue.text = TraktTools.buildRatingString(show.ratingTmdb)
-            textViewRatingsTmdbVotes.text =
-                TraktTools.buildRatingVotesString(requireContext(), show.ratingTmdbVotes)
-            textViewRatingsTraktValue.text = TraktTools.buildRatingString(show.ratingTrakt)
-            textViewRatingsTraktVotes.text =
-                TraktTools.buildRatingVotesString(requireContext(), show.ratingTraktVotes)
-        }
+        binding.containerRatings.setRatingValues(
+            show.ratingTmdb,
+            show.ratingTmdbVotes,
+            show.ratingTrakt,
+            show.ratingTraktVotes
+        )
 
         // Genres.
         ViewTools.setValueOrPlaceholder(
