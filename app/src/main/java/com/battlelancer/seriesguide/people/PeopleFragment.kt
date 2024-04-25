@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.people
 
@@ -104,21 +104,17 @@ class PeopleFragment : Fragment() {
 
         emptyView.setButtonClickListener { refresh() }
 
-        adapter = PeopleAdapter(context)
+        adapter = PeopleAdapter(requireContext())
         listView.adapter = adapter
 
         model.credits.observe(viewLifecycleOwner, Observer {
             setProgressVisibility(false)
             setEmptyMessage()
 
-            if (it == null) {
-                adapter.setData(null)
-                return@Observer
-            }
             if (peopleType == PeopleActivity.PeopleType.CAST) {
-                adapter.setData(PeopleListHelper.transformCastToPersonList(it.cast))
+                adapter.setData(Person.transformCastToPersonList(it))
             } else {
-                adapter.setData(PeopleListHelper.transformCrewToPersonList(it.crew))
+                adapter.setData(Person.transformCrewToPersonList(it))
             }
         })
     }

@@ -491,22 +491,14 @@ class ShowFragment() : Fragment() {
 
     private fun populateCredits(credits: Credits?) {
         val binding = binding ?: return
-        if (credits == null) {
-            setCastVisibility(binding, false)
-            setCrewVisibility(binding, false)
-            return
-        }
-
         val peopleListHelper = PeopleListHelper()
-        if (credits.cast?.size != 0
-            && peopleListHelper.populateShowCast(activity, binding.castContainer, credits)) {
+        if (peopleListHelper.populateShowCast(requireContext(), binding.castContainer, credits)) {
             setCastVisibility(binding, true)
         } else {
             setCastVisibility(binding, false)
         }
 
-        if (credits.crew?.size != 0
-            && peopleListHelper.populateShowCrew(activity, binding.crewContainer, credits)) {
+        if (peopleListHelper.populateShowCrew(requireContext(), binding.crewContainer, credits)) {
             setCrewVisibility(binding, true)
         } else {
             setCrewVisibility(binding, false)
