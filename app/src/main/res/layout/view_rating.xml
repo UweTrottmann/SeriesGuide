@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2024 Uwe Trottmann -->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <!-- Content description set in code -->
+    <ImageView
+        android:id="@+id/textViewRatingIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_tmdb_control_24dp"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/textViewRatingValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/placeholder_rating"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
+        app:layout_constraintStart_toEndOf="@+id/textViewRatingIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="9.6" />
+
+    <TextView
+        android:id="@+id/textViewRatingRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="8dp"
+        android:text="@string/format_rating_range"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewRatingValue"
+        app:layout_constraintStart_toEndOf="@+id/textViewRatingValue"
+        tools:text="/10" />
+
+    <TextView
+        android:id="@+id/textViewRatingVotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="150dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
+        app:layout_constraintStart_toStartOf="@+id/textViewRatingValue"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRatingValue"
+        tools:text="123456789 Stimmen" />
+
+</merge>

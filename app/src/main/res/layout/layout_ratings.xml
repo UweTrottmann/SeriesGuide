@@ -10,126 +10,55 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageViewRatingsTmdbIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="@string/tmdb"
-        android:src="@drawable/ic_tmdb_control_24dp"
+    <com.battlelancer.seriesguide.ui.widgets.RatingView
+        android:id="@+id/ratingViewTmdb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.battlelancer.seriesguide.ui.widgets.RatingView
+        android:id="@+id/ratingViewTrakt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:constraint_referenced_ids="ratingViewTmdb,ratingViewTrakt"
+        app:flow_horizontalBias="0"
+        app:flow_horizontalStyle="packed"
+        app:flow_wrapMode="chain"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTmdbValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/placeholder_rating"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-        app:layout_constraintStart_toEndOf="@+id/imageViewRatingsTmdbIcon"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="9.6" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTmdbRange"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/format_rating_range"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewRatingsTmdbValue"
-        app:layout_constraintStart_toEndOf="@+id/textViewRatingsTmdbValue"
-        tools:text="/10" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTmdbVotes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewRatingsTmdbValue"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRatingsTmdbValue"
-        tools:text="123456789 Stimmen" />
-
-    <ImageView
-        android:id="@+id/imageViewRatingsTraktIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/trakt"
-        android:src="@drawable/ic_trakt_icon_control"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewRatingsTmdbIcon" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTraktValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/placeholder_rating"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
-        app:layout_constraintStart_toEndOf="@+id/imageViewRatingsTraktIcon"
-        app:layout_constraintTop_toBottomOf="@id/imageViewRatingsTmdbIcon"
-        tools:text="9.6" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTraktRange"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/format_rating_range"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textViewRatingsTraktValue"
-        app:layout_constraintStart_toEndOf="@+id/textViewRatingsTraktValue"
-        tools:text="/10" />
-
-    <TextView
-        android:id="@+id/textViewRatingsTraktVotes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:ellipsize="end"
-        android:maxWidth="150dp"
-        android:maxLines="1"
-        android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewRatingsTraktValue"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRatingsTraktValue"
-        tools:text="123456789 Stimmen" />
 
     <View
         android:id="@+id/viewClickTargetRatingUser"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:background="?attr/selectableItemBackground"
         android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/textViewRatingsUserLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/barrierValuesEndTrakt"
-        app:layout_constraintTop_toBottomOf="@id/textViewRatingsTmdbVotes" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingViewTrakt" />
 
     <TextView
         android:id="@+id/textViewRatingsUser"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:text="@string/action_rate"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/barrierValuesEndTrakt"
-        app:layout_constraintTop_toTopOf="@+id/textViewRatingsTraktValue" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingViewTrakt"
+        tools:text="10 - Totally ninja" />
 
     <TextView
         android:id="@+id/textViewRatingsUserLabel"
@@ -137,26 +66,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
+        android:paddingBottom="16dp"
         android:text="@string/your_rating"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Caption"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewRatingsUser"
         app:layout_constraintTop_toBottomOf="@+id/textViewRatingsUser"
         app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrierValuesEndTrakt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="end"
-        app:constraint_referenced_ids="textViewRatingsTraktVotes,textViewRatingsTraktRange" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupRatingsTmdb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="imageViewRatingsTmdbIcon,textViewRatingsTmdbValue,textViewRatingsTmdbRange,textViewRatingsTmdbVotes" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/groupRatingsUser"

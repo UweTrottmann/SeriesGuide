@@ -15,8 +15,14 @@ object RatingsTools {
 
     fun LayoutRatingsBinding.setRangeValues() {
         root.context.getString(R.string.format_rating_range, 10).let {
-            textViewRatingsTmdbRange.text = it
-            textViewRatingsTraktRange.text = it
+            ratingViewTmdb.apply {
+                setRange(it)
+                setIcon(R.drawable.ic_tmdb_control_24dp, R.string.tmdb)
+            }
+            ratingViewTrakt.apply {
+                setRange(it)
+                setIcon(R.drawable.ic_trakt_icon_control, R.string.trakt)
+            }
         }
     }
 
@@ -27,10 +33,14 @@ object RatingsTools {
         traktVotes: Int?
     ) {
         val context = root.context
-        textViewRatingsTmdbValue.text = buildRatingString(tmdbValue)
-        textViewRatingsTmdbVotes.text = buildRatingVotesString(context, tmdbVotes)
-        textViewRatingsTraktValue.text = buildRatingString(traktValue)
-        textViewRatingsTraktVotes.text = buildRatingVotesString(context, traktVotes)
+        ratingViewTmdb.setValues(
+            buildRatingString(tmdbValue),
+            buildRatingVotesString(context, tmdbVotes)
+        )
+        ratingViewTrakt.setValues(
+            buildRatingString(traktValue),
+            buildRatingVotesString(context, traktVotes)
+        )
     }
 
     /**
