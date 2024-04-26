@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -36,8 +36,11 @@ object ImportTools {
             customReleaseDayOffset = custom_release_day_offset?.takeIf { it.absoluteValue <= SgShow2.MAX_CUSTOM_DAY_OFFSET },
             customReleaseTimeZone = custom_release_timezone,
             firstRelease = first_aired,
-            ratingGlobal = if (rating in 0.0..10.0) rating else 0.0,
-            ratingVotes = if (rating_votes >= 0) rating_votes else 0,
+            ratingTmdb = rating_tmdb.toRating(),
+            ratingTmdbVotes = rating_tmdb_votes.toVotes(),
+            ratingTrakt = rating.toRating(),
+            ratingTraktVotes = rating_votes.toVotes(),
+            ratingUser = rating_user.toUserRating(),
             genres = genres ?: "",
             network = network ?: "",
             imdbId = imdb_id ?: "",
@@ -51,7 +54,6 @@ object ImportTools {
             notify = notify ?: true,
             hidden = hidden,
             lastWatchedMs = last_watched_ms,
-            ratingUser = rating_user
         )
     }
 
@@ -69,8 +71,6 @@ object ImportTools {
 
     @JvmStatic
     fun Episode.toSgEpisodeForImport(showId: Long, seasonId: Long, seasonNumber: Int): SgEpisode2 {
-        val ratingUser = rating_user?.let { if (it in 0..10) it else 0 } ?: 0
-        val ratingGlobal = rating?.let { if (it in 0.0..10.0) it else 0.0 } ?: 0.0
         return SgEpisode2(
             showId = showId,
             seasonId = seasonId,
@@ -91,10 +91,16 @@ object ImportTools {
             watched = if (skipped) EpisodeFlags.SKIPPED else if (watched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED,
             collected = collected,
             plays = if (watched && plays >= 1) plays else if (watched) 1 else 0,
-            ratingUser = ratingUser,
-            ratingGlobal = ratingGlobal,
-            ratingVotes = rating_votes?.let { if (it >= 0) it else 0 } ?: 0
+            ratingTmdb = rating_tmdb.toRating(),
+            ratingTmdbVotes = rating_tmdb_votes.toVotes(),
+            ratingTrakt = rating.toRating(),
+            ratingTraktVotes = rating_votes.toVotes(),
+            ratingUser = rating_user.toUserRating()
         )
     }
+
+    fun Double?.toRating(): Double? = if (this != null && this in 0.0..10.0) this else null
+    private fun Int?.toUserRating(): Int? = if (this != null && this in 0..10) this else null
+    fun Int?.toVotes(): Int? = if (this != null && this >= 0) this else null
 
 }

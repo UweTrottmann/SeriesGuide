@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -17,9 +17,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.nio.file.Files
@@ -96,15 +96,9 @@ class JsonImportTaskTest {
         // Episodes of season 1
         val expectedEpisode1 = JsonExportTaskTest.listOfTestEpisodes[0].copy(
             id = 0, // insert
-            ratingGlobal = 0.0,
-            ratingVotes = 0,
-            ratingUser = 0
         )
         val expectedEpisode2 = JsonExportTaskTest.listOfTestEpisodes[1].copy(
             id = 0, // insert
-            ratingGlobal = 0.0,
-            ratingVotes = 0,
-            ratingUser = 0
         )
         verify(sgEpisode2Helper).insertEpisodes(listOf(expectedEpisode1, expectedEpisode2))
 

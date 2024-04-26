@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- Copyright 2015-2018, 2020-2023 Uwe Trottmann -->
+<!-- Copyright 2015-2024 Uwe Trottmann -->
 
 <!-- Need to define root ID in include tag or view binding breaks. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -112,7 +112,7 @@
 
     <include
         android:id="@+id/include_ratings"
-        layout="@layout/ratings_shows" />
+        layout="@layout/layout_ratings" />
 
     <View
         android:layout_width="match_parent"

@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2
 import com.battlelancer.seriesguide.tmdbapi.TmdbTools2
 import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.RatingsTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
 import com.battlelancer.seriesguide.util.Utils
@@ -43,6 +44,8 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
         val releaseYear: String?,
         val lastUpdated: String,
         val genres: String,
+        val tmdbRating: String,
+        val tmdbVotes: String,
         val traktRating: String,
         val traktVotes: String,
         val traktUserRating: String,
@@ -90,14 +93,6 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
                     val lastUpdated =
                         TimeTools.formatToLocalDateAndTime(application, show.lastUpdatedMs)
 
-                    val genres = TextTools.splitPipeSeparatedStrings(show.genres)
-
-                    val traktRating = TraktTools.buildRatingString(show.ratingGlobal)
-                    val traktVotes =
-                        TraktTools.buildRatingVotesString(application, show.ratingVotes)
-                    val traktUserRating =
-                        TraktTools.buildUserRatingString(application, show.ratingUser)
-
                     val databaseValues = ShowForUi(
                         show,
                         timeOrNull,
@@ -107,8 +102,12 @@ class ShowViewModel(application: Application) : AndroidViewModel(application) {
                         country,
                         releaseYear,
                         lastUpdated,
-                        genres,
-                        traktRating, traktVotes, traktUserRating,
+                        TextTools.splitPipeSeparatedStrings(show.genres),
+                        RatingsTools.buildRatingString(show.ratingTmdb),
+                        RatingsTools.buildRatingVotesString(application, show.ratingTmdbVotes),
+                        RatingsTools.buildRatingString(show.ratingTrakt),
+                        RatingsTools.buildRatingVotesString(application, show.ratingTraktVotes),
+                        TraktTools.buildUserRatingString(application, show.ratingUser),
                         null
                     )
 

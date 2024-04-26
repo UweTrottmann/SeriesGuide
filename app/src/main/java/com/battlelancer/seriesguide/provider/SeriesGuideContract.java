@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2011-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.provider;
 
@@ -497,31 +497,19 @@ public class SeriesGuideContract {
 
         String RUNTIME = "series_runtime";
 
-        /**
-         * Global rating. Encoded as double.
-         * <pre>
-         * Range:   0.0-10.0
-         * Default: 0.0
-         * </pre>
-         */
-        String RATING_GLOBAL = "series_rating";
+        /** See {@link SgShow2#getRatingTmdb()}. */
+        String RATING_TMDB = "series_rating_tmdb";
 
-        /**
-         * Global rating votes. Encoded as integer.
-         * <pre>
-         * Example: 42
-         * Default: 0
-         * </pre>
-         */
-        String RATING_VOTES = "series_rating_votes";
+        /** See {@link SgShow2#getRatingTmdbVotes()}. */
+        String RATING_TMDB_VOTES = "series_rating_tmdb_votes";
 
-        /**
-         * User rating. Encoded as integer.
-         * <pre>
-         * Range:   1-10
-         * Default: 0
-         * </pre>
-         */
+        /** See {@link SgShow2#getRatingTrakt()}. */
+        String RATING_TRAKT = "series_rating";
+
+        /** See {@link SgShow2#getRatingTraktVotes()}. */
+        String RATING_TRAKT_VOTES = "series_rating_votes";
+
+        /** See {@link SgShow2#getRatingUser()}. */
         String RATING_USER = "series_rating_user";
 
         String NETWORK = "series_network";
@@ -881,13 +869,19 @@ public class SeriesGuideContract {
 
         String DIRECTORS = "episode_directors";
 
-        /** See {@link ShowsColumns#RATING_GLOBAL}. */
-        String RATING_GLOBAL = "episode_rating";
+        /** See {@link SgShow2#getRatingTmdb()}. */
+        String RATING_TMDB = "episode_rating_tmdb";
 
-        /** See {@link ShowsColumns#RATING_VOTES}. */
-        String RATING_VOTES = "episode_rating_votes";
+        /** See {@link SgShow2#getRatingTmdbVotes()}. */
+        String RATING_TMDB_VOTES = "episode_rating_tmdb_votes";
 
-        /** See {@link ShowsColumns#RATING_USER}. */
+        /** See {@link SgShow2#getRatingTrakt()}. */
+        String RATING_TRAKT = "episode_rating";
+
+        /** See {@link SgShow2#getRatingTraktVotes()}. */
+        String RATING_TRAKT_VOTES = "episode_rating_votes";
+
+        /** See {@link SgShow2#getRatingUser()}. */
         String RATING_USER = "episode_rating_user";
 
         /**

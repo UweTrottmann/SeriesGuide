@@ -40,7 +40,7 @@ object EpisodesSettings {
         ),
         TOP_RATED(
             4, "toprated",
-            "${SgEpisode2Columns.RATING_GLOBAL} COLLATE UNICODE DESC"
+            "${SgEpisode2Columns.RATING_TRAKT} COLLATE UNICODE DESC"
         ),
         DVDLATEST_FIRST(
             5, "dvdlatestfirst",
