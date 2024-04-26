@@ -5,6 +5,8 @@ package com.battlelancer.seriesguide.shows.tools
 
 import android.content.Context
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toRating
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toVotes
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -86,8 +88,8 @@ class GetShowTools @Inject constructor(
                         releaseCountry = null,
                         releaseTimeZone = null,
                         firstRelease = TimeTools.parseShowFirstRelease(null),
-                        rating = 0.0,
-                        votes = 0
+                        rating = null,
+                        votes = null
                     )
                 } else {
                     // Use previously loaded details instead of failing.
@@ -98,8 +100,8 @@ class GetShowTools @Inject constructor(
                         releaseCountry = existingShow.releaseCountry,
                         releaseTimeZone = existingShow.releaseTimeZone,
                         firstRelease = existingShow.firstReleaseOrDefault,
-                        rating = existingShow.ratingTraktOrZero,
-                        votes = existingShow.ratingTraktVotesOrZero
+                        rating = existingShow.ratingTrakt,
+                        votes = existingShow.ratingTraktVotes
                     )
                 }
             }
@@ -139,8 +141,8 @@ class GetShowTools @Inject constructor(
             else -> ShowStatus.UNKNOWN
         }
         val poster = tmdbShow.poster_path ?: ""
-        val ratingTmdb = tmdbShow.vote_average ?: 0.0
-        val ratingTmdbVotes = tmdbShow.vote_count ?: 0
+        val ratingTmdb = tmdbShow.vote_average.toRating()
+        val ratingTmdbVotes = tmdbShow.vote_count.toVotes()
 
         val showDetails = if (existingShow != null) {
             // For updating existing show.
@@ -193,6 +195,7 @@ class GetShowTools @Inject constructor(
                     ratingTmdbVotes = ratingTmdbVotes,
                     ratingTrakt = traktDetails.rating,
                     ratingTraktVotes = traktDetails.votes,
+                    ratingUser = null,
                     genres = genres,
                     network = network,
                     imdbId = imdbId,
@@ -223,8 +226,8 @@ class GetShowTools @Inject constructor(
         val releaseCountry: String?,
         val releaseTimeZone: String?,
         val firstRelease: String,
-        val rating: Double,
-        val votes: Int
+        val rating: Double?,
+        val votes: Int?
     )
 
     sealed class GetShowError(val service: AddUpdateShowTools.ShowService) {

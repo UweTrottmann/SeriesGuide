@@ -31,6 +31,7 @@ object ShowTestHelper {
             ratingTmdbVotes = null,
             ratingTrakt = null,
             ratingTraktVotes = null,
+            ratingUser = null,
             genres = "Genre",
             network = "Network",
             imdbId = "imdbid",
