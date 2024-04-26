@@ -390,8 +390,10 @@ class AddUpdateShowTools @Inject constructor(
                         writers = TextTools.buildPipeSeparatedString(writers),
                         ratingTmdb = tmdbEpisode.vote_average,
                         ratingTmdbVotes = tmdbEpisode.vote_count,
+                        // Trakt ratings loaded later by TraktRatingsFetcher
                         ratingTrakt = null,
                         ratingTraktVotes = null,
+                        // Added by TraktRatingsSync
                         ratingUser = null
                     )
                 )
