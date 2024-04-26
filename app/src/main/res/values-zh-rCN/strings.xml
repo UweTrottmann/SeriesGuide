@@ -324,7 +324,7 @@
     <string name="trakt_notice_not_exists">（目前还）无法在 Trakt 上记录</string>
     <string name="trakt_error_limit_exceeded">列表已满，请先移除某些内容。</string>
     <!-- Connect trakt -->
-    <string name="trakt_required">To use this, connect to Trakt</string>
+    <string name="trakt_required">要使用此功能，请连接到 Trakt</string>
     <string name="connect_trakt">关联 Trakt 帐户</string>
     <string name="trakt_reconnect">关联 SeriesGuide 与 Trakt</string>
     <string name="trakt_reconnect_details">请检查您的 Trakt 凭据</string>

@@ -16,6 +16,7 @@ Version 73
 *in development*
 
 * 🌟 Ratings: display TMDB rating for shows and episodes. Tap rating to open TMDB or Trakt page.
+* 📝 Latest user interface translations from Crowdin.
 
 #### 73.0.2 🧪
 *2024-04-19*
