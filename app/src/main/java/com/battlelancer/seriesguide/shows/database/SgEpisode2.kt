@@ -46,8 +46,11 @@ data class SgEpisode2(
     @ColumnInfo(name = SgEpisode2Columns.WRITERS) val writers: String? = "",
     @ColumnInfo(name = SgEpisode2Columns.IMAGE) val image: String? = "",
     @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val firstReleasedMs: Long = -1,
-    @ColumnInfo(name = SgEpisode2Columns.RATING_GLOBAL) val ratingGlobal: Double? = null,
-    @ColumnInfo(name = SgEpisode2Columns.RATING_VOTES) val ratingVotes: Int? = null,
+    /** See [SgShow2.ratingTrakt]. */
+    @ColumnInfo(name = SgEpisode2Columns.RATING_TRAKT) val ratingTrakt: Double? = null,
+    /** See [SgShow2.ratingTraktVotes]. */
+    @ColumnInfo(name = SgEpisode2Columns.RATING_TRAKT_VOTES) val ratingTraktVotes: Int? = null,
+    /** See [SgShow2.ratingUser]. */
     @ColumnInfo(name = SgEpisode2Columns.RATING_USER) val ratingUser: Int? = null,
     @ColumnInfo(name = SgEpisode2Columns.IMDBID) val imdbId: String? = "",
     @ColumnInfo(name = SgEpisode2Columns.LAST_EDITED) val lastEditedSec: Long = 0,

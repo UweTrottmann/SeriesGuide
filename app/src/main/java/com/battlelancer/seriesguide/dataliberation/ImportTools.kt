@@ -95,8 +95,8 @@ object ImportTools {
             collected = collected,
             plays = if (watched && plays >= 1) plays else if (watched) 1 else 0,
             ratingUser = ratingUser,
-            ratingGlobal = ratingGlobal,
-            ratingVotes = rating_votes?.let { if (it >= 0) it else 0 } ?: 0
+            ratingTrakt = ratingGlobal,
+            ratingTraktVotes = rating_votes?.let { if (it >= 0) it else 0 } ?: 0
         )
     }
 

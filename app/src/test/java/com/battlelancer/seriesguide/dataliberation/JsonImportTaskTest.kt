@@ -96,14 +96,14 @@ class JsonImportTaskTest {
         // Episodes of season 1
         val expectedEpisode1 = JsonExportTaskTest.listOfTestEpisodes[0].copy(
             id = 0, // insert
-            ratingGlobal = 0.0,
-            ratingVotes = 0,
+            ratingTrakt = 0.0,
+            ratingTraktVotes = 0,
             ratingUser = 0
         )
         val expectedEpisode2 = JsonExportTaskTest.listOfTestEpisodes[1].copy(
             id = 0, // insert
-            ratingGlobal = 0.0,
-            ratingVotes = 0,
+            ratingTrakt = 0.0,
+            ratingTraktVotes = 0,
             ratingUser = 0
         )
         verify(sgEpisode2Helper).insertEpisodes(listOf(expectedEpisode1, expectedEpisode2))

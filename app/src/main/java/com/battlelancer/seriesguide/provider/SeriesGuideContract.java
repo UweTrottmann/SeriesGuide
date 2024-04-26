@@ -885,13 +885,13 @@ public class SeriesGuideContract {
 
         String DIRECTORS = "episode_directors";
 
-        /** See {@link ShowsColumns#RATING_GLOBAL}. */
-        String RATING_GLOBAL = "episode_rating";
+        /** See {@link SgShow2#getRatingTrakt()}. */
+        String RATING_TRAKT = "episode_rating";
 
-        /** See {@link ShowsColumns#RATING_VOTES}. */
-        String RATING_VOTES = "episode_rating_votes";
+        /** See {@link SgShow2#getRatingTraktVotes()}. */
+        String RATING_TRAKT_VOTES = "episode_rating_votes";
 
-        /** See {@link ShowsColumns#RATING_USER}. */
+        /** See {@link SgShow2#getRatingUser()}. */
         String RATING_USER = "episode_rating_user";
 
         /**

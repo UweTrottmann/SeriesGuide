@@ -546,9 +546,9 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
         // Trakt rating
         binding.includeRatings.also {
-            it.textViewRatingsValue.text = TraktTools.buildRatingString(episode.ratingGlobal)
+            it.textViewRatingsValue.text = TraktTools.buildRatingString(episode.ratingTrakt)
             it.textViewRatingsVotes.text = TraktTools.buildRatingVotesString(
-                activity, episode.ratingVotes
+                activity, episode.ratingTraktVotes
             )
             // user rating
             it.textViewRatingsUser.text = TraktTools.buildUserRatingString(

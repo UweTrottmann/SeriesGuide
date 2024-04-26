@@ -453,10 +453,10 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
         // trakt rating
         bindingRatings.textViewRatingsValue.text =
-            TraktTools.buildRatingString(episode.ratingGlobal)
+            TraktTools.buildRatingString(episode.ratingTrakt)
         bindingRatings.textViewRatingsVotes.text = TraktTools.buildRatingVotesString(
             requireContext(),
-            episode.ratingVotes
+            episode.ratingTraktVotes
         )
 
         // user rating

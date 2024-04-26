@@ -397,8 +397,8 @@ class JsonExportTask(
                 episodeExport.writers = episodeDb.writers
                 episodeExport.gueststars = episodeDb.guestStars
                 episodeExport.directors = episodeDb.directors
-                episodeExport.rating = episodeDb.ratingGlobal
-                episodeExport.rating_votes = episodeDb.ratingVotes
+                episodeExport.rating = episodeDb.ratingTrakt
+                episodeExport.rating_votes = episodeDb.ratingTraktVotes
             }
 
             list.add(episodeExport)
