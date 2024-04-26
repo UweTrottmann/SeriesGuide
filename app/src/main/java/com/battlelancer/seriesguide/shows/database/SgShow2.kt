@@ -58,26 +58,47 @@ data class SgShow2(
     @ColumnInfo(name = SgShow2Columns.IMDBID) val imdbId: String? = "",
     /**
      * TMDB rating. Encoded as double.
-     * <pre>
+     * ```
      * Range:   0.0-10.0
      * Default: 0.0
-     * </pre>
+     * ```
      *
      * Added with [SgRoomDatabase.VERSION_53_SHOW_TMDB_RATINGS].
      */
     @ColumnInfo(name = SgShow2Columns.RATING_TMDB) val ratingTmdb: Double?,
     /**
      * TMDB rating number of votes.
-     * <pre>
+     * ```
      * Example: 42
      * Default: 0
-     * </pre>
+     * ```
      *
      * Added with [SgRoomDatabase.VERSION_53_SHOW_TMDB_RATINGS].
      */
     @ColumnInfo(name = SgShow2Columns.RATING_TMDB_VOTES) val ratingTmdbVotes: Int?,
+    /**
+     * Trakt rating. Encoded as double.
+     * ```
+     * Range:   0.0-10.0
+     * Default: 0.0
+     * ```
+     */
     @ColumnInfo(name = SgShow2Columns.RATING_TRAKT) val ratingTrakt: Double?,
+    /**
+     * Trakt rating number of votes.
+     * ```
+     * Example: 42
+     * Default: 0
+     * ```
+     */
     @ColumnInfo(name = SgShow2Columns.RATING_TRAKT_VOTES) val ratingTraktVotes: Int?,
+    /**
+     * User rating. Encoded as integer.
+     * ```
+     * Range:   1-10
+     * Default: 0
+     * ```
+     */
     @ColumnInfo(name = SgShow2Columns.RATING_USER) val ratingUser: Int? = 0,
     @ColumnInfo(name = SgShow2Columns.RUNTIME) val runtime: Int? = 0,
     @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int? = ShowStatus.UNKNOWN,

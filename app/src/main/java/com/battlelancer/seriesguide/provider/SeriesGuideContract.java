@@ -497,35 +497,19 @@ public class SeriesGuideContract {
 
         String RUNTIME = "series_runtime";
 
+        /** See {@link SgShow2#getRatingTmdb()}. */
         String RATING_TMDB = "series_rating_tmdb";
 
+        /** See {@link SgShow2#getRatingTmdbVotes()}. */
         String RATING_TMDB_VOTES = "series_rating_tmdb_votes";
 
-        /**
-         * Trakt rating. Encoded as double.
-         * <pre>
-         * Range:   0.0-10.0
-         * Default: 0.0
-         * </pre>
-         */
+        /** See {@link SgShow2#getRatingTrakt()}. */
         String RATING_TRAKT = "series_rating";
 
-        /**
-         * Trakt rating number of votes.
-         * <pre>
-         * Example: 42
-         * Default: 0
-         * </pre>
-         */
+        /** See {@link SgShow2#getRatingTraktVotes()}. */
         String RATING_TRAKT_VOTES = "series_rating_votes";
 
-        /**
-         * User rating. Encoded as integer.
-         * <pre>
-         * Range:   1-10
-         * Default: 0
-         * </pre>
-         */
+        /** See {@link SgShow2#getRatingUser()}. */
         String RATING_USER = "series_rating_user";
 
         String NETWORK = "series_network";
