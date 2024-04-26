@@ -15,6 +15,8 @@ Version 73
 ----------
 *in development*
 
+* 🌟 Ratings: display TMDB rating for shows and episodes. Tap rating to open TMDB or Trakt page.
+
 #### 73.0.2 🧪
 *2024-04-19*
 

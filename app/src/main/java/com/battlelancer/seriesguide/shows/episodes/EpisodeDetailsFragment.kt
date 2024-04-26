@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setLink
 import com.battlelancer.seriesguide.util.RatingsTools.setValuesFor
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
@@ -605,14 +606,22 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
     }
 
     private fun updateSecondaryButtons(episode: SgEpisode2, show: SgShow2) {
+        val bindingRatings = binding?.includeRatings ?: return
         val bindingBottom = bindingBottom ?: return
 
-        // Trakt
+        // Trakt buttons
         if (episode.tmdbId != null) {
-            ViewTools.openUrlOnClickAndCopyOnLongPress(
-                bindingBottom.buttonEpisodeTrakt,
-                TraktTools.buildEpisodeUrl(episode.tmdbId)
-            )
+            val traktUrl = TraktTools.buildEpisodeUrl(episode.tmdbId)
+            bindingRatings.ratingViewTrakt.setLink(requireContext(), traktUrl)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(bindingBottom.buttonEpisodeTrakt, traktUrl)
+        }
+
+        // TMDB buttons
+        if (show.tmdbId != null) {
+            val tmdbUrl =
+                TmdbTools.buildEpisodeUrl(show.tmdbId, episode.season, episode.number)
+            bindingRatings.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(bindingBottom.buttonEpisodeTmdb, tmdbUrl)
         }
 
         // IMDb
@@ -621,14 +630,6 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
             lifecycleScope, requireContext(),
             show, episode
         )
-
-        // TMDb
-        if (show.tmdbId != null) {
-            ViewTools.openUrlOnClickAndCopyOnLongPress(
-                bindingBottom.buttonEpisodeTmdb,
-                TmdbTools.buildEpisodeUrl(show.tmdbId, episode.season, episode.number)
-            )
-        }
     }
 
     private fun loadTraktRatings() {

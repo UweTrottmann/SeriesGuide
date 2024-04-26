@@ -61,6 +61,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setLink
 import com.battlelancer.seriesguide.util.RatingsTools.setValuesFor
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
@@ -399,7 +400,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
             // populate episode details
             populateEpisodeViews(binding, episode)
-            populateEpisodeDescriptionAndTvdbButton(binding)
+            populateEpisodeDescriptionAndLinkButtons(binding)
 
             // load full info and ratings, image, actions
             loadEpisodeDetails()
@@ -541,29 +542,12 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
 
         // Ratings
         binding.includeRatings.setValuesFor(episode)
-
-        binding.includeServices.includeMore.also {
-            // IMDb button
-            ServiceUtils.configureImdbButton(
-                it.buttonEpisodeImdb,
-                lifecycleScope, requireContext(),
-                model.show.value, episode
-            )
-
-            // trakt button
-            if (episode.tmdbId != null) {
-                ViewTools.openUrlOnClickAndCopyOnLongPress(
-                    it.buttonEpisodeTrakt,
-                    TraktTools.buildEpisodeUrl(episode.tmdbId)
-                )
-            }
-        }
     }
 
     /**
-     * Updates the episode description and TVDB button. Need both show and episode data loaded.
+     * Updates the episode description and link buttons. Need both show and episode data loaded.
      */
-    private fun populateEpisodeDescriptionAndTvdbButton(binding: FragmentOverviewBinding) {
+    private fun populateEpisodeDescriptionAndLinkButtons(binding: FragmentOverviewBinding) {
         val show = model.show.value
         val episode = model.episode.value
         if (show == null || episode == null) {
@@ -582,14 +566,33 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             binding.textViewEpisodeDescription.context, overview
         )
 
-        // TMDb button
+        // TMDb buttons
         val showTmdbId = show.tmdbId
         if (showTmdbId != null) {
+            val tmdbUrl = TmdbTools.buildEpisodeUrl(showTmdbId, episode.season, episode.number)
+            binding.includeRatings.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
             ViewTools.openUrlOnClickAndCopyOnLongPress(
                 binding.includeServices.includeMore.buttonEpisodeTmdb,
-                TmdbTools.buildEpisodeUrl(showTmdbId, episode.season, episode.number)
+                tmdbUrl
             )
         }
+
+        // Trakt buttons
+        if (episode.tmdbId != null) {
+            val traktUrl = TraktTools.buildEpisodeUrl(episode.tmdbId)
+            binding.includeRatings.ratingViewTrakt.setLink(requireContext(), traktUrl)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(
+                binding.includeServices.includeMore.buttonEpisodeTrakt,
+                traktUrl
+            )
+        }
+
+        // IMDb button
+        ServiceUtils.configureImdbButton(
+            binding.includeServices.includeMore.buttonEpisodeImdb,
+            lifecycleScope, requireContext(),
+            model.show.value, episode
+        )
     }
 
     override fun loadEpisodeActions() {
@@ -702,7 +705,7 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
         )
 
         // episode description might need show language, so update it here as well
-        populateEpisodeDescriptionAndTvdbButton(binding)
+        populateEpisodeDescriptionAndLinkButtons(binding)
     }
 
     private fun runIfHasEpisode(block: (episode: SgEpisode2) -> Unit) {

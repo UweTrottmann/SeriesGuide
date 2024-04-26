@@ -56,6 +56,7 @@ import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setLink
 import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
@@ -99,6 +100,16 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         MovieDetailsModelFactory(tmdbId, requireActivity().application)
     }
     private lateinit var scrollChangeListener: ToolbarScrollChangeListener
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        tmdbId = requireArguments().getInt(ARG_TMDB_ID)
+        if (tmdbId <= 0) {
+            parentFragmentManager.popBackStack()
+            return
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -169,6 +180,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         binding.containerRatings.apply {
             root.isGone = true // to animate in later
             initialize { rateMovie() }
+            ratingViewTmdb.setLink(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
+            ratingViewTrakt.setLink(requireContext(), TraktTools.buildMovieUrl(tmdbId))
         }
 
         // language button
@@ -196,13 +209,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        tmdbId = requireArguments().getInt(ARG_TMDB_ID)
-        if (tmdbId <= 0) {
-            parentFragmentManager.popBackStack()
-            return
-        }
-
         setupViews()
 
         val args = Bundle()

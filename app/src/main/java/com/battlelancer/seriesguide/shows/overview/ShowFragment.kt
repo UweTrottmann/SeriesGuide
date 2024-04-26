@@ -40,6 +40,7 @@ import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.Metacritic
 import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setLink
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
@@ -428,17 +429,15 @@ class ShowFragment() : Fragment() {
         ServiceUtils.setUpImdbButton(show.imdbId, binding.buttonImdb)
 
         show.tmdbId?.also {
-            // TMDb button
-            ViewTools.openUrlOnClickAndCopyOnLongPress(
-                binding.buttonTmdb,
-                TmdbTools.buildShowUrl(it)
-            )
+            // TMDB buttons
+            val tmdbUrl = TmdbTools.buildShowUrl(it)
+            binding.ratingContainer.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTmdb, tmdbUrl)
 
-            // Trakt button
-            ViewTools.openUrlOnClickAndCopyOnLongPress(
-                binding.buttonTrakt,
-                TraktTools.buildShowUrl(it)
-            )
+            // Trakt buttons
+            val traktUrl = TraktTools.buildShowUrl(it)
+            binding.ratingContainer.ratingViewTrakt.setLink(requireContext(), traktUrl)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTrakt, traktUrl)
         }
 
         binding.buttonShowMetacritic.setOnClickListener {
