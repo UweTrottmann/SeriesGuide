@@ -27,10 +27,10 @@ object ShowTestHelper {
             customReleaseDayOffset = null,
             customReleaseTimeZone = null,
             firstRelease = "2022-05-20T14:15:00.0Z",
-            ratingTmdb = 0.0,
-            ratingTmdbVotes = 0,
-            ratingTrakt = 0.0,
-            ratingTraktVotes = 0,
+            ratingTmdb = null,
+            ratingTmdbVotes = null,
+            ratingTrakt = null,
+            ratingTraktVotes = null,
             genres = "Genre",
             network = "Network",
             imdbId = "imdbid",
@@ -69,8 +69,11 @@ object ShowTestHelper {
             directors = "directors",
             guestStars = "guest stars",
             writers = "writers",
-            ratingTmdb = 0.0,
-            ratingTmdbVotes = 0
+            ratingTmdb = null,
+            ratingTmdbVotes = null,
+            ratingTrakt = null,
+            ratingTraktVotes = null,
+            ratingUser = null
         )
     }
 

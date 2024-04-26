@@ -390,6 +390,9 @@ class AddUpdateShowTools @Inject constructor(
                         writers = TextTools.buildPipeSeparatedString(writers),
                         ratingTmdb = tmdbEpisode.vote_average,
                         ratingTmdbVotes = tmdbEpisode.vote_count,
+                        ratingTrakt = null,
+                        ratingTraktVotes = null,
+                        ratingUser = null
                     )
                 )
             } else {

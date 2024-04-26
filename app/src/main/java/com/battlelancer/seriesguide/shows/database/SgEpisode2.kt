@@ -85,11 +85,11 @@ data class SgEpisode2(
      */
     @ColumnInfo(name = RATING_TMDB_VOTES) val ratingTmdbVotes: Int?,
     /** See [SgShow2.ratingTrakt]. */
-    @ColumnInfo(name = RATING_TRAKT) val ratingTrakt: Double? = null,
+    @ColumnInfo(name = RATING_TRAKT) val ratingTrakt: Double?,
     /** See [SgShow2.ratingTraktVotes]. */
-    @ColumnInfo(name = RATING_TRAKT_VOTES) val ratingTraktVotes: Int? = null,
+    @ColumnInfo(name = RATING_TRAKT_VOTES) val ratingTraktVotes: Int?,
     /** See [SgShow2.ratingUser]. */
-    @ColumnInfo(name = RATING_USER) val ratingUser: Int? = null,
+    @ColumnInfo(name = RATING_USER) val ratingUser: Int?,
     @ColumnInfo(name = IMDBID) val imdbId: String? = "",
     @ColumnInfo(name = LAST_EDITED) val lastEditedSec: Long = 0,
     @ColumnInfo(name = LAST_UPDATED) val lastUpdatedSec: Long = 0
