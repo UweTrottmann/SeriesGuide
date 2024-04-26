@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -215,7 +215,9 @@ class JsonExportTaskTest {
                 writers = "writers string",
                 watched = EpisodeFlags.WATCHED,
                 plays = 1,
-                collected = false
+                collected = false,
+                ratingTmdb = 2.4,
+                ratingTmdbVotes = 4321,
             ),
             SgEpisode2(
                 id = 2,
@@ -234,7 +236,9 @@ class JsonExportTaskTest {
                 writers = "writers string",
                 watched = EpisodeFlags.SKIPPED,
                 plays = 0,
-                collected = true
+                collected = true,
+                ratingTmdb = 4.2,
+                ratingTmdbVotes = 1234,
             )
         )
     }

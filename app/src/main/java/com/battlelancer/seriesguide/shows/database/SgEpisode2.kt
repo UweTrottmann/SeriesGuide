@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -8,9 +8,35 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.ABSOLUTE_NUMBER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.COLLECTED
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.DIRECTORS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.DVDNUMBER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.FIRSTAIREDMS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.GUESTSTARS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.IMAGE
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.IMDBID
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.LAST_EDITED
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.LAST_UPDATED
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.NUMBER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.ORDER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.OVERVIEW
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.PLAYS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.RATING_TMDB
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.RATING_TMDB_VOTES
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.RATING_TRAKT
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.RATING_TRAKT_VOTES
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.RATING_USER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SEASON
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.TITLE
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.TMDB_ID
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.TVDB_ID
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.WATCHED
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.WRITERS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns._ID
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
+import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 
 @Entity(
@@ -26,35 +52,47 @@ import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
     ]
 )
 data class SgEpisode2(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = _ID) val id: Long = 0,
     @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?,
-    @ColumnInfo(name = SgEpisode2Columns.TVDB_ID) val tvdbId: Int? = null,
-    @ColumnInfo(name = SgEpisode2Columns.TITLE) val title: String? = "",
-    @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
-    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int = 0,
-    @ColumnInfo(name = SgEpisode2Columns.ABSOLUTE_NUMBER) val absoluteNumber: Int? = null,
-    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int = 0,
-    @ColumnInfo(name = SgEpisode2Columns.ORDER) val order: Int = 0,
-    @ColumnInfo(name = SgEpisode2Columns.DVDNUMBER) val dvdNumber: Double? = null,
-    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int = EpisodeFlags.UNWATCHED,
-    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int? = 0,
-    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean = false,
-    @ColumnInfo(name = SgEpisode2Columns.DIRECTORS) val directors: String? = "",
-    @ColumnInfo(name = SgEpisode2Columns.GUESTSTARS) val guestStars: String? = "",
-    @ColumnInfo(name = SgEpisode2Columns.WRITERS) val writers: String? = "",
-    @ColumnInfo(name = SgEpisode2Columns.IMAGE) val image: String? = "",
-    @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val firstReleasedMs: Long = -1,
+    @ColumnInfo(name = TMDB_ID) val tmdbId: Int?,
+    @ColumnInfo(name = TVDB_ID) val tvdbId: Int? = null,
+    @ColumnInfo(name = TITLE) val title: String? = "",
+    @ColumnInfo(name = OVERVIEW) val overview: String?,
+    @ColumnInfo(name = NUMBER) val number: Int = 0,
+    @ColumnInfo(name = ABSOLUTE_NUMBER) val absoluteNumber: Int? = null,
+    @ColumnInfo(name = SEASON) val season: Int = 0,
+    @ColumnInfo(name = ORDER) val order: Int = 0,
+    @ColumnInfo(name = DVDNUMBER) val dvdNumber: Double? = null,
+    @ColumnInfo(name = WATCHED) val watched: Int = EpisodeFlags.UNWATCHED,
+    @ColumnInfo(name = PLAYS) val plays: Int? = 0,
+    @ColumnInfo(name = COLLECTED) val collected: Boolean = false,
+    @ColumnInfo(name = DIRECTORS) val directors: String? = "",
+    @ColumnInfo(name = GUESTSTARS) val guestStars: String? = "",
+    @ColumnInfo(name = WRITERS) val writers: String? = "",
+    @ColumnInfo(name = IMAGE) val image: String? = "",
+    @ColumnInfo(name = FIRSTAIREDMS) val firstReleasedMs: Long = -1,
+    /**
+     * See [SgShow2.ratingTmdb].
+     *
+     * Added with [SgRoomDatabase.VERSION_53_SHOW_TMDB_RATINGS].
+     */
+    @ColumnInfo(name = RATING_TMDB) val ratingTmdb: Double?,
+    /**
+     * See [SgShow2.ratingTmdbVotes].
+     *
+     * Added with [SgRoomDatabase.VERSION_53_SHOW_TMDB_RATINGS].
+     */
+    @ColumnInfo(name = RATING_TMDB_VOTES) val ratingTmdbVotes: Int?,
     /** See [SgShow2.ratingTrakt]. */
-    @ColumnInfo(name = SgEpisode2Columns.RATING_TRAKT) val ratingTrakt: Double? = null,
+    @ColumnInfo(name = RATING_TRAKT) val ratingTrakt: Double? = null,
     /** See [SgShow2.ratingTraktVotes]. */
-    @ColumnInfo(name = SgEpisode2Columns.RATING_TRAKT_VOTES) val ratingTraktVotes: Int? = null,
+    @ColumnInfo(name = RATING_TRAKT_VOTES) val ratingTraktVotes: Int? = null,
     /** See [SgShow2.ratingUser]. */
-    @ColumnInfo(name = SgEpisode2Columns.RATING_USER) val ratingUser: Int? = null,
-    @ColumnInfo(name = SgEpisode2Columns.IMDBID) val imdbId: String? = "",
-    @ColumnInfo(name = SgEpisode2Columns.LAST_EDITED) val lastEditedSec: Long = 0,
-    @ColumnInfo(name = SgEpisode2Columns.LAST_UPDATED) val lastUpdatedSec: Long = 0
+    @ColumnInfo(name = RATING_USER) val ratingUser: Int? = null,
+    @ColumnInfo(name = IMDBID) val imdbId: String? = "",
+    @ColumnInfo(name = LAST_EDITED) val lastEditedSec: Long = 0,
+    @ColumnInfo(name = LAST_UPDATED) val lastUpdatedSec: Long = 0
 ) {
     val playsOrZero: Int
         get() = plays ?: 0

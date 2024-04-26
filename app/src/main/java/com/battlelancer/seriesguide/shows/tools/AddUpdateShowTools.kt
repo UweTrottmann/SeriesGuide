@@ -387,7 +387,9 @@ class AddUpdateShowTools @Inject constructor(
                         firstReleasedMs = releaseDateTime,
                         directors = TextTools.buildPipeSeparatedString(directors),
                         guestStars = TextTools.buildPipeSeparatedString(guestStars),
-                        writers = TextTools.buildPipeSeparatedString(writers)
+                        writers = TextTools.buildPipeSeparatedString(writers),
+                        ratingTmdb = tmdbEpisode.vote_average,
+                        ratingTmdbVotes = tmdbEpisode.vote_count,
                     )
                 )
             } else {
@@ -405,7 +407,9 @@ class AddUpdateShowTools @Inject constructor(
                         guestStars = TextTools.buildPipeSeparatedString(guestStars),
                         writers = TextTools.buildPipeSeparatedString(writers),
                         image = tmdbEpisode.still_path,
-                        firstReleasedMs = releaseDateTime
+                        firstReleasedMs = releaseDateTime,
+                        ratingTmdb = tmdbEpisode.vote_average,
+                        ratingTmdbVotes = tmdbEpisode.vote_count,
                     )
                 )
                 // Remove from map so episode will not get deleted.

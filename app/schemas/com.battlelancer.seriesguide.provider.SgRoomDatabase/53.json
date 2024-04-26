@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 53,
-    "identityHash": "aecb0eeec9c63848637a42359cfc0b8c",
+    "identityHash": "e864a57c9b0a038577aa1867189a3505",
     "entities": [
       {
         "tableName": "series",
@@ -901,7 +901,7 @@
       },
       {
         "tableName": "sg_episode",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `season_id` INTEGER NOT NULL, `series_id` INTEGER NOT NULL, `episode_tmdb_id` INTEGER, `episode_tvdb_id` INTEGER, `episode_title` TEXT, `episode_description` TEXT, `episode_number` INTEGER NOT NULL, `episode_absolute_number` INTEGER, `episode_season_number` INTEGER NOT NULL, `episode_order` INTEGER NOT NULL, `episode_dvd_number` REAL, `episode_watched` INTEGER NOT NULL, `episode_plays` INTEGER, `episode_collected` INTEGER NOT NULL, `episode_directors` TEXT, `episode_gueststars` TEXT, `episode_writers` TEXT, `episode_image` TEXT, `episode_firstairedms` INTEGER NOT NULL, `episode_rating` REAL, `episode_rating_votes` INTEGER, `episode_rating_user` INTEGER, `episode_imdbid` TEXT, `episode_lastedit` INTEGER NOT NULL, `episode_lastupdate` INTEGER NOT NULL, FOREIGN KEY(`series_id`) REFERENCES `sg_show`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `season_id` INTEGER NOT NULL, `series_id` INTEGER NOT NULL, `episode_tmdb_id` INTEGER, `episode_tvdb_id` INTEGER, `episode_title` TEXT, `episode_description` TEXT, `episode_number` INTEGER NOT NULL, `episode_absolute_number` INTEGER, `episode_season_number` INTEGER NOT NULL, `episode_order` INTEGER NOT NULL, `episode_dvd_number` REAL, `episode_watched` INTEGER NOT NULL, `episode_plays` INTEGER, `episode_collected` INTEGER NOT NULL, `episode_directors` TEXT, `episode_gueststars` TEXT, `episode_writers` TEXT, `episode_image` TEXT, `episode_firstairedms` INTEGER NOT NULL, `episode_rating_tmdb` REAL, `episode_rating_tmdb_votes` INTEGER, `episode_rating` REAL, `episode_rating_votes` INTEGER, `episode_rating_user` INTEGER, `episode_imdbid` TEXT, `episode_lastedit` INTEGER NOT NULL, `episode_lastupdate` INTEGER NOT NULL, FOREIGN KEY(`series_id`) REFERENCES `sg_show`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -1024,13 +1024,25 @@
             "notNull": true
           },
           {
-            "fieldPath": "ratingGlobal",
+            "fieldPath": "ratingTmdb",
+            "columnName": "episode_rating_tmdb",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ratingTmdbVotes",
+            "columnName": "episode_rating_tmdb_votes",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ratingTrakt",
             "columnName": "episode_rating",
             "affinity": "REAL",
             "notNull": false
           },
           {
-            "fieldPath": "ratingVotes",
+            "fieldPath": "ratingTraktVotes",
             "columnName": "episode_rating_votes",
             "affinity": "INTEGER",
             "notNull": false
@@ -1623,7 +1635,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aecb0eeec9c63848637a42359cfc0b8c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e864a57c9b0a038577aa1867189a3505')"
     ]
   }
 }

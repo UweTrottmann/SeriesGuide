@@ -869,6 +869,12 @@ public class SeriesGuideContract {
 
         String DIRECTORS = "episode_directors";
 
+        /** See {@link SgShow2#getRatingTmdb()}. */
+        String RATING_TMDB = "episode_rating_tmdb";
+
+        /** See {@link SgShow2#getRatingTmdbVotes()}. */
+        String RATING_TMDB_VOTES = "episode_rating_tmdb_votes";
+
         /** See {@link SgShow2#getRatingTrakt()}. */
         String RATING_TRAKT = "episode_rating";
 

@@ -135,7 +135,8 @@ abstract class SgRoomDatabase : RoomDatabase() {
         const val VERSION_52_WATCH_PROVIDER_FILTERS = 52
 
         /**
-         * Add [SgShow2.ratingTmdb] and [SgShow2.ratingTmdbVotes].
+         * - Add [SgShow2.ratingTmdb] and [SgShow2.ratingTmdbVotes].
+         * - Add [SgEpisode2.ratingTmdb] and [SgEpisode2.ratingTmdbVotes].
          */
         const val VERSION_53_SHOW_TMDB_RATINGS = 53
         const val VERSION = VERSION_53_SHOW_TMDB_RATINGS

@@ -16,7 +16,33 @@ import androidx.room.Transaction
 import androidx.room.Update
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.ABSOLUTE_NUMBER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.COLLECTED
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.DIRECTORS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.DVDNUMBER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.FIRSTAIREDMS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.GUESTSTARS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.IMAGE
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.NUMBER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.ORDER
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.OVERVIEW
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.PLAYS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.RATING_TMDB
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.RATING_TMDB_VOTES
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SEASON
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SELECTION_COLLECTED
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SELECTION_HAS_RELEASE_DATE
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SELECTION_NO_SPECIALS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SELECTION_ONLY_PREMIERES
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SELECTION_UNWATCHED
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SORT_RECENT
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.SORT_UPCOMING
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.TITLE
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.TMDB_ID
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.TVDB_ID
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.WATCHED
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns.WRITERS
+import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgEpisode2Columns._ID
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgSeason2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideContract.SgShow2Columns
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase
@@ -548,14 +574,14 @@ interface SgEpisode2Helper {
 }
 
 data class SgEpisode2WithShow(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TITLE) val episodetitle: String?,
-    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
-    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
-    @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val episode_firstairedms: Long,
-    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
-    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val episode_collected: Boolean,
-    @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = TITLE) val episodetitle: String?,
+    @ColumnInfo(name = NUMBER) val episodenumber: Int,
+    @ColumnInfo(name = SEASON) val season: Int,
+    @ColumnInfo(name = FIRSTAIREDMS) val episode_firstairedms: Long,
+    @ColumnInfo(name = WATCHED) val watched: Int,
+    @ColumnInfo(name = COLLECTED) val episode_collected: Boolean,
+    @ColumnInfo(name = OVERVIEW) val overview: String?,
 
     @ColumnInfo(name = SgShow2Columns.TITLE) val seriestitle: String,
     @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String?,
@@ -594,10 +620,10 @@ data class SgEpisode2WithShow(
                     // Only episodes from the next few days.
                     System.currentTimeMillis() + CALENDAR_DAY_LIMIT_MS
                 }
-                query = StringBuilder("${SgEpisode2Columns.FIRSTAIREDMS}>=$recentThreshold " +
-                        "AND ${SgEpisode2Columns.FIRSTAIREDMS}<$timeThreshold " +
+                query = StringBuilder("$FIRSTAIREDMS>=$recentThreshold " +
+                        "AND $FIRSTAIREDMS<$timeThreshold " +
                         "AND ${SgShow2Columns.SELECTION_NO_HIDDEN}")
-                sortOrder = SgEpisode2Columns.SORT_UPCOMING
+                sortOrder = SORT_UPCOMING
             } else {
                 // RECENT
                 val timeThreshold = if (isInfiniteCalendar) {
@@ -608,11 +634,11 @@ data class SgEpisode2WithShow(
                     System.currentTimeMillis() - CALENDAR_DAY_LIMIT_MS
                 }
                 query =
-                    StringBuilder("${SgEpisode2Columns.SELECTION_HAS_RELEASE_DATE} " +
-                            "AND ${SgEpisode2Columns.FIRSTAIREDMS}<$recentThreshold " +
-                            "AND ${SgEpisode2Columns.FIRSTAIREDMS}>$timeThreshold " +
+                    StringBuilder("$SELECTION_HAS_RELEASE_DATE " +
+                            "AND $FIRSTAIREDMS<$recentThreshold " +
+                            "AND $FIRSTAIREDMS>$timeThreshold " +
                             "AND ${SgShow2Columns.SELECTION_NO_HIDDEN}")
-                sortOrder = SgEpisode2Columns.SORT_RECENT
+                sortOrder = SORT_RECENT
             }
 
             // append only favorites selection if necessary
@@ -622,22 +648,22 @@ data class SgEpisode2WithShow(
 
             // append no specials selection if necessary
             if (DisplaySettings.isHidingSpecials(context)) {
-                query.append(" AND ").append(SgEpisode2Columns.SELECTION_NO_SPECIALS)
+                query.append(" AND ").append(SELECTION_NO_SPECIALS)
             }
 
             // append unwatched selection if necessary
             if (isOnlyUnwatched) {
-                query.append(" AND ").append(SgEpisode2Columns.SELECTION_UNWATCHED)
+                query.append(" AND ").append(SELECTION_UNWATCHED)
             }
 
             // only show collected episodes
             if (isOnlyCollected) {
-                query.append(" AND ").append(SgEpisode2Columns.SELECTION_COLLECTED)
+                query.append(" AND ").append(SELECTION_COLLECTED)
             }
 
             // Only premieres (first episodes).
             if (isOnlyPremieres) {
-                query.append(" AND ").append(SgEpisode2Columns.SELECTION_ONLY_PREMIERES)
+                query.append(" AND ").append(SELECTION_ONLY_PREMIERES)
             }
 
             return "$SELECT WHERE $query ORDER BY $sortOrder "
@@ -646,31 +672,31 @@ data class SgEpisode2WithShow(
 }
 
 data class SgEpisode2SearchResult(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TITLE) val episodetitle: String?,
-    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
-    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
-    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
-    @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = TITLE) val episodetitle: String?,
+    @ColumnInfo(name = NUMBER) val episodenumber: Int,
+    @ColumnInfo(name = SEASON) val season: Int,
+    @ColumnInfo(name = WATCHED) val watched: Int,
+    @ColumnInfo(name = OVERVIEW) val overview: String?,
 
     @ColumnInfo(name = SgShow2Columns.TITLE) val seriestitle: String,
     @ColumnInfo(name = SgShow2Columns.POSTER_SMALL) val series_poster_small: String?
 )
 
 data class SgEpisode2Info(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
+    @ColumnInfo(name = _ID) val id: Long,
     @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TVDB_ID) val episodeTvdbId: Int,
-    @ColumnInfo(name = SgEpisode2Columns.TITLE) val title: String,
-    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
-    @ColumnInfo(name = SgEpisode2Columns.ABSOLUTE_NUMBER) val absoluteNumber: Int,
-    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
-    @ColumnInfo(name = SgEpisode2Columns.DVDNUMBER) val dvdNumber: Double,
-    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
-    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
-    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean = false,
-    @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val firstReleasedMs: Long
+    @ColumnInfo(name = TVDB_ID) val episodeTvdbId: Int,
+    @ColumnInfo(name = TITLE) val title: String,
+    @ColumnInfo(name = NUMBER) val episodenumber: Int,
+    @ColumnInfo(name = ABSOLUTE_NUMBER) val absoluteNumber: Int,
+    @ColumnInfo(name = SEASON) val season: Int,
+    @ColumnInfo(name = DVDNUMBER) val dvdNumber: Double,
+    @ColumnInfo(name = WATCHED) val watched: Int,
+    @ColumnInfo(name = PLAYS) val plays: Int,
+    @ColumnInfo(name = COLLECTED) val collected: Boolean = false,
+    @ColumnInfo(name = FIRSTAIREDMS) val firstReleasedMs: Long
 ) {
     companion object {
 
@@ -687,19 +713,19 @@ data class SgEpisode2Info(
 }
 
 data class SgEpisode2Ids(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?,
-    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = TMDB_ID) val tmdbId: Int?,
+    @ColumnInfo(name = NUMBER) val episodenumber: Int
 )
 
 data class SgEpisode2Numbers(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int?,
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = TMDB_ID) val tmdbId: Int?,
     @ColumnInfo(name = SgSeason2Columns.REF_SEASON_ID) val seasonId: Long,
     @ColumnInfo(name = SgShow2Columns.REF_SHOW_ID) val showId: Long,
-    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val episodenumber: Int,
-    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
-    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int
+    @ColumnInfo(name = NUMBER) val episodenumber: Int,
+    @ColumnInfo(name = SEASON) val season: Int,
+    @ColumnInfo(name = PLAYS) val plays: Int
 ) {
     companion object {
 
@@ -716,42 +742,45 @@ data class SgEpisode2Numbers(
 }
 
 data class SgEpisode2ForSync(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int,
-    @ColumnInfo(name = SgEpisode2Columns.SEASON) val season: Int,
-    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
-    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
-    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = NUMBER) val number: Int,
+    @ColumnInfo(name = SEASON) val season: Int,
+    @ColumnInfo(name = WATCHED) val watched: Int,
+    @ColumnInfo(name = PLAYS) val plays: Int,
+    @ColumnInfo(name = COLLECTED) val collected: Boolean
 )
 
+/** See [SgEpisode2]. */
 data class SgEpisode2Update(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int,
-    @ColumnInfo(name = SgEpisode2Columns.TITLE) val title: String?,
-    @ColumnInfo(name = SgEpisode2Columns.OVERVIEW) val overview: String?,
-    @ColumnInfo(name = SgEpisode2Columns.NUMBER) val number: Int,
-    @ColumnInfo(name = SgEpisode2Columns.ORDER) val order: Int,
-    @ColumnInfo(name = SgEpisode2Columns.DIRECTORS) val directors: String?,
-    @ColumnInfo(name = SgEpisode2Columns.GUESTSTARS) val guestStars: String?,
-    @ColumnInfo(name = SgEpisode2Columns.WRITERS) val writers: String?,
-    @ColumnInfo(name = SgEpisode2Columns.IMAGE) val image: String?,
-    @ColumnInfo(name = SgEpisode2Columns.FIRSTAIREDMS) val firstReleasedMs: Long,
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = TMDB_ID) val tmdbId: Int,
+    @ColumnInfo(name = TITLE) val title: String?,
+    @ColumnInfo(name = OVERVIEW) val overview: String?,
+    @ColumnInfo(name = NUMBER) val number: Int,
+    @ColumnInfo(name = ORDER) val order: Int,
+    @ColumnInfo(name = DIRECTORS) val directors: String?,
+    @ColumnInfo(name = GUESTSTARS) val guestStars: String?,
+    @ColumnInfo(name = WRITERS) val writers: String?,
+    @ColumnInfo(name = IMAGE) val image: String?,
+    @ColumnInfo(name = FIRSTAIREDMS) val firstReleasedMs: Long,
+    @ColumnInfo(name = RATING_TMDB) val ratingTmdb: Double?,
+    @ColumnInfo(name = RATING_TMDB_VOTES) val ratingTmdbVotes: Int?,
 )
 
 data class SgEpisode2WatchedUpdate(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.WATCHED) val watched: Int,
-    @ColumnInfo(name = SgEpisode2Columns.PLAYS) val plays: Int,
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = WATCHED) val watched: Int,
+    @ColumnInfo(name = PLAYS) val plays: Int,
 )
 
 data class SgEpisode2CollectedUpdate(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.COLLECTED) val collected: Boolean
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = COLLECTED) val collected: Boolean
 )
 
 data class SgEpisode2TmdbIdUpdate(
-    @ColumnInfo(name = SgEpisode2Columns._ID) val id: Long,
-    @ColumnInfo(name = SgEpisode2Columns.TMDB_ID) val tmdbId: Int
+    @ColumnInfo(name = _ID) val id: Long,
+    @ColumnInfo(name = TMDB_ID) val tmdbId: Int
 )
 
 data class SgEpisode2UpdateByNumber(

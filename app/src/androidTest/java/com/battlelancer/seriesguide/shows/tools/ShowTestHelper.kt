@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
@@ -68,7 +68,9 @@ object ShowTestHelper {
             firstReleasedMs = releaseDateTimeMs,
             directors = "directors",
             guestStars = "guest stars",
-            writers = "writers"
+            writers = "writers",
+            ratingTmdb = 0.0,
+            ratingTmdbVotes = 0
         )
     }
 

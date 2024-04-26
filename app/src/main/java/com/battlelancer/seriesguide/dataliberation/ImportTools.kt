@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -72,6 +72,7 @@ object ImportTools {
 
     @JvmStatic
     fun Episode.toSgEpisodeForImport(showId: Long, seasonId: Long, seasonNumber: Int): SgEpisode2 {
+        // TODO refactor null check
         val ratingUser = rating_user?.let { if (it in 0..10) it else 0 } ?: 0
         val ratingGlobal = rating?.let { if (it in 0.0..10.0) it else 0.0 } ?: 0.0
         return SgEpisode2(
@@ -94,6 +95,9 @@ object ImportTools {
             watched = if (skipped) EpisodeFlags.SKIPPED else if (watched) EpisodeFlags.WATCHED else EpisodeFlags.UNWATCHED,
             collected = collected,
             plays = if (watched && plays >= 1) plays else if (watched) 1 else 0,
+            // TODO Should this be exported? Some other non-user-specific info is?
+            ratingTmdb = 0.0,
+            ratingTmdbVotes = 0,
             ratingUser = ratingUser,
             ratingTrakt = ratingGlobal,
             ratingTraktVotes = rating_votes?.let { if (it >= 0) it else 0 } ?: 0
