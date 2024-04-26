@@ -11,12 +11,16 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
-Version 73
-----------
+Version 2024.2
+--------------
 *in development*
+
+#### 2024.2.3 🧪
+*2024-04-26*
 
 * 🌟 Ratings: display TMDB rating for shows and episodes. Tap rating to open TMDB or Trakt page.
 * 📝 Latest user interface translations from Crowdin.
+* 📝 Change to year-based versioning scheme.
 
 #### 73.0.2 🧪
 *2024-04-19*
