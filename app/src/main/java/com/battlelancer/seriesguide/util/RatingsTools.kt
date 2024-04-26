@@ -4,8 +4,13 @@
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
+import android.view.View
+import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.isGone
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
+import com.battlelancer.seriesguide.shows.database.SgEpisode2
+import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.uwetrottmann.androidutils.AndroidUtils
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -16,8 +21,12 @@ import java.util.Locale
  */
 object RatingsTools {
 
-    fun LayoutRatingsBinding.setRangeValues() {
-        root.context.getString(R.string.format_rating_range, 10).let {
+    /**
+     * If no [onRateClickListener] is passed, hides the user rating views.
+     */
+    fun LayoutRatingsBinding.initialize(onRateClickListener: View.OnClickListener?) {
+        val context = root.context
+        context.getString(R.string.format_rating_range, 10).let {
             ratingViewTmdb.apply {
                 setRange(it)
                 setIcon(R.drawable.ic_tmdb_control_24dp, R.string.tmdb)
@@ -26,6 +35,15 @@ object RatingsTools {
                 setRange(it)
                 setIcon(R.drawable.ic_trakt_icon_control, R.string.trakt)
             }
+        }
+
+        if (onRateClickListener != null) {
+            viewClickTargetRatingUser.setOnClickListener(onRateClickListener)
+            val action = context.getString(R.string.action_rate)
+            viewClickTargetRatingUser.contentDescription = action
+            TooltipCompat.setTooltipText(viewClickTargetRatingUser, action)
+        } else {
+            groupRatingsUser.isGone = true
         }
     }
 
@@ -44,6 +62,17 @@ object RatingsTools {
             buildRatingString(traktValue),
             buildRatingVotesString(context, traktVotes)
         )
+    }
+
+    fun LayoutRatingsBinding.setValuesFor(episode: SgEpisode2) {
+        setRatingValues(
+            episode.ratingTmdb,
+            episode.ratingTmdbVotes,
+            episode.ratingTrakt,
+            episode.ratingTraktVotes
+        )
+        textViewRatingsUser.text =
+            TraktTools.buildUserRatingString(root.context, episode.ratingUser)
     }
 
     /**

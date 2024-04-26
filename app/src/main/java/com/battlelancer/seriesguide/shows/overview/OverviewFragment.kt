@@ -60,6 +60,8 @@ import com.battlelancer.seriesguide.ui.BaseMessageActivity.ServiceCompletedEvent
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setValuesFor
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
@@ -197,15 +199,8 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
                 )
             }
 
-            // ratings
-            with(includeRatings) {
-                root.setOnClickListener { onButtonRateClick() }
-                TooltipCompat.setTooltipText(
-                    root,
-                    root.context.getString(R.string.action_rate)
-                )
-                textViewRatingsRange.text = getString(R.string.format_rating_range, 10)
-            }
+            // Ratings
+            includeRatings.initialize { onButtonRateClick() }
 
             // set up long-press to copy text to clipboard (d-pad friendly vs text selection)
             textViewEpisodeDescription.copyTextToClipboardOnLongClick()
@@ -544,17 +539,8 @@ class OverviewFragment() : Fragment(), EpisodeActionsContract {
             TextTools.splitPipeSeparatedStrings(episode.guestStars)
         )
 
-        // Trakt rating
-        binding.includeRatings.also {
-            it.textViewRatingsValue.text = TraktTools.buildRatingString(episode.ratingTrakt)
-            it.textViewRatingsVotes.text = TraktTools.buildRatingVotesString(
-                activity, episode.ratingTraktVotes
-            )
-            // user rating
-            it.textViewRatingsUser.text = TraktTools.buildUserRatingString(
-                activity, episode.ratingUser
-            )
-        }
+        // Ratings
+        binding.includeRatings.setValuesFor(episode)
 
         binding.includeServices.includeMore.also {
             // IMDb button

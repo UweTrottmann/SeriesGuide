@@ -25,7 +25,7 @@ import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
-import com.battlelancer.seriesguide.util.RatingsTools.setRangeValues
+import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
@@ -105,10 +105,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
             buttonPositive.isGone = true
 
-            containerRatings.apply {
-                groupRatingsUser.isGone = true
-                setRangeValues()
-            }
+            containerRatings.initialize(null)
 
             // Set up long-press to copy text to clipboard (d-pad friendly vs text selection).
             containerShowInfo.setOnLongClickListener {

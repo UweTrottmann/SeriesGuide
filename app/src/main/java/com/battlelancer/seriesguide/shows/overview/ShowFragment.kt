@@ -39,7 +39,7 @@ import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.Metacritic
-import com.battlelancer.seriesguide.util.RatingsTools.setRangeValues
+import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
@@ -190,11 +190,7 @@ class ShowFragment() : Fragment() {
         )
 
         // rate button
-        binding.ratingContainer.apply {
-            setRangeValues()
-            viewClickTargetRatingUser.setOnClickListener { rateShow() }
-            TooltipCompat.setTooltipText(viewClickTargetRatingUser, getString(R.string.action_rate))
-        }
+        binding.ratingContainer.initialize { rateShow() }
 
         // share button
         binding.buttonShare.setOnClickListener { shareShow() }

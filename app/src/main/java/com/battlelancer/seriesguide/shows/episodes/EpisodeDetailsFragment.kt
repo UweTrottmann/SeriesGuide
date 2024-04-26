@@ -29,7 +29,6 @@ import com.battlelancer.seriesguide.databinding.ButtonsEpisodeMoreBinding
 import com.battlelancer.seriesguide.databinding.ButtonsServicesBinding
 import com.battlelancer.seriesguide.databinding.FragmentEpisodeBinding
 import com.battlelancer.seriesguide.databinding.LayoutEpisodeBinding
-import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
 import com.battlelancer.seriesguide.extensions.ActionsHelper
 import com.battlelancer.seriesguide.extensions.EpisodeActionsContract
 import com.battlelancer.seriesguide.extensions.EpisodeActionsLoader
@@ -53,8 +52,8 @@ import com.battlelancer.seriesguide.ui.FullscreenImageActivity.Companion.intent
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ImageTools.tmdbOrTvdbStillUrl
 import com.battlelancer.seriesguide.util.LanguageTools
-import com.battlelancer.seriesguide.util.RatingsTools.setRangeValues
-import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
+import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setValuesFor
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
@@ -91,7 +90,6 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
 
     private var binding: LayoutEpisodeBinding? = null
     private var bindingButtons: ButtonsEpisodeBinding? = null
-    private var bindingRatings: LayoutRatingsBinding? = null
     private var bindingActions: ButtonsServicesBinding? = null
     private var bindingBottom: ButtonsEpisodeMoreBinding? = null
 
@@ -116,7 +114,6 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         }
         binding = bindingRoot.includeEpisode.also { binding ->
             bindingButtons = binding.includeButtons
-            bindingRatings = binding.includeRatings
             bindingActions = binding.includeServices.also {
                 bindingBottom = it.includeMore
             }
@@ -128,11 +125,8 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         val binding = binding!!
         binding.root.visibility = View.GONE
 
-        bindingRatings!!.apply {
-            setRangeValues()
-            viewClickTargetRatingUser.setOnClickListener { rateEpisode() }
-            TooltipCompat.setTooltipText(viewClickTargetRatingUser, getString(R.string.action_rate))
-        }
+        // Ratings
+        binding.includeRatings.initialize { rateEpisode() }
 
         // Episode action buttons
         bindingButtons!!.apply {
@@ -233,7 +227,6 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         Picasso.get().cancelRequest(binding!!.imageviewScreenshot)
         binding = null
         bindingButtons = null
-        bindingRatings = null
         bindingActions = null
         bindingBottom = null
     }
@@ -344,7 +337,6 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         this.show = show
 
         val binding = binding ?: return
-        val bindingRatings = bindingRatings ?: return
 
         ViewTools.configureNotMigratedWarning(
             binding.textViewEpisodeNotMigrated,
@@ -451,16 +443,7 @@ class EpisodeDetailsFragment : Fragment(), EpisodeActionsContract {
         )
 
         // Ratings
-        bindingRatings.apply {
-            setRatingValues(
-                episode.ratingTmdb,
-                episode.ratingTmdbVotes,
-                episode.ratingTrakt,
-                episode.ratingTraktVotes
-            )
-            textViewRatingsUser.text =
-                TraktTools.buildUserRatingString(requireContext(), episode.ratingUser)
-        }
+        binding.includeRatings.setValuesFor(episode)
 
         // episode image
         val imagePath = episode.image

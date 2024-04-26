@@ -55,7 +55,7 @@ import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
-import com.battlelancer.seriesguide.util.RatingsTools.setRangeValues
+import com.battlelancer.seriesguide.util.RatingsTools.initialize
 import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
@@ -167,8 +167,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
         // ratings
         binding.containerRatings.apply {
-            root.isGone = true
-            setRangeValues()
+            root.isGone = true // to animate in later
+            initialize { rateMovie() }
         }
 
         // language button
@@ -493,16 +493,8 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
                 groupRatingsUser.isGone = true
             } else {
                 groupRatingsUser.isGone = false
-                viewClickTargetRatingUser.setOnClickListener { rateMovie() }
-                TooltipCompat.setTooltipText(
-                    viewClickTargetRatingUser,
-                    getString(R.string.action_rate)
-                )
                 textViewRatingsUser.text =
-                    TraktTools.buildUserRatingString(
-                        activity,
-                        rating
-                    )
+                    TraktTools.buildUserRatingString(activity, rating)
             }
             root.isGone = false
         }
