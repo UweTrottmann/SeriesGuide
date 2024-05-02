@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
@@ -45,10 +44,7 @@ class MoviesSearchFragment : Fragment() {
     private lateinit var searchClickListener: OnSearchClickListener
     private lateinit var adapter: MoviesSearchAdapter
 
-    private val activityModel: MoviesSearchActivityViewModel by activityViewModels()
-    private val model: MoviesSearchViewModel by viewModels {
-        MoviesSearchViewModelFactory(requireActivity().application, link)
-    }
+    private val activityModel: MoviesSearchViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -126,20 +122,8 @@ class MoviesSearchFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            model.items.collectLatest {
+            activityModel.items.collectLatest {
                 adapter.submitData(it)
-            }
-        }
-
-        // TODO Is there a way to directly access the Flows and use them in the model?
-        viewLifecycleOwner.lifecycleScope.launch {
-            activityModel.releaseYear.collectLatest {
-                model.updateYear(it)
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            activityModel.originalLanguage.collectLatest {
-                model.updateLanguage(it)
             }
         }
     }
@@ -147,10 +131,6 @@ class MoviesSearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    fun search(query: String) {
-        model.updateQuery(query)
     }
 
     private val onRefreshListener = OnRefreshListener { adapter.refresh() }

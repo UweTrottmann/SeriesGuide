@@ -27,6 +27,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 
+/**
+ * Keeps state for [MoviesSearchActivity] and state sharing with [MoviesSearchFragment].
+ */
 @OptIn(FlowPreview::class)
 class MoviesSearchViewModel(
     application: Application,
@@ -40,10 +43,10 @@ class MoviesSearchViewModel(
         val watchProviderIds: List<Int>?,
     )
 
-    private val queryString = MutableStateFlow("")
-    private val releaseYear = MutableStateFlow<Int?>(null)
-    private val originalLanguage = MutableStateFlow<String?>(null)
-    private val watchProviderIds =
+    val queryString = MutableStateFlow("")
+    val releaseYear = MutableStateFlow<Int?>(null)
+    val originalLanguage = MutableStateFlow<String?>(null)
+    val watchProviderIds =
         SgRoomDatabase.getInstance(getApplication()).sgWatchProviderHelper()
             .getEnabledWatchProviderIdsFlow(SgWatchProvider.Type.MOVIES.id)
 
@@ -82,18 +85,12 @@ class MoviesSearchViewModel(
         }
         .cachedIn(viewModelScope)
 
-    fun updateQuery(query: String) {
-        queryString.value = query
+    /**
+     * This will then load the original list as determined by the link.
+     */
+    fun removeQuery() {
+        queryString.value = ""
     }
-
-    fun updateYear(year: Int?) {
-        releaseYear.value = year
-    }
-
-    fun updateLanguage(languageCode: String?) {
-        originalLanguage.value = languageCode
-    }
-
 }
 
 class MoviesSearchViewModelFactory(

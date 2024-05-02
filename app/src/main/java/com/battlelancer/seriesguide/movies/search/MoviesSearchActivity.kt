@@ -13,6 +13,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
@@ -52,7 +53,9 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
 
     private var yearPicker: YearPickerDialogFragment? = null
     private var languagePicker: LanguagePickerDialogFragment? = null
-    private val model: MoviesSearchActivityViewModel by viewModels()
+    private val model: MoviesSearchViewModel by viewModels {
+        MoviesSearchViewModelFactory(application, link)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,14 +111,9 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        // set title for screen readers
-        if (showSearchView) {
-            setTitle(R.string.search)
-        } else {
-            setTitle(link.titleRes)
-        }
-
         setSearchViewVisible(showSearchView)
+        // When search view is shown, make back button restore original list and hide search view
+        onBackPressedDispatcher.addCallback(onBackPressedWithSearchVisibleCallback)
 
         // search box
         val searchView = binding.autoCompleteViewToolbar
@@ -158,7 +156,7 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
         lifecycleScope.launch {
             model.queryString.collectLatest {
                 // Hide unsupported filters
-                val hasQuery = it != null
+                val hasQuery = it.isNotEmpty()
                 binding.chipMoviesSearchReleaseYear.isGone =
                     !hasQuery && !TmdbMoviesDataSource.supportsYearFilter(link)
                 binding.chipMoviesSearchOriginalLanguage.isGone = hasQuery
@@ -225,7 +223,6 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
                     this,
                     binding.autoCompleteViewToolbar
                 )
-                showSearchView = true
                 invalidateOptionsMenu()
                 return true
             }
@@ -236,6 +233,16 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
                 // setting text to null seems to fix the dropdown from not clearing
                 binding.autoCompleteViewToolbar.setText(null)
                 return true
+            }
+
+            // When search view is shown, make up button restore original list and hide search view
+            android.R.id.home -> {
+                if (showSearchView) {
+                    hideSearchViewAndRemoveQuery()
+                    return true
+                } else {
+                    return super.onOptionsItemSelected(item)
+                }
             }
 
             else -> return super.onOptionsItemSelected(item)
@@ -258,26 +265,44 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
     }
 
     private fun search() {
-        val fragment = supportFragmentManager.findFragmentById(
-            R.id.containerMoviesSearchFragment
-        ) ?: return
-
         val query = binding.autoCompleteViewToolbar.text.toString().trim()
-        model.queryString.value = query
         // perform search
-        val searchFragment = fragment as MoviesSearchFragment
-        searchFragment.search(query)
+        model.queryString.value = query
         // update history
         if (searchHistory.saveRecentSearch(query)) {
             searchHistoryAdapter.clear()
             searchHistoryAdapter.addAll(searchHistory.searchHistory)
         }
+        // if search query is empty hide search bar, show search button again
+        if (query.isEmpty()) {
+            hideSearchView()
+        }
     }
 
     private fun setSearchViewVisible(visible: Boolean) {
+        showSearchView = visible
+        onBackPressedWithSearchVisibleCallback.isEnabled = visible
         binding.textInputLayoutToolbar.isGone = !visible
+        // set title for screen readers
+        setTitle(if (visible) R.string.search else link.titleRes)
         // hide title if search bar is shown
         supportActionBar?.setDisplayShowTitleEnabled(!visible)
+    }
+
+    private fun hideSearchView() {
+        setSearchViewVisible(false)
+        invalidateOptionsMenu()
+    }
+
+    private fun hideSearchViewAndRemoveQuery() {
+        hideSearchView()
+        model.removeQuery()
+    }
+
+    private val onBackPressedWithSearchVisibleCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            hideSearchViewAndRemoveQuery()
+        }
     }
 
     private val searchViewClickListener =
