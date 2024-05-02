@@ -3,7 +3,6 @@
 
 package com.battlelancer.seriesguide.movies.search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding
 import com.battlelancer.seriesguide.movies.MovieClickListenerImpl
+import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ThemeUtils
@@ -25,6 +24,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 /**
@@ -33,28 +35,13 @@ import timber.log.Timber
  */
 class MoviesSearchFragment : Fragment() {
 
-    internal interface OnSearchClickListener {
-        fun onSearchClick()
-    }
-
     private var _binding: FragmentMoviesSearchBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var link: MoviesDiscoverLink
-    private lateinit var searchClickListener: OnSearchClickListener
     private lateinit var adapter: MoviesSearchAdapter
 
     private val activityModel: MoviesSearchViewModel by activityViewModels()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        searchClickListener = try {
-            context as OnSearchClickListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement OnSearchClickListener")
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,12 +62,12 @@ class MoviesSearchFragment : Fragment() {
 
         binding.swipeRefreshLayoutMoviesSearch.also {
             it.setSwipeableChildren(R.id.scrollViewMoviesSearch, R.id.recyclerViewMoviesSearch)
-            it.setOnRefreshListener(onRefreshListener)
+            it.setOnRefreshListener { refreshList() }
             ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, it)
         }
 
         // setup empty view button
-        binding.emptyViewMoviesSearch.setButtonClickListener { searchClickListener.onSearchClick() }
+        binding.emptyViewMoviesSearch.setButtonClickListener { refreshList() }
 
         // setup grid view
         binding.recyclerViewMoviesSearch.apply {
@@ -128,12 +115,32 @@ class MoviesSearchFragment : Fragment() {
         }
     }
 
+    private fun refreshList() {
+        adapter.refresh()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventLanguageChanged(
+        @Suppress("UNUSED_PARAMETER")
+        event: MovieLocalizationDialogFragment.LocalizationChangedEvent?
+    ) {
+        refreshList()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    private val onRefreshListener = OnRefreshListener { adapter.refresh() }
 
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewMoviesSearch

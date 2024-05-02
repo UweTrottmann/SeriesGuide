@@ -35,13 +35,11 @@ import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Hosts [MoviesSearchFragment], provides a special toolbar with search bar that expands.
  */
-class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearchClickListener {
+class MoviesSearchActivity : BaseMessageActivity() {
 
     lateinit var binding: ActivityMoviesSearchBinding
 
@@ -254,29 +252,20 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
         outState.putBoolean(STATE_SEARCH_VISIBLE, showSearchView)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventLanguageChanged(@Suppress("UNUSED_PARAMETER") event: MovieLocalizationDialogFragment.LocalizationChangedEvent?) {
-        // just run the current search again
-        search()
-    }
-
-    override fun onSearchClick() {
-        search()
-    }
-
     private fun search() {
-        val query = binding.autoCompleteViewToolbar.text.toString().trim()
-        // perform search
-        model.queryString.value = query
-        // update history
-        if (searchHistory.saveRecentSearch(query)) {
-            searchHistoryAdapter.clear()
-            searchHistoryAdapter.addAll(searchHistory.searchHistory)
-        }
-        // if search query is empty hide search bar, show search button again
-        if (query.isEmpty()) {
-            hideSearchView()
-        }
+        binding.autoCompleteViewToolbar.text.toString()
+            .trim()
+            .let { query ->
+                if (query.isNotEmpty()) {
+                    // perform search
+                    model.queryString.value = query
+                    // update history
+                    if (searchHistory.saveRecentSearch(query)) {
+                        searchHistoryAdapter.clear()
+                        searchHistoryAdapter.addAll(searchHistory.searchHistory)
+                    }
+                }
+            }
     }
 
     private fun setSearchViewVisible(visible: Boolean) {
@@ -289,13 +278,9 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
         supportActionBar?.setDisplayShowTitleEnabled(!visible)
     }
 
-    private fun hideSearchView() {
+    private fun hideSearchViewAndRemoveQuery() {
         setSearchViewVisible(false)
         invalidateOptionsMenu()
-    }
-
-    private fun hideSearchViewAndRemoveQuery() {
-        hideSearchView()
         model.removeQuery()
     }
 
