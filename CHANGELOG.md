@@ -15,6 +15,8 @@ Version 2024.2
 --------------
 *in development*
 
+* 🌟 Movies: add year and original language filter where possible for discover and search screens.
+
 #### 2024.2.3 🧪
 *2024-04-26*
 

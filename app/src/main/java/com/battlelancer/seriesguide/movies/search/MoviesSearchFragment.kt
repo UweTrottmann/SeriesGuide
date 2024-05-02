@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.search
 
@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -44,6 +45,7 @@ class MoviesSearchFragment : Fragment() {
     private lateinit var searchClickListener: OnSearchClickListener
     private lateinit var adapter: MoviesSearchAdapter
 
+    private val activityModel: MoviesSearchActivityViewModel by activityViewModels()
     private val model: MoviesSearchViewModel by viewModels {
         MoviesSearchViewModelFactory(requireActivity().application, link)
     }
@@ -113,7 +115,8 @@ class MoviesSearchFragment : Fragment() {
                 .collectLatest { loadStates ->
                     Timber.d("loadStates=$loadStates")
                     val refresh = loadStates.refresh
-                    binding.swipeRefreshLayoutMoviesSearch.isRefreshing = refresh is LoadState.Loading
+                    binding.swipeRefreshLayoutMoviesSearch.isRefreshing =
+                        refresh is LoadState.Loading
                     if (refresh is LoadState.Error) {
                         binding.emptyViewMoviesSearch.setMessage(refresh.error.message)
                     } else {
@@ -125,6 +128,18 @@ class MoviesSearchFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             model.items.collectLatest {
                 adapter.submitData(it)
+            }
+        }
+
+        // TODO Is there a way to directly access the Flows and use them in the model?
+        viewLifecycleOwner.lifecycleScope.launch {
+            activityModel.releaseYear.collectLatest {
+                model.updateYear(it)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            activityModel.originalLanguage.collectLatest {
+                model.updateLanguage(it)
             }
         }
     }

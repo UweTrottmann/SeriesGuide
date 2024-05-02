@@ -13,18 +13,27 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
+import androidx.activity.viewModels
+import androidx.core.view.isGone
+import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesSearchBinding
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesDiscoverAdapter
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
+import com.battlelancer.seriesguide.shows.search.popular.LanguagePickerDialogFragment
+import com.battlelancer.seriesguide.shows.search.popular.YearPickerDialogFragment
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
 import com.battlelancer.seriesguide.ui.BaseMessageActivity
-import com.battlelancer.seriesguide.util.HighlightTools
+import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.findDialog
+import com.battlelancer.seriesguide.util.safeShow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -33,13 +42,17 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearchClickListener {
 
-    private lateinit var binding: ActivityMoviesSearchBinding
+    lateinit var binding: ActivityMoviesSearchBinding
 
     private lateinit var searchHistory: SearchHistory
     private lateinit var searchHistoryAdapter: ArrayAdapter<String>
     private var showSearchView = false
 
     private lateinit var link: MoviesDiscoverLink
+
+    private var yearPicker: YearPickerDialogFragment? = null
+    private var languagePicker: LanguagePickerDialogFragment? = null
+    private val model: MoviesSearchActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +79,7 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
             if (showSearchView) {
                 ViewTools.showSoftKeyboardOnSearchView(
                     this,
-                    binding.sgToolbar.autoCompleteViewToolbar
+                    binding.autoCompleteViewToolbar
                 )
             }
             supportFragmentManager.beginTransaction()
@@ -77,24 +90,23 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
             // allow the adapter to repopulate during the next layout pass
             // before starting the transition animation
             binding.containerMoviesSearchFragment.post { startPostponedEnterTransition() }
-        }
 
-        // Highlight new movies filter.
-        HighlightTools.highlightSgToolbarItem(
-            HighlightTools.Feature.MOVIE_FILTER,
-            this,
-            lifecycle,
-            R.id.menu_action_movies_search_filter,
-            R.string.action_movies_filter
-        ) {
-            link == MoviesDiscoverLink.POPULAR || link == MoviesDiscoverLink.DIGITAL
+            // Re-attach listeners to any showing dialogs
+            yearPicker =
+                findDialog<YearPickerDialogFragment>(supportFragmentManager, TAG_YEAR_PICKER)
+                    ?.also { it.onPickedListener = onYearPickedListener }
+            languagePicker =
+                findDialog<LanguagePickerDialogFragment>(
+                    supportFragmentManager,
+                    TAG_LANGUAGE_PICKER
+                )?.also { it.onPickedListener = onLanguagePickedListener }
         }
     }
 
     private fun setupActionBar(link: MoviesDiscoverLink) {
         super.setupActionBar()
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         // set title for screen readers
         if (showSearchView) {
@@ -105,18 +117,18 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
 
         setSearchViewVisible(showSearchView)
 
-        // setup search box
-        val searchView = binding.sgToolbar.autoCompleteViewToolbar
+        // search box
+        val searchView = binding.autoCompleteViewToolbar
         searchView.threshold = 1
         searchView.setOnClickListener(searchViewClickListener)
         searchView.onItemClickListener = searchViewItemClickListener
         searchView.setOnEditorActionListener(searchViewActionListener)
-        binding.sgToolbar.textInputLayoutToolbar.hint = getString(R.string.movies_search_hint)
+        binding.textInputLayoutToolbar.hint = getString(R.string.movies_search_hint)
         // set in code as XML is overridden
         searchView.imeOptions = EditorInfo.IME_ACTION_SEARCH
         searchView.inputType = EditorInfo.TYPE_CLASS_TEXT
 
-        // setup search history
+        // search history
         searchHistory = SearchHistory(this, "tmdb")
         searchHistoryAdapter = ArrayAdapter(
             this,
@@ -126,6 +138,67 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
         searchView.setAdapter(searchHistoryAdapter)
         // drop-down is auto-shown on config change, ensure it is hidden when recreating views
         searchView.dismissDropDown()
+
+        // filters
+        binding.chipMoviesSearchReleaseYear.setOnClickListener {
+            YearPickerDialogFragment.create(model.releaseYear.value)
+                .also { yearPicker = it }
+                .apply { onPickedListener = onYearPickedListener }
+                .safeShow(supportFragmentManager, TAG_YEAR_PICKER)
+        }
+        binding.chipMoviesSearchOriginalLanguage.setOnClickListener {
+            LanguagePickerDialogFragment.create(model.originalLanguage.value)
+                .also { languagePicker = it }
+                .apply { onPickedListener = onLanguagePickedListener }
+                .safeShow(supportFragmentManager, TAG_LANGUAGE_PICKER)
+        }
+        binding.chipMoviesSearchWatchProviders.setOnClickListener {
+            WatchProviderFilterDialogFragment.showForMovies(supportFragmentManager)
+        }
+        lifecycleScope.launch {
+            model.queryString.collectLatest {
+                // Hide unsupported filters
+                val hasQuery = it != null
+                binding.chipMoviesSearchReleaseYear.isGone =
+                    !hasQuery && !TmdbMoviesDataSource.supportsYearFilter(link)
+                binding.chipMoviesSearchOriginalLanguage.isGone = hasQuery
+                binding.chipMoviesSearchWatchProviders.isGone =
+                    hasQuery || !TmdbMoviesDataSource.supportsWatchProviderFilter(link)
+            }
+        }
+        lifecycleScope.launch {
+            model.releaseYear.collectLatest { year ->
+                binding.chipMoviesSearchReleaseYear.apply {
+                    val hasYear = year != null
+                    isChipIconVisible = hasYear
+                    text = if (hasYear) {
+                        year.toString()
+                    } else {
+                        getString(R.string.filter_year)
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            model.originalLanguage.collectLatest { language ->
+                binding.chipMoviesSearchOriginalLanguage.apply {
+                    val hasLanguage = language != null
+                    isChipIconVisible = hasLanguage
+                    text = if (hasLanguage) {
+                        LanguageTools.buildLanguageDisplayName(language!!)
+                    } else {
+                        getString(R.string.filter_language)
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            model.watchProviderIds.collectLatest {
+                binding.chipMoviesSearchWatchProviders.apply {
+                    isChipIconVisible = it.isNotEmpty()
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -136,12 +209,6 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
         itemSearch.isVisible = !showSearchView
         itemSearch.isEnabled = !showSearchView
 
-        val showFilter = TmdbMoviesDataSource.isLinkFilterable(link)
-        menu.findItem(R.id.menu_action_movies_search_filter).apply {
-            isVisible = showFilter
-            isEnabled = showFilter
-        }
-
         return true
     }
 
@@ -151,27 +218,26 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
                 MovieLocalizationDialogFragment.show(supportFragmentManager)
                 return true
             }
+
             R.id.menu_action_movies_search_display_search -> {
                 setSearchViewVisible(true)
                 ViewTools.showSoftKeyboardOnSearchView(
                     this,
-                    binding.sgToolbar.autoCompleteViewToolbar
+                    binding.autoCompleteViewToolbar
                 )
                 showSearchView = true
                 invalidateOptionsMenu()
                 return true
             }
-            R.id.menu_action_movies_search_filter -> {
-                WatchProviderFilterDialogFragment.showForMovies(supportFragmentManager)
-                return true
-            }
+
             R.id.menu_action_movies_search_clear_history -> {
                 searchHistory.clearHistory()
                 searchHistoryAdapter.clear()
                 // setting text to null seems to fix the dropdown from not clearing
-                binding.sgToolbar.autoCompleteViewToolbar.setText(null)
+                binding.autoCompleteViewToolbar.setText(null)
                 return true
             }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -196,7 +262,8 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
             R.id.containerMoviesSearchFragment
         ) ?: return
 
-        val query = binding.sgToolbar.autoCompleteViewToolbar.text.toString().trim()
+        val query = binding.autoCompleteViewToolbar.text.toString().trim()
+        model.queryString.value = query
         // perform search
         val searchFragment = fragment as MoviesSearchFragment
         searchFragment.search(query)
@@ -208,12 +275,13 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
     }
 
     private fun setSearchViewVisible(visible: Boolean) {
-        binding.sgToolbar.containerSearchBar.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.textInputLayoutToolbar.isGone = !visible
+        // hide title if search bar is shown
         supportActionBar?.setDisplayShowTitleEnabled(!visible)
     }
 
     private val searchViewClickListener =
-        View.OnClickListener { binding.sgToolbar.autoCompleteViewToolbar.showDropDown() }
+        View.OnClickListener { binding.autoCompleteViewToolbar.showDropDown() }
 
     private val searchViewItemClickListener =
         AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, _: Int, _: Long -> search() }
@@ -228,8 +296,22 @@ class MoviesSearchActivity : BaseMessageActivity(), MoviesSearchFragment.OnSearc
             false
         }
 
+    private val onYearPickedListener = object : YearPickerDialogFragment.OnPickedListener {
+        override fun onPicked(year: Int?) {
+            model.releaseYear.value = year
+        }
+    }
+
+    private val onLanguagePickedListener = object : LanguagePickerDialogFragment.OnPickedListener {
+        override fun onPicked(languageCode: String?) {
+            model.originalLanguage.value = languageCode
+        }
+    }
+
     companion object {
         const val EXTRA_ID_LINK = "idLink"
         private const val STATE_SEARCH_VISIBLE = "searchVisible"
+        private const val TAG_YEAR_PICKER = "yearPicker"
+        private const val TAG_LANGUAGE_PICKER = "languagePicker"
     }
 }
