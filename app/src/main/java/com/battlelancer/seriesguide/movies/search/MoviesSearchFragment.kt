@@ -16,7 +16,6 @@ import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding
 import com.battlelancer.seriesguide.movies.MovieClickListenerImpl
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
-import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -30,23 +29,17 @@ import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 /**
- * Integrates with a search interface and displays movies based on query results. Can pre-populate
- * the displayed movies based on a sent link.
+ * Displays movies from [MoviesSearchViewModel], supports empty view and swipe to refresh,
+ * also refreshes on [MovieLocalizationDialogFragment.LocalizationChangedEvent].
  */
 class MoviesSearchFragment : Fragment() {
 
     private var _binding: FragmentMoviesSearchBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var link: MoviesDiscoverLink
     private lateinit var adapter: MoviesSearchAdapter
 
     private val activityModel: MoviesSearchViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        link = MoviesDiscoverLink.fromId(requireArguments().getInt(ARG_ID_LINK))
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -155,16 +148,5 @@ class MoviesSearchFragment : Fragment() {
 
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewMoviesSearch
-
-        private const val ARG_ID_LINK = "linkId"
-
-        @JvmStatic
-        fun newInstance(link: MoviesDiscoverLink): MoviesSearchFragment {
-            val f = MoviesSearchFragment()
-            val args = Bundle()
-            args.putInt(ARG_ID_LINK, link.id)
-            f.arguments = args
-            return f
-        }
     }
 }

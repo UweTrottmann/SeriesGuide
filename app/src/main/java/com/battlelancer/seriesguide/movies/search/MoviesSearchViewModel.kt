@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.flatMapLatest
  */
 class MoviesSearchViewModel(
     application: Application,
-    link: MoviesDiscoverLink
+    link: MoviesDiscoverLink?
 ) : AndroidViewModel(application) {
 
     data class Filters(
@@ -91,7 +91,7 @@ class MoviesSearchViewModel(
 
 class MoviesSearchViewModelFactory(
     private val application: Application,
-    private val link: MoviesDiscoverLink
+    private val link: MoviesDiscoverLink?
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

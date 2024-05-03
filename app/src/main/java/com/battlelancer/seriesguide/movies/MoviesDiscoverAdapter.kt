@@ -71,7 +71,7 @@ class MoviesDiscoverAdapter(
             }
 
             is HeaderViewHolder -> {
-                holder.bindTo(DISCOVER_LINK_DEFAULT)
+                holder.bindTo(MoviesDiscoverLink.IN_THEATERS)
             }
 
             is MovieViewHolder -> {
@@ -173,7 +173,5 @@ class MoviesDiscoverAdapter(
         const val VIEW_TYPE_LINK: Int = 1
         const val VIEW_TYPE_HEADER: Int = 2
         const val VIEW_TYPE_MOVIE: Int = 3
-
-        val DISCOVER_LINK_DEFAULT: MoviesDiscoverLink = MoviesDiscoverLink.IN_THEATERS
     }
 }

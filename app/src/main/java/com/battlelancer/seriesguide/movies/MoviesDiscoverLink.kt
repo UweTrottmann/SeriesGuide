@@ -3,7 +3,6 @@
 package com.battlelancer.seriesguide.movies
 
 import androidx.annotation.StringRes
-import androidx.collection.SparseArrayCompat
 import com.battlelancer.seriesguide.R
 
 enum class MoviesDiscoverLink(
@@ -17,16 +16,9 @@ enum class MoviesDiscoverLink(
     UPCOMING(4, R.string.upcoming);
 
     companion object {
-        private val MAPPING = SparseArrayCompat<MoviesDiscoverLink>()
+        /** Guaranteed to not be used as an ID so [fromId] will return `null`. */
+        const val NO_LINK_ID = -1
 
-        init {
-            for (link in entries) {
-                MAPPING.put(link.id, link)
-            }
-        }
-
-        fun fromId(id: Int): MoviesDiscoverLink {
-            return MAPPING[id] ?: throw IllegalArgumentException("no mapping for $id")
-        }
+        fun fromId(id: Int): MoviesDiscoverLink? = entries.find { it.id == id }
     }
 }

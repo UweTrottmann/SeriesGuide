@@ -22,7 +22,6 @@ import androidx.lifecycle.lifecycleScope
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ActivityMoviesSearchBinding
 import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
-import com.battlelancer.seriesguide.movies.MoviesDiscoverAdapter
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
 import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity.Companion.intentLink
@@ -43,7 +42,7 @@ import kotlinx.coroutines.launch
 /**
  * Hosts [MoviesSearchFragment], provides a special toolbar with search bar that expands.
  *
- * If launched with [intentSearch] the search bar is expanded and focused.
+ * If launched with [intentSearch] the search bar is always shown and initially focused.
  * If launched with [intentLink] the search bar can be shown with a menu item and hidden by
  * going up or back.
  */
@@ -55,13 +54,16 @@ class MoviesSearchActivity : BaseMessageActivity() {
     private lateinit var searchHistoryAdapter: ArrayAdapter<String>
     private var showSearchView = false
 
-    private lateinit var link: MoviesDiscoverLink
+    private var link: MoviesDiscoverLink? = null
 
     private var yearPicker: YearPickerDialogFragment? = null
     private var languagePicker: LanguagePickerDialogFragment? = null
     private val model: MoviesSearchViewModel by viewModels {
         MoviesSearchViewModelFactory(application, link)
     }
+
+    private val isSearchOnly: Boolean
+        get() = link == null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,17 +74,16 @@ class MoviesSearchActivity : BaseMessageActivity() {
         binding.sgAppBarLayout.liftOnScrollTargetViewId =
             MoviesSearchFragment.liftOnScrollTargetViewId
 
-        val linkId = intent.getIntExtra(
-            EXTRA_ID_LINK,
-            MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT.id
+        link = MoviesDiscoverLink.fromId(
+            intent.getIntExtra(EXTRA_ID_LINK, MoviesDiscoverLink.NO_LINK_ID)
         )
-        link = MoviesDiscoverLink.fromId(linkId)
-        showSearchView = link == MoviesDiscoverAdapter.DISCOVER_LINK_DEFAULT
-        if (savedInstanceState != null) {
-            showSearchView = savedInstanceState.getBoolean(STATE_SEARCH_VISIBLE, showSearchView)
-        }
 
-        setupActionBar(link)
+        // show search view?
+        showSearchView = if (isSearchOnly) {
+            true
+        } else savedInstanceState?.getBoolean(STATE_SEARCH_VISIBLE, false) ?: false
+
+        setupViews()
 
         if (savedInstanceState == null) {
             if (showSearchView) {
@@ -92,7 +93,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
                 )
             }
             supportFragmentManager.beginTransaction()
-                .add(R.id.containerMoviesSearchFragment, MoviesSearchFragment.newInstance(link))
+                .add(R.id.containerMoviesSearchFragment, MoviesSearchFragment())
                 .commit()
         } else {
             postponeEnterTransition()
@@ -112,14 +113,17 @@ class MoviesSearchActivity : BaseMessageActivity() {
         }
     }
 
-    private fun setupActionBar(link: MoviesDiscoverLink) {
-        super.setupActionBar()
+    private fun setupViews() {
+        setupActionBar()
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         setSearchViewVisible(showSearchView)
-        // When search view is shown, make back button restore original list and hide search view
-        onBackPressedDispatcher.addCallback(onBackPressedWithSearchVisibleCallback)
+        if (!isSearchOnly) {
+            // When search view is optional,
+            // make back button restore original list and hide search view
+            onBackPressedDispatcher.addCallback(onBackPressedWithSearchVisibleCallback)
+        }
 
         // search box
         val searchView = binding.autoCompleteViewToolbar
@@ -162,12 +166,12 @@ class MoviesSearchActivity : BaseMessageActivity() {
         lifecycleScope.launch {
             model.queryString.collectLatest {
                 // Hide unsupported filters
-                val hasQuery = it.isNotEmpty()
+                val isSearching = it.isNotEmpty() || isSearchOnly
                 binding.chipMoviesSearchReleaseYear.isGone =
-                    !hasQuery && !TmdbMoviesDataSource.supportsYearFilter(link)
-                binding.chipMoviesSearchOriginalLanguage.isGone = hasQuery
+                    !isSearching && !TmdbMoviesDataSource.supportsYearFilter(link)
+                binding.chipMoviesSearchOriginalLanguage.isGone = isSearching
                 binding.chipMoviesSearchWatchProviders.isGone =
-                    hasQuery || !TmdbMoviesDataSource.supportsWatchProviderFilter(link)
+                    isSearching || !TmdbMoviesDataSource.supportsWatchProviderFilter(link)
             }
         }
         lifecycleScope.launch {
@@ -241,9 +245,9 @@ class MoviesSearchActivity : BaseMessageActivity() {
                 return true
             }
 
-            // When search view is shown, make up button restore original list and hide search view
+            // When search view is optional, make up button restore original list and hide search view
             android.R.id.home -> {
-                if (showSearchView) {
+                if (!isSearchOnly && showSearchView) {
                     hideSearchViewAndRemoveQuery()
                     return true
                 } else {
@@ -281,7 +285,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
         onBackPressedWithSearchVisibleCallback.isEnabled = visible
         binding.textInputLayoutToolbar.isGone = !visible
         // set title for screen readers
-        setTitle(if (visible) R.string.search else link.titleRes)
+        setTitle(if (visible) R.string.search else link!!.titleRes)
         // hide title if search bar is shown
         supportActionBar?.setDisplayShowTitleEnabled(!visible)
     }

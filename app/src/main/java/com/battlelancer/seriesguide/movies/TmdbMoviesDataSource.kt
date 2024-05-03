@@ -27,13 +27,14 @@ import java.util.Date
 /**
  * Loads movies from TMDb in pages.
  *
- * If a query is given, will load search results for that query. Otherwise will load a list of
- * movies based on the given link.
+ * If a [query] is given, returns search results.
+ * If the query is empty and a [link] is given returns results for that link.
+ * If no link is given, returns an empty list.
  */
 class TmdbMoviesDataSource(
     private val context: Context,
     private val tmdb: Tmdb,
-    private val link: MoviesDiscoverLink,
+    private val link: MoviesDiscoverLink?,
     private val query: String,
     private val languageCode: String,
     private val regionCode: String,
@@ -77,11 +78,11 @@ class TmdbMoviesDataSource(
 
         val action: String
         val call: Call<MovieResultsPage>
-        if (query.isEmpty()) {
-            val pair = buildMovieListCall(pageNumber)
+        if (link != null && query.isEmpty()) {
+            val pair = buildMovieListCall(link, pageNumber)
             action = pair.first
             call = pair.second
-        } else {
+        } else if (query.isNotEmpty()) {
             action = "search for movies"
             // Use year instead of primary_release_year as movies may get released years apart
             // in different regions.
@@ -95,6 +96,9 @@ class TmdbMoviesDataSource(
                     releaseYear,
                     null
                 )
+        } else {
+            // Only searching, but no query, yet
+            return buildResultEmpty()
         }
 
         val response = try {
@@ -128,12 +132,8 @@ class TmdbMoviesDataSource(
         // Filter null items (a few users affected).
         val movies = body.results?.filterNotNull()
 
-        return if (movies == null || movies.isEmpty()) {
-            LoadResult.Page(
-                data = emptyList(),
-                prevKey = null, // Only paging forward.
-                nextKey = null
-            )
+        return if (movies.isNullOrEmpty()) {
+            buildResultEmpty()
         } else {
             LoadResult.Page(
                 data = movies,
@@ -143,7 +143,10 @@ class TmdbMoviesDataSource(
         }
     }
 
-    private fun buildMovieListCall(page: Int): Pair<String, Call<MovieResultsPage>> {
+    private fun buildMovieListCall(
+        link: MoviesDiscoverLink,
+        page: Int
+    ): Pair<String, Call<MovieResultsPage>> {
         val builder = tmdb.discoverMovie()
             .language(languageCode)
             .region(regionCode)
@@ -170,6 +173,7 @@ class TmdbMoviesDataSource(
                 action = "get popular movies"
                 builder.sort_by(SortBy.POPULARITY_DESC)
             }
+
             MoviesDiscoverLink.DIGITAL -> {
                 action = "get movie digital releases"
                 builder
@@ -177,6 +181,7 @@ class TmdbMoviesDataSource(
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
             }
+
             MoviesDiscoverLink.DISC -> {
                 action = "get movie disc releases"
                 builder
@@ -184,6 +189,7 @@ class TmdbMoviesDataSource(
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
             }
+
             MoviesDiscoverLink.IN_THEATERS -> {
                 action = "get now playing movies"
                 builder
@@ -193,6 +199,7 @@ class TmdbMoviesDataSource(
                     .release_date_lte(dateNow)
                     .release_date_gte(dateOneMonthAgo)
             }
+
             MoviesDiscoverLink.UPCOMING -> {
                 action = "get upcoming movies"
                 builder
@@ -205,6 +212,12 @@ class TmdbMoviesDataSource(
         }
         return Pair(action, builder.build())
     }
+
+    private fun buildResultEmpty() = LoadResult.Page<Int, BaseMovie>(
+        data = emptyList(),
+        prevKey = null,
+        nextKey = null
+    )
 
     private fun buildResultGenericFailure(): LoadResult.Error<Int, BaseMovie> {
         val message =
@@ -227,10 +240,10 @@ class TmdbMoviesDataSource(
     }
 
     companion object {
-        fun supportsWatchProviderFilter(link: MoviesDiscoverLink): Boolean =
+        fun supportsWatchProviderFilter(link: MoviesDiscoverLink?): Boolean =
             link == MoviesDiscoverLink.POPULAR || link == MoviesDiscoverLink.DIGITAL
 
-        fun supportsYearFilter(link: MoviesDiscoverLink): Boolean =
+        fun supportsYearFilter(link: MoviesDiscoverLink?): Boolean =
             link == MoviesDiscoverLink.POPULAR
     }
 
