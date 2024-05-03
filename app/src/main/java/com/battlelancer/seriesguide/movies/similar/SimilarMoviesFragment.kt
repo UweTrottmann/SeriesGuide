@@ -1,9 +1,8 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.similar
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -131,7 +130,7 @@ class SimilarMoviesFragment : Fragment() {
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
                 MENU_ITEM_SEARCH_ID -> {
-                    startActivity(Intent(requireContext(), MoviesSearchActivity::class.java))
+                    startActivity(MoviesSearchActivity.intentSearch(requireContext()))
                     true
                 }
 

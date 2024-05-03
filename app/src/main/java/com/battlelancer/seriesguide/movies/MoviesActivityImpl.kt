@@ -4,7 +4,6 @@
 
 package com.battlelancer.seriesguide.movies
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -125,7 +124,7 @@ open class MoviesActivityImpl : BaseTopActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_action_movies_search -> {
-                startActivity(Intent(this, MoviesSearchActivity::class.java))
+                startActivity(MoviesSearchActivity.intentSearch(this))
                 true
             }
             else -> super.onOptionsItemSelected(item)

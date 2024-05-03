@@ -3,6 +3,8 @@
 
 package com.battlelancer.seriesguide.movies.search
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -23,6 +25,8 @@ import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.movies.MoviesDiscoverAdapter
 import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
 import com.battlelancer.seriesguide.movies.TmdbMoviesDataSource
+import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity.Companion.intentLink
+import com.battlelancer.seriesguide.movies.search.MoviesSearchActivity.Companion.intentSearch
 import com.battlelancer.seriesguide.shows.search.popular.LanguagePickerDialogFragment
 import com.battlelancer.seriesguide.shows.search.popular.YearPickerDialogFragment
 import com.battlelancer.seriesguide.streaming.WatchProviderFilterDialogFragment
@@ -38,6 +42,10 @@ import kotlinx.coroutines.launch
 
 /**
  * Hosts [MoviesSearchFragment], provides a special toolbar with search bar that expands.
+ *
+ * If launched with [intentSearch] the search bar is expanded and focused.
+ * If launched with [intentLink] the search bar can be shown with a menu item and hidden by
+ * going up or back.
  */
 class MoviesSearchActivity : BaseMessageActivity() {
 
@@ -319,9 +327,16 @@ class MoviesSearchActivity : BaseMessageActivity() {
     }
 
     companion object {
-        const val EXTRA_ID_LINK = "idLink"
+        private const val EXTRA_ID_LINK = "idLink"
         private const val STATE_SEARCH_VISIBLE = "searchVisible"
         private const val TAG_YEAR_PICKER = "yearPicker"
         private const val TAG_LANGUAGE_PICKER = "languagePicker"
+
+        fun intentSearch(context: Context): Intent =
+            Intent(context, MoviesSearchActivity::class.java)
+
+        fun intentLink(context: Context, link: MoviesDiscoverLink): Intent =
+            Intent(context, MoviesSearchActivity::class.java)
+                .putExtra(EXTRA_ID_LINK, link.id)
     }
 }
