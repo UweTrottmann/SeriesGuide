@@ -7,10 +7,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverLinkBinding
 import com.battlelancer.seriesguide.movies.MovieViewHolder.Companion.inflate
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.settings.TmdbSettings
@@ -68,8 +67,7 @@ class MoviesDiscoverAdapter(
         when (holder) {
             is LinkViewHolder -> {
                 val link = getLink(position)
-                holder.link = link
-                holder.title.setText(link.titleRes)
+                holder.bindTo(link)
             }
 
             is HeaderViewHolder -> {
@@ -135,12 +133,11 @@ class MoviesDiscoverAdapter(
     }
 
     class LinkViewHolder private constructor(
-        itemView: View,
+        private val binding: ItemDiscoverLinkBinding,
         itemClickListener: ItemClickListener
-    ) : RecyclerView.ViewHolder(itemView) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        var link: MoviesDiscoverLink? = null
-        val title: TextView = itemView.findViewById(R.id.textViewDiscoverLink)
+        private var link: MoviesDiscoverLink? = null
 
         init {
             itemView.setOnClickListener {
@@ -150,14 +147,22 @@ class MoviesDiscoverAdapter(
             }
         }
 
+        fun bindTo(link: MoviesDiscoverLink) {
+            this.link = link
+            binding.textViewDiscoverLink.setText(link.titleRes)
+        }
+
         companion object {
             fun inflate(
                 parent: ViewGroup,
                 itemClickListener: ItemClickListener
             ): LinkViewHolder {
                 return LinkViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_discover_movies_link, parent, false),
+                    ItemDiscoverLinkBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    ),
                     itemClickListener
                 )
             }

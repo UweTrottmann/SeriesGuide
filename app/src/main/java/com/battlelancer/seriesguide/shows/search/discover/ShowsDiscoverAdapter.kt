@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
-import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsLinkBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverLinkBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
@@ -136,7 +136,7 @@ class ShowsDiscoverAdapter(
     }
 
     class LinkViewHolder(
-        private val binding: ItemDiscoverShowsLinkBinding,
+        private val binding: ItemDiscoverLinkBinding,
         onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -152,22 +152,22 @@ class ShowsDiscoverAdapter(
 
         fun bindTo(context: Context, link: DiscoverShowsLink) {
             this.link = link
-            binding.textViewGridLink.text = context.getString(link.titleRes)
+            binding.textViewDiscoverLink.text = context.getString(link.titleRes)
             // Add Trakt icon to highlight Trakt profile specific links.
             if (link != DiscoverShowsLink.POPULAR) {
                 ViewTools.setVectorDrawableLeft(
-                    binding.textViewGridLink,
+                    binding.textViewDiscoverLink,
                     R.drawable.ic_trakt_icon_primary_24dp
                 )
             } else {
-                binding.textViewGridLink.setCompoundDrawables(null, null, null, null)
+                binding.textViewDiscoverLink.setCompoundDrawables(null, null, null, null)
             }
         }
 
         companion object {
             fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
                 LinkViewHolder(
-                    ItemDiscoverShowsLinkBinding.inflate(
+                    ItemDiscoverLinkBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
