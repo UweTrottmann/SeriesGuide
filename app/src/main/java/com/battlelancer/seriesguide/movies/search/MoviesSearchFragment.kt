@@ -67,7 +67,11 @@ class MoviesSearchFragment : Fragment() {
         }
 
         // setup empty view button
-        binding.emptyViewMoviesSearch.setButtonClickListener { refreshList() }
+        binding.emptyViewMoviesSearch.apply {
+            setButtonClickListener { refreshList() }
+            // do not show error message when initially loading
+            isGone = true
+        }
 
         // setup grid view
         binding.recyclerViewMoviesSearch.apply {
@@ -101,9 +105,16 @@ class MoviesSearchFragment : Fragment() {
                     binding.swipeRefreshLayoutMoviesSearch.isRefreshing =
                         refresh is LoadState.Loading
                     if (refresh is LoadState.Error) {
-                        binding.emptyViewMoviesSearch.setMessage(refresh.error.message)
+                        binding.emptyViewMoviesSearch.apply {
+                            setMessage(refresh.error.message)
+                            setButtonGone(false)
+                        }
                     } else {
-                        binding.emptyViewMoviesSearch.setMessage(R.string.no_results)
+                        binding.emptyViewMoviesSearch.apply {
+                            setMessage(R.string.no_results)
+                            // No point in refreshing if there are no results
+                            setButtonGone(true)
+                        }
                     }
                 }
         }
