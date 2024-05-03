@@ -15,8 +15,11 @@ Version 2024.2
 --------------
 *in development*
 
+#### 2024.2.4 🧪
+*2024-05-03*
+
 * 🌟 Movies: add year and original language filter where possible for discover and search screens.
-* 🔧 Search: hide keyboard after submitting query. 
+* 🔧 Search: hide keyboard after submitting query.
 
 #### 2024.2.3 🧪
 *2024-04-26*
