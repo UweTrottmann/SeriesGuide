@@ -1,62 +1,58 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015-2024 Uwe Trottmann
+package com.battlelancer.seriesguide.ui.widgets
 
-package com.battlelancer.seriesguide.ui.widgets;
-
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import androidx.annotation.StringRes;
-import com.battlelancer.seriesguide.R;
+import android.content.Context
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.annotation.StringRes
+import com.battlelancer.seriesguide.R
 
 /**
- * Helper layout to show an empty view with a message and action button (e.g. to refresh content).
+ * Helper [FrameLayout] to show an empty view with a message and action button (e.g. to refresh content).
  */
-public class EmptyView extends FrameLayout {
+class EmptyView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
-    private final TextView emptyViewText;
-    private final Button emptyViewButton;
+    private val emptyViewText: TextView
+    private val emptyViewButton: Button
 
-    public EmptyView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    init {
+        LayoutInflater.from(context).inflate(R.layout.empty_view, this, true)
+        emptyViewText = findViewById(R.id.textViewEmptyView)
+        emptyViewButton = findViewById(R.id.buttonEmptyView)
 
-        LayoutInflater.from(context).inflate(R.layout.empty_view, this, true);
-        emptyViewText = findViewById(R.id.textViewEmptyView);
-        emptyViewButton = findViewById(R.id.buttonEmptyView);
-
-        TypedArray a = context.getTheme()
-                .obtainStyledAttributes(attrs, R.styleable.EmptyView, 0, 0);
+        val a = context.theme
+            .obtainStyledAttributes(attrs, R.styleable.EmptyView, 0, 0)
 
         try {
-            emptyViewText.setText(a.getString(R.styleable.EmptyView_emptyViewMessage));
-            emptyViewButton.setText(a.getString(R.styleable.EmptyView_emptyViewButtonText));
+            emptyViewText.text = a.getString(R.styleable.EmptyView_emptyViewMessage)
+            emptyViewButton.text = a.getString(R.styleable.EmptyView_emptyViewButtonText)
         } finally {
-            a.recycle();
+            a.recycle()
         }
     }
 
-    public void setMessage(@StringRes int textResId) {
-        emptyViewText.setText(textResId);
+    fun setMessage(@StringRes textResId: Int) {
+        emptyViewText.setText(textResId)
     }
 
-    public void setMessage(CharSequence textResId) {
-        emptyViewText.setText(textResId);
+    fun setMessage(textResId: CharSequence?) {
+        emptyViewText.text = textResId
     }
 
-    public void setButtonText(@StringRes int textResId) {
-        emptyViewButton.setText(textResId);
+    fun setButtonText(@StringRes textResId: Int) {
+        emptyViewButton.setText(textResId)
     }
 
-    public void setButtonClickListener(OnClickListener listener) {
-        emptyViewButton.setOnClickListener(listener);
+    fun setButtonClickListener(listener: OnClickListener?) {
+        emptyViewButton.setOnClickListener(listener)
     }
 
-    public void setContentVisibility(int visibility) {
-        emptyViewText.setVisibility(visibility);
-        emptyViewButton.setVisibility(visibility);
+    fun setContentVisibility(visibility: Int) {
+        emptyViewText.visibility = visibility
+        emptyViewButton.visibility = visibility
     }
 }
