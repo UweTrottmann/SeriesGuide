@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.SearchHistory
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewTools.hideSoftKeyboard
 import com.battlelancer.seriesguide.util.findDialog
 import com.battlelancer.seriesguide.util.safeShow
 import kotlinx.coroutines.flow.collectLatest
@@ -263,6 +264,10 @@ class MoviesSearchActivity : BaseMessageActivity() {
             .trim()
             .let { query ->
                 if (query.isNotEmpty()) {
+                    // Must hide keyboard before clearing focus
+                    hideSoftKeyboard()
+                    binding.autoCompleteViewToolbar.clearFocus() // also dismisses drop-down
+
                     // perform search
                     model.queryString.value = query
                     // update history

@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.util.TabClickEvent
 import com.battlelancer.seriesguide.util.TaskManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
+import com.battlelancer.seriesguide.util.ViewTools.hideSoftKeyboard
 import com.google.android.gms.actions.SearchIntents
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -89,7 +90,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
             if (actionId == EditorInfo.IME_ACTION_SEARCH
                 || (event != null && event.action == KeyEvent.ACTION_DOWN
                         && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
-                triggerTvdbSearch()
+                triggerRemoteSearch()
                 true
             } else {
                 false
@@ -104,7 +105,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         searchAutoCompleteView.apply {
             threshold = 1
             setOnClickListener { v -> (v as AutoCompleteTextView).showDropDown() }
-            setOnItemClickListener { _, _, _, _ -> triggerTvdbSearch() }
+            setOnItemClickListener { _, _, _, _ -> triggerRemoteSearch() }
             // set in code as XML is overridden
             imeOptions = EditorInfo.IME_ACTION_SEARCH
             inputType = EditorInfo.TYPE_CLASS_TEXT
@@ -224,7 +225,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
                 // no id, populate the search field instead
                 viewPager.setCurrentItem(TAB_POSITION_SEARCH, false)
                 searchAutoCompleteView.setText(sharedText)
-                triggerTvdbSearch()
+                triggerRemoteSearch()
                 triggerLocalSearch(sharedText)
             }
         }
@@ -269,9 +270,13 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
         EventBus.getDefault().postSticky(SearchQueryEvent(args))
     }
 
-    private fun triggerTvdbSearch() {
+    private fun triggerRemoteSearch() {
+        // Also hide keyboard when doing local search (like via OnEditorActionListener)
+        // Must hide keyboard before clearing focus
+        hideSoftKeyboard()
+        searchAutoCompleteView.clearFocus() // also dismisses drop-down
+
         if (remoteSearchVisible) {
-            searchAutoCompleteView.dismissDropDown()
             // extract and post query
             val query = searchAutoCompleteView.text.toString().trim()
             EventBus.getDefault().postSticky(SearchQuerySubmitEvent(query))
@@ -320,7 +325,7 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
 
     override fun switchToDiscoverAndSearch() {
         viewPager.currentItem = TAB_POSITION_SEARCH
-        triggerTvdbSearch()
+        triggerRemoteSearch()
     }
 
     /** Used by [ShowsDiscoverFragment] to indicate the search history should be cleared.  */

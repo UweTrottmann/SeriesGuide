@@ -3,14 +3,17 @@
 
 package com.battlelancer.seriesguide.util
 
+import android.app.Activity
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.getSystemService
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -109,6 +112,16 @@ object ViewTools {
         // https://developer.android.com/develop/ui/views/touch-and-input/keyboard-input/visibility#ShowReliably
         searchView.requestFocus()
         WindowCompat.getInsetsController(window, searchView).show(WindowInsetsCompat.Type.ime())
+    }
+
+    /**
+     * If there is a [Activity.getCurrentFocus] will hide the soft input method, if available.
+     */
+    fun Activity.hideSoftKeyboard() {
+        currentFocus?.let { view ->
+            val imm = getSystemService<InputMethodManager>()
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     /**
