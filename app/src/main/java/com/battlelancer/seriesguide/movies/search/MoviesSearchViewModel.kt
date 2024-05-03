@@ -20,17 +20,14 @@ import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.SgWatchProvider
 import com.battlelancer.seriesguide.streaming.StreamingSearch
 import com.uwetrottmann.tmdb2.entities.BaseMovie
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 
 /**
  * Keeps state for [MoviesSearchActivity] and state sharing with [MoviesSearchFragment].
  */
-@OptIn(FlowPreview::class)
 class MoviesSearchViewModel(
     application: Application,
     link: MoviesDiscoverLink
@@ -60,7 +57,6 @@ class MoviesSearchViewModel(
     ) { watchProviderIds: List<Int>, queryString: String, releaseYear: Int?, originalLanguage: String? ->
         Filters(queryString, releaseYear, originalLanguage, watchProviderIds)
     }
-        .debounce(200) // below 300ms to not be perceived as lag
         .flatMapLatest {
             Pager(
                 // Note: currently TMDB page is 20 items, on phones around 9 are displayed at once.
