@@ -1,36 +1,32 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
+package com.battlelancer.seriesguide.movies
 
-package com.battlelancer.seriesguide.movies;
+import androidx.annotation.StringRes
+import androidx.collection.SparseArrayCompat
+import com.battlelancer.seriesguide.R
 
-import androidx.annotation.StringRes;
-import androidx.collection.SparseArrayCompat;
-import com.battlelancer.seriesguide.R;
-
-public enum MoviesDiscoverLink {
+enum class MoviesDiscoverLink(
+    val id: Int,
+    @param:StringRes val titleRes: Int
+) {
     IN_THEATERS(0, R.string.movies_in_theatres),
     POPULAR(1, R.string.title_popular),
     DIGITAL(2, R.string.title_digital_releases),
     DISC(3, R.string.title_disc_releases),
     UPCOMING(4, R.string.upcoming);
 
-    public final int id;
-    public final int titleRes;
+    companion object {
+        private val MAPPING = SparseArrayCompat<MoviesDiscoverLink>()
 
-    MoviesDiscoverLink(int id, @StringRes int titleRes) {
-        this.id = id;
-        this.titleRes = titleRes;
-    }
-
-    private static final SparseArrayCompat<MoviesDiscoverLink> MAPPING = new SparseArrayCompat<>();
-
-    static {
-        for (MoviesDiscoverLink link : values()) {
-            MAPPING.put(link.id, link);
+        init {
+            for (link in entries) {
+                MAPPING.put(link.id, link)
+            }
         }
-    }
 
-    public static MoviesDiscoverLink fromId(int id) {
-        return MAPPING.get(id);
+        fun fromId(id: Int): MoviesDiscoverLink {
+            return MAPPING[id] ?: throw IllegalArgumentException("no mapping for $id")
+        }
     }
 }

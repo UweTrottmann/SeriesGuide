@@ -1,171 +1,154 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2017-2024 Uwe Trottmann
+package com.battlelancer.seriesguide.movies
 
-package com.battlelancer.seriesguide.movies;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.movies.MovieViewHolder.Companion.inflate
+import com.battlelancer.seriesguide.movies.tools.MovieTools
+import com.battlelancer.seriesguide.settings.TmdbSettings
+import com.uwetrottmann.tmdb2.entities.BaseMovie
+import java.text.DateFormat
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.movies.tools.MovieTools;
-import com.battlelancer.seriesguide.settings.TmdbSettings;
-import com.uwetrottmann.tmdb2.entities.BaseMovie;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-public class MoviesDiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    static final int VIEW_TYPE_LINK = R.layout.item_discover_movies_link;
-    static final int VIEW_TYPE_HEADER = R.layout.item_discover_movies_header;
-    static final int VIEW_TYPE_MOVIE = R.layout.item_movie;
-
-    interface ItemClickListener extends MovieClickListener {
-        void onClickLink(MoviesDiscoverLink link, View anchor);
+/**
+ * [RecyclerView.Adapter] that displays a number of [links] and after a header
+ * a small number of [movies].
+ */
+class MoviesDiscoverAdapter(
+    private val context: Context,
+    private val itemClickListener: ItemClickListener
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    interface ItemClickListener : MovieClickListener {
+        fun onClickLink(link: MoviesDiscoverLink, anchor: View)
     }
 
-    private final Context context;
-    private final ItemClickListener itemClickListener;
-    private final DateFormat dateFormatMovieReleaseDate;
-    private final String posterBaseUrl;
-    private final List<BaseMovie> movies;
+    private val dateFormatMovieReleaseDate: DateFormat = MovieTools.getMovieShortDateFormat()
+    private val posterBaseUrl = TmdbSettings.getPosterBaseUrl(context)
+    private val movies: MutableList<BaseMovie> = ArrayList()
 
-    public static final MoviesDiscoverLink DISCOVER_LINK_DEFAULT = MoviesDiscoverLink.IN_THEATERS;
-    @NonNull private static final List<MoviesDiscoverLink> links;
+    private val links: List<MoviesDiscoverLink> = listOf(
+        MoviesDiscoverLink.POPULAR,
+        MoviesDiscoverLink.DIGITAL,
+        MoviesDiscoverLink.DISC,
+        MoviesDiscoverLink.UPCOMING
+    )
 
-    static {
-        links = new ArrayList<>(3);
-        links.add(MoviesDiscoverLink.POPULAR);
-        links.add(MoviesDiscoverLink.DIGITAL);
-        links.add(MoviesDiscoverLink.DISC);
-        links.add(MoviesDiscoverLink.UPCOMING);
-    }
-
-    MoviesDiscoverAdapter(Context context, @Nullable ItemClickListener itemClickListener) {
-        this.context = context;
-        this.itemClickListener = itemClickListener;
-        this.dateFormatMovieReleaseDate = MovieTools.getMovieShortDateFormat();
-        this.posterBaseUrl = TmdbSettings.getPosterBaseUrl(context);
-        this.movies = new ArrayList<>();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        int linksCount = links.size();
+    override fun getItemViewType(position: Int): Int {
+        val linksCount = links.size
         if (position < linksCount) {
-            return VIEW_TYPE_LINK;
+            return VIEW_TYPE_LINK
         }
         if (position == positionHeader()) {
-            return VIEW_TYPE_HEADER;
+            return VIEW_TYPE_HEADER
         }
-        return VIEW_TYPE_MOVIE;
+        return VIEW_TYPE_MOVIE
     }
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == VIEW_TYPE_LINK) {
-            return LinkViewHolder.inflate(parent, itemClickListener);
+            return LinkViewHolder.inflate(parent, itemClickListener)
         }
         if (viewType == VIEW_TYPE_HEADER) {
-            return HeaderViewHolder.inflate(parent);
+            return HeaderViewHolder.inflate(parent)
         }
         if (viewType == VIEW_TYPE_MOVIE) {
-            return MovieViewHolder.inflate(parent, itemClickListener);
+            return inflate(parent, itemClickListener)
         }
-        throw new IllegalArgumentException("Unknown view type " + viewType);
+        throw IllegalArgumentException("Unknown view type $viewType")
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof LinkViewHolder) {
-            LinkViewHolder holderActual = (LinkViewHolder) holder;
-            MoviesDiscoverLink link = getLink(position);
-            holderActual.link = link;
-            holderActual.title.setText(link.titleRes);
-        } else if (holder instanceof HeaderViewHolder) {
-            HeaderViewHolder holderActual = (HeaderViewHolder) holder;
-            holderActual.header.setText(DISCOVER_LINK_DEFAULT.titleRes);
-        } else if (holder instanceof MovieViewHolder) {
-            MovieViewHolder holderActual = (MovieViewHolder) holder;
-            BaseMovie movie = getMovie(position);
-            holderActual.bindTo(movie, context, dateFormatMovieReleaseDate, posterBaseUrl);
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is LinkViewHolder -> {
+                val link = getLink(position)
+                holder.link = link
+                holder.title.setText(link.titleRes)
+            }
+
+            is HeaderViewHolder -> {
+                holder.header.setText(DISCOVER_LINK_DEFAULT.titleRes)
+            }
+
+            is MovieViewHolder -> {
+                val movie = getMovie(position)
+                holder.bindTo(movie, context, dateFormatMovieReleaseDate, posterBaseUrl)
+            }
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged") // No need for incremental updates/animations.
-    void updateMovies(@Nullable List<BaseMovie> newMovies) {
-        movies.clear();
+    // No need for incremental updates/animations
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateMovies(newMovies: List<BaseMovie>?) {
+        movies.clear()
         if (newMovies != null) {
-            movies.addAll(newMovies);
+            movies.addAll(newMovies)
         }
-        notifyDataSetChanged();
+        notifyDataSetChanged()
     }
 
-    @Override
-    public int getItemCount() {
-        return links.size() + 1 /* header */ + movies.size();
-    }
+    override fun getItemCount(): Int = links.size + 1 /* header */ + movies.size
 
-    private MoviesDiscoverLink getLink(int position) {
-        return links.get(position);
-    }
+    private fun getLink(position: Int): MoviesDiscoverLink = links[position]
 
-    private BaseMovie getMovie(int position) {
-        return movies.get(position - links.size() - 1 /* header */);
-    }
+    private fun getMovie(position: Int): BaseMovie = movies[position - links.size - 1]
 
-    private int positionHeader() {
-        return links.size();
-    }
+    private fun positionHeader(): Int = links.size
 
-    static class HeaderViewHolder extends RecyclerView.ViewHolder {
+    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        TextView header;
+        val header: TextView = itemView.findViewById(R.id.textViewDiscoverHeader)
 
-        HeaderViewHolder(View itemView) {
-            super(itemView);
-            header = itemView.findViewById(R.id.textViewDiscoverHeader);
-        }
-
-        public static HeaderViewHolder inflate(ViewGroup parent) {
-            return new HeaderViewHolder(
-                    LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.item_discover_movies_header, parent, false)
-            );
+        companion object {
+            fun inflate(parent: ViewGroup): HeaderViewHolder {
+                return HeaderViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_discover_movies_header, parent, false)
+                )
+            }
         }
     }
 
-    static class LinkViewHolder extends RecyclerView.ViewHolder {
+    class LinkViewHolder private constructor(
+        itemView: View,
+        itemClickListener: ItemClickListener
+    ) : RecyclerView.ViewHolder(itemView) {
 
-        MoviesDiscoverLink link;
-        TextView title;
+        var link: MoviesDiscoverLink? = null
+        val title: TextView = itemView.findViewById(R.id.textViewDiscoverLink)
 
-        private LinkViewHolder(View itemView, final ItemClickListener itemClickListener) {
-            super(itemView);
-            title = itemView.findViewById(R.id.textViewDiscoverLink);
-            itemView.setOnClickListener(v -> {
-                if (itemClickListener != null) {
-                    itemClickListener.onClickLink(link, LinkViewHolder.this.itemView);
+        init {
+            itemView.setOnClickListener {
+                link?.let {
+                    itemClickListener.onClickLink(it, this@LinkViewHolder.itemView)
                 }
-            });
+            }
         }
 
-        public static LinkViewHolder inflate(
-                ViewGroup parent,
-                final ItemClickListener itemClickListener
-        ) {
-            return new LinkViewHolder(
-                    LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.item_discover_movies_link, parent, false),
+        companion object {
+            fun inflate(
+                parent: ViewGroup,
+                itemClickListener: ItemClickListener
+            ): LinkViewHolder {
+                return LinkViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_discover_movies_link, parent, false),
                     itemClickListener
-            );
+                )
+            }
         }
+    }
+
+    companion object {
+        val VIEW_TYPE_LINK: Int = R.layout.item_discover_movies_link
+        val VIEW_TYPE_HEADER: Int = R.layout.item_discover_movies_header
+        val VIEW_TYPE_MOVIE: Int = R.layout.item_movie
+
+        val DISCOVER_LINK_DEFAULT: MoviesDiscoverLink = MoviesDiscoverLink.IN_THEATERS
     }
 }
