@@ -8,12 +8,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
-import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsHeaderBinding
-import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsLinkBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverLinkBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.ViewTools
@@ -119,7 +118,7 @@ class ShowsDiscoverAdapter(
             }
 
             is HeaderViewHolder -> {
-                holder.bindTo(R.string.title_new_episodes, DiscoverShowsLink.NEW_EPISODES)
+                holder.bindTo(DiscoverShowsLink.NEW_EPISODES)
             }
 
             is ShowViewHolder -> {
@@ -137,7 +136,7 @@ class ShowsDiscoverAdapter(
     }
 
     class LinkViewHolder(
-        private val binding: ItemDiscoverShowsLinkBinding,
+        private val binding: ItemDiscoverLinkBinding,
         onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -153,22 +152,22 @@ class ShowsDiscoverAdapter(
 
         fun bindTo(context: Context, link: DiscoverShowsLink) {
             this.link = link
-            binding.textViewGridLink.text = context.getString(link.titleRes)
+            binding.textViewDiscoverLink.text = context.getString(link.titleRes)
             // Add Trakt icon to highlight Trakt profile specific links.
             if (link != DiscoverShowsLink.POPULAR) {
                 ViewTools.setVectorDrawableLeft(
-                    binding.textViewGridLink,
+                    binding.textViewDiscoverLink,
                     R.drawable.ic_trakt_icon_primary_24dp
                 )
             } else {
-                binding.textViewGridLink.setCompoundDrawables(null, null, null, null)
+                binding.textViewDiscoverLink.setCompoundDrawables(null, null, null, null)
             }
         }
 
         companion object {
             fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
                 LinkViewHolder(
-                    ItemDiscoverShowsLinkBinding.inflate(
+                    ItemDiscoverLinkBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
@@ -179,7 +178,7 @@ class ShowsDiscoverAdapter(
     }
 
     class HeaderViewHolder(
-        private val binding: ItemDiscoverShowsHeaderBinding,
+        private val binding: ItemDiscoverHeaderBinding,
         onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -193,15 +192,15 @@ class ShowsDiscoverAdapter(
             }
         }
 
-        fun bindTo(@StringRes text: Int, link: DiscoverShowsLink) {
-            binding.textViewGridHeader.setText(text)
+        fun bindTo(link: DiscoverShowsLink) {
             this.link = link
+            binding.textViewGridHeader.setText(link.titleRes)
         }
 
         companion object {
             fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
                 HeaderViewHolder(
-                    ItemDiscoverShowsHeaderBinding.inflate(
+                    ItemDiscoverHeaderBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
@@ -274,8 +273,8 @@ class ShowsDiscoverAdapter(
     }
 
     companion object {
-        val VIEW_TYPE_LINK = R.layout.item_discover_shows_link
-        val VIEW_TYPE_HEADER = R.layout.item_grid_header
-        val VIEW_TYPE_SHOW = R.layout.item_addshow
+        const val VIEW_TYPE_LINK = 1
+        const val VIEW_TYPE_HEADER = 2
+        const val VIEW_TYPE_SHOW = 3
     }
 }

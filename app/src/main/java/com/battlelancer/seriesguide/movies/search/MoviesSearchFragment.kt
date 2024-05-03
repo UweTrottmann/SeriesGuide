@@ -1,23 +1,21 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2020-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentMoviesSearchBinding
 import com.battlelancer.seriesguide.movies.MovieClickListenerImpl
-import com.battlelancer.seriesguide.movies.MoviesDiscoverLink
+import com.battlelancer.seriesguide.movies.MovieLocalizationDialogFragment
 import com.battlelancer.seriesguide.ui.AutoGridLayoutManager
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
@@ -25,43 +23,23 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 /**
- * Integrates with a search interface and displays movies based on query results. Can pre-populate
- * the displayed movies based on a sent link.
+ * Displays movies from [MoviesSearchViewModel], supports empty view and swipe to refresh,
+ * also refreshes on [MovieLocalizationDialogFragment.LocalizationChangedEvent].
  */
 class MoviesSearchFragment : Fragment() {
-
-    internal interface OnSearchClickListener {
-        fun onSearchClick()
-    }
 
     private var _binding: FragmentMoviesSearchBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var link: MoviesDiscoverLink
-    private lateinit var searchClickListener: OnSearchClickListener
     private lateinit var adapter: MoviesSearchAdapter
 
-    private val model: MoviesSearchViewModel by viewModels {
-        MoviesSearchViewModelFactory(requireActivity().application, link)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        searchClickListener = try {
-            context as OnSearchClickListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement OnSearchClickListener")
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        link = MoviesDiscoverLink.fromId(requireArguments().getInt(ARG_ID_LINK))
-    }
+    private val activityModel: MoviesSearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,12 +55,16 @@ class MoviesSearchFragment : Fragment() {
 
         binding.swipeRefreshLayoutMoviesSearch.also {
             it.setSwipeableChildren(R.id.scrollViewMoviesSearch, R.id.recyclerViewMoviesSearch)
-            it.setOnRefreshListener(onRefreshListener)
+            it.setOnRefreshListener { refreshList() }
             ViewTools.setSwipeRefreshLayoutColors(requireActivity().theme, it)
         }
 
         // setup empty view button
-        binding.emptyViewMoviesSearch.setButtonClickListener { searchClickListener.onSearchClick() }
+        binding.emptyViewMoviesSearch.apply {
+            setButtonClickListener { refreshList() }
+            // do not show error message when initially loading
+            isGone = true
+        }
 
         // setup grid view
         binding.recyclerViewMoviesSearch.apply {
@@ -113,20 +95,50 @@ class MoviesSearchFragment : Fragment() {
                 .collectLatest { loadStates ->
                     Timber.d("loadStates=$loadStates")
                     val refresh = loadStates.refresh
-                    binding.swipeRefreshLayoutMoviesSearch.isRefreshing = refresh is LoadState.Loading
+                    binding.swipeRefreshLayoutMoviesSearch.isRefreshing =
+                        refresh is LoadState.Loading
                     if (refresh is LoadState.Error) {
-                        binding.emptyViewMoviesSearch.setMessage(refresh.error.message)
+                        binding.emptyViewMoviesSearch.apply {
+                            setMessage(refresh.error.message)
+                            setButtonGone(false)
+                        }
                     } else {
-                        binding.emptyViewMoviesSearch.setMessage(R.string.no_results)
+                        binding.emptyViewMoviesSearch.apply {
+                            setMessage(R.string.no_results)
+                            // No point in refreshing if there are no results
+                            setButtonGone(true)
+                        }
                     }
                 }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            model.items.collectLatest {
+            activityModel.items.collectLatest {
                 adapter.submitData(it)
             }
         }
+    }
+
+    private fun refreshList() {
+        adapter.refresh()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventLanguageChanged(
+        @Suppress("UNUSED_PARAMETER")
+        event: MovieLocalizationDialogFragment.LocalizationChangedEvent?
+    ) {
+        refreshList()
     }
 
     override fun onDestroyView() {
@@ -134,24 +146,7 @@ class MoviesSearchFragment : Fragment() {
         _binding = null
     }
 
-    fun search(query: String) {
-        model.updateQuery(query)
-    }
-
-    private val onRefreshListener = OnRefreshListener { adapter.refresh() }
-
     companion object {
         val liftOnScrollTargetViewId = R.id.recyclerViewMoviesSearch
-
-        private const val ARG_ID_LINK = "linkId"
-
-        @JvmStatic
-        fun newInstance(link: MoviesDiscoverLink): MoviesSearchFragment {
-            val f = MoviesSearchFragment()
-            val args = Bundle()
-            args.putInt(ARG_ID_LINK, link.id)
-            f.arguments = args
-            return f
-        }
     }
 }

@@ -20,9 +20,11 @@
             android:columnWidth="@dimen/showgrid_columnWidth"
             android:listSelector="@color/transparent"
             android:numColumns="auto_fit"
+            android:paddingLeft="@dimen/grid_item_margin_horizontal"
+            android:paddingRight="@dimen/grid_item_margin_horizontal"
             android:paddingBottom="40dp"
             android:stretchMode="columnWidth"
-            tools:listitem="@layout/item_show" />
+            tools:listitem="@layout/item_addshow" />
 
         <com.battlelancer.seriesguide.ui.widgets.EmptyView
             android:id="@+id/emptyViewAdd"

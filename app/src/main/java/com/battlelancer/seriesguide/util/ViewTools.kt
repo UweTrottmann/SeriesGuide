@@ -1,18 +1,21 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.util
 
-import android.content.Context
+import android.app.Activity
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.getSystemService
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.battlelancer.seriesguide.R
 
@@ -105,13 +108,20 @@ object ViewTools {
         swipeRefreshLayout.setColorSchemeResources(accentColorResId, R.color.sg_color_secondary)
     }
 
-    fun showSoftKeyboardOnSearchView(context: Context, searchView: View) {
-        searchView.postDelayed({
-            if (searchView.requestFocus()) {
-                val imm = context.getSystemService<InputMethodManager>()
-                imm?.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT)
-            }
-        }, 200) // have to add a little delay (http://stackoverflow.com/a/27540921/1000543)
+    fun showSoftKeyboardOnSearchView(window: Window, searchView: View) {
+        // https://developer.android.com/develop/ui/views/touch-and-input/keyboard-input/visibility#ShowReliably
+        searchView.requestFocus()
+        WindowCompat.getInsetsController(window, searchView).show(WindowInsetsCompat.Type.ime())
+    }
+
+    /**
+     * If there is a [Activity.getCurrentFocus] will hide the soft input method, if available.
+     */
+    fun Activity.hideSoftKeyboard() {
+        currentFocus?.let { view ->
+            val imm = getSystemService<InputMethodManager>()
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     /**

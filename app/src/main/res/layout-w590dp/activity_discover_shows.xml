@@ -23,11 +23,12 @@
             android:layout_height="wrap_content"
             tools:title="@string/title_popular">
 
-            <HorizontalScrollView
+            <LinearLayout
                 android:id="@+id/scrollViewTraktShowsChips"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
+                android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:theme="@style/ThemeOverlay.SeriesGuide.Toolbar.Surface.NoColor">
@@ -61,7 +62,7 @@
 
                 </com.google.android.material.chip.ChipGroup>
 
-            </HorizontalScrollView>
+            </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
 

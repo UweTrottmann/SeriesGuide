@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.view.isGone
 import com.battlelancer.seriesguide.R
 
 /**
@@ -54,5 +55,9 @@ class EmptyView(context: Context, attrs: AttributeSet?) : FrameLayout(context, a
     fun setContentVisibility(visibility: Int) {
         emptyViewText.visibility = visibility
         emptyViewButton.visibility = visibility
+    }
+
+    fun setButtonGone(isGone: Boolean) {
+        emptyViewButton.isGone = isGone
     }
 }

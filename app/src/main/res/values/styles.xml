@@ -69,8 +69,12 @@
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
     </style>
 
-    <style name="TextAppearance.SeriesGuide.TitleLarge" parent="TextAppearance.Material3.TitleLarge" />
-    <style name="TextAppearance.SeriesGuide.TitleLarge.Bold">
+    <style name="TextAppearance.SeriesGuide.TitleLarge.Bold" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.TitleMedium.Bold" parent="TextAppearance.Material3.TitleMedium">
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
