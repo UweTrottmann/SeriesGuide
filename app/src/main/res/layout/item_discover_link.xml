@@ -26,7 +26,7 @@
         android:paddingTop="@dimen/inline_padding"
         tools:drawableStart="@drawable/ic_trakt_icon_primary_24dp"
         android:drawablePadding="2dp"
-        android:textAppearance="?attr/textAppearanceButton"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.TitleMedium.Bold"
         tools:text="Digital releases" />
 
 </com.google.android.material.card.MaterialCardView>
