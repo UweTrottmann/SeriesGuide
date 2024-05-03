@@ -136,11 +136,11 @@ open class SearchActivityImpl : BaseMessageActivity(), AddShowDialogFragment.OnA
             }
             if (mayShowKeyboard &&
                 (defaultTab == TAB_POSITION_SHOWS || defaultTab == TAB_POSITION_EPISODES)) {
-                ViewTools.showSoftKeyboardOnSearchView(this, searchAutoCompleteView)
+                ViewTools.showSoftKeyboardOnSearchView(window, searchAutoCompleteView)
             }
         } else if (mayShowKeyboard) {
             // also show keyboard when showing first tab (added tab)
-            ViewTools.showSoftKeyboardOnSearchView(this, searchAutoCompleteView)
+            ViewTools.showSoftKeyboardOnSearchView(window, searchAutoCompleteView)
         }
 
         // Highlight new shows filter.

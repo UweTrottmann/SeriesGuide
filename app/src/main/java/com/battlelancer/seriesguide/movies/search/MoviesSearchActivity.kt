@@ -87,10 +87,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
 
         if (savedInstanceState == null) {
             if (showSearchView) {
-                ViewTools.showSoftKeyboardOnSearchView(
-                    this,
-                    binding.autoCompleteViewToolbar
-                )
+                ViewTools.showSoftKeyboardOnSearchView(window, binding.autoCompleteViewToolbar)
             }
             supportFragmentManager.beginTransaction()
                 .add(R.id.containerMoviesSearchFragment, MoviesSearchFragment())
@@ -229,10 +226,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
 
             R.id.menu_action_movies_search_display_search -> {
                 setSearchViewVisible(true)
-                ViewTools.showSoftKeyboardOnSearchView(
-                    this,
-                    binding.autoCompleteViewToolbar
-                )
+                ViewTools.showSoftKeyboardOnSearchView(window, binding.autoCompleteViewToolbar)
                 invalidateOptionsMenu()
                 return true
             }
