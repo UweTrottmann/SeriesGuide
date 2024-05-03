@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
 import com.battlelancer.seriesguide.movies.MovieViewHolder.Companion.inflate
 import com.battlelancer.seriesguide.movies.tools.MovieTools
 import com.battlelancer.seriesguide.settings.TmdbSettings
@@ -25,7 +26,7 @@ class MoviesDiscoverAdapter(
     private val itemClickListener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface ItemClickListener : MovieClickListener {
-        fun onClickLink(link: MoviesDiscoverLink, anchor: View)
+        fun onLinkClick(link: MoviesDiscoverLink, anchor: View)
     }
 
     private val dateFormatMovieReleaseDate: DateFormat = MovieTools.getMovieShortDateFormat()
@@ -55,7 +56,7 @@ class MoviesDiscoverAdapter(
             return LinkViewHolder.inflate(parent, itemClickListener)
         }
         if (viewType == VIEW_TYPE_HEADER) {
-            return HeaderViewHolder.inflate(parent)
+            return HeaderViewHolder.inflate(parent, itemClickListener)
         }
         if (viewType == VIEW_TYPE_MOVIE) {
             return inflate(parent, itemClickListener)
@@ -72,7 +73,7 @@ class MoviesDiscoverAdapter(
             }
 
             is HeaderViewHolder -> {
-                holder.header.setText(DISCOVER_LINK_DEFAULT.titleRes)
+                holder.bindTo(DISCOVER_LINK_DEFAULT)
             }
 
             is MovieViewHolder -> {
@@ -100,17 +101,36 @@ class MoviesDiscoverAdapter(
 
     private fun positionHeader(): Int = links.size
 
-    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class HeaderViewHolder(
+        private val binding: ItemDiscoverHeaderBinding,
+        itemClickListener: ItemClickListener
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        val header: TextView = itemView.findViewById(R.id.textViewDiscoverHeader)
+        private var link: MoviesDiscoverLink? = null
+
+        init {
+            itemView.setOnClickListener {
+                link?.let {
+                    itemClickListener.onLinkClick(it, itemView)
+                }
+            }
+        }
+
+        fun bindTo(link: MoviesDiscoverLink) {
+            this.link = link
+            binding.textViewGridHeader.setText(link.titleRes)
+        }
 
         companion object {
-            fun inflate(parent: ViewGroup): HeaderViewHolder {
-                return HeaderViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_discover_movies_header, parent, false)
+            fun inflate(parent: ViewGroup, itemClickListener: ItemClickListener) =
+                HeaderViewHolder(
+                    ItemDiscoverHeaderBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    ),
+                    itemClickListener
                 )
-            }
         }
     }
 
@@ -125,7 +145,7 @@ class MoviesDiscoverAdapter(
         init {
             itemView.setOnClickListener {
                 link?.let {
-                    itemClickListener.onClickLink(it, this@LinkViewHolder.itemView)
+                    itemClickListener.onLinkClick(it, this@LinkViewHolder.itemView)
                 }
             }
         }
@@ -145,9 +165,9 @@ class MoviesDiscoverAdapter(
     }
 
     companion object {
-        val VIEW_TYPE_LINK: Int = R.layout.item_discover_movies_link
-        val VIEW_TYPE_HEADER: Int = R.layout.item_discover_movies_header
-        val VIEW_TYPE_MOVIE: Int = R.layout.item_movie
+        const val VIEW_TYPE_LINK: Int = 1
+        const val VIEW_TYPE_HEADER: Int = 2
+        const val VIEW_TYPE_MOVIE: Int = 3
 
         val DISCOVER_LINK_DEFAULT: MoviesDiscoverLink = MoviesDiscoverLink.IN_THEATERS
     }

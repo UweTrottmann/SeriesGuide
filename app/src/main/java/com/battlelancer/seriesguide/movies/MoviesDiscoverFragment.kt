@@ -143,7 +143,7 @@ class MoviesDiscoverFragment : Fragment() {
 
     private class DiscoverItemClickListener(context: Context) : MovieClickListenerImpl(context),
         MoviesDiscoverAdapter.ItemClickListener {
-        override fun onClickLink(link: MoviesDiscoverLink, anchor: View) {
+        override fun onLinkClick(link: MoviesDiscoverLink, anchor: View) {
             val intent = Intent(context, MoviesSearchActivity::class.java)
             intent.putExtra(MoviesSearchActivity.EXTRA_ID_LINK, link.id)
             Utils.startActivityWithAnimation(context, intent, anchor)

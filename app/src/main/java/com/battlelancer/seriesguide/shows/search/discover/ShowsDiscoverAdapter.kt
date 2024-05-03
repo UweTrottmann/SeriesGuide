@@ -8,11 +8,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.ItemAddshowBinding
-import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsHeaderBinding
+import com.battlelancer.seriesguide.databinding.ItemDiscoverHeaderBinding
 import com.battlelancer.seriesguide.databinding.ItemDiscoverShowsLinkBinding
 import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.util.ImageTools
@@ -119,7 +118,7 @@ class ShowsDiscoverAdapter(
             }
 
             is HeaderViewHolder -> {
-                holder.bindTo(R.string.title_new_episodes, DiscoverShowsLink.NEW_EPISODES)
+                holder.bindTo(DiscoverShowsLink.NEW_EPISODES)
             }
 
             is ShowViewHolder -> {
@@ -179,7 +178,7 @@ class ShowsDiscoverAdapter(
     }
 
     class HeaderViewHolder(
-        private val binding: ItemDiscoverShowsHeaderBinding,
+        private val binding: ItemDiscoverHeaderBinding,
         onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -193,15 +192,15 @@ class ShowsDiscoverAdapter(
             }
         }
 
-        fun bindTo(@StringRes text: Int, link: DiscoverShowsLink) {
-            binding.textViewGridHeader.setText(text)
+        fun bindTo(link: DiscoverShowsLink) {
             this.link = link
+            binding.textViewGridHeader.setText(link.titleRes)
         }
 
         companion object {
             fun inflate(parent: ViewGroup, onItemClickListener: OnItemClickListener) =
                 HeaderViewHolder(
-                    ItemDiscoverShowsHeaderBinding.inflate(
+                    ItemDiscoverHeaderBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
