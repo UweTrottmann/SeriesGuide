@@ -113,13 +113,13 @@ abstract class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                 ?.also { it.onPickedListener = onLanguagePickedListener }
 
         bindingActivity.chipTraktShowsFirstReleaseYear.setOnClickListener {
-            YearPickerDialogFragment.create(model.filters.value.firstReleaseYear)
+            YearPickerDialogFragment.create(model.firstReleaseYear.value)
                 .also { yearPicker = it }
                 .apply { onPickedListener = onYearPickedListener }
                 .safeShow(parentFragmentManager, TAG_YEAR_PICKER)
         }
         bindingActivity.chipTraktShowsOriginalLanguage.setOnClickListener {
-            LanguagePickerDialogFragment.create(model.filters.value.originalLanguage)
+            LanguagePickerDialogFragment.create(model.originalLanguage.value)
                 .also { languagePicker = it }
                 .apply { onPickedListener = onLanguagePickedListener }
                 .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)
@@ -171,13 +171,13 @@ abstract class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
 
     private val onYearPickedListener = object : YearPickerDialogFragment.OnPickedListener {
         override fun onPicked(year: Int?) {
-            model.updateYear(year)
+            model.firstReleaseYear.value = year
         }
     }
 
     private val onLanguagePickedListener = object : LanguagePickerDialogFragment.OnPickedListener {
         override fun onPicked(languageCode: String?) {
-            model.updateLanguage(languageCode)
+            model.originalLanguage.value = languageCode
         }
     }
 
