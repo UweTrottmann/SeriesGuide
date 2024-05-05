@@ -1,0 +1,32 @@
+---
+layout: help
+title: Show, episode or movie data is outdated or missing
+help_category: fix
+order: 3
+---
+
+<p><span class="emoji">ℹ</span> <strong>On OnePlus OxygenOS 12</strong> syncing fails if your device has less than 10% free storage.</p>
+<p><span class="emoji">ℹ</span> Show and movie data is loaded from the user-created database
+  at <a href="{{ site.data.links.tmdb }}">themoviedb.org</a>. The contributors there are typically quick
+  to update things. If not, consider to help out.</p>
+<p><span class="emoji">ℹ</span> Access to <a href="{% link _help/how-to/basics/sources.html %}">the services SeriesGuide uses</a> 
+  might be (temporarily) blocked in your region, for example because your internet connection has issues or
+  your internet provider is blocking access. Try <a href="{{ site.data.links.community }}">checking the forum</a>
+  for other affected users.</p>
+
+<p>Regardless, here are some things to check and try:</p>
+
+<p class="title">Check <em>Sync &amp; Update</em> setting</p>
+<p>Tap <strong>More</strong> <span class="material-symbols-outlined">menu</span>, then <b>Settings</b>
+  and check if <strong>Sync &amp; Update</strong> is enabled.</p>
+
+<p class="title">Check device Accounts sync setting</p>
+<p>Open the Settings app of your device. Find and open the Accounts settings and check that 
+  <strong>Auto-sync data</strong> is enabled. You should also see a SeriesGuide Sync account there.</p>
+
+<p class="title">Check device power saving settings</p>
+<p>SeriesGuide might not be able to update in the background because of battery use optimization settings. 
+  Try to <a href="{% link _help/fix/battery.html %}">exclude SeriesGuide from battery use optimizations</a>.</p>
+
+<p class="title">Last resort: remove and add the show again</p>
+<p>If a show does not update, as a last resort, remove the show and add it again.</p>

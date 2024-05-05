@@ -11,4 +11,8 @@ url: "https://www.seriesgui.de" # the base hostname & protocol for your site
 
 # Compress the generated CSS file
 sass:
-    style: compressed
+  style: compressed
+
+collections:
+  help:
+    output: true
