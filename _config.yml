@@ -7,7 +7,7 @@
 
 # Site settings
 title: SeriesGuide
-url: "https://seriesgui.de" # the base hostname & protocol for your site
+url: "https://www.seriesgui.de" # the base hostname & protocol for your site
 
 # Compress the generated CSS file
 sass:
