@@ -25,3 +25,12 @@ bundle exec jekyll serve
 * From `scss` folder copy into `_sass\bootstrap`.
 * Check `css\main.scss` if updates are required (e.g. names in `_sass\bootstrap\bootstrap.scss` have changed).
 * From `dist\js` folder copy `bootstrap.min.js` and `.map` into `javascripts`.
+
+## Configuration
+
+DNS:
+- CNAME `seriesgui.de.` to `uwetrottmann.github.io.`, Proxied so Page Rules work
+- CNAME `www.seriesgui.de.` to `uwetrottmann.github.io.`, DNS only to directly access GitHubs IP
+
+Page rules:
+- URL: `seriesgui.de/*`, Forwarding URL: 301 permanent, Destination: `https://www.seriesgui.de/$1`
