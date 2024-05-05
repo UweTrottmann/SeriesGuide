@@ -6,6 +6,9 @@ Note the special instructions for [GitHub Pages](https://jekyllrb.com/docs/githu
 
 https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll
 
+[Liquid syntax](https://shopify.github.io/liquid/basics/introduction/)
+
+[Collections](https://jekyllrb.com/docs/collections/)
 
 ```
 # update gems

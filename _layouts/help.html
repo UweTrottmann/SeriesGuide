@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<div class="row justify-content-sm-center justify-content-lg-start"> 
+  <div class="col-md-9 col-lg-7 col-xl-6">
+    <p><a href="{% link help.html %}">View all help articles</a></p>
+
+    <h1>Help</h1>
+
+    <article>
+
+      <header>
+        <h2>{{ page.title | escape }}</h2>
+      </header>
+  
+      {{ content }}
+      
+    </article>
+  </div>
+</div>
