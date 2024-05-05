@@ -7,11 +7,13 @@ title: Help
   <div class="col-md-9 col-lg-7 col-xl-6">
     <h1>Help</h1>
 
+    {% comment %} help_page.slug is identical to the old anchors, use them so old links point to the right item to click. {% endcomment %}
+
     <h2 class="mt-3">Fix an issue</h2>
     <div class="list-group">
       {% assign help_pages = site.help | where: "help_category", "fix" | sort: "order" %}
       {% for help_page in help_pages %}
-      <a class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
+      <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
       {% endfor %}
     </div>
     
@@ -20,7 +22,7 @@ title: Help
     <div class="list-group">
       {% assign help_pages = site.help | where: "help_category", "how-to-sub" | sort: "order" %}
       {% for help_page in help_pages %}
-      <a class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
+      <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
       {% endfor %}
     </div>
 
@@ -28,7 +30,7 @@ title: Help
     <div class="list-group">
       {% assign help_pages = site.help | where: "help_category", "how-to-basics" | sort: "order" %}
       {% for help_page in help_pages %}
-      <a class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
+      <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
       {% endfor %}
     </div>
 
@@ -36,7 +38,7 @@ title: Help
     <div class="list-group">
       {% assign help_pages = site.help | where: "help_category", "how-to-backup" | sort: "order" %}
       {% for help_page in help_pages %}
-      <a class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
+      <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
       {% endfor %}
     </div>
     
@@ -44,7 +46,7 @@ title: Help
     <div class="list-group">
       {% assign help_pages = site.help | where: "help_category", "how-to-trakt" | sort: "order" %}
       {% for help_page in help_pages %}
-      <a class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
+      <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
       {% endfor %}
     </div>
     
@@ -52,7 +54,7 @@ title: Help
     <div class="list-group">
       {% assign help_pages = site.help | where: "help_category", "other" | sort: "order" %}
       {% for help_page in help_pages %}
-      <a class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
+      <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
       {% endfor %}
     </div>
 
