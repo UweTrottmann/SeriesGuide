@@ -2,7 +2,6 @@
 
     <string name="url_store_page">http://www.amazon.com/gp/mas/dl/android?p=com.uwetrottmann.seriesguide.amzn</string>
     <!-- Remove Google Play links (not used in-app) -->
-    <string name="url_x_pass"/>
     <string name="url_extensions_search"/>
     <string name="url_movies_search"/>
 
