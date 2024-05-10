@@ -1,5 +1,5 @@
-// Copyright 2014 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2014-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.billing.amazon
 
@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 /**
- * Offers a single subscription and in-app purchase using the Amazon in-app purchasing library.
+ * Offers a single subscription using the Amazon in-app purchasing library.
  *
  * To debug: install on device with Amazon App Store and download App Tester app, put
  * `amazon.sdktester.json` onto `sdcard`.
@@ -65,9 +65,6 @@ class AmazonBillingActivity : BaseActivity() {
         binding.buttonAmazonBillingSubscribe.isEnabled = false
         binding.buttonAmazonBillingSubscribe.setOnClickListener { subscribe() }
 
-        binding.buttonAmazonBillingGetPass.isEnabled = false
-        binding.buttonAmazonBillingGetPass.setOnClickListener { purchasePass() }
-
         ViewTools.openUriOnClick(
             binding.textViewAmazonBillingMoreInfo,
             getString(R.string.url_whypay)
@@ -108,13 +105,6 @@ class AmazonBillingActivity : BaseActivity() {
         Timber.d("subscribe: requestId (%s)", requestId)
     }
 
-    private fun purchasePass() {
-        val requestId = PurchasingService.purchase(
-            AmazonSku.SERIESGUIDE_PASS.sku
-        )
-        Timber.d("purchasePass: requestId (%s)", requestId)
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: AmazonIapMessageEvent) {
         Toast.makeText(this, event.messageResId, Toast.LENGTH_LONG).show()
@@ -127,16 +117,13 @@ class AmazonBillingActivity : BaseActivity() {
         // enable or disable purchase buttons based on what can be purchased
         binding.buttonAmazonBillingSubscribe.isEnabled =
             event.subscriptionAvailable && !event.userHasActivePurchase
-        binding.buttonAmazonBillingGetPass.isEnabled =
-            event.passAvailable && !event.userHasActivePurchase
 
         // status text
-        if (!event.subscriptionAvailable && !event.passAvailable) {
+        if (!event.subscriptionAvailable) {
             // neither purchase available, probably not signed in
             binding.textViewAmazonBillingExisting.setText(R.string.subscription_not_signed_in)
         } else {
-            // subscription or pass available
-            // show message if either one is active
+            // subscription available
             binding.textViewAmazonBillingExisting.text =
                 if (event.userHasActivePurchase) getString(R.string.upgrade_success) else null
         }
@@ -155,9 +142,6 @@ class AmazonBillingActivity : BaseActivity() {
             val trialInfo = getString(R.string.billing_sub_description)
             val finalPriceString = "$priceString\n$trialInfo"
             binding.textViewAmazonBillingSubPrice.text = finalPriceString
-        } else if (AmazonSku.SERIESGUIDE_PASS.sku == product.sku) {
-            binding.textViewAmazonBillingPricePass.text =
-                String.format("%s\n%s", price, getString(R.string.billing_price_pass))
         }
     }
 }

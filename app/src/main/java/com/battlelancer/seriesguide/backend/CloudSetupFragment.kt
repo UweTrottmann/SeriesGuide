@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.backend
 
@@ -29,6 +29,7 @@ import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -72,12 +73,17 @@ class CloudSetupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding!!.apply {
             ThemeUtils.applyBottomPaddingForNavigationBar(scrollViewCloud)
-            buttonCloudSignIn.setOnClickListener {
-                // restrict access to supporters
-                if (Utils.hasAccessToX(activity)) {
-                    startHexagonSetup()
-                } else {
-                    Utils.advertiseSubscription(activity)
+            buttonCloudSignIn.apply {
+                if (!Utils.hasAccessToX(activity)) {
+                    (buttonCloudSignIn as MaterialButton).setIconResource(R.drawable.ic_awesome_black_24dp)
+                }
+                setOnClickListener {
+                    // restrict access to supporters
+                    if (Utils.hasAccessToX(activity)) {
+                        startHexagonSetup()
+                    } else {
+                        Utils.advertiseSubscription(activity)
+                    }
                 }
             }
             buttonCloudSignOut.setOnClickListener { signOut() }
@@ -195,10 +201,12 @@ class CloudSetupFragment : Fragment() {
                             ErrorCodes.NO_NETWORK -> {
                                 errorMessage = getString(R.string.offline)
                             }
+
                             ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED -> {
                                 // user cancelled, show no error message
                                 errorMessage = null
                             }
+
                             else -> {
                                 if (ex.errorCode == ErrorCodes.DEVELOPER_ERROR
                                     && !hexagonTools.isGoogleSignInAvailable) {
