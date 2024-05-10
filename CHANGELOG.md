@@ -13,7 +13,16 @@ Releases marked with 🧪 were released on [the beta program](https://github.com
 
 Version 2024.2
 --------------
-*in development*
+*2024-05-10*
+
+* 🌟 Discover: add year and original language filters where possible.
+* 🌟 Ratings: display TMDB rating for shows. Tap rating to open TMDB or Trakt page.
+* 🔧 Display run time in hours and minutes.
+
+#### 2024.2.5
+*2024-05-10*
+
+* 🔧 Mark some supporter-only features with stars. Drop X Pass link, not longer available for new users.
 
 #### 2024.2.4 🧪
 *2024-05-03*
