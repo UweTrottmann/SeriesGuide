@@ -39,7 +39,6 @@
     <string name="action_stream">Стримај или купи</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Select region</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Избриши историја на пребарување</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">денес</string>
     <string name="now">сега</string>
-    <string name="runtime_minutes">%s мин</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Се изгледано</string>
     <string name="unmark_all">Ништо не гледано</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
+    <!-- Popular -->
+    <string name="title_popular">Популарни</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Прва листа</string>
     <string name="list_add">Додај листа</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Една група со ова име веќе постои</string>
     <!-- Movies -->
     <string name="title_discover">Откриј</string>
-    <string name="title_popular">Популарни</string>
     <string name="title_digital_releases">Дигитално издание</string>
     <string name="title_disc_releases">Диск изданија</string>
     <string name="movies_in_theatres">Во кината</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Не може (сеуште) да бидат тракирани со trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Поврзи trakt</string>
     <string name="trakt_reconnect">Конектирај SeriesGuide со trakt</string>
     <string name="trakt_reconnect_details">Провери го trakt профилот</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Пребарај локален Amazon сајт</string>
     <string name="pref_amazon_domain">Amazon</string>
     <string name="extension_google_play">Google Play пребарување</string>
-    <string name="description_extension_google_play">Пребарај во Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Пребарај во Google Play Store</string>
     <string name="extension_youtube">YouTube search</string>
     <string name="description_extension_youtube">Пребарај YouTube за видеа</string>
     <string name="description_extension_web_search">Пребарај за веб страници и слики</string>

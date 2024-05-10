@@ -39,7 +39,6 @@
     <string name="action_stream">Online izle veya satın al</string>
     <string name="action_stream_info">Online izleme veya satın alma bilgisi</string>
     <string name="action_select_region">Bölge seçin</string>
-    <string name="action_include_any_watch_provider">Herhangi biri</string>
     <string name="action_reset">Sıfırla</string>
     <!-- Search -->
     <string name="clear_search_history">Arama geçmişini temizle</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">bugün</string>
     <string name="now">şimdi</string>
-    <string name="runtime_minutes">%s dakika</string>
+    <string name="runtime_hours_minutes_format">%1$d saat %2$d dk</string>
+    <string name="runtime_minutes_format">%d dk</string>
     <!-- Flagging -->
     <string name="mark_all">Tümü izlendi</string>
     <string name="unmark_all">Hiçbiri izlenmedi</string>
@@ -206,12 +206,12 @@
         <item quantity="other">%2$d bölümden %1$d kaldı</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d atlandı</item>
+        <item quantity="other">%d atlandı</item>
     </plurals>
     <plurals name="collected_episodes_plural">
         <item quantity="one">%d koleksiyonda</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="other">%d koleksiyonda</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Bir dizi adı yazın</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Sonuç bulunamadı</string>
     <string name="action_similar">Benzerleri</string>
     <string name="title_similar_shows">Benzer diziler</string>
+    <!-- Popular -->
+    <string name="title_popular">Popüler</string>
+    <string name="filter_year">Yıl</string>
+    <string name="filter_language">Dil</string>
     <!-- Lists -->
     <string name="first_list">İlk liste</string>
     <string name="list_add">Yeni liste</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Bu ada sahip bir liste zaten var</string>
     <!-- Movies -->
     <string name="title_discover">Keşfet</string>
-    <string name="title_popular">Popüler</string>
     <string name="title_digital_releases">Dijital Yayınlanan</string>
     <string name="title_disc_releases">Disk\'i Yayınlanan</string>
     <string name="movies_in_theatres">Vizyonda</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Trakt\'ta (henüz) mevcut değil.</string>
     <string name="trakt_error_limit_exceeded">Liste dolu, önce bir şeyi kaldırın.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Trakt\'a bağlan</string>
     <string name="trakt_reconnect">SeriesGuide ile Trakt\'a bağlan</string>
     <string name="trakt_reconnect_details">Trakt giriş bilgilerinizi kontrol edin</string>
@@ -528,13 +532,14 @@
     <string name="action_extensions_configure">Eklentileri özelleştir</string>
     <string name="action_extensions_add">Eklenti ekle</string>
     <string name="action_extensions_search">Daha fazla eklenti edin</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Bir uzantı geliştir</string>
     <string name="action_extension_remove">Kaldır</string>
     <string name="extension_amazon">Amazon\'da ara</string>
     <string name="description_extension_amazon">Yerel Amazon sitesinde arama yap</string>
     <string name="pref_amazon_domain">Amazon Web Sitesi</string>
     <string name="extension_google_play">Google Play\'de ara</string>
-    <string name="description_extension_google_play">Google Play Store\'da ara</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Google Play Store\'da ara</string>
     <string name="extension_youtube">YouTube\'da ara</string>
     <string name="description_extension_youtube">YouTube\'da videoları ara</string>
     <string name="description_extension_web_search">Web siteleri ve resimlerde ara</string>

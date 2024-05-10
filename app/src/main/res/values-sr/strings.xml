@@ -39,7 +39,6 @@
     <string name="action_stream">Strimuj ili kupi</string>
     <string name="action_stream_info">Информације о стримовању или куповини</string>
     <string name="action_select_region">Одабери регион</string>
-    <string name="action_include_any_watch_provider">Убаци било који</string>
     <string name="action_reset">Ресетуј</string>
     <!-- Search -->
     <string name="clear_search_history">Обриши историју претраге</string>
@@ -108,7 +107,8 @@
     <!-- Date and Time -->
     <string name="today">данас</string>
     <string name="now">сада</string>
-    <string name="runtime_minutes">%s мин</string>
+    <string name="runtime_hours_minutes_format">%1$d х %2$d мин</string>
+    <string name="runtime_minutes_format">%d мин</string>
     <!-- Flagging -->
     <string name="mark_all">Све одгледано</string>
     <string name="unmark_all">Неодгледано</string>
@@ -206,19 +206,19 @@
         <item quantity="other">%d preostalih</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="few">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">Остало %1$d од %2$d</item>
+        <item quantity="few">Остало %1$d од %2$d</item>
+        <item quantity="other">Остало %1$d од %2$d</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="few">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d прескочен</item>
+        <item quantity="few">%d прескочено</item>
+        <item quantity="other">%d прескочено</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="few">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d у колекцији</item>
+        <item quantity="few">%d у колекцији</item>
+        <item quantity="other">%d у колекцији</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Унеси име серије</string>
@@ -240,6 +240,10 @@
     <string name="empty_no_results">Нема резултата</string>
     <string name="action_similar">Слично</string>
     <string name="title_similar_shows">Сличне емисије</string>
+    <!-- Popular -->
+    <string name="title_popular">Popularno</string>
+    <string name="filter_year">Година</string>
+    <string name="filter_language">Језик</string>
     <!-- Lists -->
     <string name="first_list">Прва листа</string>
     <string name="list_add">Додај листу</string>
@@ -260,7 +264,6 @@
     <string name="error_name_already_exists">Lista sa ovim imenom već postoji</string>
     <!-- Movies -->
     <string name="title_discover">Otkrijte</string>
-    <string name="title_popular">Popularno</string>
     <string name="title_digital_releases">Digitalna izdanja</string>
     <string name="title_disc_releases">Disk izdanja</string>
     <string name="movies_in_theatres">U bioskopima</string>
@@ -341,6 +344,7 @@
     <string name="trakt_notice_not_exists">Не може се (још) пратити са Trakt</string>
     <string name="trakt_error_limit_exceeded">Листа за гледање је пуна, прво уклоните нешто.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Да бисте ово користили, повежите се на Trakt</string>
     <string name="connect_trakt">Повежи trakt</string>
     <string name="trakt_reconnect">Повезати SeriesGuide са Trakt</string>
     <string name="trakt_reconnect_details">Проверите акредитиве Trakt-а</string>
@@ -548,7 +552,8 @@
     <string name="description_extension_amazon">Претражи локални Аmazon сајт</string>
     <string name="pref_amazon_domain">Amazon</string>
     <string name="extension_google_play">Претрага Google продавнице</string>
-    <string name="description_extension_google_play">Претражи Google продавницу</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Претражи Google продавницу</string>
     <string name="extension_youtube">Претрага YouTube-а</string>
     <string name="description_extension_youtube">Потражи видео на YouTube-у</string>
     <string name="description_extension_web_search">Потражи сајтове и слике</string>

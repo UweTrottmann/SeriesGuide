@@ -1,6 +1,6 @@
-// Copyright 2021-2023 Uwe Trottmann
-// Copyright 2021 Andre Ippisch
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
+// Copyright 2021 Andre Ippisch
 
 package com.battlelancer.seriesguide.shows.database
 
@@ -345,8 +345,10 @@ data class SgShow2Update(
     @ColumnInfo(name = SgShow2Columns.GENRES) val genres: String?,
     @ColumnInfo(name = SgShow2Columns.NETWORK) val network: String?,
     @ColumnInfo(name = SgShow2Columns.IMDBID) val imdbId: String?,
-    @ColumnInfo(name = SgShow2Columns.RATING_GLOBAL) val ratingGlobal: Double,
-    @ColumnInfo(name = SgShow2Columns.RATING_VOTES) val ratingVotes: Int,
+    @ColumnInfo(name = SgShow2Columns.RATING_TMDB) val ratingTmdb: Double?,
+    @ColumnInfo(name = SgShow2Columns.RATING_TMDB_VOTES) val ratingTmdbVotes: Int?,
+    @ColumnInfo(name = SgShow2Columns.RATING_TRAKT) val ratingTrakt: Double?,
+    @ColumnInfo(name = SgShow2Columns.RATING_TRAKT_VOTES) val ratingTraktVotes: Int?,
     @ColumnInfo(name = SgShow2Columns.RUNTIME) val runtime: Int?,
     @ColumnInfo(name = SgShow2Columns.STATUS) val status: Int,
     @ColumnInfo(name = SgShow2Columns.POSTER) val poster: String?,

@@ -39,7 +39,6 @@
     <string name="action_stream">Stream or purchase</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Select region</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">தேடல் வரலாற்றை நீக்கு</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">இன்று</string>
     <string name="now">இப்போது</string>
-    <string name="runtime_minutes">%s நிமிடம்</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">எல்லாம் பார்த்த</string>
     <string name="unmark_all">இல்லை பார்த்த</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
+    <!-- Popular -->
+    <string name="title_popular">பிரபலமானவை</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">முதல் பட்டியல்</string>
     <string name="list_add">பட்டியல் சேர்</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">இந்த பட்டியலை ஏற்கனவே உள்ளது</string>
     <!-- Movies -->
     <string name="title_discover">Discover</string>
-    <string name="title_popular">பிரபலமானவை</string>
     <string name="title_digital_releases">Digital releases</string>
     <string name="title_disc_releases">Disc releases</string>
     <string name="movies_in_theatres">In theaters</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">இல்லை முடியும் (இதுவரை) குறியிட்ட கொண்டு trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Trakt இணை</string>
     <string name="trakt_reconnect">Trakt SeriesGuide இணைக்க</string>
     <string name="trakt_reconnect_details">Trakt அறிமுகங்களை சரிபார்க்கவும்</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">உங்கள் உள்ளூர் Amazon தளத்தை தேடு</string>
     <string name="pref_amazon_domain">Amazon தளத்தை</string>
     <string name="extension_google_play">Google இயக்கு தேடல்</string>
-    <string name="description_extension_google_play">Google இயக்கு ஸ்டோர் தேடு</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Google இயக்கு ஸ்டோர் தேடு</string>
     <string name="extension_youtube">YouTube தேடல்</string>
     <string name="description_extension_youtube">YouTube-வீடியோக்களை தேடல்</string>
     <string name="description_extension_web_search">வலைத்தளங்கள் மற்றும் படிமங்கள் தேடவும்</string>

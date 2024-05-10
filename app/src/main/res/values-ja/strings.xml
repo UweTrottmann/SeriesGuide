@@ -39,7 +39,6 @@
     <string name="action_stream">ストリーミング・購入</string>
     <string name="action_stream_info">ストリーミング・購入</string>
     <string name="action_select_region">エリアの選択</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">検索履歴を削除</string>
@@ -106,7 +105,8 @@
     <!-- Date and Time -->
     <string name="today">今日</string>
     <string name="now">今</string>
-    <string name="runtime_minutes">%s 分</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">すべて視聴済</string>
     <string name="unmark_all">すべて未視聴</string>
@@ -226,6 +226,10 @@
     <string name="empty_no_results">検索結果はありません</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似の番組</string>
+    <!-- Popular -->
+    <string name="title_popular">人気</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">最初のリスト</string>
     <string name="list_add">リストを追加</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">この名前のリストがすでに存在します</string>
     <!-- Movies -->
     <string name="title_discover">見つける</string>
-    <string name="title_popular">人気</string>
     <string name="title_digital_releases">デジタル リリース</string>
     <string name="title_disc_releases">ディスク リリース</string>
     <string name="movies_in_theatres">上映中</string>
@@ -321,6 +324,7 @@
     <string name="trakt_notice_not_exists">Trakt では追跡できません。</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Trakt に接続</string>
     <string name="trakt_reconnect">SeriesGuide を Trakt に接続</string>
     <string name="trakt_reconnect_details">Trakt の認証情報を確認してください</string>
@@ -520,7 +524,8 @@
     <string name="description_extension_amazon">ローカルの Amazon サイトを検索します</string>
     <string name="pref_amazon_domain">Amazon サイト</string>
     <string name="extension_google_play">Google Play 検索</string>
-    <string name="description_extension_google_play">Google Play ストアを検索します</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Google Play ストアを検索します</string>
     <string name="extension_youtube">YouTube 検索</string>
     <string name="description_extension_youtube">YouTube のビデオを検索します</string>
     <string name="description_extension_web_search">ウェブサイトや画像の検索</string>

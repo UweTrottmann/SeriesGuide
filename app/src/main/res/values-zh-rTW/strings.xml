@@ -39,7 +39,6 @@
     <string name="action_stream">串流播放或購買</string>
     <string name="action_stream_info">串流播放或購買資訊</string>
     <string name="action_select_region">選擇地區</string>
-    <string name="action_include_any_watch_provider">包括全部</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">清除搜尋記錄</string>
@@ -106,7 +105,8 @@
     <!-- Date and Time -->
     <string name="today">今天</string>
     <string name="now">目前</string>
-    <string name="runtime_minutes">%s 分鐘</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">全部已觀看</string>
     <string name="unmark_all">全部未觀看</string>
@@ -226,6 +226,10 @@
     <string name="empty_no_results">無結果</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">類似節目</string>
+    <!-- Popular -->
+    <string name="title_popular">熱門</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">第一個清單</string>
     <string name="list_add">新增清單</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">此名稱的清單已存在。</string>
     <!-- Movies -->
     <string name="title_discover">探索</string>
-    <string name="title_popular">熱門</string>
     <string name="title_digital_releases">數位發行</string>
     <string name="title_disc_releases">碟片版本</string>
     <string name="movies_in_theatres">上映中</string>
@@ -321,6 +324,7 @@
     <string name="trakt_notice_not_exists">無法或尚未能以 Trakt 追蹤</string>
     <string name="trakt_error_limit_exceeded">列表已滿，請先移除某些內容。</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">連接 trakt</string>
     <string name="trakt_reconnect">連結SeriesGuide與trakt</string>
     <string name="trakt_reconnect_details">檢查您的 trakt 憑證</string>
@@ -520,7 +524,8 @@
     <string name="description_extension_amazon">在當地的 Amazon 網站搜尋</string>
     <string name="pref_amazon_domain">Amazon 網站</string>
     <string name="extension_google_play">Google Play 搜尋</string>
-    <string name="description_extension_google_play">在 Google Play 商店裡搜尋</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">在 Google Play 商店裡搜尋</string>
     <string name="extension_youtube">YouTube 搜尋</string>
     <string name="description_extension_youtube">搜尋 YouTube 上的相關影片</string>
     <string name="description_extension_web_search">搜尋相關的網站及圖片</string>

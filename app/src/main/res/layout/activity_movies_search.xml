@@ -13,9 +13,83 @@
         android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 
-        <include
+        <!-- With scroll flags for CoordinatorLayouts with scrollable children to support app bar scrolling on L+. -->
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/sgToolbar"
-            layout="@layout/toolbar_search" />
+            style="@style/Widget.SeriesGuide.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
+
+            <!-- focusableInTouchMode: prevent auto-focus on search text view. -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerSearchBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_toolbar"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search"
+                    android:minWidth="250dp"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/auto_complete_view_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="LabelFor" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <HorizontalScrollView
+            android:id="@+id/scrollViewMoviesSearchChips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupMoviesSearchFilters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleLine="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMoviesSearchReleaseYear"
+                    style="@style/Widget.SeriesGuide.Chip.Filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_year" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMoviesSearchOriginalLanguage"
+                    style="@style/Widget.SeriesGuide.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_language" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMoviesSearchWatchProviders"
+                    style="@style/Widget.SeriesGuide.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_stream" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </HorizontalScrollView>
 
     </com.google.android.material.appbar.AppBarLayout>
 

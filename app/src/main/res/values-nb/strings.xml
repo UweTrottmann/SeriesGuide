@@ -39,7 +39,6 @@
     <string name="action_stream">Strøm eller kjøp</string>
     <string name="action_stream_info">Strøm eller kjøp informasjon</string>
     <string name="action_select_region">Velg region</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Tøm søkelogg</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">i dag</string>
     <string name="now">nå</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Sett alle</string>
     <string name="unmark_all">Ingen sett</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Ingen resultater</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Lignende serier</string>
+    <!-- Popular -->
+    <string name="title_popular">Populær</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Første liste</string>
     <string name="list_add">Legg til liste</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">En liste med dette navnet finnes allerede</string>
     <!-- Movies -->
     <string name="title_discover">Oppdag</string>
-    <string name="title_popular">Populær</string>
     <string name="title_digital_releases">Digitale utgaver</string>
     <string name="title_disc_releases">Utgaver på disc</string>
     <string name="movies_in_theatres">På kino</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Kan ikke spores med trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Koble til trakt</string>
     <string name="trakt_reconnect">Koble SeriesGuide til trakt</string>
     <string name="trakt_reconnect_details">Kontroller påloggingsinformasjonen for trakt</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Søk på din lokale Amazon nettside</string>
     <string name="pref_amazon_domain">Amazons nettside</string>
     <string name="extension_google_play">Google Play søk</string>
-    <string name="description_extension_google_play">Søk på Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Søk på Google Play Store</string>
     <string name="extension_youtube">YouTube søk</string>
     <string name="description_extension_youtube">Søk etter YouTube videoer</string>
     <string name="description_extension_web_search">Søk etter nettsider og bilder</string>

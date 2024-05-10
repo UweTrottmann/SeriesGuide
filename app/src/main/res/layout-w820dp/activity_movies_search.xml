@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2024 Uwe Trottmann -->
+
+<!-- Screens with more than 820dp of available width. This would
+include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".movies.search.MoviesSearchActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/sgAppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
+
+        <!-- With scroll flags for CoordinatorLayouts with scrollable children to support app bar scrolling on L+. -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/sgToolbar"
+            style="@style/Widget.SeriesGuide.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            tools:navigationIcon="@drawable/ic_menu_24dp">
+
+            <!-- focusableInTouchMode: prevent auto-focus on search text view. -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerSearchBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_toolbar"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search"
+                    android:minWidth="250dp"
+                    app:endIconMode="clear_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/auto_complete_view_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="LabelFor" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupMoviesSearchFilters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:theme="@style/ThemeOverlay.SeriesGuide.Toolbar.Surface.NoColor"
+                    app:layout_constraintStart_toEndOf="@id/text_input_layout_toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipMoviesSearchReleaseYear"
+                        style="@style/Widget.SeriesGuide.Chip.Filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_year" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipMoviesSearchOriginalLanguage"
+                        style="@style/Widget.SeriesGuide.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_language" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipMoviesSearchWatchProviders"
+                        style="@style/Widget.SeriesGuide.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_stream" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/containerMoviesSearchFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

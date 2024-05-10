@@ -14,7 +14,7 @@ import androidx.paging.cachedIn
 import com.battlelancer.seriesguide.provider.SgRoomDatabase
 import com.battlelancer.seriesguide.streaming.SgWatchProvider.Type
 
-class DiscoverFilterViewModel(
+class WatchProviderFilterViewModel(
     application: Application,
     private val type: Type
 ) : AndroidViewModel(application) {
@@ -32,12 +32,12 @@ class DiscoverFilterViewModel(
 }
 
 
-class DiscoverFilterViewModelFactory(
+class WatchProviderFilterViewModelFactory(
     private val application: Application,
     private val type: Type
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return DiscoverFilterViewModel(application, type) as T
+        return WatchProviderFilterViewModel(application, type) as T
     }
 }

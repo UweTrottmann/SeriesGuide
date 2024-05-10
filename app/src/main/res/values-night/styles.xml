@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2024 Uwe Trottmann -->
+
+<resources>
+
+    <!-- Theme overlay to restore non-colored text and icons. -->
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface.NoColor" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+    </style>
+
+</resources>

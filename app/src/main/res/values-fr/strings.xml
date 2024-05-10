@@ -39,7 +39,6 @@
     <string name="action_stream">Stream or purchase</string>
     <string name="action_stream_info">Informations sur le streaming et l\'achat</string>
     <string name="action_select_region">Sélectionner une région</string>
-    <string name="action_include_any_watch_provider">Tout inclure</string>
     <string name="action_reset">Réinitialiser</string>
     <!-- Search -->
     <string name="clear_search_history">Effacer l\'historique de recherche</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">aujourd\'hui</string>
     <string name="now">maintenant</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Tous vus</string>
     <string name="unmark_all">Vus aucun</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Aucun résultat</string>
     <string name="action_similar">Similaires</string>
     <string name="title_similar_shows">Séries similaires</string>
+    <!-- Popular -->
+    <string name="title_popular">Populaire</string>
+    <string name="filter_year">Année</string>
+    <string name="filter_language">Langue</string>
     <!-- Lists -->
     <string name="first_list">Première liste</string>
     <string name="list_add">Ajouter une liste</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Une liste portant ce nom existe déjà</string>
     <!-- Movies -->
     <string name="title_discover">A découvrir</string>
-    <string name="title_popular">Populaire</string>
     <string name="title_digital_releases">Versions numériques</string>
     <string name="title_disc_releases">Sorties DVD</string>
     <string name="movies_in_theatres">Dans les salles</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Ne peut pas (encore) être suivis avec trakt.</string>
     <string name="trakt_error_limit_exceeded">La liste est pleine, supprimez d\'abord quelque chose.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Pour l\'utiliser, connectez-vous à Trakt</string>
     <string name="connect_trakt">Me connecter à trakt</string>
     <string name="trakt_reconnect">Connecter SeriesGuide à trakt</string>
     <string name="trakt_reconnect_details">Vérifier vos informations d\'identification trakt</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Rechercher sur votre site Amazon local</string>
     <string name="pref_amazon_domain">Site Amazon</string>
     <string name="extension_google_play">Recherche Google Play</string>
-    <string name="description_extension_google_play">Rechercher sur le Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Rechercher sur le Play Store</string>
     <string name="extension_youtube">Recherche Youtube</string>
     <string name="description_extension_youtube">Recherche des vidéos sur Youtube</string>
     <string name="description_extension_web_search">Rechercher des sites web et des images</string>

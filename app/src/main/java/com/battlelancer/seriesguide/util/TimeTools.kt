@@ -4,6 +4,7 @@
 package com.battlelancer.seriesguide.util
 
 import android.content.Context
+import android.content.res.Resources
 import android.text.TextUtils
 import android.text.format.DateFormat
 import android.text.format.DateUtils
@@ -17,6 +18,7 @@ import com.battlelancer.seriesguide.shows.database.SgShow2ForLists
 import org.threeten.bp.Clock
 import org.threeten.bp.DateTimeException
 import org.threeten.bp.DayOfWeek
+import org.threeten.bp.Duration
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -839,5 +841,61 @@ object TimeTools {
             calendar.add(Calendar.HOUR_OF_DAY, offset)
         }
     }
+
+    fun formatToDaysHoursAndMinutes(resources: Resources, durationMillis: Long): String {
+        var durationCalc = durationMillis
+        val days = durationCalc / DateUtils.DAY_IN_MILLIS
+        durationCalc %= DateUtils.DAY_IN_MILLIS
+        val hours = durationCalc / DateUtils.HOUR_IN_MILLIS
+        durationCalc %= DateUtils.HOUR_IN_MILLIS
+        val minutes = durationCalc / DateUtils.MINUTE_IN_MILLIS
+
+        val result = StringBuilder()
+        if (days != 0L) {
+            result.append(
+                resources.getQuantityString(
+                    R.plurals.days_plural, days.toInt(),
+                    days.toInt()
+                )
+            )
+        }
+        if (hours != 0L) {
+            if (days != 0L) {
+                result.append(" ")
+            }
+            result.append(
+                resources.getQuantityString(
+                    R.plurals.hours_plural, hours.toInt(),
+                    hours.toInt()
+                )
+            )
+        }
+        if (minutes != 0L || days == 0L && hours == 0L) {
+            if (days != 0L || hours != 0L) {
+                result.append(" ")
+            }
+            result.append(
+                resources.getQuantityString(
+                    R.plurals.minutes_plural,
+                    minutes.toInt(),
+                    minutes.toInt()
+                )
+            )
+        }
+
+        return result.toString()
+    }
+
+    fun formatToHoursAndMinutes(resources: Resources, durationMinutes: Int): String {
+        val duration = Duration.ofMinutes(durationMinutes.toLong())
+        val hours = duration.toHours()
+        val minutes = duration.toMinutesPart()
+        return if (hours > 0) {
+            resources.getString(R.string.runtime_hours_minutes_format, hours, minutes)
+        } else {
+            resources.getString(R.string.runtime_minutes_format, minutes)
+        }
+    }
+
 
 }

@@ -39,7 +39,6 @@
     <string name="action_stream">بث أو شراء</string>
     <string name="action_stream_info">معلومات البث أو الشراء</string>
     <string name="action_select_region">حدد المنطقة</string>
-    <string name="action_include_any_watch_provider">تضمين أي</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">إزالة تاريخ البحث</string>
@@ -111,7 +110,8 @@
     <!-- Date and Time -->
     <string name="today">اليوم</string>
     <string name="now">الآن</string>
-    <string name="runtime_minutes">%s دقيقة</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">تعيين الجميع بمشاهد</string>
     <string name="unmark_all">تعيين الجميع بغير مشاهد</string>
@@ -261,6 +261,10 @@
     <string name="empty_no_results">لا توجد نتائج</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">مسلسلات مشابهة</string>
+    <!-- Popular -->
+    <string name="title_popular">الأكثر شعبية</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">القائمة الأولى</string>
     <string name="list_add">إضافة قائمة</string>
@@ -281,7 +285,6 @@
     <string name="error_name_already_exists">يوجد بالفعل قائمة بهذا الإسم</string>
     <!-- Movies -->
     <string name="title_discover">استكشاف</string>
-    <string name="title_popular">الأكثر شعبية</string>
     <string name="title_digital_releases">الإصدارات الرقمية</string>
     <string name="title_disc_releases">إصدارات القرص</string>
     <string name="movies_in_theatres">حاليا في السينما</string>
@@ -371,6 +374,7 @@
     <string name="trakt_notice_not_exists">لا يمكن تتبعه بواسطة Trakt بعد.</string>
     <string name="trakt_error_limit_exceeded">القائمة ممتلئة، أزل شيئًا ما أولاً.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">الإتصال بموقع Trakt</string>
     <string name="trakt_reconnect">ربط SeriesGuide بحساب Trakt</string>
     <string name="trakt_reconnect_details">تحقق من بياناتك في Trakt</string>
@@ -590,7 +594,8 @@
     <string name="description_extension_amazon">البحث المحلي بواسطة موقع أمازون</string>
     <string name="pref_amazon_domain">موقع أمازون</string>
     <string name="extension_google_play">البحث في متجر قوقل</string>
-    <string name="description_extension_google_play">البحث في متجر قوقل</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">البحث في متجر قوقل</string>
     <string name="extension_youtube">البحث في اليوتيوب</string>
     <string name="description_extension_youtube">بحث اليوتيوب لمقاطع الفيديو</string>
     <string name="description_extension_web_search">البحث عن المواقع و الصور</string>

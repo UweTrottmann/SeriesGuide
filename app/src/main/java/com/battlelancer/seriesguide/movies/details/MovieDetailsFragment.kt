@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2019-2023 Uwe Trottmann
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies.details
 
@@ -55,6 +55,9 @@ import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
 import com.battlelancer.seriesguide.util.Metacritic
+import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setLink
+import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.TextTools
@@ -97,6 +100,16 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         MovieDetailsModelFactory(tmdbId, requireActivity().application)
     }
     private lateinit var scrollChangeListener: ToolbarScrollChangeListener
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        tmdbId = requireArguments().getInt(ARG_TMDB_ID)
+        if (tmdbId <= 0) {
+            parentFragmentManager.popBackStack()
+            return
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -164,7 +177,12 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             )
         }
         // ratings
-        binding.containerRatings.root.isGone = true
+        binding.containerRatings.apply {
+            root.isGone = true // to animate in later
+            initialize { rateMovie() }
+            ratingViewTmdb.setLink(requireContext(), TmdbTools.buildMovieUrl(tmdbId))
+            ratingViewTrakt.setLink(requireContext(), TraktTools.buildMovieUrl(tmdbId))
+        }
 
         // language button
         binding.buttonMovieLanguage.isGone = true
@@ -191,13 +209,6 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        tmdbId = requireArguments().getInt(ARG_TMDB_ID)
-        if (tmdbId <= 0) {
-            parentFragmentManager.popBackStack()
-            return
-        }
-
         setupViews()
 
         val args = Bundle()
@@ -358,7 +369,7 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
             releaseDate == null || Instant.ofEpochMilli(releaseDate.time)
                 .isBefore(ZonedDateTime.now().minusDays(1).toInstant())
         tmdbMovie.runtime?.let {
-            releaseAndRuntime.append(getString(R.string.runtime_minutes, it.toString()))
+            releaseAndRuntime.append(TimeTools.formatToHoursAndMinutes(resources, it))
         }
         binding.textViewMovieDate.text = releaseAndRuntime.toString()
 
@@ -475,39 +486,24 @@ class MovieDetailsFragment : Fragment(), MovieActionsContract {
         }
 
         // ratings
-        binding.containerRatings.textViewRatingsTmdbValue.text = TraktTools.buildRatingString(
-            tmdbMovie.vote_average
-        )
-        binding.containerRatings.textViewRatingsTmdbVotes.text =
-            TraktTools.buildRatingVotesString(activity, tmdbMovie.vote_count)
-        traktRatings?.let {
-            binding.containerRatings.textViewRatingsTraktVotes.text =
-                TraktTools.buildRatingVotesString(activity, it.votes)
-            binding.containerRatings.textViewRatingsTraktValue.text = TraktTools.buildRatingString(
-                it.rating
+        binding.containerRatings.apply {
+            setRatingValues(
+                tmdbMovie.vote_average,
+                tmdbMovie.vote_count,
+                traktRatings?.rating,
+                traktRatings?.votes
             )
+
+            // if movie is not in database, can't handle user ratings
+            if (!inCollection && !inWatchlist && !isWatched) {
+                groupRatingsUser.isGone = true
+            } else {
+                groupRatingsUser.isGone = false
+                textViewRatingsUser.text =
+                    TraktTools.buildUserRatingString(activity, rating)
+            }
+            root.isGone = false
         }
-        // if movie is not in database, can't handle user ratings
-        if (!inCollection && !inWatchlist && !isWatched) {
-            binding.containerRatings.textViewRatingsTraktUserLabel.isGone = true
-            binding.containerRatings.textViewRatingsTraktUser.isGone = true
-            binding.containerRatings.root.isClickable = false
-            binding.containerRatings.root.isLongClickable = false // cheat sheet
-        } else {
-            binding.containerRatings.textViewRatingsTraktUserLabel.isGone = false
-            binding.containerRatings.textViewRatingsTraktUser.isGone = false
-            binding.containerRatings.textViewRatingsTraktUser.text =
-                TraktTools.buildUserRatingString(
-                    activity,
-                    rating
-                )
-            binding.containerRatings.root.setOnClickListener { rateMovie() }
-            TooltipCompat.setTooltipText(
-                binding.containerRatings.root,
-                binding.containerRatings.root.context.getString(R.string.action_rate)
-            )
-        }
-        binding.containerRatings.root.isGone = false
 
         // genres
         binding.textViewMovieGenresLabel.isGone = false

@@ -39,7 +39,6 @@
     <string name="action_stream">Стриминг или покупка</string>
     <string name="action_stream_info">Стриминг или покупка</string>
     <string name="action_select_region">Выберите регион</string>
-    <string name="action_include_any_watch_provider">Включить любое</string>
     <string name="action_reset">Сброс</string>
     <!-- Search -->
     <string name="clear_search_history">Очистить историю поиска</string>
@@ -109,7 +108,8 @@
     <!-- Date and Time -->
     <string name="today">сегодня</string>
     <string name="now">сейчас</string>
-    <string name="runtime_minutes">%s минут</string>
+    <string name="runtime_hours_minutes_format">%1$d ч %2$d мин</string>
+    <string name="runtime_minutes_format">%d мин</string>
     <!-- Flagging -->
     <string name="mark_all">Просмотрено всё</string>
     <string name="unmark_all">Не просмотрено </string>
@@ -247,6 +247,10 @@
     <string name="empty_no_results">Нет результатов</string>
     <string name="action_similar">Похожие</string>
     <string name="title_similar_shows">Похожие сериалы</string>
+    <!-- Popular -->
+    <string name="title_popular">Популярные</string>
+    <string name="filter_year">Год</string>
+    <string name="filter_language">Язык</string>
     <!-- Lists -->
     <string name="first_list">Первый список</string>
     <string name="list_add">Добавить список</string>
@@ -267,7 +271,6 @@
     <string name="error_name_already_exists">Список с таким именем уже существует</string>
     <!-- Movies -->
     <string name="title_discover">Подборка</string>
-    <string name="title_popular">Популярные</string>
     <string name="title_digital_releases">Цифровые версии</string>
     <string name="title_disc_releases">Диски</string>
     <string name="movies_in_theatres">Смотрите в кинотеатрах</string>
@@ -331,7 +334,7 @@
     <string name="hexagon_setup_fail_auth">К вашему аккаунту не привязан адрес электронной почты.</string>
     <string name="hexagon_remove_account">Удалить аккаунт</string>
     <string name="hexagon_remove_account_success">Аккаунт уничтожен.</string>
-    <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт.</string>
+    <string name="hexagon_remove_account_failure">Не удалось удалить аккаунт</string>
     <string name="hexagon_remove_account_confirmation">При удалении аккаунта будут удалены все сериалы и фильмы из SeriesGuide Cloud. Также убедитесь в том, что он удалён на других подключенных устройствах.</string>
     <string name="hexagon_api_queued">Отправка в облако SeriesGuide.</string>
     <string name="hexagon_signed_out">Вышли из SeriesGuide Cloud.</string>
@@ -351,6 +354,7 @@
     <string name="trakt_notice_not_exists">Невозможно (пока) отследить с помощью Trakt</string>
     <string name="trakt_error_limit_exceeded">Список отслеживания полон, сначала удалите что-нибудь.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Чтобы использовать это, подключитесь к Trakt</string>
     <string name="connect_trakt">Подключение trakt</string>
     <string name="trakt_reconnect">Подключите SeriesGuide к trakt</string>
     <string name="trakt_reconnect_details">Проверте учетные данные в trakt</string>
@@ -562,7 +566,8 @@
     <string name="description_extension_amazon">Поиск в локальной версии Amazon</string>
     <string name="pref_amazon_domain">Сайт Amazon</string>
     <string name="extension_google_play">Поиск Google Play</string>
-    <string name="description_extension_google_play">Поиск Google Play store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Поиск Google Play store</string>
     <string name="extension_youtube">Поиск YouTube</string>
     <string name="description_extension_youtube">Поиск YouTube для видео</string>
     <string name="description_extension_web_search">Поиск веб-сайтов и изображений</string>

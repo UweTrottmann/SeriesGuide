@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2018-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -94,8 +94,15 @@ class ShowsDiscoverLiveData(
         val tmdb = SgApp.getServicesComponent(context.applicationContext).tmdb()
         val languageActual = language
         val watchRegion = StreamingSearch.getCurrentRegionOrNull(context)
-        val results =
-            TmdbTools2().getShowsWithNewEpisodes(tmdb, language, watchProviderIds, watchRegion)
+        val results = TmdbTools2().getShowsWithNewEpisodes(
+            tmdb = tmdb,
+            language = language,
+            page = 1,
+            firstReleaseYear = null,
+            originalLanguage = null,
+            watchProviderIds = watchProviderIds,
+            watchRegion = watchRegion
+        )?.results
         return@withContext if (results != null) {
             val searchResults = SearchTools.mapTvShowsToSearchResults(languageActual, results)
             SearchTools.markLocalShowsAsAddedAndPreferLocalPoster(context, searchResults)

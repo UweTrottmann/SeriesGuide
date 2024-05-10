@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.search.discover
 
@@ -21,11 +21,12 @@ import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.search.similar.SimilarShowsFragment
 import com.battlelancer.seriesguide.shows.tools.ShowStatus
 import com.battlelancer.seriesguide.streaming.StreamingSearch
-import com.battlelancer.seriesguide.traktapi.TraktTools
 import com.battlelancer.seriesguide.ui.OverviewActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.LanguageTools
+import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setRatingValues
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
@@ -104,7 +105,7 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
             buttonPositive.isGone = true
 
-            textViewAddRatingRange.text = getString(R.string.format_rating_range, 10)
+            containerRatings.initialize(null)
 
             // Set up long-press to copy text to clipboard (d-pad friendly vs text selection).
             containerShowInfo.setOnLongClickListener {
@@ -264,13 +265,20 @@ class AddShowDialogFragment : AppCompatDialogFragment() {
             }
             // Network, runtime.
             append(show.network)
-            append("\n")
-            append(getString(R.string.runtime_minutes, show.runtime.toString()))
+            show.runtime?.also {
+                append("\n")
+                append(TimeTools.formatToHoursAndMinutes(resources, it))
+            }
         }
         binding.textViewAddShowMeta.text = timeAndNetworkText
 
-        // Rating.
-        binding.textViewAddRatingValue.text = TraktTools.buildRatingString(show.ratingGlobal)
+        // Ratings
+        binding.containerRatings.setRatingValues(
+            show.ratingTmdb,
+            show.ratingTmdbVotes,
+            show.ratingTrakt,
+            show.ratingTraktVotes
+        )
 
         // Genres.
         ViewTools.setValueOrPlaceholder(

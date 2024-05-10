@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.calendar
 
@@ -15,11 +15,12 @@ import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.settings.DisplaySettings
+import com.battlelancer.seriesguide.shows.episodes.EpisodeFlags
 import com.battlelancer.seriesguide.shows.episodes.EpisodeTools
+import com.battlelancer.seriesguide.shows.episodes.WatchedBox
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.TextTools
 import com.battlelancer.seriesguide.util.TimeTools
-import com.battlelancer.seriesguide.shows.episodes.WatchedBox
 import java.util.Date
 
 class CalendarItemViewHolder(
@@ -71,11 +72,28 @@ class CalendarItemViewHolder(
 
     fun bind(
         context: Context,
-        item: CalendarFragment2ViewModel.CalendarItem,
+        item: CalendarFragment2ViewModel.CalendarItem?,
         previousItem: CalendarFragment2ViewModel.CalendarItem?,
         multiColumn: Boolean
     ) {
         this.item = item
+
+        if (item == null) {
+            if (multiColumn) {
+                headerTextView.isInvisible = true
+            } else {
+                headerTextView.isGone = true
+            }
+            showTextView.text = null
+            episodeTextView.text = null
+            collected.isGone = true
+            watchedBox.episodeFlag = EpisodeFlags.UNWATCHED
+            watchedBox.isEnabled = false
+            info.text = null
+            timestamp.text = null
+            poster.setImageResource(R.drawable.ic_photo_gray_24dp)
+            return
+        }
 
         // optional header
         val isShowingHeader = previousItem == null || previousItem.headerTime != item.headerTime
@@ -126,6 +144,7 @@ class CalendarItemViewHolder(
         info.text = TextTools.dotSeparate(episode.network, time)
 
         // watched box
+        watchedBox.isEnabled = true
         val episodeFlag = episode.watched
         watchedBox.episodeFlag = episodeFlag
         val watched = EpisodeTools.isWatched(episodeFlag)

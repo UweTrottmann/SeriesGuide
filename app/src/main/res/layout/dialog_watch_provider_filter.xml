@@ -3,10 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".streaming.DiscoverFilterFragment">
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:textAppearance="@style/TextAppearance.SeriesGuide.TitleLarge.Bold"
+        tools:text="@string/action_shows_filter" />
+
+    <TextView
+        android:id="@+id/textViewSubTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -14,14 +24,15 @@
         android:text="@string/action_stream"
         android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold" />
 
-    <Button
+    <com.google.android.material.chip.Chip
         android:id="@+id/buttonWatchRegion"
-        style="@style/Widget.SeriesGuide.Button.Outlined"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         tools:text="@string/action_select_region" />
+
+    <include layout="@layout/divider_horizontal" />
 
     <!-- Using LinearLayout so using wrap_content is possible,
     using ConstraintLayout does not match available space. -->
@@ -32,16 +43,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         tools:listitem="@layout/item_list_checked" />
-
-    <Button
-        android:id="@+id/buttonDisableAllProviders"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/action_include_any_watch_provider" />
 
     <include layout="@layout/divider_horizontal" />
 

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2013-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation.model;
 
@@ -66,10 +66,11 @@ public class Episode {
     @Nullable
     public String directors;
 
-    @Nullable
-    public Double rating;
-    @Nullable
-    public Integer rating_votes;
-    @Nullable
-    public Integer rating_user;
+    @Nullable public Double rating_tmdb;
+    @Nullable public Integer rating_tmdb_votes;
+    /** Trakt rating. */
+    @Nullable public Double rating;
+    /** Trakt rating votes. */
+    @Nullable public Integer rating_votes;
+    @Nullable public Integer rating_user;
 }

@@ -39,7 +39,6 @@
     <string name="action_stream">Streama eller köp</string>
     <string name="action_stream_info">Stream- eller köpinfo</string>
     <string name="action_select_region">Välj region</string>
-    <string name="action_include_any_watch_provider">Inkludera alla</string>
     <string name="action_reset">Återställ</string>
     <!-- Search -->
     <string name="clear_search_history">Rensa sökhistorik</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">idag</string>
     <string name="now">nu</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Sett alla</string>
     <string name="unmark_all">Inga sedda</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Inga resultat</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Liknande program</string>
+    <!-- Popular -->
+    <string name="title_popular">Populärt</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Första listan</string>
     <string name="list_add">Lägg till lista</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">En lista med detta namn finns redan</string>
     <!-- Movies -->
     <string name="title_discover">Upptäck</string>
-    <string name="title_popular">Populärt</string>
     <string name="title_digital_releases">Digitala utgivningar</string>
     <string name="title_disc_releases">Utgivningar på skiva</string>
     <string name="movies_in_theatres">På bio</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Kan inte (ännu) följas med trakt.</string>
     <string name="trakt_error_limit_exceeded">Bevakningslistan är full, ta bort något först.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Anslut till trakt</string>
     <string name="trakt_reconnect">Anslut SeriesGuide till trakt</string>
     <string name="trakt_reconnect_details">Kontrollera dina inloggningsuppgifter för trakt</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Sök på din lokala Amazon\'s webbplats</string>
     <string name="pref_amazon_domain">Amazon\'s webbplats</string>
     <string name="extension_google_play">Google Play-sökning</string>
-    <string name="description_extension_google_play">Sök på Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Sök på Google Play Store</string>
     <string name="extension_youtube">YouTube sökning</string>
     <string name="description_extension_youtube">Sök på YouTube för videos</string>
     <string name="description_extension_web_search">Sök efter webbplatser och bilder</string>

@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2019-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.billing
 
@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.ui.BaseActivity
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.Utils
-import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
 import com.google.android.material.snackbar.Snackbar
 import com.uwetrottmann.seriesguide.billing.BillingViewModel
@@ -40,7 +39,6 @@ class BillingActivity : BaseActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SkuDetailsAdapter
     private lateinit var buttonManageSubs: Button
-    private lateinit var buttonPass: Button
     private lateinit var textViewHasUpgrade: View
     private lateinit var textViewBillingUnlockDetected: View
     private lateinit var textViewBillingError: TextView
@@ -136,9 +134,6 @@ class BillingActivity : BaseActivity() {
                 WebTools.openInApp(v.context, manageSubscriptionUrl)
             }
         }
-
-        buttonPass = findViewById(R.id.buttonBillingGetPass)
-        ViewTools.openUriOnClick(buttonPass, getString(R.string.url_x_pass))
 
         findViewById<View>(R.id.textViewBillingMoreInfo).setOnClickListener {
             WebTools.openInCustomTab(this, getString(R.string.url_whypay))

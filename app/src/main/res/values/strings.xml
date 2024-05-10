@@ -43,7 +43,6 @@
     <string name="action_stream">Stream or purchase</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Select region</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">Reset</string>
 
     <!-- Search -->
@@ -84,10 +83,6 @@
     <string name="refresh">Refresh</string>
     <plurals name="replies_plural">
         <item quantity="one">%d reply</item>
-        <item quantity="zero">%d replies</item>
-        <item quantity="two">%d replies</item>
-        <item quantity="few">%d replies</item>
-        <item quantity="many">%d replies</item>
         <item quantity="other">%d replies</item>
     </plurals>
 
@@ -121,7 +116,8 @@
     <!-- Date and Time -->
     <string name="today">today</string>
     <string name="now">now</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
 
     <!-- Flagging -->
     <string name="mark_all">Watched all</string>
@@ -256,6 +252,11 @@
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
 
+    <!-- Popular -->
+    <string name="title_popular">Popular</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
+
     <!-- Lists -->
     <string name="first_list">First list</string>
     <string name="list_add">Add list</string>
@@ -277,7 +278,6 @@
 
     <!-- Movies -->
     <string name="title_discover">Discover</string>
-    <string name="title_popular">Popular</string>
     <string name="title_digital_releases">Digital releases</string>
     <string name="title_disc_releases">Disc releases</string>
     <string name="movies_in_theatres">In theaters</string>
@@ -312,26 +312,14 @@
 
     <plurals name="days_plural">
         <item quantity="one">%d day</item>
-        <item quantity="zero">%d days</item>
-        <item quantity="two">%d days</item>
-        <item quantity="few">%d days</item>
-        <item quantity="many">%d days</item>
         <item quantity="other">%d days</item>
     </plurals>
     <plurals name="hours_plural">
-        <item quantity="zero">%d hours</item>
         <item quantity="one">%d hour</item>
-        <item quantity="two">%d hours</item>
-        <item quantity="few">%d hours</item>
-        <item quantity="many">%d hours</item>
         <item quantity="other">%d hours</item>
     </plurals>
     <plurals name="minutes_plural">
-        <item quantity="zero">%d minutes</item>
         <item quantity="one">%d minute</item>
-        <item quantity="two">%d minutes</item>
-        <item quantity="few">%d minutes</item>
-        <item quantity="many">%d minutes</item>
         <item quantity="other">%d minutes</item>
     </plurals>
 
@@ -373,6 +361,7 @@
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
 
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Connect Trakt</string>
     <string name="trakt_reconnect">Connect SeriesGuide to Trakt</string>
     <string name="trakt_reconnect_details">Check your Trakt credentials</string>
@@ -398,12 +387,8 @@
     <string name="rating8">Great</string>
     <string name="rating9">Superb</string>
     <plurals name="votes">
-        <item quantity="zero">%d votes</item>
-        <item quantity="one">%d vote</item>
-        <item quantity="two">%d votes</item>
-        <item quantity="few">%d votes</item>
-        <item quantity="many">%d votes</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%s vote</item>
+        <item quantity="other">%s votes</item>
     </plurals>
 
     <!-- Check Ins -->

@@ -25,10 +25,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.databinding.FragmentCommentsBinding
 import com.battlelancer.seriesguide.traktapi.TraktAction
+import com.battlelancer.seriesguide.traktapi.TraktCredentials
 import com.battlelancer.seriesguide.traktapi.TraktTask
 import com.battlelancer.seriesguide.traktapi.TraktTask.TraktActionCompleteEvent
 import com.battlelancer.seriesguide.ui.widgets.SgFastScroller
-import com.battlelancer.seriesguide.util.Errors
 import com.battlelancer.seriesguide.util.ThemeUtils
 import com.battlelancer.seriesguide.util.ViewTools
 import com.battlelancer.seriesguide.util.WebTools
@@ -92,12 +92,7 @@ class TraktCommentsFragment : Fragment() {
         )
 
         binding.buttonShouts.setOnClickListener {
-            try {
-                comment()
-            } catch (e: IllegalArgumentException) {
-                Toast.makeText(requireContext(), R.string.database_error, Toast.LENGTH_LONG).show()
-                Errors.logAndReport("comment", e)
-            }
+            comment()
         }
 
         // disable comment button by default, enable if comment entered
@@ -147,6 +142,10 @@ class TraktCommentsFragment : Fragment() {
             return
         }
 
+        if (!TraktCredentials.ensureCredentials(requireContext())) {
+            return
+        }
+
         // disable the comment button
         binding.buttonShouts.isEnabled = false
         val args = requireArguments()
@@ -177,9 +176,10 @@ class TraktCommentsFragment : Fragment() {
             @Suppress("DEPRECATION") // AsyncTask
             TraktTask(context).commentShow(showId, comment, isSpoiler)
                 .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            return
         }
 
-        // if all ids were 0, do nothing
+        // Should never have launched without a valid ID
         throw IllegalArgumentException("comment: failed, all IDs 0 ($args)")
     }
 

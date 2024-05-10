@@ -39,7 +39,6 @@
     <string name="action_stream">Suoratoista tai osta</string>
     <string name="action_stream_info">Suoratoisto- tai ostotiedot</string>
     <string name="action_select_region">Valitse alue</string>
-    <string name="action_include_any_watch_provider">Sisällytä kaikki</string>
     <string name="action_reset">Nollaa</string>
     <!-- Search -->
     <string name="clear_search_history">Tyhjennä hakuhistoria</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">tänään</string>
     <string name="now">nyt</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d t %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Kaikki katsottu</string>
     <string name="unmark_all">Kaikki katsomattomia</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Ei tuloksia</string>
     <string name="action_similar">Samankaltaiset</string>
     <string name="title_similar_shows">Samankaltaisia sarjoja</string>
+    <!-- Popular -->
+    <string name="title_popular">Suositut</string>
+    <string name="filter_year">Vuosi</string>
+    <string name="filter_language">Kieli</string>
     <!-- Lists -->
     <string name="first_list">Ensimmäinen lista</string>
     <string name="list_add">Lisää lista</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Samanniminen lista on jo olemassa</string>
     <!-- Movies -->
     <string name="title_discover">Tutustu</string>
-    <string name="title_popular">Suositut</string>
     <string name="title_digital_releases">Digitaaliset julkaisut</string>
     <string name="title_disc_releases">Levyjulkaisut</string>
     <string name="movies_in_theatres">Teattereissa</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Ei voida (vielä) seurata Traktissa</string>
     <string name="trakt_error_limit_exceeded">Lista on täynnä, poista ensin jotakin.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Käyttääksesi tätä, yhdistä Traktiin</string>
     <string name="connect_trakt">Yhdistä Traktiin</string>
     <string name="trakt_reconnect">Yhdistä SeriesGuide Traktiin</string>
     <string name="trakt_reconnect_details">Tarkista Trakt-tunnuksesi</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Etsi paikalliselta Amazon-sivustoltasi</string>
     <string name="pref_amazon_domain">Amazon-sivusto</string>
     <string name="extension_google_play">Google Play -haku</string>
-    <string name="description_extension_google_play">Etsi Google Play Kaupasta</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Etsi Google Play Kaupasta</string>
     <string name="extension_youtube">YouTube-haku</string>
     <string name="description_extension_youtube">Etsi videoita YouTubesta</string>
     <string name="description_extension_web_search">Etsi verkkosivustoja ja kuvia</string>

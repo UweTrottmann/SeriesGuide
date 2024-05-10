@@ -39,7 +39,6 @@
     <string name="action_stream">Переглянути або замовити</string>
     <string name="action_stream_info">Інформація про трансляцію або покупку</string>
     <string name="action_select_region">Виберіть регіон</string>
-    <string name="action_include_any_watch_provider">Включаючи будь-які</string>
     <string name="action_reset">Скинути</string>
     <!-- Search -->
     <string name="clear_search_history">Очистити історію пошуку</string>
@@ -109,7 +108,8 @@
     <!-- Date and Time -->
     <string name="today">сьогодні</string>
     <string name="now">Сьогодні</string>
-    <string name="runtime_minutes">%s хвилин</string>
+    <string name="runtime_hours_minutes_format">%1$d год %2$d хв</string>
+    <string name="runtime_minutes_format">%d хв</string>
     <!-- Flagging -->
     <string name="mark_all">Всі переглянуті</string>
     <string name="unmark_all">Жодна не переглянута</string>
@@ -247,6 +247,10 @@
     <string name="empty_no_results">Немає результатів</string>
     <string name="action_similar">Схожі</string>
     <string name="title_similar_shows">Подібні серіали</string>
+    <!-- Popular -->
+    <string name="title_popular">Популярне</string>
+    <string name="filter_year">Рік</string>
+    <string name="filter_language">Мова</string>
     <!-- Lists -->
     <string name="first_list">Перший список</string>
     <string name="list_add">Додати список</string>
@@ -267,7 +271,6 @@
     <string name="error_name_already_exists">Список з таким іменем вже існує</string>
     <!-- Movies -->
     <string name="title_discover">Дослідити</string>
-    <string name="title_popular">Популярне</string>
     <string name="title_digital_releases">Цифрові видання</string>
     <string name="title_disc_releases">Видання на диску</string>
     <string name="movies_in_theatres">В театрах</string>
@@ -351,6 +354,7 @@
     <string name="trakt_notice_not_exists">Не можна (поки що) відслідкувати на trakt.</string>
     <string name="trakt_error_limit_exceeded">Список перегляду переповнений, спочатку щось видаліть.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Щоб це використовувати, спершу під\'єднайтеся до Trakt</string>
     <string name="connect_trakt">Підключитись до trakt</string>
     <string name="trakt_reconnect">Підключити SeriesGuide до trakt</string>
     <string name="trakt_reconnect_details">Перевірте свої облікові дані на trakt</string>
@@ -562,7 +566,8 @@
     <string name="description_extension_amazon">Пошук в локальній версії сайту Amazon</string>
     <string name="pref_amazon_domain">Сайт Amazon</string>
     <string name="extension_google_play">Пошук у Google Play</string>
-    <string name="description_extension_google_play">Шукати у магазині Google Play</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Шукати у магазині Google Play</string>
     <string name="extension_youtube">Пошук YouTube</string>
     <string name="description_extension_youtube">Шукати у  YouTube відео</string>
     <string name="description_extension_web_search">Шукати вебсайти та зображення</string>

@@ -39,7 +39,6 @@
     <string name="action_stream">پخش یا خرید</string>
     <string name="action_stream_info">اطّلاعات پخش یا خرید</string>
     <string name="action_select_region">گزینش ناحیه</string>
-    <string name="action_include_any_watch_provider">شامل همه</string>
     <string name="action_reset">بازنشانی</string>
     <!-- Search -->
     <string name="clear_search_history">پاک‌سازی تاریخچهٔ جست‌وجو</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">امروز</string>
     <string name="now">اکنون</string>
-    <string name="runtime_minutes">%s دقیقه</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">همه تماشا شدن</string>
     <string name="unmark_all">هیچکدام تماشا نشدن</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">بدون نتیجه</string>
     <string name="action_similar">مشابه</string>
     <string name="title_similar_shows">سریال‌های مشابه</string>
+    <!-- Popular -->
+    <string name="title_popular">محبوب</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">فهرست نخست</string>
     <string name="list_add">افزودن فهرست</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">فهرستی با این اسم موجود است</string>
     <!-- Movies -->
     <string name="title_discover">کشف</string>
-    <string name="title_popular">محبوب</string>
     <string name="title_digital_releases">نسخه های دیجیتال</string>
     <string name="title_disc_releases">منتشر شده روی دیسک</string>
     <string name="movies_in_theatres">در سینماها</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">(هنوز) نمی‌توان با trakt ردیابی کرد.</string>
     <string name="trakt_error_limit_exceeded">سیاههٔ نمایش پر است. نخست چیزی را بردارید.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">اتصال به ترکت</string>
     <string name="trakt_reconnect">اتصال SeriesGuide به trakt</string>
     <string name="trakt_reconnect_details">اعتبارنامهٔ trakt را بررسی کنید</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">جست‌وجو در پایگاه آمازون محلّی‌تان</string>
     <string name="pref_amazon_domain">پایگاه آمازون</string>
     <string name="extension_google_play">جست‌وجوی گوگل پلی</string>
-    <string name="description_extension_google_play">جست‌وجو در فروشگاه گوگل پلی</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">جست‌وجو در فروشگاه گوگل پلی</string>
     <string name="extension_youtube">جست‌وجوی یوتوب</string>
     <string name="description_extension_youtube">جست‌وجو در یوتوب برای ویدیوها</string>
     <string name="description_extension_web_search">جست‌وجو برای پایگاه‌های وب و تصویرها</string>

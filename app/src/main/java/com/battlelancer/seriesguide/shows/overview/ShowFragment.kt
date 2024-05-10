@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2013-2023 Uwe Trottmann
+// Copyright 2013-2024 Uwe Trottmann
 // Copyright 2013 Andrew Neal
 
 package com.battlelancer.seriesguide.shows.overview
@@ -23,6 +23,7 @@ import androidx.fragment.app.viewModels
 import com.battlelancer.seriesguide.R
 import com.battlelancer.seriesguide.SgApp
 import com.battlelancer.seriesguide.comments.TraktCommentsActivity
+import com.battlelancer.seriesguide.databinding.LayoutRatingsBinding
 import com.battlelancer.seriesguide.notifications.NotificationService
 import com.battlelancer.seriesguide.people.PeopleListHelper
 import com.battlelancer.seriesguide.settings.NotificationSettings
@@ -38,6 +39,8 @@ import com.battlelancer.seriesguide.ui.FullscreenImageActivity
 import com.battlelancer.seriesguide.ui.dialogs.L10nDialogFragment
 import com.battlelancer.seriesguide.util.ImageTools
 import com.battlelancer.seriesguide.util.Metacritic
+import com.battlelancer.seriesguide.util.RatingsTools.initialize
+import com.battlelancer.seriesguide.util.RatingsTools.setLink
 import com.battlelancer.seriesguide.util.ServiceUtils
 import com.battlelancer.seriesguide.util.ShareUtils
 import com.battlelancer.seriesguide.util.ShortcutCreator
@@ -92,17 +95,12 @@ class ShowFragment() : Fragment() {
         val textShowLastUpdated: TextView
         val textViewContentRating: TextView
         val textViewGenres: TextView
-        val textViewRating: TextView
-        val textViewRatingRange: TextView
-        val textViewRatingVotes: TextView
-        val textViewRatingUser: TextView
         val buttonFavorite: MaterialButton
         val buttonNotify: MaterialButton
         val buttonHidden: MaterialButton
         val buttonEditReleaseTime: Button
-        val buttonShortcut: Button
+        val buttonShortcut: MaterialButton
         val buttonLanguage: Button
-        val buttonRate: View
         val buttonTrailer: Button
         val buttonSimilar: Button
         val buttonImdb: Button
@@ -116,6 +114,7 @@ class ShowFragment() : Fragment() {
         val castContainer: LinearLayout
         val crewLabel: TextView
         val crewContainer: LinearLayout
+        val ratingContainer: LayoutRatingsBinding
 
         init {
             // Show fragment and included layouts vary depending on screen size,
@@ -131,17 +130,12 @@ class ShowFragment() : Fragment() {
             textShowLastUpdated = view.findViewById(R.id.textShowLastUpdated)
             textViewContentRating = view.findViewById(R.id.textViewShowContentRating)
             textViewGenres = view.findViewById(R.id.textViewShowGenres)
-            textViewRating = view.findViewById(R.id.textViewRatingsValue)
-            textViewRatingRange = view.findViewById(R.id.textViewRatingsRange)
-            textViewRatingVotes = view.findViewById(R.id.textViewRatingsVotes)
-            textViewRatingUser = view.findViewById(R.id.textViewRatingsUser)
             buttonFavorite = view.findViewById(R.id.buttonShowFavorite)
             buttonNotify = view.findViewById(R.id.buttonShowNotify)
             buttonHidden = view.findViewById(R.id.buttonShowHidden)
             buttonEditReleaseTime = view.findViewById(R.id.buttonEditReleaseTime)
             buttonShortcut = view.findViewById(R.id.buttonShowShortcut)
             buttonLanguage = view.findViewById(R.id.buttonShowLanguage)
-            buttonRate = view.findViewById(R.id.containerRatings)
             buttonTrailer = view.findViewById(R.id.buttonShowTrailer)
             buttonSimilar = view.findViewById(R.id.buttonShowSimilar)
             buttonImdb = view.findViewById(R.id.buttonShowImdb)
@@ -155,6 +149,7 @@ class ShowFragment() : Fragment() {
             castContainer = view.findViewById(R.id.containerCast)
             crewLabel = view.findViewById(R.id.labelCrew)
             crewContainer = view.findViewById(R.id.containerCrew)
+            ratingContainer = LayoutRatingsBinding.bind(view.findViewById(R.id.containerRatings))
         }
     }
 
@@ -196,16 +191,10 @@ class ShowFragment() : Fragment() {
         )
 
         // rate button
-        val buttonRate = binding.buttonRate
-        buttonRate.setOnClickListener { rateShow() }
-        TooltipCompat.setTooltipText(buttonRate, buttonRate.context.getString(R.string.action_rate))
-        binding.textViewRatingRange.text = getString(R.string.format_rating_range, 10)
+        binding.ratingContainer.initialize { rateShow() }
 
         // share button
         binding.buttonShare.setOnClickListener { shareShow() }
-
-        // shortcut button
-        binding.buttonShortcut.setOnClickListener { createShortcut() }
 
         setCastVisibility(binding, false)
         setCrewVisibility(binding, false)
@@ -328,7 +317,9 @@ class ShowFragment() : Fragment() {
             )
             TooltipCompat.setTooltipText(this, contentDescription)
             setIconResource(
-                if (notify) {
+                if (!hasAccessToX) {
+                    R.drawable.ic_awesome_black_24dp
+                } else if (notify) {
                     R.drawable.ic_notifications_active_black_24dp
                 } else {
                     R.drawable.ic_notifications_off_black_24dp
@@ -406,10 +397,12 @@ class ShowFragment() : Fragment() {
         ViewTools.setValueOrPlaceholder(binding.textViewContentRating, show.contentRating)
         ViewTools.setValueOrPlaceholder(binding.textViewGenres, showForUi.genres)
 
-        // Trakt rating
-        binding.textViewRating.text = showForUi.traktRating
-        binding.textViewRatingVotes.text = showForUi.traktVotes
-        binding.textViewRatingUser.text = showForUi.traktUserRating
+        // Ratings
+        binding.ratingContainer.apply {
+            ratingViewTmdb.setValues(showForUi.tmdbRating, showForUi.tmdbVotes)
+            ratingViewTrakt.setValues(showForUi.traktRating, showForUi.traktVotes)
+            textViewRatingsUser.text = showForUi.traktUserRating
+        }
 
         // Trailer button
         binding.buttonTrailer.apply {
@@ -435,21 +428,25 @@ class ShowFragment() : Fragment() {
         ServiceUtils.setUpImdbButton(show.imdbId, binding.buttonImdb)
 
         show.tmdbId?.also {
-            // TMDb button
-            ViewTools.openUrlOnClickAndCopyOnLongPress(
-                binding.buttonTmdb,
-                TmdbTools.buildShowUrl(it)
-            )
+            // TMDB buttons
+            val tmdbUrl = TmdbTools.buildShowUrl(it)
+            binding.ratingContainer.ratingViewTmdb.setLink(requireContext(), tmdbUrl)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTmdb, tmdbUrl)
 
-            // Trakt button
-            ViewTools.openUrlOnClickAndCopyOnLongPress(
-                binding.buttonTrakt,
-                TraktTools.buildShowUrl(it)
-            )
+            // Trakt buttons
+            val traktUrl = TraktTools.buildShowUrl(it)
+            binding.ratingContainer.ratingViewTrakt.setLink(requireContext(), traktUrl)
+            ViewTools.openUrlOnClickAndCopyOnLongPress(binding.buttonTrakt, traktUrl)
         }
 
         binding.buttonShowMetacritic.setOnClickListener {
             if (show.title.isNotEmpty()) Metacritic.searchForTvShow(requireContext(), show.title)
+        }
+
+        // shortcut button
+        binding.buttonShortcut.apply {
+            setIconResource(if (hasAccessToX) R.drawable.ic_add_to_home_screen_black_24dp else R.drawable.ic_awesome_black_24dp)
+            setOnClickListener { createShortcut(hasAccessToX) }
         }
 
         // web search button
@@ -539,8 +536,8 @@ class ShowFragment() : Fragment() {
         changeShowLanguage(event.selectedLanguageCode)
     }
 
-    private fun createShortcut() {
-        if (!Utils.hasAccessToX(activity)) {
+    private fun createShortcut(hasAccessToX: Boolean) {
+        if (!hasAccessToX) {
             Utils.advertiseSubscription(activity)
             return
         }

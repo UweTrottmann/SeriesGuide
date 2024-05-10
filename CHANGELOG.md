@@ -11,6 +11,53 @@ Release notes
 
 Releases marked with 🧪 were released on [the beta program](https://github.com/UweTrottmann/SeriesGuide/wiki/Beta) only.
 
+Version 2024.2
+--------------
+*2024-05-10*
+
+* 🌟 Discover: add year and original language filters where possible.
+* 🌟 Ratings: display TMDB rating for shows. Tap rating to open TMDB or Trakt page.
+* 🔧 Display run time in hours and minutes.
+
+#### 2024.2.5
+*2024-05-10*
+
+* 🔧 Mark some supporter-only features with stars. Drop X Pass link, not longer available for new users.
+
+#### 2024.2.4 🧪
+*2024-05-03*
+
+* 🌟 Movies: add year and original language filter where possible for discover and search screens.
+* 🔧 Search: hide keyboard after submitting query.
+
+#### 2024.2.3 🧪
+*2024-04-26*
+
+* 🌟 Ratings: display TMDB rating for shows and episodes. Tap rating to open TMDB or Trakt page.
+* 📝 Latest user interface translations from Crowdin.
+* 📝 Change to year-based versioning scheme.
+
+#### 73.0.2 🧪
+*2024-04-19*
+
+* 🌟 Discover: add new episodes screen with year and language filters, similar to popular shows screen.
+* 🔧 Stream and purchase filter: sort providers by name.
+* 🔧 History: sort Trakt friends by latest activity first.
+* 🔨 Comments: do not display misleading "Could not modify data" message when commenting on a show.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 73.0.1 🧪
+*2024-04-12*
+
+* 🔧 Display run time in hours and minutes.
+* 🔧 Calendar: avoid changing scroll position after viewing details or refreshing data.
+* 📝 Latest user interface translations from Crowdin.
+
+#### 73.0.0 🧪
+*2024-04-05*
+
+* 🌟 Year and original language filter for popular shows screen.
+
 Version 72
 ----------
 *2024-03-27*

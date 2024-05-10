@@ -71,6 +71,7 @@ class TraktCommentsActivity : BaseActivity() {
          * Display comments of an episode.
          */
         fun intentEpisode(context: Context, title: String?, episodeId: Long): Intent {
+            check(episodeId > 0)
             return Intent(context, TraktCommentsActivity::class.java)
                 .putExtra(TraktCommentsFragment.InitBundle.EPISODE_ID, episodeId)
                 .putExtra(EXTRA_TITLE, title)
@@ -80,6 +81,7 @@ class TraktCommentsActivity : BaseActivity() {
          * Display comments of a show.
          */
         fun intentShow(context: Context, title: String?, showId: Long): Intent {
+            check(showId > 0)
             return Intent(context, TraktCommentsActivity::class.java)
                 .putExtra(TraktCommentsFragment.InitBundle.SHOW_ID, showId)
                 .putExtra(EXTRA_TITLE, title)
@@ -89,6 +91,7 @@ class TraktCommentsActivity : BaseActivity() {
          * Display comments of a movie.
          */
         fun intentMovie(context: Context, title: String?, movieTmdbId: Int): Intent {
+            check(movieTmdbId > 0)
             return Intent(context, TraktCommentsActivity::class.java)
                 .putExtra(TraktCommentsFragment.InitBundle.MOVIE_TMDB_ID, movieTmdbId)
                 .putExtra(EXTRA_TITLE, title)

@@ -39,7 +39,6 @@
     <string name="action_stream">Veure on-line o comprar</string>
     <string name="action_stream_info">Veure en línia o informació de la compra</string>
     <string name="action_select_region">Selecciona la regió</string>
-    <string name="action_include_any_watch_provider">Inclou qualsevol</string>
     <string name="action_reset">Restablir</string>
     <!-- Search -->
     <string name="clear_search_history">Esborra l\'historial</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">avui</string>
     <string name="now">ara</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d minuts</string>
     <!-- Flagging -->
     <string name="mark_all">Tots vists</string>
     <string name="unmark_all">Cap episodi vist</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Cap resultat</string>
     <string name="action_similar">Semblants</string>
     <string name="title_similar_shows">Sèries similars</string>
+    <!-- Popular -->
+    <string name="title_popular">Popular</string>
+    <string name="filter_year">Any</string>
+    <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Primera llista</string>
     <string name="list_add">Afegeix llista</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Ja existeix una llista amb aquest nom</string>
     <!-- Movies -->
     <string name="title_discover">Descobrir</string>
-    <string name="title_popular">Popular</string>
     <string name="title_digital_releases">Publicació digital</string>
     <string name="title_disc_releases">Publicació en disc</string>
     <string name="movies_in_theatres">En els cinemes</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">No pot ser registrada (encara) a Trakt.</string>
     <string name="trakt_error_limit_exceeded">La llista és plena, esborra alguna cosa primer.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Per fer-ho servir, connecta\'t a Trakt</string>
     <string name="connect_trakt">Connecta\'t al Trakt</string>
     <string name="trakt_reconnect">Connecta SeriesGuide a Trakt</string>
     <string name="trakt_reconnect_details">Comprova les credencials de Trakt</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Cerqueu al vostre Amazon local</string>
     <string name="pref_amazon_domain">Web Amazon</string>
     <string name="extension_google_play">Cerca a Google Play</string>
-    <string name="description_extension_google_play">Cerca a Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Cerca a Google Play Store</string>
     <string name="extension_youtube">Cerca a YouTube</string>
     <string name="description_extension_youtube">Cerca vídeos a YouTube</string>
     <string name="description_extension_web_search">Cerca llocs web i imatges</string>

@@ -39,7 +39,6 @@
     <string name="action_stream">스트리밍 or 구매</string>
     <string name="action_stream_info">스트리밍 또 구매</string>
     <string name="action_select_region">국가 선택</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">재설정</string>
     <!-- Search -->
     <string name="clear_search_history">검색 기록 삭제</string>
@@ -106,7 +105,8 @@
     <!-- Date and Time -->
     <string name="today">오늘</string>
     <string name="now">지금</string>
-    <string name="runtime_minutes">%s분</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">모두 시청 완료</string>
     <string name="unmark_all">한 편도 안 본 것으로 설정</string>
@@ -226,6 +226,10 @@
     <string name="empty_no_results">No results</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similar shows</string>
+    <!-- Popular -->
+    <string name="title_popular">인기 항목</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">첫번째 목록</string>
     <string name="list_add">목록 추가</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">이 이름을 가진 목록이 이미 존재합니다</string>
     <!-- Movies -->
     <string name="title_discover">찾기</string>
-    <string name="title_popular">인기 항목</string>
     <string name="title_digital_releases">디지털 출시</string>
     <string name="title_disc_releases">디스크 출시</string>
     <string name="movies_in_theatres">상영 중</string>
@@ -321,6 +324,7 @@
     <string name="trakt_notice_not_exists">아직 trakt에서 추적할 수 없습니다.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">trakt에 연결하기</string>
     <string name="trakt_reconnect">SeriesGuide를 trakt에 연결</string>
     <string name="trakt_reconnect_details">trakt 아이디/비밀번호를 확인하세요</string>
@@ -520,7 +524,8 @@
     <string name="description_extension_amazon">로컬 아마존 사이트 검색</string>
     <string name="pref_amazon_domain">아마존 사이트</string>
     <string name="extension_google_play">구글 플레이 검색</string>
-    <string name="description_extension_google_play">구글 플레이 스토어 검색</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">구글 플레이 스토어 검색</string>
     <string name="extension_youtube">YouTube 검색</string>
     <string name="description_extension_youtube">YouTube에서 비디오 검색</string>
     <string name="description_extension_web_search">웹사이트와 이미지에 대한 검색</string>

@@ -39,7 +39,6 @@
     <string name="action_stream">Tonton atau beli</string>
     <string name="action_stream_info">Tonton atau info pembelian</string>
     <string name="action_select_region">Pilih wilayah</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Bersihkan riwayat pencarian</string>
@@ -106,7 +105,8 @@
     <!-- Date and Time -->
     <string name="today">hari ini</string>
     <string name="now">sekarang</string>
-    <string name="runtime_minutes">%s menit</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Ditonton semua</string>
     <string name="unmark_all">Belum nonton</string>
@@ -226,6 +226,10 @@
     <string name="empty_no_results">Tidak ada hasil</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Acara Serupa</string>
+    <!-- Popular -->
+    <string name="title_popular">Populer</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Daftar pertama</string>
     <string name="list_add">Tambah daftar</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">Daftar dengan nama ini sudah ada</string>
     <!-- Movies -->
     <string name="title_discover">Jelajahi</string>
-    <string name="title_popular">Populer</string>
     <string name="title_digital_releases">Rilisan digital</string>
     <string name="title_disc_releases">Rilisan cakram</string>
     <string name="movies_in_theatres">Di bioskop</string>
@@ -321,6 +324,7 @@
     <string name="trakt_notice_not_exists">Tidak bisa (Belum) dilacak dengan trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Sambungkan trakt</string>
     <string name="trakt_reconnect">Sambungkan SeriesGuide ke trakt</string>
     <string name="trakt_reconnect_details">Periksa kredensial trakt Anda</string>
@@ -520,7 +524,8 @@
     <string name="description_extension_amazon">Cari di situs Amazon lokal anda</string>
     <string name="pref_amazon_domain">Situs Amazon</string>
     <string name="extension_google_play">Pencarian Google play</string>
-    <string name="description_extension_google_play">Cari di Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Cari di Google Play Store</string>
     <string name="extension_youtube">Penelusuran YouTube</string>
     <string name="description_extension_youtube">Cari video di YouTube</string>
     <string name="description_extension_web_search">Cari situs web dan gambar</string>

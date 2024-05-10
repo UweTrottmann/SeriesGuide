@@ -1,6 +1,6 @@
 <component name="CopyrightManager">
   <copyright>
-    <option name="notice" value="SPDX-License-Identifier: Apache-2.0&#10;Copyright &amp;#36;originalComment.match(&quot;Copyright (\d+(, \d+|-\d+)*)&quot;, 1, &quot;, &quot;, &quot;&amp;#36;today.year&quot;)&amp;#36;today.year Uwe Trottmann" />
+    <option name="notice" value="SPDX-License-Identifier: Apache-2.0&#10;Copyright &amp;#36;originalComment.match(&quot;Copyright (\d+)&quot;, 1, &quot;-&quot;, &quot;&amp;#36;today.year&quot;)&amp;#36;today.year Uwe Trottmann" />
     <option name="myName" value="Uwe Apache 2.0" />
   </copyright>
 </component>

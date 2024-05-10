@@ -20,7 +20,7 @@
     <string name="specialseason">Bonusové epizódy</string>
     <string name="ratings">Hodnotenia</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Prejsť hore</string>
     <string name="description_overview">Prehľad</string>
     <string name="description_poster">Zobraziť plagát</string>
     <string name="description_image">Obrázok z epizódy</string>
@@ -39,7 +39,6 @@
     <string name="action_stream">Streamovanie alebo zakúpenie</string>
     <string name="action_stream_info">Streamovanie alebo info o zakúpení</string>
     <string name="action_select_region">Vybrať región</string>
-    <string name="action_include_any_watch_provider">Zahrňte akékoľvek</string>
     <string name="action_reset">Resetovať</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazať históriu vyhľadávania</string>
@@ -109,7 +108,8 @@
     <!-- Date and Time -->
     <string name="today">dnes</string>
     <string name="now">teraz</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Videné všetky</string>
     <string name="unmark_all">Nevidená žiadna</string>
@@ -247,6 +247,10 @@
     <string name="empty_no_results">Žiadne výsledky</string>
     <string name="action_similar">Podobné</string>
     <string name="title_similar_shows">Podobné relácie</string>
+    <!-- Popular -->
+    <string name="title_popular">Populárne</string>
+    <string name="filter_year">Rok</string>
+    <string name="filter_language">Jazyk</string>
     <!-- Lists -->
     <string name="first_list">Prvý zoznam</string>
     <string name="list_add">Pridať zoznam</string>
@@ -267,7 +271,6 @@
     <string name="error_name_already_exists">Zoznam s týmto názvom už existuje</string>
     <!-- Movies -->
     <string name="title_discover">Objaviť</string>
-    <string name="title_popular">Populárne</string>
     <string name="title_digital_releases">Digitálne médiá</string>
     <string name="title_disc_releases">Diskové médiá</string>
     <string name="movies_in_theatres">V kinách</string>
@@ -351,6 +354,7 @@
     <string name="trakt_notice_not_exists">Nie je (zatiaľ) možné sledovať na trakt.</string>
     <string name="trakt_error_limit_exceeded">Zoznam je plný, najskôr niečo odstráňte.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Pripojiť na trakt</string>
     <string name="trakt_reconnect">Pripojiť SeriesGuide k trakt</string>
     <string name="trakt_reconnect_details">Skontrolujte užívateľské meno/heslo trakt</string>
@@ -387,7 +391,7 @@
     <string name="pref_quick_checkin">Rýchle Práve pozeráte</string>
     <string name="pref_quick_checkin_summary">Nepýtať sa na správu pri Práve pozeráte</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Poslať email</string>
     <!-- Settings -->
     <string name="action_translate">Preložiť túto aplikáciu</string>
     <string name="prefs_category_advanced">Pokročilé</string>
@@ -556,13 +560,14 @@
     <string name="action_extensions_configure">Upraviť rozšírenia</string>
     <string name="action_extensions_add">Pridať rozšírenie</string>
     <string name="action_extensions_search">Získať viac rozšírení</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Vyvinúť rozšírenie</string>
     <string name="action_extension_remove">Odstrániť</string>
     <string name="extension_amazon">Hľadať na Amazon</string>
     <string name="description_extension_amazon">Hľadať na Amazone</string>
     <string name="pref_amazon_domain">Amazon</string>
     <string name="extension_google_play">Hľadať v Google Play</string>
-    <string name="description_extension_google_play">Hľadať v Obchode Google Play</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Hľadať v Obchode Google Play</string>
     <string name="extension_youtube">Hľadať na YouTube</string>
     <string name="description_extension_youtube">Hľadať videá na YouTube</string>
     <string name="description_extension_web_search">Hľadať webstránky a obrázky</string>

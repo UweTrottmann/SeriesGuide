@@ -39,7 +39,6 @@
     <string name="action_stream">Ver en línea o comprar</string>
     <string name="action_stream_info">Ver en línea o información sobre compra</string>
     <string name="action_select_region">Seleccionar región</string>
-    <string name="action_include_any_watch_provider">Incluye cualquier</string>
     <string name="action_reset">Restablecer</string>
     <!-- Search -->
     <string name="clear_search_history">Limpiar historial de búsqueda</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">Hoy</string>
     <string name="now">ahora</string>
-    <string name="runtime_minutes">%s minutos</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Todos vistos</string>
     <string name="unmark_all">Ninguno visto</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Sin resultados</string>
     <string name="action_similar">Similares</string>
     <string name="title_similar_shows">Series parecidas</string>
+    <!-- Popular -->
+    <string name="title_popular">Populares</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Primera lista</string>
     <string name="list_add">Añadir lista</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Ya existe una lista con este nombre</string>
     <!-- Movies -->
     <string name="title_discover">Descubrir</string>
-    <string name="title_popular">Populares</string>
     <string name="title_digital_releases">Estrenos digitales</string>
     <string name="title_disc_releases">Estrenos en disco</string>
     <string name="movies_in_theatres">En cines</string>
@@ -332,6 +335,7 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="trakt_notice_not_exists">No puede ser seguido (todavía) con trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Conectar a trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide a trakt</string>
     <string name="trakt_reconnect_details">Compruebe sus credenciales trakt</string>
@@ -535,7 +539,8 @@ Asegúrate de quitarla también en tus otros dispositivos conectados.</string>
     <string name="description_extension_amazon">Buscar en la pagina local de Amazon</string>
     <string name="pref_amazon_domain">Página de Amazon</string>
     <string name="extension_google_play">Búsqueda en Google Play</string>
-    <string name="description_extension_google_play">Buscar en Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Buscar en Google Play Store</string>
     <string name="extension_youtube">Búsqueda en YouTube</string>
     <string name="description_extension_youtube">Buscar vídeos en YouTube</string>
     <string name="description_extension_web_search">Buscar imágenes y sitios web</string>

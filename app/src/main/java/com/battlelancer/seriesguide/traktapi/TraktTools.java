@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Errors;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.trakt5.TraktLink;
 import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
@@ -18,10 +17,8 @@ import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.SearchResult;
 import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -67,38 +64,6 @@ public class TraktTools {
 
     public static String buildMovieUrl(int movieTmdbId) {
         return TraktLink.tmdb(movieTmdbId) + "?id_type=movie";
-    }
-
-    /**
-     * Returns the given double as number string with one decimal digit, like "1.5". Formatted using
-     * the default locale.
-     */
-    public static String buildRatingString(@Nullable Double rating) {
-        return buildRatingString(rating, Locale.getDefault());
-    }
-
-    public static String buildRatingString(@Nullable Double rating, @NonNull Locale locale) {
-        if (rating == null || rating == 0) {
-            return "--";
-        }
-        if (!AndroidUtils.isNougatOrHigher()) {
-            // before Android 7.0 string format seems to round half down, despite docs saying half up
-            // it likely used DecimalFormat, which defaults to half even
-            BigDecimal bigDecimal = new BigDecimal(rating);
-            bigDecimal = bigDecimal.setScale(1, BigDecimal.ROUND_HALF_UP);
-            rating = bigDecimal.doubleValue();
-        }
-        return String.format(locale, "%.1f", rating);
-    }
-
-    /**
-     * Builds a localized string like "x votes".
-     */
-    public static String buildRatingVotesString(Context context, Integer votes) {
-        if (votes == null || votes < 0) {
-            votes = 0;
-        }
-        return context.getResources().getQuantityString(R.plurals.votes, votes, votes);
     }
 
     /**

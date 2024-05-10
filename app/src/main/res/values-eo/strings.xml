@@ -39,7 +39,6 @@
     <string name="action_stream">Elsendi aŭ aĉeti</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Elekti regionon</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Viŝi serĉhistorion</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">hodiaŭ</string>
     <string name="now">nun</string>
-    <string name="runtime_minutes">%s minutoj</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Ĉiuj spektitaj</string>
     <string name="unmark_all">Neniu spektita</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Ne estas rezultoj</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Similaj televidaĵoj</string>
+    <!-- Popular -->
+    <string name="title_popular">Popularaj</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Unua listo</string>
     <string name="list_add">Aldoni liston</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Listo kun ĉi tiu nomo jam ekzistas</string>
     <!-- Movies -->
     <string name="title_discover">Esplori</string>
-    <string name="title_popular">Popularaj</string>
     <string name="title_digital_releases">Bitaj eldonoj</string>
     <string name="title_disc_releases">Diskaj eldonoj</string>
     <string name="movies_in_theatres">En kinejoj</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Ne povas (jam) sekvi Trakton</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Konekti Trakt -on</string>
     <string name="trakt_reconnect">Konekti SeriesGuide al Trakt</string>
     <string name="trakt_reconnect_details">Kontrolu viajn indentigilojn de Trakt</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Traserĉi vian lokalan Amazonan retejon.</string>
     <string name="pref_amazon_domain">Amazon -a retejo</string>
     <string name="extension_google_play">Serĉi je Google Play</string>
-    <string name="description_extension_google_play">Serĉi je la Google Play Butiko</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Serĉi je la Google Play Butiko</string>
     <string name="extension_youtube">Jutuba serĉo</string>
     <string name="description_extension_youtube">Serĉi Jutubon por filmetoj</string>
     <string name="description_extension_web_search">Serĉi retejojn kaj bildojn</string>

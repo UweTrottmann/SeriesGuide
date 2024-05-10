@@ -39,7 +39,6 @@
     <string name="action_stream">Strujaj ili kupi</string>
     <string name="action_stream_info">Stream or purchase info</string>
     <string name="action_select_region">Select region</string>
-    <string name="action_include_any_watch_provider">Include any</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Očisti povijest pretraživanja</string>
@@ -108,7 +107,8 @@
     <!-- Date and Time -->
     <string name="today">danas</string>
     <string name="now">sada</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Sve pogledano</string>
     <string name="unmark_all">Ništa nije pogledano</string>
@@ -240,6 +240,10 @@
     <string name="empty_no_results">Nema rezultata</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Slične serije</string>
+    <!-- Popular -->
+    <string name="title_popular">Popularno</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Prvi popis</string>
     <string name="list_add">Dodaj popis</string>
@@ -260,7 +264,6 @@
     <string name="error_name_already_exists">Popis sa ovim nazivom već postoji</string>
     <!-- Movies -->
     <string name="title_discover">Otkrij</string>
-    <string name="title_popular">Popularno</string>
     <string name="title_digital_releases">Digitalna izdanja</string>
     <string name="title_disc_releases">Disk izdanja</string>
     <string name="movies_in_theatres">U kinima</string>
@@ -341,6 +344,7 @@
     <string name="trakt_notice_not_exists">Nije moguće povezivanje sa trakt-om (još).</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Poveži trakt</string>
     <string name="trakt_reconnect">Poveži SeriesGuide sa trakt-om</string>
     <string name="trakt_reconnect_details">Provjerite svoje trakt podatke</string>
@@ -548,7 +552,8 @@
     <string name="description_extension_amazon">Pretraži lokalnu Amazon stranicu</string>
     <string name="pref_amazon_domain">Amazon stranica</string>
     <string name="extension_google_play">Google Play pretraživanje</string>
-    <string name="description_extension_google_play">Pretraži Google Play Trgovinu</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Pretraži Google Play Trgovinu</string>
     <string name="extension_youtube">Pretraži YouTube</string>
     <string name="description_extension_youtube">Pretraga YouTube videa</string>
     <string name="description_extension_web_search">Traži za web stranice i slike</string>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2023 Uwe Trottmann -->
+
 <!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Copyright 2011-2024 Uwe Trottmann -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
@@ -66,6 +67,16 @@
     <style name="TextAppearance.SeriesGuide.Headline6" parent="TextAppearance.Material3.TitleMedium" />
     <style name="TextAppearance.SeriesGuide.Headline6.Dim">
         <item name="android:textColor">?attr/sgTextColorSecondaryDim</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.TitleLarge.Bold" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.TitleMedium.Bold" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="TextAppearance.SeriesGuide.Subtitle1" parent="TextAppearance.Material3.TitleMedium">
@@ -198,6 +209,10 @@
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
+    <style name="Widget.SeriesGuide.Chip.Filter" parent="Widget.Material3.Chip.Assist">
+        <item name="chipIcon">@drawable/ic_watch_16dp</item>
+    </style>
+
     <!-- TextView -->
     <style name="Widget.SeriesGuide.TextView" />
 
@@ -231,6 +246,11 @@
     <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface" parent="ThemeOverlay.Material3.Toolbar.Surface">
         <item name="colorOnSurface">?attr/colorPrimary</item>
         <item name="colorOnSurfaceVariant">?attr/colorPrimary</item>
+    </style>
+    <!-- Theme overlay to restore non-colored text and icons. -->
+    <style name="ThemeOverlay.SeriesGuide.Toolbar.Surface.NoColor" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="colorOnSurface">@color/sg_color_background_dark</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
     </style>
     <!-- Using OnSurface as toolbar typically used within AppBar which handles the background color. -->
     <style name="Widget.SeriesGuide.Toolbar" parent="Widget.Material3.Toolbar.OnSurface">

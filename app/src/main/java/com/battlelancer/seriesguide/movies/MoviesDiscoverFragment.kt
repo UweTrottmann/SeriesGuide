@@ -1,10 +1,9 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2017-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.movies
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -143,10 +142,9 @@ class MoviesDiscoverFragment : Fragment() {
 
     private class DiscoverItemClickListener(context: Context) : MovieClickListenerImpl(context),
         MoviesDiscoverAdapter.ItemClickListener {
-        override fun onClickLink(link: MoviesDiscoverLink, anchor: View) {
-            val intent = Intent(context, MoviesSearchActivity::class.java)
-            intent.putExtra(MoviesSearchActivity.EXTRA_ID_LINK, link.id)
-            Utils.startActivityWithAnimation(context, intent, anchor)
+        override fun onLinkClick(link: MoviesDiscoverLink, anchor: View) {
+            MoviesSearchActivity.intentLink(context, link)
+                .let { Utils.startActivityWithAnimation(context, it, anchor) }
         }
     }
 

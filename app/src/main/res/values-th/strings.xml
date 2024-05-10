@@ -39,7 +39,6 @@
     <string name="action_stream">สตรีมหรือซื้อ</string>
     <string name="action_stream_info">ข้อมูลการสตรีมหรือซื้อ</string>
     <string name="action_select_region">เลือกภูมิภาค</string>
-    <string name="action_include_any_watch_provider">รวมอะไรก็ได้</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
@@ -106,7 +105,8 @@
     <!-- Date and Time -->
     <string name="today">วันนี้</string>
     <string name="now">ขณะนี้</string>
-    <string name="runtime_minutes">%s นาที</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">ดูทั้งหมดแล้ว</string>
     <string name="unmark_all">ยังไม่ได้ดูเลย</string>
@@ -226,6 +226,10 @@
     <string name="empty_no_results">ไม่มีผลลัพธ์</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">ซีรีส์ที่คล้ายกัน</string>
+    <!-- Popular -->
+    <string name="title_popular">ยอดนิยม</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">รายการแรก</string>
     <string name="list_add">เพิ่มรายการ</string>
@@ -246,7 +250,6 @@
     <string name="error_name_already_exists">มีรายการชื่อนี้อยู่แล้ว</string>
     <!-- Movies -->
     <string name="title_discover">สำรวจ</string>
-    <string name="title_popular">ยอดนิยม</string>
     <string name="title_digital_releases">ออกเป็นดิจิทัล</string>
     <string name="title_disc_releases">ออกเป็นแผ่น</string>
     <string name="movies_in_theatres">ในโรง</string>
@@ -321,6 +324,7 @@
     <string name="trakt_notice_not_exists">(ยัง)ไม่สามารถติดตามด้วย trakt</string>
     <string name="trakt_error_limit_exceeded">รายการเต็ม, ลบบางอย่างออกก่อน</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">เชื่อมต่อ trakt</string>
     <string name="trakt_reconnect">เชื่อมต่อ SeriesGuide กับ trakt</string>
     <string name="trakt_reconnect_details">ตรวจสอบข้อมูล trakt ของคุณ</string>
@@ -520,7 +524,8 @@
     <string name="description_extension_amazon">ค้นหาในเว็บไซต์ Amazon ท้องถิ่นของคุณ</string>
     <string name="pref_amazon_domain">เว็บไซต์ Amazon</string>
     <string name="extension_google_play">ค้นหาใน Google Play</string>
-    <string name="description_extension_google_play">ค้นหาใน Google Play สโตร์</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">ค้นหาใน Google Play สโตร์</string>
     <string name="extension_youtube">ค้นหาใน YouTube</string>
     <string name="description_extension_youtube">ค้นหาวิดีโอใน YouTube</string>
     <string name="description_extension_web_search">ค้นหาเว็บไซต์และรูปภาพ</string>

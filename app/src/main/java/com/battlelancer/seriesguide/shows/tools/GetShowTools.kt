@@ -1,10 +1,12 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2022-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.shows.tools
 
 import android.content.Context
 import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toRating
+import com.battlelancer.seriesguide.dataliberation.ImportTools.toVotes
 import com.battlelancer.seriesguide.modules.ApplicationContext
 import com.battlelancer.seriesguide.shows.ShowsSettings
 import com.battlelancer.seriesguide.shows.database.SgShow2
@@ -86,8 +88,8 @@ class GetShowTools @Inject constructor(
                         releaseCountry = null,
                         releaseTimeZone = null,
                         firstRelease = TimeTools.parseShowFirstRelease(null),
-                        rating = 0.0,
-                        votes = 0
+                        rating = null,
+                        votes = null
                     )
                 } else {
                     // Use previously loaded details instead of failing.
@@ -98,8 +100,8 @@ class GetShowTools @Inject constructor(
                         releaseCountry = existingShow.releaseCountry,
                         releaseTimeZone = existingShow.releaseTimeZone,
                         firstRelease = existingShow.firstReleaseOrDefault,
-                        rating = existingShow.ratingGlobalOrZero,
-                        votes = existingShow.ratingVotesOrZero
+                        rating = existingShow.ratingTrakt,
+                        votes = existingShow.ratingTraktVotes
                     )
                 }
             }
@@ -139,6 +141,8 @@ class GetShowTools @Inject constructor(
             else -> ShowStatus.UNKNOWN
         }
         val poster = tmdbShow.poster_path ?: ""
+        val ratingTmdb = tmdbShow.vote_average.toRating()
+        val ratingTmdbVotes = tmdbShow.vote_count.toVotes()
 
         val showDetails = if (existingShow != null) {
             // For updating existing show.
@@ -154,8 +158,10 @@ class GetShowTools @Inject constructor(
                     releaseCountry = traktDetails.releaseCountry,
                     releaseTimeZone = traktDetails.releaseTimeZone,
                     firstRelease = traktDetails.firstRelease,
-                    ratingGlobal = traktDetails.rating,
-                    ratingVotes = traktDetails.votes,
+                    ratingTmdb = ratingTmdb,
+                    ratingTmdbVotes = ratingTmdbVotes,
+                    ratingTrakt = traktDetails.rating,
+                    ratingTraktVotes = traktDetails.votes,
                     genres = genres,
                     network = network,
                     imdbId = imdbId,
@@ -185,8 +191,11 @@ class GetShowTools @Inject constructor(
                     customReleaseDayOffset = SgShow2.CUSTOM_RELEASE_DAY_OFFSET_NOT_SET,
                     customReleaseTimeZone = SgShow2.CUSTOM_RELEASE_TIME_ZONE_NOT_SET,
                     firstRelease = traktDetails.firstRelease,
-                    ratingGlobal = traktDetails.rating,
-                    ratingVotes = traktDetails.votes,
+                    ratingTmdb = ratingTmdb,
+                    ratingTmdbVotes = ratingTmdbVotes,
+                    ratingTrakt = traktDetails.rating,
+                    ratingTraktVotes = traktDetails.votes,
+                    ratingUser = null,
                     genres = genres,
                     network = network,
                     imdbId = imdbId,
@@ -217,8 +226,8 @@ class GetShowTools @Inject constructor(
         val releaseCountry: String?,
         val releaseTimeZone: String?,
         val firstRelease: String,
-        val rating: Double,
-        val votes: Int
+        val rating: Double?,
+        val votes: Int?
     )
 
     sealed class GetShowError(val service: AddUpdateShowTools.ShowService) {

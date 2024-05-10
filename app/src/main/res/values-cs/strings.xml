@@ -39,7 +39,6 @@
     <string name="action_stream">Streamování nebo nákup</string>
     <string name="action_stream_info">Informace o streamování nebo nákupu</string>
     <string name="action_select_region">Vyberte region</string>
-    <string name="action_include_any_watch_provider">Zahrnout vše</string>
     <string name="action_reset">Obnovit</string>
     <!-- Search -->
     <string name="clear_search_history">Vymazat historii vyhledávání</string>
@@ -109,7 +108,8 @@
     <!-- Date and Time -->
     <string name="today">dnes</string>
     <string name="now">nyní</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Vše zhlédnuto</string>
     <string name="unmark_all">Nic není zhlédnuto</string>
@@ -247,6 +247,10 @@
     <string name="empty_no_results">Nenalezeno</string>
     <string name="action_similar">Podobné</string>
     <string name="title_similar_shows">Podobné seriály</string>
+    <!-- Popular -->
+    <string name="title_popular">Populární</string>
+    <string name="filter_year">Rok</string>
+    <string name="filter_language">Jazyk</string>
     <!-- Lists -->
     <string name="first_list">První seznam</string>
     <string name="list_add">Přidat seznam</string>
@@ -267,7 +271,6 @@
     <string name="error_name_already_exists">Seznam s tímto názvem již existuje</string>
     <!-- Movies -->
     <string name="title_discover">Objevujte</string>
-    <string name="title_popular">Populární</string>
     <string name="title_digital_releases">Digitální vydání</string>
     <string name="title_disc_releases">Vydání na discích</string>
     <string name="movies_in_theatres">V kinech</string>
@@ -351,6 +354,7 @@
     <string name="trakt_notice_not_exists">Nelze (zatím) synchronizovat s traktem.</string>
     <string name="trakt_error_limit_exceeded">Seznam Chci vidět je plný, nejdříve něco odeberte.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Připojit trakt.tv</string>
     <string name="trakt_reconnect">Připojit SeriesGuide k trakt.tv</string>
     <string name="trakt_reconnect_details">Zkontrolujte své nastavení trakt.tv</string>
@@ -562,7 +566,8 @@
     <string name="description_extension_amazon">Vyhledávání na místní síti Amazonu</string>
     <string name="pref_amazon_domain">Síť Amazon</string>
     <string name="extension_google_play">Vyhledat na Google Play</string>
-    <string name="description_extension_google_play">Vyhledá na obchodě Google Play</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Vyhledá na obchodě Google Play</string>
     <string name="extension_youtube">Vyhledat na Youtube</string>
     <string name="description_extension_youtube">Vyhledá videa na Youtube</string>
     <string name="description_extension_web_search">Vyhledá odkazy na stránky a obrázky</string>

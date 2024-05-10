@@ -39,7 +39,6 @@
     <string name="action_stream">Stream ή αγορά</string>
     <string name="action_stream_info">Πληροφορίες ροής ή αγοράς</string>
     <string name="action_select_region">Επιλογή περιοχής</string>
-    <string name="action_include_any_watch_provider">Συμπερίληψη όλων</string>
     <string name="action_reset">Reset</string>
     <!-- Search -->
     <string name="clear_search_history">Εκκαθάριση ιστορικού αναζήτησης</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">Σήμερα</string>
     <string name="now">τώρα</string>
-    <string name="runtime_minutes">%s λεπτά</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
     <string name="unmark_all">Δεν έχει παρακολουθηθεί κανένα</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Κανένα αποτέλεσμα</string>
     <string name="action_similar">Similar</string>
     <string name="title_similar_shows">Παρόμοιες σειρές</string>
+    <!-- Popular -->
+    <string name="title_popular">Δημοφιλείς</string>
+    <string name="filter_year">Year</string>
+    <string name="filter_language">Language</string>
     <!-- Lists -->
     <string name="first_list">Πρώτη λίστα</string>
     <string name="list_add">Προσθήκη λίστας</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Υπάρχει ήδη μία λίστα με αυτό το όνομα</string>
     <!-- Movies -->
     <string name="title_discover">Ανακαλύψτε</string>
-    <string name="title_popular">Δημοφιλείς</string>
     <string name="title_digital_releases">Ψηφιακές κυκλοφορίες</string>
     <string name="title_disc_releases">Κυκλοφορίες δίσκων</string>
     <string name="movies_in_theatres">Στους κινηματογράφους</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Δεν είναι δυνατή (ακόμα) η παρακολούθηση με το trakt.</string>
     <string name="trakt_error_limit_exceeded">Watchlist is full, remove something first.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">To use this, connect to Trakt</string>
     <string name="connect_trakt">Σύνδεση trakt</string>
     <string name="trakt_reconnect">Σύνδεση του SeriesGuide με το trakt</string>
     <string name="trakt_reconnect_details">Έλεγχος διαπιστευτηρίων trakt</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Ψάξτε στον τοπικό σας ιστότοπο Amazon</string>
     <string name="pref_amazon_domain">Ιστοσελίδα Amazon</string>
     <string name="extension_google_play">Αναζήτηση στο Google Play</string>
-    <string name="description_extension_google_play">Αναζήτηση στο Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Αναζήτηση στο Google Play Store</string>
     <string name="extension_youtube">Αναζήτηση στο YouTube</string>
     <string name="description_extension_youtube">Αναζήτηση για βίντεος στο YouTube</string>
     <string name="description_extension_web_search">Αναζήτηση για ιστοσελίδες και εικόνες</string>

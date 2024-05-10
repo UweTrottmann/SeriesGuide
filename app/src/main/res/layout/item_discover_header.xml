@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/textViewDiscoverHeader"
+    android:id="@+id/textViewGridHeader"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/inline_padding"
-    android:paddingLeft="@dimen/inline_padding"
-    android:paddingRight="@dimen/inline_padding"
-    android:paddingTop="@dimen/default_padding"
-    android:textAppearance="@style/TextAppearance.SeriesGuide.Subtitle1.Bold"
-    tools:text="In theaters" />
+    android:background="?attr/selectableItemBackground"
+    android:paddingStart="8dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="0dp"
+    android:paddingBottom="2dp"
+    android:textAppearance="@style/TextAppearance.SeriesGuide.TitleMedium.Bold"
+    android:textSize="18sp"
+    app:drawableEndCompat="@drawable/ic_chevron_right_black_24dp"
+    app:drawableTint="?android:attr/textColorPrimary"
+    tools:text="New episodes" />

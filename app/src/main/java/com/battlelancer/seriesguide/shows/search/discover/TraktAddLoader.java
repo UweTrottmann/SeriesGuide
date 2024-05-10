@@ -46,9 +46,9 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
     }
 
     private final TraktV2 trakt;
-    private final TraktShowsLink type;
+    private final DiscoverShowsLink type;
 
-    TraktAddLoader(Context context, TraktShowsLink type) {
+    TraktAddLoader(Context context, DiscoverShowsLink type) {
         super(context);
         this.type = type;
         this.trakt = SgApp.getServicesComponent(context).trakt();
@@ -60,13 +60,13 @@ public class TraktAddLoader extends GenericSimpleLoader<TraktAddLoader.Result> {
         String action = null;
         try {
             Response<List<BaseShow>> response;
-            if (type == TraktShowsLink.WATCHED) {
+            if (type == DiscoverShowsLink.WATCHED) {
                 action = "load watched shows";
                 response = trakt.sync().watchedShows(Extended.NOSEASONS).execute();
-            } else if (type == TraktShowsLink.COLLECTION) {
+            } else if (type == DiscoverShowsLink.COLLECTION) {
                 action = "load show collection";
                 response = trakt.sync().collectionShows(null).execute();
-            } else if (type == TraktShowsLink.WATCHLIST) {
+            } else if (type == DiscoverShowsLink.WATCHLIST) {
                 action = "load show watchlist";
                 response = trakt.sync().watchlistShows(Extended.FULL).execute();
             } else {

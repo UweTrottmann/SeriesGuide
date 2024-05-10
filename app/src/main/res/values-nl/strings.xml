@@ -39,7 +39,6 @@
     <string name="action_stream">Streamen of kopen</string>
     <string name="action_stream_info">Streaming- of aankoopinformatie</string>
     <string name="action_select_region">Regio selecteren</string>
-    <string name="action_include_any_watch_provider">Om het even welke</string>
     <string name="action_reset">Herstellen</string>
     <!-- Search -->
     <string name="clear_search_history">Verwijder zoekgeschiedenis</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">vandaag</string>
     <string name="now">nu</string>
-    <string name="runtime_minutes">%s min</string>
+    <string name="runtime_hours_minutes_format">%1$d u %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Alles bekeken</string>
     <string name="unmark_all">Niets bekeken</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Geen resultaten</string>
     <string name="action_similar">Soortgelijk</string>
     <string name="title_similar_shows">Soortgelijke shows</string>
+    <!-- Popular -->
+    <string name="title_popular">Populair</string>
+    <string name="filter_year">Jaar</string>
+    <string name="filter_language">Taal</string>
     <!-- Lists -->
     <string name="first_list">Eerste lijst</string>
     <string name="list_add">Lijst toevoegen</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Een lijst met deze naam bestaat al</string>
     <!-- Movies -->
     <string name="title_discover">Ontdekken</string>
-    <string name="title_popular">Populair</string>
     <string name="title_digital_releases">Digitale releases</string>
     <string name="title_disc_releases">Releases op schijf</string>
     <string name="movies_in_theatres">In de bioscoop</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Kan (nog) niet gevolgd worden via trakt.</string>
     <string name="trakt_error_limit_exceeded">Lijst is vol, verwijder eerst iets.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Om dit te gebruiken, maak je verbinding met Trakt</string>
     <string name="connect_trakt">Verbinden met trakt</string>
     <string name="trakt_reconnect">Verbind SeriesGuide met trakt</string>
     <string name="trakt_reconnect_details">Controleer uw trakt-inloggegevens</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Zoek op uw lokale Amazon-site</string>
     <string name="pref_amazon_domain">Amazon-site</string>
     <string name="extension_google_play">Zoeken op Google Play</string>
-    <string name="description_extension_google_play">Zoeken op de Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Zoeken op de Google Play Store</string>
     <string name="extension_youtube">Zoeken op YouTube</string>
     <string name="description_extension_youtube">Zoek op YouTube naar video\'s</string>
     <string name="description_extension_web_search">Zoeken naar websites en afbeeldingen</string>

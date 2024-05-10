@@ -40,7 +40,10 @@ interface SgWatchProviderHelper {
     @Query("SELECT * FROM sg_watch_provider WHERE type=:type")
     suspend fun getAllWatchProviders(type: Int): List<SgWatchProvider>
 
-    @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY display_priority ASC, provider_name ASC")
+    // Android provides the UNICODE collator,
+    // use to correctly order characters with e.g. accents.
+    // https://developer.android.com/reference/android/database/sqlite/SQLiteDatabase
+    @Query("SELECT * FROM sg_watch_provider WHERE type=:type ORDER BY provider_name COLLATE UNICODE ASC")
     fun allWatchProvidersPagingSource(type: Int): PagingSource<Int, SgWatchProvider>
 
     /**

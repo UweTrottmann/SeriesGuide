@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- Copyright 2012-2023 Uwe Trottmann -->
+<!-- Copyright 2012-2024 Uwe Trottmann -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -196,36 +196,12 @@
                 android:textAppearance="@style/TextAppearance.SeriesGuide.Body2"
                 tools:text="Comedy, Drama" />
 
-            <TextView
-                android:id="@+id/textViewAddRatingValue"
-                android:layout_width="wrap_content"
+            <include
+                android:id="@+id/containerRatings"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewAddGenres"
-                android:layout_marginLeft="@dimen/large_padding"
-                android:layout_marginTop="@dimen/large_padding"
-                android:text="@string/placeholder_rating"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Headline6"
-                tools:text="9.6" />
-
-            <TextView
-                android:id="@+id/textViewAddRatingRange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textViewAddRatingValue"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_toRightOf="@+id/textViewAddRatingValue"
-                android:text="@string/format_rating_range"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
-
-            <TextView
-                android:id="@+id/textViewAddRatingLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewAddRatingValue"
-                android:layout_alignLeft="@+id/textViewAddRatingValue"
-                android:layout_marginTop="-4dp"
-                android:text="@string/trakt"
-                android:textAppearance="@style/TextAppearance.SeriesGuide.Caption" />
+                layout="@layout/layout_ratings" />
 
         </RelativeLayout>
     </ScrollView>

@@ -36,10 +36,9 @@
     <string name="sync_manually">Sincronizar manualmente</string>
     <string name="sync_and_update">Sincronizar e Atualizar</string>
     <string name="sync_and_download_all">Sincronizar e Retransferir</string>
-    <string name="action_stream">Comprar ou Ver Online</string>
-    <string name="action_stream_info">Informação sobre Comprar ou Ver Online</string>
+    <string name="action_stream">Comprar ou ver em streaming</string>
+    <string name="action_stream_info">Informações sobre comprar ou ver em streaming</string>
     <string name="action_select_region">Selecionar região</string>
-    <string name="action_include_any_watch_provider">Incluir todos</string>
     <string name="action_reset">Reiniciar</string>
     <!-- Search -->
     <string name="clear_search_history">Limpar histórico de pesquisa</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">Hoje</string>
     <string name="now">Agora</string>
-    <string name="runtime_minutes">%s min.</string>
+    <string name="runtime_hours_minutes_format">%1$d h %2$d min</string>
+    <string name="runtime_minutes_format">%d min</string>
     <!-- Flagging -->
     <string name="mark_all">Vi todos</string>
     <string name="unmark_all">Não vi nenhum</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Sem resultados</string>
     <string name="action_similar">Semelhantes</string>
     <string name="title_similar_shows">Séries semelhantes</string>
+    <!-- Popular -->
+    <string name="title_popular">Populares</string>
+    <string name="filter_year">Ano</string>
+    <string name="filter_language">Idioma</string>
     <!-- Lists -->
     <string name="first_list">Lista Pessoal</string>
     <string name="list_add">Adicionar lista</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Já existe uma lista com este nome</string>
     <!-- Movies -->
     <string name="title_discover">Explorar</string>
-    <string name="title_popular">Populares</string>
     <string name="title_digital_releases">Lançamentos Digitais</string>
     <string name="title_disc_releases">Lançamentos Físicos</string>
     <string name="movies_in_theatres">Nos Cinemas</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Não pode (ainda) ser seguido com o Trakt</string>
     <string name="trakt_error_limit_exceeded">A lista está cheia, remove algo primeiro.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Para utilizar esta opção, conecta-te ao Trakt</string>
     <string name="connect_trakt">Conectar ao Trakt</string>
     <string name="trakt_reconnect">Conectar SeriesGuide ao Trakt</string>
     <string name="trakt_reconnect_details">Verifica as tuas credenciais do Trakt</string>
@@ -534,7 +538,8 @@
     <string name="description_extension_amazon">Pesquisa na Amazon do teu país</string>
     <string name="pref_amazon_domain">Site da Amazon</string>
     <string name="extension_google_play">Pesquisar na Google Play</string>
-    <string name="description_extension_google_play">Pesquisa na Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Pesquisa na Google Play Store</string>
     <string name="extension_youtube">Pesquisar no YouTube</string>
     <string name="description_extension_youtube">Pesquisa vídeos no YouTube</string>
     <string name="description_extension_web_search">Pesquisa por sites e imagens</string>

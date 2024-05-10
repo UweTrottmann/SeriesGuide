@@ -20,7 +20,7 @@
     <string name="specialseason">Специални епизоди</string>
     <string name="ratings">Рейтинги</string>
     <!-- Descriptions -->
-    <string name="navigate_up">Navigate up</string>
+    <string name="navigate_up">Назад</string>
     <string name="description_overview">Общ преглед</string>
     <string name="description_poster">Обложка</string>
     <string name="description_image">Снимкa нa епизодa</string>
@@ -39,7 +39,6 @@
     <string name="action_stream">Стрийм или закупи</string>
     <string name="action_stream_info">Поръчай онлайн</string>
     <string name="action_select_region">Избор на регион</string>
-    <string name="action_include_any_watch_provider">Избери всички</string>
     <string name="action_reset">Нулиране</string>
     <!-- Search -->
     <string name="clear_search_history">Изчисти историята на търсене</string>
@@ -107,7 +106,8 @@
     <!-- Date and Time -->
     <string name="today">днес</string>
     <string name="now">сега</string>
-    <string name="runtime_minutes">%s мин.</string>
+    <string name="runtime_hours_minutes_format">%1$d ч %2$d мин</string>
+    <string name="runtime_minutes_format">%d мин</string>
     <!-- Flagging -->
     <string name="mark_all">Всички са гледани</string>
     <string name="unmark_all">Никой не е гледан</string>
@@ -202,16 +202,16 @@
         <item quantity="other">%d оставащи</item>
     </plurals>
     <plurals name="remaining_of_total_episodes_plural">
-        <item quantity="one">%1$d of %2$d remaining</item>
-        <item quantity="other">%1$d of %2$d remaining</item>
+        <item quantity="one">%1$d от %2$d оставащите</item>
+        <item quantity="other">%1$d от %2$d оставащите</item>
     </plurals>
     <plurals name="skipped_episodes_plural">
-        <item quantity="one">%d skipped</item>
-        <item quantity="other">%d skipped</item>
+        <item quantity="one">%d пропуснати</item>
+        <item quantity="other">%d пропуснати</item>
     </plurals>
     <plurals name="collected_episodes_plural">
-        <item quantity="one">%d in collection</item>
-        <item quantity="other">%d in collection</item>
+        <item quantity="one">%d в колекцията</item>
+        <item quantity="other">%d в колекцията</item>
     </plurals>
     <!-- Add show -->
     <string name="checkin_searchhint">Въведете име на сериала</string>
@@ -233,6 +233,10 @@
     <string name="empty_no_results">Няма резултати</string>
     <string name="action_similar">Подобни</string>
     <string name="title_similar_shows">Подобни сериали</string>
+    <!-- Popular -->
+    <string name="title_popular">Популярни</string>
+    <string name="filter_year">Година</string>
+    <string name="filter_language">Език</string>
     <!-- Lists -->
     <string name="first_list">Първи списък</string>
     <string name="list_add">Добави списък</string>
@@ -253,7 +257,6 @@
     <string name="error_name_already_exists">Списък с това име вече съществува</string>
     <!-- Movies -->
     <string name="title_discover">Открийте</string>
-    <string name="title_popular">Популярни</string>
     <string name="title_digital_releases">Дихитални издания</string>
     <string name="title_disc_releases">Излезли на диск</string>
     <string name="movies_in_theatres">В кината</string>
@@ -331,6 +334,7 @@
     <string name="trakt_notice_not_exists">Не може (все още) да се проследи от trakt.</string>
     <string name="trakt_error_limit_exceeded">Списъкът е пълен, първо изтрийте нещо.</string>
     <!-- Connect trakt -->
+    <string name="trakt_required">Необходимо е свързване с Trakt</string>
     <string name="connect_trakt">Свържете се с trakt</string>
     <string name="trakt_reconnect">Свържете SeriesGuide с trakt</string>
     <string name="trakt_reconnect_details">Проверете идентификацията си в trakt</string>
@@ -365,7 +369,7 @@
     <string name="pref_quick_checkin">Бързо отбелязване</string>
     <string name="pref_quick_checkin_summary">Не питай за проверка в съобщенията</string>
     <!-- Help -->
-    <string name="feedback">Send email</string>
+    <string name="feedback">Изпратете имейл</string>
     <!-- Settings -->
     <string name="action_translate">Превеждане на приложението</string>
     <string name="prefs_category_advanced">Разширени</string>
@@ -528,13 +532,14 @@
     <string name="action_extensions_configure">Персонализиране на разширения</string>
     <string name="action_extensions_add">Добави разширение</string>
     <string name="action_extensions_search">Вземи още разширения</string>
-    <string name="action_extensions_develop">Develop an extension</string>
+    <string name="action_extensions_develop">Разработване на разширение</string>
     <string name="action_extension_remove">Премахване</string>
     <string name="extension_amazon">Търсене в Amazon</string>
     <string name="description_extension_amazon">Търси във вашия локален Amazon сайт</string>
     <string name="pref_amazon_domain">Amazon сайт</string>
     <string name="extension_google_play">Търсене в Google Play</string>
-    <string name="description_extension_google_play">Търси в Google Play Store</string>
+    <!-- description_extension_google_play is unused in the amazon flavor -->
+    <string name="description_extension_google_play" tools:ignore="UnusedResources">Търси в Google Play Store</string>
     <string name="extension_youtube">Търсене в YouTube</string>
     <string name="description_extension_youtube">Търси видеа в Youtube</string>
     <string name="description_extension_web_search">Търси за уебсайтове и снимки</string>

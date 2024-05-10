@@ -1,5 +1,5 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2021-2024 Uwe Trottmann
 
 package com.battlelancer.seriesguide.dataliberation
 
@@ -328,8 +328,10 @@ class JsonExportTask(
             show.rating_user = sgShow.ratingUser
             if (isFullDump) {
                 show.overview = sgShow.overview
-                show.rating = sgShow.ratingGlobalOrZero
-                show.rating_votes = sgShow.ratingVotesOrZero
+                show.rating_tmdb = sgShow.ratingTmdb
+                show.rating_tmdb_votes = sgShow.ratingTmdbVotes
+                show.rating = sgShow.ratingTrakt
+                show.rating_votes = sgShow.ratingTraktVotes
                 show.genres = sgShow.genres
             }
 
@@ -397,8 +399,10 @@ class JsonExportTask(
                 episodeExport.writers = episodeDb.writers
                 episodeExport.gueststars = episodeDb.guestStars
                 episodeExport.directors = episodeDb.directors
-                episodeExport.rating = episodeDb.ratingGlobal
-                episodeExport.rating_votes = episodeDb.ratingVotes
+                episodeExport.rating_tmdb = episodeDb.ratingTmdb
+                episodeExport.rating_tmdb_votes = episodeDb.ratingTmdbVotes
+                episodeExport.rating = episodeDb.ratingTrakt
+                episodeExport.rating_votes = episodeDb.ratingTraktVotes
             }
 
             list.add(episodeExport)
