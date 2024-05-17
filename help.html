@@ -11,51 +11,51 @@ title: Help
 
     <h2 class="mt-3">Fix an issue</h2>
     <div class="list-group">
-      {% assign help_pages = site.help | where: "help_category", "fix" | sort: "order" %}
-      {% for help_page in help_pages %}
+    {% for page_path in site.data.help.fix.order %}
+      {% assign help_page = site.help | where: "path", page_path | first %}      
       <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
-      {% endfor %}
+    {% endfor %}
     </div>
     
     <h2 class="mt-3">How to</h2>
     <h3>Unlock all features</h3>
     <div class="list-group">
-      {% assign help_pages = site.help | where: "help_category", "how-to-sub" | sort: "order" %}
-      {% for help_page in help_pages %}
+    {% for page_path in site.data.help.how-to.sub.order %}
+      {% assign help_page = site.help | where: "path", page_path | first %}      
       <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
-      {% endfor %}
+    {% endfor %}
     </div>
 
     <h3 class="mt-3">Basics</h3>
     <div class="list-group">
-      {% assign help_pages = site.help | where: "help_category", "how-to-basics" | sort: "order" %}
-      {% for help_page in help_pages %}
+    {% for page_path in site.data.help.how-to.basics.order %}
+      {% assign help_page = site.help | where: "path", page_path | first %}      
       <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
-      {% endfor %}
+    {% endfor %}
     </div>
 
     <h3 class="mt-3">Backup and Cloud</h3>
     <div class="list-group">
-      {% assign help_pages = site.help | where: "help_category", "how-to-backup" | sort: "order" %}
-      {% for help_page in help_pages %}
+    {% for page_path in site.data.help.how-to.backup.order %}
+      {% assign help_page = site.help | where: "path", page_path | first %}      
       <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
-      {% endfor %}
+    {% endfor %}
     </div>
     
     <h3 class="mt-3">Trakt integration</h3>
     <div class="list-group">
-      {% assign help_pages = site.help | where: "help_category", "how-to-trakt" | sort: "order" %}
-      {% for help_page in help_pages %}
+    {% for page_path in site.data.help.how-to.trakt.order %}
+      {% assign help_page = site.help | where: "path", page_path | first %}      
       <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
-      {% endfor %}
+    {% endfor %}
     </div>
     
     <h2 class="mt-3">Something else?</h2>
     <div class="list-group">
-      {% assign help_pages = site.help | where: "help_category", "other" | sort: "order" %}
-      {% for help_page in help_pages %}
+    {% for page_path in site.data.help.other.order %}
+      {% assign help_page = site.help | where: "path", page_path | first %}      
       <a id="{{ help_page.slug }}" class="list-group-item list-group-item-action" href="{{ help_page.url }}">{{ help_page.title }}</a>
-      {% endfor %}
+    {% endfor %}
     </div>
 
   </div>
