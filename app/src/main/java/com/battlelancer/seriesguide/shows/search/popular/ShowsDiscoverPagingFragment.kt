@@ -119,7 +119,7 @@ abstract class ShowsDiscoverPagingFragment : BaseAddShowsFragment() {
                 .safeShow(parentFragmentManager, TAG_YEAR_PICKER)
         }
         bindingActivity.chipTraktShowsOriginalLanguage.setOnClickListener {
-            LanguagePickerDialogFragment.create(model.originalLanguage.value)
+            LanguagePickerDialogFragment.createForShows(model.originalLanguage.value)
                 .also { languagePicker = it }
                 .apply { onPickedListener = onLanguagePickedListener }
                 .safeShow(parentFragmentManager, TAG_LANGUAGE_PICKER)

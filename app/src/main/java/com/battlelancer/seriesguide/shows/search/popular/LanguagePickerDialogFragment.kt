@@ -5,14 +5,18 @@ package com.battlelancer.seriesguide.shows.search.popular
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.annotation.StringRes
+import androidx.annotation.ArrayRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.battlelancer.seriesguide.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.text.Collator
 import java.util.Locale
 
 /**
  * A dialog displaying a list of languages or none to choose from.
+ *
+ * The first 5 are most used languages, the remaining are sorted alhpabetically
+ * by localized display name.
  */
 class LanguagePickerDialogFragment : AppCompatDialogFragment() {
 
@@ -24,9 +28,24 @@ class LanguagePickerDialogFragment : AppCompatDialogFragment() {
     private lateinit var languageCodes: Array<String>
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        languageCodes =
+        val languageCodes =
             resources.getStringArray(requireArguments().getInt(ARG_RES_ID_LANGUAGE_CODES))
-        val languageNames = languageCodes.mapToArray { Locale(it, "").displayName }
+        val localizationItems = languageCodes.mapTo(ArrayList(languageCodes.size)) {
+            // Codes are two-letter, so country-less
+            LocalizationItem(it, Locale(it, "").displayName)
+        }
+
+        // Take the first top 5, sort the remaining by display name
+        val collator = Collator.getInstance()
+        val top5 = localizationItems.take(5)
+        val remaining = localizationItems.takeLast(localizationItems.size - 5).toMutableList()
+        remaining.sortWith { left: LocalizationItem, right: LocalizationItem ->
+            collator.compare(left.displayText, right.displayText)
+        }
+
+        val combined = top5 + remaining
+        this.languageCodes = combined.mapToArray { it.code }
+        val languageNames = combined.mapToArray { it.displayText }
 
         val selectedLanguageCode = requireArguments().getString(ARG_SELECTED_LANGUAGE_CODE)
         var selectedLanguageIndex = -1 /* select none by default */
@@ -52,11 +71,16 @@ class LanguagePickerDialogFragment : AppCompatDialogFragment() {
             .create()
     }
 
-    private inline fun <T, reified R> Array<T>.mapToArray(transform: (T) -> R): Array<R> {
+    private inline fun <T, reified R> List<T>.mapToArray(transform: (T) -> R): Array<R> {
         return Array(size) { index ->
             transform(get(index))
         }
     }
+
+    data class LocalizationItem(
+        val code: String,
+        val displayText: String
+    )
 
     companion object {
 
@@ -64,18 +88,24 @@ class LanguagePickerDialogFragment : AppCompatDialogFragment() {
         private const val ARG_RES_ID_LANGUAGE_CODES = "resIdLanguageCodes"
         private const val ARG_RES_ID_TITLE = "resIdTitle"
 
+        fun createForShows(selectedLanguageCode: String?): LanguagePickerDialogFragment =
+            create(selectedLanguageCode, R.array.filter_languages_shows)
+
+        fun createForMovies(selectedLanguageCode: String?): LanguagePickerDialogFragment =
+            create(selectedLanguageCode, R.array.filter_languages_movies)
+
         /**
          * @param selectedLanguageCode two letter ISO 639-1 language code. If null selects none.
          */
-        fun create(
+        private fun create(
             selectedLanguageCode: String?,
-            @StringRes titleRes: Int = R.string.filter_language
+            @ArrayRes languageCodesRes: Int
         ): LanguagePickerDialogFragment {
             return LanguagePickerDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SELECTED_LANGUAGE_CODE, selectedLanguageCode)
-                    putInt(ARG_RES_ID_LANGUAGE_CODES, R.array.filter_languages)
-                    putInt(ARG_RES_ID_TITLE, titleRes)
+                    putInt(ARG_RES_ID_LANGUAGE_CODES, languageCodesRes)
+                    putInt(ARG_RES_ID_TITLE, R.string.filter_language)
                 }
             }
         }
