@@ -153,7 +153,7 @@ class MoviesSearchActivity : BaseMessageActivity() {
                 .safeShow(supportFragmentManager, TAG_YEAR_PICKER)
         }
         binding.chipMoviesSearchOriginalLanguage.setOnClickListener {
-            LanguagePickerDialogFragment.create(model.originalLanguage.value)
+            LanguagePickerDialogFragment.createForMovies(model.originalLanguage.value)
                 .also { languagePicker = it }
                 .apply { onPickedListener = onLanguagePickedListener }
                 .safeShow(supportFragmentManager, TAG_LANGUAGE_PICKER)

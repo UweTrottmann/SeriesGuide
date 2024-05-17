@@ -20,6 +20,7 @@ Version 2024.2
 * 🔧 Display run time in hours and minutes.
 
 * 🔨 Discover: on older versions of Android, do not crash when rotating the screen.
+* 🔧 Discover: sort languages by top 5, then alphabetically.
 
 #### 2024.2.5
 *2024-05-10*
