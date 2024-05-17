@@ -192,114 +192,225 @@
     </string-array>
 
     <!-- For filtering TMDB uses two-letter language codes.
-    These are sorted by most used for shows as of 2024-03.
+    These are sorted by top 5 most used for shows as of 2024-05, then alphabetically by code.
     Removed xx and cn because they do not exist. -->
-    <string-array name="filter_languages">
+    <string-array name="filter_languages_shows">
         <item>en</item> <!-- English -->
         <item>zh</item> <!-- Chinese -->
         <item>ja</item> <!-- Japanese -->
         <item>de</item> <!-- German -->
         <item>ko</item> <!-- Korean -->
+        <item>aa</item> <!-- Afar -->
+        <item>ab</item> <!-- Abkhazian -->
+        <item>af</item> <!-- Afrikaans -->
+        <item>am</item> <!-- Amharic -->
+        <item>ar</item> <!-- Arabic -->
+        <item>as</item> <!-- Assamese -->
+        <item>av</item> <!-- Avaric -->
+        <item>az</item> <!-- Azerbaijani -->
+        <item>be</item> <!-- Belarusian -->
+        <item>bg</item> <!-- Bulgarian -->
+        <item>bn</item> <!-- Bengali -->
+        <item>br</item> <!-- Breton -->
+        <item>bs</item> <!-- Bosnian -->
+        <item>ca</item> <!-- Catalan; Valencian -->
+        <item>cs</item> <!-- Czech -->
+        <item>cy</item> <!-- Welsh -->
+        <item>da</item> <!-- Danish -->
+        <item>dv</item> <!-- Divehi; Dhivehi; Maldivian -->
+        <item>el</item> <!-- Greek -->
+        <item>eo</item> <!-- Esperanto -->
+        <item>es</item> <!-- Spanish; Castilian -->
+        <item>et</item> <!-- Estonian -->
+        <item>eu</item> <!-- Basque -->
+        <item>fa</item> <!-- Persian -->
+        <item>fi</item> <!-- Finnish -->
+        <item>fr</item> <!-- French -->
+        <item>fy</item> <!-- Western Frisian -->
+        <item>ga</item> <!-- Irish -->
+        <item>gd</item> <!-- Gaelic; Scottish Gaelic -->
+        <item>gl</item> <!-- Galician -->
+        <item>gn</item> <!-- Guarani -->
+        <item>gu</item> <!-- Gujarati -->
+        <item>he</item> <!-- Hebrew -->
+        <item>hi</item> <!-- Hindi -->
+        <item>ho</item> <!-- Hiri Motu -->
+        <item>hr</item> <!-- Croatian -->
+        <item>ht</item> <!-- Haitian; Haitian Creole -->
+        <item>hu</item> <!-- Hungarian -->
+        <item>hy</item> <!-- Armenian -->
+        <item>hz</item> <!-- Herero -->
+        <item>id</item> <!-- Indonesian -->
+        <item>is</item> <!-- Icelandic -->
+        <item>it</item> <!-- Italian -->
+        <item>jv</item> <!-- Javanese -->
+        <item>ka</item> <!-- Georgian -->
+        <item>kk</item> <!-- Kazakh -->
+        <item>km</item> <!-- Central Khmer -->
+        <item>kn</item> <!-- Kannada -->
+        <item>ku</item> <!-- Kurdish -->
+        <item>kv</item> <!-- Komi -->
+        <item>la</item> <!-- Latin -->
+        <item>lb</item> <!-- Luxembourgish; Letzeburgesch -->
+        <item>ln</item> <!-- Lingala -->
+        <item>lo</item> <!-- Lao -->
+        <item>lt</item> <!-- Lithuanian -->
+        <item>lv</item> <!-- Latvian -->
+        <item>mi</item> <!-- Maori -->
+        <item>mk</item> <!-- Macedonian -->
+        <item>ml</item> <!-- Malayalam -->
+        <item>mn</item> <!-- Mongolian -->
+        <item>mo</item> <!-- Moldavian; Moldovan -->
+        <item>mr</item> <!-- Marathi -->
+        <item>ms</item> <!-- Malay -->
+        <item>mt</item> <!-- Maltese -->
+        <item>my</item> <!-- Burmese -->
+        <item>nb</item> <!-- Bokmål, Norwegian; Norwegian Bokmål -->
+        <item>ne</item> <!-- Nepali -->
+        <item>nl</item> <!-- Dutch; Flemish -->
+        <item>no</item> <!-- Norwegian -->
+        <item>or</item> <!-- Oriya -->
+        <item>pa</item> <!-- Panjabi; Punjabi -->
+        <item>pl</item> <!-- Polish -->
+        <item>ps</item> <!-- Pushto; Pashto -->
+        <item>pt</item> <!-- Portuguese -->
+        <item>rm</item> <!-- Romansh -->
+        <item>ro</item> <!-- Romanian -->
+        <item>ru</item> <!-- Russian -->
+        <item>sh</item> <!-- Serbo-Croatian -->
+        <item>si</item> <!-- Sinhala; Sinhalese -->
+        <item>sk</item> <!-- Slovak -->
+        <item>sl</item> <!-- Slovenian -->
+        <item>so</item> <!-- Somali -->
+        <item>sq</item> <!-- Albanian -->
+        <item>sr</item> <!-- Serbian -->
+        <item>st</item> <!-- Sotho, Southern -->
+        <item>sv</item> <!-- Swedish -->
+        <item>sw</item> <!-- Swahili -->
+        <item>ta</item> <!-- Tamil -->
+        <item>te</item> <!-- Telugu -->
+        <item>th</item> <!-- Thai -->
+        <item>tl</item> <!-- Tagalog -->
+        <item>tr</item> <!-- Turkish -->
+        <item>ug</item> <!-- Uighur; Uyghur -->
+        <item>uk</item> <!-- Ukrainian -->
+        <item>ur</item> <!-- Urdu -->
+        <item>uz</item> <!-- Uzbek -->
+        <item>vi</item> <!-- Vietnamese -->
+        <item>xh</item> <!-- Xhosa -->
+        <item>za</item> <!-- Zhuang; Chuang -->
+        <item>zu</item> <!-- Zulu -->
+    </string-array>
+
+    <!-- For filtering TMDB uses two-letter language codes.
+    These are sorted by top 5 most used for movies as of 2024-05, then alphabetically by code.
+    Removed xx and cn because they do not exist. -->
+    <string-array name="filter_languages_movies">
+        <item>en</item> <!-- English -->
         <item>fr</item> <!-- French -->
         <item>es</item> <!-- Spanish; Castilian -->
-        <item>pt</item> <!-- Portuguese -->
-        <item>nl</item> <!-- Dutch; Flemish -->
-        <item>ru</item> <!-- Russian -->
-        <item>ar</item> <!-- Arabic -->
-        <item>da</item> <!-- Danish -->
-        <item>tr</item> <!-- Turkish -->
-        <item>th</item> <!-- Thai -->
-        <item>hi</item> <!-- Hindi -->
-        <item>it</item> <!-- Italian -->
-        <item>sv</item> <!-- Swedish -->
-        <item>cs</item> <!-- Czech -->
-        <item>no</item> <!-- Norwegian -->
-        <item>pl</item> <!-- Polish -->
-        <item>el</item> <!-- Greek -->
-        <item>tl</item> <!-- Tagalog -->
-        <item>he</item> <!-- Hebrew -->
-        <item>ms</item> <!-- Malay -->
-        <item>fi</item> <!-- Finnish -->
-        <item>hu</item> <!-- Hungarian -->
-        <item>id</item> <!-- Indonesian -->
-        <item>sk</item> <!-- Slovak -->
-        <item>ur</item> <!-- Urdu -->
-        <item>fa</item> <!-- Persian -->
-        <item>bn</item> <!-- Bengali -->
-        <item>vi</item> <!-- Vietnamese -->
-        <item>sr</item> <!-- Serbian -->
-        <item>ca</item> <!-- Catalan; Valencian -->
-        <item>my</item> <!-- Burmese -->
-        <item>uk</item> <!-- Ukrainian -->
-        <item>ta</item> <!-- Tamil -->
-        <item>hr</item> <!-- Croatian -->
-        <item>ro</item> <!-- Romanian -->
-        <item>af</item> <!-- Afrikaans -->
-        <item>te</item> <!-- Telugu -->
-        <item>bg</item> <!-- Bulgarian -->
-        <item>nb</item> <!-- Bokmål, Norwegian; Norwegian Bokmål -->
-        <item>lt</item> <!-- Lithuanian -->
-        <item>sh</item> <!-- Serbo-Croatian -->
-        <item>is</item> <!-- Icelandic -->
-        <item>ka</item> <!-- Georgian -->
-        <item>et</item> <!-- Estonian -->
-        <item>sl</item> <!-- Slovenian -->
-        <item>lv</item> <!-- Latvian -->
-        <item>am</item> <!-- Amharic -->
-        <item>mr</item> <!-- Marathi -->
-        <item>ml</item> <!-- Malayalam -->
-        <item>cy</item> <!-- Welsh -->
-        <item>bs</item> <!-- Bosnian -->
-        <item>kk</item> <!-- Kazakh -->
-        <item>ga</item> <!-- Irish -->
-        <item>gl</item> <!-- Galician -->
-        <item>pa</item> <!-- Panjabi; Punjabi -->
-        <item>gu</item> <!-- Gujarati -->
-        <item>mt</item> <!-- Maltese -->
-        <item>sq</item> <!-- Albanian -->
-        <item>kn</item> <!-- Kannada -->
-        <item>or</item> <!-- Oriya -->
-        <item>eu</item> <!-- Basque -->
-        <item>az</item> <!-- Azerbaijani -->
-        <item>ab</item> <!-- Abkhazian -->
-        <item>ku</item> <!-- Kurdish -->
-        <item>zu</item> <!-- Zulu -->
-        <item>hy</item> <!-- Armenian -->
-        <item>si</item> <!-- Sinhala; Sinhalese -->
-        <item>mo</item> <!-- Moldavian; Moldovan -->
-        <item>mk</item> <!-- Macedonian -->
-        <item>km</item> <!-- Central Khmer -->
-        <item>as</item> <!-- Assamese -->
-        <item>la</item> <!-- Latin -->
-        <item>ne</item> <!-- Nepali -->
-        <item>gd</item> <!-- Gaelic; Scottish Gaelic -->
-        <item>be</item> <!-- Belarusian -->
-        <item>mi</item> <!-- Maori -->
-        <item>sw</item> <!-- Swahili -->
-        <item>fy</item> <!-- Western Frisian -->
-        <item>jv</item> <!-- Javanese -->
-        <item>hz</item> <!-- Herero -->
-        <item>rm</item> <!-- Romansh -->
-        <item>so</item> <!-- Somali -->
-        <item>lb</item> <!-- Luxembourgish; Letzeburgesch -->
-        <item>za</item> <!-- Zhuang; Chuang -->
+        <item>de</item> <!-- German -->
+        <item>ja</item> <!-- Japanese -->
         <item>aa</item> <!-- Afar -->
-        <item>ht</item> <!-- Haitian; Haitian Creole -->
-        <item>xh</item> <!-- Xhosa -->
-        <item>ps</item> <!-- Pushto; Pashto -->
-        <item>uz</item> <!-- Uzbek -->
-        <item>kv</item> <!-- Komi -->
-        <item>dv</item> <!-- Divehi; Dhivehi; Maldivian -->
-        <item>mn</item> <!-- Mongolian -->
-        <item>eo</item> <!-- Esperanto -->
-        <item>br</item> <!-- Breton -->
-        <item>ho</item> <!-- Hiri Motu -->
-        <item>lo</item> <!-- Lao -->
-        <item>gn</item> <!-- Guarani -->
-        <item>st</item> <!-- Sotho, Southern -->
-        <item>ug</item> <!-- Uighur; Uyghur -->
-        <item>ln</item> <!-- Lingala -->
+        <item>ab</item> <!-- Abkhazian -->
+        <item>af</item> <!-- Afrikaans -->
+        <item>am</item> <!-- Amharic -->
+        <item>ar</item> <!-- Arabic -->
+        <item>as</item> <!-- Assamese -->
         <item>av</item> <!-- Avaric -->
+        <item>az</item> <!-- Azerbaijani -->
+        <item>be</item> <!-- Belarusian -->
+        <item>bg</item> <!-- Bulgarian -->
+        <item>bn</item> <!-- Bengali -->
+        <item>br</item> <!-- Breton -->
+        <item>bs</item> <!-- Bosnian -->
+        <item>ca</item> <!-- Catalan; Valencian -->
+        <item>cs</item> <!-- Czech -->
+        <item>cy</item> <!-- Welsh -->
+        <item>da</item> <!-- Danish -->
+        <item>dv</item> <!-- Divehi; Dhivehi; Maldivian -->
+        <item>el</item> <!-- Greek -->
+        <item>eo</item> <!-- Esperanto -->
+        <item>et</item> <!-- Estonian -->
+        <item>eu</item> <!-- Basque -->
+        <item>fa</item> <!-- Persian -->
+        <item>fi</item> <!-- Finnish -->
+        <item>fy</item> <!-- Western Frisian -->
+        <item>ga</item> <!-- Irish -->
+        <item>gd</item> <!-- Gaelic; Scottish Gaelic -->
+        <item>gl</item> <!-- Galician -->
+        <item>gn</item> <!-- Guarani -->
+        <item>gu</item> <!-- Gujarati -->
+        <item>he</item> <!-- Hebrew -->
+        <item>hi</item> <!-- Hindi -->
+        <item>ho</item> <!-- Hiri Motu -->
+        <item>hr</item> <!-- Croatian -->
+        <item>ht</item> <!-- Haitian; Haitian Creole -->
+        <item>hu</item> <!-- Hungarian -->
+        <item>hy</item> <!-- Armenian -->
+        <item>hz</item> <!-- Herero -->
+        <item>id</item> <!-- Indonesian -->
+        <item>is</item> <!-- Icelandic -->
+        <item>it</item> <!-- Italian -->
+        <item>jv</item> <!-- Javanese -->
+        <item>ka</item> <!-- Georgian -->
+        <item>kk</item> <!-- Kazakh -->
+        <item>km</item> <!-- Central Khmer -->
+        <item>kn</item> <!-- Kannada -->
+        <item>ko</item> <!-- Korean -->
+        <item>ku</item> <!-- Kurdish -->
+        <item>kv</item> <!-- Komi -->
+        <item>la</item> <!-- Latin -->
+        <item>lb</item> <!-- Luxembourgish; Letzeburgesch -->
+        <item>ln</item> <!-- Lingala -->
+        <item>lo</item> <!-- Lao -->
+        <item>lt</item> <!-- Lithuanian -->
+        <item>lv</item> <!-- Latvian -->
+        <item>mi</item> <!-- Maori -->
+        <item>mk</item> <!-- Macedonian -->
+        <item>ml</item> <!-- Malayalam -->
+        <item>mn</item> <!-- Mongolian -->
+        <item>mo</item> <!-- Moldavian; Moldovan -->
+        <item>mr</item> <!-- Marathi -->
+        <item>ms</item> <!-- Malay -->
+        <item>mt</item> <!-- Maltese -->
+        <item>my</item> <!-- Burmese -->
+        <item>nb</item> <!-- Bokmål, Norwegian; Norwegian Bokmål -->
+        <item>ne</item> <!-- Nepali -->
+        <item>nl</item> <!-- Dutch; Flemish -->
+        <item>no</item> <!-- Norwegian -->
+        <item>or</item> <!-- Oriya -->
+        <item>pa</item> <!-- Panjabi; Punjabi -->
+        <item>pl</item> <!-- Polish -->
+        <item>ps</item> <!-- Pushto; Pashto -->
+        <item>pt</item> <!-- Portuguese -->
+        <item>rm</item> <!-- Romansh -->
+        <item>ro</item> <!-- Romanian -->
+        <item>ru</item> <!-- Russian -->
+        <item>sh</item> <!-- Serbo-Croatian -->
+        <item>si</item> <!-- Sinhala; Sinhalese -->
+        <item>sk</item> <!-- Slovak -->
+        <item>sl</item> <!-- Slovenian -->
+        <item>so</item> <!-- Somali -->
+        <item>sq</item> <!-- Albanian -->
+        <item>sr</item> <!-- Serbian -->
+        <item>st</item> <!-- Sotho, Southern -->
+        <item>sv</item> <!-- Swedish -->
+        <item>sw</item> <!-- Swahili -->
+        <item>ta</item> <!-- Tamil -->
+        <item>te</item> <!-- Telugu -->
+        <item>th</item> <!-- Thai -->
+        <item>tl</item> <!-- Tagalog -->
+        <item>tr</item> <!-- Turkish -->
+        <item>ug</item> <!-- Uighur; Uyghur -->
+        <item>uk</item> <!-- Ukrainian -->
+        <item>ur</item> <!-- Urdu -->
+        <item>uz</item> <!-- Uzbek -->
+        <item>vi</item> <!-- Vietnamese -->
+        <item>xh</item> <!-- Xhosa -->
+        <item>za</item> <!-- Zhuang; Chuang -->
+        <item>zh</item> <!-- Chinese -->
+        <item>zu</item> <!-- Zulu -->
     </string-array>
 
     <!-- Used in legacy versions. -->
