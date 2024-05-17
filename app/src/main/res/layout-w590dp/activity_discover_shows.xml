@@ -23,12 +23,15 @@
             android:layout_height="wrap_content"
             tools:title="@string/title_popular">
 
-            <LinearLayout
+            <!--
+            Could be LinearLayout, but use same type so view state restore works on Android 11
+            and older.
+            -->
+            <HorizontalScrollView
                 android:id="@+id/scrollViewTraktShowsChips"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:theme="@style/ThemeOverlay.SeriesGuide.Toolbar.Surface.NoColor">
@@ -62,7 +65,7 @@
 
                 </com.google.android.material.chip.ChipGroup>
 
-            </LinearLayout>
+            </HorizontalScrollView>
 
         </androidx.appcompat.widget.Toolbar>
 
