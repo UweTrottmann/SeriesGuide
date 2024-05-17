@@ -19,6 +19,9 @@ Version 2024.2
 * 🌟 Ratings: display TMDB rating for shows. Tap rating to open TMDB or Trakt page.
 * 🔧 Display run time in hours and minutes.
 
+#### 2024.2.6
+*2024-05-17*
+
 * 🔨 Discover: on older versions of Android, do not crash when rotating the screen.
 * 🔧 Discover: sort languages by top 5, then alphabetically.
 
