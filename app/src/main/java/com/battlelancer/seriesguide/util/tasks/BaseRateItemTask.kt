@@ -1,92 +1,73 @@
-// Copyright 2023 Uwe Trottmann
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2015 Uwe Trottmann
 
-package com.battlelancer.seriesguide.util.tasks;
+package com.battlelancer.seriesguide.util.tasks
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SgApp;
-import com.battlelancer.seriesguide.traktapi.TraktCredentials;
-import com.uwetrottmann.trakt5.TraktV2;
-import com.uwetrottmann.trakt5.entities.SyncErrors;
-import com.uwetrottmann.trakt5.entities.SyncItems;
-import com.uwetrottmann.trakt5.enums.Rating;
-import com.uwetrottmann.trakt5.services.Sync;
+import android.content.Context
+import com.battlelancer.seriesguide.R
+import com.battlelancer.seriesguide.SgApp.Companion.getServicesComponent
+import com.battlelancer.seriesguide.traktapi.TraktCredentials.Companion.get
+import com.uwetrottmann.trakt5.entities.SyncItems
+import com.uwetrottmann.trakt5.entities.SyncResponse
+import com.uwetrottmann.trakt5.enums.Rating
 
 /**
  * Stores the rating in the database and sends it to Trakt.
  */
-public abstract class BaseRateItemTask extends BaseActionTask {
+abstract class BaseRateItemTask(context: Context?, protected val rating: Rating) : BaseActionTask(
+    context!!
+) {
+    override var isSendingToHexagon: Boolean
+        get() =// Hexagon does not support ratings.
+            false
+        set(isSendingToHexagon) {
+            super.isSendingToHexagon = isSendingToHexagon
+        }
 
-    private final Rating rating;
-
-    public BaseRateItemTask(Context context, Rating rating) {
-        super(context);
-        this.rating = rating;
-    }
-
-    @Override
-    protected boolean isSendingToHexagon() {
-        // Hexagon does not support ratings.
-        return false;
-    }
-
-    @Override
-    protected Integer doBackgroundAction(Void... params) {
-        if (isSendingToTrakt()) {
-            if (!TraktCredentials.get(getContext()).hasCredentials()) {
-                return ERROR_TRAKT_AUTH;
+    protected override fun doBackgroundAction(vararg params: Void): Int? {
+        if (isSendingToTrakt) {
+            if (!get(context).hasCredentials()) {
+                return ERROR_TRAKT_AUTH
             }
 
-            SyncItems ratedItems = buildTraktSyncItems();
-            if (ratedItems == null) {
-                return ERROR_DATABASE;
-            }
+            val ratedItems = buildTraktSyncItems() ?: return ERROR_DATABASE
 
-            TraktV2 trakt = SgApp.getServicesComponent(getContext()).trakt();
-            Sync traktSync = trakt.sync();
-            int result = executeTraktCall(traktSync.addRatings(ratedItems), trakt, getTraktAction(),
-                    body -> {
-                        SyncErrors notFound = body.not_found;
+            val trakt = getServicesComponent(context).trakt()
+            val traktSync = trakt.sync()
+            val result =
+                executeTraktCall<SyncResponse>(traktSync.addRatings(ratedItems), trakt, traktAction,
+                    ResponseCallback<SyncResponse> { body: SyncResponse ->
+                        val notFound = body.not_found
                         if (notFound != null) {
-                            if ((notFound.movies != null && notFound.movies.size() != 0)
-                                    || (notFound.shows != null && notFound.shows.size() != 0)
-                                    || (notFound.episodes != null
-                                    && notFound.episodes.size() != 0)) {
+                            if ((notFound.movies != null && notFound.movies.size != 0)
+                                || (notFound.shows != null && notFound.shows.size != 0)
+                                || (notFound.episodes != null
+                                        && notFound.episodes.size != 0)) {
                                 // movie, show or episode not found on trakt
-                                return ERROR_TRAKT_API_NOT_FOUND;
+                                return@executeTraktCall ERROR_TRAKT_API_NOT_FOUND
                             }
                         }
-                        return SUCCESS;
-                    });
+                        SUCCESS
+                    })
             if (result != SUCCESS) {
-                return result;
+                return result
             }
         }
 
         if (!doDatabaseUpdate()) {
-            return ERROR_DATABASE;
+            return ERROR_DATABASE
         }
 
-        return SUCCESS;
+        return SUCCESS
     }
 
-    protected Rating getRating() {
-        return rating;
-    }
+    override val successTextResId: Int
+        get() = R.string.ack_rated
 
-    @Override
-    protected int getSuccessTextResId() {
-        return R.string.ack_rated;
-    }
+    protected abstract val traktAction: String
+        get
 
-    @NonNull
-    protected abstract String getTraktAction();
+    protected abstract fun buildTraktSyncItems(): SyncItems?
 
-    @Nullable
-    protected abstract SyncItems buildTraktSyncItems();
-
-    protected abstract boolean doDatabaseUpdate();
+    protected abstract fun doDatabaseUpdate(): Boolean
 }
