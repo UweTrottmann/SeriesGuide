@@ -95,6 +95,8 @@ android {
 
     productFlavors {
         create("pure") {
+            isDefault = true // Make Studio select this by default, it often resets (after updates, randomly)
+
             applicationId = "com.battlelancer.seriesguide"
             versionCode = sgVersionCode
             versionName = sgVersionName
